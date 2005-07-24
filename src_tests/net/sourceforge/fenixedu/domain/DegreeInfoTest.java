@@ -9,14 +9,9 @@ public class DegreeInfoTest extends DomainTestBase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		
-		IDegree degree = new Degree();
-		degree.setIdInternal(1);
-		
 		degreeInfoWithDegree = new DegreeInfo(new Degree());
-		degreeInfoWithDegree.setIdInternal(1);
-		
+
 		degreeInfoSimple = new DegreeInfo();
-		degreeInfoSimple.setIdInternal(2);
 	}
 	
 	protected void tearDown() throws Exception {

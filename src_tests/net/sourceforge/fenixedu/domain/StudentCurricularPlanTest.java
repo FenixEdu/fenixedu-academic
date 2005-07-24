@@ -44,13 +44,19 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		setUpCreate(student, degreeCurricularPlan);
 		
 		
+		setUpDelete();
+	}
+
+
+
+
+	private void setUpDelete() {
 		studentCurricularPlanToDelete = new StudentCurricularPlan();
 		studentCurricularPlanLEICToDelete = new StudentCurricularPlanLEIC();
 		studentCurricularPlanLEECToDelete = new StudentCurricularPlanLEEC();
 		
 		IBranch br1 = new Branch();
 		studentCurricularPlanToDelete.setBranch(br1);
-		
 		studentCurricularPlanLEICToDelete.setSecundaryBranch(br1);
 		studentCurricularPlanLEECToDelete.setSecundaryBranch(br1);
 		

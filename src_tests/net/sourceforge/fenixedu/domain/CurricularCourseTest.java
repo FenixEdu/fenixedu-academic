@@ -21,7 +21,6 @@ public class CurricularCourseTest extends DomainTestBase {
         super.setUp();
         
         curricularCourse = new CurricularCourse();
-        curricularCourse.setIdInternal(0);
 		
 		setUpGetExecutionCoursesByExecutionPeriod();
     }

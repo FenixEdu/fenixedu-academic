@@ -42,80 +42,61 @@ public class DegreeTest extends DomainTestBase {
 		newDegreeType = DegreeType.DEGREE;
 		newConcreteClassForDegreeCurricularPlans = DegreeCurricularPlan.class.getName();
 		
-		degreeToCreate = new Degree(newName, newNameEn, newSigla, newDegreeType, newConcreteClassForDegreeCurricularPlans);
-		degreeToCreate.setIdInternal(3);
+		setUpCreate();
 		
-		
-		
-		degreeToEditWithDegreeInfo = new Degree("x", "x", "x", null, null);
-		degreeToEditWithDegreeInfo.setIdInternal(4);
-		
-		degreeToEditWithoutDegreeInfo = new Degree();
-		degreeToEditWithoutDegreeInfo.setIdInternal(5);
-		
-		
-		
+		setUpEdit();
+
+		setUpDelete();
+	}
+
+	private void setUpDelete() {
 		delegatesToDelete = new ArrayList();
 		oldInquiriesCoursesResToDelete = new ArrayList();
 		oldInquiriesTeachersResToDelete = new ArrayList();
 		oldInquiriesSummaryToDelete = new ArrayList();
 		
 		degreeToDelete = new Degree();
-		degreeToDelete.setIdInternal(1);
 		degreeNotToDelete = new Degree();
-		degreeNotToDelete.setIdInternal(2);
 		
 		IDegreeCurricularPlan dcp1 = new DegreeCurricularPlan();
-		dcp1.setIdInternal(1);
 		degreeNotToDelete.addDegreeCurricularPlans(dcp1);
 		
 		IDegreeInfo di1 = new DegreeInfo();
-		di1.setIdInternal(1);
 		degreeToDelete.addDegreeInfos(di1);
+		
 		IDegreeInfo di2 = new DegreeInfo();
-		di2.setIdInternal(2);
 		degreeNotToDelete.addDegreeInfos(di2);
 		
 		IExecutionPeriod ep1 = new ExecutionPeriod();
-		ep1.setIdInternal(1);
 		IExecutionYear ey1 = new ExecutionYear();
-		ey1.setIdInternal(1);
 		
 		IStudent student1 = new Student();
-		student1.setIdInternal(1);
-		
 		ITeacher teacher1 = new Teacher();
-		teacher1.setIdInternal(1);
-		
 		IDelegate d1 = new Delegate();
-		d1.setIdInternal(1);
 		d1.setStudent(student1);
 		d1.setExecutionYear(ey1);
 		degreeToDelete.addDelegate(d1);
 		delegatesToDelete.add(d1);
 		
 		IDelegate d2 = new Delegate();
-		d2.setIdInternal(2);
 		d2.setStudent(student1);
 		d2.setExecutionYear(ey1);
 		degreeNotToDelete.addDelegate(d2);
 		
 		IOldInquiriesCoursesRes oicr1 = new OldInquiriesCoursesRes();
-		oicr1.setIdInternal(1);
 		oicr1.setExecutionPeriod(ep1);
+		
 		IOldInquiriesCoursesRes oicr2 = new OldInquiriesCoursesRes();
-		oicr2.setIdInternal(2);
 		oicr2.setExecutionPeriod(ep1);
 		degreeToDelete.addOldInquiriesCoursesRes(oicr1);
 		oldInquiriesCoursesResToDelete.add(oicr1);
 		degreeNotToDelete.addOldInquiriesCoursesRes(oicr2);
 		
 		IOldInquiriesTeachersRes oitr1 = new OldInquiriesTeachersRes();
-		oitr1.setIdInternal(1);
 		oitr1.setExecutionPeriod(ep1);
 		oitr1.setTeacher(teacher1);
+		
 		IOldInquiriesTeachersRes oitr2 = new OldInquiriesTeachersRes();
-		oitr2.setIdInternal(2);
 		oitr2.setExecutionPeriod(ep1);
 		oitr2.setTeacher(teacher1);
 		degreeToDelete.addOldInquiriesTeachersRes(oitr1);
@@ -123,15 +104,23 @@ public class DegreeTest extends DomainTestBase {
 		degreeNotToDelete.addOldInquiriesTeachersRes(oitr2);
 		
 		IOldInquiriesSummary ois1 = new OldInquiriesSummary();
-		ois1.setIdInternal(1);
 		ois1.setExecutionPeriod(ep1);
+		
 		IOldInquiriesSummary ois2 = new OldInquiriesSummary();
-		ois2.setIdInternal(2);
 		ois2.setExecutionPeriod(ep1);
 		degreeToDelete.addOldInquiriesSummary(ois1);
 		oldInquiriesSummaryToDelete.add(ois1);
 		degreeNotToDelete.addOldInquiriesSummary(ois2);
+	}
 
+	private void setUpEdit() {
+		degreeToEditWithDegreeInfo = new Degree("x", "x", "x", null, null);
+		degreeToEditWithoutDegreeInfo = new Degree();
+	}
+
+	private void setUpCreate() {
+		
+		degreeToCreate = new Degree(newName, newNameEn, newSigla, newDegreeType, newConcreteClassForDegreeCurricularPlans);
 	}
 	
 	protected void tearDown() throws Exception {

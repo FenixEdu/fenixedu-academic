@@ -12,15 +12,16 @@ public class OldInquiriesCoursesResTest extends DomainTestBase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		
+		setUpDelete();
+	}
+
+	private void setUpDelete() {
 		oldICRToDelete = new OldInquiriesCoursesRes();
-		oldICRToDelete.setIdInternal(1);
-		
+
 		executionPeriod = new ExecutionPeriod();
-		executionPeriod.setIdInternal(1);
 		executionPeriod.addOldInquiriesCoursesRes(oldICRToDelete);
 		
 		degree = new Degree();
-		degree.setIdInternal(1);
 		degree.addOldInquiriesCoursesRes(oldICRToDelete);
 	}
 	

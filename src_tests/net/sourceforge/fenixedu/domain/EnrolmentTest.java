@@ -72,33 +72,30 @@ public class EnrolmentTest extends DomainTestBase {
 	protected void setUp() throws Exception {
         super.setUp();
 		
+		setUpForDeleteCase();
+		setUpForUnEnrollCase();
+		setUpForGetImprovmentEvaluation();
 		setUpForGetEnrolmentEvaluationByEnrolmentEvaluationTypeAndGradeCase();
 		setUpForInitializeAsNewCase();
 		setUpForSubmitEnrolmentEvaluationCase();
 		setUpForIsImprovementForExecutionCourseCase();
+    }
+	
+	private void setUpForDeleteCase() {
 		
 		enrolmentA = new Enrolment();
 		enrolmentB = new Enrolment();
 		enrolmentC = new Enrolment();
 		enrolmentD = new Enrolment();
-		enrolmentA.setIdInternal(1);
-		enrolmentB.setIdInternal(2);
-		enrolmentC.setIdInternal(3);
-		enrolmentD.setIdInternal(4);
-		
 				
 		/*
 		 *  EnrolmentEvaluation
 		 */
 		IEnrolmentEvaluation ee1 = new EnrolmentEvaluation();
 		IEnrolmentEvaluation ee2 = new EnrolmentEvaluation();
-		ee1.setIdInternal(1);
-		ee2.setIdInternal(2);
 		
 		IPerson person = new Person();
 		IEmployee employee = new Employee();
-		person.setIdInternal(1);
-		employee.setIdInternal(1);
 		
 		ee1.setPersonResponsibleForGrade(person);
 		ee2.setPersonResponsibleForGrade(person);
@@ -117,7 +114,6 @@ public class EnrolmentTest extends DomainTestBase {
 		 * ExecutionPeriod
 		 */
 		IExecutionPeriod ep1 = new ExecutionPeriod();
-		ep1.setIdInternal(1);
 		enrolmentA.setExecutionPeriod(ep1);
 		
 		
@@ -125,7 +121,6 @@ public class EnrolmentTest extends DomainTestBase {
 		 * StudentCurricularPlan
 		 */
 		IStudentCurricularPlan scp = new StudentCurricularPlan();
-		scp.setIdInternal(1);
 		enrolmentA.setStudentCurricularPlan(scp);
 		
 		
@@ -134,8 +129,6 @@ public class EnrolmentTest extends DomainTestBase {
 		 */
 		ICreditsInAnySecundaryArea ciasa1 = new CreditsInAnySecundaryArea();
 		ICreditsInAnySecundaryArea ciasa2 = new CreditsInAnySecundaryArea();
-		ciasa1.setIdInternal(1);
-		ciasa2.setIdInternal(2);
 		
 		ciasa1.setStudentCurricularPlan(scp);
 		ciasa2.setStudentCurricularPlan(scp);
@@ -151,10 +144,7 @@ public class EnrolmentTest extends DomainTestBase {
 		 * CreditsInScientificArea
 		 */
 		ICreditsInScientificArea cisa1 = new CreditsInScientificArea();
-		ICreditsInScientificArea cisa2 = new CreditsInScientificArea();
-		cisa1.setIdInternal(1);
-		cisa2.setIdInternal(2);
-		
+		ICreditsInScientificArea cisa2 = new CreditsInScientificArea();		
 		cisa1.setStudentCurricularPlan(scp);
 		cisa2.setStudentCurricularPlan(scp);
 		
@@ -169,25 +159,15 @@ public class EnrolmentTest extends DomainTestBase {
 		 * CurricularCourse
 		 */
 		ICurricularCourse cc = new CurricularCourse();
-		cc.setIdInternal(1);
 		enrolmentA.setCurricularCourse(cc);
 		
-		
-		
-		
-		
-		
+			
 		IEquivalentEnrolmentForEnrolmentEquivalence eeee1 = new EquivalentEnrolmentForEnrolmentEquivalence();
 		IEquivalentEnrolmentForEnrolmentEquivalence eeee2 = new EquivalentEnrolmentForEnrolmentEquivalence();
 		IEquivalentEnrolmentForEnrolmentEquivalence eeee3 = new EquivalentEnrolmentForEnrolmentEquivalence();
 		IEnrolmentEquivalence eeq1 = new EnrolmentEquivalence();
 		IEnrolmentEquivalence eeq2 = new EnrolmentEquivalence();
-		eeee1.setIdInternal(1);
-		eeee2.setIdInternal(2);
-		eeee3.setIdInternal(3);
-		eeq1.setIdInternal(1);
-		eeq2.setIdInternal(2);
-
+		
 		equivalentEnrolmentsA = new ArrayList<IEquivalentEnrolmentForEnrolmentEquivalence>();
 		equivalentEnrolmentsB = new ArrayList<IEquivalentEnrolmentForEnrolmentEquivalence>();
 		equivalentEnrolmentsA.add(eeee1);
@@ -207,17 +187,16 @@ public class EnrolmentTest extends DomainTestBase {
 		enrolmentEquivalencesD = new ArrayList<IEnrolmentEquivalence>();
 		enrolmentEquivalencesC.add(eeq1);
 		enrolmentEquivalencesD.add(eeq2);
-
+	}
+	
+	
+	private void setUpForUnEnrollCase() {
 		
 		enrolmentE = new Enrolment();
 		enrolmentF = new Enrolment();
-		enrolmentE.setIdInternal(5);
-		enrolmentF.setIdInternal(6);
 		
 		IEnrolmentEvaluation ee3 = new EnrolmentEvaluation();
 		IEnrolmentEvaluation ee4 = new EnrolmentEvaluation();
-		ee3.setIdInternal(3);
-		ee4.setIdInternal(4);
 		
 		ee3.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
 		ee3.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
@@ -228,20 +207,17 @@ public class EnrolmentTest extends DomainTestBase {
 		
 		enrolmentE.addEvaluations(ee3);
 		enrolmentF.addEvaluations(ee4);
-		
-		
+	}
+	
+	
+	private void setUpForGetImprovmentEvaluation() {
 		
 		enrolmentWithImprovement = new Enrolment();
 		enrolmentWithoutImprovement = new Enrolment();
-		enrolmentWithImprovement.setIdInternal(7);
-		enrolmentWithoutImprovement.setIdInternal(8);
 		
 		IEnrolmentEvaluation normalEvaluation = new EnrolmentEvaluation();
 		IEnrolmentEvaluation normalEvaluationToImprove = new EnrolmentEvaluation();
 		improvementEvaluation = new EnrolmentEvaluation();
-		normalEvaluation.setIdInternal(5);
-		normalEvaluationToImprove.setIdInternal(6);
-		improvementEvaluation.setIdInternal(7);
 		
 		normalEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
 		normalEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
@@ -255,7 +231,8 @@ public class EnrolmentTest extends DomainTestBase {
 		normalEvaluation.setEnrolment(enrolmentWithoutImprovement);
 		normalEvaluationToImprove.setEnrolment(enrolmentWithImprovement);
 		improvementEvaluation.setEnrolment(enrolmentWithImprovement);
-    }
+	}
+	
 
     private void setUpForIsImprovementForExecutionCourseCase() {
 		improvementEnrolment = new Enrolment();
@@ -365,8 +342,7 @@ public class EnrolmentTest extends DomainTestBase {
 	public void testDelete() {
 		
 		enrolmentD.delete();
-		
-		
+				
 		assertFalse(enrolmentD.hasAnyEnrolmentEquivalences());
 		
 		for (IEnrolmentEquivalence equivalence : enrolmentEquivalencesD) {
@@ -383,10 +359,6 @@ public class EnrolmentTest extends DomainTestBase {
 		assertFalse(enrolmentA.hasAnyEnrolmentEquivalences());
 		assertTrue(enrolmentA.hasAnyEquivalentEnrolmentForEnrolmentEquivalences());
 		
-
-		
-		
-			
 		enrolmentA.delete();
 		
 		assertFalse(enrolmentA.hasAnyEvaluations());

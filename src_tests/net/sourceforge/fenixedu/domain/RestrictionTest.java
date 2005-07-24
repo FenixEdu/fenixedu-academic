@@ -59,14 +59,9 @@ public class RestrictionTest extends DomainTestBase {
 		restriction = new RestrictionByNumberOfDoneCurricularCourses();
 		restrictionByCurricularCourse = new RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse();
 		
-		restriction.setIdInternal(1);
-		restrictionByCurricularCourse.setIdInternal(2);
-
 		IPrecedence precedence = new Precedence();
-		precedence.setIdInternal(1);
 		
 		ICurricularCourse curricularCourse = new CurricularCourse();
-		curricularCourse.setIdInternal(1);
 		
 		restriction.setPrecedence(precedence);
 		restrictionByCurricularCourse.setPrecedence(precedence);

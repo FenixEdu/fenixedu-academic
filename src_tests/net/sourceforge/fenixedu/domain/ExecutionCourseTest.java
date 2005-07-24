@@ -25,7 +25,6 @@ public class ExecutionCourseTest extends DomainTestBase {
         super.setUp();
 
         executionCourse = new ExecutionCourse();
-        executionCourse.setIdInternal(0);
 
         executionCourse.setNome("name");
         executionCourse.setSigla("acronym");
@@ -38,16 +37,12 @@ public class ExecutionCourseTest extends DomainTestBase {
         setUpForGetAttendsByStudentCase();
 
         shift = new Shift();
-        shift.setIdInternal(1);
 
         room = new Room();
-        room.setIdInternal(1);
 
         teacher = new Teacher();
-        teacher.setIdInternal(1);
 
         professorship = new Professorship();
-        professorship.setIdInternal(1);
         professorship.setExecutionCourse(this.executionCourse);
         professorship.setTeacher(this.teacher);
     }

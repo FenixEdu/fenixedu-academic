@@ -12,15 +12,17 @@ public class NotNeedToEnrollInCurricularCourseTest extends DomainTestBase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		
+		setUpDelete();
+	}
+
+	private void setUpDelete() {
 		notNeedToEnrollInCurricularCourseToDelete = new NotNeedToEnrollInCurricularCourse();
-		notNeedToEnrollInCurricularCourseToDelete.setIdInternal(1);
-		
+
 		curricularCourse = new CurricularCourse();
-		curricularCourse.setIdInternal(1);
+
 		curricularCourse.addNotNeedToEnrollInCurricularCourses(notNeedToEnrollInCurricularCourseToDelete);
-		
 		studentCurricularPlan = new StudentCurricularPlan();
-		studentCurricularPlan.setIdInternal(1);
+
 		studentCurricularPlan.addNotNeedToEnrollCurricularCourses(notNeedToEnrollInCurricularCourseToDelete);
 	}
 	

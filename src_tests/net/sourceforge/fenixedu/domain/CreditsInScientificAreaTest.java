@@ -8,17 +8,12 @@ public class CreditsInScientificAreaTest extends DomainTestBase {
         super.setUp();
 		
 		credits = new CreditsInScientificArea();
-		credits.setIdInternal(1);
 		
 		IScientificArea scientificArea = new ScientificArea();
-		scientificArea.setIdInternal(1);
-		
 		IEnrolment enrolment = new Enrolment();
-		enrolment.setIdInternal(1);
-		
 		IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
-		studentCurricularPlan.setIdInternal(1);
-		
+
+		credits.setScientificArea(scientificArea);
 		credits.setEnrolment(enrolment);
 		credits.setStudentCurricularPlan(studentCurricularPlan);
     }

@@ -13,6 +13,10 @@ public class DelegateTest extends DomainTestBase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		
+		setUpDelete();
+	}
+
+	private void setUpDelete() {
 		delegateToDelete = new Delegate();
 		delegateToDelete.setIdInternal(1);
 		

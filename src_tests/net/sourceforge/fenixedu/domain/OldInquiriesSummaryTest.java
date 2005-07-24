@@ -12,15 +12,16 @@ public class OldInquiriesSummaryTest extends DomainTestBase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		
+		setUpDelete();
+	}
+
+	private void setUpDelete() {
 		oldOISToDelete = new OldInquiriesSummary();
-		oldOISToDelete.setIdInternal(1);
 		
 		executionPeriod = new ExecutionPeriod();
-		executionPeriod.setIdInternal(1);
 		executionPeriod.addOldInquiriesSummary(oldOISToDelete);
 		
 		degree = new Degree();
-		degree.setIdInternal(1);
 		degree.addOldInquiriesSummary(oldOISToDelete);
 	}
 	

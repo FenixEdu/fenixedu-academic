@@ -13,19 +13,19 @@ public class OldInquiriesTeachersResTest extends DomainTestBase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		
+		setUpDelete();
+	}
+
+	private void setUpDelete() {
 		oldITRToDelete = new OldInquiriesTeachersRes();
-		oldITRToDelete.setIdInternal(1);
 		
 		executionPeriod = new ExecutionPeriod();
-		executionPeriod.setIdInternal(1);
 		executionPeriod.addOldInquiriesTeachersRes(oldITRToDelete);
 		
 		degree = new Degree();
-		degree.setIdInternal(1);
 		degree.addOldInquiriesTeachersRes(oldITRToDelete);
 		
 		teacher = new Teacher();
-		teacher.setIdInternal(1);
 		teacher.addOldInquiriesTeacherRes(oldITRToDelete);
 	}
 	

@@ -9,13 +9,10 @@ public class CreditsInAnySecundaryAreaTest extends DomainTestBase {
         super.setUp();
 		
 		credits = new CreditsInAnySecundaryArea();
-		credits.setIdInternal(1);
 		
 		IEnrolment enrolment = new Enrolment();
-		enrolment.setIdInternal(1);
 		
 		IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
-		studentCurricularPlan.setIdInternal(1);
 		
 		credits.setEnrolment(enrolment);
 		credits.setStudentCurricularPlan(studentCurricularPlan);
@@ -31,6 +28,5 @@ public class CreditsInAnySecundaryAreaTest extends DomainTestBase {
 		
 		assertFalse(credits.hasEnrolment());
 		assertFalse(credits.hasStudentCurricularPlan());
-
 	}
 }

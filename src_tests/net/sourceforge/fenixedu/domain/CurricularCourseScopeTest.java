@@ -62,9 +62,7 @@ public class CurricularCourseScopeTest extends DomainTestBase {
 	private void setUpDelete() {
 		
 		curricularCourseScopeToDelete = new CurricularCourseScope();
-		curricularCourseScopeToDelete.setIdInternal(1);
 		curricularCourseScopeNotToDelete = new CurricularCourseScope();
-		curricularCourseScopeNotToDelete.setIdInternal(2);
 		
 		ICurricularCourse cc1 = new CurricularCourse();
 		
