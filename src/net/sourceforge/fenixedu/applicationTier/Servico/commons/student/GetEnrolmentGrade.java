@@ -6,12 +6,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -32,14 +29,9 @@ public class GetEnrolmentGrade {
                 || (enrolment.getEvaluations().size() == 0)) {
             return null;
         }
-        // This sorts the list ascendingly so we need to reverse it to get
-        // the first object.
-        Collections.sort(enrolmentEvaluations);
-        //erm...not really....what if you get the LAST object ?
-        //ass:gedl
-        Collections.reverse(enrolmentEvaluations);
+        IEnrolmentEvaluation evaluation = (IEnrolmentEvaluation) Collections.max(enrolmentEvaluations);
         try {
-            return getInfoLatestEvaluation((IEnrolmentEvaluation) enrolmentEvaluations.get(0));
+            return getInfoLatestEvaluation(evaluation);
         } catch (ExcepcaoPersistencia e) {
 
             throw new FenixServiceException(e);
@@ -55,29 +47,12 @@ public class GetEnrolmentGrade {
         if (latestEvaluation.getEmployee() != null) {
             if (String.valueOf(latestEvaluation.getEmployee().getIdInternal()) != null
                     || String.valueOf(latestEvaluation.getEmployee().getIdInternal()).length() > 0) {
-                IEmployee employee = readEmployee(latestEvaluation.getEmployee().getIdInternal()
-                        .intValue());
-                latestEvaluation.setEmployee(employee);
 
-                infolatestEvaluation.setInfoEmployee(InfoPerson.newInfoFromDomain(employee.getPerson()));
+                infolatestEvaluation.setInfoEmployee(InfoPerson.newInfoFromDomain(latestEvaluation.getEmployee().getPerson()));
             }
             infolatestEvaluation.setInfoPersonResponsibleForGrade(InfoPerson
                     .newInfoFromDomain(latestEvaluation.getPersonResponsibleForGrade()));
         }
         return infolatestEvaluation;
     }
-
-    private IEmployee readEmployee(int id) throws ExcepcaoPersistencia {
-        IEmployee employee = null;
-        IPersistentEmployee persistentEmployee;
-        try {
-            persistentEmployee = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentEmployee();
-            employee = persistentEmployee.readByIdInternal(id);
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-            throw e;
-        }
-        return employee;
-    }
-
 }
