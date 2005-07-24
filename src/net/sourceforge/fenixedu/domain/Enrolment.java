@@ -411,4 +411,49 @@ public class Enrolment extends Enrolment_Base {
 	public boolean isImprovementForExecutionCourse (IExecutionCourse executionCourse) {
 		return !getExecutionPeriod().equals(executionCourse.getExecutionPeriod());
 	}
+
+	public void unEnrollImprovement(final IExecutionPeriod executionPeriod) throws DomainException {
+		IEnrolmentEvaluation improvmentEnrolmentEvaluation = getImprovementEvaluation();
+		if (improvmentEnrolmentEvaluation != null) {
+			
+			improvmentEnrolmentEvaluation.delete();
+			
+			final IStudent student = getStudentCurricularPlan().getStudent();
+			List<IExecutionCourse> executionCourses = getCurricularCourse().getAssociatedExecutionCourses();
+			
+	        IExecutionCourse currentExecutionCourse = (IExecutionCourse) CollectionUtils.find(executionCourses, new Predicate() {
+
+	            public boolean evaluate(Object arg0) {
+	                IExecutionCourse executionCourse = (IExecutionCourse) arg0;
+	                if (executionCourse.getExecutionPeriod().equals(executionPeriod))
+	                    return true;
+	                return false;
+	            }
+	        });
+			
+			
+			if (currentExecutionCourse != null) {
+	            List attends = currentExecutionCourse.getAttends();
+	            IAttends attend = (IAttends) CollectionUtils.find(attends, new Predicate() {
+
+	                public boolean evaluate(Object arg0) {
+	                    IAttends frequenta = (IAttends) arg0;
+	                    if (frequenta.getAluno().equals(student))
+	                        return true;
+	                    return false;
+	                }
+	            });
+				
+	            if (attend != null) {
+	                try {
+						attend.delete();
+	                } catch (DomainException e) {
+						// nothing to be done
+	                }
+	            }
+	        }
+		} else {
+			throw new DomainException(this.getClass().getName(), "ola mundo");
+		}
+	}
 }

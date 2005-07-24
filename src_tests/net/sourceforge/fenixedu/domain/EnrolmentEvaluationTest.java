@@ -4,7 +4,6 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 
@@ -227,26 +226,6 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
 		assertFalse(evaluation.hasPersonResponsibleForGrade());
 		assertFalse(evaluation.hasEmployee());
 		assertFalse(evaluation.hasEnrolment());
-		
-		
-		try {
-			improvementEvaluation.unEnrollImprovment(currentExecutionPeriod);
-			
-		} catch (DomainException e) {
-			fail("Should have been deleted.");
-		}
-		
-		
-		assertFalse(attendsToDelete.hasEnrolment());
-		assertTrue(attendsNotToDelete.hasEnrolment());
-		
-		
-		try {
-			notImprovementEvaluation.unEnrollImprovment(currentExecutionPeriod);
-			fail("Should not have been deleted.");
-		} catch (DomainException e) {
-			
-		}
 	}
 	
 	

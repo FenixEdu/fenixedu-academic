@@ -69,6 +69,13 @@ public class EnrolmentTest extends DomainTestBase {
 	private IEnrolment nonImprovementEnrolment = null;
 	private IExecutionCourse executionCourseForImprovement = null;
 	
+	private IEnrolment enrolmentToUnEnrollImprovement = null;
+	private IEnrolmentEvaluation improvementEnrolmentEvaluation = null;
+	private IEnrolmentEvaluation nonImprovementEnrolmentEvaluation = null;
+	private IExecutionPeriod executionPeriodToUnEnrollImprovement = null;
+	private IAttends attendsToDelete = null;
+	private IExecutionCourse executionCourseToUnEnrollImprovement = null;
+	
 	protected void setUp() throws Exception {
         super.setUp();
 		
@@ -79,8 +86,51 @@ public class EnrolmentTest extends DomainTestBase {
 		setUpForInitializeAsNewCase();
 		setUpForSubmitEnrolmentEvaluationCase();
 		setUpForIsImprovementForExecutionCourseCase();
+		
+		setUpForUnEnrollImprovementCase();
     }
 	
+	private void setUpForUnEnrollImprovementCase() {
+
+		enrolmentToUnEnrollImprovement = new Enrolment();
+		
+		improvementEnrolmentEvaluation = new EnrolmentEvaluation();
+		improvementEnrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.IMPROVEMENT);
+		improvementEnrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
+		
+		nonImprovementEnrolmentEvaluation = new EnrolmentEvaluation();
+		nonImprovementEnrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
+		nonImprovementEnrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
+		
+		executionPeriodToUnEnrollImprovement = new ExecutionPeriod();
+		attendsToDelete = new Attends();
+		executionCourseToUnEnrollImprovement = new ExecutionCourse();
+		
+		IStudentCurricularPlan scp = new StudentCurricularPlan();
+		IStudent student = new Student();
+		IStudent otherStudent = new Student();
+		ICurricularCourse cc = new CurricularCourse();
+		IExecutionCourse ec1 = new ExecutionCourse();
+		IExecutionPeriod ep1 = new ExecutionPeriod();
+		IAttends otherAttends = new Attends();
+
+		enrolmentToUnEnrollImprovement.addEvaluations(improvementEnrolmentEvaluation);
+		enrolmentToUnEnrollImprovement.addEvaluations(nonImprovementEnrolmentEvaluation);
+		
+		scp.setStudent(student);
+		attendsToDelete.setAluno(student);
+		attendsToDelete.setDisciplinaExecucao(executionCourseToUnEnrollImprovement);
+		otherAttends.setAluno(otherStudent);
+		otherAttends.setDisciplinaExecucao(executionCourseToUnEnrollImprovement);
+		executionCourseToUnEnrollImprovement.setExecutionPeriod(executionPeriodToUnEnrollImprovement);
+		ec1.setExecutionPeriod(ep1);
+		
+		cc.addAssociatedExecutionCourses(executionCourseToUnEnrollImprovement);
+		cc.addAssociatedExecutionCourses(ec1);
+		enrolmentToUnEnrollImprovement.setCurricularCourse(cc);
+		enrolmentToUnEnrollImprovement.setStudentCurricularPlan(scp);
+	}
+
 	private void setUpForDeleteCase() {
 		
 		enrolmentA = new Enrolment();
@@ -535,6 +585,26 @@ public class EnrolmentTest extends DomainTestBase {
 	public void testIsImprovementForExecutionCourse() {
 		assertTrue(improvementEnrolment.isImprovementForExecutionCourse(executionCourseForImprovement));
 		assertFalse(nonImprovementEnrolment.isImprovementForExecutionCourse(executionCourseForImprovement));
+	}
+	
+	public void testUnEnrollImprovement() {
+		
+		try {
+			enrolmentToUnEnrollImprovement.unEnrollImprovement(executionPeriodToUnEnrollImprovement);
+		} catch (DomainException e) {
+			fail("Should have unenrolled");
+		}
+		
+		assertFalse(improvementEnrolmentEvaluation.hasEnrolment());
+		assertFalse(executionCourseToUnEnrollImprovement.hasAttends(attendsToDelete));
+		assertFalse(attendsToDelete.hasAluno());
+		
+		try {
+			enrolmentToUnEnrollImprovement.unEnrollImprovement(executionPeriodToUnEnrollImprovement);
+			fail("Should not have unenrolled");
+		} catch (DomainException e) {
+			
+		}
 	}
 	
 	private IEnrolmentEvaluation createEnrolmentEvaluation(IEnrolment enrolment, EnrolmentEvaluationType type, String grade) {

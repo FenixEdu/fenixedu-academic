@@ -774,6 +774,7 @@ class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu
 	public void delete();
 	public void initializeAsNew(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod, net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition enrolmentCondition, String createdBy);
 	public void unEnroll() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+	public void unEnrollImprovement(IExecutionPeriod executionPeriod) throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
 	public IEnrolmentEvaluation getImprovementEvaluation();
 	public IEnrolmentEvaluation getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade (final net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType evaluationType, final String grade);
 	
@@ -814,7 +815,6 @@ class net.sourceforge.fenixedu.domain.EnrolmentEvaluation extends net.sourceforg
 	public void edit(IPerson responsibleFor, String grade, java.util.Date availableDate, java.util.Date examDate, String checksum);
 	public void confirmSubmission(IEmployee employee, String observation);
 	public void delete();
-	public void unEnrollImprovment(IExecutionPeriod currentExecutionPeriod) throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
 	public void alterStudentEnrolmentEvaluationForMasterDegree(String grade, IEmployee employee, IPerson responsibleFor,
 			net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType evaluationType, java.util.Date evaluationAvailableDate, 
 			java.util.Date examDate, String observation) throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
