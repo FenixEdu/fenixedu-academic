@@ -17,7 +17,6 @@ public class Publication extends Publication_Base implements IPublication {
    
 
     public Publication() {
-        super();
     } 
 
     /********************************************************************
@@ -64,9 +63,9 @@ public class Publication extends Publication_Base implements IPublication {
     }
 
     
- /********************************************************************
-  *                         PRIVATE METHODS                          *
-  ********************************************************************/
+    /********************************************************************
+     *                         PRIVATE METHODS                          *
+     ********************************************************************/
     
     
     private void setProperties(PublicationDTO publicationDTO) {

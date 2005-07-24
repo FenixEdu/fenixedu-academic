@@ -13,12 +13,19 @@ public class AuthorshipTest extends DomainTestBase {
 
     IPerson person1;
     IPerson person2;
+    IPerson person3;
+    IPerson person4;
+    IPerson person5;
     
     List<IPerson> authors;
     
     IPublication publication;
     
     IAuthorship authorship1;
+    IAuthorship authorship2;
+    IAuthorship authorship3;
+    IAuthorship authorship4;
+    
     
     Integer order;
     
@@ -32,6 +39,15 @@ public class AuthorshipTest extends DomainTestBase {
         person2 = new Person();
         person2.setNome("Autor2");
         
+        person3 = new Person();
+        person3.setNome("Autor3");
+        
+        person4 = new Person();
+        person4.setNome("Autor4");
+        
+        person5 = new Person();
+        person5.setNome("Autor5");
+        
         authors = new ArrayList<IPerson>();
         authors.add(person1);
         
@@ -42,17 +58,32 @@ public class AuthorshipTest extends DomainTestBase {
         authorship1.setPublication(publication);
         authorship1.setOrder(1);
         
+        authorship2 = new Authorship();
+        authorship2.setAuthor(person2);
+        authorship2.setPublication(publication);
+        authorship2.setOrder(2);
+        
+        authorship3 = new Authorship();
+        authorship3.setAuthor(person3);
+        authorship3.setPublication(publication);
+        authorship3.setOrder(3);
+        
+        authorship4 = new Authorship();
+        authorship4.setAuthor(person4);
+        authorship4.setPublication(publication);
+        authorship4.setOrder(4);
+        
     }
 
     public void testCreateAuthorship() {
     	try {
-	        IAuthorship authorship = new Authorship(publication, person2, 2);
+	        IAuthorship authorship = new Authorship(publication, person5, 5);
 	        
 	        assertEquals("Publication Expected", authorship.getPublication(), publication);
-	        assertEquals("Person Expected", authorship.getAuthor(), person2);
-	        assertEquals("Authorship's Order Unexpected", new Integer(2), authorship.getOrder());
+	        assertEquals("Person Expected", authorship.getAuthor(), person5);
+	        assertEquals("Authorship's Order Unexpected", new Integer(5), authorship.getOrder());
 	        
-	        assertEquals("Authorships size unexpected", 2, publication.getPublicationAuthorshipsCount());
+	        assertEquals("Authorships size unexpected", 5, publication.getPublicationAuthorshipsCount());
 	        assertEquals("Teachers size unexpected", 0, publication.getPublicationTeachersCount());
     	} catch (DomainException domainException) {
     		fail("The authorship should have been sucessfully created");
@@ -70,21 +101,25 @@ public class AuthorshipTest extends DomainTestBase {
     }
 
     public void testDeleteAuthorship() {
+        assertEquals("Unexpected Authorships Size", 4, publication.getPublicationAuthorshipsCount());
+        assertTrue("Publication doen't contain the authorship being deleted", publication.getPublicationAuthorships().contains(authorship2));
         
-        assertEquals("Unexpected Authorships Size", publication.getPublicationAuthorshipsCount(), 1);
-        assertTrue("Publication doen't contain the authorship being deleted", publication.getPublicationAuthorships().contains(authorship1));
+        authorship2.delete();
         
-        authorship1.delete();
-        
-        assertEquals("Authorships Size Unexpected", 0, publication.getPublicationAuthorshipsCount());
+        assertEquals("Authorships Size Unexpected", 3, publication.getPublicationAuthorshipsCount());
         assertEquals("PublicationTeachers Size Unexpected", 0, publication.getPublicationTeachersCount());
-        assertEquals("Unexpected Authorships Size", person1.getPersonAuthorshipsCount(), 0);
-        assertEquals("Unexpected Authorships Size", person2.getPersonAuthorshipsCount(), 0);
+        assertEquals("Unexpected Authorships Size", 1, person1.getPersonAuthorshipsCount());
+        assertEquals("Unexpected Authorships Size", 0, person2.getPersonAuthorshipsCount());
+        assertEquals("Unexpected Authorships Size", 1, person3.getPersonAuthorshipsCount());
+        assertEquals("Unexpected Authorships Size", 1, person4.getPersonAuthorshipsCount());
         
-        assertEquals("Unexpected Authorships Size", publication.getPublicationAuthorshipsCount(), 0);
+        //Verify if the remaining authorships order was updated
+        //Note this rule enforcement is being done at the relation - PublicationAuthorship.remove
+        assertEquals("Unexpected Order for Authorship1", new Integer(1), authorship1.getOrder());
+        assertEquals("Unexpected Order for Authorship3", new Integer(2), authorship3.getOrder());
+        assertEquals("Unexpected Order for Authorship4", new Integer(3), authorship4.getOrder());
         
-        assertFalse("Publication still contains the authorship", publication.getPublicationAuthorships().contains(authorship1));
-        
+        assertFalse("Publication still contains the authorship", publication.getPublicationAuthorships().contains(authorship2));
     }
-
+    
 }

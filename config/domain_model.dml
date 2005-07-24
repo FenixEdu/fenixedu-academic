@@ -1051,6 +1051,9 @@ class net.sourceforge.fenixedu.domain.teacher.ExternalActivity extends net.sourc
 class net.sourceforge.fenixedu.domain.ExternalPerson extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyWorkLocation;
 	Integer keyPerson;
+	interface "
+	public void edit (String name, String address, String phone, String mobile, String homepage, String email, IWorkLocation workLocation, java.util.List<IExternalPerson> allExternalPersons);
+	"
 }
 
 class net.sourceforge.fenixedu.domain.support.FAQEntry extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1837,9 +1840,11 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
     
     public void changePassword(String oldPassword, String newPassword);
     
-    public IPerson editPersonalContactInformation(net.sourceforge.fenixedu.dataTransferObject.InfoPerson personToEdit);
+    public net.sourceforge.fenixedu.domain.IPerson editPersonalContactInformation(net.sourceforge.fenixedu.dataTransferObject.InfoPerson personToEdit);
     
     public void changeUsername(String newUsername, java.util.List<IPerson> persons);
+    
+    public void edit(String name, String address, String phone, String mobile, String homepage, String email);
     "
 }
 

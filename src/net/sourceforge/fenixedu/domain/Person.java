@@ -25,7 +25,6 @@ public class Person extends Person_Base {
 
         setProperties(personToCreate);
         setPais(country);
-
     }
     
     public Person(String name, String identificationDocumentNumber, IDDocumentType identificationDocumentType, Gender gender) {
@@ -33,6 +32,23 @@ public class Person extends Person_Base {
         setNumeroDocumentoIdentificacao(identificationDocumentNumber);
         setIdDocumentType(identificationDocumentType);
         setGender(gender);
+    }
+    
+    public Person(String username, String name, Gender gender, String address, String phone, String mobile, String homepage, String email, String documentIDNumber, IDDocumentType documentType) {
+    	setUsername(username);
+    	setNome (name);
+    	setGender(gender);
+    	setMorada(address);
+    	setTelefone(phone);
+    	setTelemovel(mobile);
+    	setEnderecoWeb(homepage);
+    	setEmail(email);
+    	setNumeroDocumentoIdentificacao(documentIDNumber);
+    	setIdDocumentType(documentType);
+    	setAvailableEmail(Boolean.FALSE);
+    	setAvailableWebSite(Boolean.FALSE);
+    	setAvailablePhoto(Boolean.FALSE);
+    	setMaritalStatus(MaritalStatus.SINGLE);
     }
     
     public IPerson edit(InfoPerson personToEdit, ICountry country) {
@@ -52,6 +68,15 @@ public class Person extends Person_Base {
         return this;
     }
 
+    public void edit(String name, String address, String phone, String mobile, String homepage, String email) {
+    	setNome(name);
+    	setMorada(address);
+    	setTelefone(phone);
+    	setTelemovel(mobile);
+    	setEnderecoWeb(homepage);
+    	setEmail(email);
+    }
+    
     public static boolean checkIfUsernameExists(String username, List<IPerson> persons) {
         for (IPerson person : persons) {
             if (username.equals(person.getUsername())) {

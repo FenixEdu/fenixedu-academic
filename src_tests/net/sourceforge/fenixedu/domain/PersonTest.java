@@ -22,6 +22,8 @@ public class PersonTest extends DomainTestBase {
     IDDocumentType documentType;
 
     ICountry country;
+    
+    String username = "username";
 
     Boolean availableEmail = Boolean.TRUE;
 
@@ -91,7 +93,7 @@ public class PersonTest extends DomainTestBase {
         country = new Country("Portugal", "Portuguese", "PT");
 
         documentType = IDDocumentType.AIR_FORCE_IDENTITY_CARD;
-
+        
         infoPerson1 = new InfoPerson();
         infoPerson1.setAvailableEmail(availableEmail);
         infoPerson1.setAvailablePhoto(availablePhoto);
@@ -196,19 +198,37 @@ public class PersonTest extends DomainTestBase {
         
     }
 
-    public void testCreatePerson() {
+    public void testCreatePerson1() {
         IPerson person = new Person(infoPerson1, country);
 
         assertPersonContent(person, country);
     }
     
-    public void testCreateSimplePerson() {
+    public void testCreatePerson2() {
         IPerson person = new Person(nome, numDocumentoIdentificacao, documentType, sexo);
         
         assertEquals(person.getNome(), nome);
         assertEquals(person.getNumeroDocumentoIdentificacao(), numDocumentoIdentificacao);
         assertEquals(person.getIdDocumentType(), documentType);
         assertEquals(person.getGender(), sexo);
+    }
+    
+    public void testCreatePerson3() {
+    	IPerson person = new Person(username, nome, Gender.MALE, address, telefone, telemovel, enderecoWeb, email, numDocumentoIdentificacao, IDDocumentType.EXTERNAL);
+    	
+    	assertEquals(person.getUsername(), username);
+    	assertEquals(person.getNome(), nome);
+    	assertEquals(person.getGender(), Gender.MALE);
+    	assertEquals(person.getMorada(), address);
+    	assertEquals(person.getTelefone(), telefone);
+    	assertEquals(person.getTelemovel(), telemovel);
+    	assertEquals(person.getEnderecoWeb(), enderecoWeb);
+    	assertEquals(person.getEmail(), email);
+    	assertEquals(person.getNumeroDocumentoIdentificacao(), numDocumentoIdentificacao);
+    	assertEquals(person.getIdDocumentType(), IDDocumentType.EXTERNAL);
+    	assertEquals(person.getAvailableEmail(), Boolean.FALSE);
+    	assertEquals(person.getAvailablePhoto() , Boolean.FALSE);
+    	assertEquals(person.getAvailableWebSite() , Boolean.FALSE);
     }
 
     public void testEditPerson() {
@@ -225,6 +245,19 @@ public class PersonTest extends DomainTestBase {
         assertPersonContent(person, country);
     }
     
+    public void testEdit() {
+    	IPerson person = new Person(username, nome, Gender.MALE, address, telefone, telemovel, enderecoWeb, email, numDocumentoIdentificacao, IDDocumentType.EXTERNAL);
+    	//public void edit(String name, String address, String phone, String homepage, String email)
+    	person.edit("new"+nome, "new"+address, "new"+telefone, "new"+telemovel, "new"+enderecoWeb, "new"+email);
+    	
+    	assertEquals(person.getNome(), "new"+nome);
+    	assertEquals(person.getMorada(), "new"+address);
+    	assertEquals(person.getTelefone(), "new"+telefone);
+    	assertEquals(person.getEnderecoWeb(), "new"+enderecoWeb);
+    	assertEquals(person.getEmail(), "new"+email);
+    	
+    }
+    
     public void testChangeUsername() {
         IPerson person = new Person(infoPerson1, country);
         person.setUsername("user1");
@@ -233,7 +266,7 @@ public class PersonTest extends DomainTestBase {
         IPerson person3 = new Person(infoPerson3, country);
         person3.setUsername("user3");
         
-        List<IPerson> persons = new ArrayList();
+        List<IPerson> persons = new ArrayList<IPerson>();
         persons.add(person);
         persons.add(person2);
         persons.add(person3);

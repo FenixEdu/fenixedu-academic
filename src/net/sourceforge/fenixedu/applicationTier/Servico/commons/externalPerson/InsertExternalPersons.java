@@ -22,7 +22,7 @@ public class InsertExternalPersons implements IService {
 
     public List<IExternalPerson> run(List<InfoExternalPerson> infoExternalPersons) throws ExcepcaoPersistencia, ExistingServiceException {
 
-        List<IExternalPerson> externalPersons = new ArrayList();
+        List<IExternalPerson> externalPersons = new ArrayList<IExternalPerson>();
 
 
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -34,48 +34,31 @@ public class InsertExternalPersons implements IService {
 
             for (InfoExternalPerson infoExternalPerson : infoExternalPersons) {
 
-            IWorkLocation currentWorkLocation = null;
+	            IWorkLocation currentWorkLocation = null;
+	
+	            // retrieving existing work location
+	            for (IWorkLocation workLocation : workLocations) {
+	                if (workLocation.getName()
+	                        .equals(infoExternalPerson.getInfoWorkLocation().getName())) {
+	                    currentWorkLocation = workLocation;
+	                    break;
+	                }
+	            }
+	
+	            // creating a new one if it doesn't already exist
+	            if (currentWorkLocation == null) {
+	                InsertWorkLocation iwl = new InsertWorkLocation();
+	                currentWorkLocation = iwl.run(infoExternalPerson.getInfoWorkLocation().getName());
+	                workLocations.add(currentWorkLocation);
+	            }
 
-            // retrieving existing work location
-            for (IWorkLocation workLocation : workLocations) {
-                if (workLocation.getName()
-                        .equals(infoExternalPerson.getInfoWorkLocation().getName())) {
-                    currentWorkLocation = workLocation;
-                    break;
-                }
-            }
+	            String name = infoExternalPerson.getInfoPerson().getNome();
+	            String documentIDNumber = String.valueOf(++nextID);
+	
+	            // creating a new ExternalPerson
+	            IExternalPerson externalPerson = new ExternalPerson(name, Gender.MALE, "", "", "", "", "", documentIDNumber ,currentWorkLocation);
 
-            // creating a new one if it doesn't already exist
-            if (currentWorkLocation == null) {
-                InsertWorkLocation iwl = new InsertWorkLocation();
-                currentWorkLocation = iwl.run(infoExternalPerson.getInfoWorkLocation().getName());
-                workLocations.add(currentWorkLocation);
-            }
-
-            // creating a new Person to relate to
-            IPerson person = new Person();
-            person.setNome(infoExternalPerson.getInfoPerson().getNome());
-            person.setGender(Gender.MALE);
-            person.setMorada("");
-            person.setTelefone("");
-            person.setTelemovel("");
-            person.setEnderecoWeb("");
-            person.setEmail("");
-            nextID++;
-            person.setNumeroDocumentoIdentificacao("" + nextID);
-            person.setIdDocumentType(IDDocumentType.EXTERNAL);
-            person.setUsername("e" + nextID);
-
-            sp.getIPessoaPersistente().simpleLockWrite(person);
-
-            // creating a new ExternalPerson
-            IExternalPerson externalPerson = new ExternalPerson();
-            externalPerson.setPerson(person);
-            externalPerson.setWorkLocation(currentWorkLocation);
-
-            sp.getIPersistentExternalPerson().simpleLockWrite(externalPerson);
-
-            externalPersons.add(externalPerson);
+	            externalPersons.add(externalPerson);
         }
 
 
