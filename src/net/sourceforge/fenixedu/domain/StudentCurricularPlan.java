@@ -871,7 +871,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	public void changeState(StudentCurricularPlanState studentCurricularPlanState) throws DomainException {
 		
 		if (!canSetStateToActive() && studentCurricularPlanState.equals(StudentCurricularPlanState.ACTIVE))
-			throw new DomainException(this.getClass().getName(), "ola mundo");
+			throw new DomainException("error.student.curricular.plan.state.conflit");
 		else
 			setCurrentState(studentCurricularPlanState);
 	}
@@ -978,7 +978,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		throws DomainException {
 		
         if (specializationArea != null && secundaryArea != null && specializationArea.equals(secundaryArea))
-            throw new DomainException(this.getClass().getName(), "ola mundo");
+            throw new DomainException("error.student.curricular.plan.areas.conflit");
 		
         setBranch(specializationArea);
         setSecundaryBranch(secundaryArea);
@@ -997,6 +997,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 			setStudentAreasWithoutRestrictions(specializationArea, secundaryArea);
 			
         else
-            throw new DomainException(this.getClass().getName(), "ola mundo");
+            throw new DomainException("error.student.curricular.plan.areas.conflit");
 	}
 }

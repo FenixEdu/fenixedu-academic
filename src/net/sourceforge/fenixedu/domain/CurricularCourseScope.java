@@ -20,7 +20,7 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
         // check that there isn't another scope active with the same curricular course, branch and semester
 		
         if (curricularCourse.hasActiveScopeInGivenSemesterForGivenBranch(curricularSemester.getSemester(), branch)) {
-            throw new DomainException("","");
+            throw new DomainException("error.curricular.course.scope.conflit.creation");
         }
 		
 		setBranch(branch);
@@ -114,7 +114,7 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 			
 			super.deleteDomainObject();
         } else {
-            throw new DomainException(this.getClass().getName(), "ola mundo");
+            throw new DomainException("error.curricular.course.scope.has.written.evaluations");
         }
 	}
 

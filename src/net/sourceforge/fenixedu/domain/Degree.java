@@ -117,7 +117,7 @@ public class Degree extends Degree_Base {
 			
 			deleteDomainObject();
 		} else {
-			throw new DomainException(this.getClass().getName(),"");
+			throw new DomainException("error.degree.has.degree.curricular.plans");
 		}
 	}
 }

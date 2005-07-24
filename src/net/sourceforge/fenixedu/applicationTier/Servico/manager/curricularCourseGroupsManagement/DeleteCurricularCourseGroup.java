@@ -1,7 +1,3 @@
-/*
- * Created on Jul 28, 2004
- *
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.curricularCourseGroupsManagement;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -15,10 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author João Mota
- *  
- */
+
 public class DeleteCurricularCourseGroup implements IService {
 
     public void run(Integer groupId) throws FenixServiceException, ExcepcaoPersistencia {

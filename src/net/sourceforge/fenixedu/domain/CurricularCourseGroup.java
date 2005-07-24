@@ -23,7 +23,7 @@ public abstract class CurricularCourseGroup extends CurricularCourseGroup_Base {
 			getScientificAreas().clear();
 			deleteDomainObject();
 		} else {
-			throw new DomainException(this.getClass().getName(), "ola mundo");			
+			throw new DomainException("error.curricular.course.group.has.associated.curricular.courses");			
 		}
 	}
 	

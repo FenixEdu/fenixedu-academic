@@ -59,7 +59,7 @@ public class Attends extends Attends_Base {
 			super.deleteDomainObject();
 		}
 		else
-			throw new DomainException(this.getClass().getName(), "ola mundo");
+			throw new DomainException("error.attends.cant.delete");
 	}
 
 }

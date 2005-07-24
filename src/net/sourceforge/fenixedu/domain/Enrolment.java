@@ -106,7 +106,7 @@ public class Enrolment extends Enrolment_Base {
 				(eval.getGrade() == null || eval.getGrade().equals("")))
 				;
 			else
-				throw new DomainException(this.getClass().getName(), "ola mundo");
+				throw new DomainException("error.enrolment.cant.unenroll");
 		}
 		
 		delete();

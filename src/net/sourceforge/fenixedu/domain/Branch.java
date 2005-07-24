@@ -101,7 +101,7 @@ public class Branch extends Branch_Base {
 	public void delete() throws DomainException {
 		
 		if (!this.canBeDeleted())
-			throw new DomainException(this.getClass().getName(),"ola mundo");
+			throw new DomainException("error.branch.cant.delete");
 		
 		IBranch commonBranch = findCommonBranchForSameDegreeCurricularPlan();
 

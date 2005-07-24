@@ -308,7 +308,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 			deleteDomainObject();
 		}
 		else
-			throw new DomainException(this.getClass().getName(), "ola mundo");
+			throw new DomainException("error.degree.curricular.plan.cant.delete");
 		
 	}
 	

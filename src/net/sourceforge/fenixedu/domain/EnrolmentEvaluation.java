@@ -302,7 +302,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
 			}
 		
 			else
-				throw new DomainException(this.getClass().getName(), "ola mundo");
+				throw new DomainException("error.invalid.grade");
 		}
 	}
 	
@@ -331,7 +331,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
 			}
 			
 			else
-				throw new DomainException(this.getClass().getName(), "ola mundo");
+				throw new DomainException("error.invalid.grade");
         }
 	}
 
