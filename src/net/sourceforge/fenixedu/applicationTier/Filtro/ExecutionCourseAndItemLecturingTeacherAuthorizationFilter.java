@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoItem;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IItem;
@@ -28,29 +27,19 @@ import pt.utl.ist.berserk.ServiceResponse;
 
 /**
  * @author João Mota
- *  
+ * 
  */
 public class ExecutionCourseAndItemLecturingTeacherAuthorizationFilter extends AuthorizationByRoleFilter {
 
     public ExecutionCourseAndItemLecturingTeacherAuthorizationFilter() {
-
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-     */
+    @Override
     protected RoleType getRoleType() {
         return RoleType.TEACHER;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *      pt.utl.ist.berserk.ServiceResponse)
-     */
+    @Override
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
@@ -83,7 +72,8 @@ public class ExecutionCourseAndItemLecturingTeacherAuthorizationFilter extends A
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+                executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                        ExecutionCourse.class, infoExecutionCourse.getIdInternal());
             } else {
                 executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
                         ExecutionCourse.class, (Integer) argumentos[0]);
@@ -140,4 +130,5 @@ public class ExecutionCourseAndItemLecturingTeacherAuthorizationFilter extends A
             return false;
         }
     }
+
 }

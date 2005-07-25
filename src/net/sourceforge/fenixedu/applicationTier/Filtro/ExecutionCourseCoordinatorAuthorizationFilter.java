@@ -9,7 +9,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
@@ -35,21 +34,12 @@ public class ExecutionCourseCoordinatorAuthorizationFilter extends Authorization
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-     */
+    @Override
     protected RoleType getRoleType() {
         return RoleType.COORDINATOR;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *      pt.utl.ist.berserk.ServiceResponse)
-     */
+    @Override
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
@@ -85,7 +75,8 @@ public class ExecutionCourseCoordinatorAuthorizationFilter extends Authorization
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+                executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                        ExecutionCourse.class, infoExecutionCourse.getIdInternal());
             } else {
                 executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
                         ExecutionCourse.class, (Integer) argumentos[0]);
@@ -96,7 +87,8 @@ public class ExecutionCourseCoordinatorAuthorizationFilter extends Authorization
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
 
             if (teacher != null && executionCourse != null) {
-                List executionDegrees = persistentCoordinator.readExecutionDegreesByTeacher(teacher.getIdInternal());
+                List executionDegrees = persistentCoordinator.readExecutionDegreesByTeacher(teacher
+                        .getIdInternal());
                 if (executionDegrees != null && !executionDegrees.isEmpty()) {
                     Iterator iter = executionDegrees.iterator();
                     while (iter.hasNext() && !result) {

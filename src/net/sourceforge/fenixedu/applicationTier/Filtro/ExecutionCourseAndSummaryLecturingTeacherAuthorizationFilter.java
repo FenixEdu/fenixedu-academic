@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSummary;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IProfessorship;
@@ -40,24 +39,14 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
         AuthorizationByRoleFilter {
 
     public ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter() {
-
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-     */
+    @Override
     protected RoleType getRoleType() {
         return RoleType.TEACHER;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *      pt.utl.ist.berserk.ServiceResponse)
-     */
+    @Override
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
@@ -166,11 +155,12 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseId);
-            
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, executionCourseId);
+
             result = executionCourse.responsibleFors();
 
-            List infoResult = new ArrayList();
+            List<ITeacher> infoResult = new ArrayList<ITeacher>();
             if (result != null) {
                 Iterator iter = result.iterator();
                 while (iter.hasNext()) {
@@ -298,11 +288,11 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
     private boolean isResponsible(final ITeacher teacher, ISummary summary) throws ExcepcaoPersistencia {
         ISuportePersistente persistenteSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-                
+
         if (summary.getShift() == null) {
-            
-            List responsibleTeachers = summary.getExecutionCourse().responsibleFors(); 
-                                        
+
+            List responsibleTeachers = summary.getExecutionCourse().responsibleFors();
+
             return CollectionUtils.find(responsibleTeachers, new Predicate() {
 
                 public boolean evaluate(Object arg0) {
@@ -311,18 +301,16 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
                 }
             }) != null;
         }
-        
-        List responsibleTeachers = summary.getShift().getDisciplinaExecucao().responsibleFors();
-       
-        return CollectionUtils.find(responsibleTeachers,
-                new Predicate() {
 
-                    public boolean evaluate(Object arg0) {
-                        IProfessorship responsibleFor = (IProfessorship) arg0;
-                        return responsibleFor.getTeacher().getIdInternal().equals(
-                                teacher.getIdInternal());
-                    }
-                }) != null;
+        List responsibleTeachers = summary.getShift().getDisciplinaExecucao().responsibleFors();
+
+        return CollectionUtils.find(responsibleTeachers, new Predicate() {
+
+            public boolean evaluate(Object arg0) {
+                IProfessorship responsibleFor = (IProfessorship) arg0;
+                return responsibleFor.getTeacher().getIdInternal().equals(teacher.getIdInternal());
+            }
+        }) != null;
 
     }
 
@@ -379,7 +367,8 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+                executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                        ExecutionCourse.class, infoExecutionCourse.getIdInternal());
             } else {
                 executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
                         ExecutionCourse.class, (Integer) argumentos[0]);
@@ -444,4 +433,5 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
             return false;
         }
     }
+
 }
