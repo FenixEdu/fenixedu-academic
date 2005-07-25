@@ -69,6 +69,7 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
         }
     }
 
+    @Override
     protected void doBeforeLock(IDomainObject domainObjectToLock, InfoObject infoObject,
             ISuportePersistente sp) throws FenixServiceException {
         try {
@@ -131,6 +132,7 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
         }
     }
 
+    @Override
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentTeacherDegreeFinalProjectStudent();
     }
@@ -162,17 +164,17 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
     protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
             IDomainObject domainObject) throws ExcepcaoPersistencia {
         InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = (InfoTeacherDegreeFinalProjectStudent) infoObject;
-        ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (TeacherDegreeFinalProjectStudent) domainObject;
+        ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (ITeacherDegreeFinalProjectStudent) domainObject;
         IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
         IPersistentStudent persistentStudent = sp.getIPersistentStudent();
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
-        IExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
+        IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
                 ExecutionPeriod.class, infoTeacherDegreeFinalProjectStudent.getInfoExecutionPeriod()
                         .getIdInternal());
-        IStudent student = (Student) persistentStudent.readByOID(Student.class,
+        IStudent student = (IStudent) persistentStudent.readByOID(Student.class,
                 infoTeacherDegreeFinalProjectStudent.getInfoStudent().getIdInternal());
-        ITeacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class,
+        ITeacher teacher = (ITeacher) persistentTeacher.readByOID(Teacher.class,
                 infoTeacherDegreeFinalProjectStudent.getInfoTeacher().getIdInternal());
 
         teacherDegreeFinalProjectStudent.setExecutionPeriod(executionPeriod);
