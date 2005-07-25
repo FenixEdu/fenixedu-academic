@@ -43,7 +43,20 @@
 	</definition>	
 	<definition name="df.page.showStudentCurriculum" extends="definition.degreeAdministrativeOffice.masterPage" >
 		<put name="body" value="/degreeAdministrativeOffice/curriculum/viewStudentInformation.jsp" />
-	</definition>	
+	</definition>
+	
+<!-- ************************************** Student Information **************************** -->
+	<definition name="df.page.prepareViewStudentInformationChooseStudent" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/information/prepareViewStudentInformationChooseStudent.jsp"/>
+	</definition>
+	
+	<definition name="df.page.showStudentInformation" extends="definition.degreeAdministrativeOffice.masterPage" >
+		<put name="body" value="/degreeAdministrativeOffice/information/viewStudentInformation.jsp" />
+	</definition>
+	
+	<definition name="df.page.editStudentInformation" extends="definition.degreeAdministrativeOffice.masterPage" >
+		<put name="body" value="/degreeAdministrativeOffice/information/editStudentInformation.jsp" />
+	</definition>
 	
  	<!-- ****************** Enrollment Without Rules **************************** -->	
 	<definition name="df.page.prepareEnrollmentChooseStudentWithoutRules" extends="definition.degreeAdministrativeOffice.masterPage">

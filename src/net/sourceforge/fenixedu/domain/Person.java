@@ -51,13 +51,12 @@ public class Person extends Person_Base {
     	setMaritalStatus(MaritalStatus.SINGLE);
     }
     
-    public IPerson edit(InfoPerson personToEdit, ICountry country) {
+    public void edit(InfoPerson personToEdit, ICountry country) {
         setProperties(personToEdit);
         setPais(country);
-        return this;
     }
 
-    public IPerson editPersonalContactInformation(InfoPerson personToEdit) {
+    public void editPersonalContactInformation(InfoPerson personToEdit) {
         setTelemovel(personToEdit.getTelemovel());
         setWorkPhone(personToEdit.getWorkPhone());
         setEmail(personToEdit.getEmail());
@@ -65,7 +64,6 @@ public class Person extends Person_Base {
         setEnderecoWeb(personToEdit.getEnderecoWeb());
         setAvailableWebSite(personToEdit.getAvailableWebSite());
         setAvailablePhoto(personToEdit.getAvailablePhoto());
-        return this;
     }
 
     public void edit(String name, String address, String phone, String mobile, String homepage, String email) {
