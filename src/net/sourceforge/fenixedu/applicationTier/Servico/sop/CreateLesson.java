@@ -19,10 +19,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidTimeIntervalServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonServiceResult;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftServiceResult;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IPeriod;
@@ -30,11 +29,12 @@ import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.Period;
+import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 import net.sourceforge.fenixedu.util.beanUtils.FenixPropertyUtils;
@@ -45,27 +45,32 @@ public class CreateLesson implements IService {
     public InfoLessonServiceResult run(InfoLesson infoLesson, InfoShift infoShift)
             throws FenixServiceException, ExcepcaoPersistencia {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final ITurnoPersistente persistentShift = sp.getITurnoPersistente();
 
-        InfoLessonServiceResult result = null;
+        IRoomOccupation roomOccupation = new RoomOccupation();
+        roomOccupation.setDayOfWeek(infoLesson.getInfoRoomOccupation().getDayOfWeek());
+        roomOccupation.setStartTime(infoLesson.getInfoRoomOccupation().getStartTime());
+        roomOccupation.setEndTime(infoLesson.getInfoRoomOccupation().getEndTime());
+        roomOccupation.setFrequency(infoLesson.getInfoRoomOccupation().getFrequency());
+        roomOccupation.setWeekOfQuinzenalStart(infoLesson.getInfoRoomOccupation().getWeekOfQuinzenalStart());
         
-        IRoom sala = sp.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
-
-        IRoomOccupation roomOccupation = Cloner.copyInfoRoomOccupation2RoomOccupation(infoLesson
-                .getInfoRoomOccupation());
+        final IRoom sala = sp.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
         roomOccupation.setRoom(sala);
-        InfoPeriod infoPeriod = infoLesson.getInfoRoomOccupation().getInfoPeriod();
-        IPeriod period = Cloner.copyInfoPeriod2IPeriod(infoPeriod);
+
+        final IPeriod period = (IPeriod) sp.getIPersistentPeriod().readByOID(Period.class,
+                infoLesson.getInfoRoomOccupation().getInfoPeriod().getIdInternal());
         roomOccupation.setPeriod(period);
 
-        //IShift shift = Cloner.copyInfoShift2Shift(infoLesson.getInfoShift());
-        final IShift shift = (IShift) persistentShift.readByOID(Shift.class, infoShift.getIdInternal());
-        IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoLesson
-                .getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod());
+        final IExecutionPeriod executionPeriod = (IExecutionPeriod) sp.getIPersistentExecutionPeriod()
+                .readByOID(
+                        ExecutionPeriod.class,
+                        infoLesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod()
+                                .getIdInternal());
 
-        ILesson aula = new Lesson(infoLesson.getDiaSemana(), infoLesson.getInicio(), infoLesson.getFim(),
-                infoLesson.getTipo(), sala, roomOccupation, shift);
-        result = validTimeInterval(aula);
+        final IShift shift = (IShift) sp.getITurnoPersistente().readByOID(Shift.class, infoShift.getIdInternal());
+        ILesson aula = new Lesson(infoLesson.getDiaSemana(), infoLesson.getInicio(),
+                infoLesson.getFim(), infoLesson.getTipo(), sala, roomOccupation, shift);
+        
+        InfoLessonServiceResult result = validTimeInterval(aula);
         if (result.getMessageType() == 1) {
             throw new InvalidTimeIntervalServiceException();
         }
@@ -193,23 +198,13 @@ public class CreateLesson implements IService {
         return new Integer(duration);
     }
 
-    /**
-     * To change the template for this generated type comment go to
-     * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
-     */
     public class InvalidLoadException extends FenixServiceException {
-        /**
-         * 
-         */
         private InvalidLoadException() {
             super();
         }
-
-        /**
-         * @param s
-         */
         InvalidLoadException(String s) {
             super(s);
         }
     }
+
 }
