@@ -25,11 +25,11 @@ public class EditManagementPositionCreditLineService extends EditDomainObjectSer
     protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
             IDomainObject domainObject) throws ExcepcaoPersistencia {
         InfoManagementPositionCreditLine infoManagementPositionCreditLine = (InfoManagementPositionCreditLine) infoObject;
-        IManagementPositionCreditLine managementPositionCreditLine = (ManagementPositionCreditLine) domainObject;
+        IManagementPositionCreditLine managementPositionCreditLine = (IManagementPositionCreditLine) domainObject;
         managementPositionCreditLine.setCredits(infoManagementPositionCreditLine.getCredits());
         managementPositionCreditLine.setEnd(infoManagementPositionCreditLine.getEnd());
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-        ITeacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class,
+        ITeacher teacher = (ITeacher) persistentTeacher.readByOID(Teacher.class,
                 infoManagementPositionCreditLine.getInfoTeacher().getIdInternal());
 
         managementPositionCreditLine.setPosition(infoManagementPositionCreditLine.getPosition());
@@ -47,6 +47,7 @@ public class EditManagementPositionCreditLineService extends EditDomainObjectSer
         return ManagementPositionCreditLine.class;
     }
 
+    @Override
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentManagementPositionCreditLine();
     }

@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOldPublication;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.teacher.IOldPublication;
-import net.sourceforge.fenixedu.domain.teacher.OldPublication;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
@@ -23,6 +22,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
  */
 public class EditOldPublication extends EditDomainObjectService {
 
+    @Override
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentOldPublication();
     }
@@ -31,7 +31,7 @@ public class EditOldPublication extends EditDomainObjectService {
     protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
             IDomainObject domainObject) throws ExcepcaoPersistencia {
         InfoOldPublication infoOldPublication = (InfoOldPublication) infoObject;
-        IOldPublication oldPublication = (OldPublication) domainObject;
+        IOldPublication oldPublication = (IOldPublication) domainObject;
 
         oldPublication.setLastModificationDate(infoOldPublication.getLastModificationDate());
         oldPublication.setOldPublicationType(infoOldPublication.getOldPublicationType());

@@ -28,18 +28,18 @@ public class EditOtherTypeCreditLineService extends EditDomainObjectService {
     protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
             IDomainObject domainObject) throws ExcepcaoPersistencia {
         InfoOtherTypeCreditLine infoOtherTypeCreditLine = (InfoOtherTypeCreditLine) infoObject;
-        IOtherTypeCreditLine otherTypeCreditLine = (OtherTypeCreditLine) domainObject;
+        IOtherTypeCreditLine otherTypeCreditLine = (IOtherTypeCreditLine) domainObject;
 
         otherTypeCreditLine.setCredits(infoOtherTypeCreditLine.getCredits());
 
         IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-        IExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
+        IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
                 ExecutionPeriod.class, infoOtherTypeCreditLine.getInfoExecutionPeriod().getIdInternal());
         otherTypeCreditLine.setExecutionPeriod(executionPeriod);
         otherTypeCreditLine.setKeyExecutionPeriod(executionPeriod.getIdInternal());
 
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-        ITeacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class, infoOtherTypeCreditLine
+        ITeacher teacher = (ITeacher) persistentTeacher.readByOID(Teacher.class, infoOtherTypeCreditLine
                 .getInfoTeacher().getIdInternal());
         otherTypeCreditLine.setKeyTeacher(teacher.getIdInternal());
         otherTypeCreditLine.setTeacher(teacher);
@@ -58,6 +58,7 @@ public class EditOtherTypeCreditLineService extends EditDomainObjectService {
         return OtherTypeCreditLine.class;
     }
 
+    @Override
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentOtherTypeCreditLine();
     }

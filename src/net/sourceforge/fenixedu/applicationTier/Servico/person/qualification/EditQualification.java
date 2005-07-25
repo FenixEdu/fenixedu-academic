@@ -30,7 +30,7 @@ public class EditQualification extends EditDomainObjectService {
     protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
             IDomainObject domainObject) throws ExcepcaoPersistencia {
         InfoQualification infoQualification = (InfoQualification) infoObject;
-        IQualification qualification = (Qualification) domainObject;
+        IQualification qualification = (IQualification) domainObject;
 
         ICountry country = (ICountry) sp.getIPersistentCountry().readByOID(Country.class,
                 infoQualification.getInfoCountry().getIdInternal());
@@ -64,6 +64,7 @@ public class EditQualification extends EditDomainObjectService {
         return Qualification.class;
     }
 
+    @Override
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         return persistentSuport.getIPersistentQualification();

@@ -28,42 +28,39 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 public class EditProfessorship extends EditDomainObjectService {
 
     @Override
-	protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) throws ExcepcaoPersistencia {
-		InfoProfessorship infoProfessorship = (InfoProfessorship)infoObject;
-		IProfessorship professorship = (Professorship)domainObject;
-		
-		IExecutionCourse executionCourse = new ExecutionCourse();
-		IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-		executionCourse = (ExecutionCourse)persistentExecutionCourse.readByOID(ExecutionCourse.class,infoProfessorship.getInfoExecutionCourse().getIdInternal());
-		professorship.setExecutionCourse(executionCourse);
-		
-		professorship.setHours(infoProfessorship.getHours());
-		
-		professorship.setKeyExecutionCourse(executionCourse.getIdInternal());
-		
-		IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-        ITeacher teacher = persistentTeacher.readByNumber(infoProfessorship.getInfoTeacher().getTeacherNumber());
-		professorship.setKeyTeacher(teacher.getIdInternal());
-		professorship.setTeacher(teacher);
-		
-		
-		
-		
-	}
+    protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
+            IDomainObject domainObject) throws ExcepcaoPersistencia {
+        InfoProfessorship infoProfessorship = (InfoProfessorship) infoObject;
+        IProfessorship professorship = (IProfessorship) domainObject;
 
-	@Override
-	protected IDomainObject createNewDomainObject(InfoObject infoObject) {
-		// TODO Auto-generated method stub
-		return new Professorship();
-	}
+        IExecutionCourse executionCourse = new ExecutionCourse();
+        IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+        executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class,
+                infoProfessorship.getInfoExecutionCourse().getIdInternal());
+        professorship.setExecutionCourse(executionCourse);
 
-	@Override
-	protected Class getDomainObjectClass() {
-		// TODO Auto-generated method stub
-		return Professorship.class;
-	}
+        professorship.setHours(infoProfessorship.getHours());
 
-	protected boolean canCreate(IDomainObject domainObject) throws FenixServiceException,
+        professorship.setKeyExecutionCourse(executionCourse.getIdInternal());
+
+        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        ITeacher teacher = persistentTeacher.readByNumber(infoProfessorship.getInfoTeacher()
+                .getTeacherNumber());
+        professorship.setKeyTeacher(teacher.getIdInternal());
+        professorship.setTeacher(teacher);
+    }
+
+    @Override
+    protected IDomainObject createNewDomainObject(InfoObject infoObject) {
+        return new Professorship();
+    }
+
+    @Override
+    protected Class getDomainObjectClass() {
+        return Professorship.class;
+    }
+
+    protected boolean canCreate(IDomainObject domainObject) throws FenixServiceException,
             ExcepcaoPersistencia {
 
         IProfessorship professorship = (IProfessorship) domainObject;
@@ -82,11 +79,8 @@ public class EditProfessorship extends EditDomainObjectService {
                 .getIdInternal().equals(wantedId))) || (isNewProfessorship && (professorshipFromDB == null)));
 
     }
-//
-//    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
-//        return Cloner.copyInfoProfessorship2IProfessorship((InfoProfessorship) infoObject);
-//    }
 
+    @Override
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentProfessorship();
     }

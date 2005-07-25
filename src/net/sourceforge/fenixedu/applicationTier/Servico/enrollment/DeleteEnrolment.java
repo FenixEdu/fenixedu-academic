@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.precedences.IRestriction;
 import net.sourceforge.fenixedu.domain.precedences.IRestrictionByCurricularCourse;
+import net.sourceforge.fenixedu.domain.precedences.IRestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
@@ -27,8 +28,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * @author João Mota Jul 23, 2004
  */
 public class DeleteEnrolment implements IService {
-    public DeleteEnrolment() {
-    }
 
     // some of these arguments may be null. they are only needed for filter
     public void run(Integer executionDegreeId, Integer studentCurricularPlanId, Integer enrolmentID)
@@ -68,7 +67,7 @@ public class DeleteEnrolment implements IService {
                 if (restrictions != null) {
                     Iterator<IRestriction> iter = restrictions.iterator();
                     while (iter.hasNext()) {
-                        final IRestrictionByCurricularCourse restriction = (RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse) iter
+                        final IRestrictionByCurricularCourse restriction = (IRestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse) iter
                                 .next();
                         if (enrollment1.getStudentCurricularPlan().isCurricularCourseEnrolled(
                                 restriction.getPrecedence().getCurricularCourse())) {

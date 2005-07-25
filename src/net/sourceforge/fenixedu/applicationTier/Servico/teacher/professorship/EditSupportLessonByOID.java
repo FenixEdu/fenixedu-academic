@@ -33,47 +33,16 @@ import net.sourceforge.fenixedu.util.DiaSemana;
  * @author jpvl
  */
 public class EditSupportLessonByOID extends EditDomainObjectService {
-    /**
-     * @author jpvl
-     */
-    public class InvalidPeriodException extends FenixServiceException {
 
-        /**
-         *  
-         */
+    public class InvalidPeriodException extends FenixServiceException {
         public InvalidPeriodException() {
             super();
         }
     }
 
-    public EditSupportLessonByOID() {
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-     */
+    @Override
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentSupportLesson();
-    }
-
-//    /*
-//     * (non-Javadoc)
-//     * 
-//     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(net.sourceforge.fenixedu.dataTransferObject.InfoObject)
-//     */
-//    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
-//        return Cloner.copyInfoSupportLesson2ISupportLesson((InfoSupportLesson) infoObject);
-//    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.IServico#getNome()
-     */
-    public String getNome() {
-        return "EditSupportLessonByOID";
     }
 
     protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
@@ -87,6 +56,7 @@ public class EditSupportLessonByOID extends EditDomainObjectService {
         return supportLesson;
     }
 
+    @Override
     protected void doBeforeLock(IDomainObject domainObjectToLock, InfoObject infoObject,
             ISuportePersistente sp) throws Exception {
         InfoSupportLesson infoSupportLesson = (InfoSupportLesson) infoObject;
@@ -147,7 +117,7 @@ public class EditSupportLessonByOID extends EditDomainObjectService {
 	@Override
 	protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) throws ExcepcaoPersistencia {
 		InfoSupportLesson infoSupportLesson = (InfoSupportLesson)infoObject;
-		ISupportLesson supportLesson = (SupportLesson)domainObject;
+		ISupportLesson supportLesson = (ISupportLesson) domainObject;
 		supportLesson.setEndTime(infoSupportLesson.getEndTime());
 		
 		IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
@@ -166,13 +136,12 @@ public class EditSupportLessonByOID extends EditDomainObjectService {
 
 	@Override
 	protected IDomainObject createNewDomainObject(InfoObject infoObject) {
-		// TODO Auto-generated method stub
 		return new SupportLesson();
 	}
 
 	@Override
 	protected Class getDomainObjectClass() {
-		// TODO Auto-generated method stub
 		return SupportLesson.class ;
 	}
+
 }

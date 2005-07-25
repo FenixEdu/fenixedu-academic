@@ -34,15 +34,14 @@ import net.sourceforge.fenixedu.util.DiaSemana;
  * @author jpvl
  */
 public class EditTeacherInstitutionWorkingTimeByOID extends EditDomainObjectService {
-    /**
-     * @author jpvl
-     */
+
     public class InvalidPeriodException extends FenixServiceException {
         public InvalidPeriodException() {
             super();
         }
     }
 
+    @Override
     protected void doBeforeLock(IDomainObject domainObjectToLock, InfoObject infoObject,
             ISuportePersistente sp) throws Exception {
         super.doBeforeLock(domainObjectToLock, infoObject, sp);
@@ -95,6 +94,7 @@ public class EditTeacherInstitutionWorkingTimeByOID extends EditDomainObjectServ
 
     }
 
+    @Override
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentTeacherInstitutionWorkingTime();
     }
@@ -113,18 +113,18 @@ public class EditTeacherInstitutionWorkingTimeByOID extends EditDomainObjectServ
     protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
             IDomainObject domainObject) throws ExcepcaoPersistencia {
         InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = (InfoTeacherInstitutionWorkTime) infoObject;
-        ITeacherInstitutionWorkTime teacherInstitutionWorkTime = (TeacherInstitutionWorkTime) domainObject;
+        ITeacherInstitutionWorkTime teacherInstitutionWorkTime = (ITeacherInstitutionWorkTime) domainObject;
         teacherInstitutionWorkTime.setEndTime(infoTeacherInstitutionWorkTime.getEndTime());
 
         IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-        IExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
+        IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
                 ExecutionPeriod.class, infoTeacherInstitutionWorkTime.getInfoExecutionPeriod()
                         .getIdInternal());
         teacherInstitutionWorkTime.setExecutionPeriod(executionPeriod);
         teacherInstitutionWorkTime.setKeyExecutionPeriod(executionPeriod.getIdInternal());
 
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-        ITeacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class,
+        ITeacher teacher = (ITeacher) persistentTeacher.readByOID(Teacher.class,
                 infoTeacherInstitutionWorkTime.getInfoTeacher().getIdInternal());
         teacherInstitutionWorkTime.setKeyTeacher(teacher.getIdInternal());
         teacherInstitutionWorkTime.setStartTime(infoTeacherInstitutionWorkTime.getStartTime());

@@ -24,42 +24,16 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentExternalActiv
  */
 public class EditExternalActivity extends EditDomainObjectService {
 
-    private static EditExternalActivity service = new EditExternalActivity();
-
-    public static EditExternalActivity getService() {
-        return service;
-    }
-
-    /**
-     *  
-     */
-    private EditExternalActivity() {
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.IServico#getNome()
-     */
-    public String getNome() {
-        return "EditExternalActivity";
-    }
-
+    @Override
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         IPersistentExternalActivity persistentExternalActivity = sp.getIPersistentExternalActivity();
         return persistentExternalActivity;
     }
 
-//    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
-//        IExternalActivity externalActivity = Cloner
-//                .copyInfoExternalActivity2IExternalActivity((InfoExternalActivity) infoObject);
-//        return externalActivity;
-//    }
-
 	@Override
 	protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) throws ExcepcaoPersistencia {
 		InfoExternalActivity infoExternalActivity = (InfoExternalActivity)infoObject;
-		IExternalActivity externalActivity = (ExternalActivity) domainObject;
+		IExternalActivity externalActivity = (IExternalActivity) domainObject;
 		externalActivity.setActivity(infoExternalActivity.getActivity());
 		
 		externalActivity.setLastModificationDate(infoExternalActivity.getLastModificationDate());
@@ -68,18 +42,16 @@ public class EditExternalActivity extends EditDomainObjectService {
         ITeacher teacher = persistentTeacher.readByNumber(infoExternalActivity.getInfoTeacher().getTeacherNumber());
 		externalActivity.setTeacher(teacher);
 		externalActivity.setKeyTeacher(teacher.getIdInternal());
-		
 	}
 
 	@Override
 	protected IDomainObject createNewDomainObject(InfoObject infoObject) {
-		// TODO Auto-generated method stub
 		return new ExternalActivity();
 	}
 
 	@Override
 	protected Class getDomainObjectClass() {
-		// TODO Auto-generated method stub
 		return ExternalActivity.class;
 	}
+
 }

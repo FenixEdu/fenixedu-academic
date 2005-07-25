@@ -27,10 +27,10 @@ public class EditStudentCourseReport extends EditDomainObjectService {
     @Override
 	protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) throws ExcepcaoPersistencia {
         InfoStudentCourseReport infoStudentCourseReport = (InfoStudentCourseReport) infoObject;
-        IStudentCourseReport studentCourseReport = (StudentCourseReport) domainObject;
+        IStudentCourseReport studentCourseReport = (IStudentCourseReport) domainObject;
 
         IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-        ICurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+        ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
                 CurricularCourse.class, infoStudentCourseReport.getInfoCurricularCourse()
                         .getIdInternal());
         studentCourseReport.setCurricularCourse(curricularCourse);
@@ -53,6 +53,7 @@ public class EditStudentCourseReport extends EditDomainObjectService {
         return StudentCourseReport.class;
     }
 
+    @Override
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentStudentCourseReport();
     }

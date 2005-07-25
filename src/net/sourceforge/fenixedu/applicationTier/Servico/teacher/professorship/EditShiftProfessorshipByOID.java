@@ -29,7 +29,7 @@ public class EditShiftProfessorshipByOID extends EditDomainObjectService {
     protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
             IDomainObject domainObject) throws ExcepcaoPersistencia {
         InfoShiftProfessorship infoShiftProfessorship = (InfoShiftProfessorship) infoObject;
-        IShiftProfessorship shiftProfessorship = (ShiftProfessorship) domainObject;
+        IShiftProfessorship shiftProfessorship = (IShiftProfessorship) domainObject;
 
         shiftProfessorship.setPercentage(infoShiftProfessorship.getPercentage());
         IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
@@ -58,6 +58,7 @@ public class EditShiftProfessorshipByOID extends EditDomainObjectService {
         return ShiftProfessorship.class;
     }
 
+    @Override
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentShiftProfessorship();
     }
