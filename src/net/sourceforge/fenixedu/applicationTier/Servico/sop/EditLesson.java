@@ -20,9 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonServiceResult;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftServiceResult;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IPeriod;
 import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.IShift;
@@ -100,7 +98,7 @@ public class EditLesson implements IService {
                 roomOccupation.setEndTime(aulaNova.getFim());
                 roomOccupation.setRoom(salaNova);
 
-                roomOccupation.setFrequency(aulaNova.getInfoRoomOccupation().getFrequency().intValue());
+                roomOccupation.setFrequency(aulaNova.getInfoRoomOccupation().getFrequency());
                 roomOccupation.setWeekOfQuinzenalStart(aulaNova.getInfoRoomOccupation()
                         .getWeekOfQuinzenalStart());
 
