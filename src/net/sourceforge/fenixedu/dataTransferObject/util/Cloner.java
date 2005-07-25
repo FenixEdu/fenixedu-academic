@@ -87,9 +87,6 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftProf
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSupportLesson;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InfoTeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.IAdvisory;
 import net.sourceforge.fenixedu.domain.IAnnouncement;
@@ -151,9 +148,7 @@ import net.sourceforge.fenixedu.domain.IWebSite;
 import net.sourceforge.fenixedu.domain.IWebSiteItem;
 import net.sourceforge.fenixedu.domain.IWebSiteSection;
 import net.sourceforge.fenixedu.domain.IWorkLocation;
-import net.sourceforge.fenixedu.domain.Period;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Room;
 import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WorkLocation;
@@ -1318,35 +1313,6 @@ public abstract class Cloner {
         return listInfoExternalPersons;
     }
 
-    public static List copyListInfoExternalPerson2ListIExternalPerson(List listInfoExternalPerson) {
-        List listExternalPersons = new ArrayList();
-
-        Iterator iterListInfoExternalPerson = listInfoExternalPerson.iterator();
-
-        while (iterListInfoExternalPerson.hasNext()) {
-            InfoExternalPerson infoExternalPerson = (InfoExternalPerson) iterListInfoExternalPerson
-                    .next();
-            
-            IExternalPerson externalPerson = new ExternalPerson();
-            copyObjectProperties(externalPerson, infoExternalPerson);
-
-            IPerson person = new Person();
-            copyObjectProperties(person, infoExternalPerson.getInfoPerson());
-            ICountry country = new Country();
-            copyObjectProperties(country, infoExternalPerson.getInfoPerson().getInfoPais());
-            person.setPais(country);
-            externalPerson.setPerson(person);
-
-            IWorkLocation workLocation = new WorkLocation();
-            copyObjectProperties(workLocation, infoExternalPerson.getInfoWorkLocation());
-            externalPerson.setWorkLocation(workLocation);
-
-            listExternalPersons.add(externalPerson);
-        }
-
-        return listExternalPersons;
-    }
-
     public static List copyListITeacher2ListInfoTeacher(List listITeacher) {
         List listInfoTeacher = new ArrayList();
 
@@ -1359,34 +1325,6 @@ public abstract class Cloner {
         }
 
         return listInfoTeacher;
-    }
-
-    public static List copyListInfoTeacher2ListITeacher(List listInfoTeacher) {
-        List listITeacher = new ArrayList();
-
-        Iterator iterListInfoTeacher = listInfoTeacher.iterator();
-
-        while (iterListInfoTeacher.hasNext()) {
-            InfoTeacher infoTeacher = (InfoTeacher) iterListInfoTeacher.next();
-
-            ITeacher teacher = new Teacher();
-            copyObjectProperties(teacher, infoTeacher);
-
-            IPerson person = new Person();
-            copyObjectProperties(person, infoTeacher.getInfoPerson());
-            ICountry country = new Country();
-            copyObjectProperties(country, infoTeacher.getInfoPerson().getInfoPais());
-            person.setPais(country);
-            teacher.setPerson(person);
-
-            ICategory category = new Category();
-            copyObjectProperties(category, infoTeacher.getInfoCategory());
-            teacher.setCategory(category);
-
-            listITeacher.add(teacher);
-        }
-
-        return listITeacher;
     }
 
     public static InfoCoordinator copyICoordinator2InfoCoordenator(ICoordinator coordinator) {
@@ -1644,29 +1582,6 @@ public abstract class Cloner {
         return infoCreditLine;
     }
 
-    /**
-     * Method copyInfoExecutionCourse2ExecutionCourse.
-     * 
-     * @param infoExecutionCourse
-     * @return IDisciplinaExecucao
-     */
-    public static IExecutionCourse copyInfoExecutionCourse2ExecutionCourse(
-            InfoExecutionCourse infoExecutionCourse) {
-        IExecutionCourse executionCourse = new ExecutionCourse();
-        IExecutionPeriod executionPeriod = Cloner
-                .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionCourse.getInfoExecutionPeriod());
-
-        copyObjectProperties(executionCourse, infoExecutionCourse);
-
-        executionCourse.setExecutionPeriod(executionPeriod);
-        return executionCourse;
-    }
-
-    /**
-     * Method copyInfoRoomOccupation2RoomOccupation.
-     * 
-     * @param infoRoomOccupation
-     */
     public static IRoomOccupation copyInfoRoomOccupation2RoomOccupation(
             InfoRoomOccupation infoRoomOccupation) {
         IRoomOccupation roomOccupation = new RoomOccupation();
@@ -1674,54 +1589,61 @@ public abstract class Cloner {
         return roomOccupation;
     }
 
+    public static List copyListInfoExternalPerson2ListIExternalPerson(List listInfoExternalPerson) {
+        List listExternalPersons = new ArrayList();
 
+        Iterator iterListInfoExternalPerson = listInfoExternalPerson.iterator();
 
-    public static IExecutionPeriod copyInfoExecutionPeriod2IExecutionPeriod(
-            InfoExecutionPeriod infoExecutionPeriod) {
+        while (iterListInfoExternalPerson.hasNext()) {
+            InfoExternalPerson infoExternalPerson = (InfoExternalPerson) iterListInfoExternalPerson
+                    .next();
 
-        IExecutionPeriod executionPeriod = new ExecutionPeriod();
-        InfoExecutionYear infoExecutionYear = infoExecutionPeriod.getInfoExecutionYear();
-        IExecutionYear executionYear = null;
-        if (infoExecutionYear != null) {
-            executionYear = new ExecutionYear();
-            try {
-                BeanUtils.copyProperties(executionYear, infoExecutionYear);
-            } catch (Exception e) {
-                    throw new RuntimeException(e);
-            }
-        } else {
-            copyObjectProperties(executionYear, infoExecutionYear);
+            IExternalPerson externalPerson = new ExternalPerson();
+            copyObjectProperties(externalPerson, infoExternalPerson);
+
+            IPerson person = new Person();
+            copyObjectProperties(person, infoExternalPerson.getInfoPerson());
+            ICountry country = new Country();
+            copyObjectProperties(country, infoExternalPerson.getInfoPerson().getInfoPais());
+            person.setPais(country);
+            externalPerson.setPerson(person);
+
+            IWorkLocation workLocation = new WorkLocation();
+            copyObjectProperties(workLocation, infoExternalPerson.getInfoWorkLocation());
+            externalPerson.setWorkLocation(workLocation);
+
+            listExternalPersons.add(externalPerson);
         }
 
-        copyObjectProperties(executionPeriod, infoExecutionPeriod);
-
-        executionPeriod.setExecutionYear(executionYear);
-
-        return executionPeriod;
+        return listExternalPersons;
     }
 
-    public static IRoomOccupation copyInfoRoomOccupation2IRoomOccupation(
-            InfoRoomOccupation infoRoomOccupation) {
+    public static List copyListInfoTeacher2ListITeacher(List listInfoTeacher) {
+        List listITeacher = new ArrayList();
 
-        IRoomOccupation roomOccupation = new RoomOccupation();
-        copyObjectProperties(roomOccupation, infoRoomOccupation);
-        
-        IPeriod period = Cloner.copyInfoPeriod2IPeriod(infoRoomOccupation.getInfoPeriod());
-        roomOccupation.setPeriod(period);
-        
-        IRoom room = new Room();
-        copyObjectProperties(room, infoRoomOccupation.getInfoRoom());
-        roomOccupation.setRoom(room);
+        Iterator iterListInfoTeacher = listInfoTeacher.iterator();
 
-        return roomOccupation;
-    }
+        while (iterListInfoTeacher.hasNext()) {
+            InfoTeacher infoTeacher = (InfoTeacher) iterListInfoTeacher.next();
 
-    public static IPeriod copyInfoPeriod2IPeriod(InfoPeriod infoPeriod) {
-        IPeriod period = new Period();
+            ITeacher teacher = new Teacher();
+            copyObjectProperties(teacher, infoTeacher);
 
-        copyObjectProperties(period, infoPeriod);
+            IPerson person = new Person();
+            copyObjectProperties(person, infoTeacher.getInfoPerson());
+            ICountry country = new Country();
+            copyObjectProperties(country, infoTeacher.getInfoPerson().getInfoPais());
+            person.setPais(country);
+            teacher.setPerson(person);
 
-        return period;
+            ICategory category = new Category();
+            copyObjectProperties(category, infoTeacher.getInfoCategory());
+            teacher.setCategory(category);
+
+            listITeacher.add(teacher);
+        }
+
+        return listITeacher;
     }
 
 }
