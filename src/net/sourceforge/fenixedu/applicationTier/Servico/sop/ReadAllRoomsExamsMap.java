@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -36,7 +35,7 @@ public class ReadAllRoomsExamsMap implements IService {
     public List run(InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia {
 
         // Object to be returned
-        List infoRoomExamMapList = new ArrayList();
+        List<InfoRoomExamsMap> infoRoomExamMapList = new ArrayList<InfoRoomExamsMap>();
 
         // Exam seasons hardcoded because this information
         // is not yet available from the database
@@ -73,12 +72,8 @@ public class ReadAllRoomsExamsMap implements IService {
             infoExamsMap.setStartSeason2(null);
             infoExamsMap.setEndSeason2(endSeason2);
 
-            // Translate to execute following queries
-            IExecutionPeriod executionPeriod = Cloner
-                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
-
             List exams = sp.getIPersistentExam().readByRoomAndExecutionPeriod(room.getNome(),
-                    executionPeriod.getName(), executionPeriod.getExecutionYear().getYear());
+                    infoExecutionPeriod.getName(), infoExecutionPeriod.getInfoExecutionYear().getYear());
             infoExamsMap.setExams((List) CollectionUtils.collect(exams, TRANSFORM_EXAM_TO_INFOEXAM));
 
             infoRoomExamMapList.add(infoExamsMap);
