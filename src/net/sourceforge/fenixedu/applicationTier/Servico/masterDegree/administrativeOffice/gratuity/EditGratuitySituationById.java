@@ -52,13 +52,9 @@ public class EditGratuitySituationById implements IService {
             gratuityValues.setIdInternal(infoGratuitySituation
                     .getInfoGratuityValues().getIdInternal());
 
-            IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
-            studentCurricularPlan.setIdInternal(infoGratuitySituation
-                    .getInfoStudentCurricularPlan().getIdInternal());
-
             IGratuitySituation gratuitySituation = persistentGratuitySituation
                     .readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
-                            studentCurricularPlan.getIdInternal(), gratuityValues.getIdInternal());
+                            infoGratuitySituation.getInfoStudentCurricularPlan().getIdInternal(), gratuityValues.getIdInternal());
             if (gratuitySituation == null) {
                 throw new NonExistingServiceException(
                         "Gratuity Situation not exist yet.");
