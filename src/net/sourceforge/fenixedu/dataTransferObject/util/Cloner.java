@@ -1582,13 +1582,6 @@ public abstract class Cloner {
         return infoCreditLine;
     }
 
-    public static IRoomOccupation copyInfoRoomOccupation2RoomOccupation(
-            InfoRoomOccupation infoRoomOccupation) {
-        IRoomOccupation roomOccupation = new RoomOccupation();
-        copyObjectProperties(roomOccupation, infoRoomOccupation);
-        return roomOccupation;
-    }
-
     public static List copyListInfoExternalPerson2ListIExternalPerson(List listInfoExternalPerson) {
         List listExternalPersons = new ArrayList();
 
