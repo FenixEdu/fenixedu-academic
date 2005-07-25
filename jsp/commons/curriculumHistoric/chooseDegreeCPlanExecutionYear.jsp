@@ -12,6 +12,8 @@ function changedExecutionYear(){
 // -->
 </script>
 
+<h2><bean:message key="title.student.marksSheetConsult"/></h2>
+
 <span class="error"><html:errors bundle="CURRICULUM_HISTORIC_RESOURCES"/><br /></span>
 
 <html:form action="/chooseExecutionYearAndDegreeCurricularPlan">

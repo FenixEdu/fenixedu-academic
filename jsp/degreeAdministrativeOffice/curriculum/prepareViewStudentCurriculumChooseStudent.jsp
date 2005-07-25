@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
 <html:errors/>
-<h2><bean:message key="title.student.information"/></h2>
+<h2><bean:message key="title.student.curriculum"/></h2>
 <html:form action="/viewCurriculum" focus="studentNumber">
 	<html:hidden property="method" value="getStudentCP"/>
 	<html:hidden property="page" value="1"/>

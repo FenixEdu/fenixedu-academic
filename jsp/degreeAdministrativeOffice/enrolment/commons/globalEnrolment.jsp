@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<h2><bean:message key="title.welcome"/></h2>
+<h2><bean:message key="title.student.curricularEnrollments"/></h2>
 <ul>
 	<li>
 		<html:link page="/curricularCoursesEnrollment.do?method=prepareEnrollmentChooseStudent"><bean:message key="link.student.enrollment"/></html:link>
