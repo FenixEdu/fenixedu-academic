@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftServiceResult;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ILesson;
+import net.sourceforge.fenixedu.domain.IPeriod;
 import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.IShift;
@@ -32,6 +33,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import net.sourceforge.fenixedu.util.DiaSemana;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class EditLesson implements IService {
@@ -67,8 +69,12 @@ public class EditLesson implements IService {
             if (result.getMessageType() == 1) {
                 throw new InvalidTimeIntervalServiceException();
             }
-            boolean resultB = validNoInterceptingLesson(Cloner
-                    .copyInfoRoomOccupation2RoomOccupation(aulaNova.getInfoRoomOccupation()),
+            boolean resultB = validNoInterceptingLesson(
+                    aulaNova.getInfoRoomOccupation().getStartTime(),
+                    aulaNova.getInfoRoomOccupation().getEndTime(), 
+                    aulaNova.getInfoRoomOccupation().getDayOfWeek(), 
+                    aulaNova.getInfoRoomOccupation().getFrequency(), 
+                    aulaNova.getInfoRoomOccupation().getWeekOfQuinzenalStart(), 
                     roomOccupation);
 
             InfoShiftServiceResult infoShiftServiceResult = valid(shift, newLesson);
@@ -118,8 +124,8 @@ public class EditLesson implements IService {
      * @param aula
      * @return InfoLessonServiceResult
      */
-    private boolean validNoInterceptingLesson(IRoomOccupation roomOccupation,
-            IRoomOccupation oldroomOccupation) throws FenixServiceException {
+    private boolean validNoInterceptingLesson(Calendar startTime, Calendar endTime,
+            DiaSemana dayOfWeek, Integer frequency, Integer week, IRoomOccupation oldroomOccupation) throws FenixServiceException {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             List roomOccupationInDBList = sp.getIPersistentRoomOccupation().readAll();
@@ -130,7 +136,7 @@ public class EditLesson implements IService {
                 if (roomOccupationInDB.equals(oldroomOccupation)) {
                     continue;
                 }
-                if (roomOccupation.roomOccupationForDateAndTime(roomOccupationInDB)) {
+                if (roomOccupationInDB.roomOccupationForDateAndTime(null, startTime, endTime, dayOfWeek, frequency, week, null)) {
                     return false;
                 }
             }
