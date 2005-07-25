@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.ExternalPerson;

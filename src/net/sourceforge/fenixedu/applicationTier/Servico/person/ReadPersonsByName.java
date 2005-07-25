@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
