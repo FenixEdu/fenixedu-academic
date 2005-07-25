@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
  */
 public class EditStudentCourseReport extends EditDomainObjectService {
 
+    @Override
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentStudentCourseReport();
     }
@@ -31,7 +32,7 @@ public class EditStudentCourseReport extends EditDomainObjectService {
     protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
             IDomainObject domainObject) throws ExcepcaoPersistencia {
         InfoStudentCourseReport infoStudentCourseReport = (InfoStudentCourseReport) infoObject;
-        IStudentCourseReport studentCourseReport = (StudentCourseReport) domainObject;
+        IStudentCourseReport studentCourseReport = (IStudentCourseReport) domainObject;
         if (infoStudentCourseReport.getInfoCurricularCourse() != null) {
             ICurricularCourse curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse()
                     .readByOID(Country.class,
