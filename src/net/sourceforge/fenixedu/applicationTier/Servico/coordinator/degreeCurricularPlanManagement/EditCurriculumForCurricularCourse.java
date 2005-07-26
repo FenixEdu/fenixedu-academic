@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurriculum;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
@@ -64,7 +65,7 @@ public class EditCurriculumForCurricularCourse implements IService {
             ICurriculum oldCurriculum = (ICurriculum) persistentCurriculum.readByOID(Curriculum.class,
                     oldCurriculumId);
             if (oldCurriculum == null) {
-                oldCurriculum = new Curriculum();
+                oldCurriculum = DomainFactory.makeCurriculum();
 
                 oldCurriculum.setCurricularCourse(curricularCourse);
                 Calendar today = Calendar.getInstance();
