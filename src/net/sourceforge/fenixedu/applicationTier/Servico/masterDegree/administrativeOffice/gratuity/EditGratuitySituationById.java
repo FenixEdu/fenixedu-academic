@@ -12,10 +12,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithAll;
-import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IGratuitySituation;
-import net.sourceforge.fenixedu.domain.IGratuityValues;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideEntry;
@@ -46,13 +44,9 @@ public class EditGratuitySituationById implements IService {
             IPersistentGratuitySituation persistentGratuitySituation = sp
                     .getIPersistentGratuitySituation();
 
-            IGratuityValues gratuityValues = new GratuityValues();
-            gratuityValues.setIdInternal(infoGratuitySituation
-                    .getInfoGratuityValues().getIdInternal());
-
             IGratuitySituation gratuitySituation = persistentGratuitySituation
                     .readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
-                            infoGratuitySituation.getInfoStudentCurricularPlan().getIdInternal(), gratuityValues.getIdInternal());
+                            infoGratuitySituation.getInfoStudentCurricularPlan().getIdInternal(), infoGratuitySituation.getInfoGratuityValues().getIdInternal());
             if (gratuitySituation == null) {
                 throw new NonExistingServiceException(
                         "Gratuity Situation not exist yet.");
