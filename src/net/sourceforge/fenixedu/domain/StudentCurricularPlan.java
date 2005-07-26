@@ -905,11 +905,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         for (IStudentCurricularPlan otherStudentCurricularPlan : student.getStudentCurricularPlans()) {
             final IDegreeCurricularPlan associatedDegreeCurricularPlan = otherStudentCurricularPlan.getDegreeCurricularPlan();
 			
-			boolean x1 = associatedDegreeCurricularPlan.getIdInternal().equals(degreeCurricularPlan.getIdInternal());
-			boolean x2 = otherStudentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.ACTIVE);
-			
-			
-            if (associatedDegreeCurricularPlan.getIdInternal().equals(degreeCurricularPlan.getIdInternal())
+			if (associatedDegreeCurricularPlan.getIdInternal().equals(degreeCurricularPlan.getIdInternal())
                     && otherStudentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.ACTIVE)) {
 				
 				otherStudentCurricularPlan.setCurrentState(StudentCurricularPlanState.INACTIVE);
