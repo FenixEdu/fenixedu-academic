@@ -16,7 +16,7 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
         // check that there isn't another scope active with the same curricular course, branch and semester
 		
         if (curricularCourse.hasActiveScopeInGivenSemesterForGivenBranch(curricularSemester.getSemester(), branch)) {
-            throw new DomainException("error.curricular.course.scope.conflit.creation");
+            throw new DomainException("error.curricular.course.scope.conflict.creation");
         }
 		
 		setBranch(branch);

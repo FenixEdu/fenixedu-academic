@@ -76,6 +76,13 @@ public class EnrolmentTest extends DomainTestBase {
 	private IAttends attendsToDelete = null;
 	private IExecutionCourse executionCourseToUnEnrollImprovement = null;
 	
+	private IEnrolment enrolmentToImprove = null;
+	private ICurricularCourse curricularCourseToImprove = null;
+	private IExecutionCourse executionCourseToEnrollImprovement = null;
+	private IStudent studentToImprove = null;
+	private IExecutionPeriod executionPeriodForImprovement = null;
+	private IEmployee someEmployee = null;
+	
 	protected void setUp() throws Exception {
         super.setUp();
 		
@@ -88,8 +95,22 @@ public class EnrolmentTest extends DomainTestBase {
 		setUpForIsImprovementForExecutionCourseCase();
 		
 		setUpForUnEnrollImprovementCase();
+		setUpCreateEnrolmentEvaluationForImprovement();
     }
 	
+	private void setUpCreateEnrolmentEvaluationForImprovement() {
+		enrolmentToImprove = new Enrolment();
+		curricularCourseToImprove = new CurricularCourse();
+		executionCourseToEnrollImprovement = new ExecutionCourse();
+		studentToImprove = new Student();
+		executionPeriodForImprovement = new ExecutionPeriod();
+		someEmployee = new Employee();
+		
+		executionCourseToEnrollImprovement.setExecutionPeriod(executionPeriodForImprovement);
+		curricularCourseToImprove.addAssociatedExecutionCourses(executionCourseToEnrollImprovement);
+		enrolmentToImprove.setCurricularCourse(curricularCourseToImprove);
+	}
+
 	private void setUpForUnEnrollImprovementCase() {
 
 		enrolmentToUnEnrollImprovement = new Enrolment();
@@ -605,6 +626,18 @@ public class EnrolmentTest extends DomainTestBase {
 		} catch (DomainException e) {
 			
 		}
+	}
+	
+	public void testCreateEnrolmentEvaluationForImprovement() {
+		assertNull(enrolmentToImprove.getImprovementEvaluation());
+		assertFalse(executionCourseToEnrollImprovement.hasAnyAttends());
+		
+		enrolmentToImprove.createEnrolmentEvaluationForImprovement(someEmployee,executionPeriodForImprovement,studentToImprove);
+		
+		IEnrolmentEvaluation improvementEvaluation = enrolmentToImprove.getImprovementEvaluation(); 
+		assertNotNull(improvementEvaluation);
+		assertEquals(improvementEvaluation.getEmployee(),someEmployee);
+		assertTrue(executionCourseToEnrollImprovement.hasAnyAttends());
 	}
 	
 	private IEnrolmentEvaluation createEnrolmentEvaluation(IEnrolment enrolment, EnrolmentEvaluationType type, String grade) {

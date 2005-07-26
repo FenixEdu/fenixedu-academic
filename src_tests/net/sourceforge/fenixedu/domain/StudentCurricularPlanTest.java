@@ -31,6 +31,10 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 	private Double givenCreditsForNewStudentCurricularPlan = null;
 	private Specialization specializationForNewStudentCurricularPlan = null;
 	
+	private IStudentCurricularPlanLEIC studentCurricularPlanToSetAreas = null;
+	private IBranch primaryArea = null;
+	private IBranch secondaryArea = null;
+	
 	protected void setUp() throws Exception {
 		super.setUp();
 		
@@ -42,12 +46,15 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		setUpChangeState(student, degreeCurricularPlan);
 		setUpCreate(student, degreeCurricularPlan);
 		
-		
 		setUpDelete();
+		setUpSetStudentAreasWithoutRestrictions();
 	}
 
-
-
+	private void setUpSetStudentAreasWithoutRestrictions() {
+		studentCurricularPlanToSetAreas = new StudentCurricularPlanLEIC();
+		primaryArea = new Branch();
+		secondaryArea = new Branch();		
+	}
 
 	private void setUpDelete() {
 		studentCurricularPlanToDelete = new StudentCurricularPlan();
@@ -244,5 +251,30 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		IEnrolment enrolment = studentCurricularPlanToReadFrom.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse,executionPeriod);
 		
 		assertEquals(enrolment,enrolmentToBeRead);
+	}
+	
+	public void testSetStudentAreasWithoutRestrictions() {
+
+		assertFalse(studentCurricularPlanToSetAreas.hasBranch());
+		assertFalse(studentCurricularPlanToSetAreas.hasSecundaryBranch());
+		
+		try {
+			studentCurricularPlanToSetAreas.setStudentAreasWithoutRestrictions(primaryArea,primaryArea);
+			fail("same areas should not have been set");
+		} catch (DomainException e) {
+			
+		}
+		
+		assertFalse(studentCurricularPlanToSetAreas.hasBranch());
+		assertFalse(studentCurricularPlanToSetAreas.hasSecundaryBranch());
+		
+		try {
+			studentCurricularPlanToSetAreas.setStudentAreasWithoutRestrictions(primaryArea,secondaryArea);
+		} catch (DomainException e) {
+			fail("same areas should have been set");
+		}
+		
+		assertEquals(studentCurricularPlanToSetAreas.getBranch(),primaryArea);
+		assertEquals(studentCurricularPlanToSetAreas.getSecundaryBranch(),secondaryArea);
 	}
 }

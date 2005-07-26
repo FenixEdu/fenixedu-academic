@@ -782,7 +782,7 @@ class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu
 	public IEnrolmentEvaluation getImprovementEvaluation();
 	public IEnrolmentEvaluation getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade (final net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType evaluationType, final String grade);
 	
-	public void createEnrolmentEvaluationForImprovment(IEmployee employee, IExecutionPeriod currentExecutionPeriod, IStudent student);
+	public void createEnrolmentEvaluationForImprovement(IEmployee employee, IExecutionPeriod currentExecutionPeriod, IStudent student);
 	public IEnrolmentEvaluation submitEnrolmentEvaluation (net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType enrolmentEvaluationType, IMark publishedMark, IEmployee employee, IPerson personResponsibleForGrade, java.util.Date evaluationDate, String observation);
 	public boolean isImprovementForExecutionCourse (IExecutionCourse executionCourse);
 	"

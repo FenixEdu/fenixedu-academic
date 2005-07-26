@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
@@ -60,7 +59,6 @@ public class ImprovmentEnrollService implements IService{
             }
 
             IPersistentEnrollment persistentEnrollment = sp.getIPersistentEnrolment();
-            IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp.getIPersistentEnrolmentEvaluation();
             
             Iterator iterator = enrolmentsIds.iterator();
             while(iterator.hasNext()) {
@@ -70,7 +68,7 @@ public class ImprovmentEnrollService implements IService{
                     throw new InvalidArgumentsServiceException();
                 }
 
-				enrollment.createEnrolmentEvaluationForImprovment(employee, currentExecutionPeriod, student);
+				enrollment.createEnrolmentEvaluationForImprovement(employee, currentExecutionPeriod, student);
             }
             
             return new Boolean(true);

@@ -352,7 +352,7 @@ public class Enrolment extends Enrolment_Base {
 	
 	
 	
-	public void createEnrolmentEvaluationForImprovment(IEmployee employee, IExecutionPeriod currentExecutionPeriod,
+	public void createEnrolmentEvaluationForImprovement(IEmployee employee, IExecutionPeriod currentExecutionPeriod,
 														IStudent student) {
 		
 		IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
@@ -453,7 +453,7 @@ public class Enrolment extends Enrolment_Base {
 	            }
 	        }
 		} else {
-			throw new DomainException(this.getClass().getName(), "ola mundo");
+			throw new DomainException("error.enrolment.cant.unenroll.improvement");
 		}
 	}
 }
