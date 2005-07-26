@@ -860,7 +860,10 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 }
 
 
-	class net.sourceforge.fenixedu.domain.FinalEvaluation extends net.sourceforge.fenixedu.domain.Evaluation {
+	class net.sourceforge.fenixedu.domain.FinalEvaluation extends net.sourceforge.fenixedu.domain.Evaluation {		
+		interface "
+		public boolean deleteFrom(IExecutionCourse executionCourse);
+		"
 	}
 	
 	class net.sourceforge.fenixedu.domain.onlineTests.OnlineTest extends net.sourceforge.fenixedu.domain.Evaluation {

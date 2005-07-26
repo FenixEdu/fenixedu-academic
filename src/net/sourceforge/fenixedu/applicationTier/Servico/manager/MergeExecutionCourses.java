@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,6 +12,7 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.utils.ExecutionCourseUtils;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
@@ -30,64 +30,38 @@ import net.sourceforge.fenixedu.domain.ISection;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IShiftProfessorship;
 import net.sourceforge.fenixedu.domain.ISite;
-import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.ISummary;
 import net.sourceforge.fenixedu.domain.ISupportLesson;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentAnnouncement;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupPropertiesExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseReport;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-import org.apache.ojb.broker.core.proxy.ProxyHelper;
-
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 29/Nov/2003
- *  
+ * @author <a href="mailto:joao.mota@ist.utl.pt"> João Mota </a> 29/Nov/2003
+ * 
  */
 public class MergeExecutionCourses implements IService {
 
     public class SourceAndDestinationAreTheSameException extends FenixServiceException {
         private static final long serialVersionUID = 3761968254943244338L;
-    }
-
-    public class CONTAINS_STUDENT_PREDICATE implements Predicate {
-
-        private IStudent student = null;
-
-        public CONTAINS_STUDENT_PREDICATE(IStudent studentArg) {
-            super();
-            student = studentArg;
-        }
-
-        public boolean evaluate(Object arg0) {
-            IStudent studentFromList = (IStudent) arg0;
-            return (student.getIdInternal().equals(studentFromList.getIdInternal()));
-        }
-
     }
 
     public void run(Integer executionCourseDestinationId, Integer executionCourseSourceId)
@@ -97,379 +71,302 @@ public class MergeExecutionCourses implements IService {
             throw new SourceAndDestinationAreTheSameException();
         }
 
-        ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentExecutionCourse persistentExecutionCourse = ps.getIPersistentExecutionCourse();
-        IExecutionCourse destination;
-        IExecutionCourse source;
-        destination = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class,
-                executionCourseDestinationId, true);
-        source = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class,
-                executionCourseSourceId);
-        if (!isMergeAllowed(destination, source, ps)) {
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
+        final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
+                .getIPersistentExecutionCourse();
+
+        final IExecutionCourse executionCourseFrom = (IExecutionCourse) persistentExecutionCourse
+                .readByOID(ExecutionCourse.class, executionCourseSourceId);
+        if (executionCourseFrom == null) {
             throw new InvalidArgumentsServiceException();
         }
-        copyProfessorshipsAndResponsibleFors(destination, source, ps);
-        copyAttends(destination, source, ps);
-        copyBibliography(destination, source, ps);
-        copyEvaluations(destination, source, ps);
-        copySites(destination, source, ps);
-        copyShiftsAndLessons(destination, source, ps);
-        copyCourseReport(destination, source, ps);
-        copyGroups(destination, source, ps);
-        copySummaries(destination, source, ps);
-        copyEvaluationMethod(destination, source, ps);
 
-        destination.getAssociatedCurricularCourses().addAll(source.getAssociatedCurricularCourses());
-                
+        final IExecutionCourse executionCourseTo = (IExecutionCourse) persistentExecutionCourse
+                .readByOID(ExecutionCourse.class, executionCourseDestinationId, true);
+        if (executionCourseTo == null) {
+            throw new InvalidArgumentsServiceException();
+        }
+
+        if (!isMergeAllowed(persistentSupport, executionCourseFrom, executionCourseTo)) {
+            throw new InvalidArgumentsServiceException();
+        }
+
+        copyProfessorships(persistentSupport, executionCourseFrom, executionCourseTo);
+        copyAttends(executionCourseFrom, executionCourseTo);
+        copyBibliographicReference(persistentSupport, executionCourseFrom, executionCourseTo);
+        removeEvaluationMethod(persistentSupport, executionCourseFrom);
+        removeCourseReport(persistentSupport, executionCourseFrom);
+        copySummaries(persistentSupport, executionCourseFrom, executionCourseTo);
+        copyGroupPropertiesExecutionCourse(executionCourseFrom, executionCourseTo);
+        copySite(persistentSupport, executionCourseFrom, executionCourseTo);
+        copyShifts(executionCourseFrom, executionCourseTo);
+        removeEvaluations(persistentSupport, executionCourseFrom);
+
+        executionCourseTo.getAssociatedCurricularCourses().addAll(
+                executionCourseFrom.getAssociatedCurricularCourses());
+
         List executionCourseID = new ArrayList();
-        executionCourseID.add(source.getIdInternal());
-        
+        executionCourseID.add(executionCourseFrom.getIdInternal());
+
         DeleteExecutionCourses deleteExecutionCourses = new DeleteExecutionCourses();
         deleteExecutionCourses.run(executionCourseID);
     }
 
-    private boolean isMergeAllowed(IExecutionCourse destination, IExecutionCourse source,
-            ISuportePersistente ps) {
+    private boolean isMergeAllowed(final ISuportePersistente persistentSupport,
+            final IExecutionCourse executionCourseFrom, final IExecutionCourse executionCourseTo) {
 
         boolean distributedTestAuthorization = false;
 
-        IPersistentMetadata persistentMetadata = ps.getIPersistentMetadata();
-        IPersistentDistributedTest persistentDistributedTest = ps.getIPersistentDistributedTest();
+        IPersistentMetadata persistentMetadata = persistentSupport.getIPersistentMetadata();
+        IPersistentDistributedTest persistentDistributedTest = persistentSupport
+                .getIPersistentDistributedTest();
         try {
-            List metadatas = persistentMetadata.readByExecutionCourse(source);
-            List distributedTests = persistentDistributedTest.readByTestScope(source.getClass().getName(), source.getIdInternal());
+            List metadatas = persistentMetadata.readByExecutionCourse(executionCourseFrom);
+            List distributedTests = persistentDistributedTest.readByTestScope(executionCourseFrom
+                    .getClass().getName(), executionCourseFrom.getIdInternal());
             distributedTestAuthorization = (metadatas == null || metadatas.isEmpty())
                     && (distributedTests == null || distributedTests.isEmpty());
 
-        } catch (ExcepcaoPersistencia e1) {
-            // ignore
-
+        } catch (ExcepcaoPersistencia e) { // ignore
         }
 
-        return destination != null && source != null
-                && source.getExecutionPeriod().equals(destination.getExecutionPeriod())
-                && source != destination && distributedTestAuthorization;
+        return executionCourseTo != null
+                && executionCourseFrom != null
+                && executionCourseFrom.getExecutionPeriod().equals(
+                        executionCourseTo.getExecutionPeriod())
+                && executionCourseFrom != executionCourseTo && distributedTestAuthorization;
     }
 
-    private void copyEvaluationMethod(IExecutionCourse destination, IExecutionCourse source,
-            ISuportePersistente ps) throws ExcepcaoPersistencia {
-        IPersistentEvaluationMethod persistentEvaluationMethod = ps.getIPersistentEvaluationMethod();
-        IEvaluationMethod evaluationMethod = persistentEvaluationMethod.readByIdExecutionCourse(source
-                .getIdInternal());
+    private void removeEvaluationMethod(final ISuportePersistente persistentSupport,
+            final IExecutionCourse executionCourseFrom) throws ExcepcaoPersistencia {
+        final IPersistentEvaluationMethod persistentEvaluationMethod = persistentSupport
+                .getIPersistentEvaluationMethod();
+        final IEvaluationMethod evaluationMethod = executionCourseFrom.getEvaluationMethod();
         if (evaluationMethod != null) {
-            evaluationMethod.getExecutionCourse().setEvaluationMethod(null);
-            evaluationMethod.setExecutionCourse(null);
+            evaluationMethod.delete();
             persistentEvaluationMethod.deleteByOID(EvaluationMethod.class, evaluationMethod
                     .getIdInternal());
         }
-
     }
 
-    private void copySummaries(IExecutionCourse destination, IExecutionCourse source,
-            ISuportePersistente ps) throws ExcepcaoPersistencia {
-        IPersistentSummary persistentSummary = ps.getIPersistentSummary();
-        List summaries = persistentSummary.readByExecutionCourse(source.getIdInternal());
-        Iterator iter = summaries.iterator();
-        while (iter.hasNext()) {
-            ISummary summary = (ISummary) iter.next();
-            persistentSummary.simpleLockWrite(summary);
-            summary.setExecutionCourse(destination);
+    private void copySummaries(final ISuportePersistente persistentSupport,
+            final IExecutionCourse executionCourseFrom, final IExecutionCourse executionCourseTo)
+            throws ExcepcaoPersistencia {
+        final List<ISummary> associatedSummaries = new ArrayList();
+        associatedSummaries.addAll(executionCourseFrom.getAssociatedSummaries());
+        for (final ISummary summary : associatedSummaries) {
+            summary.setExecutionCourse(executionCourseTo);
         }
-
     }
 
-    private void copyCourseReport(IExecutionCourse destination, IExecutionCourse source,
-            ISuportePersistente ps) throws ExcepcaoPersistencia {
-        IPersistentCourseReport persistentCourseReport = ps.getIPersistentCourseReport();
-        ICourseReport courseReport = persistentCourseReport.readCourseReportByExecutionCourse(source
-                .getIdInternal());
+    private void removeCourseReport(final ISuportePersistente persistentSupport,
+            final IExecutionCourse executionCourseFrom) throws ExcepcaoPersistencia {
+        final IPersistentCourseReport persistentCourseReport = persistentSupport
+                .getIPersistentCourseReport();
+        final ICourseReport courseReport = executionCourseFrom.getCourseReport();
         if (courseReport != null) {
-            courseReport.getExecutionCourse().setCourseReport(null);
-            courseReport.setExecutionCourse(null);
+            courseReport.delete();
             persistentCourseReport.deleteByOID(CourseReport.class, courseReport.getIdInternal());
         }
-
     }
 
-    private void copyGroups(IExecutionCourse destination, IExecutionCourse source, ISuportePersistente ps)
+    private void copyGroupPropertiesExecutionCourse(final IExecutionCourse executionCourseFrom,
+            final IExecutionCourse executionCourseTo) throws ExcepcaoPersistencia {
+        final List<IGroupPropertiesExecutionCourse> associatedGroupPropertiesExecutionCourse = new ArrayList();
+        associatedGroupPropertiesExecutionCourse.addAll(executionCourseFrom
+                .getGroupPropertiesExecutionCourse());
+
+        for (final IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse : associatedGroupPropertiesExecutionCourse) {
+            groupPropertiesExecutionCourse.setExecutionCourse(executionCourseTo);
+        }
+    }
+
+    private void removeEvaluations(final ISuportePersistente persistentSupport,
+            final IExecutionCourse executionCourseFrom) throws ExcepcaoPersistencia,
+            InvalidArgumentsServiceException {
+        final List<IEvaluation> associatedEvaluations = new ArrayList();
+        associatedEvaluations.addAll(executionCourseFrom.getAssociatedEvaluations());
+
+        final IPersistentEvaluation persistentEvaluation = persistentSupport.getIPersistentEvaluation();
+        for (final IEvaluation evaluation : associatedEvaluations) {
+            if (evaluation instanceof IFinalEvaluation) {
+                if (((IFinalEvaluation) evaluation).deleteFrom(executionCourseFrom)) {
+                    persistentEvaluation.deleteByOID(Evaluation.class, evaluation.getIdInternal());
+                }
+            } else {
+                throw new InvalidArgumentsServiceException();
+            }
+
+        }
+    }
+
+    private void copyBibliographicReference(final ISuportePersistente persistentSupport,
+            final IExecutionCourse executionCourseFrom, final IExecutionCourse executionCourseTo)
             throws ExcepcaoPersistencia {
-        IPersistentGroupPropertiesExecutionCourse persistentGroupPropertiesExecutionCourse = ps
-                .getIPersistentGroupPropertiesExecutionCourse();
-        List sourceGroupPropertiesExecutionCourseList = persistentGroupPropertiesExecutionCourse
-                .readAllByExecutionCourse(source);
-        Iterator iter = sourceGroupPropertiesExecutionCourseList.iterator();
-        while (iter.hasNext()) {
-            IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse) iter
-                    .next();
-            persistentGroupPropertiesExecutionCourse.simpleLockWrite(groupPropertiesExecutionCourse);
-            groupPropertiesExecutionCourse.setExecutionCourse(destination);
-            destination.addGroupPropertiesExecutionCourse(groupPropertiesExecutionCourse);
-            source.removeGroupPropertiesExecutionCourse(groupPropertiesExecutionCourse);
-        }
 
+        final List<IBibliographicReference> notCopiedBibliographicReferences = ExecutionCourseUtils
+                .copyBibliographicReference(executionCourseFrom, executionCourseTo);
+        removeBibliographicReferences(persistentSupport, notCopiedBibliographicReferences);
     }
 
-    private void copyEvaluations(IExecutionCourse destination, IExecutionCourse source,
-            ISuportePersistente ps) throws ExcepcaoPersistencia, InvalidArgumentsServiceException {
-
-        IPersistentObject persistentObject = ps.getIPersistentObject();
-
-        List sourceEvaluations = source.getAssociatedEvaluations();
-        if (sourceEvaluations != null && !sourceEvaluations.isEmpty()) {
-            Iterator iter = sourceEvaluations.iterator();
-            while (iter.hasNext()) {
-                IEvaluation evaluation = (IEvaluation) iter.next();
-                if (evaluation instanceof Proxy) {
-                    evaluation = (IEvaluation) ProxyHelper.getRealObject(evaluation);
-                }
-                if (evaluation instanceof IFinalEvaluation) {
-                    persistentObject.deleteByOID(Evaluation.class, evaluation.getIdInternal());
-                } else {
-                    throw new InvalidArgumentsServiceException();
-                }
-            }
-        }
-    }
-
-    private void copyBibliography(IExecutionCourse destination, IExecutionCourse source,
-            ISuportePersistente ps) throws ExcepcaoPersistencia {
-
-        IPersistentBibliographicReference persistentBibliographicReference = ps
+    private void removeBibliographicReferences(final ISuportePersistente persistentSupport,
+            final List<IBibliographicReference> notCopiedBibliographicReferences)
+            throws ExcepcaoPersistencia {
+        final IPersistentBibliographicReference persistentBibliographicReference = persistentSupport
                 .getIPersistentBibliographicReference();
-        List destinationBibliographicReferences = persistentBibliographicReference
-                .readBibliographicReference(destination.getIdInternal());
-        if (destinationBibliographicReferences == null) {
-            destinationBibliographicReferences = new ArrayList();
+        for (final IBibliographicReference bibliographicReference : notCopiedBibliographicReferences) {
+            bibliographicReference.delete();
+            persistentBibliographicReference.deleteByOID(BibliographicReference.class,
+                    bibliographicReference.getIdInternal());
         }
-        List sourceBibliographicReferences = persistentBibliographicReference
-                .readBibliographicReference(source.getIdInternal());
-        if (sourceBibliographicReferences != null) {
-            Iterator iter = sourceBibliographicReferences.iterator();
-            while (iter.hasNext()) {
-                IBibliographicReference bibliographicReference = (IBibliographicReference) iter.next();
-                final IBibliographicReference bibliographicReference2Compare = bibliographicReference;
-                if (CollectionUtils.find(destinationBibliographicReferences, new Predicate() {
-
-                    public boolean evaluate(Object arg0) {
-                        IBibliographicReference reference = (IBibliographicReference) arg0;
-                        if (reference.getTitle() == bibliographicReference2Compare.getTitle()) {
-                            return true;
-                        }
-                        return false;
-
-                    }
-                }) == null) {
-                    persistentBibliographicReference.simpleLockWrite(bibliographicReference);
-                    bibliographicReference.setExecutionCourse(destination);
-
-                } else {
-                    bibliographicReference.getExecutionCourse().getAssociatedBibliographicReferences()
-                            .remove(bibliographicReference);
-                    bibliographicReference.setExecutionCourse(null);
-                    persistentBibliographicReference.deleteByOID(BibliographicReference.class,
-                            bibliographicReference.getIdInternal());
-                }
-
-            }
-        }
-
     }
 
-    private void copyShiftsAndLessons(IExecutionCourse destination, IExecutionCourse source,
-            ISuportePersistente ps) throws ExcepcaoPersistencia {
-        ITurnoPersistente persistentShift = ps.getITurnoPersistente();
-        List sourceShifts = persistentShift.readByExecutionCourse(source.getIdInternal());
-        Iterator iter = sourceShifts.iterator();
-        while (iter.hasNext()) {
-            IShift shift = (IShift) iter.next();
-            persistentShift.simpleLockWrite(shift);
-            shift.setDisciplinaExecucao(destination);
-        }
+    private void copyShifts(final IExecutionCourse executionCourseFrom,
+            final IExecutionCourse executionCourseTo) throws ExcepcaoPersistencia {
 
+        final List<IShift> associatedShifts = new ArrayList();
+        associatedShifts.addAll(executionCourseFrom.getAssociatedShifts());
+
+        for (final IShift shift : associatedShifts) {
+            shift.setDisciplinaExecucao(executionCourseTo);
+        }
     }
 
-    private void copyAttends(IExecutionCourse destination, IExecutionCourse source,
-            ISuportePersistente ps) throws ExcepcaoPersistencia {
+    private void copyAttends(final IExecutionCourse executionCourseFrom,
+            final IExecutionCourse executionCourseTo) throws ExcepcaoPersistencia {
 
-        List sourceAttends = source.getAttends();
-        Map alreadyAttendingDestination = new HashMap();
-        for (int i = 0; i < destination.getAttends().size(); i++) {
-            IAttends attend = destination.getAttends().get(i);
+        final Iterator associatedAttendsFromDestination = executionCourseTo.getAttendsIterator();
+        final Map alreadyAttendingDestination = new HashMap();
+        while (associatedAttendsFromDestination.hasNext()) {
+            IAttends attend = (IAttends) associatedAttendsFromDestination.next();
             alreadyAttendingDestination.put(attend.getAluno().getNumber().toString(), attend);
         }
-        Iterator iter = sourceAttends.iterator();
-        while (iter.hasNext()) {
-            IAttends attend = (IAttends) iter.next();
+        final List<IAttends> associatedAttendsFromSource = new ArrayList();
+        associatedAttendsFromSource.addAll(executionCourseFrom.getAttends());
+        for (final IAttends attend : associatedAttendsFromSource) {
             if (!alreadyAttendingDestination.containsKey(attend.getAluno().getNumber().toString())) {
-                ps.getIFrequentaPersistente().simpleLockWrite(attend);
-                attend.setDisciplinaExecucao(destination);
+                attend.setDisciplinaExecucao(executionCourseTo);
             }
         }
     }
 
-    private void copySites(IExecutionCourse destination, IExecutionCourse source,
-            ISuportePersistente suportePersistente) throws ExcepcaoPersistencia {
+    private void copySite(final ISuportePersistente persistentSupport,
+            final IExecutionCourse executionCourseFrom, final IExecutionCourse executionCourseTo)
+            throws ExcepcaoPersistencia {
 
-        final ISite sourceSite = source.getSite();
+        final ISite sourceSite = executionCourseFrom.getSite();
         if (sourceSite != null) {
-            IPersistentSite persistentSite = suportePersistente.getIPersistentSite();
+            copySiteAnnouncements(executionCourseFrom.getSite(), executionCourseTo.getSite());
+            copySiteSections(executionCourseFrom.getSite(), executionCourseTo.getSite());
 
-            copySiteAnnouncements(suportePersistente, sourceSite.getAssociatedAnnouncements(),
-                    destination.getSite());
-            copySiteSections(suportePersistente, sourceSite.getAssociatedSections(), destination
-                    .getSite());
-
-            sourceSite.getExecutionCourse().setSite(null);
             sourceSite.setExecutionCourse(null);
+            final IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
             persistentSite.deleteByOID(Site.class, sourceSite.getIdInternal());
         }
     }
 
-    private void copySiteSections(final ISuportePersistente suportePersistente,
-            final List<ISection> associatedSections, final ISite destinationSite)
-            throws ExcepcaoPersistencia {
-        if (destinationSite != null) {
-            IPersistentSection persistentSection = suportePersistente.getIPersistentSection();
+    private void copySiteSections(final ISite siteFrom, final ISite siteTo) throws ExcepcaoPersistencia {
+        if (siteTo != null) {
+            final List<ISection> associatedSections = new ArrayList();
+            associatedSections.addAll(siteFrom.getAssociatedSections());
+
             for (final ISection section : associatedSections) {
-                persistentSection.simpleLockWrite(section);
-                section.setSite(destinationSite);
+                section.setSite(siteTo);
             }
         }
     }
 
-    private void copySiteAnnouncements(final ISuportePersistente suportePersistente,
-            final List<IAnnouncement> associatedAnnouncements, final ISite destinationSite)
+    private void copySiteAnnouncements(final ISite siteFrom, final ISite siteTo)
             throws ExcepcaoPersistencia {
 
-        if (destinationSite != null) {
-            IPersistentAnnouncement persistentAnnouncement = suportePersistente
-                    .getIPersistentAnnouncement();
+        if (siteTo != null) {
+            final List<IAnnouncement> associatedAnnouncements = new ArrayList();
+            associatedAnnouncements.addAll(siteFrom.getAssociatedAnnouncements());
+
             for (final IAnnouncement announcement : associatedAnnouncements) {
-                persistentAnnouncement.simpleLockWrite(announcement);
-                announcement.setSite(destinationSite);
+                announcement.setSite(siteTo);
             }
         }
     }
 
-    private void copyProfessorshipsAndResponsibleFors(IExecutionCourse destination,
-            IExecutionCourse source, ISuportePersistente ps) throws ExcepcaoPersistencia {
-        IPersistentProfessorship persistentProfessorship = ps.getIPersistentProfessorship();
-        IPersistentShiftProfessorship persistentShiftProfessorship = ps
+    private void copyProfessorships(final ISuportePersistente persistentSupport,
+            final IExecutionCourse executionCourseFrom, final IExecutionCourse executionCourseTo)
+            throws ExcepcaoPersistencia {
+
+        final List<IProfessorship> sourceExecutionCourseProfessorships = new ArrayList();
+        sourceExecutionCourseProfessorships.addAll(executionCourseFrom.getProfessorships());
+        for (final IProfessorship professorship : sourceExecutionCourseProfessorships) {
+            if (canAddProfessorshipTo(executionCourseTo, professorship)) {
+                professorship.setExecutionCourse(executionCourseTo);
+            } else {
+                removeProfessorship(persistentSupport, professorship);
+            }
+        }
+    }
+
+    private boolean canAddProfessorshipTo(final IExecutionCourse executionCourse,
+            final IProfessorship professorshipToAdd) {
+        final Iterator associatedProfessorships = executionCourse.getProfessorshipsIterator();
+        while (associatedProfessorships.hasNext()) {
+            IProfessorship professorship = (IProfessorship) associatedProfessorships.next();
+            if (professorship.getTeacher().equals(professorshipToAdd.getTeacher())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void removeProfessorship(final ISuportePersistente persistentSupport,
+            final IProfessorship professorship) throws ExcepcaoPersistencia {
+
+        deleteShiftProfessorships(persistentSupport, professorship);
+        deleteSupportLessons(persistentSupport, professorship);
+        dereferenceSummariesFrom(professorship);
+        deleteProfessorship(persistentSupport, professorship);
+    }
+
+    private void dereferenceSummariesFrom(final IProfessorship professorship) {
+        final Iterator associatedSummaries = professorship.getAssociatedSummariesIterator();
+        while (associatedSummaries.hasNext()) {
+            ISummary summary = (ISummary) associatedSummaries.next();
+            summary.setProfessorship(null);
+        }
+    }
+
+    private void deleteSupportLessons(final ISuportePersistente persistentSupport,
+            final IProfessorship professorship) throws ExcepcaoPersistencia {
+        final IPersistentSupportLesson persistentSupportLesson = persistentSupport
+                .getIPersistentSupportLesson();
+        final Iterator associatedSupportLessons = professorship.getSupportLessonsIterator();
+        while (associatedSupportLessons.hasNext()) {
+            ISupportLesson supportLesson = (ISupportLesson) associatedSupportLessons.next();
+            supportLesson.setProfessorship(null);
+            persistentSupportLesson.deleteByOID(SupportLesson.class, supportLesson.getIdInternal());
+        }
+    }
+
+    private void deleteShiftProfessorships(final ISuportePersistente persistentSupport,
+            final IProfessorship professorship) throws ExcepcaoPersistencia {
+        final IPersistentShiftProfessorship persistentShiftProfessorship = persistentSupport
                 .getIPersistentShiftProfessorship();
-        IPersistentSupportLesson persistentSupportLesson = ps.getIPersistentSupportLesson();
-        List destinationProfessorships = persistentProfessorship.readByExecutionCourse(destination.getIdInternal());
-        if (destinationProfessorships == null) {
-            destinationProfessorships = new ArrayList();
-        }
-        List sourceProfessorships = persistentProfessorship.readByExecutionCourse(source.getIdInternal());
-        if (sourceProfessorships != null) {
-
-            Iterator iter = sourceProfessorships.iterator();
-            while (iter.hasNext()) {
-                IProfessorship professorship = (IProfessorship) iter.next();
-                final IProfessorship professorship2Compare = professorship;
-                if (CollectionUtils.find(destinationProfessorships, new Predicate() {
-
-                    public boolean evaluate(Object arg0) {
-                        IProfessorship prof = (IProfessorship) arg0;
-                        if (prof.getTeacher() == professorship2Compare.getTeacher()) {
-                            return true;
-                        }
-                        return false;
-
-                    }
-                }) == null) {
-                    persistentProfessorship.simpleLockWrite(professorship);
-                    professorship.setExecutionCourse(destination);
-
-                } else {
-                    List associatedShiftsProfessorships = professorship
-                            .getAssociatedShiftProfessorship();
-                    Iterator iterator = associatedShiftsProfessorships.iterator();
-
-                    while (iterator.hasNext()) {
-                        IShiftProfessorship shiftProfessorship = (IShiftProfessorship) iterator.next();
-                        persistentShiftProfessorship.delete(shiftProfessorship);
-                    }
-
-                    List supportLessons = persistentSupportLesson.readByProfessorship(professorship.getIdInternal());
-                    iterator = supportLessons.iterator();
-                    while (iterator.hasNext()) {
-                        ISupportLesson supportLesson = (ISupportLesson) iterator.next();
-                        if (supportLesson.getProfessorship().getSupportLessons() != null) {
-                            supportLesson.getProfessorship().getSupportLessons().remove(supportLesson);
-                        }
-                        supportLesson.setProfessorship(null);
-                        persistentSupportLesson.deleteByOID(SupportLesson.class, supportLesson.getIdInternal());
-                    }
-
-                    IPersistentSummary persistentSummary = ps.getIPersistentSummary();
-                    List summaryList = persistentSummary.readByTeacher(professorship
-                            .getExecutionCourse().getIdInternal(), professorship.getTeacher()
-                            .getTeacherNumber());
-                    if (summaryList != null && !summaryList.isEmpty()) {
-                        for (Iterator iteratorSummaries = summaryList.iterator(); iteratorSummaries
-                                .hasNext();) {
-                            ISummary summary = (ISummary) iteratorSummaries.next();
-                            persistentSummary.simpleLockWrite(summary);
-                            summary.setProfessorship(null);
-                            summary.setKeyProfessorship(null);
-                        }
-                    }
-                    deleteProfessorship(persistentProfessorship, professorship);
-                }
-            }
-        }
-        List destinationResponsibleFor = destination.responsibleFors();
-        if (destinationResponsibleFor == null) {
-            destinationResponsibleFor = new ArrayList();
-        }
-        List sourceResponsibleFor = source.responsibleFors();
-        if (sourceResponsibleFor != null) {
-            Iterator iter = sourceResponsibleFor.iterator();
-            while (iter.hasNext()) {
-                IProfessorship responsibleFor = (IProfessorship) iter.next();
-                final IProfessorship responsibleFor2Compare = responsibleFor;
-                if (CollectionUtils.find(destinationResponsibleFor, new Predicate() {
-
-                    public boolean evaluate(Object arg0) {
-                        IProfessorship respons = (IProfessorship) arg0;
-                        if (respons.getTeacher() == responsibleFor2Compare.getTeacher()) {
-                            return true;
-                        }
-                        return false;
-
-                    }
-                }) == null) {
-                    persistentProfessorship.simpleLockWrite(responsibleFor);
-                    responsibleFor.setExecutionCourse(destination);
-
-                } else {
-                    responsibleFor.setResponsibleFor(false);
-                }
-            }
+        final Iterator associatedShifProfessorships = professorship
+                .getAssociatedShiftProfessorshipIterator();
+        while (associatedShifProfessorships.hasNext()) {
+            IShiftProfessorship shiftProfessorship = (IShiftProfessorship) associatedShifProfessorships
+                    .next();
+            shiftProfessorship.setProfessorship(null);
+            shiftProfessorship.setShift(null);
+            persistentShiftProfessorship.deleteByOID(ShiftProfessorship.class, shiftProfessorship
+                    .getIdInternal());
         }
     }
-    
-    private void deleteProfessorship(final IPersistentProfessorship persistentProfessorship,
-            final IProfessorship professorshipToDelete) throws ExcepcaoPersistencia {
-        
-        if (professorshipToDelete.getAssociatedSummaries() != null)
-            professorshipToDelete.getAssociatedSummaries().clear();
-        if (professorshipToDelete.getSupportLessons() != null)
-            professorshipToDelete.getSupportLessons().clear();
-        
-        if (professorshipToDelete.getAssociatedShiftProfessorship() != null)
-            professorshipToDelete.getAssociatedShiftProfessorship().clear();
 
-        if (professorshipToDelete.getExecutionCourse().getProfessorships() != null) {
-            professorshipToDelete.getExecutionCourse().getProfessorships().remove(professorshipToDelete);
-        }
-        professorshipToDelete.setExecutionCourse(null);
-        if (professorshipToDelete.getTeacher().getProfessorships() != null) {
-            professorshipToDelete.getTeacher().getProfessorships().remove(professorshipToDelete);
-        }
-        professorshipToDelete.setTeacher(null);
+    private void deleteProfessorship(final ISuportePersistente persistentSupport,
+            final IProfessorship professorshipToDelete) throws ExcepcaoPersistencia {
+        final IPersistentProfessorship persistentProfessorship = persistentSupport
+                .getIPersistentProfessorship();
+        professorshipToDelete.delete();
         persistentProfessorship.deleteByOID(Professorship.class, professorshipToDelete.getIdInternal());
     }
 

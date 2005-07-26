@@ -10,11 +10,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.applicationTier.utils.ExecutionCourseUtils;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IBibliographicReference;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IEvaluationMethod;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IProfessorship;
@@ -55,9 +54,9 @@ public class SeperateExecutionCourse implements IService {
         if (destinationExecutionCourse == null) {
             destinationExecutionCourse = createNewExecutionCourse(persistentObject,
                     originExecutionCourse);
-            createNewSite(persistentObject, destinationExecutionCourse);
-            copyEvaluationMethod(destinationExecutionCourse, originExecutionCourse);
-            copyBibliographicReferences(destinationExecutionCourse, originExecutionCourse);
+            createNewSite(destinationExecutionCourse);
+            ExecutionCourseUtils.copyBibliographicReference(originExecutionCourse, destinationExecutionCourse);
+            ExecutionCourseUtils.copyEvaluationMethod(originExecutionCourse, destinationExecutionCourse);           
         }
 
         final Collection curricularCoursesToTransfer = getCurricularCoursesToTransfer(
@@ -77,33 +76,7 @@ public class SeperateExecutionCourse implements IService {
         destinationExecutionCourse.getAssociatedCurricularCourses().addAll(curricularCoursesToTransfer);
     }
 
-    private void copyBibliographicReferences(IExecutionCourse destinationExecutionCourse,
-            IExecutionCourse originExecutionCourse) throws ExcepcaoPersistencia {
-
-        final Iterator bibliographicReferences = originExecutionCourse
-                .getAssociatedBibliographicReferencesIterator();
-        while (bibliographicReferences.hasNext()) {
-            final IBibliographicReference bibliographicReference = (IBibliographicReference) bibliographicReferences
-                    .next();
-            destinationExecutionCourse.createBibliographicReference(bibliographicReference.getTitle(),
-                    bibliographicReference.getAuthors(), bibliographicReference.getReference(),
-                    bibliographicReference.getYear(), bibliographicReference.getOptional());
-        }
-    }
-
-    private void copyEvaluationMethod(IExecutionCourse destinationExecutionCourse,
-            IExecutionCourse originExecutionCourse) throws ExcepcaoPersistencia {
-
-        IEvaluationMethod evaluationMethod = originExecutionCourse.getEvaluationMethod();
-        if (evaluationMethod != null) {
-            destinationExecutionCourse.createEvaluationMethod(evaluationMethod.getEvaluationElements(),
-                    evaluationMethod.getEvaluationElementsEn());
-        }
-    }
-
-    private void createNewSite(IPersistentObject persistentObject,
-            IExecutionCourse destinationExecutionCourse) throws ExcepcaoPersistencia {
-        persistentObject.simpleLockWrite(destinationExecutionCourse);
+    private void createNewSite(IExecutionCourse destinationExecutionCourse) throws ExcepcaoPersistencia {        
         destinationExecutionCourse.createSite();
     }
 

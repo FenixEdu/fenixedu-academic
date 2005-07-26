@@ -25,8 +25,8 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
- * @author jdnf	and Luis Cruz
- *  
+ * @author jdnf, mrsp and Luis Cruz
+ * 
  */
 public class DeleteExecutionCourses implements IService {
 
@@ -46,7 +46,6 @@ public class DeleteExecutionCourses implements IService {
                 undeletedExecutionCoursesCodes.add(executionCourse.getSigla());
             }
         }
-
         return undeletedExecutionCoursesCodes;
     }
 
@@ -55,20 +54,13 @@ public class DeleteExecutionCourses implements IService {
             final IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
 
         if (canBeDeleted(executionCourse)) {
-            deleteProfessorships(persistentSupport, executionCourse);
-            
-            executionCourse.getExecutionPeriod().getAssociatedExecutionCourses().remove(executionCourse);
             executionCourse.setExecutionPeriod(null);
-
+            deleteProfessorships(persistentSupport, executionCourse);
             dereferenceCurricularCourses(executionCourse);
-
             deleteExecutionCourseProperties(persistentSupport, executionCourse);
-
             deleteNonAffiliatedTeachers(executionCourse);
-
             persistentExecutionCourse
                     .deleteByOID(ExecutionCourse.class, executionCourse.getIdInternal());
-
             return true;
         }
         return false;
@@ -93,7 +85,6 @@ public class DeleteExecutionCourses implements IService {
             persistentObject.deleteByOID(ExecutionCourseProperty.class, executionCourseProperty
                     .getIdInternal());
         }
-        executionCourseProperties.clear();
     }
 
     private void dereferenceCurricularCourses(final IExecutionCourse executionCourse) {
@@ -111,8 +102,7 @@ public class DeleteExecutionCourses implements IService {
                 .getIPersistentProfessorship();
         final List<IProfessorship> professorships = executionCourse.getProfessorships();
         for (final IProfessorship professorship : professorships) {
-            professorship.setExecutionCourse(null);
-            professorship.setTeacher(null);
+            professorship.delete();
             persistentProfessorship.deleteByOID(Professorship.class, professorship.getIdInternal());
         }
         professorships.clear();
