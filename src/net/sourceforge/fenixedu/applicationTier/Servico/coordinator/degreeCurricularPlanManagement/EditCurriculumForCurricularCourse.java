@@ -94,8 +94,7 @@ public class EditCurriculumForCurricularCourse implements IService {
                 Calendar today = Calendar.getInstance();
                 oldCurriculum.setLastModificationDate(today.getTime());
             } else {
-                ICurriculum newCurriculum = new Curriculum();
-                persistentCurriculum.simpleLockWrite(newCurriculum);
+                ICurriculum newCurriculum = DomainFactory.makeCurriculum();
                 newCurriculum.setCurricularCourse(curricularCourse);
                 if (language == null) {
                     newCurriculum.setGeneralObjectives(newInfoCurriculum.getGeneralObjectives());

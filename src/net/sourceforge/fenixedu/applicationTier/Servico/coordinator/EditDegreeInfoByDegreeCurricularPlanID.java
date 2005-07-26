@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeInfo;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeInfoWithDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IDegreeInfo;
@@ -85,12 +86,10 @@ public class EditDegreeInfoByDegreeCurricularPlanID implements IService {
             //verify if the record found is in this execution period or if is new in database 
 			//if it isn't, is necessary to create a new record
             if (degreeInfo == null || (!verifyExecutionYear(degreeInfo.getLastModificationDate(), executionDegree.getExecutionYear()))) {
-                degreeInfo = new DegreeInfo();
+                degreeInfo = DomainFactory.makeDegreeInfo();
 
                 //associate the degree
                 degreeInfo.setDegree(degree);
-
-                persistentDegreeInfo.simpleLockWrite(degreeInfo);
             }
 
             //update information that it will be displayed in degree site.
