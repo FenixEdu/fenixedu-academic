@@ -1,0 +1,1 @@
+alter table PERSON add column KEY_PERSON_ACCOUNT int(11) unsigned default null;
