@@ -15,10 +15,12 @@ public class PublicationAuthorship extends PublicationAuthorship_Base {
     	boolean result = PublicationAuthorship_Base.remove(publicationAuthorships, publication);
     	if (result) {
 	    	int removedOrder = publicationAuthorships.getOrder();
-	    	for(IAuthorship authorship : publication.getPublicationAuthorships()) {
-	    		if (authorship.getOrder() > removedOrder) {
-	    			authorship.setOrder(authorship.getOrder()-1);
-	    		}
+	    	if (publication != null) {
+		    	for(IAuthorship authorship : publication.getPublicationAuthorships()) {
+		    		if (authorship.getOrder() > removedOrder) {
+		    			authorship.setOrder(authorship.getOrder()-1);
+		    		}
+		    	}
 	    	}
     	}
     	return result;    	

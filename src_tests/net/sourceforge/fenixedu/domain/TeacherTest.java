@@ -306,12 +306,6 @@ public class TeacherTest extends DomainTestBase {
         assertEquals(publication8.getPublicationTeachersCount(), 0);
         assertEquals(publication9.getPublicationTeachersCount(), 0);
         
-        try {
-            teacher2.removeFromTeacherInformationSheet(publication9);
-            fail("Accepted to remove a non-associated publication");
-        } catch (DomainException e) {
-            // clean expected exception
-        }
     }
     
     private void testResponsibleForValue(boolean value1, boolean value2, boolean value3){

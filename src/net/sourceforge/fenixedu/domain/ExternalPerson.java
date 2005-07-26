@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 
 public class ExternalPerson extends ExternalPerson_Base {
 
-	//TODO retirar isto quando o cloner já não depender deste método
 	public ExternalPerson() {
 	}
 	

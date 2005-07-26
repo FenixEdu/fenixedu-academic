@@ -79,7 +79,7 @@ public class PublicationTest extends DomainTestBase {
         person3 = new Person();
         person3.setNome("Autor3");
         
-        authors = new ArrayList();
+        authors = new ArrayList<IPerson>();
         authors.add(person1);
         authors.add(person2);
         authors.add(person3);
@@ -198,6 +198,7 @@ public class PublicationTest extends DomainTestBase {
         
         IAuthorship authorship = new Authorship();
         authorship.setAuthor(person1);
+        authorship.setOrder(1);
         authorship.setPublication(existentPublication);
         //existentPublication.getPublicationAuthorships().add(authorship);
 
@@ -250,7 +251,7 @@ public class PublicationTest extends DomainTestBase {
         
         assertNotNull(publication);
         
-        List<IPerson> createdAuthors = new ArrayList(authors.size());
+        List<IPerson> createdAuthors = new ArrayList<IPerson>(authors.size());
         for(IAuthorship authorship : publication.getPublicationAuthorships()) {
             createdAuthors.add(authorship.getAuthor());
         }
@@ -271,7 +272,7 @@ public class PublicationTest extends DomainTestBase {
         
         assertNotNull(existentPublication);
         
-        List<IPerson> createdAuthors = new ArrayList(authors.size());
+        List<IPerson> createdAuthors = new ArrayList<IPerson>(authors.size());
         for(IAuthorship authorship : existentPublication.getPublicationAuthorships()) {
             createdAuthors.add(authorship.getAuthor());
         }

@@ -25,11 +25,9 @@ public class Authorship extends Authorship_Base {
         setOrder(order);
     }
 
-
-    public void delete()
-    {
+    public void delete() {
+    	super.deleteDomainObject();
         removeAuthor();
         removePublication();
-        super.deleteDomainObject();
     }
 }

@@ -14,8 +14,6 @@ import org.apache.commons.collections.Transformer;
 
 public class Publication extends Publication_Base implements IPublication {
 
-   
-
     public Publication() {
     } 
 

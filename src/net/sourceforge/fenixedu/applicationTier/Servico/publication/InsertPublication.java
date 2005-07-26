@@ -22,7 +22,6 @@ public class InsertPublication implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentPublicationType persistentPublicationType = sp.getIPersistentPublicationType();
 
-        // COMO É QUE ISTO ESTÁ A FUNCIONAR???? estamos a passar uma lista de InfoPublicationAuthors qd devia ser info Authors!!
         List infoAuthorsList = infoPublication.getInfoPublicationAuthors();
 
         final List<IPerson> authors = new InsertInexistentAuthors().run(infoAuthorsList);

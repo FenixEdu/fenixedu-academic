@@ -26,11 +26,11 @@ public class Teacher extends Teacher_Base {
      *                        BUSINESS SERVICES                         *
      ********************************************************************/
     
-    public void addToTeacherInformationSheet(IPublication publication, PublicationArea publicationArea) throws DomainException {
+    public void addToTeacherInformationSheet(IPublication publication, PublicationArea publicationArea) {
         new PublicationTeacher(publication, this, publicationArea);
     }
     
-    public void removeFromTeacherInformationSheet(IPublication publication) throws DomainException {
+    public void removeFromTeacherInformationSheet(IPublication publication) {
         Iterator<IPublicationTeacher> iterator = getTeacherPublications().iterator();
 
         while (iterator.hasNext()) {
@@ -41,8 +41,6 @@ public class Teacher extends Teacher_Base {
                 return;
             }
         }
-        // In case the publication isn't associated with the teacher
-        throw new DomainException(publication.getTitle());
     }
     
     public Boolean canAddPublicationToTeacherInformationSheet(PublicationArea area) {
