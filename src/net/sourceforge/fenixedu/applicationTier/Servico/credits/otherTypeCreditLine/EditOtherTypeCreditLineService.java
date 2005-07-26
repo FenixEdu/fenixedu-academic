@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.credits.otherTypeCredit
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoOtherTypeCreditLine;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
@@ -50,7 +51,7 @@ public class EditOtherTypeCreditLineService extends EditDomainObjectService {
 
     @Override
     protected IDomainObject createNewDomainObject(InfoObject infoObject) {
-        return new OtherTypeCreditLine();
+        return DomainFactory.makeOtherTypeCreditLine();
     }
 
     @Override

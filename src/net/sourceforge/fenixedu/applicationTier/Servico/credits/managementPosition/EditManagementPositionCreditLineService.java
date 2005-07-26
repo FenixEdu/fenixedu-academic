@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.credits.managementPosit
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoManagementPositionCreditLine;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -39,7 +40,7 @@ public class EditManagementPositionCreditLineService extends EditDomainObjectSer
 
     @Override
     protected IDomainObject createNewDomainObject(InfoObject infoObject) {
-        return new ManagementPositionCreditLine();
+        return DomainFactory.makeManagementPositionCreditLine();
     }
 
     @Override

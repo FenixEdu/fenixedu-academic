@@ -10,8 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteEnrollment;
 import net.sourceforge.fenixedu.domain.Branch;
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IBranch;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IEnrolment;
@@ -111,9 +110,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
                     if (extraCurricularCourses.contains(enrolment.getIdInternal())) {
                         if (!(enrolment instanceof IEnrolmentInExtraCurricularCourse)) {
 
-
-                            IEnrolment auxEnrolment = new EnrolmentInExtraCurricularCourse();
-                            persistentEnrolment.simpleLockWrite(auxEnrolment);
+                            IEnrolment auxEnrolment = DomainFactory.makeEnrolmentInExtraCurricularCourse();
 
                             copyEnrollment(enrolment, auxEnrolment);
                             setEnrolmentCreationInformation(userView, auxEnrolment);
@@ -129,8 +126,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
                     } else {
                         if (enrolment instanceof IEnrolmentInExtraCurricularCourse) {
                             
-                            IEnrolment auxEnrolment = new Enrolment();
-                            persistentEnrolment.simpleLockWrite(auxEnrolment);
+                            IEnrolment auxEnrolment = DomainFactory.makeEnrolment();
 
                             copyEnrollment(enrolment, auxEnrolment);
                             setEnrolmentCreationInformation(userView, auxEnrolment);
