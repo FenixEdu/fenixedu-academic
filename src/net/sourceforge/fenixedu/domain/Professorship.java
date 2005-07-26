@@ -1,7 +1,11 @@
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import net.sourceforge.fenixedu.domain.credits.event.CreditsEvent;
 import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerAware;
@@ -55,5 +59,39 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 
     public void afterLookup(PersistenceBroker broker) throws PersistenceBrokerException {
     }
+    
+    public static IProfessorship create(Boolean responsibleFor, IExecutionCourse executionCourse, ITeacher teacher, Double hours) throws MaxResponsibleForExceed, InvalidCategory{
+       
+        if(responsibleFor == null || executionCourse == null || teacher == null)
+            throw new NullPointerException();
+        
+        IProfessorship professorShip = new Professorship();
+               
+        if(hours == null)
+            professorShip.setHours(new Double(0.0));
+        else
+            professorShip.setHours(hours);
 
+        if (responsibleFor.booleanValue()) {            
+            ResponsibleForValidator.getInstance().validateResponsibleForList(teacher, executionCourse, professorShip);
+            professorShip.setResponsibleFor(true);
+        }
+        else
+            professorShip.setResponsibleFor(false);
+        
+        professorShip.setExecutionCourse(executionCourse);
+        professorShip.setTeacher(teacher);
+        
+        return professorShip;
+    }
+
+    public void delete() {
+
+        if (this.getAssociatedSummariesCount() > 0 || this.getAssociatedShiftProfessorshipCount() > 0
+                || this.getSupportLessonsCount() > 0)
+            throw new DomainException(this.getClass().getName(), "");
+
+        this.setExecutionCourse(null);
+        this.setTeacher(null);
+    }
 }
