@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.GroupProperties;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IAttendsSet;
@@ -18,8 +19,6 @@ import net.sourceforge.fenixedu.domain.IGroupProperties;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
-import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.domain.StudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupProperties;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
@@ -39,21 +38,15 @@ public class CreateStudentGroupWithoutShift implements IService {
     private IPersistentStudentGroup persistentStudentGroup = null;
 
     private void checkIfStudentGroupExists(Integer groupNumber, IGroupProperties groupProperties)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
 
         IStudentGroup studentGroup = null;
 
-        try {
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
 
-            ISuportePersistente persistentSupport = PersistenceSupportFactory
-                    .getDefaultPersistenceSupport();
-            persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
-
-            studentGroup = persistentStudentGroup.readStudentGroupByAttendsSetAndGroupNumber(
-                    groupProperties.getAttendsSet().getIdInternal(), groupNumber);
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia.getMessage());
-        }
+        studentGroup = persistentStudentGroup.readStudentGroupByAttendsSetAndGroupNumber(groupProperties
+                .getAttendsSet().getIdInternal(), groupNumber);
 
         if (studentGroup != null)
             throw new ExistingServiceException();
@@ -76,8 +69,7 @@ public class CreateStudentGroupWithoutShift implements IService {
 
         persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
         IAttendsSet attendsSet = groupProperties.getAttendsSet();
-        IStudentGroup newStudentGroup = new StudentGroup(groupNumber, attendsSet);
-        persistentStudentGroup.simpleLockWrite(newStudentGroup);
+        IStudentGroup newStudentGroup = DomainFactory.makeStudentGroup(groupNumber, attendsSet);
         attendsSet.addStudentGroup(newStudentGroup);
         persistentStudent = persistentSupport.getIPersistentStudent();
         persistentStudentGroupAttend = persistentSupport.getIPersistentStudentGroupAttend();
@@ -140,10 +132,7 @@ public class CreateStudentGroupWithoutShift implements IService {
                 throw new InvalidArgumentsServiceException();
             }
 
-            IStudentGroupAttend notExistingSGAttend = new StudentGroupAttend(newStudentGroup, attend);
-
-            persistentStudentGroupAttend.simpleLockWrite(notExistingSGAttend);
-
+            IStudentGroupAttend notExistingSGAttend = DomainFactory.makeStudentGroupAttend(newStudentGroup, attend);
         }
         return true;
 

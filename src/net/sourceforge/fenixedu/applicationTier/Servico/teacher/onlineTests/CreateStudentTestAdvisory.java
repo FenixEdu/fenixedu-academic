@@ -8,12 +8,11 @@ import java.util.Calendar;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.domain.Advisory;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAdvisory;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory;
 import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTestAdvisory;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -48,11 +47,9 @@ public class CreateStudentTestAdvisory implements IService {
 
             // Create Advisory
             IAdvisory advisory = createTestAdvisory(distributedTest, path);
-            persistentSuport.getIPersistentAdvisory().simpleLockWrite(advisory);
 
             // Create DistributedTestAdvisory
-            IDistributedTestAdvisory distributedTestAdvisory = new DistributedTestAdvisory();
-            persistentSuport.getIPersistentDistributedTestAdvisory().simpleLockWrite(distributedTestAdvisory);
+            IDistributedTestAdvisory distributedTestAdvisory = DomainFactory.makeDistributedTestAdvisory();
             distributedTestAdvisory.setAdvisory(advisory);
             distributedTestAdvisory.setDistributedTest(distributedTest);
 
@@ -63,7 +60,7 @@ public class CreateStudentTestAdvisory implements IService {
     }
 
     private IAdvisory createTestAdvisory(IDistributedTest distributedTest, String path) {
-        IAdvisory advisory = new Advisory();
+        IAdvisory advisory = DomainFactory.makeAdvisory();
         advisory.setCreated(Calendar.getInstance().getTime());
         advisory.setExpires(distributedTest.getEndDate().getTime());
         advisory.setSender("Docente da disciplina " + ((IExecutionCourse) distributedTest.getTestScope().getDomainObject()).getNome());
