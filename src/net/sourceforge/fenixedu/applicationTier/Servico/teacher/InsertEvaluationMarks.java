@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMark;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
@@ -27,7 +28,6 @@ import net.sourceforge.fenixedu.domain.IMark;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluation;
@@ -90,10 +90,7 @@ public class InsertEvaluationMarks implements IService {
                     IMark domainMark = persistentMark.readBy(evaluation, attend);
                     //verify if the student has already a mark
                     if (domainMark == null) {
-                        domainMark = new Mark();
-
-                        persistentMark.simpleLockWrite(domainMark);
-
+                        domainMark = DomainFactory.makeMark();
                         domainMark.setAttend(attend);
                         domainMark.setEvaluation(evaluation);
                         domainMark.setMark(mark.toUpperCase());

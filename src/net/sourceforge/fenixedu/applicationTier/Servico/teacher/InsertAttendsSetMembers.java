@@ -11,7 +11,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
-import net.sourceforge.fenixedu.domain.AttendInAttendsSet;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.GroupProperties;
 import net.sourceforge.fenixedu.domain.IAttendInAttendsSet;
 import net.sourceforge.fenixedu.domain.IAttends;
@@ -35,16 +35,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 
 public class InsertAttendsSetMembers implements IService {
-
-    /**
-     * The constructor of this class.
-     */
-    public InsertAttendsSetMembers() {
-    }
-
-    /**
-     * Executes the service.
-     */
 
     public Boolean run(Integer executionCourseCode, Integer groupPropertiesCode,
             List studentCodes) throws FenixServiceException {
@@ -135,8 +125,7 @@ public class InsertAttendsSetMembers implements IService {
                 	attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student,executionCourse);
                 }
                 
-				IAttendInAttendsSet attendInAttendsSet = new AttendInAttendsSet(attend,attendsSet);
-                persistentAttendInAttendsSet.simpleLockWrite(attendInAttendsSet);
+				IAttendInAttendsSet attendInAttendsSet = DomainFactory.makeAttendInAttendsSet(attend,attendsSet);
                 attendsSet.addAttendInAttendsSet(attendInAttendsSet);
                 attend.addAttendInAttendsSet(attendInAttendsSet);
             }

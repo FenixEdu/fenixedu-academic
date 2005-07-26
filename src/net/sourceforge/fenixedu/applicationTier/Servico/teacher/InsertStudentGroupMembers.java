@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituat
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.GroupProperties;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IGroupProperties;
@@ -23,7 +24,6 @@ import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.domain.StudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupProperties;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
@@ -111,9 +111,7 @@ public class InsertStudentGroupMembers implements IService {
 
             IAttends attend = groupProperties.getAttendsSet().getStudentAttend(student);
 
-            IStudentGroupAttend notExistingSGAttend = new StudentGroupAttend(studentGroup, attend);
-
-            persistentStudentGroupAttend.simpleLockWrite(notExistingSGAttend);
+            IStudentGroupAttend notExistingSGAttend = DomainFactory.makeStudentGroupAttend(studentGroup, attend);
         }
 
         return new Boolean(true);

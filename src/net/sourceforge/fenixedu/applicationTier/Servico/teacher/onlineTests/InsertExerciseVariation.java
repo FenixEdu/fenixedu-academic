@@ -13,12 +13,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.IMetadata;
 import net.sourceforge.fenixedu.domain.onlineTests.IQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
-import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -70,12 +70,11 @@ public class InsertExerciseVariation implements IService {
                     IPersistentQuestion persistentQuestion = persistentSuport.getIPersistentQuestion();
 
                     parseQuestion.parseQuestion(xmlFile, new InfoQuestion(), this.path);
-                    IQuestion question = new Question();
+                    IQuestion question = DomainFactory.makeQuestion();
                     question.setMetadata(metadata);
                     question.setXmlFile(xmlFile);
                     question.setXmlFileName(persistentQuestion.correctFileName(xmlFileName, metadataId));
                     question.setVisibility(new Boolean("true"));
-                    persistentQuestion.simpleLockWrite(question);
                     xmlNumber++;
                 } catch (SAXParseException e) {
                     badXmls.add(xmlFileName);

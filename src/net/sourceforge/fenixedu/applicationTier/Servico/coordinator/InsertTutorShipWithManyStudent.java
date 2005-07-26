@@ -9,12 +9,12 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.ITutor;
-import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
@@ -29,10 +29,6 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
  */
 public class InsertTutorShipWithManyStudent extends InsertTutorShip {
 
-    public InsertTutorShipWithManyStudent() {
-
-    }
-
     public Object run(Integer executionDegreeId, Integer teacherNumber, Integer studentNumberFirst,
             Integer studentNumberSecond) throws FenixServiceException {
         if (teacherNumber == null || studentNumberFirst == null || studentNumberSecond == null) {
@@ -40,7 +36,7 @@ public class InsertTutorShipWithManyStudent extends InsertTutorShip {
         }
 
         ISuportePersistente sp = null;
-        List studentsErrors = new ArrayList();
+        List<Integer> studentsErrors = new ArrayList<Integer>();
         try {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
@@ -89,11 +85,9 @@ public class InsertTutorShipWithManyStudent extends InsertTutorShip {
                 IPersistentTutor persistentTutor = sp.getIPersistentTutor();
                 ITutor tutor = persistentTutor.readTutorByTeacherAndStudent(teacher, student);
                 if (tutor == null) {
-                    tutor = new Tutor();
+                    tutor = DomainFactory.makeTutor();
                     tutor.setTeacher(teacher);
                     tutor.setStudent(student);
-
-                    persistentTutor.simpleLockWrite(tutor);
                 }
             }
         } catch (Exception e) {

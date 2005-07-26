@@ -10,13 +10,13 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.onlineTests.IMetadata;
 import net.sourceforge.fenixedu.domain.onlineTests.IQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.ITest;
 import net.sourceforge.fenixedu.domain.onlineTests.ITestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
-import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -85,8 +85,7 @@ public class InsertTestQuestion implements IService {
                     if (thisQuestionValue == null)
                         thisQuestionValue = new Double(0);
                 }
-                ITestQuestion testQuestion = new TestQuestion();
-                persistentTestQuestion.simpleLockWrite(testQuestion);
+                ITestQuestion testQuestion = DomainFactory.makeTestQuestion();
                 persistentTest.simpleLockWrite(test);
                 test.setNumberOfQuestions(new Integer(test.getNumberOfQuestions().intValue() + 1));
                 test.setLastModifiedDate(Calendar.getInstance().getTime());
