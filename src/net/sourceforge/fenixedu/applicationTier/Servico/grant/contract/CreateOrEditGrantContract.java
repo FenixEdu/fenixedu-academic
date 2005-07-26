@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.GrantTy
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.InvalidGrantPaymentEntityException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContract;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantOrientationTeacher;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantCostCenter;
@@ -57,7 +57,7 @@ public class CreateOrEditGrantContract implements IService {
             Integer newContractNumber = new Integer(maxNumber.intValue() + 1);
             infoGrantContract.setContractNumber(newContractNumber);
 
-            grantContract = new GrantContract();
+            grantContract = DomainFactory.makeGrantContract();
         } else {
             grantContract = pGrantContract.readGrantContractByNumberAndGrantOwner(infoGrantContract
                     .getContractNumber(), infoGrantContract.getGrantOwnerInfo().getIdInternal());
@@ -136,15 +136,10 @@ public class CreateOrEditGrantContract implements IService {
         if (teacher == null)
             throw new GrantOrientationTeacherNotFoundException();
 
-        newGrantOrientationTeacher = new GrantOrientationTeacher();
-        pGrantOrientationTeacher.simpleLockWrite(newGrantOrientationTeacher);
+        newGrantOrientationTeacher = DomainFactory.makeGrantOrientationTeacher();
         newGrantOrientationTeacher.setBeginDate(grantOrientationTeacherInfo.getBeginDate());
         newGrantOrientationTeacher.setEndDate(grantOrientationTeacherInfo.getEndDate());
-
         newGrantOrientationTeacher.setGrantContract(grantContract);
-        newGrantOrientationTeacher.setKeyContract(grantContract.getIdInternal());
-
-        newGrantOrientationTeacher.setKeyTeacher(teacher.getIdInternal());
         newGrantOrientationTeacher.setOrientationTeacher(teacher);
 
         return newGrantOrientationTeacher;
