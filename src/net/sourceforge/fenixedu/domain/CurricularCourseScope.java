@@ -4,11 +4,7 @@ import java.util.Calendar;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-/**
- * @author dcs-rjao
- * 
- * 20/Mar/2003
- */
+
 
 public class CurricularCourseScope extends CurricularCourseScope_Base {
 
@@ -104,6 +100,21 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 	public Boolean canBeDeleted() {
 		return !hasAnyAssociatedWrittenEvaluations();
 	}
+	
+	
+	public void edit(IBranch branch, ICurricularSemester curricularSemester,
+			 Calendar beginDate, Calendar endDate, String Annotation) {
+   	
+		setBranch(branch);
+		setCurricularSemester(curricularSemester);
+		setBeginDate(beginDate);
+		setEndDate(endDate);
+		setAnotation(Annotation);
+	}
+	
+	public void end(Calendar endDate) {
+		setEndDate(endDate);
+	}	
 	
 	public void delete() throws DomainException {
 

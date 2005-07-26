@@ -495,6 +495,10 @@ class net.sourceforge.fenixedu.domain.CurricularCourseScope extends net.sourcefo
     
     public Boolean isActive();
 	
+	public void edit(IBranch branch, ICurricularSemester curricularSemester, java.util.Calendar beginDate, java.util.Calendar endDate, String Annotation);
+	
+	public void end(java.util.Calendar endDate);
+	
 	public void delete() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
 	
 	public Boolean canBeDeleted();

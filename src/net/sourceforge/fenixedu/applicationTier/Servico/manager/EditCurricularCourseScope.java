@@ -1,6 +1,3 @@
-/*
- * Created on 21/Ago/2003
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -22,9 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author lmac1
- */
+
 public class EditCurricularCourseScope implements IService {
 
     public void run(InfoCurricularCourseScope newInfoCurricularCourseScope) throws FenixServiceException {
@@ -36,22 +31,18 @@ public class EditCurricularCourseScope implements IService {
         try {
             ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentBranch persistentBranch = ps.getIPersistentBranch();
-            IPersistentCurricularSemester persistentCurricularSemester = ps
-                    .getIPersistentCurricularSemester();
-            IPersistentCurricularCourseScope persistentCurricularCourseScope = ps
-                    .getIPersistentCurricularCourseScope();
+            IPersistentCurricularSemester persistentCurricularSemester = ps.getIPersistentCurricularSemester();
+            IPersistentCurricularCourseScope persistentCurricularCourseScope = ps.getIPersistentCurricularCourseScope();
 
             Integer branchId = newInfoCurricularCourseScope.getInfoBranch().getIdInternal();
-
             newBranch = (IBranch) persistentBranch.readByOID(Branch.class, branchId);
 
             if (newBranch == null) {
                 throw new NonExistingServiceException("message.non.existing.branch", null);
             }
 
-            Integer curricularSemesterId = newInfoCurricularCourseScope.getInfoCurricularSemester()
-                    .getIdInternal();
-
+			
+            Integer curricularSemesterId = newInfoCurricularCourseScope.getInfoCurricularSemester().getIdInternal();
             newCurricularSemester = (ICurricularSemester) persistentCurricularSemester.readByOID(
                     CurricularSemester.class, curricularSemesterId);
 
@@ -59,21 +50,17 @@ public class EditCurricularCourseScope implements IService {
                 throw new NonExistingServiceException("message.non.existing.curricular.semester", null);
             }
 
-            oldCurricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope
-                    .readByOID(CurricularCourseScope.class,
-                            newInfoCurricularCourseScope.getIdInternal(), true);
+			
+            oldCurricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope.readByOID(
+					CurricularCourseScope.class, newInfoCurricularCourseScope.getIdInternal(), true);
 
             if (oldCurricularCourseScope == null) {
                 throw new NonExistingServiceException("message.non.existing.curricular.course.scope",
                         null);
             }
 
-            oldCurricularCourseScope.setBranch(newBranch);
-            //it already includes the curricular year
-            oldCurricularCourseScope.setCurricularSemester(newCurricularSemester);
-            oldCurricularCourseScope.setBeginDate(newInfoCurricularCourseScope.getBeginDate());
-            oldCurricularCourseScope.setEndDate(null);
-            oldCurricularCourseScope.setAnotation(newInfoCurricularCourseScope.getAnotation());
+			oldCurricularCourseScope.edit(newBranch, newCurricularSemester, newInfoCurricularCourseScope.getBeginDate(),
+					null, newInfoCurricularCourseScope.getAnotation());
 
         } catch (ExistingPersistentException ex) {
             throw new ExistingServiceException("O âmbito com ramo " + newBranch.getCode() + ", do "

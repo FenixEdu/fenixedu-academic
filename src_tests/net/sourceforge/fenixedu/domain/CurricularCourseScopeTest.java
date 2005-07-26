@@ -23,6 +23,8 @@ public class CurricularCourseScopeTest extends DomainTestBase {
 	private Calendar newEndDate;
 	private String newAnnotation;
 	
+	ICurricularCourseScope scopeToEdit;
+	
 	private ICurricularCourseScope curricularCourseScopeToDelete;
 	private ICurricularCourseScope curricularCourseScopeNotToDelete;
 	
@@ -30,7 +32,7 @@ public class CurricularCourseScopeTest extends DomainTestBase {
         super.setUp();
 		
 		setUpCreate();
-		
+		setUpEdit();
 		setUpDelete();
     }
 	
@@ -55,6 +57,14 @@ public class CurricularCourseScopeTest extends DomainTestBase {
 		otherCurricularCourseScope.setCurricularCourse(commonCurricularCourse);
 		otherCurricularCourseScope.setCurricularSemester(commonCurricularSemester);
 		otherCurricularCourseScope.setBranch(commonBranch);
+	}
+	
+	
+	
+	private void setUpEdit() {
+		
+		scopeToEdit = new CurricularCourseScope();
+		
 	}
 	
 	
@@ -118,6 +128,27 @@ public class CurricularCourseScopeTest extends DomainTestBase {
 		}
 		
 	}
+	
+	
+	public void testEdit() {
+		
+		scopeToEdit.edit(newBranch, newCurricularSemester, newBeginDate, null, newAnnotation);
+		
+		assertTrue(scopeToEdit.getBranch().equals(newBranch));
+		assertTrue(scopeToEdit.getCurricularSemester().equals(newCurricularSemester));
+		assertTrue(scopeToEdit.getBeginDate().equals(newBeginDate));
+		assertNull(scopeToEdit.getEndDate());
+		assertTrue(scopeToEdit.getAnotation().equals(newAnnotation));
+	}
+	
+	
+	public void testEnd() {
+		
+		scopeToEdit.end(newEndDate);
+		
+		assertTrue(scopeToEdit.getEndDate().equals(newEndDate));
+	}
+	
 	
 	public void testDelete() {
 		try {

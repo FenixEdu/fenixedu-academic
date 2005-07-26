@@ -46,7 +46,7 @@ public class EndCurricularCourseScope implements IService {
                 throw new NonExistingServiceException("message.non.existing.curricular.course.scope",
                         null);
             }
-            oldCurricularCourseScope.setEndDate(newInfoCurricularCourseScope.getEndDate());
+            oldCurricularCourseScope.end(newInfoCurricularCourseScope.getEndDate());
 
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);
