@@ -5,11 +5,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -26,10 +25,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class EstablishFinalDegreeWorkStudentGroup implements IService {
 
-    public EstablishFinalDegreeWorkStudentGroup() {
-        super();
-    }
-
     public boolean run(String username, Integer executionDegreeOID) throws ExcepcaoPersistencia,
             FenixServiceException {
         ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -41,12 +36,10 @@ public class EstablishFinalDegreeWorkStudentGroup implements IService {
 
         IGroup group = persistentFinalDegreeWork.readFinalDegreeWorkGroupByUsername(username);
         if (group == null) {
-            group = new Group();
-            persistentFinalDegreeWork.simpleLockWrite(group);
+            group = DomainFactory.makeGroup();
             IStudent student = persistentStudent.readByUsername(username);
             if (student != null) {
-                IGroupStudent groupStudent = new GroupStudent();
-                persistentFinalDegreeWork.simpleLockWrite(groupStudent);
+                IGroupStudent groupStudent = DomainFactory.makeGroupStudent();
                 groupStudent.setStudent(student);
                 groupStudent.setFinalDegreeDegreeWorkGroup(group);
             } else {

@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRoom;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiry;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -36,7 +37,6 @@ import net.sourceforge.fenixedu.domain.inquiries.IInquiriesCourse;
 import net.sourceforge.fenixedu.domain.inquiries.IInquiriesRegistry;
 import net.sourceforge.fenixedu.domain.inquiries.IInquiriesRoom;
 import net.sourceforge.fenixedu.domain.inquiries.IInquiriesTeacher;
-import net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher;
@@ -113,7 +113,7 @@ public class WriteInquiry implements IService {
     private IInquiriesCourse writeInquiriesCourse(final IPersistentInquiriesCourse inquiriesCourseDAO,
             final InfoInquiry ii, final InfoInquiriesCourse iic, final ISuportePersistente sp)
             throws ExcepcaoPersistencia {
-        final IInquiriesCourse inquiriesCourse = new InquiriesCourse();
+        final IInquiriesCourse inquiriesCourse = DomainFactory.makeInquiriesCourse();
 
         IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
         inquiriesCourse.setExecutionCourse((IExecutionCourse) executionCourseDAO.readByOID(
@@ -144,7 +144,6 @@ public class WriteInquiry implements IService {
         inquiriesCourse.setEvaluationMethodAdequation(iic.getEvaluationMethodAdequation());
         inquiriesCourse.setWeeklySpentHours(iic.getWeeklySpentHours());
         inquiriesCourse.setGlobalAppreciation(iic.getGlobalAppreciation());
-        inquiriesCourseDAO.simpleLockWrite(inquiriesCourse);
 
         return inquiriesCourse;
     }

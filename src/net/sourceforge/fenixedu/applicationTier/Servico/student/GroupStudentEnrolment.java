@@ -15,13 +15,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IGroupProperties;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.domain.StudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroupAttend;
@@ -75,7 +75,7 @@ public class GroupStudentEnrolment implements IService {
         if (!result) {
             throw new InvalidArgumentsServiceException();
         }
-        IStudentGroupAttend newStudentGroupAttend = new StudentGroupAttend(studentGroup, attend);
+        IStudentGroupAttend newStudentGroupAttend = DomainFactory.makeStudentGroupAttend(studentGroup, attend);
 
         List allStudentGroup = groupProperties.getAttendsSet().getStudentGroups();
 
@@ -90,7 +90,6 @@ public class GroupStudentEnrolment implements IService {
                 throw new InvalidSituationServiceException();
             }
         }
-        persistentStudentGroupAttend.simpleLockWrite(newStudentGroupAttend);
 
         return new Boolean(true);
     }
