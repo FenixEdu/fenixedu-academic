@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.projectsManagement.IProject;
 import net.sourceforge.fenixedu.domain.projectsManagement.IProjectAccess;
-import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -87,10 +86,8 @@ public class InsertNewProjectAccess implements IService {
             if (sp.getIPersistentProjectAccess().countByPersonAndProject(person, new Integer(projectCodes[i])) != 0)
                 throw new IllegalArgumentException();
 
-            IProjectAccess projectAccess = new ProjectAccess();
-            sp.getIPersistentProjectAccess().simpleLockWrite(projectAccess);
+            IProjectAccess projectAccess = DomainFactory.makeProjectAccess();
             projectAccess.setPerson(person);
-            projectAccess.setKeyPerson(person.getIdInternal());
             projectAccess.setKeyProjectCoordinator(new Integer(userNumber));
             projectAccess.setKeyProject(new Integer(projectCodes[i]));
             projectAccess.setBeginDate(beginDate);
