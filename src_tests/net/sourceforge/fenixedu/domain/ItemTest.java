@@ -109,7 +109,7 @@ public class ItemTest extends DomainTestBase {
     
     private void testEditInformation(String name, String information, boolean urgent){
         assertEquals("Name Unexpected", name, item2.getName());
-        assertEquals("Information Unexpectfalseed", information, item2.getInformation());
+        assertEquals("Information Unexpected", information, item2.getInformation());
         assertEquals("Urgent Unexpected", urgent, item2.getUrgent().booleanValue());
     }
     

@@ -34,16 +34,16 @@ public class Item extends Item_Base {
         return section;
     }
 
-    public void delete(){
-               
+    public void delete() {
+
         ISection section = this.getSection();
 
         if (this.getSection() != null && this.getSection().getAssociatedItems() != null) {
-                       
-            this.setSection(null);                        
-            List<IItem> items = section.getAssociatedItems();            
+
+            this.setSection(null);
+            List<IItem> items = section.getAssociatedItems();
             int associatedItemOrder;
-            
+
             for (IItem item : items) {
                 associatedItemOrder = item.getItemOrder().intValue();
                 if (associatedItemOrder > this.getItemOrder().intValue()) {
@@ -55,13 +55,12 @@ public class Item extends Item_Base {
 
     public void edit(String newItemName, String newItemInformation, Boolean newItemUrgent,
             Integer newOrder) {
-        
-        if(newItemName == null || newItemInformation == null || newItemUrgent == null || newOrder == null)
+
+        if (newItemName == null || newItemInformation == null || newItemUrgent == null
+                || newOrder == null)
             throw new NullPointerException();
 
-        if (newOrder.intValue() != this.getItemOrder().intValue()) {
-            newOrder = organizeItemsOrder(newOrder, this.getItemOrder(), this.getSection());
-        }
+        newOrder = organizeItemsOrder(newOrder, this.getItemOrder(), this.getSection());
 
         this.setInformation(newItemInformation);
         this.setItemOrder(newOrder);
@@ -71,27 +70,27 @@ public class Item extends Item_Base {
 
     private Integer organizeItemsOrder(Integer newOrder, Integer oldOrder, ISection section) {
 
-        if (newOrder.intValue() == -2) {
-            newOrder = new Integer(section.getAssociatedItems().size() - 1);
-        }
-
         List<IItem> items = section.getAssociatedItems();
 
-        if (newOrder.intValue() - oldOrder.intValue() > 0)
-            for (IItem item : items) {
-                int iterItemOrder = item.getItemOrder().intValue();
-                if (iterItemOrder > oldOrder.intValue() && iterItemOrder <= newOrder.intValue()) {
-                    item.setItemOrder(new Integer(iterItemOrder - 1));
-                }
-            }
-        else
-            for (IItem item : items) {
-                int iterItemOrder = item.getItemOrder().intValue();
-                if (iterItemOrder >= newOrder.intValue() && iterItemOrder < oldOrder.intValue()) {
-                    item.setItemOrder(new Integer(iterItemOrder + 1));
-                }
-            }
+        int diffOrder = newOrder.intValue() - oldOrder.intValue();
 
+        if (diffOrder != 0) {
+            if (diffOrder > 0)
+                for (IItem item : items) {
+                    int iterItemOrder = item.getItemOrder().intValue();
+                    if (iterItemOrder > oldOrder.intValue() && iterItemOrder <= newOrder.intValue()) {
+                        item.setItemOrder(new Integer(iterItemOrder - 1));
+                    }
+                }
+            else {                
+                for (IItem item : items) {
+                    int iterItemOrder = item.getItemOrder().intValue();
+                    if (iterItemOrder >= newOrder.intValue() && iterItemOrder < oldOrder.intValue()) {
+                        item.setItemOrder(new Integer(iterItemOrder + 1));
+                    }
+                }
+            }
+        }
         return newOrder;
     }
 }

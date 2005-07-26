@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
+import java.util.List;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.ISection;
@@ -26,7 +28,12 @@ public class EditSection implements IService {
         if (iSection == null) {
             throw new NonExistingServiceException();
         }
-                   
+        
+        List<ISection> sectionsList = Section.getSections(iSection.getSuperiorSection(), iSection.getSite());
+        if (newOrder.intValue() == -2) {
+            newOrder = new Integer(sectionsList.size() - 1);
+        }
+        
         iSection.edit(newSectionName, newOrder);
 
         return new Boolean(true);

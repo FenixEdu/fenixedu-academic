@@ -33,7 +33,14 @@ public class EditItem implements IService {
             if (item == null) {
                 throw new ExistingServiceException();
             }
-                                      
+                                    
+            if (newInfoItem.getItemOrder() == -2)
+                newInfoItem.setItemOrder(new Integer(item.getSection().getAssociatedItemsCount() - 1));
+            
+            int diffOrder = newInfoItem.getItemOrder() - item.getItemOrder().intValue();
+            if(diffOrder < 0)
+                newInfoItem.setItemOrder(newInfoItem.getItemOrder() + 1);
+            
             item.edit(newInfoItem.getName(), newInfoItem.getInformation(), newInfoItem.getUrgent(), newInfoItem.getItemOrder());
 
         } catch (ExcepcaoPersistencia e) {

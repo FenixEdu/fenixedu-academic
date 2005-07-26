@@ -24,7 +24,11 @@ public class InsertItem implements IService {
         final IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
                        
         final ISection section = (ISection) persistentSection.readByOID(Section.class, sectionCode);
-                                  
+              
+        if (infoItem.getItemOrder() == -1) {
+            infoItem.setItemOrder(section.getAssociatedItemsCount());
+        }
+        
         section.insertItem(infoItem.getName(), infoItem.getInformation(), infoItem.getUrgent(), infoItem.getItemOrder());
           
         return new Boolean(true);

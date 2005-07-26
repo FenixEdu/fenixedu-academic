@@ -72,11 +72,7 @@ public class Section extends Section_Base {
         Iterator items = this.getAssociatedItemsIterator();
 
         if (this.getAssociatedItems() != null) {
-            int itemOrder;
-
-            if (insertItemOrder == -1) {
-                insertItemOrder = this.getAssociatedItemsCount();
-            }
+            int itemOrder;            
 
             for (; items.hasNext() ; ) {
                 IItem item = (IItem) items.next();
@@ -107,11 +103,7 @@ public class Section extends Section_Base {
             ISite site) {
 
         List<ISection> sectionsList = getSections(superiorSection, this.getSite());
-
-        if (newOrder.intValue() == -2) {
-            newOrder = new Integer(sectionsList.size() - 1);
-        }
-
+       
         if (newOrder.intValue() - oldOrder.intValue() > 0) {
             for (ISection section : sectionsList) {
                 int sectionOrder = section.getSectionOrder().intValue();
@@ -172,7 +164,7 @@ public class Section extends Section_Base {
         }
     }
 
-    private List<ISection> getSections(ISection superiorSection, ISite site) {
+    public static List<ISection> getSections(ISection superiorSection, ISite site) {
         
         List<ISection> sections = new ArrayList();        
        
