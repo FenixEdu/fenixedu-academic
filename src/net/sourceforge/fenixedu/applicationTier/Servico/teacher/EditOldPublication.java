@@ -41,7 +41,6 @@ public class EditOldPublication extends EditDomainObjectService {
         ITeacher teacher = persistentTeacher.readByNumber(infoOldPublication.getInfoTeacher()
                 .getTeacherNumber());
         oldPublication.setTeacher(teacher);
-        oldPublication.setKeyTeacher(teacher.getIdInternal());
     }
 
     @Override

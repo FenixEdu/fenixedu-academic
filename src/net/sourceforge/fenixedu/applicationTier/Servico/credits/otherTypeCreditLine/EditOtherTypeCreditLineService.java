@@ -37,12 +37,10 @@ public class EditOtherTypeCreditLineService extends EditDomainObjectService {
         IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
                 ExecutionPeriod.class, infoOtherTypeCreditLine.getInfoExecutionPeriod().getIdInternal());
         otherTypeCreditLine.setExecutionPeriod(executionPeriod);
-        otherTypeCreditLine.setKeyExecutionPeriod(executionPeriod.getIdInternal());
 
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
         ITeacher teacher = (ITeacher) persistentTeacher.readByOID(Teacher.class, infoOtherTypeCreditLine
                 .getInfoTeacher().getIdInternal());
-        otherTypeCreditLine.setKeyTeacher(teacher.getIdInternal());
         otherTypeCreditLine.setTeacher(teacher);
 
         otherTypeCreditLine.setReason(infoOtherTypeCreditLine.getReason());

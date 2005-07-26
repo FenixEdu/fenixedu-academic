@@ -83,8 +83,6 @@ public class EditGrantContractMovement extends EditDomainObjectService {
                 infoGrantContractMovement.getInfoGrantContract().getIdInternal());
         grantContractMovement.setGrantContract(grantContract);
 
-        grantContractMovement.setKeyGrantContract(infoGrantContractMovement.getInfoGrantContract()
-                .getIdInternal());
         grantContractMovement.setLocation(infoGrantContractMovement.getLocation());
 
     }

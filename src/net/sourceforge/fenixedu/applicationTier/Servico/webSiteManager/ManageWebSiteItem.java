@@ -116,8 +116,8 @@ abstract public class ManageWebSiteItem implements IService {
                 }
             }
 
-            webSiteItem.setKeyEditor(person.getIdInternal());
-            webSiteItem.setKeyWebSiteSection(webSiteSection.getIdInternal());
+            webSiteItem.setEditor(person);
+            webSiteItem.setWebSiteSection(webSiteSection);
             webSiteItem.setKeywords(infoWebSiteItem.getKeywords());
             webSiteItem.setMainEntryText(infoWebSiteItem.getMainEntryText());
 

@@ -257,7 +257,6 @@ public class ChangeStudentTestQuestion implements IService {
         } else {
             for (ITestQuestion oldTestQuestion : testQuestionOldList) {
                 persistentTestQuestion.simpleLockWrite(oldTestQuestion);
-                oldTestQuestion.setKeyQuestion(newQuestion.getIdInternal());
                 oldTestQuestion.setQuestion(newQuestion);
             }
         }

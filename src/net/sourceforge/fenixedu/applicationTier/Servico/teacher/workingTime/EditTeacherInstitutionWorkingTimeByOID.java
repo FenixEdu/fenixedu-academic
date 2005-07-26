@@ -122,7 +122,6 @@ public class EditTeacherInstitutionWorkingTimeByOID extends EditDomainObjectServ
                 ExecutionPeriod.class, infoTeacherInstitutionWorkTime.getInfoExecutionPeriod()
                         .getIdInternal());
         teacherInstitutionWorkTime.setExecutionPeriod(executionPeriod);
-        teacherInstitutionWorkTime.setKeyExecutionPeriod(executionPeriod.getIdInternal());
 
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
         ITeacher teacher = (ITeacher) persistentTeacher.readByOID(Teacher.class,

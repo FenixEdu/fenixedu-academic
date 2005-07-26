@@ -35,7 +35,6 @@ public class EditStudentCourseReport extends EditDomainObjectService {
                 CurricularCourse.class, infoStudentCourseReport.getInfoCurricularCourse()
                         .getIdInternal());
         studentCourseReport.setCurricularCourse(curricularCourse);
-        studentCourseReport.setKeyCurricularCourse(curricularCourse.getIdInternal());
 
         studentCourseReport.setLastModificationDate(infoStudentCourseReport.getLastModificationDate());
         studentCourseReport.setStrongPoints(infoStudentCourseReport.getStrongPoints());

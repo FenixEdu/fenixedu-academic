@@ -56,7 +56,6 @@ public class EditGrantPaymentEntity extends EditDomainObjectService implements I
                         .getInfoResponsibleTeacher().getTeacherNumber());
                 if (teacher == null)
                     throw new GrantOrientationTeacherNotFoundException();
-                grantProject.setKeyResponsibleTeacher(teacher.getIdInternal());
                 grantProject.setResponsibleTeacher(teacher);
             }
             if (infoGrantProject.getInfoGrantCostCenter() != null) {

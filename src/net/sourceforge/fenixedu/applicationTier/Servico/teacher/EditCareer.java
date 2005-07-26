@@ -72,7 +72,6 @@ public class EditCareer extends EditDomainObjectService {
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
             ITeacher teacher = persistentTeacher.readByNumber(infoTeachingCareer.getInfoTeacher().getTeacherNumber());
             teachingCareer.setTeacher(teacher);
-            teachingCareer.setKeyTeacher(teacher.getIdInternal());
         }
 	}
 

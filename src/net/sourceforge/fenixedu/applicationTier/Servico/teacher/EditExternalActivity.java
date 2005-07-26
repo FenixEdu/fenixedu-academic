@@ -42,7 +42,6 @@ public class EditExternalActivity extends EditDomainObjectService {
     	IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
         ITeacher teacher = persistentTeacher.readByNumber(infoExternalActivity.getInfoTeacher().getTeacherNumber());
 		externalActivity.setTeacher(teacher);
-		externalActivity.setKeyTeacher(teacher.getIdInternal());
 	}
 
 	@Override

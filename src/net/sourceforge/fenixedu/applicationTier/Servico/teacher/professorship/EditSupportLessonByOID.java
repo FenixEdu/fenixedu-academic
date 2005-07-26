@@ -123,16 +123,12 @@ public class EditSupportLessonByOID extends EditDomainObjectService {
 		
 		IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
 		IProfessorship professorship = (IProfessorship)persistentProfessorship.readByOID(Professorship.class, infoSupportLesson.getInfoProfessorship().getIdInternal());
-		supportLesson.setKeyProfessorship(professorship.getIdInternal());
+        supportLesson.setProfessorship(professorship);
 		
 		supportLesson.setPlace(infoSupportLesson.getPlace());
 		
-		supportLesson.setProfessorship(professorship);
-		
 		supportLesson.setStartTime(infoSupportLesson.getStartTime());
 		supportLesson.setWeekDay(infoSupportLesson.getWeekDay());
-		
-		
 	}
 
 	@Override

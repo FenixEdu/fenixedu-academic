@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
@@ -120,8 +120,7 @@ public class WriteStudentAttendingCourses implements IService {
                 IAttends attendsEntry = persistentAttend.readByAlunoAndDisciplinaExecucao(student,
                         executionCourse);
                 if (attendsEntry == null) {
-                    attendsEntry = new Attends();
-                    persistentAttend.simpleLockWrite(attendsEntry);
+                    attendsEntry = DomainFactory.makeAttends();
                     attendsEntry.setAluno(student);
                     attendsEntry.setDisciplinaExecucao(executionCourse);
                 }
