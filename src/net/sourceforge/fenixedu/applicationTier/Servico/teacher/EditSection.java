@@ -34,6 +34,10 @@ public class EditSection implements IService {
             newOrder = new Integer(sectionsList.size() - 1);
         }
         
+        int diffOrder = newOrder.intValue() - iSection.getSectionOrder().intValue();
+        if(diffOrder < 0)
+            newOrder += 1; 
+        
         iSection.edit(newSectionName, newOrder);
 
         return new Boolean(true);

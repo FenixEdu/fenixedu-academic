@@ -59,12 +59,12 @@ public class Section extends Section_Base {
 
         IItem item = new Item();
         item.setInformation(itemInformation);
-        item.setName(itemName);        
+        item.setName(itemName);
         item.setUrgent(itemUrgent);
         Integer itemOrder = new Integer(organizeExistingItemsOrder(insertItemOrder.intValue()));
         item.setItemOrder(itemOrder);
-        
-        item.setSection(this);     
+
+        item.setSection(this);
     }
 
     private int organizeExistingItemsOrder(int insertItemOrder) {
@@ -72,9 +72,9 @@ public class Section extends Section_Base {
         Iterator items = this.getAssociatedItemsIterator();
 
         if (this.getAssociatedItems() != null) {
-            int itemOrder;            
+            int itemOrder;
 
-            for (; items.hasNext() ; ) {
+            for (; items.hasNext();) {
                 IItem item = (IItem) items.next();
                 itemOrder = item.getItemOrder().intValue();
                 if (itemOrder >= insertItemOrder)
@@ -89,11 +89,9 @@ public class Section extends Section_Base {
         if (newSectionName == null || newOrder == null) {
             throw new NullPointerException();
         }
-        
-        if (newOrder != this.getSectionOrder()) {
-            newOrder = organizeSectionsOrder(newOrder, this.getSectionOrder(),
-                    this.getSuperiorSection(), this.getSite());
-        }
+
+        newOrder = organizeSectionsOrder(newOrder, this.getSectionOrder(), this.getSuperiorSection(),
+                this.getSite());
 
         this.setName(newSectionName);
         this.setSectionOrder(newOrder);
@@ -103,60 +101,64 @@ public class Section extends Section_Base {
             ISite site) {
 
         List<ISection> sectionsList = getSections(superiorSection, this.getSite());
-       
-        if (newOrder.intValue() - oldOrder.intValue() > 0) {
-            for (ISection section : sectionsList) {
-                int sectionOrder = section.getSectionOrder().intValue();
-                if (sectionOrder > oldOrder.intValue() && sectionOrder <= newOrder.intValue()) {
-                    section.setSectionOrder(new Integer(sectionOrder - 1));
+
+        int diffOrder = newOrder.intValue() - oldOrder.intValue();
+
+        if (diffOrder != 0) {
+            if (diffOrder > 0) {
+                for (ISection section : sectionsList) {
+                    int sectionOrder = section.getSectionOrder().intValue();
+                    if (sectionOrder > oldOrder.intValue() && sectionOrder <= newOrder.intValue()) {
+                        section.setSectionOrder(new Integer(sectionOrder - 1));
+                    }
                 }
-            }
-        } else {
-            for (ISection section : sectionsList) {
-                int sectionOrder = section.getSectionOrder().intValue();
-                if (sectionOrder >= newOrder.intValue() && sectionOrder < oldOrder.intValue()) {
-                    section.setSectionOrder(new Integer(sectionOrder + 1));
+            } else {
+                for (ISection section : sectionsList) {
+                    int sectionOrder = section.getSectionOrder().intValue();
+                    if (sectionOrder >= newOrder.intValue() && sectionOrder < oldOrder.intValue()) {
+                        section.setSectionOrder(new Integer(sectionOrder + 1));
+                    }
                 }
             }
         }
         return newOrder;
     }
 
-    public void delete(){        
-               
+    public void delete() {
+
         ISection superiorSection = this.getSuperiorSection();
         ISite sectionSite = this.getSite();
         Integer sectionToDeleteOrder = this.getSectionOrder();
-             
-        //Delete Associated Items       
+
+        // Delete Associated Items
         if (this.getAssociatedItemsCount() != 0) {
             List<IItem> items = new ArrayList();
-            items.addAll(this.getAssociatedItems());            
+            items.addAll(this.getAssociatedItems());
             for (IItem item : items) {
                 item.delete();
-            }            
+            }
         }
-        
-        //Delete Associated Sections
+
+        // Delete Associated Sections
         if (this.getAssociatedSectionsCount() != 0) {
             List<ISection> sections = new ArrayList();
             sections.addAll(this.getAssociatedSections());
-            for (ISection section : sections) {                
+            for (ISection section : sections) {
                 section.delete();
             }
         }
-        
-        //Delete Associations with Superior Section if exists
-        if(superiorSection != null){           
+
+        // Delete Associations with Superior Section if exists
+        if (superiorSection != null) {
             this.setSuperiorSection(null);
-        }  
-        
-        //Delete Associations with Site 
+        }
+
+        // Delete Associations with Site
         this.setSite(null);
-                                                  
-        //ReOrder Sections                        
-        List<ISection> sectionsReordered = getSections(superiorSection, sectionSite);        
-        for(ISection section : sectionsReordered) {
+
+        // ReOrder Sections
+        List<ISection> sectionsReordered = getSections(superiorSection, sectionSite);
+        for (ISection section : sectionsReordered) {
             Integer sectionOrder = section.getSectionOrder();
             if (sectionOrder.intValue() > sectionToDeleteOrder.intValue()) {
                 section.setSectionOrder(new Integer(sectionOrder.intValue() - 1));
@@ -165,12 +167,12 @@ public class Section extends Section_Base {
     }
 
     public static List<ISection> getSections(ISection superiorSection, ISite site) {
-        
-        List<ISection> sections = new ArrayList();        
-       
+
+        List<ISection> sections = new ArrayList();
+
         if (superiorSection != null) {
             sections = superiorSection.getAssociatedSections();
-        
+
         } else {
             List<ISection> sectionListAux = site.getAssociatedSections();
             for (ISection section : sectionListAux) {
