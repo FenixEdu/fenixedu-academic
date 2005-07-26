@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.Date;
 import java.util.Iterator;
 
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Guide;
-import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.domain.IGuideSituation;
@@ -28,10 +28,9 @@ public class CreateGuideSituation implements IService {
 
         IGuide guide = (IGuide) sp.getIPersistentGuide().readByOID(Guide.class, guideID, true);
 
-        IGuideSituation guideSituation = new GuideSituation(situation, remarks, date, guide, new State(
+        IGuideSituation guideSituation = DomainFactory.makeGuideSituation(situation, remarks, date, guide, new State(
                 State.ACTIVE));
 
-        sp.getIPersistentGuideSituation().simpleLockWrite(guideSituation);
 
         for (Iterator iter = guide.getGuideSituations().iterator(); iter.hasNext();) {
             IGuideSituation guideSituationTmp = (IGuideSituation) iter.next();

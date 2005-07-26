@@ -12,6 +12,7 @@ import java.util.ListIterator;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.IEmployee;
@@ -72,7 +73,7 @@ public class InsertGratuityData implements IService {
             if (gratuityValues == null) // it doesn't exist in database, then
             // write it
             {
-                gratuityValues = new GratuityValues();
+                gratuityValues = DomainFactory.makeGratuityValues();
                 persistentGratuityValues.simpleLockWrite(gratuityValues);
                 isNew = true;
 
@@ -257,7 +258,7 @@ public class InsertGratuityData implements IService {
                 while (iterator.hasNext()) {
                     InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) iterator.next();
 
-                    IPaymentPhase paymentPhase = new PaymentPhase();
+                    IPaymentPhase paymentPhase = DomainFactory.makePaymentPhase();
                     paymentPhase.setStartDate(infoPaymentPhase.getStartDate());
                     paymentPhase.setEndDate(infoPaymentPhase.getEndDate());
                     paymentPhase.setValue(infoPaymentPhase.getValue());

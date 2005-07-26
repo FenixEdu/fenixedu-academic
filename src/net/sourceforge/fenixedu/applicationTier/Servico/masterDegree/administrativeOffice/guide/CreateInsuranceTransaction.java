@@ -10,6 +10,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.domain.IGuideEntry;
@@ -61,11 +62,10 @@ public class CreateInsuranceTransaction implements IService {
         IPersonAccount personAccount = sp.getIPersistentPersonAccount().readByPerson(guide.getPerson().getIdInternal());
         
         if(personAccount == null){
-            personAccount = new PersonAccount(guide.getPerson());
-            sp.getIPersistentPersonAccount().simpleLockWrite(personAccount);
+            personAccount = DomainFactory.makePersonAccount(guide.getPerson());
         }
         
-        IInsuranceTransaction insuranceTransaction = new InsuranceTransaction(guideEntry.getPrice(),
+        InsuranceTransaction insuranceTransaction = DomainFactory.makeInsuranceTransaction(guideEntry.getPrice(),
                 new Timestamp(Calendar.getInstance().getTimeInMillis()), guideEntry.getDescription(),
                 guide.getPaymentType(), TransactionType.INSURANCE_PAYMENT, Boolean.FALSE, responsible,
                 personAccount, guideEntry, guide.getExecutionDegree().getExecutionYear(), student);

@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.CandidateSituation;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ICandidateSituation;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -42,7 +42,7 @@ public class CreateCandidateSituation implements IService {
 		}
 
 		// Create the New Candidate Situation
-		ICandidateSituation candidateSituation = new CandidateSituation();
+		ICandidateSituation candidateSituation = DomainFactory.makeCandidateSituation();
 		sp.getIPersistentCandidateSituation().simpleLockWrite(candidateSituation);
 		Calendar calendar = Calendar.getInstance();
 		candidateSituation.setDate(calendar.getTime());

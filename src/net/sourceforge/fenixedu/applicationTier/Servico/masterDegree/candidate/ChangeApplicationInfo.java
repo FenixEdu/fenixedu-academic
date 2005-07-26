@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePersonalCon
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.domain.CandidateSituation;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ICandidateSituation;
 import net.sourceforge.fenixedu.domain.ICountry;
@@ -86,9 +86,8 @@ public class ChangeApplicationInfo implements IService {
         ICandidateSituation oldCandidateSituation = existingMasterDegreeCandidate
                 .getActiveCandidateSituation();
         oldCandidateSituation.setValidation(new State(State.INACTIVE));
-        sp.getIPersistentCandidateSituation().simpleLockWrite(oldCandidateSituation);
 
-        ICandidateSituation activeCandidateSituation = new CandidateSituation();
+        ICandidateSituation activeCandidateSituation = DomainFactory.makeCandidateSituation();
         sp.getIPersistentCandidateSituation().simpleLockWrite(activeCandidateSituation);
         activeCandidateSituation.setDate(Calendar.getInstance().getTime());
         activeCandidateSituation.setSituation(SituationName.PENDENT_COM_DADOS_OBJ);

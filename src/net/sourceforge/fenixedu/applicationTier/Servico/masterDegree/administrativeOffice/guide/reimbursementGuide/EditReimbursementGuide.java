@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideEnt
 import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideSituation;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation;
 import net.sourceforge.fenixedu.domain.transactions.IReimbursementTransaction;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -96,7 +95,7 @@ public class EditReimbursementGuide implements IService {
             if (!validateReimbursementGuideSituation(activeSituation, situation)) {
                 throw new InvalidGuideSituationServiceException();
             }
-            IReimbursementGuideSituation newActiveSituation = new ReimbursementGuideSituation();
+            IReimbursementGuideSituation newActiveSituation = DomainFactory.makeReimbursementGuideSituation();
 
             IPersistentEmployee persistentEmployee = ps.getIPersistentEmployee();
             IPessoaPersistente persistentPerson = ps.getIPessoaPersistente();
@@ -120,8 +119,6 @@ public class EditReimbursementGuide implements IService {
             newActiveSituation.setReimbursementGuide(reimbursementGuide);
             newActiveSituation.setState(new State(State.ACTIVE));
             newActiveSituation.setRemarks(remarks);
-
-            // persistentObject.simpleLockWrite(newActiveSituation);
 
             // REIMBURSEMENT TRANSACTIONS
             if (newState.equals(ReimbursementGuideState.PAYED)) {

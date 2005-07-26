@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
-import net.sourceforge.fenixedu.domain.CandidateSituation;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ICandidateSituation;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
@@ -62,8 +62,7 @@ public class CreateMasterDegreeCandidate implements IService {
 		}
 
 		// Set the Candidate's Situation
-		ICandidateSituation candidateSituation = new CandidateSituation();
-		sp.getIPersistentCandidateSituation().simpleLockWrite(candidateSituation);
+		ICandidateSituation candidateSituation = DomainFactory.makeCandidateSituation();
 		// First candidate situation
 		candidateSituation.setRemarks("Pré-Candidatura. Pagamento da candidatura por efectuar.");
 		candidateSituation.setSituation(new SituationName(SituationName.PRE_CANDIDATO));
@@ -72,8 +71,7 @@ public class CreateMasterDegreeCandidate implements IService {
 		candidateSituation.setDate(actualDate.getTime());
 
 		// Create the Candidate
-		IMasterDegreeCandidate masterDegreeCandidate = new MasterDegreeCandidate();
-		masterDegreeCandidateDAO.simpleLockWrite(masterDegreeCandidate);
+		IMasterDegreeCandidate masterDegreeCandidate = DomainFactory.makeMasterDegreeCandidate();
 		masterDegreeCandidate.addSituations(candidateSituation);
 		candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
 		masterDegreeCandidate.setSpecialization(degreeType);
@@ -93,7 +91,7 @@ public class CreateMasterDegreeCandidate implements IService {
         
 		if (person == null) {
 			// Create the new Person
-			person = new Person(name, identificationDocumentNumber, identificationDocumentType, Gender.MALE);
+			person = DomainFactory.makePerson(name, identificationDocumentNumber, identificationDocumentType, Gender.MALE);
 
 			// Generate Person Username
 			String username = MasterDegreeCandidate.generateUsernameForNewCandidate(masterDegreeCandidate, persons);

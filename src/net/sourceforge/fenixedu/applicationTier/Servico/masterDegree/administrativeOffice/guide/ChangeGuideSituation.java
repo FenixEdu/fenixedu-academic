@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonValidChangeServiceException;
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IGratuitySituation;
@@ -88,7 +87,7 @@ public class ChangeGuideSituation implements IService {
 
             guideSituation.setState(new State(State.INACTIVE));
 
-            IGuideSituation newGuideSituation = new GuideSituation();
+            IGuideSituation newGuideSituation = DomainFactory.makeGuideSituation();
 
             Calendar date = Calendar.getInstance();
             newGuideSituation.setDate(date.getTime());

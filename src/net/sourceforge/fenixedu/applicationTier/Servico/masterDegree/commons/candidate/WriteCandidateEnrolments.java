@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.CandidateEnrolment;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ICandidateEnrolment;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
@@ -109,8 +110,7 @@ public class WriteCandidateEnrolments implements IService {
                 throw new NonExistingServiceException();
             }
 
-            ICandidateEnrolment candidateEnrolment = new CandidateEnrolment();
-            sp.getIPersistentCandidateEnrolment().simpleLockWrite(candidateEnrolment);
+            ICandidateEnrolment candidateEnrolment = DomainFactory.makeCandidateEnrolment();
 
             candidateEnrolment.setMasterDegreeCandidate(masterDegreeCandidate);
             candidateEnrolment.setCurricularCourse(curricularCourse);

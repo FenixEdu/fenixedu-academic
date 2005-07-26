@@ -6,6 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.workLocation.InsertWorkLocation;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.IExternalPerson;
 import net.sourceforge.fenixedu.domain.IWorkLocation;
@@ -53,7 +54,7 @@ public class InsertExternalPersons implements IService {
 	            String documentIDNumber = String.valueOf(++nextID);
 	
 	            // creating a new ExternalPerson
-	            IExternalPerson externalPerson = new ExternalPerson(name, Gender.MALE, "", "", "", "", "", documentIDNumber ,currentWorkLocation);
+	            IExternalPerson externalPerson = DomainFactory.makeExternalPerson(name, Gender.MALE, "", "", "", "", "", documentIDNumber ,currentWorkLocation);
 
 	            externalPersons.add(externalPerson);
         }

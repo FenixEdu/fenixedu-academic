@@ -9,13 +9,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.GuiderAlreadyChosenServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IExternalPerson;
 import net.sourceforge.fenixedu.domain.IMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -52,7 +52,7 @@ public class ChangeMasterDegreeThesisData implements IService {
         }
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        
+
         IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) sp
                 .getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,
                         studentCurricularPlanID, true);
@@ -84,9 +84,10 @@ public class ChangeMasterDegreeThesisData implements IService {
         IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
         IEmployee employee = sp.getIPersistentEmployee().readByPerson(person.getIdInternal().intValue());
 
-        IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion = new MasterDegreeThesisDataVersion(
-                storedMasterDegreeThesisDataVersion.getMasterDegreeThesis(), employee,
-                dissertationTitle, new Date(), new State(State.ACTIVE));
+        IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion = DomainFactory
+                .makeMasterDegreeThesisDataVersion(storedMasterDegreeThesisDataVersion
+                        .getMasterDegreeThesis(), employee, dissertationTitle, new Date(), new State(
+                        State.ACTIVE));
 
         Collection<ITeacher> guiders = sp.getIPersistentTeacher().readByNumbers(guidersNumbers);
         Collection<ITeacher> assistentGuiders = sp.getIPersistentTeacher().readByNumbers(
