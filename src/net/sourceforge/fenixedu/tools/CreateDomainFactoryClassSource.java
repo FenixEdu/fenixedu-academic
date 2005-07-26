@@ -148,7 +148,7 @@ public class CreateDomainFactoryClassSource extends AbstractDomainPostprocessor 
 
         public void visit(int version, int access, String desc, String signature, String superName,
                 String[] interfaces) {
-            if (isDomainNonBaseClass(descToName(desc))) {
+            if (((access & ACC_ABSTRACT) == 0) && isDomainNonBaseClass(descToName(desc))) {
                 this.classDesc = desc;
             }
             super.visit(version, access, desc, signature, superName, interfaces);
