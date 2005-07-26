@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoFAQEntry;
-import net.sourceforge.fenixedu.domain.support.FAQEntry;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.support.FAQSection;
 import net.sourceforge.fenixedu.domain.support.IFAQEntry;
 import net.sourceforge.fenixedu.domain.support.IFAQSection;
@@ -31,8 +31,7 @@ public class CreateFAQEntry implements IService {
                     .getParentSection().getIdInternal());
         }
 
-        IFAQEntry faqEntry = new FAQEntry();
-        sp.getIPersistentObject().simpleLockWrite(faqEntry);
+        IFAQEntry faqEntry = DomainFactory.makeFAQEntry();
         faqEntry.setParentSection(parentFAQSection);
         faqEntry.setQuestion(infoFAQEntry.getQuestion());
         faqEntry.setAnswer(infoFAQEntry.getAnswer());

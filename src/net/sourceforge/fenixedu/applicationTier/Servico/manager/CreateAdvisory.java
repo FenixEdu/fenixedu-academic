@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoAdvisory;
-import net.sourceforge.fenixedu.domain.Advisory;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IAdvisory;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IRole;
@@ -45,8 +45,7 @@ public class CreateAdvisory implements IService {
         final IPersistentAdvisory persistentAdvisory = persistenceSupport.getIPersistentAdvisory();
         final IPessoaPersistente persistentPerson = persistenceSupport.getIPessoaPersistente();
 
-        final IAdvisory advisory = new Advisory();
-        persistentAdvisory.simpleLockWrite(advisory);
+        final IAdvisory advisory = DomainFactory.makeAdvisory();
         advisory.setCreated(infoAdvisory.getCreated());
         advisory.setSubject(infoAdvisory.getSubject());
         advisory.setOnlyShowOnce(infoAdvisory.getOnlyShowOnce());
