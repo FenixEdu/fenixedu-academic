@@ -1924,6 +1924,8 @@ class net.sourceforge.fenixedu.domain.Professorship extends net.sourceforge.feni
 	public void afterDelete(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
 	
 	public void afterLookup(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;	
+			
+	public void delete();
 	"
 }
 
@@ -2627,8 +2629,7 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	
 	public void updateResponsabilitiesFor(Integer executionYearId, java.util.List<Integer> executionCourses) 
 		throws net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed, 
-		net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory, 
-		net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;		
+		net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
 	"
 }
 
