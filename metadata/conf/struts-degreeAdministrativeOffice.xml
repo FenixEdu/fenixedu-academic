@@ -366,11 +366,11 @@
        		parameter="method">
        		<forward name="show-report" path="view-curriculum-historic"/>
        	</action>
-       	
+
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
-	<controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
+	<controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixFacesRequestProcessorWithTiles"/>
 
 	<!-- ========== Message Resources Definitions =========================== -->
 	<message-resources parameter="ServidorApresentacao.DegreeAdministrativeOfficeResources" null="false"/>

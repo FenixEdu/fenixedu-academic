@@ -15,4 +15,5 @@
 	<li><html:link page="/generateEnrollmentsDeclaration.do?method=prepare&amp;page=0"><bean:message key="link.student.print.enrollmentsDeclaration"/></html:link></li>
 	<li class="navheader"><bean:message key="label.navheader.marksSheet" /></li>
 	<li><html:link page="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare"><bean:message key="link.consult" /></html:link></li>
+	<li><html:link page="/changeDegree/changeDegree.faces"><bean:message key="link.change.degree"/></html:link></li>
 </ul>     

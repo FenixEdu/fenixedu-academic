@@ -114,6 +114,5 @@
 		extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/commons/curriculumHistoric/showCurriculumHistoricReport.jsp"></put>
 	</definition>
-	
 
 </tiles-definitions>

@@ -8581,4 +8581,13 @@
         <filterChains>
         </filterChains>
     </service>
+    <service>
+    	<name>ReadEnrolmentsByStudentCurricularPlan</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.ReadEnrolmentsByStudentCurricularPlan</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="StudentOrMasterDegreeAdministrativeOfficeAuthorization"/>
+        </filterChains>
+    </service>
 </serviceDefinitions>
