@@ -78,9 +78,8 @@ public class EditGrantContractMovement extends EditDomainObjectService {
         grantContractMovement.setArrivalDate(infoGrantContractMovement.getArrivalDate());
         grantContractMovement.setDepartureDate(infoGrantContractMovement.getDepartureDate());
 
-        IGrantContract grantContract = new GrantContract();
         IPersistentGrantContract persistentGrantContract = sp.getIPersistentGrantContract();
-        grantContract = (IGrantContract) persistentGrantContract.readByOID(GrantContract.class,
+        IGrantContract grantContract = (IGrantContract) persistentGrantContract.readByOID(GrantContract.class,
                 infoGrantContractMovement.getInfoGrantContract().getIdInternal());
         grantContractMovement.setGrantContract(grantContract);
 
