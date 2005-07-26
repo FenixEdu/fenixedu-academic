@@ -34,20 +34,16 @@ public class EditProfessorship extends EditDomainObjectService {
         InfoProfessorship infoProfessorship = (InfoProfessorship) infoObject;
         IProfessorship professorship = (IProfessorship) domainObject;
 
-        IExecutionCourse executionCourse = new ExecutionCourse();
         IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-        executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class,
+        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class,
                 infoProfessorship.getInfoExecutionCourse().getIdInternal());
         professorship.setExecutionCourse(executionCourse);
 
         professorship.setHours(infoProfessorship.getHours());
 
-        professorship.setKeyExecutionCourse(executionCourse.getIdInternal());
-
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
         ITeacher teacher = persistentTeacher.readByNumber(infoProfessorship.getInfoTeacher()
                 .getTeacherNumber());
-        professorship.setKeyTeacher(teacher.getIdInternal());
         professorship.setTeacher(teacher);
     }
 

@@ -35,18 +35,14 @@ public class EditShiftProfessorshipByOID extends EditDomainObjectService {
         shiftProfessorship.setPercentage(infoShiftProfessorship.getPercentage());
         IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
         IPersistentShiftProfessorship persistentShift = sp.getIPersistentShiftProfessorship();
-        IProfessorship professorship = new Professorship();
-        IShift shift = new Shift();
 
-        professorship = (IProfessorship) persistentProfessorship.readByOID(Professorship.class,
+        IProfessorship professorship = (IProfessorship) persistentProfessorship.readByOID(Professorship.class,
                 infoShiftProfessorship.getInfoProfessorship().getIdInternal());
         shiftProfessorship.setProfessorship(professorship);
-        shiftProfessorship.setKeyProfessorship(professorship.getIdInternal());
 
-        shift = (IShift) persistentShift.readByOID(Shift.class, infoShiftProfessorship.getInfoShift()
+        IShift shift = (IShift) persistentShift.readByOID(Shift.class, infoShiftProfessorship.getInfoShift()
                 .getIdInternal());
         shiftProfessorship.setShift(shift);
-        shiftProfessorship.setKeyShift(shift.getIdInternal());
     }
 
     @Override
