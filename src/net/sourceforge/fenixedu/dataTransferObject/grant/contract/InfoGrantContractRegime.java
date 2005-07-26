@@ -9,10 +9,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantContractRegime;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantCostCenter;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Pica
@@ -278,25 +275,6 @@ public class InfoGrantContractRegime extends InfoObject {
             infoGrantContractRegime.copyFromDomain(grantContractRegime);
         }
         return infoGrantContractRegime;
-    }
-
-    public void copyToDomain(InfoGrantContractRegime infoGrantContractRegime,
-            IGrantContractRegime grantContractRegime) throws ExcepcaoPersistencia {
-        super.copyToDomain(infoGrantContractRegime, grantContractRegime);
-
-        grantContractRegime.setDateBeginContract(infoGrantContractRegime.getDateBeginContract());
-        grantContractRegime.setDateEndContract(infoGrantContractRegime.getDateEndContract());
-        grantContractRegime.setDateDispatchCC(infoGrantContractRegime.getDateDispatchCC());
-        grantContractRegime.setDateDispatchCD(infoGrantContractRegime.getDateDispatchCD());
-        grantContractRegime.setDateSendDispatchCC(infoGrantContractRegime.getDateSendDispatchCC());
-        grantContractRegime.setDateSendDispatchCD(infoGrantContractRegime.getDateSendDispatchCD());
-        grantContractRegime.setState(infoGrantContractRegime.getState());
-        if (infoGrantContractRegime.getGrantCostCenterInfo() != null) {
-            IGrantCostCenter grantCostCenter = new GrantCostCenter();
-            grantCostCenter = InfoGrantCostCenter.newDomainFromInfo(infoGrantContractRegime
-                    .getGrantCostCenterInfo());
-            grantContractRegime.setGrantCostCenter(grantCostCenter);
-        }
     }
 
 }

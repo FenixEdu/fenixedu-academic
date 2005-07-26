@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.dataTransferObject.support;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.support.FAQSection;
 import net.sourceforge.fenixedu.domain.support.IFAQEntry;
 import net.sourceforge.fenixedu.domain.support.IFAQSection;
 
@@ -71,19 +70,6 @@ public class InfoFAQEntry extends InfoObject implements Serializable {
             infoFAQEntry.copyFromDomain(faqEntry);
         }
         return infoFAQEntry;
-    }
-
-    public void copyToDomain(InfoFAQEntry infoFAQEntry, IFAQEntry faqEntry) {
-        if (infoFAQEntry != null && infoFAQEntry != null) {
-            super.copyToDomain(infoFAQEntry, faqEntry);
-            faqEntry.setQuestion(infoFAQEntry.getQuestion());
-            faqEntry.setAnswer(infoFAQEntry.getAnswer());
-            InfoFAQSection infoParentFAQSection = infoFAQEntry.getParentSection();
-            if (infoParentFAQSection != null) {
-                faqEntry.setParentSection(new FAQSection());
-                faqEntry.getParentSection().setIdInternal(infoParentFAQSection.getIdInternal());
-            }
-        }
     }
 
 }

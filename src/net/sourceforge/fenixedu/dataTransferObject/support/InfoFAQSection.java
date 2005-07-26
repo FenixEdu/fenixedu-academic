@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.support.FAQSection;
 import net.sourceforge.fenixedu.domain.support.IFAQSection;
 
 /**
@@ -27,15 +26,6 @@ public class InfoFAQSection extends InfoObject implements Serializable {
 
     public InfoFAQSection() {
         super();
-    }
-
-    public boolean equals(Object obj) {
-        if (obj instanceof InfoFAQSection) {
-            InfoFAQSection infoObject = (InfoFAQSection) obj;
-            return this.getIdInternal().equals(infoObject.getIdInternal());
-        }
-
-        return false;
     }
 
     public int hashCode() {
@@ -97,18 +87,6 @@ public class InfoFAQSection extends InfoObject implements Serializable {
             infoFAQSection.copyFromDomain(faqSection);
         }
         return infoFAQSection;
-    }
-
-    public void copyToDomain(InfoFAQSection infoFAQSection, IFAQSection faqSection) {
-        if (infoFAQSection != null && infoFAQSection != null) {
-            super.copyToDomain(infoFAQSection, faqSection);
-            faqSection.setSectionName(infoFAQSection.getSectionName());
-            InfoFAQSection infoParentFAQSection = infoFAQSection.getParentSection();
-            if (infoParentFAQSection != null) {
-                faqSection.setParentSection(new FAQSection());
-                faqSection.getParentSection().setIdInternal(infoParentFAQSection.getIdInternal());
-            }
-        }
     }
 
 }

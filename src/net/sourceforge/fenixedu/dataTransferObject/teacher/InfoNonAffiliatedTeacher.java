@@ -6,9 +6,7 @@ package net.sourceforge.fenixedu.dataTransferObject.teacher;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.IInstitution;
 import net.sourceforge.fenixedu.domain.INonAffiliatedTeacher;
-import net.sourceforge.fenixedu.domain.Institution;
 
 /**
  * @author Ricardo Rodrigues
@@ -47,20 +45,6 @@ public class InfoNonAffiliatedTeacher extends InfoObject {
         return infoNaTeacher;
     }
 
-    public void copyToDomain(InfoNonAffiliatedTeacher infoNonAffiliatedTeacher,
-            INonAffiliatedTeacher nonAffiliatedTeacher) {
-        if (infoNonAffiliatedTeacher != null && nonAffiliatedTeacher != null) {
-            super.copyToDomain(infoNonAffiliatedTeacher, nonAffiliatedTeacher);
-            nonAffiliatedTeacher.setName(infoNonAffiliatedTeacher.getName());
-            InfoInstitution infoInstitution = infoNonAffiliatedTeacher.getInfoInstitution();
-            if (infoInstitution != null) {
-                IInstitution institution = new Institution();
-                infoInstitution.copyToDomain(infoInstitution, institution);
-                nonAffiliatedTeacher.setInstitution(institution);
-            }
-        }
-    }
-
     public InfoInstitution getInfoInstitution() {
         return infoInstitution;
     }
@@ -85,6 +69,7 @@ public class InfoNonAffiliatedTeacher extends InfoObject {
         this.name = name;
     }
 
+    @Override
     public String toString() {
         String result = "[INFONONAFFILIATEDTEACHER";
         result += ", nome=" + this.getName();
