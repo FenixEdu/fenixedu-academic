@@ -8,6 +8,7 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -26,9 +27,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class InsertNewProjectAccess implements IService {
 
-    public InsertNewProjectAccess() {
-    }
-
     public void run(String userView, String costCenter, String username, GregorianCalendar beginDate, GregorianCalendar endDate, String userNumber)
             throws ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -38,11 +36,11 @@ public class InsertNewProjectAccess implements IService {
         sp.getIPersistentProjectAccess().deleteByPersonAndDate(person);
         IPersistentSuportOracle po = PersistentSuportOracle.getInstance();
         Integer coordinatorCode = new Integer(userNumber);
-        Boolean isCostCenter = false;
+        Boolean isCostCenter = Boolean.FALSE;
         RoleType roleType = RoleType.PROJECTS_MANAGER;
         if (costCenter != null && !costCenter.equals("")) {
             roleType = RoleType.INSTITUCIONAL_PROJECTS_MANAGER;
-            isCostCenter = true;
+            isCostCenter = Boolean.TRUE;
         }
         if (!hasProjectsManagerRole(person, roleType)) {
             sp.getIPessoaPersistente().simpleLockWrite(person);
@@ -55,10 +53,8 @@ public class InsertNewProjectAccess implements IService {
             IProject project = (IProject) projectList.get(i);
             if (sp.getIPersistentProjectAccess().countByPersonAndProject(person, new Integer(project.getProjectCode())) != 0)
                 throw new IllegalArgumentException();
-            IProjectAccess projectAccess = new ProjectAccess();
-            sp.getIPersistentProjectAccess().simpleLockWrite(projectAccess);
+            IProjectAccess projectAccess = DomainFactory.makeProjectAccess();
             projectAccess.setPerson(person);
-            projectAccess.setKeyPerson(person.getIdInternal());
             projectAccess.setKeyProjectCoordinator(coordinatorCode);
             projectAccess.setKeyProject(new Integer(project.getProjectCode()));
             projectAccess.setBeginDate(beginDate);
@@ -75,11 +71,11 @@ public class InsertNewProjectAccess implements IService {
             throw new IllegalArgumentException();
         sp.getIPersistentProjectAccess().deleteByPersonAndDate(person);
 
-        Boolean isCostCenter = false;
+        Boolean isCostCenter = Boolean.FALSE;
         RoleType roleType = RoleType.PROJECTS_MANAGER;
         if (costCenter != null && !costCenter.equals("")) {
             roleType = RoleType.INSTITUCIONAL_PROJECTS_MANAGER;
-            isCostCenter = true;
+            isCostCenter = Boolean.TRUE;
         }
 
         if (!hasProjectsManagerRole(person, roleType)) {
