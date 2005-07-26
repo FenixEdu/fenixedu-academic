@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.credits.serviceExemptio
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoServiceExemptionCreditLine;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.credits.IServiceExemptionCreditLine;
@@ -34,7 +35,7 @@ public class EditServiceExemptionCreditLineService implements IService {
 
         final IServiceExemptionCreditLine serviceExemptionCreditLine;
         if (infoServiceExemptionCreditLine.getIdInternal() == null || infoServiceExemptionCreditLine.getIdInternal().intValue() == 0) {
-            serviceExemptionCreditLine = new ServiceExemptionCreditLine();
+            serviceExemptionCreditLine = DomainFactory.makeServiceExemptionCreditLine();
         } else {
             serviceExemptionCreditLine = (IServiceExemptionCreditLine) persistentServiceExemptionCreditLine
                     .readByOID(ServiceExemptionCreditLine.class, objectId);
