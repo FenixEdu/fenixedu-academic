@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObje
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ICountry;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.IPerson;
@@ -56,7 +57,7 @@ public class EditQualification extends EditDomainObjectService {
 
     @Override
     protected IDomainObject createNewDomainObject(InfoObject infoObject) {
-        return new Qualification();
+        return DomainFactory.makeQualification();
     }
 
     @Override
