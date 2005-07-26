@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractMovement;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement;
@@ -25,22 +26,12 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractMo
  */
 public class EditGrantContractMovement extends EditDomainObjectService {
 
-    public EditGrantContractMovement() {
-    }
-
-//    protected IDomainObject clone2DomainObject(InfoObject infoObject) throws ExcepcaoPersistencia {
-//        
-//    	  ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-//    	  InfoGrantContractMovement infoGrantContractMovement =(InfoGrantContractMovement) infoObject;
-//          IGrantContractMovement grantContractMovement = (IGrantContractMovement) sp.getIPersistentGrantContractMovement().readByOID(IGrantContractMovement.class,infoGrantContractMovement.getIdInternal());
-//          
-//    	 return grantContractMovement;
-//    }
-
+    @Override
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentGrantContractMovement();
     }
 
+    @Override
     protected IDomainObject readObjectByUnique(InfoObject infoObject, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         IPersistentGrantContractMovement persistentGrantContractMovement = sp
@@ -48,15 +39,10 @@ public class EditGrantContractMovement extends EditDomainObjectService {
         InfoGrantContractMovement infoGrantContractMovement = (InfoGrantContractMovement) infoObject;
 
         return persistentGrantContractMovement.readByOID(GrantContractMovement.class,
-        		infoGrantContractMovement.getIdInternal());
+                infoGrantContractMovement.getIdInternal());
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#doAfterLock(Dominio.IDomainObject,
-     *      net.sourceforge.fenixedu.dataTransferObject.InfoObject, ServidorPersistente.ISuportePersistente)
-     */
+    @Override
     protected void doAfterLock(IDomainObject domainObjectLocked, InfoObject infoObject,
             ISuportePersistente sp) throws FenixServiceException {
 
@@ -67,9 +53,10 @@ public class EditGrantContractMovement extends EditDomainObjectService {
              */
             IGrantContractMovement grantContractMovement = (IGrantContractMovement) domainObjectLocked;
             InfoGrantContractMovement infoGrantContractMovement = (InfoGrantContractMovement) infoObject;
-            IGrantContract grantContract = new GrantContract();
-            grantContract
-                    .setIdInternal(infoGrantContractMovement.getInfoGrantContract().getIdInternal());
+
+            IGrantContract grantContract = (IGrantContract) sp.getIPersistentGrantContract().readByOID(
+                    GrantContract.class,
+                    infoGrantContractMovement.getInfoGrantContract().getIdInternal());
             grantContractMovement.setGrantContract(grantContract);
             domainObjectLocked = grantContractMovement;
         } catch (Exception e) {
@@ -77,37 +64,40 @@ public class EditGrantContractMovement extends EditDomainObjectService {
         }
     }
 
-    public void run(InfoGrantContractMovement infoGrantContractMovement) throws FenixServiceException,ExcepcaoPersistencia {
+    public void run(InfoGrantContractMovement infoGrantContractMovement) throws FenixServiceException,
+            ExcepcaoPersistencia {
         super.run(new Integer(0), infoGrantContractMovement);
     }
 
-	@Override
-	protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject)throws ExcepcaoPersistencia {
-		InfoGrantContractMovement infoGrantContractMovement = (InfoGrantContractMovement) infoObject;
-		IGrantContractMovement grantContractMovement = (IGrantContractMovement) domainObject;
+    @Override
+    protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
+            IDomainObject domainObject) throws ExcepcaoPersistencia {
+        InfoGrantContractMovement infoGrantContractMovement = (InfoGrantContractMovement) infoObject;
+        IGrantContractMovement grantContractMovement = (IGrantContractMovement) domainObject;
 
-		grantContractMovement.setArrivalDate(infoGrantContractMovement.getArrivalDate());
-		grantContractMovement.setDepartureDate(infoGrantContractMovement.getDepartureDate());
-	
-		IGrantContract grantContract = new GrantContract();
-		IPersistentGrantContract persistentGrantContract = sp.getIPersistentGrantContract();
-		grantContract = (IGrantContract) persistentGrantContract.readByOID(GrantContract.class ,infoGrantContractMovement.getInfoGrantContract().getIdInternal());
-		grantContractMovement.setGrantContract(grantContract);
-	
-		grantContractMovement.setKeyGrantContract(infoGrantContractMovement.getInfoGrantContract().getIdInternal());
-		grantContractMovement.setLocation(infoGrantContractMovement.getLocation());
-		
-	}
+        grantContractMovement.setArrivalDate(infoGrantContractMovement.getArrivalDate());
+        grantContractMovement.setDepartureDate(infoGrantContractMovement.getDepartureDate());
 
-	@Override
-	protected IDomainObject createNewDomainObject(InfoObject infoObject) {
-		// TODO Auto-generated method stub
-		return new GrantContractMovement();
-	}
+        IGrantContract grantContract = new GrantContract();
+        IPersistentGrantContract persistentGrantContract = sp.getIPersistentGrantContract();
+        grantContract = (IGrantContract) persistentGrantContract.readByOID(GrantContract.class,
+                infoGrantContractMovement.getInfoGrantContract().getIdInternal());
+        grantContractMovement.setGrantContract(grantContract);
 
-	@Override
-	protected Class getDomainObjectClass() {
-		// TODO Auto-generated method stub
-		return GrantContractMovement.class;
-	}
+        grantContractMovement.setKeyGrantContract(infoGrantContractMovement.getInfoGrantContract()
+                .getIdInternal());
+        grantContractMovement.setLocation(infoGrantContractMovement.getLocation());
+
+    }
+
+    @Override
+    protected IDomainObject createNewDomainObject(InfoObject infoObject) {
+        return DomainFactory.makeGrantContractMovement();
+    }
+
+    @Override
+    protected Class getDomainObjectClass() {
+        return GrantContractMovement.class;
+    }
+
 }
