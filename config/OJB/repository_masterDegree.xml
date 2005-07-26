@@ -1112,7 +1112,43 @@
 	        class-ref="net.sourceforge.fenixedu.domain.WorkLocation"
       	>
     	    <foreignkey field-ref="keyWorkLocation"/>
-		</reference-descriptor>
+		</reference-descriptor>			  
+	  
+	   <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+        	name="masterDegreeThesisExternalGuider"
+	        element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion"
+    	    auto-retrieve="true"        		        
+         	auto-update="false"
+         	auto-delete="false"
+	        indirection-table="MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_GUIDER"
+      	>
+    	    <fk-pointing-to-this-class column="KEY_EXTERNAL_PERSON"/>
+        	<fk-pointing-to-element-class column="KEY_MASTER_DEGREE_THESIS_DATA_VERSION"/>
+      	</collection-descriptor>
+
+	   <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+        	name="masterDegreeThesisExternalAssistentGuider"
+	        element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion"
+    	    auto-retrieve="true"        		        
+         	auto-update="false"
+         	auto-delete="false"
+	        indirection-table="MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_ASSISTENT_GUIDER"
+      	>
+    	    <fk-pointing-to-this-class column="KEY_EXTERNAL_PERSON"/>
+        	<fk-pointing-to-element-class column="KEY_MASTER_DEGREE_THESIS_DATA_VERSION"/>
+      	</collection-descriptor>
+      	
+	   <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+        	name="masterDegreeProofsExternalJury"
+	        element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeProofVersion"
+    	    auto-retrieve="true"        		        
+         	auto-update="false"
+         	auto-delete="false"
+	        indirection-table="MASTER_DEGREE_PROOF_VERSION_EXTERNAL_JURY"
+      	>
+    	    <fk-pointing-to-this-class column="KEY_EXTERNAL_PERSON"/>
+        	<fk-pointing-to-element-class column="KEY_MASTER_DEGREE_PROOF_VERSION"/>
+      	</collection-descriptor>      	
                 
  </class-descriptor>  
    
