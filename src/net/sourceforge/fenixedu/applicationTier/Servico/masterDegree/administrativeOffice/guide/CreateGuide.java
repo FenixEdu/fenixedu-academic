@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGuideSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.domain.DocumentType;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.Guide;
@@ -89,8 +90,7 @@ public class CreateGuide implements IService {
         IContributor contributor = (IContributor) sp.getIPersistentContributor().readByOID(
                 Contributor.class, infoGuide.getInfoContributor().getIdInternal());
 
-        IGuide guide = new Guide();
-        sp.getIPersistentGuide().simpleLockWrite(guide);
+        IGuide guide = DomainFactory.makeGuide();
         guide.setExecutionDegree(executionDegree);
         guide.setContributor(contributor);
         guide.setPerson(person);
@@ -111,15 +111,14 @@ public class CreateGuide implements IService {
 
         // Write the new Entries of the Guide
         for (InfoGuideEntry infoGuideEntryIter : (List<InfoGuideEntry>) infoGuide.getInfoGuideEntries()) {
-            IGuideEntry guideEntry = new GuideEntry();
+            IGuideEntry guideEntry = DomainFactory.makeGuideEntry();
             infoGuideEntryIter.copyToDomain(infoGuideEntryIter, guideEntry);
             guideEntry.setGuide(guide);
         }
 
         // Write the New Guide Situation
-        guideSituation = new GuideSituation(situationOfGuide, remarks, calendar.getTime(), guide,
+        guideSituation = DomainFactory.makeGuideSituation(situationOfGuide, remarks, calendar.getTime(), guide,
                 new State(State.ACTIVE));
-        sp.getIPersistentGuideSituation().simpleLockWrite(guideSituation);
 
         guide.getGuideSituations().add(guideSituation);
 

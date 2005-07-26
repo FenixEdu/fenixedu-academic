@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.InvalidGuideSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.InvalidReimbursementValueServiceException;
 import net.sourceforge.fenixedu.domain.DocumentType;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IGratuitySituation;
@@ -23,7 +24,6 @@ import net.sourceforge.fenixedu.domain.IGuideEntry;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IPersonAccount;
 import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.PersonAccount;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuide;
@@ -33,7 +33,6 @@ import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation;
 import net.sourceforge.fenixedu.domain.transactions.IReimbursementTransaction;
-import net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
@@ -66,17 +65,15 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class EditReimbursementGuide implements IService {
 
-    public EditReimbursementGuide() {
-    }
-
     /**
      * @throws FenixServiceException,
      *             InvalidGuideSituationServiceException
+     * @throws ExcepcaoPersistencia 
      */
 
     public void run(Integer reimbursementGuideId, String situation, Date officialDate, String remarks,
-            IUserView userView) throws FenixServiceException {
-        try {
+            IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
+
             ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPersistentReimbursementGuide persistentReimbursementGuide = ps
@@ -87,7 +84,6 @@ public class EditReimbursementGuide implements IService {
             IReimbursementGuide reimbursementGuide = (IReimbursementGuide) persistentReimbursementGuide
                     .readByOID(ReimbursementGuide.class, reimbursementGuideId);
 
-            reimbursementGuideEntryDAO.simpleLockWrite(reimbursementGuide);
 
             if (reimbursementGuide == null) {
                 throw new NonExistingServiceException();
@@ -139,8 +135,7 @@ public class EditReimbursementGuide implements IService {
                         .getGuide().getPerson().getIdInternal());
 
                 if (personAccount == null) {
-                    personAccount = new PersonAccount(reimbursementGuide.getGuide().getPerson());
-                    persistentPersonAccount.simpleLockWrite(personAccount);
+                    personAccount = DomainFactory.makePersonAccount(reimbursementGuide.getGuide().getPerson());
                 }
 
                 IPersistentReimbursementTransaction persistentReimbursementTransaction = ps
@@ -167,13 +162,11 @@ public class EditReimbursementGuide implements IService {
                         // .readByOID(ReimbursementGuideEntry.class,
                         // reimbursementGuideEntry.getIdInternal());
 
-                        reimbursementTransaction = new ReimbursementTransaction(reimbursementGuideEntry
+                        reimbursementTransaction = DomainFactory.makeReimbursementTransaction(reimbursementGuideEntry
                                 .getValue(), new Timestamp(Calendar.getInstance().getTimeInMillis()),
                                 "", reimbursementGuideEntry.getGuideEntry().getGuide().getPaymentType(),
                                 TransactionType.GRATUITY_REIMBURSEMENT, Boolean.FALSE, person,
                                 personAccount, reimbursementGuideEntry);
-
-                        persistentReimbursementTransaction.lockWrite(reimbursementTransaction);
 
                         IPerson studentPerson = reimbursementGuide.getGuide().getPerson();
                         IStudent student = ps.getIPersistentStudent().readByPersonAndDegreeType(
@@ -190,8 +183,6 @@ public class EditReimbursementGuide implements IService {
                                     "Database is inconsistent. The gratuity situation is supposed to exist");
                         }
 
-                        persistentGratuitySituation.lockWrite(gratuitySituation);
-
                         Double remainingValue = gratuitySituation.getRemainingValue();
 
                         gratuitySituation.setRemainingValue(new Double(remainingValue.doubleValue()
@@ -202,27 +193,21 @@ public class EditReimbursementGuide implements IService {
                     if (reimbursementGuideEntry.getGuideEntry().getDocumentType().equals(
                             DocumentType.INSURANCE)) {
 
-                        reimbursementTransaction = new ReimbursementTransaction(reimbursementGuideEntry
+                        reimbursementTransaction = DomainFactory.makeReimbursementTransaction(reimbursementGuideEntry
                                 .getValue(), new Timestamp(Calendar.getInstance().getTimeInMillis()),
                                 "", reimbursementGuideEntry.getGuideEntry().getGuide().getPaymentType(),
                                 TransactionType.INSURANCE_REIMBURSEMENT, Boolean.FALSE, person,
                                 personAccount, reimbursementGuideEntry);
 
-                        persistentReimbursementTransaction.lockWrite(reimbursementTransaction);
                     }
                 }
             }
 
-            persistentObject.simpleLockWrite(activeSituation);
             activeSituation.setState(new State(State.INACTIVE_STRING));
 
             reimbursementGuide.addReimbursementGuideSituations(newActiveSituation);
 
-            persistentObject.simpleLockWrite(newActiveSituation);
 
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
     }
 
     /**

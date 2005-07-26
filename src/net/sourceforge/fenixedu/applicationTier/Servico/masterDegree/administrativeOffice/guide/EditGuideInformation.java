@@ -17,10 +17,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.domain.DocumentType;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
-import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.IContributor;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
@@ -56,32 +56,23 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class EditGuideInformation implements IService {
 
     public InfoGuide run(InfoGuide infoGuide, String[] quantityList, Integer contributorNumber,
-            String othersRemarks, Integer othersQuantity, Double othersPrice) throws Exception {
-
-        ISuportePersistente sp = null;
+            String othersRemarks, Integer othersQuantity, Double othersPrice)
+            throws ExcepcaoPersistencia, FenixServiceException {
 
         // This will be the flag that indicates if a change has been made to the
         // Guide
         // No need to anything if there's no change ...
         boolean change = false;
 
-        IContributor contributor = null;
-        IGuide guide = new Guide();
-        IGuideEntry othersGuideEntry = null;
-
+        
         // Safety check to see if the Guide can be changed
         this.chekIfChangeable(infoGuide);
 
         // Read The Guide
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            guide = sp.getIPersistentGuide().readByNumberAndYearAndVersion(infoGuide.getNumber(),
-                    infoGuide.getYear(), infoGuide.getVersion());
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IGuide guide = sp.getIPersistentGuide().readByNumberAndYearAndVersion(infoGuide.getNumber(),
+                infoGuide.getYear(), infoGuide.getVersion());
 
         // check if it's needed to change the Contributor
         if ((contributorNumber != null)
@@ -92,15 +83,8 @@ public class EditGuideInformation implements IService {
         }
 
         // Read the Contributor
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            contributor = sp.getIPersistentContributor().readByContributorNumber(contributorNumber);
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+        IContributor contributor = sp.getIPersistentContributor().readByContributorNumber(contributorNumber);
 
         infoGuide.setInfoContributor(InfoContributor.newInfoFromDomain(contributor));
 
@@ -133,10 +117,11 @@ public class EditGuideInformation implements IService {
         }
 
         // Check if a Others Guide Entry will be Added
+        IGuideEntry othersGuideEntry = null;
         if ((othersPrice != null) && (othersQuantity != null) && (!othersPrice.equals(new Double(0)))
                 && (!othersQuantity.equals(new Integer(0)))) {
             change = true;
-            othersGuideEntry = new GuideEntry();
+            othersGuideEntry = DomainFactory.makeGuideEntry();
             othersGuideEntry.setDescription(othersRemarks);
             othersGuideEntry.setDocumentType(DocumentType.OTHERS);
             // TODO : In the future it's possible to be a Major Degree
@@ -165,8 +150,6 @@ public class EditGuideInformation implements IService {
                             .readByGuideEntryID(guideEntry.getIdInternal());
 
                     if (paymentTransaction != null) {
-                        sp.getIPersistentPersonAccount().simpleLockWrite(
-                                paymentTransaction.getPersonAccount());
                         paymentTransaction.getPersonAccount().getPaymentTransactions().remove(
                                 paymentTransaction);
                         sp.getIPersistentPaymentTransaction().deleteByOID(PaymentTransaction.class,
@@ -176,8 +159,6 @@ public class EditGuideInformation implements IService {
                     if (guideEntry.getReimbursementGuideEntries() != null) {
                         for (IReimbursementGuideEntry reimbursementGuideEntry : guideEntry
                                 .getReimbursementGuideEntries()) {
-                            sp.getIPersistentReimbursementGuide().simpleLockWrite(
-                                    reimbursementGuideEntry.getReimbursementGuide());
                             reimbursementGuideEntry.getReimbursementGuide()
                                     .getReimbursementGuideEntries().remove(reimbursementGuideEntry);
                             sp.getIPersistentGuideEntry().deleteByOID(ReimbursementGuideEntry.class,
@@ -194,22 +175,14 @@ public class EditGuideInformation implements IService {
                 entryIterator = newInfoGuideEntries.iterator();
                 while (entryIterator.hasNext()) {
                     InfoGuideEntry infoGuideEntry = (InfoGuideEntry) entryIterator.next();
-                    try {
-                        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-                        IGuideEntry guideEntry = sp.getIPersistentGuideEntry()
-                                .readByGuideAndGraduationTypeAndDocumentTypeAndDescription(guide,
-                                        infoGuideEntry.getGraduationType(),
-                                        infoGuideEntry.getDocumentType(),
-                                        infoGuideEntry.getDescription());
-                        guideEntry.setQuantity(infoGuideEntry.getQuantity());
-                    } catch (ExcepcaoPersistencia ex) {
-                        FenixServiceException newEx = new FenixServiceException(
-                                "Persistence layer error");
-                        newEx.fillInStackTrace();
-                        throw newEx;
-                    }
+
+                    IGuideEntry guideEntry = sp.getIPersistentGuideEntry()
+                            .readByGuideAndGraduationTypeAndDocumentTypeAndDescription(guide,
+                                    infoGuideEntry.getGraduationType(),
+                                    infoGuideEntry.getDocumentType(), infoGuideEntry.getDescription());
+                    guideEntry.setQuantity(infoGuideEntry.getQuantity());
+
                 }
-                sp.getIPersistentGuide().simpleLockWrite(guide);
                 guide.setContributor(contributor);
 
             }
@@ -219,118 +192,100 @@ public class EditGuideInformation implements IService {
             if (change) {
 
                 // Create a new Guide Version
-                IGuide newGuideVersion = null;
-                try {
-                    sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-                    sp.getIPersistentGuide().simpleLockWrite(newGuideVersion);
-                    newGuideVersion = this.createNewGuideVersion(infoGuide);
+                IGuide newGuideVersion = this.createNewGuideVersion(infoGuide);
 
-                    // fill in the last field in the Others Guide Entry if
-                    // necessary
-                    if (othersGuideEntry != null) {
-                        othersGuideEntry.setGuide(newGuideVersion);
-                    }
-
-                    // Create The new Situation
-                    IGuideSituation guideSituation = new GuideSituation();
-
-                    sp.getIPersistentGuideSituation().simpleLockWrite(guideSituation);
-                    guideSituation.setDate(infoGuide.getInfoGuideSituation().getDate());
-                    guideSituation.setGuide(newGuideVersion);
-                    guideSituation.setRemarks(infoGuide.getRemarks());
-                    guideSituation.setSituation(infoGuide.getInfoGuideSituation().getSituation());
-                    guideSituation.setState(new State(State.ACTIVE));
-
-                    // Write the new Guide Version
-
-                    // // Make sure that everything is written before reading
-                    // ...
-                    // sp.confirmarTransaccao();
-                    // sp.iniciarTransaccao();
-
-                    // For Transactions Creation
-                    IPersistentTransaction persistentTransaction = sp.getIPersistentTransaction();
-                    IPaymentTransaction paymentTransaction = null;
-                    IGratuitySituation gratuitySituation = null;
-                    IPersistentPersonAccount persistentPersonAccount = sp.getIPersistentPersonAccount();
-                    IPersonAccount personAccount = persistentPersonAccount.readByPerson(guide
-                            .getPerson().getIdInternal());
-
-                    if (personAccount == null) {
-                        personAccount = new PersonAccount(guide.getPerson());
-                        persistentPersonAccount.simpleLockWrite(personAccount);
-                    }
-
-                    IPersistentGratuitySituation persistentGratuitySituation = sp
-                            .getIPersistentGratuitySituation();
-
-                    // Write the Guide Entries
-                    for (InfoGuideEntry infoGuideEntry : (List<InfoGuideEntry>) newInfoGuideEntries) {
-                        IGuideEntry guideEntry = new GuideEntry();
-                        infoGuideEntry.copyToDomain(infoGuideEntry, guideEntry);
-
-                        // Reset id internal to allow persistence to write a new
-                        // version
-                        guideEntry.setGuide(newGuideVersion);
-
-                        IPerson studentPerson = guide.getPerson();
-                        IStudent student = sp.getIPersistentStudent().readByUsername(
-                                studentPerson.getUsername());
-                        IExecutionDegree executionDegree = guide.getExecutionDegree();
-
-                        // Write Gratuity Transaction
-                        if (guideEntry.getDocumentType().equals(DocumentType.GRATUITY)) {
-
-                            executionDegree = guide.getExecutionDegree();
-                            gratuitySituation = persistentGratuitySituation
-                                    .readGratuitySituationByExecutionDegreeAndStudent(executionDegree
-                                            .getIdInternal(), student.getIdInternal());
-
-                            paymentTransaction = new GratuityTransaction(guideEntry.getPrice(),
-                                    new Timestamp(Calendar.getInstance().getTimeInMillis()), guideEntry
-                                            .getDescription(), infoGuide.getPaymentType(),
-                                    TransactionType.GRATUITY_ADHOC_PAYMENT, Boolean.FALSE, guide
-                                            .getPerson(), personAccount, guideEntry, gratuitySituation);
-
-                            persistentTransaction.lockWrite(paymentTransaction);
-
-                            // Update GratuitySituation
-                            persistentGratuitySituation.lockWrite(gratuitySituation);
-
-                            Double remainingValue = gratuitySituation.getRemainingValue();
-
-                            gratuitySituation.setRemainingValue(new Double(remainingValue.doubleValue()
-                                    + paymentTransaction.getValue().doubleValue()));
-
-                        }
-
-                        // Write Insurance Transaction
-                        if (guideEntry.getDocumentType().equals(DocumentType.INSURANCE)) {
-                            paymentTransaction = new InsuranceTransaction(guideEntry.getPrice(),
-                                    new Timestamp(Calendar.getInstance().getTimeInMillis()), guideEntry
-                                            .getDescription(), infoGuide.getPaymentType(),
-                                    TransactionType.INSURANCE_PAYMENT, Boolean.FALSE, guide.getPerson(),
-                                    personAccount, guideEntry, executionDegree.getExecutionYear(),
-                                    student);
-
-                            persistentTransaction.lockWrite(paymentTransaction);
-                        }
-
-                    }
-
-                    // Update the version number for the next Database Access
-                    infoGuide.setVersion(newGuideVersion.getVersion());
-
-                    // CREATE TRANSACTIONS!!!!!!!!!!!!!!!!!!!!!(Gratuity or
-                    // Insurance)
-
-                    // UPDATE remainigValue ou GRATUITY_SITUATION!!!!!
-
-                } catch (ExcepcaoPersistencia ex) {
-                    FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-                    newEx.fillInStackTrace();
-                    throw newEx;
+                // fill in the last field in the Others Guide Entry if
+                // necessary
+                if (othersGuideEntry != null) {
+                    othersGuideEntry.setGuide(newGuideVersion);
                 }
+
+                // Create The new Situation
+                IGuideSituation guideSituation = DomainFactory.makeGuideSituation();
+                guideSituation.setDate(infoGuide.getInfoGuideSituation().getDate());
+                guideSituation.setGuide(newGuideVersion);
+                guideSituation.setRemarks(infoGuide.getRemarks());
+                guideSituation.setSituation(infoGuide.getInfoGuideSituation().getSituation());
+                guideSituation.setState(new State(State.ACTIVE));
+
+                // Write the new Guide Version
+
+                // // Make sure that everything is written before reading
+                // ...
+                // sp.confirmarTransaccao();
+                // sp.iniciarTransaccao();
+
+                // For Transactions Creation
+                IPersistentTransaction persistentTransaction = sp.getIPersistentTransaction();
+                IPaymentTransaction paymentTransaction = null;
+                IGratuitySituation gratuitySituation = null;
+                IPersistentPersonAccount persistentPersonAccount = sp.getIPersistentPersonAccount();
+                IPersonAccount personAccount = persistentPersonAccount.readByPerson(guide.getPerson()
+                        .getIdInternal());
+
+                if (personAccount == null) {
+                    personAccount = DomainFactory.makePersonAccount(guide.getPerson());
+                }
+
+                IPersistentGratuitySituation persistentGratuitySituation = sp
+                        .getIPersistentGratuitySituation();
+
+                // Write the Guide Entries
+                for (InfoGuideEntry infoGuideEntry : (List<InfoGuideEntry>) newInfoGuideEntries) {
+                    IGuideEntry guideEntry = DomainFactory.makeGuideEntry();
+                    infoGuideEntry.copyToDomain(infoGuideEntry, guideEntry);
+
+                    // Reset id internal to allow persistence to write a new
+                    // version
+                    guideEntry.setGuide(newGuideVersion);
+
+                    IPerson studentPerson = guide.getPerson();
+                    IStudent student = sp.getIPersistentStudent().readByUsername(
+                            studentPerson.getUsername());
+                    IExecutionDegree executionDegree = guide.getExecutionDegree();
+
+                    // Write Gratuity Transaction
+                    if (guideEntry.getDocumentType().equals(DocumentType.GRATUITY)) {
+
+                        executionDegree = guide.getExecutionDegree();
+                        gratuitySituation = persistentGratuitySituation
+                                .readGratuitySituationByExecutionDegreeAndStudent(executionDegree
+                                        .getIdInternal(), student.getIdInternal());
+
+                        paymentTransaction = DomainFactory.makeGratuityTransaction(guideEntry.getPrice(),
+                                new Timestamp(Calendar.getInstance().getTimeInMillis()), guideEntry
+                                        .getDescription(), infoGuide.getPaymentType(),
+                                TransactionType.GRATUITY_ADHOC_PAYMENT, Boolean.FALSE,
+                                guide.getPerson(), personAccount, guideEntry, gratuitySituation);
+
+
+                        // Update GratuitySituation
+                        Double remainingValue = gratuitySituation.getRemainingValue();
+
+                        gratuitySituation.setRemainingValue(new Double(remainingValue.doubleValue()
+                                + paymentTransaction.getValue().doubleValue()));
+
+                    }
+
+                    // Write Insurance Transaction
+                    if (guideEntry.getDocumentType().equals(DocumentType.INSURANCE)) {
+                        paymentTransaction = DomainFactory.makeInsuranceTransaction(guideEntry.getPrice(),
+                                new Timestamp(Calendar.getInstance().getTimeInMillis()), guideEntry
+                                        .getDescription(), infoGuide.getPaymentType(),
+                                TransactionType.INSURANCE_PAYMENT, Boolean.FALSE, guide.getPerson(),
+                                personAccount, guideEntry, executionDegree.getExecutionYear(), student);
+                    }
+
+                }
+
+                // Update the version number for the next Database Access
+                infoGuide.setVersion(newGuideVersion.getVersion());
+
+                // CREATE TRANSACTIONS!!!!!!!!!!!!!!!!!!!!!(Gratuity or
+                // Insurance)
+
+                // UPDATE remainigValue ou GRATUITY_SITUATION!!!!!
+
             }
 
         }
@@ -341,40 +296,29 @@ public class EditGuideInformation implements IService {
         }
         IGuide newGuide = null;
         InfoGuide result = null;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            // write the Others Guide Entry if necessary
-            if (othersGuideEntry != null) {
-                sp.getIPersistentGuideEntry().simpleLockWrite(othersGuideEntry);
-            }
-            // Make sure that everything is written before reading ...
-            sp.confirmarTransaccao();
-            sp.iniciarTransaccao();
+        // Make sure that everything is written before reading ...
+        sp.confirmarTransaccao();
+        sp.iniciarTransaccao();
 
-            newGuide = sp.getIPersistentGuide().readByNumberAndYearAndVersion(infoGuide.getNumber(),
-                    infoGuide.getYear(), infoGuide.getVersion());
-            // Update the Guide Total
-            InfoGuide infoGuideTemp = new InfoGuide();
-            infoGuideTemp.setInfoGuideEntries(newInfoGuideEntries);
+        newGuide = sp.getIPersistentGuide().readByNumberAndYearAndVersion(infoGuide.getNumber(),
+                infoGuide.getYear(), infoGuide.getVersion());
+        // Update the Guide Total
+        InfoGuide infoGuideTemp = new InfoGuide();
+        infoGuideTemp.setInfoGuideEntries(newInfoGuideEntries);
 
-            result = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(newGuide);
+        result = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(newGuide);
 
-            result.setTotal(CalculateGuideTotal.calculate(result));
+        result.setTotal(CalculateGuideTotal.calculate(result));
 
-            sp.getIPersistentGuide().simpleLockWrite(newGuide);
-            newGuide.setTotal(result.getTotal());
-
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);
-            throw newEx;
-        }
+        newGuide.setTotal(result.getTotal());
 
         return result;
 
     }
 
-    private void chekIfChangeable(InfoGuide infoGuide) throws FenixServiceException {
+    private void chekIfChangeable(InfoGuide infoGuide) throws FenixServiceException,
+            ExcepcaoPersistencia {
         ISuportePersistente sp = null;
         List guides = null;
 
@@ -382,49 +326,34 @@ public class EditGuideInformation implements IService {
         if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.ANNULLED))
             throw new InvalidChangeServiceException("Situation of Guide Is Annulled");
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            guides = sp.getIPersistentGuide().readByNumberAndYear(infoGuide.getNumber(),
-                    infoGuide.getYear());
-
-        } catch (ExcepcaoPersistencia e) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error", e);
-            throw newEx;
-        }
+        guides = sp.getIPersistentGuide()
+                .readByNumberAndYear(infoGuide.getNumber(), infoGuide.getYear());
 
         // If it's not the latest version ...
         if (guides.size() != infoGuide.getVersion().intValue())
             throw new InvalidChangeServiceException("Not the Latest Version");
     }
 
-    private IGuide createNewGuideVersion(InfoGuide infoGuide) throws FenixServiceException {
-        IGuide guide = new Guide();
+    private IGuide createNewGuideVersion(InfoGuide infoGuide) throws FenixServiceException,
+            ExcepcaoPersistencia {
+        IGuide guide = DomainFactory.makeGuide();
         ISuportePersistente sp = null;
         IContributor contributor = null;
         IPerson person = null;
         IExecutionDegree executionDegree = null;
 
         // Read the needed information from the DataBase
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            person = sp.getIPessoaPersistente().lerPessoaPorUsername(
-                    infoGuide.getInfoPerson().getUsername());
-            contributor = sp.getIPersistentContributor().readByContributorNumber(
-                    infoGuide.getInfoContributor().getContributorNumber());
-            IExecutionYear executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(
-                    infoGuide.getInfoExecutionDegree().getInfoExecutionYear().getYear());
+        person = sp.getIPessoaPersistente()
+                .lerPessoaPorUsername(infoGuide.getInfoPerson().getUsername());
+        contributor = sp.getIPersistentContributor().readByContributorNumber(
+                infoGuide.getInfoContributor().getContributorNumber());
+        IExecutionYear executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(
+                infoGuide.getInfoExecutionDegree().getInfoExecutionYear().getYear());
 
-            executionDegree = sp.getIPersistentExecutionDegree()
-                    .readByDegreeCurricularPlanAndExecutionYear(
-                            infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName(),
-                            infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan()
-                                    .getInfoDegree().getSigla(), executionYear.getYear());
-
-        } catch (ExcepcaoPersistencia e) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+        executionDegree = sp.getIPersistentExecutionDegree().readByDegreeCurricularPlanAndExecutionYear(
+                infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName(),
+                infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree()
+                        .getSigla(), executionYear.getYear());
 
         // Set the fields
         guide.setContributor(contributor);

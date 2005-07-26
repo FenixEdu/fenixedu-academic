@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.Invalid
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.RequiredJustificationServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.DocumentType;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.GuideState;
@@ -73,10 +74,8 @@ public class CreateReimbursementGuide implements IService {
                     "error.exception.masterDegree.invalidGuideSituation");
         }
 
-        IReimbursementGuide reimbursementGuide = new ReimbursementGuide();
+        IReimbursementGuide reimbursementGuide = DomainFactory.makeReimbursementGuide();
 
-        // List reimbursementGuideEntries = Cloner
-        // .copyListInfoReimbursementGuideEntries2ListIReimbursementGuideEntries(infoReimbursementGuideEntries);
         List<IReimbursementGuideEntry> reimbursementGuideEntries = new ArrayList<IReimbursementGuideEntry>(
                 infoReimbursementGuideEntries.size());
         for (InfoReimbursementGuideEntry infoReimbursementGuideEntry : (List<InfoReimbursementGuideEntry>) infoReimbursementGuideEntries) {
@@ -99,8 +98,7 @@ public class CreateReimbursementGuide implements IService {
             }
 
             // create new reimbursement entry
-            IReimbursementGuideEntry newReimbursementGuideEntry = new ReimbursementGuideEntry();
-            ps.getIPersistentReimbursementGuideEntry().simpleLockWrite(newReimbursementGuideEntry);
+            IReimbursementGuideEntry newReimbursementGuideEntry = DomainFactory.makeReimbursementGuideEntry();
             newReimbursementGuideEntry.setGuideEntry(guideEntry);
             newReimbursementGuideEntry.setJustification(infoReimbursementGuideEntry.getJustification());
             newReimbursementGuideEntry.setReimbursementGuide(reimbursementGuide);
@@ -109,7 +107,6 @@ public class CreateReimbursementGuide implements IService {
         }
 
         // reimbursement Guide
-        ps.getIPersistentReimbursementGuide().simpleLockWrite(reimbursementGuide);
         reimbursementGuide.setCreationDate(Calendar.getInstance());
         Integer reimbursementGuideNumber = ps.getIPersistentReimbursementGuide()
                 .generateReimbursementGuideNumber();
@@ -121,8 +118,7 @@ public class CreateReimbursementGuide implements IService {
         IEmployee employee = ps.getIPersistentEmployee().readByPerson(person);
 
         // reimbursement Guide Situation
-        IReimbursementGuideSituation reimbursementGuideSituation = new ReimbursementGuideSituation();
-        ps.getIPersistentObject().simpleLockWrite(reimbursementGuideSituation);
+        IReimbursementGuideSituation reimbursementGuideSituation = DomainFactory.makeReimbursementGuideSituation();
         reimbursementGuideSituation.setEmployee(employee);
         reimbursementGuideSituation.setModificationDate(Calendar.getInstance());
         reimbursementGuideSituation.setOfficialDate(Calendar.getInstance());

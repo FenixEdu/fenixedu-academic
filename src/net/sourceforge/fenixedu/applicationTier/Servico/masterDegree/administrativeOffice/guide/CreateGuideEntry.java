@@ -3,9 +3,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.Iterator;
 
 import net.sourceforge.fenixedu.domain.DocumentType;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.Guide;
-import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.domain.IGuideEntry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -28,8 +28,7 @@ public class CreateGuideEntry implements IService {
 
         IGuide guide = (IGuide) sp.getIPersistentGuide().readByOID(Guide.class, guideID, true);
 
-        IGuideEntry guideEntry = new GuideEntry();
-        sp.getIPersistentGuideEntry().simpleLockWrite(guideEntry);
+        IGuideEntry guideEntry = DomainFactory.makeGuideEntry();
 
         guideEntry.setDescription(description);
         guideEntry.setDocumentType(documentType);
