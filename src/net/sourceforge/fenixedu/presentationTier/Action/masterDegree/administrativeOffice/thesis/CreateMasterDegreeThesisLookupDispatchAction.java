@@ -33,7 +33,7 @@ import org.apache.struts.actions.LookupDispatchAction;
  * 
  * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 
 public class CreateMasterDegreeThesisLookupDispatchAction extends LookupDispatchAction {
@@ -129,7 +129,7 @@ public class CreateMasterDegreeThesisLookupDispatchAction extends LookupDispatch
     public ActionForward externalAssitentGuider(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-        //	to display the external persons search form
+        // to display the external persons search form
         request.setAttribute(SessionConstants.SEARCH_EXTERNAL_ASSISTENT_GUIDERS, new Boolean(true));
 
         MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
@@ -159,7 +159,7 @@ public class CreateMasterDegreeThesisLookupDispatchAction extends LookupDispatch
     public ActionForward externalGuider(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-        //	to display the external persons search form
+        // to display the external persons search form
         request.setAttribute(SessionConstants.SEARCH_EXTERNAL_GUIDERS, new Boolean(true));
 
         MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
@@ -409,7 +409,8 @@ public class CreateMasterDegreeThesisLookupDispatchAction extends LookupDispatch
     }
 
     public ActionForward createMasterDegreeThesis(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixFilterException {
 
         DynaActionForm createMasterDegreeForm = (DynaActionForm) form;
         IUserView userView = SessionUtils.getUserView(request);
@@ -456,9 +457,11 @@ public class CreateMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 
         }
 
-        Object args2[] = { userView, infoStudentCurricularPlan, dissertationTitle, infoTeacherGuiders,
-                infoTeacherAssistentGuiders, infoExternalPersonExternalGuiders,
-                infoExternalPersonExternalAssistentGuiders };
+        Object args2[] = { userView, infoStudentCurricularPlan.getIdInternal(), dissertationTitle,
+                operations.getTeachersNumbers(form, "guidersNumbers"),
+                operations.getTeachersNumbers(form, "assistentGuidersNumbers"),
+                operations.getExternalPersonsIDs(form, "externalGuidersIDs"),
+                operations.getExternalPersonsIDs(form, "externalAssistentGuidersIDs") };
 
         try {
             ServiceUtils.executeService(userView, "CreateMasterDegreeThesis", args2);

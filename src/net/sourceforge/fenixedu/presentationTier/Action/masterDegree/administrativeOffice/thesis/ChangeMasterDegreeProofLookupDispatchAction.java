@@ -249,15 +249,15 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 
         MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
         ActionErrors actionErrors = new ActionErrors();
-        List infoTeacherJuries = null;
-        List infoExternalPersonExternalJuries = null;
+        List<Integer> juriesNumbers = null;
+        List<Integer> externalJuriesIDs = null;
 
         try {
             operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
-            infoTeacherJuries = operations.getTeachersByNumbers(form, request, "juriesNumbers",
-                    SessionConstants.JURIES_LIST, actionErrors);
-            infoExternalPersonExternalJuries = operations.getExternalPersonsByIDs(form, request,
-                    "externalJuriesIDs", SessionConstants.EXTERNAL_JURIES_LIST, actionErrors);
+            
+            juriesNumbers = operations.getTeachersNumbers(form, "juriesNumbers");
+            externalJuriesIDs = operations.getExternalPersonsIDs(form, "externalJuriesIDs");
+            
 
         } catch (Exception e1) {
             throw new FenixActionException(e1);
@@ -273,8 +273,8 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
         }
 
         executeChangeMasterDegreeProofService(mapping, userView, finalResult, attachedCopiesNumber,
-                proofDate, thesisDeliveryDate, infoStudentCurricularPlan, infoTeacherJuries,
-                infoExternalPersonExternalJuries);
+                proofDate, thesisDeliveryDate, infoStudentCurricularPlan, juriesNumbers,
+                externalJuriesIDs);
 
         return mapping.findForward("success");
 
@@ -283,11 +283,11 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
     private void executeChangeMasterDegreeProofService(ActionMapping mapping, IUserView userView,
             MasterDegreeClassification finalResult, Integer attachedCopiesNumber, Date proofDate,
             Date thesisDeliveryDate, InfoStudentCurricularPlan infoStudentCurricularPlan,
-            List infoTeacherJuries, List infoExternalPersonExternalJuries)
+            List<Integer> juriesNumbers, List<Integer> externalJuriesIDs)
             throws NonExistingActionException, ScholarshipNotFinishedActionException,
             ExistingActionException, FenixFilterException {
-        Object args2[] = { userView, infoStudentCurricularPlan, proofDate, thesisDeliveryDate,
-                finalResult, attachedCopiesNumber, infoTeacherJuries, infoExternalPersonExternalJuries };
+        Object args2[] = { userView, infoStudentCurricularPlan.getIdInternal(), proofDate, thesisDeliveryDate,
+                finalResult, attachedCopiesNumber, juriesNumbers, externalJuriesIDs };
 
         try {
             ServiceUtils.executeService(userView, "ChangeMasterDegreeProof", args2);
