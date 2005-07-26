@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IMark;
 import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.IOnlineTest;
@@ -173,7 +172,7 @@ public class InsertStudentTestResponses implements IService {
                     IMark mark = persistentSuport.getIPersistentMark().readBy(onlineTest, attend);
 
                     if (mark == null) {
-                        mark = new Mark();
+                        mark = DomainFactory.makeMark();
                         mark.setAttend(attend);
                         mark.setEvaluation(onlineTest);
                     }
