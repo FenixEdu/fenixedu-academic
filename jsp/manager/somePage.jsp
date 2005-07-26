@@ -4,7 +4,7 @@
 
 
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
-	<h:outputText value="Hello World :o0)"/>
+	<h:outputText value="Hello World :o)"/>
 	<br />
 	<h:outputText value="#{infoExecutionPeriod.name}"/>
 	<br />
