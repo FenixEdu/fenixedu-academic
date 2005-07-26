@@ -2325,11 +2325,6 @@ class net.sourceforge.fenixedu.domain.ShiftProfessorship extends net.sourceforge
 }
 
 
-class net.sourceforge.fenixedu.domain.ShiftStudent extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyShift;
-	Integer keyStudent;
-}
-
 class net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile extends net.sourceforge.fenixedu.domain.DomainObject {
 	String filename;
 }
@@ -4866,19 +4861,13 @@ relation ShiftShiftProfessorship {
 	}
 }
 
-
-relation ShiftShiftStudent {
-	net.sourceforge.fenixedu.domain.Shift playsRole shift;
-	net.sourceforge.fenixedu.domain.ShiftStudent playsRole studentShifts {
+relation ShiftStudent {
+	net.sourceforge.fenixedu.domain.Shift playsRole shifts {
 		multiplicity *;
 	}
-}
-
-relation ShiftStudentStudent {
-	net.sourceforge.fenixedu.domain.ShiftStudent playsRole shiftStudents {
+	net.sourceforge.fenixedu.domain.Student playsRole students {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Student playsRole student;
 }
 
 relation ShiftSummary {

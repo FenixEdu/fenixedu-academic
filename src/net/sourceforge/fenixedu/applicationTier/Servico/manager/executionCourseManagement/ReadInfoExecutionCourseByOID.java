@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
@@ -48,11 +48,11 @@ public class ReadInfoExecutionCourseByOID implements IService {
                 public Object transform(Object input) {
                     ICurricularCourse curricularCourse = (ICurricularCourse) input;
 
-                    return Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                    return InfoCurricularCourse.newInfoFromDomain(curricularCourse);
                 }
             }, infoCurricularCourses);
 
-            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
+            infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
             infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
         } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex);

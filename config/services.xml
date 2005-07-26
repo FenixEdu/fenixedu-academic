@@ -40,15 +40,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>AdicionarAula</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.AdicionarAula</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ApagarSala</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.ApagarSala</implementationClass>
 		<description />
@@ -241,15 +232,6 @@
 	<service>
 		<name>LerAlunosDeTurno</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.LerAlunosDeTurno</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>LerOcupacaoDeTurnos</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.LerOcupacaoDeTurnos</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -638,16 +620,6 @@
 	<service>
 		<name>ReadShiftLessons</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.ReadShiftLessons</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="StudentAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>WriteStudentAttendingCourses</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.student.WriteStudentAttendingCourses</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4890,16 +4862,6 @@
 		<name>teacher.GetProjectsGroupsByExecutionCourseID</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.teacher.GetProjectsGroupsByExecutionCourseID</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ExecutionCourseLecturingTeacherOrDegreeCoordinatorAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>teacher.GetAttendaciesByStudentList</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.GetAttendaciesByStudentList</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>

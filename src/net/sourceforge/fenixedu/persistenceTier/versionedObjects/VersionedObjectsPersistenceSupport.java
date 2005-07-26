@@ -171,7 +171,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TeacherVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TransactionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TurmaTurnoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TurmaVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TurnoAlunoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TurnoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.UniversityVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.WorkLocationVO;
@@ -499,10 +498,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentExtraWorkHistoric getIPersistentExtraWorkHistoric() {
         return null;
-    }
-
-    public ITurnoAlunoPersistente getITurnoAlunoPersistente() {
-        return new TurnoAlunoVO();
     }
 
     public IPersistentExternalPerson getIPersistentExternalPerson() {

@@ -16,9 +16,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
-import net.sourceforge.fenixedu.domain.IShiftStudent;
+import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.Room;
-import net.sourceforge.fenixedu.domain.ShiftStudent;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
@@ -41,10 +42,17 @@ public class AulaVO extends VersionedObjectsBase implements IAulaPersistente {
     public List readLessonsByStudent(final String username) throws ExcepcaoPersistencia {
         final List lessons = new ArrayList();
 
-        final List<IShiftStudent> shiftStudents = (List<IShiftStudent>) readAll(ShiftStudent.class);
-        for (final IShiftStudent shiftStudent : shiftStudents) {
-            if (shiftStudent.getStudent().getPerson().getUsername().equalsIgnoreCase(username)) {
-                lessons.add(shiftStudent.getShift().getAssociatedLessons());
+        List<IStudent> students = (List<IStudent>) readAll(Student.class);
+        for(IStudent student : students){
+            if(student.getPerson().getUsername().equalsIgnoreCase(username)){
+                List<IShift> shifts = student.getShifts();
+                for(IShift shift : shifts){
+                    List auxLessons = shift.getAssociatedLessons();
+                    if (auxLessons != null) {
+                        lessons.addAll(auxLessons);
+                    }
+                }
+                break;
             }
         }
 

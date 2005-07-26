@@ -41,6 +41,7 @@ public class AddShiftsToClass implements IService {
                     (Integer) shiftOIDs.get(i));
 
             schoolClass.associateShift(shift);
+            
         }
 
         result = true;

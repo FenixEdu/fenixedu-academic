@@ -44,19 +44,16 @@ public class AssociateExecutionCourseToExam implements IService {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
-//            IExecutionPeriod executionPeriod = Cloner
-//                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionCourse
-//                            .getInfoExecutionPeriod());
-
             IExecutionCourse executionCourseToBeAssociatedWithExam = executionCourseDAO
                     .readByExecutionCourseInitialsAndExecutionPeriodId(infoExecutionCourse.getSigla(),
                             infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
 
             // We assume it's the same execution period.
             IExecutionCourse someExecutionCourseAlreadyAssociatedWithExam = executionCourseDAO
-                    .readByExecutionCourseInitialsAndExecutionPeriodId(((InfoExecutionCourse) infoViewExam
-                            .getInfoExecutionCourses().get(0)).getSigla(), 
-                            infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
+                    .readByExecutionCourseInitialsAndExecutionPeriodId(
+                            ((InfoExecutionCourse) infoViewExam.getInfoExecutionCourses().get(0))
+                                    .getSigla(), infoExecutionCourse.getInfoExecutionPeriod()
+                                    .getIdInternal());
 
             // Obtain a mapped exam
             IExam examFromDBToBeAssociated = null;

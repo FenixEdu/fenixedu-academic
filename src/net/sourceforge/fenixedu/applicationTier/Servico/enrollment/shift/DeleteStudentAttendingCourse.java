@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -7,6 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.domain.Student;
@@ -15,7 +17,6 @@ import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoAlunoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -90,7 +91,6 @@ public class DeleteStudentAttendingCourse implements IService {
             throws FenixServiceException {
         try {
             IFrequentaPersistente persistentAttends = sp.getIFrequentaPersistente();
-            ITurnoAlunoPersistente persistentShiftStudent = sp.getITurnoAlunoPersistente();
 
             IAttends attend = persistentAttends.readByAlunoAndDisciplinaExecucao(student,
                     executionCourse);
@@ -106,8 +106,16 @@ public class DeleteStudentAttendingCourse implements IService {
                     throw new AlreadyEnrolledServiceException();
                 }
 
-                List shiftAttendsToDelete = persistentShiftStudent.readByStudentAndExecutionCourse(
-                        student.getIdInternal(), executionCourse.getIdInternal());
+                List shiftAttendsToDelete = new ArrayList();
+                List<IShift> shifts = student.getShifts();
+
+                for (IShift shift : shifts) {
+                    if (shift.getDisciplinaExecucao().getIdInternal().equals(
+                            executionCourse.getIdInternal())) {
+                        shiftAttendsToDelete.add(shift);
+                    }
+
+                }
 
                 if (shiftAttendsToDelete != null && shiftAttendsToDelete.size() > 0) {
                     throw new AlreadyEnrolledInShiftServiceException();

@@ -300,11 +300,8 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
             openDatabase();
             Transaction tx = _odmg.currentTransaction();
 
-            if (tx != null)
-            {
+            if (tx != null) {
                 tx.commit();
-                //				Database db =_odmg.getDatabase(null);
-                //				if (db!= null) db.close();
             }
         } catch (ODMGException ex1) {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.CLOSE_DATABASE, ex1);
@@ -320,7 +317,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 
             if (tx != null) {
                 tx.abort();
-                //					_odmg.getDatabase(null).close();
             }
 
         } catch (ODMGException ex1) {
@@ -362,14 +358,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new TurmaTurnoOJB();
     }
 
-    public ITurnoAlunoPersistente getITurnoAlunoPersistente() {
-        return new TurnoAlunoOJB();
-    }
-
-    /*
-     * public ITurnoAulaPersistente getITurnoAulaPersistente() { return new
-     * TurnoAulaOJB(); }
-     */
     public IPersistentCurricularCourse getIPersistentCurricularCourse() {
         return new CurricularCourseOJB();
     }
@@ -397,7 +385,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
     public IPersistentStudent getIPersistentStudent() {
         return new StudentOJB();
     }
-    
+
     public IPersistentSenior getIPersistentSenior() {
         return new SeniorOJB();
     }
@@ -643,7 +631,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new CurricularCourseEquivalenceOJB();
     }
 
-    //by gedl AT rnl DOT ist DOT utl DOT pt (July the 25th, 2003)
+    // by gedl AT rnl DOT ist DOT utl DOT pt (July the 25th, 2003)
     public IPersistentSeminaryModality getIPersistentSeminaryModality() {
         return new ModalityOJB();
     }
@@ -658,12 +646,12 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new GrantContractOJB();
     }
 
-    //By Barbosa (November 19th, 2003)
+    // By Barbosa (November 19th, 2003)
     public IPersistentGrantType getIPersistentGrantType() {
         return new GrantTypeOJB();
     }
 
-    //By Barbosa (November 20th, 2003)
+    // By Barbosa (November 20th, 2003)
     public IPersistentGrantOrientationTeacher getIPersistentGrantOrientationTeacher() {
         return new GrantOrientationTeacherOJB();
     }
@@ -801,7 +789,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new TeacherInstitutionWorkingTimeOJB();
     }
 
-    //Nuno Correia & Ricardo Rodrigues
+    // Nuno Correia & Ricardo Rodrigues
     public IPersistentCurricularCourseGroup getIPersistentCurricularCourseGroup() {
         return new CurricularCourseGroupOJB();
     }
@@ -819,32 +807,32 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new CampusOJB();
     }
 
-    //by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)
+    // by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)
     public IPersistentSeminaryTheme getIPersistentSeminaryTheme() {
         return new ThemeOJB();
     }
 
-    //	   by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)
+    // by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)
     public IPersistentSeminary getIPersistentSeminary() {
         return new SeminaryOJB();
     }
 
-    //	   by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)
+    // by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)
     public IPersistentSeminaryCaseStudy getIPersistentSeminaryCaseStudy() {
         return new CaseStudyOJB();
     }
 
-    //	   by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003)
+    // by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003)
     public IPersistentSeminaryCandidacy getIPersistentSeminaryCandidacy() {
         return new CandidacyOJB();
     }
 
-    //	   by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003)
+    // by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003)
     public IPersistentSeminaryCaseStudyChoice getIPersistentSeminaryCaseStudyChoice() {
         return new CaseStudyChoiceOJB();
     }
 
-    //	   by gedl AT rnl DOT ist DOT utl DOT pt (August the 4th, 2003)
+    // by gedl AT rnl DOT ist DOT utl DOT pt (August the 4th, 2003)
     public IPersistentSeminaryCurricularCourseEquivalency getIPersistentSeminaryCurricularCourseEquivalency() {
         return new EquivalencyOJB();
     }
@@ -918,7 +906,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 
     }
 
-    //	   by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
+    // by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
     public void commitTransaction() throws StorageException {
         try {
             this.confirmarTransaccao();
@@ -928,7 +916,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 
     }
 
-    //	   by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
+    // by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
     public void abortTransaction() throws StorageException {
         try {
             this.cancelarTransaccao();
@@ -938,7 +926,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 
     }
 
-    //	   by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
+    // by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
     public void lockRead(List list) throws StorageException {
         try {
 
@@ -956,7 +944,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         }
     }
 
-    //	   by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
+    // by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
     public void lockRead(Object obj) throws StorageException {
         try {
             Transaction tx = _odmg.currentTransaction();
@@ -967,7 +955,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         }
     }
 
-    //	   by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
+    // by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
     public void lockWrite(Object obj) throws StorageException {
         try {
             Transaction tx = _odmg.currentTransaction();
@@ -978,7 +966,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         }
     }
 
-    //	   by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
+    // by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
     public PersistenceBroker currentBroker() throws StorageException {
         Transaction tx = this._odmg.currentTransaction();
         if (tx == null)
@@ -1121,7 +1109,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new FinalDegreeWorkOJB();
     }
 
-    //	Ana e Ricardo
+    // Ana e Ricardo
     public IPersistentRoomOccupation getIPersistentRoomOccupation() {
         return new RoomOccupationOJB();
     }
@@ -1138,17 +1126,12 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new ReimbursementGuideEntryOJB();
 
     }
-/*
-    public IPersistentWrittenEvaluationCurricularCourseScope getIPersistentWrittenEvaluationCurricularCourseScope() {
-        return new WrittenEvaluationCurricularCourseScopeOJB();
-
-    }
-*/
-    public IPersistentSentSms getIPersistentSentSms() {
+	
+	public IPersistentSentSms getIPersistentSentSms() {
         return new SentSmsOJB();
     }
 
-    //TJBF & PFON
+    // TJBF & PFON
     /*
      * (non-Javadoc)
      * 
@@ -1245,72 +1228,81 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
     public IPersistentGlossaryEntries getIPersistentGlossaryEntries() {
         return new GlossaryEntriesOJB();
     }
-    
+
     public IPersistentGroupPropertiesExecutionCourse getIPersistentGroupPropertiesExecutionCourse() {
         return new GroupPropertiesExecutionCourseOJB();
     }
 
     public IPersistentAttendInAttendsSet getIPersistentAttendInAttendsSet() {
-    	return new AttendInAttendsSetOJB();
+        return new AttendInAttendsSetOJB();
     }
 
     public IPersistentAttendsSet getIPersistentAttendsSet() {
-    	return new AttendsSetOJB();
+        return new AttendsSetOJB();
     }
-    
+
     public IPersistentEnrolmentLog getIPersistentEnrolmentLog() {
         return new EnrolmentLogOJB();
     }
 
     // Rita Ferreira e Jo�o Fialho
-	public IPersistentOldInquiriesSummary getIPersistentOldInquiriesSummary() {
-		return new OldInquiriesSummaryOJB();
-	}
-	public IPersistentOldInquiriesTeachersRes getIPersistentOldInquiriesTeachersRes() {
-	    return new OldInquiriesTeachersResOJB();
-	}
-	public IPersistentOldInquiriesCoursesRes getIPersistentOldInquiriesCoursesRes() {
-	    return new OldInquiriesCoursesResOJB();
-	}
-	public IPersistentInquiriesCourse getIPersistentInquiriesCourse() {
-		return new InquiriesCourseOJB();
-	}
-	public IPersistentInquiriesRegistry getIPersistentInquiriesRegistry() {
-		return new InquiriesRegistryOJB();
-	}
-	public IPersistentInquiriesRoom getIPersistentInquiriesRoom() {
-		return new InquiriesRoomOJB();
-	}
-	public IPersistentInquiriesTeacher getIPersistentInquiriesTeacher() {
-		return new InquiriesTeacherOJB();
-	}
-	//
-    public IPersistentPublicationTeacher getIPersistentPublicationTeacher(){
-    	return new PublicationTeacherOJB();
+    public IPersistentOldInquiriesSummary getIPersistentOldInquiriesSummary() {
+        return new OldInquiriesSummaryOJB();
     }
+
+    public IPersistentOldInquiriesTeachersRes getIPersistentOldInquiriesTeachersRes() {
+        return new OldInquiriesTeachersResOJB();
+    }
+
+    public IPersistentOldInquiriesCoursesRes getIPersistentOldInquiriesCoursesRes() {
+        return new OldInquiriesCoursesResOJB();
+    }
+
+    public IPersistentInquiriesCourse getIPersistentInquiriesCourse() {
+        return new InquiriesCourseOJB();
+    }
+
+    public IPersistentInquiriesRegistry getIPersistentInquiriesRegistry() {
+        return new InquiriesRegistryOJB();
+    }
+
+    public IPersistentInquiriesRoom getIPersistentInquiriesRoom() {
+        return new InquiriesRoomOJB();
+    }
+
+    public IPersistentInquiriesTeacher getIPersistentInquiriesTeacher() {
+        return new InquiriesTeacherOJB();
+    }
+
+    //
+    public IPersistentPublicationTeacher getIPersistentPublicationTeacher() {
+        return new PublicationTeacherOJB();
+    }
+
     public IPersistentCostCenter getIPersistentCostCenter() {
         return new CostCenterOJB();
     }
-    
+
     public IPersistentMoneyCostCenter getIPersistentMoneyCostCenter() {
         return new MoneyCostCenterOJB();
     }
-    
+
     public IPersistentExtraWork getIPersistentExtraWork() {
         return new ExtraWorkOJB();
     }
 
     public IPersistentExtraWorkRequests getIPersistentExtraWorkRequests() {
         return new ExtraWorkResquestsOJB();
-    }    
-       public IPersistentPaymentTransaction getIPersistentPaymentTransaction() {
+    }
+
+    public IPersistentPaymentTransaction getIPersistentPaymentTransaction() {
         return new PaymentTransactionOJB();
     }
 
     public IPersistentSecretaryEnrolmentStudent getIPersistentSecretaryEnrolmentStudent() {
         return new SecretaryEnrolmentStudentOJB();
     }
-    
+
     public IPersistentExtraWorkCompensation getIPersistentExtraWorkCompensation() {
         return new ExtraWorkCompensationOJB();
     }
@@ -1318,7 +1310,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
     public IPersistentExtraWorkHistoric getIPersistentExtraWorkHistoric() {
         return new ExtraWorkHistoricOJB();
     }
-    
+
     public IPersistentProjectAccess getIPersistentProjectAccess() {
         return new ProjectAccessOJB();
     }
@@ -1326,7 +1318,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
     public IPersistentBuilding getIPersistentBuilding() {
         return new BuildingOJB();
     }
-    
+
     public IPersistentInstitution getIPersistentInstitution() {
         return new InstitutionOJB();
     }

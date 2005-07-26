@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IShiftStudent;
+import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -36,7 +36,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoAlunoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -167,16 +166,21 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
             Integer executionPeriodIdInternal = ((InfoExecutionCourse) infoAttendingCourses.get(0))
                 .getInfoExecutionPeriod().getIdInternal();
 
-            ITurnoAlunoPersistente persistentShiftStudent = sp.getITurnoAlunoPersistente();
-            List studentShifts = persistentShiftStudent.readByStudentAndExecutionPeriod(student.getIdInternal(),
-                    executionPeriodIdInternal);
-
+            List<IShift> shifts = student.getShifts();
+            List studentShifts= new ArrayList();
+            for (IShift shift : shifts) {
+                if (shift.getDisciplinaExecucao().getExecutionPeriod().getIdInternal().equals(
+                        executionPeriodIdInternal))
+                    ;
+                studentShifts.add(shift);
+            }
+            
             infoShiftEnrollment = (List) CollectionUtils.collect(studentShifts, new Transformer() {
 
                 public Object transform(Object input) {
-                    IShiftStudent shiftStudent = (IShiftStudent) input;
+                    IShift shift = (IShift) input;
                     InfoShift infoShift = InfoShiftWithInfoExecutionCourseAndInfoLessons
-                            .newInfoFromDomain(shiftStudent.getShift());
+                            .newInfoFromDomain(shift);
                     return infoShift;
                 }
             });

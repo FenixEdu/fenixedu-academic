@@ -19,13 +19,11 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IShiftStudent;
+import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.ShiftStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoAlunoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
@@ -118,8 +116,7 @@ public class SeperateExecutionCourse implements IService {
     private void transferShifts(final IPersistentObject persistentObject, final ISuportePersistente sp,
             final List shifts, final Integer[] shiftIdsToTransfer, final Collection transferedStudents,
             final IExecutionCourse destinationExecutionCourse) throws ExcepcaoPersistencia {
-        final ITurnoAlunoPersistente persistentStudentShift = sp.getITurnoAlunoPersistente();
-
+        
         for (Iterator iterator = shifts.iterator(); iterator.hasNext();) {
             IShift shift = (IShift) iterator.next();
             if (contains(shiftIdsToTransfer, shift.getIdInternal())) {
@@ -138,20 +135,15 @@ public class SeperateExecutionCourse implements IService {
                     throw new ExcepcaoPersistencia("Failed to store shift", ex);
                 }
             }
-
-            for (Iterator studentShiftIterator = shift.getStudentShifts().iterator(); studentShiftIterator
-                    .hasNext();) {
-                IShiftStudent studentShift = (IShiftStudent) studentShiftIterator.next();
-                if (!transferedStudents.contains(studentShift.getStudent().getIdInternal())) {
-                    // persistentStudentShift.delete(studentShift);
-                    studentShift.getStudent().getShiftStudents().remove(studentShift);
-                    studentShift.getShift().getStudentShifts().remove(studentShift);
-                    studentShift.setShift(null);
-                    studentShift.setStudent(null);
-                    persistentStudentShift.deleteByOID(ShiftStudent.class, studentShift.getIdInternal());
+            List<IStudent> students = shift.getStudents();
+            Iterator<IStudent> iter = students.iterator();
+            while(iter.hasNext()){
+                IStudent student = iter.next();
+                if (transferedStudents.contains(student.getIdInternal())) {
+                    iter.remove();
                 }
             }
-        }
+       	}
     }
 
     private Collection transferAttends(final IPersistentObject persistentObject,
@@ -160,8 +152,7 @@ public class SeperateExecutionCourse implements IService {
 
         final Set transferedStudents = new HashSet();
 
-        for (Iterator iterator = attends.iterator(); iterator.hasNext();) {
-            final IAttends attend = (IAttends) iterator.next();
+        for (IAttends attend : (List<IAttends>) attends) {
             if (attend.getEnrolment() != null
                     && contains(curricularCourseIdsToTransfer, attend.getEnrolment()
                             .getCurricularCourse().getIdInternal())) {

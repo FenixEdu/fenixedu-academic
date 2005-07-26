@@ -34,7 +34,6 @@ import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IGroupProperties;
 import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
@@ -192,19 +191,8 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
                     // if an attendance is related to a Shift
                     IStudent student = attendance.getAluno();
 
-                    try {
-                        IShiftStudent ta = sp.getITurnoAlunoPersistente().readByTurnoAndAluno(
-                                turno.getIdInternal(), student.getIdInternal());
-
-                        if (ta != null)
-                            collectedAttends.add(attendance);
-                    }
-
-                    catch (ExcepcaoPersistencia ep) {
-                        FenixServiceException newEx = new FenixServiceException(
-                                "Persistence layer error");
-                        newEx.fillInStackTrace();
-                        throw newEx;
+                    if (turno.getStudents().contains(student)) {
+                        collectedAttends.add(attendance);
                     }
                 }
             }
@@ -341,7 +329,8 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         return degreeCurricularPlans;
     }
 
-    private Map getShiftsByAttends(final List shifts, final IAttends attend, final ISuportePersistente sp, final Map<Integer, InfoShift> clonedShifts)
+    private Map getShiftsByAttends(final List shifts, final IAttends attend,
+            final ISuportePersistente sp, final Map<Integer, InfoShift> clonedShifts)
             throws ExcepcaoPersistencia {
         final Map result = new HashMap();
 
@@ -349,13 +338,14 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
             final IShift shift = (IShift) iterator.next();
 
             boolean studentInShift = false;
-            for (final IShiftStudent shiftStudent : shift.getStudentShifts()) {
-                if (shiftStudent.getStudent().getIdInternal().equals(attend.getAluno().getIdInternal())) {
+            List<IStudent> students = shift.getStudents();
+            for (IStudent student : students) {
+                if (student.getIdInternal().equals(attend.getAluno().getIdInternal())) {
                     studentInShift = true;
                     break;
                 }
             }
-
+            
             if (studentInShift) {
                 InfoShift infoShift = clonedShifts.get(shift.getIdInternal());
                 if (infoShift == null) {

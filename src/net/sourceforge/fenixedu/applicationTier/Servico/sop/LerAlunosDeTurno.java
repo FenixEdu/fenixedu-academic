@@ -12,6 +12,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  * @author tfc130
  */
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
@@ -29,15 +30,16 @@ public class LerAlunosDeTurno implements IService {
 
     public Object run(ShiftKey keyTurno) throws ExcepcaoPersistencia {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
+        
         final ITurnoPersistente persistentShift = sp.getITurnoPersistente();
         IShift shift = persistentShift.readByNameAndExecutionCourse(keyTurno.getShiftName(), keyTurno
                 .getInfoExecutionCourse().getIdInternal());
 
-        final List<IStudent> alunos = sp.getITurnoAlunoPersistente().readByShift(shift.getIdInternal());
+        List<IStudent> alunos = shift.getStudents();
 
-        List<InfoStudent> infoAlunos = new ArrayList<InfoStudent>(alunos.size());
-        for (IStudent elem : alunos) {
+        List infoAlunos = new ArrayList(alunos.size());
+        for (final Iterator iterator = alunos.iterator(); iterator.hasNext();) {
+            IStudent elem = (IStudent) iterator.next();
             InfoPerson infoPessoa = new InfoPerson();
             infoPessoa.setNome(elem.getPerson().getNome());
             infoPessoa.setUsername(elem.getPerson().getUsername());

@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -14,14 +15,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.SendMail;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.ShiftStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoAlunoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -35,7 +33,6 @@ public class ChangeStudentsShift implements IService {
             throws ExcepcaoPersistencia, FenixServiceException {
         ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
-        ITurnoAlunoPersistente persistentShiftStudent = persistentSupport.getITurnoAlunoPersistente();
         IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 
         IShift oldShift = (IShift) persistentShift.readByOID(Shift.class, oldShiftId);
@@ -52,34 +49,29 @@ public class ChangeStudentsShift implements IService {
                 && oldShift.getTipo().equals(newShift.getTipo())) {
             Set studentsInNewShiftSet = new HashSet();
 
-            List newShiftStudents = persistentShiftStudent.readStudentShiftByShift(newShift.getIdInternal());
+            List newShiftStudents = newShift.getStudents();
             for (int i = 0; i < newShiftStudents.size(); i++) {
-                IShiftStudent shiftStudent = (IShiftStudent) newShiftStudents.get(i);
-                studentsInNewShiftSet.add(shiftStudent.getStudent().getIdInternal());
+                IStudent student = (IStudent) newShiftStudents.get(i);
+                studentsInNewShiftSet.add(student.getIdInternal());
             }
-
-            List shiftStudents = persistentShiftStudent.readStudentShiftByShift(oldShift.getIdInternal());
-            for (int i = 0; i < shiftStudents.size(); i++) {
-                IShiftStudent shiftStudent = (IShiftStudent) shiftStudents.get(i);
-                IStudent student = shiftStudent.getStudent();
+            
+            List shiftStudents = oldShift.getStudents();
+            Iterator<IStudent> iter = shiftStudents.iterator();
+            while (iter.hasNext()) {
+                IStudent student = iter.next();
                 if (!studentsInNewShiftSet.contains(student.getIdInternal())) {
-                    persistentShiftStudent.simpleLockWrite(shiftStudent);
-                    shiftStudent.setShift(newShift);
-
+                    newShift.getStudents().add(student);
+                    iter.remove();
+                                        
                     IPerson person = student.getPerson();
                     if (person.getEmail() != null && person.getEmail().length() > 0) {
                         toMails.add(person.getEmail());
                     }
                 } else {
-                    //persistentShiftStudent.delete(shiftStudent);
-                    shiftStudent.getStudent().getShiftStudents().remove(shiftStudent);
-                    shiftStudent.getShift().getStudentShifts().remove(shiftStudent);
-                    shiftStudent.setShift(null);
-                    shiftStudent.setStudent(null);
-                    persistentShiftStudent.deleteByOID(ShiftStudent.class, shiftStudent.getIdInternal());
+                    iter.remove();
                 }
             }
-
+            
             IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
             sendMail
                     .run(emptyList, emptyList, toMails, person.getNome(), person.getEmail(),

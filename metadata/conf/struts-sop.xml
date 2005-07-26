@@ -956,19 +956,7 @@
           <forward name="Sucesso" path="/prepararEditarAulasDeTurno.do"/>
       </action>
 
-              <!--input="/adicionarAulas.jsp"-->
-      <action attribute="adicionarAulasForm"
-              input="/prepararAdicionarAulasDeTurno.do"
-              name="adicionarAulasForm"
-              path="/adicionarAulasForm"
-              scope="request"
-              type="net.sourceforge.fenixedu.presentationTier.Action.sop.AdicionarAulasFormAction">
-          <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
-          	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-               handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
-               />
-        <forward name="Sucesso" path="/prepararEditarAulasDeTurno.do"/>
-      </action>
+              
 
      <action path="/prepararVerAlunosDeTurno"
              input="/manipularTurnos.jsp"

@@ -421,7 +421,7 @@ public class InfoExecutionCourse extends InfoObject {
         }
         return infoExecutionCourse;
     }
-
+    
     public List getNonAffiliatedTeachers() {
         return nonAffiliatedTeachers;
     }

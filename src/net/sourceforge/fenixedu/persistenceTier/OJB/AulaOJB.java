@@ -16,10 +16,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IShiftStudent;
+import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.RoomOccupation;
-import net.sourceforge.fenixedu.domain.ShiftStudent;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 
@@ -48,19 +48,17 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 
     public List readLessonsByStudent(String username) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
-        crit.addEqualTo("aluno.person.username", username);
-        List studentShifts = queryList(ShiftStudent.class, crit);
-        if (studentShifts == null) {
-            return null;
-        }
+        crit.addEqualTo("person.username", username);
+        IStudent student = (IStudent) queryList(Student.class, crit);
+        List<IShift> shifts = student.getShifts();
         List lessons = new ArrayList();
-        for (int i = 0; i < studentShifts.size(); i++) {
-            IShift shift = ((IShiftStudent) studentShifts.get(i)).getShift();
+        for(IShift shift : shifts){
             List auxLessons = shift.getAssociatedLessons();
             if (auxLessons != null) {
                 lessons.addAll(auxLessons);
             }
         }
+        
         return lessons;
     }
 

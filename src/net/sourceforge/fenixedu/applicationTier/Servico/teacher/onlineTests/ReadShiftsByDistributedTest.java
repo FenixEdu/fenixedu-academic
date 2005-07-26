@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoAlunoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -43,9 +42,8 @@ public class ReadShiftsByDistributedTest implements IService {
             List<IShift> shiftList = persistentSuport.getITurnoPersistente().readByExecutionCourse(executionCourse.getIdInternal());
 
             List<InfoShift> result = new ArrayList<InfoShift>();
-            ITurnoAlunoPersistente turnoAlunoPersistente = persistentSuport.getITurnoAlunoPersistente();
             for (IShift shift : shiftList) {
-                List<IStudent> shiftStudents = turnoAlunoPersistente.readByShift(shift.getIdInternal());
+                List<IStudent> shiftStudents = shift.getStudents();
                 if (!studentsList.containsAll(shiftStudents)) {
                     result.add(InfoShift.newInfoFromDomain(shift));
                 }

@@ -6,10 +6,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.ShiftStudent;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -22,7 +20,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class UnEnrollStudentFromShift implements IService {
 
     /**
-     *  
+     * 
      */
     public UnEnrollStudentFromShift() {
     }
@@ -30,14 +28,15 @@ public class UnEnrollStudentFromShift implements IService {
     /**
      * @param studentId
      * @param shiftId
-     * @return @throws
-     *         StudentNotFoundServiceException
+     * @return
+     * @throws StudentNotFoundServiceException
      * @throws FenixServiceException
      */
     public Boolean run(Integer studentId, Integer shiftId) throws StudentNotFoundServiceException,
             ShiftNotFoundServiceException, ShiftEnrolmentNotFoundServiceException, FenixServiceException {
         try {
-            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            ISuportePersistente persistentSupport = PersistenceSupportFactory
+                    .getDefaultPersistenceSupport();
 
             IShift shift = (IShift) persistentSupport.getITurnoPersistente().readByOID(Shift.class,
                     shiftId);
@@ -54,19 +53,9 @@ public class UnEnrollStudentFromShift implements IService {
             if (student.getPayedTuition() == null || student.getPayedTuition().equals(Boolean.FALSE)) {
                 throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
             }
+			
+			shift.getStudents().remove(student);
 
-            IShiftStudent studentShift = persistentSupport.getITurnoAlunoPersistente()
-                    .readByTurnoAndAluno(shift.getIdInternal(), student.getIdInternal());
-            if (studentShift == null) {
-                throw new ShiftEnrolmentNotFoundServiceException();
-            }
-
-            //persistentSupport.getITurnoAlunoPersistente().delete(studentShift);
-            studentShift.getStudent().getShiftStudents().remove(studentShift);
-            studentShift.getShift().getStudentShifts().remove(studentShift);
-            studentShift.setShift(null);
-            studentShift.setStudent(null);
-            persistentSupport.getITurnoAlunoPersistente().deleteByOID(ShiftStudent.class, studentShift.getIdInternal());
             return new Boolean(true);
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);

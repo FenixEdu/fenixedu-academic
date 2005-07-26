@@ -16,13 +16,11 @@ import net.sourceforge.fenixedu.domain.IPeriod;
 import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoAlunoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -37,17 +35,21 @@ public class ReadStudentTimeTable implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentStudent persistentStudent = sp.getIPersistentStudent();
         IStudent student = persistentStudent.readByUsername(username);
-        ITurnoAlunoPersistente persistentShiftStudent = sp.getITurnoAlunoPersistente();
         IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
         IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
-        List studentShifts = persistentShiftStudent.readByStudentAndExecutionPeriod(student.getIdInternal(),
-                executionPeriod.getIdInternal());
+        
+        List studentShifts = new ArrayList();
+        List<IShift> shifts = student.getShifts();
+        for (IShift shift : shifts) {
+            if (shift.getDisciplinaExecucao().getExecutionPeriod().equals(executionPeriod)) {
+                studentShifts.add(shift);
+            }
+        }
 
         List lessons = new ArrayList();
         Iterator shiftIter = studentShifts.iterator();
         while (shiftIter.hasNext()) {
-            IShiftStudent shiftStudent = (IShiftStudent) shiftIter.next();
-            IShift shift = shiftStudent.getShift();
+            IShift shift = (IShift) shiftIter.next();
             lessons.addAll(shift.getAssociatedLessons());
         }
 
@@ -58,7 +60,8 @@ public class ReadStudentTimeTable implements IService {
             InfoLesson infolesson = copyILesson2InfoLesson(lesson);
             IShift shift = lesson.getShift();
             InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
-            InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(shift.getDisciplinaExecucao());
+            InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(shift
+                    .getDisciplinaExecucao());
             infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
             infolesson.setInfoShift(infoShift);
             infoLessons.add(infolesson);

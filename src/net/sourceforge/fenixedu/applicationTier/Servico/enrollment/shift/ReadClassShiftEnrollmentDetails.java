@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Student;
@@ -32,7 +31,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoAlunoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
@@ -59,7 +57,6 @@ public class ReadClassShiftEnrollmentDetails implements IService {
             IPersistentStudent studentDAO = sp.getIPersistentStudent();
             ITurmaPersistente classDAO = sp.getITurmaPersistente();
             IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
-            ITurnoAlunoPersistente shiftStudentDAO = sp.getITurnoAlunoPersistente();
             ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
 
             // Current Execution Period
@@ -83,18 +80,23 @@ public class ReadClassShiftEnrollmentDetails implements IService {
                     student.getIdInternal(), executionPeriod.getIdInternal());
 
             // Shifts enrolment
-            List studentShifts = shiftStudentDAO.readByStudentAndExecutionPeriod(
-                    student.getIdInternal(), executionPeriod.getIdInternal());
-            List shifts = collectShifts(studentShifts);
-            List infoShifts = collectInfoShifts(shifts);
+            List<IShift> shifts = student.getShifts();
+            List studentShifts = new ArrayList();
+            for (IShift shift : shifts) {
+                if (shift.getDisciplinaExecucao().getExecutionPeriod().getIdInternal().equals(
+                        executionPeriod.getIdInternal()))
+                    ;
+                studentShifts.add(shift);
+            }
+            
+            List infoShifts = collectInfoShifts(studentShifts);
 
             List infoClassList = new ArrayList();
             Map classExecutionCourseShiftEnrollmentDetailsMap = createMapAndPopulateInfoClassList(
-                    shiftStudentDAO, classList, shiftAttendList, infoClassList, klass);
+                    classList, shiftAttendList, infoClassList, klass);
 
             enrollmentDetails = new InfoClassEnrollmentDetails();
             enrollmentDetails.setInfoStudent(copyIStudent2InfoStudent(student));
-            // enrollmentDetails.setInfoShiftEnrolledList(studentShifts);
             enrollmentDetails.setInfoShiftEnrolledList(infoShifts);
             enrollmentDetails.setInfoClassList(infoClassList);
             enrollmentDetails
@@ -124,20 +126,6 @@ public class ReadClassShiftEnrollmentDetails implements IService {
         return infoShifts;
     }
 
-    /**
-     * @param studentShifts
-     * @return
-     */
-    private List collectShifts(List studentShifts) {
-        List shifts = (List) CollectionUtils.collect(studentShifts, new Transformer() {
-
-            public Object transform(Object input) {
-                IShiftStudent shiftStudent = (IShiftStudent) input;
-                return shiftStudent.getShift();
-            }
-        });
-        return shifts;
-    }
 
     /**
      * @param shiftStudentDAO
@@ -147,9 +135,8 @@ public class ReadClassShiftEnrollmentDetails implements IService {
      * @return
      * @throws ExcepcaoPersistencia
      */
-    private Map createMapAndPopulateInfoClassList(ITurnoAlunoPersistente shiftStudentDAO,
-            List classList, List shiftsAttendList, List infoClassList, ISchoolClass klassToTreat)
-            throws ExcepcaoPersistencia {
+    private Map createMapAndPopulateInfoClassList(List classList, List shiftsAttendList,
+            List infoClassList, ISchoolClass klassToTreat) throws ExcepcaoPersistencia {
         Map classExecutionCourseShiftEnrollmentDetailsMap = new HashMap();
 
         /* shift id -> ShiftEnrollmentDetails */
@@ -179,7 +166,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
                         IShift shift = (IShift) shiftsRequired.get(j);
 
                         ShiftEnrollmentDetails shiftEnrollmentDetails = createShiftEnrollmentDetails(
-                                shiftStudentDAO, shiftsTreated, shift);
+                                shiftsTreated, shift);
 
                         ExecutionCourseShiftEnrollmentDetails executionCourseShiftEnrollmentDetails = createExecutionCourseShiftEnrollmentDetails(
                                 executionCourseTreated, shift);
@@ -239,15 +226,15 @@ public class ReadClassShiftEnrollmentDetails implements IService {
      * @return
      * @throws ExcepcaoPersistencia
      */
-    private ShiftEnrollmentDetails createShiftEnrollmentDetails(ITurnoAlunoPersistente shiftStudentDAO,
-            Map shiftsTreated, IShift shift) throws ExcepcaoPersistencia {
+    private ShiftEnrollmentDetails createShiftEnrollmentDetails(Map shiftsTreated, IShift shift)
+            throws ExcepcaoPersistencia {
         ShiftEnrollmentDetails shiftEnrollmentDetails = (ShiftEnrollmentDetails) shiftsTreated.get(shift
                 .getIdInternal());
         if (shiftEnrollmentDetails == null) {
             shiftEnrollmentDetails = new ShiftEnrollmentDetails();
 
             InfoShift infoShift = InfoShiftWithInfoLessons.newInfoFromDomain(shift);
-            int occupation = shiftStudentDAO.readNumberOfStudentsByShift(shift.getIdInternal());
+            int occupation = shift.getStudents().size();
             shiftEnrollmentDetails.setInfoShift(infoShift);
             shiftEnrollmentDetails.setVacancies(new Integer(shift.getLotacao().intValue() - occupation));
 

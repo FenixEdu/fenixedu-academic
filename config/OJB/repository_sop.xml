@@ -249,20 +249,20 @@
 		<fk-pointing-to-this-class column="KEY_SHIFT"/>
 		<fk-pointing-to-element-class column="KEY_CLASS"/>
 	</collection-descriptor>
-     <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="studentShifts"
-			element-class-ref="net.sourceforge.fenixedu.domain.ShiftStudent"
-			
-			auto-retrieve="true"
-			>
-		<inverse-foreignkey field-ref="keyShift"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+    <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 		name="associatedSummaries" 
 		element-class-ref="net.sourceforge.fenixedu.domain.Summary"
 		
 		>
 		<inverse-foreignkey field-ref="keyShift"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="students"
+			element-class-ref="net.sourceforge.fenixedu.domain.Student"
+			indirection-table="SHIFT_STUDENT"
+			>
+		<fk-pointing-to-this-class column="KEY_SHIFT"/>
+		<fk-pointing-to-element-class column="KEY_STUDENT"/>
 	</collection-descriptor>
 	</class-descriptor>
 
@@ -407,43 +407,6 @@
    
       
  
-<!-- Definitions for net.sourceforge.fenixedu.domain.ShiftStudent -->
-   <class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.ShiftStudent"
-   	  table="SHIFT_STUDENT"
-   >
-      <field-descriptor
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"/>
-      <field-descriptor
-         name="keyShift"
-         column="KEY_SHIFT"
-         jdbc-type="INTEGER"/>
-      <field-descriptor
-         name="keyStudent"
-         column="KEY_STUDENT"
-         jdbc-type="INTEGER"/>
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
-      <reference-descriptor
-         name="shift"
-         class-ref="net.sourceforge.fenixedu.domain.Shift">
-      <foreignkey field-ref="keyShift"/>
-      </reference-descriptor>      
-         <reference-descriptor
-         name="student"
-         class-ref="net.sourceforge.fenixedu.domain.Student">
-      <foreignkey field-ref="keyStudent"/>
-      </reference-descriptor>      
-   </class-descriptor>         
-
 <!-- Definitions for net.sourceforge.fenixedu.domain.Attends -->
    <class-descriptor proxy="dynamic"
    	  class="net.sourceforge.fenixedu.domain.Attends"
