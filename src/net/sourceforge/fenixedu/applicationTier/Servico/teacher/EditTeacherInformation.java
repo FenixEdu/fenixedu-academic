@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOrientation;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoPublicationsNumber;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoServiceProviderRegime;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.IOrientation;
@@ -60,8 +61,7 @@ public class EditTeacherInformation implements IService {
                 .readByOID(ServiceProviderRegime.class, infoServiceProviderRegime.getIdInternal(), true);
 
         if (serviceProviderRegimeToLock == null) {
-            serviceProviderRegimeToLock = new ServiceProviderRegime();
-            persistentServiceProviderRegime.simpleLockWrite(serviceProviderRegimeToLock);
+            serviceProviderRegimeToLock = DomainFactory.makeServiceProviderRegime();
             serviceProviderRegimeToLock.setTeacher(teacher);
         }
         serviceProviderRegimeToLock.setProviderRegimeType(infoServiceProviderRegime
@@ -74,7 +74,7 @@ public class EditTeacherInformation implements IService {
                 WeeklyOcupation.class, infoWeeklyOcupation.getIdInternal(), true);
 
         if (weeklyOcupationToLock == null) {
-            weeklyOcupationToLock = new WeeklyOcupation();
+            weeklyOcupationToLock = DomainFactory.makeWeeklyOcupation();
             persistentWeeklyOcupation.simpleLockWrite(weeklyOcupationToLock);
             weeklyOcupationToLock.setTeacher(teacher);
         }
@@ -92,7 +92,7 @@ public class EditTeacherInformation implements IService {
                     Orientation.class, infoOrientation.getIdInternal(), true);
 
             if (orientationToLock == null) {
-                orientationToLock = new Orientation();
+                orientationToLock = DomainFactory.makeOrientation();
                 persistentOrientation.simpleLockWrite(orientationToLock);
                 orientationToLock.setTeacher(teacher);
             }
@@ -111,7 +111,7 @@ public class EditTeacherInformation implements IService {
                     .readByOID(PublicationsNumber.class, infoPublicationsNumber.getIdInternal(), true);
 
             if (publicationsNumberToLock == null) {
-                publicationsNumberToLock = new PublicationsNumber();
+                publicationsNumberToLock = DomainFactory.makePublicationsNumber();
                 persistentPublicationsNumber.simpleLockWrite(publicationsNumberToLock);
                 publicationsNumberToLock.setTeacher(teacher);
             }
@@ -124,7 +124,7 @@ public class EditTeacherInformation implements IService {
 
         // TODO <cargos de gestão>
 
-        return true;
+        return Boolean.TRUE;
     }
 
 }
