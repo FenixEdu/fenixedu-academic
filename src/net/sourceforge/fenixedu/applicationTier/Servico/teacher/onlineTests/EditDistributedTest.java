@@ -13,16 +13,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
-import net.sourceforge.fenixedu.domain.Advisory;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAdvisory;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IMark;
 import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory;
 import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTestAdvisory;
 import net.sourceforge.fenixedu.domain.onlineTests.IOnlineTest;
@@ -85,9 +83,8 @@ public class EditDistributedTest implements IService {
                 distributedTest.setEndDate(endDate);
                 distributedTest.setEndHour(endHour);
                 advisory = createTestAdvisory(distributedTest);
-                persistentSuport.getIPersistentAdvisory().simpleLockWrite(advisory);
                 persistentSuport.getIPersistentDistributedTestAdvisory().updateDistributedTestAdvisoryDates(distributedTest, endDate.getTime());
-                persistentSuport.getIPersistentDistributedTestAdvisory().simpleLockWrite(createDistributedTestAdvisory(distributedTest, advisory));
+                createDistributedTestAdvisory(distributedTest, advisory);
             }
 
             if (change2OtherType) {
@@ -99,8 +96,7 @@ public class EditDistributedTest implements IService {
             } else if (change2EvaluationType) {
                 // Change to evaluation test
                 // Create evaluation (onlineTest) and marks
-                IOnlineTest onlineTest = new OnlineTest();
-                persistentSuport.getIPersistentEvaluation().simpleLockWrite(onlineTest);
+                IOnlineTest onlineTest = DomainFactory.makeOnlineTest();
                 onlineTest.setDistributedTest(distributedTest);
                 onlineTest.addAssociatedExecutionCourses(executionCourse);
                 List<IStudent> studentList = persistentSuport.getIPersistentStudentTestQuestion().readStudentsByDistributedTest(
@@ -114,8 +110,7 @@ public class EditDistributedTest implements IService {
                     }
                     IAttends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student, executionCourse);
                     if (attend != null) {
-                        IMark mark = new Mark();
-                        persistentSuport.getIPersistentMark().simpleLockWrite(mark);
+                        IMark mark = DomainFactory.makeMark();
                         mark.setAttend(attend);
                         mark.setEvaluation(onlineTest);
                         mark.setMark(new java.text.DecimalFormat("#0.##").format(studentMark));
@@ -153,7 +148,7 @@ public class EditDistributedTest implements IService {
     private IAdvisory createTestAdvisory(IDistributedTest distributedTest) {
         ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
 
-        IAdvisory advisory = new Advisory();
+        IAdvisory advisory = DomainFactory.makeAdvisory();
         advisory.setCreated(Calendar.getInstance().getTime());
         advisory.setExpires(distributedTest.getEndDate().getTime());
         advisory.setSender(MessageFormat.format(bundle.getString("message.distributedTest.from"), new Object[] { ((IExecutionCourse) distributedTest
@@ -175,7 +170,7 @@ public class EditDistributedTest implements IService {
     }
 
     private IDistributedTestAdvisory createDistributedTestAdvisory(IDistributedTest distributedTest, IAdvisory advisory) {
-        IDistributedTestAdvisory distributedTestAdvisory = new DistributedTestAdvisory();
+        IDistributedTestAdvisory distributedTestAdvisory = DomainFactory.makeDistributedTestAdvisory();
         distributedTestAdvisory.setAdvisory(advisory);
         distributedTestAdvisory.setDistributedTest(distributedTest);
         return distributedTestAdvisory;
