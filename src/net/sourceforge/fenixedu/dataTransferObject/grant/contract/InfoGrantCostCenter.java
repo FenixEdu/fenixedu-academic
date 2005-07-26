@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
-import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -49,16 +48,6 @@ public class InfoGrantCostCenter extends InfoGrantPaymentEntity {
         grantCostCenter.setDesignation(infoGrantCostCenter.getDesignation());
         grantCostCenter.setNumber(infoGrantCostCenter.getNumber());
         grantCostCenter.setOjbConcreteClass(infoGrantCostCenter.getOjbConcreteClass());
-    }
-
-    public static IGrantCostCenter newDomainFromInfo(InfoGrantCostCenter infoGrantCostCenter)
-            throws ExcepcaoPersistencia {
-        IGrantCostCenter grantCostCenter = null;
-        if (infoGrantCostCenter != null) {
-            grantCostCenter = new GrantCostCenter();
-            infoGrantCostCenter.copyToDomain(infoGrantCostCenter, grantCostCenter);
-        }
-        return grantCostCenter;
     }
 
 }
