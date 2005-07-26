@@ -5,10 +5,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IInstitution;
 import net.sourceforge.fenixedu.domain.INonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.Institution;
-import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentInstitution;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -22,9 +22,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 
 public class InsertNonAffiliatedTeacher implements IService {
-
-    public InsertNonAffiliatedTeacher() {
-    }
 
     public void run(String nonAffiliatedTeacherName, Integer institutionID) throws ExcepcaoPersistencia,
             NotExistingServiceException {
@@ -41,18 +38,16 @@ public class InsertNonAffiliatedTeacher implements IService {
             throw new NotExistingServiceException(/* label e tal */);
         }
 
-        INonAffiliatedTeacher nonAffiliatedTeacher = persistentNonAffiliatedTeacher.readByNameAndInstitution(nonAffiliatedTeacherName,
-                institution);
-        
-        if(nonAffiliatedTeacher != null){
+        INonAffiliatedTeacher nonAffiliatedTeacher = persistentNonAffiliatedTeacher
+                .readByNameAndInstitution(nonAffiliatedTeacherName, institution);
+
+        if (nonAffiliatedTeacher != null) {
             throw new NotExistingServiceException(/* label e tal*/);
         }
-        
-        nonAffiliatedTeacher = new NonAffiliatedTeacher();
-        persistentNonAffiliatedTeacher.simpleLockWrite(nonAffiliatedTeacher);
+
+        nonAffiliatedTeacher = DomainFactory.makeNonAffiliatedTeacher();
         nonAffiliatedTeacher.setName(nonAffiliatedTeacherName);
         nonAffiliatedTeacher.setInstitution(institution);
-
     }
 
 }

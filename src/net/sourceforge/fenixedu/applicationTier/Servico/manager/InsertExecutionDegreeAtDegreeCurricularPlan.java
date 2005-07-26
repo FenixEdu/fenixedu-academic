@@ -14,14 +14,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ICampus;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IPeriod;
-import net.sourceforge.fenixedu.domain.Period;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -43,7 +42,8 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IService {
         IExecutionYear executionYear = null;
 
         try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory
+                    .getDefaultPersistenceSupport();
 
             IPersistentCampus campusDAO = persistentSuport.getIPersistentCampus();
             IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSuport
@@ -76,8 +76,7 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IService {
             IPersistentExecutionDegree persistentExecutionDegree = persistentSuport
                     .getIPersistentExecutionDegree();
 
-            IExecutionDegree executionDegree = new ExecutionDegree();
-            persistentExecutionDegree.simpleLockWrite(executionDegree);
+            IExecutionDegree executionDegree = DomainFactory.makeExecutionDegree();
             executionDegree.setDegreeCurricularPlan(degreeCurricularPlan);
             executionDegree.setExecutionYear(executionYear);
             executionDegree.setTemporaryExamMap(infoExecutionDegree.getTemporaryExamMap());
@@ -115,9 +114,10 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IService {
     private void setCompositePeriod(IExecutionDegree executionDegree, InfoPeriod infoPeriod,
             int periodToAssociateExecutionDegree) throws FenixServiceException {
         try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory
+                    .getDefaultPersistenceSupport();
             IPersistentPeriod periodDAO = persistentSuport.getIPersistentPeriod();
-            List infoPeriodList = new ArrayList();
+            List<InfoPeriod> infoPeriodList = new ArrayList<InfoPeriod>();
 
             infoPeriodList.add(infoPeriod);
 
@@ -126,10 +126,10 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IService {
                 infoPeriod = infoPeriod.getNextPeriod();
             }
 
-            //inicializacao
+            // inicializacao
             int infoPeriodListSize = infoPeriodList.size();
 
-            InfoPeriod infoPeriodNew = (InfoPeriod) infoPeriodList.get(infoPeriodListSize - 1);
+            InfoPeriod infoPeriodNew = infoPeriodList.get(infoPeriodListSize - 1);
 
             IPeriod period = (IPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew
                     .getStartDate(), infoPeriodNew.getEndDate(), null);
@@ -137,17 +137,16 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IService {
             if (period == null) {
                 Calendar startDate = infoPeriodNew.getStartDate();
                 Calendar endDate = infoPeriodNew.getEndDate();
-                period = new Period(startDate, endDate);
-                periodDAO.simpleLockWrite(period);
+                period = DomainFactory.makePeriod(startDate, endDate);
             }
 
-            //iteracoes
+            // iteracoes
             for (int i = infoPeriodListSize - 2; i >= 0; i--) {
                 Integer keyNextPeriod = period.getIdInternal();
 
                 IPeriod nextPeriod = period;
 
-                infoPeriodNew = (InfoPeriod) infoPeriodList.get(i);
+                infoPeriodNew = infoPeriodList.get(i);
 
                 period = (IPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew.getStartDate(),
                         infoPeriodNew.getEndDate(), keyNextPeriod);
@@ -155,8 +154,7 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IService {
                 if (period == null) {
                     Calendar startDate = infoPeriodNew.getStartDate();
                     Calendar endDate = infoPeriodNew.getEndDate();
-                    period = new Period(startDate, endDate);
-                    periodDAO.simpleLockWrite(period);
+                    period = DomainFactory.makePeriod(startDate, endDate);
                     period.setNextPeriod(nextPeriod);
                 }
             }

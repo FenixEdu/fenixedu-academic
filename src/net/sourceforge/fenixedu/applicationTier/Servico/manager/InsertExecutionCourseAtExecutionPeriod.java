@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
@@ -24,11 +24,8 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class InsertExecutionCourseAtExecutionPeriod implements IService {
 
-    public InsertExecutionCourseAtExecutionPeriod() {
-    }
-
     public void run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
-        IExecutionCourse executionCourse = new ExecutionCourse();
+        IExecutionCourse executionCourse = DomainFactory.makeExecutionCourse();
         IExecutionPeriod executionPeriod = null;
         IExecutionCourse existentExecutionCourse = null;
         try {
@@ -54,7 +51,6 @@ public class InsertExecutionCourseAtExecutionPeriod implements IService {
                 throw new ExistingPersistentException();
             }
 
-            persistentExecutionCourse.simpleLockWrite(executionCourse);
             executionCourse.setNome(infoExecutionCourse.getNome());
             executionCourse.setExecutionPeriod(executionPeriod);
             executionCourse.setSigla(infoExecutionCourse.getSigla());
