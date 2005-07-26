@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.ICategory;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.PublicationArea;
 
 public class TeacherTest extends DomainTestBase {
@@ -77,9 +76,7 @@ public class TeacherTest extends DomainTestBase {
         catch (InvalidCategory e) {
             fail("Expected NullPointerException");
         } 
-        catch (ExcepcaoPersistencia e) {
-            fail("Expected NullPointerException");
-        }
+    
         
         List newResponsabilities = new ArrayList();
         newResponsabilities.add(1);
@@ -99,10 +96,7 @@ public class TeacherTest extends DomainTestBase {
             // todas as alterações efectuadas ateriormente não serão repostas.
         
         } catch (InvalidCategory e) {
-            fail("Expected MaxResponsibleForExceed");
-       
-        } catch (ExcepcaoPersistencia e) {
-            fail("Expected MaxResponsibleForExceed");
+            fail("Expected MaxResponsibleForExceed");       
         }
         
         //////////////////////////
@@ -117,10 +111,7 @@ public class TeacherTest extends DomainTestBase {
             fail("Expected InvalidCategory");            
         
         } catch (InvalidCategory e) {
-            testResponsibleForValue(false, false, true);
-       
-        } catch (ExcepcaoPersistencia e) {
-            fail("Expected InvalidCategory");
+            testResponsibleForValue(false, false, true);       
         }
         
         /////////////////////////
@@ -132,15 +123,12 @@ public class TeacherTest extends DomainTestBase {
             teacher3.updateResponsabilitiesFor(executionYear.getIdInternal(), newResponsabilities);
             
         } catch (MaxResponsibleForExceed e) {
-            testResponsibleForValue(false, false, true);            
+            fail("Unexpected MaxResponsibleForExceed Exception");            
         
         } catch (InvalidCategory e) {
-            testResponsibleForValue(false, false, true);
-       
-        } catch (ExcepcaoPersistencia e) {
-            testResponsibleForValue(false, false, true);
+            fail("Unexpected InvalidCategory Exception");
         }
-        
+              
         testResponsibleForValue(false, true, false);    
     } 
 
