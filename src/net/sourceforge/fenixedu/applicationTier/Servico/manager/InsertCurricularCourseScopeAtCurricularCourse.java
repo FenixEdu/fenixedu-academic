@@ -28,9 +28,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class InsertCurricularCourseScopeAtCurricularCourse implements IService {
 
-    public InsertCurricularCourseScopeAtCurricularCourse() {
-    }
-
     public void run(InfoCurricularCourseScope infoCurricularCourseScope) throws FenixServiceException {
         IBranch branch = null;
         ICurricularSemester curricularSemester = null;

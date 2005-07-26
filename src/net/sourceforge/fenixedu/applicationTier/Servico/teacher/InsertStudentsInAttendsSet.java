@@ -12,7 +12,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
-import net.sourceforge.fenixedu.domain.AttendInAttendsSet;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.GroupProperties;
 import net.sourceforge.fenixedu.domain.IAttendInAttendsSet;
 import net.sourceforge.fenixedu.domain.IAttends;
@@ -37,116 +37,92 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class InsertStudentsInAttendsSet implements IService {
 
-    /**
-     * The constructor of this class.
-     */
-    public InsertStudentsInAttendsSet() {
-    }
-
-    /**
-     * Executes the service.
-     */
-
-    public Boolean run(Integer executionCourseCode, Integer groupPropertiesCode,
-            String[] selected) throws FenixServiceException {
+    public Boolean run(Integer executionCourseCode, Integer groupPropertiesCode, String[] selected)
+            throws FenixServiceException {
 
         IPersistentGroupProperties persistentGroupProperties = null;
         IFrequentaPersistente persistentAttend = null;
         IPersistentStudent persistentStudent = null;
         IPersistentAttendInAttendsSet persistentAttendInAttendsSet = null;
         List students = new ArrayList();
-        
+
         try {
+            ISuportePersistente persistentSupport = PersistenceSupportFactory
+                    .getDefaultPersistenceSupport();
 
-            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-            persistentGroupProperties = persistentSupport
-                    .getIPersistentGroupProperties();
+            persistentGroupProperties = persistentSupport.getIPersistentGroupProperties();
             persistentStudent = persistentSupport.getIPersistentStudent();
             persistentAttend = persistentSupport.getIFrequentaPersistente();
             persistentAttendInAttendsSet = persistentSupport.getIPersistentAttendInAttendsSet();
 
-            
-            
-            IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties
-                    .readByOID(GroupProperties.class, groupPropertiesCode);
+            IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties.readByOID(
+                    GroupProperties.class, groupPropertiesCode);
 
-            
             if (groupProperties == null) {
                 throw new ExistingServiceException();
             }
-            
-            if (selected==null) return new Boolean(true);
-            
+
+            if (selected == null)
+                return new Boolean(true);
+
             List studentCodes = Arrays.asList(selected);
-            
+
             Iterator iterator = studentCodes.iterator();
-            
+
             while (iterator.hasNext()) {
-                String number = (String)iterator.next();
+                String number = (String) iterator.next();
                 if (number.equals("Todos os Alunos")) {
-                }
-                else{
-                IStudent student = (IStudent) persistentStudent.readByOID(
-                        Student.class, new Integer (number));
-                students.add(student);
+                } else {
+                    IStudent student = (IStudent) persistentStudent.readByOID(Student.class,
+                            new Integer(number));
+                    students.add(student);
                 }
             }
-            
-            
+
             IAttendsSet attendsSet = groupProperties.getAttendsSet();
-            
+
             List attends = new ArrayList();
             attends.addAll(attendsSet.getAttends());
             Iterator iterAttends = attends.iterator();
 
-            
-            
             while (iterAttends.hasNext()) {
-                IAttends existingAttend = (IAttends) iterAttends
-                        .next();
+                IAttends existingAttend = (IAttends) iterAttends.next();
                 IStudent existingAttendStudent = existingAttend.getAluno();
-                
+
                 List studentsList = new ArrayList();
                 studentsList.addAll(students);
                 Iterator iteratorStudents = studentsList.iterator();
-                
+
                 while (iteratorStudents.hasNext()) {
-                	
-            
-                	
-                    IStudent student = (IStudent)iteratorStudents.next();
-                    if(student.equals(existingAttendStudent)){
-                    	throw new InvalidSituationServiceException();
+
+                    IStudent student = (IStudent) iteratorStudents.next();
+                    if (student.equals(existingAttendStudent)) {
+                        throw new InvalidSituationServiceException();
                     }
                 }
             }
 
-            
-            
             List studentsList1 = new ArrayList();
             studentsList1.addAll(students);
             Iterator iterStudents1 = studentsList1.iterator();
-            
+
             while (iterStudents1.hasNext()) {
-            	IAttends attend=null;
-                IStudent student = (IStudent)iterStudents1.next();
-            
+                IAttends attend = null;
+                IStudent student = (IStudent) iterStudents1.next();
+
                 List listaExecutionCourses = new ArrayList();
                 listaExecutionCourses.addAll(groupProperties.getExecutionCourses());
                 Iterator iterExecutionCourse = listaExecutionCourses.iterator();
-                while (iterExecutionCourse.hasNext() && attend==null) {
-            
-                	IExecutionCourse executionCourse = (IExecutionCourse)iterExecutionCourse.next();
-                	attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student,executionCourse);
+                while (iterExecutionCourse.hasNext() && attend == null) {
+
+                    IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourse.next();
+                    attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student, executionCourse);
                 }
-                
-				IAttendInAttendsSet attendInAttendsSet = new AttendInAttendsSet(attend,attendsSet);
-                persistentAttendInAttendsSet.simpleLockWrite(attendInAttendsSet);
+
+                IAttendInAttendsSet attendInAttendsSet = DomainFactory.makeAttendInAttendsSet(attend, attendsSet);
                 attendsSet.addAttendInAttendsSet(attendInAttendsSet);
                 attend.addAttendInAttendsSet(attendInAttendsSet);
             }
-            
 
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia.getMessage());
