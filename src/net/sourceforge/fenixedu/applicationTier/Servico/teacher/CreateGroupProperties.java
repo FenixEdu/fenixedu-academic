@@ -11,11 +11,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGroupProperties;
-import net.sourceforge.fenixedu.domain.AttendInAttendsSet;
-import net.sourceforge.fenixedu.domain.AttendsSet;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.GroupProperties;
-import net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttendInAttendsSet;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IAttendsSet;
@@ -67,8 +64,7 @@ public class CreateGroupProperties implements IService {
         List attends = new ArrayList();
         attends = persistentFrequenta.readByExecutionCourse(executionCourseCode);
 
-        IGroupProperties newGroupProperties = new GroupProperties();
-        persistentGroupProperties.simpleLockWrite(newGroupProperties);
+        IGroupProperties newGroupProperties = DomainFactory.makeGroupProperties();
         
         newGroupProperties.setEnrolmentBeginDay(infoGroupProperties.getEnrolmentBeginDay());
         newGroupProperties.setEnrolmentEndDay(infoGroupProperties.getEnrolmentEndDay());
@@ -77,29 +73,23 @@ public class CreateGroupProperties implements IService {
         newGroupProperties.setIdealCapacity(infoGroupProperties.getIdealCapacity());
         newGroupProperties.setGroupMaximumNumber(infoGroupProperties.getGroupMaximumNumber());
         newGroupProperties.setEnrolmentPolicy(infoGroupProperties.getEnrolmentPolicy());
-        newGroupProperties.setIdInternal(infoGroupProperties.getIdInternal());
         newGroupProperties.setName(infoGroupProperties.getName());
         newGroupProperties.setShiftType(infoGroupProperties.getShiftType());
         newGroupProperties.setProjectDescription(infoGroupProperties.getProjectDescription());
 
-        IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse;
-        groupPropertiesExecutionCourse = new GroupPropertiesExecutionCourse(newGroupProperties,
+        IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = DomainFactory.makeGroupPropertiesExecutionCourse(newGroupProperties,
                 executionCourse);
-        persistentGroupPropertiesExecutionCourse.simpleLockWrite(groupPropertiesExecutionCourse);
         groupPropertiesExecutionCourse.setProposalState(new ProposalState(new Integer(1)));
 
-        IAttendsSet attendsSet;
-        attendsSet = new AttendsSet();
+        IAttendsSet attendsSet = DomainFactory.makeAttendsSet();
         attendsSet.setName(executionCourse.getNome());
-        persistentAttendsSet.simpleLockWrite(attendsSet);
 
         IAttendInAttendsSet attendInAttendsSet;
         Iterator iterAttends = attends.iterator();
         while (iterAttends.hasNext()) {
             IAttends frequenta = (IAttends) iterAttends.next();
 
-            attendInAttendsSet = new AttendInAttendsSet(frequenta, attendsSet);
-            persistentAttendInAttendsSet.simpleLockWrite(attendInAttendsSet);
+            attendInAttendsSet = DomainFactory.makeAttendInAttendsSet(frequenta, attendsSet);
             attendsSet.addAttendInAttendsSet(attendInAttendsSet);
             frequenta.addAttendInAttendsSet(attendInAttendsSet);
         }
