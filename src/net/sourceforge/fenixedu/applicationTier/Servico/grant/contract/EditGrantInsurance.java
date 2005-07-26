@@ -8,6 +8,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractRegime;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantInsurance;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
@@ -45,8 +46,9 @@ public class EditGrantInsurance implements IService {
         IGrantInsurance grantInsurance = (IGrantInsurance) persistentGrantInsurance
                 .readByOID(GrantInsurance.class, infoGrantInsurance
                         .getIdInternal());
-        if (grantInsurance == null)
-            grantInsurance = new GrantInsurance();        
+        if (grantInsurance == null) {
+            grantInsurance = DomainFactory.makeGrantInsurance();
+        }
         persistentGrantInsurance.simpleLockWrite(grantInsurance);
 
         grantInsurance.setDateBeginInsurance(infoGrantInsurance.getDateBeginInsurance());

@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.InvalidGrantPaymentEntityException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.InvalidPartResponsibleTeacherException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPart;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
@@ -42,8 +43,9 @@ public class EditGrantPart implements IService {
 
         IGrantPart grantPart = (IGrantPart) persistentGrantPart.readByOID(GrantPart.class, infoGrantPart
                 .getIdInternal());
-        if (grantPart == null)
-            grantPart = new GrantPart();
+        if (grantPart == null) {
+            grantPart = DomainFactory.makeGrantPart();
+        }
         persistentGrantPart.simpleLockWrite(grantPart);
 
         final IGrantPaymentEntity grantPaymentEntity = (IGrantPaymentEntity) persistentGrantPaymentEntity
