@@ -61,11 +61,9 @@ public class EditCareer extends EditDomainObjectService {
             ITeachingCareer teachingCareer = (ITeachingCareer) domainObject;
             teachingCareer.setBeginYear(infoTeachingCareer.getBeginYear());
             IPersistentCategory persistentCategory = sp.getIPersistentCategory();
-            ICategory category = new Category();
-            category = (ICategory)persistentCategory.readByOID(Category.class,infoTeachingCareer.getInfoCategory().getIdInternal());
+            ICategory category = (ICategory)persistentCategory.readByOID(Category.class,infoTeachingCareer.getInfoCategory().getIdInternal());
             
             teachingCareer.setCategory(category);
-            teachingCareer.setKeyCategory(category.getIdInternal());
             teachingCareer.setCourseOrPosition(infoTeachingCareer.getCourseOrPosition());
             teachingCareer.setEndYear(infoTeachingCareer.getEndYear());
             teachingCareer.setLastModificationDate(infoTeachingCareer.getLastModificationDate());
