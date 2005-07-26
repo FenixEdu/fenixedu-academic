@@ -46,18 +46,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadClassShiftEnrollmentDetails implements IService {
 
-    /**
-     * @author jpvl
-     */
     public class StudentNotFoundServiceException extends FenixServiceException {
-
-    }
-
-    /**
-     * 
-     */
-    public ReadClassShiftEnrollmentDetails() {
-        super();
     }
 
     public InfoClassEnrollmentDetails run(InfoStudent infoStudent, Integer klassId)
@@ -94,8 +83,8 @@ public class ReadClassShiftEnrollmentDetails implements IService {
                     student.getIdInternal(), executionPeriod.getIdInternal());
 
             // Shifts enrolment
-            List studentShifts = shiftStudentDAO.readByStudentAndExecutionPeriod(student.getIdInternal(),
-                    executionPeriod.getIdInternal());
+            List studentShifts = shiftStudentDAO.readByStudentAndExecutionPeriod(
+                    student.getIdInternal(), executionPeriod.getIdInternal());
             List shifts = collectShifts(studentShifts);
             List infoShifts = collectInfoShifts(shifts);
 
@@ -156,10 +145,11 @@ public class ReadClassShiftEnrollmentDetails implements IService {
      * @param shifts
      * @param infoClassList
      * @return
-     * @throws ExcepcaoPersistencia 
+     * @throws ExcepcaoPersistencia
      */
     private Map createMapAndPopulateInfoClassList(ITurnoAlunoPersistente shiftStudentDAO,
-            List classList, List shiftsAttendList, List infoClassList, ISchoolClass klassToTreat) throws ExcepcaoPersistencia {
+            List classList, List shiftsAttendList, List infoClassList, ISchoolClass klassToTreat)
+            throws ExcepcaoPersistencia {
         Map classExecutionCourseShiftEnrollmentDetailsMap = new HashMap();
 
         /* shift id -> ShiftEnrollmentDetails */
@@ -247,7 +237,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
      * @param shiftsTreated
      * @param shift
      * @return
-     * @throws ExcepcaoPersistencia 
+     * @throws ExcepcaoPersistencia
      */
     private ShiftEnrollmentDetails createShiftEnrollmentDetails(ITurnoAlunoPersistente shiftStudentDAO,
             Map shiftsTreated, IShift shift) throws ExcepcaoPersistencia {
@@ -296,212 +286,4 @@ public class ReadClassShiftEnrollmentDetails implements IService {
         return infoStudent;
     }
 
-    // private InfoShift copyShift2InfoShift(IShift shift) {
-    // InfoShift infoShift = null;
-    // if (shift != null) {
-    // infoShift = new InfoShift();
-    // infoShift.setIdInternal(shift.getIdInternal());
-    // infoShift.setNome(shift.getNome());
-    // infoShift
-    // .setInfoDisciplinaExecucao(copyIExecutionCourse2InfoExecutionCourse(shift
-    // .getDisciplinaExecucao()));
-    // infoShift.setInfoLessons(copyILessons2InfoLessons(shift
-    // .getAssociatedLessons()));
-    // infoShift.setTipo(shift.getTipo());
-    // infoShift.setLotacao(shift.getLotacao());
-    // infoShift.setOcupation(shift.getOcupation());
-    // infoShift.setPercentage(shift.getPercentage());
-    // infoShift.setInfoClasses(copyIClasses2InfoClasses(shift
-    // .getAssociatedClasses()));
-    // }
-    // return infoShift;
-    // }
-    //
-    // /**
-    // * @param list
-    // * @return
-    // */
-    // private List copyIClasses2InfoClasses(List list) {
-    // List infoClasses = null;
-    // if (list != null) {
-    // infoClasses = (List) CollectionUtils.collect(list,
-    // new Transformer() {
-    //
-    // public Object transform(Object arg0) {
-    //
-    // return copyIClass2InfoClass((ISchoolClass) arg0);
-    // }
-    //
-    // });
-    // }
-    // return infoClasses;
-    // }
-    //
-    // private InfoClass copyIClass2InfoClass(ISchoolClass turma) {
-    // InfoClass infoClass = null;
-    // if (turma != null) {
-    // infoClass = new InfoClass();
-    // infoClass.setIdInternal(turma.getIdInternal());
-    // infoClass.setNome(turma.getNome());
-    // infoClass
-    // .setInfoExecutionDegree(copyIExecutionDegree2InfoExecutionDegree(turma
-    // .getExecutionDegree()));
-    //
-    // }
-    // return infoClass;
-    // }
-    //
-    // /**
-    // * @param executionDegree
-    // * @return
-    // */
-    // private InfoExecutionDegree copyIExecutionDegree2InfoExecutionDegree(
-    // IExecutionDegree executionDegree) {
-    // InfoExecutionDegree infoExecutionDegree = null;
-    // if (executionDegree != null) {
-    // infoExecutionDegree = new InfoExecutionDegree();
-    // infoExecutionDegree.setIdInternal(executionDegree.getIdInternal());
-    // infoExecutionDegree
-    // .setInfoExecutionYear(copyIExecutionYear2InfoExecutionYear(executionDegree
-    // .getExecutionYear()));
-    // infoExecutionDegree
-    // .setInfoDegreeCurricularPlan(copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(executionDegree
-    // .getDegreeCurricularPlan()));
-    // }
-    // return infoExecutionDegree;
-    // }
-    //
-    // /**
-    // * @param plan
-    // * @return
-    // */
-    // private InfoDegreeCurricularPlan
-    // copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(
-    // IDegreeCurricularPlan plan) {
-    // InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
-    // if (plan != null) {
-    // infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
-    // infoDegreeCurricularPlan.setIdInternal(plan.getIdInternal());
-    // infoDegreeCurricularPlan.setName(plan.getName());
-    // infoDegreeCurricularPlan.setInfoDegree(copyIDegree2InfoDegree(plan
-    // .getDegree()));
-    // }
-    // return infoDegreeCurricularPlan;
-    // }
-    //
-    // /**
-    // * @param degree
-    // * @return
-    // */
-    // private InfoDegree copyIDegree2InfoDegree(IDegree degree) {
-    // InfoDegree infoDegree = null;
-    // if (degree != null) {
-    // infoDegree = new InfoDegree();
-    // infoDegree.setIdInternal(degree.getIdInternal());
-    // infoDegree.setNome(degree.getNome());
-    // infoDegree.setSigla(degree.getSigla());
-    // infoDegree.setTipoCurso(degree.getTipoCurso());
-    // }
-    // return infoDegree;
-    // }
-    //
-    // /**
-    // * @param list
-    // * @return
-    // */
-    // private List copyILessons2InfoLessons(List list) {
-    // List infoLessons = null;
-    // if (list != null) {
-    // infoLessons = (List) CollectionUtils.collect(list,
-    // new Transformer() {
-    //
-    // public Object transform(Object arg0) {
-    //
-    // return copyILesson2InfoLesson((ILesson) arg0);
-    // }
-    //
-    // });
-    // }
-    // return infoLessons;
-    // }
-    //
-    // private Object copyILesson2InfoLesson(ILesson lesson) {
-    // InfoLesson infoLesson = null;
-    // if (lesson != null) {
-    // infoLesson = new InfoLesson();
-    // infoLesson.setIdInternal(lesson.getIdInternal());
-    // infoLesson.setDiaSemana(lesson.getDiaSemana());
-    // infoLesson.setFim(lesson.getFim());
-    // infoLesson.setInicio(lesson.getInicio());
-    // infoLesson.setTipo(lesson.getTipo());
-    // infoLesson.setInfoSala(copyISala2InfoRoom(lesson.getSala()));
-    // }
-    // return infoLesson;
-    // }
-    //
-    // /**
-    // * @param sala
-    // * @return
-    // */
-    // private InfoRoom copyISala2InfoRoom(IRoom sala) {
-    // InfoRoom infoRoom = null;
-    // if (sala != null) {
-    // infoRoom = new InfoRoom();
-    // infoRoom.setIdInternal(sala.getIdInternal());
-    // infoRoom.setNome(sala.getNome());
-    // }
-    // return infoRoom;
-    // }
-    //
-    // /**
-    // * @param executionCourse
-    // * @return
-    // */
-    // private InfoExecutionCourse copyIExecutionCourse2InfoExecutionCourse(
-    // IExecutionCourse executionCourse) {
-    // InfoExecutionCourse infoExecutionCourse = null;
-    // if (executionCourse != null) {
-    // infoExecutionCourse = new InfoExecutionCourse();
-    // infoExecutionCourse.setIdInternal(executionCourse.getIdInternal());
-    // infoExecutionCourse.setNome(executionCourse.getNome());
-    // infoExecutionCourse.setSigla(executionCourse.getSigla());
-    // infoExecutionCourse
-    // .setInfoExecutionPeriod(copyIExecutionPeriod2InfoExecutionPeriod(executionCourse
-    // .getExecutionPeriod()));
-    // }
-    // return infoExecutionCourse;
-    // }
-    //
-    // /**
-    // * @param period
-    // * @return
-    // */
-    // private InfoExecutionPeriod copyIExecutionPeriod2InfoExecutionPeriod(
-    // IExecutionPeriod period) {
-    // InfoExecutionPeriod infoExecutionPeriod = null;
-    // if (period != null) {
-    // infoExecutionPeriod = new InfoExecutionPeriod();
-    // infoExecutionPeriod.setIdInternal(period.getIdInternal());
-    // infoExecutionPeriod.setName(period.getName());
-    // infoExecutionPeriod
-    // .setInfoExecutionYear(copyIExecutionYear2InfoExecutionYear(period
-    // .getExecutionYear()));
-    // }
-    // return infoExecutionPeriod;
-    // }
-    //
-    // /**
-    // * @param year
-    // * @return
-    // */
-    // private InfoExecutionYear copyIExecutionYear2InfoExecutionYear(
-    // IExecutionYear year) {
-    // InfoExecutionYear infoExecutionYear = null;
-    // if (year != null) {
-    // infoExecutionYear = new InfoExecutionYear();
-    // infoExecutionYear.setIdInternal(year.getIdInternal());
-    // infoExecutionYear.setYear(year.getYear());
-    // }
-    // return infoExecutionYear;
-    // }
 }
