@@ -15,8 +15,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
-import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.domain.DocumentType;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.Guide;
@@ -70,8 +70,7 @@ public class PrepareCreateGuide implements IService {
                     && (contributorName != null)) {
 
                 // Create the Contributor
-                contributor = new Contributor();
-                sp.getIPersistentContributor().simpleLockWrite(contributor);
+                contributor = DomainFactory.makeContributor();
                 contributor.setContributorNumber(contributorNumber);
                 contributor.setContributorAddress(contributorAddress);
                 contributor.setContributorName(contributorName);

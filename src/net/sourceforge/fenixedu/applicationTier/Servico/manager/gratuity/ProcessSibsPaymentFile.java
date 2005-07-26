@@ -13,6 +13,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.DuplicateSibsPaymentFileProcessingServiceException;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IGratuitySituation;
@@ -22,17 +23,14 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IPersonAccount;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.PersonAccount;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFile;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFileEntry;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
-import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.IGratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.IInsuranceTransaction;
-import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -40,7 +38,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentInsuranceValue;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFile;
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentGratuityTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
@@ -54,47 +51,35 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ProcessSibsPaymentFile implements IService {
 
-    public ProcessSibsPaymentFile() {
-
-    }
-
     /**
      * Process sibs payment files and creates corresponding payment transactions
      * 
      * @param filename
      * @param fileEntries
      * @throws FenixServiceException
+     * @throws ExcepcaoPersistencia
      */
-    public void run(String filename, List fileEntries, IUserView userView) throws FenixServiceException {
+    public void run(String filename, List fileEntries, IUserView userView) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
-        try {
+        if (filename.trim().length() == 0) {
+            throw new DuplicateSibsPaymentFileProcessingServiceException(
+                    "error.exception.duplicateSibsPaymentFileProcessing");
 
-            if (filename.trim().length() == 0) {
-                throw new DuplicateSibsPaymentFileProcessingServiceException(
-                        "error.exception.duplicateSibsPaymentFileProcessing");
-
-            }
-
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-            ISibsPaymentFile storedPaymentFile = sp.getIPersistentSibsPaymentFile().readByFilename(
-                    filename);
-
-            if (storedPaymentFile != null) {
-                throw new DuplicateSibsPaymentFileProcessingServiceException(
-                        "error.exception.duplicateSibsPaymentFileProcessing");
-            }
-
-            ISibsPaymentFile sibsPaymentFile = SibsPaymentFileUtils.buildPaymentFile(filename,
-                    fileEntries);
-
-            buildTransactionsAndStoreFile(sp, sibsPaymentFile, userView);
-
-        } catch (ExcepcaoPersistencia e) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
         }
+
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+
+        ISibsPaymentFile storedPaymentFile = sp.getIPersistentSibsPaymentFile().readByFilename(filename);
+
+        if (storedPaymentFile != null) {
+            throw new DuplicateSibsPaymentFileProcessingServiceException(
+                    "error.exception.duplicateSibsPaymentFileProcessing");
+        }
+
+        ISibsPaymentFile sibsPaymentFile = SibsPaymentFileUtils.buildPaymentFile(filename, fileEntries);
+
+        buildTransactionsAndStoreFile(sp, sibsPaymentFile, userView);
 
     }
 
@@ -104,9 +89,6 @@ public class ProcessSibsPaymentFile implements IService {
      */
     private void buildTransactionsAndStoreFile(ISuportePersistente sp, ISibsPaymentFile sibsPaymentFile,
             IUserView userView) throws ExcepcaoPersistencia {
-
-        IPersistentSibsPaymentFile sibsPaymentFileDAO = sp.getIPersistentSibsPaymentFile();
-        sibsPaymentFileDAO.simpleLockWrite(sibsPaymentFile);
 
         List sibsPaymentFileEntries = sibsPaymentFile.getSibsPaymentFileEntries();
 
@@ -192,11 +174,10 @@ public class ProcessSibsPaymentFile implements IService {
                     userView.getUtilizador());
 
             IPersonAccount personAccount = sp.getIPersistentPersonAccount().readByPerson(
-                    student.getPerson().getIdInternal());            
-            
-            if(personAccount == null){
-                personAccount = new PersonAccount(student.getPerson());
-                sp.getIPersistentPersonAccount().simpleLockWrite(personAccount);
+                    student.getPerson().getIdInternal());
+
+            if (personAccount == null) {
+                personAccount = DomainFactory.makePersonAccount(student.getPerson());
             }
 
             if (sibsPaymentFileEntry.getPaymentType().equals(SibsPaymentType.INSURANCE)) {
@@ -205,7 +186,8 @@ public class ProcessSibsPaymentFile implements IService {
                         .getIdInternal());
 
                 List insuranceTransactionList = insuranceTransactionDAO
-                        .readAllNonReimbursedByExecutionYearAndStudent(executionYear.getIdInternal(), student.getIdInternal());
+                        .readAllNonReimbursedByExecutionYearAndStudent(executionYear.getIdInternal(),
+                                student.getIdInternal());
 
                 if (insuranceTransactionList.size() > 0) {
                     sibsPaymentFileEntry.setPaymentStatus(SibsPaymentStatus.DUPLICATE_INSURANCE_PAYMENT);
@@ -219,11 +201,11 @@ public class ProcessSibsPaymentFile implements IService {
                     } else {
                         // create the insurance transaction payment for the
                         // execution year
-                        IInsuranceTransaction insuranceTransaction = new InsuranceTransaction(
-                                sibsPaymentFileEntry.getPayedValue(),
-                                new Timestamp(new Date().getTime()), null, PaymentType.SIBS,
-                                TransactionType.INSURANCE_PAYMENT, new Boolean(false),
-                                responsiblePerson, personAccount, null, executionYear, student);
+                        IInsuranceTransaction insuranceTransaction = DomainFactory
+                                .makeInsuranceTransaction(sibsPaymentFileEntry.getPayedValue(),
+                                        new Timestamp(new Date().getTime()), null, PaymentType.SIBS,
+                                        TransactionType.INSURANCE_PAYMENT, new Boolean(false),
+                                        responsiblePerson, personAccount, null, executionYear, student);
 
                         insuranceTransactionDAO.lockWrite(insuranceTransaction);
                     }
@@ -298,15 +280,12 @@ public class ProcessSibsPaymentFile implements IService {
             TransactionType transactionType = bindSibsCodeTypeToTransactionCodeType(sibsPaymentFileEntry
                     .getPaymentType());
 
-            IGratuityTransaction gratuityTransaction = new GratuityTransaction(sibsPaymentFileEntry
-                    .getPayedValue(), new Timestamp(new Date().getTime()), null, PaymentType.SIBS,
-                    transactionType, new Boolean(false), responsiblePerson, personAccount, null,
-                    gratuitySituation);
-
-            gratuityTransactionDAO.lockWrite(gratuityTransaction);
+            IGratuityTransaction gratuityTransaction = DomainFactory.makeGratuityTransaction(
+                    sibsPaymentFileEntry.getPayedValue(), new Timestamp(new Date().getTime()), null,
+                    PaymentType.SIBS, transactionType, new Boolean(false), responsiblePerson,
+                    personAccount, null, gratuitySituation);
 
             // update remaining value of gratuity
-            gratuitySituationDAO.lockWrite(gratuitySituation);
             double oldRemainingValue = 0;
             if (gratuitySituation.getRemainingValue() != null) {
                 oldRemainingValue = gratuitySituation.getRemainingValue().doubleValue();

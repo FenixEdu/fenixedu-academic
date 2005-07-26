@@ -14,11 +14,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.InvalidSibsPaymentFileFormatServiceException;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFile;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFileEntry;
-import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry;
 import pt.ist.utl.fenix.utils.SibsPaymentCodeFactory;
 
@@ -43,7 +43,7 @@ public class SibsPaymentFileUtils {
     public static ISibsPaymentFile buildPaymentFile(String filename, List fileEntries)
             throws InvalidSibsPaymentFileFormatServiceException {
 
-        ISibsPaymentFile sibsFile = new SibsPaymentFile(filename);
+        ISibsPaymentFile sibsFile = DomainFactory.makeSibsPaymentFile(filename);
         List sibsFileEntries = new ArrayList();
         String line = null;
 

@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.GratuitySituation;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
@@ -232,7 +232,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
             return;
         }
 
-        IGratuitySituation gratuitySituation = new GratuitySituation();
+        IGratuitySituation gratuitySituation = DomainFactory.makeGratuitySituation();
 
         gratuitySituation.setGratuityValues(gratuityValues);
         gratuitySituation.setStudentCurricularPlan(studentCurricularPlan);
