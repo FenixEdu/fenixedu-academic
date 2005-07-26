@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.GroupProperties;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IAttendsSet;
@@ -21,8 +22,6 @@ import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.domain.StudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupProperties;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
@@ -123,9 +122,9 @@ public class CreateStudentGroup implements IService {
         if (shiftCode != null) {
             persistentShift = persistentSupport.getITurnoPersistente();
             IShift shift = (IShift) persistentShift.readByOID(Shift.class, shiftCode);
-            newStudentGroup = new StudentGroup(groupNumber, attendsSet, shift);
+            newStudentGroup = DomainFactory.makeStudentGroup(groupNumber, attendsSet, shift);
         } else {
-            newStudentGroup = new StudentGroup(groupNumber, attendsSet);
+            newStudentGroup = DomainFactory.makeStudentGroup(groupNumber, attendsSet);
         }
         persistentStudentGroup.simpleLockWrite(newStudentGroup);
         attendsSet.addStudentGroup(newStudentGroup);
@@ -139,10 +138,8 @@ public class CreateStudentGroup implements IService {
             IStudent student = persistentStudent.readByUsername((String) iter.next());
             IAttends attend = groupProperties.getAttendsSet().getStudentAttend(student);
 
-            IStudentGroupAttend notExistingSGAttend = new StudentGroupAttend(newStudentGroup, attend);
-
-            persistentStudentGroupAttend.simpleLockWrite(notExistingSGAttend);
-
+            IStudentGroupAttend notExistingSGAttend = DomainFactory.makeStudentGroupAttend(
+                    newStudentGroup, attend);
         }
         return true;
     }
