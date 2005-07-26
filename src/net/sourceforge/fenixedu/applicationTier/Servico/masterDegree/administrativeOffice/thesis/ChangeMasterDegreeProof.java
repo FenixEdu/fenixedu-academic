@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -12,11 +13,14 @@ import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.ID
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IMasterDegreeCurricularPlanStrategy;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IEmployee;
+import net.sourceforge.fenixedu.domain.IExternalPerson;
 import net.sourceforge.fenixedu.domain.IMasterDegreeProofVersion;
 import net.sourceforge.fenixedu.domain.IMasterDegreeThesis;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
@@ -32,23 +36,24 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ChangeMasterDegreeProof implements IService {
 
-    public void run(IUserView userView, InfoStudentCurricularPlan infoStudentCurricularPlan,
-            Date proofDate, Date thesisDeliveryDate, MasterDegreeClassification finalResult,
-            Integer attachedCopiesNumber, List infoTeacherJuries, List infoExternalPersonExternalJuries)
-            throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(IUserView userView, Integer studentCurricularPlanID, Date proofDate,
+            Date thesisDeliveryDate, MasterDegreeClassification finalResult,
+            Integer attachedCopiesNumber, List<Integer> teacherJuriesNumbers,
+            List<Integer> externalJuriesIDs) throws FenixServiceException, ExcepcaoPersistencia {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) sp
                 .getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,
-                        infoStudentCurricularPlan.getIdInternal());
+                        studentCurricularPlanID);
 
         IMasterDegreeThesis storedMasterDegreeThesis = sp.getIPersistentMasterDegreeThesis()
-                .readByStudentCurricularPlan(infoStudentCurricularPlan.getIdInternal());
+                .readByStudentCurricularPlan(studentCurricularPlanID);
         if (storedMasterDegreeThesis == null) {
             throw new NonExistingServiceException(
                     "error.exception.masterDegree.nonExistentMasterDegreeThesis");
         }
+
         IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory
                 .getInstance();
         IMasterDegreeCurricularPlanStrategy masterDegreeCurricularPlanStrategy = (IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory
@@ -69,15 +74,17 @@ public class ChangeMasterDegreeProof implements IService {
 
         IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
         IEmployee employee = sp.getIPersistentEmployee().readByPerson(person.getIdInternal().intValue());
-        List teacherJuries = Cloner.copyListInfoTeacher2ListITeacher(infoTeacherJuries);
-        List externalJuries = Cloner
-                .copyListInfoExternalPerson2ListIExternalPerson(infoExternalPersonExternalJuries);
 
-        IMasterDegreeProofVersion masterDegreeProofVersion = new MasterDegreeProofVersion(
+        List<ITeacher> teacherJuries = (List<ITeacher>) sp.getIPersistentTeacher().readByNumbers(
+                teacherJuriesNumbers);
+        List<IExternalPerson> externalJuries = (List<IExternalPerson>) sp.getIPersistentExternalPerson()
+                .readByIDs(externalJuriesIDs);
+
+        IMasterDegreeProofVersion masterDegreeProofVersion = DomainFactory.makeMasterDegreeProofVersion(
                 storedMasterDegreeThesis, employee, new Date(), proofDate, thesisDeliveryDate,
                 finalResult, attachedCopiesNumber, new State(State.ACTIVE), teacherJuries,
                 externalJuries);
-        sp.getIPersistentMasterDegreeProofVersion().simpleLockWrite(masterDegreeProofVersion);
+
     }
 
 }
