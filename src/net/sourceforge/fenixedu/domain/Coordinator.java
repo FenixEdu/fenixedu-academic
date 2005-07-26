@@ -11,14 +11,4 @@ package net.sourceforge.fenixedu.domain;
  */
 public class Coordinator extends Coordinator_Base {
 
-	/**
-	 * @param integer
-	 */
-	public Coordinator(Integer integer) {
-		setIdInternal(integer);
-	}
-
-	public Coordinator() {
-	}
-
 }
