@@ -9,12 +9,11 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudyChoice;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
-import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
 import net.sourceforge.fenixedu.domain.Seminaries.ICandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.ICaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.ICaseStudyChoice;
@@ -29,9 +28,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminary;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudy;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudyChoice;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryModality;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryTheme;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -45,9 +42,7 @@ public class WriteCandidacy implements IService {
     public void run(InfoCandidacy infoCandidacy) throws ExcepcaoPersistencia {
         final ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final IPersistentSeminaryCandidacy persistentCandidacy = persistenceSupport.getIPersistentSeminaryCandidacy();
-        ICandidacy candidacy = new Candidacy();
-        persistentCandidacy.simpleLockWrite(candidacy);
+        ICandidacy candidacy = DomainFactory.makeCandidacy();
         candidacy.setApproved(infoCandidacy.getApproved());
         candidacy.setMotivation(infoCandidacy.getMotivation());
         
@@ -84,11 +79,9 @@ public class WriteCandidacy implements IService {
         }
 
         // Seminary Case Study Choices
-        final IPersistentSeminaryCaseStudyChoice persistentChoice = persistenceSupport.getIPersistentSeminaryCaseStudyChoice();
         final IPersistentSeminaryCaseStudy persistentSeminaryCaseStudy = persistenceSupport.getIPersistentSeminaryCaseStudy();
         for (InfoCaseStudyChoice infoCaseStudyChoice : (List<InfoCaseStudyChoice>) infoCandidacy.getCaseStudyChoices()) {
-            final ICaseStudyChoice caseStudyChoice = new CaseStudyChoice();
-            persistentChoice.simpleLockWrite(caseStudyChoice);
+            final ICaseStudyChoice caseStudyChoice = DomainFactory.makeCaseStudyChoice();
             
             caseStudyChoice.setOrder(infoCaseStudyChoice.getOrder());
 

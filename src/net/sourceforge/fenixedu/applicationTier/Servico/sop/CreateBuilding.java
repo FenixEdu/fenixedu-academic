@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.domain.Building;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IBuilding;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBuilding;
@@ -31,8 +31,7 @@ public class CreateBuilding implements IService {
             throw new ExistingServiceException();
         }
 
-        final IBuilding building = new Building();
-        persistentBuilding.simpleLockWrite(building);
+        final IBuilding building = DomainFactory.makeBuilding();        
         building.setName(buildingName);
     }
 
