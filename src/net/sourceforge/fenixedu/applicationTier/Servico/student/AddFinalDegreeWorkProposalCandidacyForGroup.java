@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
@@ -56,8 +57,7 @@ public class AddFinalDegreeWorkProposalCandidacyForGroup implements IService {
                         .getMinimumNumberOfStudents().toString());
             }
 
-            GroupProposal groupProposal = new GroupProposal();
-            persistentFinalDegreeWork.simpleLockWrite(groupProposal);
+            GroupProposal groupProposal = DomainFactory.makeGroupProposal();
             groupProposal.setFinalDegreeWorkProposal(proposal);
             groupProposal.setFinalDegreeDegreeWorkGroup(group);
             groupProposal.setOrderOfPreference(new Integer(group.getGroupProposals().size() + 1));

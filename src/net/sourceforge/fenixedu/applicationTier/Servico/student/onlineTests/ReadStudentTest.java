@@ -11,12 +11,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionWithAll;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestLog;
 import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -72,8 +72,7 @@ public class ReadStudentTest implements IService {
                 infoStudentTestQuestionList.add(infoStudentTestQuestion);
             }
             if (log.booleanValue()) {
-                IStudentTestLog studentTestLog = new StudentTestLog();
-                persistentSuport.getIPersistentStudentTestLog().simpleLockWrite(studentTestLog);
+                IStudentTestLog studentTestLog = DomainFactory.makeStudentTestLog();
                 studentTestLog.setDistributedTest(distributedTest);
                 studentTestLog.setStudent(student);
                 studentTestLog.setDate(Calendar.getInstance().getTime());

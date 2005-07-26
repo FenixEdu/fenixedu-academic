@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.GroupProperties;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IGroupProperties;
@@ -29,8 +30,6 @@ import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.domain.StudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
@@ -45,17 +44,10 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class GroupEnrolment implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public GroupEnrolment() {
-    }
-
     public boolean run(Integer groupPropertiesCode, Integer shiftCode,
             Integer groupNumber, List studentCodes, String username)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-        try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentStudentGroupAttend persistentStudentGroupAttend = sp
             .getIPersistentStudentGroupAttend();
@@ -74,7 +66,7 @@ public class GroupEnrolment implements IService {
             IStudent userStudent = sp.getIPersistentStudent().readByUsername(
                     username);
        
-            List studentsList = new ArrayList();
+            List<IStudent> studentsList = new ArrayList<IStudent>();
             Iterator iterator = studentCodes.iterator();
     		while (iterator.hasNext()) {
     			IStudent student = (IStudent) persistentStudent.readByOID(
@@ -131,10 +123,8 @@ public class GroupEnrolment implements IService {
             checkStudentCodesAndUserAttendInStudentGroup(studentsList,groupProperties,userAttend);
 
             
-            newStudentGroup = new StudentGroup(groupNumber, groupProperties.getAttendsSet(),
+            newStudentGroup = DomainFactory.makeStudentGroup(groupNumber, groupProperties.getAttendsSet(),
                     shift);
-            
-            persistentStudentGroup.simpleLockWrite(newStudentGroup);
             
             groupProperties.getAttendsSet().addStudentGroup(newStudentGroup);
             
@@ -147,21 +137,12 @@ public class GroupEnrolment implements IService {
 
                 IAttends attend = groupProperties.getAttendsSet().getStudentAttend(student);
 
-                IStudentGroupAttend notExistingSGAttend = new StudentGroupAttend(
+                IStudentGroupAttend notExistingSGAttend = DomainFactory.makeStudentGroupAttend(
                         newStudentGroup, attend);
-
-                persistentStudentGroupAttend
-                        .simpleLockWrite(notExistingSGAttend);
             }
-            IStudentGroupAttend notExistingUserSGAttend = new StudentGroupAttend(
+            IStudentGroupAttend notExistingUserSGAttend = DomainFactory.makeStudentGroupAttend(
                     newStudentGroup, userAttend);
 
-            persistentStudentGroupAttend
-                    .simpleLockWrite(notExistingUserSGAttend);
-
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
-        }
         return true;
     }
 

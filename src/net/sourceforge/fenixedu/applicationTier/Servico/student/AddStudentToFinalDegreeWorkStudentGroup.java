@@ -4,9 +4,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IScheduleing;
@@ -27,19 +27,12 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class AddStudentToFinalDegreeWorkStudentGroup implements IService {
 
-    public AddStudentToFinalDegreeWorkStudentGroup() {
-        super();
-    }
-
     public boolean run(Integer groupOID, String username) throws ExcepcaoPersistencia,
             FenixServiceException {
         ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
         IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-        //        IStudentCurricularPlanPersistente studentCurricularPlanPersistente =
-        // persistentSupport
-        //                .getIStudentCurricularPlanPersistente();
         IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
         IGroup group = (IGroup) persistentFinalDegreeWork.readByOID(Group.class, groupOID);
@@ -64,7 +57,8 @@ public class AddStudentToFinalDegreeWorkStudentGroup implements IService {
                     .toString());
         } else {
             int numberOfCompletedCourses = persistentEnrolment
-                    .countCompletedCoursesForStudentForActiveUndergraduateCurricularPlan(student.getIdInternal());
+                    .countCompletedCoursesForStudentForActiveUndergraduateCurricularPlan(student
+                            .getIdInternal());
 
             if (numberOfCompletedCourses < scheduleing.getMinimumNumberOfCompletedCourses().intValue()) {
                 throw new MinimumNumberOfCompletedCoursesNotReachedException(scheduleing
@@ -72,16 +66,13 @@ public class AddStudentToFinalDegreeWorkStudentGroup implements IService {
             }
         }
 
-        IGroupStudent groupStudent = new GroupStudent();
-        persistentFinalDegreeWork.simpleLockWrite(groupStudent);
+        IGroupStudent groupStudent = DomainFactory.makeGroupStudent();
         groupStudent.setStudent(student);
         groupStudent.setFinalDegreeDegreeWorkGroup(group);
         return true;
-
     }
 
     public class MaximumNumberOfStudentsUndefinedException extends FenixServiceException {
-
         public MaximumNumberOfStudentsUndefinedException() {
             super();
         }
@@ -104,7 +95,6 @@ public class AddStudentToFinalDegreeWorkStudentGroup implements IService {
     }
 
     public class MaximumNumberOfStudentsReachedException extends FenixServiceException {
-
         public MaximumNumberOfStudentsReachedException() {
             super();
         }
@@ -127,7 +117,6 @@ public class AddStudentToFinalDegreeWorkStudentGroup implements IService {
     }
 
     public class MinimumNumberOfCompletedCoursesUndefinedException extends FenixServiceException {
-
         public MinimumNumberOfCompletedCoursesUndefinedException() {
             super();
         }
@@ -150,7 +139,6 @@ public class AddStudentToFinalDegreeWorkStudentGroup implements IService {
     }
 
     public class MinimumNumberOfCompletedCoursesNotReachedException extends FenixServiceException {
-
         public MinimumNumberOfCompletedCoursesNotReachedException() {
             super();
         }
@@ -173,7 +161,6 @@ public class AddStudentToFinalDegreeWorkStudentGroup implements IService {
     }
 
     private class PREDICATE_FIND_GROUP_STUDENT_BY_STUDENT implements Predicate {
-
         IStudent student = null;
 
         public boolean evaluate(Object arg0) {

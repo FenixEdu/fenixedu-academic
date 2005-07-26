@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.ExamStudentRoom;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExamStudentRoom;
 import net.sourceforge.fenixedu.domain.IStudent;
@@ -23,39 +23,27 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class EnrollStudentInExam implements IService {
 
-    public EnrollStudentInExam() {
-    }
-
-    public Boolean run(String username, Integer examId) throws FenixServiceException {
-
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-            IStudent student = persistentStudent.readByUsername(username);
-            IPersistentExam persistentExam = sp.getIPersistentExam();
-            IPersistentExamStudentRoom persistentExamStudentRoom = sp.getIPersistentExamStudentRoom();
-            IExam exam = (IExam) persistentExam.readByOID(Exam.class, examId, true);
-            if (exam == null || student == null) {
-
-                throw new InvalidArgumentsServiceException();
-            }
-
-            IExamStudentRoom examStudentRoom = persistentExamStudentRoom.readBy(exam.getIdInternal(),
-                    student.getIdInternal());
-            if (examStudentRoom != null) {
-                throw new ExistingServiceException();
-            }
-            examStudentRoom = new ExamStudentRoom();
-            persistentExamStudentRoom.simpleLockWrite(examStudentRoom);
-            examStudentRoom.setExam(exam);
-            examStudentRoom.setStudent(student);
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+    public Boolean run(String username, Integer examId) throws FenixServiceException, ExcepcaoPersistencia {
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+        IStudent student = persistentStudent.readByUsername(username);
+        IPersistentExam persistentExam = sp.getIPersistentExam();
+        IPersistentExamStudentRoom persistentExamStudentRoom = sp.getIPersistentExamStudentRoom();
+        IExam exam = (IExam) persistentExam.readByOID(Exam.class, examId, true);
+        if (exam == null || student == null) {
+            throw new InvalidArgumentsServiceException();
         }
 
-        return new Boolean(true);
+        IExamStudentRoom examStudentRoom = persistentExamStudentRoom.readBy(exam.getIdInternal(),
+                student.getIdInternal());
+        if (examStudentRoom != null) {
+            throw new ExistingServiceException();
+        }
+        examStudentRoom = DomainFactory.makeExamStudentRoom();
+        examStudentRoom.setExam(exam);
+        examStudentRoom.setStudent(student);
 
+        return new Boolean(true);
     }
 
 }
