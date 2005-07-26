@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.SendMail;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
-import net.sourceforge.fenixedu.domain.CandidateSituation;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ICandidateSituation;
 import net.sourceforge.fenixedu.domain.ICountry;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
@@ -73,7 +73,7 @@ public class EditMasterDegreeCandidate implements IService {
             oldCandidateSituation.setValidation(new State(State.INACTIVE));
             sp.getIPersistentCandidateSituation().simpleLockWrite(oldCandidateSituation);
 
-            ICandidateSituation newCandidateSituation = new CandidateSituation();
+            ICandidateSituation newCandidateSituation = DomainFactory.makeCandidateSituation();
             sp.getIPersistentCandidateSituation().simpleLockWrite(newCandidateSituation);
             newCandidateSituation.setDate(Calendar.getInstance().getTime());
             newCandidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
@@ -98,8 +98,8 @@ public class EditMasterDegreeCandidate implements IService {
     private void sendEmailToCandidate(IMasterDegreeCandidate masterDegreeCandidate,
             ICandidateSituation candidateSituation) {
         ResourceBundle rb = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
-        List toList, CCList, BCCList;
-        toList = new ArrayList();
+        List<String> toList = new ArrayList<String>();
+        List CCList, BCCList;
         CCList = new ArrayList();
         BCCList = new ArrayList();
         toList.add(masterDegreeCandidate.getPerson().getEmail());
