@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftProfessorship;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.IShift;
@@ -50,7 +51,7 @@ public class EditShiftProfessorshipByOID extends EditDomainObjectService {
 
     @Override
     protected IDomainObject createNewDomainObject(InfoObject infoObject) {
-        return new ShiftProfessorship();
+        return DomainFactory.makeShiftProfessorship();
     }
 
     @Override

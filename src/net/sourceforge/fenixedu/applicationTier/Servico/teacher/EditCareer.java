@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObje
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoProfessionalCareer;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoTeachingCareer;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.teacher.Career;
@@ -31,14 +32,16 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCategory;
  */
 public class EditCareer extends EditDomainObjectService {
 
+    @Override
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         IPersistentCareer persistentCareer = sp.getIPersistentCareer();
         return persistentCareer;
     }
 
-	protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) throws ExcepcaoPersistencia {
+	@Override
+    protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) throws ExcepcaoPersistencia {
         if (infoObject instanceof InfoProfessionalCareer) {
-        	IProfessionalCareer professionalCareer = (ProfessionalCareer) domainObject;
+        	IProfessionalCareer professionalCareer = (IProfessionalCareer) domainObject;
         	InfoProfessionalCareer infoProfessionalCareer = (InfoProfessionalCareer)infoObject;
         	
         	professionalCareer.setBeginYear(infoProfessionalCareer.getBeginYear());
@@ -55,7 +58,7 @@ public class EditCareer extends EditDomainObjectService {
         }
         else {
             InfoTeachingCareer infoTeachingCareer = (InfoTeachingCareer) infoObject;
-            ITeachingCareer teachingCareer = (TeachingCareer)domainObject;
+            ITeachingCareer teachingCareer = (ITeachingCareer) domainObject;
             teachingCareer.setBeginYear(infoTeachingCareer.getBeginYear());
             IPersistentCategory persistentCategory = sp.getIPersistentCategory();
             ICategory category = new Category();
@@ -75,18 +78,19 @@ public class EditCareer extends EditDomainObjectService {
         }
 	}
 
-	protected IDomainObject createNewDomainObject(InfoObject infoObject) {
-
+	@Override
+    protected IDomainObject createNewDomainObject(InfoObject infoObject) {
         if (infoObject instanceof InfoProfessionalCareer) {
-            return new ProfessionalCareer();
+            return DomainFactory.makeProfessionalCareer();
         } else if (infoObject instanceof InfoTeachingCareer) {
-            return new TeachingCareer();
+            return DomainFactory.makeTeachingCareer();
         } else {
             throw new Error("Unknown type of InfoCareer: " + infoObject.getClass().getName());
         }
 	}
 
-	protected Class getDomainObjectClass() {
+	@Override
+    protected Class getDomainObjectClass() {
 		return Career.class ;
 	}
 

@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
@@ -52,7 +53,7 @@ public class EditProfessorship extends EditDomainObjectService {
 
     @Override
     protected IDomainObject createNewDomainObject(InfoObject infoObject) {
-        return new Professorship();
+        return DomainFactory.makeProfessorship();
     }
 
     @Override

@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoExternalActivity;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
@@ -46,7 +47,7 @@ public class EditExternalActivity extends EditDomainObjectService {
 
 	@Override
 	protected IDomainObject createNewDomainObject(InfoObject infoObject) {
-		return new ExternalActivity();
+		return DomainFactory.makeExternalActivity();
 	}
 
 	@Override

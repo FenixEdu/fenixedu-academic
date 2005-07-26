@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InfoTeacherInstitutionWorkTime;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
@@ -135,7 +136,7 @@ public class EditTeacherInstitutionWorkingTimeByOID extends EditDomainObjectServ
 
     @Override
     protected IDomainObject createNewDomainObject(InfoObject infoObject) {
-        return new TeacherInstitutionWorkTime();
+        return DomainFactory.makeTeacherInstitutionWorkTime();
     }
 
     @Override

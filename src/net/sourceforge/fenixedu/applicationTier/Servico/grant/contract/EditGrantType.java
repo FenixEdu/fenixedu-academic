@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantType;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantType;
@@ -21,13 +22,12 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantType;
  */
 public class EditGrantType extends EditDomainObjectService {
 
-    public EditGrantType() {
-    }
-
+    @Override
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentGrantType();
     }
 
+    @Override
     protected IDomainObject readObjectByUnique(InfoObject infoObject, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         IPersistentGrantType pgs = sp.getIPersistentGrantType();
@@ -41,7 +41,7 @@ public class EditGrantType extends EditDomainObjectService {
 
 	@Override
 	protected IDomainObject createNewDomainObject(InfoObject infoObject) {
-		return new GrantType();
+		return DomainFactory.makeGrantType();
 	}
 
 	@Override
