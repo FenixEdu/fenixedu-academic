@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.student.schoolRegistration.InfoResidenceCandidacy;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ICountry;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IRole;
@@ -21,12 +22,10 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.IPersonalDataUseInquiryAnswers;
 import net.sourceforge.fenixedu.domain.student.IResidenceCandidacies;
 import net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers;
-import net.sourceforge.fenixedu.domain.student.ResidenceCandidacies;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCountry;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonalDataUseInquiryAnswers;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentResidenceCandidacies;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRole;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
@@ -64,7 +63,7 @@ public class SchoolRegistration implements IService {
         }
         updatePersonalInfo(suportePersistente, infoPerson, pessoa);
         writeInquiryAnswers(suportePersistente, student, answers);
-        writeResidenceCandidacy(suportePersistente, student, infoResidenceCandidacy);
+        writeResidenceCandidacy(student, infoResidenceCandidacy);
         updateStudentInfo(suportePersistente, student);
 
         return Boolean.TRUE;
@@ -163,15 +162,11 @@ public class SchoolRegistration implements IService {
 
     }
 
-    private void writeResidenceCandidacy(ISuportePersistente sp, IStudent student,
+    private void writeResidenceCandidacy(IStudent student,
             InfoResidenceCandidacy infoResidenceCandidacy) throws ExcepcaoPersistencia {
 
         if (infoResidenceCandidacy != null) {
-            IPersistentResidenceCandidacies pResidenceCandidacies = sp
-                    .getIPersistentResidenceCandidacies();
-
-            IResidenceCandidacies residenceCandidacy = new ResidenceCandidacies();
-            pResidenceCandidacies.simpleLockWrite(residenceCandidacy);
+            IResidenceCandidacies residenceCandidacy = DomainFactory.makeResidenceCandidacies();
 
             residenceCandidacy.setStudent(student);
             residenceCandidacy.setCreationDate(new Date());
