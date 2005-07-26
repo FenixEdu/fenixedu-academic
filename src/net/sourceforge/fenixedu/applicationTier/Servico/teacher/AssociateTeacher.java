@@ -51,11 +51,8 @@ public class AssociateTeacher implements IService {
                 throw new ExistingServiceException();
             }
 
-            IProfessorship professorship = new Professorship();
-            persistentProfessorship.simpleLockWrite(professorship);
-
-            professorship.setTeacher(iTeacher);
-            professorship.setExecutionCourse(iExecutionCourse);
+            Professorship.create(false, iExecutionCourse, iTeacher, null);
+            
         } catch (ExistingPersistentException ex) {
             throw new ExistingServiceException(ex);
         } catch (ExcepcaoPersistencia ex) {

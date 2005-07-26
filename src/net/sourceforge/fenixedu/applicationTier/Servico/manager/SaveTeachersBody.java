@@ -142,16 +142,12 @@ public class SaveTeachersBody implements IService {
         IProfessorship professorShipToWrite;
         while (newProfIterator.hasNext()) {
             id = (Integer) newProfIterator.next();
-            if (!oldProfessorShipTeachersIds.contains(id)) {
-                professorShipToWrite = new Professorship();
-                professorShipToWrite.setExecutionCourse(executionCourse);
+            if (!oldProfessorShipTeachersIds.contains(id)) {                
                 teacher = (ITeacher) sp.getIPersistentTeacher().readByOID(Teacher.class, id);
                 if (teacher == null)
                     result = false;
                 else {
-                    persistentProfessorShip.simpleLockWrite(professorShipToWrite);
-                    professorShipToWrite.setTeacher(teacher);
-
+                    Professorship.create(false, executionCourse, teacher, null);                    
                 }
             }
         }
