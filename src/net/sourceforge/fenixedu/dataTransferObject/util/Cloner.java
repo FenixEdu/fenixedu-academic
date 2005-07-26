@@ -86,8 +86,6 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoTeachingCareer;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSupportLesson;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InfoTeacherInstitutionWorkTime;
-import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.IAdvisory;
 import net.sourceforge.fenixedu.domain.IAnnouncement;
 import net.sourceforge.fenixedu.domain.IAttends;
@@ -148,10 +146,6 @@ import net.sourceforge.fenixedu.domain.IWebSite;
 import net.sourceforge.fenixedu.domain.IWebSiteItem;
 import net.sourceforge.fenixedu.domain.IWebSiteSection;
 import net.sourceforge.fenixedu.domain.IWorkLocation;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RoomOccupation;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.WorkLocation;
 import net.sourceforge.fenixedu.domain.credits.IManagementPositionCreditLine;
 import net.sourceforge.fenixedu.domain.credits.IOtherTypeCreditLine;
 import net.sourceforge.fenixedu.domain.credits.IServiceExemptionCreditLine;
@@ -159,7 +153,6 @@ import net.sourceforge.fenixedu.domain.degree.finalProject.ITeacherDegreeFinalPr
 import net.sourceforge.fenixedu.domain.gaugingTests.physics.IGaugingTestResult;
 import net.sourceforge.fenixedu.domain.gesdis.ICourseHistoric;
 import net.sourceforge.fenixedu.domain.gesdis.IStudentCourseReport;
-import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.ICareer;
 import net.sourceforge.fenixedu.domain.teacher.ICategory;
 import net.sourceforge.fenixedu.domain.teacher.IExternalActivity;
@@ -1580,63 +1573,6 @@ public abstract class Cloner {
 
         infoCreditLine.setInfoTeacher(infoTeacher);
         return infoCreditLine;
-    }
-
-    public static List copyListInfoExternalPerson2ListIExternalPerson(List listInfoExternalPerson) {
-        List listExternalPersons = new ArrayList();
-
-        Iterator iterListInfoExternalPerson = listInfoExternalPerson.iterator();
-
-        while (iterListInfoExternalPerson.hasNext()) {
-            InfoExternalPerson infoExternalPerson = (InfoExternalPerson) iterListInfoExternalPerson
-                    .next();
-
-            IExternalPerson externalPerson = new ExternalPerson();
-            copyObjectProperties(externalPerson, infoExternalPerson);
-
-            IPerson person = new Person();
-            copyObjectProperties(person, infoExternalPerson.getInfoPerson());
-            ICountry country = new Country();
-            copyObjectProperties(country, infoExternalPerson.getInfoPerson().getInfoPais());
-            person.setPais(country);
-            externalPerson.setPerson(person);
-
-            IWorkLocation workLocation = new WorkLocation();
-            copyObjectProperties(workLocation, infoExternalPerson.getInfoWorkLocation());
-            externalPerson.setWorkLocation(workLocation);
-
-            listExternalPersons.add(externalPerson);
-        }
-
-        return listExternalPersons;
-    }
-
-    public static List copyListInfoTeacher2ListITeacher(List listInfoTeacher) {
-        List listITeacher = new ArrayList();
-
-        Iterator iterListInfoTeacher = listInfoTeacher.iterator();
-
-        while (iterListInfoTeacher.hasNext()) {
-            InfoTeacher infoTeacher = (InfoTeacher) iterListInfoTeacher.next();
-
-            ITeacher teacher = new Teacher();
-            copyObjectProperties(teacher, infoTeacher);
-
-            IPerson person = new Person();
-            copyObjectProperties(person, infoTeacher.getInfoPerson());
-            ICountry country = new Country();
-            copyObjectProperties(country, infoTeacher.getInfoPerson().getInfoPais());
-            person.setPais(country);
-            teacher.setPerson(person);
-
-            ICategory category = new Category();
-            copyObjectProperties(category, infoTeacher.getInfoCategory());
-            teacher.setCategory(category);
-
-            listITeacher.add(teacher);
-        }
-
-        return listITeacher;
     }
 
 }
