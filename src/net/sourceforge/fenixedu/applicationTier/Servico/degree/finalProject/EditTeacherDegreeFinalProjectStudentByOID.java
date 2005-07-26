@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
@@ -186,7 +187,7 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
 
     @Override
     protected IDomainObject createNewDomainObject(InfoObject infoObject) {
-        return new TeacherDegreeFinalProjectStudent();
+        return DomainFactory.makeTeacherDegreeFinalProjectStudent();
     }
 
     @Override

@@ -2,11 +2,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IInsuranceValue;
-import net.sourceforge.fenixedu.domain.InsuranceValue;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentInsuranceValue;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -21,37 +20,26 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class EditInsuranceValueByExecutionYearID implements IService {
 
-    /**
-     * Constructor
-     */
-    public EditInsuranceValueByExecutionYearID() {
-    }
-
     public void run(Integer executionYearID, Double annualValue, Date endDate)
-            throws FenixServiceException {
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            throws ExcepcaoPersistencia {
 
-            IExecutionYear executionYear = (IExecutionYear) sp.getIPersistentExecutionYear().readByOID(
-                    ExecutionYear.class, executionYearID);
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IPersistentInsuranceValue insuranceValueDAO = sp.getIPersistentInsuranceValue();
+        final IExecutionYear executionYear = (IExecutionYear) sp.getIPersistentExecutionYear().readByOID(
+                ExecutionYear.class, executionYearID);
 
-            IInsuranceValue insuranceValue = insuranceValueDAO.readByExecutionYear(executionYear.getIdInternal());
+        final IPersistentInsuranceValue insuranceValueDAO = sp.getIPersistentInsuranceValue();
+        IInsuranceValue insuranceValue = insuranceValueDAO.readByExecutionYear(executionYear
+                .getIdInternal());
 
-            if (insuranceValue != null) {
-                insuranceValueDAO.simpleLockWrite(insuranceValue);
-                insuranceValue.setEndDate(endDate);
-                insuranceValue.setAnnualValue(annualValue);
-            } else {
-                insuranceValue = new InsuranceValue(executionYear, annualValue, endDate);
-                insuranceValueDAO.simpleLockWrite(insuranceValue);
-            }
-
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
+        if (insuranceValue != null) {
+            insuranceValueDAO.simpleLockWrite(insuranceValue);
+            insuranceValue.setEndDate(endDate);
+            insuranceValue.setAnnualValue(annualValue);
+        } else {
+            insuranceValue = DomainFactory.makeInsuranceValue(executionYear, annualValue, endDate);
+            insuranceValueDAO.simpleLockWrite(insuranceValue);
         }
     }
+
 }
