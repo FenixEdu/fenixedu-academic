@@ -10,12 +10,12 @@ import java.util.Calendar;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.IMetadata;
 import net.sourceforge.fenixedu.domain.onlineTests.IQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
-import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -45,7 +45,7 @@ public class CreateExercise implements IService {
             }
             IMetadata metadata = null;
             if (metadataId == null) {
-                metadata = new Metadata();
+                metadata = DomainFactory.makeMetadata();
                 metadata.setAuthor(author);
                 metadata.setDescription(description);
                 metadata.setDifficulty(questionDifficultyType.getTypeString());
@@ -63,9 +63,8 @@ public class CreateExercise implements IService {
                 }
                 metadata.setNumberOfMembers(new Integer(metadata.getNumberOfMembers().intValue() + 1));
             }
-            persistentSuport.getIPersistentMetadata().simpleLockWrite(metadata);
             IPersistentQuestion persistentQuestion = persistentSuport.getIPersistentQuestion();
-            IQuestion question = new Question();
+            IQuestion question = DomainFactory.makeQuestion();
             question.setMetadata(metadata);
             question.setVisibility(new Boolean(true));
             try {
@@ -78,7 +77,6 @@ public class CreateExercise implements IService {
                 question.setXmlFileName("Pergunta" + metadata.getNumberOfMembers() + ".xml");
             else
                 question.setXmlFileName(persistentQuestion.correctFileName("Pergunta" + metadata.getNumberOfMembers() + ".xml", metadataId));
-            persistentQuestion.simpleLockWrite(question);
 
             infoQuestion.setXmlFile(question.getXmlFile());
             ParseQuestion parse = new ParseQuestion();
