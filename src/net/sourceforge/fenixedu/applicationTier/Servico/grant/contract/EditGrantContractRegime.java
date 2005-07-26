@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractRegime;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantInsurance;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.ITeacher;
@@ -76,7 +77,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
 
     @Override
     protected IDomainObject createNewDomainObject(InfoObject infoObject) {
-        return new GrantContractRegime();
+        return DomainFactory.makeGrantContractRegime();
     }
 
     @Override
@@ -84,10 +85,12 @@ public class EditGrantContractRegime extends EditDomainObjectService {
         return GrantContractRegime.class;
     }
 
+    @Override
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentGrantContractRegime();
     }
 
+    @Override
     protected IDomainObject readObjectByUnique(InfoObject infoObject, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         IPersistentGrantContractRegime persistentGrantContractRegime = sp
@@ -103,6 +106,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
         super.run(new Integer(0), infoGrantContractRegime);
     }
 
+    @Override
     protected void doAfterLock(IDomainObject domainObjectLocked, InfoObject infoObject,
             ISuportePersistente sp) throws FenixServiceException {
 
