@@ -17,11 +17,10 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IExam;
@@ -29,41 +28,18 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IPeriod;
 import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
-import net.sourceforge.fenixedu.domain.Period;
 import net.sourceforge.fenixedu.domain.Room;
 import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.Season;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class CreateExamNew implements IServico {
-
-    private static CreateExamNew _servico = new CreateExamNew();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static CreateExamNew getService() {
-        return _servico;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private CreateExamNew() {
-    }
-
-    /**
-     * Devolve o nome do servico
-     */
-    public final String getNome() {
-        return "CreateExamNew";
-    }
+public class CreateExamNew implements IService {
 
     public Boolean run(Calendar examDate, Calendar examStartTime, Calendar examEndTime, Season season,
             String[] executionCourseIDArray, String[] scopeIDArray, String[] roomIDArray)
@@ -77,16 +53,11 @@ public class CreateExamNew implements IServico {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentRoomOccupation roomOccupationDAO = sp.getIPersistentRoomOccupation();
             // Exam
-            IExam exam = new Exam(examDate, examStartTime, examEndTime, season);
+            IExam exam = DomainFactory.makeExam(examDate, examStartTime, examEndTime, season);
             // Writing the new exam to the database
-            try {
-                IPersistentExam persistentExam = sp.getIPersistentExam();
-                persistentExam.simpleLockWrite(exam);
-            } catch (ExistingPersistentException ex) {
-                throw new ExistingServiceException(ex);
-            }
+
             // Execution Course list
-            List executionCourseList = new ArrayList();
+            List<IExecutionCourse> executionCourseList = new ArrayList<IExecutionCourse>();
             try {
                 for (int i = 0; i < executionCourseIDArray.length; i++) {
                     Integer executionCourseID = new Integer(executionCourseIDArray[i]);
@@ -104,7 +75,7 @@ public class CreateExamNew implements IServico {
             exam.getAssociatedExecutionCourses().addAll(executionCourseList);
 
             // Scopes
-            List scopesList = new ArrayList();
+            List<ICurricularCourseScope> scopesList = new ArrayList<ICurricularCourseScope>();
             try {
                 for (int i = 0; i < scopeIDArray.length; i++) {
                     Integer scopeID = new Integer(scopeIDArray[i]);
@@ -143,7 +114,7 @@ public class CreateExamNew implements IServico {
             }
 
             // Rooms
-            List roomsList = new ArrayList();
+            List<IRoom> roomsList = new ArrayList<IRoom>();
 
             IPeriod period = null;
             if (roomIDArray.length != 0) {
@@ -151,8 +122,7 @@ public class CreateExamNew implements IServico {
                     period = (IPeriod) sp.getIPersistentPeriod().readByCalendarAndNextPeriod(examDate,
                             examDate, null);
                     if (period == null) {
-                        period = new Period(examDate, examDate);
-                        sp.getIPersistentPeriod().lockWrite(period);
+                        period = DomainFactory.makePeriod(examDate, examDate);
                     }
                 } catch (ExistingPersistentException ex) {
                     throw new ExistingServiceException(ex);
@@ -170,7 +140,7 @@ public class CreateExamNew implements IServico {
                     roomsList.add(room);
                     DiaSemana day = new DiaSemana(examDate.get(Calendar.DAY_OF_WEEK));
 
-                    RoomOccupation roomOccupation = new RoomOccupation(room, examStartTime, examEndTime,
+                    RoomOccupation roomOccupation = DomainFactory.makeRoomOccupation(room, examStartTime, examEndTime,
                             day, RoomOccupation.DIARIA);
                     roomOccupation.setPeriod(period);
 
@@ -182,11 +152,6 @@ public class CreateExamNew implements IServico {
                         }
                     }
 
-                    try {
-                        roomOccupationDAO.lockWrite(roomOccupation);
-                    } catch (ExistingPersistentException ex) {
-                        throw new ExistingServiceException(ex);
-                    }
                     exam.getAssociatedRoomOccupation().add(roomOccupation);
                 }
             } catch (ExcepcaoPersistencia ex) {
