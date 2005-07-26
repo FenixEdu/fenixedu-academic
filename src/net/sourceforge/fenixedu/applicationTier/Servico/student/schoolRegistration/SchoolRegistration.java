@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.IPersonalDataUseInquiryAnswers;
 import net.sourceforge.fenixedu.domain.student.IResidenceCandidacies;
-import net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCountry;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -92,7 +91,7 @@ public class SchoolRegistration implements IService {
                 .readAnswersByStudent(student);
 
         if (personalDataUseInquiryAnswers == null) {
-            personalDataUseInquiryAnswers = new PersonalDataUseInquiryAnswers();
+            personalDataUseInquiryAnswers = DomainFactory.makePersonalDataUseInquiryAnswers();
         }
 
         persistentPDUIA.simpleLockWrite(personalDataUseInquiryAnswers);
