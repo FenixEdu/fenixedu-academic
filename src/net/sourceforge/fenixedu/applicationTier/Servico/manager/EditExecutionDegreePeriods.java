@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IPeriod;
-import net.sourceforge.fenixedu.domain.Period;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
@@ -99,8 +98,7 @@ public class EditExecutionDegreePeriods implements IService {
             if (period == null) {
                 Calendar startDate = infoPeriodNew.getStartDate();
                 Calendar endDate = infoPeriodNew.getEndDate();
-                period = new Period(startDate, endDate);
-                periodDAO.simpleLockWrite(period);
+                period = DomainFactory.makePeriod(startDate, endDate);
                 period.setNextPeriod(nextPeriod);
             }
         }
