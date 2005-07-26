@@ -4480,9 +4480,7 @@ relation PaymentPhaseGratuityValues {
 
 
 relation PaymentTransactionGuideEntry {
-	net.sourceforge.fenixedu.domain.transactions.PaymentTransaction playsRole paymentTransactions {
-		multiplicity *;
-	}
+	net.sourceforge.fenixedu.domain.transactions.PaymentTransaction playsRole paymentTransaction;
 	net.sourceforge.fenixedu.domain.GuideEntry playsRole guideEntry;
 }
 
