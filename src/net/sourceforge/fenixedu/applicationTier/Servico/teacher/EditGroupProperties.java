@@ -52,7 +52,7 @@ public class EditGroupProperties implements IService {
             IGroupProperties groupProperties) throws FenixServiceException {
 
         IPersistentStudentGroup persistentStudentGroup = null;
-        List errors = new ArrayList();
+        List<Integer> errors = new ArrayList<Integer>();
         try {
             ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
@@ -65,7 +65,7 @@ public class EditGroupProperties implements IService {
 
             if (groupMaximumNumber != null) {
                 IShift shift = null;
-                List shiftsInternalList = new ArrayList();
+                List<IShift> shiftsInternalList = new ArrayList<IShift>();
                 Iterator iterator = allStudentsGroup.iterator();
 
                 while (iterator.hasNext()) {
@@ -179,7 +179,6 @@ public class EditGroupProperties implements IService {
                 groupProperties.setEnrolmentPolicy(infoGroupProperties.getEnrolmentPolicy());
                 groupProperties.setGroupMaximumNumber(infoGroupProperties.getGroupMaximumNumber());
                 groupProperties.setIdealCapacity(infoGroupProperties.getIdealCapacity());
-                groupProperties.setIdInternal(infoGroupProperties.getIdInternal());
                 groupProperties.setMaximumCapacity(infoGroupProperties.getMaximumCapacity());
                 groupProperties.setMinimumCapacity(infoGroupProperties.getMinimumCapacity());
 
