@@ -11,18 +11,16 @@ import java.util.Random;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.Advisory;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IAdvisory;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory;
 import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTestAdvisory;
 import net.sourceforge.fenixedu.domain.onlineTests.IQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -59,8 +57,7 @@ public class AddStudentsToDistributedTest implements IService {
                         ((InfoStudent) infoStudentList.get(j)).getIdInternal());
                 if (persistentSuport.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(student.getIdInternal(), distributedTestId)
                         .isEmpty()) {
-                    IStudentTestQuestion studentTestQuestion = new StudentTestQuestion();
-                    persistentSuport.getIPersistentStudentTestQuestion().lockWrite(studentTestQuestion);
+                    IStudentTestQuestion studentTestQuestion = DomainFactory.makeStudentTestQuestion();
                     studentTestQuestion.setStudent(student);
                     studentTestQuestion.setDistributedTest(distributedTest);
                     studentTestQuestion.setTestQuestionOrder(studentTestQuestionExample.getTestQuestionOrder());
@@ -84,12 +81,10 @@ public class AddStudentsToDistributedTest implements IService {
         }
         // create advisory for new students
         IAdvisory advisory = createTestAdvisory(distributedTest);
-        persistentSuport.getIPersistentAdvisory().simpleLockWrite(advisory);
 
-        IDistributedTestAdvisory distributedTestAdvisory = new DistributedTestAdvisory();
+        IDistributedTestAdvisory distributedTestAdvisory = DomainFactory.makeDistributedTestAdvisory();
         distributedTestAdvisory.setAdvisory(advisory);
         distributedTestAdvisory.setDistributedTest(distributedTest);
-        persistentSuport.getIPersistentDistributedTestAdvisory().simpleLockWrite(distributedTestAdvisory);
 
         return advisory.getIdInternal();
     }
@@ -125,7 +120,7 @@ public class AddStudentsToDistributedTest implements IService {
     }
 
     private IAdvisory createTestAdvisory(IDistributedTest distributedTest) {
-        IAdvisory advisory = new Advisory();
+        IAdvisory advisory = DomainFactory.makeAdvisory();
         advisory.setCreated(Calendar.getInstance().getTime());
         advisory.setExpires(distributedTest.getEndDate().getTime());
         advisory.setSender("Docente da disciplina " + ((IExecutionCourse) distributedTest.getTestScope().getDomainObject()).getNome());

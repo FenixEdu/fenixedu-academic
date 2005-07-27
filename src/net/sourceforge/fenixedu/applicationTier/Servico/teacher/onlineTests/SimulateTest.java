@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentTestFeedback;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionWithInfoQuestionAndInfoDistributedTest;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
@@ -28,7 +29,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.ITestScope;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
-import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -74,8 +74,7 @@ public class SimulateTest implements IService {
             ITestScope testScope = persistentSuport.getIPersistentTestScope().readByDomainObject(ExecutionCourse.class.getName(), executionCourseId);
 
             if (testScope == null) {
-                testScope = new TestScope(persistentSuport.getIPersistentExecutionCourse().materialize(executionCourse));
-                persistentSuport.getIPersistentTestScope().simpleLockWrite(testScope);
+                testScope = DomainFactory.makeTestScope(persistentSuport.getIPersistentExecutionCourse().materialize(executionCourse));
             }
 
             IDistributedTest distributedTest = new DistributedTest();
