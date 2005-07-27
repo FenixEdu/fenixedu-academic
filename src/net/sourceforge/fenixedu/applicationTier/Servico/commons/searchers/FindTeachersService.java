@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 /**
@@ -22,38 +21,23 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
  */
 public class FindTeachersService extends SearchService {
 
-    static private FindTeachersService serviceInstance = new FindTeachersService();
-
-    private FindTeachersService() {
-
+    @Override
+    protected InfoObject newInfoFromDomain(IDomainObject object) {
+        return Cloner.copyITeacher2InfoTeacher((ITeacher) object);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.SearchService#cloneDomainObject(Dominio.IDomainObject)
-     */
-    protected InfoObject cloneDomainObject(IDomainObject object) {
-        ITeacher teacher = (ITeacher) object;
-        return Cloner.copyITeacher2InfoTeacher(teacher);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.SearchService#doSearch(java.util.HashMap,
-     *      ServidorPersistente.ISuportePersistente)
-     */
+    @Override
     protected List doSearch(HashMap searchParameters, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
-        IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
+
         ITeacher teacher = null;
         try {
-            teacher = teacherDAO.readByNumber(new Integer(searchParameters.get("teacherNumber")
-                    .toString()));
+            teacher = sp.getIPersistentTeacher().readByNumber(
+                    new Integer(searchParameters.get("teacherNumber").toString()));
         } catch (NumberFormatException e) {
-            //ignored
+            // ignored
         }
+
         List returnList = new ArrayList();
         if (teacher != null) {
             returnList.add(teacher);
@@ -61,16 +45,4 @@ public class FindTeachersService extends SearchService {
         return returnList;
     }
 
-    public static FindTeachersService getService() {
-        return serviceInstance;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.IServico#getNome()
-     */
-    public String getNome() {
-        return "FindTeachersService";
-    }
 }

@@ -18,9 +18,7 @@ import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.student.IDelegate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDelegate;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -28,25 +26,16 @@ import org.apache.commons.collections.Transformer;
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
  * @author <a href="mailto:shmc@mega.ist.utl.pt">Sergio Montelobo </a>
- *  
+ * 
  */
 public class ReadDelegateCurricularCourses extends SearchService {
-    /**
-     *  
-     */
-    public ReadDelegateCurricularCourses() {
-        super();
-    }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.SearchService#cloneDomainObject(Dominio.IDomainObject)
-     */
-    protected InfoObject cloneDomainObject(IDomainObject object) {
+    @Override
+    protected InfoObject newInfoFromDomain(IDomainObject object) {
         ICurricularCourse curricularCourse = (ICurricularCourse) object;
         InfoCurricularCourse infoCurricularCourse = Cloner
                 .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+
         List infoScopes = (List) CollectionUtils.collect(curricularCourse.getScopes(),
                 new Transformer() {
                     public Object transform(Object arg0) {
@@ -61,35 +50,30 @@ public class ReadDelegateCurricularCourses extends SearchService {
         return infoCurricularCourse;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.SearchService#doSearch(java.util.HashMap,
-     *      ServidorPersistente.ISuportePersistente)
-     */
+    @Override
     protected List doSearch(HashMap searchParameters, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
-        List curricularCourses = null;
-        IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-        IPersistentDelegate persistentDelegate = sp.getIPersistentDelegate();
-        IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 
-        String user = (String) searchParameters.get("user");
+        final String user = (String) searchParameters.get("user");
+        final IStudent student = sp.getIPersistentStudent().readByUsername(user);
+        final IDelegate delegate = sp.getIPersistentDelegate().readByStudent(student);
 
-        IStudent student = persistentStudent.readByUsername(user);
-        IDelegate delegate = persistentDelegate.readByStudent(student);
         // if he's a degree delegate then he can read all curricular courses
         // report
+        final IPersistentCurricularCourse persistentCurricularCourse = sp
+                .getIPersistentCurricularCourse();
+        List curricularCourses = null;
         if (delegate.getType().booleanValue()) {
             curricularCourses = persistentCurricularCourse
-                    .readExecutedCurricularCoursesByDegreeAndExecutionYear(delegate.getDegree().getIdInternal(),
-                            delegate.getExecutionYear().getIdInternal());
+                    .readExecutedCurricularCoursesByDegreeAndExecutionYear(delegate.getDegree()
+                            .getIdInternal(), delegate.getExecutionYear().getIdInternal());
         } else {
             Integer year = new Integer(delegate.getYearType().getValue());
             curricularCourses = persistentCurricularCourse
-                    .readExecutedCurricularCoursesByDegreeAndYearAndExecutionYear(delegate.getDegree().getIdInternal(),
-                            year, delegate.getExecutionYear().getIdInternal());
+                    .readExecutedCurricularCoursesByDegreeAndYearAndExecutionYear(delegate.getDegree()
+                            .getIdInternal(), year, delegate.getExecutionYear().getIdInternal());
         }
         return curricularCourses;
     }
+
 }

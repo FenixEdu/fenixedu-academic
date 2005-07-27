@@ -1,7 +1,3 @@
-/*
- * Created on Nov 18, 2003 by jpvl
- *  
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.framework;
 
 import java.util.HashMap;
@@ -25,27 +21,23 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * @author jpvl
  */
 public abstract class SearchService implements IService {
+
     /**
      * @param searchParameters
      *            HashMap that contains name of attribute for key and value of
      *            the attribute
      * @return An empty list if nothing was found.
+     * @throws ExcepcaoPersistencia
      * @throws FenixServiceException
      *             if it can't get persistent support
      */
-    public List run(HashMap searchParameters) throws FenixServiceException {
-        ISuportePersistente sp;
-        List domainList;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            domainList = doSearch(searchParameters, sp);
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException("Problems with database!", e);
-        }
+    public List run(HashMap searchParameters) throws ExcepcaoPersistencia {
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final List domainList = doSearch(searchParameters, sp);
 
-        List infoList = (List) CollectionUtils.collect(domainList, new Transformer() {
+        final List infoList = (List) CollectionUtils.collect(domainList, new Transformer() {
             public Object transform(Object input) {
-                InfoObject infoObject = cloneDomainObject((IDomainObject) input);
+                InfoObject infoObject = newInfoFromDomain((IDomainObject) input);
                 return infoObject;
             }
         });
@@ -59,7 +51,7 @@ public abstract class SearchService implements IService {
      * @param object
      * @return
      */
-    abstract protected InfoObject cloneDomainObject(IDomainObject object);
+    abstract protected InfoObject newInfoFromDomain(IDomainObject object);
 
     /**
      * Do the search using search using the search parameters.
@@ -69,4 +61,5 @@ public abstract class SearchService implements IService {
      */
     abstract protected List doSearch(HashMap searchParameters, ISuportePersistente sp)
             throws ExcepcaoPersistencia;
+
 }
