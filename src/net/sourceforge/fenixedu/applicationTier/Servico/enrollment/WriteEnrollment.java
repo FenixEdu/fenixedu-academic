@@ -2,9 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.enrollment;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse;
-import net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IEnrolment;
@@ -56,11 +54,11 @@ public class WriteEnrollment implements IService {
             if (enrollmentClass == null || enrollmentClass.equals(new Integer(1))
                     || enrollmentClass.equals(new Integer(0))) {
 
-                enrolmentToWrite = new Enrolment();
+                enrolmentToWrite = DomainFactory.makeEnrolment();
             } else if (enrollmentClass.equals(new Integer(2))) {
-                enrolmentToWrite = new EnrolmentInOptionalCurricularCourse();
+                enrolmentToWrite = DomainFactory.makeEnrolmentInOptionalCurricularCourse();
             } else {
-                enrolmentToWrite = new EnrolmentInExtraCurricularCourse();
+                enrolmentToWrite = DomainFactory.makeEnrolmentInExtraCurricularCourse();
             }
 			
 			enrolmentToWrite.initializeAsNew(studentCurricularPlan,curricularCourse,executionPeriod,getEnrollmentCondition(enrollmentType),userView.getUtilizador());
