@@ -16,12 +16,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftProfessorship;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IShiftProfessorship;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
@@ -35,17 +35,8 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * @author jpvl
  */
 public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
-    /**
-     * @author jpvl
-     */
+
     public class InvalidProfessorshipPercentage extends FenixServiceException {
-
-    }
-
-    /**
-     * 
-     */
-    public AcceptTeacherExecutionCourseShiftPercentage() {
 
     }
 
@@ -76,7 +67,7 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
             if (professorship != null) {
                 Iterator iterator = infoShiftProfessorshipList.iterator();
 
-                List shiftProfessorshipDeleted = new ArrayList();
+                List<IShiftProfessorship> shiftProfessorshipDeleted = new ArrayList<IShiftProfessorship>();
 
                 List shiftProfessorshipAdded = addShiftProfessorships(shiftDAO, shiftProfessorshipDAO,
                         professorship, iterator, shiftProfessorshipDeleted);
@@ -94,9 +85,9 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
 
     private List addShiftProfessorships(ITurnoPersistente shiftDAO,
             IPersistentShiftProfessorship shiftProfessorshipDAO, IProfessorship professorship,
-            Iterator iterator, List shiftProfessorshipDeleted) throws InvalidProfessorshipPercentage,
+            Iterator iterator, List<IShiftProfessorship> shiftProfessorshipDeleted) throws InvalidProfessorshipPercentage,
             ExcepcaoPersistencia, OverlappingPeriodException, FenixServiceException {
-        List shiftProfessorshipAdded = new ArrayList();
+        List<IShiftProfessorship> shiftProfessorshipAdded = new ArrayList<IShiftProfessorship>();
         while (iterator.hasNext()) {
             InfoShiftProfessorship infoShiftProfessorship = (InfoShiftProfessorship) iterator.next();
 
@@ -120,8 +111,8 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
 
     private void lockOrDeleteShiftProfessorship(IPersistentShiftProfessorship shiftProfessorshipDAO,
             IProfessorship professorship, Double percentage, IShift shift,
-            IShiftProfessorship shiftProfessorship, List shiftProfessorshipDeleted,
-            List shiftProfessorshipAdded) throws ExcepcaoPersistencia, OverlappingPeriodException,
+            IShiftProfessorship shiftProfessorship, List<IShiftProfessorship> shiftProfessorshipDeleted,
+            List<IShiftProfessorship> shiftProfessorshipAdded) throws ExcepcaoPersistencia, OverlappingPeriodException,
             FenixServiceException {
         boolean toAdd = false;
         if (percentage.doubleValue() == 0) {
@@ -137,7 +128,7 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
 
             if (shiftProfessorship == null) {
                 toAdd = true;
-                shiftProfessorship = new ShiftProfessorship();
+                shiftProfessorship = DomainFactory.makeShiftProfessorship();
                 shiftProfessorship.setProfessorship(professorship);
                 shiftProfessorship.setShift(shift);
             }
