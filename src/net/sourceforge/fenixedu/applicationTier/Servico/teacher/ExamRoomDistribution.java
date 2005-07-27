@@ -18,8 +18,8 @@ import java.util.Random;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.ExamStudentRoom;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExamStudentRoom;
@@ -136,8 +136,7 @@ public class ExamRoomDistribution implements IService {
                     IExamStudentRoom examStudentRoom = persistentExamStudentRoom.readBy(exam
                             .getIdInternal(), student.getIdInternal());
                     if (examStudentRoom == null) {
-                        examStudentRoom = new ExamStudentRoom();
-                        persistentExamStudentRoom.simpleLockWrite(examStudentRoom);
+                        examStudentRoom = DomainFactory.makeExamStudentRoom();
                         examStudentRoom.setExam(exam);
                         examStudentRoom.setRoom(room);
                         examStudentRoom.setStudent(student);

@@ -12,7 +12,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.domain.Advisory;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.GroupProperties;
 import net.sourceforge.fenixedu.domain.IAdvisory;
@@ -122,7 +122,6 @@ public class DeleteProjectProposal implements IService {
         // Create Advisory
         IAdvisory advisory = createDeleteProjectProposalAdvisory(executionCourse, startExecutionCourse,
                 withdrawalPerson, groupPropertiesExecutionCourse);
-        persistentSupport.getIPersistentAdvisory().simpleLockWrite(advisory);
         for (final Iterator iterator = group.iterator(); iterator.hasNext();) {
             final IPerson person = (IPerson) iterator.next();
             persistentSupport.getIPessoaPersistente().simpleLockWrite(person);
@@ -137,7 +136,7 @@ public class DeleteProjectProposal implements IService {
     private IAdvisory createDeleteProjectProposalAdvisory(IExecutionCourse goalExecutionCourse,
             IExecutionCourse startExecutionCourse, IPerson withdrawalPerson,
             IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse) {
-        IAdvisory advisory = new Advisory();
+        IAdvisory advisory = DomainFactory.makeAdvisory();
         advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
         if (groupPropertiesExecutionCourse.getGroupProperties().getEnrolmentEndDay() != null) {
             advisory.setExpires(groupPropertiesExecutionCourse.getGroupProperties().getEnrolmentEndDay()
