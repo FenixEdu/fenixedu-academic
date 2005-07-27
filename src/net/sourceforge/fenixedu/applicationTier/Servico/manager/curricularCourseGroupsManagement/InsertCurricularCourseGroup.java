@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IBranch;
 import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
-import net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
@@ -58,9 +58,9 @@ public class InsertCurricularCourseGroup implements IService {
      */
     private ICurricularCourseGroup getInstance(String className) {
         if (className.equals(AreaCurricularCourseGroup.class.getName())) {
-            return new AreaCurricularCourseGroup();
+            return DomainFactory.makeAreaCurricularCourseGroup();
         }
-        return new OptionalCurricularCourseGroup();
+        return DomainFactory.makeOptionalCurricularCourseGroup();
     }
 
 }
