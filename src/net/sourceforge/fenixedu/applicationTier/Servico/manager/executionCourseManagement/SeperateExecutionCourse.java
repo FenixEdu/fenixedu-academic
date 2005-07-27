@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.utils.ExecutionCourseUtils;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
@@ -19,7 +20,6 @@ import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -151,7 +151,7 @@ public class SeperateExecutionCourse implements IService {
 
     private IExecutionCourse createNewExecutionCourse(IPersistentObject persistentObject,
             IExecutionCourse originExecutionCourse) throws ExcepcaoPersistencia {
-        IExecutionCourse destinationExecutionCourse = new ExecutionCourse();
+        IExecutionCourse destinationExecutionCourse = DomainFactory.makeExecutionCourse();
         destinationExecutionCourse.setComment("");
         destinationExecutionCourse.setExecutionPeriod(originExecutionCourse.getExecutionPeriod());
         destinationExecutionCourse.setLabHours(originExecutionCourse.getLabHours());
@@ -160,8 +160,7 @@ public class SeperateExecutionCourse implements IService {
 
         for (int i = 0; i < originExecutionCourse.getProfessorships().size(); i++) {
             IProfessorship professorship = originExecutionCourse.getProfessorships().get(i);
-            IProfessorship newProfessorship = new Professorship();
-            persistentObject.simpleLockWrite(newProfessorship);
+            IProfessorship newProfessorship = DomainFactory.makeProfessorship();
             newProfessorship.setExecutionCourse(destinationExecutionCourse);
             newProfessorship.setTeacher(professorship.getTeacher());
             newProfessorship.setResponsibleFor(professorship.getResponsibleFor());

@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfPeriodEx
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
 import net.sourceforge.fenixedu.domain.Branch;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.IBranch;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
@@ -58,8 +59,7 @@ public class SubmitFinalWorkProposal implements IService {
                     .getIdInternal());
         }
         if (proposal == null) {
-            proposal = new Proposal();
-            persistentFinalWork.simpleLockWrite(proposal);
+            proposal = DomainFactory.makeProposal();
             int proposalNumber = scheduleing.getCurrentProposalNumber().intValue();
             proposal.setProposalNumber(new Integer(proposalNumber));
             persistentFinalWork.simpleLockWrite(scheduleing);

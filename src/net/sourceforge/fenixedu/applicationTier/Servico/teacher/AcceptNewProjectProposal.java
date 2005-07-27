@@ -14,8 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.Advisory;
-import net.sourceforge.fenixedu.domain.AttendInAttendsSet;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.GroupProperties;
 import net.sourceforge.fenixedu.domain.IAdvisory;
 import net.sourceforge.fenixedu.domain.IAttendInAttendsSet;
@@ -106,8 +105,7 @@ public class AcceptNewProjectProposal implements IService {
             while (iterAttends.hasNext()) {
                 IAttends attend = (IAttends) iterAttends.next();
                 if (!attendsSetStudentNumbers.contains(attend.getAluno().getNumber())) {
-                    IAttendInAttendsSet attendInAttendsSet = new AttendInAttendsSet(attend, attendsSet);
-                    persistentAttendInAttendsSet.simpleLockWrite(attendInAttendsSet);
+                    IAttendInAttendsSet attendInAttendsSet = DomainFactory.makeAttendInAttendsSet(attend, attendsSet);
                     attendsSet.addAttendInAttendsSet(attendInAttendsSet);
                     attend.addAttendInAttendsSet(attendInAttendsSet);
                 }
@@ -141,7 +139,6 @@ public class AcceptNewProjectProposal implements IService {
                     // executioncourses
                     IAdvisory advisory = createAcceptAdvisory(executionCourse, personExecutionCourse,
                             groupPropertiesExecutionCourse, receiverPerson, senderPerson);
-                    sp.getIPersistentAdvisory().simpleLockWrite(advisory);
                     for (final Iterator iterator = groupTeachers.iterator(); iterator.hasNext();) {
                         final IPerson person = (IPerson) iterator.next();
                         sp.getIPessoaPersistente().simpleLockWrite(person);
@@ -168,7 +165,6 @@ public class AcceptNewProjectProposal implements IService {
             // Create Advisory for teachers of the new executioncourse
             IAdvisory advisoryAux = createAcceptAdvisory(executionCourse, executionCourse,
                     groupPropertiesExecutionCourse, receiverPerson, senderPerson);
-            sp.getIPersistentAdvisory().simpleLockWrite(advisoryAux);
             for (final Iterator iterator = groupAux.iterator(); iterator.hasNext();) {
                 final IPerson person = (IPerson) iterator.next();
                 sp.getIPessoaPersistente().simpleLockWrite(person);
@@ -192,7 +188,7 @@ public class AcceptNewProjectProposal implements IService {
             IExecutionCourse personExecutionCourse,
             IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse, IPerson receiverPerson,
             IPerson senderPerson) {
-        IAdvisory advisory = new Advisory();
+        IAdvisory advisory = DomainFactory.makeAdvisory();
         advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
         if (groupPropertiesExecutionCourse.getGroupProperties().getEnrolmentEndDay() != null) {
             advisory.setExpires(groupPropertiesExecutionCourse.getGroupProperties().getEnrolmentEndDay()

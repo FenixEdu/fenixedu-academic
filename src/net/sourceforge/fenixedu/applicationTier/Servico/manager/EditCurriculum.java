@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.Curriculum;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurriculum;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
@@ -56,7 +56,7 @@ public class EditCurriculum implements IService {
                 .getIdInternal());
 
         if (curriculum == null) {
-            curriculum = new Curriculum();
+            curriculum = DomainFactory.makeCurriculum();
 
             Calendar today = Calendar.getInstance();
             curriculum.setLastModificationDate(today.getTime());
@@ -74,7 +74,7 @@ public class EditCurriculum implements IService {
                     infoCurriculum.getProgramEn(), language, person);
 
         } else {
-            ICurriculum newCurriculum = new Curriculum();
+            ICurriculum newCurriculum = DomainFactory.makeCurriculum();
             newCurriculum.setCurricularCourse(curricularCourse);
 
             newCurriculum.edit(infoCurriculum.getGeneralObjectives(), infoCurriculum

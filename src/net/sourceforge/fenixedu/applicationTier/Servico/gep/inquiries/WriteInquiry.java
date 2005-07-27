@@ -37,9 +37,6 @@ import net.sourceforge.fenixedu.domain.inquiries.IInquiriesCourse;
 import net.sourceforge.fenixedu.domain.inquiries.IInquiriesRegistry;
 import net.sourceforge.fenixedu.domain.inquiries.IInquiriesRoom;
 import net.sourceforge.fenixedu.domain.inquiries.IInquiriesTeacher;
-import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
-import net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom;
-import net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -153,7 +150,7 @@ public class WriteInquiry implements IService {
             final ISuportePersistente sp) throws ExcepcaoPersistencia {
 
         for (ShiftType classType : iit.getClassTypes()) {
-            final IInquiriesTeacher inquiriesTeacher = new InquiriesTeacher();
+            final IInquiriesTeacher inquiriesTeacher = DomainFactory.makeInquiriesTeacher();
 
             inquiriesTeacher.setExecutionCourse(inquiriesCourse.getExecutionCourse());
             inquiriesTeacher.setExecutionDegreeCourse(inquiriesCourse.getExecutionDegreeCourse());
@@ -185,9 +182,6 @@ public class WriteInquiry implements IService {
             inquiriesTeacher.setTeacherAvailability(iit.getTeacherAvailability());
             inquiriesTeacher.setTeacherReasoningStimulation(iit.getTeacherReasoningStimulation());
             inquiriesTeacher.setGlobalAppreciation(iit.getGlobalAppreciation());
-
-            inquiriesTeacherDAO.simpleLockWrite(inquiriesTeacher);
-
         }
 
     }
@@ -195,7 +189,7 @@ public class WriteInquiry implements IService {
     private void writeInquiriesRoom(final IPersistentInquiriesRoom inquiriesRoomDAO,
             final InfoInquiriesRoom iir, final IInquiriesCourse inquiriesCourse,
             final ISuportePersistente sp) throws ExcepcaoPersistencia {
-        final IInquiriesRoom inquiriesRoom = new InquiriesRoom();
+        final IInquiriesRoom inquiriesRoom = DomainFactory.makeInquiriesRoom();
 
         inquiriesRoom.setExecutionCourse(inquiriesCourse.getExecutionCourse());
         inquiriesRoom.setExecutionDegreeCourse(inquiriesCourse.getExecutionDegreeCourse());
@@ -209,15 +203,13 @@ public class WriteInquiry implements IService {
         inquiriesRoom.setEnvironmentalConditions(iir.getEnvironmentalConditions());
         inquiriesRoom.setEquipmentQuality(iir.getEquipmentQuality());
         inquiriesRoom.setSpaceAdequation(iir.getSpaceAdequation());
-
-        inquiriesRoomDAO.simpleLockWrite(inquiriesRoom);
     }
 
     private IInquiriesRegistry writeInquiriesRegistry(
             final IPersistentInquiriesRegistry inquiriesRegistryDAO,
             final IInquiriesCourse inquiriesCourse, final InfoStudent infoStudent,
             final ISuportePersistente sp) throws ExcepcaoPersistencia {
-        final IInquiriesRegistry inquiriesRegistry = new InquiriesRegistry();
+        final IInquiriesRegistry inquiriesRegistry = DomainFactory.makeInquiriesRegistry();
         inquiriesRegistry.setExecutionCourse(inquiriesCourse.getExecutionCourse());
         inquiriesRegistry.setExecutionDegreeCourse(inquiriesCourse.getExecutionDegreeCourse());
         inquiriesRegistry.setExecutionDegreeStudent(inquiriesCourse.getExecutionDegreeStudent());
@@ -227,7 +219,6 @@ public class WriteInquiry implements IService {
         inquiriesRegistry.setStudent((IStudent) studentDAO.readByOID(Student.class, infoStudent
                 .getIdInternal()));
 
-        inquiriesRegistryDAO.simpleLockWrite(inquiriesRegistry);
         return inquiriesRegistry;
     }
 }
