@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSite;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteItem;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteSection;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IWebSiteItem;
 import net.sourceforge.fenixedu.domain.IWebSiteSection;
-import net.sourceforge.fenixedu.domain.WebSiteItem;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
@@ -46,8 +46,7 @@ public class AddItem extends ManageWebSiteItem implements IService {
 
         checkData(infoWebSiteItem, webSiteSection);
 
-        IWebSiteItem webSiteItem = new WebSiteItem();
-        persistentWebSiteItem.simpleLockWrite(webSiteItem);
+        IWebSiteItem webSiteItem = DomainFactory.makeWebSiteItem();
 
         fillWebSiteItemForDB(infoWebSiteItem, user, persistentPerson, persistentWebSiteSection,
                 webSiteSection, webSiteItem);
