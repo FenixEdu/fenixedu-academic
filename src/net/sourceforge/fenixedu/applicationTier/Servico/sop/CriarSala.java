@@ -18,9 +18,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IBuilding;
 import net.sourceforge.fenixedu.domain.IRoom;
-import net.sourceforge.fenixedu.domain.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBuilding;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
@@ -66,8 +66,7 @@ public class CriarSala implements IService {
 
     protected IRoom writeRoom(final ISalaPersistente roomDAO, final InfoRoom infoRoom, final IBuilding building)
             throws ExcepcaoPersistencia {
-        final IRoom room = new Room();
-        roomDAO.simpleLockWrite(room);
+        final IRoom room = DomainFactory.makeRoom();
         room.setCapacidadeExame(infoRoom.getCapacidadeExame());
         room.setCapacidadeNormal(infoRoom.getCapacidadeNormal());
         room.setNome(infoRoom.getNome());

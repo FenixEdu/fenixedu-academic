@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithInfoExecutionCourse;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
@@ -35,8 +35,7 @@ public class CriarTurno implements IService {
             throw new ExistingServiceException("Duplicate Entry: " + infoTurno.getNome());
         }
 
-        IShift newShift = new Shift();
-        sp.getITurnoPersistente().simpleLockWrite(newShift);
+        IShift newShift = DomainFactory.makeShift();
         Integer availabilityFinal = new Integer(new Double(Math.ceil(1.10 * infoTurno.getLotacao()
                 .doubleValue())).intValue());
         newShift.setAvailabilityFinal(availabilityFinal);
