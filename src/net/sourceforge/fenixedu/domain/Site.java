@@ -42,7 +42,7 @@ public class Site extends Site_Base {
             throw new NullPointerException();
         }
         final Date currentDate = Calendar.getInstance().getTime();
-        final IAnnouncement announcement = new Announcement();
+        final IAnnouncement announcement = DomainFactory.makeAnnouncement();
         announcement.setTitle(announcementTitle);
         announcement.setInformation(announcementInformation);
         announcement.setCreationDate(currentDate);

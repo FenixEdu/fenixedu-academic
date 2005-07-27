@@ -266,7 +266,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         		
 		if (grade.equals("0") || grade.equals("")) {
 
-            IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(enrolment, getEnrolmentEvaluationType());
+            IEnrolmentEvaluation enrolmentEvaluation = DomainFactory.makeEnrolmentEvaluation(enrolment, getEnrolmentEvaluationType());
 			enrolmentEvaluation.confirmSubmission(employee, observation);
 			enrolment.setEnrollmentState(EnrollmentState.ENROLLED);
 
@@ -274,7 +274,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
 
 			if (degreeCurricularPlan.isGradeValid(grade)) {
 				
-				IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(enrolment, evaluationType);
+				IEnrolmentEvaluation enrolmentEvaluation = DomainFactory.makeEnrolmentEvaluation(enrolment, evaluationType);
 				enrolmentEvaluation.edit(responsibleFor, grade, evaluationAvailableDate, examDate, "");
 				enrolmentEvaluation.confirmSubmission(employee, observation);
 			}

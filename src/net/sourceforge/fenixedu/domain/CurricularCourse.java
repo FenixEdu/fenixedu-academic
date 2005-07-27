@@ -216,7 +216,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     public ICurriculum insertCurriculum(String program, String programEn, String operacionalObjectives,
             String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn) {
 
-        ICurriculum curriculum = new Curriculum();
+        ICurriculum curriculum = DomainFactory.makeCurriculum();
         
         curriculum.setCurricularCourse(this);
         curriculum.setProgram(program);
