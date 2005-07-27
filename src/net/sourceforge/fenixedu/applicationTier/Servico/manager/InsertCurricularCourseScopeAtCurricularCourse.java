@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IBranch;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularSemester;
@@ -59,7 +59,7 @@ public class InsertCurricularCourseScopeAtCurricularCourse implements IService {
             if (branch == null)
                 throw new NonExistingServiceException("message.non.existing.branch", null);
 			
-			new CurricularCourseScope(branch, curricularCourse, curricularSemester, infoCurricularCourseScope.getBeginDate(),
+			DomainFactory.makeCurricularCourseScope(branch, curricularCourse, curricularSemester, infoCurricularCourseScope.getBeginDate(),
 										infoCurricularCourseScope.getEndDate(), infoCurricularCourseScope.getAnotation());
 			
         } catch (RuntimeException e) {
