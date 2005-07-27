@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewExamByDayAndShift;
-import net.sourceforge.fenixedu.domain.ExamExecutionCourse;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExamExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
@@ -24,73 +24,52 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class AssociateExecutionCourseToExam implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public AssociateExecutionCourseToExam() {
-    }
-
     public Boolean run(InfoViewExamByDayAndShift infoViewExam, InfoExecutionCourse infoExecutionCourse)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
 
         Boolean result = new Boolean(false);
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
-            IExecutionCourse executionCourseToBeAssociatedWithExam = executionCourseDAO
-                    .readByExecutionCourseInitialsAndExecutionPeriodId(infoExecutionCourse.getSigla(),
-                            infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
+        IExecutionCourse executionCourseToBeAssociatedWithExam = executionCourseDAO
+                .readByExecutionCourseInitialsAndExecutionPeriodId(infoExecutionCourse.getSigla(),
+                        infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
 
-            // We assume it's the same execution period.
-            IExecutionCourse someExecutionCourseAlreadyAssociatedWithExam = executionCourseDAO
-                    .readByExecutionCourseInitialsAndExecutionPeriodId(
-                            ((InfoExecutionCourse) infoViewExam.getInfoExecutionCourses().get(0))
-                                    .getSigla(), infoExecutionCourse.getInfoExecutionPeriod()
-                                    .getIdInternal());
+        // We assume it's the same execution period.
+        IExecutionCourse someExecutionCourseAlreadyAssociatedWithExam = executionCourseDAO
+                .readByExecutionCourseInitialsAndExecutionPeriodId(((InfoExecutionCourse) infoViewExam
+                        .getInfoExecutionCourses().get(0)).getSigla(), infoExecutionCourse
+                        .getInfoExecutionPeriod().getIdInternal());
 
-            // Obtain a mapped exam
-            IExam examFromDBToBeAssociated = null;
-            for (int i = 0; i < someExecutionCourseAlreadyAssociatedWithExam.getAssociatedExams().size(); i++) {
-                IExam exam = someExecutionCourseAlreadyAssociatedWithExam.getAssociatedExams()
-                        .get(i);
-                if (exam.getSeason().equals(infoViewExam.getInfoExam().getSeason())) {
-                    examFromDBToBeAssociated = exam;
-                }
+        // Obtain a mapped exam
+        IExam examFromDBToBeAssociated = null;
+        for (int i = 0; i < someExecutionCourseAlreadyAssociatedWithExam.getAssociatedExams().size(); i++) {
+            IExam exam = someExecutionCourseAlreadyAssociatedWithExam.getAssociatedExams().get(i);
+            if (exam.getSeason().equals(infoViewExam.getInfoExam().getSeason())) {
+                examFromDBToBeAssociated = exam;
             }
-
-            // Check that the execution course which will be associated with the
-            // exam
-            // doesn't already have an exam scheduled for the corresponding
-            // season
-            for (int i = 0; i < executionCourseToBeAssociatedWithExam.getAssociatedExams().size(); i++) {
-                IExam exam = executionCourseToBeAssociatedWithExam.getAssociatedExams().get(i);
-                if (exam.getSeason().equals(infoViewExam.getInfoExam().getSeason())) {
-                    throw new ExistingServiceException();
-                }
-            }
-
-            IExamExecutionCourse examExecutionCourse = new ExamExecutionCourse(examFromDBToBeAssociated,
-                    executionCourseToBeAssociatedWithExam);
-
-            try {
-                sp.getIPersistentExamExecutionCourse().simpleLockWrite(examExecutionCourse);
-            } catch (ExistingPersistentException ex) {
-                throw new ExistingServiceException(ex);
-            }
-
-            result = new Boolean(true);
-        } catch (ExcepcaoPersistencia ex) {
-
-            throw new FenixServiceException(ex.getMessage());
         }
 
+        // Check that the execution course which will be associated with the
+        // exam
+        // doesn't already have an exam scheduled for the corresponding
+        // season
+        for (int i = 0; i < executionCourseToBeAssociatedWithExam.getAssociatedExams().size(); i++) {
+            IExam exam = executionCourseToBeAssociatedWithExam.getAssociatedExams().get(i);
+            if (exam.getSeason().equals(infoViewExam.getInfoExam().getSeason())) {
+                throw new ExistingServiceException();
+            }
+        }
+
+        IExamExecutionCourse examExecutionCourse = DomainFactory.makeExamExecutionCourse(examFromDBToBeAssociated,
+                executionCourseToBeAssociatedWithExam);
+
+        result = new Boolean(true);
         return result;
     }
 

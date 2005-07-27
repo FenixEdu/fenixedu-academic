@@ -15,8 +15,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
-import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -54,8 +54,7 @@ public class CriarTurma implements IService {
             throw new ExistingServiceException("Duplicate Entry: " + infoTurma.getNome());
         }
 
-        ISchoolClass schoolClass = new SchoolClass();
-        sp.getITurmaPersistente().simpleLockWrite(schoolClass);
+        ISchoolClass schoolClass = DomainFactory.makeSchoolClass();
         schoolClass.setNome(infoTurma.getNome());
         schoolClass.setAnoCurricular(infoTurma.getAnoCurricular());
         

@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InterceptingRoomsServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
@@ -29,7 +30,6 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IPeriod;
 import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
-import net.sourceforge.fenixedu.domain.Period;
 import net.sourceforge.fenixedu.domain.Room;
 import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -186,8 +186,7 @@ public class EditExamNew implements IService {
                     period = (IPeriod) sp.getIPersistentPeriod().readByCalendarAndNextPeriod(examDate,
                             examDate, null);
                     if (period == null) {
-                        period = new Period();
-                        persistentPeriod.simpleLockWrite(period);
+                        period = DomainFactory.makePeriod();
                         period.setStartDate(examDate);
                         period.setEndDate(examDate);
                     }
@@ -198,8 +197,7 @@ public class EditExamNew implements IService {
                 period = (IPeriod) sp.getIPersistentPeriod().readByCalendarAndNextPeriod(examDate,
                         examDate, null);
                 if (period == null) {
-                    period = new Period();
-                    persistentPeriod.simpleLockWrite(period);
+                    period = DomainFactory.makePeriod();
                     period.setStartDate(examDate);
                     period.setEndDate(examDate);
                 }
