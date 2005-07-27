@@ -13,8 +13,10 @@ import net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits;
 import net.sourceforge.fenixedu.domain.credits.event.CreditsEvent;
 import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
 import net.sourceforge.fenixedu.domain.credits.util.InfoCreditsBuilder;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
 import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
+import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.util.PublicationArea;
 
 public class Teacher extends Teacher_Base {
@@ -25,7 +27,7 @@ public class Teacher extends Teacher_Base {
      ********************************************************************/
     
     public void addToTeacherInformationSheet(IPublication publication, PublicationArea publicationArea) {
-        DomainFactory.makePublicationTeacher(publication, this, publicationArea);
+        new PublicationTeacher(publication, this, publicationArea);
     }
     
     public void removeFromTeacherInformationSheet(IPublication publication) {

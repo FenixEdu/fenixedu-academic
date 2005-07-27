@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.log.IEnrolmentLog;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
@@ -57,7 +58,7 @@ public class Enrolment extends Enrolment_Base {
 
     private void createNewEnrolmentLog(EnrolmentAction action, PersistenceBroker arg0)
             throws PersistenceBrokerException {
-        IEnrolmentLog enrolmentLog = DomainFactory.makeEnrolmentLog();
+        IEnrolmentLog enrolmentLog = new EnrolmentLog();
         enrolmentLog.setDate(new Date());
         enrolmentLog.setAction(action);
         enrolmentLog.setCurricularCourse(this.getCurricularCourse());
@@ -271,7 +272,7 @@ public class Enrolment extends Enrolment_Base {
 
 		//There can be only one enrolmentEvaluation with Temporary State
 		if (enrolmentEvaluation == null ) {
-		    enrolmentEvaluation = DomainFactory.makeEnrolmentEvaluation();
+		    enrolmentEvaluation = new EnrolmentEvaluation();
 			enrolmentEvaluation.setEnrolment(this);
 		}
 		
@@ -310,7 +311,7 @@ public class Enrolment extends Enrolment_Base {
 		IEnrolmentEvaluation enrolmentEvaluation = getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(EnrolmentEvaluationType.NORMAL, null);
 
         if (enrolmentEvaluation == null) {
-            enrolmentEvaluation = DomainFactory.makeEnrolmentEvaluation();
+            enrolmentEvaluation = new EnrolmentEvaluation();
             enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
             enrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
 			
@@ -343,7 +344,7 @@ public class Enrolment extends Enrolment_Base {
             if (attend != null) {
 				addAttends(attend);
             } else {
-                IAttends attendToWrite = DomainFactory.makeAttends(student,executionCourse);
+                IAttends attendToWrite = new Attends(student,executionCourse);
 				addAttends(attendToWrite);
             }
         }
@@ -354,7 +355,7 @@ public class Enrolment extends Enrolment_Base {
 	public void createEnrolmentEvaluationForImprovement(IEmployee employee, IExecutionPeriod currentExecutionPeriod,
 														IStudent student) {
 		
-		IEnrolmentEvaluation enrolmentEvaluation = DomainFactory.makeEnrolmentEvaluation();
+		IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
 
         enrolmentEvaluation.setEmployee(employee);
         enrolmentEvaluation.setWhen(new Date());
@@ -398,7 +399,7 @@ public class Enrolment extends Enrolment_Base {
                 attend.setEnrolment(this);
             }
             else {
-                attend = DomainFactory.makeAttends(student, currentExecutionCourse);
+                attend = new Attends(student, currentExecutionCourse);
                 attend.setEnrolment(this);                
             }
             
