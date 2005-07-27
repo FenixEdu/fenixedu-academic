@@ -5,9 +5,9 @@ import java.util.Date;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -39,6 +39,6 @@ public void run(final Integer studentNumber, final DegreeType degreeType,
 			throw new NonExistingServiceException("exception.degree.curricular.plan.does.not.exist");
 		}
 
-		new StudentCurricularPlan(student, degreeCurricularPlan, studentCurricularPlanState, startDate);
+		DomainFactory.makeStudentCurricularPlan(student, degreeCurricularPlan, studentCurricularPlanState, startDate);
     }
 }
