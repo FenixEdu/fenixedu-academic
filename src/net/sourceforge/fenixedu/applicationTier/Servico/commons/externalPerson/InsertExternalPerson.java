@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.ExternalPerson;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IExternalPerson;
 import net.sourceforge.fenixedu.domain.IWorkLocation;
 import net.sourceforge.fenixedu.domain.WorkLocation;
@@ -14,8 +14,8 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class InsertExternalPerson implements IService {
 
-    public IExternalPerson run(String name, String sex, String address, Integer workLocationID, String phone,
-            String mobile, String homepage, String email) throws FenixServiceException,
+    public IExternalPerson run(String name, String sex, String address, Integer workLocationID,
+            String phone, String mobile, String homepage, String email) throws FenixServiceException,
             ExcepcaoPersistencia {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -34,9 +34,8 @@ public class InsertExternalPerson implements IService {
         int nextID = Integer.parseInt(lastDocumentIdNumber) + 1;
         String documentIdNumber = String.valueOf(nextID);
 
-        IExternalPerson externalPerson = new ExternalPerson(name, Gender.valueOf(sex), address, phone, mobile, homepage, email, documentIdNumber, storedWorkLocation);        
-        
-        return externalPerson;
-
+        return DomainFactory.makeExternalPerson(name, Gender.valueOf(sex), address, phone, mobile,
+                homepage, email, documentIdNumber, storedWorkLocation);
     }
+
 }
