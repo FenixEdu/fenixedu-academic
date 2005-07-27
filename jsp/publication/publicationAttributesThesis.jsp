@@ -37,26 +37,6 @@
 	
 	<tr>
 		<td>
-			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.language" />
-		</td>
-		<td>
-			<html:text size="20" property="language"/>
-		</td>
-	</tr>
-	
-	<tr>
-		<td>
-			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.format" />
-		</td>
-		<td>
-			<html:select property="format">
-				<html:options collection="formatList" property="format" />
-			</html:select>
-		</td>
-	</tr>
-	
-	<tr>
-		<td>
 			<bean:define id="valueMonth" name="insertPublicationForm" property="infoPublicationTypeId"/>
 			<logic:equal name="valueMonth" value="3">
 				<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.monthInith" />
@@ -117,6 +97,26 @@
 
 	
 	<%-- NON-MANDATORY FIELDS --%>
+
+	<tr>
+		<td>
+			<bean:message key="message.publicationAttribute.language" />
+		</td>
+		<td>
+			<html:text size="20" property="language"/>
+		</td>
+	</tr>
+	
+	<tr>
+		<td>
+			<bean:message key="message.publicationAttribute.format" />
+		</td>
+		<td>
+			<html:select property="format">
+				<html:options collection="formatList" property="format" />
+			</html:select>
+		</td>
+	</tr>
 
 	<tr>
 		<td>

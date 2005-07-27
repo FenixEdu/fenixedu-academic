@@ -64,35 +64,6 @@
 	
 	<tr>
 		<td>
-			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.language" />
-		</td>
-		<td>
-			<html:text size="20" property="language"/>
-		</td>
-	</tr>
-	
-	<tr>
-		<td>
-			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.format" />
-		</td>
-		<td>
-			<html:select property="format">
-				<html:options collection="formatList" property="format" />
-			</html:select>
-		</td>
-	</tr>
-	
-	<tr>
-		<td>
-			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.observations" />
-		</td>
-		<td>
-			<html:text size="20" property="observation"/>
-		</td>
-	</tr>
-	
-	<tr>
-		<td>
 			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.number" />
 		</td>
 		<td>
@@ -138,6 +109,36 @@
 	
 	
 	<%-- NON-MANDATORY FIELDS --%>
+	
+	<tr>
+		<td>
+			<bean:message key="message.publicationAttribute.language" />
+		</td>
+		<td>
+			<html:text size="20" property="language"/>
+		</td>
+	</tr>
+	
+	<tr>
+		<td>
+			<bean:message key="message.publicationAttribute.format" />
+		</td>
+		<td>
+			<html:select property="format">
+				<html:options collection="formatList" property="format" />
+			</html:select>
+		</td>
+	</tr>
+	
+	<tr>
+		<td>
+			<bean:message key="message.publicationAttribute.observations" />
+		</td>
+		<td>
+			<html:text size="20" property="observation"/>
+		</td>
+	</tr>
+	
 	<tr>
 		<td>
 			<bean:message key="message.publicationAttribute.editor" />

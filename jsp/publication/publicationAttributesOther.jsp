@@ -26,24 +26,6 @@
 	
 	<tr>
 		<td>
-			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.language" />
-		</td>
-		<td>
-			<html:text size="20" property="language"/>
-		</td>
-	</tr>
-	
-	<tr>
-		<td>
-			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.editor" />
-		</td>
-		<td>
-			<html:text size="30" property="editor"/>
-		</td>
-	</tr>
-	
-	<tr>
-		<td>
 			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.numberPages" />
 		</td>
 		<td>
@@ -53,30 +35,80 @@
 	
 	<tr>
 		<td>
-			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.format" />
+			<bean:message key="message.publicationAttribute.required" />
+			<bean:define id="valueMonth" name="insertPublicationForm" property="infoPublicationTypeId"/>
+			<logic:equal name="valueMonth" value="3">
+				<bean:message key="message.publicationAttribute.monthInith" />
+			</logic:equal>
+			<logic:notEqual name="valueMonth" value="3">
+				<bean:message key="message.publicationAttribute.month" />
+			</logic:notEqual>
 		</td>
 		<td>
-			<html:select property="format">
-				<html:options collection="formatList" property="format" />
+			<html:select property="month">
+				<logic:iterate id="month" name="monthList" >
+					<html:option value='<%=month.toString()%>'>
+						<bean:write name="month" />		
+					</html:option>
+				</logic:iterate>
 			</html:select>
 		</td>
 	</tr>
-	
-	
-	
-	
 
-	
+	<tr>
+		<td>
+			<bean:message key="message.publicationAttribute.required" />
+			<bean:define id="valueYear" name="insertPublicationForm" property="infoPublicationTypeId"/>
+			<logic:equal name="valueYear" value="3">
+				<bean:message key="message.publicationAttribute.yearInith" />
+			</logic:equal>
+			<logic:notEqual name="valueYear" value="3">
+				<bean:message key="message.publicationAttribute.year" />
+			</logic:notEqual>
+		</td>
+		<td>
+			<html:text size="9" property="year"/>
+		</td>
+	</tr>
 	
 	
 	<%-- NON-MANDATORY FIELDS --%>
 
 	<tr>
 		<td>
+			<bean:message key="message.publicationAttribute.language" />
+		</td>
+		<td>
+			<html:text size="20" property="language"/>
+		</td>
+	</tr>
+	
+	<tr>
+		<td>
+			<bean:message key="message.publicationAttribute.editor" />
+		</td>
+		<td>
+			<html:text size="30" property="editor"/>
+		</td>
+	</tr>
+	
+	<tr>
+		<td>
 			<bean:message key="message.publicationAttribute.editorCity" />
 		</td>
 		<td>
 			<html:text size="20" property="editorCity"/>
+		</td>
+	</tr>
+	
+	<tr>
+		<td>
+			<bean:message key="message.publicationAttribute.format" />
+		</td>
+		<td>
+			<html:select property="format">
+				<html:options collection="formatList" property="format" />
+			</html:select>
 		</td>
 	</tr>
 	
@@ -116,38 +148,3 @@
 		</td>
 	</tr>
 
-	<tr>
-		<td>
-			<bean:define id="valueMonth" name="insertPublicationForm" property="infoPublicationTypeId"/>
-			<logic:equal name="valueMonth" value="3">
-				<bean:message key="message.publicationAttribute.monthInith" />
-			</logic:equal>
-			<logic:notEqual name="valueMonth" value="3">
-				<bean:message key="message.publicationAttribute.month" />
-			</logic:notEqual>
-		</td>
-		<td>
-			<html:select property="month">
-				<logic:iterate id="month" name="monthList" >
-					<html:option value='<%=month.toString()%>'>
-						<bean:write name="month" />		
-					</html:option>
-				</logic:iterate>
-			</html:select>
-		</td>
-	</tr>
-
-	<tr>
-		<td>
-			<bean:define id="valueYear" name="insertPublicationForm" property="infoPublicationTypeId"/>
-			<logic:equal name="valueYear" value="3">
-				<bean:message key="message.publicationAttribute.yearInith" />
-			</logic:equal>
-			<logic:notEqual name="valueYear" value="3">
-				<bean:message key="message.publicationAttribute.year" />
-			</logic:notEqual>
-		</td>
-		<td>
-			<html:text size="9" property="year"/>
-		</td>
-	</tr>

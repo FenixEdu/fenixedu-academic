@@ -28,28 +28,10 @@
 	
 	<tr>
 		<td>
-			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.language" />
-		</td>
-		<td>
-			<html:text size="20" property="language"/>
-		</td>
-	</tr>
-	
-	<tr>
-		<td>
 			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.editor" />
 		</td>
 		<td>
 			<html:text size="30" property="editor"/>
-		</td>
-	</tr>
-	
-	<tr>
-		<td>
-			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.country" />
-		</td>
-		<td>
-			<html:text size="20" property="country"/>
 		</td>
 	</tr>
 	
@@ -68,59 +50,6 @@
 		</td>
 		<td>
 			<html:text size="3" property="lastPage"/>
-		</td>
-	</tr>
-	
-	<tr>
-		<td>
-			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.volume" />
-		</td>
-		<td>
-			<html:text size="20" property="volume"/>
-		</td>
-	</tr>
-	
-	<tr>
-		<td>
-			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.format" />
-		</td>
-		<td>
-			<html:select property="format">
-				<html:options collection="formatList" property="format" />
-			</html:select>
-		</td>
-	</tr>
-	
-	<tr>
-		<td>
-			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.scope" />
-		</td>
-		<td>
-			<html:select property="scope">
-				<logic:iterate id="scopes" name="scopeList" >
-					<html:option value='<%=scopes.toString()%>'>
-						<bean:write name="scopes" />
-					</html:option>
-				</logic:iterate>
-			</html:select>
-		</td>
-	</tr>
-	
-	<tr>
-		<td>
-			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.criticizedAuthor" />
-		</td>
-		<td>
-			<html:text size="60" property="criticizedAuthor"/>
-		</td>
-	</tr>
-	
-	<tr>
-		<td>
-			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.title" />
-		</td>
-		<td>
-			<html:text size="20" property="title"/>
 		</td>
 	</tr>
 	
@@ -162,6 +91,77 @@
 	
 	
 	<%-- NON-MANDATORY FIELDS --%>
+	
+	<tr>
+		<td>
+			<bean:message key="message.publicationAttribute.language" />
+		</td>
+		<td>
+			<html:text size="20" property="language"/>
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<bean:message key="message.publicationAttribute.country" />
+		</td>
+		<td>
+			<html:text size="20" property="country"/>
+		</td>
+	</tr>
+	
+	<tr>
+		<td>
+			<bean:message key="message.publicationAttribute.volume" />
+		</td>
+		<td>
+			<html:text size="20" property="volume"/>
+		</td>
+	</tr>
+	
+	<tr>
+		<td>
+			<bean:message key="message.publicationAttribute.format" />
+		</td>
+		<td>
+			<html:select property="format">
+				<html:options collection="formatList" property="format" />
+			</html:select>
+		</td>
+	</tr>
+	
+	<tr>
+		<td>
+			<bean:message key="message.publicationAttribute.scope" />
+		</td>
+		<td>
+			<html:select property="scope">
+				<logic:iterate id="scopes" name="scopeList" >
+					<html:option value='<%=scopes.toString()%>'>
+						<bean:write name="scopes" />
+					</html:option>
+				</logic:iterate>
+			</html:select>
+		</td>
+	</tr>
+	
+	<tr>
+		<td>
+			<bean:message key="message.publicationAttribute.criticizedAuthor" />
+		</td>
+		<td>
+			<html:text size="60" property="criticizedAuthor"/>
+		</td>
+	</tr>
+	
+	<tr>
+		<td>
+			<bean:message key="message.publicationAttribute.title" />
+		</td>
+		<td>
+			<html:text size="20" property="title"/>
+		</td>
+	</tr>
 
 	<tr>
 		<td>

@@ -71,9 +71,12 @@
 		</td>
 	</tr>
 	
+	
+	<%-- NON-MANDATORY FIELDS --%>
+
 	<tr>
 		<td>
-			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.country" />
+			<bean:message key="message.publicationAttribute.country" />
 		</td>
 		<td>
 			<html:text size="20" property="country"/>
@@ -82,7 +85,7 @@
 	
 	<tr>
 		<td>
-			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.numberPages" />
+			<bean:message key="message.publicationAttribute.numberPages" />
 		</td>
 		<td>
 			<html:text size="20" property="numberPages"/>
@@ -91,7 +94,7 @@
 	
 	<tr>
 		<td>
-			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.format" />
+			<bean:message key="message.publicationAttribute.format" />
 		</td>
 		<td>
 			<html:select property="format">
@@ -99,9 +102,6 @@
 			</html:select>
 		</td>
 	</tr>
-	
-	
-	<%-- NON-MANDATORY FIELDS --%>
 
 	<tr>
 		<td>
