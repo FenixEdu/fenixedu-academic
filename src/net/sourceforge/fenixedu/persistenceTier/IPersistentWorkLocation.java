@@ -11,5 +11,5 @@ import net.sourceforge.fenixedu.domain.IWorkLocation;
 public interface IPersistentWorkLocation extends IPersistentObject {
     public IWorkLocation readByName(String name) throws ExcepcaoPersistencia;
 
-    public List readAll() throws ExcepcaoPersistencia;
+    public List<IWorkLocation> readAll() throws ExcepcaoPersistencia;
 }
