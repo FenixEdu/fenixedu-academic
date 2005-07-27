@@ -20,10 +20,6 @@ import net.sourceforge.fenixedu.util.DataIndisponivel;
  */
 public class PessoaRelacional implements IPessoaPersistente {
 
-    /** Cria uma nova instância de PessoaRelacional */
-    public PessoaRelacional() {
-    }
-
     /**
      * Altera um registo de Person
      * 
@@ -236,67 +232,6 @@ public class PessoaRelacional implements IPessoaPersistente {
     }
 
     /**
-     * Le os cargos de Person com a chave primaria
-     * 
-     * @return lista de cargos se sucedeu, null caso contrario
-     */
-    public List lerCargos(int chavePessoa) {
-        List listaCargos = null;
-
-        try {
-            PreparedStatement sql = UtilRelacional
-                    .prepararComando("SELECT ass_CARGO.cargo FROM ass_CARGO "
-                            + "LEFT JOIN ass_PESSOA_CARGO ON ass_CARGO.chaveCargo=ass_PESSOA_CARGO.chaveCargo "
-                            + "WHERE ass_PESSOA_CARGO.chavePessoa = ?");
-            sql.setInt(1, chavePessoa);
-
-            ResultSet resultado = sql.executeQuery();
-            listaCargos = new ArrayList();
-            while (resultado.next()) {
-                listaCargos.add(resultado.getString("cargo"));
-            }
-            sql.close();
-        } catch (SQLException SQLe) {
-            System.out.println("PessoaRelacional.lerCargos: " + SQLe.toString());
-        }
-        return listaCargos;
-    } /* lerCargos */
-
-    /** Le todos os roles associado à Person */
-    public List lerPapelPessoa(int codigoInterno) {
-        List listaRoles = null;
-
-        try {
-            PreparedStatement sql = UtilRelacional
-                    .prepararComando("SELECT * FROM PERSON_ROLE WHERE KEY_PERSON = ?");
-            sql.setInt(1, codigoInterno);
-
-            ResultSet resultadoQuery = sql.executeQuery();
-
-            // query para buscar os roles
-            PreparedStatement sql2 = UtilRelacional
-                    .prepararComando("SELECT * FROM ROLE WHERE ID_INTERNAL = ?");
-            while (resultadoQuery.next()) {
-                sql2.setInt(1, resultadoQuery.getInt("KEY_ROLE"));
-
-                ResultSet resultadoQuery2 = sql2.executeQuery();
-
-                listaRoles = new ArrayList();
-                while (resultadoQuery2.next()) {
-                    listaRoles.add(new Integer(resultadoQuery2.getInt("ID_INTERNAL")));
-                }
-            }
-            sql2.close();
-            sql.close();
-        } catch (Exception e) {
-            System.out.println("PessoaRelacional.lerPapelPessoa: " + e.toString());
-            return null;
-        }
-        return listaRoles;
-
-    } /* lerPapelPessoa */
-
-    /**
      * Le um registo de Person com a chave primaria
      * 
      * @return Person se sucedeu, null caso contrario
@@ -491,8 +426,8 @@ public class PessoaRelacional implements IPessoaPersistente {
                     .getString("DOCUMENT_ID_NUMBER"), IDDocumentType.valueOf(resultado
                     .getString("TYPE_ID_DOCUMENT")), resultado
                     .getString("EMISSION_LOCATION_OF_DOCUMENT_ID"), emissionDate, experationDate,
-                    resultado.getString("NAME"), Gender.valueOf(resultado.getString("SEX")), MaritalStatus
-                            .valueOf(resultado.getString("MARITAL_STATUS")), birthDate, resultado
+                    resultado.getString("NAME"), Gender.valueOf(resultado.getString("SEX")),
+                    MaritalStatus.valueOf(resultado.getString("MARITAL_STATUS")), birthDate, resultado
                             .getString("NAME_OF_FATHER"), resultado.getString("NAME_OF_MOTHER"),
                     resultado.getString("NATIONALITY"), resultado.getString("PARISH_OF_BIRTH"),
                     resultado.getString("DISTRICT_SUBDIVISION_OF_BIRTH"), resultado
@@ -543,4 +478,5 @@ public class PessoaRelacional implements IPessoaPersistente {
         }
         return cargos;
     }
+
 }

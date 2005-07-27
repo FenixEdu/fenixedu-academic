@@ -17,10 +17,6 @@ public interface IPessoaPersistente {
 
     public boolean escreverPapelPessoa(IPerson pessoa, int chaveRole);
 
-    public List lerCargos(int chavePessoa);
-
-    public List lerPapelPessoa(int codigoInterno);
-
     public Person lerPessoa(int codigoInterno);
 
     public Person lerPessoa(String username);
