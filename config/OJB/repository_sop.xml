@@ -104,6 +104,22 @@
 		<inverse-foreignkey field-ref="keyRoom"/>
 	  </collection-descriptor>
 
+      <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+		name="examStudentRooms" 
+		element-class-ref="net.sourceforge.fenixedu.domain.ExamStudentRoom"
+		
+		>
+		<inverse-foreignkey field-ref="keyRoom"/>
+	  </collection-descriptor>
+
+      <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+		name="inquiriesRoom" 
+		element-class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom"
+		
+		>
+		<inverse-foreignkey field-ref="keyRoom"/>
+	  </collection-descriptor>
+
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.SchoolClass -->
