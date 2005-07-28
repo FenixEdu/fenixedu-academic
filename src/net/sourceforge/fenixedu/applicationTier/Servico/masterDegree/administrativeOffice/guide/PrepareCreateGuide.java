@@ -11,18 +11,19 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingContributorServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GraduationType;
-import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.IContributor;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.IPrice;
 import net.sourceforge.fenixedu.domain.IStudent;
@@ -51,7 +52,6 @@ public class PrepareCreateGuide implements IService {
         ISuportePersistente sp = null;
         IContributor contributor = null;
         IMasterDegreeCandidate masterDegreeCandidate = null;
-        IGuide guide = new Guide();
         InfoGuide infoGuide = new InfoGuideWithPersonAndExecutionDegreeAndContributor();
 
         // Read the Contributor
@@ -128,16 +128,14 @@ public class PrepareCreateGuide implements IService {
                 throw new FenixServiceException("Unkown Application Price");
             }
 
-            guide.setContributor(contributor);
-            guide.setPerson(masterDegreeCandidate.getPerson());
-            guide.setYear(year);
-            guide.setTotal(price.getPrice());
+            infoGuide.setInfoContributor(InfoContributor.newInfoFromDomain(contributor));
+            infoGuide.setInfoPerson(InfoPerson.newInfoFromDomain(masterDegreeCandidate.getPerson()));
+            infoGuide.setYear(year);
+            infoGuide.setTotal(price.getPrice());
 
-            guide.setCreationDate(calendar.getTime());
-            guide.setVersion(new Integer(1));
-            guide.setExecutionDegree(executionDegree);
-
-            infoGuide = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide);
+            infoGuide.setCreationDate(calendar.getTime());
+            infoGuide.setVersion(new Integer(1));
+            infoGuide.setInfoExecutionDegree(InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan.newInfoFromDomain(executionDegree));
 
             InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
             infoGuideEntry.setDescription(price.getDescription());
@@ -147,12 +145,11 @@ public class PrepareCreateGuide implements IService {
             infoGuideEntry.setPrice(price.getPrice());
             infoGuideEntry.setQuantity(new Integer(1));
 
-            List infoGuideEntries = new ArrayList();
+            List<InfoGuideEntry> infoGuideEntries = new ArrayList<InfoGuideEntry>();
             infoGuideEntries.add(infoGuideEntry);
 
             infoGuide.setInfoGuideEntries(infoGuideEntries);
             infoGuide.setGuideRequester(GuideRequester.CANDIDATE);
-
         }
 
         if (requesterType.equals(GuideRequester.STUDENT.name())) {
@@ -171,11 +168,6 @@ public class PrepareCreateGuide implements IService {
                         IStudentCurricularPlan scp = (IStudentCurricularPlan) arg0;
                         return scp.getDegreeCurricularPlan().getIdInternal().equals(degreeCurricularPlanID);
                     }});
-                //TODO ver bem isto
-               
-//                List studentCurricularPlanList = sp.getIStudentCurricularPlanPersistente()
-//                        .readAllByStudentAndDegreeCurricularPlan(student,
-//                                executionDegree.getDegreeCurricularPlan());
 
                 // check if student curricular plan contains selected execution
                 // degree
@@ -193,16 +185,14 @@ public class PrepareCreateGuide implements IService {
             if (student == null)
                 throw new NonExistingServiceException("O Aluno", null);
 
-            guide.setContributor(contributor);
-            guide.setPerson(student.getPerson());
-            guide.setYear(year);
+            infoGuide.setInfoContributor(InfoContributor.newInfoFromDomain(contributor));
+            infoGuide.setInfoPerson(InfoPerson.newInfoFromDomain(student.getPerson()));
+            infoGuide.setYear(year);
 
-            guide.setCreationDate(calendar.getTime());
-            guide.setVersion(new Integer(1));
+            infoGuide.setCreationDate(calendar.getTime());
+            infoGuide.setVersion(new Integer(1));
 
-            guide.setExecutionDegree(executionDegree);
-
-            infoGuide = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide);
+            infoGuide.setInfoExecutionDegree(InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan.newInfoFromDomain(executionDegree));
 
             infoGuide.setInfoGuideEntries(new ArrayList());
             infoGuide.setGuideRequester(GuideRequester.STUDENT);
