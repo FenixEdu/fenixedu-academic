@@ -1,42 +1,97 @@
-<%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
-<%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
-<%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
-<%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
+<%@ page language="java" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<ft:tilesView definition="definition.degreeAdministrativeOffice.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/DegreeAdministrativeOfficeResources" var="bundle"/>
-	<h:form>
-		<h:outputText value="#{bundle['label.student.number']}"/>:
-		<h:inputText value="#{changeDegree.studentNumber}" onchange="this.form.submit();"/>
-	</h:form>
+<logic:notPresent name="activeInfoStudentCurricularPlan">
+	<logic:messagesPresent message="true">
+		<html:messages id="message" message="true">
+			<span class="error"><bean:write name="message"/></span>
+		</html:messages>
+	</logic:messagesPresent>
 
-	<br />
+	<html:form action="/changeDegree" focus="studentNumber">
+		<html:hidden property="method" value="selectStudent"/>
 
-	<c:if test="${changeDegree.studentNumber != null}">
-		<br/>
-		<h:outputText value="#{changeDegree.infoStudent.infoPerson.nome}"/>
+		<bean:message key="label.student.number"/>:
+		<html:text size="5" property="studentNumber"/>
+		<html:submit><bean:message key="button.select"/></html:submit>
+	</html:form>
+</logic:notPresent>
+
+<logic:present name="activeInfoStudentCurricularPlan">
+	<html:form action="/changeDegree" focus="executionDegreeToChangeTo">
+		<html:hidden property="method" value="confirm"/>
+		<html:hidden property="studentNumber"/>
+
+		<bean:message key="label.student.number"/>:
+		<html:text disabled="true" size="5" property="studentNumber"/>
+
 		<br />
-		<h:outputText value="#{bundle['label.student.curricular.plan']}"/>
 		<br />
-		<h:panelGrid columns="2">
-			<h:outputText value="#{bundle['label.student.curricular.plan.state']}"/>
-			<h:outputText value="#{changeDegree.activeInfoStudentCurricularPlan.currentState}" />
-			<h:outputText value="#{bundle['label.degree.name']}"/>
-			<h:outputText value="#{changeDegree.activeInfoStudentCurricularPlan.infoDegreeCurricularPlan.infoDegree.nome}" />
-		</h:panelGrid>
-		<br/>
-		<h:dataTable value="#{changeDegree.enrolments}" var="enrolment">
-			<h:column>
-				<h:panelGrid columns="6">
-					<h:outputText value="#{enrolment.infoExecutionPeriod.infoExecutionYear.year}" />
-					<h:outputText value="#{enrolment.infoExecutionPeriod.semester}" />
-					<h:outputText value="#{enrolment.infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.sigla}" />
-					<h:outputText value="#{enrolment.infoCurricularCourse.code}" />
-					<h:outputText value="#{enrolment.infoCurricularCourse.name}" />
-					<h:outputText value="#{enrolment.infoEnrolmentEvaluation.grade}" />
-				</h:panelGrid>
-			</h:column>
-		</h:dataTable>
-	</c:if>
 
-</ft:tilesView>
+		<table>
+			<tr>
+				<td>
+					<bean:message key="label.student.curricular.plan"/>
+				</td>
+				<td>
+					<bean:write name="activeInfoStudentCurricularPlan" property="infoStudent.infoPerson.nome"/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<bean:message key="label.student.curricular.plan.state"/>
+				</td>
+				<td>
+					<bean:write name="activeInfoStudentCurricularPlan" property="currentState"/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<bean:message key="label.degree.name"/>
+				</td>
+				<td>
+					<bean:write name="activeInfoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.nome"/>
+				</td>
+			</tr>
+		</table>
+
+		<br/>
+		<br/>
+
+		<logic:messagesPresent message="true">
+			<html:messages id="message" message="true">
+				<span class="error"><bean:write name="message"/></span>
+			</html:messages>
+		</logic:messagesPresent>
+		<table>
+			<logic:iterate id="infoEnrolment" name="activeInfoStudentCurricularPlan" property="infoEnrolments">
+				<bean:define id="infoEnrolmentId" name="infoEnrolment" property="idInternal" type="java.lang.Integer"/>
+				<tr>
+					<td><bean:write name="infoEnrolment" property="infoExecutionPeriod.infoExecutionYear.year"/></td>
+					<td><bean:write name="infoEnrolment" property="infoExecutionPeriod.semester"/></td>
+					<td><bean:write name="infoEnrolment" property="infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.sigla"/></td>
+					<td><bean:write name="infoEnrolment" property="infoCurricularCourse.code"/></td>
+					<td><bean:write name="infoEnrolment" property="infoCurricularCourse.name"/></td>
+					<td><bean:write name="infoEnrolment" property="infoEnrolmentEvaluation.grade"/></td>
+					<td>
+						<html:multibox property="enrolementsToTransfer" value="<%= infoEnrolmentId.toString() %>"/><bean:message key="label.transfer"/>
+						<html:multibox property="enrolementsToMaintain" value="<%= infoEnrolmentId.toString() %>"/><bean:message key="label.maintain"/>
+						<html:multibox property="enrolementsToDelete" value="<%= infoEnrolmentId.toString() %>"/><bean:message key="label.delete"/>
+					</td>
+				</tr>
+			</logic:iterate>
+		</table>
+
+		<br />
+		<bean:message key="label.change.degree"/>
+		<html:select property="executionDegreeToChangeTo">
+			<html:options collection="availableExecutionDegrees"  labelProperty="label" property="value"/>
+		</html:select>
+
+		<br />
+		<br />
+		<html:submit><bean:message key="button.change.degree"/></html:submit>
+	</html:form>
+</logic:present>

@@ -46,12 +46,6 @@
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.gratuity.UpdateGratuitySituations</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
-
-	<managed-bean>
-		<managed-bean-name>changeDegree</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.degreeAdministrativeOffice.ChangeDegree</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
 	
 	<!-- NAVIGATION RULES -->
 	

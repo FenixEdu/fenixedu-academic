@@ -8590,4 +8590,13 @@
             <chain name="StudentOrMasterDegreeAdministrativeOfficeAuthorization"/>
         </filterChains>
     </service>
+    <service>
+    	<name>ChangeDegree</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.ChangeDegree</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="StudentOrMasterDegreeAdministrativeOfficeAuthorization"/>
+        </filterChains>
+    </service>
 </serviceDefinitions>

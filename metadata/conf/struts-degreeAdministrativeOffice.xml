@@ -142,7 +142,16 @@
         	<form-property name="areaOfAreaCode" type="java.lang.String" /> 
 			<form-property name="studentNumber" type="java.lang.String"/>
       </form-bean>
-		
+
+		<form-bean name="changeDegreeForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+			<form-property name="studentNumber" type="java.lang.String"/>
+			<form-property name="executionDegreeToChangeTo" type="java.lang.String"/>
+			<form-property name="enrolementsToTransfer" type="java.lang.String[]"/>
+			<form-property name="enrolementsToMaintain" type="java.lang.String[]"/>
+			<form-property name="enrolementsToDelete" type="java.lang.String[]"/>
+		</form-bean>
+
 	</form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -365,6 +374,18 @@
 			input="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare&amp;page=0"
        		parameter="method">
        		<forward name="show-report" path="view-curriculum-historic"/>
+       	</action>
+
+       	<!-- ==================== Change Degree ================== -->
+       	<action path="/changeDegree"
+       			type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.ChangeDegreeDA"
+				input="/changeDegree.do?method=prepare&amp;page=0"
+				name="changeDegreeForm"
+    	   		scope="request"
+       			parameter="method">
+       		<forward name="showForm" path="change-degree"/>
+       		<forward name="showConfirmationScreen" path="confirm-change-degree"/>
+			<forward name="showSucessPage" path="sucess-change-degree"/>
        	</action>
 
 	</action-mappings>

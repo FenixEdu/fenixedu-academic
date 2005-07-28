@@ -51,6 +51,11 @@ public class InfoEnrolment extends InfoObject {
 
     private String enrollmentTypeResourceKey;
 
+    // this variable is used for in the interface for changing a students degree
+    // check net.sourceforge.fenixedu.presentationTier.backBeans.degreeAdministrativeOffice.ChangeDegree.EnrolementOperation
+    // for possible valies
+    private String changeDegreeOperation;
+
     public InfoEnrolment() {
     }
 
@@ -340,6 +345,15 @@ public class InfoEnrolment extends InfoObject {
     public void setInfoEquivalenceEnrolmentEvaluation(
             InfoEnrolmentEvaluation infoEquivalenceEnrolmentEvaluation) {
         this.infoEquivalenceEnrolmentEvaluation = infoEquivalenceEnrolmentEvaluation;
+    }
+
+    public String getChangeDegreeOperation() {
+        return changeDegreeOperation;
+    }
+
+    public void setChangeDegreeOperation(String changeDegreeOperation) {
+        System.out.println("Setting enrolement operation.");
+        this.changeDegreeOperation = changeDegreeOperation;
     }
 
 }

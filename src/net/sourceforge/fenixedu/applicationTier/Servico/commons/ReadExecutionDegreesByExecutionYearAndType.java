@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -39,6 +40,22 @@ public class ReadExecutionDegreesByExecutionYearAndType implements IService {
         return getInfoExecutionDegrees(executionDegrees);
     }
 
+    public List run(final DegreeType typeOfCourse) throws ExcepcaoPersistencia {
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
+
+        final IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
+        final List<IExecutionDegree> executionDegrees = executionYear.getExecutionDegrees();
+        final List<InfoExecutionDegree> infoExecutionDegrees = new ArrayList();
+        for (final IExecutionDegree executionDegree : executionDegrees) {
+            final IDegree degree = executionDegree.getDegreeCurricularPlan().getDegree();
+            if (degree.getTipoCurso().equals(typeOfCourse)) {
+                infoExecutionDegrees.add(getInfoExecutionDegree(executionDegree));
+            }
+        }
+        return infoExecutionDegrees;
+    }
+
     public List run(IDegree degree, IExecutionYear executionYear, String tmp)
             throws ExcepcaoPersistencia {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -53,8 +70,7 @@ public class ReadExecutionDegreesByExecutionYearAndType implements IService {
         final List infoExecutionDegrees = new ArrayList(executionDegrees.size());
         for (int i = 0; i < executionDegrees.size(); i++) {
             final IExecutionDegree executionDegree = (IExecutionDegree) executionDegrees.get(i);
-            final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
-                    .newInfoFromDomain(executionDegree);
+            final InfoExecutionDegree infoExecutionDegree = getInfoExecutionDegree(executionDegree);
 
             infoExecutionDegree.setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan
                     .newInfoFromDomain(executionDegree.getDegreeCurricularPlan()));
@@ -65,6 +81,19 @@ public class ReadExecutionDegreesByExecutionYearAndType implements IService {
             infoExecutionDegrees.add(infoExecutionDegree);
         }
         return infoExecutionDegrees;
+    }
+
+    private InfoExecutionDegree getInfoExecutionDegree(final IExecutionDegree executionDegree) {
+            final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
+                    .newInfoFromDomain(executionDegree);
+
+            infoExecutionDegree.setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan
+                    .newInfoFromDomain(executionDegree.getDegreeCurricularPlan()));
+
+            infoExecutionDegree.getInfoDegreeCurricularPlan().setInfoDegree(
+                    InfoDegree.newInfoFromDomain(executionDegree.getDegreeCurricularPlan().getDegree()));
+
+            return infoExecutionDegree;
     }
 
 }
