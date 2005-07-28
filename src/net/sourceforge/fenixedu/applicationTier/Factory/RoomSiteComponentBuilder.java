@@ -17,6 +17,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
@@ -39,6 +41,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import net.sourceforge.fenixedu.util.CalendarUtil;
 
 /**
  * @author João Mota
@@ -69,11 +72,12 @@ public class RoomSiteComponentBuilder {
 
     }
 
-    /* TODO (rspl): alterar as aulas a ler e o dia da semana */
+    // TODO (rspl): alterar as aulas a ler e o dia da semana
+    // FIXME duplicated code: this method is (almost?) identical to ReadLessonsAndExamsInWeekAndRoom.run
     private ISiteComponent getInfoSiteRoomTimeTable(InfoSiteRoomTimeTable component, Calendar day,
             IRoom room) {
 
-        List infoShowOccupations = new ArrayList();
+        List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
@@ -90,8 +94,8 @@ public class RoomSiteComponentBuilder {
             endDay.add(Calendar.DATE, 6);
             Period weekPeriod = new Period(day, endDay);
 
-            Period lessonsPeriod = calculateLessonsSeason(executionPeriod);
-            if (lessonsPeriod.intersectPeriods(weekPeriod)) {
+            InfoPeriod lessonsInfoPeriod = calculateLessonsSeason(executionPeriod);
+            if (this.intersectPeriods(day, endDay,lessonsInfoPeriod)) {
                 //adicionar as aulas
                 List lessonList = lessonDAO.readByRoomAndExecutionPeriod(room.getIdInternal(), executionPeriod.getIdInternal());
                 Iterator iterator = lessonList.iterator();
@@ -99,8 +103,11 @@ public class RoomSiteComponentBuilder {
                 while (iterator.hasNext()) {
                     ILesson aula = (ILesson) iterator.next();
                     IRoomOccupation roomOccupation = aula.getRoomOccupation();
+                    
                     IPeriod period = roomOccupation.getPeriod();
-                    if (period.intersectPeriods(weekPeriod)) {
+                    InfoPeriod infoPeriod = InfoPeriod.newInfoFromDomain(period);
+                    
+                    if (this.intersectPeriods(day, endDay, infoPeriod)) {
 
                         boolean add = true;
                         if ((roomOccupation.getFrequency().intValue() == RoomOccupation.QUINZENAL)
@@ -115,7 +122,7 @@ public class RoomSiteComponentBuilder {
                             dayOfLesson.add(Calendar.DATE, roomOccupation.getDayOfWeek().getDiaSemana()
                                     .intValue()
                                     - Calendar.MONDAY);
-                            if (!period.intersectPeriods(new Period(dayOfLesson, dayOfLesson))) {
+                            if (!this.intersectPeriods(dayOfLesson, dayOfLesson, infoPeriod)) {
                                 add = false;
                             }
                         }
@@ -134,9 +141,6 @@ public class RoomSiteComponentBuilder {
                                     .getRoomOccupation().getRoom());
                             infoRoomOccupation.setInfoRoom(infoRoom);
                             infoLesson.setInfoRoomOccupation(infoRoomOccupation);
-
-//                            shift.setAssociatedLessons(new ArrayList(1));
-//                            shift.getAssociatedLessons().add(infoLesson);
 
                             IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
                             InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
@@ -172,8 +176,19 @@ public class RoomSiteComponentBuilder {
 
         return component;
     }
+    
+    private boolean intersectPeriods(Calendar startDate, Calendar endDate, InfoPeriod secondPeriod) {
+        while (secondPeriod != null) {
+            if (CalendarUtil.intersectDates(startDate, endDate, secondPeriod
+                    .getStartDate(), secondPeriod.getEndDate())) {
+                return true;
+            }
+            secondPeriod = secondPeriod.getNextPeriod();
+        }
+        return false;
+    }
 
-    private Period calculateLessonsSeason(IExecutionPeriod executionPeriod) throws Exception {
+    private InfoPeriod calculateLessonsSeason(IExecutionPeriod executionPeriod) throws Exception {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
@@ -212,7 +227,7 @@ public class RoomSiteComponentBuilder {
                 }
 
             }
-            return new Period(startSeason1, endSeason2);
+            return new InfoPeriod(startSeason1, endSeason2);
         } catch (Exception e) {
             throw new FenixServiceException("Error calculating exams season");
         }
