@@ -20,6 +20,14 @@ public class InfoPeriod extends InfoObject {
 
     protected InfoPeriod nextPeriod;
 
+    public InfoPeriod() {
+    }
+
+    public InfoPeriod(Calendar startSeason1, Calendar endSeason2) {
+        this.setStartDate(startSeason1);
+        this.setEndDate(endSeason2);
+    }
+
     public InfoPeriod getNextPeriod() {
         return nextPeriod;
     }
