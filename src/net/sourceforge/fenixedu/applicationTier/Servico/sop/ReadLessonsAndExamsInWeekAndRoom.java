@@ -47,6 +47,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadLessonsAndExamsInWeekAndRoom implements IService {
 
+    // FIXME duplicated code: this method is (almost?) identical to RoomSiteComponentBuilder.getInfoSiteRoomTimeTable
     public List run(InfoRoom infoRoom, Calendar day, InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia, FenixServiceException {
         List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();
 
@@ -65,8 +66,8 @@ public class ReadLessonsAndExamsInWeekAndRoom implements IService {
         endDay.add(Calendar.DATE, 6);
         Period weekPeriod = new Period(day, endDay);
 
-        InfoPeriod lessonsPeriod = calculateLessonsSeason(executionPeriod);
-        if (this.intersectPeriods(day, endDay,lessonsPeriod)) {
+        InfoPeriod lessonsInfoPeriod = calculateLessonsSeason(executionPeriod);
+        if (this.intersectPeriods(day, endDay,lessonsInfoPeriod)) {
             //adicionar as aulas
             List lessonList = lessonDAO.readByRoomAndExecutionPeriod(infoRoom.getIdInternal(), executionPeriod.getIdInternal());
             Iterator iterator = lessonList.iterator();
