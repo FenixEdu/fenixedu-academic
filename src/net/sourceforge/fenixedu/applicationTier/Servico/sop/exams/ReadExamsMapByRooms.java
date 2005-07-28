@@ -18,13 +18,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IPeriod;
-import net.sourceforge.fenixedu.domain.Period;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
@@ -50,7 +49,7 @@ public class ReadExamsMapByRooms implements IService {
 
             
 
-            IPeriod period = calculateExamsSeason(year, infoExecutionPeriod.getSemester().intValue());
+            InfoPeriod period = calculateExamsSeason(year, infoExecutionPeriod.getSemester().intValue());
             Calendar startSeason1 = period.getStartDate();
             Calendar endSeason2 = period.getEndDate();
             // The calendar must start at a monday
@@ -91,7 +90,7 @@ public class ReadExamsMapByRooms implements IService {
         }
     };
 
-    private Period calculateExamsSeason(String year, int semester) throws Exception {
+    private InfoPeriod calculateExamsSeason(String year, int semester) throws Exception {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
@@ -127,7 +126,7 @@ public class ReadExamsMapByRooms implements IService {
                 }
 
             }
-            return new Period(startSeason1, endSeason2);
+            return new InfoPeriod(startSeason1, endSeason2);
         } catch (Exception e) {
             throw new FenixServiceException("Error calculating exams season", e);
         }
