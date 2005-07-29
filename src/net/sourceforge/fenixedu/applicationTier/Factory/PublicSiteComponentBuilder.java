@@ -110,9 +110,7 @@ public class PublicSiteComponentBuilder {
 
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            // ITurnoAulaPersistente shiftLessonDAO =
-            // sp.getITurnoAulaPersistente();
-            List shiftList = sp.getITurmaTurnoPersistente().readByClass(domainClass.getIdInternal());
+            List<IShift> shiftList = domainClass.getAssociatedShifts();
             infoLessonList = new ArrayList();
 
             IExecutionPeriod executionPeriod = domainClass.getExecutionPeriod();
@@ -128,7 +126,6 @@ public class PublicSiteComponentBuilder {
                 infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
                 infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
 
-                // List lessonList = shiftLessonDAO.readByShift(shift);
                 List lessonList = shift.getAssociatedLessons();
                 Iterator lessonIterator = lessonList.iterator();
                 while (lessonIterator.hasNext()) {

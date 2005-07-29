@@ -296,16 +296,6 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>ReadClassesWithShiftService</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadClassesWithShiftService</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ReadEmptyRoomsForExam</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadEmptyRoomsForExam</implementationClass>
 		<description />
@@ -964,14 +954,6 @@
 		<name>ReadExecutionDegreesByExecutionYearAndDegreeInitials</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadExecutionDegreesByExecutionYearAndDegreeInitials</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
-		<name>SelectExecutionShiftsWithAssociatedLessonsAndClasses</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.publico.SelectExecutionShiftsWithAssociatedLessonsAndClasses</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />

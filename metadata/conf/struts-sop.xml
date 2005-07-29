@@ -869,16 +869,7 @@
         <forward name="Sucesso" path="/gestaoHorarios.do"/> 
       </action>
 
-      <action attribute="shiftNameForm"
-              input="/manipularTurnos.jsp"
-              name="shiftNameForm"
-              path="/viewClassesWithShift"
-              scope="request"
-              type="net.sourceforge.fenixedu.presentationTier.Action.sop.ViewClassesWithShift"
-              validate="false">
-	        <forward name="sucess" path="/viewClassesWithShift.jsp"/> 
-      </action>
-     
+         
     <action path="/prepararManipularTurnos"
               type="net.sourceforge.fenixedu.presentationTier.Action.sop.PrepararManipularTurnosFormAction"
               scope="request">

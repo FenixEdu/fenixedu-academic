@@ -354,10 +354,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new EnrolmentEvaluationOJB();
     }
 
-    public ITurmaTurnoPersistente getITurmaTurnoPersistente() {
-        return new TurmaTurnoOJB();
-    }
-
     public IPersistentCurricularCourse getIPersistentCurricularCourse() {
         return new CurricularCourseOJB();
     }

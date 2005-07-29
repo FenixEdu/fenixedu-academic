@@ -116,8 +116,6 @@ public interface ISuportePersistente {
 
     public IPersistentEnrolmentEvaluation getIPersistentEnrolmentEvaluation();
 
-    public ITurmaTurnoPersistente getITurmaTurnoPersistente();
-
     public IPersistentCurricularCourse getIPersistentCurricularCourse();
 
     public IPersistentExecutionCourse getIPersistentExecutionCourse();

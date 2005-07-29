@@ -9,13 +9,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  * 
  * @author Luis Cruz & Sara Ribeiro
  */
+import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ISchoolClass;
-import net.sourceforge.fenixedu.domain.ISchoolClassShift;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.SchoolClass;
-import net.sourceforge.fenixedu.domain.SchoolClassShift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -32,10 +31,11 @@ public class DeleteClasses implements IService {
             final ISchoolClass schoolClass = (ISchoolClass) sp.getITurmaPersistente().readByOID(
                     SchoolClass.class, classId);
 
-            // sp.getITurmaPersistente().simpleLockWrite(schoolClass);
-
             // Shift
-            for (IShift shift : schoolClass.getAssociatedShifts()) {
+            Iterator iter = schoolClass.getAssociatedShiftsIterator();
+            while(iter.hasNext()){
+                IShift shift = (IShift) iter.next();
+                iter.remove();
                 shift.getAssociatedClasses().remove(schoolClass);
             }
             schoolClass.getAssociatedShifts().clear();
@@ -48,19 +48,7 @@ public class DeleteClasses implements IService {
             schoolClass.getExecutionPeriod().getSchoolClasses().remove(schoolClass);
             schoolClass.setExecutionPeriod(null);
 
-            // SchoolClassShift
-            List<ISchoolClassShift> schoolClassShifts = schoolClass.getSchoolClassShifts();
-            for (ISchoolClassShift schoolClassShift : schoolClassShifts) {
-                schoolClassShift.setTurma(null);
-                schoolClassShift.getTurno().getSchoolClassShifts().remove(schoolClassShift);
-                schoolClassShift.setTurno(null);
-                sp.getITurmaTurnoPersistente().deleteByOID(SchoolClassShift.class,
-                        schoolClassShift.getIdInternal());
-            }
-            schoolClass.getSchoolClassShifts().clear();
-
             sp.getITurmaPersistente().deleteByOID(SchoolClass.class, schoolClass.getIdInternal());
-            // sp.getITurmaPersistente().delete(schoolClass);
         }
 
         return new Boolean(true);

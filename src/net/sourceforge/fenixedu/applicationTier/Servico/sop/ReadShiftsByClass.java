@@ -15,8 +15,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoLessonWithInfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.IShift;
@@ -36,10 +36,10 @@ public class ReadShiftsByClass implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        ISchoolClass shcoolClass = (ISchoolClass) sp.getITurmaPersistente().readByOID(SchoolClass.class,
+        ISchoolClass schoolClass = (ISchoolClass) sp.getITurmaPersistente().readByOID(SchoolClass.class,
                 infoClass.getIdInternal());
 
-        List shifts = sp.getITurmaTurnoPersistente().readByClass(shcoolClass.getIdInternal());
+        List<IShift> shifts = schoolClass.getAssociatedShifts();
 
         return CollectionUtils.collect(shifts, new Transformer() {
             public Object transform(Object arg0) {
@@ -48,7 +48,7 @@ public class ReadShiftsByClass implements IService {
                 infoShift.setInfoLessons((List) CollectionUtils.collect(shift.getAssociatedLessons(),
                         new Transformer() {
                             public Object transform(Object arg0) {
-                                InfoLesson infoLesson = Cloner.copyILesson2InfoLesson((ILesson) arg0);
+                                InfoLesson infoLesson = InfoLessonWithInfoRoom.newInfoFromDomain((ILesson) arg0);
                                 IShift shift = ((ILesson) arg0).getShift();
                                 InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
                                 infoLesson.setInfoShift(infoShift);

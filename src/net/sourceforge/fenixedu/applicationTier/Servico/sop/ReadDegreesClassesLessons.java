@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- *  
+ * 
  */
 import java.util.ArrayList;
 import java.util.Collection;
@@ -44,6 +44,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
+
 /**
  * TODO Remove cloner deste serviço...
  */
@@ -57,10 +58,6 @@ public class ReadDegreesClassesLessons implements IService {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             ITurmaPersistente classDAO = sp.getITurmaPersistente();
-            //ITurnoAulaPersistente shiftLessonDAO =
-            // sp.getITurnoAulaPersistente();
-
-            // Read executionDegrees classes
             List classes = new ArrayList();
             for (int i = 0; i < infoExecutionDegrees.size(); i++) {
                 InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegrees
@@ -68,13 +65,13 @@ public class ReadDegreesClassesLessons implements IService {
                 IExecutionDegree executionDegree = (IExecutionDegree) classDAO.readByOID(
                         ExecutionDegree.class, infoExecutionDegree.getIdInternal());
                 List degreeClasses = classDAO.readByExecutionDegree(executionDegree.getIdInternal());
-                for (Iterator iterator = degreeClasses.iterator(); iterator.hasNext(); ) {
+                for (Iterator iterator = degreeClasses.iterator(); iterator.hasNext();) {
                     ISchoolClass klass = (ISchoolClass) iterator.next();
-                    if (klass.getExecutionPeriod().getIdInternal().equals(infoExecutionPeriod.getIdInternal())) {
+                    if (klass.getExecutionPeriod().getIdInternal().equals(
+                            infoExecutionPeriod.getIdInternal())) {
                         classes.add(klass);
                     }
                 }
-                //CollectionUtils.addAll(classes, iterator);
             }
 
             for (int i = 0; i < classes.size(); i++) {
@@ -82,7 +79,7 @@ public class ReadDegreesClassesLessons implements IService {
                 ISchoolClass turma = (ISchoolClass) classes.get(i);
 
                 // read class lessons
-                List shiftList = sp.getITurmaTurnoPersistente().readByClass(turma.getIdInternal());
+                List shiftList = turma.getAssociatedShifts();
                 Iterator iterator = shiftList.iterator();
                 List infoLessonList = new ArrayList();
                 while (iterator.hasNext()) {
@@ -90,17 +87,19 @@ public class ReadDegreesClassesLessons implements IService {
                     final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
 
                     final IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
-                    final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
+                    final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
+                            .newInfoFromDomain(executionCourse);
                     infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
 
                     final IExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-                    final InfoExecutionPeriod infoExecutionPeriod2 = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
+                    final InfoExecutionPeriod infoExecutionPeriod2 = InfoExecutionPeriod
+                            .newInfoFromDomain(executionPeriod);
                     infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod2);
 
                     final Collection lessons = shift.getAssociatedLessons();
                     final List infoLessons = new ArrayList(lessons.size());
                     infoShift.setInfoLessons(infoLessons);
-                    for (final Iterator iterator2 = lessons.iterator(); iterator2.hasNext(); ) {
+                    for (final Iterator iterator2 = lessons.iterator(); iterator2.hasNext();) {
                         final ILesson lesson = (ILesson) iterator2.next();
                         final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
                         infoLesson.setInfoShift(infoShift);
@@ -108,7 +107,8 @@ public class ReadDegreesClassesLessons implements IService {
                         infoLesson.getInfoShiftList().add(infoShift);
 
                         final IRoomOccupation roomOccupation = lesson.getRoomOccupation();
-                        final InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(roomOccupation);
+                        final InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation
+                                .newInfoFromDomain(roomOccupation);
                         infoLesson.setInfoRoomOccupation(infoRoomOccupation);
 
                         final IRoom room = roomOccupation.getRoom();
@@ -127,21 +127,24 @@ public class ReadDegreesClassesLessons implements IService {
                     final Collection schoolClasses = shift.getAssociatedClasses();
                     final List infoSchoolClasses = new ArrayList(schoolClasses.size());
                     infoShift.setInfoClasses(infoSchoolClasses);
-                    for (final Iterator iterator2 = schoolClasses.iterator(); iterator2.hasNext(); ) {
+                    for (final Iterator iterator2 = schoolClasses.iterator(); iterator2.hasNext();) {
                         final ISchoolClass schoolClass = (ISchoolClass) iterator2.next();
                         final InfoClass infoClass = InfoClass.newInfoFromDomain(schoolClass);
                         infoSchoolClasses.add(infoClass);
                     }
 
-                 }
+                }
 
                 InfoClass infoClass = InfoClass.newInfoFromDomain(turma);
                 final IExecutionDegree executionDegree = turma.getExecutionDegree();
-                final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+                final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
+                        .newInfoFromDomain(executionDegree);
                 infoClass.setInfoExecutionDegree(infoExecutionDegree);
 
-                final IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-                final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
+                final IDegreeCurricularPlan degreeCurricularPlan = executionDegree
+                        .getDegreeCurricularPlan();
+                final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
+                        .newInfoFromDomain(degreeCurricularPlan);
                 infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 
                 final IDegree degree = degreeCurricularPlan.getDegree();

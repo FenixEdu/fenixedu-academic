@@ -65,7 +65,7 @@ import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IItem;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ISchoolClassShift;
+import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.ISection;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.ISite;
@@ -96,7 +96,7 @@ import org.apache.slide.common.SlideException;
 /**
  * @author João Mota
  * 
- *  
+ * 
  */
 public class ExecutionCourseSiteComponentBuilder {
 
@@ -151,12 +151,13 @@ public class ExecutionCourseSiteComponentBuilder {
         try {
             IExecutionCourse executionCourse = site.getExecutionCourse();
 
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory
+                    .getDefaultPersistenceSupport();
 
-            //execution courses's lesson types for display to filter summary
+            // execution courses's lesson types for display to filter summary
             List lessonTypes = findLessonTypesExecutionCourse(executionCourse);
 
-            //execution courses's shifts for display to filter summary
+            // execution courses's shifts for display to filter summary
             ITurnoPersistente persistentShift = persistentSuport.getITurnoPersistente();
             List shifts = persistentShift.readByExecutionCourse(executionCourse.getIdInternal());
             List infoShifts = new ArrayList();
@@ -170,10 +171,11 @@ public class ExecutionCourseSiteComponentBuilder {
                 });
             }
 
-            //execution courses's professorships for display to filter summary
+            // execution courses's professorships for display to filter summary
             IPersistentProfessorship persistentProfessorship = persistentSuport
                     .getIPersistentProfessorship();
-            List professorships = persistentProfessorship.readByExecutionCourse(executionCourse.getIdInternal());
+            List professorships = persistentProfessorship.readByExecutionCourse(executionCourse
+                    .getIdInternal());
             List infoProfessorships = new ArrayList();
             if (professorships != null && professorships.size() > 0) {
                 infoProfessorships = (List) CollectionUtils.collect(professorships, new Transformer() {
@@ -190,12 +192,14 @@ public class ExecutionCourseSiteComponentBuilder {
             List summaries = null;
             if (component.getShiftType() != null) {
                 List summariesBySummaryType = persistentSummary
-                        .readByExecutionCourseShiftsAndTypeLesson(executionCourse.getIdInternal(), component.getShiftType());
+                        .readByExecutionCourseShiftsAndTypeLesson(executionCourse.getIdInternal(),
+                                component.getShiftType());
 
-                //read summary also by execution course key
-                //and add to the last list
+                // read summary also by execution course key
+                // and add to the last list
                 List summariesByExecutionCourseBySummaryType = persistentSummary
-                        .readByExecutionCourseAndType(executionCourse.getIdInternal(), component.getShiftType());
+                        .readByExecutionCourseAndType(executionCourse.getIdInternal(), component
+                                .getShiftType());
 
                 summaries = allSummaries(summariesBySummaryType, summariesByExecutionCourseBySummaryType);
             }
@@ -229,8 +233,8 @@ public class ExecutionCourseSiteComponentBuilder {
                     throw new FenixServiceException("no.shift");
                 }
 
-                List summariesByProfessorship = persistentSummary.readByTeacher(executionCourse.getIdInternal(),
-                        professorshipSelected.getTeacher().getTeacherNumber());
+                List summariesByProfessorship = persistentSummary.readByTeacher(executionCourse
+                        .getIdInternal(), professorshipSelected.getTeacher().getTeacherNumber());
 
                 if (summaries != null) {
                     summaries = (List) CollectionUtils.intersection(summaries, summariesByProfessorship);
@@ -240,7 +244,8 @@ public class ExecutionCourseSiteComponentBuilder {
             }
 
             if (component.getTeacherId() != null && component.getTeacherId().equals(new Integer(-1))) {
-                List summariesByTeacher = persistentSummary.readByOtherTeachers(executionCourse.getIdInternal());
+                List summariesByTeacher = persistentSummary.readByOtherTeachers(executionCourse
+                        .getIdInternal());
 
                 if (summaries != null) {
                     summaries = (List) CollectionUtils.intersection(summaries, summariesByTeacher);
@@ -252,7 +257,8 @@ public class ExecutionCourseSiteComponentBuilder {
             if ((component.getShiftType() == null)
                     && (component.getShiftId() == null || component.getShiftId().intValue() == 0)
                     && (component.getTeacherId() == null || component.getTeacherId().intValue() == 0)) {
-                summaries = persistentSummary.readByExecutionCourseShifts(executionCourse.getIdInternal());
+                summaries = persistentSummary.readByExecutionCourseShifts(executionCourse
+                        .getIdInternal());
                 List summariesByExecutionCourse = persistentSummary
                         .readByExecutionCourse(executionCourse.getIdInternal());
 
@@ -318,9 +324,10 @@ public class ExecutionCourseSiteComponentBuilder {
     private List findLesson(IPersistentSummary persistentSummary, IExecutionCourse executionCourse,
             IShift shift) throws ExcepcaoPersistencia {
 
-        List summariesByExecutionCourse = persistentSummary.readByExecutionCourse(executionCourse.getIdInternal());
+        List summariesByExecutionCourse = persistentSummary.readByExecutionCourse(executionCourse
+                .getIdInternal());
 
-        //copy the list
+        // copy the list
         List summariesByShift = new ArrayList();
         summariesByShift.addAll(summariesByExecutionCourse);
 
@@ -330,13 +337,13 @@ public class ExecutionCourseSiteComponentBuilder {
                 ISummary summary = (ISummary) iterator.next();
 
                 Calendar dateAndHourSummary = Calendar.getInstance();
-                
+
                 Calendar summaryDate = Calendar.getInstance();
                 summaryDate.setTime(summary.getSummaryDate());
-                
+
                 Calendar summaryHour = Calendar.getInstance();
                 summaryHour.setTime(summary.getSummaryHour());
-                
+
                 dateAndHourSummary.set(Calendar.DAY_OF_MONTH, summaryDate.get(Calendar.DAY_OF_MONTH));
                 dateAndHourSummary.set(Calendar.MONTH, summaryDate.get(Calendar.MONTH));
                 dateAndHourSummary.set(Calendar.YEAR, summaryDate.get(Calendar.YEAR));
@@ -437,7 +444,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
         List infoCurricularCourseList = null;
         List infoCurricularCourseListByDegree = null;
-           
+
         try {
             // read sections
 
@@ -467,7 +474,7 @@ public class ExecutionCourseSiteComponentBuilder {
         }
         component.setAssociatedDegrees(infoCurricularCourseList);
         component.setAssociatedDegreesByDegree(infoCurricularCourseListByDegree);
-        component.setTitle(site.getExecutionCourse().getNome()); 
+        component.setTitle(site.getExecutionCourse().getNome());
         component.setMail(site.getMail());
         component.setSections(infoSectionsList);
         InfoExecutionCourse executionCourse;
@@ -503,7 +510,7 @@ public class ExecutionCourseSiteComponentBuilder {
             try {
                 infoItem.setLinks(CMSUtils.getItemLinks(fileSuport, item.getSlideName()));
             } catch (SlideException e1) {
-                //the item does not have a folder associated
+                // the item does not have a folder associated
             }
             infoItemsList.add(infoItem);
         }
@@ -520,7 +527,8 @@ public class ExecutionCourseSiteComponentBuilder {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IExecutionCourse disciplinaExecucao = site.getExecutionCourse();
-            List shifts = sp.getITurnoPersistente().readByExecutionCourse(disciplinaExecucao.getIdInternal());
+            List shifts = sp.getITurnoPersistente().readByExecutionCourse(
+                    disciplinaExecucao.getIdInternal());
 
             if (shifts == null || shifts.isEmpty()) {
 
@@ -534,7 +542,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
                     List lessons = shift.getAssociatedLessons();
                     List infoLessons = new ArrayList();
-                    List classesShifts = sp.getITurmaTurnoPersistente().readClassesWithShift(shift.getIdInternal());
+                    List<ISchoolClass> classesShifts = shift.getAssociatedClasses();
                     List infoClasses = new ArrayList();
 
                     for (int j = 0; j < lessons.size(); j++)
@@ -545,7 +553,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
                     for (int j = 0; j < classesShifts.size(); j++)
                         infoClasses.add(InfoClassWithInfoExecutionDegree
-                                .newInfoFromDomain(((ISchoolClassShift) classesShifts.get(j)).getTurma()));
+                                .newInfoFromDomain((classesShifts.get(j))));
 
                     shiftWithAssociatedClassesAndLessons.setInfoClasses(infoClasses);
 
@@ -574,7 +582,8 @@ public class ExecutionCourseSiteComponentBuilder {
 
             List aulas = new ArrayList();
 
-            List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse.getIdInternal());
+            List shifts = sp.getITurnoPersistente().readByExecutionCourse(
+                    executionCourse.getIdInternal());
             for (int i = 0; i < shifts.size(); i++) {
                 IShift shift = (IShift) shifts.get(i);
                 List aulasTemp = shift.getAssociatedLessons();
@@ -609,23 +618,24 @@ public class ExecutionCourseSiteComponentBuilder {
 
             InfoRoomOccupation infoRoomOccupation = Cloner.copyIRoomOccupation2InfoRoomOccupation(lesson
                     .getRoomOccupation());
-            InfoRoom infoRoom = InfoRoom.newInfoFromDomain(lesson
-                    .getRoomOccupation().getRoom());
+            InfoRoom infoRoom = InfoRoom.newInfoFromDomain(lesson.getRoomOccupation().getRoom());
             infoRoomOccupation.setInfoRoom(infoRoom);
             infoLesson.setInfoRoomOccupation(infoRoomOccupation);
 
             IShift shift = lesson.getShift();
-			InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
-            
+            InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
+
             infoShift.setInfoLessons(new ArrayList(1));
             infoShift.getInfoLessons().add(infoLesson);
 
             IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
-            InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
+            InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
+                    .newInfoFromDomain(executionCourse);
             infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
 
             IExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-            InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
+            InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod
+                    .newInfoFromDomain(executionPeriod);
             infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 
             infoLesson.setInfoShift(infoShift);
@@ -657,7 +667,8 @@ public class ExecutionCourseSiteComponentBuilder {
 
             IExecutionCourse executionCourse = site.getExecutionCourse();
 
-            references = persistentBibliographicReference.readBibliographicReference(executionCourse.getIdInternal());
+            references = persistentBibliographicReference.readBibliographicReference(executionCourse
+                    .getIdInternal());
 
             Iterator iterator = references.iterator();
             infoBibRefs = new ArrayList();
@@ -699,7 +710,8 @@ public class ExecutionCourseSiteComponentBuilder {
     private ISiteComponent getInfoSiteFirstPage(InfoSiteFirstPage component, ISite site)
             throws FenixServiceException {
         try {
-            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            ISuportePersistente persistentSupport = PersistenceSupportFactory
+                    .getDefaultPersistenceSupport();
 
             IExecutionCourse executionCourse = site.getExecutionCourse();
 
@@ -712,7 +724,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
             List lecturingInfoTeachersList = readLecturingTeachers(persistentSupport, executionCourse);
 
-            //set all the required information to the component
+            // set all the required information to the component
 
             if (!infoAnnouncements.isEmpty()) {
                 infoAnnouncements.remove(0);
@@ -744,7 +756,8 @@ public class ExecutionCourseSiteComponentBuilder {
     private List readLastFiveAnnouncements(ISuportePersistente persistentSupport,
             IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
 
-        ISite site = persistentSupport.getIPersistentSite().readByExecutionCourse(executionCourse.getIdInternal());
+        ISite site = persistentSupport.getIPersistentSite().readByExecutionCourse(
+                executionCourse.getIdInternal());
         List announcementsList = persistentSupport.getIPersistentAnnouncement().readAnnouncementsBySite(
                 site.getIdInternal());
 
@@ -779,7 +792,8 @@ public class ExecutionCourseSiteComponentBuilder {
 
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            List announcementsList = sp.getIPersistentAnnouncement().readAnnouncementsBySite(site.getIdInternal());
+            List announcementsList = sp.getIPersistentAnnouncement().readAnnouncementsBySite(
+                    site.getIdInternal());
             List infoAnnouncementsList = new ArrayList();
 
             if (announcementsList != null && announcementsList.isEmpty() == false) {
@@ -804,7 +818,8 @@ public class ExecutionCourseSiteComponentBuilder {
         List domainLecturingTeachersList = null;
         IPersistentProfessorship persistentProfessorship = persistentSupport
                 .getIPersistentProfessorship();
-        domainLecturingTeachersList = persistentProfessorship.readByExecutionCourse(executionCourse.getIdInternal());
+        domainLecturingTeachersList = persistentProfessorship.readByExecutionCourse(executionCourse
+                .getIdInternal());
 
         List lecturingInfoTeachersList = new ArrayList();
         if (domainLecturingTeachersList != null) {
@@ -824,10 +839,11 @@ public class ExecutionCourseSiteComponentBuilder {
             IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
         List responsibleDomainTeachersList = null;
 
-        IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
-        
+        IPersistentProfessorship persistentProfessorship = persistentSupport
+                .getIPersistentProfessorship();
+
         responsibleDomainTeachersList = executionCourse.responsibleFors();
-        
+
         List responsibleInfoTeachersList = new ArrayList();
         if (responsibleDomainTeachersList != null) {
             Iterator iter = responsibleDomainTeachersList.iterator();
@@ -844,7 +860,8 @@ public class ExecutionCourseSiteComponentBuilder {
 
     private InfoAnnouncement readLastAnnouncement(ISuportePersistente persistentSupport,
             IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
-        ISite site = persistentSupport.getIPersistentSite().readByExecutionCourse(executionCourse.getIdInternal());
+        ISite site = persistentSupport.getIPersistentSite().readByExecutionCourse(
+                executionCourse.getIdInternal());
         IAnnouncement announcement = persistentSupport.getIPersistentAnnouncement()
                 .readLastAnnouncementForSite(site.getIdInternal());
         InfoAnnouncement infoAnnouncement = null;
@@ -859,7 +876,8 @@ public class ExecutionCourseSiteComponentBuilder {
         List infoCurricularCourseList = new ArrayList();
         if (executionCourse.getAssociatedCurricularCourses() != null)
             for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {
-                ICurricularCourse curricularCourse = executionCourse.getAssociatedCurricularCourses().get(i);
+                ICurricularCourse curricularCourse = executionCourse.getAssociatedCurricularCourses()
+                        .get(i);
                 InfoCurricularCourse infoCurricularCourse = copyFromDomain(curricularCourse);
                 infoCurricularCourseScopeList = new ArrayList();
                 for (int j = 0; j < curricularCourse.getScopes().size(); j++) {
@@ -874,9 +892,10 @@ public class ExecutionCourseSiteComponentBuilder {
 
         return infoCurricularCourseList;
     }
-    
+
     /**
-     * Curricular courses list organized by degree (curricular information in first page).
+     * Curricular courses list organized by degree (curricular information in
+     * first page).
      */
     private List readCurricularCoursesOrganizedByDegree(IExecutionCourse executionCourse) {
         final List curricularCourses = executionCourse.getAssociatedCurricularCourses();
@@ -884,17 +903,20 @@ public class ExecutionCourseSiteComponentBuilder {
 
         final List infoCurricularCourses = new ArrayList(estimatedResultSize);
         final Set degreesCodes = new HashSet(estimatedResultSize);
-        for (final Iterator iterator = curricularCourses.iterator(); iterator.hasNext(); ) {
+        for (final Iterator iterator = curricularCourses.iterator(); iterator.hasNext();) {
             final ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
             final String degreeCode = curricularCourse.getDegreeCurricularPlan().getDegree().getSigla();
             if (!degreesCodes.contains(degreeCode)) {
                 final InfoCurricularCourse infoCurricularCourse = copyFromDomain(curricularCourse);
-                //final InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
+                // final InfoCurricularCourse infoCurricularCourse =
+                // InfoCurricularCourse.newInfoFromDomain(curricularCourse);
                 infoCurricularCourses.add(infoCurricularCourse);
                 infoCurricularCourse.setInfoScopes(new ArrayList());
 
-                for (final Iterator scopeIterator = curricularCourse.getScopes().iterator(); scopeIterator.hasNext(); ) {
-                    final ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) scopeIterator.next();
+                for (final Iterator scopeIterator = curricularCourse.getScopes().iterator(); scopeIterator
+                        .hasNext();) {
+                    final ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) scopeIterator
+                            .next();
                     final InfoCurricularCourseScope infoCurricularCourseScope = copyFromDomain(curricularCourseScope);
                     infoCurricularCourse.getInfoScopes().add(infoCurricularCourseScope);
                 }
@@ -904,51 +926,58 @@ public class ExecutionCourseSiteComponentBuilder {
         }
 
         return infoCurricularCourses;
-//
-//		List infoCurricularCourseScopeList;
-//		List infoCurricularCourseList = new ArrayList();	
-//		StringBuffer allSiglas = new StringBuffer();
-//		
-//		if (executionCourse.getAssociatedCurricularCourses() != null) {
-//			for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {
-//				ICurricularCourse curricularCourse = (ICurricularCourse) executionCourse
-//				.getAssociatedCurricularCourses().get(i);
-//				InfoCurricularCourse infoCurricularCourse = copyFromDomain(curricularCourse);
-//				infoCurricularCourseScopeList = new ArrayList();
-//				for (int j = 0; j < curricularCourse.getScopes().size(); j++) {
-//					ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourse
-//					.getScopes().get(j);
-//					InfoCurricularCourseScope infoCurricularCourseScope = copyFromDomain(curricularCourseScope);
-//					infoCurricularCourseScopeList.add(infoCurricularCourseScope);
-//				}
-//				
-//				infoCurricularCourse.setInfoScopes(infoCurricularCourseScopeList);
-//	
-//				String currentSigla = infoCurricularCourse.getInfoDegreeCurricularPlan().getInfoDegree().getSigla();			
-//			
-//				if (!infoCurricularCourseList.isEmpty() && StringUtils.contains(allSiglas.toString(),currentSigla)) {
-//					for (int k = 0; k < infoCurricularCourseList.size(); k++) {
-//						String sigla = ((InfoDegree) ((InfoDegreeCurricularPlan) ((InfoCurricularCourse) 
-//								((List) infoCurricularCourseList.get(k)).get(0)).getInfoDegreeCurricularPlan()).getInfoDegree()).getSigla();
-//						if (sigla.equals(currentSigla)) {
-//							((List)infoCurricularCourseList.get(k)).add(infoCurricularCourse);
-//							break;
-//						}
-//					}
-//				} else {
-//					List infoCurricularCoursesByDegree = new ArrayList();	
-//					infoCurricularCoursesByDegree.add(infoCurricularCourse);
-//					infoCurricularCourseList.add(infoCurricularCoursesByDegree);
-//					allSiglas.append(currentSigla);
-//				}
-//			}				
-//		}
-//		
-//		return infoCurricularCourseList;
-	}
-		
-    
-    
+        //
+        // List infoCurricularCourseScopeList;
+        // List infoCurricularCourseList = new ArrayList();
+        // StringBuffer allSiglas = new StringBuffer();
+        //		
+        // if (executionCourse.getAssociatedCurricularCourses() != null) {
+        // for (int i = 0; i <
+        // executionCourse.getAssociatedCurricularCourses().size(); i++) {
+        // ICurricularCourse curricularCourse = (ICurricularCourse)
+        // executionCourse
+        // .getAssociatedCurricularCourses().get(i);
+        // InfoCurricularCourse infoCurricularCourse =
+        // copyFromDomain(curricularCourse);
+        // infoCurricularCourseScopeList = new ArrayList();
+        // for (int j = 0; j < curricularCourse.getScopes().size(); j++) {
+        // ICurricularCourseScope curricularCourseScope =
+        // (ICurricularCourseScope) curricularCourse
+        // .getScopes().get(j);
+        // InfoCurricularCourseScope infoCurricularCourseScope =
+        // copyFromDomain(curricularCourseScope);
+        // infoCurricularCourseScopeList.add(infoCurricularCourseScope);
+        // }
+        //				
+        // infoCurricularCourse.setInfoScopes(infoCurricularCourseScopeList);
+        //	
+        // String currentSigla =
+        // infoCurricularCourse.getInfoDegreeCurricularPlan().getInfoDegree().getSigla();
+        //			
+        // if (!infoCurricularCourseList.isEmpty() &&
+        // StringUtils.contains(allSiglas.toString(),currentSigla)) {
+        // for (int k = 0; k < infoCurricularCourseList.size(); k++) {
+        // String sigla = ((InfoDegree) ((InfoDegreeCurricularPlan)
+        // ((InfoCurricularCourse)
+        // ((List)
+        // infoCurricularCourseList.get(k)).get(0)).getInfoDegreeCurricularPlan()).getInfoDegree()).getSigla();
+        // if (sigla.equals(currentSigla)) {
+        // ((List)infoCurricularCourseList.get(k)).add(infoCurricularCourse);
+        // break;
+        // }
+        // }
+        // } else {
+        // List infoCurricularCoursesByDegree = new ArrayList();
+        // infoCurricularCoursesByDegree.add(infoCurricularCourse);
+        // infoCurricularCourseList.add(infoCurricularCoursesByDegree);
+        // allSiglas.append(currentSigla);
+        // }
+        // }
+        // }
+        //		
+        // return infoCurricularCourseList;
+    }
+
     /**
      * @param section
      * @return

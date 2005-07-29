@@ -15,6 +15,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithInfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.DomainFactory;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -39,8 +41,16 @@ public class CriarTurno implements IService {
         Integer availabilityFinal = new Integer(new Double(Math.ceil(1.10 * infoTurno.getLotacao()
                 .doubleValue())).intValue());
         newShift.setAvailabilityFinal(availabilityFinal);
+        IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
+                .readByOID(ExecutionCourse.class, infoTurno.getInfoDisciplinaExecucao().getIdInternal());
+        newShift.setDisciplinaExecucao(executionCourse);
+        newShift.setNome(infoTurno.getNome());
+        newShift.setLotacao(infoTurno.getLotacao());
+        newShift.setTipo(infoTurno.getTipo());
 
-        return InfoShiftWithInfoExecutionCourse.newInfoFromDomain(newShift);
+        InfoShift infoShift = InfoShiftWithInfoExecutionCourse.newInfoFromDomain(newShift);
+
+        return infoShift;
 
     }
 

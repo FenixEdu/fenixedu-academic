@@ -2253,12 +2253,6 @@ class net.sourceforge.fenixedu.domain.SchoolClass extends net.sourceforge.fenixe
 	"
 }
 
-
-class net.sourceforge.fenixedu.domain.SchoolClassShift extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer chaveTurma;
-	Integer chaveTurno;
-}
-
 class net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent extends net.sourceforge.fenixedu.domain.DomainObject {
     String reasonDescription;
     Integer keyStudent;
@@ -4785,20 +4779,6 @@ relation SchoolClassExecutionDegree {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
-}
-
-relation SchoolClassShiftSchoolClass {
-	net.sourceforge.fenixedu.domain.SchoolClassShift playsRole schoolClassShifts {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.SchoolClass playsRole turma;
-}
-
-relation SchoolClassShiftShift {
-	net.sourceforge.fenixedu.domain.SchoolClassShift playsRole schoolClassShifts {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Shift playsRole turno;
 }
 
 relation ScientificAreaCreditsInScientificArea {

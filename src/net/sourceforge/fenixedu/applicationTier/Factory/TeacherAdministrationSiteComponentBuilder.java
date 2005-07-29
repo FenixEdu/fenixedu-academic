@@ -100,7 +100,7 @@ import net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse;
 import net.sourceforge.fenixedu.domain.IItem;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ISchoolClassShift;
+import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.ISection;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.ISite;
@@ -2005,8 +2005,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
                             List lessons = shift.getAssociatedLessons();
                             List infoLessons = new ArrayList();
-                            List classesShifts = sp.getITurmaTurnoPersistente().readClassesWithShift(
-                                    shift.getIdInternal());
+                            List<ISchoolClass> classesShifts = shift.getAssociatedClasses();
                             List infoClasses = new ArrayList();
 
                             for (int j = 0; j < lessons.size(); j++)
@@ -2015,9 +2014,7 @@ public class TeacherAdministrationSiteComponentBuilder {
                             infoShift.setInfoLessons(infoLessons);
 
                             for (int j = 0; j < classesShifts.size(); j++)
-                                infoClasses.add(InfoClass
-                                        .newInfoFromDomain(((ISchoolClassShift) classesShifts.get(j))
-                                                .getTurma()));
+                                infoClasses.add(InfoClass.newInfoFromDomain(classesShifts.get(j)));
                             infoShift.setInfoClasses(infoClasses);
                             infoShift.setIdInternal(shift.getIdInternal());
 

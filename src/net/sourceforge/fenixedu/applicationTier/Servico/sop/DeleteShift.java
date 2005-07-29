@@ -14,10 +14,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
-import net.sourceforge.fenixedu.domain.ISchoolClassShift;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IShiftProfessorship;
-import net.sourceforge.fenixedu.domain.SchoolClassShift;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
@@ -47,11 +45,11 @@ public class DeleteShift implements IService {
                 // if the shift has student groups associated it can't be
                 // deleted
                 List studentGroupShift = shift.getAssociatedStudentGroups();
-                
-                if(studentGroupShift.size() > 0){
+
+                if (studentGroupShift.size() > 0) {
                     throw new FenixServiceException("error.deleteShift.with.studentGroups");
                 }
-                
+
                 // if the shift has summaries it can't be deleted
                 IPersistentSummary persistentSummary = sp.getIPersistentSummary();
                 List summariesShift = persistentSummary.readByShift(shift.getDisciplinaExecucao()
@@ -74,13 +72,7 @@ public class DeleteShift implements IService {
                     ISchoolClass schoolClass = shift.getAssociatedClasses().get(i);
                     schoolClass.getAssociatedShifts().remove(shift);
                 }
-                List<ISchoolClassShift> schoolClassShifts = shift.getSchoolClassShifts();
-                for (ISchoolClassShift schoolClassShift : schoolClassShifts) {
-                    schoolClassShift.setTurno(null);
-                    schoolClassShift.setTurma(null);
-                    sp.getITurmaTurnoPersistente().deleteByOID(SchoolClassShift.class,
-                            schoolClassShift.getIdInternal());
-                }
+
                 shift.setDisciplinaExecucao(null);
                 sp.getITurnoPersistente().deleteByOID(Shift.class, shift.getIdInternal());
                 result = true;

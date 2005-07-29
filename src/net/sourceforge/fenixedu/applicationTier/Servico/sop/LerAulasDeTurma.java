@@ -28,7 +28,9 @@ import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IPeriod;
 import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
+import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -39,7 +41,9 @@ public class LerAulasDeTurma implements IService {
     public List run(InfoClass infoClass) throws ExcepcaoPersistencia {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         
-        final List<IShift> shiftList = sp.getITurmaTurnoPersistente().readByClass(infoClass.getIdInternal());
+        ISchoolClass schoolClass = (ISchoolClass) sp.getITurmaPersistente().readByOID(SchoolClass.class, infoClass.getIdInternal());
+        
+        final List<IShift> shiftList = schoolClass.getAssociatedShifts();
 
         List<InfoLesson> infoLessonList = new ArrayList<InfoLesson>();
         for (IShift shift : shiftList) {

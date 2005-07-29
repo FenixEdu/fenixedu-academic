@@ -13,10 +13,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
-import net.sourceforge.fenixedu.domain.ISchoolClassShift;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IShiftProfessorship;
-import net.sourceforge.fenixedu.domain.SchoolClassShift;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
@@ -40,7 +38,7 @@ public class DeleteShifts implements IService {
 
             if (shift != null) {
                 // if the shift has students associated it can't be deleted
-                List studentShifts =  shift.getStudents();
+                List studentShifts = shift.getStudents();
                 if (studentShifts != null && studentShifts.size() > 0) {
                     throw new FenixServiceException("error.deleteShift.with.students");
                 }
@@ -48,8 +46,8 @@ public class DeleteShifts implements IService {
                 // if the shift has student groups associated it can't be
                 // deleted
                 List studentGroupShift = shift.getAssociatedStudentGroups();
-                
-                if(studentGroupShift.size() > 0){
+
+                if (studentGroupShift.size() > 0) {
                     throw new FenixServiceException("error.deleteShift.with.studentGroups");
                 }
 
@@ -71,7 +69,7 @@ public class DeleteShifts implements IService {
                 for (int i = 0; i < shift.getAssociatedLessons().size(); i++) {
                     ILesson lesson = shift.getAssociatedLessons().get(i);
 
-					DeleteLessons.deleteLesson(sp, lesson.getIdInternal());
+                    DeleteLessons.deleteLesson(sp, lesson.getIdInternal());
                 }
 
                 for (int i = 0; i < shift.getAssociatedClasses().size(); i++) {
@@ -80,13 +78,6 @@ public class DeleteShifts implements IService {
                 }
                 shift.getAssociatedClasses().clear();
 
-                List<ISchoolClassShift> schoolClassShifts = shift.getSchoolClassShifts();
-                for (ISchoolClassShift schoolClassShift : schoolClassShifts) {
-                    schoolClassShift.setTurno(null);
-                    schoolClassShift.setTurma(null);
-                    sp.getITurmaTurnoPersistente().deleteByOID(SchoolClassShift.class,
-                            schoolClassShift.getIdInternal());
-                }
                 shift.setDisciplinaExecucao(null);
 
                 sp.getITurnoPersistente().deleteByOID(Shift.class, shift.getIdInternal());

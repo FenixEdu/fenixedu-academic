@@ -180,16 +180,6 @@
 		<fk-pointing-to-this-class column="KEY_CLASS"/>
 		<fk-pointing-to-element-class column="KEY_SHIFT"/>
 	</collection-descriptor> 
-	
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="schoolClassShifts"
-			element-class-ref="net.sourceforge.fenixedu.domain.SchoolClassShift"
-			>
-			
-		<inverse-foreignkey field-ref="chaveTurma"/>
-		
-		</collection-descriptor>
-	     
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.Shift -->
@@ -376,54 +366,7 @@
       </reference-descriptor>     
 </class-descriptor>
 
-<!-- Definitions for net.sourceforge.fenixedu.domain.SchoolClassShift -->
-<class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.SchoolClassShift"
-   	  table="CLASS_SHIFT"
-   >
-      <field-descriptor id="1"
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor id="2"
-         name="chaveTurma"
-         column="KEY_CLASS"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor id="3"
-         name="chaveTurno"
-         column="KEY_SHIFT"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
-      <reference-descriptor
-         name="turma"
-         class-ref="net.sourceforge.fenixedu.domain.SchoolClass"
-         
-      >
-         <foreignkey field-ref="chaveTurma"/>
-      </reference-descriptor>      
-      <reference-descriptor
-         name="turno"
-         class-ref="net.sourceforge.fenixedu.domain.Shift"
-         
-      >
-         <foreignkey field-ref="chaveTurno"/>
-      </reference-descriptor>      
-   </class-descriptor>      
-
-   
-      
- 
-<!-- Definitions for net.sourceforge.fenixedu.domain.Attends -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.Attends -->
    <class-descriptor proxy="dynamic"
    	  class="net.sourceforge.fenixedu.domain.Attends"
    	  table="ATTEND"
