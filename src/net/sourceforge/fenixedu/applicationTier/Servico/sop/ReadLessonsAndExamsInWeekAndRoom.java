@@ -34,7 +34,6 @@ import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IPeriod;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.Period;
 import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
@@ -64,7 +63,7 @@ public class ReadLessonsAndExamsInWeekAndRoom implements IService {
         Calendar endDay = Calendar.getInstance();
         endDay.setTimeInMillis(startDay.getTimeInMillis());
         endDay.add(Calendar.DATE, 6);
-        Period weekPeriod = new Period(day, endDay);
+        //Period weekPeriod = new Period(day, endDay);
 
         InfoPeriod lessonsInfoPeriod = calculateLessonsSeason(executionPeriod);
         if (this.intersectPeriods(day, endDay,lessonsInfoPeriod)) {
@@ -89,7 +88,7 @@ public class ReadLessonsAndExamsInWeekAndRoom implements IService {
                     if ((roomOccupation.getFrequency().intValue() == RoomOccupation.QUINZENAL)
                             && (!RoomOccupation.periodQuinzenalContainsWeekPeriod(period, 
 	                            roomOccupation.getWeekOfQuinzenalStart().intValue(),
-                                    roomOccupation.getDayOfWeek(), weekPeriod))) {
+                                    roomOccupation.getDayOfWeek(), day, endDay, null))) {
                         add = false;
                     }
                     if (roomOccupation.getFrequency().intValue() == RoomOccupation.SEMANAL) {
