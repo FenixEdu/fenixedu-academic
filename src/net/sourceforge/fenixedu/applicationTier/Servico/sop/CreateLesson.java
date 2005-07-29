@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonServiceResult;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftServiceResult;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ILesson;
@@ -28,7 +29,6 @@ import net.sourceforge.fenixedu.domain.IPeriod;
 import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Period;
 import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -37,7 +37,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
-import net.sourceforge.fenixedu.util.beanUtils.FenixPropertyUtils;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class CreateLesson implements IService {
@@ -67,32 +66,21 @@ public class CreateLesson implements IService {
                                 .getIdInternal());
 
         final IShift shift = (IShift) sp.getITurnoPersistente().readByOID(Shift.class, infoShift.getIdInternal());
-        ILesson aula = new Lesson(infoLesson.getDiaSemana(), infoLesson.getInicio(),
-                infoLesson.getFim(), infoLesson.getTipo(), sala, roomOccupation, shift);
         
-        InfoLessonServiceResult result = validTimeInterval(aula);
+        InfoLessonServiceResult result = validTimeInterval(infoLesson);
         if (result.getMessageType() == 1) {
             throw new InvalidTimeIntervalServiceException();
         }
-        boolean resultB = validNoInterceptingLesson(aula.getRoomOccupation());
+        boolean resultB = validNoInterceptingLesson(roomOccupation);
         if (result.isSUCESS() && resultB) {
             try {
-                InfoShiftServiceResult infoShiftServiceResult = valid(shift, aula);
+                InfoShiftServiceResult infoShiftServiceResult = valid(shift, infoLesson);
                 if (infoShiftServiceResult.isSUCESS()) {
-                    ILesson aula2 = new Lesson();
-                    sp.getIAulaPersistente().simpleLockWrite(aula2);
+                    ILesson aula2 = DomainFactory.makeLesson(infoLesson.getDiaSemana(), infoLesson.getInicio(),
+                            infoLesson.getFim(), infoLesson.getTipo(), sala, roomOccupation, shift);
 
                     sp.getIPersistentRoomOccupation().simpleLockWrite(roomOccupation);
-
-                    try {
-                        FenixPropertyUtils.copyProperties(aula2, aula);
-                    } catch (Exception e) {
-                        throw new FenixServiceException(e);
-                    }
-                    aula2.setShift(shift);
                     aula2.setExecutionPeriod(executionPeriod);
-                    aula2.setSala(aula.getSala());
-                    aula2.setRoomOccupation(roomOccupation);
                 } else {
                     throw new InvalidLoadException(infoShiftServiceResult.toString());
                 }
@@ -130,19 +118,19 @@ public class CreateLesson implements IService {
         }
     }
 
-    private InfoLessonServiceResult validTimeInterval(ILesson lesson) {
+    private InfoLessonServiceResult validTimeInterval(InfoLesson infoLesson) {
         InfoLessonServiceResult result = new InfoLessonServiceResult();
-        if (lesson.getInicio().getTime().getTime() >= lesson.getFim().getTime().getTime()) {
+        if (infoLesson.getInicio().getTime().getTime() >= infoLesson.getFim().getTime().getTime()) {
             result.setMessageType(InfoLessonServiceResult.INVALID_TIME_INTERVAL);
         }
         return result;
     }
 
-    private InfoShiftServiceResult valid(IShift shift, ILesson lesson) throws ExcepcaoPersistencia {
+    private InfoShiftServiceResult valid(IShift shift, InfoLesson infoLesson) throws ExcepcaoPersistencia {
         InfoShiftServiceResult result = new InfoShiftServiceResult();
         result.setMessageType(InfoShiftServiceResult.SUCESS);
         double hours = getTotalHoursOfShiftType(shift);
-        double lessonDuration = (getLessonDurationInMinutes(lesson).doubleValue()) / 60;
+        double lessonDuration = (getLessonDurationInMinutes(infoLesson).doubleValue()) / 60;
         if (shift.getTipo().equals(ShiftType.TEORICA)) {
             if (hours == shift.getDisciplinaExecucao().getTheoreticalHours().doubleValue())
                 result.setMessageType(InfoShiftServiceResult.THEORETICAL_HOURS_LIMIT_REACHED);
@@ -198,6 +186,16 @@ public class CreateLesson implements IService {
         return new Integer(duration);
     }
 
+    private Integer getLessonDurationInMinutes(InfoLesson infoLesson) {
+        int beginHour = infoLesson.getInicio().get(Calendar.HOUR_OF_DAY);
+        int beginMinutes = infoLesson.getInicio().get(Calendar.MINUTE);
+        int endHour = infoLesson.getFim().get(Calendar.HOUR_OF_DAY);
+        int endMinutes = infoLesson.getFim().get(Calendar.MINUTE);
+        int duration = 0;
+        duration = (endHour - beginHour) * 60 + (endMinutes - beginMinutes);
+        return new Integer(duration);
+    }
+    
     public class InvalidLoadException extends FenixServiceException {
         private InvalidLoadException() {
             super();
