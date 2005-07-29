@@ -6,13 +6,13 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculumWithInfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.ICurriculum;
@@ -40,8 +40,6 @@ public class ReadCurrentCurriculumByCurricularCourseCode implements IService {
 
     public InfoCurriculum run(Integer executionDegreeCode, Integer curricularCourseCode)
             throws FenixServiceException, ExcepcaoPersistencia {
-
-        InfoCurriculum infoCurriculum = null;
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
@@ -78,11 +76,7 @@ public class ReadCurrentCurriculumByCurricularCourseCode implements IService {
         //selects execution courses for current execution period
         final IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
        
-//        List associatedExecutionCourses = persistentExecutionCourse
-//                .readListbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
-        
-        
-        List associatedExecutionCourses = new ArrayList();
+        List<IExecutionCourse> associatedExecutionCourses = new ArrayList<IExecutionCourse>();
         List<IExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
         for(IExecutionCourse executionCourse : executionCourses){
             if(executionCourse.getExecutionPeriod().equals(executionPeriod))
@@ -92,23 +86,23 @@ public class ReadCurrentCurriculumByCurricularCourseCode implements IService {
 
         ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse
                 .getIdInternal());
-        if (curriculum == null) {
-            curriculum = new Curriculum();
-            curriculum.setIdInternal(new Integer(0));
-            curriculum.setCurricularCourse(curricularCourse);
+        InfoCurriculum infoCurriculum = null; 
+        if (curriculum != null) {
+            infoCurriculum = InfoCurriculumWithInfoCurricularCourse.newInfoFromDomain(curriculum);            
+        } else {
+            infoCurriculum = new InfoCurriculumWithInfoCurricularCourse();
+            infoCurriculum.setIdInternal(new Integer(0));
+            infoCurriculum.setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
         }
 
-        infoCurriculum = createInfoCurriculum(curriculum, persistentExecutionCourse,
+        infoCurriculum = createInfoCurriculum(infoCurriculum, persistentExecutionCourse,
                 activeCurricularCourseScopes, associatedExecutionCourses);
         return infoCurriculum;
     }
 
-    private InfoCurriculum createInfoCurriculum(ICurriculum curriculum,
+    private InfoCurriculum createInfoCurriculum(InfoCurriculum infoCurriculum,
             IPersistentExecutionCourse persistentExecutionCourse, List activeCurricularCourseScopes,
             List associatedExecutionCourses) throws ExcepcaoPersistencia {
-
-        InfoCurriculum infoCurriculum = InfoCurriculumWithInfoCurricularCourse
-                .newInfoFromDomain(curriculum);
 
         List scopes = new ArrayList();
 
@@ -122,7 +116,7 @@ public class ReadCurrentCurriculumByCurricularCourseCode implements IService {
         }, scopes);
         infoCurriculum.getInfoCurricularCourse().setInfoScopes(scopes);
 
-        List infoExecutionCourses = new ArrayList();
+        List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
         Iterator iterExecutionCourses = associatedExecutionCourses.iterator();
         while (iterExecutionCourses.hasNext()) {
             IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses.next();
@@ -132,9 +126,9 @@ public class ReadCurrentCurriculumByCurricularCourseCode implements IService {
 
             Boolean hasSite;
             if(executionCourse.getSite() != null)
-                hasSite = true;
+                hasSite = Boolean.TRUE;
             else
-                hasSite = false;
+                hasSite = Boolean.FALSE;
             
             infoExecutionCourse.setHasSite(hasSite);
             infoExecutionCourses.add(infoExecutionCourse);
