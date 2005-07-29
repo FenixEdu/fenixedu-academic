@@ -46,12 +46,13 @@ public class DeleteLessons implements IService {
 
         roomOccupation.setPeriod(null);
         roomOccupation.setRoom(null);
-        persistentRoomOccupation.deleteByOID(RoomOccupation.class, roomOccupation.getIdInternal());
 
         lesson.setShift(null);
         lesson.setRoomOccupation(null);
         lesson.setSala(null);
         lesson.setExecutionPeriod(null);
+
+        persistentRoomOccupation.deleteByOID(RoomOccupation.class, roomOccupation.getIdInternal());
         persistenetLesson.deleteByOID(Lesson.class, lesson.getIdInternal());
     }
 
