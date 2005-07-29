@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -44,6 +46,8 @@ public class ChangeDegreeDA extends TransactionalDispatchAction {
         ENROLEMENT_COMPARATOR.addComparator(new BeanComparator("infoExecutionPeriod.semester"));
         ENROLEMENT_COMPARATOR.addComparator(new BeanComparator("infoCurricularCourse.name"));
     }
+
+    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -98,22 +102,16 @@ public class ChangeDegreeDA extends TransactionalDispatchAction {
                 }
             }
 
-            String[] enrolementsToTransfer = (String[]) actionForm.get("enrolementsToTransfer");
-            if (enrolementsToTransfer == null || enrolementsToTransfer.length == 0) {
-                enrolementsToTransfer = CollectionUtils.toArrayOfString(enrolementsToTransferList);
+            String[] enrolementsToTransferFromForm = (String[]) actionForm.get("enrolementsToTransfer");
+            String[] enrolementsToMaintainFromForm = (String[]) actionForm.get("enrolementsToMaintain");
+            String[] enrolementsToDeleteFromForm = (String[]) actionForm.get("enrolementsToDelete");
+            if ((enrolementsToTransferFromForm == null || enrolementsToTransferFromForm.length == 0)
+                    && (enrolementsToMaintainFromForm == null || enrolementsToMaintainFromForm.length == 0)
+                    && (enrolementsToDeleteFromForm == null || enrolementsToDeleteFromForm.length == 0)) {
+                actionForm.set("enrolementsToTransfer", CollectionUtils.toArrayOfString(enrolementsToTransferList));
+                actionForm.set("enrolementsToMaintain", CollectionUtils.toArrayOfString(enrolementsToMaintainList));
+                actionForm.set("enrolementsToDelete", CollectionUtils.toArrayOfString(enrolementsToDeleteList));
             }
-            String[] enrolementsToMaintain = (String[]) actionForm.get("enrolementsToMaintain");
-            if (enrolementsToMaintain == null || enrolementsToMaintain.length == 0) {
-                enrolementsToMaintain = CollectionUtils.toArrayOfString(enrolementsToMaintainList);
-            }
-            String[] enrolementsToDelete = (String[]) actionForm.get("enrolementsToDelete");
-            if (enrolementsToDelete == null || enrolementsToDelete.length == 0) {
-                enrolementsToDelete = CollectionUtils.toArrayOfString(enrolementsToDeleteList);
-            }
-
-            actionForm.set("enrolementsToTransfer", enrolementsToTransfer);
-            actionForm.set("enrolementsToMaintain", enrolementsToMaintain);
-            actionForm.set("enrolementsToDelete", enrolementsToDelete);
 
             request.setAttribute("changeDegreeForm", actionForm);
 
@@ -143,7 +141,6 @@ public class ChangeDegreeDA extends TransactionalDispatchAction {
     public ActionForward confirm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final DynaActionForm actionForm = (DynaActionForm) form;
-        final String studentNumber = (String) actionForm.get("studentNumber");
 
         selectStudent(mapping, form, request, response);
 
@@ -205,6 +202,7 @@ public class ChangeDegreeDA extends TransactionalDispatchAction {
         final String[] enrolementsToTransfer = (String[]) actionForm.get("enrolementsToTransfer");
         final String[] enrolementsToMaintain = (String[]) actionForm.get("enrolementsToMaintain");
         final String[] enrolementsToDelete = (String[]) actionForm.get("enrolementsToDelete");
+        final String newStudentCurricularPlanStartDate = (String) actionForm.get("newStudentCurricularPlanStartDate");
 
         final Set<String> enrolements = new HashSet<String>();
 
@@ -247,7 +245,9 @@ public class ChangeDegreeDA extends TransactionalDispatchAction {
                 Integer.valueOf(executionDegreeToChangeTo),
                 enrolementsToTransferIds,
                 enrolementsToMaintainIds,
-                enrolementsToDeleteIds };
+                enrolementsToDeleteIds,
+                dateFormat.parse(newStudentCurricularPlanStartDate)
+                };
         ServiceUtils.executeService(userView, "ChangeDegree", args);
 
         return mapping.findForward("showSucessPage");

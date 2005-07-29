@@ -150,6 +150,7 @@
 			<form-property name="enrolementsToTransfer" type="java.lang.String[]"/>
 			<form-property name="enrolementsToMaintain" type="java.lang.String[]"/>
 			<form-property name="enrolementsToDelete" type="java.lang.String[]"/>
+			<form-property name="newStudentCurricularPlanStartDate" type="java.lang.String"/>
 		</form-bean>
 
 	</form-beans>

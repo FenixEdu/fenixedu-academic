@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -26,7 +27,8 @@ public class ChangeDegree implements IService {
 
     public void run(final String employeeUsername, final Integer studentNumber,
             final Integer executionDegreeToChangeTo, final Set<Integer> enrolementsToTransferIds,
-            final Set<Integer> enrolementsToMaintainIds, final Set<Integer> enrolementsToDeleteIds)
+            final Set<Integer> enrolementsToMaintainIds, final Set<Integer> enrolementsToDeleteIds,
+            final Date newStudentCurricularPlanStartDate)
             throws ExcepcaoPersistencia {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
@@ -63,7 +65,7 @@ public class ChangeDegree implements IService {
         newActiveStudentCurricularPlan.setObservations(null);
         newActiveStudentCurricularPlan.setSecundaryBranch(null);
         newActiveStudentCurricularPlan.setSpecialization(null);
-        newActiveStudentCurricularPlan.setStartDate(Calendar.getInstance().getTime());
+        newActiveStudentCurricularPlan.setStartDate(newStudentCurricularPlanStartDate);
         newActiveStudentCurricularPlan.setStudent(currentActiveStudentCurricularPlan.getStudent());
         newActiveStudentCurricularPlan.setWhen(Calendar.getInstance().getTime());
 
