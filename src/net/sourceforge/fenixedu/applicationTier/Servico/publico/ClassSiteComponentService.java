@@ -35,49 +35,38 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ClassSiteComponentService implements IService {
 
-    public ClassSiteComponentService() {
-
-    }
-
     public Object run(ISiteComponent bodyComponent, String executionYearName,
             String executionPeriodName, String degreeInitials, String nameDegreeCurricularPlan,
-            String className, Integer curricularYear, Integer classId) throws FenixServiceException {
+            String className, Integer curricularYear, Integer classId) throws FenixServiceException, ExcepcaoPersistencia {
 
-        SiteView siteView = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+        final IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+        final IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
+        final ITurmaPersistente persistentSchoolClass = sp.getITurmaPersistente();
 
-            IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
-            ITurmaPersistente persistentSchoolClass = sp.getITurmaPersistente();
+        IExecutionYear executionYear = persistentExecutionYear
+                .readExecutionYearByName(executionYearName);
 
-            IExecutionYear executionYear = persistentExecutionYear
-                    .readExecutionYearByName(executionYearName);
+        IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(
+                executionPeriodName, executionYear.getYear());
 
-            IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(
-                    executionPeriodName, executionYear.getYear());
-
-            IExecutionDegree executionDegree = executionDegreeDAO
-                    .readByDegreeCurricularPlanAndExecutionYear(nameDegreeCurricularPlan,
-                            degreeInitials, executionYear.getYear());
-            PublicSiteComponentBuilder componentBuilder = PublicSiteComponentBuilder.getInstance();
-            ISchoolClass domainClass;
-            if (classId == null) {
-                domainClass = getDomainClass(className, curricularYear, executionPeriod,
-                        executionDegree, sp);
-                if (domainClass == null) {
-                    throw new NonExistingServiceException();
-                }
-            } else {
-
-                domainClass = (ISchoolClass) persistentSchoolClass.readByOID(SchoolClass.class, classId);
+        IExecutionDegree executionDegree = executionDegreeDAO
+                .readByDegreeCurricularPlanAndExecutionYear(nameDegreeCurricularPlan, degreeInitials,
+                        executionYear.getYear());
+        PublicSiteComponentBuilder componentBuilder = PublicSiteComponentBuilder.getInstance();
+        ISchoolClass domainClass;
+        if (classId == null) {
+            domainClass = getDomainClass(className, curricularYear, executionPeriod, executionDegree, sp);
+            if (domainClass == null) {
+                throw new NonExistingServiceException();
             }
-            bodyComponent = componentBuilder.getComponent(bodyComponent, domainClass);
-            siteView = new SiteView(bodyComponent);
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+        } else {
+
+            domainClass = (ISchoolClass) persistentSchoolClass.readByOID(SchoolClass.class, classId);
         }
+        bodyComponent = componentBuilder.getComponent(bodyComponent, domainClass);
+        SiteView siteView = new SiteView(bodyComponent);
 
         return siteView;
     }
@@ -103,12 +92,6 @@ public class ClassSiteComponentService implements IService {
                 if (domainList.size() != 0) {
                     domainClass = (ISchoolClass) domainList.get(0);
                 }
-            } else {
-                domainClass = new SchoolClass();
-                domainClass.setAnoCurricular(curricularYear);
-                domainClass.setExecutionDegree(executionDegree);
-                domainClass.setExecutionPeriod(executionPeriod);
-
             }
         }
         return domainClass;
