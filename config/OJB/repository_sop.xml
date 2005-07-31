@@ -1,4 +1,4 @@
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.Building" table="BUILDING">
+<class-descriptor class="net.sourceforge.fenixedu.domain.Building" table="BUILDING">
       <field-descriptor
          name="idInternal"
          column="ID_INTERNAL"
@@ -17,7 +17,7 @@
          column="NAME"
          jdbc-type="VARCHAR"
       />
-     <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="rooms"
 			element-class-ref="net.sourceforge.fenixedu.domain.Room"
 			>
@@ -25,8 +25,7 @@
 	</collection-descriptor>
 </class-descriptor>
 
-<class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.Room"
+<class-descriptor class="net.sourceforge.fenixedu.domain.Room"
    	  table="ROOM"
    >
       <field-descriptor id="1"
@@ -73,14 +72,14 @@
          column="KEY_BUILDING"
          jdbc-type="INTEGER"
       />
-      <reference-descriptor
+      <reference-descriptor auto-retrieve="false"
          name="building"
          class-ref="net.sourceforge.fenixedu.domain.Building"
       >
          <foreignkey field-ref="keyBuilding"/>
       </reference-descriptor>
       
-      <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 		name="associatedSummaries" 
 		element-class-ref="net.sourceforge.fenixedu.domain.Summary"
 		
@@ -88,7 +87,7 @@
 		<inverse-foreignkey field-ref="keyRoom"/>
 	  </collection-descriptor>
 
-      <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 		name="associatedLessons" 
 		element-class-ref="net.sourceforge.fenixedu.domain.Lesson"
 		
@@ -96,7 +95,7 @@
 		<inverse-foreignkey field-ref="chaveSala"/>
 	  </collection-descriptor>
 
-      <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 		name="roomOccupations" 
 		element-class-ref="net.sourceforge.fenixedu.domain.RoomOccupation"
 		
@@ -104,7 +103,7 @@
 		<inverse-foreignkey field-ref="keyRoom"/>
 	  </collection-descriptor>
 
-      <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 		name="examStudentRooms" 
 		element-class-ref="net.sourceforge.fenixedu.domain.ExamStudentRoom"
 		
@@ -112,7 +111,7 @@
 		<inverse-foreignkey field-ref="keyRoom"/>
 	  </collection-descriptor>
 
-      <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 		name="inquiriesRoom" 
 		element-class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom"
 		
@@ -123,8 +122,7 @@
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.SchoolClass -->
-<class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.SchoolClass"
+<class-descriptor class="net.sourceforge.fenixedu.domain.SchoolClass"
    	  table="CLASS"
    >
       <field-descriptor id="1"
@@ -160,19 +158,19 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-      <reference-descriptor
+      <reference-descriptor auto-retrieve="false"
          name="executionDegree"
          class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
       >
          <foreignkey field-ref="keyExecutionDegree"/>
       </reference-descriptor>
-      <reference-descriptor
+      <reference-descriptor auto-retrieve="false"
          name="executionPeriod"
          class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
       >
          <foreignkey field-ref="keyExecutionPeriod"/>
       </reference-descriptor>      
-     <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedShifts"
 			element-class-ref="net.sourceforge.fenixedu.domain.Shift"
 			indirection-table="CLASS_SHIFT"
@@ -180,11 +178,11 @@
 		<fk-pointing-to-this-class column="KEY_CLASS"/>
 		<fk-pointing-to-element-class column="KEY_SHIFT"/>
 	</collection-descriptor> 
+		     
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.Shift -->
-   <class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.Shift"
+   <class-descriptor class="net.sourceforge.fenixedu.domain.Shift"
    	  table="SHIFT"
    >
       <field-descriptor id="1"
@@ -228,26 +226,26 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-      <reference-descriptor
+      <reference-descriptor auto-retrieve="false"
          name="disciplinaExecucao"
          class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 		 
 		 >
          <foreignkey field-ref="chaveDisciplinaExecucao"/>
       </reference-descriptor>
-     <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedShiftProfessorship"
 			element-class-ref="net.sourceforge.fenixedu.domain.ShiftProfessorship"
 			>
 		<inverse-foreignkey field-ref="keyShift"/>
 	</collection-descriptor>
-     <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedLessons"
 			element-class-ref="net.sourceforge.fenixedu.domain.Lesson"
 			>
 		<inverse-foreignkey field-ref="keyShift"/>
 	</collection-descriptor>
-     <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedClasses"
 			element-class-ref="net.sourceforge.fenixedu.domain.SchoolClass"
 			indirection-table="CLASS_SHIFT"
@@ -255,14 +253,14 @@
 		<fk-pointing-to-this-class column="KEY_SHIFT"/>
 		<fk-pointing-to-element-class column="KEY_CLASS"/>
 	</collection-descriptor>
-    <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 		name="associatedSummaries" 
 		element-class-ref="net.sourceforge.fenixedu.domain.Summary"
 		
 		>
 		<inverse-foreignkey field-ref="keyShift"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="students"
 			element-class-ref="net.sourceforge.fenixedu.domain.Student"
 			indirection-table="SHIFT_STUDENT"
@@ -273,8 +271,7 @@
 	</class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.Lesson -->
-   <class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.Lesson"
+   <class-descriptor class="net.sourceforge.fenixedu.domain.Lesson"
    	  table="LESSON"
    >
       <field-descriptor id="1"
@@ -340,25 +337,25 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-      <reference-descriptor
+      <reference-descriptor auto-retrieve="false"
          name="sala"
          class-ref="net.sourceforge.fenixedu.domain.Room"
       >
          <foreignkey field-ref="chaveSala"/>
       </reference-descriptor>
-      <reference-descriptor
+      <reference-descriptor auto-retrieve="false"
          name="shift"
          class-ref="net.sourceforge.fenixedu.domain.Shift"
       >
          <foreignkey field-ref="keyShift"/>
       </reference-descriptor>
-	 <reference-descriptor
+	 <reference-descriptor auto-retrieve="false"
          name="executionPeriod"
          class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
       >
          <foreignkey field-ref="keyExecutionPeriod"/>
       </reference-descriptor>     
-   	  <reference-descriptor
+   	  <reference-descriptor auto-retrieve="false"
          name="roomOccupation"
          class-ref="net.sourceforge.fenixedu.domain.RoomOccupation"
       >
@@ -366,9 +363,10 @@
       </reference-descriptor>     
 </class-descriptor>
 
-	<!-- Definitions for net.sourceforge.fenixedu.domain.Attends -->
-   <class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.Attends"
+      
+ 
+<!-- Definitions for net.sourceforge.fenixedu.domain.Attends -->
+   <class-descriptor class="net.sourceforge.fenixedu.domain.Attends"
    	  table="ATTEND"
    >
       <field-descriptor id="1"
@@ -399,20 +397,20 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-      <reference-descriptor
+      <reference-descriptor auto-retrieve="false"
          name="aluno"
          class-ref="net.sourceforge.fenixedu.domain.Student"
          
       >
          <foreignkey field-ref="chaveAluno"/>
       </reference-descriptor> 
-      <reference-descriptor
+      <reference-descriptor auto-retrieve="false"
          name="disciplinaExecucao"
          class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
       >
          <foreignkey field-ref="chaveDisciplinaExecucao"/>
       </reference-descriptor> 
-      <reference-descriptor
+      <reference-descriptor auto-retrieve="false"
          name="enrolment"
          class-ref="net.sourceforge.fenixedu.domain.Enrolment"
          
@@ -420,24 +418,24 @@
          <foreignkey field-ref="keyEnrolment"/>
       </reference-descriptor> 
 
-	  <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+	  <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 			name="attendInAttendsSet" 
 			element-class-ref="net.sourceforge.fenixedu.domain.AttendInAttendsSet"
 			>
 			<inverse-foreignkey field-ref="keyAttend"/>
       </collection-descriptor>
 
-	  <collection-descriptor 
+	  <collection-descriptor proxy="true" auto-retrieve="false" 
 			name="studentGroupAttends" 
 			element-class-ref="net.sourceforge.fenixedu.domain.StudentGroupAttend"
-			proxy="true">
+		>
 			<inverse-foreignkey field-ref="keyAttend"/>
       </collection-descriptor>
 
    </class-descriptor>   
 
 
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.ExamStudentRoom"  table="EXAM_STUDENT_ROOM">
+<class-descriptor class="net.sourceforge.fenixedu.domain.ExamStudentRoom"  table="EXAM_STUDENT_ROOM">
       <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" 
       					autoincrement="true"/>
       <field-descriptor name="keyExam" column="KEY_EVALUATION"  jdbc-type="INTEGER"/>      
@@ -449,20 +447,19 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-      <reference-descriptor name="exam" class-ref="net.sourceforge.fenixedu.domain.Exam" >
+      <reference-descriptor auto-retrieve="false" name="exam" class-ref="net.sourceforge.fenixedu.domain.Exam" >
          <foreignkey field-ref="keyExam"/>
       </reference-descriptor> 
-      <reference-descriptor name="student" class-ref="net.sourceforge.fenixedu.domain.Student" >
+      <reference-descriptor auto-retrieve="false" name="student" class-ref="net.sourceforge.fenixedu.domain.Student" >
          <foreignkey field-ref="keyStudent"/>
       </reference-descriptor> 
-      <reference-descriptor name="room" class-ref="net.sourceforge.fenixedu.domain.Room" >
+      <reference-descriptor auto-retrieve="false" name="room" class-ref="net.sourceforge.fenixedu.domain.Room" >
          <foreignkey field-ref="keyRoom"/>
       </reference-descriptor> 
 </class-descriptor>
 	
 <!-- Definitions for net.sourceforge.fenixedu.domain.FinalEvaluation -->
-   <class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.FinalEvaluation"
+   <class-descriptor class="net.sourceforge.fenixedu.domain.FinalEvaluation"
    	  table="EVALUATION"
    >
       <field-descriptor
@@ -488,7 +485,7 @@
         column="PUBLISHMENT_MESSAGE"
         jdbc-type="VARCHAR"
       />
-	  <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	  <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedExecutionCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 			indirection-table="EXAM_EXECUTION_COURSE"
@@ -500,8 +497,7 @@
 
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.Mark -->
-   <class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.Mark"
+   <class-descriptor class="net.sourceforge.fenixedu.domain.Mark"
    	  table="MARK">
       <field-descriptor
          name="idInternal"
@@ -536,14 +532,14 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-      <reference-descriptor
+      <reference-descriptor auto-retrieve="false"
          name="attend"
          class-ref="net.sourceforge.fenixedu.domain.Attends"
          
       >
          <foreignkey field-ref="keyAttend"/>
       </reference-descriptor> 
-      <reference-descriptor
+      <reference-descriptor auto-retrieve="false"
          name="evaluation"
          class-ref="net.sourceforge.fenixedu.domain.Evaluation"
       >
@@ -553,8 +549,7 @@
 </class-descriptor> 
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.ExamExecutionCourse -->
-   <class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.ExamExecutionCourse"
+   <class-descriptor class="net.sourceforge.fenixedu.domain.ExamExecutionCourse"
    	  table="EXAM_EXECUTION_COURSE"
    >
       <field-descriptor id="1"
@@ -580,13 +575,13 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-      <reference-descriptor
+      <reference-descriptor auto-retrieve="false"
          name="exam"
          class-ref="net.sourceforge.fenixedu.domain.Exam"
       >
          <foreignkey field-ref="keyExam"/>
       </reference-descriptor> 
-      <reference-descriptor
+      <reference-descriptor auto-retrieve="false"
          name="executionCourse"
          class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
       >
@@ -595,8 +590,7 @@
    </class-descriptor>
    
 <!-- Definitions for net.sourceforge.fenixedu.domain.EvaluationExecutionCourse -->
-   <class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.EvaluationExecutionCourse"
+   <class-descriptor class="net.sourceforge.fenixedu.domain.EvaluationExecutionCourse"
    	  table="EXAM_EXECUTION_COURSE"
    >
       <field-descriptor id="1"
@@ -622,13 +616,13 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-      <reference-descriptor
+      <reference-descriptor auto-retrieve="false"
          name="evaluation"
          class-ref="net.sourceforge.fenixedu.domain.Evaluation"
       >
          <foreignkey field-ref="keyEvaluation"/>
       </reference-descriptor> 
-      <reference-descriptor
+      <reference-descriptor auto-retrieve="false"
          name="executionCourse"
          class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
       >
@@ -637,8 +631,7 @@
    </class-descriptor>
    
 <!-- Definitions for net.sourceforge.fenixedu.domain.RoomOccupation -->
-   <class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.RoomOccupation"
+   <class-descriptor class="net.sourceforge.fenixedu.domain.RoomOccupation"
    	  table="ROOM_OCCUPATION"
    >
       <field-descriptor id="1"
@@ -692,13 +685,13 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-      <reference-descriptor
+      <reference-descriptor auto-retrieve="false"
          name="room"
          class-ref="net.sourceforge.fenixedu.domain.Room"
       >
          <foreignkey field-ref="keyRoom"/>
       </reference-descriptor>
-      <reference-descriptor
+      <reference-descriptor auto-retrieve="false"
          name="period"
          class-ref="net.sourceforge.fenixedu.domain.Period"
       >
@@ -708,8 +701,7 @@
 
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.Period -->
-   <class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.Period"
+   <class-descriptor class="net.sourceforge.fenixedu.domain.Period"
    	  table="PERIOD"
    >
       <field-descriptor id="1"
@@ -742,43 +734,43 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-      <reference-descriptor
+      <reference-descriptor auto-retrieve="false"
          name="nextPeriod"
          class-ref="net.sourceforge.fenixedu.domain.Period"
       >
          <foreignkey field-ref="keyPeriod"/>
       </reference-descriptor>
-      <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="roomOccupations"
          element-class-ref="net.sourceforge.fenixedu.domain.RoomOccupation"
          >
          <inverse-foreignkey field-ref="keyPeriod"/>
       </collection-descriptor>
-      <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="executionDegreesForExamsFirstSemester"
          element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
          >
          <inverse-foreignkey field-ref="keyPeriodExamsFirstSemester"/>
       </collection-descriptor>
-      <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="executionDegreesForExamsFirstSemester"
          element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
          >
          <inverse-foreignkey field-ref="keyPeriodExamsFirstSemester"/>
       </collection-descriptor>
-      <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="executionDegreesForExamsSecondSemester"
          element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
          >
          <inverse-foreignkey field-ref="keyPeriodExamsSecondSemester"/>
       </collection-descriptor>
-      <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="executionDegreesForLessonsFirstSemester"
          element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
          >
          <inverse-foreignkey field-ref="keyPeriodLessonsFirstSemester"/>
       </collection-descriptor>
-      <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="executionDegreesForLessonsSecondSemester"
          element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
          >
@@ -788,7 +780,7 @@
    </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.Evaluation -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.Evaluation" table="EVALUATION">
+<class-descriptor class="net.sourceforge.fenixedu.domain.Evaluation" table="EVALUATION">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.Exam" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.WrittenTest" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.WrittenEvaluation" />
@@ -812,7 +804,7 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedExecutionCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 			indirection-table="EXAM_EXECUTION_COURSE"
@@ -820,13 +812,13 @@
 		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
 		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="evaluationExecutionCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.EvaluationExecutionCourse"
 			>
 		<inverse-foreignkey field-ref="keyEvaluation"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="marks"
 			element-class-ref="net.sourceforge.fenixedu.domain.Mark"
 			>
@@ -836,8 +828,7 @@
 
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.WrittenTest -->
-   <class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.WrittenTest"
+   <class-descriptor class="net.sourceforge.fenixedu.domain.WrittenTest"
    	  table="EVALUATION"
    >
       <field-descriptor
@@ -905,7 +896,7 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-   <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+   <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedExecutionCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 			indirection-table="EXAM_EXECUTION_COURSE"
@@ -914,12 +905,12 @@
 		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
 		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedRoomOccupation"
 			element-class-ref="net.sourceforge.fenixedu.domain.RoomOccupation"
 			indirection-table="WRITTEN_EVALUATION_ROOM_OCCUPATION"
 			
-			auto-retrieve="true"
+			
 			auto-update="false"
 			auto-delete="false"
 			
@@ -933,8 +924,7 @@
 
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.Exam -->
-   <class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.Exam"
+   <class-descriptor class="net.sourceforge.fenixedu.domain.Exam"
    	  table="EVALUATION"
    >
       <field-descriptor
@@ -1008,7 +998,7 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedExecutionCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 			indirection-table="EXAM_EXECUTION_COURSE"
@@ -1016,7 +1006,7 @@
 		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
 		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedRoomOccupation"
 			element-class-ref="net.sourceforge.fenixedu.domain.RoomOccupation"
 			indirection-table="WRITTEN_EVALUATION_ROOM_OCCUPATION"
@@ -1024,7 +1014,7 @@
 		<fk-pointing-to-this-class column="KEY_WRITTEN_EVALUATION"/>
 		<fk-pointing-to-element-class column="KEY_ROOM_OCCUPATION"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedCurricularCourseScope"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseScope"
 			indirection-table="WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE"
@@ -1032,13 +1022,13 @@
 		<fk-pointing-to-this-class column="KEY_WRITTEN_EVALUATION"/>
 		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE_SCOPE"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="examStudentRooms"
 			element-class-ref="net.sourceforge.fenixedu.domain.ExamStudentRoom"
 			>
 		<inverse-foreignkey field-ref="keyExam"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedExecutionCoursesForExam"
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 			indirection-table="EXAM_EXECUTION_COURSE"
@@ -1049,8 +1039,7 @@
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.WrittenEvaluation -->
-   <class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.WrittenEvaluation"
+   <class-descriptor class="net.sourceforge.fenixedu.domain.WrittenEvaluation"
    	  table="EVALUATION"
    >
       <field-descriptor
@@ -1118,7 +1107,7 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedExecutionCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 			indirection-table="EXAM_EXECUTION_COURSE"
@@ -1126,7 +1115,7 @@
 		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
 		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedCurricularCourseScope"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseScope"
 			indirection-table="WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE"
@@ -1134,7 +1123,7 @@
 		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
 		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE_SCOPE"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedRoomOccupation"
 			element-class-ref="net.sourceforge.fenixedu.domain.RoomOccupation"
 			indirection-table="WRITTEN_EVALUATION_ROOM_OCCUPATION"

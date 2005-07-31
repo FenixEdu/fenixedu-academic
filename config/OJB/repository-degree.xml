@@ -1,4 +1,4 @@
-<class-descriptor proxy="dynamic"	class="net.sourceforge.fenixedu.domain.degree.finalProject.DegreeFinalProject"
+<class-descriptor class="net.sourceforge.fenixedu.domain.degree.finalProject.DegreeFinalProject"
 		table="DEGREE_FINAL_PROJECT">
 	  <field-descriptor  name="idInternal" column="ID_INTERNAL"  
 							     jdbc-type="INTEGER"  primarykey="true" autoincrement="true"/>
@@ -12,14 +12,14 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-	  <reference-descriptor
+	  <reference-descriptor auto-retrieve="false"
 			name="executionYear"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionYear">
 		<foreignkey field-ref="keyExecutionYear"/>
 	 </reference-descriptor>   
  </class-descriptor>  
 
-<class-descriptor proxy="dynamic"	class="net.sourceforge.fenixedu.domain.degree.finalProject.DegreeFinalProjectOrientation"
+<class-descriptor class="net.sourceforge.fenixedu.domain.degree.finalProject.DegreeFinalProjectOrientation"
 		table="DEGREE_FINAL_PROJECT_ORIENTATION">
 	  <field-descriptor  name="idInternal" column="ID_INTERNAL"  
 							     jdbc-type="INTEGER"  primarykey="true" autoincrement="true"/>
@@ -37,13 +37,13 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-	  <reference-descriptor
+	  <reference-descriptor auto-retrieve="false"
 			name="teacher"
 			class-ref="net.sourceforge.fenixedu.domain.Teacher"
 			>
 		<foreignkey field-ref="keyTeacher"/>
 	 </reference-descriptor>   
-	  <reference-descriptor
+	  <reference-descriptor auto-retrieve="false"
 			name="degreeFinalProject"
 			class-ref="net.sourceforge.fenixedu.domain.degree.finalProject.DegreeFinalProject"
 			>

@@ -215,6 +215,15 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return _odmg;
     }
 
+    public Transaction getCurrentTransaction() {
+        return _odmg.currentTransaction();
+    }
+
+    public static PersistenceBroker getCurrentPersistenceBroker() throws ExcepcaoPersistencia {
+        return ((HasBroker) getInstance().getCurrentTransaction()).getBroker();
+    }
+
+
     /*
      * (non-Javadoc)
      * 

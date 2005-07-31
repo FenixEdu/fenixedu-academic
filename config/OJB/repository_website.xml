@@ -5,7 +5,7 @@
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.WebSite -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.WebSite" table="WEBSITE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.WebSite" table="WEBSITE">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.SiteIST" />
     <field-descriptor
         name="idInternal"
@@ -45,7 +45,7 @@
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.SiteIST -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.SiteIST" table="WEBSITE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.SiteIST" table="WEBSITE">
     <field-descriptor
         name="idInternal"
         column="ID_INTERNAL"
@@ -87,7 +87,7 @@
    
    
 <!-- Definitions for net.sourceforge.fenixedu.domain.WebSiteSection -->
-   <class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.WebSiteSection" table="WEBSITE_SECTION">
+   <class-descriptor class="net.sourceforge.fenixedu.domain.WebSiteSection" table="WEBSITE_SECTION">
     <field-descriptor
         name="idInternal"
         column="ID_INTERNAL"
@@ -136,7 +136,7 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-      <reference-descriptor
+      <reference-descriptor auto-retrieve="false"
          name="webSite"
          class-ref="net.sourceforge.fenixedu.domain.WebSite"
          
@@ -151,7 +151,7 @@
 <!-- ******************************************************************************************************************************* -->
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.WebSite_Item -->
-   <class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.WebSiteItem" table="WEBSITE_ITEM">
+   <class-descriptor class="net.sourceforge.fenixedu.domain.WebSiteItem" table="WEBSITE_ITEM">
       <field-descriptor
          name="idInternal"
          column="ID_INTERNAL"
@@ -236,14 +236,14 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-      <reference-descriptor
+      <reference-descriptor auto-retrieve="false"
          name="editor"
          class-ref="net.sourceforge.fenixedu.domain.Person"
          
       >
          <foreignkey field-ref="keyEditor"/>
       </reference-descriptor>
-      <reference-descriptor
+      <reference-descriptor auto-retrieve="false"
          name="webSiteSection"
          class-ref="net.sourceforge.fenixedu.domain.WebSiteSection"
          

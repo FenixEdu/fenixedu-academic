@@ -8,6 +8,10 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.QueryByCriteria;
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.odmg.HasBroker;
+
 
 public abstract class VersionedObjectsBase {
 
@@ -48,7 +52,10 @@ public abstract class VersionedObjectsBase {
 
     public Collection readAll(final Class classToQuery) {
         try {
-            return SuportePersistenteOJB.getInstance().getIPersistentObject().readAll(classToQuery);
+            QueryByCriteria queryCriteria = new QueryByCriteria(classToQuery, null, false);
+            PersistenceBroker pb = ((HasBroker) SuportePersistenteOJB.getInstance().getCurrentTransaction()).getBroker();
+            
+            return pb.getCollectionByQuery(queryCriteria);
         } catch (ExcepcaoPersistencia e) {
             return null;
         }

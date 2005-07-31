@@ -1,6 +1,5 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.student.Senior -->
-<class-descriptor proxy="dynamic"
-	class="net.sourceforge.fenixedu.domain.student.Senior"
+<class-descriptor class="net.sourceforge.fenixedu.domain.student.Senior"
 	table="SENIOR"
 >
 	<field-descriptor 
@@ -66,7 +65,7 @@
 		column="LAST_MODIFICATION_DATE"
 		jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>
-	<reference-descriptor 
+	<reference-descriptor auto-retrieve="false" 
 			name="student" 
 			class-ref="net.sourceforge.fenixedu.domain.Student" 
 			>

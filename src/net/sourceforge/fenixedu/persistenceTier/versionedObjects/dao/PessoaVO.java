@@ -10,12 +10,12 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
 
-public class PessoaVO extends PersistentObjectOJB implements IPessoaPersistente {
+public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente {
 
     public IPerson lerPessoaPorUsername(final String username) throws ExcepcaoPersistencia {
         for (final IPerson person : (List<IPerson>) readAll(Person.class)) {

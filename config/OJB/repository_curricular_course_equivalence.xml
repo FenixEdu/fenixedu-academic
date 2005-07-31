@@ -1,7 +1,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.CurricularCourseEquivalence -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.CurricularCourseEquivalence" table="CURRICULAR_COURSE_EQUIVALENCE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.CurricularCourseEquivalence" table="CURRICULAR_COURSE_EQUIVALENCE">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -30,19 +30,19 @@
 		jdbc-type="INTEGER"
 		locking="true"
 	/>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="oldCurricularCourse"
 			class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			>
 		<foreignkey field-ref="oldCurricularCourseKey"/>
 	</reference-descriptor>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="equivalentCurricularCourse"
 			class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			>
 		<foreignkey field-ref="equivalentCurricularCourseKey"/>
 	</reference-descriptor>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="degreeCurricularPlan"
 			class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
 			>

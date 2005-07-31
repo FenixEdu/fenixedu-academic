@@ -1,6 +1,5 @@
 <!-- Definitions for . -->
-<class-descriptor proxy="dynamic" 
-  class="middleware.almeida.Almeida_coddisc"
+<class-descriptor class="middleware.almeida.Almeida_coddisc"
   table="almeida_coddisc"
 >
   <field-descriptor id="1"

@@ -1,6 +1,5 @@
 <!-- Definitions for . -->
-<class-descriptor proxy="dynamic" 
-  class="net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter"
+<class-descriptor class="net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter"
   table="MONEY_COST_CENTER"
 >
 	<field-descriptor
@@ -52,13 +51,13 @@
 		jdbc-type="TIMESTAMP"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>   
-  	<reference-descriptor
+  	<reference-descriptor auto-retrieve="false"
          name="costCenter"
          class-ref="net.sourceforge.fenixedu.domain.CostCenter"
          >
          <foreignkey field-ref="costCenterKey"/>
   	</reference-descriptor>
-    <reference-descriptor
+    <reference-descriptor auto-retrieve="false"
       	name="whoEmployee"
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
        	
@@ -67,8 +66,7 @@
     </reference-descriptor>  
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" 
-  class="net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork"
+<class-descriptor class="net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork"
   table="EXTRA_WORK"
 >
 	<field-descriptor
@@ -191,14 +189,14 @@
 		jdbc-type="TIMESTAMP"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>   
-    <reference-descriptor
+    <reference-descriptor auto-retrieve="false"
       	name="employee"
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
        	
 		>
         <foreignkey field-ref="employeeKey"/>
     </reference-descriptor> 
-    <reference-descriptor
+    <reference-descriptor auto-retrieve="false"
       	name="whoEmployee"
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
        	
@@ -207,8 +205,7 @@
     </reference-descriptor> 
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" 
-  class="net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests"
+<class-descriptor class="net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests"
   table="EXTRA_WORK_REQUESTS"
 >
 	<field-descriptor
@@ -320,25 +317,25 @@
 		jdbc-type="TIMESTAMP"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>   
-    <reference-descriptor
+    <reference-descriptor auto-retrieve="false"
       	name="employee"
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
        	>
         <foreignkey field-ref="employeeKey"/>
     </reference-descriptor> 
-  	<reference-descriptor
+  	<reference-descriptor auto-retrieve="false"
          name="costCenterExtraWork"
 		 class-ref="net.sourceforge.fenixedu.domain.CostCenter"
          >
          <foreignkey field-ref="costCenterExtraWorkKey"/>
   	</reference-descriptor>
-  	<reference-descriptor
+  	<reference-descriptor auto-retrieve="false"
          name="costCenterMoney"
          class-ref="net.sourceforge.fenixedu.domain.CostCenter"
          >
          <foreignkey field-ref="costCenterMoneyKey"/>
   	</reference-descriptor>
-    <reference-descriptor
+    <reference-descriptor auto-retrieve="false"
       	name="whoEmployee"
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
        	>
@@ -346,8 +343,7 @@
     </reference-descriptor> 
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" 
-  class="net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkCompensation"
+<class-descriptor class="net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkCompensation"
   table="EXTRA_WORK_COMPENSATION"
 >
 	<field-descriptor
@@ -404,14 +400,14 @@
 		jdbc-type="TIMESTAMP"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>   
-    <reference-descriptor
+    <reference-descriptor auto-retrieve="false"
       	name="employee"
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
        	
 		>
         <foreignkey field-ref="employeeKey"/>
     </reference-descriptor> 
-    <reference-descriptor
+    <reference-descriptor auto-retrieve="false"
       	name="whoEmployee"
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
        	
@@ -421,8 +417,7 @@
 </class-descriptor>
 
 
-<class-descriptor proxy="dynamic" 
-  class="net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkHistoric"
+<class-descriptor class="net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkHistoric"
   table="EXTRA_WORK_HISTORIC"
 >
 	<field-descriptor
@@ -481,14 +476,14 @@
 		jdbc-type="TIMESTAMP"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>   
-    <reference-descriptor
+    <reference-descriptor auto-retrieve="false"
       	name="employee"
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
        	
 		>
         <foreignkey field-ref="employeeKey"/>
     </reference-descriptor> 
-    <reference-descriptor
+    <reference-descriptor auto-retrieve="false"
       	name="whoEmployee"
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
        	

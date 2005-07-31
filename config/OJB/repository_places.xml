@@ -2,7 +2,7 @@
      to avoid mixing user defined and system mappings. -->   
 <!-- Mapping of User defined classes starts here -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.Campus -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.Campus" table="CAMPUS">
+<class-descriptor class="net.sourceforge.fenixedu.domain.Campus" table="CAMPUS">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -21,7 +21,7 @@
 	  	jdbc-type="INTEGER"
 	  	locking="true"
 	/>
-   <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+   <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="executionDegrees"
 		element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
 		>

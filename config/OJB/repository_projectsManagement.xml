@@ -1,7 +1,7 @@
 <!-- ************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.PersonProject -->
 <!-- ************************************* -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess"
+<class-descriptor class="net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess"
 				  
                   table="PROJECT_ACCESS">
 	<field-descriptor
@@ -49,7 +49,7 @@
       	jdbc-type="INTEGER"
       	locking="true"
 	/>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
          name="person"
          class-ref="net.sourceforge.fenixedu.domain.Person"
          

@@ -3,7 +3,7 @@
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.InquiryAnswer -->
 <!-- *************************************************************************************************************** -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers" table="PERSONAL_DATA_USE_INQUIRY_ANSWERS">
+<class-descriptor class="net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers" table="PERSONAL_DATA_USE_INQUIRY_ANSWERS">
   <field-descriptor
     name="idInternal"
     column="ID_INTERNAL"
@@ -58,7 +58,7 @@
 	locking="true"
   />
 
-  <reference-descriptor
+  <reference-descriptor auto-retrieve="false"
 	name="student"
 	class-ref="net.sourceforge.fenixedu.domain.Student"
 	>
@@ -66,7 +66,7 @@
   </reference-descriptor>
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.student.ResidenceCandidacies" table="RESIDENCE_CANDIDACIES">
+<class-descriptor class="net.sourceforge.fenixedu.domain.student.ResidenceCandidacies" table="RESIDENCE_CANDIDACIES">
 	<field-descriptor
     	name="idInternal"
     	column="ID_INTERNAL"
@@ -104,7 +104,7 @@
 		locking="true"
 	  />
 
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 		name="student"
 		class-ref="net.sourceforge.fenixedu.domain.Student"
 		>

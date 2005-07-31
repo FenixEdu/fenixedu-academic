@@ -5,7 +5,7 @@
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction" table="REIMBURSEMENT_TRANSACTION">
+<class-descriptor class="net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction" table="REIMBURSEMENT_TRANSACTION">
 	
 	<field-descriptor
 		name="idInternal"
@@ -79,7 +79,7 @@
 	    jdbc-type="INTEGER"
 	/>
 		
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
        	name="personAccount"
        	class-ref="net.sourceforge.fenixedu.domain.PersonAccount"
        	
@@ -88,7 +88,7 @@
 		<foreignkey field-ref="keyPersonAccount"/>
 	</reference-descriptor>
 	
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
        	name="reimbursementGuideEntry"
        	class-ref="net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry"
        	
@@ -97,7 +97,7 @@
 		<foreignkey field-ref="keyReimbursementGuideEntry"/>
 	</reference-descriptor>
 	
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
        	name="responsiblePerson"
        	class-ref="net.sourceforge.fenixedu.domain.Person"
        	

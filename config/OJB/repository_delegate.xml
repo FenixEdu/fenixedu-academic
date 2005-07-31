@@ -2,8 +2,7 @@
      to avoid mixing user defined and system mappings. -->   
 <!-- Mapping of User defined classes starts here -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.student.Delegate -->
-   <class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.student.Delegate"
+   <class-descriptor class="net.sourceforge.fenixedu.domain.student.Delegate"
    	  table="DELEGATE"
    >
       <field-descriptor 
@@ -43,18 +42,18 @@
         name="type" 
         column="TYPE" 
         jdbc-type="BIT"/>
-    <reference-descriptor
+    <reference-descriptor auto-retrieve="false"
 			name="degree"
 			class-ref="net.sourceforge.fenixedu.domain.Degree"
 			>
 		<foreignkey field-ref="keyDegree"/>
 	</reference-descriptor>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="executionYear"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionYear">
 		<foreignkey field-ref="keyExecutionYear"/>
 	</reference-descriptor>    
-	 <reference-descriptor
+	 <reference-descriptor auto-retrieve="false"
 			name="student"
 			class-ref="net.sourceforge.fenixedu.domain.Student"
 			>

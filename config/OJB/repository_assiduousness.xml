@@ -1,6 +1,5 @@
 <!-- Definitions for . -->
-<class-descriptor proxy="dynamic" 
-  class="net.sourceforge.fenixedu.domain.Employee"
+<class-descriptor class="net.sourceforge.fenixedu.domain.Employee"
   table="ass_FUNCIONARIO"
 >
   <field-descriptor
@@ -40,75 +39,75 @@
   	name="active" 
   	column="ACTIVE" 
   	jdbc-type="BIT"/>
-  <reference-descriptor
+  <reference-descriptor auto-retrieve="false"
          name="person"
          class-ref="net.sourceforge.fenixedu.domain.Person">
          <foreignkey field-ref="keyPerson"/>
   </reference-descriptor>
-  <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+  <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 	name="historicList"
 	element-class-ref="net.sourceforge.fenixedu.domain.EmployeeHistoric"
 	auto_retrieve="true"
 	>
 	<inverse-foreignkey field-ref="keyEmployee"/>
   </collection-descriptor> 
-  <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+  <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 	name="enrolmentEvaluations"
 	element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentEvaluation"
 	auto_retrieve="true"
 	>
 	<inverse-foreignkey field-ref="enrolmentKey"/>
   </collection-descriptor> 
-  <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+  <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 	name="reimbursementGuideSituations"
 	element-class-ref="net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation"
 	auto_retrieve="true"
 	>
 	<inverse-foreignkey field-ref="keyEmployee"/>
   </collection-descriptor>   
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="employeesNotTeacher"
 		element-class-ref="net.sourceforge.fenixedu.domain.EmployeeNotTeacher"
 		>
 		<inverse-foreignkey field-ref="keyEmployee"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="gratuitySituations"
 		element-class-ref="net.sourceforge.fenixedu.domain.GratuitySituation"
 		>
 		<inverse-foreignkey field-ref="keyEmployee"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="gratuityValues"
 		element-class-ref="net.sourceforge.fenixedu.domain.GratuityValues"
 		>
 		<inverse-foreignkey field-ref="keyEmployee"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="masterDegreeProofVersions"
 		element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeProofVersion"
 		>
 		<inverse-foreignkey field-ref="keyEmployee"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="masterDegreeThesisDataVersions"
 		element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion"
 		>
 		<inverse-foreignkey field-ref="keyEmployee"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="nonTeacherEmployees"
 		element-class-ref="net.sourceforge.fenixedu.domain.NonTeacherEmployee"
 		>
 		<inverse-foreignkey field-ref="chaveFuncionario"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="responsibleEmployeeAssociatedEmployeeHistorics"
 		element-class-ref="net.sourceforge.fenixedu.domain.EmployeeHistoric"
 		>
 		<inverse-foreignkey field-ref="keyResponsableEmployee"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="studentCurricularPlans"
 		element-class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
 		>
@@ -116,8 +115,7 @@
 	</collection-descriptor>
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" 
-  class="net.sourceforge.fenixedu.domain.EmployeeNotTeacher"
+<class-descriptor class="net.sourceforge.fenixedu.domain.EmployeeNotTeacher"
   table="ass_FUNC_NAO_DOCENTE"
 >
   <field-descriptor
@@ -138,15 +136,14 @@
     column="chaveFuncionario"
     jdbc-type="INTEGER"
   />
-  <reference-descriptor
+  <reference-descriptor auto-retrieve="false"
   	name="employee"
   	class-ref="net.sourceforge.fenixedu.domain.Employee">
   	<foreignkey field-ref="keyEmployee"/>
   </reference-descriptor>  
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" 
-  class="net.sourceforge.fenixedu.domain.EmployeeHistoric"
+<class-descriptor class="net.sourceforge.fenixedu.domain.EmployeeHistoric"
   table="ass_FUNCIONARIO_HISTORICO"
 >
   <field-descriptor
@@ -218,47 +215,46 @@
     jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
   />
 
-  <reference-descriptor
+  <reference-descriptor auto-retrieve="false"
          name="employee"
          class-ref="net.sourceforge.fenixedu.domain.Employee">
          <foreignkey field-ref="keyEmployee"/>
   </reference-descriptor>
   
-  <reference-descriptor
+  <reference-descriptor auto-retrieve="false"
          name="responsableEmployee"
          class-ref="net.sourceforge.fenixedu.domain.Employee">
          <foreignkey field-ref="keyResponsableEmployee"/>
   </reference-descriptor>
   
-  <reference-descriptor
+  <reference-descriptor auto-retrieve="false"
          name="workingPlaceCostCenter"
          class-ref="net.sourceforge.fenixedu.domain.CostCenter"
          >
          <foreignkey field-ref="keyWorkingPlaceCostCenter"/>
   </reference-descriptor>
 
-  <reference-descriptor
+  <reference-descriptor auto-retrieve="false"
          name="mailingCostCenter"
          class-ref="net.sourceforge.fenixedu.domain.CostCenter"
          >
          <foreignkey field-ref="keyMailingCostCenter"/>
   </reference-descriptor>   
 
-  <reference-descriptor
+  <reference-descriptor auto-retrieve="false"
          name="salaryCostCenter"
          class-ref="net.sourceforge.fenixedu.domain.CostCenter">
          <foreignkey field-ref="keySalaryCostCenter"/>
   </reference-descriptor>
   
-  <reference-descriptor
+  <reference-descriptor auto-retrieve="false"
          name="status"
          class-ref="net.sourceforge.fenixedu.domain.StatusAssiduidade">
          <foreignkey field-ref="keyStatus"/>
   </reference-descriptor>  
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" 
-	class="net.sourceforge.fenixedu.domain.CostCenter" 
+<class-descriptor class="net.sourceforge.fenixedu.domain.CostCenter" 
 	table="ass_CENTRO_CUSTO">
   <field-descriptor id="0"
     name="idInternal"
@@ -290,19 +286,19 @@
   	column="seccao2" 
   	jdbc-type="VARCHAR"/>
 
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
     	name="workingPlaceCostCenterAssociatedEmployeeHistorics"
         element-class-ref="net.sourceforge.fenixedu.domain.EmployeeHistoric"
 		>
 		<inverse-foreignkey field-ref="keyWorkingPlaceCostCenter"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
     	name="mailingCostCenterAssociatedEmployeeHistorics"
         element-class-ref="net.sourceforge.fenixedu.domain.EmployeeHistoric"
 		>
 		<inverse-foreignkey field-ref="keyMailingCostCenter"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
     	name="salaryCostCenterAssociatedEmployeeHistorics"
         element-class-ref="net.sourceforge.fenixedu.domain.EmployeeHistoric"
 		>
@@ -313,8 +309,7 @@
 
 <!-- Old classes -->
 
-<class-descriptor proxy="dynamic" 
-  class="net.sourceforge.fenixedu.domain.NonTeacherEmployee"
+<class-descriptor class="net.sourceforge.fenixedu.domain.NonTeacherEmployee"
   table="ass_FUNC_NAO_DOCENTE"
 >
   <field-descriptor id="0"
@@ -335,15 +330,14 @@
     column="chaveFuncionario"
     jdbc-type="INTEGER"
   />
-  <reference-descriptor
+  <reference-descriptor auto-retrieve="false"
   	name="funcionario"
   	class-ref="net.sourceforge.fenixedu.domain.Employee">
   	<foreignkey field-ref="chaveFuncionario"/>
   </reference-descriptor>  
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" 
-	class="net.sourceforge.fenixedu.domain.StatusAssiduidade" 
+<class-descriptor class="net.sourceforge.fenixedu.domain.StatusAssiduidade" 
 	table="ass_STATUS">
   <field-descriptor 
   	name="idInternal" 
@@ -384,8 +378,7 @@
   />  	
 </class-descriptor>
 
-<!--<class-descriptor proxy="dynamic" 
-  class="net.sourceforge.fenixedu.domain.Funcionario"
+<!--<class-descriptor class="net.sourceforge.fenixedu.domain.Funcionario"
   table="ass_FUNCIONARIO"
 >
   <field-descriptor id="0"
@@ -465,27 +458,27 @@
     column="quando"
     jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
   />
-  <reference-descriptor
+  <reference-descriptor auto-retrieve="false"
          name="person"
          class-ref="net.sourceforge.fenixedu.domain.Person">
          <foreignkey field-ref="chavePessoa"/>
   </reference-descriptor>
 
-  <reference-descriptor
+  <reference-descriptor auto-retrieve="false"
          name="workingPlaceCostCenter"
          class-ref="net.sourceforge.fenixedu.domain.CostCenter"
          >
          <foreignkey field-ref="chaveCCLocalTrabalho"/>
   </reference-descriptor>
 
-  <reference-descriptor
+  <reference-descriptor auto-retrieve="false"
          name="mailingCostCenter"
          class-ref="net.sourceforge.fenixedu.domain.CostCenter"
          >
          <foreignkey field-ref="chaveCCCorrespondencia"/>
   </reference-descriptor>   
 
-  <reference-descriptor
+  <reference-descriptor auto-retrieve="false"
          name="salaryCostCenter"
          class-ref="net.sourceforge.fenixedu.domain.CostCenter">
          <foreignkey field-ref="chaveCCVencimento"/>

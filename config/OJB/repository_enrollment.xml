@@ -1,7 +1,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.Enrolment -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.Enrolment" table="ENROLMENT">
+<class-descriptor class="net.sourceforge.fenixedu.domain.Enrolment" table="ENROLMENT">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -59,27 +59,27 @@
 		column="CREATED_BY"
 		jdbc-type="VARCHAR"
 	/>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="studentCurricularPlan"
 			class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
 			
             >
 		<foreignkey field-ref="studentCurricularPlanKey"/>
 	</reference-descriptor>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="curricularCourse"
 			class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			
             >
 		<foreignkey field-ref="curricularCourseKey"/>
 	</reference-descriptor>      
-	<reference-descriptor 
+	<reference-descriptor auto-retrieve="false" 
 			name="executionPeriod"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
             >
 		<foreignkey field-ref="keyExecutionPeriod"/>
 	</reference-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="evaluations"
 			
 			
@@ -87,7 +87,7 @@
 		<inverse-foreignkey field-ref="enrolmentKey"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="equivalentEnrolmentForEnrolmentEquivalences"
 			
 			
@@ -95,7 +95,7 @@
 		<inverse-foreignkey field-ref="equivalentEnrolmentKey"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="enrolmentEquivalences"
 			
 			
@@ -103,7 +103,7 @@
 		<inverse-foreignkey field-ref="enrolmentKey"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="attends"
 			
 			
@@ -111,7 +111,7 @@
 		<inverse-foreignkey field-ref="keyEnrolment"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="creditsInAnySecundaryAreas"
 			
 			
@@ -119,7 +119,7 @@
 		<inverse-foreignkey field-ref="enrolmentKey"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="creditsInScientificAreas"
 			
 			
@@ -135,7 +135,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse" table="ENROLMENT">
+<class-descriptor class="net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse" table="ENROLMENT">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -193,25 +193,25 @@
 		column="CREATED_BY"
 		jdbc-type="VARCHAR"
 	/>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="studentCurricularPlan"
 			class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
 			>
 		<foreignkey field-ref="studentCurricularPlanKey"/>
 	</reference-descriptor>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="curricularCourse"
 			class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			>
 		<foreignkey field-ref="curricularCourseKey"/>
 	</reference-descriptor>      
-	<reference-descriptor 
+	<reference-descriptor auto-retrieve="false" 
 			name="executionPeriod"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
             >
 		<foreignkey field-ref="keyExecutionPeriod"/>
 	</reference-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="evaluations"
 			
 			
@@ -220,7 +220,7 @@
 	</collection-descriptor>    
 	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
 	
-<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="equivalentEnrolmentForEnrolmentEquivalences"
 			
 			
@@ -228,7 +228,7 @@
 		<inverse-foreignkey field-ref="equivalentEnrolmentKey"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="enrolmentEquivalences"
 			
 			
@@ -236,7 +236,7 @@
 		<inverse-foreignkey field-ref="enrolmentKey"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="attends"
 			
 			
@@ -244,7 +244,7 @@
 		<inverse-foreignkey field-ref="keyEnrolment"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="creditsInAnySecundaryAreas"
 			
 			
@@ -252,7 +252,7 @@
 		<inverse-foreignkey field-ref="enrolmentKey"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="creditsInScientificAreas"
 			
 			
@@ -264,7 +264,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse" table="ENROLMENT">
+<class-descriptor class="net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse" table="ENROLMENT">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -322,25 +322,25 @@
 		column="CREATED_BY"
 		jdbc-type="VARCHAR"
 	/>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="studentCurricularPlan"
 			class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
 			>
 		<foreignkey field-ref="studentCurricularPlanKey"/>
 	</reference-descriptor>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="curricularCourse"
 			class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			>
 		<foreignkey field-ref="curricularCourseKey"/>
 	</reference-descriptor>      
-	<reference-descriptor 
+	<reference-descriptor auto-retrieve="false" 
 			name="executionPeriod"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
             >
 		<foreignkey field-ref="keyExecutionPeriod"/>
 	</reference-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="evaluations"
 			
 			
@@ -349,7 +349,7 @@
 	</collection-descriptor>    
 	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
 	
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="equivalentEnrolmentForEnrolmentEquivalences"
 			
 			
@@ -357,7 +357,7 @@
 		<inverse-foreignkey field-ref="equivalentEnrolmentKey"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="enrolmentEquivalences"
 			
 			
@@ -365,7 +365,7 @@
 		<inverse-foreignkey field-ref="enrolmentKey"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="attends"
 			
 			
@@ -373,7 +373,7 @@
 		<inverse-foreignkey field-ref="keyEnrolment"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="creditsInAnySecundaryAreas"
 			
 			
@@ -381,7 +381,7 @@
 		<inverse-foreignkey field-ref="enrolmentKey"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="creditsInScientificAreas"
 			
 			
@@ -394,7 +394,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.log.EnrolmentLog -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.log.EnrolmentLog" table="ENROLMENT_LOG">
+<class-descriptor class="net.sourceforge.fenixedu.domain.log.EnrolmentLog" table="ENROLMENT_LOG">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -430,13 +430,13 @@
 		jdbc-type="INTEGER"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaEnrollmentLogAction2SqlEnrollmentLogActionFieldConversion"
 	/>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="student"
 			class-ref="net.sourceforge.fenixedu.domain.Student"
 			>
 		<foreignkey field-ref="keyStudent"/>
 	</reference-descriptor>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="curricularCourse"
 			class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			>
@@ -447,7 +447,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent" table="SECRETARY_ENROLMENT_STUDENT">
+<class-descriptor class="net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent" table="SECRETARY_ENROLMENT_STUDENT">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -477,7 +477,7 @@
 		column="REASON_DESCRIPTION"
 		jdbc-type="VARCHAR"
 	/>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="student"
 			class-ref="net.sourceforge.fenixedu.domain.Student"
 			>

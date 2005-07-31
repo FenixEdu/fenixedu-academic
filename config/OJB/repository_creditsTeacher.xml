@@ -4,7 +4,7 @@
 
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.ShiftProfessorship -->
-<class-descriptor proxy="dynamic"  class="net.sourceforge.fenixedu.domain.ShiftProfessorship"  table="SHIFT_PROFESSORSHIP">
+<class-descriptor class="net.sourceforge.fenixedu.domain.ShiftProfessorship"  table="SHIFT_PROFESSORSHIP">
 
       <field-descriptor  name="idInternal"  column="ID_INTERNAL"  jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
 
@@ -20,18 +20,18 @@
       	locking="true"
       />
       
-      <reference-descriptor name="professorship" class-ref="net.sourceforge.fenixedu.domain.Professorship">
+      <reference-descriptor auto-retrieve="false" name="professorship" class-ref="net.sourceforge.fenixedu.domain.Professorship">
          <foreignkey field-ref="keyProfessorship"/>
       </reference-descriptor>
             
-      <reference-descriptor name="shift" class-ref="net.sourceforge.fenixedu.domain.Shift">
+      <reference-descriptor auto-retrieve="false" name="shift" class-ref="net.sourceforge.fenixedu.domain.Shift">
          <foreignkey field-ref="keyShift"/>
       </reference-descriptor>    
 </class-descriptor>
 
 
 <!-- Definitions for credits.CreditLine -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine" table="crd_OTHER_TYPE_CREDIT_LINE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine" table="crd_OTHER_TYPE_CREDIT_LINE">
       <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER"
 				        		 primarykey="true" autoincrement="true"/>
 
@@ -48,15 +48,15 @@
       	locking="true"
       />
       
-      <reference-descriptor name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher">
+      <reference-descriptor auto-retrieve="false" name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher">
          <foreignkey field-ref="keyTeacher"/>
       </reference-descriptor>
-      <reference-descriptor name="executionPeriod" class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
+      <reference-descriptor auto-retrieve="false" name="executionPeriod" class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
          <foreignkey field-ref="keyExecutionPeriod"/>
       </reference-descriptor>
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.credits.ServiceExemptionCreditLine" table="crd_SERVICE_EXEMPTION_CREDIT_LINE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.credits.ServiceExemptionCreditLine" table="crd_SERVICE_EXEMPTION_CREDIT_LINE">
       <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER"
 				        		 primarykey="true" autoincrement="true"/>
 
@@ -69,12 +69,12 @@
 
       <field-descriptor	name="ackOptLock" column="ACK_OPT_LOCK"	jdbc-type="INTEGER"	locking="true"/>
       
-      <reference-descriptor name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher">
+      <reference-descriptor auto-retrieve="false" name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher">
          <foreignkey field-ref="keyTeacher"/>
       </reference-descriptor>
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine" table="crd_MANAGEMENT_POSITION_CREDIT_LINE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine" table="crd_MANAGEMENT_POSITION_CREDIT_LINE">
       <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER"
 				        		 primarykey="true" autoincrement="true"/>
 
@@ -89,13 +89,13 @@
 
       <field-descriptor	name="ackOptLock" column="ACK_OPT_LOCK"	jdbc-type="INTEGER"	locking="true"/>
       
-      <reference-descriptor name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher">
+      <reference-descriptor auto-retrieve="false" name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher">
          <foreignkey field-ref="keyTeacher"/>
       </reference-descriptor>
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent" table="crd_TEACHER_DEGREE_FINAL_PROJECT_STUDENT">
+<class-descriptor class="net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent" table="crd_TEACHER_DEGREE_FINAL_PROJECT_STUDENT">
       <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER"
 				        		 primarykey="true" autoincrement="true"/>
 
@@ -113,15 +113,15 @@
       	locking="true"
       />
 
-      <reference-descriptor name="executionPeriod" class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
+      <reference-descriptor auto-retrieve="false" name="executionPeriod" class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
          <foreignkey field-ref="keyExecutionPeriod"/>
       </reference-descriptor> 
 
-      <reference-descriptor name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher">
+      <reference-descriptor auto-retrieve="false" name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher">
          <foreignkey field-ref="keyTeacher"/>
       </reference-descriptor>
 
-      <reference-descriptor name="student" class-ref="net.sourceforge.fenixedu.domain.Student">
+      <reference-descriptor auto-retrieve="false" name="student" class-ref="net.sourceforge.fenixedu.domain.Student">
          <foreignkey field-ref="keyStudent"/>
       </reference-descriptor>
 
@@ -129,7 +129,7 @@
 
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime"  table="crd_TEACHER_INSTITUTION_WORK_TIME">
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime"  table="crd_TEACHER_INSTITUTION_WORK_TIME">
 	
 	<field-descriptor	name="idInternal"  column="ID_INTERNAL" jdbc-type="INTEGER"
 						        primarykey="true" autoincrement="true"/>
@@ -153,11 +153,11 @@
       	locking="true"
       />
 	
-	<reference-descriptor name="teacher"  class-ref="net.sourceforge.fenixedu.domain.Teacher">
+	<reference-descriptor auto-retrieve="false" name="teacher"  class-ref="net.sourceforge.fenixedu.domain.Teacher">
 		<foreignkey field-ref="keyTeacher"/>
     </reference-descriptor>
 
-    <reference-descriptor name="executionPeriod" class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
+    <reference-descriptor auto-retrieve="false" name="executionPeriod" class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
        <foreignkey field-ref="keyExecutionPeriod"/>
     </reference-descriptor>
 
@@ -165,7 +165,7 @@
 
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.Category -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.teacher.Category" table="CATEGORY">
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.Category" table="CATEGORY">
 
       <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
       					
@@ -181,12 +181,12 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="associatedTeachingCareers"
 		element-class-ref="net.sourceforge.fenixedu.domain.teacher.TeachingCareer">
 		<inverse-foreignkey field-ref="keyCategory"/>
   	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="teacher"
 		element-class-ref="net.sourceforge.fenixedu.domain.Teacher">
 		<inverse-foreignkey field-ref="keyCategory"/>

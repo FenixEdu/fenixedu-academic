@@ -1,7 +1,7 @@
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.Curriculum -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.Curriculum"
+<class-descriptor class="net.sourceforge.fenixedu.domain.Curriculum"
                   table="CURRICULUM">
     <field-descriptor
         name="idInternal"
@@ -62,7 +62,7 @@
         jdbc-type="INTEGER"
 	/>
     
-    <reference-descriptor    	
+    <reference-descriptor auto-retrieve="false"    	
          name="curricularCourse"
          class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
          
@@ -71,7 +71,7 @@
 	<foreignkey field-ref="keyCurricularCourse"/>
     </reference-descriptor>
     
-    <reference-descriptor    	
+    <reference-descriptor auto-retrieve="false"    	
          name="personWhoAltered"
          class-ref="net.sourceforge.fenixedu.domain.Person"
          

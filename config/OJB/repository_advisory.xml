@@ -3,8 +3,7 @@
 <!-- Mapping of User defined classes starts here -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.Advisory -->
 
-<class-descriptor proxy="dynamic"
-		class="net.sourceforge.fenixedu.domain.Advisory"
+<class-descriptor class="net.sourceforge.fenixedu.domain.Advisory"
 		table="ADVISORY"
 		>
       <field-descriptor id="1"
@@ -51,7 +50,7 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="people"
 			element-class-ref="net.sourceforge.fenixedu.domain.Person"
 			
@@ -61,7 +60,7 @@
 		<fk-pointing-to-element-class column="KEY_PERSON" />
 		<fk-pointing-to-this-class column="KEY_ADVISORY" />
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="distributedTestsAdvisories"
 			element-class-ref="net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory">
 		<inverse-foreignkey field-ref="keyAdvisory"/>

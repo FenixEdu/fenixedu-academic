@@ -1,5 +1,4 @@
-<class-descriptor proxy="dynamic"
-		class="net.sourceforge.fenixedu.domain.support.FAQSection"
+<class-descriptor class="net.sourceforge.fenixedu.domain.support.FAQSection"
 		table="FAQ_SECTION"
 		>
 	<field-descriptor
@@ -25,7 +24,7 @@
 		column="SECTION_NAME"
 		jdbc-type="VARCHAR"
 		/>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="parentSection"
 			class-ref="net.sourceforge.fenixedu.domain.support.FAQSection"
 			>

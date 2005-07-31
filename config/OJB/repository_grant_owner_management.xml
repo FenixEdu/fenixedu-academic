@@ -5,8 +5,7 @@
 <!-- ********************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.grant.owner.GrantOwner -->
 <!-- ********************************************** -->
-   <class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.grant.owner.GrantOwner"
+   <class-descriptor class="net.sourceforge.fenixedu.domain.grant.owner.GrantOwner"
    	  table="GRANT_OWNER"
    >
       <field-descriptor 
@@ -42,13 +41,13 @@
 		column="CARD_COPY_NUMBER"
 		jdbc-type="INTEGER"
 	/>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 		name="person"
 		class-ref="net.sourceforge.fenixedu.domain.Person"
 		>
 		<foreignkey field-ref="keyPerson"/>
 	</reference-descriptor>   
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="grantContracts"
 			element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantContract"
 			>
@@ -62,8 +61,7 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.grant.contract.GrantContract -->
 <!-- **************************************************** -->
 
-   <class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.grant.contract.GrantContract"
+   <class-descriptor class="net.sourceforge.fenixedu.domain.grant.contract.GrantContract"
    	  table="GRANT_CONTRACT"
    >
       <field-descriptor 
@@ -109,37 +107,37 @@
 		column="KEY_COST_CENTER"
 		jdbc-type="INTEGER"
 	/>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 		name="grantOwner"
 		class-ref="net.sourceforge.fenixedu.domain.grant.owner.GrantOwner"
 		>
 		<foreignkey field-ref="keyGrantOwner"/>
 	</reference-descriptor> 
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 		name="grantType"
 		class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantType"
 		>
 		<foreignkey field-ref="keyGrantType"/>
 	</reference-descriptor> 
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 		name="grantCostCenter"
 		class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter"
 		>
 		<foreignkey field-ref="costCenterKey"/>
 	</reference-descriptor> 		
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="contractRegimes"
 			element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime"
 			>
 		<inverse-foreignkey field-ref="keyGrantContract"/>
 	</collection-descriptor>    
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedGrantInsurances"
 			element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance"
 			>
 		<inverse-foreignkey field-ref="keyGrantContract"/>
 	</collection-descriptor>  
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedGrantSubsidies"
 			element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy"
 			>
@@ -155,8 +153,7 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement -->
 <!-- ************************************************************ -->
 
-  <class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement"
+  <class-descriptor class="net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement"
    	  table="GRANT_CONTRACT_MOVEMENT"
    >
       <field-descriptor 
@@ -192,7 +189,7 @@
 		column="KEY_GRANT_CONTRACT"
 		jdbc-type="INTEGER"
 	/>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 		name="grantContract"
 		class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantContract"
 		>
@@ -207,8 +204,7 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime -->
 <!-- ********************************************************** -->
 
-   <class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime"
+   <class-descriptor class="net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime"
    	  table="GRANT_CONTRACT_REGIME"
    >
       <field-descriptor 
@@ -275,19 +271,19 @@
 			column="KEY_COST_CENTER"
 			jdbc-type="INTEGER"
 		/>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 		name="teacher"
 		class-ref="net.sourceforge.fenixedu.domain.Teacher"
 		>
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor> 
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 		name="grantContract"
 		class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantContract"
 		>
 		<foreignkey field-ref="keyGrantContract"/>
 	</reference-descriptor> 
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 		name="grantCostCenter"
 		class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter"
 		>
@@ -299,8 +295,7 @@
 <!-- ************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.grant.contract.GrantType -->
 <!-- ************************************************ -->
-   <class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.grant.contract.GrantType"
+   <class-descriptor class="net.sourceforge.fenixedu.domain.grant.contract.GrantType"
    	  table="GRANT_TYPE"
    >
       <field-descriptor 
@@ -351,7 +346,7 @@
 		column="STATE"
 		jdbc-type="DATE"
 	/>   
-		<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+		<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedGrantContracts"
 			element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantContract"
              >
@@ -363,8 +358,7 @@
 <!-- ************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher -->
 <!-- ************************************************************** -->
-   <class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher"
+   <class-descriptor class="net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher"
    	  table="GRANT_ORIENTATION_TEACHER"
    >
       <field-descriptor 
@@ -400,13 +394,13 @@
 		column="KEY_GRANT_CONTRACT"
 		jdbc-type="INTEGER"
 	/>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 		name="orientationTeacher"
 		class-ref="net.sourceforge.fenixedu.domain.Teacher"
 		>
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 		name="grantContract"
 		class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantContract"
 		>
@@ -418,19 +412,18 @@
 <!-- ************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity      -->
 <!-- ************************************************************** -->
-   <class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity"
+   <class-descriptor class="net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity"
    >
     <extent-class class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantProject" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter" />
     
-    <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedGrantInsurances"
 			element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance"
              >
 		<inverse-foreignkey field-ref="keyGrantPaymentEntity"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedGrantParts"
 			element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantPart"
              >
@@ -443,8 +436,7 @@
 <!-- ************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.grant.contract.GrantProject            -->
 <!-- ************************************************************** -->
-   <class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.grant.contract.GrantProject"
+   <class-descriptor class="net.sourceforge.fenixedu.domain.grant.contract.GrantProject"
    	  table="GRANT_PAYMENT_ENTITY"
    >
       <field-descriptor 
@@ -485,25 +477,25 @@
 		column="KEY_COST_CENTER"
 		jdbc-type="INTEGER"
 	  />
-	  <reference-descriptor
+	  <reference-descriptor auto-retrieve="false"
 		name="responsibleTeacher"
 		class-ref="net.sourceforge.fenixedu.domain.Teacher"
 		>
 		<foreignkey field-ref="keyResponsibleTeacher"/>
 	  </reference-descriptor>
-	  <reference-descriptor
+	  <reference-descriptor auto-retrieve="false"
 		name="grantCostCenter"
 		class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter"
 		>
 		<foreignkey field-ref="keyGrantCostCenter"/>
 	  </reference-descriptor>
-	  <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	  <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedGrantInsurances"
 			element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance"
              >
 		<inverse-foreignkey field-ref="keyGrantPaymentEntity"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedGrantParts"
 			element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantPart"
              >
@@ -515,8 +507,7 @@
 <!-- ************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter         -->
 <!-- ************************************************************** -->
-   <class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter"
+   <class-descriptor class="net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter"
    	  table="GRANT_PAYMENT_ENTITY"
    >
       <field-descriptor 
@@ -552,37 +543,37 @@
 		column="KEY_TEACHER"
 		jdbc-type="INTEGER"
 	  />
-	  <reference-descriptor
+	  <reference-descriptor auto-retrieve="false"
 		name="responsibleTeacher"
 		class-ref="net.sourceforge.fenixedu.domain.Teacher"
 		>
 		<foreignkey field-ref="keyResponsibleTeacher"/>
 	  </reference-descriptor>
-	 <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	 <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedGrantProjects"
 			element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantProject"
              >
 		<inverse-foreignkey field-ref="keyGrantCostCenter"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedGrantContracts"
 			element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantContract"
              >
 		<inverse-foreignkey field-ref="costCenterKey"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedGrantContractRegimes"
 			element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime"
              >
 		<inverse-foreignkey field-ref="costCenterKey"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedGrantInsurances"
 			element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance"
              >
 		<inverse-foreignkey field-ref="keyGrantPaymentEntity"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedGrantParts"
 			element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantPart"
              >
@@ -595,8 +586,7 @@
 <!-- ************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.grant.contract.GrantPart               -->
 <!-- ************************************************************** -->
-   <class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.grant.contract.GrantPart"
+   <class-descriptor class="net.sourceforge.fenixedu.domain.grant.contract.GrantPart"
    	  table="GRANT_PART"
    >
       <field-descriptor 
@@ -632,18 +622,18 @@
 		column="KEY_TEACHER"
 		jdbc-type="INTEGER"
 	 />
-	 <reference-descriptor
+	 <reference-descriptor auto-retrieve="false"
 		name="grantPaymentEntity"
 		class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity">
 		<foreignkey field-ref="keyGrantPaymentEntity"/>
 	</reference-descriptor>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 		name="grantSubsidy"
 		class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy"
 		>
 		<foreignkey field-ref="keyGrantSubsidy"/>
 	</reference-descriptor>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 		name="responsibleTeacher"
 		class-ref="net.sourceforge.fenixedu.domain.Teacher"
 		>
@@ -654,8 +644,7 @@
 <!-- ************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy            -->
 <!-- ************************************************************** -->
-   <class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy"
+   <class-descriptor class="net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy"
    	  table="GRANT_SUBSIDY"
    >
       <field-descriptor 
@@ -706,13 +695,13 @@
 		column="KEY_GRANT_CONTRACT"
 		jdbc-type="INTEGER"
 	 />
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 		name="grantContract"
 		class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantContract"
 		>
 		<foreignkey field-ref="keyGrantContract"/>
 	</reference-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedGrantParts"
 			element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantPart"
              >
@@ -725,8 +714,7 @@
 <!-- ************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance          -->
 <!-- ************************************************************** -->
-   <class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance"
+   <class-descriptor class="net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance"
    	  table="GRANT_INSURANCE"
    >
       <field-descriptor 
@@ -767,12 +755,12 @@
 		column="KEY_GRANT_PAYMENT_ENTITY"
 		jdbc-type="INTEGER"
 	 />
-	 <reference-descriptor
+	 <reference-descriptor auto-retrieve="false"
 		name="grantPaymentEntity"
 		class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity">
 		<foreignkey field-ref="keyGrantPaymentEntity"/>
 	</reference-descriptor>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 		name="grantContract"
 		class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantContract"
 		

@@ -5,7 +5,7 @@
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.InsuranceValue -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.InsuranceValue" table="INSURANCE_VALUE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.InsuranceValue" table="INSURANCE_VALUE">
 	
 	<field-descriptor
 		name="idInternal"
@@ -40,7 +40,7 @@
          jdbc-type="DATE"
 	 />
 	
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
        	name="executionYear"
        	class-ref="net.sourceforge.fenixedu.domain.ExecutionYear"
 		

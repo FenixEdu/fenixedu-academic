@@ -1,6 +1,5 @@
 <!-- Definitions for . -->
-<class-descriptor proxy="dynamic" 
-  class="middleware.posgrad.Posgrad_aluno_mestrado"
+<class-descriptor class="middleware.posgrad.Posgrad_aluno_mestrado"
   table="posgrad_aluno_mestrado"
 >
   <field-descriptor id="11"
@@ -67,8 +66,7 @@
       />
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" 
-  class="middleware.posgrad.Posgrad_area_cientifica"
+<class-descriptor class="middleware.posgrad.Posgrad_area_cientifica"
   table="posgrad_area_cientifica"
 >
   <field-descriptor id="4"
@@ -106,8 +104,7 @@
       />
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" 
-  class="middleware.posgrad.Posgrad_candidato_mestrado"
+<class-descriptor class="middleware.posgrad.Posgrad_candidato_mestrado"
   table="posgrad_candidato_mestrado"
 >
   <field-descriptor id="37"
@@ -304,8 +301,7 @@
       />
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" 
-  class="middleware.posgrad.Posgrad_candidato_situacao"
+<class-descriptor class="middleware.posgrad.Posgrad_candidato_situacao"
   table="posgrad_candidato_situacao"
 >
   <field-descriptor id="6"
@@ -347,8 +343,7 @@
       />
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" 
-  class="middleware.posgrad.Posgrad_cargo"
+<class-descriptor class="middleware.posgrad.Posgrad_cargo"
   table="posgrad_cargo"
 >
   <field-descriptor id="2"
@@ -370,8 +365,7 @@
       />
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" 
-  class="middleware.posgrad.Posgrad_curso_mestrado"
+<class-descriptor class="middleware.posgrad.Posgrad_curso_mestrado"
   table="posgrad_curso_mestrado"
 >
   <field-descriptor id="3"
@@ -398,8 +392,7 @@
       />
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" 
-  class="middleware.posgrad.Posgrad_disc_area"
+<class-descriptor class="middleware.posgrad.Posgrad_disc_area"
   table="posgrad_disc_area"
 >
   <field-descriptor id="4"
@@ -431,8 +424,7 @@
       />
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" 
-  class="middleware.posgrad.Posgrad_disc_area_aluno"
+<class-descriptor class="middleware.posgrad.Posgrad_disc_area_aluno"
   table="posgrad_disc_area_aluno"
 >
   <field-descriptor id="8"
@@ -484,8 +476,7 @@
       />
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" 
-  class="middleware.posgrad.Posgrad_disciplina"
+<class-descriptor class="middleware.posgrad.Posgrad_disciplina"
   table="posgrad_disciplina"
 >
   <field-descriptor id="3"
@@ -543,8 +534,7 @@
       />
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" 
-  class="middleware.posgrad.Posgrad_docente"
+<class-descriptor class="middleware.posgrad.Posgrad_docente"
   table="posgrad_docente"
 >
   <field-descriptor id="6"
@@ -586,8 +576,7 @@
       />
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" 
-  class="middleware.posgrad.Posgrad_guia"
+<class-descriptor class="middleware.posgrad.Posgrad_guia"
   table="posgrad_guia"
 >
   <field-descriptor id="13"
@@ -664,8 +653,7 @@
       />
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" 
-  class="middleware.posgrad.Posgrad_guia_tabela"
+<class-descriptor class="middleware.posgrad.Posgrad_guia_tabela"
   table="posgrad_guia_tabela"
 >
   <field-descriptor id="3"
@@ -692,8 +680,7 @@
       />
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" 
-  class="middleware.posgrad.Posgrad_pagamento_guia"
+<class-descriptor class="middleware.posgrad.Posgrad_pagamento_guia"
   table="posgrad_pagamento_guia"
 >
   <field-descriptor id="5"
@@ -730,8 +717,7 @@
       />
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" 
-  class="middleware.posgrad.Posgrad_pessoa"
+<class-descriptor class="middleware.posgrad.Posgrad_pessoa"
   table="posgrad_pessoa"
 >
   <field-descriptor id="29"
@@ -888,8 +874,7 @@
       />
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" 
-  class="middleware.posgrad.Posgrad_pessoa_cargo"
+<class-descriptor class="middleware.posgrad.Posgrad_pessoa_cargo"
   table="posgrad_pessoa_cargo"
 >
   <field-descriptor id="4"
@@ -921,8 +906,7 @@
       />
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" 
-  class="middleware.posgrad.Posgrad_situacao"
+<class-descriptor class="middleware.posgrad.Posgrad_situacao"
   table="posgrad_situacao"
 >
   <field-descriptor id="2"
@@ -944,8 +928,7 @@
       />
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" 
-  class="middleware.posgrad.Posgrad_tabela_precos"
+<class-descriptor class="middleware.posgrad.Posgrad_tabela_precos"
   table="posgrad_tabela_precos"
 >
   <field-descriptor id="5"

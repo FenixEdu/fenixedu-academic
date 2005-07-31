@@ -1,7 +1,7 @@
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.EnrolmentPeriod -->
 <!-- *************************************************************************************************************** -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.EnrolmentPeriod">
+<class-descriptor class="net.sourceforge.fenixedu.domain.EnrolmentPeriod">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses" />
 	<field-descriptor
@@ -11,8 +11,7 @@
 	/>
 </class-descriptor>
 
-<class-descriptor proxy="dynamic"
-		class="net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses"
+<class-descriptor class="net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses"
 		table="ENROLMENT_PERIOD">
 	<field-descriptor
 			name="idInternal"
@@ -55,21 +54,20 @@
 			conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
 	/>
 
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="degreeCurricularPlan"
 			class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
 			>
 		<foreignkey field-ref="keyDegreeCurricularPlan"/>
 	</reference-descriptor>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="executionPeriod"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
 		<foreignkey field-ref="keyExecutionPeriod"/>
 	</reference-descriptor>
 </class-descriptor>
 
-<class-descriptor proxy="dynamic"
-		class="net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses"
+<class-descriptor class="net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses"
 		table="ENROLMENT_PERIOD">
 	<field-descriptor
 			name="idInternal"
@@ -112,13 +110,13 @@
 			conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
 	/>
 
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="degreeCurricularPlan"
 			class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
 			>
 		<foreignkey field-ref="keyDegreeCurricularPlan"/>
 	</reference-descriptor>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="executionPeriod"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
 		<foreignkey field-ref="keyExecutionPeriod"/>
@@ -128,7 +126,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.CurricularCourse -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.CurricularCourse" table="CURRICULAR_COURSE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.CurricularCourse" table="CURRICULAR_COURSE">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -274,44 +272,44 @@
 		column="ACRONYM"
 		jdbc-type="VARCHAR"
 	/>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="university"
 			class-ref="net.sourceforge.fenixedu.domain.University"
 			>
 		<foreignkey field-ref="universityKey"/> 
 	</reference-descriptor>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="departmentCourse"
 			class-ref="net.sourceforge.fenixedu.domain.DepartmentCourse"
 			>
 		<foreignkey field-ref="departmentCourseKey"/> 
 	</reference-descriptor>
-    <reference-descriptor
+    <reference-descriptor auto-retrieve="false"
 			name="degreeCurricularPlan"
 			class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
 			>
 		<foreignkey field-ref="degreeCurricularPlanKey"/>
 	 </reference-descriptor>
-	 <reference-descriptor
+	 <reference-descriptor auto-retrieve="false"
 			name="scientificArea"
 			class-ref="net.sourceforge.fenixedu.domain.ScientificArea"
 			>
 		<foreignkey field-ref="keyScientificArea"/>
 	 </reference-descriptor>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
          name="studentCourseReport"
          class-ref="net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport"
          >
 	  <foreignkey field-ref="keyStudentCourseReport"/>
     </reference-descriptor>	 
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
          name="courseHistoric"
          class-ref="net.sourceforge.fenixedu.domain.gesdis.CourseHistoric"
          >
         <foreignkey field-ref="keyCourseHistoric"/>
     </reference-descriptor> 
     
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedExecutionCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 			indirection-table="CURRICULAR_COURSE_EXECUTION_COURSE"
@@ -319,34 +317,34 @@
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE"/>
 		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="scopes"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseScope"
 			>
 		<inverse-foreignkey field-ref="curricularCourseKey"/>
 	</collection-descriptor>   
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedCurriculums"
 			element-class-ref="net.sourceforge.fenixedu.domain.Curriculum"
 			
 			>
 		<inverse-foreignkey field-ref="keyCurricularCourse"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="oldCurricularCourseEquivalences"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseEquivalence"
 			
 			>
 		<inverse-foreignkey field-ref="oldCurricularCourseKey"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="curricularCourseEquivalences"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseEquivalence"
 			
 			>
 		<inverse-foreignkey field-ref="equivalentCurricularCourseKey"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="curricularCourseGroups"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseGroup"
 			indirection-table="CURRICULAR_COURSE_CURRICULAR_COURSE_GROUP"
@@ -355,7 +353,7 @@
 		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE_GROUP"/>
 	</collection-descriptor>
 
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="enrolments"
 			element-class-ref="net.sourceforge.fenixedu.domain.Enrolment"
 			
@@ -363,28 +361,28 @@
 		<inverse-foreignkey field-ref="curricularCourseKey"/>
 	</collection-descriptor>	
 
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="enrolmentLogs"
 			element-class-ref="net.sourceforge.fenixedu.domain.log.EnrolmentLog"
 			
 			>
 		<inverse-foreignkey field-ref="keyCurricularCourse"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="notNeedToEnrollInCurricularCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse"
 			
 			>
 		<inverse-foreignkey field-ref="curricularCourseKey"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="candidateEnrolments"
 			element-class-ref="net.sourceforge.fenixedu.domain.CandidateEnrolment"
 			
 			>
 		<inverse-foreignkey field-ref="curricularCourseKey"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="precedences"
 			element-class-ref="net.sourceforge.fenixedu.domain.precedences.Precedence"
 			
@@ -392,7 +390,7 @@
 		<inverse-foreignkey field-ref="keyCurricularCourse"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="restrictionsByCurricularCourse"
 			element-class-ref="net.sourceforge.fenixedu.domain.precedences.RestrictionByCurricularCourse"
 			
@@ -400,14 +398,14 @@
 		<inverse-foreignkey field-ref="keyPrecedentCurricularCourse"/>
 	</collection-descriptor>
 
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="courseEquivalencies"
 			element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency"
 			
 			>
 		<inverse-foreignkey field-ref="curricularCourseIdInternal"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedCandidancies"
 			element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.Candidacy"
 			
@@ -420,7 +418,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.CurricularYear -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.CurricularYear" table="CURRICULAR_YEAR">
+<class-descriptor class="net.sourceforge.fenixedu.domain.CurricularYear" table="CURRICULAR_YEAR">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -440,7 +438,7 @@
       	locking="true"
       />
 	  
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="curricularSemesters"
 		element-class-ref="net.sourceforge.fenixedu.domain.CurricularSemester">
 		<inverse-foreignkey field-ref="curricularYearKey"/>
@@ -451,7 +449,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.CurricularSemester -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.CurricularSemester" table="CURRICULAR_SEMESTER">
+<class-descriptor class="net.sourceforge.fenixedu.domain.CurricularSemester" table="CURRICULAR_SEMESTER">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -475,7 +473,7 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="curricularYear"
 			class-ref="net.sourceforge.fenixedu.domain.CurricularYear"
 			>
@@ -484,18 +482,18 @@
 
 
 <!--
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedCurricularCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			indirection-table="CURRICULAR_COURSE_CURRICULAR_SEMESTER"
-			auto-retrieve="true"
+			
 			>
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_SEMESTER"/>
 		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE"/>
 	</collection-descriptor>
 -->
 
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="scopes"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseScope"
 			>
@@ -510,7 +508,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.EnrolmentEquivalence -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.EnrolmentEquivalence" table="ENROLMENT_EQUIVALENCE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.EnrolmentEquivalence" table="ENROLMENT_EQUIVALENCE">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -529,13 +527,13 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 		name="enrolment"
 		class-ref="net.sourceforge.fenixedu.domain.Enrolment"
 		>
 		<foreignkey field-ref="enrolmentKey"/>
 	</reference-descriptor>
-    <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
     	name="equivalenceRestrictions" 
     	element-class-ref="net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence" 
     	>
@@ -546,7 +544,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence" table="EQUIVALENT_ENROLMENT_FOR_ENROLMENT_EQUIVALENCE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence" table="EQUIVALENT_ENROLMENT_FOR_ENROLMENT_EQUIVALENCE">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -570,13 +568,13 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 		name="enrolmentEquivalence"
 		class-ref="net.sourceforge.fenixedu.domain.EnrolmentEquivalence"
 		>
 		<foreignkey field-ref="enrolmentEquivalenceKey"/>
 	</reference-descriptor>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 		name="equivalentEnrolment"
 		class-ref="net.sourceforge.fenixedu.domain.Enrolment"
 		>
@@ -587,7 +585,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.CurricularCourseScope -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.CurricularCourseScope" table="CURRICULAR_COURSE_SCOPE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.CurricularCourseScope" table="CURRICULAR_COURSE_SCOPE">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -639,25 +637,25 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="curricularCourse"
 			class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			>
 		<foreignkey field-ref="curricularCourseKey"/>
 	</reference-descriptor>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="curricularSemester"
 			class-ref="net.sourceforge.fenixedu.domain.CurricularSemester"
 			>
 		<foreignkey field-ref="curricularSemesterKey"/>
 	</reference-descriptor>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="branch"
 			class-ref="net.sourceforge.fenixedu.domain.Branch"
 			>
 		<foreignkey field-ref="branchKey"/>
 	</reference-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedWrittenEvaluations"
 			element-class-ref="net.sourceforge.fenixedu.domain.WrittenEvaluation"
 			indirection-table="WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE"
@@ -670,7 +668,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.StudentKind -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.StudentKind" table="STUDENT_KIND">
+<class-descriptor class="net.sourceforge.fenixedu.domain.StudentKind" table="STUDENT_KIND">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -706,7 +704,7 @@
       	locking="true"
       />
 	  
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="students"
 			element-class-ref="net.sourceforge.fenixedu.domain.Student">
 		<inverse-foreignkey field-ref="studentKindKey"/>
@@ -718,7 +716,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.EnrolmentEvaluation -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.EnrolmentEvaluation" table="ENROLMENT_EVALUATION">
+<class-descriptor class="net.sourceforge.fenixedu.domain.EnrolmentEvaluation" table="ENROLMENT_EVALUATION">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -793,21 +791,21 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="personResponsibleForGrade"
 			class-ref="net.sourceforge.fenixedu.domain.Person"
 			>
 		<foreignkey field-ref="personResponsibleForGradeKey"/>
 	</reference-descriptor>
 	
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="employee"
 			class-ref="net.sourceforge.fenixedu.domain.Employee"
 			>
 		<foreignkey field-ref="employeeKey"/>
 	</reference-descriptor>
 	
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="enrolment"
 			class-ref="net.sourceforge.fenixedu.domain.Enrolment"
 			
@@ -819,7 +817,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.University -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.University" table="UNIVERSITY">
+<class-descriptor class="net.sourceforge.fenixedu.domain.University" table="UNIVERSITY">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -858,7 +856,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.ScientificArea -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.ScientificArea" table="SCIENTIFIC_AREA">
+<class-descriptor class="net.sourceforge.fenixedu.domain.ScientificArea" table="SCIENTIFIC_AREA">
 	<field-descriptor 
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -877,7 +875,7 @@
 		jdbc-type="INTEGER"
 		locking="true"
 	/>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="curricularCourseGroups"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseGroup"
 			indirection-table="SCIENTIFIC_AREA_CURRICULAR_COURSE_GROUP"
@@ -890,7 +888,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.CreditsInScientificArea -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.CreditsInScientificArea" table="CREDITS_IN_SCIENTIFIC_AREA">
+<class-descriptor class="net.sourceforge.fenixedu.domain.CreditsInScientificArea" table="CREDITS_IN_SCIENTIFIC_AREA">
 	<field-descriptor 
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -924,19 +922,19 @@
 		jdbc-type="INTEGER"
 		locking="true"
 	/>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="studentCurricularPlan"
 			class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
 			>
 		<foreignkey field-ref="studentCurricularPlanKey"/>
 	</reference-descriptor>		
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="scientificArea"
 			class-ref="net.sourceforge.fenixedu.domain.ScientificArea"
 			>
 		<foreignkey field-ref="scientificAreaKey"/>
 	</reference-descriptor>		
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="enrolment"
 			class-ref="net.sourceforge.fenixedu.domain.Enrolment"
 			>
@@ -947,7 +945,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea" table="CREDITS_IN_ANY_SECUNDARY_AREA">
+<class-descriptor class="net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea" table="CREDITS_IN_ANY_SECUNDARY_AREA">
 	<field-descriptor 
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -976,13 +974,13 @@
 		jdbc-type="INTEGER"
 		locking="true"
 	/>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="studentCurricularPlan"
 			class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
 			>
 		<foreignkey field-ref="studentCurricularPlanKey"/>
 	</reference-descriptor>		
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="enrolment"
 			class-ref="net.sourceforge.fenixedu.domain.Enrolment"
 			>
@@ -993,7 +991,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse" table="NOT_NEED_TO_ENROLL_IN_CURRICULAR_COURSE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse" table="NOT_NEED_TO_ENROLL_IN_CURRICULAR_COURSE">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -1017,13 +1015,13 @@
 		jdbc-type="INTEGER"
 		locking="true"
 	/>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="curricularCourse"
 			class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			>
 		<foreignkey field-ref="curricularCourseKey"/>
 	</reference-descriptor>
-	<reference-descriptor
+	<reference-descriptor auto-retrieve="false"
 			name="studentCurricularPlan"
 			class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
 			>

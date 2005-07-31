@@ -1,6 +1,5 @@
 <!-- Definitions for . -->
-<class-descriptor proxy="dynamic" 
-  class="middleware.thor.Atribuicaodisciplinas"
+<class-descriptor class="middleware.thor.Atribuicaodisciplinas"
   table="AtribuicaoDisciplinas"
 >
   <field-descriptor id="0"
@@ -61,8 +60,7 @@
       />
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" 
-  class="middleware.thor.Aulas"
+<class-descriptor class="middleware.thor.Aulas"
   table="Aulas"
 >
   <field-descriptor id="0"
@@ -124,8 +122,7 @@
       />
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" 
-  class="middleware.thor.Disciplinas"
+<class-descriptor class="middleware.thor.Disciplinas"
   table="Disciplinas"
 >
   <field-descriptor id="0"
@@ -187,8 +184,7 @@
       />
 </class-descriptor>
 
-<class-descriptor proxy="dynamic" 
-  class="middleware.thor.Turmas"
+<class-descriptor class="middleware.thor.Turmas"
   table="Turmas"
 >
   <field-descriptor id="0"

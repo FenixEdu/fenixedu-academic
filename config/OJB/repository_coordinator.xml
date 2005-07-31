@@ -2,8 +2,7 @@
      to avoid mixing user defined and system mappings. -->   
 <!-- Mapping of User defined classes starts here -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.Coordinator -->
-   <class-descriptor proxy="dynamic"
-   	  class="net.sourceforge.fenixedu.domain.Coordinator"
+   <class-descriptor class="net.sourceforge.fenixedu.domain.Coordinator"
    	  table="COORDINATOR"
    >
       <field-descriptor 
@@ -34,13 +33,13 @@
 		column="KEY_EXECUTION_DEGREE"
 		jdbc-type="INTEGER"
 	/>
-    <reference-descriptor
+    <reference-descriptor auto-retrieve="false"
 			name="executionDegree"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
 			>
 		<foreignkey field-ref="keyExecutionDegree"/>
 	</reference-descriptor>   
-	 <reference-descriptor
+	 <reference-descriptor auto-retrieve="false"
 			name="teacher"
 			class-ref="net.sourceforge.fenixedu.domain.Teacher"
 			>
@@ -49,8 +48,7 @@
    </class-descriptor>
    
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeInfo -->   
-   <class-descriptor proxy="dynamic"
-   	class="net.sourceforge.fenixedu.domain.DegreeInfo"
+   <class-descriptor class="net.sourceforge.fenixedu.domain.DegreeInfo"
    	table="DEGREE_INFO"
    	>
 	    <field-descriptor id="1"
@@ -186,7 +184,7 @@
    			column="LAST_MODIFICATION_DATE"
    			jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
    		/>   				
-	    <reference-descriptor
+	    <reference-descriptor auto-retrieve="false"
 				name="degree"
 				class-ref="net.sourceforge.fenixedu.domain.Degree"
 				>
@@ -195,7 +193,7 @@
    </class-descriptor>	
    
 <!-- Definitions for net.sourceforge.fenixedu.domain.Tutor -->    
-   <class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.Tutor"
+   <class-descriptor class="net.sourceforge.fenixedu.domain.Tutor"
    	table="TUTOR_SHIP">
    		<field-descriptor id="1"
 	        name="idInternal"
@@ -220,13 +218,13 @@
 			column="KEY_STUDENT"
 			jdbc-type="INTEGER"
 		/>
-	    <reference-descriptor
+	    <reference-descriptor auto-retrieve="false"
 				name="teacher"
 				class-ref="net.sourceforge.fenixedu.domain.Teacher"
 				>
 			<foreignkey field-ref="teacherKey"/>
 		</reference-descriptor> 
-	    <reference-descriptor
+	    <reference-descriptor auto-retrieve="false"
 				name="student"
 				class-ref="net.sourceforge.fenixedu.domain.Student"
 				>

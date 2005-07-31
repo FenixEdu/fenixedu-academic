@@ -110,7 +110,7 @@
          column="SIZE_"
          jdbc-type="INTEGER"
       />
-      <collection-descriptor
+      <collection-descriptor proxy="true" auto-retrieve="false"
          name="elements"
          element-class-ref="org.apache.ojb.odmg.collections.DListEntry"
       >
@@ -166,10 +166,9 @@
          column="SIZE_"
          jdbc-type="INTEGER"
       />
-      <collection-descriptor
+      <collection-descriptor proxy="true" auto-retrieve="false"
          name="elements"
          element-class-ref="org.apache.ojb.odmg.collections.DListEntry_2"
-         auto-retrieve = "true"
       >
          <inverse-foreignkey field-ref="dlistId"/>
       </collection-descriptor>
@@ -222,7 +221,7 @@
          column="SIZE_"
          jdbc-type="INTEGER"
       />
-      <collection-descriptor
+      <collection-descriptor proxy="true" auto-retrieve="false"
          name="elements"
          element-class-ref="org.apache.ojb.odmg.collections.DListEntry"
       >
@@ -247,7 +246,7 @@
          column="SIZE_"
          jdbc-type="INTEGER"
       />
-      <collection-descriptor
+      <collection-descriptor proxy="true" auto-retrieve="false"
          name="elements"
          element-class-ref="org.apache.ojb.odmg.collections.DSetEntry"
       >
@@ -302,7 +301,7 @@
          column="SIZE_"
          jdbc-type="INTEGER"
       />
-      <collection-descriptor
+      <collection-descriptor proxy="true" auto-retrieve="false"
          name="entries"
          element-class-ref="org.apache.ojb.odmg.collections.DMapEntry"
          collection-class="org.apache.ojb.broker.util.collections.ManageableHashSet"
