@@ -89,14 +89,14 @@ public abstract class DomainObject extends DomainObject_Base {
     }
 
     protected void loadRefIfNeeded(Object value, String attrName) {
-        //if (value == null) {
-        //System.out.println("++++++ Retrieving " + attrName + " for " + this.getClass() + System.identityHashCode(this));
-        try {
-            SuportePersistenteOJB.getCurrentPersistenceBroker().retrieveReference(this, attrName);
-        } catch (Exception e) {
-            System.err.println("Couldn't retrieve " + attrName + " for class " + this.getClass());
-            // ignore errors
+        if (value == null) {
+            //System.out.println("++++++ Retrieving " + attrName + " for " + this.getClass() + System.identityHashCode(this));
+            try {
+                SuportePersistenteOJB.getCurrentPersistenceBroker().retrieveReference(this, attrName);
+            } catch (Exception e) {
+                System.err.println("Couldn't retrieve " + attrName + " for class " + this.getClass());
+                // ignore errors
+            }
         }
-        //}
     }
 }
