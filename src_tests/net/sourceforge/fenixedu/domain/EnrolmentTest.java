@@ -19,8 +19,10 @@ public class EnrolmentTest extends DomainTestBase {
 	private IEnrolment enrolmentB;
 	private IEnrolment enrolmentC;
 	private IEnrolment enrolmentD;
+	
 	private IEnrolment enrolmentE;		//enrolment able to unenroll
 	private IEnrolment enrolmentF;		//enrolment unable to unenroll
+	
 	private IEnrolment enrolmentWithImprovement;
 	private IEnrolment enrolmentWithoutImprovement;
 	private List<IEnrolmentEvaluation> evaluations;
@@ -83,20 +85,6 @@ public class EnrolmentTest extends DomainTestBase {
 	private IExecutionPeriod executionPeriodForImprovement = null;
 	private IEmployee someEmployee = null;
 	
-	protected void setUp() throws Exception {
-        super.setUp();
-		
-		setUpForDeleteCase();
-		setUpForUnEnrollCase();
-		setUpForGetImprovmentEvaluation();
-		setUpForGetEnrolmentEvaluationByEnrolmentEvaluationTypeAndGradeCase();
-		setUpForInitializeAsNewCase();
-		setUpForSubmitEnrolmentEvaluationCase();
-		setUpForIsImprovementForExecutionCourseCase();
-		
-		setUpForUnEnrollImprovementCase();
-		setUpCreateEnrolmentEvaluationForImprovement();
-    }
 	
 	private void setUpCreateEnrolmentEvaluationForImprovement() {
 		enrolmentToImprove = new Enrolment();
@@ -406,69 +394,72 @@ public class EnrolmentTest extends DomainTestBase {
 		evaluationWithoutGradeToBeRead = ee2;
 	}
 
-	protected void tearDown() throws Exception {
-        super.tearDown();
-    }
+	
 	
 	public void testDelete() {
 		
+		setUpForDeleteCase();
+				
 		enrolmentD.delete();
 				
-		assertFalse(enrolmentD.hasAnyEnrolmentEquivalences());
+		assertFalse("Should have dereferenced EnrolmentEquivalences", enrolmentD.hasAnyEnrolmentEquivalences());
 		
 		for (IEnrolmentEquivalence equivalence : enrolmentEquivalencesD) {
-			assertFalse(equivalence.hasAnyEquivalenceRestrictions());
-			assertFalse(equivalence.hasEnrolment());
+			assertFalse("Should have dereferenced EnrolmentEquivalence from Restrictions", equivalence.hasAnyEquivalenceRestrictions());
+			assertFalse("Should have dereferenced EnrolmentEquivalence from Enrolment", equivalence.hasEnrolment());
 		}
 		
-		assertTrue(enrolmentA.hasAnyEvaluations());
-		assertTrue(enrolmentA.hasExecutionPeriod());
-		assertTrue(enrolmentA.hasStudentCurricularPlan());
-		assertTrue(enrolmentA.hasAnyCreditsInAnySecundaryAreas());
-		assertTrue(enrolmentA.hasAnyCreditsInScientificAreas());
-		assertTrue(enrolmentA.hasCurricularCourse());
-		assertFalse(enrolmentA.hasAnyEnrolmentEquivalences());
-		assertTrue(enrolmentA.hasAnyEquivalentEnrolmentForEnrolmentEquivalences());
+		assertTrue("Should not have dereferenced EnrolmentEvaluations", enrolmentA.hasAnyEvaluations());
+		assertTrue("Should not have dereferenced ExecutionPeriod", enrolmentA.hasExecutionPeriod());
+		assertTrue("Should not have dereferenced StudentCurricularPlan", enrolmentA.hasStudentCurricularPlan());
+		assertTrue("Should not have dereferenced CreditsInAnySecondaryAreas", enrolmentA.hasAnyCreditsInAnySecundaryAreas());
+		assertTrue("Should not have dereferenced CreditsInScientificAreas", enrolmentA.hasAnyCreditsInScientificAreas());
+		assertTrue("Should not have dereferenced CurricularCourse", enrolmentA.hasCurricularCourse());
+		assertFalse("Should have dereferenced EnrolmentEquivalences", enrolmentA.hasAnyEnrolmentEquivalences());
+		assertTrue("Should not have dereferenced EquivalentEnrolmentForEnrolmentEquivalences", enrolmentA.hasAnyEquivalentEnrolmentForEnrolmentEquivalences());
 		
 		enrolmentA.delete();
 		
-		assertFalse(enrolmentA.hasAnyEvaluations());
-		assertFalse(enrolmentA.hasExecutionPeriod());
-		assertFalse(enrolmentA.hasStudentCurricularPlan());
-		assertFalse(enrolmentA.hasAnyCreditsInAnySecundaryAreas());
-		assertFalse(enrolmentA.hasAnyCreditsInScientificAreas());
-		assertFalse(enrolmentA.hasCurricularCourse());
-		assertFalse(enrolmentA.hasAnyEnrolmentEquivalences());
-		assertFalse(enrolmentA.hasAnyEquivalentEnrolmentForEnrolmentEquivalences());
+		assertFalse("Should have dereferenced EnrolmentEvaluations", enrolmentA.hasAnyEvaluations());
+		assertFalse("Should have dereferenced ExecutionPeriod", enrolmentA.hasExecutionPeriod());
+		assertFalse("Should have dereferenced StudentcurricularPlan", enrolmentA.hasStudentCurricularPlan());
+		assertFalse("Should have dereferenced CreditsInAnySecondaryAreas", enrolmentA.hasAnyCreditsInAnySecundaryAreas());
+		assertFalse("Should have dereferenced CreditsInScientificAreas", enrolmentA.hasAnyCreditsInScientificAreas());
+		assertFalse("Should have dereferenced CurricularCourse", enrolmentA.hasCurricularCourse());
+		assertFalse("Should have dereferenced EnrolmentEquivalences", enrolmentA.hasAnyEnrolmentEquivalences());
+		assertFalse("Should have dereferenced EquivalentEnrolmentForEnrolmentEquivalences", enrolmentA.hasAnyEquivalentEnrolmentForEnrolmentEquivalences());
 		
 		for (IEnrolmentEvaluation eval : evaluations) {
-			assertFalse(eval.hasPersonResponsibleForGrade());
-			assertFalse(eval.hasEmployee());
+			assertFalse("Should have dereferenced EnrolmentEvaluation from Person", eval.hasPersonResponsibleForGrade());
+			assertFalse("Should have dereferenced EnrolmentEvaluation from Employee", eval.hasEmployee());
 		}
 		
 		for (ICreditsInAnySecundaryArea credits : creditsInAnySecundaryAreas)
-			assertFalse(credits.hasStudentCurricularPlan());
+			assertFalse("Should have dereferenced CreditsInAnySecondaryAreas from StudentCurricularPlan", credits.hasStudentCurricularPlan());
 		
 		for (ICreditsInScientificArea credits : creditsInScientificAreas)
-			assertFalse(credits.hasStudentCurricularPlan());
+			assertFalse("Should have dereferenced CreditsInScientificAreas from StudentCurricularPlan", credits.hasStudentCurricularPlan());
 		
-		assertFalse(enrolmentC.hasAnyEnrolmentEquivalences());
-		assertFalse(enrolmentC.hasAnyEquivalentEnrolmentForEnrolmentEquivalences());
+		assertFalse("Should have dereferenced EnrolmentEquivalences", enrolmentC.hasAnyEnrolmentEquivalences());
+		assertFalse("Should have dereferenced EquivalentEnrolmentForEnrolmentEquivalences", enrolmentC.hasAnyEquivalentEnrolmentForEnrolmentEquivalences());
 		
 		for (IEquivalentEnrolmentForEnrolmentEquivalence equivalentEnrolment : equivalentEnrolmentsA) {
-			assertFalse(equivalentEnrolment.hasEquivalentEnrolment());
-			assertFalse(equivalentEnrolment.hasEnrolmentEquivalence());
+			assertFalse("Should have dereferenced EquivalentEnrolmentForEnrolmentEquivalence from Enrolment", equivalentEnrolment.hasEquivalentEnrolment());
+			assertFalse("Should have dereferenced EquivalentEnrolmentForEnrolmentEquivalence from EnrolmentEquivalence", equivalentEnrolment.hasEnrolmentEquivalence());
 		}
 		
 		for (IEnrolmentEquivalence equivalence : enrolmentEquivalencesC) {
-			assertFalse(equivalence.hasEnrolment());
-			assertFalse(equivalence.hasAnyEquivalenceRestrictions());
+			assertFalse("Should have dereferenced EnrolmentEquivalence from Enrolment", equivalence.hasEnrolment());
+			assertFalse("Should have dereferenced EnrolmentEquivalence from Restrictions", equivalence.hasAnyEquivalenceRestrictions());
 		}
 	}
 	
 	
 	
 	public void testUnEnroll() {
+		
+		setUpForUnEnrollCase();
+				
 		try {
 			enrolmentE.unEnroll();
 			
@@ -488,61 +479,73 @@ public class EnrolmentTest extends DomainTestBase {
 	
 	public void testGetImprovementEvaluation() {
 		
-		assertNull(enrolmentWithoutImprovement.getImprovementEvaluation());
-		assertTrue(enrolmentWithImprovement.getImprovementEvaluation().equals(improvementEvaluation));	
+		setUpForGetImprovmentEvaluation();
+				
+		assertNull("Enrolment should not return any improvement EnrolmentEvaluation", enrolmentWithoutImprovement.getImprovementEvaluation());
+		assertTrue("Enrolment returned EnrolmentEvaluation different from expected", enrolmentWithImprovement.getImprovementEvaluation().equals(improvementEvaluation));	
 	}
 	
 	
 	public void testGetEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade() {
+		
+		setUpForGetEnrolmentEvaluationByEnrolmentEvaluationTypeAndGradeCase();
+				
 		IEnrolmentEvaluation enrolmentEvaluationWithGrade = enrolmentToReadFrom.getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(enrolmentEvaluationTypeToSearchFor,gradeToSearchFor);
-		assertEquals(enrolmentEvaluationWithGrade,evaluationWithGradeToBeRead);
+		assertEquals("Enrolment returned EnrolmentEvaluation different from expected", enrolmentEvaluationWithGrade,evaluationWithGradeToBeRead);
 		
 		IEnrolmentEvaluation enrolmentEvaluationWithoutGrade = enrolmentToReadFrom.getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(enrolmentEvaluationTypeToSearchFor,null);
-		assertEquals(enrolmentEvaluationWithoutGrade,evaluationWithoutGradeToBeRead);
+		assertEquals("Enrolment returned EnrolmentEvaluation different from expected", enrolmentEvaluationWithoutGrade,evaluationWithoutGradeToBeRead);
 		
 		IEnrolmentEvaluation nullEnrolmentEvaluation = enrolmentToReadFrom.getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(enrolmentEvaluationTypeToSearchFor,impossibleGrade);
-		assertNull(nullEnrolmentEvaluation);
+		assertNull("Enrolment should not have returned EnrolmentEvaluation", nullEnrolmentEvaluation);
 	}
 	
 	public void testInitializeAsNew() {
+		
+		setUpForInitializeAsNewCase();
+				
 		Date before = new Date();
 		enrolmentToInitialize.initializeAsNew(studentCurricularPlan,curricularCourseToEnroll,currentExecutionPeriod,enrolmentCondition,createdBy);
 		Date after = new Date();
 		
-		assertEquals(enrolmentToInitialize.getStudentCurricularPlan(),studentCurricularPlan);
-		assertEquals(enrolmentToInitialize.getCurricularCourse(),curricularCourseToEnroll);
-		assertEquals(enrolmentToInitialize.getExecutionPeriod(),currentExecutionPeriod);
-		assertEquals(enrolmentToInitialize.getCondition(),enrolmentCondition);
-		assertEquals(enrolmentToInitialize.getCreatedBy(),createdBy);
-		assertEquals(enrolmentToInitialize.getEnrollmentState(),EnrollmentState.ENROLLED);
-		assertEquals(enrolmentToInitialize.getEnrolmentEvaluationType(),EnrolmentEvaluationType.NORMAL);
-		assertTrue(before.before(enrolmentToInitialize.getCreationDate()) && after.after(enrolmentToInitialize.getCreationDate()));
+		assertEquals("Failed to assign StudentCurricularPlan", enrolmentToInitialize.getStudentCurricularPlan(),studentCurricularPlan);
+		assertEquals("Failed to assign CurricularCourse", enrolmentToInitialize.getCurricularCourse(),curricularCourseToEnroll);
+		assertEquals("Failed to assign ExecutionPeriod", enrolmentToInitialize.getExecutionPeriod(),currentExecutionPeriod);
+		assertEquals("Failed to assign EnrolmentCondition", enrolmentToInitialize.getCondition(),enrolmentCondition);
+		assertEquals("Failed to assign createdBy", enrolmentToInitialize.getCreatedBy(),createdBy);
+		assertEquals("Failed to assign EnrolmentState", enrolmentToInitialize.getEnrollmentState(),EnrollmentState.ENROLLED);
+		assertEquals("Failed to assign EnrolmentEvaluationType", enrolmentToInitialize.getEnrolmentEvaluationType(),EnrolmentEvaluationType.NORMAL);
+		assertTrue("CreationDate is in the past", before.before(enrolmentToInitialize.getCreationDate()));
+		assertTrue("CreationDate is in the future", after.after(enrolmentToInitialize.getCreationDate()));
 		
-		assertTrue(enrolmentToInitialize.getEvaluationsCount() == 1);
+		assertTrue("Initialized Enrolment should only have 1 EnrolmentEvaluation", enrolmentToInitialize.getEvaluationsCount() == 1);
 		IEnrolmentEvaluation evaluation = enrolmentToInitialize.getEvaluations().get(0);
-		assertEquals(evaluation.getEnrolmentEvaluationState(),EnrolmentEvaluationState.TEMPORARY_OBJ);
-        assertEquals(evaluation.getEnrolmentEvaluationType(),EnrolmentEvaluationType.NORMAL);
-		assertNull(evaluation.getGrade());
+		assertEquals("Newly created EnrolmentEvaluation should have TEMPORARY state", evaluation.getEnrolmentEvaluationState(),EnrolmentEvaluationState.TEMPORARY_OBJ);
+        assertEquals("Newly created EnrolmentEvaluation should have NORMAL type",evaluation.getEnrolmentEvaluationType(),EnrolmentEvaluationType.NORMAL);
+		assertNull("Newly created EnrolmentEvaluation should not have grade", evaluation.getGrade());
 		
-		assertTrue(enrolmentToInitialize.getAttendsCount() == 1);
+		assertTrue("Initialized Enrolment should only have 1 Attends", enrolmentToInitialize.getAttendsCount() == 1);
 		IAttends attends = enrolmentToInitialize.getAttends().get(0);
-		assertEquals(attends.getAluno(),studentCurricularPlan.getStudent());
-		assertEquals(attends.getDisciplinaExecucao(),executionCourseToEnroll);
-		assertEquals(attends.getEnrolment(),enrolmentToInitialize);
+		assertEquals("Newly created Attends has wrong Student", attends.getAluno(),studentCurricularPlan.getStudent());
+		assertEquals("Newly created Attends has wrong ExecutionCourse", attends.getDisciplinaExecucao(),executionCourseToEnroll);
+		assertEquals("Newly created Attends has wrong Enrolment", attends.getEnrolment(),enrolmentToInitialize);
 		
 		// only difference lies in the Attends assignment part
 		enrolmentToInitializeForAnotherExecutionPeriod.initializeAsNew(studentCurricularPlan,curricularCourseToEnroll,anotherExecutionPeriod,enrolmentCondition,createdBy);
-		assertTrue(enrolmentToInitializeForAnotherExecutionPeriod.getAttendsCount() == 1);
+		
+		assertTrue("Initialized Enrolment should only have 1 Attends", enrolmentToInitializeForAnotherExecutionPeriod.getAttendsCount() == 1);
 		IAttends att = enrolmentToInitializeForAnotherExecutionPeriod.getAttends().get(0);
-		assertEquals(att,attendsToEnroll);
-		assertEquals(att.getAluno(),thisStudent);
-		assertEquals(att.getDisciplinaExecucao(),executionCourseToEnrollWithAttendsForThisStudent);
-		assertEquals(att.getEnrolment(),enrolmentToInitializeForAnotherExecutionPeriod);
+		assertEquals("Attends does not match expected", att,attendsToEnroll);
+		assertEquals("Attends has wrong Student", att.getAluno(),thisStudent);
+		assertEquals("Attends has wrong ExecutionCourse", att.getDisciplinaExecucao(),executionCourseToEnrollWithAttendsForThisStudent);
+		assertEquals("Attends has wrong Enrolment", att.getEnrolment(),enrolmentToInitializeForAnotherExecutionPeriod);
 		
 	}
 
 	public void testSubmitEnrolmentEvaluation() {
-
+		
+		setUpForSubmitEnrolmentEvaluationCase();
+		
 		long sleepTime = 1000;
 		
 		// there isn't an evaluation with TEMPORARY state
@@ -555,40 +558,39 @@ public class EnrolmentTest extends DomainTestBase {
 		sleep(sleepTime);
 		Date after = new Date();
 
-		assertTrue(enrolmentToSubmitWithoutTemporaryEvaluation.getEvaluations().contains(newEvaluation));
-		assertEquals(newEvaluation.getGrade().toUpperCase(),realMark.getMark().toUpperCase());
-		assertEquals(newEvaluation.getEnrolmentEvaluationType(),notExistingEnrolmentEvaluationType);
-		assertEquals(newEvaluation.getEnrolmentEvaluationState(),EnrolmentEvaluationState.TEMPORARY_OBJ);
-		assertEquals(newEvaluation.getObservation(),observation);
-		assertEquals(newEvaluation.getPersonResponsibleForGrade(),personResponsibleForGrade);
-		assertEquals(newEvaluation.getEmployee(),employeeSubmittingGrade);
-		assertEquals(newEvaluation.getExamDate(),examDate);
-		assertTrue(before.before(newEvaluation.getWhen()));
-		assertTrue(after.after(newEvaluation.getWhen()));
-		assertTrue(before.before(newEvaluation.getGradeAvailableDate()));
-		assertTrue(after.after(newEvaluation.getGradeAvailableDate()));
+		assertTrue("Newly created EnrolmentEvaluation should be related to Enrolment", enrolmentToSubmitWithoutTemporaryEvaluation.getEvaluations().contains(newEvaluation));
+		assertEquals("Assigned grade does not match expected", newEvaluation.getGrade().toUpperCase(),realMark.getMark().toUpperCase());
+		assertEquals("Assigned EnrolmentEvaluationType does not match expected", newEvaluation.getEnrolmentEvaluationType(),notExistingEnrolmentEvaluationType);
+		assertEquals("Newly created EnrolmentEvaluation should have TEMPORARY state", newEvaluation.getEnrolmentEvaluationState(),EnrolmentEvaluationState.TEMPORARY_OBJ);
+		assertEquals("Assigned observation does not match expected", newEvaluation.getObservation(),observation);
+		assertEquals("Assigned personResponsibleForGrade does not match expected", newEvaluation.getPersonResponsibleForGrade(),personResponsibleForGrade);
+		assertEquals("Assigned employee does not match expected", newEvaluation.getEmployee(),employeeSubmittingGrade);
+		assertEquals("Assigned examDate does not match expected", newEvaluation.getExamDate(),examDate);
+		assertTrue("When is a date in the past past", before.before(newEvaluation.getWhen()));
+		assertTrue("When is a date in the past future", after.after(newEvaluation.getWhen()));
+		assertTrue("GradeAvailableDate is in the past", before.before(newEvaluation.getGradeAvailableDate()));
+		assertTrue("GradeAvailableDate is in the future", after.after(newEvaluation.getGradeAvailableDate()));
 
 		// there *is* an evaluation with TEMPORARY state
 		IEnrolmentEvaluation existingEvaluation = enrolmentToSubmitWithTemporaryEvaluation.submitEnrolmentEvaluation(
 				existingEnrolmentEvaluationType,realMark,employeeSubmittingGrade,
 				personResponsibleForGrade,examDate,observation);
 		
-		assertTrue(enrolmentToSubmitWithTemporaryEvaluation.getEvaluations().contains(existingEvaluation));
-		assertEquals(existingEvaluation,existingTemporaryEnrolmentEvaluation);
+		assertEquals("Submitted EnrolmentEvaluation does not match expected", existingEvaluation,existingTemporaryEnrolmentEvaluation);
 		
 		// null mark
 		IEnrolmentEvaluation anotherEnrolmentEvaluation = enrolmentToSubmitWithoutTemporaryEvaluation.submitEnrolmentEvaluation(
 				notExistingEnrolmentEvaluationType,null,employeeSubmittingGrade,
 				personResponsibleForGrade,examDate,observation);
 		
-		assertTrue(anotherEnrolmentEvaluation.getGrade().equals("NA"));
+		assertTrue("Assigned grade does not match expected", anotherEnrolmentEvaluation.getGrade().equals("NA"));
 
 		// "" mark
 		anotherEnrolmentEvaluation = enrolmentToSubmitWithoutTemporaryEvaluation.submitEnrolmentEvaluation(
 				notExistingEnrolmentEvaluationType,emptyMark,employeeSubmittingGrade,
 				personResponsibleForGrade,examDate,observation);
 		
-		assertTrue(anotherEnrolmentEvaluation.getGrade().equals("NA"));
+		assertTrue("Assigned grade does not match expected", anotherEnrolmentEvaluation.getGrade().equals("NA"));
 		
 		// null examDate
 		before = new Date();
@@ -599,26 +601,31 @@ public class EnrolmentTest extends DomainTestBase {
 		sleep(sleepTime);
 		after = new Date();
 		
-		assertTrue(before.before(anotherEnrolmentEvaluation.getExamDate()));
-		assertTrue(after.after(anotherEnrolmentEvaluation.getExamDate()));
+		assertTrue("ExamDate is in the past", before.before(anotherEnrolmentEvaluation.getExamDate()));
+		assertTrue("ExamDate is in the future", after.after(anotherEnrolmentEvaluation.getExamDate()));
 	}
 	
 	public void testIsImprovementForExecutionCourse() {
-		assertTrue(improvementEnrolment.isImprovementForExecutionCourse(executionCourseForImprovement));
-		assertFalse(nonImprovementEnrolment.isImprovementForExecutionCourse(executionCourseForImprovement));
+		
+		setUpForIsImprovementForExecutionCourseCase();
+		
+		assertTrue("Enrolment should be considered improvement for given ExecutionCourse", improvementEnrolment.isImprovementForExecutionCourse(executionCourseForImprovement));
+		assertFalse("Enrolment should not be considered improvement for given ExecutionCourse",nonImprovementEnrolment.isImprovementForExecutionCourse(executionCourseForImprovement));
 	}
 	
 	public void testUnEnrollImprovement() {
 		
+		setUpForUnEnrollImprovementCase();
+				
 		try {
 			enrolmentToUnEnrollImprovement.unEnrollImprovement(executionPeriodToUnEnrollImprovement);
 		} catch (DomainException e) {
 			fail("Should have unenrolled");
 		}
 		
-		assertFalse(improvementEnrolmentEvaluation.hasEnrolment());
-		assertFalse(executionCourseToUnEnrollImprovement.hasAttends(attendsToDelete));
-		assertFalse(attendsToDelete.hasAluno());
+		assertFalse("EnrolmentEvaluation should have been dereferenced from Enrolment", improvementEnrolmentEvaluation.hasEnrolment());
+		assertFalse("ExecutionCourse should have been dereferenced from Attends", executionCourseToUnEnrollImprovement.hasAttends(attendsToDelete));
+		assertFalse("Attends should have been dereferenced from Student", attendsToDelete.hasAluno());
 		
 		try {
 			enrolmentToUnEnrollImprovement.unEnrollImprovement(executionPeriodToUnEnrollImprovement);
@@ -629,15 +636,18 @@ public class EnrolmentTest extends DomainTestBase {
 	}
 	
 	public void testCreateEnrolmentEvaluationForImprovement() {
-		assertNull(enrolmentToImprove.getImprovementEvaluation());
-		assertFalse(executionCourseToEnrollImprovement.hasAnyAttends());
+		
+		setUpCreateEnrolmentEvaluationForImprovement();
+		
+		assertNull("Enrolment should not have an improvement EnrolmentEvaluation", enrolmentToImprove.getImprovementEvaluation());
+		assertFalse("ExecutionCourse for improvement should not have any Attends", executionCourseToEnrollImprovement.hasAnyAttends());
 		
 		enrolmentToImprove.createEnrolmentEvaluationForImprovement(someEmployee,executionPeriodForImprovement,studentToImprove);
 		
 		IEnrolmentEvaluation improvementEvaluation = enrolmentToImprove.getImprovementEvaluation(); 
-		assertNotNull(improvementEvaluation);
-		assertEquals(improvementEvaluation.getEmployee(),someEmployee);
-		assertTrue(executionCourseToEnrollImprovement.hasAnyAttends());
+		assertNotNull("Enrolment should have returned an EnrolmentEvaluation", improvementEvaluation);
+		assertEquals("Newly created EnrolmentEvaluation's Employee does not match expected", improvementEvaluation.getEmployee(),someEmployee);
+		assertTrue("ExecutionCourse for improvement should have a new Attends", executionCourseToEnrollImprovement.hasAnyAttends());
 	}
 	
 	private IEnrolmentEvaluation createEnrolmentEvaluation(IEnrolment enrolment, EnrolmentEvaluationType type, String grade) {

@@ -6,42 +6,33 @@ import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
 public class OldInquiriesTeachersResTest extends DomainTestBase {
 	
 	private IOldInquiriesTeachersRes oldITRToDelete = null;
-	private IExecutionPeriod executionPeriod = null;
-	private IDegree degree = null;
-	private ITeacher teacher = null;
 	
-	protected void setUp() throws Exception {
-		super.setUp();
-		
-		setUpDelete();
-	}
-
 	private void setUpDelete() {
+		
 		oldITRToDelete = new OldInquiriesTeachersRes();
 		
-		executionPeriod = new ExecutionPeriod();
+		IExecutionPeriod executionPeriod = new ExecutionPeriod();
 		executionPeriod.addOldInquiriesTeachersRes(oldITRToDelete);
 		
-		degree = new Degree();
+		IDegree degree = new Degree();
 		degree.addOldInquiriesTeachersRes(oldITRToDelete);
 		
-		teacher = new Teacher();
+		ITeacher teacher = new Teacher();
 		teacher.addOldInquiriesTeacherRes(oldITRToDelete);
 	}
 	
-	protected void tearDown() throws Exception {
-		super.tearDown();
-	}
-	
 	public void testDelete() {
+		
+		setUpDelete();
+		
 		oldITRToDelete.delete();
 		
-		assertFalse(oldITRToDelete.hasExecutionPeriod());
-		assertFalse(oldITRToDelete.hasDegree());
-		assertFalse(oldITRToDelete.hasTeacher());
-		
-		assertFalse(executionPeriod.hasOldInquiriesTeachersRes(oldITRToDelete));
-		assertFalse(degree.hasOldInquiriesTeachersRes(oldITRToDelete));
-		assertFalse(teacher.hasOldInquiriesTeacherRes(oldITRToDelete));
+		assertCorrectDeletion(oldITRToDelete);
+	}
+	
+	protected static void assertCorrectDeletion(IOldInquiriesTeachersRes oitr) {
+		assertFalse("Deleted OldInquiriesTeachersRes should not have ExecutionPeriod", oitr.hasExecutionPeriod());
+		assertFalse("Deleted OldInquiriesTeachersRes should not have Degree", oitr.hasDegree());
+		assertFalse("Deleted OldInquiriesTeachersRes should not have Teacher", oitr.hasTeacher());
 	}
 }

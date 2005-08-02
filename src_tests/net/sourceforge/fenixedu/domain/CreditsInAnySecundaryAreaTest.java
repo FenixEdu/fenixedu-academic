@@ -5,9 +5,7 @@ public class CreditsInAnySecundaryAreaTest extends DomainTestBase {
 
 	private ICreditsInAnySecundaryArea credits;
 	
-	protected void setUp() throws Exception {
-        super.setUp();
-		
+	private void setUpDelete() {
 		credits = new CreditsInAnySecundaryArea();
 		
 		IEnrolment enrolment = new Enrolment();
@@ -16,17 +14,15 @@ public class CreditsInAnySecundaryAreaTest extends DomainTestBase {
 		
 		credits.setEnrolment(enrolment);
 		credits.setStudentCurricularPlan(studentCurricularPlan);
-    }
+	}
 
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-	
-	public void testDelete() {
+    public void testDelete() {
+		
+		setUpDelete();
 		
 		credits.delete();
 		
-		assertFalse(credits.hasEnrolment());
-		assertFalse(credits.hasStudentCurricularPlan());
+		assertFalse("Failed to dereference Enrolment", credits.hasEnrolment());
+		assertFalse("Failed to dereference StudentCurricularPlan", credits.hasStudentCurricularPlan());
 	}
 }

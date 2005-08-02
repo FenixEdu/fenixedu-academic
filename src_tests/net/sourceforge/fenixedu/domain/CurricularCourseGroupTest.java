@@ -17,14 +17,6 @@ public class CurricularCourseGroupTest extends DomainTestBase {
 	private Integer editedMinimumValue = null;
 	private Integer editedMaximumValue = null;
 	private AreaType editedAreaType = null;
-	
-	protected void setUp() throws Exception {
-        super.setUp();
-		
-		setUpDeleteCase();
-		
-		setUpEditCase();
-    }
 
 	private void setUpEditCase() {
 		areaCurricularcourseGroupToEdit = new AreaCurricularCourseGroup();
@@ -65,11 +57,11 @@ public class CurricularCourseGroupTest extends DomainTestBase {
 		curricularCourseGroupNotToDelete.addCurricularCourses(cc2);
 	}
 
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
 	
 	public void testDelete() {
+		
+		setUpDeleteCase();
+		
 		try {
 			curricularCourseGroupNotToDelete.delete();
 			fail("Expected DomainException: should not have been deleted.");
@@ -77,9 +69,9 @@ public class CurricularCourseGroupTest extends DomainTestBase {
 
 		}
 		
-		assertTrue(curricularCourseGroupNotToDelete.hasBranch());
-		assertTrue(curricularCourseGroupNotToDelete.hasAnyScientificAreas());
-		assertTrue(curricularCourseGroupNotToDelete.hasAnyCurricularCourses());
+		assertTrue("Should not have dereferenced Branch", curricularCourseGroupNotToDelete.hasBranch());
+		assertTrue("Should not have dereferenced ScientificAreas", curricularCourseGroupNotToDelete.hasAnyScientificAreas());
+		assertTrue("Should not have dereferenced CurricularCourses", curricularCourseGroupNotToDelete.hasAnyCurricularCourses());
 		
 		try {
 			curricularCourseGroupToDelete.delete();
@@ -87,26 +79,29 @@ public class CurricularCourseGroupTest extends DomainTestBase {
 			fail("Unexpected DomainException: should have been deleted.");
 		}
 		
-		assertFalse(curricularCourseGroupToDelete.hasBranch());
-		assertFalse(curricularCourseGroupToDelete.hasAnyScientificAreas());
-		assertFalse(curricularCourseGroupToDelete.hasAnyCurricularCourses());
+		assertFalse("Should have dereferenced Branch", curricularCourseGroupToDelete.hasBranch());
+		assertFalse("Should have dereferenced ScientificAreas", curricularCourseGroupToDelete.hasAnyScientificAreas());
+		assertFalse("Should have dereferenced CurricularCourses", curricularCourseGroupToDelete.hasAnyCurricularCourses());
 	}
 	
 	public void testEdit() {
+		
+		setUpEditCase();
+		
 		areaCurricularcourseGroupToEdit.edit(editedAreaCCGName,editedBranch,editedMinimumValue,editedMaximumValue,editedAreaType);
 		
-		assertEquals(areaCurricularcourseGroupToEdit.getName(),editedAreaCCGName);
-		assertEquals(areaCurricularcourseGroupToEdit.getBranch(),editedBranch);
-		assertEquals(areaCurricularcourseGroupToEdit.getMinimumCredits(),editedMinimumValue);
-		assertEquals(areaCurricularcourseGroupToEdit.getMaximumCredits(),editedMaximumValue);
-		assertEquals(areaCurricularcourseGroupToEdit.getAreaType(),editedAreaType);
+		assertEquals("Edited name does not match expected", areaCurricularcourseGroupToEdit.getName(),editedAreaCCGName);
+		assertEquals("Edited Branch does not match expected", areaCurricularcourseGroupToEdit.getBranch(),editedBranch);
+		assertEquals("Edited minimumCredits does not match expected", areaCurricularcourseGroupToEdit.getMinimumCredits(),editedMinimumValue);
+		assertEquals("Edited maximumCredits does not match expected", areaCurricularcourseGroupToEdit.getMaximumCredits(),editedMaximumValue);
+		assertEquals("Edited AreaType does not match expected", areaCurricularcourseGroupToEdit.getAreaType(),editedAreaType);
 		
 		optionalCurricularcourseGroupToEdit.edit(editedOptionalCCGName,editedBranch,editedMinimumValue,editedMaximumValue,editedAreaType);
 
-		assertEquals(optionalCurricularcourseGroupToEdit.getName(),editedOptionalCCGName);
-		assertEquals(optionalCurricularcourseGroupToEdit.getBranch(),editedBranch);
-		assertEquals(optionalCurricularcourseGroupToEdit.getMinimumNumberOfOptionalCourses(),editedMinimumValue);
-		assertEquals(optionalCurricularcourseGroupToEdit.getMaximumNumberOfOptionalCourses(),editedMaximumValue);
-		assertNull(optionalCurricularcourseGroupToEdit.getAreaType());
+		assertEquals("Edited name does not match expected", optionalCurricularcourseGroupToEdit.getName(),editedOptionalCCGName);
+		assertEquals("Edited Branch does not match expected", optionalCurricularcourseGroupToEdit.getBranch(),editedBranch);
+		assertEquals("Edited minimumNumberOfOptionalCourses does not match expected", optionalCurricularcourseGroupToEdit.getMinimumNumberOfOptionalCourses(),editedMinimumValue);
+		assertEquals("Edited maximumNumberOfOptionalCourses does not match expected", optionalCurricularcourseGroupToEdit.getMaximumNumberOfOptionalCourses(),editedMaximumValue);
+		assertNull("Edited AreaType does not match expected", optionalCurricularcourseGroupToEdit.getAreaType());
 	}
 }

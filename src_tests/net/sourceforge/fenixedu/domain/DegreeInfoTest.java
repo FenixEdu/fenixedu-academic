@@ -8,13 +8,6 @@ public class DegreeInfoTest extends DomainTestBase {
 	
 	private IDegreeInfo degreeInfoToDelete = null;
 
-	protected void setUp() throws Exception {
-		super.setUp();
-		
-		setUpCreate();
-		setUpDelete();
-	}
-
 	private void setUpDelete() {
 		degreeInfoToDelete = new DegreeInfo();
 		degreeInfoToDelete.setDegree(new Degree());
@@ -24,23 +17,24 @@ public class DegreeInfoTest extends DomainTestBase {
 		degreeInfoWithDegree = new DegreeInfo(new Degree());
 		degreeInfoSimple = new DegreeInfo();
 	}
-	
-	protected void tearDown() throws Exception {
-		super.tearDown();
-	}
-	
+
 	public void testCreate() {
+
+		setUpCreate();
 		
-		assertTrue(degreeInfoWithDegree.hasDegree());
-		assertNotNull(degreeInfoWithDegree.getLastModificationDate());
+		assertTrue("Failed to assign Degree on creation", degreeInfoWithDegree.hasDegree());
+		assertNotNull("LastModificationDate should be set for newly created DegreeInfo", degreeInfoWithDegree.getLastModificationDate());
 		
-		assertFalse(degreeInfoSimple.hasDegree());
-		assertNotNull(degreeInfoSimple.getLastModificationDate());
+		assertFalse("DegreeInfo should not have Degree", degreeInfoSimple.hasDegree());
+		assertNotNull("LastModificationDate should be set for newly created DegreeInfo", degreeInfoSimple.getLastModificationDate());
 	}
 	
 	public void testDelete() {
+		
+		setUpDelete();
+		
 		degreeInfoToDelete.delete();
 		
-		assertFalse(degreeInfoToDelete.hasDegree());
+		assertFalse("Failed to dereference Degree", degreeInfoToDelete.hasDegree());
 	}
 }

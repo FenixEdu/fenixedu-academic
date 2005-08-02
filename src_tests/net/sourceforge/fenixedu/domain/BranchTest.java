@@ -47,21 +47,6 @@ public class BranchTest extends DomainTestBase {
 	private String createdBranchCode = "";
 	private IDegreeCurricularPlan createdBranchDCP = null;
 	
-	protected void setUp() throws Exception {
-		super.setUp();
-		setUpDeleteCaseForNonCommonBranch();
-	
-		setUpDeleteCaseForNonDeletableBranchWithProposals();
-		
-		setUpDeleteCaseForCommonBranch();
-		
-		setUpDeleteCaseForNonDeletableCommonBranch();
-		
-		setUpEditCase();
-		
-		setUpCreateCase();
-	}
-
 	private IBranch createBranchWithNameAndType(BranchType branchType, String name) {
 		IBranch br = new Branch();
 		br.setBranchType(branchType);
@@ -234,75 +219,61 @@ public class BranchTest extends DomainTestBase {
 		createdBranchDCP = new DegreeCurricularPlan();
 	}
 	
-	protected void tearDown() throws Exception {
-		super.tearDown();
-	}
-	
 	public void testDelete() {
+		
+		setUpDeleteCaseForNonCommonBranch();
+		setUpDeleteCaseForNonDeletableBranchWithProposals();
+		setUpDeleteCaseForCommonBranch();
+		setUpDeleteCaseForNonDeletableCommonBranch();
+		
 		try {
 			nonCommonBranchToDelete.delete();
 		} catch (DomainException e) {
 			fail("Unexpected DomainException: should have been deleted.");
 		}
 		
-		assertFalse(degreeCurricularPlan.hasAreas(nonCommonBranchToDelete));
-		
-		assertFalse(nonCommonBranchToDelete.hasDegreeCurricularPlan());
-		assertFalse(nonCommonBranchToDelete.hasAnyScopes());
-		assertFalse(nonCommonBranchToDelete.hasAnyCurricularCourseGroups());
-		assertFalse(nonCommonBranchToDelete.hasAnyStudentCurricularPlans());
-		assertFalse(nonCommonBranchToDelete.hasAnySecundaryStudentCurricularPlansLEEC());
-		assertFalse(nonCommonBranchToDelete.hasAnySecundaryStudentCurricularPlansLEIC());
+		assertFalse("Failed to dereference DegreeCurricularPlan", nonCommonBranchToDelete.hasDegreeCurricularPlan());
+		assertFalse("Failed to dereference CurricularCourseScopes", nonCommonBranchToDelete.hasAnyScopes());
+		assertFalse("Failed to dereference CurricularCourseGroups", nonCommonBranchToDelete.hasAnyCurricularCourseGroups());
+		assertFalse("Failed to dereference StudentCurricularPlans", nonCommonBranchToDelete.hasAnyStudentCurricularPlans());
+		assertFalse("Failed to dereference secondary StudentCurricularPlans: LEEC", nonCommonBranchToDelete.hasAnySecundaryStudentCurricularPlansLEEC());
+		assertFalse("Failed to dereference secundary StudentCurricularPlans: LEIC", nonCommonBranchToDelete.hasAnySecundaryStudentCurricularPlansLEIC());
 		
 		for (ICurricularCourseScope ccs : curricularCourseScopesToCommonBranch) {
-			assertTrue(ccs.getBranch().representsCommonBranch());
+			assertTrue("Failed to switch CurricularCourseScope's Branch to common branch", ccs.getBranch().representsCommonBranch());
 		}
 
 		for (ICurricularCourseScope ccs : curricularCourseScopesToDelete) {
-			assertFalse(ccs.hasBranch());
-			assertFalse(ccs.hasCurricularCourse());
+			assertFalse("Failed to dereference CurricularCourseScope's Branch", ccs.hasBranch());
+			assertFalse("Failed to dereference CurricularCourseScope's CurricularCourse", ccs.hasCurricularCourse());
 			
 			for (ICurricularCourse cc : curricularCoursesWithOneHavingCCScopeInCommonBranch) {
-				assertFalse(cc.hasScopes(ccs));
+				assertFalse("CurricularCourse should not have CurricularCourseScopes that will be deleted.", cc.hasScopes(ccs));
 			}
 		}
 		
 		for (ICurricularCourseGroup ccg : curricularCourseGroupsToCommonBranch) {
-			assertTrue(ccg.getBranch().representsCommonBranch());
+			assertTrue("Failed to switch CurricularCourseGroup's Branch to common branch", ccg.getBranch().representsCommonBranch());
 		}
 		
 		for (IStudentCurricularPlan scp : studentCurricularPlans) {
-			assertFalse(scp.hasBranch());
+			assertFalse("Failed to dereference StudentCurricularPlan from Branch", scp.hasBranch());
 		}
 		
 		for (IStudentCurricularPlanLEIC scp : studentCurricularPlansLEIC) {
-			assertFalse(scp.hasBranch());
-			assertFalse(scp.hasSecundaryBranch());
+			assertFalse("Failed to dereference StudentCurricularPlanLEIC from Branch", scp.hasBranch());
+			assertFalse("Failed to dereference StudentCurricularPlanLEIC from secondary Branch", scp.hasSecundaryBranch());
 		}
 		
 		for (IStudentCurricularPlanLEEC scp : studentCurricularPlansLEEC) {
-			assertFalse(scp.hasBranch());
-			assertFalse(scp.hasSecundaryBranch());
+			assertFalse("Failed to dereference StudentCurricularPlanLEEC from Branch", scp.hasBranch());
+			assertFalse("Failed to dereference StudentCurricularPlanLEEC from secondary Branch", scp.hasSecundaryBranch());
 		}
 		
 		
 		
 		
-		try {
-			nonCommonBranchNotToDeleteWithProposals.delete();
-			fail("Expected DomainException: should not have been deleted.");
-		} catch (DomainException e) {
-		}
-		
-		assertTrue(nonCommonBranchNotToDeleteWithProposals.hasDegreeCurricularPlan());
-		assertTrue(nonCommonBranchNotToDeleteWithProposals.hasAnyScopes());
-		assertTrue(nonCommonBranchNotToDeleteWithProposals.hasAnyCurricularCourseGroups());
-		assertTrue(nonCommonBranchNotToDeleteWithProposals.hasAnyStudentCurricularPlans());
-		assertTrue(nonCommonBranchNotToDeleteWithProposals.hasAnySecundaryStudentCurricularPlansLEEC());
-		assertTrue(nonCommonBranchNotToDeleteWithProposals.hasAnySecundaryStudentCurricularPlansLEIC());
-		assertTrue(nonCommonBranchNotToDeleteWithProposals.hasAnyAssociatedFinalDegreeWorkProposals());
-		
-		
+
 		
 		try {
 			commonBranchToDelete.delete();
@@ -310,14 +281,26 @@ public class BranchTest extends DomainTestBase {
 			fail("Unexpected DomainException: should have been deleted.");
 		}
 		
-		assertFalse(degreeCurricularPlanInCommonBranchToDelete.hasAreas(commonBranchToDelete));
+		assertFalse("Failed to dereference DegreeCurricularPlan", commonBranchToDelete.hasDegreeCurricularPlan());
+		assertFalse("Failed to dereference StudentCurricularPlans", commonBranchToDelete.hasAnyStudentCurricularPlans());
+		assertFalse("Failed to dereference secondary StudentCurricularPlans: LEEC", commonBranchToDelete.hasAnySecundaryStudentCurricularPlansLEEC());
+		assertFalse("Failed to dereference secondary StudentCurricularPlans: LEIC", commonBranchToDelete.hasAnySecundaryStudentCurricularPlansLEIC());
 		
-		assertFalse(commonBranchToDelete.hasDegreeCurricularPlan());
-		assertFalse(commonBranchToDelete.hasAnyStudentCurricularPlans());
-		assertFalse(commonBranchToDelete.hasAnySecundaryStudentCurricularPlansLEEC());
-		assertFalse(commonBranchToDelete.hasAnySecundaryStudentCurricularPlansLEIC());
+
+		try {
+			nonCommonBranchNotToDeleteWithProposals.delete();
+			fail("Expected DomainException: should not have been deleted.");
+		} catch (DomainException e) {
+		}
 		
-		
+		assertTrue("Should not have dereferenced DegreeCurricularPlan", nonCommonBranchNotToDeleteWithProposals.hasDegreeCurricularPlan());
+		assertTrue("Should not have dereferenced CurricularCourseScopes", nonCommonBranchNotToDeleteWithProposals.hasAnyScopes());
+		assertTrue("Should not have dereferenced CurricularCourseGroups", nonCommonBranchNotToDeleteWithProposals.hasAnyCurricularCourseGroups());
+		assertTrue("Should not have dereferenced StudentCurricularPlans", nonCommonBranchNotToDeleteWithProposals.hasAnyStudentCurricularPlans());
+		assertTrue("Should not have dereferenced secondary StudentCurricularPlans: LEEC", nonCommonBranchNotToDeleteWithProposals.hasAnySecundaryStudentCurricularPlansLEEC());
+		assertTrue("Should not have dereferenced secondary StudentCurricularPlans: LEIC", nonCommonBranchNotToDeleteWithProposals.hasAnySecundaryStudentCurricularPlansLEIC());
+		assertTrue("Should not have dereferenced FinalDegreeWorkProposals", nonCommonBranchNotToDeleteWithProposals.hasAnyAssociatedFinalDegreeWorkProposals());
+	
 		
 		try {
 			commonBranchNotToDelete.delete();
@@ -326,29 +309,35 @@ public class BranchTest extends DomainTestBase {
 
 		}
 		
-		assertTrue(commonBranchNotToDelete.hasDegreeCurricularPlan());
-		assertTrue(commonBranchNotToDelete.hasAnyScopes());
-		assertTrue(commonBranchNotToDelete.hasAnyCurricularCourseGroups());
-		assertTrue(commonBranchNotToDelete.hasAnyStudentCurricularPlans());
-		assertTrue(commonBranchNotToDelete.hasAnySecundaryStudentCurricularPlansLEEC());
-		assertTrue(commonBranchNotToDelete.hasAnySecundaryStudentCurricularPlansLEIC());
+		assertTrue("Should not have dereferenced DegreeCurricularPlan", commonBranchNotToDelete.hasDegreeCurricularPlan());
+		assertTrue("Should not have dereferenced CurricularCourseScopes", commonBranchNotToDelete.hasAnyScopes());
+		assertTrue("Should not have dereferenced CurricularCourseGroups", commonBranchNotToDelete.hasAnyCurricularCourseGroups());
+		assertTrue("Should not have dereferenced StudentCurricularPlans", commonBranchNotToDelete.hasAnyStudentCurricularPlans());
+		assertTrue("Should not have dereferenced secondary StudentCurricularPlans: LEEC", commonBranchNotToDelete.hasAnySecundaryStudentCurricularPlansLEEC());
+		assertTrue("Should not have dereferenced secondary StudentCurricularPlans: LEIC", commonBranchNotToDelete.hasAnySecundaryStudentCurricularPlansLEIC());
 	}
 	
 	public void testEdit() {
+		
+		setUpEditCase();
+		
 		branchToEdit.edit(editedName,editedNameEn,editedCode);
 		
-		assertEquals(branchToEdit.getName(),editedName);
-		assertEquals(branchToEdit.getNameEn(),editedNameEn);
-		assertEquals(branchToEdit.getCode(),editedCode);
+		assertEquals("Edited name does not match", branchToEdit.getName(),editedName);
+		assertEquals("Edited nameEn does not match", branchToEdit.getNameEn(),editedNameEn);
+		assertEquals("Edited code does not match", branchToEdit.getCode(),editedCode);
 	}
 	
 	public void testCreate() {
+		
+		setUpCreateCase();
+		
 		branchToCreate = new Branch(createdBranchName,createdBranchNameEn,createdBranchCode,createdBranchDCP);
 		
-		assertEquals (branchToCreate.getName(),createdBranchName);
-		assertEquals (branchToCreate.getNameEn(),createdBranchNameEn);
-		assertEquals (branchToCreate.getCode(),createdBranchCode);
-		assertEquals (branchToCreate.getDegreeCurricularPlan(),createdBranchDCP);
+		assertEquals ("Failed to assign name", branchToCreate.getName(),createdBranchName);
+		assertEquals ("Failed to assign nameEn", branchToCreate.getNameEn(),createdBranchNameEn);
+		assertEquals ("Failed to assign code", branchToCreate.getCode(),createdBranchCode);
+		assertEquals ("Failed to assign DegreeCurricularPlan", branchToCreate.getDegreeCurricularPlan(),createdBranchDCP);
 	}
 }
 

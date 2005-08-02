@@ -26,25 +26,14 @@ public class PrecedenceTest extends DomainTestBase {
 	
 	private IPrecedence precedenceToDelete;
 	
-	private IPrecedence destinyPrecedence;
+	private IPrecedence destinationPrecedence;
 	private IPrecedence sourcePrecedence;
-	
 	private IRestriction restrictionToMerge1;
 	private IRestriction restrictionToMerge2;
 	private IRestriction restrictionToMerge3;
 	
 	private ICurricularCourse curricularCourse;
 	private ICurricularCourse precedentCurricularCourse;
-		
-	
-	protected void setUp() throws Exception {
-        super.setUp();
-	
-		setUpCreate();
-		setUpDelete();
-		setUpMergePrecedences();
-    }
-
 	
 	private void setUpCreate() {
 		
@@ -68,29 +57,25 @@ public class PrecedenceTest extends DomainTestBase {
 	
 	private void setUpMergePrecedences() {
 		
-		destinyPrecedence = new Precedence();
+		destinationPrecedence = new Precedence();
 		sourcePrecedence = new Precedence();
 		
 		restrictionToMerge1 = new RestrictionDoneCurricularCourse();
 		restrictionToMerge2 = new RestrictionDoneCurricularCourse();
 		restrictionToMerge3 = new RestrictionDoneCurricularCourse();
 
-		destinyPrecedence.setCurricularCourse(curricularCourse);
-		sourcePrecedence.setCurricularCourse(curricularCourse);
+		destinationPrecedence.setCurricularCourse(new CurricularCourse());
+		sourcePrecedence.setCurricularCourse(new CurricularCourse());
 		
-		restrictionToMerge1.setPrecedence(destinyPrecedence);
+		restrictionToMerge1.setPrecedence(destinationPrecedence);
 		restrictionToMerge2.setPrecedence(sourcePrecedence);
 		restrictionToMerge3.setPrecedence(sourcePrecedence);
 	}
 	
-	
-	
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-	
-	
 	public void testCreate() {
+		
+		setUpCreate();
+		
 		precedenceWithRestrictionDoneCurricularCourse = new Precedence(curricularCourse, 
 				RestrictionDoneCurricularCourse.class.getName(), precedentCurricularCourse, 1);
 		
@@ -116,51 +101,44 @@ public class PrecedenceTest extends DomainTestBase {
 				RestrictionPeriodToApply.class.getName(), precedentCurricularCourse, 1);
 		
 		
-		assertTrue(precedenceWithRestrictionDoneCurricularCourse.hasCurricularCourse());
-		assertTrue(precedenceWithRestrictionDoneCurricularCourse.hasAnyRestrictions());
-		
-		assertTrue(precedenceWithRestrictionDoneOrHasBeenEnroledInCurricularCourse.hasCurricularCourse());
-		assertTrue(precedenceWithRestrictionDoneOrHasBeenEnroledInCurricularCourse.hasAnyRestrictions());
-		
-		assertTrue(precedenceWithRestrictionHasEverBeenOrIsCurrentlyEnroledInCurricularCourse.hasCurricularCourse());
-		assertTrue(precedenceWithRestrictionHasEverBeenOrIsCurrentlyEnroledInCurricularCourse.hasAnyRestrictions());
-		
-		assertTrue(precedenceWithRestrictionHasEverBeenOrWillBeAbleToBeEnroledInCurricularCourse.hasCurricularCourse());
-		assertTrue(precedenceWithRestrictionHasEverBeenOrWillBeAbleToBeEnroledInCurricularCourse.hasAnyRestrictions());
-		
-		assertTrue(precedenceWithRestrictionNotDoneCurricularCourse.hasCurricularCourse());
-		assertTrue(precedenceWithRestrictionNotDoneCurricularCourse.hasAnyRestrictions());
-		
-		assertTrue(precedenceWithRestrictionNotEnroledInCurricularCourse.hasCurricularCourse());
-		assertTrue(precedenceWithRestrictionNotEnroledInCurricularCourse.hasAnyRestrictions());
-		
-		assertTrue(precedenceWithRestrictionByNumberOfDoneCurricularCourses.hasCurricularCourse());
-		assertTrue(precedenceWithRestrictionByNumberOfDoneCurricularCourses.hasAnyRestrictions());
-		
-		assertTrue(precedenceWithRestrictionPeriodToAply.hasCurricularCourse());
-		assertTrue(precedenceWithRestrictionPeriodToAply.hasAnyRestrictions());
-		
+		assertPrecedenceCorrectCreation(precedenceWithRestrictionDoneCurricularCourse);
+		assertPrecedenceCorrectCreation(precedenceWithRestrictionDoneOrHasBeenEnroledInCurricularCourse);
+		assertPrecedenceCorrectCreation(precedenceWithRestrictionHasEverBeenOrIsCurrentlyEnroledInCurricularCourse);
+		assertPrecedenceCorrectCreation(precedenceWithRestrictionHasEverBeenOrWillBeAbleToBeEnroledInCurricularCourse);
+		assertPrecedenceCorrectCreation(precedenceWithRestrictionNotDoneCurricularCourse);
+		assertPrecedenceCorrectCreation(precedenceWithRestrictionNotEnroledInCurricularCourse);
+		assertPrecedenceCorrectCreation(precedenceWithRestrictionByNumberOfDoneCurricularCourses);
+		assertPrecedenceCorrectCreation(precedenceWithRestrictionPeriodToAply);		
 	}
 	
+	private void assertPrecedenceCorrectCreation(IPrecedence precedence) {
+		assertTrue("Creation failed: Precedence has no CurricularCourse", precedence.hasCurricularCourse());
+		assertTrue("Creation failed: Precedence has no Restrictions", precedence.hasAnyRestrictions());
+	}
+
 	public void testDelete() {
+		
+		setUpDelete();
 		
 		precedenceToDelete.delete();
 		
-		assertFalse(precedenceToDelete.hasCurricularCourse());
-		assertFalse(precedenceToDelete.hasAnyRestrictions());
+		assertFalse("Failed to dereference CurricularCourse", precedenceToDelete.hasCurricularCourse());
+		assertFalse("Failed to dereference Restrictions", precedenceToDelete.hasAnyRestrictions());
 	}
 	
 	
 	public void testMergePrecedences() {
 		
-		destinyPrecedence.mergePrecedences(sourcePrecedence);
+		setUpMergePrecedences();
 		
-		assertTrue(restrictionToMerge1.getPrecedence().equals(destinyPrecedence));
-		assertTrue(restrictionToMerge2.getPrecedence().equals(destinyPrecedence));
-		assertTrue(restrictionToMerge3.getPrecedence().equals(destinyPrecedence));
+		destinationPrecedence.mergePrecedences(sourcePrecedence);
 		
-		assertTrue(destinyPrecedence.hasCurricularCourse());
-		assertFalse(sourcePrecedence.hasCurricularCourse());
-		assertFalse(sourcePrecedence.hasAnyRestrictions());
+		assertTrue("Restriction should not have changed Precedence", restrictionToMerge1.getPrecedence().equals(destinationPrecedence));
+		assertTrue("Failed to change Restriction to destination Precedence", restrictionToMerge2.getPrecedence().equals(destinationPrecedence));
+		assertTrue("Failed to change Restriction to destination Precedence", restrictionToMerge3.getPrecedence().equals(destinationPrecedence));
+		
+		assertTrue("Destination Precedence should have CurricularCourse", destinationPrecedence.hasCurricularCourse());
+		assertFalse("Failed to dereference CurricularCourse from source Precedence", sourcePrecedence.hasCurricularCourse());
+		assertFalse("Failed to move Restrictions from source to destination Precedence", sourcePrecedence.hasAnyRestrictions());
 	}
 }

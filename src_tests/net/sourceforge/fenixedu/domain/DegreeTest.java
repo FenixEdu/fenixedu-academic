@@ -36,17 +36,12 @@ public class DegreeTest extends DomainTestBase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		
+		//common initialization for 'create' and 'edit' method tests
 		newName = "name";
 		newNameEn = "nameEn";
 		newSigla = "sigla";
 		newDegreeType = DegreeType.DEGREE;
 		newConcreteClassForDegreeCurricularPlans = DegreeCurricularPlan.class.getName();
-		
-		setUpCreate();
-		
-		setUpEdit();
-
-		setUpDelete();
 	}
 
 	private void setUpDelete() {
@@ -122,101 +117,103 @@ public class DegreeTest extends DomainTestBase {
 		
 		degreeToCreate = new Degree(newName, newNameEn, newSigla, newDegreeType, newConcreteClassForDegreeCurricularPlans);
 	}
-	
-	protected void tearDown() throws Exception {
-		super.tearDown();
-	}
-	
+
 	
 	public void testCreate() {
-		assertTrue(degreeToCreate.getNome().equals(newName));
-		assertTrue(degreeToCreate.getNameEn().equals(newNameEn));
-		assertTrue(degreeToCreate.getSigla().equals(newSigla));
-		assertTrue(degreeToCreate.getTipoCurso().equals(newDegreeType));
-		assertTrue(degreeToCreate.getConcreteClassForDegreeCurricularPlans().equals(newConcreteClassForDegreeCurricularPlans));
-		assertTrue(degreeToCreate.hasAnyDegreeInfos());
+		
+		setUpCreate();
+		
+		assertCorrectInitialization("Failed to assign property on creation", degreeToCreate,newName,newNameEn,newSigla,newDegreeType);
+		assertTrue("Failed to assign property on creation: concreteClassForDegreeCurricularPlans", degreeToCreate.getConcreteClassForDegreeCurricularPlans().equals(newConcreteClassForDegreeCurricularPlans));
 	}
 	
 	public void testEdit() {
+		
+		setUpEdit();
+		
+		
 		degreeToEditWithDegreeInfo.edit(newName, newNameEn, newSigla, newDegreeType);
-		
-		assertTrue(degreeToEditWithDegreeInfo.getNome().equals(newName));
-		assertTrue(degreeToEditWithDegreeInfo.getNameEn().equals(newNameEn));
-		assertTrue(degreeToEditWithDegreeInfo.getSigla().equals(newSigla));
-		assertTrue(degreeToEditWithDegreeInfo.getTipoCurso().equals(newDegreeType));
-		assertTrue(degreeToEditWithDegreeInfo.hasAnyDegreeInfos());
-		
+
+		assertCorrectInitialization("Edition failed for property", degreeToEditWithDegreeInfo,newName,newNameEn,newSigla,newDegreeType);
+
 		
 		degreeToEditWithoutDegreeInfo.edit(newName, newNameEn, newSigla, newDegreeType);
-		
-		assertTrue(degreeToEditWithoutDegreeInfo.getNome().equals(newName));
-		assertTrue(degreeToEditWithoutDegreeInfo.getNameEn().equals(newNameEn));
-		assertTrue(degreeToEditWithoutDegreeInfo.getSigla().equals(newSigla));
-		assertTrue(degreeToEditWithoutDegreeInfo.getTipoCurso().equals(newDegreeType));
-		assertTrue(degreeToEditWithoutDegreeInfo.hasAnyDegreeInfos());
+
+		assertCorrectInitialization("Edition failed for property", degreeToEditWithoutDegreeInfo,newName,newNameEn,newSigla,newDegreeType);
 	}
 	
 	
 	public void testDelete() {
+		
+		setUpDelete();
+		
 		try {
 			degreeToDelete.delete();
 		} catch (DomainException e) {
 			fail("Unexpected DomainException: should have been deleted.");
 		}
 		
+		assertFalse("Failed to dereference Delegate", degreeToDelete.hasAnyDelegate());
+		assertFalse("Failed to dereference OldInquiriesCoursesRes", degreeToDelete.hasAnyOldInquiriesCoursesRes());
+		assertFalse("Failed to dereference OldInquiriesTeachersRes", degreeToDelete.hasAnyOldInquiriesTeachersRes());
+		assertFalse("Failed to dereference OldInquiriesSummary", degreeToDelete.hasAnyOldInquiriesSummary());
+		assertFalse("Deleted Degree should not have DegreeCurricularPlans", degreeToDelete.hasAnyDegreeCurricularPlans());
+		
+		for (IDelegate delegate : delegatesToDelete) {
+			DelegateTest.assertCorrectDeletion(delegate);
+		}
+		
+		for (IOldInquiriesCoursesRes oicr : oldInquiriesCoursesResToDelete) {
+			OldInquiriesCoursesResTest.assertCorrectDeletion(oicr);
+		}
+		
+		for (IOldInquiriesTeachersRes oitr : oldInquiriesTeachersResToDelete) {
+			OldInquiriesTeachersResTest.assertCorrectDeletion(oitr);
+		}
+		
+		for (IOldInquiriesSummary ois : oldInquiriesSummaryToDelete) {
+			OldInquiriesSummaryTest.assertCorrectDeletion(ois);
+		}
+		
+		
+		
 		try {
 			degreeNotToDelete.delete();
 			fail ("Expected DomainException: should not have been deleted.");
 		} catch (DomainException e) {
 		}
-		
-		assertFalse(degreeToDelete.hasAnyDelegate());
-		assertFalse(degreeToDelete.hasAnyOldInquiriesCoursesRes());
-		assertFalse(degreeToDelete.hasAnyOldInquiriesTeachersRes());
-		assertFalse(degreeToDelete.hasAnyOldInquiriesSummary());
-		assertFalse(degreeToDelete.hasAnyDegreeCurricularPlans());
-		
-		for (IDelegate delegate : delegatesToDelete) {
-			assertFalse(delegate.hasExecutionYear());
-			assertFalse(delegate.hasStudent());
-		}
-		
-		for (IOldInquiriesCoursesRes oicr : oldInquiriesCoursesResToDelete) {
-			assertFalse(oicr.hasExecutionPeriod());
-		}
-		
-		for (IOldInquiriesTeachersRes oitr : oldInquiriesTeachersResToDelete) {
-			assertFalse(oitr.hasExecutionPeriod());
-			assertFalse(oitr.hasTeacher());
-		}
-		
-		for (IOldInquiriesSummary ois : oldInquiriesSummaryToDelete) {
-			assertFalse(ois.hasExecutionPeriod());
-		}
-		
-		assertTrue(degreeNotToDelete.hasAnyDelegate());
-		assertTrue(degreeNotToDelete.hasAnyOldInquiriesCoursesRes());
-		assertTrue(degreeNotToDelete.hasAnyOldInquiriesTeachersRes());
-		assertTrue(degreeNotToDelete.hasAnyOldInquiriesSummary());
-		assertTrue(degreeNotToDelete.hasAnyDegreeCurricularPlans());
-		assertTrue(degreeNotToDelete.hasAnyDegreeInfos());
+
+		assertTrue("Should not have dereferenced Delegates", degreeNotToDelete.hasAnyDelegate());
+		assertTrue("Should not have dereferenced OldInquiriesCoursesRes", degreeNotToDelete.hasAnyOldInquiriesCoursesRes());
+		assertTrue("Should not have dereferenced OldInquiriesTeachersRes", degreeNotToDelete.hasAnyOldInquiriesTeachersRes());
+		assertTrue("Should not have dereferenced OldInquiriesSummary", degreeNotToDelete.hasAnyOldInquiriesSummary());
+		assertTrue("Should not have dereferenced DegreeCurricularPlans", degreeNotToDelete.hasAnyDegreeCurricularPlans());
+		assertTrue("Should not have dereferenced DegreeInfos", degreeNotToDelete.hasAnyDegreeInfos());
 		
 		for (IDelegate delegate : degreeNotToDelete.getDelegate()) {
-			assertTrue(delegate.hasExecutionYear());
-			assertTrue(delegate.hasStudent());
+			assertTrue("Should not have dereferenced Delegate from ExecutionYear", delegate.hasExecutionYear());
+			assertTrue("Should not have dereferenced Delegate from Student", delegate.hasStudent());
 		}
 		
 		for (IOldInquiriesCoursesRes oicr : degreeNotToDelete.getOldInquiriesCoursesRes()) {
-			assertTrue (oicr.hasExecutionPeriod());
+			assertTrue ("Should not have dereferenced OldInquiriesCoursesRes from ExecutionPeriod", oicr.hasExecutionPeriod());
 		}
 		
 		for (IOldInquiriesTeachersRes oitr : degreeNotToDelete.getOldInquiriesTeachersRes()) {
-			assertTrue (oitr.hasExecutionPeriod());
-			assertTrue (oitr.hasTeacher());
+			assertTrue ("Should not have dereferenced OldInquiriesTeachersRes from ExecutionPeriod", oitr.hasExecutionPeriod());
+			assertTrue ("Should not have dereferenced OldInquiriesTeachersRes from Teacher", oitr.hasTeacher());
 		}
 		
 		for (IOldInquiriesSummary ois : degreeNotToDelete.getOldInquiriesSummary()) {
-			assertTrue (ois.hasExecutionPeriod());
+			assertTrue ("Should not have dereferenced OldInquiriesSummary from ExecutionPeriod", ois.hasExecutionPeriod());
 		}
+	}
+	
+	private void assertCorrectInitialization(String errorMessagePrefix, IDegree degree, String name, String nameEn, String code, DegreeType type) {
+		assertTrue(errorMessagePrefix + ": name", degree.getNome().equals(name));
+		assertTrue(errorMessagePrefix + ": nameEn", degree.getNameEn().equals(nameEn));
+		assertTrue(errorMessagePrefix + ": code", degree.getSigla().equals(code));
+		assertTrue(errorMessagePrefix + ": DegreeType", degree.getTipoCurso().equals(type));
+		assertTrue(errorMessagePrefix + ": DegreeInfos", degree.hasAnyDegreeInfos());
 	}
 }

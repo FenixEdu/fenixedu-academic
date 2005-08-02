@@ -37,16 +37,6 @@ public class RestrictionTest extends DomainTestBase {
 	private IRestriction restriction;
 	private IRestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse restrictionByCurricularCourse;
 	
-	protected void setUp() throws Exception {
-        super.setUp();
-		
-		setUpCreate();
-		
-		setUpDelete();
-    }
-	
-	
-	
 	private void setUpCreate() {
 		newPrecedence = new Precedence();
 		newPrecedentCurricularCourse = new CurricularCourse();
@@ -67,15 +57,12 @@ public class RestrictionTest extends DomainTestBase {
 		restrictionByCurricularCourse.setPrecedence(precedence);
 		restrictionByCurricularCourse.setPrecedentCurricularCourse(curricularCourse);
 	}
-	
 
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-	
-	
-	
 	public void testCreate() {
+		
+		setUpCreate();
+		
+		
 		newRestrictionDoneCurricularCourse = new RestrictionDoneCurricularCourse(newNumber, newPrecedence, 
 				newPrecedentCurricularCourse);
 		
@@ -99,41 +86,51 @@ public class RestrictionTest extends DomainTestBase {
 		
 		newRestrictionPeriodToApply = new RestrictionPeriodToApply(newNumber, newPrecedence, newPrecedentCurricularCourse);
 		
+		assertRestrictionByCurricularCourseCreationCorrect(newRestrictionDoneCurricularCourse, newPrecedence, newPrecedentCurricularCourse, "Failed to create RestrictionDoneCurricularCourse");
+
+		assertRestrictionByCurricularCourseCreationCorrect(newRestrictionDoneOrHasBeenEnroledInCurricularCourse, newPrecedence, newPrecedentCurricularCourse, "Failed to create RestrictionDoneOrHasBeenEnroledInCurricularCourse");
 		
-		assertTrue(newRestrictionDoneCurricularCourse.getPrecedence().equals(newPrecedence));
-		assertTrue(newRestrictionDoneCurricularCourse.getPrecedentCurricularCourse().equals(newPrecedentCurricularCourse));
+		assertRestrictionByCurricularCourseCreationCorrect(newRestrictionHasEverBeenOrIsCurrentlyEnroledInCurricularCourse, newPrecedence, newPrecedentCurricularCourse, "Failed to create RestrictionHasEverBeenOrIsCurrentlyEnroledInCurricularCourse");
 		
-		assertTrue(newRestrictionDoneOrHasBeenEnroledInCurricularCourse.getPrecedence().equals(newPrecedence));
-		assertTrue(newRestrictionDoneOrHasBeenEnroledInCurricularCourse.getPrecedentCurricularCourse().equals(newPrecedentCurricularCourse));
+		assertRestrictionByCurricularCourseCreationCorrect(newRestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse, newPrecedence, newPrecedentCurricularCourse, "Failed to create RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse");
+
+		assertRestrictionByCurricularCourseCreationCorrect(newRestrictionNotDoneCurricularCourse, newPrecedence, newPrecedentCurricularCourse, "Failed to create RestrictionNotDoneCurricularCourse");
+
+		assertRestrictionByCurricularCourseCreationCorrect(newRestrictionNotEnroledCurricularCourse, newPrecedence, newPrecedentCurricularCourse, "Failed to create RestrictionNotEnroledCurricularCourse");
+
+		assertRestrictionByNumberOfCurricularCoursesCreationCorrect(newRestrictionByNumberOfDoneCurricularCourses, newPrecedence, newNumber, "Failed to create RestrictionByNumberOfDoneCurricularCourses");
 		
-		assertTrue(newRestrictionHasEverBeenOrIsCurrentlyEnroledInCurricularCourse.getPrecedence().equals(newPrecedence));
-		assertTrue(newRestrictionHasEverBeenOrIsCurrentlyEnroledInCurricularCourse.getPrecedentCurricularCourse().equals(newPrecedentCurricularCourse));
-		
-		assertTrue(newRestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse.getPrecedence().equals(newPrecedence));
-		assertTrue(newRestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse.getPrecedentCurricularCourse().equals(newPrecedentCurricularCourse));
-		
-		assertTrue(newRestrictionNotDoneCurricularCourse.getPrecedence().equals(newPrecedence));
-		assertTrue(newRestrictionNotDoneCurricularCourse.getPrecedentCurricularCourse().equals(newPrecedentCurricularCourse));
-		
-		assertTrue(newRestrictionNotEnroledCurricularCourse.getPrecedence().equals(newPrecedence));
-		assertTrue(newRestrictionNotEnroledCurricularCourse.getPrecedentCurricularCourse().equals(newPrecedentCurricularCourse));
-		
-		assertTrue(newRestrictionByNumberOfDoneCurricularCourses.getPrecedence().equals(newPrecedence));
-		assertTrue(newRestrictionByNumberOfDoneCurricularCourses.getNumberOfCurricularCourses().equals(newNumber));
-		
-		assertTrue(newRestrictionPeriodToApply.getPrecedence().equals(newPrecedence));
-		assertTrue(newRestrictionPeriodToApply.getPeriodToApplyRestriction().equals(PeriodToApplyRestriction.getEnum(newNumber.intValue())));
+		assertRestrictionPeriodToApplyCreationCorrect (newRestrictionPeriodToApply, newPrecedence, newNumber,  "Failed to create RestrictionPeriodToApply");
 	}
 	
 	
+	private void assertRestrictionPeriodToApplyCreationCorrect(IRestrictionPeriodToApply restriction, IPrecedence precedence, Integer number, String message) {
+		assertTrue(message, restriction.getPrecedence().equals(precedence));
+		assertTrue(message, restriction.getPeriodToApplyRestriction().equals(PeriodToApplyRestriction.getEnum(number.intValue())));		
+	}
+
+	private void assertRestrictionByNumberOfCurricularCoursesCreationCorrect (IRestrictionByNumberOfCurricularCourses restriction, IPrecedence precedence, Integer number, String message) {
+		assertTrue(message, restriction.getPrecedence().equals(precedence));
+		assertTrue(message, restriction.getNumberOfCurricularCourses().equals(number));
+	}
+
+	private void assertRestrictionByCurricularCourseCreationCorrect(IRestrictionByCurricularCourse restriction, IPrecedence precedence, ICurricularCourse curricularCourse, String message) {
+		assertTrue(message, restriction.getPrecedence().equals(precedence));
+		assertTrue(message, restriction.getPrecedentCurricularCourse().equals(curricularCourse));
+	}
+
+
+
 	public void testDelete() {
+		
+		setUpDelete();
 		
 		restriction.delete();
 		restrictionByCurricularCourse.delete();
 
-		assertFalse(restriction.hasPrecedence());
-		assertFalse(restrictionByCurricularCourse.hasPrecedence());
-		assertFalse(restrictionByCurricularCourse.hasPrecedentCurricularCourse());
+		assertFalse("Failed to dereference Precedence", restriction.hasPrecedence());
+		assertFalse("Failed to dereference Precedence", restrictionByCurricularCourse.hasPrecedence());
+		assertFalse("Failed to dereference PrecedentCurricularCourse", restrictionByCurricularCourse.hasPrecedentCurricularCourse());
 	}
 
 

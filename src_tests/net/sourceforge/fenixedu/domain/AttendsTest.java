@@ -10,12 +10,6 @@ public class AttendsTest extends DomainTestBase {
 	private IAttends attendNotToDelete3;
 	private IAttends attendNotToDelete4;
 	
-	protected void setUp() throws Exception {
-        super.setUp();
-		
-		setUpForDeleteCase();
-    }
-
 	private void setUpForDeleteCase() {
 		attendToDelete = new Attends();
 		attendNotToDelete1 = new Attends();
@@ -63,12 +57,10 @@ public class AttendsTest extends DomainTestBase {
 		attendNotToDelete4.setMark(mark2);
 	}
 
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-	
 	public void testDelete() {
 
+		setUpForDeleteCase();
+		
 		try {
 			attendToDelete.delete();
 		}
@@ -100,35 +92,29 @@ public class AttendsTest extends DomainTestBase {
 		}
 		catch (DomainException e) {}
 
-		
-		
-		assertFalse(attendToDelete.hasAluno());
-		assertFalse(attendToDelete.hasEnrolment());
-		assertFalse(attendToDelete.hasDisciplinaExecucao());
+		assertFalse("Failed to dereference Student", attendToDelete.hasAluno());
+		assertFalse("Failed to dereference Enrolment", attendToDelete.hasEnrolment());
+		assertFalse("Failed to dereference ExecutionCourse", attendToDelete.hasDisciplinaExecucao());
 
-		assertTrue(attendNotToDelete1.hasAluno());
-		assertTrue(attendNotToDelete1.hasEnrolment());
-		assertTrue(attendNotToDelete1.hasDisciplinaExecucao());
-		assertTrue(attendNotToDelete1.hasAnyStudentGroupAttends());
-		assertTrue(attendNotToDelete1.hasAnyAttendInAttendsSet());
-		assertTrue(attendNotToDelete1.hasMark());
+		assertAttendsNotDereferenced(attendNotToDelete1);
+		assertTrue("Should not dereference StudentGroupAttends", attendNotToDelete1.hasAnyStudentGroupAttends());
+		assertTrue("Should not dereference AttendInAttendsSets", attendNotToDelete1.hasAnyAttendInAttendsSet());
+		assertTrue("Should not dereference Mark", attendNotToDelete1.hasMark());
 		
-		assertTrue(attendNotToDelete2.hasAluno());
-		assertTrue(attendNotToDelete2.hasEnrolment());
-		assertTrue(attendNotToDelete2.hasDisciplinaExecucao());
-		assertTrue(attendNotToDelete2.hasAnyStudentGroupAttends());
+		assertAttendsNotDereferenced(attendNotToDelete2);
+		assertTrue("Should not dereference StudentGroupAttends", attendNotToDelete2.hasAnyStudentGroupAttends());
 		
-		assertTrue(attendNotToDelete3.hasAluno());
-		assertTrue(attendNotToDelete3.hasEnrolment());
-		assertTrue(attendNotToDelete3.hasDisciplinaExecucao());
-		assertTrue(attendNotToDelete3.hasAnyAttendInAttendsSet());
+		assertAttendsNotDereferenced(attendNotToDelete3);
+		assertTrue("Should not dereference AttendInAttendsSets", attendNotToDelete3.hasAnyAttendInAttendsSet());
 		
-		assertTrue(attendNotToDelete4.hasAluno());
-		assertTrue(attendNotToDelete4.hasEnrolment());
-		assertTrue(attendNotToDelete4.hasDisciplinaExecucao());
-		assertTrue(attendNotToDelete4.hasMark());
-		
+		assertAttendsNotDereferenced(attendNotToDelete4);
+		assertTrue("Should not dereference Mark", attendNotToDelete4.hasMark());
 	}
 
+	private void assertAttendsNotDereferenced(IAttends attends) {
+		assertTrue("Should not dereference Student", attends.hasAluno());
+		assertTrue("Should not dereference Enrolment", attends.hasEnrolment());
+		assertTrue("Should not dereference ExecutionCourse", attends.hasDisciplinaExecucao());
+	}
 }
 

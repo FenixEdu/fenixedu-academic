@@ -38,16 +38,11 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		
-		setUpEnrolmentByCurricularCourseAndExecutionPeriodCase();
-		
 		IStudent student = new Student();
 		IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
 		
 		setUpChangeState(student, degreeCurricularPlan);
 		setUpCreate(student, degreeCurricularPlan);
-		
-		setUpDelete();
-		setUpSetStudentAreasWithoutRestrictions();
 	}
 
 	private void setUpSetStudentAreasWithoutRestrictions() {
@@ -94,7 +89,7 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		cred2.setStudentCurricularPlan(studentCurricularPlanToDelete);
 	}
 
-	private void setUpEnrolmentByCurricularCourseAndExecutionPeriodCase() {
+	private void setUpGetEnrolmentByCurricularCourseAndExecutionPeriod() {
 		
 		studentCurricularPlanToReadFrom = new StudentCurricularPlan();
 		enrolmentToBeRead = new Enrolment();
@@ -156,26 +151,17 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		degreeCurricularPlan.addStudentCurricularPlans(concludedStudentCurricularPlan);
 	}
 	
-	
-	
-	
-	
-	
-	
-	protected void tearDown() throws Exception {
-		super.tearDown();
-	}
-	
+		
 	
 	
 	public void testCreate() {
-		assertTrue(newStudentCurricularPlan.hasDegreeCurricularPlan());
-		assertTrue(newStudentCurricularPlan.hasStudent());
-		assertNotNull(newStudentCurricularPlan.getStartDate());
-		assertNotNull(newStudentCurricularPlan.getWhen());
+		assertTrue("Failed to assign DegreeCurricularPlan", newStudentCurricularPlan.hasDegreeCurricularPlan());
+		assertTrue("Failed to assign Student", newStudentCurricularPlan.hasStudent());
+		assertNotNull("Failed to assign startDate", newStudentCurricularPlan.getStartDate());
+		assertNotNull("Failed to assign when", newStudentCurricularPlan.getWhen());
 		
-		assertTrue(newStudentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.ACTIVE));
-		assertTrue(activeStudentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.INACTIVE));
+		assertTrue("Failed to activate StudentCurricularPlan", newStudentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.ACTIVE));
+		assertTrue("Failed to inactivate previously active StudentCurricularPlan", activeStudentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.INACTIVE));
 		
 		
 		
@@ -184,13 +170,13 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 				startDateForNewStudentCurricularPlan, stateForNewStudentCurricularPlan, 
 				givenCreditsForNewStudentCurricularPlan, specializationForNewStudentCurricularPlan) ;
 		
-		assertEquals(scp.getStudent(),studentForNewStudentCurricularPlan);
-		assertEquals(scp.getDegreeCurricularPlan(),degreeCurricularPlanForNewStudentCurricularPlan);
-		assertEquals(scp.getBranch(),branchForNewStudentCurricularPlan);
-		assertEquals(scp.getStartDate(),startDateForNewStudentCurricularPlan);
-		assertEquals(scp.getCurrentState(),stateForNewStudentCurricularPlan);
-		assertEquals(scp.getGivenCredits(),givenCreditsForNewStudentCurricularPlan);
-		assertEquals(scp.getSpecialization(),specializationForNewStudentCurricularPlan);
+		assertEquals("Failed to assign Student", scp.getStudent(),studentForNewStudentCurricularPlan);
+		assertEquals("Failed to assign DegreeCurricularPlan", scp.getDegreeCurricularPlan(),degreeCurricularPlanForNewStudentCurricularPlan);
+		assertEquals("Failed to assign Branch", scp.getBranch(),branchForNewStudentCurricularPlan);
+		assertEquals("Failed to assign startDate", scp.getStartDate(),startDateForNewStudentCurricularPlan);
+		assertEquals("Failed to assign currentState", scp.getCurrentState(),stateForNewStudentCurricularPlan);
+		assertEquals("Failed to assign givenCredits", scp.getGivenCredits(),givenCreditsForNewStudentCurricularPlan);
+		assertEquals("Failed to assign Specialization", scp.getSpecialization(),specializationForNewStudentCurricularPlan);
 	}
 	
 	public void testChangeState() {
@@ -200,7 +186,7 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 			fail("Should have been changed.");
 		}
 		
-		assertTrue(concludedStudentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.PAST));
+		assertTrue("StudentCurricularPlan's state doesn't match expected state", concludedStudentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.PAST));
 		
 		try {
 			concludedStudentCurricularPlan.changeState(StudentCurricularPlanState.ACTIVE);
@@ -209,26 +195,28 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 			
 		}
 		
-		assertTrue(concludedStudentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.PAST));
+		assertTrue("StudentCurricularPlan's state doesn't match expected state", concludedStudentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.PAST));
 	}
 	
 	public void testDelete() {
+		
+		setUpDelete();
+		
 		try {
 			studentCurricularPlanToDelete.delete();
 		} catch (DomainException e) {
 			fail("Unexpected DomainException: should have been deleted.");
 		}
 		
-		assertFalse(studentCurricularPlanToDelete.hasDegreeCurricularPlan());
-		assertFalse(studentCurricularPlanToDelete.hasStudent());
-		assertFalse(studentCurricularPlanToDelete.hasAnyEnrolments());
-		assertFalse(studentCurricularPlanToDelete.hasBranch());
-		
-		assertFalse(studentCurricularPlanToDelete.hasAnyGratuitySituations());
-		assertFalse(studentCurricularPlanToDelete.hasMasterDegreeThesis());
-		assertFalse(studentCurricularPlanToDelete.hasAnyCreditsInScientificAreas());
-		assertFalse(studentCurricularPlanToDelete.hasAnyCreditsInAnySecundaryAreas());
-		assertFalse(studentCurricularPlanToDelete.hasAnyNotNeedToEnrollCurricularCourses());
+		assertFalse("Failed to dereference DegreeCurricularPlan", studentCurricularPlanToDelete.hasDegreeCurricularPlan());
+		assertFalse("Failed to dereference Student", studentCurricularPlanToDelete.hasStudent());
+		assertFalse("Failed to dereference Enrolments", studentCurricularPlanToDelete.hasAnyEnrolments());
+		assertFalse("Failed to dereference Branch", studentCurricularPlanToDelete.hasBranch());
+		assertFalse("Failed to dereference GratuitySituations", studentCurricularPlanToDelete.hasAnyGratuitySituations());
+		assertFalse("Failed to dereference MasterDegreeThesis", studentCurricularPlanToDelete.hasMasterDegreeThesis());
+		assertFalse("Failed to dereference CreditsInScientificAreas", studentCurricularPlanToDelete.hasAnyCreditsInScientificAreas());
+		assertFalse("Failed to dereference CreditsInAnySecundaryAreas", studentCurricularPlanToDelete.hasAnyCreditsInAnySecundaryAreas());
+		assertFalse("Failed to dereference NotNeedToEnrollCurricularCourses", studentCurricularPlanToDelete.hasAnyNotNeedToEnrollCurricularCourses());
 		
 		try {
 			studentCurricularPlanLEICToDelete.delete();
@@ -236,7 +224,7 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 			fail("Unexpected DomainException: should have been deleted.");
 		}
 		
-		assertFalse(studentCurricularPlanLEICToDelete.hasSecundaryBranch());
+		assertFalse("Failed to dereference secondary Branch", studentCurricularPlanLEICToDelete.hasSecundaryBranch());
 		
 		try {
 			studentCurricularPlanLEECToDelete.delete();
@@ -244,19 +232,24 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 			fail("Unexpected DomainException: should have been deleted.");
 		}
 		
-		assertFalse(studentCurricularPlanLEECToDelete.hasSecundaryBranch());
+		assertFalse("Failed to dereference secondary Branch", studentCurricularPlanLEECToDelete.hasSecundaryBranch());
 	}
 	
 	public void testGetEnrolmentByCurricularCourseAndExecutionPeriod () {
+		
+		setUpGetEnrolmentByCurricularCourseAndExecutionPeriod();
+		
 		IEnrolment enrolment = studentCurricularPlanToReadFrom.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse,executionPeriod);
 		
-		assertEquals(enrolment,enrolmentToBeRead);
+		assertEquals("Enrolment is not the one that was expected", enrolment,enrolmentToBeRead);
 	}
 	
 	public void testSetStudentAreasWithoutRestrictions() {
 
-		assertFalse(studentCurricularPlanToSetAreas.hasBranch());
-		assertFalse(studentCurricularPlanToSetAreas.hasSecundaryBranch());
+		setUpSetStudentAreasWithoutRestrictions();
+		
+		assertFalse("StudentCurricularPlan already has Branch", studentCurricularPlanToSetAreas.hasBranch());
+		assertFalse("StudentCurricularPlan already has secondary Branch", studentCurricularPlanToSetAreas.hasSecundaryBranch());
 		
 		try {
 			studentCurricularPlanToSetAreas.setStudentAreasWithoutRestrictions(primaryArea,primaryArea);
@@ -265,8 +258,8 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 			
 		}
 		
-		assertFalse(studentCurricularPlanToSetAreas.hasBranch());
-		assertFalse(studentCurricularPlanToSetAreas.hasSecundaryBranch());
+		assertFalse("StudentCurricularPlan shouldn't have Branch", studentCurricularPlanToSetAreas.hasBranch());
+		assertFalse("StudentCurricularPlan shouldn't have secondary Branch", studentCurricularPlanToSetAreas.hasSecundaryBranch());
 		
 		try {
 			studentCurricularPlanToSetAreas.setStudentAreasWithoutRestrictions(primaryArea,secondaryArea);
@@ -274,7 +267,7 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 			fail("same areas should have been set");
 		}
 		
-		assertEquals(studentCurricularPlanToSetAreas.getBranch(),primaryArea);
-		assertEquals(studentCurricularPlanToSetAreas.getSecundaryBranch(),secondaryArea);
+		assertEquals("StudentCurricularPlan's Branch does not match expected Branch", studentCurricularPlanToSetAreas.getBranch(),primaryArea);
+		assertEquals("StudentCurricularPlan's secondary Branch does not match expected Branch", studentCurricularPlanToSetAreas.getSecundaryBranch(),secondaryArea);
 	}
 }

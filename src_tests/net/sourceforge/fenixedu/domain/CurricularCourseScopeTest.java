@@ -30,15 +30,9 @@ public class CurricularCourseScopeTest extends DomainTestBase {
 	
 	protected void setUp() throws Exception {
         super.setUp();
+
 		
-		setUpCreate();
-		setUpEdit();
-		setUpDelete();
-    }
-	
-	
-	private void setUpCreate() {
-		
+		// common initialization for 'edit' and 'create' method tests
 		newCurricularSemester = new CurricularSemester();
 		newCurricularCourse = new CurricularCourse();
 		newBranch = new Branch();
@@ -47,6 +41,12 @@ public class CurricularCourseScopeTest extends DomainTestBase {
 		newEndDate = new GregorianCalendar();
 		newAnnotation = "annotation";
 		
+		// common initialization for 'edit' and 'end' method tests
+		setUpEdit();
+    }
+	
+	
+	private void setUpCreate() {
 
 		commonCurricularSemester = new CurricularSemester();
 		commonCurricularSemester.setSemester(2);
@@ -89,19 +89,10 @@ public class CurricularCourseScopeTest extends DomainTestBase {
 		curricularCourseScopeNotToDelete.addAssociatedWrittenEvaluations(we2);
 	}
 
-	
-	
-	
-	
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-	
-	
-	
-	
-	
+
 	public void testCreate() {
+
+		setUpCreate();
 		
 		try {
 			newCurricularCourseScope = new CurricularCourseScope(newBranch, newCurricularCourse, newCurricularSemester,
@@ -111,12 +102,12 @@ public class CurricularCourseScopeTest extends DomainTestBase {
 		}
 		
 		
-		assertTrue(newCurricularCourseScope.hasCurricularSemester());
-		assertTrue(newCurricularCourseScope.hasCurricularCourse());
-		assertTrue(newCurricularCourseScope.hasBranch());
-		assertTrue(newCurricularCourseScope.getBeginDate().equals(newBeginDate));
-		assertTrue(newCurricularCourseScope.getEndDate().equals(newEndDate));
-		assertTrue(newCurricularCourseScope.getAnotation().equals(newAnnotation));
+		assertTrue("Failed to assign CurricularSemester", newCurricularCourseScope.hasCurricularSemester());
+		assertTrue("Failed to assign CurricularCourse", newCurricularCourseScope.hasCurricularCourse());
+		assertTrue("Failed to assign Branch", newCurricularCourseScope.hasBranch());
+		assertTrue("Failed to assign beginDate", newCurricularCourseScope.getBeginDate().equals(newBeginDate));
+		assertTrue("Failed to assign endDate", newCurricularCourseScope.getEndDate().equals(newEndDate));
+		assertTrue("Failed to assign anotation", newCurricularCourseScope.getAnotation().equals(newAnnotation));
 		
 		
 		try {
@@ -134,11 +125,11 @@ public class CurricularCourseScopeTest extends DomainTestBase {
 		
 		scopeToEdit.edit(newBranch, newCurricularSemester, newBeginDate, null, newAnnotation);
 		
-		assertTrue(scopeToEdit.getBranch().equals(newBranch));
-		assertTrue(scopeToEdit.getCurricularSemester().equals(newCurricularSemester));
-		assertTrue(scopeToEdit.getBeginDate().equals(newBeginDate));
-		assertNull(scopeToEdit.getEndDate());
-		assertTrue(scopeToEdit.getAnotation().equals(newAnnotation));
+		assertTrue("Edited Branch does not match expected", scopeToEdit.getBranch().equals(newBranch));
+		assertTrue("Edited CurricularSemester does not match expected", scopeToEdit.getCurricularSemester().equals(newCurricularSemester));
+		assertTrue("Edited beginDate does not match expected", scopeToEdit.getBeginDate().equals(newBeginDate));
+		assertNull("Edited endDate does not match expected", scopeToEdit.getEndDate());
+		assertTrue("Edited anotation does not match expected", scopeToEdit.getAnotation().equals(newAnnotation));
 	}
 	
 	
@@ -146,11 +137,14 @@ public class CurricularCourseScopeTest extends DomainTestBase {
 		
 		scopeToEdit.end(newEndDate);
 		
-		assertTrue(scopeToEdit.getEndDate().equals(newEndDate));
+		assertTrue("Failed to set endDate", scopeToEdit.getEndDate().equals(newEndDate));
 	}
 	
 	
 	public void testDelete() {
+		
+		setUpDelete();
+		
 		try {
 			curricularCourseScopeNotToDelete.delete();
 			fail("Should not have been deleted.");
@@ -158,20 +152,19 @@ public class CurricularCourseScopeTest extends DomainTestBase {
 
 		}
 		
+		assertTrue("Should not have dereferenced from CurricularCourse", curricularCourseScopeNotToDelete.hasCurricularCourse());
+		assertTrue("Should not have dereferenced from CurricularSemester", curricularCourseScopeNotToDelete.hasCurricularSemester());
+		assertTrue("Should not have dereferenced from WrittenEvaluations", curricularCourseScopeNotToDelete.hasAnyAssociatedWrittenEvaluations());
+		
 		try {
 			curricularCourseScopeToDelete.delete();
 		} catch (DomainException e) {
 			fail("Should have been deleted.");
 		}
 		
-		
-		assertFalse(curricularCourseScopeToDelete.hasCurricularCourse());
-		assertFalse(curricularCourseScopeToDelete.hasCurricularSemester());
-		assertFalse(curricularCourseScopeToDelete.hasAnyAssociatedWrittenEvaluations());
-		
-		assertTrue(curricularCourseScopeNotToDelete.hasCurricularCourse());
-		assertTrue(curricularCourseScopeNotToDelete.hasCurricularSemester());
-		assertTrue(curricularCourseScopeNotToDelete.hasAnyAssociatedWrittenEvaluations());
+		assertFalse("Failed to dereference CurricularCourse", curricularCourseScopeToDelete.hasCurricularCourse());
+		assertFalse("Failed to dereference CurricularSemester", curricularCourseScopeToDelete.hasCurricularSemester());
+		assertFalse("Failed to dereference WrittenEvaluations", curricularCourseScopeToDelete.hasAnyAssociatedWrittenEvaluations());
 	}
 
 }

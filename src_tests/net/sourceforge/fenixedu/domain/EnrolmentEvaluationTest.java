@@ -36,21 +36,7 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
 	
 	private IEnrolmentEvaluation mdEvaluationToInsert;
 	
-	
-	
-	
-	
-	protected void setUp() throws Exception {
-        super.setUp();
 		
-		setUpEdit();
-		setUpConfirmSubmission();
-		setUpDelete();
-		setUpInsertStudentFinalEvaluationForMasterDegree();
-    }
-	
-	
-	
 	private void setUpEdit() {
 		
 		normalEvaluation = new EnrolmentEvaluation();
@@ -161,76 +147,83 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
 		mdStudentCurricularPlanToInsert.setDegreeCurricularPlan(mdDegreeCurricularPlanToInsert);
 	}
 
-	
-	
-	
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-	
+
 	
 	
 	public void testEdit() {
 		
+		setUpEdit();
+				
 		normalEvaluation.edit(newResponsibleFor, newGrade, newAvailableDate, newExamDate, newChecksum);
+
+		assertTrue("Failed to assign personResponsibleForGrade", normalEvaluation.getPersonResponsibleForGrade().equals(newResponsibleFor));
+		assertTrue("Failed to assign grade", normalEvaluation.getGrade().equals(newGrade));
+		assertTrue("Failed to assign gradeAvailableDate", normalEvaluation.getGradeAvailableDate().equals(newAvailableDate));
+		assertTrue("Failed to assign examDate", normalEvaluation.getExamDate().equals(newExamDate));
+		assertTrue("Failed to assign checkSum", normalEvaluation.getCheckSum().equals(newChecksum));
+
+		
 		evaluationToClear.edit(null, null, null, null, null);
+		
+		assertFalse("Failed to clear personResponsibleForGrade", evaluationToClear.hasPersonResponsibleForGrade());
+		assertNull("Failed to clear grade", evaluationToClear.getGrade());
+		assertNull("Failed to clear gradeAvailableDate", evaluationToClear.getGradeAvailableDate());
+		assertNull("Failed to clear examDate", evaluationToClear.getExamDate());
+		assertNull("Failed to clear checkSum", evaluationToClear.getCheckSum());
+		
+		
 		evaluationWithoutExamDate.edit(newResponsibleFor, newGrade, newAvailableDate, null, newChecksum);
-		
-		assertTrue(normalEvaluation.getPersonResponsibleForGrade().equals(newResponsibleFor));
-		assertTrue(normalEvaluation.getGrade().equals(newGrade));
-		assertTrue(normalEvaluation.getGradeAvailableDate().equals(newAvailableDate));
-		assertTrue(normalEvaluation.getExamDate().equals(newExamDate));
-		assertTrue(normalEvaluation.getCheckSum().equals(newChecksum));
-		
-		assertFalse(evaluationToClear.hasPersonResponsibleForGrade());
-		assertNull(evaluationToClear.getGrade());
-		assertNull(evaluationToClear.getGradeAvailableDate());
-		assertNull(evaluationToClear.getExamDate());
-		assertNull(evaluationToClear.getCheckSum());
-		
-		assertTrue(evaluationWithoutExamDate.getPersonResponsibleForGrade().equals(newResponsibleFor));
-		assertTrue(evaluationWithoutExamDate.getGrade().equals(newGrade));
-		assertTrue(evaluationWithoutExamDate.getGradeAvailableDate().equals(newAvailableDate));
-		assertTrue(evaluationWithoutExamDate.getExamDate().equals(newAvailableDate));
-		assertTrue(evaluationWithoutExamDate.getCheckSum().equals(newChecksum));
+				
+		assertTrue("Failed to assign personResponsibleForGrade", evaluationWithoutExamDate.getPersonResponsibleForGrade().equals(newResponsibleFor));
+		assertTrue("Failed to assign grade", evaluationWithoutExamDate.getGrade().equals(newGrade));
+		assertTrue("Failed to assign gradeAvailableDate", evaluationWithoutExamDate.getGradeAvailableDate().equals(newAvailableDate));
+		assertTrue("Failed to assign examDate", evaluationWithoutExamDate.getExamDate().equals(newAvailableDate));
+		assertTrue("Failed to assign checkSum", evaluationWithoutExamDate.getCheckSum().equals(newChecksum));
 	}
 	
 	
 	public void testConfirmSubmission() {
 		
+		setUpConfirmSubmission();
+				
 		aprovedEvaluation.confirmSubmission(employee, observation);
+		
+		assertCorrectSubmissionConfirmation("Assignment of property failed on submission confirmation", 
+				aprovedEvaluation, EnrolmentEvaluationState.FINAL_OBJ, 
+				employee, observation, EnrollmentState.APROVED);
+
+		
 		notAprovedEvaluation.confirmSubmission(employee, observation);
+		
+		assertCorrectSubmissionConfirmation("Assignment of property failed on submission confirmation", 
+				notAprovedEvaluation, EnrolmentEvaluationState.FINAL_OBJ, 
+				employee, observation, EnrollmentState.NOT_APROVED);
+		
+		
 		notEvaluatedEvaluation.confirmSubmission(employee, observation);
-		
-		assertTrue(aprovedEvaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.FINAL_OBJ));
-		assertTrue(aprovedEvaluation.getEmployee().equals(employee));
-		assertTrue(aprovedEvaluation.getObservation().equals(observation));
-		assertTrue(aprovedEvaluation.getEnrolment().getEnrollmentState().equals(EnrollmentState.APROVED));
-		
-		assertTrue(notAprovedEvaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.FINAL_OBJ));
-		assertTrue(notAprovedEvaluation.getEmployee().equals(employee));
-		assertTrue(notAprovedEvaluation.getObservation().equals(observation));
-		assertTrue(notAprovedEvaluation.getEnrolment().getEnrollmentState().equals(EnrollmentState.NOT_APROVED));
-		
-		assertTrue(notEvaluatedEvaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.FINAL_OBJ));
-		assertTrue(notEvaluatedEvaluation.getEmployee().equals(employee));
-		assertTrue(notEvaluatedEvaluation.getObservation().equals(observation));
-		assertTrue(notEvaluatedEvaluation.getEnrolment().getEnrollmentState().equals(EnrollmentState.NOT_EVALUATED));
+
+		assertCorrectSubmissionConfirmation("Assignment of property failed on submission confirmation", 
+				notEvaluatedEvaluation, EnrolmentEvaluationState.FINAL_OBJ, 
+				employee, observation, EnrollmentState.NOT_EVALUATED);		
 	}
 	
 	
 	public void testDelete() {
 		
+		setUpDelete();
+				
 		evaluation.delete();
 		
-		assertFalse(evaluation.hasPersonResponsibleForGrade());
-		assertFalse(evaluation.hasEmployee());
-		assertFalse(evaluation.hasEnrolment());
+		assertFalse("Failed to dereference personResponsibleForGrade", evaluation.hasPersonResponsibleForGrade());
+		assertFalse("Failed to dereference employee", evaluation.hasEmployee());
+		assertFalse("Failed to dereference enrolment", evaluation.hasEnrolment());
 	}
 	
 	
 //	public void testInsertStudentFinalEvaluationForMasterDegree() {
 //		
+//		setUpInsertStudentFinalEvaluationForMasterDegree();
+//	
 //		mdEvaluationToInsert.insertStudentFinalEvaluationForMasterDegree("20", newResponsibleFor, newExamDate);
 //		
 //		assertTrue(mdEvaluationToInsert.getGrade().equals("20"));
@@ -258,5 +251,13 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
 //		assertTrue(mdEvaluationToInsert.getPersonResponsibleForGrade().equals(newResponsibleFor));
 //		assertTrue(mdEvaluationToInsert.getExamDate().equals(newExamDate));	
 //	}
+	
+	private void assertCorrectSubmissionConfirmation(String errorMessagePrefix, IEnrolmentEvaluation evaluation, EnrolmentEvaluationState state, 
+			IEmployee employee, String observation, EnrollmentState enrolmentState) {
+		assertTrue(errorMessagePrefix + ": enrolmentEvaluationState", evaluation.getEnrolmentEvaluationState().equals(state));
+		assertTrue(errorMessagePrefix + ": employee", evaluation.getEmployee().equals(employee));
+		assertTrue(errorMessagePrefix + ": observation", evaluation.getObservation().equals(observation));
+		assertTrue(errorMessagePrefix + ": enrolment.enrolmentState", evaluation.getEnrolment().getEnrollmentState().equals(enrolmentState));
+	}
 
 }

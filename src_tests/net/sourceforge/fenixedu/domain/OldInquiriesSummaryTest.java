@@ -6,36 +6,28 @@ import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
 public class OldInquiriesSummaryTest extends DomainTestBase {
 	
 	private IOldInquiriesSummary oldOISToDelete = null;
-	private IExecutionPeriod executionPeriod = null;
-	private IDegree degree = null;
 	
-	protected void setUp() throws Exception {
-		super.setUp();
-		
-		setUpDelete();
-	}
-
 	private void setUpDelete() {
 		oldOISToDelete = new OldInquiriesSummary();
 		
-		executionPeriod = new ExecutionPeriod();
+		IExecutionPeriod executionPeriod = new ExecutionPeriod();
 		executionPeriod.addOldInquiriesSummary(oldOISToDelete);
 		
-		degree = new Degree();
+		IDegree degree = new Degree();
 		degree.addOldInquiriesSummary(oldOISToDelete);
 	}
-	
-	protected void tearDown() throws Exception {
-		super.tearDown();
-	}
-	
+		
 	public void testDelete() {
+		
+		setUpDelete();
+		
 		oldOISToDelete.delete();
 		
-		assertFalse(oldOISToDelete.hasExecutionPeriod());
-		assertFalse(oldOISToDelete.hasDegree());
-		
-		assertFalse(executionPeriod.hasOldInquiriesSummary(oldOISToDelete));
-		assertFalse(degree.hasOldInquiriesSummary(oldOISToDelete));
+		assertCorrectDeletion(oldOISToDelete);
+	}
+	
+	protected static void assertCorrectDeletion(IOldInquiriesSummary ois) {
+		assertFalse("Deleted OldInquiriesSummary should not have ExecutionPeriod", ois.hasExecutionPeriod());
+		assertFalse("Deleted OldInquiriesSummary should not have Degree", ois.hasDegree());
 	}
 }

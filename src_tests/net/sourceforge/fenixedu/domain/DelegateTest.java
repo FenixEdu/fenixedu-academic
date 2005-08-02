@@ -6,46 +6,33 @@ import net.sourceforge.fenixedu.domain.student.IDelegate;
 public class DelegateTest extends DomainTestBase {
 
 	IDelegate delegateToDelete = null;
-	IExecutionYear executionYear = null;
-	IStudent student = null;
-	IDegree degree = null;
-	
-	protected void setUp() throws Exception {
-		super.setUp();
-		
-		setUpDelete();
-	}
 
 	private void setUpDelete() {
 		delegateToDelete = new Delegate();
 		delegateToDelete.setIdInternal(1);
 		
-		executionYear = new ExecutionYear();
-		executionYear.setIdInternal(1);
+		IExecutionYear executionYear = new ExecutionYear();
 		executionYear.addDelegate(delegateToDelete);
 		
-		student = new Student();
-		student.setIdInternal(1);
+		IStudent student  = new Student();
 		student.addDelegate(delegateToDelete);
 		
-		degree = new Degree();
-		degree.setIdInternal(1);
+		IDegree degree = new Degree();
 		degree.addDelegate(delegateToDelete);
 	}
-	
-	protected void tearDown() throws Exception {
-		super.tearDown();
-	}
-	
+		
 	public void testDelete () {
+		
+		setUpDelete();
+		
 		delegateToDelete.delete();
 		
-		assertFalse(delegateToDelete.hasDegree());
-		assertFalse(delegateToDelete.hasStudent());
-		assertFalse(delegateToDelete.hasExecutionYear());
-		
-		assertFalse(degree.hasDelegate(delegateToDelete));
-		assertFalse(student.hasDelegate(delegateToDelete));
-		assertFalse(executionYear.hasDelegate(delegateToDelete));
+		assertCorrectDeletion(delegateToDelete);
+	}
+	
+	protected static void assertCorrectDeletion(IDelegate delegate) {
+		assertFalse("Deleted Delegate should not have Degree", delegate.hasDegree());
+		assertFalse("Deleted Delegate should not have Student", delegate.hasStudent());
+		assertFalse("Deleted Delegate should not have ExecutionYear", delegate.hasExecutionYear());
 	}
 }
