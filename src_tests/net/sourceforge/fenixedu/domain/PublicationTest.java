@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.publication.PublicationDTO;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.publication.Authorship;
 import net.sourceforge.fenixedu.domain.publication.IAuthorship;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
@@ -265,6 +266,23 @@ public class PublicationTest extends DomainTestBase {
         assertPublicationContent(publication);
         
     }
+    
+    public void testCreatePublicationWithoutAuthors() {
+        try {
+            IPublication publication = new Publication(inexistentPublicationDTO, publicationType, null);
+            fail("The publication shouldn't have been created without authors");
+        } catch (DomainException domainException) {
+            //everything went as planned since a publication can't be created without authors
+        }
+        
+        try {
+            List authors1 = new ArrayList<IAuthorship>();
+            IPublication publication = new Publication(inexistentPublicationDTO, publicationType, authors1);
+            fail("The publication shouldn't have been created without authors");
+        } catch (DomainException domainException) {
+            //everything went as planned since a publication can't be created without authors
+        }        
+    }
 
     public void testEditPublication() {
         
@@ -286,6 +304,22 @@ public class PublicationTest extends DomainTestBase {
         assertPublicationContent(existentPublication);  
     }
     
+    public void testEditPublicationWithoutAuthors() {
+        try {
+            existentPublication.edit(existentPublicationDTO, newPublicationType, null);
+            fail("The publication shouldn't have been edited without authors");
+        } catch (DomainException domainException) {
+            //everything went as planned since a publication can't be edited without authors
+        }
+        
+        try {
+            List authors1 = new ArrayList<IAuthorship>();
+            existentPublication.edit(existentPublicationDTO, newPublicationType, authors1);
+            fail("The publication shouldn't have been edited without authors");
+        } catch (DomainException domainException) {
+            //everything went as planned since a publication can't be edited without authors
+        }        
+    }
     
     public void testDeletePublication() {
         

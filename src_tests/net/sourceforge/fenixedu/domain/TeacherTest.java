@@ -10,6 +10,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.publication.Authorship;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
 import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
 import net.sourceforge.fenixedu.domain.publication.Publication;
@@ -21,6 +22,7 @@ import net.sourceforge.fenixedu.util.PublicationArea;
 public class TeacherTest extends DomainTestBase {
 
     private ITeacher teacher, teacher2, teacher3;
+    private IPerson person1, person2;
     private IExecutionCourse executionCourse, executionCourse2, executionCourse3;
     private IProfessorship professorship, professorship2, professorship3, professorship4, professorship5, professorship6;
     private IExecutionYear  executionYear;
@@ -41,24 +43,45 @@ public class TeacherTest extends DomainTestBase {
         super.setUp();
     
         setupTestUpdateResponsabilitiesFor();
+        
+        person1 = new Person();
+        person2 = new Person();
                 
         teacher = new Teacher();
+        teacher.setPerson(person1);
         
         publication = new Publication();
+        publication.addPublicationAuthorships(new Authorship(publication, person1, 1));
+        
         publication2 = new Publication();
+        publication2.addPublicationAuthorships(new Authorship(publication2, person1, 1));
+        
         publication3 = new Publication();
+        publication3.addPublicationAuthorships(new Authorship(publication3, person1, 1));
+        
         publication4 = new Publication();
+        publication4.addPublicationAuthorships(new Authorship(publication4, person1, 1));
+        
         publication5 = new Publication();
+        publication5.addPublicationAuthorships(new Authorship(publication5, person1, 1));
+        
         publication6 = new Publication();
+        publication6.addPublicationAuthorships(new Authorship(publication6, person1, 1));
+        
         publication7 = new Publication();
+        publication7.addPublicationAuthorships(new Authorship(publication7, person1, 1));
         
         teacher2 = new Teacher();
+        teacher2.setPerson(person2);
         
         publication8 = new Publication();
-        publication9 = new Publication();
+        publication8.addPublicationAuthorships(new Authorship(publication8, person2, 1));
         
-        new PublicationTeacher(publication8, teacher2, PublicationArea.CIENTIFIC).setIdInternal(1);
-        new PublicationTeacher(publication9, teacher2, PublicationArea.DIDATIC).setIdInternal(2);
+        publication9 = new Publication();
+        publication9.addPublicationAuthorships(new Authorship(publication9, person2, 1));
+        
+        new PublicationTeacher(publication8, teacher2, PublicationArea.CIENTIFIC);
+        new PublicationTeacher(publication9, teacher2, PublicationArea.DIDATIC);
     }
 
     public void testUpdateResponsabilitiesFor() {
@@ -133,6 +156,30 @@ public class TeacherTest extends DomainTestBase {
     } 
 
     public void testAddPublicationToTeacherInformationSheet() {
+        List<IPublication> publications;
+        
+        assertEquals(teacher.getTeacherPublicationsCount(), 0);
+
+        
+        try {
+            teacher.addToTeacherInformationSheet(publication,PublicationArea.CIENTIFIC);
+        } catch (DomainException de) {
+            fail("Should have inserted the publication cleanly, but threw a DomainException");
+        }
+        assertEquals(teacher.getTeacherPublicationsCount(), 1);
+        publications = new ArrayList<IPublication>();
+        for(IPublicationTeacher publicationTeacher : teacher.getTeacherPublications()) {
+            publications.add(publicationTeacher.getPublication());
+        }
+        assertTrue(publications.contains(publication));
+        assertEquals(publication.getPublicationTeachersCount(), 1);
+        assertTrue(publication.getPublicationTeachers().get(0).getPublicationArea().equals(PublicationArea.CIENTIFIC));
+        
+    }
+    
+    
+    
+    public void testAddPublicationToTeacherInformationSheetWhenFull() {
         List<IPublication> publications;
         
         assertEquals(teacher.getTeacherPublicationsCount(), 0);

@@ -7,6 +7,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.publication.PublicationDTO;
 import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -22,7 +23,8 @@ public class Publication extends Publication_Base implements IPublication {
      ********************************************************************/
     
     public Publication (PublicationDTO publicationDTO, IPublicationType publicationType, List<IPerson> authors) {
-        
+        if( authors == null || authors.size() == 0)
+            throw new DomainException("error.publication.createPublicationWithoutAuthors");
         setProperties(publicationDTO);
         
         setType(publicationType);
@@ -31,6 +33,8 @@ public class Publication extends Publication_Base implements IPublication {
     }
     
     public void edit(PublicationDTO publicationDTO, IPublicationType publicationType, List<IPerson> authors) {
+        if( authors == null || authors.size() == 0)
+            throw new DomainException("error.publication.editPublicationWithoutAuthors");
 
         setProperties(publicationDTO);
         
