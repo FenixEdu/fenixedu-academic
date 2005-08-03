@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
@@ -242,6 +243,11 @@ public class EditStudentPersonInfoDispatchAction extends DispatchAction {
                         "EditPersonalStudentInfo", args);
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
+            } catch (NotAuthorizedFilterException e) {
+                ActionErrors errors = new ActionErrors();
+                errors.add("errors", new ActionError("error.degreeAdministration.notMereStudent"));
+                saveErrors(request, errors);
+                return mapping.findForward("done");
             }
 
             request.removeAttribute("idInternal");

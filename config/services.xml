@@ -1881,6 +1881,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
+			<chain name="DegreeAdministrativeOfficeAuthorization" />
 		</filterChains>
 	</service>
 	<service>
@@ -2104,6 +2105,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
+			<chain name="ChangeStudentInfoFromDegreeAdministrativeOfficeAuthorization" />
 		</filterChains>
 	</service>
 

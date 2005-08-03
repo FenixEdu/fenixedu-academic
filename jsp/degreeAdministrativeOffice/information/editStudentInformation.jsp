@@ -249,17 +249,17 @@
 	<!-- Telemovel -->
 	<tr>
 	    <td width="15%"><bean:message key="label.person.mobilePhone" bundle="DEFAULT" /></td>
-	    <td><bean:write name="changePersonalInfoForm" property="mobilePhone"/></td>
+	    <td><html:text property="mobilePhone"/></td>
 	</tr>
 	<!-- E-Mail -->
 	<tr>
 	    <td><bean:message key="label.person.email" bundle="DEFAULT" /></td>
-	    <td><bean:write name="changePersonalInfoForm" property="email" /></td>
+	    <td><html:text property="email" /></td>
 	</tr>
 	<!-- WebPage -->
 	<tr>
 	    <td><bean:message key="label.person.webSite" bundle="DEFAULT" /></td>
-	    <td><bean:write name="changePersonalInfoForm" property="webSite" /></td>
+	    <td><html:text property="webSite" /></td>
 	</tr>
  </table>
     

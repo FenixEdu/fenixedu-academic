@@ -6,6 +6,7 @@
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
 <%@ page import="java.util.Date" %>
  
+ <html:errors />
  <table width="100%">
  	<tr valign="bottom">
  		<td><h2><bean:message key="label.person.title.personalConsult" bundle="DEFAULT" /></h2></td>

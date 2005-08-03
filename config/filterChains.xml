@@ -177,6 +177,13 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
+		<name>ChangeStudentInfoFromDegreeAdministrativeOfficeAuthorization</name>
+        <expression>ChangeStudentInfoAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>    
+    </filterChain>
+    <filterChain>
         <name>EquivalenceAuthorization</name>
         <expression>EquivalenceAuthorization</expression>
         <description/>
