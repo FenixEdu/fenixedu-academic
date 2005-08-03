@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 
@@ -21,7 +23,14 @@ public class InfoExecutionCourseWithExecutionPeriodAndExams extends
     public void copyFromDomain(IExecutionCourse executionCourse) {
         super.copyFromDomain(executionCourse);
         if (executionCourse != null) {
-            setAssociatedInfoExams(copyIExam2InfoExam(executionCourse.getAssociatedExams()));
+            List<IExam> associatedExams = new ArrayList();
+            List<IEvaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
+            for(IEvaluation evaluation : associatedEvaluations){
+                if (evaluation instanceof Exam){
+                    associatedExams.add((IExam) evaluation);
+                }
+            }
+            setAssociatedInfoExams(copyIExam2InfoExam(associatedExams));
         }
     }
 
@@ -30,12 +39,6 @@ public class InfoExecutionCourseWithExecutionPeriodAndExams extends
      * @return
      */
     private List copyIExam2InfoExam(List associatedExams) {
-//        List associatedInfoExams = (List) CollectionUtils.collect(associatedExams, new Transformer() {
-//
-//            public Object transform(Object arg0) {
-//                return InfoExam.newInfoFromDomain((IExam) arg0);
-//            }
-//        });
         List associatedInfoExams = new ArrayList(associatedExams.size());
         for (Iterator iterator = associatedExams.iterator(); iterator.hasNext(); ) {
             Object object = iterator.next();

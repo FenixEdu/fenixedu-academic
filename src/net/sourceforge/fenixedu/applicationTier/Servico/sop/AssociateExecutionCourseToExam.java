@@ -12,11 +12,16 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  * @author Luis Cruz & Sara Ribeiro
  */
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewExamByDayAndShift;
 import net.sourceforge.fenixedu.domain.DomainFactory;
+import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExamExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
@@ -48,8 +53,16 @@ public class AssociateExecutionCourseToExam implements IService {
 
         // Obtain a mapped exam
         IExam examFromDBToBeAssociated = null;
-        for (int i = 0; i < someExecutionCourseAlreadyAssociatedWithExam.getAssociatedExams().size(); i++) {
-            IExam exam = someExecutionCourseAlreadyAssociatedWithExam.getAssociatedExams().get(i);
+        List<IExam> associatedExams = new ArrayList();
+        List<IEvaluation> associatedEvaluations = someExecutionCourseAlreadyAssociatedWithExam
+                .getAssociatedEvaluations();
+        for (IEvaluation evaluation : associatedEvaluations) {
+            if (evaluation instanceof Exam) {
+                associatedExams.add((IExam) evaluation);
+            }
+        }
+        for (int i = 0; i < associatedExams.size(); i++) {
+            IExam exam = associatedExams.get(i);
             if (exam.getSeason().equals(infoViewExam.getInfoExam().getSeason())) {
                 examFromDBToBeAssociated = exam;
             }
@@ -59,15 +72,23 @@ public class AssociateExecutionCourseToExam implements IService {
         // exam
         // doesn't already have an exam scheduled for the corresponding
         // season
-        for (int i = 0; i < executionCourseToBeAssociatedWithExam.getAssociatedExams().size(); i++) {
-            IExam exam = executionCourseToBeAssociatedWithExam.getAssociatedExams().get(i);
+        List<IExam> associatedExams2 = new ArrayList();
+        List<IEvaluation> associatedEvaluations2 = executionCourseToBeAssociatedWithExam
+                .getAssociatedEvaluations();
+        for (IEvaluation evaluation : associatedEvaluations) {
+            if (evaluation instanceof Exam) {
+                associatedExams.add((IExam) evaluation);
+            }
+        }
+        for (int i = 0; i < associatedExams2.size(); i++) {
+            IExam exam = associatedExams2.get(i);
             if (exam.getSeason().equals(infoViewExam.getInfoExam().getSeason())) {
                 throw new ExistingServiceException();
             }
         }
 
-        IExamExecutionCourse examExecutionCourse = DomainFactory.makeExamExecutionCourse(examFromDBToBeAssociated,
-                executionCourseToBeAssociatedWithExam);
+        IExamExecutionCourse examExecutionCourse = DomainFactory.makeExamExecutionCourse(
+                examFromDBToBeAssociated, executionCourseToBeAssociatedWithExam);
 
         result = new Boolean(true);
         return result;

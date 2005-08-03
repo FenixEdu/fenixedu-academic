@@ -3523,15 +3523,6 @@ relation EvaluationExecutionCourseExecutionCourse {
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
 }
 
-relation ExamExecutionCourse {
-	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole associatedExecutionCoursesForExam {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Exam playsRole associatedExams {
-		multiplicity *;
-	}
-}
-
 relation ExamExecutionCourseExam {
 	net.sourceforge.fenixedu.domain.ExamExecutionCourse playsRole examExecutionCourses {
 		multiplicity *;

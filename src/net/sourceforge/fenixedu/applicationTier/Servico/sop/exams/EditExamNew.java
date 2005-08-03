@@ -84,7 +84,7 @@ public class EditExamNew implements IService {
                     newExecutionCourses.add(executionCourse);
                 }
 
-                for (int j = 0; j < executionCourse.getAssociatedExams().size(); j++) {
+                for (int j = 0; j < executionCourse.getAssociatedEvaluations().size(); j++) {
                     IEvaluation evaluation = executionCourse.getAssociatedEvaluations()
                             .get(j);
                     if (evaluation instanceof IExam) {

@@ -17,8 +17,10 @@ import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewExamByDayAndShift;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -64,8 +66,15 @@ public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod imple
                     .readByExecutionCourseInitialsAndExecutionPeriodId(executionCourseInitials,
                             infoExecutionPeriod.getIdInternal());
 
-            for (int i = 0; i < executionCourse.getAssociatedExams().size(); i++) {
-                IExam exam = executionCourse.getAssociatedExams().get(i);
+            List<IExam> associatedExams = new ArrayList();
+            List<IEvaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
+            for(IEvaluation evaluation : associatedEvaluations){
+                if (evaluation instanceof Exam){
+                    associatedExams.add((IExam) evaluation);
+                }
+            }
+            for (int i = 0; i < associatedExams.size(); i++) {
+                IExam exam = associatedExams.get(i);
                 if (exam.getSeason().equals(season)) {
                     infoViewExamByDayAndShift.setInfoExam(Cloner.copyIExam2InfoExam(exam));
 

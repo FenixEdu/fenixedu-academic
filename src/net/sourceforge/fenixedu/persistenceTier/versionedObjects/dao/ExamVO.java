@@ -85,7 +85,13 @@ public class ExamVO extends VersionedObjectsBase implements IPersistentExam {
         HashSet hashSet = new HashSet(75);
 
         for (IExecutionCourse executionCourse : executionCourses) {
-            List<IExam> exams = executionCourse.getAssociatedExams();
+            List<IExam> exams = new ArrayList();
+            List<IEvaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
+            for(IEvaluation evaluation : associatedEvaluations){
+                if (evaluation instanceof Exam){
+                    exams.add((IExam) evaluation);
+                }
+            }
             for (IExam exam : exams) {
                 List<IRoom> rooms = exam.getAssociatedRooms();
                 for (IRoom room : rooms) {

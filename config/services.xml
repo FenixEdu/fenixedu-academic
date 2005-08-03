@@ -68,15 +68,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>CreateExam</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.CreateExam</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>CreateLesson</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.CreateLesson</implementationClass>
 		<description />
@@ -160,15 +151,6 @@
 	<service>
 		<name>DefineExamComment</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.DefineExamComment</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>EditExam</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.EditExam</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -458,14 +440,6 @@
 		<filterChains>
 			<chain name="TimeTableManagerAuthorization" />
 		</filterChains>
-	</service>
-	<service>
-		<name>ReadExamsByExecutionDegreeAndCurricularYearPublic</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadExamsByExecutionDegreeAndCurricularYearPublic</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
 	</service>
 	<service>
 		<name>LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular</name>
@@ -2820,24 +2794,9 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>ExamSiteComponentService</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.publico.ExamSiteComponentService</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
 		<name>GroupSiteComponentService</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.publico.GroupSiteComponentService</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
-		<name>ReadExams</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadExams</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />

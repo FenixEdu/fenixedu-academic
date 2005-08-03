@@ -104,19 +104,6 @@
 		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedExams"
-			element-class-ref="net.sourceforge.fenixedu.domain.Exam"
-			indirection-table="EXAM_EXECUTION_COURSE"
-			
-			
-			auto-update="false"
-			auto-delete="false"
-			
-			>
-		<fk-pointing-to-this-class column="KEY_EXECUTION_COURSE"/>
-		<fk-pointing-to-element-class column="KEY_EVALUATION"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedEvaluations"
 			element-class-ref="net.sourceforge.fenixedu.domain.Evaluation"
 			indirection-table="EXAM_EXECUTION_COURSE"

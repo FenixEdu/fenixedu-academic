@@ -6,50 +6,29 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- *  
+ * 
  */
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class ReadExamsMap implements IServico {
-
-    private static ReadExamsMap servico = new ReadExamsMap();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadExamsMap getService() {
-        return servico;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private ReadExamsMap() {
-    }
-
-    /**
-     * Devolve o nome do servico
-     */
-    public String getNome() {
-        return "ReadExamsMap";
-    }
+public class ReadExamsMap implements IService {
 
     public InfoExamsMap run(InfoExecutionDegree infoExecutionDegree, List curricularYears,
             InfoExecutionPeriod infoExecutionPeriod) {
@@ -82,30 +61,11 @@ public class ReadExamsMap implements IServico {
         endSeason2.set(Calendar.SECOND, 0);
         endSeason2.set(Calendar.MILLISECOND, 0);
 
-//        if (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals("LEC")) {
-//            startSeason1.set(Calendar.DAY_OF_MONTH, 21);
-//            endSeason2.set(Calendar.DAY_OF_MONTH, 17);
-//        }
-//        if (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals("LET")) {
-//            startSeason1.set(Calendar.DAY_OF_MONTH, 21);
-//            endSeason2.set(Calendar.DAY_OF_MONTH, 17);
-//        }
-//        if (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals("LA")) {
-//            startSeason1.set(Calendar.DAY_OF_MONTH, 21);
-//            endSeason2.set(Calendar.DAY_OF_MONTH, 17);
-//        }
-
         // Set Exam Season info
         infoExamsMap.setStartSeason1(startSeason1);
         infoExamsMap.setEndSeason1(null);
         infoExamsMap.setStartSeason2(null);
         infoExamsMap.setEndSeason2(endSeason2);
-
-        // Translate to execute following queries
-//        IExecutionDegree executionDegree = Cloner
-//                .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
-//        IExecutionPeriod executionPeriod = Cloner
-//                .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
 
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -122,14 +82,14 @@ public class ReadExamsMap implements IServico {
                                 (Integer) curricularYears.get(i),
                                 infoExecutionPeriod.getSemester(),
                                 infoExecutionDegree.getInfoDegreeCurricularPlan().getName(),
-                                infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla(),
-                                infoExecutionPeriod.getIdInternal());
+                                infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
+                                        .getSigla(), infoExecutionPeriod.getIdInternal());
 
                 // For each execution course obtain curricular courses and
                 // exams
                 for (int j = 0; j < executionCourses.size(); j++) {
-                    InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner
-                            .get((IExecutionCourse) executionCourses.get(j));
+                    InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
+                            .newInfoFromDomain((IExecutionCourse) executionCourses.get(j));
 
                     infoExecutionCourse.setCurricularYear((Integer) curricularYears.get(i));
 
@@ -138,8 +98,8 @@ public class ReadExamsMap implements IServico {
                             .getAssociatedCurricularCourses();
                     // Curricular courses
                     for (int k = 0; k < associatedCurricularCourses.size(); k++) {
-                        InfoCurricularCourse infoCurricularCourse = Cloner
-                                .copyCurricularCourse2InfoCurricularCourse((ICurricularCourse) associatedCurricularCourses
+                        InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
+                                .newInfoFromDomain((ICurricularCourse) associatedCurricularCourses
                                         .get(k));
                         associatedInfoCurricularCourses.add(infoCurricularCourse);
                     }
@@ -147,11 +107,18 @@ public class ReadExamsMap implements IServico {
                             .setAssociatedInfoCurricularCourses(associatedInfoCurricularCourses);
 
                     List associatedInfoExams = new ArrayList();
-                    List associatedExams = ((IExecutionCourse) executionCourses.get(j))
-                            .getAssociatedExams();
+                    List<IExam> associatedExams = new ArrayList();
+                    List<IEvaluation> associatedEvaluations = ((IExecutionCourse) executionCourses
+                            .get(j)).getAssociatedEvaluations();
+                    for (IEvaluation evaluation : associatedEvaluations) {
+                        if (evaluation instanceof Exam) {
+                            associatedExams.add((IExam) evaluation);
+                        }
+                    }
+
                     // Exams
                     for (int k = 0; k < associatedExams.size(); k++) {
-                        InfoExam infoExam = Cloner.copyIExam2InfoExam((IExam) associatedExams.get(k));
+                        InfoExam infoExam = InfoExam.newInfoFromDomain((IExam) associatedExams.get(k));
                         associatedInfoExams.add(infoExam);
                     }
                     infoExecutionCourse.setAssociatedInfoExams(associatedInfoExams);

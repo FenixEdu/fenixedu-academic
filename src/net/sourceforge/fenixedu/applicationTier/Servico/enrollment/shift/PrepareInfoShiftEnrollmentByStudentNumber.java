@@ -50,7 +50,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * This class read and prepare all information usefull for shift enrollment use
  * case
- *  
+ * 
  */
 public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
 
@@ -65,7 +65,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
         try {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            //read student to enroll
+            // read student to enroll
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
             IStudent student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
                     DegreeType.DEGREE);
@@ -83,43 +83,44 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
 
             infoShiftEnrollment.setInfoStudent(InfoStudent.newInfoFromDomain(student));
 
-            //retrieve all courses that student is currently attended in
-            infoShiftEnrollment.setInfoAttendingCourses(readAttendingCourses(sp, student.getNumber(), student.getDegreeType()));
+            // retrieve all courses that student is currently attended in
+            infoShiftEnrollment.setInfoAttendingCourses(readAttendingCourses(sp, student.getNumber(),
+                    student.getDegreeType()));
 
-            //retrieve all shifts that student is currently enrollment
-            //it will be shift associated with all or some attending courses
+            // retrieve all shifts that student is currently enrollment
+            // it will be shift associated with all or some attending courses
             infoShiftEnrollment.setInfoShiftEnrollment(readShiftEnrollment(sp, student,
                     infoShiftEnrollment.getInfoAttendingCourses()));
 
-            //calculate the number of courses that have shift enrollment
+            // calculate the number of courses that have shift enrollment
             infoShiftEnrollment.setNumberCourseWithShiftEnrollment(calculeNumberCoursesWithEnrollment(
                     infoShiftEnrollment.getInfoAttendingCourses(), infoShiftEnrollment
                             .getInfoShiftEnrollment()));
 
-            //read current execution period
+            // read current execution period
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
             IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
             if (executionPeriod == null) {
                 throw new FenixServiceException("errors.impossible.operation");
             }
 
-            //read current execution year
+            // read current execution year
             IExecutionYear executionYear = executionPeriod.getExecutionYear();
             if (executionYear == null) {
                 throw new FenixServiceException("errors.impossible.operation");
             }
 
-            //retrieve the list of existing degrees
+            // retrieve the list of existing degrees
             List infoExecutionDegreeList = readInfoExecutionDegrees(sp, executionYear);
             infoShiftEnrollment.setInfoExecutionDegreesList(infoExecutionDegreeList);
 
-            //select the first execution degree or the execution degree of the
+            // select the first execution degree or the execution degree of the
             // student logged
             InfoExecutionDegree infoExecutionDegree = selectExecutionDegree(sp, infoExecutionDegreeList,
                     executionDegreeIdChosen, student);
             infoShiftEnrollment.setInfoExecutionDegree(infoExecutionDegree);
 
-            //retrieve all courses pertaining to the selected degree
+            // retrieve all courses pertaining to the selected degree
             infoShiftEnrollment.setInfoExecutionCoursesList(readInfoExecutionCoursesOfdegree(sp,
                     executionPeriod, infoExecutionDegree));
 
@@ -164,17 +165,16 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
 
         if (infoAttendingCourses != null && infoAttendingCourses.size() > 0) {
             Integer executionPeriodIdInternal = ((InfoExecutionCourse) infoAttendingCourses.get(0))
-                .getInfoExecutionPeriod().getIdInternal();
+                    .getInfoExecutionPeriod().getIdInternal();
 
             List<IShift> shifts = student.getShifts();
-            List studentShifts= new ArrayList();
+            List studentShifts = new ArrayList();
             for (IShift shift : shifts) {
                 if (shift.getDisciplinaExecucao().getExecutionPeriod().getIdInternal().equals(
                         executionPeriodIdInternal))
-                    ;
-                studentShifts.add(shift);
+                    studentShifts.add(shift);
             }
-            
+
             infoShiftEnrollment = (List) CollectionUtils.collect(studentShifts, new Transformer() {
 
                 public Object transform(Object input) {
@@ -219,8 +219,8 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
     private List readInfoExecutionDegrees(ISuportePersistente sp, IExecutionYear executionYear)
             throws ExcepcaoPersistencia, FenixServiceException {
         IPersistentExecutionDegree presistentExecutionDegree = sp.getIPersistentExecutionDegree();
-        List executionDegrees = presistentExecutionDegree.readByExecutionYearAndDegreeType(
-                executionYear.getYear(), DegreeType.DEGREE);
+        List executionDegrees = presistentExecutionDegree.readByExecutionYearAndDegreeType(executionYear
+                .getYear(), DegreeType.DEGREE);
         if (executionDegrees == null || executionDegrees.size() <= 0) {
             throw new FenixServiceException("errors.impossible.operation");
         }
@@ -272,12 +272,12 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
             throws ExcepcaoPersistencia {
         IExecutionDegree executionDegree = null;
 
-        //read the execution degree chosen
+        // read the execution degree chosen
         if (executionDegreeIdChosen != null) {
             IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
 
-            executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(ExecutionDegree.class,
-                    executionDegreeIdChosen);
+            executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+                    ExecutionDegree.class, executionDegreeIdChosen);
             if (executionDegree != null) {
                 return InfoExecutionDegree.newInfoFromDomain(executionDegree);
             }

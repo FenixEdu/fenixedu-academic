@@ -4,10 +4,14 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IExam;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
 import net.sourceforge.fenixedu.domain.IWrittenTest;
 
@@ -188,6 +192,18 @@ public class InfoWrittenEvaluation extends InfoEvaluation {
     public void copyFromDomain(IWrittenEvaluation writtenEvaluation) {
         super.copyFromDomain(writtenEvaluation);
         if (writtenEvaluation != null) {
+            associatedExecutionCourse = new ArrayList();
+            associatedRoomOccupation = new ArrayList();
+            associatedCurricularCourseScope = new ArrayList();
+            for(IExecutionCourse executionCourse : writtenEvaluation.getAssociatedExecutionCourses()){
+                associatedExecutionCourse.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+            }
+            for(IRoomOccupation roomOccupation : writtenEvaluation.getAssociatedRoomOccupation()){
+                associatedRoomOccupation.add(InfoRoomOccupationWithInfoRoom.newInfoFromDomain(roomOccupation));
+            }
+            for(ICurricularCourseScope curricularCourseScope : writtenEvaluation.getAssociatedCurricularCourseScope()){
+                associatedCurricularCourseScope.add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
+            }
             setBeginning(writtenEvaluation.getBeginning());
             setDay(writtenEvaluation.getDay());
             setEnd(writtenEvaluation.getEnd());

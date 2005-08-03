@@ -118,7 +118,7 @@ public class ReadFilteredExamsMapList implements IService {
 
                     List associatedInfoExams = new ArrayList();
                     List associatedExams = ((IExecutionCourse) executionCourses.get(j))
-                            .getAssociatedExams();
+                            .getAssociatedEvaluations();
                     // Exams
                     for (int k = 0; k < associatedExams.size(); k++) {
                         if (!(associatedExams.get(k) instanceof IExam)) {

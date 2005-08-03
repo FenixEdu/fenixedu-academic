@@ -13,7 +13,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseAndExams;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -31,30 +30,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.Season;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class ReadExamsSortedByExecutionDegreeAndCurricularYear implements IServico {
-
-    private static ReadExamsSortedByExecutionDegreeAndCurricularYear _servico = new ReadExamsSortedByExecutionDegreeAndCurricularYear();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadExamsSortedByExecutionDegreeAndCurricularYear getService() {
-        return _servico;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private ReadExamsSortedByExecutionDegreeAndCurricularYear() {
-    }
-
-    /**
-     * Devolve o nome do servico
-     */
-    public final String getNome() {
-        return "ReadExamsSortedByExecutionDegreeAndCurricularYear";
-    }
+public class ReadExamsSortedByExecutionDegreeAndCurricularYear implements IService {
 
     public List run(InfoExecutionPeriod infoExecutionPeriod) {
 
@@ -64,10 +42,6 @@ public class ReadExamsSortedByExecutionDegreeAndCurricularYear implements IServi
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
-            
-//            IExecutionPeriod executionPeriod = Cloner
-//                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
-
             
             InfoExecutionYear executionYear = infoExecutionPeriod.getInfoExecutionYear();
 
@@ -101,8 +75,8 @@ public class ReadExamsSortedByExecutionDegreeAndCurricularYear implements IServi
                         infoExecutionCourseAndExams.setInfoExecutionCourse((InfoExecutionCourse) Cloner
                                 .get(executionCourse));
 
-                        for (int j = 0; j < executionCourse.getAssociatedExams().size(); j++) {
-                            IEvaluation evaluation = executionCourse.getAssociatedExams()
+                        for (int j = 0; j < executionCourse.getAssociatedEvaluations().size(); j++) {
+                            IEvaluation evaluation = executionCourse.getAssociatedEvaluations()
                                     .get(j);
 
                             if (evaluation instanceof IExam) {

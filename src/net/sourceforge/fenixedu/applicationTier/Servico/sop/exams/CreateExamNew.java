@@ -21,8 +21,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DomainFactory;
+import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
+import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IPeriod;
@@ -97,8 +99,15 @@ public class CreateExamNew implements IService {
             Iterator iterExecutionCourses = executionCourseList.iterator();
             while (iterExecutionCourses.hasNext()) {
                 IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses.next();
-                for (int i = 0; i < executionCourse.getAssociatedExams().size(); i++) {
-                    IExam examAux = executionCourse.getAssociatedExams().get(i);
+                List<IExam> associatedExams = new ArrayList();
+                List<IEvaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
+                for (IEvaluation evaluation : associatedEvaluations) {
+                    if (evaluation instanceof Exam && !evaluation.equals(exam)) {
+                        associatedExams.add((IExam) evaluation);
+                    }
+                }
+                for (int i = 0; i < associatedExams.size(); i++) {
+                    IExam examAux = associatedExams.get(i);
                     if (examAux.getSeason().equals(season)) {
                         // is necessary to confirm if is for the same scope
                         List scopes = examAux.getAssociatedCurricularCourseScope();
@@ -114,8 +123,6 @@ public class CreateExamNew implements IService {
             }
 
             // Rooms
-            List<IRoom> roomsList = new ArrayList<IRoom>();
-
             IPeriod period = null;
             if (roomIDArray.length != 0) {
                 try {
@@ -137,13 +144,11 @@ public class CreateExamNew implements IService {
                     if (room == null) {
                         throw new FenixServiceException("Unexisting Room");
                     }
-                    roomsList.add(room);
                     DiaSemana day = new DiaSemana(examDate.get(Calendar.DAY_OF_WEEK));
 
-                    RoomOccupation roomOccupation = DomainFactory.makeRoomOccupation(room, examStartTime, examEndTime,
-                            day, RoomOccupation.DIARIA);
+                    RoomOccupation roomOccupation = DomainFactory.makeRoomOccupation(room,
+                            examStartTime, examEndTime, day, RoomOccupation.DIARIA);
                     roomOccupation.setPeriod(period);
-
                     Iterator iter = roomOccupationInDBList.iterator();
                     while (iter.hasNext()) {
                         IRoomOccupation roomOccupationInDB = (IRoomOccupation) iter.next();

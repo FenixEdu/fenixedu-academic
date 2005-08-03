@@ -13,42 +13,22 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseAndExams;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.Season;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class ReadExamsByExecutionDegreeAndCurricularYear implements IServico {
-
-    private static ReadExamsByExecutionDegreeAndCurricularYear _servico = new ReadExamsByExecutionDegreeAndCurricularYear();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadExamsByExecutionDegreeAndCurricularYear getService() {
-        return _servico;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private ReadExamsByExecutionDegreeAndCurricularYear() {
-    }
-
-    /**
-     * Devolve o nome do servico
-     */
-    public final String getNome() {
-        return "ReadExamsByExecutionDegreeAndCurricularYear";
-    }
+public class ReadExamsByExecutionDegreeAndCurricularYear implements IService {
 
     public List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod,
             Integer curricularYear) {
@@ -56,11 +36,6 @@ public class ReadExamsByExecutionDegreeAndCurricularYear implements IServico {
 
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            
-//            IExecutionDegree executionDegree = Cloner
-//                    .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
-//            IExecutionPeriod executionPeriod = Cloner
-//                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
 
             List executionCourses = sp.getIPersistentExecutionCourse()
                     .readByCurricularYearAndExecutionPeriodAndExecutionDegree(curricularYear,
@@ -77,8 +52,15 @@ public class ReadExamsByExecutionDegreeAndCurricularYear implements IServico {
                 infoExecutionCourseAndExams.setInfoExecutionCourse((InfoExecutionCourse) Cloner
                         .get(executionCourse));
 
-                for (int j = 0; j < executionCourse.getAssociatedExams().size(); j++) {
-                    IExam exam = executionCourse.getAssociatedExams().get(j);
+                List<IExam> associatedExams = new ArrayList();
+                List<IEvaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
+                for(IEvaluation evaluation : associatedEvaluations){
+                    if (evaluation instanceof Exam){
+                        associatedExams.add((IExam) evaluation);
+                    }
+                }
+                for (int j = 0; j < associatedExams.size(); j++) {
+                    IExam exam = associatedExams.get(j);
                     if (exam.getSeason().getseason().intValue() == Season.SEASON1) {
                         infoExecutionCourseAndExams.setInfoExam1(Cloner.copyIExam2InfoExam(exam));
                     } else if (exam.getSeason().getseason().intValue() == Season.SEASON2) {

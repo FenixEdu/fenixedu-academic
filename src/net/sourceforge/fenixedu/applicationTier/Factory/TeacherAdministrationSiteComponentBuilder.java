@@ -83,6 +83,7 @@ import net.sourceforge.fenixedu.domain.AttendsSet;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.GroupProperties;
 import net.sourceforge.fenixedu.domain.IAnnouncement;
@@ -718,8 +719,15 @@ public class TeacherAdministrationSiteComponentBuilder {
      * @return
      */
     private ISiteComponent getInfoSiteExam(InfoSiteExam component, ISite site) {
+        System.out.println("\n\n\n\n\nEntrei na funao getInfoSite Exam!!!\n\n\n\n\n");
         IExecutionCourse executionCourse = site.getExecutionCourse();
-        List exams = executionCourse.getAssociatedExams();
+        List<IEvaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
+        List<IExam> exams = new ArrayList();
+        for(IEvaluation evaluation : associatedEvaluations){
+            if (evaluation instanceof Exam){
+                exams.add((IExam) evaluation);
+            }
+        }
         List infoExams = new ArrayList();
         Iterator iter = exams.iterator();
         while (iter.hasNext()) {

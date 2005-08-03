@@ -85,7 +85,7 @@ public class ReadExamsByStudent implements IService {
             Iterator examsToEnrollIterator = attends.iterator();
             while (examsToEnrollIterator.hasNext()) {
                 examsToEnroll.addAll(((IAttends) examsToEnrollIterator.next()).getDisciplinaExecucao()
-                        .getAssociatedExams());
+                        .getAssociatedEvaluations());
             }
 
             CollectionUtils.filter(examsToEnroll, new ExamsNotEnrolledPredicate(examsEnrolled));

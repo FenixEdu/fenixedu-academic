@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExam;
+import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.ITeacher;
@@ -118,8 +118,8 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
             }
 
             if (executionCourse != null && examId != null) {
-                for (IExam associatedExam : executionCourse.getAssociatedExams()) {
-                    if (associatedExam.getIdInternal().equals(examId)) {
+                for (IEvaluation associatedEvaluation : executionCourse.getAssociatedEvaluations()) {
+                    if (associatedEvaluation.getIdInternal().equals(examId)) {
                         return true;
                     }
                 }

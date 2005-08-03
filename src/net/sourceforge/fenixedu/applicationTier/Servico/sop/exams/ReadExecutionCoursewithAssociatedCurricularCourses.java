@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegreeAndScopes;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
@@ -54,7 +54,7 @@ public class ReadExecutionCoursewithAssociatedCurricularCourses implements IServ
             final IExecutionCourse executionCourse = (IExecutionCourse) executionDegreeDAO.readByOID(
                     ExecutionCourse.class, oid);
             if (executionCourse != null) {
-                result = (InfoExecutionCourse) Cloner.get(executionCourse);
+                result = InfoExecutionCourse.newInfoFromDomain(executionCourse);
             } else {
                 throw new FenixServiceException("Unexisting Execution Course");
             }
@@ -64,8 +64,7 @@ public class ReadExecutionCoursewithAssociatedCurricularCourses implements IServ
             while (iterator.hasNext()) {
                 ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
 
-                InfoCurricularCourse infoCurricularCourse = Cloner
-                        .copyCurricularCourse2InfoCurricularCourseWithCurricularCourseScopes(curricularCourse);
+                InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegreeAndScopes.newInfoFromDomain(curricularCourse);
                 CollectionUtils.filter(infoCurricularCourse.getInfoScopes(), new Predicate() {
 
                     public boolean evaluate(Object arg0) {

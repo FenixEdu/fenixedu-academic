@@ -12,7 +12,9 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExamExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
@@ -32,17 +34,18 @@ public class ExamExecutionCourseVO extends VersionedObjectsBase implements
             if (executionCourse.getSigla().equals(executionCourseAcronym)
                     && executionCourse.getExecutionPeriod().getName().equals(executionPeriodName)
                     && executionCourse.getExecutionPeriod().getExecutionYear().getYear().equals(year)) {
-                List<IExam> exams = executionCourse.getAssociatedExams();
+                List<IExam> exams = new ArrayList();
+                List<IEvaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
+                for (IEvaluation evaluation : associatedEvaluations) {
+                    if (evaluation instanceof Exam) {
+                        exams.add((IExam) evaluation);
+                    }
+                }
                 for (IExam exam : exams) {
-                    //if(exam != null){
-                       List<IExamExecutionCourse> examExecutionCourses = exam.getExamExecutionCourses();
-                       //if(examExecutionCourses != null){
-                           for (IExamExecutionCourse examExecutionCourse : examExecutionCourses) {
-                               result.add(examExecutionCourse);
-                          }
-                       //}
-                       
-                    //}
+                    List<IExamExecutionCourse> examExecutionCourses = exam.getExamExecutionCourses();
+                    for (IExamExecutionCourse examExecutionCourse : examExecutionCourses) {
+                        result.add(examExecutionCourse);
+                    }
                 }
             }
         }
