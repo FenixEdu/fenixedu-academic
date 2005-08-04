@@ -19,11 +19,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewExamByDayAndShift;
-import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.IExamExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -87,8 +85,9 @@ public class AssociateExecutionCourseToExam implements IService {
             }
         }
 
-        IExamExecutionCourse examExecutionCourse = DomainFactory.makeExamExecutionCourse(
-                examFromDBToBeAssociated, executionCourseToBeAssociatedWithExam);
+        
+       /* IExamExecutionCourse examExecutionCourse = DomainFactory.makeExamExecutionCourse(
+                examFromDBToBeAssociated, executionCourseToBeAssociatedWithExam);*/
 
         result = new Boolean(true);
         return result;

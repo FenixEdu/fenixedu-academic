@@ -203,12 +203,6 @@
 		element-class-ref="net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse">
 		<inverse-foreignkey field-ref="keySenderExecutionCourse"/>
 	</collection-descriptor>
-		
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-		name="evaluationExecutionCourses" 
-		element-class-ref="net.sourceforge.fenixedu.domain.EvaluationExecutionCourse">
-		<inverse-foreignkey field-ref="keyExecutionCourse"/>
-	</collection-descriptor>	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedInquiriesCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse"

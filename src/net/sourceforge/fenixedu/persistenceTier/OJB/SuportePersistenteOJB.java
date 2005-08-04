@@ -484,10 +484,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new ExamOJB();
     }
 
-    public IPersistentExamExecutionCourse getIPersistentExamExecutionCourse() {
-        return new ExamExecutionCourseOJB();
-    }
-
     public IPersistentBranch getIPersistentBranch() {
         return new BranchOJB();
     }
@@ -584,10 +580,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 
     public IPersistentEvaluation getIPersistentEvaluation() {
         return new EvaluationOJB();
-    }
-
-    public IPersistentEvaluationExecutionCourse getIPersistentEvaluationExecutionCourse() {
-        return new EvaluationExecutionCourseOJB();
     }
 
     /*

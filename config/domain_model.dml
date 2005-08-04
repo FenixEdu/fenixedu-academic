@@ -923,16 +923,6 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 		}
 
 
-class net.sourceforge.fenixedu.domain.EvaluationExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyExecutionCourse;
-	Integer keyEvaluation;
-}
-
-	class net.sourceforge.fenixedu.domain.ExamExecutionCourse extends net.sourceforge.fenixedu.domain.EvaluationExecutionCourse {
-		Integer keyExam;
-	}
-
-
 class net.sourceforge.fenixedu.domain.EvaluationMethod extends net.sourceforge.fenixedu.domain.DomainObject {
 	String evaluationElements;
 	String evaluationElementsEn;
@@ -3507,27 +3497,6 @@ relation EvaluationExecutionCourse {
 	net.sourceforge.fenixedu.domain.Evaluation playsRole associatedEvaluations {
 		multiplicity *;
 	}
-}
-
-relation EvaluationExecutionCourseEvaluation {
-	net.sourceforge.fenixedu.domain.EvaluationExecutionCourse playsRole evaluationExecutionCourses {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Evaluation playsRole evaluation;
-}
-
-relation EvaluationExecutionCourseExecutionCourse {
-	net.sourceforge.fenixedu.domain.EvaluationExecutionCourse playsRole evaluationExecutionCourses {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
-}
-
-relation ExamExecutionCourseExam {
-	net.sourceforge.fenixedu.domain.ExamExecutionCourse playsRole examExecutionCourses {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Exam playsRole exam;
 }
 
 relation ExamStudentRoomExam {

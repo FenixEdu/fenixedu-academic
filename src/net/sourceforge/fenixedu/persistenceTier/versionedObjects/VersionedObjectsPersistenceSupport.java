@@ -114,10 +114,8 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentEq
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentEvaluationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentPeriodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EquivalentEnrolmentForEnrolmentEquivalenceVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EvaluationExecutionCourseVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EvaluationMethodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EvaluationVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamExecutionCourseVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamStudentRoomVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionCourseVO;
@@ -293,10 +291,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentServiceExemptionCreditLine getIPersistentServiceExemptionCreditLine() {
         return new ServiceExemptionCreditLineVO();
-    }
-
-    public IPersistentExamExecutionCourse getIPersistentExamExecutionCourse() {
-        return new ExamExecutionCourseVO();
     }
 
     public IPersistentReimbursementTransaction getIPersistentReimbursementTransaction() {
@@ -861,10 +855,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentSenior getIPersistentSenior() {
         return null;
-    }
-
-    public IPersistentEvaluationExecutionCourse getIPersistentEvaluationExecutionCourse() {
-        return new EvaluationExecutionCourseVO();
     }
 
     public IPersistentExtraWork getIPersistentExtraWork() {

@@ -170,8 +170,6 @@ public interface ISuportePersistente {
 
     //public IPersistentWrittenEvaluationCurricularCourseScope getIPersistentWrittenEvaluationCurricularCourseScope();
 
-    public IPersistentExamExecutionCourse getIPersistentExamExecutionCourse();
-
     public IPersistentBranch getIPersistentBranch();
 
     public IPersistentCurricularYear getIPersistentCurricularYear();
@@ -215,8 +213,6 @@ public interface ISuportePersistente {
     public IPersistentMark getIPersistentMark();
 
     public IPersistentEvaluation getIPersistentEvaluation();
-
-    public IPersistentEvaluationExecutionCourse getIPersistentEvaluationExecutionCourse();
 
     public IPersistentEmployee getIPersistentEmployee();
 

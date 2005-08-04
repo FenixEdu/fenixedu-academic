@@ -19,15 +19,15 @@ public class FinalEvaluation extends FinalEvaluation_Base {
 
     private boolean remove(IExecutionCourse executionCourse) {
         if (this.getAssociatedExecutionCoursesCount() == 1
-                && this.getAssociatedExecutionCourses().contains(executionCourse)
-                && this.getEvaluationExecutionCoursesCount() == 1) {
+                && this.getAssociatedExecutionCourses().contains(executionCourse)){
+                /*&& this.getEvaluationExecutionCoursesCount() == 1) {
             final IEvaluationExecutionCourse evaluationExecutionCourse = this
                     .getEvaluationExecutionCourses(0);
             if (evaluationExecutionCourse.getExecutionCourse().equals(executionCourse)) {
-                this.getEvaluationExecutionCourses().remove(evaluationExecutionCourse);
+                this.getEvaluationExecutionCourses().remove(evaluationExecutionCourse);*/
                 this.getAssociatedExecutionCourses().remove(executionCourse);
                 return true;
-            }
+            //}
         }
         return false;
     }

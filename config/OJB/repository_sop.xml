@@ -548,87 +548,6 @@
       </reference-descriptor> 
 </class-descriptor> 
 
-<!-- Definitions for net.sourceforge.fenixedu.domain.ExamExecutionCourse -->
-   <class-descriptor class="net.sourceforge.fenixedu.domain.ExamExecutionCourse"
-   	  table="EXAM_EXECUTION_COURSE"
-   >
-      <field-descriptor id="1"
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor id="2"
-         name="keyExam"
-         column="KEY_EVALUATION"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor id="3"
-         name="keyExecutionCourse"
-         column="KEY_EXECUTION_COURSE"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
-      <reference-descriptor auto-retrieve="false"
-         name="exam"
-         class-ref="net.sourceforge.fenixedu.domain.Exam"
-      >
-         <foreignkey field-ref="keyExam"/>
-      </reference-descriptor> 
-      <reference-descriptor auto-retrieve="false"
-         name="executionCourse"
-         class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
-      >
-         <foreignkey field-ref="keyExecutionCourse"/>
-      </reference-descriptor>
-   </class-descriptor>
-   
-<!-- Definitions for net.sourceforge.fenixedu.domain.EvaluationExecutionCourse -->
-   <class-descriptor class="net.sourceforge.fenixedu.domain.EvaluationExecutionCourse"
-   	  table="EXAM_EXECUTION_COURSE"
-   >
-      <field-descriptor id="1"
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor id="2"
-         name="keyEvaluation"
-         column="KEY_EVALUATION"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor id="3"
-         name="keyExecutionCourse"
-         column="KEY_EXECUTION_COURSE"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
-      <reference-descriptor auto-retrieve="false"
-         name="evaluation"
-         class-ref="net.sourceforge.fenixedu.domain.Evaluation"
-      >
-         <foreignkey field-ref="keyEvaluation"/>
-      </reference-descriptor> 
-      <reference-descriptor auto-retrieve="false"
-         name="executionCourse"
-         class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
-      >
-         <foreignkey field-ref="keyExecutionCourse"/>
-      </reference-descriptor>
-   </class-descriptor>
    
 <!-- Definitions for net.sourceforge.fenixedu.domain.RoomOccupation -->
    <class-descriptor class="net.sourceforge.fenixedu.domain.RoomOccupation"
@@ -811,12 +730,6 @@
 			>
 		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
 		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="evaluationExecutionCourses"
-			element-class-ref="net.sourceforge.fenixedu.domain.EvaluationExecutionCourse"
-			>
-		<inverse-foreignkey field-ref="keyEvaluation"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="marks"

@@ -39,7 +39,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.Season;
 
@@ -170,7 +169,6 @@ public class EditExamNew implements IService {
 
             /** ******************** */
             // Rooms
-            List roomsList = new ArrayList();
             List roomOccupationList = new ArrayList();
             IPeriod period;
             if (exam.getAssociatedRoomOccupation() != null
@@ -218,7 +216,6 @@ public class EditExamNew implements IService {
                         throw new FenixServiceException("The room doesnt exist");
                     }
 
-                    roomsList.add(room);
                     DiaSemana weekday = new DiaSemana(examDate.get(Calendar.DAY_OF_WEEK));
 
                     IRoomOccupation roomOccupation = new RoomOccupation(room, examStartTime, examEndTime,
@@ -236,11 +233,6 @@ public class EditExamNew implements IService {
                     }
 
                     if (!exam.getAssociatedRoomOccupation().contains(roomOccupation)) {
-                        try {
-                            roomOccupationDAO.simpleLockWrite(roomOccupation);
-                        } catch (ExistingPersistentException ex) {
-                            throw new ExistingServiceException(ex);
-                        }
                         exam.getAssociatedRoomOccupation().add(roomOccupation);
                     }
 
