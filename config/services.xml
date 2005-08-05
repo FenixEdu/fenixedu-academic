@@ -8534,6 +8534,32 @@
         </filterChains>
     </service>
     <service>
+    	<name>ReadActiveStudentCurricularPlanByNumberAndType</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.ReadActiveStudentCurricularPlanByNumberAndType</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
+    <service>
+    	<name>InsertNotNeedToEnrollInCurricularCourses</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.equivalences.InsertNotNeedToEnrollInCurricularCourses</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="DegreeAdministrativeOfficeAuthorization" />
+		</filterChains>
+    </service>    
+        <service>
+    	<name>DeleteNotNeedToEnrollInCurricularCourse</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.equivalences.DeleteNotNeedToEnrollInCurricularCourse</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="DegreeAdministrativeOfficeAuthorization" />
+		</filterChains>
+    </service>
+    <service>
     	<name>ChangeDegree</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.ChangeDegree</implementationClass>
         <description></description>
@@ -8542,4 +8568,14 @@
             <chain name="StudentOrMasterDegreeAdministrativeOfficeAuthorization"/>
         </filterChains>
     </service>
+    <service>
+    	<name>ReadShiftsToEnroll</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.ReadShiftsToEnroll</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="StudentAuthorization" />
+			<chain name="ClassEnrollmentAuthorization" />
+		</filterChains>
+    </service>    
 </serviceDefinitions>
