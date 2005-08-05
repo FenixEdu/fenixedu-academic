@@ -4,11 +4,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.equivalences;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.INotNeedToEnrollInCurricularCourse;
-import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
@@ -34,7 +34,7 @@ public class InsertNotNeedToEnrollInCurricularCourses implements IService {
         for (int iter = 0; iter < curricularCoursesID.length; iter++) {
             Integer curricularCourseID = curricularCoursesID[iter];
             ICurricularCourse curricularCourse = (ICurricularCourse) ccDAO.readByOID(CurricularCourse.class, curricularCourseID);
-            INotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = new NotNeedToEnrollInCurricularCourse();
+            INotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = DomainFactory.makeNotNeedToEnrollInCurricularCourse();
             notNeedToEnrollInCurricularCourse.setCurricularCourse(curricularCourse);
             notNeedToEnrollInCurricularCourse.setStudentCurricularPlan(scp);
         }        
