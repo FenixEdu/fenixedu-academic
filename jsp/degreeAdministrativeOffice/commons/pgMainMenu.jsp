@@ -16,4 +16,7 @@
 	<li class="navheader"><bean:message key="label.navheader.marksSheet" /></li>
 	<li><html:link page="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare"><bean:message key="link.consult" /></html:link></li>
 	<li><html:link page="/changeDegree.do?method=prepare"><bean:message key="link.change.degree"/></html:link></li>
+	<li class="navheader">Equivalências</li>
+	<li><html:link page="/prepareNotNeedToEnroll.do">Não necessita de fazer</html:link></li>
+	<li><html:link page="">Equivalências</html:link></li>
 </ul>     
