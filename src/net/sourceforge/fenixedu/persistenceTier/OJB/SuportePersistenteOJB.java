@@ -80,6 +80,7 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationTeach
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationTypeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.sms.SentSmsOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.student.DelegateOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.student.NotNeedToEnrollInCurricularCourseOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.student.SeniorOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.CareerOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.CategoryOJB;
@@ -162,6 +163,7 @@ import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicati
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationType;
 import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDelegate;
+import net.sourceforge.fenixedu.persistenceTier.student.IPersistentNotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentSenior;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCareer;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCategory;
@@ -1328,4 +1330,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new AuthorshipOJB();
     }
 
+    public IPersistentNotNeedToEnrollInCurricularCourse getIPersistentNotNeedToEnrollInCurricularCourse() {
+        return new NotNeedToEnrollInCurricularCourseOJB();
+    }
 }
