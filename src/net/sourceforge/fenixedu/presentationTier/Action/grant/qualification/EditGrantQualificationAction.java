@@ -85,7 +85,7 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
                     "ReadAllCountries", null);
 
             //Adding a select country line to the list (presentation reasons)
-            Country selectCountry = new Country();
+            InfoCountry selectCountry = new InfoCountry();
             selectCountry.setIdInternal(null);
             selectCountry.setName("[Escolha um país]");
             countryList.add(0, selectCountry);

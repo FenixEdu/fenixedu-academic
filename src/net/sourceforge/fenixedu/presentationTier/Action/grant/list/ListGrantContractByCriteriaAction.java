@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantType;
 import net.sourceforge.fenixedu.dataTransferObject.grant.list.InfoListGrantOwnerComplete;
 import net.sourceforge.fenixedu.dataTransferObject.grant.list.InfoSpanByCriteriaListGrantContract;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -76,7 +76,7 @@ public class ListGrantContractByCriteriaAction extends FenixDispatchAction {
         try {
             IUserView userView = SessionUtils.getUserView(request);
 
-            //Read the grant contracts
+            // Read the grant contracts
             Object[] args = { infoSpanByCriteriaListGrantOwner };
 
             Object[] result = (Object[]) ServiceUtils.executeService(userView,
@@ -85,7 +85,7 @@ public class ListGrantContractByCriteriaAction extends FenixDispatchAction {
             infoSpanByCriteriaListGrantOwner = (InfoSpanByCriteriaListGrantContract) result[1];
 
             if (listGrantContracts != null && listGrantContracts.size() != 0) {
-                //Setting the request
+                // Setting the request
                 DynaValidatorForm listForm = (DynaValidatorForm) form;
                 setForm(listForm, infoSpanByCriteriaListGrantOwner);
                 request.setAttribute("listGrantContract", listGrantContracts);
@@ -121,13 +121,13 @@ public class ListGrantContractByCriteriaAction extends FenixDispatchAction {
 
         if (grantOwnerId != null) {
             try {
-                //Read all the information about the grant owner
+                // Read all the information about the grant owner
                 Object[] args = { grantOwnerId };
                 InfoListGrantOwnerComplete listGrantOwnerCompleteInfo = (InfoListGrantOwnerComplete) ServiceUtils
                         .executeService(userView, "ShowGrantOwner", args);
 
                 if (listGrantOwnerCompleteInfo != null) {
-                    //Set the request
+                    // Set the request
                     request.setAttribute("infoGrantOwner", listGrantOwnerCompleteInfo
                             .getInfoGrantOwner());
                     request.setAttribute("infoQualificationList", listGrantOwnerCompleteInfo
@@ -239,12 +239,13 @@ public class ListGrantContractByCriteriaAction extends FenixDispatchAction {
         return infoSpanByCriteriaListGrantOwner;
     }
 
-    private List createGrantTypeList(IUserView userView) throws FenixServiceException, FenixFilterException {
-        //Read grant types for the contract
+    private List createGrantTypeList(IUserView userView) throws FenixServiceException,
+            FenixFilterException {
+        // Read grant types for the contract
         Object[] args = {};
         List grantTypeList = (List) ServiceUtils.executeService(userView, "ReadAllGrantTypes", args);
-        //Adding a select country line to the list (presentation reasons)
-        GrantType grantType = new GrantType();
+        // Adding a select country line to the list (presentation reasons)
+        InfoGrantType grantType = new InfoGrantType();
         grantType.setIdInternal(null);
         grantType.setSigla("[Escolha um tipo de bolsa]");
         grantTypeList.add(0, grantType);

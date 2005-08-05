@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantType;
 import net.sourceforge.fenixedu.dataTransferObject.grant.stat.InfoStatGrantOwner;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -34,11 +34,11 @@ public class GrantOwnerStatsAction extends FenixDispatchAction {
 
         IUserView userView = SessionUtils.getUserView(request);
         try {
-            //Read grant types for the contract
+            // Read grant types for the contract
             Object[] args = {};
             List grantTypeList = (List) ServiceUtils.executeService(userView, "ReadAllGrantTypes", args);
-            //Adding a select country line to the list (presentation reasons)
-            GrantType grantType = new GrantType();
+            // Adding a select country line to the list (presentation reasons)
+            InfoGrantType grantType = new InfoGrantType();
             grantType.setIdInternal(null);
             grantType.setSigla("[Escolha um tipo de bolsa]");
             grantTypeList.add(0, grantType);
@@ -69,7 +69,7 @@ public class GrantOwnerStatsAction extends FenixDispatchAction {
         Object[] result = (Object[]) ServiceUtils.executeService(userView,
                 "CalculateStatGrantOwnerByCriteria", args);
 
-        //Set the request with the variables
+        // Set the request with the variables
         Integer filterType = new Integer(1);
         if (infoStatGrantOwner.getJustActiveContracts().booleanValue()) {
             filterType = new Integer(2);

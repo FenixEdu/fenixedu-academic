@@ -116,8 +116,8 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
             List countryList = (List) ServiceUtils.executeService(SessionUtils.getUserView(request),
                     "ReadAllCountries", null);
 
-            //Adding a select country line to the list (presentation reasons)
-            Country selectCountry = new Country();
+            //Adding a select country line to the list (presentation reasons)             
+            InfoCountry selectCountry = new InfoCountry();
             selectCountry.setIdInternal(null);
             selectCountry.setName("[Escolha um país]");
             countryList.add(0, selectCountry);
