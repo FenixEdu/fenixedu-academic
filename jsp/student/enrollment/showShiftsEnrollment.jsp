@@ -13,9 +13,10 @@
 <logic:present name="infoShiftEnrollment" >
 	<bean:define id="executionDegreeId" name="infoShiftEnrollment" property="infoExecutionDegree.idInternal" />
 	<bean:define id="studentId" name="infoShiftEnrollment" property="infoStudent.idInternal" />
+
 	<table width="60%">
 		<tr>
-			<td class="infoop" colspan='5'>
+			<td class="infoop" colspan='6'>						
 				<br />
 				<ul>
 					<li>
@@ -49,9 +50,142 @@
 				
 			</td>
 		</tr>
+
+		<br/><br/>
+		<logic:notEmpty name="infoEnrolledNewShiftEnrollmentList">
+			<tr>
+				<td><bean:message key="label.curricular.course.name"/></td>
+				<td><bean:message key="label.enrollment.state"/></td>
+				<td><bean:message key="label.shiftType.theoric"/></td>
+				<td><bean:message key="label.shiftType.pratic"/></td>
+				<td><bean:message key="label.shiftType.laboratory"/></td>
+				<td><bean:message key="label.shiftType.theoricoPratic"/></td>
+			</tr>			
+			<logic:iterate id="infoNewShiftEnrollment" name="infoEnrolledNewShiftEnrollmentList" 
+					type="net.sourceforge.fenixedu.dataTransferObject.InfoNewShiftEnrollment">
+				<tr>
+					<td><bean:write name="infoNewShiftEnrollment" property="infoExecutionCourse.nome"/></td>
+					<bean:define id="condition" name="infoNewShiftEnrollment" property="enrollmentState"/>					
+					<td><bean:message key='<%=condition.toString()%>' bundle="ENUMERATION_RESOURCES"/></td>
+					
+					<logic:notEmpty name="infoNewShiftEnrollment" property="theoricType">
+						<logic:notEmpty name="infoNewShiftEnrollment" property="theoricShift">
+							<td><bean:message key="label.shift.enrolled"/></td>
+						</logic:notEmpty>
+						<logic:empty name="infoNewShiftEnrollment" property="theoricShift">
+							<td><html:link page=""><bean:message key="label.shift.toEnroll"/></html:link></td>
+						</logic:empty>
+					</logic:notEmpty>
+					<logic:empty name="infoNewShiftEnrollment" property="theoricType">
+						<td></td>
+					</logic:empty>
+					
+					<logic:notEmpty name="infoNewShiftEnrollment" property="praticType">
+						<logic:notEmpty name="infoNewShiftEnrollment" property="praticShift">
+							<td><bean:message key="label.shift.enrolled"/></td>
+						</logic:notEmpty>
+						<logic:empty name="infoNewShiftEnrollment" property="praticShift">
+							<td><html:link page=""><bean:message key="label.shift.toEnroll"/></html:link></td>
+						</logic:empty>
+					</logic:notEmpty>
+					<logic:empty name="infoNewShiftEnrollment" property="praticType">
+						<td></td>
+					</logic:empty>
+					
+					<logic:notEmpty name="infoNewShiftEnrollment" property="laboratoryType">
+						<logic:notEmpty name="infoNewShiftEnrollment" property="laboratoryShift">
+							<td><bean:message key="label.shift.enrolled"/></td>
+						</logic:notEmpty>
+						<logic:empty name="infoNewShiftEnrollment" property="laboratoryShift">
+							<td><html:link page=""><bean:message key="label.shift.toEnroll"/></html:link></td>
+						</logic:empty>
+					</logic:notEmpty>
+					<logic:empty name="infoNewShiftEnrollment" property="laboratoryType">
+						<td></td>
+					</logic:empty>
+					
+					<logic:notEmpty name="infoNewShiftEnrollment" property="theoricoPraticType">
+						<logic:notEmpty name="infoNewShiftEnrollment" property="theoricoPraticShift">
+							<td><bean:message key="label.shift.enrolled"/></td>
+						</logic:notEmpty>
+						<logic:empty name="infoNewShiftEnrollment" property="theoricoPraticShift">
+							<td><html:link page=""><bean:message key="label.shift.toEnroll"/></html:link></td>
+						</logic:empty>
+					</logic:notEmpty>
+					<logic:empty name="infoNewShiftEnrollment" property="theoricoPraticType">
+						<td></td>
+					</logic:empty>																				
+				</tr>														
+			</logic:iterate>
+		</logic:notEmpty>
+		
+		<logic:notEmpty name="infoNotEnrolledNewShiftEnrollmentList">
+			<tr>
+				<td><bean:message key="label.curricular.course.name"/></td>
+				<td><bean:message key="label.shiftType.theoric"/></td>
+				<td><bean:message key="label.shiftType.pratic"/></td>
+				<td><bean:message key="label.shiftType.laboratory"/></td>
+				<td><bean:message key="label.shiftType.theoricoPratic"/></td>
+			</tr>			
+			<logic:iterate id="infoNewShiftEnrollment" name="infoNotEnrolledNewShiftEnrollmentList" 
+					type="net.sourceforge.fenixedu.dataTransferObject.InfoNewShiftEnrollment">
+				<tr>
+					<td><bean:write name="infoNewShiftEnrollment" property="infoExecutionCourse.nome"/></td>
+					
+					<logic:notEmpty name="infoNewShiftEnrollment" property="theoricType">
+						<logic:notEmpty name="infoNewShiftEnrollment" property="theoricShift">
+							<td><bean:message key="label.shift.enrolled"/></td>
+						</logic:notEmpty>
+						<logic:empty name="infoNewShiftEnrollment" property="theoricShift">
+							<td><html:link page=""><bean:message key="label.shift.toEnroll"/></html:link></td>
+						</logic:empty>
+					</logic:notEmpty>
+					<logic:empty name="infoNewShiftEnrollment" property="theoricType">
+						<td></td>
+					</logic:empty>
+					
+					<logic:notEmpty name="infoNewShiftEnrollment" property="praticType">
+						<logic:notEmpty name="infoNewShiftEnrollment" property="praticShift">
+							<td><bean:message key="label.shift.enrolled"/></td>
+						</logic:notEmpty>
+						<logic:empty name="infoNewShiftEnrollment" property="praticShift">
+							<td><html:link page=""><bean:message key="label.shift.toEnroll"/></html:link></td>
+						</logic:empty>
+					</logic:notEmpty>
+					<logic:empty name="infoNewShiftEnrollment" property="praticType">
+						<td></td>
+					</logic:empty>
+					
+					<logic:notEmpty name="infoNewShiftEnrollment" property="laboratoryType">
+						<logic:notEmpty name="infoNewShiftEnrollment" property="laboratoryShift">
+							<td><bean:message key="label.shift.enrolled"/></td>
+						</logic:notEmpty>
+						<logic:empty name="infoNewShiftEnrollment" property="laboratoryShift">
+							<td><html:link page=""><bean:message key="label.shift.toEnroll"/></html:link></td>
+						</logic:empty>
+					</logic:notEmpty>
+					<logic:empty name="infoNewShiftEnrollment" property="laboratoryType">
+						<td></td>
+					</logic:empty>
+					
+					<logic:notEmpty name="infoNewShiftEnrollment" property="theoricoPraticType">
+						<logic:notEmpty name="infoNewShiftEnrollment" property="theoricoPraticShift">
+							<td><bean:message key="label.shift.enrolled"/></td>
+						</logic:notEmpty>
+						<logic:empty name="infoNewShiftEnrollment" property="theoricoPraticShift">
+							<td><html:link page=""><bean:message key="label.shift.toEnroll"/></html:link></td>
+						</logic:empty>
+					</logic:notEmpty>
+					<logic:empty name="infoNewShiftEnrollment" property="theoricoPraticType">
+						<td></td>
+					</logic:empty>																				
+				</tr>														
+			</logic:iterate>
+		</logic:notEmpty>		
+		
 		<logic:present name="infoShiftEnrollment" property="infoShiftEnrollment">
 			<tr>
-				<td colspan='5'>
+				<td colspan='6'>
 					<br />
 					<bean:define id="numberCourseWithShiftEnrollment" name="infoShiftEnrollment" property="numberCourseWithShiftEnrollment" />
 					<logic:lessEqual name="numberCourseWithShiftEnrollment" value="0">
@@ -69,12 +203,12 @@
 				<logic:present name="elem">
 					<logic:notEqual name="elem" value="<%=infoShift.getInfoDisciplinaExecucao().getNome()%>">
 						<tr>
-							<td colspan='5'>
+							<td colspan='6'>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							</td>
 						</tr>	
 						<tr>
-							<td class="listClasses-subheader" style="text-align:left;background:#4F82B5" colspan='5' >
+							<td class="listClasses-subheader" style="text-align:left;background:#4F82B5" colspan='6' >
 								<bean:write name="infoShift" property="infoDisciplinaExecucao.nome" />
 							</td>
 						</tr>	
@@ -82,7 +216,7 @@
 				</logic:present>
 				<%-- SHIFTS --%>
 				<tr>
-					<td class="listClasses-header" style="text-align:left" colspan='5'>
+					<td class="listClasses-header" style="text-align:left" colspan='6'>
 						<bean:message key="property.turno" />:</b>&nbsp;
 						<bean:write name="infoShift" property="nome" />
 						<bean:define id="infoShiftId" name="infoShift" property="idInternal" />
@@ -96,6 +230,7 @@
 						</html:link>
 					</th>
 				</tr>
+
 				<%-- LESSONS --%>
 				<logic:iterate id="infoLesson" name="infoShift" property="infoLessons">
 					<tr>
@@ -127,6 +262,7 @@
 				<bean:define id="elem" name="infoShift" property="infoDisciplinaExecucao.nome" type="java.lang.String"/> 
 			</logic:iterate>
 		</logic:present>
+		
 		<logic:notPresent name="infoShiftEnrollment" property="infoShiftEnrollment">
 			<logic:empty name="infoShiftEnrollment" property="infoShiftEnrollment">
 				<tr>
@@ -136,5 +272,6 @@
 				</tr>				
 			</logic:empty>
 		</logic:notPresent>
+		
 	</table>
 </logic:present>
