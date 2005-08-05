@@ -6,6 +6,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.student.enrollment;
 
 import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoNewShiftEnrollment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.InfoShiftEnrollment;
@@ -22,6 +26,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.ExecutionDegreesFormat;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -31,7 +37,7 @@ import org.apache.struts.util.MessageResources;
 /**
  * @author tdi-dev (bruno) Modified by Tânia Pousão Modified by Fernanda
  *         Quitério
- *  
+ * 
  */
 public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDispatchAction {
     public ActionForward prepareStartViewWarning(ActionMapping mapping, ActionForm form,
@@ -57,25 +63,43 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 
         InfoShiftEnrollment infoShiftEnrollment = null;
         Object[] args = { Integer.valueOf(studentNumber), executionDegreeIdChosen };
-       
+
         infoShiftEnrollment = (InfoShiftEnrollment) ServiceManagerServiceFactory.executeService(
                 userView, "PrepareInfoShiftEnrollmentByStudentNumber", args);
-        
-        //inicialize the form with the degree chosen and student number
+
+        // inicialize the form with the degree chosen and student number
         enrolmentForm.set("degree", infoShiftEnrollment.getInfoExecutionDegree().getIdInternal());
         enrolmentForm.set("studentId", infoShiftEnrollment.getInfoStudent().getIdInternal());
 
         request.setAttribute("infoShiftEnrollment", infoShiftEnrollment);
 
+        Object[] args1 = { Integer.valueOf(studentNumber) };
+        List<InfoNewShiftEnrollment> infoNewShiftsEnrollment = (List) ServiceManagerServiceFactory
+                .executeService(userView, "ReadShiftsToEnroll", args1);
+
+        List<InfoNewShiftEnrollment> infoEnrolledNewShiftsEnrollment = (List<InfoNewShiftEnrollment>) CollectionUtils
+                .select(infoNewShiftsEnrollment, new Predicate() {
+
+                    public boolean evaluate(Object arg0) {
+                        InfoNewShiftEnrollment infoNewShiftEnrollment = (InfoNewShiftEnrollment) arg0;
+                        return infoNewShiftEnrollment.getEnrolled();
+                    }
+                });
+
+        List<InfoNewShiftEnrollment> infoNotEnrolledNewShiftsEnrollment = (List<InfoNewShiftEnrollment>) CollectionUtils.subtract(
+                infoNewShiftsEnrollment, infoEnrolledNewShiftsEnrollment);
+
+        request.setAttribute("infoEnrolledNewShiftEnrollmentList", infoEnrolledNewShiftsEnrollment);
+        request.setAttribute("infoNotEnrolledNewShiftEnrollmentList", infoNotEnrolledNewShiftsEnrollment);
         String selectCourses = checkParameter(request);
 
-        //order degree's list and format them names
+        // order degree's list and format them names
         if (selectCourses != null) {
             if (infoShiftEnrollment.getInfoExecutionDegreesList() != null
                     && infoShiftEnrollment.getInfoExecutionDegreesList().size() > 0) {
                 Collections.sort(infoShiftEnrollment.getInfoExecutionDegreesList(),
                         new ComparatorByNameForInfoExecutionDegree());
-                
+
                 MessageResources messageResources = this.getResources(request, "ENUMERATION_RESOURCES");
                 infoShiftEnrollment.setInfoExecutionDegreesLabelsList(ExecutionDegreesFormat
                         .buildExecutionDegreeLabelValueBean(infoShiftEnrollment
@@ -85,6 +109,19 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
         }
 
         return mapping.findForward("showShiftsEnrollment");
+    }
+
+    private InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers getAttend(List infoAttends,
+            final InfoExecutionCourse infoExecutionCourse) {
+
+        return (InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers) CollectionUtils.find(
+                infoAttends, new Predicate() {
+
+                    public boolean evaluate(Object arg0) {
+                        InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers infoAttend = (InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers) arg0;
+                        return infoAttend.getDisciplinaExecucao().equals(infoExecutionCourse);
+                    }
+                });
     }
 
     private String checkParameter(HttpServletRequest request) {
