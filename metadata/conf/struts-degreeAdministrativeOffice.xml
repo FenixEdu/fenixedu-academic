@@ -142,7 +142,16 @@
         	<form-property name="areaOfAreaCode" type="java.lang.String" /> 
 			<form-property name="studentNumber" type="java.lang.String"/>
       </form-bean>
-
+		
+			
+		<!-- ==================  EQUIVALENCES  ================= -->
+		<form-bean name="equivalencesForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String"/>
+			<form-property name="studentNumber" type="java.lang.String"/>
+			<form-property name="curricularCoursesID" type="java.lang.Integer[]"/>
+			<form-property name="studentCurricularPlanID" type="java.lang.String"/>
+		</form-bean>	
+		
 		<form-bean name="changeDegreeForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 			<form-property name="studentNumber" type="java.lang.String"/>
@@ -185,7 +194,8 @@
 		<action path="/switchAction" type="org.apache.struts.actions.SwitchAction"/>
 		<action path="/outOfPeriod" forward="definition.out.of.period"/>
 		<action path="/globalEnrolment" forward="df.page.globalEnrolment"/>	
-		<action path="/cantEnroll" forward="definition.cant.enroll"/>		
+		<action path="/cantEnroll" forward="definition.cant.enroll"/>	
+		<action path="/prepareNotNeedToEnroll" forward="show-not-need-to-enroll"/>
    		
 		<!-- ****************** Index **************************** -->
 		<action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
@@ -376,6 +386,19 @@
        		parameter="method">
        		<forward name="show-report" path="view-curriculum-historic"/>
        	</action>
+       	
+       	
+       	<!-- =================== Equivalences =================== -->
+       	<action path="/showNotNeedToEnroll"
+	       	name="equivalencesForm"
+       		type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.equivalences.ManageNotNeedToEnrollDispathAction"
+       		scope="request"
+			input=""
+       		parameter="method">
+       		<forward name="showNotNeedToEnroll" path="show-not-need-to-enroll"/>
+       		<forward name="insertNotNeedToEnroll" path="/showNotNeedToEnroll.do?method=prepareNotNeedToEnroll"/>
+       	</action>
+       	
 
        	<!-- ==================== Change Degree ================== -->
        	<action path="/changeDegree"
