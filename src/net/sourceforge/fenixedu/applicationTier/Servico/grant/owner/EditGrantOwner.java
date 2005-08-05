@@ -5,6 +5,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
 import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ICountry;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.IPerson;
@@ -41,7 +42,6 @@ public class EditGrantOwner implements IService {
     private IGrantOwner prepareGrantOwner(IGrantOwner grantOwner, IPerson person,
             InfoGrantOwner infoGrantOwner, IPersistentGrantOwner pGrantOwner)
             throws ExcepcaoPersistencia {
-        pGrantOwner.simpleLockWrite(grantOwner);
         grantOwner.setPerson(person);
         grantOwner.setCardCopyNumber(infoGrantOwner.getCardCopyNumber());
         grantOwner.setDateSendCGD(infoGrantOwner.getDateSendCGD());
@@ -85,7 +85,7 @@ public class EditGrantOwner implements IService {
         
         //create or edit person information
         if (infoGrantOwner.getPersonInfo().getIdInternal() == null) {
-            person = new Person(infoGrantOwner.getPersonInfo(), country);
+            person = DomainFactory.makePerson(infoGrantOwner.getPersonInfo(), country);
         }
         else {
             person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class, infoGrantOwner.getPersonInfo().getIdInternal());
@@ -98,7 +98,8 @@ public class EditGrantOwner implements IService {
 
         //create or edit grantOwner information
         if (grantOwner == null) {
-            grantOwner = new GrantOwner();
+            
+            grantOwner = DomainFactory.makeGrantOwner();
 
             IPersistentRole persistentRole = sp.getIPersistentRole();
             person.getPersonRoles().add(persistentRole.readByRoleType(RoleType.GRANT_OWNER));

@@ -107,7 +107,7 @@ public class SibsPaymentFileUtils {
 
                     SibsPaymentType paymentType = SibsPaymentCodeFactory.getPaymentType(new Integer(paymentTypeString));
 
-                    sibsFileEntries.add(new SibsPaymentFileEntry(year, studentNumber, paymentType,
+                    sibsFileEntries.add(DomainFactory.makeSibsPaymentFileEntry(year, studentNumber, paymentType,
                             new Timestamp(transactionDate.getTime()), value, sibsFile,
                             SibsPaymentStatus.NOT_PROCESSED_PAYMENT));
 
