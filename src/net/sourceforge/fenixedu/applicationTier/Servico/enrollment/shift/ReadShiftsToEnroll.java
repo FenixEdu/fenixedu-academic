@@ -62,7 +62,6 @@ public class ReadShiftsToEnroll implements IService {
                     .getDisciplinaExecucao()));
             if (attends.getEnrolment() != null) {
                 infoNewShiftEnrollment.setEnrolled(true);
-                infoNewShiftEnrollment.setEnrollmentState(attends.getEnrolment().getEnrollmentState());
             }
             infoNewShiftEnrollments.add(infoNewShiftEnrollment);
         }
