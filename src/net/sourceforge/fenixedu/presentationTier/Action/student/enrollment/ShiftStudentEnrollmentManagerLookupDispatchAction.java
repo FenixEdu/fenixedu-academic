@@ -3,10 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.student.enrollment;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,16 +20,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.WriteSt
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.ExecutionCourseShiftEnrollmentDetails;
-import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.InfoClassEnrollmentDetails;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.TransactionalLookupDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixTransactionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
-import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -52,7 +48,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
         HttpSession session = request.getSession();
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-        //Read data from form
+        // Read data from form
         DynaActionForm enrollmentForm = (DynaActionForm) form;
         Integer wantedCourse = (Integer) enrollmentForm.get("wantedCourse");
 
@@ -61,7 +57,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
         InfoStudent infoStudent = new InfoStudent();
         infoStudent.setIdInternal(studentId);
 
-        //Add course
+        // Add course
         Object[] args = { infoStudent, wantedCourse };
         Boolean result = Boolean.FALSE;
         try {
@@ -90,7 +86,8 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
     }
 
     public ActionForward removeCourses(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixTransactionException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixTransactionException,
+            FenixFilterException {
         super.validateToken(request, form, mapping, "error.transaction.enrollment");
 
         checkParameter(request);
@@ -99,7 +96,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
         HttpSession session = request.getSession();
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-        //Read data from form
+        // Read data from form
         DynaActionForm enrollmentForm = (DynaActionForm) form;
         Integer removedCourse = (Integer) enrollmentForm.get("removedCourse");
 
@@ -108,7 +105,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
         InfoStudent infoStudent = new InfoStudent();
         infoStudent.setIdInternal(studentId);
 
-        //Remove course
+        // Remove course
         Object[] args = { infoStudent, removedCourse };
         Boolean result = Boolean.FALSE;
         try {
@@ -138,55 +135,56 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
     }
 
     public ActionForward proceedToShiftEnrolment(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+            FenixServiceException {
         checkParameter(request);
 
-        ActionErrors errors = new ActionErrors();
         HttpSession session = request.getSession();
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-        Integer classIdSelected = readClassSelected(request);
-
-        //Read data from form
-        DynaActionForm enrollmentForm = (DynaActionForm) form;
-        Integer studentId = readStudentId(request, enrollmentForm);
-
-        InfoStudent infoStudent = new InfoStudent();
-        infoStudent.setIdInternal(studentId);
-
-        Object[] args = { infoStudent, classIdSelected };
-        InfoClassEnrollmentDetails infoClassEnrollmentDetails = null;
-        try {
-            infoClassEnrollmentDetails = (InfoClassEnrollmentDetails) ServiceManagerServiceFactory
-                    .executeService(userView, "ReadClassShiftEnrollmentDetails", args);
-        } catch (FenixServiceException exception) {
-            exception.printStackTrace();
-            errors.add("error", new ActionError("errors.impossible.operation"));
-            saveErrors(request, errors);
-            return mapping.getInputForward();
+        Integer classIdSelected = readClassSelected(request);        
+        Integer studentId = Integer.valueOf((String)request.getParameter("studentId"));
+        if(studentId == null){
+            studentId = (Integer) request.getAttribute("studentId");
         }
-        if (infoClassEnrollmentDetails == null
-                || infoClassEnrollmentDetails.getInfoClassList().size() == 0) {
-            errors.add("error", new ActionError("error.message.no.classes.for.reserve"));
-            saveErrors(request, errors);
-            return mapping.getInputForward();
-        }
-
-        HashMap shiftsMap = buildDataToForm(infoClassEnrollmentDetails);
-        enrollmentForm.set("shiftMap", shiftsMap);
-        enrollmentForm.set("studentId", infoClassEnrollmentDetails.getInfoStudent().getIdInternal());
-        request.setAttribute("studentId", infoClassEnrollmentDetails.getInfoStudent().getIdInternal());
-
+        request.setAttribute("studentId", studentId);        
+        
+        Object[] args = { studentId };
+        List infoClassList = (List) ServiceManagerServiceFactory.executeService(userView,
+                "ReadClassesByStudentID", args);        
+        request.setAttribute("infoClassList", infoClassList);
+        
+        Integer tempClassId = null;
         if (classIdSelected != null) {
-            request.setAttribute("classId", classIdSelected);
+            tempClassId = classIdSelected;            
         } else {
-            request.setAttribute("classId", ((InfoClass) infoClassEnrollmentDetails.getInfoClassList()
-                    .get(0)).getIdInternal());
+            tempClassId = ((InfoClass) infoClassList.get(0))
+                    .getIdInternal();            
         }
 
-        order(infoClassEnrollmentDetails);
+        request.setAttribute("classId", tempClassId);
+        final Integer classId = tempClassId;
 
-        request.setAttribute("infoClassEnrollmentDetails", infoClassEnrollmentDetails);
+        List selectedClasses = (List) CollectionUtils.select(infoClassList, new Predicate() {
+
+            public boolean evaluate(Object arg0) {
+                InfoClass infoClass = (InfoClass) arg0;
+                return infoClass.getIdInternal().equals(classId);
+            }
+        });
+
+        InfoClass infoClass = (InfoClass) selectedClasses.get(0);
+        request.setAttribute("infoClass", infoClass);                
+        
+        Object[] args1 = { userView.getUtilizador(), classId };
+        List infoClasslessons = (List) ServiceManagerServiceFactory.executeService(userView,
+                "ReadClassTimeTableByStudent", args1);        
+        request.setAttribute("infoClasslessons", infoClasslessons);
+
+        Object[] args2 = { userView.getUtilizador() };
+        List infoLessons = (List) ServiceManagerServiceFactory.executeService(userView,
+                "ReadStudentTimeTable", args2);
+        request.setAttribute("infoLessons", infoLessons);
 
         return mapping.findForward("showShiftsToEnroll");
     }
@@ -207,72 +205,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
             classIdSelected = (Integer) request.getAttribute("classId");
         }
         return classIdSelected;
-    }
-
-    /**
-     * @param infoClassEnrollmentDetails
-     */
-    private void order(InfoClassEnrollmentDetails infoClassEnrollmentDetails) {
-        Map classExecutionCourseShiftEnrollmentDetailsMap = infoClassEnrollmentDetails
-                .getClassExecutionCourseShiftEnrollmentDetailsMap();
-
-        ListIterator iterator = infoClassEnrollmentDetails.getInfoClassList().listIterator();
-        while (iterator.hasNext()) {
-            InfoClass infoClass = (InfoClass) iterator.next();
-
-            List executionCourseDetails = (List) classExecutionCourseShiftEnrollmentDetailsMap
-                    .get(infoClass.getIdInternal());
-
-            //order execution course list
-            if (executionCourseDetails != null) {
-                Collections.sort(executionCourseDetails, new BeanComparator("infoExecutionCourse.nome"));
-
-                ListIterator iterator2 = executionCourseDetails.listIterator();
-                while (iterator2.hasNext()) {
-                    ExecutionCourseShiftEnrollmentDetails details2 = (ExecutionCourseShiftEnrollmentDetails) iterator2
-                            .next();
-                    Collections.sort(details2.getShiftEnrollmentDetailsList(), new BeanComparator(
-                            "infoShift.tipo"));
-
-                }
-            }
-        }
-
-    }
-
-    /**
-     * @param infoClassEnrollmentDetails
-     * @return
-     */
-    private HashMap buildDataToForm(InfoClassEnrollmentDetails infoClassEnrollmentDetails) {
-        HashMap shiftsMap = new HashMap();
-
-        //na lista de turnos e torná-la num Hashmap em que a key do map é
-        //idDisciplina concatenada com o tipo do turno (tipo de aula) e o
-        // valor é o id do turno
-        List infoShifts = infoClassEnrollmentDetails.getInfoShiftEnrolledList();
-        ListIterator iterator = infoShifts.listIterator();
-        while (iterator.hasNext()) {
-            InfoShift infoShift = (InfoShift) iterator.next();
-
-            String key = infoShift.getInfoDisciplinaExecucao().getIdInternal() + "-"
-                    + infoShift.getTipo().toString();
-            shiftsMap.put(key, infoShift.getIdInternal());
-        }
-
-        return shiftsMap;
-    }
-
-    private Integer readStudentId(HttpServletRequest request, DynaActionForm enrollmentForm) {
-        Integer studentId = (Integer) enrollmentForm.get("studentId");
-        if (studentId == null) {
-            String studentIdString = request.getParameter("studentId");
-            if (studentIdString != null) {
-                studentId = Integer.valueOf(request.getParameter("studentId"));
-            }
-        }
-        return studentId;
-    }
+    }       
 
     public ActionForward exitEnrollment(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
