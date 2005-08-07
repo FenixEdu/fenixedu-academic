@@ -340,7 +340,7 @@
         scope="request"
         validate="false"
         input="/studentShiftEnrollmentManagerLoockup.do?method=Escolher Turnos&amp;page=0" > 
-        <forward name="enrollmentConfirmation" path="/studentShiftEnrollmentManager.do?method=prepareShiftEnrollment"/>
+        <forward name="enrollmentConfirmation" path="/studentShiftEnrollmentManagerLoockup.do?method=Escolher Turnos"/>
       </action>
       
       <action 
