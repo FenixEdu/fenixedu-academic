@@ -1,0 +1,17 @@
+/**
+* Aug 6, 2005
+*/
+package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3;
+
+import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRenderer;
+
+/**
+ * @author Ricardo Rodrigues
+ *
+ */
+
+public interface LessonSlotContentRendererShift extends LessonSlotContentRenderer {
+    public StringBuffer lastRender(LessonSlot lessonSlot);
+}
+
+
