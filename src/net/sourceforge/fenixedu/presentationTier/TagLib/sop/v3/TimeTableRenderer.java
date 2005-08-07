@@ -4,12 +4,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
+
+import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.ShiftEnrollmentTimeTableLessonContentRenderer;
 
 import org.apache.struts.Globals;
 import org.apache.struts.util.RequestUtils;
@@ -19,7 +22,7 @@ import org.apache.struts.util.RequestUtils;
  */
 public class TimeTableRenderer {
 
-    //	private Integer endHour;
+    // private Integer endHour;
     private Integer startHour;
 
     private Integer slotSize;
@@ -29,9 +32,6 @@ public class TimeTableRenderer {
     private LessonSlotContentRenderer lessonSlotContentRenderer;
 
     private ColorPicker colorPicker;
-    
-    
-   
 
     /**
      * Constructor TimeTableRenderer.
@@ -50,23 +50,22 @@ public class TimeTableRenderer {
         this.timeTable = timeTable;
         this.lessonSlotContentRenderer = lessonSlotContentRenderer;
 
-        //		this.endHour = endHour;
+        // this.endHour = endHour;
         this.startHour = startHour;
         this.slotSize = slotSize;
         this.colorPicker = colorPicker;
     }
 
-    public StringBuffer render(Locale locale, PageContext pageContext) {
+    public StringBuffer render(Locale locale, PageContext pageContext) {        
         StringBuffer strBuffer = new StringBuffer("");
-
+        HashMap slotLessons = new HashMap();
         TimeTableSlot[][] grid = timeTable.getTimeTableGrid();
 
         strBuffer.append("<table class='timetable' cellspacing='0' cellpadding='0' width='90%'>");
-        
-        renderHeader(strBuffer,locale, pageContext);
+
+        renderHeader(strBuffer, locale, pageContext);
 
         for (int hourIndex = 0; hourIndex < timeTable.getNumberOfHours().intValue(); hourIndex++) {
-
             strBuffer.append("<tr>\r\n");
             strBuffer.append("<td width='15%' class='period-hours'>");
             strBuffer.append(getHourLabelByIndex(hourIndex)).append("</td>\r\n");
@@ -74,7 +73,7 @@ public class TimeTableRenderer {
             /* iterate over days */
             for (int dayIndex = 0; dayIndex < timeTable.getNumberOfDays().intValue(); dayIndex++) {
                 DayColumn dayColumn = timeTable.getDayColumn(dayIndex);
-
+                
                 TimeTableSlot timeTableSlot = grid[dayIndex][hourIndex];
 
                 if (timeTableSlot != null) {
@@ -83,7 +82,7 @@ public class TimeTableRenderer {
                     InfoLessonWrapper[] lessonSlotListResolved = resolveColisions(colisionList,
                             timeTable.getDayColumn(dayIndex));
 
-                    for (int slotIndex = 0; slotIndex < lessonSlotListResolved.length; slotIndex++) {
+                    for (int slotIndex = 0; slotIndex < lessonSlotListResolved.length; slotIndex++) {                        
                         InfoLessonWrapper infoLessonWrapper = lessonSlotListResolved[slotIndex];
 
                         strBuffer.append("<td ");
@@ -121,8 +120,23 @@ public class TimeTableRenderer {
                                 && (infoLessonWrapper.getLessonSlot().getStartIndex() == hourIndex)) {
                             strBuffer.append(this.lessonSlotContentRenderer.render(infoLessonWrapper
                                     .getLessonSlot()));
+                            if (this.lessonSlotContentRenderer instanceof ShiftEnrollmentTimeTableLessonContentRenderer) {
+                                slotLessons.put(slotIndex+"-"+dayIndex, infoLessonWrapper);
+                            }
                         } else {
-                            strBuffer.append("&nbsp;");
+                            if (this.lessonSlotContentRenderer instanceof ShiftEnrollmentTimeTableLessonContentRenderer
+                                    && getSlotCssClass((InfoLessonWrapper) slotLessons.get(slotIndex+"-"+dayIndex),
+                                            hourIndex).equalsIgnoreCase("period-last-slot")) {
+                                LessonSlotContentRendererShift lessonSlotContentRendererShift = (LessonSlotContentRendererShift)
+                                        this.lessonSlotContentRenderer;
+                                InfoLessonWrapper infoLessonWrapperHashMap = (InfoLessonWrapper) slotLessons
+                                        .get(slotIndex+"-"+dayIndex);
+                                strBuffer.append(lessonSlotContentRendererShift
+                                        .lastRender(infoLessonWrapperHashMap.getLessonSlot()));                                
+                            }
+                            else{                            
+                                strBuffer.append("&nbsp;");
+                            }
                         }
                         strBuffer.append("</td>\r\n");
                     }
@@ -131,7 +145,7 @@ public class TimeTableRenderer {
                     int colspan = dayColumn.getMaxColisionSize().intValue();
                     String cssClass = getSlotCssClass(null, hourIndex);
                     strBuffer.append("<td ").append(" class='").append(cssClass).append("' ");
-                    if (colspan > 1){
+                    if (colspan > 1) {
                         strBuffer.append("colspan='").append(colspan).append("'");
                     }
                     strBuffer.append(">").append("&nbsp;").append("</td>\r\n");
@@ -202,16 +216,17 @@ public class TimeTableRenderer {
      * Method renderHeader.
      * 
      * @param strBuffer
-     * @param pageContext 
+     * @param pageContext
      */
-    private void renderHeader(StringBuffer strBuffer,Locale locale, PageContext pageContext) {
+    private void renderHeader(StringBuffer strBuffer, Locale locale, PageContext pageContext) {
 
-        //strBuffer.append("<th width='15%'>horas/dias</th>\r\n");
+        // strBuffer.append("<th width='15%'>horas/dias</th>\r\n");
         String hourDaysTitle;
         try {
-            hourDaysTitle = RequestUtils.message(pageContext, "PUBLIC_DEGREE_INFORMATION", Globals.LOCALE_KEY, "public.degree.information.label.timesAndDays");
+            hourDaysTitle = RequestUtils.message(pageContext, "PUBLIC_DEGREE_INFORMATION",
+                    Globals.LOCALE_KEY, "public.degree.information.label.timesAndDays");
         } catch (JspException e) {
-            hourDaysTitle = "???label.timesAndDays???"; 
+            hourDaysTitle = "???label.timesAndDays???";
         }
 
         strBuffer.append("<th width='15%'>");
