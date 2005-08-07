@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.ClassTi
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.ClassTimeTableWithoutLinksLessonContentRenderer;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.ExecutionCourseTimeTableLessonContentRenderer;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.RoomTimeTableLessonContentRenderer;
+import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.ShiftEnrollmentTimeTableLessonContentRenderer;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.ShiftTimeTableLessonContentRenderer;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.SopClassRoomTimeTableLessonContentRenderer;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.SopClassTimeTableLessonContentRenderer;
@@ -42,17 +43,23 @@ public final class RenderTimeTableTag extends TagSupport {
 
     private String application = "";
 
+    private String studentID = "";
+
+    private String classID = "";
+    
+    private String action = "";
+
     private final Integer startTimeTableHour = new Integer(8);
 
-    private final Integer endTimeTableHour = new Integer(24);
+    private Integer endTimeTableHour = new Integer(24);
 
     private final Integer slotSizeMinutes = new Integer(30);
 
-    //private final int HORA_MINIMA = 8;
-    //private final int HORA_MAXIMA = 24;
+    // private final int HORA_MINIMA = 8;
+    // private final int HORA_MAXIMA = 24;
 
     // Factor de divisão das celulas.
-    //private final int COL_SPAN_FACTOR = 24;
+    // private final int COL_SPAN_FACTOR = 24;
 
     private ColorPicker colorPicker;
 
@@ -61,12 +68,11 @@ public final class RenderTimeTableTag extends TagSupport {
 
     // Mensagens de erro.
     protected static MessageResources messages = MessageResources
-    .getMessageResources("PublicDegreeInformation");
+            .getMessageResources("PublicDegreeInformation");
 
     private InfoCurricularYear infoCurricularYear = null;
 
     private InfoExecutionDegree infoExecutionDegree = null;
-    
 
     public String getName() {
         return (this.name);
@@ -76,16 +82,14 @@ public final class RenderTimeTableTag extends TagSupport {
         this.name = name;
     }
 
-   
-    
     public int doStartTag() throws JspException {
- 
+
         try {
             infoCurricularYear = (InfoCurricularYear) pageContext
                     .findAttribute(SessionConstants.CURRICULAR_YEAR);
             infoExecutionDegree = (InfoExecutionDegree) pageContext
                     .findAttribute(SessionConstants.EXECUTION_DEGREE);
- 
+
         } catch (ClassCastException e) {
             infoCurricularYear = null;
             infoExecutionDegree = null;
@@ -107,20 +111,28 @@ public final class RenderTimeTableTag extends TagSupport {
             setApplication((String) pageContext.findAttribute("application"));
         }
 
+        if ((String) pageContext.findAttribute("studentID") != null) {
+            setStudentID((String) pageContext.findAttribute("studentID"));
+        }
+
+        if ((String) pageContext.findAttribute("classID") != null) {
+            setClassID((String) pageContext.findAttribute("classID"));
+        }
+        
         // Gera o horário a partir da lista de aulas.
-        Locale locale = (Locale)pageContext.findAttribute(Globals.LOCALE_KEY);
+        Locale locale = (Locale) pageContext.findAttribute(Globals.LOCALE_KEY);
         JspWriter writer = pageContext.getOut();
-        TimeTable timeTable = generateTimeTable(infoLessonList,locale, pageContext);
+        TimeTable timeTable = generateTimeTable(infoLessonList, locale, pageContext);
 
         TimeTableRenderer renderer = new TimeTableRenderer(timeTable, lessonSlotContentRenderer,
                 this.slotSizeMinutes, this.startTimeTableHour, this.endTimeTableHour, colorPicker);
-       
+
         try {
-           writer.print(renderer.render(locale, pageContext));
-           writer.print(legenda(infoLessonList,locale));
+            writer.print(renderer.render(locale, pageContext));
+            writer.print(legenda(infoLessonList, locale));
         } catch (IOException e) {
             throw new JspException(messages.getMessage("gerarHorario.io", e.toString()));
-        } 
+        }
         return (SKIP_BODY);
     }
 
@@ -130,7 +142,7 @@ public final class RenderTimeTableTag extends TagSupport {
      * @param listaAulas
      * @return TimeTable
      */
-    private TimeTable generateTimeTable(List lessonList,Locale locale, PageContext pageContext) {
+    private TimeTable generateTimeTable(List lessonList, Locale locale, PageContext pageContext) {
 
         Calendar calendar = Calendar.getInstance();
 
@@ -142,14 +154,15 @@ public final class RenderTimeTableTag extends TagSupport {
                 (endTimeTableHour.intValue() - startTimeTableHour.intValue())
                         * (60 / slotSizeMinutes.intValue()));
 
-        TimeTable timeTable = new TimeTable(numberOfHours, numberOfDays, calendar, slotSizeMinutes,locale, pageContext);
+        TimeTable timeTable = new TimeTable(numberOfHours, numberOfDays, calendar, slotSizeMinutes,
+                locale, pageContext);
 
         Iterator lessonIterator = lessonList.iterator();
 
         while (lessonIterator.hasNext()) {
 
-//            InfoLesson infoLesson = (InfoLesson) lessonIterator.next();
-//            timeTable.addLesson(infoLesson);
+            // InfoLesson infoLesson = (InfoLesson) lessonIterator.next();
+            // timeTable.addLesson(infoLesson);
             InfoShowOccupation infoShowOccupation = (InfoShowOccupation) lessonIterator.next();
             timeTable.addLesson(infoShowOccupation);
         }
@@ -167,13 +180,14 @@ public final class RenderTimeTableTag extends TagSupport {
 
     private String getMessageResource(PageContext pageContext, String key) {
         try {
-            return RequestUtils.message(pageContext, "PUBLIC_DEGREE_INFORMATION", Globals.LOCALE_KEY, key);
+            return RequestUtils.message(pageContext, "PUBLIC_DEGREE_INFORMATION", Globals.LOCALE_KEY,
+                    key);
         } catch (JspException e) {
-            return "???" + key + "???"; 
+            return "???" + key + "???";
         }
     }
 
-    private StringBuffer legenda(List listaAulas,Locale locale) {
+    private StringBuffer legenda(List listaAulas, Locale locale) {
         StringBuffer result = new StringBuffer("");
         List listaAuxiliar = new ArrayList();
         Iterator iterator = listaAulas.iterator();
@@ -212,11 +226,11 @@ public final class RenderTimeTableTag extends TagSupport {
                 result.append("<td colspan='3'>&nbsp;</td></tr>");
             }
 
-            //TODO(rspl): Will it stay like this the interface for showing
+            // TODO(rspl): Will it stay like this the interface for showing
             // the legend of a quinzenal lesson?
             result.append("<tr><td style='vertical-align:top'><b>[Q]</b></td>");
             result.append("<td  style='vertical-align:top'>-</td>");
-            result.append("<td wrap='wrap'>" );
+            result.append("<td wrap='wrap'>");
             result.append(getMessageResource(pageContext, "public.degree.information.label.biweekly"));
             result.append("</td></tr>");
 
@@ -284,6 +298,12 @@ public final class RenderTimeTableTag extends TagSupport {
                     getApplication());
             this.colorPicker = new ClassTimeTableColorPicker();
             break;
+        case TimeTableType.SHIFT_ENROLLMENT_TIMETABLE:
+            this.lessonSlotContentRenderer = new ShiftEnrollmentTimeTableLessonContentRenderer(
+                    getStudentID(), getApplication(), getClassID(), getAction());
+            this.colorPicker = new ClassTimeTableColorPicker();
+            this.endTimeTableHour = new Integer(19);
+            break;
 
         default:
             this.lessonSlotContentRenderer = new ClassTimeTableLessonContentRenderer();
@@ -307,5 +327,28 @@ public final class RenderTimeTableTag extends TagSupport {
         this.application = application;
     }
 
-}
+    public String getStudentID() {
+        return studentID;
+    }
 
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    public String getClassID() {
+        return classID;
+    }
+
+    public void setClassID(String classID) {
+        this.classID = classID;
+    }
+
+}
