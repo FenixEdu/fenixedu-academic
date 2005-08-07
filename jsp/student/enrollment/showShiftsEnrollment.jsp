@@ -55,7 +55,6 @@
 		<logic:notEmpty name="infoEnrolledNewShiftEnrollmentList">
 			<tr>
 				<td><bean:message key="label.curricular.course.name"/></td>
-				<td><bean:message key="label.enrollment.state"/></td>
 				<td><bean:message key="label.shiftType.theoric"/></td>
 				<td><bean:message key="label.shiftType.pratic"/></td>
 				<td><bean:message key="label.shiftType.laboratory"/></td>
@@ -65,15 +64,14 @@
 					type="net.sourceforge.fenixedu.dataTransferObject.InfoNewShiftEnrollment">
 				<tr>
 					<td><bean:write name="infoNewShiftEnrollment" property="infoExecutionCourse.nome"/></td>
-					<bean:define id="condition" name="infoNewShiftEnrollment" property="enrollmentState"/>					
-					<td><bean:message key='<%=condition.toString()%>' bundle="ENUMERATION_RESOURCES"/></td>
 					
 					<logic:notEmpty name="infoNewShiftEnrollment" property="theoricType">
 						<logic:notEmpty name="infoNewShiftEnrollment" property="theoricShift">
 							<td><bean:message key="label.shift.enrolled"/></td>
 						</logic:notEmpty>
 						<logic:empty name="infoNewShiftEnrollment" property="theoricShift">
-							<td><html:link page=""><bean:message key="label.shift.toEnroll"/></html:link></td>
+							<td><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;studentId=" 
+							+ pageContext.findAttribute("studentId").toString()%>"><bean:message key="label.shift.toEnroll"/></html:link></td>
 						</logic:empty>
 					</logic:notEmpty>
 					<logic:empty name="infoNewShiftEnrollment" property="theoricType">
@@ -85,7 +83,8 @@
 							<td><bean:message key="label.shift.enrolled"/></td>
 						</logic:notEmpty>
 						<logic:empty name="infoNewShiftEnrollment" property="praticShift">
-							<td><html:link page=""><bean:message key="label.shift.toEnroll"/></html:link></td>
+							<td><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;studentId=" 
+							+ pageContext.findAttribute("studentId").toString()%>"><bean:message key="label.shift.toEnroll"/></html:link></td>
 						</logic:empty>
 					</logic:notEmpty>
 					<logic:empty name="infoNewShiftEnrollment" property="praticType">
@@ -97,7 +96,8 @@
 							<td><bean:message key="label.shift.enrolled"/></td>
 						</logic:notEmpty>
 						<logic:empty name="infoNewShiftEnrollment" property="laboratoryShift">
-							<td><html:link page=""><bean:message key="label.shift.toEnroll"/></html:link></td>
+							<td><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;studentId=" 
+							+ pageContext.findAttribute("studentId").toString()%>"><bean:message key="label.shift.toEnroll"/></html:link></td>
 						</logic:empty>
 					</logic:notEmpty>
 					<logic:empty name="infoNewShiftEnrollment" property="laboratoryType">
@@ -109,7 +109,8 @@
 							<td><bean:message key="label.shift.enrolled"/></td>
 						</logic:notEmpty>
 						<logic:empty name="infoNewShiftEnrollment" property="theoricoPraticShift">
-							<td><html:link page=""><bean:message key="label.shift.toEnroll"/></html:link></td>
+							<td><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;studentId=" 
+							+ pageContext.findAttribute("studentId").toString()%>"><bean:message key="label.shift.toEnroll"/></html:link></td>
 						</logic:empty>
 					</logic:notEmpty>
 					<logic:empty name="infoNewShiftEnrollment" property="theoricoPraticType">
@@ -137,7 +138,8 @@
 							<td><bean:message key="label.shift.enrolled"/></td>
 						</logic:notEmpty>
 						<logic:empty name="infoNewShiftEnrollment" property="theoricShift">
-							<td><html:link page=""><bean:message key="label.shift.toEnroll"/></html:link></td>
+							<td><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;studentId=" 
+							+ pageContext.findAttribute("studentId").toString()%>"><bean:message key="label.shift.toEnroll"/></html:link></td>
 						</logic:empty>
 					</logic:notEmpty>
 					<logic:empty name="infoNewShiftEnrollment" property="theoricType">
@@ -149,7 +151,8 @@
 							<td><bean:message key="label.shift.enrolled"/></td>
 						</logic:notEmpty>
 						<logic:empty name="infoNewShiftEnrollment" property="praticShift">
-							<td><html:link page=""><bean:message key="label.shift.toEnroll"/></html:link></td>
+							<td><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;studentId=" 
+							+ pageContext.findAttribute("studentId").toString()%>"><bean:message key="label.shift.toEnroll"/></html:link></td>
 						</logic:empty>
 					</logic:notEmpty>
 					<logic:empty name="infoNewShiftEnrollment" property="praticType">
@@ -161,7 +164,8 @@
 							<td><bean:message key="label.shift.enrolled"/></td>
 						</logic:notEmpty>
 						<logic:empty name="infoNewShiftEnrollment" property="laboratoryShift">
-							<td><html:link page=""><bean:message key="label.shift.toEnroll"/></html:link></td>
+							<td><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;studentId=" 
+							+ pageContext.findAttribute("studentId").toString()%>"><bean:message key="label.shift.toEnroll"/></html:link></td>
 						</logic:empty>
 					</logic:notEmpty>
 					<logic:empty name="infoNewShiftEnrollment" property="laboratoryType">
@@ -173,7 +177,8 @@
 							<td><bean:message key="label.shift.enrolled"/></td>
 						</logic:notEmpty>
 						<logic:empty name="infoNewShiftEnrollment" property="theoricoPraticShift">
-							<td><html:link page=""><bean:message key="label.shift.toEnroll"/></html:link></td>
+							<td><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;studentId=" 
+							+ pageContext.findAttribute("studentId").toString()%>"><bean:message key="label.shift.toEnroll"/></html:link></td>
 						</logic:empty>
 					</logic:notEmpty>
 					<logic:empty name="infoNewShiftEnrollment" property="theoricoPraticType">
