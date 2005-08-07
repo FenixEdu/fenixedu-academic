@@ -48,14 +48,14 @@ public class EnrollStudentInShifts implements IService {
                 if (student == null) {
                     throw new StudentNotFoundServiceException();
                 }
-                
+
                 if (student.getPayedTuition() == null || student.getPayedTuition().equals(Boolean.FALSE)) {
                     throw new FenixServiceException(
                             "error.exception.notAuthorized.student.warningTuition");
                 }
-                
+
                 persistentStudent.simpleLockWrite(student);
-                
+
                 IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
 
                 List<IShift> shifts = student.getShifts();
@@ -63,10 +63,9 @@ public class EnrollStudentInShifts implements IService {
                 for (IShift shift : shifts) {
                     if (shift.getDisciplinaExecucao().getExecutionPeriod().getIdInternal().equals(
                             executionPeriod.getIdInternal()))
-                        ;
-                    shiftEnrollments.add(shift);
+                        shiftEnrollments.add(shift);
                 }
-                
+
                 List shiftsToUnEnroll = new ArrayList();
                 List filteredShiftsIdsToEnroll = new ArrayList();
 
@@ -86,9 +85,10 @@ public class EnrollStudentInShifts implements IService {
         }
     }
 
-    private void unEnrollStudentsInShifts(List shiftsToUnEnroll, IStudent student) throws ExcepcaoPersistencia {
+    private void unEnrollStudentsInShifts(List shiftsToUnEnroll, IStudent student)
+            throws ExcepcaoPersistencia {
         student.getShifts().removeAll(shiftsToUnEnroll);
-    
+
     }
 
     /**
@@ -101,8 +101,7 @@ public class EnrollStudentInShifts implements IService {
      */
     private List enrollStudentsInShiftsAndCalculateShiftsToUnEnroll(IStudent student,
             List filteredShiftsIdsToEnroll, ShiftEnrollmentErrorReport errorReport,
-            ITurnoPersistente persistentShift)
-            throws ExcepcaoPersistencia {
+            ITurnoPersistente persistentShift) throws ExcepcaoPersistencia {
         List shiftsToUnEnroll = new ArrayList();
         Iterator iter = filteredShiftsIdsToEnroll.iterator();
         while (iter.hasNext()) {
@@ -147,7 +146,7 @@ public class EnrollStudentInShifts implements IService {
                 IShift shift = (IShift) iter.next();
 
                 if (shiftIdsToEnroll.contains(shift.getIdInternal())) {
-					shiftIdsToIgnore.add(shift.getIdInternal());
+                    shiftIdsToIgnore.add(shift.getIdInternal());
                 }
             }
 

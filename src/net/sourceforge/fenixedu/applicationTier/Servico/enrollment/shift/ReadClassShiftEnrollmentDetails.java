@@ -85,7 +85,6 @@ public class ReadClassShiftEnrollmentDetails implements IService {
             for (IShift shift : shifts) {
                 if (shift.getDisciplinaExecucao().getExecutionPeriod().getIdInternal().equals(
                         executionPeriod.getIdInternal()))
-                    ;
                 studentShifts.add(shift);
             }
             
