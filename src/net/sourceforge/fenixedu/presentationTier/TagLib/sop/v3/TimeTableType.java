@@ -20,4 +20,6 @@ public abstract class TimeTableType {
     public static final int CLASS_TIMETABLE_WITHOUT_LINKS = 7;
 
     public static final int SOP_CLASS_ROOM_TIMETABLE = 8;
+    
+    public static final int SHIFT_ENROLLMENT_TIMETABLE = 9;
 }
