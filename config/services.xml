@@ -8577,5 +8577,25 @@
 			<chain name="StudentAuthorization" />
 			<chain name="ClassEnrollmentAuthorization" />
 		</filterChains>
-    </service>    
+    </service>
+    <service>
+    	<name>ReadClassTimeTableByStudent</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.ReadClassTimeTableByStudent</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="StudentAuthorization" />
+			<chain name="ClassEnrollmentAuthorization" />
+		</filterChains>
+    </service>  
+    <service>
+    	<name>ReadClassesByStudentID</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.enrollment.ReadClassesByStudentID</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="StudentAuthorization" />
+			<chain name="ClassEnrollmentAuthorization" />
+		</filterChains>
+    </service>       
 </serviceDefinitions>
