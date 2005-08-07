@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <ul>
-	<logic:iterate id="infoClass" name="infoClassEnrollmentDetails" property="infoClassList">
+	<logic:iterate id="infoClass" name="infoClassList">
 		<bean:define id="infoClassId" name="infoClass" property="idInternal"/>
 		<bean:define id="infoClassName" name="infoClass" property="nome"/>
 		<bean:define id="classSelected">
