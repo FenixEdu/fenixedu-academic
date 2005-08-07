@@ -4,7 +4,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 
 /**
  * @author Ricardo Rodrigues
@@ -24,7 +23,6 @@ public class InfoNewShiftEnrollment extends DataTranferObject {
     private InfoShift laboratoryShift;
     private InfoShift theoricoPraticShift;
     
-    private EnrollmentState enrollmentState;
     private boolean enrolled;
     
     public Boolean getEnrolled() {
@@ -32,12 +30,6 @@ public class InfoNewShiftEnrollment extends DataTranferObject {
     }
     public void setEnrolled(Boolean enrolled) {
         this.enrolled = enrolled;
-    }
-    public EnrollmentState getEnrollmentState() {
-        return enrollmentState;
-    }
-    public void setEnrollmentState(EnrollmentState enrollmentState) {
-        this.enrollmentState = enrollmentState;
     }
 
     public InfoShift getLaboratoryShift() {
