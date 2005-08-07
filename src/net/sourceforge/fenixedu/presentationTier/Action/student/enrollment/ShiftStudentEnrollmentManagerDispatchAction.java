@@ -56,6 +56,14 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         IUserView userView = SessionUtils.getUserView(request);
 
+        String classID = request.getParameter("classId");
+        if(classID != null){
+            Integer studentID = new Integer((String)request.getParameter("studentId"));
+            request.setAttribute("studentId",studentID);
+            request.setAttribute("classId",new Integer(classID));
+            return mapping.findForward("showEnrollmentPage");
+        }
+        
         DynaActionForm enrolmentForm = (DynaActionForm) form;
         Integer executionDegreeIdChosen = (Integer) enrolmentForm.get("degree");
 
@@ -118,7 +126,8 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
                 infoAttends, new Predicate() {
 
                     public boolean evaluate(Object arg0) {
-                        InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers infoAttend = (InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers) arg0;
+                        InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers infoAttend = 
+                            (InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers) arg0;
                         return infoAttend.getDisciplinaExecucao().equals(infoExecutionCourse);
                     }
                 });
