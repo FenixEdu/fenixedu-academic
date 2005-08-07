@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.student.enrollment;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,10 +25,9 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.validator.DynaValidatorForm;
 
 /**
- * @author jmota Modified by Fernanda Quitério
+ * @author jmota Modified by Fernanda Quitério Modified by Ricardo Rodrigues
  */
 public class EnrollStudentInShiftsAction extends FenixAction {
 
@@ -38,13 +36,13 @@ public class EnrollStudentInShiftsAction extends FenixAction {
 
         IUserView userView = SessionUtils.getUserView(request);
         ActionErrors actionErrors = new ActionErrors();
-        DynaValidatorForm enrollmentForm = (DynaValidatorForm) actionForm;
 
-        Integer studentId = (Integer) enrollmentForm.get("studentId");
-        Map shiftsToEnroll = (Map) enrollmentForm.get("shiftMap");
+        Integer shiftId = new Integer( (String)request.getParameter("shiftId"));
+        Integer studentId = new Integer( (String) request.getParameter("studentId"));
 
-        List shiftList = buildShiftList(shiftsToEnroll);
-
+        List shiftList = new ArrayList();
+        shiftList.add(shiftId);
+        
         Object[] args = { studentId, shiftList };
         try {
             ShiftEnrollmentErrorReport errorReport = (ShiftEnrollmentErrorReport) ServiceUtils
@@ -78,23 +76,5 @@ public class EnrollStudentInShiftsAction extends FenixAction {
             return mapping.getInputForward();
         }
         return mapping.findForward("enrollmentConfirmation");
-    }
-
-    /**
-     * @param shiftsToEnroll
-     * @return
-     */
-    private List buildShiftList(Map shiftsToEnroll) {
-        List list = new ArrayList();
-        Iterator iterator = shiftsToEnroll.entrySet().iterator();
-
-        while (iterator.hasNext()) {
-            Map.Entry entry = (Map.Entry) iterator.next();
-            Integer shiftId = Integer.valueOf((String) entry.getValue());
-            if (shiftId != null) {
-                list.add(shiftId);
-            }
-        }
-        return list;
     }
 }
