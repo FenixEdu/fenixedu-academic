@@ -7,7 +7,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
-import net.sourceforge.fenixedu.domain.Period;
 import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRoomOccupation;
@@ -52,7 +51,7 @@ public class ReadAvailableRoomsForExam implements IService {
             IRoomOccupation roomOccupationToRemove = (IRoomOccupation) persistentRoomOccupation
                     .readByOID(RoomOccupation.class, roomOccupationToRemoveId);
 
-            if (roomOccupationToRemove.roomOccupationForDateAndTime(new Period(periodStart, periodEnd),
+            if (roomOccupationToRemove.roomOccupationForDateAndTime(periodStart, periodEnd,
                     startTime, endTime, dayOfWeek, frequency, weekOfStart)) {
                 availableInfoRooms.add(InfoRoom.newInfoFromDomain(roomOccupationToRemove.getRoom()));
             }
@@ -66,8 +65,8 @@ public class ReadAvailableRoomsForExam implements IService {
             Integer frequency, Integer weekOfStart) {
         final List<IRoomOccupation> roomOccupations = room.getRoomOccupations();
         for (final IRoomOccupation roomOccupation : roomOccupations) {
-            boolean isOccupied = roomOccupation.roomOccupationForDateAndTime(new Period(periodStart,
-                    periodEnd), startTime, endTime, dayOfWeek, frequency, weekOfStart);
+            boolean isOccupied = roomOccupation.roomOccupationForDateAndTime(periodStart,
+                    periodEnd, startTime, endTime, dayOfWeek, frequency, weekOfStart);
             if (isOccupied) {
                 return true;
             }

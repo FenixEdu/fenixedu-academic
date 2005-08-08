@@ -109,7 +109,7 @@ public class RoomSiteComponentBuilder {
 
                         boolean add = true;
                         if ((roomOccupation.getFrequency().intValue() == RoomOccupation.QUINZENAL)
-                                && (!RoomOccupation.periodQuinzenalContainsWeekPeriod(period,
+                                && (!RoomOccupation.periodQuinzenalContainsWeekPeriod(period.getStartDate(), period.getEndDate(),
                                         roomOccupation.getWeekOfQuinzenalStart().intValue(),
                                         roomOccupation.getDayOfWeek(), day, endDay, null))) {
                             add = false;

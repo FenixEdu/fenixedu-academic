@@ -1,15 +1,5 @@
-/*
- * EditarAula.java
- *
- * Created on 27 de Outubro de 2002, 19:05
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
-/**
- * Servi�o EditarAula.
- * 
- * @author tfc130
- */
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;

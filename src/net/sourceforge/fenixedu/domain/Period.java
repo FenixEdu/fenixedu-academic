@@ -78,21 +78,14 @@ public class Period extends Period_Base {
         return end;
     }
 
-    public boolean intersectPeriods(IPeriod period) {
-        while (period != null) {
-            IPeriod secondPeriod = this;
-            while (secondPeriod != null) {
-                if (CalendarUtil.intersectDates(period.getStartDate(), period.getEndDate(), secondPeriod
-                        .getStartDate(), secondPeriod.getEndDate())) {
-                    return true;
-                }
-                secondPeriod = secondPeriod.getNextPeriod();
-            }
-            period = period.getNextPeriod();
-        }
-        return false;
+    public boolean intersectPeriods(final Calendar start, final Calendar end) {
+        return CalendarUtil.intersectDates(start, end, getStartDate(), getEndDate());
     }
-    
+
+    public boolean intersectPeriods(IPeriod period) {
+        return intersectPeriods(period.getStartDate(), period.getEndDate());
+    }
+
     public boolean containsDay(Calendar day){
         return !(this.getStartDate().after(day) || this.getEndDate().before(day));
     }
