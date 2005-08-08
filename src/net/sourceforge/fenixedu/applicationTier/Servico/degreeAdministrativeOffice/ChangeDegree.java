@@ -1,10 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IEmployee;
@@ -30,13 +31,11 @@ public class ChangeDegree implements IService {
             final Set<Integer> enrolementsToMaintainIds, final Set<Integer> enrolementsToDeleteIds,
             final Date newStudentCurricularPlanStartDate)
             throws ExcepcaoPersistencia {
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
+
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
-        final IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
-                .getIStudentCurricularPlanPersistente();
-        final IPersistentExecutionDegree persistentExecutionDegree = persistentSupport
-                .getIPersistentExecutionDegree();
+        final IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
+        final IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
         final IPersistentEnrollment persistentEnrollment = persistentSupport.getIPersistentEnrolment();
 
         final IPerson personEmployee = persistentPerson.lerPessoaPorUsername(employeeUsername);
@@ -50,8 +49,7 @@ public class ChangeDegree implements IService {
                 ExecutionDegree.class, executionDegreeToChangeTo);
         final IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
-        final IStudentCurricularPlan newActiveStudentCurricularPlan = degreeCurricularPlan
-                .getNewStudentCurricularPlan();
+        final IStudentCurricularPlan newActiveStudentCurricularPlan = degreeCurricularPlan.getNewStudentCurricularPlan();
         newActiveStudentCurricularPlan.setBranch(null);
         newActiveStudentCurricularPlan.setClassification(Double.valueOf(0));
         newActiveStudentCurricularPlan.setCompletedCourses(0);
@@ -69,18 +67,21 @@ public class ChangeDegree implements IService {
         newActiveStudentCurricularPlan.setStudent(currentActiveStudentCurricularPlan.getStudent());
         newActiveStudentCurricularPlan.setWhen(Calendar.getInstance().getTime());
 
-        for (final Integer enrolementID : enrolementsToTransferIds) {
-            final IEnrolment enrolement = (IEnrolment) persistentEnrollment.readByOID(Enrolment.class,
-                    enrolementID);
-            enrolement.setStudentCurricularPlan(newActiveStudentCurricularPlan);
-        }
+        final List<IEnrolment> enrolments = new ArrayList<IEnrolment>(currentActiveStudentCurricularPlan.getEnrolments());
+        for (final IEnrolment enrolment : enrolments) {
+            final Integer enrolmentId = enrolment.getIdInternal();
 
-        for (final Integer enrolementID : enrolementsToDeleteIds) {
-            final IEnrolment enrolment = (IEnrolment) persistentEnrollment.readByOID(Enrolment.class,
-                    enrolementID);
-            enrolment.delete();
+            if (enrolementsToTransferIds.contains(enrolmentId)) {
+                enrolment.setStudentCurricularPlan(newActiveStudentCurricularPlan);
+            } else if (enrolementsToDeleteIds.contains(enrolmentId)) {
+                enrolment.delete();
+            } else if (enrolementsToMaintainIds.contains(enrolmentId)) {
+                // nothing to do
+            } else {
+                // this should never happen
+                throw new IllegalArgumentException("Unspecified operation for enrolment: " + enrolmentId);
+            }
         }
-
     }
 
 }
