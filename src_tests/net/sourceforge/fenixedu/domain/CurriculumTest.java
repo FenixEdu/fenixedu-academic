@@ -9,6 +9,7 @@ public class CurriculumTest extends DomainTestBase {
 
     ICurriculum curriculum;
     IPerson person, person2;
+    ICurricularCourse curricularCourse;
         
     protected void setUp() throws Exception {
         super.setUp();
@@ -21,8 +22,13 @@ public class CurriculumTest extends DomainTestBase {
         person2.setIdInternal(1);
         person2.setNome("Jdnf");
        
+        curricularCourse = new CurricularCourse();
+        curricularCourse.setIdInternal(0);
+                
         curriculum = new Curriculum();
         curriculum.setIdInternal(0);
+        curriculum.setCurricularCourse(curricularCourse);
+        
         curriculum.setGeneralObjectives("generalObjectives");
         curriculum.setGeneralObjectivesEn("generalObjectivesEn");
         curriculum.setOperacionalObjectives("operacionalObjectives");
@@ -41,28 +47,45 @@ public class CurriculumTest extends DomainTestBase {
         
         curriculum.edit("generalObjectives2", "operacionalObjectives2", "program2", "", "", "", null, person);
         
-        assertEquals("General Objectives Unexpected", "generalObjectives2", curriculum.getGeneralObjectives());
-        assertEquals("General Objectives Eng Unexpected", "generalObjectivesEn", curriculum.getGeneralObjectivesEn());
-        
-        assertEquals("General Objectives Unexpected", "operacionalObjectives2", curriculum.getOperacionalObjectives());
-        assertEquals("General Objectives Eng Unexpected", "operacionalObjectivesEn", curriculum.getOperacionalObjectivesEn());
-        
-        assertEquals("Program Unexpected", "program2", curriculum.getProgram());
-        assertEquals("Program Eng Unexpected", "programEn", curriculum.getProgramEn());
+        testGeneralObjectives("generalObjectives2", "generalObjectivesEn");            
+        testOperacionalObjectives("operacionalObjectives2", "operacionalObjectivesEn");      
+        testProgram("program2", "programEn"); 
         
         assertEquals("Person Name Unexpected", person.getNome(), curriculum.getPersonWhoAltered().getNome());
         
         curriculum.edit("", "", "", "generalObjectivesEn2", "operacionalObjectivesEn2", "programEn2", "Eng", person2);
-        
-        assertEquals("General Objectives Unexpected", "generalObjectives2", curriculum.getGeneralObjectives());
-        assertEquals("General Objectives Eng Unexpected", "generalObjectivesEn2", curriculum.getGeneralObjectivesEn());
-        
-        assertEquals("General Objectives Unexpected", "operacionalObjectives2", curriculum.getOperacionalObjectives());
-        assertEquals("General Objectives Eng Unexpected", "operacionalObjectivesEn2", curriculum.getOperacionalObjectivesEn());
-        
-        assertEquals("Program Unexpected", "program2", curriculum.getProgram());
-        assertEquals("Program Eng Unexpected", "programEn2", curriculum.getProgramEn());
+                      
+        testGeneralObjectives("generalObjectives2", "generalObjectivesEn2");
+        testOperacionalObjectives("operacionalObjectives2", "operacionalObjectivesEn2");
+        testProgram("program2", "programEn2");
         
         assertEquals("Person Name Unexpected", person2.getNome(), curriculum.getPersonWhoAltered().getNome());
+    }
+    
+    private void testGeneralObjectives(String generalObjectives, String generalObjectivesEng){
+        
+        assertEquals("General Objectives Unexpected", generalObjectives, curriculum.getGeneralObjectives());
+        assertEquals("General Objectives Eng Unexpected", generalObjectivesEng, curriculum.getGeneralObjectivesEn());
+        
+        assertEquals("General Objectives Unexpected", generalObjectives, curricularCourse.getAssociatedCurriculums(0).getGeneralObjectives());
+        assertEquals("General Objectives Eng Unexpected", generalObjectivesEng, curricularCourse.getAssociatedCurriculums(0).getGeneralObjectivesEn());       
+    }
+    
+    private void testOperacionalObjectives(String operacionalObjectives, String operacionalObjectivesEng){
+       
+        assertEquals("Operacional Objectives Unexpected", operacionalObjectives, curriculum.getOperacionalObjectives());
+        assertEquals("Operacional Objectives Eng Unexpected", operacionalObjectivesEng, curriculum.getOperacionalObjectivesEn());
+        
+        assertEquals("Operacional Objectives Unexpected", operacionalObjectives, curricularCourse.getAssociatedCurriculums(0).getOperacionalObjectives());
+        assertEquals("Operacional Objectives Eng Unexpected", operacionalObjectivesEng, curricularCourse.getAssociatedCurriculums(0).getOperacionalObjectivesEn());
+    }
+    
+    private void testProgram(String program, String programEng){
+        
+        assertEquals("Program Unexpected", program, curriculum.getProgram());
+        assertEquals("Program Eng Unexpected", programEng, curriculum.getProgramEn());
+        
+        assertEquals("Program Unexpected", program, curricularCourse.getAssociatedCurriculums(0).getProgram());
+        assertEquals("Program Eng Unexpected", programEng, curricularCourse.getAssociatedCurriculums(0).getProgramEn());
     }
 }

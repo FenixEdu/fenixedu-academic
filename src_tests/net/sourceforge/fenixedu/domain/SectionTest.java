@@ -144,7 +144,7 @@ public class SectionTest extends DomainTestBase {
         assertEquals("Order Unexpected", 2, section.getAssociatedItems(3).getItemOrder().intValue());
     }  
     
-    public void testEditSection(){
+    public void testEdit(){
         try{
             section.edit(null, null);
             fail("Expected NullPointerException");
@@ -176,7 +176,7 @@ public class SectionTest extends DomainTestBase {
         assertEquals("Order Unexpected", 2, section.getAssociatedSections(2).getSectionOrder().intValue());
     }
     
-    public void testDeleteSection(){
+    public void testDelete(){
         
         section3.delete();
                            

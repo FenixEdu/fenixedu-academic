@@ -31,7 +31,7 @@ public class AnnouncementTest extends DomainTestBase {
         announcement.setCreationDate(Calendar.getInstance().getTime());
     }
 
-    public void testEditAnnouncement() {
+    public void testEdit() {
         try {
             announcement.edit(null, null);
             fail("Expected NullPointerException!");
@@ -68,7 +68,7 @@ public class AnnouncementTest extends DomainTestBase {
                 .getLastModifiedDate().before(dateAfterEdition));
     }
 
-    public void testDeleteAnnouncement() {
+    public void testDelete() {
         assertEquals("Size unexpected!", 1, site.getAssociatedAnnouncementsCount());
         announcement.delete();
         assertEquals("Size unexpected in AssociatedAnnouncements!", 0, site

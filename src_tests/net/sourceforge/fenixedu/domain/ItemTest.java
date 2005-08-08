@@ -52,7 +52,7 @@ public class ItemTest extends DomainTestBase {
         super.tearDown();
     }
 
-    public void testDeleteItem() {
+    public void testDelete() {
                                                       
         item.delete();            
         
@@ -80,7 +80,7 @@ public class ItemTest extends DomainTestBase {
         assertNull("Section Unexpected", item3.getSection());                
     }
 
-    public void testEditItem() {
+    public void testEdit() {
           
         try{
             item2.edit(null, null, null, null);

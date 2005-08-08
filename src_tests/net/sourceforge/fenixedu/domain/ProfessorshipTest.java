@@ -138,10 +138,6 @@ public class ProfessorshipTest extends DomainTestBase {
         }
     }
 
-    public void testEdit() {
-            
-    }
-
     public void testDelete() {
         try {
             professorship = Professorship.create(true, executionCourse, teacher, new Double(0.0));
