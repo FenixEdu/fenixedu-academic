@@ -1,6 +1,5 @@
 package pt.utl.ist.codeGenerator.database;
 
-import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -67,11 +66,11 @@ public class DataInitializer {
     }
 
     private static void createCurricularYearsAndSemesters() {
-        new CurricularYear(Integer.valueOf(1), 2);
-        new CurricularYear(Integer.valueOf(2), 2);
-        new CurricularYear(Integer.valueOf(3), 2);
-        new CurricularYear(Integer.valueOf(4), 2);
-        new CurricularYear(Integer.valueOf(5), 2);
+        DomainFactory.makeCurricularYear(Integer.valueOf(1), 2);
+        DomainFactory.makeCurricularYear(Integer.valueOf(2), 2);
+        DomainFactory.makeCurricularYear(Integer.valueOf(3), 2);
+        DomainFactory.makeCurricularYear(Integer.valueOf(4), 2);
+        DomainFactory.makeCurricularYear(Integer.valueOf(5), 2);
     }
 
 }
