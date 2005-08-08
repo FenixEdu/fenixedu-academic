@@ -35,7 +35,7 @@ public class SiteTest extends DomainTestBase {
         parentSection.setSectionOrder(0);
     }
 
-    public void testEditSite() {
+    public void testEdit() {
         try {
             site.edit(null, null, "mailEdited", "alternativeSiteEdited");
             fail("Expected NullPointerException!");
