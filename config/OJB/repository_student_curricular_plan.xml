@@ -4,6 +4,7 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.StudentCurricularPlan" table="STUDENT_CURRICULAR_PLAN">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlanLEEC"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlanLEIC"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlanLEM"/>    
 
 	<field-descriptor
 		name="ojbConcreteClass"
@@ -451,6 +452,162 @@
 		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
 	</collection-descriptor>
   <!--  <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="enrollmentReports"
+			element-class-ref="net.sourceforge.fenixedu.domain.enrollmentReport.EnrollmentReport"
+			
+			>
+		<inverse-foreignkey field-ref="keyStudentCurricularPlan"/>
+	</collection-descriptor>-->
+</class-descriptor>
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.StudentCurricularPlan -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.StudentCurricularPlanLEM" table="STUDENT_CURRICULAR_PLAN">
+
+	<field-descriptor
+		name="ojbConcreteClass"
+		column="CLASS_NAME"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="studentKey"
+		column="KEY_STUDENT"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="degreeCurricularPlanKey"
+		column="KEY_DEGREE_CURRICULAR_PLAN"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="currentState"
+		column="CURRENT_STATE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaStudentCurricularPlanState2SqlStudentCurricularPlanStateFieldConversion"
+	/>
+	<field-descriptor
+		name="startDate"
+		column="START_DATE"
+		jdbc-type="DATE"
+	/>
+	<field-descriptor
+		name="specialization"
+		column="SPECIALIZATION"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaSpecialization2SqlSpecializationFieldConversion"
+	/>
+	<field-descriptor
+		name="branchKey"
+		column="KEY_SPECIALIZATION_BRANCH"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="givenCredits"
+		column="GIVEN_CREDITS"
+		jdbc-type="FLOAT"
+	/>
+	<field-descriptor
+		name="completedCourses"
+		column="COMPLETED_COURSES"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="enrolledCourses"
+		column="ENROLLED_COURSES"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="classification"
+		column="CLASSIFICATION"
+		jdbc-type="FLOAT"
+	/>
+	<field-descriptor 
+		name="observations"
+		column="OBSERVATIONS"
+		jdbc-type="LONGVARCHAR"
+	/>
+    <field-descriptor
+		name="employeeKey"
+		column="KEY_EMPLOYEE"
+		jdbc-type="INTEGER"	
+	/>
+    <field-descriptor
+		name="masterDegreeThesisKey"
+		column="KEY_MASTER_DEGREE_THESIS"
+		jdbc-type="INTEGER"	
+	/>	
+	<field-descriptor
+		name="when"
+		column="WHEN_ALTER"
+		jdbc-type="TIMESTAMP"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
+	/>
+	<field-descriptor
+		name="ackOptLock"
+		column="ACK_OPT_LOCK"
+		jdbc-type="INTEGER"
+		locking="true"
+	/>
+	<reference-descriptor
+			name="student"
+			class-ref="net.sourceforge.fenixedu.domain.Student"
+			>
+		<foreignkey field-ref="studentKey"/>
+	</reference-descriptor>
+	<reference-descriptor auto-retrieve="false"
+			name="degreeCurricularPlan"
+			class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
+			>
+		<foreignkey field-ref="degreeCurricularPlanKey"/>
+	</reference-descriptor>
+	<reference-descriptor auto-retrieve="false"
+			name="branch"
+			class-ref="net.sourceforge.fenixedu.domain.Branch"
+			>
+		<foreignkey field-ref="branchKey"/>
+	</reference-descriptor>
+	<reference-descriptor auto-retrieve="false"
+			name="employee"
+			class-ref="net.sourceforge.fenixedu.domain.Employee"
+			>
+		<foreignkey field-ref="employeeKey"/>
+	</reference-descriptor>	
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="enrolments"
+			element-class-ref="net.sourceforge.fenixedu.domain.Enrolment"
+			
+			>
+		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
+	</collection-descriptor>    
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="notNeedToEnrollCurricularCourses"
+			element-class-ref="net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse"
+			
+			>
+		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="creditsInScientificAreas"
+			element-class-ref="net.sourceforge.fenixedu.domain.CreditsInScientificArea"
+			
+			>
+		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="gratuitySituations"
+			element-class-ref="net.sourceforge.fenixedu.domain.GratuitySituation"
+			
+			>
+		<inverse-foreignkey field-ref="keyStudentCurricularPlan"/>
+	</collection-descriptor>	
+    <!--<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="enrollmentReports"
 			element-class-ref="net.sourceforge.fenixedu.domain.enrollmentReport.EnrollmentReport"
 			
