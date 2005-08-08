@@ -39,10 +39,6 @@ public class EditLesson implements IService {
 
         IRoomOccupation roomOccupation = aula.getRoomOccupation();
 
-        ILesson newLesson = new Lesson(aulaNova.getDiaSemana(), aulaNova.getInicio(), aulaNova.getFim(),
-                aulaNova.getTipo(), salaNova, roomOccupation, shift /* ,null */
-        );
-        newLesson.setIdInternal(aula.getIdInternal());
         List associatedLessons = shift.getAssociatedLessons();
         for (int i = 0; i < associatedLessons.size(); i++) {
             ILesson lessonAssociated = (ILesson) associatedLessons.get(i);
@@ -53,7 +49,7 @@ public class EditLesson implements IService {
             }
         }
         if (aula != null) {
-            result = valid(newLesson);
+            result = valid(aulaNova.getInicio(), aulaNova.getFim());
             if (result.getMessageType() == 1) {
                 throw new InvalidTimeIntervalServiceException();
             }
@@ -65,7 +61,7 @@ public class EditLesson implements IService {
                     aulaNova.getInfoRoomOccupation().getWeekOfQuinzenalStart(), 
                     roomOccupation);
 
-            InfoShiftServiceResult infoShiftServiceResult = valid(shift, newLesson);
+            InfoShiftServiceResult infoShiftServiceResult = valid(shift, aula.getIdInternal(), aulaNova.getInicio(), aulaNova.getFim());
             if (result.isSUCESS() && resultB && infoShiftServiceResult.isSUCESS()) {
                 // aula = (ILesson) aulaPersistente.readByOId(aula, true);
                 aula = (ILesson) aulaPersistente.readByOID(Lesson.class, aula.getIdInternal());
@@ -100,9 +96,9 @@ public class EditLesson implements IService {
         return result;
     }
 
-    private InfoLessonServiceResult valid(ILesson lesson) {
+    private InfoLessonServiceResult valid(Calendar start, Calendar end) {
         InfoLessonServiceResult result = new InfoLessonServiceResult();
-        if (lesson.getInicio().getTime().getTime() >= lesson.getFim().getTime().getTime()) {
+        if (start.getTime().getTime() >= end.getTime().getTime()) {
             result.setMessageType(InfoLessonServiceResult.INVALID_TIME_INTERVAL);
         }
         return result;
@@ -134,11 +130,11 @@ public class EditLesson implements IService {
         }
     }
 
-    private InfoShiftServiceResult valid(IShift shift, ILesson lesson) throws ExcepcaoPersistencia {
+    private InfoShiftServiceResult valid(IShift shift, Integer lessonId, Calendar start, Calendar end) throws ExcepcaoPersistencia {
         InfoShiftServiceResult result = new InfoShiftServiceResult();
         result.setMessageType(InfoShiftServiceResult.SUCESS);
-        double hours = getTotalHoursOfShiftType(shift, lesson);
-        double lessonDuration = (getLessonDurationInMinutes(lesson).doubleValue()) / 60;
+        double hours = getTotalHoursOfShiftType(shift, lessonId, start, end);
+        double lessonDuration = (getLessonDurationInMinutes(start, end).doubleValue()) / 60;
 
         if (shift.getTipo().equals(ShiftType.TEORICA)) {
             if (hours == shift.getDisciplinaExecucao().getTheoreticalHours().doubleValue()) {
@@ -169,25 +165,25 @@ public class EditLesson implements IService {
         return result;
     }
 
-    private double getTotalHoursOfShiftType(IShift shift, ILesson alteredLesson)
+    private double getTotalHoursOfShiftType(IShift shift, Integer lessonId, Calendar start, Calendar end)
             throws ExcepcaoPersistencia {
         ILesson lesson = null;
         double duration = 0;
         List associatedLessons = shift.getAssociatedLessons();
         for (int i = 0; i < associatedLessons.size(); i++) {
             lesson = (ILesson) associatedLessons.get(i);
-            if (!lesson.getIdInternal().equals(alteredLesson.getIdInternal())) {
-                duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);
+            if (!lesson.getIdInternal().equals(lessonId)) {
+                duration += (getLessonDurationInMinutes(start, end).doubleValue() / 60);
             }
         }
         return duration;
     }
 
-    private Integer getLessonDurationInMinutes(ILesson lesson) {
-        int beginHour = lesson.getInicio().get(Calendar.HOUR_OF_DAY);
-        int beginMinutes = lesson.getInicio().get(Calendar.MINUTE);
-        int endHour = lesson.getFim().get(Calendar.HOUR_OF_DAY);
-        int endMinutes = lesson.getFim().get(Calendar.MINUTE);
+    private Integer getLessonDurationInMinutes(Calendar start, Calendar end) {
+        int beginHour = start.get(Calendar.HOUR_OF_DAY);
+        int beginMinutes = start.get(Calendar.MINUTE);
+        int endHour = end.get(Calendar.HOUR_OF_DAY);
+        int endMinutes = end.get(Calendar.MINUTE);
         int duration = 0;
         duration = (endHour - beginHour) * 60 + (endMinutes - beginMinutes);
         return new Integer(duration);

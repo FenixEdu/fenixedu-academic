@@ -218,19 +218,22 @@ public class EditExamNew implements IService {
 
                     DiaSemana weekday = new DiaSemana(examDate.get(Calendar.DAY_OF_WEEK));
 
-                    IRoomOccupation roomOccupation = new RoomOccupation(room, examStartTime, examEndTime,
-                            weekday, RoomOccupation.DIARIA);
-                    roomOccupation.setPeriod(period);
-
                     Iterator iter = roomOccupationInDBList.iterator();
                     while (iter.hasNext()) {
                         IRoomOccupation roomOccupationInDB = (IRoomOccupation) iter.next();
 
-                        if (roomOccupation.roomOccupationForDateAndTime(roomOccupationInDB)) {
-                            throw new InterceptingRoomsServiceException(roomOccupation.getRoom()
-                                    .getNome());
+                        if (roomOccupationInDB.roomOccupationForDateAndTime(period.getStartDate(), period.getEndDate(), examStartTime, examEndTime, weekday, RoomOccupation.DIARIA, 0)) {
+                            throw new InterceptingRoomsServiceException(room.getNome());
                         }
                     }
+
+                    IRoomOccupation roomOccupation = DomainFactory.makeRoomOccupation();
+                    roomOccupation.setRoom(room);
+                    roomOccupation.setStartTime(examStartTime);
+                    roomOccupation.setEndTime(examEndTime);
+                    roomOccupation.setDayOfWeek(weekday);
+                    roomOccupation.setFrequency(RoomOccupation.DIARIA);
+                    roomOccupation.setPeriod(period);
 
                     if (!exam.getAssociatedRoomOccupation().contains(roomOccupation)) {
                         exam.getAssociatedRoomOccupation().add(roomOccupation);
