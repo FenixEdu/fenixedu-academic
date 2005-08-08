@@ -11,7 +11,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  * @author Luis Cruz & Sara Ribeiro
  */
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -19,6 +18,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidTimeIntervalServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonServiceResult;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftServiceResult;
 import net.sourceforge.fenixedu.domain.DomainFactory;
@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.Period;
-import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -45,39 +44,42 @@ public class CreateLesson implements IService {
             throws FenixServiceException, ExcepcaoPersistencia {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IRoomOccupation roomOccupation = new RoomOccupation();
-        roomOccupation.setDayOfWeek(infoLesson.getInfoRoomOccupation().getDayOfWeek());
-        roomOccupation.setStartTime(infoLesson.getInfoRoomOccupation().getStartTime());
-        roomOccupation.setEndTime(infoLesson.getInfoRoomOccupation().getEndTime());
-        roomOccupation.setFrequency(infoLesson.getInfoRoomOccupation().getFrequency());
-        roomOccupation.setWeekOfQuinzenalStart(infoLesson.getInfoRoomOccupation().getWeekOfQuinzenalStart());
-        
-        final IRoom sala = sp.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
-        roomOccupation.setRoom(sala);
-
-        final IPeriod period = (IPeriod) sp.getIPersistentPeriod().readByOID(Period.class,
-                infoLesson.getInfoRoomOccupation().getInfoPeriod().getIdInternal());
-        roomOccupation.setPeriod(period);
-
         final IExecutionPeriod executionPeriod = (IExecutionPeriod) sp.getIPersistentExecutionPeriod()
                 .readByOID(
                         ExecutionPeriod.class,
                         infoLesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod()
                                 .getIdInternal());
 
-        final IShift shift = (IShift) sp.getITurnoPersistente().readByOID(Shift.class, infoShift.getIdInternal());
-        
+        final IShift shift = (IShift) sp.getITurnoPersistente().readByOID(Shift.class,
+                infoShift.getIdInternal());
+
         InfoLessonServiceResult result = validTimeInterval(infoLesson);
         if (result.getMessageType() == 1) {
             throw new InvalidTimeIntervalServiceException();
         }
-        boolean resultB = validNoInterceptingLesson(roomOccupation);
+        boolean resultB = validNoInterceptingLesson(infoLesson.getInfoRoomOccupation());
         if (result.isSUCESS() && resultB) {
             try {
                 InfoShiftServiceResult infoShiftServiceResult = valid(shift, infoLesson);
                 if (infoShiftServiceResult.isSUCESS()) {
-                    ILesson aula2 = DomainFactory.makeLesson(infoLesson.getDiaSemana(), infoLesson.getInicio(),
-                            infoLesson.getFim(), infoLesson.getTipo(), sala, roomOccupation, shift);
+                    IRoomOccupation roomOccupation = DomainFactory.makeRoomOccupation();
+                    roomOccupation.setDayOfWeek(infoLesson.getInfoRoomOccupation().getDayOfWeek());
+                    roomOccupation.setStartTime(infoLesson.getInfoRoomOccupation().getStartTime());
+                    roomOccupation.setEndTime(infoLesson.getInfoRoomOccupation().getEndTime());
+                    roomOccupation.setFrequency(infoLesson.getInfoRoomOccupation().getFrequency());
+                    roomOccupation.setWeekOfQuinzenalStart(infoLesson.getInfoRoomOccupation()
+                            .getWeekOfQuinzenalStart());
+
+                    final IRoom sala = sp.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
+                    roomOccupation.setRoom(sala);
+
+                    final IPeriod period = (IPeriod) sp.getIPersistentPeriod().readByOID(Period.class,
+                            infoLesson.getInfoRoomOccupation().getInfoPeriod().getIdInternal());
+                    roomOccupation.setPeriod(period);
+
+                    ILesson aula2 = DomainFactory.makeLesson(infoLesson.getDiaSemana(), infoLesson
+                            .getInicio(), infoLesson.getFim(), infoLesson.getTipo(), sala,
+                            roomOccupation, shift);
 
                     sp.getIPersistentRoomOccupation().simpleLockWrite(roomOccupation);
                     aula2.setExecutionPeriod(executionPeriod);
@@ -94,28 +96,24 @@ public class CreateLesson implements IService {
         return result;
     }
 
-    /**
-     * @param aula
-     * @return InfoLessonServiceResult
-     */
+    private boolean validNoInterceptingLesson(InfoRoomOccupation infoRoomOccupation)
+            throws FenixServiceException, ExcepcaoPersistencia {
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        List<IRoomOccupation> roomOccupations = sp.getIPersistentRoomOccupation().readAll();
 
-    private boolean validNoInterceptingLesson(IRoomOccupation roomOccupation)
-            throws FenixServiceException {
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            List roomOccupationInDBList = sp.getIPersistentRoomOccupation().readAll();
-
-            Iterator iter = roomOccupationInDBList.iterator();
-            while (iter.hasNext()) {
-                IRoomOccupation roomOccupationInDB = (IRoomOccupation) iter.next();
-                if (roomOccupation.roomOccupationForDateAndTime(roomOccupationInDB)) {
-                    return false;
-                }
+        for (final IRoomOccupation roomOccupation : roomOccupations) {
+            if (roomOccupation.roomOccupationForDateAndTime(
+                    infoRoomOccupation.getInfoPeriod().getStartDate(),
+                    infoRoomOccupation.getInfoPeriod().getEndDate(),
+                    infoRoomOccupation.getStartTime(),
+                    infoRoomOccupation.getEndTime(),
+                    infoRoomOccupation.getDayOfWeek(),
+                    infoRoomOccupation.getFrequency(),
+                    infoRoomOccupation.getWeekOfQuinzenalStart())) {
+                return false;
             }
-            return true;
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex);
         }
+        return true;
     }
 
     private InfoLessonServiceResult validTimeInterval(InfoLesson infoLesson) {
@@ -126,7 +124,8 @@ public class CreateLesson implements IService {
         return result;
     }
 
-    private InfoShiftServiceResult valid(IShift shift, InfoLesson infoLesson) throws ExcepcaoPersistencia {
+    private InfoShiftServiceResult valid(IShift shift, InfoLesson infoLesson)
+            throws ExcepcaoPersistencia {
         InfoShiftServiceResult result = new InfoShiftServiceResult();
         result.setMessageType(InfoShiftServiceResult.SUCESS);
         double hours = getTotalHoursOfShiftType(shift);
@@ -195,11 +194,12 @@ public class CreateLesson implements IService {
         duration = (endHour - beginHour) * 60 + (endMinutes - beginMinutes);
         return new Integer(duration);
     }
-    
+
     public class InvalidLoadException extends FenixServiceException {
         private InvalidLoadException() {
             super();
         }
+
         InvalidLoadException(String s) {
             super(s);
         }
