@@ -58,16 +58,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>AssociateExecutionCourseToExam</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.sop.AssociateExecutionCourseToExam</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>CreateLesson</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.CreateLesson</implementationClass>
 		<description />
@@ -408,14 +398,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadExamsByExecutionDegreeAndCurricularYear</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadExamsByExecutionDegreeAndCurricularYear</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
 		<name>ReadExecutionDegreesByExecutionYear</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadExecutionDegreesByExecutionYear</implementationClass>
@@ -430,16 +412,6 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
-	</service>
-	<service>
-		<name>ReadExamsSortedByExecutionDegreeAndCurricularYear</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadExamsSortedByExecutionDegreeAndCurricularYear</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
-		</filterChains>
 	</service>
 	<service>
 		<name>LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular</name>

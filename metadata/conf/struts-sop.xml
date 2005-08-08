@@ -1064,30 +1064,6 @@
         <forward name="addExecutionCourseToExam" path="/chooseExecutionCourseToAddToExam.do"/>
     </action>
 
-	<action path="/addExecutionCourseToExam"
-    		type="net.sourceforge.fenixedu.presentationTier.Action.sop.AddExecutionCourseToExamAction"
-    		input="/viewExamsByDayAndShift.jsp"
-    		>
-    	<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
-        		   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
-        		   />
-    	<forward name="Sucess" path="/viewExamsDayAndShiftForm.do?method=view"/>
-	</action>
-	
-	<action path="/viewExamsByDegreeAndCurricularYear"
-    		type="net.sourceforge.fenixedu.presentationTier.Action.sop.ViewExamsByDegreeAndCurricularYearAction"
-    		>
-    	<forward name="Sucess" path="/viewExamsByDegreeAndCurricularYear.jsp"/>
-	</action>
-
-	<action path="/viewAllExamsByDegreeAndCurricularYear"
-    		type="net.sourceforge.fenixedu.presentationTier.Action.sop.ViewAllExamsByDegreeAndCurricularYearAction"
-    		>
-    	<forward name="Sucess" path="/viewAllExamsByDegreeAndCurricularYear.jsp"/>
-	</action>
-
-
 	<!-- Choose Execution Course Form for exam -->
     <action path="/chooseExecutionCourseForm"
     		name="chooseExecutionCourseForm"
