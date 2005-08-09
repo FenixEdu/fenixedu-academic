@@ -51,7 +51,14 @@ public class ReadStudentPersonInfoAction extends FenixAction {
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
             Integer studentNumber = 0;
             try {
-                studentNumber = new Integer(getFromRequest("studentNumber", request));
+                String numberString = getFromRequest("studentNumber", request);
+                if (numberString == null || numberString.equals("")) {
+                    ActionErrors errors = new ActionErrors();
+                    errors.add("nonExisting", new ActionError("error.degreeAdministration.emptyField"));
+                    saveErrors(request, errors);
+                    return mapping.findForward("Insuccess");
+                }
+                studentNumber = new Integer(numberString);
             } catch (NumberFormatException numberFormatException) {
                 ActionErrors errors = new ActionErrors();
                 errors.add("nonExisting", new ActionError("error.exception.noStudents"));
@@ -64,6 +71,12 @@ public class ReadStudentPersonInfoAction extends FenixAction {
             try {
                 infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(userView,
                         "ReadStudentByNumber", args);
+                if (infoStudent == null || infoStudent.getIdInternal() == null) {
+                    ActionErrors errors = new ActionErrors();
+                    errors.add("nonExisting", new ActionError("error.degreeAdministration.inexistentStudent"));
+                    saveErrors(request, errors);
+                    return mapping.findForward("Insuccess");
+                }
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
             }
