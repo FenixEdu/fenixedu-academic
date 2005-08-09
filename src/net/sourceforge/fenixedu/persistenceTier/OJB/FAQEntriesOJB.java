@@ -16,7 +16,7 @@ import org.apache.ojb.broker.query.Criteria;
 public class FAQEntriesOJB extends PersistentObjectOJB implements IPersistentFAQEntries {
 
     public List readAll() throws ExcepcaoPersistencia {
-        return readByCriteria(FAQEntry.class, null);
+        return queryList(FAQEntry.class, null);
     }
 
     public List readEntriesInSection(Integer sectionId) throws ExcepcaoPersistencia {
@@ -26,7 +26,7 @@ public class FAQEntriesOJB extends PersistentObjectOJB implements IPersistentFAQ
         } else {
             criteria.addIsNull("parentSection.idInternal");
         }
-        return readByCriteria(FAQEntry.class, criteria);
+        return queryList(FAQEntry.class, criteria);
     }
 
 }

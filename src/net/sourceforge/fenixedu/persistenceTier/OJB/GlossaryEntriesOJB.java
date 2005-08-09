@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentGlossaryEntries;
 public class GlossaryEntriesOJB extends PersistentObjectOJB implements IPersistentGlossaryEntries {
 
     public List readAll() throws ExcepcaoPersistencia {
-        return readByCriteria(GlossaryEntry.class, null);
+        return queryList(GlossaryEntry.class, null);
     }
 
 }
