@@ -62,11 +62,11 @@ public class ExecutionCourseUtils {
     }
 
     public static void deleteSectionsAndItemsIfExistFrom(ISite siteTo) throws DomainException {
-        if (siteTo.getAssociatedSectionsCount() > 0) {
-            Iterator associatedSections = siteTo.getAssociatedSectionsIterator();
-            while (associatedSections.hasNext()) {
-                ISection section = (ISection) associatedSections.next();
-                section.delete();
+        if (siteTo.getAssociatedSectionsCount() > 0) {                   
+            final List<ISection> associatedSections = new ArrayList();
+            associatedSections.addAll(siteTo.getAssociatedSections());
+            for(final ISection section : associatedSections){
+            	section.delete();
             }
         }
     }
