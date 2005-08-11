@@ -125,7 +125,7 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>ManagerFilter</filter-name>
-		<url-pattern>/manager/*</url-pattern>
+		<url-pattern>/manager/@manager.filter.pattern@</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>ManagerFilter</filter-name>

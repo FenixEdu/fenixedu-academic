@@ -14,6 +14,7 @@ http.port=8080
 app.name=ciapl
 app.context=ciapl
 application=extranet
+manager.filter.pattern=nothing
 
 index.html.link=siteMap.do
 login.page=https://fenix.ist.utl.pt/privado
