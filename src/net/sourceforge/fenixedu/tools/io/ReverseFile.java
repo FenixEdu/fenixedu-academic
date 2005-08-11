@@ -44,12 +44,12 @@ public class ReverseFile {
             throws IOException {
         if ((new File(inputFilename)).exists()) {
             final String filecontents = FileUtils.readFile(inputFilename);
-            final String[] lines = filecontents.split("\n");
+            final String[] lines = filecontents.split(";\n");
 
             final FileWriter fileWriter = new FileWriter(outputFilename, false);
             for (int i = lines.length; i > 0; i--) {
                 fileWriter.write(lines[i - 1]);
-                fileWriter.write("\n");
+                fileWriter.write(";\n");
             }
             fileWriter.close();
 
