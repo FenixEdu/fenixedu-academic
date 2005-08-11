@@ -89,9 +89,15 @@ public class JdbcAccessRollbackImpl extends JdbcAccessImpl {
                 resultSetAndStatement.m_rs.first();
                 String property = resultSetAndStatement.m_rs.getString(columnName);
                 stringBuffer.append(columnName);
-                stringBuffer.append("='");
-                stringBuffer.append(property);
-                stringBuffer.append("'");
+
+                if (property != null) {
+                    stringBuffer.append("='");
+                    stringBuffer.append(property);
+                    stringBuffer.append("'");
+                } else {
+                    stringBuffer.append("= null");
+                }
+
                 if (i != fieldDescriptors.length - 1) {
                     stringBuffer.append(", ");
                 }
