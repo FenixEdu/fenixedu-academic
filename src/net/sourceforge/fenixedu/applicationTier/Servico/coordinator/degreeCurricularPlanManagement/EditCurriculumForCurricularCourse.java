@@ -64,6 +64,7 @@ public class EditCurriculumForCurricularCourse implements IService {
 
             ICurriculum oldCurriculum = (ICurriculum) persistentCurriculum.readByOID(Curriculum.class,
                     oldCurriculumId);
+            
             if (oldCurriculum == null) {
                 oldCurriculum = DomainFactory.makeCurriculum();
 
@@ -71,45 +72,26 @@ public class EditCurriculumForCurricularCourse implements IService {
                 Calendar today = Calendar.getInstance();
                 oldCurriculum.setLastModificationDate(today.getTime());
             }
-            persistentCurriculum.simpleLockWrite(oldCurriculum);
-
+            
             IExecutionYear currentExecutionYear = persistentExecutionYear.readCurrentExecutionYear();
-            // modification of curriculum is made in context of an execution
-            // year
+            
             if (!oldCurriculum.getLastModificationDate().before(currentExecutionYear.getBeginDate())
                     && !oldCurriculum.getLastModificationDate().after(currentExecutionYear.getEndDate())) {
-                // let's edit curriculum
-                if (language == null) {
-                    oldCurriculum.setGeneralObjectives(newInfoCurriculum.getGeneralObjectives());
-                    oldCurriculum.setOperacionalObjectives(newInfoCurriculum.getOperacionalObjectives());
-                    oldCurriculum.setProgram(newInfoCurriculum.getProgram());
-                } else {
-                    oldCurriculum.setGeneralObjectivesEn(newInfoCurriculum.getGeneralObjectivesEn());
-                    oldCurriculum.setOperacionalObjectivesEn(newInfoCurriculum
-                            .getOperacionalObjectivesEn());
-                    oldCurriculum.setProgramEn(newInfoCurriculum.getProgramEn());
-                }
-
-                oldCurriculum.setPersonWhoAltered(person);
-                Calendar today = Calendar.getInstance();
-                oldCurriculum.setLastModificationDate(today.getTime());
+                 
+                oldCurriculum.edit(newInfoCurriculum.getGeneralObjectives(), newInfoCurriculum
+                        .getOperacionalObjectives(), newInfoCurriculum.getProgram(), newInfoCurriculum
+                        .getGeneralObjectivesEn(), newInfoCurriculum.getOperacionalObjectivesEn(),
+                        newInfoCurriculum.getProgramEn(), language, person);
+                
             } else {
                 ICurriculum newCurriculum = DomainFactory.makeCurriculum();
                 newCurriculum.setCurricularCourse(curricularCourse);
-                if (language == null) {
-                    newCurriculum.setGeneralObjectives(newInfoCurriculum.getGeneralObjectives());
-                    newCurriculum.setOperacionalObjectives(newInfoCurriculum.getOperacionalObjectives());
-                    newCurriculum.setProgram(newInfoCurriculum.getProgram());
-                } else {
-                    newCurriculum.setGeneralObjectivesEn(newInfoCurriculum.getGeneralObjectivesEn());
-                    newCurriculum.setOperacionalObjectivesEn(newInfoCurriculum
-                            .getOperacionalObjectivesEn());
-                    newCurriculum.setProgramEn(newInfoCurriculum.getProgramEn());
-                }
-
-                newCurriculum.setPersonWhoAltered(person);
-                Calendar today = Calendar.getInstance();
-                newCurriculum.setLastModificationDate(today.getTime());
+                
+                newCurriculum.edit(newInfoCurriculum.getGeneralObjectives(), newInfoCurriculum
+                        .getOperacionalObjectives(), newInfoCurriculum.getProgram(), newInfoCurriculum
+                        .getGeneralObjectivesEn(), newInfoCurriculum.getOperacionalObjectivesEn(),
+                        newInfoCurriculum.getProgramEn(), language, person);
+               
 
             }
             result = Boolean.TRUE;
