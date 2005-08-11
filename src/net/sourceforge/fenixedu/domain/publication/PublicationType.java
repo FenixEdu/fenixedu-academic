@@ -39,7 +39,7 @@ public class PublicationType extends PublicationType_Base implements IPublicatio
     }
 
     /**
-     * @return Returns the nonRequiredAttributes.
+     * @return Returns the requiredAttributes.
      */
     public List getRequiredAttributes() {
         List requiredAttributes = new ArrayList(getPublicationTypeAttributes());

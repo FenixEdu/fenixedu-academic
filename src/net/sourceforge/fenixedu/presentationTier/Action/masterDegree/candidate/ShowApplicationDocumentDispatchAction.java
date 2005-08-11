@@ -30,6 +30,9 @@ public class ShowApplicationDocumentDispatchAction extends DispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
+        
+        request.setAttribute("candidateID", request.getParameter("candidateID"));
+        
         return mapping.findForward("showApplicationDocumentsList");
     }
 
@@ -39,6 +42,8 @@ public class ShowApplicationDocumentDispatchAction extends DispatchAction {
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         ActionErrors actionErrors = new ActionErrors();
 
+        request.setAttribute("candidateID", request.getParameter("candidateID"));
+        
         String documentTypeStr = request.getParameter(REQUEST_DOCUMENT_TYPE);
 
         InfoPerson infoPerson = readPersonByUsername(userView, actionErrors, request, mapping);

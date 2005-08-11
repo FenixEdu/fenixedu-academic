@@ -20,10 +20,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadUserProjects implements IService {
 
-    public ReadUserProjects() {
-    }
-
-    public List run(String username, String costCenter, Boolean all, String userNumber) throws ExcepcaoPersistencia {
+    public List<InfoProject> run(String username, String costCenter, Boolean all, String userNumber) throws ExcepcaoPersistencia {
         List<InfoProject> infoProjectList = new ArrayList<InfoProject>();
 
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();

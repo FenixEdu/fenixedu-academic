@@ -6,10 +6,8 @@ package net.sourceforge.fenixedu.dataTransferObject.projectsManagement;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
@@ -17,14 +15,12 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.Region;
 
 /**
  * @author Susana Fernandes
  * 
  */
-public class InfoCoordinatorReport extends DataTranferObject {
-    private List lines;
+public class InfoCoordinatorReport extends InfoReport {
 
     private InfoRubric infoCoordinator;
 
@@ -34,18 +30,6 @@ public class InfoCoordinatorReport extends DataTranferObject {
 
     public void setInfoCoordinator(InfoRubric infoCoordinator) {
         this.infoCoordinator = infoCoordinator;
-    }
-
-    public List getLines() {
-        return lines;
-    }
-
-    public void setLines(List lines) {
-        this.lines = lines;
-    }
-
-    public Integer getLinesSize() {
-        return new Integer(lines.size());
     }
 
     public void getReportToExcel(IUserView userView, HSSFWorkbook wb, ReportType reportType) {
@@ -59,42 +43,20 @@ public class InfoCoordinatorReport extends DataTranferObject {
 
         row = sheet.createRow((short) 2);
         cell = row.createCell((short) 0);
-        cell.setCellValue("Coordenador:");
+        cell.setCellValue(getString("label.coordinator") + ":");
         cell.setCellStyle(excelStyle.getLabelStyle());
         cell = row.createCell((short) 1);
         cell.setCellValue(infoCoordinator.getDescription());
         cell.setCellStyle(excelStyle.getValueStyle());
         row = sheet.createRow((short) 3);
         cell = row.createCell((short) 0);
-        cell.setCellValue("Data:");
+        cell.setCellValue(getString("label.date") + ":");
         cell.setCellStyle(excelStyle.getLabelStyle());
         cell = row.createCell((short) 1);
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy 'às' HH:mm");
         cell.setCellValue(formatter.format(new Date()));
         cell.setCellStyle(excelStyle.getValueStyle());
 
-        sheet.addMergedRegion(new Region(0, (short) 0, 0, (short) ((IReportLine) lines.get(0)).getNumberOfColumns()));
-        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-            sheet.addMergedRegion(new Region(i, (short) 1, i, (short) (((IReportLine) lines.get(0)).getNumberOfColumns())));
-        }
-
-        int lastRowNum = sheet.getLastRowNum() + 2;
-        if (lines != null && lines.size() > 0) {
-            row = sheet.createRow(lastRowNum);
-            ((IReportLine) lines.get(0)).getHeaderToExcel(sheet, excelStyle, reportType);
-            lastRowNum++;
-            for (int i = 0; i < lines.size(); i++) {
-                ((IReportLine) lines.get(i)).getLineToExcel(sheet, excelStyle, reportType);
-            }
-            ((IReportLine) lines.get(0)).getTotalLineToExcel(sheet, excelStyle, reportType);
-        }
-
-        row = sheet.createRow((short) sheet.getLastRowNum() + 2);
-        row.setHeight((short) 0x349);
-        cell = row.createCell((short) 0);
-        cell.setCellValue(reportType.getReportNote());
-        cell.setCellStyle(excelStyle.getValueStyle());
-        sheet.addMergedRegion(new Region(sheet.getLastRowNum(), (short) 0, sheet.getLastRowNum(), (short) ((IReportLine) lines.get(0))
-                .getNumberOfColumns()));
+        getReportToExcel(sheet, excelStyle, reportType);
     }
 }

@@ -100,7 +100,7 @@ public class RowMarksFile {
         setCurricularYear(enrolmentEvaluation.getEnrolment().getCurricularCourse()
                 .getCurricularYearByBranchAndSemester(
                         enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getBranch(),
-                        enrolmentEvaluation.getEnrolment().getExecutionPeriod().getSemester()).getYear());
+                        enrolmentEvaluation.getEnrolment().getExecutionPeriod().getSemester(), enrolmentEvaluation.getEnrolment().getExecutionPeriod().getEndDate()).getYear());
         setCurricularSemester(enrolmentEvaluation.getEnrolment().getExecutionPeriod().getSemester());
         setCurricularSeason(translateSeason(enrolmentEvaluation));
         setCourseCode(enrolmentEvaluation.getEnrolment().getCurricularCourse().getCode());

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.faces.model.SelectItem;
+
 import org.apache.struts.util.LabelValueBean;
 
 public class Data extends FenixUtil {
@@ -108,16 +110,23 @@ public class Data extends FenixUtil {
                 && _ano == ((Data) o).ano();
     }
 
-    public static List getMonthDays() {
-        List result = new ArrayList();
+    public static List<LabelValueBean> getMonthDays() {
+        List<LabelValueBean> result = new ArrayList<LabelValueBean>();
         result.add(new LabelValueBean(Data.OPTION_STRING, Data.OPTION_DEFAULT));
         for (int i = 1; i <= 31; i++)
             result.add(new LabelValueBean(new Integer(i).toString(), new Integer(i).toString()));
         return result;
     }
 
-    public static List getMonths() {
-        List result = new ArrayList();
+    public static List<SelectItem> getMonthDaysSelectItems() {
+        List<SelectItem> result = new ArrayList<SelectItem>();
+        for (int i = 1; i <= 31; i++)
+            result.add(new SelectItem(i, new Integer(i).toString()));
+        return result;
+    }
+
+    public static List<LabelValueBean> getMonths() {
+        List<LabelValueBean> result = new ArrayList<LabelValueBean>();
         result.add(new LabelValueBean(Data.OPTION_STRING, Data.OPTION_DEFAULT));
         result.add(new LabelValueBean(Data.JANUARY_STRING, Data.JANUARY.toString()));
         result.add(new LabelValueBean(Data.FEBRUARY_STRING, Data.FEBRUARY.toString()));
@@ -134,6 +143,23 @@ public class Data extends FenixUtil {
         return result;
     }
 
+    public static List<SelectItem> getMonthsSelectItems() {
+        List<SelectItem> result = new ArrayList<SelectItem>();
+        result.add(new SelectItem(Data.JANUARY, Data.JANUARY_STRING));
+        result.add(new SelectItem(Data.FEBRUARY, Data.FEBRUARY_STRING));
+        result.add(new SelectItem(Data.MARCH, Data.MARCH_STRING));
+        result.add(new SelectItem(Data.APRIL, Data.APRIL_STRING));
+        result.add(new SelectItem(Data.MAY, Data.MAY_STRING));
+        result.add(new SelectItem(Data.JUNE, Data.JUNE_STRING));
+        result.add(new SelectItem(Data.JULY, Data.JULY_STRING));
+        result.add(new SelectItem(Data.AUGUST, Data.AUGUST_STRING));
+        result.add(new SelectItem(Data.SETEMBER, Data.SETEMBER_STRING));
+        result.add(new SelectItem(Data.OCTOBER, Data.OCTOBER_STRING));
+        result.add(new SelectItem(Data.NOVEMBER, Data.NOVEMBER_STRING));
+        result.add(new SelectItem(Data.DECEMBER, Data.DECEMBER_STRING));
+        return result;
+    }
+
     public static List getYears() {
         List result = new ArrayList();
         Calendar date = Calendar.getInstance();
@@ -142,6 +168,15 @@ public class Data extends FenixUtil {
 
         for (int i = date.get(Calendar.YEAR); i > 1900; i--)
             result.add(new LabelValueBean(new Integer(i).toString(), new Integer(i).toString()));
+        return result;
+    }
+
+    public static List<SelectItem> getExpirationYearsSelectItems() {
+        List<SelectItem> result = new ArrayList<SelectItem>();
+        Calendar date = Calendar.getInstance();
+
+        for (int i = date.get(Calendar.YEAR) - 1; i < (date.get(Calendar.YEAR) + 20); i++)
+            result.add(new SelectItem(i, new Integer(i).toString()));
         return result;
     }
 
@@ -193,7 +228,7 @@ public class Data extends FenixUtil {
      * @param Date
      *            to Format
      * @return String separator
-     *  
+     * 
      */
     public static String format2DayMonthYear(java.util.Date date, String separator) {
         if (date == null)
@@ -210,14 +245,13 @@ public class Data extends FenixUtil {
         return result;
     }
 
-    
     /**
      * Formats date in format dd separator MM separator YYYY
      * 
      * @param Date
      *            to Format
      * @return String separator
-     *  
+     * 
      */
     public static String format2DayMonthYearWithZeros(java.util.Date date, String separator) {
         if (date == null)
@@ -226,22 +260,21 @@ public class Data extends FenixUtil {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         String result = new String();
-        int day = calendar.get(Calendar.DAY_OF_MONTH);        
-        if(day < 10)
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        if (day < 10)
             result += ("0" + day);
         else
-            result += day; 
+            result += day;
         result += separator;
         int month = calendar.get(Calendar.MONTH) + 1;
-        if(month < 10)
+        if (month < 10)
             result += ("0" + month);
         else
-            result += month;  
+            result += month;
         result += separator;
         result += calendar.get(Calendar.YEAR);
         return result;
     }
-
 
     /**
      * Formats data in format d-M-YYYY

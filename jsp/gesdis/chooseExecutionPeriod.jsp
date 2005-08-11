@@ -5,7 +5,14 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
 <br>
-<bean:message key="message.copySite.information" />
+<bean:message key="message.copySite.information.destination" />
+<strong><bean:write name="siteView" property="commonComponent.executionCourse.nome"/></strong>
+<bean:message key="message.copySite.information.destination.ofperiod" />
+<strong>
+<bean:write name="siteView" property="commonComponent.executionCourse.infoExecutionPeriod.name"/>
+<bean:write name="siteView" property="commonComponent.executionCourse.infoExecutionPeriod.infoExecutionYear.year"/>
+</strong>
+<bean:message key="message.copySite.information.whatIsCopied" />
 <br><br>
 <span class="error"><html:errors/></span>
 <logic:present name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>">

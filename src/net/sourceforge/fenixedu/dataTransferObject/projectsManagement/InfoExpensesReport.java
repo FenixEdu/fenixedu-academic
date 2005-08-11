@@ -6,35 +6,46 @@ package net.sourceforge.fenixedu.dataTransferObject.projectsManagement;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.util.StringAppender;
+import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
+import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.Region;
+
 /**
  * @author Susana Fernandes
  * 
  */
 public class InfoExpensesReport extends InfoProjectReport {
 
-    List summaryPTEReport;
+    InfoSummaryPTEReportLine summaryPTEReport;
 
-    List summaryEURReport;
+    InfoSummaryEURReportLine summaryEURReport;
 
-    List adiantamentosReport;
+    InfoAdiantamentosReportLine adiantamentosReport;
 
-    List cabimentosReport;
+    InfoCabimentosReportLine cabimentosReport;
 
     List rubricList;
 
-    public List getAdiantamentosReport() {
+    public InfoAdiantamentosReportLine getAdiantamentosReport() {
         return adiantamentosReport;
     }
 
-    public void setAdiantamentosReport(List adiantamentosReport) {
+    public void setAdiantamentosReport(InfoAdiantamentosReportLine adiantamentosReport) {
         this.adiantamentosReport = adiantamentosReport;
     }
 
-    public List getCabimentosReport() {
+    public InfoCabimentosReportLine getCabimentosReport() {
         return cabimentosReport;
     }
 
-    public void setCabimentosReport(List cabimentosReport) {
+    public void setCabimentosReport(InfoCabimentosReportLine cabimentosReport) {
         this.cabimentosReport = cabimentosReport;
     }
 
@@ -46,19 +57,70 @@ public class InfoExpensesReport extends InfoProjectReport {
         this.rubricList = rubricList;
     }
 
-    public List getSummaryEURReport() {
+    public InfoSummaryEURReportLine getSummaryEURReport() {
         return summaryEURReport;
     }
 
-    public void setSummaryEURReport(List summaryEURReport) {
+    public void setSummaryEURReport(InfoSummaryEURReportLine summaryEURReport) {
         this.summaryEURReport = summaryEURReport;
     }
 
-    public List getSummaryPTEReport() {
+    public InfoSummaryPTEReportLine getSummaryPTEReport() {
         return summaryPTEReport;
     }
 
-    public void setSummaryPTEReport(List summaryPTEReport) {
+    public void setSummaryPTEReport(InfoSummaryPTEReportLine summaryPTEReport) {
         this.summaryPTEReport = summaryPTEReport;
     }
+
+    public void getReportToExcel(IUserView userView, HSSFWorkbook wb, ReportType reportType) {
+        ExcelStyle excelStyle = new ExcelStyle(wb);
+        super.getReportToExcel(userView, wb, reportType);
+        HSSFSheet sheet = wb.getSheetAt(0);
+        HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 3);
+
+        sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum(), (short) 3));
+        HSSFCell cell = row.createCell((short) 0);
+        cell.setCellValue(getString("label.treasury"));
+        cell.setCellStyle(excelStyle.getTitleStyle());
+        summaryPTEReport.getLineToExcel(sheet, excelStyle, reportType);
+        summaryEURReport.getLineToExcel(sheet, excelStyle, reportType);
+        row = sheet.createRow(sheet.getLastRowNum() + 3);
+        cell = row.createCell((short) 0);
+        cell.setCellValue(StringAppender.append(getString("label.treasuryBalance"), "(a)(b)", ":"));
+        sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum(), (short) 2));
+        cell.setCellStyle(excelStyle.getLabelStyle());
+        cell = row.createCell((short) 3);
+        Double total = (summaryPTEReport.getTotal() / 200.482 + summaryEURReport.getTotal());
+        cell.setCellValue(total);
+        if (total.doubleValue() < 0)
+            cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
+        else
+            cell.setCellStyle(excelStyle.getDoubleStyle());
+        row = sheet.createRow(sheet.getLastRowNum() + 3);
+        cell = row.createCell((short) 0);
+        cell.setCellValue(getString("label.adiantamentos"));
+        sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum(), (short) 3));
+        cell.setCellStyle(excelStyle.getTitleStyle());
+        adiantamentosReport.getLineToExcel(sheet, excelStyle, reportType);
+        row = sheet.createRow(sheet.getLastRowNum() + 1);
+        cell = row.createCell((short) 0);
+        sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum() + 1, (short) ((IReportLine) getLines().get(0))
+                .getNumberOfColumns()));
+        cell.setCellValue(getString("message.extraInformation.a"));
+        cell.setCellStyle(excelStyle.getValueStyle());
+        row = sheet.createRow(sheet.getLastRowNum() + 4);
+        cell = row.createCell((short) 0);
+        cell.setCellValue(getString("label.cabimentos"));
+        sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum(), (short) 3));
+        cell.setCellStyle(excelStyle.getTitleStyle());
+        cabimentosReport.getLineToExcel(sheet, excelStyle, reportType);
+        row = sheet.createRow(sheet.getLastRowNum() + 1);
+        cell = row.createCell((short) 0);
+        sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum() + 1, (short) ((IReportLine) getLines().get(0))
+                .getNumberOfColumns()));
+        cell.setCellValue(getString("message.extraInformation.b"));
+        cell.setCellStyle(excelStyle.getValueStyle());
+    }
+
 }

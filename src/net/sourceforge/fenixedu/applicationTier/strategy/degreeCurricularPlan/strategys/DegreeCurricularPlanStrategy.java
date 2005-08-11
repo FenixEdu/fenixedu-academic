@@ -122,7 +122,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
     public Double calculateStudentWeightedAverage(IStudentCurricularPlan studentCurricularPlan)
             throws ExcepcaoPersistencia {
         float marks = 0;
-        int numberOfWeigths = 0;
+        float numberOfWeigths = 0;
         List enrolments = studentCurricularPlan.getEnrolments();
 
         Iterator iterator = enrolments.iterator();

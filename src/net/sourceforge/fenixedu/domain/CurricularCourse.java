@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -53,6 +54,12 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public ICurricularYear getCurricularYearByBranchAndSemester(final IBranch branch,
             final Integer semester) {
+    	Date date = new Date();
+    	return getCurricularYearByBranchAndSemester(branch, semester, date);
+    }
+
+    public ICurricularYear getCurricularYearByBranchAndSemester(final IBranch branch,
+            final Integer semester, final Date date) {
 
         if (this.getScopes().size() == 1) {
             return this.getScopes().get(0).getCurricularSemester().getCurricularYear();
@@ -101,7 +108,7 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
 
         if (foundInBranchButNotInSemester) {
-            curricularYearToReturn = getCurricularYearWithLowerYear(curricularCourseScopesFound);
+            curricularYearToReturn = getCurricularYearWithLowerYear(curricularCourseScopesFound, date);
         }
 
         if (notFoundInBranch) {
@@ -120,7 +127,7 @@ public class CurricularCourse extends CurricularCourse_Base {
                     // curricularYearToReturn =
                     // getCurricularYearWithLowerYear(this.getScopes());
                     // } else {
-                    curricularYearToReturn = getCurricularYearWithLowerYear(curricularCourseScopesFound);
+                    curricularYearToReturn = getCurricularYearWithLowerYear(curricularCourseScopesFound, date);
                     // }
                 } else {
                     notFoundInSemester = true;
@@ -131,7 +138,7 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
 
         if (notFoundInSemester) {
-            curricularYearToReturn = getCurricularYearWithLowerYear(this.getScopes());
+            curricularYearToReturn = getCurricularYearWithLowerYear(this.getScopes(), date);
         }
 
         return curricularYearToReturn;
@@ -197,6 +204,30 @@ public class CurricularCourse extends CurricularCourse_Base {
 								new BeanComparator("curricularSemester.curricularYear.year"));
 		
 		return minYearScope.getCurricularSemester().getCurricularYear();        
+    }
+
+   private ICurricularYear getCurricularYearWithLowerYear(List listOfScopes, Date date) {
+
+        ICurricularYear maxCurricularYear = new CurricularYear();
+        maxCurricularYear.setYear(new Integer(10));
+
+        ICurricularYear actualCurricularYear = null;
+
+        int size = listOfScopes.size();
+
+        for (int i = 0; i < size; i++) {
+
+            ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) listOfScopes.get(i);
+            actualCurricularYear = curricularCourseScope.getCurricularSemester().getCurricularYear();
+
+            if (maxCurricularYear.getYear().intValue() > actualCurricularYear.getYear().intValue()
+                    && curricularCourseScope.isActive(date).booleanValue()) {
+
+                maxCurricularYear = actualCurricularYear;
+            }
+        }
+
+        return maxCurricularYear;
     }
 
     // -------------------------------------------------------------

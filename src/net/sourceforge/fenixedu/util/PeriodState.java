@@ -49,7 +49,7 @@ public class PeriodState extends FenixUtil {
     public boolean equals(Object obj) {
         if (obj instanceof PeriodState) {
             PeriodState executionPeriodState = (PeriodState) obj;
-            return executionPeriodState.getStateCode() == stateCode;
+            return executionPeriodState.getStateCode().equals(stateCode);
         }
         return false;
     }

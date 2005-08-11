@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatc
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -100,6 +101,7 @@ public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction {
             if (infoViewClassScheduleList != null && infoViewClassScheduleList.isEmpty()) {
                 request.removeAttribute(SessionConstants.ALL_INFO_VIEW_CLASS_SCHEDULE);
             } else {
+                Collections.sort(infoViewClassScheduleList, new BeanComparator("infoClass.nome"));
                 request.setAttribute(SessionConstants.ALL_INFO_VIEW_CLASS_SCHEDULE,
                         infoViewClassScheduleList);
             }

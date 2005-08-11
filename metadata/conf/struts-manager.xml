@@ -1436,6 +1436,13 @@
 		<forward name="returnFromTransfer" path="/editExecutionCourseChooseExPeriod.do?method=prepareEditECChooseExecutionPeriod"/>
 	</action>	
 
+	<action path="/createSites"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.CreateSitesAction"
+			parameter="method"
+			scope="request"
+			input="/editExecutionCourseChooseExPeriod.do?method=prepareEditECChooseExecutionPeriod&amp;page=0">
+		<forward name="ShowCreatedSites" path="df.executionCourseManagement.showCreatedSites"/>
+	</action>
 	
 	<!-- ========== PERSON MANAGEMENT ========== -->
 	<action path="/personManagement"
@@ -1626,7 +1633,7 @@
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
-    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixFacesRequestProcessorWithTiles"/>
+    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
 
 	<!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="ServidorApresentacao.ManagerResources" null="false"/>

@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.projectsManagement;
 
-import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.domain.projectsManagement.IExpensesReportLine;
 import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
@@ -18,7 +17,7 @@ import org.apache.poi.hssf.util.CellReference;
  * @author Susana Fernandes
  * 
  */
-public class InfoExpensesReportLine extends DataTranferObject implements IReportLine {
+public class InfoExpensesReportLine extends InfoReportLine {
     private Integer projectCode;
 
     private String movementId;
@@ -234,7 +233,6 @@ public class InfoExpensesReportLine extends DataTranferObject implements IReport
         cell.setCellValue("Membro");
         cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) column++);
-
         if (reportType.equals(ReportType.COMPLETE_EXPENSES)) {
             cell.setCellValue("Fornecedor");
             cell.setCellStyle(excelStyle.getHeaderStyle());
@@ -248,7 +246,6 @@ public class InfoExpensesReportLine extends DataTranferObject implements IReport
             cell.setCellValue("Fonte financ");
             cell.setCellStyle(excelStyle.getHeaderStyle());
             cell = row.createCell((short) column++);
-
         }
         cell.setCellValue("Rúbrica");
         cell.setCellStyle(excelStyle.getHeaderStyle());
@@ -267,7 +264,6 @@ public class InfoExpensesReportLine extends DataTranferObject implements IReport
             cell.setCellStyle(excelStyle.getHeaderStyle());
             cell = row.createCell((short) column++);
         }
-
         cell.setCellValue("Valor");
         cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) column++);
@@ -276,10 +272,10 @@ public class InfoExpensesReportLine extends DataTranferObject implements IReport
         cell = row.createCell((short) column++);
         cell.setCellValue("Total");
         cell.setCellStyle(excelStyle.getHeaderStyle());
+        cell = row.createCell((short) column++);
         if (reportType.equals(ReportType.COMPLETE_EXPENSES)) {
             cell.setCellValue("% Imput");
             cell.setCellStyle(excelStyle.getHeaderStyle());
-            cell = row.createCell((short) column++);
         }
     }
 
@@ -297,7 +293,6 @@ public class InfoExpensesReportLine extends DataTranferObject implements IReport
             cell.setCellValue(getSupplierDescription());
             cell.setCellStyle(excelStyle.getStringStyle());
             cell = row.createCell((short) column++);
-
             cell.setCellValue(getDocumentType());
             cell.setCellStyle(excelStyle.getStringStyle());
             cell = row.createCell((short) column++);
@@ -345,13 +340,13 @@ public class InfoExpensesReportLine extends DataTranferObject implements IReport
             cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
         else
             cell.setCellStyle(excelStyle.getDoubleStyle());
+        cell = row.createCell((short) column++);
         if (reportType.equals(ReportType.COMPLETE_EXPENSES)) {
             cell.setCellValue(getImputedPercentage().doubleValue());
             if (getValue().doubleValue() < 0)
                 cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
             else
                 cell.setCellStyle(excelStyle.getDoubleStyle());
-            cell = row.createCell((short) column++);
         }
     }
 

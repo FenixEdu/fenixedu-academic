@@ -12,13 +12,11 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -98,8 +96,6 @@ public class EndCurricularCourseScopeDA extends FenixDispatchAction {
                     .findForward("readCurricularCourse"));
         } catch (InvalidArgumentsServiceException ex) {
             throw new InvalidArgumentsActionException("error.manager.wrongDates");
-        } catch (InvalidSituationServiceException ex) {
-            throw new InvalidSituationActionException("error.manager.invalidDate");
         } catch (FenixServiceException fenixServiceException) {
             throw new FenixActionException(fenixServiceException.getMessage());
         }

@@ -7896,6 +7896,17 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>ReadOverheadReport</name>
+		<implementationClass>
+			net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.ReadOverheadReport
+		</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ProjectsManagerAuthorization" />
+		</filterChains>
+	</service>
+	<service>
 		<name>ReadRubric</name>
 		<implementationClass>
 			net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.ReadRubric
@@ -7976,6 +7987,17 @@
 		<name>ReadProjectWithoutPersonAccess</name>
 		<implementationClass>
 			net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.ReadProjectWithoutPersonAccess
+		</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ProjectsManagerAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>ReadPersonToDelegateAccess</name>
+		<implementationClass>
+			net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.ReadPersonToDelegateAccess
 		</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
@@ -8569,5 +8591,40 @@
 			<chain name="StudentAuthorization" />
 			<chain name="ClassEnrollmentAuthorization" />
 		</filterChains>
-    </service>       
+    </service>
+	<service>
+        <name>ReadActiveDegreeCurricularPlansByDegreeType</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.ReadActiveDegreeCurricularPlansByDegreeType</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
+    </service>
+	<service>
+		<name>CreateSites</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateSites</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization" />
+		</filterChains>
+	</service>
+    <service>
+        <name>CreateExecutionDegreesForExecutionYear</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateExecutionDegreesForExecutionYear</implementationClass>
+        <isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization" />
+		</filterChains>/>
+    </service>
+	<service>
+		<name>CreateCourseReports</name>
+		<implementationClass>
+			net.sourceforge.fenixedu.applicationTier.Servico.gesdis.CreateCourseReports
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization"/>
+		</filterChains>
+	</service>     
 </serviceDefinitions>

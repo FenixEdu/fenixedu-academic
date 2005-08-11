@@ -122,7 +122,11 @@
 				<bean:define id="length" value="<%=request.getAttribute("length").toString()%>" />
 				<bean:define id="numberOfSpanElements" value="<%=request.getAttribute("numberOfSpanElements").toString()%>" />
 				<bean:define id="spanNumber" value="<%=request.getAttribute("spanNumber").toString()%>" />
-				<p class="viewHeader"><report:navigation-bar linesId="infoExpensesReport" spanId="span" numberOfSpanElements="numberOfSpanElements" /></p>
+				<table class="viewHeader">
+					<tr>
+						<td><report:navigation-bar linesId="infoExpensesReport" spanId="span" numberOfSpanElements="numberOfSpanElements" /></td>
+					</tr>
+				</table>
 				<br />
 			</logic:present>
 
@@ -183,7 +187,19 @@
 	<span class="error"><bean:message key="message.noMovements" /></span>
 </logic:empty>
 <logic:present name="infoExpensesReport" property="summaryPTEReport">
-	<jsp:include page="showExtraReportLines.jsp" />
+	<table class="printHeader">
+
+		<logic:present name="lastSpan">
+			<bean:define id="lastSpan" value="<%=request.getAttribute("lastSpan").toString()%>" />
+			<logic:equal name="lastSpan" value="true">
+	</table>
+	<table>
+	</logic:equal>
+</logic:present>
+<tr>
+	<td><jsp:include page="showExtraReportLines.jsp" /></td>
+</tr>
+</table>
 </logic:present>
 <br />
 <br />

@@ -138,6 +138,18 @@ public class ExecutionCourseVO extends VersionedObjectsBase implements IPersiste
         }
         return executionCourses;
     }
+    
+    public List readByExecutionPeriod(Integer executionPeriodID) throws ExcepcaoPersistencia {
+
+        IExecutionPeriod executionPeriod = (IExecutionPeriod) readByOID(ExecutionPeriod.class,
+                executionPeriodID);
+
+        if (executionPeriod != null) {
+            return executionPeriod.getAssociatedExecutionCourses();
+        }
+        
+        return null;
+    }
 
     public List readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(
             Integer executionPeriodID, Integer degreeCurricularPlanID, Integer curricularYearID,

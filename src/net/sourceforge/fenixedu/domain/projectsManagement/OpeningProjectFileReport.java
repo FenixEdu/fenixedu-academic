@@ -81,13 +81,13 @@ public class OpeningProjectFileReport implements Serializable, IOpeningProjectFi
 
     private Double coordinatorOverhead;
 
-    private List projectFinancialEntities;
+    private List<IRubric> projectFinancialEntities;
 
-    private List projectRubricBudget;
+    private List<IRubric> projectRubricBudget;
 
-    private List projectMembersBudget;
+    private List<IProjectMemberBudget> projectMembersBudget;
 
-    private List projectInvestigationTeam;
+    private List<IRubric> projectInvestigationTeam;
 
     public String getAcademicUnit() {
         return academicUnit;
@@ -321,27 +321,27 @@ public class OpeningProjectFileReport implements Serializable, IOpeningProjectFi
         this.projectCode = projectCode;
     }
 
-    public List getProjectFinancialEntities() {
+    public List<IRubric> getProjectFinancialEntities() {
         return projectFinancialEntities;
     }
 
-    public void setProjectFinancialEntities(List projectFinancialEntities) {
+    public void setProjectFinancialEntities(List<IRubric> projectFinancialEntities) {
         this.projectFinancialEntities = projectFinancialEntities;
     }
 
-    public List getProjectInvestigationTeam() {
+    public List<IRubric> getProjectInvestigationTeam() {
         return projectInvestigationTeam;
     }
 
-    public void setProjectInvestigationTeam(List projectInvestigationTeam) {
+    public void setProjectInvestigationTeam(List<IRubric> projectInvestigationTeam) {
         this.projectInvestigationTeam = projectInvestigationTeam;
     }
 
-    public List getProjectMembersBudget() {
+    public List<IProjectMemberBudget> getProjectMembersBudget() {
         return projectMembersBudget;
     }
 
-    public void setProjectMembersBudget(List projectMembersBudget) {
+    public void setProjectMembersBudget(List<IProjectMemberBudget> projectMembersBudget) {
         this.projectMembersBudget = projectMembersBudget;
     }
 
@@ -353,11 +353,11 @@ public class OpeningProjectFileReport implements Serializable, IOpeningProjectFi
         this.projectOrigin = projectOrigin;
     }
 
-    public List getProjectRubricBudget() {
+    public List<IRubric> getProjectRubricBudget() {
         return projectRubricBudget;
     }
 
-    public void setProjectRubricBudget(List projectRubricBudget) {
+    public void setProjectRubricBudget(List<IRubric> projectRubricBudget) {
         this.projectRubricBudget = projectRubricBudget;
     }
 

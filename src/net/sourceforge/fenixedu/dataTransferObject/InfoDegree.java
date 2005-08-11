@@ -5,10 +5,15 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 
 /**
  * @author tfc130
@@ -131,7 +136,18 @@ public class InfoDegree extends InfoObject implements Comparable {
             setSigla(degree.getSigla());
             setTipoCurso(degree.getTipoCurso());
             setNameEn(degree.getNameEn());
+
+            Collection<InfoDegreeCurricularPlan> degreeCurricularPlans = CollectionUtils.collect(degree
+                    .getDegreeCurricularPlans(), new Transformer() {
+                public Object transform(Object arg0) {
+                    IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) arg0;
+                    return InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
         }
+            });
+
+            setInfoDegreeCurricularPlans((List) degreeCurricularPlans);
+
+    }
     }
 
     /**

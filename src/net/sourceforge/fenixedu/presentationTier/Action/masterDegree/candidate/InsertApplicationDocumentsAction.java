@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
@@ -25,7 +25,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.upload.FormFile;
 
-public class InsertApplicationDocumentsAction extends FenixAction {
+public class InsertApplicationDocumentsAction extends FenixDispatchAction {
 
     /** file names * */
     private final String CANDIDATE_CH_FNAME = "candidateCH";
@@ -45,7 +45,21 @@ public class InsertApplicationDocumentsAction extends FenixAction {
 
     private final String DOC_CAPS_EXTENSION = ".DOC";
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        DynaActionForm appDocForm = (DynaActionForm) form;
+
+        Integer candidateID = new Integer(request.getParameter("candidateID"));
+
+        appDocForm.set("candidateID", candidateID);
+        request.setAttribute("candidateID", candidateID);
+
+        return mapping.findForward("chooseFile");
+
+    }
+
+    public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
@@ -56,6 +70,14 @@ public class InsertApplicationDocumentsAction extends FenixAction {
         FormFile cmiFormFile = (FormFile) appDocForm.get("cmiFile");
         FormFile chFormFile = (FormFile) appDocForm.get("chFile");
         FormFile chFormFile2 = (FormFile) appDocForm.get("chFile2");
+
+        // transport candidate ID
+        Integer candidateID = new Integer(request.getParameter("candidateID"));
+        if (candidateID == null) {
+            candidateID = (Integer) appDocForm.get("candidateID");
+        }
+        appDocForm.set("candidateID", candidateID);
+        request.setAttribute("candidateID", candidateID);
 
         String username = userView.getUtilizador();
         ActionErrors actionErrors = new ActionErrors();

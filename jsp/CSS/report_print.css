@@ -5,10 +5,24 @@ h2 {
 	color: #223d4a;
 }
 
-.printHeader {
+tr .printHeader{
+	display: table-row;
+}
+
+.printHeader{
 	display: block;
 }
+
 
 .viewHeader {
 	display: none;
 }
+
+body {
+	font: 11pt Arial, Helvetica, sans-serif;
+	color: #fff;
+	text-align: left;
+	margin: 0;
+	margin-left: 0px;
+	}
+	

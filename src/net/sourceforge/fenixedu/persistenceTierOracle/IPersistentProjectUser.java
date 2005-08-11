@@ -23,4 +23,5 @@ public interface IPersistentProjectUser {
     public String getCCNameByCoordinatorAndCC(Integer userNumber, Integer costCenter) throws ExcepcaoPersistencia;
 
     public IRubric getCostCenterByID(Integer costCenter) throws ExcepcaoPersistencia;
+
 }

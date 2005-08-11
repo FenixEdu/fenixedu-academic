@@ -73,9 +73,16 @@
 		<forward name="showopeningProjectFileReport" path="show-Opening-Project-File-Report"/>
 		<forward name="showprojectBudgetaryBalanceReport" path="show-Project-Budgetary-Balance-Report"/>
 		<forward name="helpPage" path="help-Page"/>
-		<forward name="printexpensesReport" path="/printExpensesReport.jsp"/>
-		<forward name="printcompleteExpensesReport" path="/printCompleteExpensesReport.jsp"/>
     </action>
+    <action path="/overheadReport" type="net.sourceforge.fenixedu.presentationTier.Action.projectsManagement.OverheadReportsDispatchAction" 
+        parameter="method" scope="request"  validate="true" name="rubricForm" >
+        <forward name="index" path="df.page.projectManager"/>
+		<forward name="showgeneratedOverheadsReport" path="show-Generated-Overheads-Report"/>
+		<forward name="showtransferedOverheadsReport" path="show-Transfered-Overheads-Report"/>
+		<forward name="showoverheadsSummaryReport" path="show-Overheads-Summary-Report"/>
+		<forward name="helpPage" path="help-Page"/>
+    </action>
+    
     <action path="/projectAccess" name="accessForm"
 	    input="/projectAccess.do?method=showPersonAccesses&amp;page=0" scope="request"
         parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.projectsManagement.ProjectAccessDelegationDispatchAction"

@@ -70,7 +70,7 @@
 										<strong><bean:message key="label.masterDegree.administrativeOffice.specialization" /></strong>
 								    </td>
 									<td>      
-										<bean:message name="infoCandidateRegistration" property="infoMasterDegreeCandidate.specialization.name" />
+										<bean:message name="infoCandidateRegistration" property="infoMasterDegreeCandidate.specialization.name"  bundle="ENUMERATION_RESOURCES"/>
 								    </td>
 							    </tr>
 						    </table>
@@ -106,7 +106,7 @@
 										<strong><bean:message key="label.masterDegree.administrativeOffice.specialization" /></strong>
 								    </td>
 									<td>      
-										<bean:write name="infoCandidateRegistration" property="infoStudentCurricularPlan.specialization" />
+										<bean:message name="infoCandidateRegistration" property="infoStudentCurricularPlan.specialization.name"  bundle="ENUMERATION_RESOURCES"/>
 								    </td>
 							    </tr>
 								<tr>      

@@ -5,11 +5,16 @@
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
-
 <br /> 
 <logic:present name="<%=SessionConstants.ALL_INFO_VIEW_CLASS_SCHEDULE %>" scope="request">
-	<logic:iterate id="viewClassSchedule" name="<%=SessionConstants.ALL_INFO_VIEW_CLASS_SCHEDULE %>" scope="request">
-		<table width="100%" cellspacing="0">
+	<logic:iterate id="viewClassSchedule" name="<%=SessionConstants.ALL_INFO_VIEW_CLASS_SCHEDULE %>" scope="request" indexId="i">
+				
+		<logic:equal name="i" value="0">
+			<table width="100%" cellspacing="0">
+		</logic:equal>
+		<logic:notEqual name="i" value="0">
+			<table class="break-before" width="100%" cellspacing="0">
+		</logic:notEqual>
 			<tr>
 				<td class="infoselected">
 					<strong>
@@ -25,7 +30,7 @@
 		    </tr>
 		</table>
 
-		<h2 class="break-before"><bean:message key="title.class.timetable" /><bean:write name="viewClassSchedule" property="infoClass.nome" /></h2>
+		<h2><bean:message key="title.class.timetable" /><bean:write name="viewClassSchedule" property="infoClass.nome" /></h2>
 	   	<br/>
 	   	<bean:define id="lessons" name="viewClassSchedule" property="classLessons"/>
 		<div align="center"><app:gerarHorario name="lessons" type="<%= TimeTableType.CLASS_TIMETABLE_WITHOUT_LINKS %>"/></div>

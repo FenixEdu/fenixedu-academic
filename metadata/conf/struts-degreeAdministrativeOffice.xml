@@ -415,7 +415,7 @@
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
-	<controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixFacesRequestProcessorWithTiles"/>
+	<controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
 
 	<!-- ========== Message Resources Definitions =========================== -->
 	<message-resources parameter="ServidorApresentacao.DegreeAdministrativeOfficeResources" null="false"/>

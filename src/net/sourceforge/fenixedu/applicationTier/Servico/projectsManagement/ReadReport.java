@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.IReportLine;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoMovementReport;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProject;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProjectBudgetaryBalanceReportLine;
@@ -27,76 +28,35 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadReport implements IService {
 
-    public ReadReport() {
-    }
-
     public InfoProjectReport run(String userView, String costCenter, ReportType reportType, Integer projectCode, String userNumber)
             throws ExcepcaoPersistencia {
-        InfoProjectReport infoReport = null;
+        InfoProjectReport infoReport = new InfoProjectReport();
+        List<IReportLine> infoLines = new ArrayList<IReportLine>();
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        // Integer userNumber = getUserNumber(persistentSuport, userView);
-
-        // if (userNumber != null) {
         PersistentSuportOracle p = PersistentSuportOracle.getInstance();
-        // IRole role =
-        // persistentSuport.getIPersistentRole().readByRoleType(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
-        // Integer coordID = userNumber;
-        // if (prefix.equals(role.getPortalSubApplication())) {
-        // coordID =
-        // p.getIPersistentProjectUser().getInstitucionalProjectCoordId(userNumber).get(0);
-        // }
-
-        infoReport = new InfoProjectReport();
-        List infoLines = new ArrayList();
-        if (reportType.equals(ReportType.REVENUE)) {
-            if (projectCode != null
-                    && (p.getIPersistentProject().isUserProject(new Integer(userNumber), projectCode) || persistentSuport
-                            .getIPersistentProjectAccess().hasPersonProjectAccess(userView, projectCode))) {
-                infoReport.setInfoProject(InfoProject.newInfoFromDomain(p.getIPersistentProject().readProject(projectCode)));
-                List lines = p.getIPersistentRevenueReport().getCompleteReport(reportType, projectCode);
-                for (int i = 0; i < lines.size(); i++)
-                    infoLines.add(InfoRevenueReportLine.newInfoFromDomain((IRevenueReportLine) lines.get(i)));
-            }
-        } else if (reportType.equals(ReportType.ADIANTAMENTOS) || reportType.equals(ReportType.CABIMENTOS)) {
-            if (projectCode != null
-                    && (p.getIPersistentProject().isUserProject(new Integer(userNumber), projectCode) || persistentSuport
-                            .getIPersistentProjectAccess().hasPersonProjectAccess(userView, projectCode))) {
-                infoReport.setInfoProject(InfoProject.newInfoFromDomain(p.getIPersistentProject().readProject(projectCode)));
-                List lines = p.getIPersistentMovementReport().getCompleteReport(reportType, projectCode);
-                for (int i = 0; i < lines.size(); i++)
-                    infoLines.add(InfoMovementReport.newInfoFromDomain((IMovementReport) lines.get(i)));
-            }
-        } else if (reportType.equals(ReportType.PROJECT_BUDGETARY_BALANCE)) {
-            if (projectCode != null
-                    && (p.getIPersistentProject().isUserProject(new Integer(userNumber), projectCode) || persistentSuport
-                            .getIPersistentProjectAccess().hasPersonProjectAccess(userView, projectCode))) {
-                infoReport.setInfoProject(InfoProject.newInfoFromDomain(p.getIPersistentProject().readProject(projectCode)));
-                List lines = p.getIPersistentProjectBudgetaryBalanceReport().getCompleteReport(reportType, projectCode);
-                for (int i = 0; i < lines.size(); i++)
-                    infoLines.add(InfoProjectBudgetaryBalanceReportLine.newInfoFromDomain((IProjectBudgetaryBalanceReportLine) lines.get(i)));
+        if (projectCode != null
+                && (p.getIPersistentProject().isUserProject(new Integer(userNumber), projectCode) || persistentSuport.getIPersistentProjectAccess()
+                        .hasPersonProjectAccess(userView, projectCode))) {
+            infoReport.setInfoProject(InfoProject.newInfoFromDomain(p.getIPersistentProject().readProject(projectCode)));
+            if (reportType.equals(ReportType.REVENUE)) {
+                List<IRevenueReportLine> lines = p.getIPersistentRevenueReport().getCompleteReport(reportType, projectCode);
+                for (IRevenueReportLine revenueReportLine : lines) {
+                    infoLines.add(InfoRevenueReportLine.newInfoFromDomain(revenueReportLine));
+                }
+            } else if (reportType.equals(ReportType.ADIANTAMENTOS) || reportType.equals(ReportType.CABIMENTOS)) {
+                List<IMovementReport> lines = p.getIPersistentMovementReport().getCompleteReport(reportType, projectCode);
+                for (IMovementReport movementReport : lines) {
+                    infoLines.add(InfoMovementReport.newInfoFromDomain(movementReport));
+                }
+            } else if (reportType.equals(ReportType.PROJECT_BUDGETARY_BALANCE)) {
+                List<IProjectBudgetaryBalanceReportLine> lines = p.getIPersistentProjectBudgetaryBalanceReport().getCompleteReport(reportType,
+                        projectCode);
+                for (IProjectBudgetaryBalanceReportLine projectBudgetaryBalanceReportLine : lines) {
+                    infoLines.add(InfoProjectBudgetaryBalanceReportLine.newInfoFromDomain(projectBudgetaryBalanceReportLine));
+                }
             }
         }
         infoReport.setLines(infoLines);
-        // }
-
         return infoReport;
     }
-
-    // private Integer getUserNumber(ISuportePersistente sp, String userView)
-    // throws
-    // ExcepcaoPersistencia {
-    // Integer userNumber = null;
-    // ITeacher teacher =
-    // sp.getIPersistentTeacher().readTeacherByUsername(userView);
-    // if (teacher != null)
-    // userNumber = teacher.getTeacherNumber();
-    // else {
-    // IPerson person =
-    // sp.getIPessoaPersistente().lerPessoaPorUsername(userView);
-    // IEmployee employee = sp.getIPersistentEmployee().readByPerson(person);
-    // if (employee != null)
-    // userNumber = employee.getEmployeeNumber();
-    // }
-    // return userNumber;
-    // }
 }

@@ -61,4 +61,13 @@
 	<definition name="show-Projects-Accesses" extends="definition.projectManager.two-column">
 		<put name="body" value="/projectsManagement/showProjectsAccesses.jsp" />
 	</definition>
+	<definition name="show-Generated-Overheads-Report" extends="definition.projectManager.two-column">
+		<put name="body" value="/projectsManagement/showGeneratedOverheadsReport.jsp" />
+	</definition>
+	<definition name="show-Transfered-Overheads-Report" extends="definition.projectManager.two-column">
+		<put name="body" value="/projectsManagement/showTransferedOverheadsReport.jsp" />
+	</definition>
+	<definition name="show-Overheads-Summary-Report" extends="definition.projectManager.two-column">
+		<put name="body" value="/projectsManagement/showOverheadsSummaryReport.jsp" />
+	</definition>
 </tiles-definitions>

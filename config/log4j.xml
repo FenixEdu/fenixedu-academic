@@ -77,6 +77,11 @@
 		<appender-ref ref="BasicConsoleAppender"/>
 	</logger>
 
+	<logger name="net.sourceforge.fenixedu.dataConsistency.CheckOverlappingRoomOccupations" additivity="false">
+		<level value="info"/>
+		<appender-ref ref="BasicConsoleAppender"/>
+	</logger>
+
 	<root>
 		<priority value="warn"/>
 		<appender-ref ref="ConsoleAppender"/>

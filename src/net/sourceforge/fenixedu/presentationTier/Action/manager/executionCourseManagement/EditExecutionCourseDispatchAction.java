@@ -111,6 +111,8 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         Integer executionPeriodId = separateLabel(form, request, "executionPeriod", "executionPeriodId",
                 "executionPeriodName");
 
+        request.setAttribute("executionPeriodId", executionPeriodId);
+
         Object args[] = { executionPeriodId };
         List executionDegreeList = null;
         try {

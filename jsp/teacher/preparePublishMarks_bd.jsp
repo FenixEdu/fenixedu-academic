@@ -30,11 +30,11 @@
 					<bean:message key="message.sendSMS"/>		
 				</td>
 				<td>
-					<html:checkbox property="sendSMS"/>
+					<html:checkbox property="sendSMS" disabled="true"/>
 					<span class="error"><html:errors property="sendSMS"/></span>
 				</td>
 				<td>
-				<span class="error">Serviço Indisponível</span>
+				<span class="error">Serviï¿½o Indisponï¿½vel</span>
 				</td>
 			</tr>
 		</table>

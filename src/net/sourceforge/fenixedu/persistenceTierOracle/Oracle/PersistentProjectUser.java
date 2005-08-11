@@ -49,7 +49,7 @@ public class PersistentProjectUser implements IPersistentProjectUser {
 
     public List<IRubric> getInstitucionalProjectCoordId(Integer userCode) throws ExcepcaoPersistencia {
         StringBuffer queryBuffer = new StringBuffer();
-        queryBuffer.append("select ID_CC, CC_NAME from v_responsavel_cc where ID_COORD = '");
+        queryBuffer.append("select ID_COORD_CC, CC_NAME from v_responsavel_cc where ID_COORD = '");
         queryBuffer.append(userCode);
         queryBuffer.append("'");
         String query = queryBuffer.toString();
@@ -61,7 +61,7 @@ public class PersistentProjectUser implements IPersistentProjectUser {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 IRubric rubric = new Rubric();
-                rubric.setCode(new Integer(rs.getInt("ID_CC")).toString());
+                rubric.setCode(new Integer(rs.getInt("ID_COORD_CC")).toString());
                 rubric.setDescription(rs.getString("CC_NAME"));
                 result.add(rubric);
             }
@@ -78,13 +78,13 @@ public class PersistentProjectUser implements IPersistentProjectUser {
 
         if (ccCodes != null && ccCodes.size() != 0) {
             StringBuffer stringBuffer = new StringBuffer();
-            stringBuffer.append("select ID_CC, CC_NAME from v_responsavel_cc where ID_CC IN (");
+            stringBuffer.append("select ID_COORD_CC, CC_NAME from v_responsavel_cc where ID_COORD_CC IN (");
             for (int i = 0; i < ccCodes.size(); i++) {
                 if (i != 0)
                     stringBuffer.append(", ");
                 stringBuffer.append(ccCodes.get(i));
             }
-            stringBuffer.append(") order by ID_CC");
+            stringBuffer.append(") order by ID_COORD_CC");
             String query = stringBuffer.toString();
 
             try {
@@ -94,7 +94,7 @@ public class PersistentProjectUser implements IPersistentProjectUser {
                 ResultSet rs = stmt.executeQuery();
                 while (rs.next()) {
                     IRubric rubric = new Rubric();
-                    rubric.setCode(new Integer(rs.getInt("ID_CC")).toString());
+                    rubric.setCode(new Integer(rs.getInt("ID_COORD_CC")).toString());
                     rubric.setDescription(rs.getString("CC_NAME"));
                     result.add(rubric);
                 }
@@ -109,7 +109,7 @@ public class PersistentProjectUser implements IPersistentProjectUser {
 
     public String getCCNameByCoordinatorAndCC(Integer userNumber, Integer costCenter) throws ExcepcaoPersistencia {
         StringBuffer query = new StringBuffer();
-        query.append("select CC_NAME from v_responsavel_cc where ID_CC = '");
+        query.append("select CC_NAME from v_responsavel_cc where ID_COORD_CC = '");
         query.append(costCenter);
         query.append("' and ID_COORD = '");
         query.append(userNumber);
@@ -132,7 +132,7 @@ public class PersistentProjectUser implements IPersistentProjectUser {
 
     public IRubric getCostCenterByID(Integer costCenter) throws ExcepcaoPersistencia {
         StringBuffer query = new StringBuffer();
-        query.append("select CC_NAME from v_responsavel_cc where ID_CC = '");
+        query.append("select CC_NAME from v_responsavel_cc where ID_COORD_CC = '");
         query.append(costCenter);
         query.append("'");
         try {
@@ -153,4 +153,5 @@ public class PersistentProjectUser implements IPersistentProjectUser {
         }
         return null;
     }
+
 }

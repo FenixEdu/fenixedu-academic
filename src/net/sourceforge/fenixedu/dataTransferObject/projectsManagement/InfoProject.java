@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.dataTransferObject.projectsManagement;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.domain.projectsManagement.IProject;
@@ -159,37 +160,38 @@ public class InfoProject extends DataTranferObject {
     }
 
     public HSSFSheet getProjectInformationToExcel(HSSFSheet sheet, ExcelStyle excelStyle) {
+        final ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ProjectsManagementResources");
         HSSFRow row = sheet.createRow((short) 2);
         HSSFCell cell = row.createCell((short) 0);
-        cell.setCellValue("Acrónimo:");
+        cell.setCellValue(bundle.getString("label.acronym") + ":");
         cell.setCellStyle(excelStyle.getLabelStyle());
         cell = row.createCell((short) 1);
         cell.setCellValue(getTitle());
         cell.setCellStyle(excelStyle.getValueStyle());
         row = sheet.createRow((short) 3);
         cell = row.createCell((short) 0);
-        cell.setCellValue("Projecto Nº:");
+        cell.setCellValue(bundle.getString("label.projectNumber") + ":");
         cell.setCellStyle(excelStyle.getLabelStyle());
         cell = row.createCell((short) 1);
         cell.setCellValue(getProjectCode());
         cell.setCellStyle(excelStyle.getValueStyle());
         row = sheet.createRow((short) 4);
         cell = row.createCell((short) 0);
-        cell.setCellValue("Tipo:");
+        cell.setCellValue(bundle.getString("label.type") + ":");
         cell.setCellStyle(excelStyle.getLabelStyle());
         cell = row.createCell((short) 1);
         cell.setCellValue(getType().getLabel() + " - " + getType().getValue());
         cell.setCellStyle(excelStyle.getValueStyle());
         row = sheet.createRow((short) 5);
         cell = row.createCell((short) 0);
-        cell.setCellValue("Coordenador:");
+        cell.setCellValue(bundle.getString("label.coordinator") + ":");
         cell.setCellStyle(excelStyle.getLabelStyle());
         cell = row.createCell((short) 1);
         cell.setCellValue(getCoordinatorName());
         cell.setCellStyle(excelStyle.getValueStyle());
         row = sheet.createRow((short) 6);
         cell = row.createCell((short) 0);
-        cell.setCellValue("Data:");
+        cell.setCellValue(bundle.getString("label.date") + ":");
         cell.setCellStyle(excelStyle.getLabelStyle());
         cell = row.createCell((short) 1);
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy 'às' HH:mm");

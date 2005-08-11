@@ -104,6 +104,11 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
         return queryList(ExecutionCourse.class, criteria);
     }
 
+    public List readByExecutionPeriod(Integer executionPeriodID) throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("executionPeriod.idInternal", executionPeriodID);
+        return queryList(ExecutionCourse.class, criteria);
+    }
 
     public List readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(
             Integer executionPeriodID, Integer degreeCurricularPlanID,

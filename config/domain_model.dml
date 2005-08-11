@@ -417,6 +417,8 @@ class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.f
 	interface "
     public ICurricularYear getCurricularYearByBranchAndSemester(final IBranch branch,final Integer semester);
 
+    public ICurricularYear getCurricularYearByBranchAndSemester(final IBranch branch, final Integer semester, final java.util.Date date);
+
     public String getCurricularCourseUniqueKeyForEnrollment();
 
     public boolean hasActiveScopeInGivenSemester(final Integer semester);
@@ -495,6 +497,8 @@ class net.sourceforge.fenixedu.domain.CurricularCourseScope extends net.sourcefo
     
     public Boolean isActive();
 	
+	public Boolean isActive(java.util.Date date);
+
 	public void edit(IBranch branch, ICurricularSemester curricularSemester, java.util.Calendar beginDate, java.util.Calendar endDate, String Annotation);
 	
 	public void end(java.util.Calendar endDate);
@@ -2251,6 +2255,11 @@ class net.sourceforge.fenixedu.domain.SchoolClass extends net.sourceforge.fenixe
 	interface "
 	public void associateShift(net.sourceforge.fenixedu.domain.IShift shift);
 	"
+}
+
+class net.sourceforge.fenixedu.domain.SchoolClassShift extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer chaveTurma;
+	Integer chaveTurno;
 }
 
 class net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent extends net.sourceforge.fenixedu.domain.DomainObject {

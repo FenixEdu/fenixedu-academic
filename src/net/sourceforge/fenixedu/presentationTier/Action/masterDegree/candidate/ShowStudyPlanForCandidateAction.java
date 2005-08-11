@@ -30,6 +30,9 @@ public class ShowStudyPlanForCandidateAction extends FenixAction {
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         ArrayList candidateStudyPlan = null;
 
+        // transport candidate ID
+        request.setAttribute("candidateID", request.getParameter("candidateID"));
+        
         InfoMasterDegreeCandidate infoMasterDegreeCandidate = getMasterDegreeCandidate(userView, session);
 
         if (infoMasterDegreeCandidate != null) {

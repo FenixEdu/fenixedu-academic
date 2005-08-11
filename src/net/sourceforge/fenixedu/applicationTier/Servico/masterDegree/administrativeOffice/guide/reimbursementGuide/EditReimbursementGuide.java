@@ -81,7 +81,7 @@ public class EditReimbursementGuide implements IService {
             IPersistentReimbursementGuideEntry reimbursementGuideEntryDAO = ps
                     .getIPersistentReimbursementGuideEntry();
             IReimbursementGuide reimbursementGuide = (IReimbursementGuide) persistentReimbursementGuide
-                    .readByOID(ReimbursementGuide.class, reimbursementGuideId);
+                .readByOID(ReimbursementGuide.class, reimbursementGuideId, true);
 
 
             if (reimbursementGuide == null) {

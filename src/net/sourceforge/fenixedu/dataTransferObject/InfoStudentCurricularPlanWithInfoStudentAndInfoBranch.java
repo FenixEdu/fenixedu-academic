@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
  * @author Tânia Pousão 23/Jun/2004
  */
 public class InfoStudentCurricularPlanWithInfoStudentAndInfoBranch extends
-        InfoStudentCurricularPlanWithInfoStudent {
+        InfoStudentCurricularPlanWithInfoStudentAndDegree {
     public void copyFromDomain(IStudentCurricularPlan studentCurricularPlan) {
         super.copyFromDomain(studentCurricularPlan);
         if (studentCurricularPlan != null) {

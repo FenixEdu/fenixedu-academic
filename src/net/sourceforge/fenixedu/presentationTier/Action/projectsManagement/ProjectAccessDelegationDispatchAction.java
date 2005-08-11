@@ -73,8 +73,8 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
                             userView.getUtilizador(), costCenter, username });
                     request.setAttribute("personAccessesList", personAccessesList);
                     if (personAccessesList == null || personAccessesList.size() == 0) {
-                        final InfoPerson infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(userView, "ReadPersonByUsername",
-                                new Object[] { username });
+                        final InfoPerson infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(userView,
+                                "ReadPersonToDelegateAccess", new Object[] { userView.getUtilizador(), costCenter, username });
                         request.setAttribute("infoPerson", infoPerson);
                     }
 
@@ -119,11 +119,12 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
                         username, beginDate, endDate });
             } else {
                 final String[] projectCodes = request.getParameterValues("projectCodes");
-                if (projectCodes != null && projectCodes.length != 0)
+                if (projectCodes != null && projectCodes.length != 0) {
                     ServiceManagerServiceFactory.executeService(userView, "InsertNewProjectAccess", new Object[] { userView.getUtilizador(),
                             costCenter, username, projectCodes, beginDate, endDate });
-                else
+                } else {
                     request.setAttribute("noProjectsSelected", new Boolean(true));
+                }
             }
         }
 

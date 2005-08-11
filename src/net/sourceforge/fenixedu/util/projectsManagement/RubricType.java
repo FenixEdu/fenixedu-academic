@@ -20,7 +20,7 @@ public class RubricType extends FenixUtil {
 
     public static final String EXPLORATION_UNITS_RUBRIC_TABLE_NAME = "V_UNID_EXPLORACAO";
 
-    // OVHTYPES
+    public static final String OVERHEAD_TYPE_RUBRIC_TABLE_NAME = "v_tipos_overheads";
 
     public static final String REVENUE_RUBRIC_TYPE = "revenueRubric";
 
@@ -30,6 +30,8 @@ public class RubricType extends FenixUtil {
 
     public static final String EXPLORATION_UNITS_RUBRIC_TYPE = "explorationUnitsRubric";
 
+    public static final String OVERHEAD_TYPE_RUBRIC_TYPE = "overheadTypesRubric";
+
     public static final RubricType REVENUE_RUBRIC = new RubricType(REVENUE_RUBRIC_TYPE);
 
     public static final RubricType EXPENSES_RUBRIC = new RubricType(EXPENSES_RUBRIC_TYPE);
@@ -37,6 +39,8 @@ public class RubricType extends FenixUtil {
     public static final RubricType PROJECT_TYPE_RUBRIC = new RubricType(PROJECT_TYPE_RUBRIC_TYPE);
 
     public static final RubricType EXPLORATION_UNITS_RUBRIC = new RubricType(EXPLORATION_UNITS_RUBRIC_TYPE);
+
+    public static final RubricType OVERHEAD_TYPE_RUBRIC = new RubricType(OVERHEAD_TYPE_RUBRIC_TYPE);
 
     private String rubricTableName;
 
@@ -49,6 +53,8 @@ public class RubricType extends FenixUtil {
             this.rubricTableName = PROJECT_TYPE_RUBRIC_TABLE_NAME;
         else if (rubricType.equals(EXPLORATION_UNITS_RUBRIC_TYPE))
             this.rubricTableName = EXPLORATION_UNITS_RUBRIC_TABLE_NAME;
+        else if (rubricType.equals(OVERHEAD_TYPE_RUBRIC_TYPE))
+            this.rubricTableName = OVERHEAD_TYPE_RUBRIC_TABLE_NAME;
     }
 
     public static RubricType getRubricType(String rubricType) {
@@ -60,6 +66,8 @@ public class RubricType extends FenixUtil {
             return PROJECT_TYPE_RUBRIC;
         else if (rubricType.equals(EXPLORATION_UNITS_RUBRIC_TYPE))
             return EXPLORATION_UNITS_RUBRIC;
+        else if (rubricType.equals(OVERHEAD_TYPE_RUBRIC_TYPE))
+            return OVERHEAD_TYPE_RUBRIC;
         return null;
     }
 

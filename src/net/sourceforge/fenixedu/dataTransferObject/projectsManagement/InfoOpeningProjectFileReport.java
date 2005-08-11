@@ -7,20 +7,15 @@ package net.sourceforge.fenixedu.dataTransferObject.projectsManagement;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.domain.projectsManagement.IOpeningProjectFileReport;
 import net.sourceforge.fenixedu.domain.projectsManagement.IProjectMemberBudget;
 import net.sourceforge.fenixedu.domain.projectsManagement.IRubric;
-import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
-import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
-
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 
 /**
  * @author Susana Fernandes
  * 
  */
-public class InfoOpeningProjectFileReport extends DataTranferObject implements IReportLine {
+public class InfoOpeningProjectFileReport extends InfoReportLine {
     private Integer projectCode;
 
     private String acronym;
@@ -89,13 +84,13 @@ public class InfoOpeningProjectFileReport extends DataTranferObject implements I
 
     private Double coordinatorOverhead;
 
-    private List projectFinancialEntities;
+    private List<InfoRubric> projectFinancialEntities;
 
-    private List projectRubricBudget;
+    private List<InfoRubric> projectRubricBudget;
 
-    private List projectMembersBudget;
+    private List<InfoProjectMemberBudget> projectMembersBudget;
 
-    private List projectInvestigationTeam;
+    private List<InfoRubric> projectInvestigationTeam;
 
     public String getAcademicUnit() {
         return academicUnit;
@@ -329,27 +324,27 @@ public class InfoOpeningProjectFileReport extends DataTranferObject implements I
         this.projectCode = projectCode;
     }
 
-    public List getProjectFinancialEntities() {
+    public List<InfoRubric> getProjectFinancialEntities() {
         return projectFinancialEntities;
     }
 
-    public void setProjectFinancialEntities(List projectFinancialEntities) {
+    public void setProjectFinancialEntities(List<InfoRubric> projectFinancialEntities) {
         this.projectFinancialEntities = projectFinancialEntities;
     }
 
-    public List getProjectInvestigationTeam() {
+    public List<InfoRubric> getProjectInvestigationTeam() {
         return projectInvestigationTeam;
     }
 
-    public void setProjectInvestigationTeam(List projectInvestigationTeam) {
+    public void setProjectInvestigationTeam(List<InfoRubric> projectInvestigationTeam) {
         this.projectInvestigationTeam = projectInvestigationTeam;
     }
 
-    public List getProjectMembersBudget() {
+    public List<InfoProjectMemberBudget> getProjectMembersBudget() {
         return projectMembersBudget;
     }
 
-    public void setProjectMembersBudget(List projectMembersBudget) {
+    public void setProjectMembersBudget(List<InfoProjectMemberBudget> projectMembersBudget) {
         this.projectMembersBudget = projectMembersBudget;
     }
 
@@ -361,11 +356,11 @@ public class InfoOpeningProjectFileReport extends DataTranferObject implements I
         this.projectOrigin = projectOrigin;
     }
 
-    public List getProjectRubricBudget() {
+    public List<InfoRubric> getProjectRubricBudget() {
         return projectRubricBudget;
     }
 
-    public void setProjectRubricBudget(List projectRubricBudget) {
+    public void setProjectRubricBudget(List<InfoRubric> projectRubricBudget) {
         this.projectRubricBudget = projectRubricBudget;
     }
 
@@ -438,33 +433,27 @@ public class InfoOpeningProjectFileReport extends DataTranferObject implements I
             setOperationalUnitOverhead(openingProjectFileReport.getOperationalUnitOverhead());
             setCoordinatorOverhead(openingProjectFileReport.getCoordinatorOverhead());
             if (openingProjectFileReport.getProjectFinancialEntities() != null) {
-                setProjectFinancialEntities(new ArrayList());
-                for (int i = 0; i < openingProjectFileReport.getProjectFinancialEntities().size(); i++) {
-                    getProjectFinancialEntities().add(
-                            InfoRubric.newInfoFromDomain((IRubric) openingProjectFileReport.getProjectFinancialEntities().get(i)));
+                setProjectFinancialEntities(new ArrayList<InfoRubric>());
+                for (IRubric projectFinancialEntitie : openingProjectFileReport.getProjectFinancialEntities()) {
+                    getProjectFinancialEntities().add(InfoRubric.newInfoFromDomain(projectFinancialEntitie));
                 }
             }
-
             if (openingProjectFileReport.getProjectRubricBudget() != null) {
-                setProjectRubricBudget(new ArrayList());
-                for (int i = 0; i < openingProjectFileReport.getProjectRubricBudget().size(); i++) {
-                    getProjectRubricBudget().add(InfoRubric.newInfoFromDomain((IRubric) openingProjectFileReport.getProjectRubricBudget().get(i)));
+                setProjectRubricBudget(new ArrayList<InfoRubric>());
+                for (IRubric projectRubricBudget : openingProjectFileReport.getProjectRubricBudget()) {
+                    getProjectRubricBudget().add(InfoRubric.newInfoFromDomain(projectRubricBudget));
                 }
             }
-
             if (openingProjectFileReport.getProjectMembersBudget() != null) {
-                setProjectMembersBudget(new ArrayList());
-                for (int i = 0; i < openingProjectFileReport.getProjectMembersBudget().size(); i++) {
-                    getProjectMembersBudget().add(
-                            InfoProjectMemberBudget.newInfoFromDomain((IProjectMemberBudget) openingProjectFileReport.getProjectMembersBudget()
-                                    .get(i)));
+                setProjectMembersBudget(new ArrayList<InfoProjectMemberBudget>());
+                for (IProjectMemberBudget projectMembersBudget : openingProjectFileReport.getProjectMembersBudget()) {
+                    getProjectMembersBudget().add(InfoProjectMemberBudget.newInfoFromDomain(projectMembersBudget));
                 }
             }
             if (openingProjectFileReport.getProjectInvestigationTeam() != null) {
-                setProjectInvestigationTeam(new ArrayList());
-                for (int i = 0; i < openingProjectFileReport.getProjectInvestigationTeam().size(); i++) {
-                    getProjectInvestigationTeam().add(
-                            InfoRubric.newInfoFromDomain((IRubric) openingProjectFileReport.getProjectInvestigationTeam().get(i)));
+                setProjectInvestigationTeam(new ArrayList<InfoRubric>());
+                for (IRubric projectInvestigationTeam : openingProjectFileReport.getProjectInvestigationTeam()) {
+                    getProjectInvestigationTeam().add(InfoRubric.newInfoFromDomain(projectInvestigationTeam));
                 }
             }
         }
@@ -477,22 +466,5 @@ public class InfoOpeningProjectFileReport extends DataTranferObject implements I
             infoOpeningProjectFileReport.copyFromDomain(openingProjectFileReport);
         }
         return infoOpeningProjectFileReport;
-    }
-
-    public int getNumberOfColumns() {
-        return 0;
-    }
-
-    public void getHeaderToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
-    }
-
-    public void getLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
-    }
-
-    public void getTotalLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
-    }
-
-    public Double getValue(int column) {
-        return null;
     }
 }

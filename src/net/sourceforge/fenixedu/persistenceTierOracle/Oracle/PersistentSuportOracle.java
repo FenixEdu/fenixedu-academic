@@ -16,6 +16,7 @@ import java.util.Properties;
 
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentExpensesReport;
+import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentExpensesResume;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentOpeningProjectFileReport;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentProject;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentProjectUser;
@@ -159,20 +160,8 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
         return new PersistentSummaryReport();
     }
 
-    public IPersistentReport getIPersistentAdiantamentosReport() {
-        return new PersistentAdiantamentosReport();
-    }
-
-    public IPersistentReport getIPersistentCabimentosReport() {
-        return new PersistentCabimentosReport();
-    }
-
-    public IPersistentReport getIPersistentSummaryPTEReport() {
-        return new PersistentSummaryPTEReport();
-    }
-
-    public IPersistentReport getIPersistentSummaryEURReport() {
-        return new PersistentSummaryEURReport();
+    public IPersistentExpensesResume getIPersistentExpensesResume() {
+        return new PersistentExpensesResume();
     }
 
     public IPersistentReport getIPersistentMovementReport() {
@@ -193,6 +182,18 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
 
     public IPersistentReport getIPersistentProjectBudgetaryBalanceReport() {
         return new PersistentProjectBudgetaryBalanceReport();
+    }
+
+    public IPersistentReport getIPersistentGeneratedOverheadsReport() {
+        return new PersistentGeneratedOverheadsReport();
+    }
+
+    public IPersistentReport getIPersistentTransferedOverheadsReport() {
+        return new PersistentTransferedOverheadsReport();
+    }
+
+    public IPersistentReport getIPersistentOverheadsSummaryReport() {
+        return new PersistentOverheadsSummaryReport();
     }
 
 }

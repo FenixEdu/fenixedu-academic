@@ -47,6 +47,24 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	
+	<managed-bean>
+		<managed-bean-name>displayCurricularPlan</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.degreeAdministrativeOffice.DisplayCurricularPlan</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>createExecutionDegrees</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.degree.CreateExecutionDegreesForExecutionYear</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>	
+
+	<managed-bean>
+		<managed-bean-name>createCourseReports</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.executionCourse.CreateCourseReportsForExecutionPeriod</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>	
+	
 	<!-- NAVIGATION RULES -->
 	
 	<navigation-rule>
@@ -57,4 +75,36 @@
 		</navigation-case>			
 	</navigation-rule>
 
+	<navigation-rule>
+		<from-view-id>/degreeAdministrativeOffice/curricularPlans/chooseCurricularPlan.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/degreeAdministrativeOffice/curricularPlans/displayCurricularPlan.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/manager/curricularPlans/chooseCurricularPlan.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/manager/curricularPlans/displayCurricularPlan.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>	
+
+	<navigation-rule>
+		<from-view-id>/manager/degree/chooseDegreeType.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>choose</from-outcome>
+			<to-view-id>/manager/degree/chooseDegreeCurricularPlans.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>	
+	
+	<navigation-rule>
+		<from-view-id>/manager/degree/chooseDegreeCurricularPlans.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/manager/degree/insertExecutionDegreesSuccess.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+		
 </faces-config>

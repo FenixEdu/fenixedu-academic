@@ -105,7 +105,7 @@
     </action-mappings>
 
     <!-- ========== Controller Configuration ================================ -->
-	<controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixFacesRequestProcessorWithTiles"/>
+	<controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
 
     <!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="ServidorApresentacao.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>

@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.projectsManagement;
 
-import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.domain.projectsManagement.IRevenueReportLine;
 import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
@@ -18,7 +17,7 @@ import org.apache.poi.hssf.util.CellReference;
  * @author Susana Fernandes
  * 
  */
-public class InfoRevenueReportLine extends DataTranferObject implements IReportLine {
+public class InfoRevenueReportLine extends InfoReportLine {
     private Integer projectCode;
 
     private String movementId;
@@ -117,22 +116,22 @@ public class InfoRevenueReportLine extends DataTranferObject implements IReportL
     public void getHeaderToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
         HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
         HSSFCell cell = row.createCell((short) 0);
-        cell.setCellValue("Id Mov");
+        cell.setCellValue(getString("label.idMov"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 1);
-        cell.setCellValue("Ent. Financ.");
+        cell.setCellValue(getString("label.financialEntity"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 2);
-        cell.setCellValue("Rúbrica");
+        cell.setCellValue(getString("label.rubric"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 3);
-        cell.setCellValue("Data");
+        cell.setCellValue(getString("label.date"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 4);
-        cell.setCellValue("Descrição");
+        cell.setCellValue(getString("label.description"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 5);
-        cell.setCellValue("Valor");
+        cell.setCellValue(getString("label.value"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
     }
 
@@ -165,7 +164,7 @@ public class InfoRevenueReportLine extends DataTranferObject implements IReportL
         HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
         HSSFCell cell = row.createCell((short) 0);
         cell.setCellStyle(excelStyle.getStringStyle());
-        cell.setCellValue("TOTAL");
+        cell.setCellValue(getString("label.total"));
         CellReference cellRef1 = new CellReference(1, 5);
         CellReference cellRef2 = new CellReference(((short) row.getRowNum() - 1), 5);
         cell = row.createCell((short) 5);

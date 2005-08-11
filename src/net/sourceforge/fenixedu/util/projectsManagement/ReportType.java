@@ -26,10 +26,11 @@ public class ReportType extends FenixUtil {
 
     public static final int SUMMARY_TYPE = 10;
 
-    // public static final int OVERHEADS_GERADOS = 11;
-    // public static final int OVERHEADS_TRANSFERIDOS = 12;
-    // public static final int OVERHEADS_RESUMO = 13;
-    // public static final int OVERHEADS_RESUMO_CD = 14;
+    public static final int GENERATED_OVERHEADS_TYPE = 11;
+
+    public static final int TRANSFERED_OVERHEADS_TYPE = 12;
+
+    public static final int OVERHEADS_SUMMARY_TYPE = 13;
 
     public static final int CABIMENTOS_TYPE = 15;
 
@@ -67,6 +68,12 @@ public class ReportType extends FenixUtil {
 
     public static final String SUMMARY_CABIMENTOS_STRING = "summaryCabimentosReport";
 
+    public static final String GENERATED_OVERHEADS_STRING = "generatedOverheadsReport";
+
+    public static final String TRANSFERED_OVERHEADS_STRING = "transferedOverheadsReport";
+
+    public static final String OVERHEADS_SUMMARY_STRING = "overheadsSummaryReport";
+
     public static final String CABIMENTOS_STRING = "cabimentosReport";
 
     public static final String ADIANTAMENTOS_STRING = "adiantamentosReport";
@@ -85,6 +92,12 @@ public class ReportType extends FenixUtil {
     public static final String EXPENSES_LABEL = "Listagem de Despesa em Euros";
 
     public static final String SUMMARY_LABEL = "Resumo por Coordenador";
+
+    public static final String GENERATED_OVERHEADS_LABEL = "Listagem de Overheads Gerados";
+
+    public static final String TRANSFERED_OVERHEADS_LABEL = "Listagem de Overheads Transferidos";
+
+    public static final String OVERHEADS_SUMMARY_LABEL = "Resumo de Overheads";
 
     public static final String CABIMENTOS_LABEL = "Listagem de Cabimentos";
 
@@ -106,6 +119,8 @@ public class ReportType extends FenixUtil {
 
     public static final String SUMMARY_NOTE = "(*) O Saldo Orçamental é calculado com base no valor da coluna Máximo Financiável";
 
+    public static final String OVERHEADS_SUMMARY_NOTE = "Nota:\nReceita OG - é a totalidade da receita sobre a qual foram calculados overheads para o Centro de Custo indicado na sua qualidade de Órgãos de Gestão.\nReceita OA - é a totalidade da receita sobre a qual foram calculados overheads para o Centro de Custo indicado na sua qualidade de Unidade Académica.\nReceita OO - é a totalidade da receita sobre a qual foram calculados overheads para o Centro de Custo indicado na sua qualidade de Unidade Operacional.\nReceita OE - é a totalidade da receita sobre a qual foram calculados overheads para o Centro de Custo indicado na sua qualidade de Unidade de Exploração.";
+
     public static final ReportType REVENUE = new ReportType(REVENUE_TYPE);
 
     public static final ReportType EXPENSES = new ReportType(EXPENSES_TYPE);
@@ -119,6 +134,12 @@ public class ReportType extends FenixUtil {
     public static final ReportType SUMMARY_ADIANTAMENTOS = new ReportType(SUMMARY_ADIANTAMENTOS_TYPE);
 
     public static final ReportType SUMMARY_CABIMENTOS = new ReportType(SUMMARY_CABIMENTOS_TYPE);
+
+    public static final ReportType GENERATED_OVERHEADS = new ReportType(GENERATED_OVERHEADS_TYPE);
+
+    public static final ReportType TRANSFERED_OVERHEADS = new ReportType(TRANSFERED_OVERHEADS_TYPE);
+
+    public static final ReportType OVERHEADS_SUMMARY = new ReportType(OVERHEADS_SUMMARY_TYPE);
 
     public static final ReportType CABIMENTOS = new ReportType(CABIMENTOS_TYPE);
 
@@ -168,6 +189,12 @@ public class ReportType extends FenixUtil {
             this.reportType = new Integer(SUMMARY_CABIMENTOS_TYPE);
         else if (reportType.equals(SUMMARY_STRING))
             this.reportType = new Integer(SUMMARY_TYPE);
+        else if (reportType.equals(GENERATED_OVERHEADS_STRING))
+            this.reportType = new Integer(GENERATED_OVERHEADS_TYPE);
+        else if (reportType.equals(TRANSFERED_OVERHEADS_STRING))
+            this.reportType = new Integer(TRANSFERED_OVERHEADS_TYPE);
+        else if (reportType.equals(OVERHEADS_SUMMARY_STRING))
+            this.reportType = new Integer(OVERHEADS_SUMMARY_TYPE);
         else if (reportType.equals(CABIMENTOS_STRING))
             this.reportType = new Integer(CABIMENTOS_TYPE);
         else if (reportType.equals(ADIANTAMENTOS_STRING))
@@ -203,6 +230,12 @@ public class ReportType extends FenixUtil {
             return SUMMARY_CABIMENTOS;
         if (reportType == SUMMARY_TYPE)
             return SUMMARY;
+        if (reportType == GENERATED_OVERHEADS_TYPE)
+            return GENERATED_OVERHEADS;
+        if (reportType == TRANSFERED_OVERHEADS_TYPE)
+            return TRANSFERED_OVERHEADS;
+        if (reportType == OVERHEADS_SUMMARY_TYPE)
+            return OVERHEADS_SUMMARY;
         if (reportType == CABIMENTOS_TYPE)
             return CABIMENTOS;
         if (reportType == ADIANTAMENTOS_TYPE)
@@ -233,6 +266,12 @@ public class ReportType extends FenixUtil {
             return SUMMARY_CABIMENTOS_STRING;
         if (reportType.intValue() == SUMMARY_TYPE)
             return SUMMARY_STRING;
+        if (reportType.intValue() == GENERATED_OVERHEADS_TYPE)
+            return GENERATED_OVERHEADS_STRING;
+        if (reportType.intValue() == TRANSFERED_OVERHEADS_TYPE)
+            return TRANSFERED_OVERHEADS_STRING;
+        if (reportType.intValue() == OVERHEADS_SUMMARY_TYPE)
+            return OVERHEADS_SUMMARY_STRING;
         if (reportType.intValue() == CABIMENTOS_TYPE)
             return CABIMENTOS_STRING;
         if (reportType.intValue() == ADIANTAMENTOS_TYPE)
@@ -265,6 +304,12 @@ public class ReportType extends FenixUtil {
             return OPENING_PROJECT_FILE_LABEL;
         else if (reportType.intValue() == PROJECT_BUDGETARY_BALANCE_TYPE)
             return PROJECT_BUDGETARY_BALANCE_LABEL;
+        else if (reportType.intValue() == GENERATED_OVERHEADS_TYPE)
+            return GENERATED_OVERHEADS_LABEL;
+        else if (reportType.intValue() == TRANSFERED_OVERHEADS_TYPE)
+            return TRANSFERED_OVERHEADS_LABEL;
+        else if (reportType.intValue() == OVERHEADS_SUMMARY_TYPE)
+            return OVERHEADS_SUMMARY_LABEL;
         // else if (reportType.intValue() == COORDINATOR_BUDGETARY_BALANCE_TYPE)
         // return COORDINATOR_BUDGETARY_BALANCE_LABEL;
         return null;
@@ -283,6 +328,8 @@ public class ReportType extends FenixUtil {
             return ADIANTAMENTOS_NOTE;
         else if (reportType.intValue() == COMPLETE_EXPENSES_TYPE)
             return COMPLETE_EXPENSES_NOTE;
+        else if (reportType.intValue() == OVERHEADS_SUMMARY_TYPE)
+            return OVERHEADS_SUMMARY_NOTE;
         return null;
     }
 

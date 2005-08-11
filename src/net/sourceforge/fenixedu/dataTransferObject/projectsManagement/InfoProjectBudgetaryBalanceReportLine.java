@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.projectsManagement;
 
-import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.domain.projectsManagement.IProjectBudgetaryBalanceReportLine;
 import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
@@ -17,7 +16,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
  * @author Susana Fernandes
  * 
  */
-public class InfoProjectBudgetaryBalanceReportLine extends DataTranferObject implements IReportLine {
+public class InfoProjectBudgetaryBalanceReportLine extends InfoReportLine {
     private Integer rubric;
 
     private String rubricDescription;
@@ -95,19 +94,19 @@ public class InfoProjectBudgetaryBalanceReportLine extends DataTranferObject imp
     public void getHeaderToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
         HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
         HSSFCell cell = row.createCell((short) 0);
-        cell.setCellValue("Rubrica");
+        cell.setCellValue(getString("label.rubric"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 1);
-        cell.setCellValue("Nome");
+        cell.setCellValue(getString("label.name"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 2);
-        cell.setCellValue("Orçamento");
+        cell.setCellValue(getString("label.budget"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 3);
-        cell.setCellValue("Executado");
+        cell.setCellValue(getString("label.executed"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 4);
-        cell.setCellValue("Saldo");
+        cell.setCellValue(getString("label.balance"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
     }
 
@@ -139,11 +138,4 @@ public class InfoProjectBudgetaryBalanceReportLine extends DataTranferObject imp
             cell.setCellStyle(excelStyle.getDoubleStyle());
     }
 
-    public void getTotalLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
-
-    }
-
-    public Double getValue(int column) {
-        return null;
-    }
 }

@@ -11,6 +11,17 @@
 			<bean:message key="label.manager.readDegrees" />
 		</html:link>
 </strong></p>
+<p><strong>&raquo; 
+	  	<html:link page="/curricularPlans/chooseCurricularPlan.faces">
+	  		Consulta de Currículo
+	  	</html:link>  
+</strong></p>
+
+<p><strong>&raquo; 
+	  	<html:link page="/degree/chooseDegreeType.faces">
+	  		Criação de Cursos de Execução
+	  	</html:link>  
+</strong></p>
 
 <p><strong>&raquo; 
 	<html:link page="/manageExecutionPeriods.do?method=prepare">

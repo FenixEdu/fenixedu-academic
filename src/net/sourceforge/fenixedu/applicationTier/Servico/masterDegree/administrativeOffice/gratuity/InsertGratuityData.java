@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.PaymentPhase;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuityValues;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPaymentPhase;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
@@ -68,6 +67,12 @@ public class InsertGratuityData implements IService {
             IGratuityValues gratuityValues = persistentGratuityValues
                     .readGratuityValuesByExecutionDegree(infoGratuityValues.getInfoExecutionDegree()
                             .getIdInternal());
+
+            // execution Degree
+            IExecutionDegree executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree()
+                    .readByOID(ExecutionDegree.class,
+                            infoGratuityValues.getInfoExecutionDegree().getIdInternal(), true);
+
             boolean isNew = false;
             if (gratuityValues == null) // it doesn't exist in database, then
             // write it
@@ -76,16 +81,12 @@ public class InsertGratuityData implements IService {
                 persistentGratuityValues.simpleLockWrite(gratuityValues);
                 isNew = true;
 
-                // execution Degree
-                IPersistentExecutionDegree persistentExecutionDegree = sp
-                        .getIPersistentExecutionDegree();
-
-                IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree
-                        .readByOID(ExecutionDegree.class, infoGratuityValues.getInfoExecutionDegree()
-                                .getIdInternal());
                 gratuityValues.setExecutionDegree(executionDegree);
 
             }
+
+            executionDegree.setGratuityValues(gratuityValues);
+
             if (!isNew) {
                 persistentGratuityValues.simpleLockWrite(gratuityValues);
             }

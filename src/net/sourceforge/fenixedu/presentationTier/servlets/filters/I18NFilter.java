@@ -16,6 +16,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts.Globals;
 import org.apache.struts.action.Action;
@@ -54,11 +55,15 @@ public class I18NFilter implements Filter {
             } else {
                 locale = new Locale(localParameter);
             }
-            
-            request.getSession(false).removeAttribute(Action.LOCALE_KEY);
-            request.getSession(false).removeAttribute(Globals.LOCALE_KEY);
-            request.getSession(false).setAttribute(Action.LOCALE_KEY, locale);
-            request.getSession(false).setAttribute(Globals.LOCALE_KEY, locale);
+
+            HttpSession httpSession = request.getSession(false);
+            if (httpSession == null) {
+                httpSession = request.getSession(true);
+            }
+            httpSession.removeAttribute(Action.LOCALE_KEY);
+            httpSession.removeAttribute(Globals.LOCALE_KEY);
+            httpSession.setAttribute(Action.LOCALE_KEY, locale);
+            httpSession.setAttribute(Globals.LOCALE_KEY, locale);
 
             request.removeAttribute(Action.LOCALE_KEY);
             request.removeAttribute(Globals.LOCALE_KEY);

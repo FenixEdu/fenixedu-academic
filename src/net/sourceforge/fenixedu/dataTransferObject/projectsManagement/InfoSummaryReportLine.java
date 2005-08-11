@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.projectsManagement;
 
-import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.domain.projectsManagement.ISummaryReportLine;
 import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
@@ -18,7 +17,7 @@ import org.apache.poi.hssf.util.CellReference;
  * @author Susana Fernandes
  * 
  */
-public class InfoSummaryReportLine extends DataTranferObject implements IReportLine {
+public class InfoSummaryReportLine extends InfoReportLine {
     private Integer coordinatorCode;
 
     private Integer projectCode;
@@ -183,40 +182,40 @@ public class InfoSummaryReportLine extends DataTranferObject implements IReportL
     public void getHeaderToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
         HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
         HSSFCell cell = row.createCell((short) 0);
-        cell.setCellValue("NºProj");
+        cell.setCellValue(getString("label.projNum"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 1);
-        cell.setCellValue("Acrónimo");
+        cell.setCellValue(getString("label.acronym"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 2);
-        cell.setCellValue("Unid Expl");
+        cell.setCellValue(getString("label.explorUnit"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 3);
-        cell.setCellValue("Tipo");
+        cell.setCellValue(getString("label.type"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 4);
-        cell.setCellValue("Orçamento");
+        cell.setCellValue(getString("label.budget"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 5);
-        cell.setCellValue("Máximo Financiável");
+        cell.setCellValue(getString("label.maxFinance"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 6);
-        cell.setCellValue("Receita");
+        cell.setCellValue(getString("link.revenue"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 7);
-        cell.setCellValue("Despesa");
+        cell.setCellValue(getString("link.expenses"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 8);
-        cell.setCellValue("Adiantamentos por Justificar");
+        cell.setCellValue(getString("label.toExecute.adiantamentosReport"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 9);
-        cell.setCellValue("Saldo Tesouraria");
+        cell.setCellValue(getString("label.treasuryBalance"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 10);
-        cell.setCellValue("Cabimentos por Executar");
+        cell.setCellValue(getString("label.toExecute.cabimentosReport"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 11);
-        cell.setCellValue("Saldo Orçamental (*)");
+        cell.setCellValue(getString("label.budgetBalance"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
     }
 
@@ -288,7 +287,7 @@ public class InfoSummaryReportLine extends DataTranferObject implements IReportL
         HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
         HSSFCell cell = row.createCell((short) 0);
         cell.setCellStyle(excelStyle.getStringStyle());
-        cell.setCellValue("TOTAL");
+        cell.setCellValue(getString("label.total"));
         for (int i = 4; i <= 11; i++) {
             CellReference cellRef1 = new CellReference(1, i);
             CellReference cellRef2 = new CellReference(((short) row.getRowNum() - 1), i);

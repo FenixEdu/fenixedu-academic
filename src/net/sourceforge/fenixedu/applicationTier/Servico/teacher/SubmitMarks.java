@@ -159,7 +159,7 @@ public class SubmitMarks implements IService {
                 }
                 
 				String observation = "Submissão da Pauta";
-                IMark mark = getMark(evaluation, markList, attend);
+                IMark mark = getMark(markList, attend);
                 if(enrolment.isImprovementForExecutionCourse(executionCourse)) {
 					enrolmentEvaluation = enrolment.submitEnrolmentEvaluation(EnrolmentEvaluationType.IMPROVEMENT, mark, employee, teacher.getPerson(), evaluationDate,observation);
                     improvmentEnrolmentEvaluationTableByDegree.put(enrolment.getStudentCurricularPlan().getDegreeCurricularPlan().getDegree().getIdInternal(), enrolmentEvaluation);
@@ -208,16 +208,12 @@ public class SubmitMarks implements IService {
         }
     }
 
-    private IMark getMark(final IEvaluation evaluation, List markList, final IAttends attend) {
-
-		return (IMark)CollectionUtils.find(markList,new Predicate() {
-
-			public boolean evaluate(Object o) {
-				IMark mark = (IMark)o;
-				return mark.getAttend().equals(attend) &&
-						mark.getEvaluation().equals(evaluation);
-			}
-		});
+    private IMark getMark(List<IMark> markList, IAttends attend) {
+        for (IMark mark : markList) {
+            if(mark.getAttend().getIdInternal().equals(attend.getIdInternal()))
+                return mark;
+        }
+        return null;
     }
 
     private List submitMarksAndCreateFiles(MultiHashMap enrolmentEvaluationTableByDegree)

@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.IReportLine;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoCoordinatorReport;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoRubric;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoSummaryReportLine;
@@ -22,9 +23,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * @author Susana Fernandes
  */
 public class ReadSummaryReport implements IService {
-
-    public ReadSummaryReport() {
-    }
 
     public InfoCoordinatorReport run(String username, String costCenter, Integer coordinatorCode, String userNumber) throws ExcepcaoPersistencia {
         InfoCoordinatorReport infoReport = new InfoCoordinatorReport();
@@ -43,9 +41,8 @@ public class ReadSummaryReport implements IService {
                 lines = p.getIPersistentSummaryReport().readByCoordinatorAndProjectCodes(ReportType.SUMMARY, coordinatorCode, projectCodes);
         }
         if (lines != null) {
-         //   infoReport = new InfoCoordinatorReport();
             infoReport.setInfoCoordinator(InfoRubric.newInfoFromDomain(p.getIPersistentProjectUser().readProjectCoordinator(coordinatorCode)));
-            List<InfoSummaryReportLine> infoLines = new ArrayList<InfoSummaryReportLine>();
+            List<IReportLine> infoLines = new ArrayList<IReportLine>();
 
             for (int line = 0; line < lines.size(); line++)
                 infoLines.add(InfoSummaryReportLine.newInfoFromDomain((ISummaryReportLine) lines.get(line)));

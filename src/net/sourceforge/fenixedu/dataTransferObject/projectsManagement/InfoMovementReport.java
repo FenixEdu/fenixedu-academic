@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.dataTransferObject.projectsManagement;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.domain.projectsManagement.IMovementReport;
 import net.sourceforge.fenixedu.domain.projectsManagement.IMovementReportLine;
 import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
@@ -24,7 +23,7 @@ import org.apache.poi.hssf.util.Region;
  * @author Susana Fernandes
  * 
  */
-public class InfoMovementReport extends DataTranferObject implements IReportLine {
+public class InfoMovementReport extends InfoReportLine {
 
     private String parentMovementId;
 
@@ -144,19 +143,19 @@ public class InfoMovementReport extends DataTranferObject implements IReportLine
     public void getLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
         HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 2);
         HSSFCell cell = row.createCell((short) 0);
-        cell.setCellValue("Id Mov");
+        cell.setCellValue(getString("label.idMov"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 1);
-        cell.setCellValue("Rúbrica");
+        cell.setCellValue(getString("label.rubric"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 2);
-        cell.setCellValue("Tipo");
+        cell.setCellValue(getString("label.type"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 3);
-        cell.setCellValue("Data");
+        cell.setCellValue(getString("label.date"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 4);
-        cell.setCellValue("Descrição");
+        cell.setCellValue(getString("label.description"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 5);
         cell.setCellStyle(excelStyle.getHeaderStyle());
@@ -166,7 +165,7 @@ public class InfoMovementReport extends DataTranferObject implements IReportLine
         cell.setCellStyle(excelStyle.getHeaderStyle());
         sheet.addMergedRegion(new Region(row.getRowNum(), (short) 4, row.getRowNum(), (short) 7));
         cell = row.createCell((short) 8);
-        cell.setCellValue("Total");
+        cell.setCellValue(getString("label.total"));
         cell.setCellStyle(excelStyle.getHeaderStyle());
 
         row = sheet.createRow(sheet.getLastRowNum() + 1);
@@ -209,7 +208,7 @@ public class InfoMovementReport extends DataTranferObject implements IReportLine
         }
         row = sheet.createRow(sheet.getLastRowNum() + 2);
         cell = row.createCell((short) 0);
-        cell.setCellValue("Total:");
+        cell.setCellValue(getString("label.total") + ":");
         cell.setCellStyle(excelStyle.getLabelStyle());
         sheet.addMergedRegion(new Region(row.getRowNum(), (short) 0, row.getRowNum(), (short) 2));
         cell = row.createCell((short) 3);
@@ -220,7 +219,7 @@ public class InfoMovementReport extends DataTranferObject implements IReportLine
             cell.setCellStyle(excelStyle.getDoubleStyle());
         row = sheet.createRow(sheet.getLastRowNum() + 1);
         cell = row.createCell((short) 0);
-        cell.setCellValue("Total Executado/Justificado:");
+        cell.setCellValue(getString("label.totalExecuted"));
         cell.setCellStyle(excelStyle.getLabelStyle());
         sheet.addMergedRegion(new Region(row.getRowNum(), (short) 0, row.getRowNum(), (short) 2));
         cell = row.createCell((short) 3);
@@ -231,7 +230,7 @@ public class InfoMovementReport extends DataTranferObject implements IReportLine
             cell.setCellStyle(excelStyle.getDoubleStyle());
         row = sheet.createRow(sheet.getLastRowNum() + 1);
         cell = row.createCell((short) 0);
-        cell.setCellValue("Por Executar/Justificar:");
+        cell.setCellValue(getString("label.forExecuted"));
         cell.setCellStyle(excelStyle.getLabelStyle());
         sheet.addMergedRegion(new Region(row.getRowNum(), (short) 0, row.getRowNum(), (short) 2));
         cell = row.createCell((short) 3);
@@ -247,13 +246,13 @@ public class InfoMovementReport extends DataTranferObject implements IReportLine
     public void getTotalLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
         HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 2);
         HSSFCell cell = row.createCell((short) 0);
-        cell.setCellValue("Resumo");
+        cell.setCellValue(getString("link.summary"));
         cell.setCellStyle(excelStyle.getTitleStyle());
         sheet.addMergedRegion(new Region(row.getRowNum(), (short) 0, row.getRowNum(), (short) getNumberOfColumns()));
 
         row = sheet.createRow(sheet.getLastRowNum() + 1);
         cell = row.createCell((short) 0);
-        cell.setCellValue("Total:");
+        cell.setCellValue(getString("label.total") + ":");
         cell.setCellStyle(excelStyle.getLabelStyle());
         sheet.addMergedRegion(new Region(row.getRowNum(), (short) 0, row.getRowNum(), (short) 2));
         cell = row.createCell((short) 3);
@@ -264,7 +263,7 @@ public class InfoMovementReport extends DataTranferObject implements IReportLine
 
         row = sheet.createRow(sheet.getLastRowNum() + 1);
         cell = row.createCell((short) 0);
-        cell.setCellValue("Executados/Justificados:");
+        cell.setCellValue(getString("label.executedOrJustified"));
         cell.setCellStyle(excelStyle.getLabelStyle());
         sheet.addMergedRegion(new Region(row.getRowNum(), (short) 0, row.getRowNum(), (short) 2));
         cell = row.createCell((short) 3);
@@ -275,7 +274,7 @@ public class InfoMovementReport extends DataTranferObject implements IReportLine
 
         row = sheet.createRow(sheet.getLastRowNum() + 1);
         cell = row.createCell((short) 0);
-        cell.setCellValue("Por Executar/Justificar:");
+        cell.setCellValue(getString("label.forExecuted"));
         cell.setCellStyle(excelStyle.getLabelStyle());
         sheet.addMergedRegion(new Region(row.getRowNum(), (short) 0, row.getRowNum(), (short) 2));
         cell = row.createCell((short) 3);

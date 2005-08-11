@@ -5,6 +5,11 @@
 <h2><bean:message key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
 <span class="error"><html:errors/></span>
 <bean:write name="executionPeriodName"/>
+<p>
+	<html:link action="/createSites" paramId="executionPeriodID" paramName="executionPeriodId">
+		<bean:message key="link.create.sites.for.execution.period"/>
+	</html:link>
+</p>
 <html:form action="/editExecutionCourseChooseExDegree">
 	<input type="hidden" name="method" value="prepareEditExecutionCourse"/>
 	<html:hidden property="executionPeriod"/>

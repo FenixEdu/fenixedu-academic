@@ -10,8 +10,12 @@
 
 <h2><bean:message key="label.masterDegree.insertApplicationDocuments"/></h2>
 	<table>
-		<html:form action="/insertApplicationDocumentsService.do" enctype="multipart/form-data">
+		<html:form action="/insertApplicationDocuments.do" enctype="multipart/form-data">
 			<html:hidden property="page" value="1" />
+			<html:hidden property="method" value="insert" />
+			
+			<html:hidden property="candidateID" />
+			
 					<%
 						if (request.getAttribute("uploadStatus")!=null)
 						{

@@ -7,8 +7,15 @@
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <br />
 <logic:present name="<%=SessionConstants.ALL_INFO_VIEW_ROOM_SCHEDULE %>" scope="request">
-	<logic:iterate id="viewRoomSchedule" name="<%=SessionConstants.ALL_INFO_VIEW_ROOM_SCHEDULE %>" scope="request">
-		<h2 class="break-before"> </h2>
+	<logic:iterate id="viewRoomSchedule" name="<%=SessionConstants.ALL_INFO_VIEW_ROOM_SCHEDULE %>" scope="request" indexId="i">
+
+		<logic:equal name="i" value="0">
+			<table width="100%" cellspacing="0">
+		</logic:equal>
+		<logic:notEqual name="i" value="0">
+			<table class="break-before" width="100%" cellspacing="0">
+		</logic:notEqual>
+
 		<table width="100%" cellspacing="0">
 			<tr>
 				<td class="infoselected">

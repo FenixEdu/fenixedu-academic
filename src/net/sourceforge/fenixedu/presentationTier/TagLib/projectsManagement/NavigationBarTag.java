@@ -17,7 +17,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProjectReport;
+import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoReport;
 
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionMapping;
@@ -60,11 +60,11 @@ public class NavigationBarTag extends TagSupport {
     }
 
     public int doStartTag() {
-        InfoProjectReport infoProjectReport = (InfoProjectReport) pageContext.findAttribute(this.getLinesId());
+        InfoReport infoReport = (InfoReport) pageContext.findAttribute(this.getLinesId());
         int span = (new Integer((String) pageContext.findAttribute(this.getSpanId()))).intValue();
         int numberOfElements = (new Integer((String) pageContext.findAttribute(this.getNumberOfSpanElements()))).intValue();
 
-        int numberOfSpans = (int) Math.ceil((double) infoProjectReport.getLinesSize().intValue() / numberOfElements);
+        int numberOfSpans = (int) Math.ceil((double) infoReport.getLinesSize().intValue() / numberOfElements);
         StringBuffer navigationBar = new StringBuffer("");
 
         if (numberOfSpans > 1) {

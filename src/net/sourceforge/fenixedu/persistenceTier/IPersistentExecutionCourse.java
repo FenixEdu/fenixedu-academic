@@ -19,6 +19,8 @@ public interface IPersistentExecutionCourse extends IPersistentObject {
 
     public List readByExecutionPeriod(Integer executionPeriod, DegreeType curso)
             throws ExcepcaoPersistencia;
+    
+    public List readByExecutionPeriod(Integer executionPeriodID) throws ExcepcaoPersistencia;
 
     public List readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(
             Integer executionPeriodID, Integer degreeCurricularPlanID,

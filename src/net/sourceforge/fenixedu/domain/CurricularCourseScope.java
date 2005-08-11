@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 
 
 
@@ -129,4 +131,17 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
         }
 	}
 
+    public Boolean isActive(Date date) {
+    	Calendar calendar = Calendar.getInstance();
+    	calendar.setTime(date);
+    	CalendarDateComparator calendarDateComparator = new CalendarDateComparator();
+    	Boolean result = Boolean.FALSE;
+    	if(calendarDateComparator.compare(getBeginDate(), calendar) <= 0) {
+    		if(getEnd() == null || calendarDateComparator.compare(getEndDate(), calendar) >= 0) {
+    			result = Boolean.TRUE;
+			}
+    	}
+    	return result;
+    }
+    
 }

@@ -59,7 +59,7 @@
 		<tr>
 			<td class="box_cell">
 				<logic:iterate id="infoExecutionCourse" name="infoCurricularCourse" property="infoAssociatedExecutionCourses">
-					<logic:notEqual name="infoExecutionCourse" property="infoExecutionPeriod.infoExecutionYear.state.stateCode" value="NO">
+					<logic:notEqual name="infoExecutionCourse" property="infoExecutionPeriod.state.stateCode" value="NO">
 						<bean:define id="executionCourseID" name="infoExecutionCourse" property="idInternal" />
 						<p>
 						<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode=" + pageContext.findAttribute("executionCourseID").toString() + "&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)  %>"  >

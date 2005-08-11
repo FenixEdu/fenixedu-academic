@@ -24,10 +24,12 @@
 				type="org.apache.struts.validator.DynaValidatorForm"
       			dynamic="true">
 		<form-property name="username" type="java.lang.String"/>
+		<form-property name="method" type="java.lang.String"/>
 		<form-property name="cvFile" type="org.apache.struts.upload.FormFile"/>
 		<form-property name="cmiFile" type="org.apache.struts.upload.FormFile"/>
 		<form-property name="chFile" type="org.apache.struts.upload.FormFile"/>
 		<form-property name="chFile2" type="org.apache.struts.upload.FormFile"/>
+		<form-property name="candidateID" type="java.lang.Integer"/>		
 		<form-property name="page" type="java.lang.Integer"/>
 	  </form-bean>
 
@@ -140,13 +142,12 @@
       </action>     
 
       <!-- Action for Visualization Of the Candidate's Application Information -->
-      <action path="/insertApplicationDocuments" forward="/insertApplicationDocuments.jsp"/>      
-
-      <action path="/insertApplicationDocumentsService"
+      <action path="/insertApplicationDocuments"
 	     attribute="insertApplicationDocumentsForm"
 	          name="insertApplicationDocumentsForm"
-	         input="/insertApplicationDocuments.do"
+	         input="/insertApplicationDocuments.do?method=prepare"
 	      validate="true"
+	      parameter="method"
       	      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.candidate.InsertApplicationDocumentsAction">
       	  <forward name="chooseFile" path="/insertApplicationDocuments.jsp"/>
       </action>

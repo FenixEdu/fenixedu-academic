@@ -24,8 +24,8 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
  */
 public class PersistentRevenueReport extends PersistentReport implements IPersistentReport {
 
-    public List getCompleteReport(ReportType reportType, Integer projectCode) throws ExcepcaoPersistencia {
-        List result = new ArrayList();
+    public List<IRevenueReportLine> getCompleteReport(ReportType reportType, Integer projectCode) throws ExcepcaoPersistencia {
+        List<IRevenueReportLine> result = new ArrayList<IRevenueReportLine>();
 
         try {
             PersistentSuportOracle p = PersistentSuportOracle.getInstance();

@@ -19,4 +19,6 @@
 	<li class="navheader">Equivalências</li>
 	<li><html:link page="/prepareNotNeedToEnroll.do">Não necessita de fazer</html:link></li>
 	<li><html:link page="">Equivalências</html:link></li>
+	<li class="navheader">Currículos</li>
+	<li><html:link page="/curricularPlans/chooseCurricularPlan.faces"><bean:message key="link.consultCurriculum"/></html:link></li>
 </ul>     

@@ -4,18 +4,20 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.projectsManagement;
 
-import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.domain.projectsManagement.IAdiantamentosReportLine;
 import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.util.Region;
 
 /**
  * @author Susana Fernandes
  * 
  */
-public class InfoAdiantamentosReportLine extends DataTranferObject implements IReportLine {
+public class InfoAdiantamentosReportLine extends InfoReportLine {
 
     private Integer projectCode;
 
@@ -75,21 +77,42 @@ public class InfoAdiantamentosReportLine extends DataTranferObject implements IR
         return infoAdiantamentosReportLine;
     }
 
-    public Double getValue(int column) {
-        return null;
-    }
-
-    public void getHeaderToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
-    }
-
     public void getLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
+        int nextRow = sheet.getLastRowNum() + 2;
+        HSSFRow row = sheet.createRow(nextRow);
+        HSSFCell cell = row.createCell((short) 0);
+        cell.setCellValue(getString("label.total.adiantamentosReport"));
+        sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum(), (short) 2));
+        cell.setCellStyle(excelStyle.getLabelStyle());
+        cell = row.createCell((short) 3);
+        cell.setCellValue(getAdiantamentos().doubleValue());
+        if (getAdiantamentos().doubleValue() < 0)
+            cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
+        else
+            cell.setCellStyle(excelStyle.getDoubleStyle());
+        nextRow++;
+        row = sheet.createRow(nextRow);
+        cell = row.createCell((short) 0);
+        cell.setCellValue(getString("label.returnsExecuted.adiantamentosReport"));
+        sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum(), (short) 2));
+        cell.setCellStyle(excelStyle.getLabelStyle());
+        cell = row.createCell((short) 3);
+        cell.setCellValue(getJustifications().doubleValue());
+        if (getJustifications().doubleValue() < 0)
+            cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
+        else
+            cell.setCellStyle(excelStyle.getDoubleStyle());
+        nextRow++;
+        row = sheet.createRow(nextRow);
+        cell = row.createCell((short) 0);
+        cell.setCellValue(getString("label.total"));
+        sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum(), (short) 2));
+        cell.setCellStyle(excelStyle.getLabelStyle());
+        cell = row.createCell((short) 3);
+        cell.setCellValue(getTotal().doubleValue());
+        if (getTotal().doubleValue() < 0)
+            cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
+        else
+            cell.setCellStyle(excelStyle.getDoubleStyle());
     }
-
-    public void getTotalLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
-    }
-
-    public int getNumberOfColumns() {
-        return 0;
-    }
-
 }

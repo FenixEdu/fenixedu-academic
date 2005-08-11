@@ -48,9 +48,11 @@
 			<td>
 				<strong><bean:message key="property.curricularCourse.branch" /></strong>
 			</td>
-			<td>
-				<bean:write name="infoCandidateRegistration" property="infoStudentCurricularPlan.infoBranch.name"/>
-			</td>
+			<logic:notEmpty name="infoCandidateRegistration" property="infoStudentCurricularPlan.infoBranch">
+				<td>
+					<bean:write name="infoCandidateRegistration" property="infoStudentCurricularPlan.infoBranch.name"/>
+				</td>
+			</logic:notEmpty>
 		</tr>			
 	</table>
 	
@@ -72,9 +74,6 @@
 	           		<td>
             			<bean:write name="enrolment" property="infoCurricularCourse.name"/>
             		</td>
-	           	<%--	<td>
-            			<bean:write name="enrolment" property="infoCurricularCourseScope.infoBranch.name"/>
-            		</td>--%>
 				</tr>
 	       	</logic:iterate>
 		</table>

@@ -169,8 +169,10 @@
 					this.form.guideSituationID.value='<bean:write name="guideSituation" property="idInternal" />';
 				</bean:define>
 				
-				<td colspan="4"><bean:write name="guideSituation" property="remarks" />
+				<td colspan="5"><bean:write name="guideSituation" property="remarks" />
 				- <bean:write name="guideSituation" property="idInternal" />
+				- <bean:write name="guideSituation" property="situation.name" />
+				- <bean:write name="guideSituation" property="state" />
 				- <html:submit value="Apagar Situação" onclick="<%= behavior %>" />	</td>	
 			</tr>		
 		</logic:iterate>

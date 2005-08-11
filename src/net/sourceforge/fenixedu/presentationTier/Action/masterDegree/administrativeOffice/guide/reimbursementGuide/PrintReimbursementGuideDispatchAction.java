@@ -34,7 +34,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- *  
+ * 
  */
 public class PrintReimbursementGuideDispatchAction extends FenixDispatchAction {
 
@@ -89,7 +89,9 @@ public class PrintReimbursementGuideDispatchAction extends FenixDispatchAction {
 
         request.setAttribute(SessionConstants.DATE, formatedDate);
         request.setAttribute(SessionConstants.REIMBURSEMENT_GUIDE, infoReimbursementGuide);
-        request.setAttribute(SessionConstants.STUDENT, infoStudent);
+        if (infoStudent != null) {
+            request.setAttribute(SessionConstants.STUDENT, infoStudent);
+        }
 
         return mapping.findForward("start");
 

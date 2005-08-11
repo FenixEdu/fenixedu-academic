@@ -47,11 +47,9 @@ public class ExecutionPeriodsEnrollmentFenix extends Filtro {
 
             if (executionPeriod.getIdInternal().intValue() >= EXECUTION_PERIOD_ENROLMENT_FENIX) {
                 newRes.add(executionPeriod);
-            }
-
-            // master degree extra execution periods
-            if (executionPeriod.getBeginDate().after(this.masterDegreeFirstExecutionPeriodDate)
+            } else if (executionPeriod.getBeginDate().after(this.masterDegreeFirstExecutionPeriodDate)
                     && degreeType != null && degreeType.equals(DegreeType.MASTER_DEGREE)) {
+                // master degree extra execution periods
                 newRes.add((executionPeriod));
             }
         }

@@ -121,25 +121,25 @@ public interface IOpeningProjectFileReport extends Serializable {
 
     public abstract void setProjectCode(Integer projectCode);
 
-    public abstract List getProjectFinancialEntities();
+    public abstract List<IRubric> getProjectFinancialEntities();
 
-    public abstract void setProjectFinancialEntities(List projectFinancialEntities);
+    public abstract void setProjectFinancialEntities(List<IRubric> projectFinancialEntities);
 
-    public abstract List getProjectInvestigationTeam();
+    public abstract List<IRubric> getProjectInvestigationTeam();
 
-    public abstract void setProjectInvestigationTeam(List projectInvestigationTeam);
+    public abstract void setProjectInvestigationTeam(List<IRubric> projectInvestigationTeam);
 
-    public abstract List getProjectMembersBudget();
+    public abstract List<IProjectMemberBudget> getProjectMembersBudget();
 
-    public abstract void setProjectMembersBudget(List projectMembersBudget);
+    public abstract void setProjectMembersBudget(List<IProjectMemberBudget> projectMembersBudget);
 
     public abstract String getProjectOrigin();
 
     public abstract void setProjectOrigin(String projectOrigin);
 
-    public abstract List getProjectRubricBudget();
+    public abstract List<IRubric> getProjectRubricBudget();
 
-    public abstract void setProjectRubricBudget(List projectRubricBudget);
+    public abstract void setProjectRubricBudget(List<IRubric> projectRubricBudget);
 
     public abstract String getProjectType();
 

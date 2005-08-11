@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentAndInfoBranch;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.DomainFactory;
@@ -256,8 +256,9 @@ public class RegisterCandidate implements IService {
         InfoCandidateRegistration infoCandidateRegistration = new InfoCandidateRegistration();
         infoCandidateRegistration.setInfoMasterDegreeCandidate(InfoMasterDegreeCandidateWithInfoPerson
                 .newInfoFromDomain(masterDegreeCandidate));
-        infoCandidateRegistration.setInfoStudentCurricularPlan(Cloner
-                .copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlanResult));
+        infoCandidateRegistration
+                .setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentAndInfoBranch
+                        .newInfoFromDomain(studentCurricularPlanResult));
         infoCandidateRegistration.setEnrolments(new ArrayList());
         Iterator iteratorSCPs = studentCurricularPlanResult.getEnrolments().iterator();
         while (iteratorSCPs.hasNext()) {
