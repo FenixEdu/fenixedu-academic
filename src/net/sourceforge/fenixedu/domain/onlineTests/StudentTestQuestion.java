@@ -20,4 +20,11 @@ public class StudentTestQuestion extends StudentTestQuestion_Base {
         this.formula = formula;
     }
 
+    public void delete() {
+        removeDistributedTest();
+        removeQuestion();
+        removeStudent();
+        super.deleteDomainObject();
+    }
+
 }

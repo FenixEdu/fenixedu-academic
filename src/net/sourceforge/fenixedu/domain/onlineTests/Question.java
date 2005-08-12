@@ -8,4 +8,10 @@ package net.sourceforge.fenixedu.domain.onlineTests;
  * @author Susana Fernandes
  */
 public class Question extends Question_Base {
+
+    public void delete() {
+        removeMetadata();
+        deleteDomainObject();
+    }
+
 }
