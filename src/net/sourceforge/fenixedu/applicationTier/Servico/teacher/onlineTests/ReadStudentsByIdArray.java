@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
@@ -28,8 +29,8 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadStudentsByIdArray implements IService {
 
-    public List<InfoStudent> run(Integer executionCourseId, String[] selected, Boolean insertByShifts)
-            throws FenixServiceException, ExcepcaoPersistencia {
+    public List<InfoStudent> run(Integer executionCourseId, String[] selected, Boolean insertByShifts) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
@@ -38,35 +39,33 @@ public class ReadStudentsByIdArray implements IService {
             if (insertByShifts.booleanValue())
                 studentList = returnStudentsFromShiftsArray(persistentSuport, selected);
             else
-                studentList = returnStudentsFromStudentsArray(persistentSuport, selected,
-                        executionCourseId);
+                studentList = returnStudentsFromStudentsArray(persistentSuport, selected, executionCourseId);
         }
         return studentList;
     }
 
-    public List<InfoStudent> run(Integer executionCourseId, ArrayList lavelValueBeanList)
-            throws FenixServiceException, ExcepcaoPersistencia {
-
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+    public List<InfoStudent> run(Integer executionCourseId, ArrayList lavelValueBeanList) throws FenixServiceException, ExcepcaoPersistencia {
+        final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         List<InfoStudent> studentList = new ArrayList<InfoStudent>();
         for (LabelValueBean lvb : (ArrayList<LabelValueBean>) lavelValueBeanList) {
             if (!lvb.getLabel().equals(" (Ficha Fechada)")) {
                 Integer number = new Integer(lvb.getValue());
-                studentList.add(InfoStudent.newInfoFromDomain((IStudent) persistentSuport
-                        .getIPersistentStudent().readAllBetweenNumbers(number, number).get(0)));
+                studentList.add(InfoStudent.newInfoFromDomain((IStudent) persistentSuport.getIPersistentStudent().readAllBetweenNumbers(number,
+                        number).get(0)));
             }
         }
 
         return studentList;
     }
 
-    private List<InfoStudent> returnStudentsFromShiftsArray(ISuportePersistente persistentSuport,
-            String[] shifts) throws FenixServiceException, ExcepcaoPersistencia {
+    private List<InfoStudent> returnStudentsFromShiftsArray(ISuportePersistente persistentSuport, String[] shifts) throws FenixServiceException,
+            ExcepcaoPersistencia {
+        final ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
         List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
         ITurnoPersistente persistentShift = persistentSuport.getITurnoPersistente();
         for (int i = 0; i < shifts.length; i++) {
-            if (shifts[i].equals("Todos os Turnos")) {
+            if (shifts[i].equals(bundle.getString("label.allShifts"))) {
                 continue;
             }
             IShift shift = (IShift) persistentShift.readByOID(Shift.class, new Integer(shifts[i]));
@@ -81,22 +80,21 @@ public class ReadStudentsByIdArray implements IService {
         return infoStudentList;
     }
 
-    private List<InfoStudent> returnStudentsFromStudentsArray(ISuportePersistente persistentSuport,
-            String[] students, Integer executionCourseId) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    private List<InfoStudent> returnStudentsFromStudentsArray(ISuportePersistente persistentSuport, String[] students, Integer executionCourseId)
+            throws FenixServiceException, ExcepcaoPersistencia {
+        final ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
         List<InfoStudent> studentsList = new ArrayList<InfoStudent>();
 
         for (int i = 0; i < students.length; i++) {
-            if (students[i].equals("Todos os Alunos")) {
-                List<IAttends> attendList = persistentSuport.getIFrequentaPersistente()
-                        .readByExecutionCourse(executionCourseId);
+            if (students[i].equals(bundle.getString("label.allStudents"))) {
+                List<IAttends> attendList = persistentSuport.getIFrequentaPersistente().readByExecutionCourse(executionCourseId);
                 for (IAttends attend : attendList) {
                     studentsList.add(InfoStudent.newInfoFromDomain(attend.getAluno()));
                 }
                 break;
             }
-            InfoStudent infoStudent = InfoStudent.newInfoFromDomain((IStudent) persistentSuport
-                    .getIPersistentStudent().readByOID(Student.class, new Integer(students[i])));
+            InfoStudent infoStudent = InfoStudent.newInfoFromDomain((IStudent) persistentSuport.getIPersistentStudent().readByOID(Student.class,
+                    new Integer(students[i])));
             if (!studentsList.contains(infoStudent))
                 studentsList.add(infoStudent);
 

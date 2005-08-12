@@ -26,42 +26,35 @@ public class ReadQuestion implements IService {
 
     private String path = new String();
 
-    public InfoQuestion run(Integer executionCourseId, Integer metadataId, Integer questionId, String path) throws FenixServiceException {
+    public InfoQuestion run(Integer executionCourseId, Integer metadataId, Integer questionId, String path) throws FenixServiceException,
+            ExcepcaoPersistencia {
         this.path = path.replace('\\', '/');
-        try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IQuestion question = null;
-            if (questionId == null || questionId.equals(new Integer(-1))) {
-                if (metadataId == null)
-                    throw new InvalidArgumentsServiceException();
-                IMetadata metadata = (IMetadata) persistentSuport.getIPersistentMetadata().readByOID(Metadata.class, metadataId);
-                if (metadata == null) {
-                    throw new InvalidArgumentsServiceException();
-                }
-                if (metadata.getVisibleQuestions() != null && metadata.getVisibleQuestions().size() != 0) {
-                    question = metadata.getVisibleQuestions().get(0);
-                } else {
-                    throw new InvalidArgumentsServiceException();
-                }
-            } else {
-                question = (IQuestion) persistentSuport.getIPersistentQuestion().readByOID(Question.class, questionId);
-            }
-            if (question == null) {
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IQuestion question = null;
+        if (questionId == null || questionId.equals(new Integer(-1))) {
+            if (metadataId == null)
+                throw new InvalidArgumentsServiceException();
+            IMetadata metadata = (IMetadata) persistentSuport.getIPersistentMetadata().readByOID(Metadata.class, metadataId);
+            if (metadata == null || metadata.getVisibleQuestions() == null && metadata.getVisibleQuestions().size() == 0) {
                 throw new InvalidArgumentsServiceException();
             }
-            InfoQuestion infoQuestion = InfoQuestionWithInfoMetadata.newInfoFromDomain(question);
-            ParseQuestion parse = new ParseQuestion();
-            try {
-                infoQuestion = parse.parseQuestion(infoQuestion.getXmlFile(), infoQuestion, this.path);
-                if (infoQuestion.getQuestionType().getType().equals(new Integer(QuestionType.LID)))
-                    infoQuestion.setResponseProcessingInstructions(parse.newResponseList(infoQuestion.getResponseProcessingInstructions(),
-                            infoQuestion.getOptions()));
-            } catch (Exception e) {
-                throw new FenixServiceException(e);
-            }
-            return infoQuestion;
-        } catch (ExcepcaoPersistencia e) {
+            question = metadata.getVisibleQuestions().get(0);
+        } else {
+            question = (IQuestion) persistentSuport.getIPersistentQuestion().readByOID(Question.class, questionId);
+        }
+        if (question == null) {
+            throw new InvalidArgumentsServiceException();
+        }
+        InfoQuestion infoQuestion = InfoQuestionWithInfoMetadata.newInfoFromDomain(question);
+        ParseQuestion parse = new ParseQuestion();
+        try {
+            infoQuestion = parse.parseQuestion(infoQuestion.getXmlFile(), infoQuestion, this.path);
+            if (infoQuestion.getQuestionType().getType().equals(new Integer(QuestionType.LID)))
+                infoQuestion.setResponseProcessingInstructions(parse.newResponseList(infoQuestion.getResponseProcessingInstructions(), infoQuestion
+                        .getOptions()));
+        } catch (Exception e) {
             throw new FenixServiceException(e);
         }
+        return infoQuestion;
     }
 }
