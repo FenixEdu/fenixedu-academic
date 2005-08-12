@@ -64,136 +64,129 @@ public class InsertStudentTestResponses implements IService {
     private String path;
 
     public InfoSiteStudentTestFeedback run(String userName, Integer studentNumber, Integer distributedTestId, Response[] response, String path)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
 
         String logIdString = StringAppender.append("student nº ", studentNumber.toString(), " testId ", distributedTestId.toString());
 
         InfoSiteStudentTestFeedback infoSiteStudentTestFeedback = new InfoSiteStudentTestFeedback();
         this.path = path.replace('\\', '/');
-        try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IStudent student = persistentSuport.getIPersistentStudent().readByUsername(userName);
-            if (student == null)
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IStudent student = persistentSuport.getIPersistentStudent().readByUsername(userName);
+        if (student == null)
+            throw new FenixServiceException();
+        if (student.getNumber().compareTo(studentNumber) != 0)
+            throw new NotAuthorizedStudentToDoTestException();
+
+        IDistributedTest distributedTest = (IDistributedTest) persistentSuport.getIPersistentDistributedTest().readByOID(DistributedTest.class,
+                distributedTestId);
+        if (distributedTest == null)
+            throw new FenixServiceException();
+        String event = getLogString(response);
+
+        double totalMark = 0;
+        int responseNumber = 0;
+        int notResponseNumber = 0;
+        List<String> errors = new ArrayList<String>();
+
+        if (compareDates(distributedTest.getEndDate(), distributedTest.getEndHour())) {
+            List<IStudentTestQuestion> studentTestQuestionList = persistentSuport.getIPersistentStudentTestQuestion()
+                    .readByStudentAndDistributedTest(student.getIdInternal(), distributedTest.getIdInternal());
+            if (studentTestQuestionList.size() == 0)
                 throw new FenixServiceException();
-            if (!student.getPerson().getUsername().equalsIgnoreCase(userName))
-                throw new NotAuthorizedStudentToDoTestException();
+            IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport.getIPersistentStudentTestQuestion();
+            ParseQuestion parse = new ParseQuestion();
 
-            IDistributedTest distributedTest = (IDistributedTest) persistentSuport.getIPersistentDistributedTest().readByOID(DistributedTest.class,
-                    distributedTestId);
-            if (distributedTest == null)
-                throw new FenixServiceException();
-            String event = getLogString(response);
+            for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+                InfoStudentTestQuestion infoStudentTestQuestion = InfoStudentTestQuestionWithInfoQuestion.newInfoFromDomain(studentTestQuestion);
+                infoStudentTestQuestion.setResponse(response[studentTestQuestion.getTestQuestionOrder().intValue() - 1]);
 
-            double totalMark = 0;
-            int responseNumber = 0;
-            int notResponseNumber = 0;
-            List<String> errors = new ArrayList<String>();
+                if (logger.isDebugEnabled())
+                    logger.debug(StringAppender.append(logIdString, " infoStudentTestQuestion.getResonse()= ",
+                            getLogString(new Response[] { infoStudentTestQuestion.getResponse() })));
 
-            if (compareDates(distributedTest.getEndDate(), distributedTest.getEndHour())) {
-                List<IStudentTestQuestion> studentTestQuestionList = persistentSuport.getIPersistentStudentTestQuestion()
-                        .readByStudentAndDistributedTest(student.getIdInternal(), distributedTest.getIdInternal());
-                if (studentTestQuestionList.size() == 0)
-                    throw new FenixServiceException();
-                IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport.getIPersistentStudentTestQuestion();
-                ParseQuestion parse = new ParseQuestion();
-
-                for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
-                    persistentStudentTestQuestion.simpleLockWrite(studentTestQuestion);
-
-                    InfoStudentTestQuestion infoStudentTestQuestion = InfoStudentTestQuestionWithInfoQuestion.newInfoFromDomain(studentTestQuestion);
-                    infoStudentTestQuestion.setResponse(response[studentTestQuestion.getTestQuestionOrder().intValue() - 1]);
-
-                    if (logger.isDebugEnabled())
-                        logger.debug(StringAppender.append(logIdString, " infoStudentTestQuestion.getResonse()= ",
-                                getLogString(new Response[] { infoStudentTestQuestion.getResponse() })));
-
-                    if (infoStudentTestQuestion.getResponse().isResponsed()) {
-                        responseNumber++;
-                        if (studentTestQuestion.getResponse() != null && distributedTest.getTestType().getType().intValue() == TestType.EVALUATION) {
-                            // não pode aceitar nova resposta
-                        } else {
-                            try {
-                                infoStudentTestQuestion = parse.parseStudentTestQuestion(infoStudentTestQuestion, this.path);
-                                infoStudentTestQuestion.setQuestion(correctQuestionValues(infoStudentTestQuestion.getQuestion(), new Double(
-                                        infoStudentTestQuestion.getTestQuestionValue().doubleValue())));
-                            } catch (Exception e) {
-                                throw new FenixServiceException(e);
-                            }
-
-                            IQuestionCorrectionStrategyFactory questionCorrectionStrategyFactory = QuestionCorrectionStrategyFactory.getInstance();
-                            IQuestionCorrectionStrategy questionCorrectionStrategy = questionCorrectionStrategyFactory
-                                    .getQuestionCorrectionStrategy(infoStudentTestQuestion);
-
-                            String error = questionCorrectionStrategy.validResponse(infoStudentTestQuestion);
-                            if (error == null) {
-                                if ((!distributedTest.getTestType().equals(new TestType(TestType.INQUIRY)))
-                                        && infoStudentTestQuestion.getQuestion().getResponseProcessingInstructions().size() != 0) {
-
-                                    infoStudentTestQuestion = questionCorrectionStrategy.getMark(infoStudentTestQuestion);
-                                }
-                                totalMark += infoStudentTestQuestion.getTestQuestionMark().doubleValue();
-                                ByteArrayOutputStream out = new ByteArrayOutputStream();
-                                XMLEncoder encoder = new XMLEncoder(out);
-
-                                if (logger.isDebugEnabled())
-                                    logger.debug(StringAppender.append(logIdString, " order= ", infoStudentTestQuestion.getTestQuestionOrder()
-                                            .toString(), " ", dateFormat.format(Calendar.getInstance().getTime()),
-                                            " before write: infoStudentTestQuestion.getResonse()= ",
-                                            getLogString(new Response[] { infoStudentTestQuestion.getResponse() })));
-
-                                encoder.writeObject(infoStudentTestQuestion.getResponse());
-                                encoder.close();
-
-                                final String outString = out.toString();
-                                if (logger.isDebugEnabled())
-                                    logger.debug(StringAppender.append(logIdString, " out.toString()= ", outString));
-
-                                studentTestQuestion.setResponse(outString);
-                                studentTestQuestion.setTestQuestionMark(infoStudentTestQuestion.getTestQuestionMark());
-
-                            } else {
-                                notResponseNumber++;
-                                responseNumber--;
-                                errors.add(error);
-                            }
-                        }
+                if (infoStudentTestQuestion.getResponse().isResponsed()) {
+                    responseNumber++;
+                    if (studentTestQuestion.getResponse() != null && distributedTest.getTestType().getType().intValue() == TestType.EVALUATION) {
+                        // não pode aceitar nova resposta
                     } else {
-                        if (studentTestQuestion.getResponse() != null)
-                            responseNumber++;
-                        else
+                        try {
+                            infoStudentTestQuestion = parse.parseStudentTestQuestion(infoStudentTestQuestion, this.path);
+                            infoStudentTestQuestion.setQuestion(correctQuestionValues(infoStudentTestQuestion.getQuestion(), new Double(
+                                    infoStudentTestQuestion.getTestQuestionValue().doubleValue())));
+                        } catch (Exception e) {
+                            throw new FenixServiceException(e);
+                        }
+
+                        IQuestionCorrectionStrategyFactory questionCorrectionStrategyFactory = QuestionCorrectionStrategyFactory.getInstance();
+                        IQuestionCorrectionStrategy questionCorrectionStrategy = questionCorrectionStrategyFactory
+                                .getQuestionCorrectionStrategy(infoStudentTestQuestion);
+
+                        String error = questionCorrectionStrategy.validResponse(infoStudentTestQuestion);
+                        if (error == null) {
+                            if ((!distributedTest.getTestType().equals(new TestType(TestType.INQUIRY)))
+                                    && infoStudentTestQuestion.getQuestion().getResponseProcessingInstructions().size() != 0) {
+
+                                infoStudentTestQuestion = questionCorrectionStrategy.getMark(infoStudentTestQuestion);
+                            }
+                            totalMark += infoStudentTestQuestion.getTestQuestionMark().doubleValue();
+                            ByteArrayOutputStream out = new ByteArrayOutputStream();
+                            XMLEncoder encoder = new XMLEncoder(out);
+
+                            if (logger.isDebugEnabled())
+                                logger.debug(StringAppender.append(logIdString, " order= ",
+                                        infoStudentTestQuestion.getTestQuestionOrder().toString(), " ", dateFormat.format(Calendar.getInstance()
+                                                .getTime()), " before write: infoStudentTestQuestion.getResonse()= ",
+                                        getLogString(new Response[] { infoStudentTestQuestion.getResponse() })));
+
+                            encoder.writeObject(infoStudentTestQuestion.getResponse());
+                            encoder.close();
+
+                            final String outString = out.toString();
+                            if (logger.isDebugEnabled())
+                                logger.debug(StringAppender.append(logIdString, " out.toString()= ", outString));
+
+                            studentTestQuestion.setResponse(outString);
+                            studentTestQuestion.setTestQuestionMark(infoStudentTestQuestion.getTestQuestionMark());
+
+                        } else {
                             notResponseNumber++;
-
+                            responseNumber--;
+                            errors.add(error);
+                        }
                     }
-                }
-                if (distributedTest.getTestType().equals(new TestType(TestType.EVALUATION))) {
-                    IOnlineTest onlineTest = (IOnlineTest) persistentSuport.getIPersistentOnlineTest().readByDistributedTest(distributedTest);
-                    IAttends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student,
-                            (IExecutionCourse) distributedTest.getTestScope().getDomainObject());
-                    IMark mark = persistentSuport.getIPersistentMark().readBy(onlineTest, attend);
+                } else {
+                    if (studentTestQuestion.getResponse() != null)
+                        responseNumber++;
+                    else
+                        notResponseNumber++;
 
-                    if (mark == null) {
-                        mark = DomainFactory.makeMark();
-                        mark.setAttend(attend);
-                        mark.setEvaluation(onlineTest);
-                    }
-                    persistentSuport.getIPersistentMark().simpleLockWrite(mark);
-                    mark.setMark(new java.text.DecimalFormat("#0.##").format(totalMark));
                 }
+            }
+            if (distributedTest.getTestType().equals(new TestType(TestType.EVALUATION))) {
+                IOnlineTest onlineTest = (IOnlineTest) persistentSuport.getIPersistentOnlineTest().readByDistributedTest(distributedTestId);
+                IAttends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student,
+                        (IExecutionCourse) distributedTest.getTestScope().getDomainObject());
+                IMark mark = persistentSuport.getIPersistentMark().readBy(onlineTest, attend);
 
-                IPersistentStudentTestLog persistentStudentTestLog = persistentSuport.getIPersistentStudentTestLog();
-                IStudentTestLog studentTestLog = DomainFactory.makeStudentTestLog();
-                studentTestLog.setDistributedTest(distributedTest);
-                studentTestLog.setStudent(student);
-                studentTestLog.setDate(Calendar.getInstance().getTime());
-                studentTestLog.setEvent(event);
-            } else
-                throw new NotAuthorizedException();
-            infoSiteStudentTestFeedback.setResponseNumber(new Integer(responseNumber));
-            infoSiteStudentTestFeedback.setNotResponseNumber(new Integer(notResponseNumber));
-            infoSiteStudentTestFeedback.setErrors(errors);
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
+                if (mark == null) {
+                    mark = DomainFactory.makeMark();
+                    mark.setAttend(attend);
+                    mark.setEvaluation(onlineTest);
+                }
+                mark.setMark(new java.text.DecimalFormat("#0.##").format(totalMark));
+            }
+
+            IPersistentStudentTestLog persistentStudentTestLog = persistentSuport.getIPersistentStudentTestLog();
+            IStudentTestLog studentTestLog = DomainFactory.makeStudentTestLog();
+            studentTestLog.setDistributedTest(distributedTest);
+            studentTestLog.setStudent(student);
+            studentTestLog.setDate(Calendar.getInstance().getTime());
+            studentTestLog.setEvent(event);
+        } else
+            throw new NotAuthorizedException();
+        infoSiteStudentTestFeedback.setResponseNumber(new Integer(responseNumber));
+        infoSiteStudentTestFeedback.setNotResponseNumber(new Integer(notResponseNumber));
+        infoSiteStudentTestFeedback.setErrors(errors);
         return infoSiteStudentTestFeedback;
     }
 
