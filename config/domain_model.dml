@@ -1538,9 +1538,9 @@ class net.sourceforge.fenixedu.domain.onlineTests.Metadata extends net.sourcefor
     String secondarySubject;
     
     interface "
-        public abstract java.util.Calendar getLearningTime();
+    public abstract java.util.Calendar getLearningTime();
 
-	    public abstract void setLearningTime(java.util.Calendar calendar);
+    public abstract void setLearningTime(java.util.Calendar calendar);
     "
 }
 
@@ -2007,7 +2007,7 @@ class net.sourceforge.fenixedu.domain.onlineTests.Question extends net.sourcefor
     String xmlFileName;
     
     interface "
-	    public abstract boolean equals(Object obj);
+    public void delete();
     "
 }
 
@@ -2545,6 +2545,7 @@ class net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion extends ne
 
     public abstract void setCorrectionFormula(net.sourceforge.fenixedu.util.tests.CorrectionFormula formula);
     
+    public void delete();
     "
 }
 
@@ -2667,6 +2668,8 @@ class net.sourceforge.fenixedu.domain.onlineTests.Test extends net.sourceforge.f
     Integer numberOfQuestions;
     
     interface "
+    public void insertTestQuestion(IQuestion question, Integer testQuestionOrder, Double testQuestionValue, net.sourceforge.fenixedu.util.tests.CorrectionFormula formula);
+    
     public void deleteTestQuestion(ITestQuestion testQuestion);
     "
 }
@@ -2682,6 +2685,8 @@ class net.sourceforge.fenixedu.domain.onlineTests.TestQuestion extends net.sourc
 
   	public abstract void setCorrectionFormula(net.sourceforge.fenixedu.util.tests.CorrectionFormula formula);
     	
+    public void editTestQuestion(Integer newTestQuestionOrder, Double newTestQuestionValue, net.sourceforge.fenixedu.util.tests.CorrectionFormula newFormula);
+    
   	public void delete();
     "
 }

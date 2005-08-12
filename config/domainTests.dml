@@ -72,9 +72,7 @@ class net.sourceforge.fenixedu.domain.onlineTests.Metadata extends net.sourcefor
 
 
 class net.sourceforge.fenixedu.domain.onlineTests.OnlineTest extends net.sourceforge.fenixedu.domain.Evaluation {
-    String ojbConcreteClass;
     Integer keyDistributedTest;
-    String publishmentMessage;
 }
 
 
@@ -124,6 +122,12 @@ class net.sourceforge.fenixedu.domain.onlineTests.Test extends net.sourceforge.f
     Date lastModifiedDate;
     Integer keyTestScope;
     Integer numberOfQuestions;
+    
+    interface "
+    public void insertTestQuestion(IQuestion question, Integer testQuestionOrder, Double testQuestionValue, net.sourceforge.fenixedu.util.tests.CorrectionFormula formula);
+    
+    public void deleteTestQuestion(ITestQuestion testQuestion);
+    "
 }
 
 
@@ -134,9 +138,13 @@ class net.sourceforge.fenixedu.domain.onlineTests.TestQuestion extends net.sourc
     Double testQuestionValue;
     
     interface "
-        public abstract net.sourceforge.fenixedu.util.tests.CorrectionFormula getCorrectionFormula();
+    public abstract net.sourceforge.fenixedu.util.tests.CorrectionFormula getCorrectionFormula();
 
-    	public abstract void setCorrectionFormula(net.sourceforge.fenixedu.util.tests.CorrectionFormula formula);
+    public abstract void setCorrectionFormula(net.sourceforge.fenixedu.util.tests.CorrectionFormula formula);
+    	
+    public void editTestQuestion(Integer newTestQuestionOrder, Double newTestQuestionValue, net.sourceforge.fenixedu.util.tests.CorrectionFormula newFormula);
+    
+    public void delete();
     "
 }
 
