@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.dataTransferObject.onlineTests;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.onlineTests.ITest;
@@ -26,8 +27,7 @@ public class InfoTest extends InfoObject {
 
     private InfoTestScope infoTestScope;
 
-    public InfoTest() {
-    }
+    private List<InfoTestQuestion> infoTestQuestions;
 
     public InfoTestScope getInfoTestScope() {
         return infoTestScope;
@@ -75,6 +75,14 @@ public class InfoTest extends InfoObject {
 
     public void setInformation(String string) {
         information = string;
+    }
+
+    public List<InfoTestQuestion> getInfoTestQuestions() {
+        return infoTestQuestions;
+    }
+
+    public void setInfoTestQuestions(List<InfoTestQuestion> infoTestQuestions) {
+        this.infoTestQuestions = infoTestQuestions;
     }
 
     public String getLastModifiedDateFormatted() {
@@ -142,7 +150,7 @@ public class InfoTest extends InfoObject {
             setLastModifiedDate(test.getLastModifiedDate());
         }
     }
-
+    
     public static InfoTest newInfoFromDomain(ITest test) {
         InfoTest infoTest = null;
         if (test != null) {
