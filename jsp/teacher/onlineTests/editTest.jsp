@@ -9,11 +9,8 @@
 	</tr>
 </table>
 <br/>
-<bean:define id="component" name="siteView" property="component"/>
-<bean:define id="executionCourse" name="component" property="executionCourse"/>
-<bean:define id="objectCode" name="executionCourse" property="idInternal"/>
-<bean:define id="infoTest" name="component" property="infoTest"/>
-<bean:define id="infoTestQuestionList" name="component" property="infoTestQuestions"/>
+<logic:present name="infoTest">
+<bean:define id="infoTestQuestionList" name="infoTest" property="infoTestQuestions"/>
 
 <html:form action="/testEdition">
 <html:hidden property="page" value="1"/>
@@ -77,7 +74,7 @@
 	</logic:iterate>
 </table>
 <br/>
-<bean:size id="infoTestQuestionListSize" name="component" property="infoTestQuestions"/>
+<bean:size id="infoTestQuestionListSize" name="infoTest" property="infoTestQuestions"/>
 <logic:notEqual name="infoTestQuestionListSize" value="0">
 	<table>
 		<tr><td>
@@ -93,3 +90,4 @@
 	</table>
 </logic:notEqual>
 </html:form>
+</logic:present>
