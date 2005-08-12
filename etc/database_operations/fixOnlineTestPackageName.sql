@@ -1,0 +1,1 @@
+update EVALUATION set CLASS_NAME="net.sourceforge.fenixedu.domain.onlineTests.OnlineTest", ACK_OPT_LOCK=ACK_OPT_LOCK + 1 where CLASS_NAME="net.sourceforge.fenixedu.domain.OnlineTest"
