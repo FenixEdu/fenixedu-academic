@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests;
 
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
@@ -19,9 +18,9 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class OnlineTestOJB extends PersistentObjectOJB implements IPersistentOnlineTest {
 
-    public Object readByDistributedTest(IDistributedTest distributedTest) throws ExcepcaoPersistencia {
+    public Object readByDistributedTest(Integer distributedTestId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
+        criteria.addEqualTo("keyDistributedTest", distributedTestId);
         return queryObject(OnlineTest.class, criteria);
     }
 }
