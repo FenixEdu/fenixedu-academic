@@ -43,13 +43,15 @@ public class ReverseFile {
     protected static void reverseFile(final String inputFilename, final String outputFilename)
             throws IOException {
         if ((new File(inputFilename)).exists()) {
-            final String filecontents = FileUtils.readFile(inputFilename);
-            final String[] lines = filecontents.split(";\n");
+            String filecontents = "###\n" + FileUtils.readFile(inputFilename);
+            filecontents.replaceAll(";\ninsert", "###\n;\ninsert");
+            filecontents.replaceAll(";\nupdate", "###\n;\nupdate");
+            filecontents.replaceAll(";\ndelete", "###\n;\ndelete");
+            final String[] lines = filecontents.split("###\n");
 
             final FileWriter fileWriter = new FileWriter(outputFilename, false);
             for (int i = lines.length; i > 0; i--) {
                 fileWriter.write(lines[i - 1]);
-                fileWriter.write(";\n");
             }
             fileWriter.close();
 
