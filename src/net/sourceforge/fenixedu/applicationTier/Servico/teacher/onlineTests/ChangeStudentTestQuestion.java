@@ -139,9 +139,8 @@ public class ChangeStudentTestQuestion implements IService {
                     if (!group.contains(studentTestQuestion.getStudent().getPerson()))
                         group.add(studentTestQuestion.getStudent().getPerson());
                     if (studentTestQuestion.getDistributedTest().getTestType().equals(new TestType(TestType.EVALUATION))) {
-//                        IOnlineTest onlineTest = (IOnlineTest) persistentSuport.getIPersistentOnlineTest().readByDistributedTest(
-//                                studentTestQuestion.getDistributedTest().getIdInternal());
-                        IOnlineTest onlineTest = null;
+                        IOnlineTest onlineTest = (IOnlineTest) persistentSuport.getIPersistentOnlineTest().readByDistributedTest(
+                                studentTestQuestion.getDistributedTest().getIdInternal());
                         IAttends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(
                                 studentTestQuestion.getStudent(), (IExecutionCourse) distributedTest.getTestScope().getDomainObject());
                         IMark mark = persistentSuport.getIPersistentMark().readBy(onlineTest, attend);
@@ -169,7 +168,7 @@ public class ChangeStudentTestQuestion implements IService {
 
             if (canDelete) {
                 int metadataNumberOfQuestions = persistentMetadata.getNumberOfQuestions(metadata);
-                //oldQuestion.delete();
+                oldQuestion.delete();
                 if (metadataNumberOfQuestions <= 1) {
                     metadata.removeExecutionCourse();
                     persistentMetadata.deleteByOID(Metadata.class, metadata.getIdInternal());

@@ -32,6 +32,9 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.TestType;
+
+import org.apache.commons.lang.time.DateFormatUtils;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -90,7 +93,7 @@ public class EditDistributedTest implements IService {
             if (change2OtherType) {
                 // Change evaluation test to study/inquiry test
                 // delete evaluation and marks
-                IOnlineTest onlineTest = (IOnlineTest) persistentSuport.getIPersistentOnlineTest().readByDistributedTest(distributedTest);
+                IOnlineTest onlineTest = (IOnlineTest) persistentSuport.getIPersistentOnlineTest().readByDistributedTest(distributedTestId);
                 persistentSuport.getIPersistentMark().deleteByEvaluation(onlineTest);
                 persistentSuport.getIPersistentOnlineTest().deleteByOID(OnlineTest.class, onlineTest.getIdInternal());
             } else if (change2EvaluationType) {
@@ -125,26 +128,6 @@ public class EditDistributedTest implements IService {
         }
     }
 
-    private String getDateFormatted(Calendar date) {
-        String result = new String();
-        result += date.get(Calendar.DAY_OF_MONTH);
-        result += "/";
-        result += date.get(Calendar.MONTH) + 1;
-        result += "/";
-        result += date.get(Calendar.YEAR);
-        return result;
-    }
-
-    private String getHourFormatted(Calendar hour) {
-        String result = new String();
-        result += hour.get(Calendar.HOUR_OF_DAY);
-        result += ":";
-        if (hour.get(Calendar.MINUTE) < 10)
-            result += "0";
-        result += hour.get(Calendar.MINUTE);
-        return result;
-    }
-
     private IAdvisory createTestAdvisory(IDistributedTest distributedTest) {
         ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
 
@@ -157,9 +140,12 @@ public class EditDistributedTest implements IService {
         advisory.setSubject(MessageFormat.format(bundle.getString("message.distributedTest.subjectChangeDates"), new Object[] { distributedTest
                 .getTitle() }));
 
-        Object[] args = { this.contextPath, distributedTest.getIdInternal(), getHourFormatted(distributedTest.getBeginHour()),
-                getDateFormatted(distributedTest.getBeginDate()), getHourFormatted(distributedTest.getEndHour()),
-                getDateFormatted(distributedTest.getEndDate()) };
+        final String beginHour = DateFormatUtils.format(distributedTest.getBeginHour().getTime(), "hh:mm");
+        final String beginDate = DateFormatUtils.format(distributedTest.getBeginDate().getTime(), "dd/MM/yyyy");
+        final String endHour = DateFormatUtils.format(distributedTest.getEndHour().getTime(), "hh:mm");
+        final String endDate = DateFormatUtils.format(distributedTest.getEndDate().getTime(), "dd/MM/yyyy");
+
+        Object[] args = { this.contextPath, distributedTest.getIdInternal().toString(), beginHour, beginDate, endHour, endDate };
         if (distributedTest.getTestType().equals(new TestType(TestType.INQUIRY))) {
             advisory.setMessage(MessageFormat.format(bundle.getString("message.distributedTest.messageChangeInquiryDates"), args));
         } else {

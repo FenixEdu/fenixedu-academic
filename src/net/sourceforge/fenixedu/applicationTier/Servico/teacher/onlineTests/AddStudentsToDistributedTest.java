@@ -4,10 +4,12 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
@@ -26,6 +28,9 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.util.tests.TestType;
+
+import org.apache.commons.lang.time.DateFormatUtils;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -99,45 +104,27 @@ public class AddStudentsToDistributedTest implements IService {
         return question;
     }
 
-    private String getDateFormatted(Calendar date) {
-        String result = new String();
-        result += date.get(Calendar.DAY_OF_MONTH);
-        result += "/";
-        result += date.get(Calendar.MONTH) + 1;
-        result += "/";
-        result += date.get(Calendar.YEAR);
-        return result;
-    }
-
-    private String getHourFormatted(Calendar hour) {
-        String result = new String();
-        result += hour.get(Calendar.HOUR_OF_DAY);
-        result += ":";
-        if (hour.get(Calendar.MINUTE) < 10)
-            result += "0";
-        result += hour.get(Calendar.MINUTE);
-        return result;
-    }
-
     private IAdvisory createTestAdvisory(IDistributedTest distributedTest) {
+        ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
         IAdvisory advisory = DomainFactory.makeAdvisory();
         advisory.setCreated(Calendar.getInstance().getTime());
         advisory.setExpires(distributedTest.getEndDate().getTime());
-        advisory.setSender("Docente da disciplina " + ((IExecutionCourse) distributedTest.getTestScope().getDomainObject()).getNome());
+        advisory.setSender(MessageFormat.format(bundle.getString("message.distributedTest.from"), new Object[] { ((IExecutionCourse) distributedTest
+                .getTestScope().getDomainObject()).getNome() }));
         String msgBeginning;
         advisory.setSubject(distributedTest.getTitle());
-        if (distributedTest.getTestType().equals(new TestType(TestType.INQUIRY)))
-            msgBeginning = new String("Tem um <a href='" + this.contextPath + "/student/studentTests.do?method=prepareToDoTest&testCode="
-                    + distributedTest.getIdInternal() + "'>questionário</a> para responder entre ");
-        else
-            msgBeginning = new String("Tem uma <a href='" + this.contextPath + "/student/studentTests.do?method=prepareToDoTest&testCode="
-                    + distributedTest.getIdInternal() + "'>Ficha de Trabalho</a> a realizar entre ");
+        final String beginHour = DateFormatUtils.format(distributedTest.getBeginHour().getTime(), "hh:mm");
+        final String beginDate = DateFormatUtils.format(distributedTest.getBeginDate().getTime(), "dd/MM/yyyy");
+        final String endHour = DateFormatUtils.format(distributedTest.getEndHour().getTime(), "hh:mm");
+        final String endDate = DateFormatUtils.format(distributedTest.getEndDate().getTime(), "dd/MM/yyyy");
 
-        advisory.setMessage(msgBeginning + " as " + getHourFormatted(distributedTest.getBeginHour()) + " de "
-                + getDateFormatted(distributedTest.getBeginDate()) + " e as " + getHourFormatted(distributedTest.getEndHour()) + " de "
-                + getDateFormatted(distributedTest.getEndDate()));
+        Object[] args = { this.contextPath, distributedTest.getIdInternal().toString(), beginHour, beginDate, endHour, endDate };
+        if (distributedTest.getTestType().equals(new TestType(TestType.INQUIRY))) {
+            advisory.setMessage(MessageFormat.format(bundle.getString("message.distributedTest.distributeInquiryMessage"), args));
+        } else {
+            advisory.setMessage(MessageFormat.format(bundle.getString("message.distributedTest.distributeTestMessage"), args));
+        }
         advisory.setOnlyShowOnce(new Boolean(false));
         return advisory;
     }
-
 }

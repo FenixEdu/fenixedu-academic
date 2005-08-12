@@ -4,10 +4,12 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -31,12 +33,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.TestType;
+
+import org.apache.commons.lang.time.DateFormatUtils;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -48,108 +51,86 @@ public class InsertDistributedTest implements IService {
 
     public Integer run(Integer executionCourseId, Integer testId, String testInformation, Calendar beginDate, Calendar beginHour, Calendar endDate,
             Calendar endHour, TestType testType, CorrectionAvailability correctionAvaiability, Boolean imsFeedback,
-            List<InfoStudent> infoStudentList, String contextPath) throws FenixServiceException {
+            List<InfoStudent> infoStudentList, String contextPath) throws FenixServiceException, ExcepcaoPersistencia {
         this.contextPath = contextPath.replace('\\', '/');
-        try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseId);
-            if (executionCourse == null)
-                throw new InvalidArgumentsServiceException();
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIPersistentExecutionCourse();
+        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseId);
+        if (executionCourse == null)
+            throw new InvalidArgumentsServiceException();
 
-            IPersistentDistributedTest persistentDistributedTest = persistentSuport.getIPersistentDistributedTest();
-            IDistributedTest distributedTest = DomainFactory.makeDistributedTest();
+        IDistributedTest distributedTest = DomainFactory.makeDistributedTest();
 
-            IPersistentTest persistentTest = persistentSuport.getIPersistentTest();
-            ITest test = (ITest) persistentTest.readByOID(Test.class, testId);
-            if (test == null)
-                throw new InvalidArgumentsServiceException();
+        ITest test = (ITest) persistentSuport.getIPersistentTest().readByOID(Test.class, testId);
+        if (test == null)
+            throw new InvalidArgumentsServiceException();
 
-            distributedTest.setTitle(test.getTitle());
-            distributedTest.setTestInformation(testInformation);
-            distributedTest.setBeginDate(beginDate);
-            distributedTest.setBeginHour(beginHour);
-            distributedTest.setEndDate(endDate);
-            distributedTest.setEndHour(endHour);
-            distributedTest.setTestType(testType);
-            distributedTest.setCorrectionAvailability(correctionAvaiability);
-            distributedTest.setImsFeedback(imsFeedback);
-            distributedTest.setNumberOfQuestions(test.getNumberOfQuestions());
+        distributedTest.setTitle(test.getTitle());
+        distributedTest.setTestInformation(testInformation);
+        distributedTest.setBeginDate(beginDate);
+        distributedTest.setBeginHour(beginHour);
+        distributedTest.setEndDate(endDate);
+        distributedTest.setEndHour(endHour);
+        distributedTest.setTestType(testType);
+        distributedTest.setCorrectionAvailability(correctionAvaiability);
+        distributedTest.setImsFeedback(imsFeedback);
+        distributedTest.setNumberOfQuestions(test.getNumberOfQuestions());
 
-            ITestScope testScope = persistentSuport.getIPersistentTestScope().readByDomainObject(ExecutionCourse.class.getName(), executionCourseId);
+        ITestScope testScope = persistentSuport.getIPersistentTestScope().readByDomainObject(ExecutionCourse.class.getName(), executionCourseId);
 
-            if (testScope == null) {
-                testScope = DomainFactory.makeTestScope(persistentExecutionCourse.materialize(executionCourse));
-            }
-            distributedTest.setTestScope(testScope);
-
-            IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport.getIPersistentStudentTestQuestion();
-            IPersistentTestQuestion persistentTestQuestion = persistentSuport.getIPersistentTestQuestion();
-
-            List<ITestQuestion> testQuestionList = persistentTestQuestion.readByTest(testId);
-
-            for (ITestQuestion testQuestion : testQuestionList) {
-                List<IQuestion> questionList = new ArrayList<IQuestion>();
-                questionList.addAll(testQuestion.getQuestion().getMetadata().getVisibleQuestions());
-
-                for (InfoStudent infoStudent : infoStudentList) {
-                    IStudent student = (IStudent) persistentSuport.getIPersistentStudent().readByOID(Student.class, infoStudent.getIdInternal());
-                    IStudentTestQuestion studentTestQuestion = DomainFactory.makeStudentTestQuestion();
-                    studentTestQuestion.setStudent(student);
-                    studentTestQuestion.setDistributedTest(distributedTest);
-                    studentTestQuestion.setTestQuestionOrder(testQuestion.getTestQuestionOrder());
-                    studentTestQuestion.setTestQuestionValue(testQuestion.getTestQuestionValue());
-                    studentTestQuestion.setCorrectionFormula(testQuestion.getCorrectionFormula());
-                    studentTestQuestion.setTestQuestionMark(new Double(0));
-                    studentTestQuestion.setOldResponse(new Integer(0));
-                    studentTestQuestion.setResponse(null);
-
-                    if (questionList.size() == 0)
-                        questionList.addAll(testQuestion.getQuestion().getMetadata().getVisibleQuestions());
-                    IQuestion question = getStudentQuestion(questionList);
-                    if (question == null) {
-                        throw new InvalidArgumentsServiceException();
-                    }
-                    studentTestQuestion.setQuestion(question);
-                    questionList.remove(question);
-                }
-            }
-            // Create Evaluation - OnlineTest and Marks
-            if (distributedTest.getTestType().equals(new TestType(TestType.EVALUATION))) {
-                IOnlineTest onlineTest = DomainFactory.makeOnlineTest();
-                onlineTest.addAssociatedExecutionCourses(executionCourse);
-            }
-
-            // Create Advisory
-
-            IAdvisory advisory = DomainFactory.makeAdvisory();
-            advisory.setCreated(Calendar.getInstance().getTime());
-            advisory.setExpires(endDate.getTime());
-            advisory.setSender("Docente da disciplina " + executionCourse.getNome());
-            advisory.setSubject(distributedTest.getTitle());
-            String msgBeginning;
-
-            if (distributedTest.getTestType().equals(new TestType(TestType.INQUIRY)))
-                msgBeginning = new String("Tem um <a href='" + this.contextPath + "/student/studentTests.do?method=prepareToDoTest&testCode="
-                        + distributedTest.getIdInternal() + "'>questionário</a> para responder entre ");
-            else
-                msgBeginning = new String("Tem uma <a href='" + this.contextPath + "/student/studentTests.do?method=prepareToDoTest&testCode="
-                        + distributedTest.getIdInternal() + "'>Ficha de Trabalho</a> a realizar entre ");
-            advisory.setMessage(msgBeginning + " as " + getHourFormatted(beginHour) + " de " + getDateFormatted(beginDate) + " e as "
-                    + getHourFormatted(endHour) + " de " + getDateFormatted(endDate));
-            advisory.setOnlyShowOnce(new Boolean(false));
-
-            // Create DistributedTestAdvisory
-            IDistributedTestAdvisory distributedTestAdvisory = DomainFactory.makeDistributedTestAdvisory();
-            distributedTestAdvisory.setAdvisory(advisory);
-            distributedTestAdvisory.setDistributedTest(distributedTest);
-
-            return advisory.getIdInternal();
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        } catch (Exception e) {
-            throw new FenixServiceException(e);
+        if (testScope == null) {
+            testScope = DomainFactory.makeTestScope(persistentExecutionCourse.materialize(executionCourse));
         }
+        distributedTest.setTestScope(testScope);
+
+        IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport.getIPersistentStudentTestQuestion();
+        IPersistentTestQuestion persistentTestQuestion = persistentSuport.getIPersistentTestQuestion();
+
+        List<ITestQuestion> testQuestionList = persistentTestQuestion.readByTest(testId);
+
+        for (ITestQuestion testQuestion : testQuestionList) {
+            List<IQuestion> questionList = new ArrayList<IQuestion>();
+            questionList.addAll(testQuestion.getQuestion().getMetadata().getVisibleQuestions());
+
+            for (InfoStudent infoStudent : infoStudentList) {
+                IStudent student = (IStudent) persistentSuport.getIPersistentStudent().readByOID(Student.class, infoStudent.getIdInternal());
+                IStudentTestQuestion studentTestQuestion = DomainFactory.makeStudentTestQuestion();
+                studentTestQuestion.setStudent(student);
+                studentTestQuestion.setDistributedTest(distributedTest);
+                studentTestQuestion.setTestQuestionOrder(testQuestion.getTestQuestionOrder());
+                studentTestQuestion.setTestQuestionValue(testQuestion.getTestQuestionValue());
+                studentTestQuestion.setCorrectionFormula(testQuestion.getCorrectionFormula());
+                studentTestQuestion.setTestQuestionMark(new Double(0));
+                studentTestQuestion.setOldResponse(new Integer(0));
+                studentTestQuestion.setResponse(null);
+
+                if (questionList.size() == 0)
+                    questionList.addAll(testQuestion.getQuestion().getMetadata().getVisibleQuestions());
+                IQuestion question = getStudentQuestion(questionList);
+                if (question == null) {
+                    throw new InvalidArgumentsServiceException();
+                }
+                studentTestQuestion.setQuestion(question);
+                questionList.remove(question);
+            }
+        }
+        // Create Evaluation - OnlineTest and Marks
+        if (distributedTest.getTestType().equals(new TestType(TestType.EVALUATION))) {
+            IOnlineTest onlineTest = DomainFactory.makeOnlineTest();
+            onlineTest.addAssociatedExecutionCourses(executionCourse);
+            onlineTest.setDistributedTest(distributedTest);
+        }
+
+        // Create Advisory
+        IAdvisory advisory = getAdvisory(distributedTest, executionCourse.getNome());
+
+        // Create DistributedTestAdvisory
+        IDistributedTestAdvisory distributedTestAdvisory = DomainFactory.makeDistributedTestAdvisory();
+        distributedTestAdvisory.setAdvisory(advisory);
+        distributedTestAdvisory.setDistributedTest(distributedTest);
+
+        return advisory.getIdInternal();
+
     }
 
     private IQuestion getStudentQuestion(List<IQuestion> questions) {
@@ -162,23 +143,26 @@ public class InsertDistributedTest implements IService {
         return question;
     }
 
-    private String getDateFormatted(Calendar date) {
-        String result = new String();
-        result += date.get(Calendar.DAY_OF_MONTH);
-        result += "/";
-        result += date.get(Calendar.MONTH) + 1;
-        result += "/";
-        result += date.get(Calendar.YEAR);
-        return result;
-    }
+    private IAdvisory getAdvisory(IDistributedTest distributedTest, String sender) {
+        ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
+        IAdvisory advisory = DomainFactory.makeAdvisory();
+        advisory.setCreated(Calendar.getInstance().getTime());
+        advisory.setExpires(distributedTest.getEndDate().getTime());
+        advisory.setSender(MessageFormat.format(bundle.getString("message.distributedTest.from"), new Object[] { sender }));
+        advisory.setSubject(distributedTest.getTitle());
+        String msgBeginning;
+        final String beginHour = DateFormatUtils.format(distributedTest.getBeginHour().getTime(), "hh:mm");
+        final String beginDate = DateFormatUtils.format(distributedTest.getBeginDate().getTime(), "dd/MM/yyyy");
+        final String endHour = DateFormatUtils.format(distributedTest.getEndHour().getTime(), "hh:mm");
+        final String endDate = DateFormatUtils.format(distributedTest.getEndDate().getTime(), "dd/MM/yyyy");
+        Object[] args = { this.contextPath, distributedTest.getIdInternal().toString(), beginHour, beginDate, endHour, endDate };
 
-    private String getHourFormatted(Calendar hour) {
-        String result = new String();
-        result += hour.get(Calendar.HOUR_OF_DAY);
-        result += ":";
-        if (hour.get(Calendar.MINUTE) < 10)
-            result += "0";
-        result += hour.get(Calendar.MINUTE);
-        return result;
+        if (distributedTest.getTestType().equals(new TestType(TestType.INQUIRY))) {
+            advisory.setMessage(MessageFormat.format(bundle.getString("message.distributedTest.distributeInquiryMessage"), args));
+        } else {
+            advisory.setMessage(MessageFormat.format(bundle.getString("message.distributedTest.distributeTestMessage"), args));
+        }
+        advisory.setOnlyShowOnce(new Boolean(false));
+        return advisory;
     }
 }
