@@ -39,6 +39,7 @@
             userid="${db.user}"
             password="${db.pass}"
             encoding="${encoding}"
+        	keepformat="true"
             src="${roleback.filename}">
             <classpath>
                 <fileset dir="${lib}">
