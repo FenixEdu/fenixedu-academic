@@ -4,6 +4,8 @@
 
 <h2><bean:message key="title.equivalencies.curricular.course"/></h2>
 
+<span class="error"><html:errors/></span>
+
 <html:form action="/curricularCourseEquivalencies">
 	<html:hidden property="method" value="prepare"/>
 	<html:hidden property="page" value="0"/>

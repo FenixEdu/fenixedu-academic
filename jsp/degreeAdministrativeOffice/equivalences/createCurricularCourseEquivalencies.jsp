@@ -5,7 +5,7 @@
 <h2><bean:message key="title.equivalencies.curricular.course"/></h2>
 
 <html:form action="/curricularCourseEquivalencies">
-	<html:hidden property="method" value="prepareCreate"/>
+	<html:hidden property="method" value="create"/>
 	<html:hidden property="page" value="0"/>
 	<bean:define id="degreeID" name="curricularCourseEquivalenciesForm" property="degreeID" type="java.lang.String"/>
 	<html:hidden property="degreeID" value="<%= degreeID %>"/>
@@ -55,14 +55,47 @@
 		</logic:present>
 		<tr>
 			<td class="listClasses-header">
-				<bean:message key="label.choose.degree"/>
+				<bean:message key="label.choose.degree.old"/>
 			</td>
 			<td class="listClasses">
-				<html:select property="oldDegreeID" onchange="this.form.submit();">
+				<html:select property="oldDegreeID" onchange="this.form.method.value='prepareCreate';this.form.submit();">
 					<html:option value=""/>
 					<html:options collection="infoDegrees" labelProperty="nome" property="idInternal"/>
 				</html:select>
 			</td>
 		</tr>
+		<logic:present name="oldInfoDegreeCurricularPlans">
+			<tr>
+				<td class="listClasses-header">
+					<bean:message key="label.choose.degree.curricular.plan.old"/>
+				</td>
+				<td class="listClasses">
+					<html:select property="oldDegreeCurricularPlanID" onchange="this.form.method.value='prepareCreate';this.form.submit();">
+						<html:option value=""/>
+						<html:options collection="oldInfoDegreeCurricularPlans" labelProperty="name" property="idInternal"/>
+					</html:select>
+				</td>
+			</tr>
+		</logic:present>
+		<logic:present name="oldInfoCurricularCourses">
+			<tr>
+				<td class="listClasses-header">
+					<bean:message key="label.choose.curricular.course.old"/>
+				</td>
+				<td class="listClasses">
+					<html:select property="oldCurricularCourseID">
+						<html:option value=""/>
+						<html:options collection="oldInfoCurricularCourses" labelProperty="name" property="idInternal"/>
+					</html:select>
+				</td>
+			</tr>
+		</logic:present>
 	</table>
+
+	<br/>
+	<br/>
+
+	<html:submit styleClass="inputbutton">
+		<bean:message key="link.curricular.course.equivalence.create"/>
+	</html:submit>
 </html:form>

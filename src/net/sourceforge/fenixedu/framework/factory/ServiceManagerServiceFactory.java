@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixRemoteServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.logging.SystemInfo;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.framework.ejb.EJBHomeFactory;
 
 import org.apache.log4j.Logger;
@@ -112,6 +113,10 @@ public class ServiceManagerServiceFactory {
             if (e != null && e.getCause() != null && e.getCause() instanceof FenixServiceException) {
                 FenixServiceException fenixServiceException = (FenixServiceException) e.getCause();
                 throw fenixServiceException;
+            }
+            if (e != null && e.getCause() != null && e.getCause() instanceof DomainException) {
+                DomainException domainException = (DomainException) e.getCause();
+                throw domainException;
             }
             if (e != null && e.getCause() != null && e.getCause() instanceof FilterChainFailedException) {
                 FilterChainFailedException filterChainFailedException = (FilterChainFailedException) e.getCause();

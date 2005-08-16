@@ -429,6 +429,9 @@
 				name="curricularCourseEquivalenciesForm"
     	   		scope="request"
        			parameter="method">
+			<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException"
+				key="error.exists.curricular.course.equivalency"
+				handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
        		<forward name="showEquivalencies" path="show-curricular-course-equivalencies"/>
        		<forward name="showCreateEquivalencyForm" path="show-create-curricular-course-equivalencies"/>
        	</action>

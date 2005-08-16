@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.applicationTier.logging.ServiceExecutionLog;
 import net.sourceforge.fenixedu.applicationTier.logging.SystemInfo;
 import net.sourceforge.fenixedu.applicationTier.logging.UserExecutionLog;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.collections.FastHashMap;
 import org.apache.log4j.Logger;
@@ -144,7 +145,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
             }
             return serviceResult;
         } catch (Exception e) {
-            if (e instanceof FenixServiceException) {
+            if (e instanceof FenixServiceException || e instanceof DomainException) {
                 e.printStackTrace();
                 logger.warn(e);
             } else {

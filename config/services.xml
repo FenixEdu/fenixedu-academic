@@ -8626,7 +8626,7 @@
 		<filterChains>
 			<chain name="ManagerAuthorization"/>
 		</filterChains>
-	</service>     
+	</service>
 	<service>
 		<name>ReadCurricularCourseEquivalenciesByDegreeCurricularPlan</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.ReadCurricularCourseEquivalenciesByDegreeCurricularPlan</implementationClass>
@@ -8635,4 +8635,12 @@
 		<filterChains>
 		</filterChains>
 	</service>     
+	<service>
+		<name>CreateCurricularCourseEquivalency</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.CreateCurricularCourseEquivalency</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
 </serviceDefinitions>
