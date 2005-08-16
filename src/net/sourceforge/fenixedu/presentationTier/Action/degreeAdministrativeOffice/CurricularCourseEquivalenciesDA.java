@@ -105,6 +105,20 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
         return prepare(mapping, form, request, response);        
     }
 
+    public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final IUserView userView = SessionUtils.getUserView(request);
+        final DynaActionForm actionForm = (DynaActionForm) form;
+
+        final String curricularCourseEquivalencyIDString = (String) actionForm.get("curricularCourseEquivalencyID");
+        if (isValidObjectID(curricularCourseEquivalencyIDString)) {
+            final Object[] args = { Integer.valueOf(curricularCourseEquivalencyIDString) };
+            ServiceUtils.executeService(userView, "DeleteCurricularCourseEquivalency", args);
+        }
+
+        return prepare(mapping, form, request, response);        
+    }
+
 	private void setInfoDegrees(final HttpServletRequest request, final IUserView userView) 
 			throws FenixFilterException, FenixServiceException {
     	final Object[] args = { DegreeType.DEGREE };

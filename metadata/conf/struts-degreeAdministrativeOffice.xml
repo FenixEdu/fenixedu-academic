@@ -170,6 +170,7 @@
 			<form-property name="oldDegreeID" type="java.lang.String"/>
 			<form-property name="oldDegreeCurricularPlanID" type="java.lang.String"/>
 			<form-property name="oldCurricularCourseID" type="java.lang.String"/>
+			<form-property name="curricularCourseEquivalencyID" type="java.lang.String"/>
 		</form-bean>
 
 	</form-beans>

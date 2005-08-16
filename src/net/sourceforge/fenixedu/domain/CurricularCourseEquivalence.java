@@ -24,4 +24,12 @@ public class CurricularCourseEquivalence extends CurricularCourseEquivalence_Bas
         setOldCurricularCourse(oldCurricularCourse);
     }
 
+    public void delete() {
+        setDegreeCurricularPlan(null);
+        setEquivalentCurricularCourse(null);
+        setOldCurricularCourse(null);
+
+        super.deleteDomainObject();
+    }
+
 }

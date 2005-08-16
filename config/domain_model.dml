@@ -441,6 +441,10 @@ class net.sourceforge.fenixedu.domain.CurricularCourseEquivalence extends net.so
 	Integer oldCurricularCourseKey;
 	Integer equivalentCurricularCourseKey;
 	Integer degreeCurricularPlanKey;
+
+	interface "
+	public void delete();
+	"
 }
 
 class net.sourceforge.fenixedu.domain.CurricularCourseGroup extends net.sourceforge.fenixedu.domain.DomainObject {

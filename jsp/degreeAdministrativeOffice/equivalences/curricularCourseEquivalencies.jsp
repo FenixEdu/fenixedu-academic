@@ -71,6 +71,8 @@
 			<td colspan="2" class="listClasses-header">
 				<bean:message key="label.equivalente.curricular.course"/>
 			</td>
+			<td class="listClasses-header">
+			</td>
 		</tr>
 		<logic:iterate id="infoCurricularCourseEquivalence" name="infoCurricularCourseEquivalences">
 			<tr>
@@ -88,6 +90,22 @@
 				</td>
 				<td class="listClasses">
 					<bean:write name="infoCurricularCourseEquivalence" property="infoEquivalentCurricularCourse.name"/>
+				</td>
+				<td class="listClasses">
+					<html:form action="/curricularCourseEquivalencies">
+						<html:hidden property="method" value="delete"/>
+						<html:hidden property="page" value="0"/>
+						<bean:define id="degreeID" name="curricularCourseEquivalenciesForm" property="degreeID" type="java.lang.String"/>
+						<html:hidden property="degreeID" value="<%= degreeID %>"/>
+						<bean:define id="degreeCurricularPlanID" name="curricularCourseEquivalenciesForm" property="degreeCurricularPlanID" type="java.lang.String"/>
+						<html:hidden property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID %>"/>
+						<bean:define id="curricularCourseEquivalencyID" name="infoCurricularCourseEquivalence" property="idInternal" type="java.lang.Integer"/>
+						<html:hidden property="curricularCourseEquivalencyID" value="<%= curricularCourseEquivalencyID.toString() %>"/>
+
+						<html:submit styleClass="inputbutton">
+							<bean:message key="button.delete"/>
+						</html:submit>
+					</html:form>
 				</td>
 			</tr>
 		</logic:iterate>

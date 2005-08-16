@@ -8643,4 +8643,12 @@
 		<filterChains>
 		</filterChains>
 	</service>
+	<service>
+		<name>DeleteCurricularCourseEquivalency</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.DeleteCurricularCourseEquivalency</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
 </serviceDefinitions>
