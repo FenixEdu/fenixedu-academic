@@ -26,66 +26,63 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * @author Luis Cruz & Sara Ribeiro
  * 
- *  
+ * 
  */
 public class ReadExecutionDegreeByOID implements IService {
 
-    /**
-     *  
-     */
-    public ReadExecutionDegreeByOID() {
+	public InfoExecutionDegree run(Integer oid) throws ExcepcaoPersistencia {
 
-    }
+		InfoExecutionDegree infoExecutionDegree = null;
 
-    public InfoExecutionDegree run(Integer oid) throws FenixServiceException {
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentObject persistentObject = sp.getIPersistentObject();
+		IExecutionDegree executionDegree = (IExecutionDegree) persistentObject
+				.readByOID(ExecutionDegree.class, oid);
+		if (executionDegree != null) {
 
-        InfoExecutionDegree infoExecutionDegree = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentObject persistentObject = sp.getIPersistentObject();
-            IExecutionDegree executionDegree = (IExecutionDegree) persistentObject.readByOID(
-                    ExecutionDegree.class, oid);
-            if (executionDegree != null) {
+			infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlanAndInfoCampus
+					.newInfoFromDomain(executionDegree);
 
-                infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlanAndInfoCampus
-                        .newInfoFromDomain(executionDegree);
+			if (executionDegree.getCoordinatorsList() != null) {
+				List infoCoordinatorList = new ArrayList();
+				ListIterator iteratorCoordinator = executionDegree
+						.getCoordinatorsList().listIterator();
+				while (iteratorCoordinator.hasNext()) {
+					ICoordinator coordinator = (ICoordinator) iteratorCoordinator
+							.next();
 
-                if (executionDegree.getCoordinatorsList() != null) {
-                    List infoCoordinatorList = new ArrayList();
-                    ListIterator iteratorCoordinator = executionDegree.getCoordinatorsList()
-                            .listIterator();
-                    while (iteratorCoordinator.hasNext()) {
-                        ICoordinator coordinator = (ICoordinator) iteratorCoordinator.next();
+					infoCoordinatorList.add(InfoCoordinatorWithInfoPerson
+							.newInfoFromDomain(coordinator));
+				}
 
-                        infoCoordinatorList.add(InfoCoordinatorWithInfoPerson
-                                .newInfoFromDomain(coordinator));
-                    }
+				infoExecutionDegree.setCoordinatorsList(infoCoordinatorList);
+			}
 
-                    infoExecutionDegree.setCoordinatorsList(infoCoordinatorList);
-                }
+			if (executionDegree.getPeriodExamsFirstSemester() != null) {
+				infoExecutionDegree.setInfoPeriodExamsFirstSemester(InfoPeriod
+						.newInfoFromDomain(executionDegree
+								.getPeriodExamsFirstSemester()));
+			}
+			if (executionDegree.getPeriodExamsSecondSemester() != null) {
+				infoExecutionDegree.setInfoPeriodExamsSecondSemester(InfoPeriod
+						.newInfoFromDomain(executionDegree
+								.getPeriodExamsSecondSemester()));
+			}
+			if (executionDegree.getPeriodLessonsFirstSemester() != null) {
+				infoExecutionDegree
+						.setInfoPeriodLessonsFirstSemester(InfoPeriod
+								.newInfoFromDomain(executionDegree
+										.getPeriodLessonsFirstSemester()));
+			}
+			if (executionDegree.getPeriodLessonsSecondSemester() != null) {
+				infoExecutionDegree
+						.setInfoPeriodLessonsSecondSemester(InfoPeriod
+								.newInfoFromDomain(executionDegree
+										.getPeriodLessonsSecondSemester()));
+			}
 
-                if (executionDegree.getPeriodExamsFirstSemester() != null) {
-                    infoExecutionDegree.setInfoPeriodExamsFirstSemester(InfoPeriod
-                            .newInfoFromDomain(executionDegree.getPeriodExamsFirstSemester()));
-                }
-                if (executionDegree.getPeriodExamsSecondSemester() != null) {
-                    infoExecutionDegree.setInfoPeriodExamsSecondSemester(InfoPeriod
-                            .newInfoFromDomain(executionDegree.getPeriodExamsSecondSemester()));
-                }
-                if (executionDegree.getPeriodLessonsFirstSemester() != null) {
-                    infoExecutionDegree.setInfoPeriodLessonsFirstSemester(InfoPeriod
-                            .newInfoFromDomain(executionDegree.getPeriodLessonsFirstSemester()));
-                }
-                if (executionDegree.getPeriodLessonsSecondSemester() != null) {
-                    infoExecutionDegree.setInfoPeriodLessonsSecondSemester(InfoPeriod
-                            .newInfoFromDomain(executionDegree.getPeriodLessonsSecondSemester()));
-                }
+		}
 
-            }
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex);
-        }
-
-        return infoExecutionDegree;
-    }
+		return infoExecutionDegree;
+	}
 }
