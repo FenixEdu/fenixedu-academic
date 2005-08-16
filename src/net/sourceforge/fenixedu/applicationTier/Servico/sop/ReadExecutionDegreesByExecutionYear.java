@@ -27,37 +27,26 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadExecutionDegreesByExecutionYear implements IService {
 
-	public List run(InfoExecutionYear infoExecutionYear)
-			throws ExcepcaoPersistencia {
+	public List run(InfoExecutionYear infoExecutionYear) throws ExcepcaoPersistencia {
 
 		final List infoExecutionDegreeList = new ArrayList();
 
-		final ISuportePersistente sp = PersistenceSupportFactory
-				.getDefaultPersistenceSupport();
-		final IPersistentExecutionDegree executionDegreeDAO = sp
-				.getIPersistentExecutionDegree();
+		final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		final IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
 
-		final List executionDegrees = readExecutionDegrees(infoExecutionYear,
-				sp, executionDegreeDAO);
+		final List executionDegrees = readExecutionDegrees(infoExecutionYear, sp, executionDegreeDAO);
 
-		for (final Iterator iterator = executionDegrees.iterator(); iterator
-				.hasNext();) {
-			final IExecutionDegree executionDegree = (IExecutionDegree) iterator
-					.next();
+		for (final Iterator iterator = executionDegrees.iterator(); iterator.hasNext();) {
+			final IExecutionDegree executionDegree = (IExecutionDegree) iterator.next();
 			final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYear
 					.newInfoFromDomain(executionDegree);
 			if (executionDegree.getDegreeCurricularPlan() != null) {
-				infoExecutionDegree
-						.setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan
-								.newInfoFromDomain(executionDegree
-										.getDegreeCurricularPlan()));
+				infoExecutionDegree.setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan
+								.newInfoFromDomain(executionDegree.getDegreeCurricularPlan()));
 				if (executionDegree.getDegreeCurricularPlan().getDegree() != null) {
-					infoExecutionDegree.getInfoDegreeCurricularPlan()
-							.setInfoDegree(
-									InfoDegree
-											.newInfoFromDomain(executionDegree
-													.getDegreeCurricularPlan()
-													.getDegree()));
+					infoExecutionDegree.getInfoDegreeCurricularPlan().setInfoDegree(
+									InfoDegree.newInfoFromDomain(executionDegree
+											.getDegreeCurricularPlan().getDegree()));
 				}
 			}
 			infoExecutionDegreeList.add(infoExecutionDegree);
@@ -72,15 +61,11 @@ public class ReadExecutionDegreesByExecutionYear implements IService {
 			final IPersistentExecutionDegree executionDegreeDAO)
 			throws ExcepcaoPersistencia {
 		if (infoExecutionYear == null) {
-			final IPersistentExecutionYear persistentExecutionYear = sp
-					.getIPersistentExecutionYear();
-			final IExecutionYear executionYear = persistentExecutionYear
-					.readCurrentExecutionYear();
-			return executionDegreeDAO.readByExecutionYear(executionYear
-					.getYear());
+			final IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+			final IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
+			return executionDegreeDAO.readByExecutionYear(executionYear.getYear());
 		}
-		return executionDegreeDAO.readByExecutionYear(infoExecutionYear
-				.getYear());
+		return executionDegreeDAO.readByExecutionYear(infoExecutionYear.getYear());
 	}
 
 }

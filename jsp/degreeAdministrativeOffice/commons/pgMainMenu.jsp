@@ -16,9 +16,9 @@
 	<li class="navheader"><bean:message key="label.navheader.marksSheet" /></li>
 	<li><html:link page="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare"><bean:message key="link.consult" /></html:link></li>
 	<li><html:link page="/changeDegree.do?method=prepare"><bean:message key="link.change.degree"/></html:link></li>
-	<li class="navheader">Equivalências</li>
-	<li><html:link page="/prepareNotNeedToEnroll.do">Não necessita de fazer</html:link></li>
-	<li><html:link page="">Equivalências</html:link></li>
-	<li class="navheader">Currículos</li>
+	<li class="navheader"><bean:message key="label.navheader.equivalences" /></li>
+	<li><html:link page="/prepareNotNeedToEnroll.do"><bean:message key="link.notNeedToEnroll" /></html:link></li>
+	<li><html:link page="/curricularCourseEquivalencies.do?method=prepare"><bean:message key="label.navheader.equivalences" /></html:link></li>
+	<li class="navheader"><bean:message key="label.navheader.curriculums" /></li>
 	<li><html:link page="/curricularPlans/chooseCurricularPlan.faces"><bean:message key="link.consultCurriculum"/></html:link></li>
 </ul>     

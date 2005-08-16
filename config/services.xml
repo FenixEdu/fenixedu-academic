@@ -8627,4 +8627,12 @@
 			<chain name="ManagerAuthorization"/>
 		</filterChains>
 	</service>     
+	<service>
+		<name>ReadCurricularCourseEquivalenciesByDegreeCurricularPlan</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.ReadCurricularCourseEquivalenciesByDegreeCurricularPlan</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>     
 </serviceDefinitions>

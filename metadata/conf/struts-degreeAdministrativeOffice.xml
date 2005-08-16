@@ -151,7 +151,7 @@
 			<form-property name="curricularCoursesID" type="java.lang.Integer[]"/>
 			<form-property name="studentCurricularPlanID" type="java.lang.String"/>
 		</form-bean>	
-		
+
 		<form-bean name="changeDegreeForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 			<form-property name="studentNumber" type="java.lang.String"/>
@@ -160,6 +160,16 @@
 			<form-property name="enrolementsToMaintain" type="java.lang.String[]"/>
 			<form-property name="enrolementsToDelete" type="java.lang.String[]"/>
 			<form-property name="newStudentCurricularPlanStartDate" type="java.lang.String"/>
+		</form-bean>
+
+		<form-bean name="curricularCourseEquivalenciesForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+			<form-property name="degreeID" type="java.lang.String"/>
+			<form-property name="degreeCurricularPlanID" type="java.lang.String"/>
+			<form-property name="curricularCourseID" type="java.lang.String"/>
+			<form-property name="oldDegreeID" type="java.lang.String"/>
+			<form-property name="oldDegreeCurricularPlanID" type="java.lang.String"/>
+			<form-property name="oldCurricularCourseID" type="java.lang.String"/>
 		</form-bean>
 
 	</form-beans>
@@ -410,6 +420,17 @@
        		<forward name="showForm" path="change-degree"/>
        		<forward name="showConfirmationScreen" path="confirm-change-degree"/>
 			<forward name="showSucessPage" path="sucess-change-degree"/>
+       	</action>
+
+       	<!-- ==================== Curricular Course Equivalencies ================== -->
+       	<action path="/curricularCourseEquivalencies"
+       			type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.CurricularCourseEquivalenciesDA"
+				input="/curricularCourseEquivalencies.do?method=prepare&amp;page=0"
+				name="curricularCourseEquivalenciesForm"
+    	   		scope="request"
+       			parameter="method">
+       		<forward name="showEquivalencies" path="show-curricular-course-equivalencies"/>
+       		<forward name="showCreateEquivalencyForm" path="show-create-curricular-course-equivalencies"/>
        	</action>
 
 	</action-mappings>
