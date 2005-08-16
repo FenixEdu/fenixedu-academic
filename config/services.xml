@@ -8651,4 +8651,12 @@
 		<filterChains>
 		</filterChains>
 	</service>
+	<service>
+		<name>ReadEnrolmentPeriods</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadEnrolmentPeriods</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
 </serviceDefinitions>

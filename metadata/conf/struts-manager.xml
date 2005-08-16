@@ -467,7 +467,14 @@
 			<form-property name="startDate" type="java.lang.String"/>
 			<form-property name="enrollmentIDsToTransfer" type="java.lang.String[]"/>
 		</form-bean>
-		
+
+		<form-bean name="enrolementPeriodsForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="executionPeriodID" type="java.lang.String"/>
+		</form-bean>
+
 		<!-- ========== Struts vs JSF example ========== -->
 		<form-bean name="strutsExampleForm"
 				type="org.apache.struts.validator.DynaValidatorForm"
@@ -476,7 +483,7 @@
 			<form-property name="method" type="java.lang.String"/> 
 			<form-property name="someValue" type="java.lang.String" initial="O galo!"/> 
 		</form-bean>
-		
+
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -1628,6 +1635,16 @@
 			<forward name="show" path="show-student-curricular-plan"/>
 			<forward name="createStudentCurricularPlan" path="create-student-curricular-plan"/>
 			<forward name="transferEnrollments" path="transfer-enrollments"/>
+		</action>
+
+		<action path="/manageEnrolementPeriods"
+				parameter="method"
+				validate="true"
+				input="/manageEnrolementPeriods.do?method=prepare&amp;page=0"
+				name="enrolementPeriodsForm"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageEnrolementPeriodsDA"
+				scope="request">
+			<forward name="showEnrolementPeriods" path="show-enrolement-periods"/>
 		</action>
 
 	</action-mappings>

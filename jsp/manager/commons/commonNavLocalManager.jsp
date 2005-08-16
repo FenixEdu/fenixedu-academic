@@ -35,6 +35,12 @@
 	</html:link>
 </strong></p>
 
+<p><strong>&raquo; 
+	<html:link page="/manageEnrolementPeriods.do?method=prepare">
+		<bean:message key="title.manage.enrolement.period" />
+	</html:link>
+</strong></p>
+
 <br />
 <strong>Gestão de Pessoal</strong>
 <p><strong>&raquo; 

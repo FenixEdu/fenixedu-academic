@@ -395,6 +395,10 @@
 		<put name="body" value="/manager/transferEnrollments.jsp" />
 	</definition>
 
+	<definition name="show-enrolement-periods" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/enrolementPeriods.jsp" />
+	</definition>	
+
 	<!-- ========== Struts vs JSF example ========== -->
 	<definition name="strutsExampleFirstPage" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/somePageInStruts.jsp" />
