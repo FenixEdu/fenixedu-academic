@@ -58,7 +58,7 @@ public class WikiPublisher {
 					wikiHost, wikiPort);
 
             final GetMethod method = HttpClientFactory.getGetMethod("/UserPreferences");
-            executeMethod(httpClient, method, false);
+            executeMethod(httpClient, method);
 
             method.setPath("/UserPreferences" + "#preview");
 
@@ -69,18 +69,13 @@ public class WikiPublisher {
             loginNameValuePairs[3] = new NameValuePair("login", "Login");
             loginNameValuePairs[4] = new NameValuePair("method", "POST");
             method.setQueryString(loginNameValuePairs);
-            executeMethod(httpClient, method, false);
+            executeMethod(httpClient, method);
 
             method.setPath("/" + wikiPage);
-            executeMethod(httpClient, method, false);
-
-            System.out.println("###########################################################");
+            executeMethod(httpClient, method);
 
 			method.setPath("/" + wikiPage + "?action=edit");
-			executeMethod(httpClient, method, true);
-
-            System.out.println("###########################################################");
-            System.out.println("###########################################################");
+			executeMethod(httpClient, method);
 
 			method.setPath("/" + wikiPage);
 
@@ -90,20 +85,16 @@ public class WikiPublisher {
 			nameValuePairs[2] = new NameValuePair("savetext", fileContents);
 			nameValuePairs[3] = new NameValuePair("method", "post");
 			method.setQueryString(nameValuePairs);
-			executeMethod(httpClient, method, true);
+			executeMethod(httpClient, method);
         } catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
 	protected static void executeMethod(final HttpClient httpClient,
-			final GetMethod method, boolean showInfo) throws IOException, HttpException {
+			final GetMethod method) throws IOException, HttpException {
 		method.setFollowRedirects(true);
 		httpClient.executeMethod(method);
-
-		if (showInfo) {
-			System.out.println(method.getResponseBodyAsString());
-		}
 
         //method.releaseConnection();
 		method.recycle();
