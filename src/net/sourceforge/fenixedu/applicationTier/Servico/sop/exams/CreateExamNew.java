@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IPeriod;
 import net.sourceforge.fenixedu.domain.IRoom;
-import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.Room;
 import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -135,32 +134,17 @@ public class CreateExamNew implements IService {
                     throw new ExistingServiceException(ex);
                 }
             }
-            try {
-                List roomOccupationInDBList = sp.getIPersistentRoomOccupation().readAll();
 
-                for (int i = 0; i < roomIDArray.length; i++) {
-                    IRoom room = (IRoom) sp.getISalaPersistente().readByOID(Room.class,
-                            new Integer(roomIDArray[i]));
-                    if (room == null) {
-                        throw new FenixServiceException("Unexisting Room");
-                    }
-                    DiaSemana day = new DiaSemana(examDate.get(Calendar.DAY_OF_WEEK));
-
-                    RoomOccupation roomOccupation = DomainFactory.makeRoomOccupation(room,
-                            examStartTime, examEndTime, day, RoomOccupation.DIARIA);
-                    roomOccupation.setPeriod(period);
-                    Iterator iter = roomOccupationInDBList.iterator();
-                    while (iter.hasNext()) {
-                        IRoomOccupation roomOccupationInDB = (IRoomOccupation) iter.next();
-                        if (roomOccupation.roomOccupationForDateAndTime(roomOccupationInDB)) {
-                            throw new ExistingServiceException("A sala está ocupada");
-                        }
-                    }
-
-                    exam.getAssociatedRoomOccupation().add(roomOccupation);
+            for (int i = 0; i < roomIDArray.length; i++) {
+                IRoom room = (IRoom) sp.getISalaPersistente().readByOID(Room.class,
+                        new Integer(roomIDArray[i]));
+                if (room == null) {
+                    throw new FenixServiceException("Unexisting Room");
                 }
-            } catch (ExcepcaoPersistencia ex) {
-                throw new FenixServiceException(ex);
+                DiaSemana day = new DiaSemana(examDate.get(Calendar.DAY_OF_WEEK));
+
+                room.createRoomOccupation(period, examStartTime, examEndTime, day, RoomOccupation.DIARIA, null, exam);
+                
             }
 
             result = new Boolean(true);

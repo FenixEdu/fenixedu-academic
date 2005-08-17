@@ -604,6 +604,11 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
+      <field-descriptor
+         name="keyWrittenEvaluation"
+         column="KEY_WRITTEN_EVALUATION"
+         jdbc-type="INTEGER"
+      />
       <reference-descriptor auto-retrieve="false"
          name="room"
          class-ref="net.sourceforge.fenixedu.domain.Room"
@@ -615,6 +620,12 @@
          class-ref="net.sourceforge.fenixedu.domain.Period"
       >
          <foreignkey field-ref="keyPeriod"/>
+      </reference-descriptor>
+      <reference-descriptor auto-retrieve="false"
+         name="writtenEvaluation"
+         class-ref="net.sourceforge.fenixedu.domain.WrittenEvaluation"
+      >
+         <foreignkey field-ref="keyWrittenEvaluation"/>
       </reference-descriptor>
    </class-descriptor>
 
@@ -818,18 +829,12 @@
 		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
 		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+
+     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedRoomOccupation"
 			element-class-ref="net.sourceforge.fenixedu.domain.RoomOccupation"
-			indirection-table="WRITTEN_EVALUATION_ROOM_OCCUPATION"
-			
-			
-			auto-update="false"
-			auto-delete="false"
-			
 			>
-		<fk-pointing-to-this-class column="KEY_WRITTEN_EVALUATION"/>
-		<fk-pointing-to-element-class column="KEY_ROOM_OCCUPATION"/>
+		<inverse-foreignkey field-ref="keyWrittenEvaluation"/>
 	</collection-descriptor>
 
 </class-descriptor>
@@ -919,13 +924,11 @@
 		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
 		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedRoomOccupation"
 			element-class-ref="net.sourceforge.fenixedu.domain.RoomOccupation"
-			indirection-table="WRITTEN_EVALUATION_ROOM_OCCUPATION"
 			>
-		<fk-pointing-to-this-class column="KEY_WRITTEN_EVALUATION"/>
-		<fk-pointing-to-element-class column="KEY_ROOM_OCCUPATION"/>
+		<inverse-foreignkey field-ref="keyWrittenEvaluation"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedCurricularCourseScope"
@@ -1028,12 +1031,10 @@
 		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
 		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE_SCOPE"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedRoomOccupation"
 			element-class-ref="net.sourceforge.fenixedu.domain.RoomOccupation"
-			indirection-table="WRITTEN_EVALUATION_ROOM_OCCUPATION"
 			>
-		<fk-pointing-to-this-class column="KEY_WRITTEN_EVALUATION"/>
-		<fk-pointing-to-element-class column="KEY_ROOM_OCCUPATION"/>
+		<inverse-foreignkey field-ref="keyWrittenEvaluation"/>
 	</collection-descriptor>
 </class-descriptor>

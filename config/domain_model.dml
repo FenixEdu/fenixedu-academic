@@ -930,6 +930,7 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
             
 			interface "
 			public java.util.List getAssociatedRooms();
+			public void delete() throws net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;
 			"	
 		}
 
@@ -1797,6 +1798,8 @@ class net.sourceforge.fenixedu.domain.Period extends net.sourceforge.fenixedu.do
 	public boolean intersectPeriods(IPeriod period);
 	
 	public boolean containsDay(java.util.Calendar day);
+	
+	public void deleteIfEmpty();
 	"
 }
 
@@ -2127,6 +2130,11 @@ class net.sourceforge.fenixedu.domain.Room extends net.sourceforge.fenixedu.doma
 	Integer capacidadeExame;
 	Integer piso;
     TipoSala tipo;
+
+	interface "
+	public void createRoomOccupation(net.sourceforge.fenixedu.domain.IPeriod period, java.util.Calendar startTime, java.util.Calendar endTime,
+            net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week, net.sourceforge.fenixedu.domain.IWrittenEvaluation writtenEvaluation) throws net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+	"
 }
 
 class net.sourceforge.fenixedu.domain.RoomOccupation extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2137,6 +2145,7 @@ class net.sourceforge.fenixedu.domain.RoomOccupation extends net.sourceforge.fen
     DiaSemana dayOfWeek;
     Date startTimeDate;
     Date endTimeDate;
+    Integer keyWrittenEvaluation;
 
 	interface "
     public java.util.Calendar getStartTime();
@@ -2156,6 +2165,8 @@ class net.sourceforge.fenixedu.domain.RoomOccupation extends net.sourceforge.fen
     public boolean roomOccupationForDateAndTime(java.util.Calendar startDate, java.util.Calendar endDate, java.util.Calendar startTime, java.util.Calendar endTime, net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week);
 
 	public boolean containedIn(java.util.Calendar day, java.util.Calendar beginning, java.util.Calendar end);
+
+	public void delete();
 	"
 }
 

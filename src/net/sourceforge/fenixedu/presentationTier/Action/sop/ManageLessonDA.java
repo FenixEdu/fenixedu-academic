@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InterceptingS
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidTimeIntervalServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.sop.CreateLesson;
 import net.sourceforge.fenixedu.applicationTier.Servico.sop.EditLesson;
+import net.sourceforge.fenixedu.applicationTier.Servico.sop.CreateLesson.InterceptingLessonException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
@@ -313,6 +314,11 @@ public class ManageLessonDA extends
                     actionErrors.add("errors.shift.hours.limit.exceeded", new ActionError(
                             "errors.shift.hours.limit.exceeded"));
                 }
+                saveErrors(request, actionErrors);
+                return mapping.getInputForward();
+            } catch (InterceptingLessonException ex) {
+                actionErrors.add("error.intercepting.lesson", 
+                        new ActionError("error.intercepting.lesson"));
                 saveErrors(request, actionErrors);
                 return mapping.getInputForward();
             }

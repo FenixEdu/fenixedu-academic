@@ -90,7 +90,11 @@ public class CreateLesson implements IService {
                 throw new ExistingServiceException(ex);
             }
         } else {
-            result.setMessageType(2);
+            if (!resultB) {
+                throw new InterceptingLessonException();
+            } else {
+                result.setMessageType(2);                
+            }
         }
 
         return result;
@@ -201,6 +205,16 @@ public class CreateLesson implements IService {
         }
 
         InvalidLoadException(String s) {
+            super(s);
+        }
+    }
+
+    public class InterceptingLessonException extends FenixServiceException {
+        private InterceptingLessonException() {
+            super();
+        }
+
+        InterceptingLessonException(String s) {
             super(s);
         }
     }

@@ -317,4 +317,17 @@ public class RoomOccupation extends RoomOccupation_Base {
                 && getPeriod().containsDay(day);
     }
 
+    public void delete() {
+        final IPeriod period = getPeriod();
+
+        setLesson(null);
+        setPeriod(null);
+        setRoom(null);
+        setWrittenEvaluation(null);
+
+        period.deleteIfEmpty();
+
+        super.deleteDomainObject();
+    }
+
 }

@@ -408,6 +408,7 @@
         name="shiftType"
         column="CLASS_TYPE"
         jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TipoAula2EnumTipoAulaFieldConversion"
 	/>
 
    <field-descriptor

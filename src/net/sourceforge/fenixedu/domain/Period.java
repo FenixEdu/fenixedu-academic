@@ -62,7 +62,7 @@ public class Period extends Period_Base {
      */
     public void setStartDate(Calendar calendar) {
         if (calendar != null) {
-            this.setStart(calendar.getTime());    
+            this.setStart(calendar.getTime());
         } else {
             this.setStart(null);
         }
@@ -86,8 +86,34 @@ public class Period extends Period_Base {
         return intersectPeriods(period.getStartDate(), period.getEndDate());
     }
 
-    public boolean containsDay(Calendar day){
+    public boolean containsDay(Calendar day) {
         return !(this.getStartDate().after(day) || this.getEndDate().before(day));
     }
 
+    public void deleteIfEmpty() {
+        if (empty()) {
+            delete();
+        }
+    }
+
+    private boolean empty() {
+        return getRoomOccupations().isEmpty()
+                && getExecutionDegreesForExamsFirstSemester().isEmpty()
+                && getExecutionDegreesForExamsSecondSemester().isEmpty()
+                && getExecutionDegreesForLessonsFirstSemester().isEmpty()
+                && getExecutionDegreesForLessonsSecondSemester().isEmpty();
+    }
+
+    private void delete() {
+        final IPeriod previous = getPreviousPeriod();
+        final IPeriod next = getNextPeriod();
+        if (previous != null && next != null) { 
+            previous.setNextPeriod(next);
+        } else {
+            setPreviousPeriod(null);
+            setNextPeriod(null);
+        }
+
+        deleteDomainObject();
+    }
 }

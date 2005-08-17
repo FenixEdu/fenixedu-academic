@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;
 import net.sourceforge.fenixedu.util.Season;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -46,6 +47,20 @@ public class Exam extends Exam_Base {
                 return roomOccupation.getRoom();
             }
         });
+    }
+
+    public void delete() throws notAuthorizedServiceDeleteException {
+        if (!hasAnyExamStudentRooms()) {
+            getAssociatedExecutionCourses().clear();
+
+            final List<IRoomOccupation> roomOccupations = getAssociatedRoomOccupation();
+            for (; !roomOccupations.isEmpty(); roomOccupations.get(0).delete());
+
+            getAssociatedCurricularCourseScope().clear();
+            deleteDomainObject();
+        } else {
+            throw new notAuthorizedServiceDeleteException("error.notAuthorizedExamDelete.withStudent");
+        }
     }
 
 }
