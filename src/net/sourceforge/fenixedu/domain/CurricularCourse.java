@@ -207,27 +207,25 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
    private ICurricularYear getCurricularYearWithLowerYear(List listOfScopes, Date date) {
-
-        ICurricularYear maxCurricularYear = new CurricularYear();
-        maxCurricularYear.setYear(new Integer(10));
+        
+        if(listOfScopes.isEmpty()) {
+        	return null;
+        }
+        
+        ICurricularYear minCurricularYear = ((ICurricularCourseScope) listOfScopes.get(0)).getCurricularSemester().getCurricularYear();
 
         ICurricularYear actualCurricularYear = null;
-
-        int size = listOfScopes.size();
-
-        for (int i = 0; i < size; i++) {
-
-            ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) listOfScopes.get(i);
+        for (ICurricularCourseScope curricularCourseScope : (List<ICurricularCourseScope>) listOfScopes) {
             actualCurricularYear = curricularCourseScope.getCurricularSemester().getCurricularYear();
 
-            if (maxCurricularYear.getYear().intValue() > actualCurricularYear.getYear().intValue()
+            if (minCurricularYear.getYear().intValue() > actualCurricularYear.getYear().intValue()
                     && curricularCourseScope.isActive(date).booleanValue()) {
 
-                maxCurricularYear = actualCurricularYear;
+                minCurricularYear = actualCurricularYear;
             }
         }
 
-        return maxCurricularYear;
+        return minCurricularYear;
     }
 
     // -------------------------------------------------------------
