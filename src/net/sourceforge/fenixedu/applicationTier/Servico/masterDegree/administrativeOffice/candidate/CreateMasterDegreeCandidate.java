@@ -95,7 +95,7 @@ public class CreateMasterDegreeCandidate implements IService {
 
 			// Generate Person Username
 			String username = MasterDegreeCandidate.generateUsernameForNewCandidate(masterDegreeCandidate, persons);
-			person.changeUsername(username, (List<IPerson>) sp.getIPessoaPersistente().readAll(Person.class));
+			person.changeUsername(username, persons);
 
 			// Give the Person Role
 			person.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(RoleType.PERSON));
@@ -103,13 +103,13 @@ public class CreateMasterDegreeCandidate implements IService {
             if(person.getUsername().startsWith("INA")){
                 // Generate Person Username
                 String username = MasterDegreeCandidate.generateUsernameForNewCandidate(masterDegreeCandidate, persons);
-                person.changeUsername(username, (List<IPerson>) sp.getIPessoaPersistente().readAll(Person.class));
+                person.changeUsername(username, persons);
             }
             if(person.getUsername().startsWith("B")){
                 // Generate Person Username
                 person.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(RoleType.PERSON));
                 String username = MasterDegreeCandidate.generateUsernameForNewCandidate(masterDegreeCandidate, persons);
-                person.changeUsername(username, (List<IPerson>) sp.getIPessoaPersistente().readAll(Person.class));
+                person.changeUsername(username, persons);
         	}
         }
 
