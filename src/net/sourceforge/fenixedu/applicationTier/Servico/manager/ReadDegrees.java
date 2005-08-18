@@ -11,10 +11,6 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * 
- * @author Luis Cruz
- */
 public class ReadDegrees implements IService {
 
     public List run() throws ExcepcaoPersistencia {
@@ -26,7 +22,7 @@ public class ReadDegrees implements IService {
         final List<IDegree> degrees = persistentSupport.getICursoPersistente().readAll();
         final List<InfoDegree> infoDegrees = new ArrayList<InfoDegree>(degrees.size());
         for (final IDegree degree : degrees) {
-        	if (degreeType != null && degreeType == degree.getTipoCurso()) {
+        	if (degreeType == null || degreeType == degree.getTipoCurso()) {
         		infoDegrees.add(InfoDegree.newInfoFromDomain(degree));
         	}
         }

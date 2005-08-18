@@ -207,7 +207,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 
         if (deletedCoordinatorsIds != null) {
             List deletedCoordinatorsIdsList = Arrays.asList(deletedCoordinatorsIds);
-            Object[] args = { executionDegreeId, deletedCoordinatorsIdsList };
+            Object[] args = { deletedCoordinatorsIdsList };
             try {
                 ServiceManagerServiceFactory.executeService(userView, "RemoveCoordinatorsByManager",
                         args);

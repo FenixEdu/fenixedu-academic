@@ -166,7 +166,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
         String infoExecutionDegreeIdString = request.getParameter("infoExecutionDegreeId");
         Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
         request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
-        Object[] args = { infoExecutionDegreeId, coordinators };
+        Object[] args = { coordinators };
         try {
             ServiceUtils.executeService(userView, "RemoveCoordinators", args);
 
