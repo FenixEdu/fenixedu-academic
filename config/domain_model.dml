@@ -620,10 +620,10 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     
     class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEM extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
     }
-    
+
     class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLET extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
     }
-    
+
     class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEA extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
     }
 
@@ -1543,9 +1543,9 @@ class net.sourceforge.fenixedu.domain.onlineTests.Metadata extends net.sourcefor
     String secondarySubject;
     
     interface "
-    public abstract java.util.Calendar getLearningTime();
+        public abstract java.util.Calendar getLearningTime();
 
-    public abstract void setLearningTime(java.util.Calendar calendar);
+	    public abstract void setLearningTime(java.util.Calendar calendar);
     "
 }
 
@@ -2161,7 +2161,7 @@ class net.sourceforge.fenixedu.domain.RoomOccupation extends net.sourceforge.fen
 	public boolean roomOccupationForDateAndTime(IPeriod period, java.util.Calendar startTime, java.util.Calendar endTime, net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week, IRoom room);
 	
 	public boolean roomOccupationForDateAndTime(IPeriod period, java.util.Calendar startTime, java.util.Calendar endTime, net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week);
-
+	
     public boolean roomOccupationForDateAndTime(java.util.Calendar startDate, java.util.Calendar endDate, java.util.Calendar startTime, java.util.Calendar endTime, net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week);
 
 	public boolean containedIn(java.util.Calendar day, java.util.Calendar beginning, java.util.Calendar end);
@@ -2313,6 +2313,23 @@ class net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime extends net.
     ProviderRegimeType providerRegimeType;
 }
 
+class net.sourceforge.fenixedu.domain.log.ServiceLog extends net.sourceforge.fenixedu.domain.DomainObject {
+	Date invocationDate;
+	String invokerUsername;
+	String serviceName;
+	String serviceArguments;
+
+}
+
+class net.sourceforge.fenixedu.domain.log.MonitoredService extends net.sourceforge.fenixedu.domain.DomainObject {
+	String serviceName;
+
+}
+
+class net.sourceforge.fenixedu.domain.log.MonitoredUser extends net.sourceforge.fenixedu.domain.DomainObject {
+	String username;
+
+}
 
 class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer availabilityFinal;
