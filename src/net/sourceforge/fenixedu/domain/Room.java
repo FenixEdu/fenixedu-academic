@@ -44,10 +44,10 @@ public class Room extends Room_Base {
             DiaSemana dayOfWeek, Integer frequency, Integer week, IWrittenEvaluation writtenEvaluation) throws ExistingServiceException {
         boolean isFree = isFree(period, startTime, endTime, dayOfWeek, RoomOccupation.DIARIA, null);
         if (!isFree) {
-            throw new ExistingServiceException("A sala está ocupada");
+            throw new ExistingServiceException("A sala estï¿½ ocupada");
         }
 
-        RoomOccupation roomOccupation = DomainFactory.makeRoomOccupation(this,
+        RoomOccupation roomOccupation = new RoomOccupation(this,
                 startTime, endTime, dayOfWeek, RoomOccupation.DIARIA);
         roomOccupation.setPeriod(period);
         roomOccupation.setWrittenEvaluation(writtenEvaluation);
