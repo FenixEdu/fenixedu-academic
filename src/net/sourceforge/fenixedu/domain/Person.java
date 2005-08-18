@@ -32,6 +32,10 @@ public class Person extends Person_Base {
         setNumeroDocumentoIdentificacao(identificationDocumentNumber);
         setIdDocumentType(identificationDocumentType);
         setGender(gender);
+        setAvailableEmail(Boolean.FALSE);
+        setAvailableWebSite(Boolean.FALSE);
+        setAvailablePhoto(Boolean.FALSE);
+        setMaritalStatus(MaritalStatus.SINGLE);
     }
     
     public Person(String username, String name, Gender gender, String address, String phone, String mobile, String homepage, String email, String documentIDNumber, IDDocumentType documentType) {
