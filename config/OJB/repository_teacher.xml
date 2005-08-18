@@ -262,6 +262,12 @@
       	jdbc-type="INTEGER"
       	locking="true"
     />
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="associatedNonAffiliatedTeachers"
+			element-class-ref="net.sourceforge.fenixedu.domain.NonAffiliatedTeacher"
+			>
+		<inverse-foreignkey field-ref="keyInstitution"/>
+	</collection-descriptor>
 </class-descriptor>  
 				  		
 <!-- Mapping of User defined classses ends here -->

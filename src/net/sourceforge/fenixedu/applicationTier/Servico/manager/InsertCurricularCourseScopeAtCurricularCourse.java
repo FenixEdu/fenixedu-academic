@@ -28,7 +28,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class InsertCurricularCourseScopeAtCurricularCourse implements IService {
 
-    public void run(InfoCurricularCourseScope infoCurricularCourseScope) throws FenixServiceException {
+    public void run(InfoCurricularCourseScope infoCurricularCourseScope) throws FenixServiceException, ExcepcaoPersistencia {
         IBranch branch = null;
         ICurricularSemester curricularSemester = null;
         try {
@@ -66,8 +66,6 @@ public class InsertCurricularCourseScopeAtCurricularCourse implements IService {
             throw new ExistingServiceException("O âmbito pertencente ao ramo " + branch.getCode() + ", no "
                     + curricularSemester.getCurricularYear().getYear() + "º ano,  "
                     + curricularSemester.getSemester() + "º semestre");
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
         }
     }
 }

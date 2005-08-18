@@ -17,7 +17,7 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 		
         // check that there isn't another scope active with the same curricular course, branch and semester
 		
-        if (curricularCourse.hasActiveScopeInGivenSemesterForGivenBranch(curricularSemester.getSemester(), branch)) {
+        if (curricularCourse.hasActiveScopeInGivenSemesterForGivenBranch(curricularSemester, branch)) {
             throw new DomainException("error.curricular.course.scope.conflict.creation");
         }
 		
@@ -91,11 +91,7 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
     }
 
     public Boolean isActive() {
-        Boolean result = Boolean.FALSE;
-        if (this.getEndDate() == null) {
-            result = Boolean.TRUE;
-        }
-        return result;
+        return this.getEndDate() == null;
     }
 	
 	

@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import java.util.ListIterator;
 
 /**
  * 
@@ -28,45 +27,13 @@ public class Employee extends Employee_Base {
         return result;
     }
 
-    public void fillEmployeeHistoric() {
-        if (getHistoricList() != null) {
-            ListIterator iterator = getHistoricList().listIterator();
-            IEmployeeHistoric historic = null;
-
-            setEmployeeHistoric(new EmployeeHistoric());
-            while (iterator.hasNext()) {
-                historic = (IEmployeeHistoric) iterator.next();
-
-                if (historic.getKeyResponsableEmployee() != null
-                        && historic.getKeyResponsableEmployee().intValue() > 0) {
-                    employeeHistoric.setKeyResponsableEmployee(historic.getKeyResponsableEmployee());
-                    employeeHistoric.setResponsableEmployee(historic.getResponsableEmployee());
-                }
-                if (historic.getKeyMailingCostCenter() != null
-                        && historic.getKeyMailingCostCenter().intValue() > 0) {
-                    employeeHistoric.setKeyMailingCostCenter(historic.getKeyMailingCostCenter());
-                    employeeHistoric.setMailingCostCenter(historic.getMailingCostCenter());
-                }
-                if (historic.getKeyWorkingPlaceCostCenter() != null
-                        && historic.getKeyWorkingPlaceCostCenter().intValue() > 0) {
-                    employeeHistoric.setKeyWorkingPlaceCostCenter(historic
-                            .getKeyWorkingPlaceCostCenter());
-                    employeeHistoric.setWorkingPlaceCostCenter(historic.getWorkingPlaceCostCenter());
-                }
-                if (historic.getKeySalaryCostCenter() != null
-                        && historic.getKeySalaryCostCenter().intValue() > 0) {
-                    employeeHistoric.setKeySalaryCostCenter(historic.getKeySalaryCostCenter());
-                    employeeHistoric.setSalaryCostCenter(historic.getSalaryCostCenter());
-                }
-                if (historic.getCalendar() != null) {
-                    employeeHistoric.setCalendar(historic.getCalendar());
-                }
-                if (historic.getKeyStatus() != null && historic.getKeyStatus().intValue() > 0) {
-                    employeeHistoric.setKeyStatus(historic.getKeyStatus());
-                    employeeHistoric.setStatus(historic.getStatus());
-                }
+    public ICostCenter findWorkingCostCenter() {
+        for (final IEmployeeHistoric employeeHistoric : getHistoricList()) {
+            if (employeeHistoric.getWorkingPlaceCostCenter() != null) {
+                return employeeHistoric.getWorkingPlaceCostCenter();
             }
         }
+        return null;
     }
 
 }

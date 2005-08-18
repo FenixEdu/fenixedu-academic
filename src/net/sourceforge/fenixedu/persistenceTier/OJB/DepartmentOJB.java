@@ -35,9 +35,8 @@ public class DepartmentOJB extends PersistentObjectOJB implements IPersistentDep
         // TODO: Remove this call after refactoring teacher...
         // teacher.getEmployee();
 		ITeacher teacher = (ITeacher)readByOID(Teacher.class, teacherId);
-        IEmployeeHistoric employeeHistoric = getEmployee(teacher);
-
-        ICostCenter workingCC = employeeHistoric.getWorkingPlaceCostCenter();
+        IEmployee employee = getEmployee(teacher);
+        ICostCenter workingCC = employee.findWorkingCostCenter();
 
         List departmentList = null;
         IDepartment department = null;
@@ -105,16 +104,11 @@ public class DepartmentOJB extends PersistentObjectOJB implements IPersistentDep
      * @param teacher
      * @return
      */
-    private IEmployeeHistoric getEmployee(ITeacher teacher) throws ExcepcaoPersistencia {
+    private IEmployee getEmployee(ITeacher teacher) throws ExcepcaoPersistencia {
         IPersistentEmployee employeeDAO = new EmployeeOJB();
 
         IEmployee employee = employeeDAO.readByNumber(teacher.getTeacherNumber());
-        employee.getHistoricList().clear();
-        employee.getHistoricList().addAll(employeeDAO.readHistoricByKeyEmployee(employee.getIdInternal()
-                .intValue()));
 
-        employee.fillEmployeeHistoric();
-
-        return employee.getEmployeeHistoric();
+        return employee;
     }
 }

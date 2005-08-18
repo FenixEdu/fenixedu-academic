@@ -165,20 +165,28 @@ public class CurricularCourse extends CurricularCourse_Base {
         return !result.isEmpty();
     }
 
-    public boolean hasActiveScopeInGivenSemesterForGivenBranch(final Integer semester,
-            final IBranch branch) {
-        List scopes = this.getScopes();
-
-        List result = (List) CollectionUtils.select(scopes, new Predicate() {
-            public boolean evaluate(Object obj) {
-                ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) obj;
-                return (curricularCourseScope.getCurricularSemester().getSemester().equals(semester)
-                        && curricularCourseScope.isActive().booleanValue() && curricularCourseScope
-                        .getBranch().equals(branch));
+    public boolean hasActiveScopeInGivenSemesterForGivenBranch(
+            final ICurricularSemester curricularSemester, final IBranch branch) {
+        final List<ICurricularCourseScope> scopes = this.getScopes();
+        for (final ICurricularCourseScope curricularCourseScope : scopes) {
+            if (curricularCourseScope.getCurricularSemester().equals(curricularSemester)
+                    && curricularCourseScope.isActive() && curricularCourseScope.getBranch().equals(branch)) {
+                return true;
             }
-        });
+        }
+        return false;
+    }
 
-        return !result.isEmpty();
+    public boolean hasActiveScopeInGivenSemesterForGivenBranch(
+            final Integer semester, final IBranch branch) {
+        final List<ICurricularCourseScope> scopes = this.getScopes();
+        for (final ICurricularCourseScope curricularCourseScope : scopes) {
+            if (curricularCourseScope.getCurricularSemester().getSemester().equals(semester)
+                    && curricularCourseScope.isActive() && curricularCourseScope.getBranch().equals(branch)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean hasActiveScopeInGivenSemesterForCommonAndGivenBranch(final Integer semester,

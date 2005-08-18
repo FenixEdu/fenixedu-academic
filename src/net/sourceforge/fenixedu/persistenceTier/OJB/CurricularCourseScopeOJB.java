@@ -41,9 +41,9 @@ public class CurricularCourseScopeOJB extends PersistentObjectOJB implements
         criteria.addEqualTo("curricularSemesterKey", curricularSemesterId);
         criteria.addEqualTo("branchKey", branchId);
         if (endDate == null) {
-            criteria.addIsNull("endDate");
+            criteria.addIsNull("end");
         } else {
-            criteria.addEqualTo("endDate", endDate);
+            criteria.addEqualTo("end", endDate.getTime());
         }
         return (ICurricularCourseScope) queryObject(CurricularCourseScope.class, criteria);
 
@@ -53,7 +53,7 @@ public class CurricularCourseScopeOJB extends PersistentObjectOJB implements
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("curricularCourseKey", curricularCourseId);
-        crit.addIsNull("endDate");
+        crit.addIsNull("end");
         List result = queryList(CurricularCourseScope.class, crit);
         return result;
     }
@@ -62,7 +62,7 @@ public class CurricularCourseScopeOJB extends PersistentObjectOJB implements
             final Integer degreeCurricularPlanId) throws ExcepcaoPersistencia {
         final Criteria crit = new Criteria();
         crit.addEqualTo("curricularCourse.degreeCurricularPlanKey", degreeCurricularPlanId);
-        crit.addIsNull("endDate");
+        crit.addIsNull("end");
         final List result = queryList(CurricularCourseScope.class, crit);
         return result;
     }
@@ -72,13 +72,13 @@ public class CurricularCourseScopeOJB extends PersistentObjectOJB implements
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("curricularCourseKey", curricularCourseId);
-        crit.addLessThan("beginDate", endDate);
+        crit.addLessThan("begin", endDate);
 
         Criteria crit3 = new Criteria();
-        crit3.addIsNull("endDate");
+        crit3.addIsNull("end");
 
         Criteria crit4 = new Criteria();
-        crit4.addGreaterThan("endDate", beginDate);
+        crit4.addGreaterThan("end", beginDate);
 
         crit3.addOrCriteria(crit4);
         crit.addAndCriteria(crit3);
@@ -93,13 +93,13 @@ public class CurricularCourseScopeOJB extends PersistentObjectOJB implements
         Criteria crit = new Criteria();
 
         crit.addEqualTo("curricularCourse.degreeCurricularPlanKey", degreeCurricularPlanId);
-        crit.addLessThan("beginDate", endDate);
+        crit.addLessThan("begin", endDate);
 
         Criteria crit3 = new Criteria();
-        crit3.addIsNull("endDate");
+        crit3.addIsNull("end");
 
         Criteria crit4 = new Criteria();
-        crit4.addGreaterThan("endDate", beginDate);
+        crit4.addGreaterThan("end", beginDate);
 
         crit3.addOrCriteria(crit4);
         crit.addAndCriteria(crit3);
@@ -114,13 +114,13 @@ public class CurricularCourseScopeOJB extends PersistentObjectOJB implements
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("curricularCourse.idInternal", curricularCourseId);
-        crit.addLessThan("beginDate", endDate);
+        crit.addLessThan("begin", endDate);
 
         Criteria crit3 = new Criteria();
-        crit3.addIsNull("endDate");
+        crit3.addIsNull("end");
 
         Criteria crit4 = new Criteria();
-        crit4.addGreaterThan("endDate", beginDate);
+        crit4.addGreaterThan("end", beginDate);
 
         crit3.addOrCriteria(crit4);
         crit.addAndCriteria(crit3);
@@ -134,13 +134,13 @@ public class CurricularCourseScopeOJB extends PersistentObjectOJB implements
         Criteria crit = new Criteria();
         crit.addEqualTo("curricularCourse.degreeCurricularPlanKey", degreeCurricularPlanId);
         crit.addEqualTo("curricularSemester.curricularYear.year", curricularYear);
-        crit.addLessThan("beginDate", endDate);
+        crit.addLessThan("begin", endDate);
 
         Criteria crit3 = new Criteria();
-        crit3.addIsNull("endDate");
+        crit3.addIsNull("end");
 
         Criteria crit4 = new Criteria();
-        crit4.addGreaterThan("endDate", beginDate);
+        crit4.addGreaterThan("end", beginDate);
 
         crit3.addOrCriteria(crit4);
         crit.addAndCriteria(crit3);

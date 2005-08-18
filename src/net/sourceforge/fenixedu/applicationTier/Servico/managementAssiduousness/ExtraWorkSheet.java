@@ -162,7 +162,8 @@ public class ExtraWorkSheet implements IService {
             employee.getHistoricList().clear();
             employee.getHistoricList().addAll(employeeDAO.readHistoricByKeyEmployee(employee.getIdInternal()
                                                                                     .intValue()));
-            employee.fillEmployeeHistoric();
+            // Removed because this method creates objects.
+            //employee.fillEmployeeHistoric();
 
             // »»»»»»»»»build extra work for to fill sheet
             extraWorkList = buildSheet(employeeNumber, firstDay, lastDay, locale);

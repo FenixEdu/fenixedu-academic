@@ -425,6 +425,8 @@ class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.f
 
     public boolean hasActiveScopeInGivenSemesterForGivenBranch(final Integer semester, final IBranch branch);
 
+    public boolean hasActiveScopeInGivenSemesterForGivenBranch(final ICurricularSemester curricularSemester, final IBranch branch);
+
     public boolean hasActiveScopeInGivenSemesterForCommonAndGivenBranch(final Integer semester, final IBranch branch);
 
     public java.util.List<ICurricularCourseScope> getActiveScopesInExecutionPeriod(final IExecutionPeriod executionPeriod);
@@ -750,7 +752,7 @@ class net.sourceforge.fenixedu.domain.Employee extends net.sourceforge.fenixedu.
 	
 	public void setEmployeeHistoric(IEmployeeHistoric employeeHistoric);
 	
-	public void fillEmployeeHistoric();
+	public ICostCenter findWorkingCostCenter();
 	"
 }
 

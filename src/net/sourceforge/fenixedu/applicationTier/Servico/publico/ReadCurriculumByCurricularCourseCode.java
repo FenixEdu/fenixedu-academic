@@ -6,6 +6,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithBranchAndSemesterAndYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
@@ -58,13 +60,15 @@ public class ReadCurriculumByCurricularCourseCode implements IService {
         ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse
                 .getIdInternal());
         if (curriculum != null) {
-            infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
+            infoCurriculum = InfoCurriculum.newInfoFromDomain(curriculum);
+            infoCurriculum.setInfoCurricularCourse(InfoCurricularCourseWithInfoDegree
+                    .newInfoFromDomain(curricularCourse));
         } else {
             //Although doesn't exist CURRICULUM, an object is returned with
             // the correspond curricular course
             infoCurriculum = new InfoCurriculum();
-            infoCurriculum.setInfoCurricularCourse(Cloner
-                    .copyCurricularCourse2InfoCurricularCourse(curricularCourse));
+            infoCurriculum.setInfoCurricularCourse(InfoCurricularCourseWithInfoDegree
+                    .newInfoFromDomain(curricularCourse));
         }
 
         List infoExecutionCourses = buildExecutionCourses(persistentExecutionCourse, curricularCourse);
@@ -72,6 +76,7 @@ public class ReadCurriculumByCurricularCourseCode implements IService {
 
         List activeInfoScopes = buildActiveScopes(persistentCurricularCourseScope, curricularCourse);
         infoCurriculum.getInfoCurricularCourse().setInfoScopes(activeInfoScopes);
+
         return infoCurriculum;
     }
 
@@ -119,9 +124,7 @@ public class ReadCurriculumByCurricularCourseCode implements IService {
                 new Transformer() {
 
                     public Object transform(Object arg0) {
-
-                        return Cloner
-                                .copyICurricularCourseScope2InfoCurricularCourseScope((ICurricularCourseScope) arg0);
+                        return InfoCurricularCourseScopeWithBranchAndSemesterAndYear.newInfoFromDomain((ICurricularCourseScope) arg0);
                     }
                 });
         return activeInfoScopes;

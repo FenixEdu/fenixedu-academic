@@ -609,16 +609,14 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="beginDate"
+		name="begin"
 		column="BEGIN_DATE"
         jdbc-type="DATE"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
 	/>
 	<field-descriptor
-		name="endDate"
+		name="end"
 		column="END_DATE"
         jdbc-type="DATE"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
 	/>
 			<!--	<field-descriptor
 		name="executionYear"
@@ -883,6 +881,20 @@
 		<fk-pointing-to-this-class column="KEY_SCIENTIFIC_AREA"/>
 		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE_GROUP"/>
 	</collection-descriptor>
+      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+		name="associatedCurricularCourses" 
+		element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
+		
+		>
+		<inverse-foreignkey field-ref="keyScientificArea"/>
+	  </collection-descriptor>
+      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+		name="creditsInScientificAreas" 
+		element-class-ref="net.sourceforge.fenixedu.domain.CreditsInScientificAreas"
+		
+		>
+		<inverse-foreignkey field-ref="keyScientificArea"/>
+	  </collection-descriptor>
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
