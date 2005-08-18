@@ -61,6 +61,7 @@
 <!ENTITY inquiries SYSTEM "repository_inquiries.xml">
 <!ENTITY managementAssiduousness SYSTEM "repository_managementAssiduousness.xml">
 <!ENTITY projectsManagement SYSTEM "repository_projectsManagement.xml">
+<!ENTITY log SYSTEM "repository_log.xml">
 ]>
 
 
@@ -129,5 +130,6 @@
 	&inquiries;
 	&managementAssiduousness;
 	&projectsManagement;
+	&log;
 	
 </descriptor-repository>
