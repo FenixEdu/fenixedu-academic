@@ -394,6 +394,14 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 	            <replacefilter token="@enrollment.faq.url@"
 			    			   property="enrollment.faq.url"/>    
 			</replace>
+			
+			<replace dir="${build.home.webinf.classes}"
+					 propertyFile="build.properties">
+				<include name="berserk.properties"/>
+			  	<replacefilter token="@application.filterBroker@"
+			  				   property="application.filterBroker"/>
+			</replace>			
+			
 		</parallel>
 	</target>
 
