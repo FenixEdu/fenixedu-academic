@@ -80,7 +80,11 @@ public class FenixFilterBroker extends FilterBroker {
         
         for (Object argument : arguments) {
             if(argument != null){
-                argumentsInString.append(argument.toString());
+                try {
+                    argumentsInString.append(argument.toString());
+                } catch (NullPointerException e) {
+                    argumentsInString.append(argument.getClass().getName());
+                }
                 argumentsInString.append("; ");
             }
         }
