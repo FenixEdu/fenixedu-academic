@@ -493,10 +493,11 @@ public class ExecutionCourseSiteComponentBuilder {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentItem persistentItem = sp.getIPersistentItem();
-            itemsList = persistentItem.readAllItemsBySection(infoSection.getIdInternal(), 
-                    infoSection.getInfoSite().getInfoExecutionCourse().getSigla(), 
-                    infoSection.getInfoSite().getInfoExecutionCourse().getInfoExecutionPeriod().getInfoExecutionYear().getYear(),
-                    infoSection.getInfoSite().getInfoExecutionCourse().getInfoExecutionPeriod().getName());
+            itemsList = persistentItem.readAllItemsBySection(infoSection.getIdInternal(), infoSection
+                    .getInfoSite().getInfoExecutionCourse().getSigla(), infoSection.getInfoSite()
+                    .getInfoExecutionCourse().getInfoExecutionPeriod().getInfoExecutionYear().getYear(),
+                    infoSection.getInfoSite().getInfoExecutionCourse().getInfoExecutionPeriod()
+                            .getName());
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
@@ -527,38 +528,30 @@ public class ExecutionCourseSiteComponentBuilder {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IExecutionCourse disciplinaExecucao = site.getExecutionCourse();
-            List shifts = sp.getITurnoPersistente().readByExecutionCourse(
-                    disciplinaExecucao.getIdInternal());
+            List<IShift> shifts = disciplinaExecucao.getAssociatedShifts();
 
-            if (shifts == null || shifts.isEmpty()) {
+            for (final IShift shift : shifts) {
+                List<ILesson> lessons = shift.getAssociatedLessons();
+                List infoLessons = new ArrayList(lessons.size());
+                List<ISchoolClass> classesShifts = shift.getAssociatedClasses();
+                List infoClasses = new ArrayList(classesShifts.size());
 
-            } else {
-
-                for (int i = 0; i < shifts.size(); i++) {
-                    IShift shift = (IShift) shifts.get(i);
-                    InfoShiftWithAssociatedInfoClassesAndInfoLessons shiftWithAssociatedClassesAndLessons = new InfoShiftWithAssociatedInfoClassesAndInfoLessons(
-                            InfoShiftWithInfoExecutionCourseAndCollections.newInfoFromDomain(shift),
-                            null, null);
-
-                    List lessons = shift.getAssociatedLessons();
-                    List infoLessons = new ArrayList();
-                    List<ISchoolClass> classesShifts = shift.getAssociatedClasses();
-                    List infoClasses = new ArrayList();
-
-                    for (int j = 0; j < lessons.size(); j++)
-                        infoLessons.add(InfoLessonWithInfoRoomAndInfoExecutionCourse
-                                .newInfoFromDomain((ILesson) lessons.get(j)));
-
-                    shiftWithAssociatedClassesAndLessons.setInfoLessons(infoLessons);
-
-                    for (int j = 0; j < classesShifts.size(); j++)
-                        infoClasses.add(InfoClassWithInfoExecutionDegree
-                                .newInfoFromDomain((classesShifts.get(j))));
-
-                    shiftWithAssociatedClassesAndLessons.setInfoClasses(infoClasses);
-
-                    shiftsWithAssociatedClassesAndLessons.add(shiftWithAssociatedClassesAndLessons);
+                for (final ILesson lesson : lessons) {
+                    infoLessons.add(InfoLessonWithInfoRoomAndInfoExecutionCourse
+                            .newInfoFromDomain(lesson));
                 }
+
+                for (final ISchoolClass schoolClass : classesShifts) {
+                    infoClasses.add(InfoClassWithInfoExecutionDegree.newInfoFromDomain(schoolClass));
+                }
+
+                InfoShift infoShift = InfoShiftWithInfoExecutionCourseAndCollections
+                        .newInfoFromDomain(shift);
+
+                InfoShiftWithAssociatedInfoClassesAndInfoLessons shiftWithAssociatedClassesAndLessons = 
+                    new InfoShiftWithAssociatedInfoClassesAndInfoLessons(infoShift, infoLessons, infoClasses);
+
+                shiftsWithAssociatedClassesAndLessons.add(shiftWithAssociatedClassesAndLessons);
             }
 
         } catch (ExcepcaoPersistencia e) {

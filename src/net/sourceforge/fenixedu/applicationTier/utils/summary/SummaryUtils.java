@@ -147,6 +147,7 @@ public class SummaryUtils {
                     .getInicio())) {
                 throw new FenixServiceException("error.summary.invalid.date");
             }
+            room = lesson.getRoomOccupation().getRoom();
             infoSummary.setSummaryHour(lesson.getInicio());
         }
         if (room == null) {

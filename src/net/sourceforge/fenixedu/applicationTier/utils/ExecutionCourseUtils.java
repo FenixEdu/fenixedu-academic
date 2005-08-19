@@ -111,9 +111,15 @@ public class ExecutionCourseUtils {
     public static void copyEvaluationMethod(final IExecutionCourse executionCourseFrom,
             IExecutionCourse executionCourseTo) {
         if (executionCourseFrom.getEvaluationMethod() != null) {
-            IEvaluationMethod evaluationMethod = executionCourseFrom.getEvaluationMethod();
-            executionCourseTo.createEvaluationMethod(evaluationMethod.getEvaluationElements(),
-                    evaluationMethod.getEvaluationElementsEn());
+            final IEvaluationMethod evaluationMethodFrom = executionCourseFrom.getEvaluationMethod();
+            final IEvaluationMethod evaluationMethodTo = executionCourseTo.getEvaluationMethod();
+            if (evaluationMethodTo == null) {
+                executionCourseTo.createEvaluationMethod(evaluationMethodFrom.getEvaluationElements(),
+                        evaluationMethodFrom.getEvaluationElementsEn());
+            } else {
+                evaluationMethodTo.edit(evaluationMethodFrom.getEvaluationElements(),
+                        evaluationMethodFrom.getEvaluationElementsEn());
+            }
         }
     }
 

@@ -312,7 +312,7 @@
 		name="chooseExecutionCourseForm"
 		input="/chooseContextDA.do?method=nextPagePublic&amp;nextPage=executionCourseSearch"
 		parameter="method"
-        type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction">    
+        type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction">
      		<forward name="sucess" path="/executionCourseSite.jsp"/> 
    	</action>
 

@@ -288,16 +288,14 @@
          conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.DiaSemana2EnumDiaSemanaFieldConversion"
       />
       <field-descriptor id="3"
-         name="inicio"
+         name="begin"
          column="START_TIME"
          jdbc-type="TIME"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
       />
       <field-descriptor id="4"
-         name="fim"
+         name="end"
          column="END_TIME"
          jdbc-type="TIME"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
       />
       <field-descriptor id="5"
          name="chaveSala"

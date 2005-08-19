@@ -33,7 +33,7 @@ public class Summary extends Summary_Base {
 
     private void edit(String title, String summaryText, Integer studentsNumber, Boolean isExtraLesson) {
 
-        if (title == null || summaryText == null || studentsNumber == null || isExtraLesson == null)
+        if (title == null || summaryText == null || isExtraLesson == null)
             throw new NullPointerException();
 
         setTitle(title);

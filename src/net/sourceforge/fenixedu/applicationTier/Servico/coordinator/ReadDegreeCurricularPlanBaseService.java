@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithBranchAndSemesterAndYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
@@ -50,7 +49,7 @@ abstract public class ReadDegreeCurricularPlanBaseService implements IService {
                     public Object transform(Object input) {
                         ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) input;
 
-                        return InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear
+                        return InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear
                                 .newInfoFromDomain(curricularCourseScope);
                     }
                 }, infoActiveScopes);
@@ -83,7 +82,7 @@ abstract public class ReadDegreeCurricularPlanBaseService implements IService {
                     CollectionUtils.collect(allActiveScopes, new Transformer() {
                         public Object transform(Object input) {
                             ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) input;
-                            return InfoCurricularCourseScopeWithBranchAndSemesterAndYear
+                            return InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear
                                     .newInfoFromDomain(curricularCourseScope);
                         }
 
@@ -122,7 +121,7 @@ abstract public class ReadDegreeCurricularPlanBaseService implements IService {
                     CollectionUtils.collect(allActiveExecution, new Transformer() {
                         public Object transform(Object input) {
                             ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) input;
-                            return InfoCurricularCourseScopeWithBranchAndSemesterAndYear
+                            return InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear
                                 .newInfoFromDomain(curricularCourseScope);
                         }
                     }, infoActiveScopes);
