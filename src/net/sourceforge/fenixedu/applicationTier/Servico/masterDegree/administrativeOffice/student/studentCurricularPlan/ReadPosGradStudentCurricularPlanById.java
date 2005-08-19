@@ -7,7 +7,7 @@ import java.util.ListIterator;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentAndDegreeAndBranch;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -34,8 +34,8 @@ public class ReadPosGradStudentCurricularPlanById implements IService {
                 .readByOID(StudentCurricularPlan.class, studentCurricularPlanId);
 
         if (studentCurricularPlan != null) {
-            infoStudentCurricularPlan = Cloner
-                    .copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan);
+            infoStudentCurricularPlan = InfoStudentCurricularPlanWithInfoStudentAndDegreeAndBranch
+                    .newInfoFromDomain(studentCurricularPlan);
         }
 
         if (studentCurricularPlan.getEnrolments() != null) {

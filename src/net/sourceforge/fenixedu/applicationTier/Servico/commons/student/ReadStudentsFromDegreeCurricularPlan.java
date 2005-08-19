@@ -7,14 +7,11 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
@@ -22,52 +19,37 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadStudentsFromDegreeCurricularPlan implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public ReadStudentsFromDegreeCurricularPlan() {
-    }
+    public List run(Integer degreeCurricularPlanID, DegreeType degreeType) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
-    public List run(Integer degreeCurricularPlanID, DegreeType degreeType) throws ExcepcaoInexistente,
-            FenixServiceException {
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        ISuportePersistente sp = null;
+        // Read the Students
+        IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp
+                .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
+                        degreeCurricularPlanID);
 
-        List students = null;
+        List students = degreeCurricularPlan.getStudentCurricularPlans();
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-            // Read the Students
-
-            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp
-                    .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
-                            degreeCurricularPlanID);
-
-            students = degreeCurricularPlan.getStudentCurricularPlans();
-
-        } catch (ExcepcaoPersistencia ex) {
-
-            throw new FenixServiceException("Persistence layer error", ex);
-        }
-
-        if ((students == null) || (students.size() == 0)) {
+        if ((students == null) || (students.isEmpty())) {
             throw new NonExistingServiceException();
         }
 
-        Iterator iterator = students.iterator();
-        List result = new ArrayList();
-        while (iterator.hasNext()) {
-            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator.next();
+        return (List) CollectionUtils.collect(students, new Transformer() {
+            public Object transform(Object arg0) {
+                IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) arg0;
+                return InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree
+                        .newInfoFromDomain(studentCurricularPlan);
+            }
 
-            result.add(Cloner
-                    .copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
-        }
-
-        return result;
+        });
     }
 }

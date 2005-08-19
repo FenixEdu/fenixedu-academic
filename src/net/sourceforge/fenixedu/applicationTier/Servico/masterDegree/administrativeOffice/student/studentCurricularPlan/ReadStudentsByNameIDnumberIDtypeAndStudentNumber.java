@@ -1,17 +1,17 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.studentCurricularPlan;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -20,30 +20,23 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadStudentsByNameIDnumberIDtypeAndStudentNumber implements IService {
 
-    public List run(String studentName, String idNumber, IDDocumentType idType,
-            Integer studentNumber) throws FenixServiceException {
-        List result = new ArrayList();
+    public List run(String studentName, String idNumber, IDDocumentType idType, Integer studentNumber)
+            throws ExcepcaoPersistencia {
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        
+        List masterDegreeStudents = sp.getIPersistentStudent()
+                .readMasterDegreeStudentsByNameIDnumberIDtypeAndStudentNumber(studentName, idNumber,
+                        idType, studentNumber);
 
-            List tempResult = persistentStudent
-                    .readMasterDegreeStudentsByNameIDnumberIDtypeAndStudentNumber(studentName, idNumber,
-                            idType, studentNumber);
+        return (List) CollectionUtils.collect(masterDegreeStudents, new Transformer() {
 
-            if (tempResult != null) {
-                Iterator iterator = tempResult.iterator();
-                while (iterator.hasNext()) {
-                    IStudent student = (IStudent) iterator.next();
-                    result.add(Cloner.copyIStudent2InfoStudent(student));
-                }
+            public Object transform(Object arg0) {
+                IStudent student = (IStudent) arg0;
+                return InfoStudentWithInfoPerson.newInfoFromDomain(student);
             }
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
-        return result;
+
+        });
+        
     }
 }

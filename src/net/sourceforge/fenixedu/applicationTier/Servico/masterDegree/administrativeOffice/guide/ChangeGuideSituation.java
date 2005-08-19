@@ -8,7 +8,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
@@ -33,14 +32,14 @@ import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonAccount;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
-import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
-import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransaction;
 import net.sourceforge.fenixedu.util.State;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ChangeGuideSituation implements IService {
@@ -57,57 +56,51 @@ public class ChangeGuideSituation implements IService {
         if (guide == null) {
             throw new ExcepcaoInexistente("Unknown Guide !!");
         }
-        GuideState situationOfGuide = GuideState.valueOf(situationOfGuideString);
 
-        IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-        IPerson employeePerson = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+        IGuideSituation activeGuideSituation = (IGuideSituation) CollectionUtils.find(guide
+                .getGuideSituations(), new Predicate() {
 
-        IGuideSituation guideSituation = DomainFactory.makeGuideSituation();
-        for (Iterator iter = guide.getGuideSituations().iterator(); iter.hasNext();) {
-            IGuideSituation guideSituationTemp = (IGuideSituation) iter.next();
-            if (guideSituationTemp.getState().equals(new State(State.ACTIVE)))
-                guideSituation = guideSituationTemp;
+            public boolean evaluate(Object arg0) {
+                IGuideSituation guideSituation = (IGuideSituation) arg0;
+                return guideSituation.getState().equals(new State(State.ACTIVE));
+            }
 
-        }
+        });
+
+        GuideState newSituationOfGuide = GuideState.valueOf(situationOfGuideString);
 
         // check if the change is valid
-        if (verifyChangeValidation(guideSituation, situationOfGuide) == false) {
+        if (!verifyChangeValidation(activeGuideSituation, newSituationOfGuide)) {
             throw new NonValidChangeServiceException();
         }
 
-        if (situationOfGuide.equals(guideSituation.getSituation())) {
-            guideSituation.setRemarks(remarks);
-            if (guideSituation.getSituation().equals(GuideState.PAYED)) {
+        if (newSituationOfGuide.equals(activeGuideSituation.getSituation())) {
+            activeGuideSituation.setRemarks(remarks);
+            if (activeGuideSituation.getSituation().equals(GuideState.PAYED)) {
                 guide.setPaymentDate(paymentDate);
                 guide.setPaymentType(PaymentType.valueOf(paymentType));
             }
-            guide.getGuideSituations().add(guideSituation);
+            // guide.addGuideSituations(activeGuideSituation);
         } else {
-            // Create The New Situation
 
-            guideSituation.setState(new State(State.INACTIVE));
+            // Create The New Situation
+            activeGuideSituation.setState(new State(State.INACTIVE));
 
             IGuideSituation newGuideSituation = DomainFactory.makeGuideSituation();
 
             Calendar date = Calendar.getInstance();
             newGuideSituation.setDate(date.getTime());
-            newGuideSituation.setGuide(guide);
             newGuideSituation.setRemarks(remarks);
-            newGuideSituation.setSituation(situationOfGuide);
+            newGuideSituation.setSituation(newSituationOfGuide);
             newGuideSituation.setState(new State(State.ACTIVE));
 
-            if (situationOfGuide.equals(GuideState.PAYED)) {
+            if (newSituationOfGuide.equals(GuideState.PAYED)) {
                 guide.setPaymentDate(paymentDate);
                 guide.setPaymentType(PaymentType.valueOf(paymentType));
 
                 // For Transactions Creation
-                IPersistentTransaction persistentTransaction = sp.getIPersistentTransaction();
-                IPaymentTransaction paymentTransaction = null;
-                IGratuitySituation gratuitySituation = null;
-                IPersistentPersonAccount persistentPersonAccount = sp.getIPersistentPersonAccount();
-                IPersonAccount personAccount = persistentPersonAccount.readByPerson(guide.getPerson()
-                        .getIdInternal());
-
+                IPersonAccount personAccount = sp.getIPersistentPersonAccount().readByPerson(
+                        guide.getPerson().getIdInternal());
                 if (personAccount == null) {
                     personAccount = DomainFactory.makePersonAccount(guide.getPerson());
                 }
@@ -115,35 +108,30 @@ public class ChangeGuideSituation implements IService {
                 IPersistentGratuitySituation persistentGratuitySituation = sp
                         .getIPersistentGratuitySituation();
 
+                IPerson employeePerson = sp.getIPessoaPersistente().lerPessoaPorUsername(
+                        userView.getUtilizador());
+                IPerson studentPerson = guide.getPerson();
+                IStudent student = sp.getIPersistentStudent().readByPersonAndDegreeType(
+                        studentPerson.getIdInternal(), DegreeType.MASTER_DEGREE);
+                IExecutionDegree executionDegree = guide.getExecutionDegree();
+
                 // Iterate Guide Entries to create Transactions
-                IGuideEntry guideEntry = null;
-                Iterator guideEntryIterator = guide.getGuideEntries().iterator();
-                while (guideEntryIterator.hasNext()) {
-
-                    guideEntry = (IGuideEntry) guideEntryIterator.next();
-
-                    IPerson studentPerson = guide.getPerson();
-
-                    IStudent student = sp.getIPersistentStudent().readByPersonAndDegreeType(
-                            studentPerson.getIdInternal(), DegreeType.MASTER_DEGREE);
-
-                    IExecutionDegree executionDegree = guide.getExecutionDegree();
+                for (IGuideEntry guideEntry : guide.getGuideEntries()) {
 
                     // Write Gratuity Transaction
                     if (guideEntry.getDocumentType().equals(DocumentType.GRATUITY)) {
 
-                        executionDegree = guide.getExecutionDegree();
-                        gratuitySituation = persistentGratuitySituation
+                        IGratuitySituation gratuitySituation = persistentGratuitySituation
                                 .readGratuitySituationByExecutionDegreeAndStudent(executionDegree
                                         .getIdInternal(), student.getIdInternal());
                         Double value = new Double(guideEntry.getPrice().doubleValue()
                                 * guideEntry.getQuantity().intValue());
 
-                        paymentTransaction = DomainFactory.makeGratuityTransaction(value, new Timestamp(
-                                Calendar.getInstance().getTimeInMillis()), guideEntry.getDescription(),
-                                guide.getPaymentType(), TransactionType.GRATUITY_ADHOC_PAYMENT,
-                                Boolean.FALSE, employeePerson, personAccount, guideEntry,
-                                gratuitySituation);
+                        IPaymentTransaction paymentTransaction = DomainFactory.makeGratuityTransaction(
+                                value, new Timestamp(Calendar.getInstance().getTimeInMillis()),
+                                guideEntry.getDescription(), guide.getPaymentType(),
+                                TransactionType.GRATUITY_ADHOC_PAYMENT, Boolean.FALSE, employeePerson,
+                                personAccount, guideEntry, gratuitySituation);
 
                         // Update GratuitySituation
                         Double remainingValue = gratuitySituation.getRemainingValue();
@@ -156,33 +144,29 @@ public class ChangeGuideSituation implements IService {
                     // Write Insurance Transaction
                     if (guideEntry.getDocumentType().equals(DocumentType.INSURANCE)) {
 
-                        IPersistentInsuranceTransaction insuranceTransactionDAO = sp
-                                .getIPersistentInsuranceTransaction();
+                        List insuranceTransactionList = sp.getIPersistentInsuranceTransaction()
+                                .readAllNonReimbursedByExecutionYearAndStudent(
+                                        executionDegree.getExecutionYear().getIdInternal(),
+                                        student.getIdInternal());
 
-                        List insuranceTransactionList = insuranceTransactionDAO
-                                .readAllNonReimbursedByExecutionYearAndStudent(executionDegree
-                                        .getExecutionYear().getIdInternal(), student.getIdInternal());
-
-                        if (insuranceTransactionList.isEmpty() == false) {
+                        if (!insuranceTransactionList.isEmpty()) {
                             throw new ExistingServiceException(
                                     "error.message.transaction.insuranceTransactionAlreadyExists");
                         }
 
-                        paymentTransaction = DomainFactory.makeInsuranceTransaction(guideEntry
-                                .getPrice(), new Timestamp(Calendar.getInstance().getTimeInMillis()),
-                                guideEntry.getDescription(), guide.getPaymentType(),
-                                TransactionType.INSURANCE_PAYMENT, Boolean.FALSE, guide.getPerson(),
-                                personAccount, guideEntry, executionDegree.getExecutionYear(), student);
+                        IPaymentTransaction paymentTransaction = DomainFactory.makeInsuranceTransaction(
+                                guideEntry.getPrice(), new Timestamp(Calendar.getInstance()
+                                        .getTimeInMillis()), guideEntry.getDescription(), guide
+                                        .getPaymentType(), TransactionType.INSURANCE_PAYMENT,
+                                Boolean.FALSE, guide.getPerson(), personAccount, guideEntry,
+                                executionDegree.getExecutionYear(), student);
 
                     }
-
                 }
-
             }
 
             // Write the new Situation
-
-            guide.getGuideSituations().add(newGuideSituation);
+            guide.addGuideSituations(newGuideSituation);
 
         }
 

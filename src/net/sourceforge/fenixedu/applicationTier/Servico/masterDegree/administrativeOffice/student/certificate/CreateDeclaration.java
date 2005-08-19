@@ -7,7 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
@@ -54,8 +54,9 @@ public class CreateDeclaration implements IService {
             IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iter.next();
 
             if (studentCurricularPlan != null || studentCurricularPlan.getIdInternal() != null) {
-                infoStudentCurricularPlanList.add(Cloner
-                        .copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
+                infoStudentCurricularPlanList
+                        .add(InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree
+                                .newInfoFromDomain(studentCurricularPlan));
             }
 
         }
@@ -96,8 +97,9 @@ public class CreateDeclaration implements IService {
             IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iter.next();
 
             if (studentCurricularPlan != null || studentCurricularPlan.getIdInternal() != null) {
-                infoStudentCurricularPlanList.add(Cloner
-                        .copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
+                infoStudentCurricularPlanList
+                        .add(InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree
+                                .newInfoFromDomain(studentCurricularPlan));
             }
 
         }
@@ -106,7 +108,7 @@ public class CreateDeclaration implements IService {
 
     }
 
-    //FIXME change paraemter states to List type, when berserk's reflection bug
+    // FIXME change paraemter states to List type, when berserk's reflection bug
     // is fixed
     public List run(InfoStudent infoStudent, Specialization specialization, ArrayList states)
             throws Exception {
@@ -150,8 +152,9 @@ public class CreateDeclaration implements IService {
             IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iter.next();
 
             if (studentCurricularPlan != null || studentCurricularPlan.getIdInternal() != null) {
-                infoStudentCurricularPlanList.add(Cloner
-                        .copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
+                infoStudentCurricularPlanList
+                        .add(InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree
+                                .newInfoFromDomain(studentCurricularPlan));
             }
 
         }

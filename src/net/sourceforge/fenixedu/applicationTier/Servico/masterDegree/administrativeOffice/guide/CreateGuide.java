@@ -98,7 +98,7 @@ public class CreateGuide implements IService {
         guide.setPaymentType(infoGuide.getPaymentType());
         guide.setRemarks(infoGuide.getRemarks());
         guide.setTotal(infoGuide.getTotal());
-        guide.setVersion(infoGuide.getVersion());
+        guide.setVersion(infoGuide.getVersion());        
         guide.setYear(infoGuide.getYear());
 
         if (situationOfGuide.equals(GuideState.PAYED)) {
@@ -109,15 +109,22 @@ public class CreateGuide implements IService {
         // Write the new Entries of the Guide
         for (InfoGuideEntry infoGuideEntryIter : (List<InfoGuideEntry>) infoGuide.getInfoGuideEntries()) {
             IGuideEntry guideEntry = DomainFactory.makeGuideEntry();
-            infoGuideEntryIter.copyToDomain(infoGuideEntryIter, guideEntry);
-            guideEntry.setGuide(guide);
+            
+            guideEntry.setDescription(infoGuideEntryIter.getDescription());
+            guideEntry.setDocumentType(infoGuideEntryIter.getDocumentType());
+            guideEntry.setGraduationType(infoGuideEntryIter.getGraduationType());
+            guideEntry.setPrice(infoGuideEntryIter.getPrice());
+            guideEntry.setQuantity(infoGuideEntryIter.getQuantity());
+            
+            guide.addGuideEntries(guideEntry);
+            
         }
 
         // Write the New Guide Situation
         guideSituation = DomainFactory.makeGuideSituation(situationOfGuide, remarks, calendar.getTime(), guide,
                 new State(State.ACTIVE));
 
-        guide.getGuideSituations().add(guideSituation);
+        guide.addGuideSituations(guideSituation);
 
         InfoGuide result = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide);
         result.setInfoGuideEntries(infoGuide.getInfoGuideEntries());

@@ -66,22 +66,22 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
     }
 
     protected void lockRead(List list) throws ExcepcaoPersistencia {
-        try {
-
-            tx = odmg.currentTransaction();
-
-            if (tx == null)
-                throw new ExcepcaoPersistencia("No current transaction!");
-            if (list != null) {
-                for (int i = 0; i < list.size(); i++) {
-                    Object obj = list.get(i);
-
-                    lockRead(obj);
-                }
-            }
-        } catch (ODMGRuntimeException ex) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.READ_LOCK, ex);
-        }
+//        try {
+//
+//            tx = odmg.currentTransaction();
+//
+//            if (tx == null)
+//                throw new ExcepcaoPersistencia("No current transaction!");
+//            if (list != null) {
+//                for (int i = 0; i < list.size(); i++) {
+//                    Object obj = list.get(i);
+//
+//                    lockRead(obj);
+//                }
+//            }
+//        } catch (ODMGRuntimeException ex) {
+//            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.READ_LOCK, ex);
+//        }
     }
 
     public void lockWrite(Object obj) throws ExcepcaoPersistencia {
@@ -96,13 +96,13 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
     }
 
     protected void lockRead(Object obj) throws ExcepcaoPersistencia {
-        try {
-            tx = odmg.currentTransaction();
-            tx.lock(obj, Transaction.READ);
-
-        } catch (ODMGRuntimeException ex) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.READ_LOCK, ex);
-        }
+//        try {
+//            tx = odmg.currentTransaction();
+//            tx.lock(obj, Transaction.READ);
+//
+//        } catch (ODMGRuntimeException ex) {
+//            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.READ_LOCK, ex);
+//        }
 
     }
 
@@ -195,7 +195,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
         if (lockWrite) {
             tx.lock(domainObject, Transaction.WRITE);
         } else {
-            tx.lock(domainObject, Transaction.READ);
+//            tx.lock(domainObject, Transaction.READ);
         }
         return domainObject;
     }
@@ -287,6 +287,8 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 
     public IDomainObject readByOID(Class classToQuery, Integer oid, boolean lockWrite)
             throws ExcepcaoPersistencia {
+        
+        tx = odmg.currentTransaction();
         Criteria criteria = new Criteria();
         criteria.addEqualTo("idInternal", oid);
         IDomainObject domainObject = (IDomainObject) queryObject(classToQuery, criteria);

@@ -7,8 +7,6 @@ import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.De
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IMasterDegreeCurricularPlanStrategy;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeProofVersion;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
-import net.sourceforge.fenixedu.domain.IBranch;
 import net.sourceforge.fenixedu.domain.IMasterDegreeProofVersion;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -26,49 +24,30 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlan implements IService {
 
     public InfoMasterDegreeProofVersion run(Integer studentCurricularPlanID)
-            throws FenixServiceException {
-        InfoMasterDegreeProofVersion infoMasterDegreeProofVersion = null;
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) sp
-                    .getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,
-                            studentCurricularPlanID);
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) sp
+                .getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,
+                        studentCurricularPlanID);
 
-            IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory
-                    .getInstance();
-            IMasterDegreeCurricularPlanStrategy masterDegreeCurricularPlanStrategy = (IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory
-                    .getDegreeCurricularPlanStrategy(studentCurricularPlan.getDegreeCurricularPlan());
+        IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory
+                .getInstance();
+        IMasterDegreeCurricularPlanStrategy masterDegreeCurricularPlanStrategy = (IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory
+                .getDegreeCurricularPlanStrategy(studentCurricularPlan.getDegreeCurricularPlan());
 
-            if (!masterDegreeCurricularPlanStrategy.checkEndOfScholarship(studentCurricularPlan))
-                throw new ScholarshipNotFinishedServiceException(
-                        "error.exception.masterDegree.scholarshipNotFinished");
+        if (!masterDegreeCurricularPlanStrategy.checkEndOfScholarship(studentCurricularPlan))
+            throw new ScholarshipNotFinishedServiceException(
+                    "error.exception.masterDegree.scholarshipNotFinished");
 
-            IMasterDegreeProofVersion masterDegreeProofVersion = sp
-                    .getIPersistentMasterDegreeProofVersion().readActiveByStudentCurricularPlan(
-                            studentCurricularPlan);
+        IMasterDegreeProofVersion masterDegreeProofVersion = sp.getIPersistentMasterDegreeProofVersion()
+                .readActiveByStudentCurricularPlan(studentCurricularPlan);
 
-            if (masterDegreeProofVersion == null)
-                throw new NonExistingServiceException(
-                        "error.exception.masterDegree.nonExistingMasterDegreeProofVersion");
+        if (masterDegreeProofVersion == null)
+            throw new NonExistingServiceException(
+                    "error.exception.masterDegree.nonExistingMasterDegreeProofVersion");
 
-            IBranch branch = masterDegreeProofVersion.getMasterDegreeThesis().getStudentCurricularPlan()
-                    .getBranch();
+        return InfoMasterDegreeProofVersion.newInfoFromDomain(masterDegreeProofVersion);
 
-            if (branch != null) {
-
-                branch.getIdInternal();
-            }
-
-            infoMasterDegreeProofVersion = Cloner
-                    .copyIMasterDegreeProofVersion2InfoMasterDegreeProofVersion(masterDegreeProofVersion);
-
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
-
-        return infoMasterDegreeProofVersion;
     }
 }

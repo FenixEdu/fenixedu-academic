@@ -11,9 +11,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteEnrollment;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.DomainFactory;
+import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IBranch;
+import net.sourceforge.fenixedu.domain.ICreditsInAnySecundaryArea;
+import net.sourceforge.fenixedu.domain.ICreditsInScientificArea;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IEnrolment;
+import net.sourceforge.fenixedu.domain.IEnrolmentEquivalence;
+import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IEnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
@@ -41,17 +46,17 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class EditPosGradStudentCurricularPlanStateAndCredits implements IService {
 
     public void run(IUserView userView, Integer studentCurricularPlanId, String currentState,
-                    Double credits, String startDate, List extraCurricularCourses, String observations,
-                    Integer branchId, String specialization) throws FenixServiceException {
+            Double credits, String startDate, List extraCurricularCourses, String observations,
+            Integer branchId, String specialization) throws FenixServiceException {
 
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
-                .getIStudentCurricularPlanPersistente();
+                    .getIStudentCurricularPlanPersistente();
 
             IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan
-                .readByOID(StudentCurricularPlan.class, studentCurricularPlanId, true);
+                    .readByOID(StudentCurricularPlan.class, studentCurricularPlanId, true);
             if (studentCurricularPlan == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -93,7 +98,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
                 while (iterator.hasNext()) {
                     IEnrolment enrolment = (IEnrolment) iterator.next();
                     if (enrolment.getEnrollmentState() == EnrollmentState.ENROLLED
-                        || enrolment.getEnrollmentState() == EnrollmentState.TEMPORARILY_ENROLLED) {
+                            || enrolment.getEnrollmentState() == EnrollmentState.TEMPORARILY_ENROLLED) {
                         persistentEnrolment.simpleLockWrite(enrolment);
                         enrolment.setEnrollmentState(EnrollmentState.ANNULED);
                     }
@@ -106,18 +111,19 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
                     if (enrolment instanceof Proxy) {
                         enrolment = (IEnrolment) ProxyHelper.getRealObject(enrolment);
                     }
-                    
+
                     if (extraCurricularCourses.contains(enrolment.getIdInternal())) {
                         if (!(enrolment instanceof IEnrolmentInExtraCurricularCourse)) {
 
-                            IEnrolment auxEnrolment = DomainFactory.makeEnrolmentInExtraCurricularCourse();
+                            IEnrolment auxEnrolment = DomainFactory
+                                    .makeEnrolmentInExtraCurricularCourse();
 
                             copyEnrollment(enrolment, auxEnrolment);
                             setEnrolmentCreationInformation(userView, auxEnrolment);
-                            
+
                             changeAnnulled2ActiveIfActivePlan(newState, persistentEnrolment,
-                                                              auxEnrolment);
-							
+                                    auxEnrolment);
+
                             DeleteEnrollment deleteEnrolmentService = new DeleteEnrollment();
                             deleteEnrolmentService.run(enrolment.getIdInternal());
                         } else {
@@ -125,15 +131,15 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
                         }
                     } else {
                         if (enrolment instanceof IEnrolmentInExtraCurricularCourse) {
-                            
+
                             IEnrolment auxEnrolment = DomainFactory.makeEnrolment();
 
                             copyEnrollment(enrolment, auxEnrolment);
                             setEnrolmentCreationInformation(userView, auxEnrolment);
-                            
+
                             changeAnnulled2ActiveIfActivePlan(newState, persistentEnrolment,
-                                                              auxEnrolment);
-							
+                                    auxEnrolment);
+
                             DeleteEnrollment deleteEnrolmentService = new DeleteEnrollment();
                             deleteEnrolmentService.run(enrolment.getIdInternal());
                         } else {
@@ -158,25 +164,34 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
      * @param auxEnrolment
      * @throws FenixServiceException
      */
-    private void copyEnrollment(IEnrolment enrolment, IEnrolment auxEnrolment)
-        throws FenixServiceException {
+    private void copyEnrollment(IEnrolment enrolment, IEnrolment auxEnrolment) {
 
         auxEnrolment.setCreatedBy(enrolment.getCreatedBy());
         auxEnrolment.setCreationDate(enrolment.getCreationDate());
         auxEnrolment.setAccumulatedWeight(enrolment.getAccumulatedWeight());
         auxEnrolment.setCurricularCourse(enrolment.getCurricularCourse());
         auxEnrolment.setExecutionPeriod(enrolment.getExecutionPeriod());
-        auxEnrolment.setStudentCurricularPlan(enrolment.getStudentCurricularPlan());     
+        auxEnrolment.setStudentCurricularPlan(enrolment.getStudentCurricularPlan());
         auxEnrolment.setCondition(enrolment.getCondition());
         auxEnrolment.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
         auxEnrolment.setEnrollmentState(enrolment.getEnrollmentState());
-		
-        auxEnrolment.getEvaluations().addAll(enrolment.getEvaluations());
-        auxEnrolment.getEnrolmentEquivalences().addAll(enrolment.getEnrolmentEquivalences());
-        auxEnrolment.getAttends().addAll(enrolment.getAttends());
-        auxEnrolment.getEquivalentEnrolmentForEnrolmentEquivalences().addAll(enrolment.getEquivalentEnrolmentForEnrolmentEquivalences());
-        auxEnrolment.getCreditsInAnySecundaryAreas().addAll(enrolment.getCreditsInAnySecundaryAreas());
-        auxEnrolment.getCreditsInScientificAreas().addAll(enrolment.getCreditsInScientificAreas());
+
+        for (final List<IEnrolmentEvaluation> evaluations = enrolment.getEvaluations(); !evaluations
+                .isEmpty(); auxEnrolment.addEvaluations(evaluations.get(0)))
+            ;
+        for (final List<IEnrolmentEquivalence> equivalences = enrolment.getEnrolmentEquivalences(); !equivalences
+                .isEmpty(); auxEnrolment.addEnrolmentEquivalences(equivalences.get(0)))
+            ;
+        for (final List<IAttends> attends = enrolment.getAttends(); !attends.isEmpty(); auxEnrolment
+                .addAttends(attends.get(0)))
+            ;
+        for (final List<ICreditsInAnySecundaryArea> credits = enrolment.getCreditsInAnySecundaryAreas(); !credits
+                .isEmpty(); auxEnrolment.addCreditsInAnySecundaryAreas(credits.get(0)))
+            ;
+        for (final List<ICreditsInScientificArea> credits = enrolment.getCreditsInScientificAreas(); !credits
+                .isEmpty(); auxEnrolment.addCreditsInScientificAreas(credits.get(0)))
+            ;
+
     }
 
     /**
@@ -186,8 +201,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
      * @throws ExcepcaoPersistencia
      */
     private void changeAnnulled2ActiveIfActivePlan(StudentCurricularPlanState newState,
-                                                   IPersistentEnrollment persistentEnrolment, IEnrolment enrolment)
-        throws ExcepcaoPersistencia {
+            IPersistentEnrollment persistentEnrolment, IEnrolment enrolment) throws ExcepcaoPersistencia {
         if (newState.equals(StudentCurricularPlanState.ACTIVE)) {
             if (enrolment.getEnrollmentState() == EnrollmentState.ANNULED) {
                 persistentEnrolment.simpleLockWrite(enrolment);

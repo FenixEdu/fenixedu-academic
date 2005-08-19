@@ -315,14 +315,13 @@ public class EditGuideInformation implements IService {
 
     private void chekIfChangeable(InfoGuide infoGuide) throws FenixServiceException,
             ExcepcaoPersistencia {
-        ISuportePersistente sp = null;
-        List guides = null;
-
+        
         // Annuled Guides cannot be changed
         if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.ANNULLED))
             throw new InvalidChangeServiceException("Situation of Guide Is Annulled");
-
-        guides = sp.getIPersistentGuide()
+        
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();        
+        List<IGuide> guides = sp.getIPersistentGuide()
                 .readByNumberAndYear(infoGuide.getNumber(), infoGuide.getYear());
 
         // If it's not the latest version ...
@@ -330,26 +329,24 @@ public class EditGuideInformation implements IService {
             throw new InvalidChangeServiceException("Not the Latest Version");
     }
 
-    private IGuide createNewGuideVersion(InfoGuide infoGuide) throws FenixServiceException,
+    private IGuide createNewGuideVersion(InfoGuide infoGuide) throws 
             ExcepcaoPersistencia {
-        IGuide guide = DomainFactory.makeGuide();
-        ISuportePersistente sp = null;
-        IContributor contributor = null;
-        IPerson person = null;
-        IExecutionDegree executionDegree = null;
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();  
 
         // Read the needed information from the DataBase
-        person = sp.getIPessoaPersistente()
+        IPerson person = sp.getIPessoaPersistente()
                 .lerPessoaPorUsername(infoGuide.getInfoPerson().getUsername());
-        contributor = sp.getIPersistentContributor().readByContributorNumber(
+        IContributor contributor = sp.getIPersistentContributor().readByContributorNumber(
                 infoGuide.getInfoContributor().getContributorNumber());
         IExecutionYear executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(
                 infoGuide.getInfoExecutionDegree().getInfoExecutionYear().getYear());
 
-        executionDegree = sp.getIPersistentExecutionDegree().readByDegreeCurricularPlanAndExecutionYear(
+        IExecutionDegree executionDegree = sp.getIPersistentExecutionDegree().readByDegreeCurricularPlanAndExecutionYear(
                 infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName(),
                 infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree()
                         .getSigla(), executionYear.getYear());
+
+        IGuide guide = DomainFactory.makeGuide();
 
         // Set the fields
         guide.setContributor(contributor);
@@ -360,13 +357,13 @@ public class EditGuideInformation implements IService {
         guide.setGuideRequester(infoGuide.getGuideRequester());
         guide.setNumber(infoGuide.getNumber());
         guide.setYear(infoGuide.getYear());
-        guide.setVersion(new Integer(infoGuide.getVersion().intValue() + 1));
+        guide.setVersion(infoGuide.getVersion() + 1);
         guide.setPaymentDate(infoGuide.getPaymentDate());
         guide.setPaymentType(infoGuide.getPaymentType());
         guide.setRemarks(null);
 
         // The total will be calculated afterwards
-        guide.setTotal(new Double(0));
+        guide.setTotal(0.0);
 
         return guide;
     }

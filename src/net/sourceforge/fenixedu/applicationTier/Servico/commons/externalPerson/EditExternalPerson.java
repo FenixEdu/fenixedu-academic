@@ -16,25 +16,25 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class EditExternalPerson implements IService {
 
     public void run(Integer externalPersonID, String name, String address, Integer workLocationID,
-            String phone, String mobile, String homepage, String email) throws FenixServiceException, ExcepcaoPersistencia {
-        IExternalPerson storedExternalPerson = null;
-        IExternalPerson existingExternalPerson = null;
-
-        IWorkLocation storedWorkLocation = null;
+            String phone, String mobile, String homepage, String email) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        storedExternalPerson = (IExternalPerson) sp.getIPersistentExternalPerson().readByOID(
-                ExternalPerson.class, externalPersonID);
-        
+        IExternalPerson storedExternalPerson = (IExternalPerson) sp.getIPersistentExternalPerson()
+                .readByOID(ExternalPerson.class, externalPersonID);
+
         if (storedExternalPerson == null)
             throw new NonExistingServiceException(
                     "error.exception.externalPerson.nonExistingExternalPsrson");
 
-        List<IExternalPerson> allExternalPersons = (List<IExternalPerson>) sp.getIPersistentExternalPerson().readAll(ExternalPerson.class);
+        List<IExternalPerson> allExternalPersons = (List<IExternalPerson>) sp
+                .getIPersistentExternalPerson().readAll(ExternalPerson.class);
 
-        storedWorkLocation = (IWorkLocation) sp.getIPersistentWorkLocation().readByOID(WorkLocation.class, workLocationID);
-        
-        storedExternalPerson.edit(name, address, phone, mobile, homepage, email, storedWorkLocation, allExternalPersons);
+        IWorkLocation storedWorkLocation = (IWorkLocation) sp.getIPersistentWorkLocation().readByOID(
+                WorkLocation.class, workLocationID);
+
+        storedExternalPerson.edit(name, address, phone, mobile, homepage, email, storedWorkLocation,
+                allExternalPersons);
     }
 }
