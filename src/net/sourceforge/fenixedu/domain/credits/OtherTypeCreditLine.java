@@ -16,11 +16,6 @@ public class OtherTypeCreditLine extends OtherTypeCreditLine_Base {
         return CreditsEvent.OTHER_CREDIT;
     }
     
-    protected void notifyTeacher() {
-        ITeacher teacher = this.getTeacher();
-        teacher.notifyCreditsChange(getCreditEventGenerated(), this);
-    }
-    
     public boolean belongsToExecutionPeriod(IExecutionPeriod executionPeriod) {
         return this.getExecutionPeriod().equals(executionPeriod);
     }

@@ -288,7 +288,7 @@ log4j.email.smtp.subject=Hello
 #
 #
 #------------------------------------------------------------------------------
-# Berserk Configuration
+# ServiceManager Configuration
 #------------------------------------------------------------------------------
 #
 #   application.filterBroker: name of the filter broker that will be used in the application

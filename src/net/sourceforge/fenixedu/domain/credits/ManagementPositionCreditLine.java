@@ -15,9 +15,4 @@ public class ManagementPositionCreditLine extends ManagementPositionCreditLine_B
         return CreditsEvent.MANAGEMENT_POSITION;
     }
     
-    protected void notifyTeacher() {
-        ITeacher teacher = this.getTeacher();
-        teacher.notifyCreditsChange(getCreditEventGenerated(), this);
-    }
-
 }

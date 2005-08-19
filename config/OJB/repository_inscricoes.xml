@@ -893,7 +893,7 @@
 		element-class-ref="net.sourceforge.fenixedu.domain.CreditsInScientificArea"
 
 		>
-		<inverse-foreignkey field-ref="keyScientificArea"/>
+		<inverse-foreignkey field-ref="scientificAreaKey"/>
 	  </collection-descriptor>
 </class-descriptor>
 

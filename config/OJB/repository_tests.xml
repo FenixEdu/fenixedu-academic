@@ -550,6 +550,12 @@
          class-ref="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest">
 		<foreignkey field-ref="keyDistributedTest"/>
 	</reference-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="marks"
+			element-class-ref="net.sourceforge.fenixedu.domain.Mark"
+			>
+		<inverse-foreignkey field-ref="keyEvaluation"/>
+	</collection-descriptor>
 </class-descriptor>
 
 <!-- ********************************* -->

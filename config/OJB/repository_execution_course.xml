@@ -116,19 +116,6 @@
 		<fk-pointing-to-this-class column="KEY_EXECUTION_COURSE"/>
 		<fk-pointing-to-element-class column="KEY_EVALUATION"/>
 	</collection-descriptor>
-    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="attendingStudents"
-			element-class-ref="net.sourceforge.fenixedu.domain.Student"
-			indirection-table="ATTEND"
-			
-			
-			auto-update="false"
-			auto-delete="false"
-			
-			>
-		<fk-pointing-to-this-class column="KEY_EXECUTION_COURSE"/>
-		<fk-pointing-to-element-class column="KEY_STUDENT"/>
-	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="attends"
 		element-class-ref="net.sourceforge.fenixedu.domain.Attends"

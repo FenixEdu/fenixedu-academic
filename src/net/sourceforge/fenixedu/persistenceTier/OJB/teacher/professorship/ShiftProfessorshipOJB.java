@@ -149,16 +149,16 @@ public class ShiftProfessorshipOJB extends PersistentObjectOJB implements IPersi
         endTimeCalendar.setTime(endTime);
 
         Criteria startCriteria = new Criteria();
-        startCriteria.addGreaterThan("shift.associatedLessons.inicio", startTimeCalendar);
-        startCriteria.addLessThan("shift.associatedLessons.inicio", endTimeCalendar);
+        startCriteria.addGreaterThan("shift.associatedLessons.begin", startTimeCalendar.getTime());
+        startCriteria.addLessThan("shift.associatedLessons.begin", endTimeCalendar.getTime());
 
         Criteria endCriteria = new Criteria();
-        endCriteria.addGreaterThan("shift.associatedLessons.fim", startTimeCalendar);
-        endCriteria.addLessThan("shift.associatedLessons.fim", endTimeCalendar);
+        endCriteria.addGreaterThan("shift.associatedLessons.end", startTimeCalendar.getTime());
+        endCriteria.addLessThan("shift.associatedLessons.end", endTimeCalendar.getTime());
 
         Criteria equalCriteria = new Criteria();
-        equalCriteria.addEqualTo("shift.associatedLessons.inicio", startTimeCalendar);
-        equalCriteria.addEqualTo("shift.associatedLessons.fim", endTimeCalendar);
+        equalCriteria.addEqualTo("shift.associatedLessons.begin", startTimeCalendar.getTime());
+        equalCriteria.addEqualTo("shift.associatedLessons.end", endTimeCalendar.getTime());
         Criteria timeCriteria = new Criteria();
         timeCriteria.addOrCriteria(startCriteria);
         timeCriteria.addOrCriteria(endCriteria);

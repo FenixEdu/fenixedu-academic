@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
@@ -280,7 +281,6 @@ public class TurmaVO extends VersionedObjectsBase implements ITurmaPersistente {
         IExecutionPeriod executionPeriod = (IExecutionPeriod) readByOID(ExecutionPeriod.class,
                 executionPeriodOID);
         IStudent student = (IStudent) readByOID(Student.class, studentOID);
-        System.out.println("STUDENT --> " + student);
         List<ISchoolClass> result = new ArrayList();
         List<ISchoolClass> schoolClasses = executionPeriod.getSchoolClasses();
         for (ISchoolClass schoolClass : schoolClasses) {
@@ -288,30 +288,17 @@ public class TurmaVO extends VersionedObjectsBase implements ITurmaPersistente {
             for (IShift shift : shifts) {
                 if (shift.getDisciplinaExecucao().getExecutionPeriod().getIdInternal().equals(
                         executionPeriod.getIdInternal())) {
-                    List<IStudent> students = shift.getDisciplinaExecucao().getAttendingStudents();
-                    System.out.println("DISCIPLINA --> " + shift.getDisciplinaExecucao().getNome());
-                    if (students.contains(student)) {
-                        System.out.println("O ALUNO ESTÁ NA LISTA!!!");
-                        result.add(schoolClass);
+                    final List<IAttends> attends = shift.getDisciplinaExecucao().getAttends();
+                    for (final IAttends attend : attends) {
+                        final IStudent otherStudent = attend.getAluno();
+                        if (student.equals(otherStudent)) {
+                            result.add(schoolClass);
+                        }
                     }
                 }
             }
         }
         
-        /*List<IAttends> attendsList = student.getAssociatedAttends();
-        for(IAttends attends : attendsList){
-            IExecutionCourse executionCourse = attends.getDisciplinaExecucao();
-            if(executionCourse.getExecutionPeriod().getIdInternal().equals(executionPeriodOID)){
-                //result.add(schoolClass)
-                List<IShift> shifts = executionCourse.getAssociatedShifts();
-                for(IShift shift : shifts){
-                   List<ISchoolClass> schoolClasses = shift.getAssociatedClasses();
-                }
-            }
-        }*/
-        
-        
-        System.out.println("RESULT " + result);
         return result;
 
         /*

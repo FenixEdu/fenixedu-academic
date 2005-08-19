@@ -119,6 +119,14 @@
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
+        <name>DeleteProffessorshpAuthorizationFilter</name>
+        <implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.DeleteProffessorshpAuthorizationFilter
+		</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
+    <filter>
         <name>ExecutionCourseLecturingTeacherAuthorization</name>
         <implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter</implementationClass>

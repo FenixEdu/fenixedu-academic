@@ -18,6 +18,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
@@ -181,7 +182,8 @@ public class ExamVO extends VersionedObjectsBase implements IPersistentExam {
         IExam exam = (IExam) readByOID(Exam.class, examOID);
 
         for (IExecutionCourse executionCourse : exam.getAssociatedExecutionCourses()) {
-            for (IStudent student : executionCourse.getAttendingStudents()) {
+            for (final IAttends attends : executionCourse.getAttends()) {
+                final IStudent student = attends.getAluno();
                 if (student.getPerson().getUsername().equals(studentsUsername)) {
                     return true;
                 }

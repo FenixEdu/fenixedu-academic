@@ -235,8 +235,7 @@ public abstract class Cloner {
 
         copyObjectProperties(infoExecutionCourse, executionCourse);
 
-        infoExecutionCourse.setNumberOfAttendingStudents(new Integer(executionCourse
-                .getAttendingStudents() == null ? 0 : executionCourse.getAttendingStudents().size()));
+        infoExecutionCourse.setNumberOfAttendingStudents(executionCourse.getAttendsCount());
         return infoExecutionCourse;
     }
 

@@ -19,8 +19,7 @@ import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.util.PublicationArea;
 
 public class Teacher extends Teacher_Base {
-    private Map creditsMap = new HashMap();
-
+    
     /********************************************************************
      *                        BUSINESS SERVICES                         *
      ********************************************************************/
@@ -103,26 +102,9 @@ public class Teacher extends Teacher_Base {
     }
 
     public InfoCredits getExecutionPeriodCredits(IExecutionPeriod executionPeriod) {
-        InfoCredits credits = (InfoCredits) creditsMap.get(executionPeriod);
-        if (credits == null) {
-            credits = InfoCreditsBuilder.build(this, executionPeriod);
-            creditsMap.put(executionPeriod, credits);
-        }
-        return credits;
+        return InfoCreditsBuilder.build(this, executionPeriod);
     }
 
-    public void notifyCreditsChange(CreditsEvent creditsEvent, ICreditsEventOriginator originator) {
-        if(this.creditsMap != null && !this.creditsMap.isEmpty()){
-            Iterator iterator = this.creditsMap.keySet().iterator();
-            while (iterator.hasNext()) {
-                IExecutionPeriod executionPeriod = (IExecutionPeriod) iterator.next();
-                if (originator.belongsToExecutionPeriod(executionPeriod)) {
-                    iterator.remove();
-                }
-            }    
-        }
-    }
-    
     /********************************************************************
      *                         PRIVATE METHODS                          *
      ********************************************************************/

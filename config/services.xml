@@ -2910,7 +2910,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
+			<chain name="DeleteProffessorshpAuthorization" />
 		</filterChains>
 	</service>
 	<service>

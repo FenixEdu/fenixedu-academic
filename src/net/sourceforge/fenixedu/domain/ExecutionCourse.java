@@ -94,14 +94,12 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public boolean isMasterDegreeOnly() {
-        return CollectionUtils.exists(this.getAssociatedCurricularCourses(), new Predicate() {
-
-            public boolean evaluate(Object input) {
-                ICurricularCourse curricularCourse = (ICurricularCourse) input;
-                return !curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(
-                        DegreeType.DEGREE);
+        for (final ICurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
+            if (curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso() != DegreeType.MASTER_DEGREE) {
+                return false;
             }
-        });
+        }
+        return true;
     }
 
     public void edit(String name, String acronym, double theoreticalHours,

@@ -95,7 +95,8 @@ public abstract class DomainObject extends DomainObject_Base {
 	            try {
 	                SuportePersistenteOJB.getCurrentPersistenceBroker().retrieveReference(this, attrName);
 	            } catch (Exception e) {
-	                //System.err.println("Couldn't retrieve " + attrName + " for class " + this.getClass());
+                    e.printStackTrace();
+	                System.err.println("Couldn't retrieve " + attrName + " for class " + this.getClass());
 	                // ignore errors
 	            }
 	        }

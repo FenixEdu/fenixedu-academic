@@ -773,12 +773,10 @@ public class TeacherAdministrationSiteComponentBuilder {
                 Iterator iter = executionCourses.iterator();
                 while (iter.hasNext()) {
                     IExecutionCourse element = (IExecutionCourse) iter.next();
-                    List attendingStudents = element.getAttendingStudents();
 
                     InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
                             .newInfoFromDomain(element);
-                    infoExecutionCourse.setNumberOfAttendingStudents(new Integer(attendingStudents
-                            .size()));
+                    infoExecutionCourse.setNumberOfAttendingStudents(element.getAttendsCount());
                     infoExecutionCourses.add(infoExecutionCourse);
                 }
 

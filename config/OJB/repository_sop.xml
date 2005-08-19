@@ -291,11 +291,13 @@
          name="begin"
          column="START_TIME"
          jdbc-type="TIME"
+		 conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
       />
       <field-descriptor id="4"
          name="end"
          column="END_TIME"
          jdbc-type="TIME"
+		 conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
       />
       <field-descriptor id="5"
          name="chaveSala"
@@ -491,6 +493,12 @@
 		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
 		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
 	  </collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="marks"
+			element-class-ref="net.sourceforge.fenixedu.domain.Mark"
+			>
+		<inverse-foreignkey field-ref="keyEvaluation"/>
+	</collection-descriptor>
 	</class-descriptor>
 
 
@@ -536,11 +544,10 @@
          
       >
          <foreignkey field-ref="keyAttend"/>
-      </reference-descriptor> 
+      </reference-descriptor>
       <reference-descriptor auto-retrieve="false"
          name="evaluation"
-         class-ref="net.sourceforge.fenixedu.domain.Evaluation"
-      >
+         class-ref="net.sourceforge.fenixedu.domain.Evaluation">
          <!--  -->
          <foreignkey field-ref="keyEvaluation"/>
       </reference-descriptor> 
@@ -834,7 +841,12 @@
 			>
 		<inverse-foreignkey field-ref="keyWrittenEvaluation"/>
 	</collection-descriptor>
-
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="marks"
+			element-class-ref="net.sourceforge.fenixedu.domain.Mark"
+			>
+		<inverse-foreignkey field-ref="keyEvaluation"/>
+	</collection-descriptor>
 </class-descriptor>
 
 
@@ -942,6 +954,12 @@
 			>
 		<inverse-foreignkey field-ref="keyExam"/>
 	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="marks"
+			element-class-ref="net.sourceforge.fenixedu.domain.Mark"
+			>
+		<inverse-foreignkey field-ref="keyEvaluation"/>
+	</collection-descriptor>
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.WrittenEvaluation -->
@@ -1034,5 +1052,11 @@
 			element-class-ref="net.sourceforge.fenixedu.domain.RoomOccupation"
 			>
 		<inverse-foreignkey field-ref="keyWrittenEvaluation"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="marks"
+			element-class-ref="net.sourceforge.fenixedu.domain.Mark"
+			>
+		<inverse-foreignkey field-ref="keyEvaluation"/>
 	</collection-descriptor>
 </class-descriptor>

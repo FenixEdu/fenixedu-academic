@@ -15,9 +15,4 @@ public class ServiceExemptionCreditLine extends ServiceExemptionCreditLine_Base 
         return CreditsEvent.SERVICE_EXEMPTION;
     }
     
-    protected void notifyTeacher() {
-        ITeacher teacher = this.getTeacher();
-        teacher.notifyCreditsChange(getCreditEventGenerated(), this);
-    }
-
 }

@@ -1925,20 +1925,6 @@ class net.sourceforge.fenixedu.domain.Professorship extends net.sourceforge.feni
     interface "
 	public boolean belongsToExecutionPeriod(IExecutionPeriod executionPeriod);
 	
-	public void beforeUpdate(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
-	
-	public void afterUpdate(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
-	
-	public void beforeInsert(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
-	
-	public void afterInsert(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
-	
-	public void beforeDelete(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
-	
-	public void afterDelete(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
-	
-	public void afterLookup(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;	
-			
 	public void delete();
 	"
 }
@@ -2422,7 +2408,7 @@ class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.d
 	DegreeType degreeType;
     StudentState state;
     AgreementType agreementType;
-    EntryPhase entryPhase; 
+    EntryPhase entryPhase;
 	
 	interface "
     public IStudentCurricularPlan getActiveStudentCurricularPlan();
@@ -2625,20 +2611,6 @@ class net.sourceforge.fenixedu.domain.SupportLesson extends net.sourceforge.feni
 	interface "
 	public double hours();
 	
-	public void beforeUpdate(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
-	
-	public void afterUpdate(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
-	
-	public void beforeInsert(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
-	
-	public void afterInsert(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
-	
-	public void beforeDelete(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
-	
-	public void afterDelete(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
-	
-	public void afterLookup(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
-	
 	public boolean belongsToExecutionPeriod(IExecutionPeriod executionPeriod);
 	"
 }
@@ -2653,8 +2625,6 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	
 	interface "
 	public net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits getExecutionPeriodCredits(IExecutionPeriod executionPeriod);
-	
-	public void notifyCreditsChange(net.sourceforge.fenixedu.domain.credits.event.CreditsEvent creditsEvent, net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator originator);
 	
 	public void addToTeacherInformationSheet(net.sourceforge.fenixedu.domain.publication.IPublication publication, net.sourceforge.fenixedu.util.PublicationArea publicationArea) throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
 	
@@ -4991,16 +4961,6 @@ relation StudentEnrolmentLog {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Student playsRole student;
-}
-
-relation StudentExecutionCourse {
-	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourses {
-		multiplicity *;
-	}
-	
-	net.sourceforge.fenixedu.domain.Student playsRole attendingStudents {
-		multiplicity *;
-	}
 }
 
 relation StudentExecutionYear {

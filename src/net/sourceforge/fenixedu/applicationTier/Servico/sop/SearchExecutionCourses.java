@@ -275,7 +275,7 @@ public class SearchExecutionCourses implements IService {
                         infoExecutionCourse.setOccupancy(new Double(-1));
                     } else {
                         infoExecutionCourse.setOccupancy(NumberUtils.formatNumber(
-                                new Double((new Double(executionCourse.getAttendingStudents().size())
+                                new Double((new Double(executionCourse.getAttendsCount())
                                         .floatValue() * 100 / total)), 1));
                     }
                     return infoExecutionCourse;

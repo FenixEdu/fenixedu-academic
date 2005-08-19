@@ -96,8 +96,7 @@ public class ReadCourseInformation implements IService {
 
         InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
                 .newInfoFromDomain(executionCourse);
-        infoExecutionCourse.setNumberOfAttendingStudents(new Integer(executionCourse
-                .getAttendingStudents() == null ? 0 : executionCourse.getAttendingStudents().size()));
+        infoExecutionCourse.setNumberOfAttendingStudents(executionCourse.getAttendsCount());
 
         infoSiteCourseInformation.setInfoExecutionCourse(infoExecutionCourse);
 

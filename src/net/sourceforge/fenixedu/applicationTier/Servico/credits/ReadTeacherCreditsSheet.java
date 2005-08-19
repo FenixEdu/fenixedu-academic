@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.credits.InfoManagementPositio
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoOtherTypeCreditLine;
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoServiceExemptionCreditLine;
 import net.sourceforge.fenixedu.dataTransferObject.credits.TeacherCreditsSheetDTO;
-import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
+import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftProfessorshipWithProfessorshipAndExecutionCourseAndShiftAndLessons;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.DetailedProfessorship;
@@ -202,9 +202,7 @@ public class ReadTeacherCreditsSheet implements IService {
             ITeacherDegreeFinalProjectStudent student = (ITeacherDegreeFinalProjectStudent) teacherDegreeFinalProjectStudentList
                     .get(i);
             if (student.getExecutionPeriod().equals(executionPeriod)) {
-                InfoTeacherDegreeFinalProjectStudent infoStudent = Cloner
-                        .copyITeacherDegreeFinalProjectStudent2InfoTeacherDegreeFinalProjectStudent(student);
-                infoList.add(infoStudent);
+                infoList.add(InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson.newInfoFromDomain(student));
             }
         }
         return infoList;

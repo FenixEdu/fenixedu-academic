@@ -173,8 +173,8 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
         IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
                 ExecutionPeriod.class, infoTeacherDegreeFinalProjectStudent.getInfoExecutionPeriod()
                         .getIdInternal());
-        IStudent student = (IStudent) persistentStudent.readByOID(Student.class,
-                infoTeacherDegreeFinalProjectStudent.getInfoStudent().getIdInternal());
+        IStudent student = (IStudent) persistentStudent.readStudentByNumberAndDegreeType(
+                infoTeacherDegreeFinalProjectStudent.getInfoStudent().getNumber(), DegreeType.DEGREE);
         ITeacher teacher = (ITeacher) persistentTeacher.readByOID(Teacher.class,
                 infoTeacherDegreeFinalProjectStudent.getInfoTeacher().getIdInternal());
 

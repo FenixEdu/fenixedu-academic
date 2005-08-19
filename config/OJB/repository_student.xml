@@ -164,4 +164,34 @@
 			element-class-ref="net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion">
 		<inverse-foreignkey field-ref="keyStudent"/>
 	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="associatedGroupStudents"
+			element-class-ref="net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent">
+		<inverse-foreignkey field-ref="keyStudent"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="associatedResidenceCandidacies"
+			element-class-ref="net.sourceforge.fenixedu.domain.student.ResidenceCandidacies">
+		<inverse-foreignkey field-ref="keyStudent"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="delegate"
+			element-class-ref="net.sourceforge.fenixedu.domain.student.Delegate">
+		<inverse-foreignkey field-ref="keyStudent"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="teacherDegreeFinalProjectStudent"
+			element-class-ref="net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent">
+		<inverse-foreignkey field-ref="keyStudent"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="insuranceTransactions"
+			element-class-ref="net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction">
+		<inverse-foreignkey field-ref="keyStudent"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="secretaryEnrolmentStudents"
+			element-class-ref="net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent">
+		<inverse-foreignkey field-ref="keyStudent"/>
+	</collection-descriptor>
 </class-descriptor>

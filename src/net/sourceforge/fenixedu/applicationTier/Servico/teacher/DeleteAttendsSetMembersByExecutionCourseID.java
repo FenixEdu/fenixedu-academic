@@ -64,10 +64,9 @@ public class DeleteAttendsSetMembersByExecutionCourseID implements IService {
         }
 
         List executionCourseStudentNumbers = new ArrayList();
-        List studentsInExecutionCourse = executionCourse.getAttendingStudents();
-        Iterator iterStudentsInExecutionCourse = studentsInExecutionCourse.iterator();
-        while (iterStudentsInExecutionCourse.hasNext()) {
-            IStudent student = (IStudent) iterStudentsInExecutionCourse.next();
+        final List<IAttends> attends = executionCourse.getAttends();
+        for (final IAttends attend : attends) {
+            final IStudent student = attend.getAluno();
             executionCourseStudentNumbers.add(student.getNumber());
         }
 

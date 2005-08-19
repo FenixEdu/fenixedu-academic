@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.domain.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 
 /**
  * @author jpvl
@@ -79,5 +80,22 @@ public class InfoTeacherDegreeFinalProjectStudent extends InfoObject {
      */
     public void setPercentage(Double percentage) {
         this.percentage = percentage;
+    }
+
+    public void copyFromDomain(final ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent) {
+        super.copyFromDomain(teacherDegreeFinalProjectStudent);
+        if (teacherDegreeFinalProjectStudent != null) {
+            setPercentage(teacherDegreeFinalProjectStudent.getPercentage());
+        }
+    }
+
+    public static InfoTeacherDegreeFinalProjectStudent newInfoFromDomain(
+            final ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent) {
+        if (teacherDegreeFinalProjectStudent != null) {
+            InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = new InfoTeacherDegreeFinalProjectStudent();
+            infoTeacherDegreeFinalProjectStudent.copyFromDomain(teacherDegreeFinalProjectStudent);
+            return infoTeacherDegreeFinalProjectStudent;
+        }
+        return null;
     }
 }
