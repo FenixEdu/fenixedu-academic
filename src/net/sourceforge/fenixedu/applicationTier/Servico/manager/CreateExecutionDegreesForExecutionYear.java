@@ -3,17 +3,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ICampus;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IPeriod;
-import net.sourceforge.fenixedu.domain.Period;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -25,12 +22,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class CreateExecutionDegreesForExecutionYear implements IService {
 
-    private ISuportePersistente ps = null;
-
-    private IPersistentPeriod periodDAO = null;
-
-    private IPersistentExecutionDegree executionDegreeDAO = null;
-
     public void run(final Integer[] degreeCurricularPlansIDs, final Integer executionYearID,
             final String campusName, final Boolean temporaryExamMap,
             final Calendar lessonSeason1BeginDate, final Calendar lessonSeason1EndDate,
@@ -39,9 +30,7 @@ public class CreateExecutionDegreesForExecutionYear implements IService {
             final Calendar examsSeason2BeginDate, final Calendar examsSeason2EndDate)
             throws ExcepcaoPersistencia {
 
-        ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        periodDAO = ps.getIPersistentPeriod();
-        executionDegreeDAO = ps.getIPersistentExecutionDegree();
+        ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         final IExecutionYear executionYear = (IExecutionYear) ps.getIPersistentExecutionYear()
                 .readByOID(ExecutionYear.class, executionYearID);
@@ -59,9 +48,9 @@ public class CreateExecutionDegreesForExecutionYear implements IService {
                     .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                             degreeCurricularPlanID);
 
-            IExecutionDegree storedExecutionDegree = executionDegreeDAO
-                    .readByDegreeCurricularPlanIDAndExecutionYear(degreeCurricularPlanID, executionYear
-                            .getYear());
+            IExecutionDegree storedExecutionDegree = ps.getIPersistentExecutionDegree()
+                    .readByDegreeCurricularPlanIDAndExecutionYear(degreeCurricularPlanID,
+                            executionYear.getYear());
 
             if (storedExecutionDegree != null) {
                 continue;
@@ -74,15 +63,12 @@ public class CreateExecutionDegreesForExecutionYear implements IService {
 
     }
 
-    private IPeriod createPeriod(final Calendar startDate, final Calendar endDate)
-            throws ExcepcaoPersistencia {
-        final IPeriod period = new Period();
+    private IPeriod createPeriod(final Calendar startDate, final Calendar endDate) {
+        final IPeriod period = DomainFactory.makePeriod();
 
         period.setStartDate(startDate);
         period.setEndDate(endDate);
         period.setNextPeriod(null);
-
-        periodDAO.simpleLockWrite(period);
 
         return period;
     }
@@ -91,9 +77,9 @@ public class CreateExecutionDegreesForExecutionYear implements IService {
 
     final IExecutionYear executionYear, ICampus campus, IDegreeCurricularPlan degreeCurricularPlan,
             Boolean temporaryExamMap, IPeriod periodExamsSeason1, IPeriod periodExamsSeason2,
-            IPeriod periodLessonSeason1, IPeriod periodLessonSeason2) throws ExcepcaoPersistencia {
+            IPeriod periodLessonSeason1, IPeriod periodLessonSeason2) {
 
-        final IExecutionDegree executionDegree = new ExecutionDegree();
+        final IExecutionDegree executionDegree = DomainFactory.makeExecutionDegree();
 
         executionDegree.setCampus(campus);
         executionDegree.setDegreeCurricularPlan(degreeCurricularPlan);
@@ -104,8 +90,6 @@ public class CreateExecutionDegreesForExecutionYear implements IService {
         executionDegree.setPeriodLessonsSecondSemester(periodLessonSeason2);
         executionDegree.setScheduling(null);
         executionDegree.setTemporaryExamMap(temporaryExamMap);
-
-        executionDegreeDAO.simpleLockWrite(executionDegree);
 
     }
 

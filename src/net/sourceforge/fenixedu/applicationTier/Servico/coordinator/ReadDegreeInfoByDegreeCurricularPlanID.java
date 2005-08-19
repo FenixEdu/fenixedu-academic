@@ -6,9 +6,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeInfo;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IDegreeInfo;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
@@ -18,62 +18,39 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * 
- * @author  <a href="mailto:amam@mega.ist.utl.pt">Amin Amirali</a>
- * @author  <a href="mailto:frnp@mega.ist.utl.pt">Francisco Paulo</a>
- * 
+ * @author - Shezad Anavarali (shezad@ist.utl.pt)
+ *
  */
 public class ReadDegreeInfoByDegreeCurricularPlanID implements IService {
 
-    public InfoDegreeInfo run(Integer degreeCurricularPlanID) throws FenixServiceException {
+    public InfoDegreeInfo run(Integer degreeCurricularPlanID) throws FenixServiceException,
+            ExcepcaoPersistencia {
+
+        if (degreeCurricularPlanID == null) {
+            throw new FenixServiceException("error.invalidDegreeCurricularPlan");
+        }
+
+        ISuportePersistente suportePersistente = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
+
+        // Degree curricular plan
+        IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) suportePersistente
+                .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
+                        degreeCurricularPlanID);
+
+        // Read degree information
+        List<IDegreeInfo> degreeInfoList = degreeCurricularPlan.getDegree().getDegreeInfos();
         InfoDegreeInfo infoDegreeInfo = new InfoDegreeInfo();
-        infoDegreeInfo.setIdInternal(new Integer(0));
 
-        try {
-            if (degreeCurricularPlanID == null) {
-                throw new FenixServiceException("error.invalidDegreeCurricularPlan");
-            }
+        // Last information about this degree
+        if (degreeInfoList != null && !degreeInfoList.isEmpty()) {
+            Collections.sort(degreeInfoList, new BeanComparator("lastModificationDate"));
+            IDegreeInfo degreeInfo = (IDegreeInfo) degreeInfoList.get(degreeInfoList.size() - 1);
 
-            ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            infoDegreeInfo = InfoDegreeInfo.newInfoFromDomain(degreeInfo);
 
-            // Degree curricular plan
-            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) suportePersistente
-                    .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
-                            degreeCurricularPlanID);
+            infoDegreeInfo.recaptureNULLs(degreeInfo);
 
-            if (degreeCurricularPlan == null) {
-                throw new FenixServiceException("error.invalidDegreeCurricularPlan");
-            }
-
-            if (degreeCurricularPlan.getDegree() == null) {
-                throw new FenixServiceException("error.invalidDegreeCurricularPlan");
-            }
-
-            //Degree
-            IDegree degree = degreeCurricularPlan.getDegree();
-
-            if (degree == null) {
-                throw new FenixServiceException("error.impossibleDegreeInfo");
-            }
-
-            //Read degree information
-            List degreeInfoList = degree.getDegreeInfos();
-
-            //Last information about this degree
-            if (degreeInfoList != null && degreeInfoList.size() > 0) {
-                Collections.sort(degreeInfoList, new BeanComparator("lastModificationDate"));
-                IDegreeInfo degreeInfo = (IDegreeInfo) degreeInfoList.get(degreeInfoList.size() - 1);
-
-                infoDegreeInfo = InfoDegreeInfo.newInfoFromDomain(degreeInfo);
-
-                infoDegreeInfo.recaptureNULLs(degreeInfo);
-
-                //return the degree info with the last modification date
-                //even if this degree info doesn't belong at execution period
-                // used.
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new FenixServiceException(e);
         }
 
         return infoDegreeInfo;

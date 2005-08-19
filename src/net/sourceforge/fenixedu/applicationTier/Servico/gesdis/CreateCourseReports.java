@@ -5,10 +5,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IFinalEvaluation;
-import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -46,12 +46,8 @@ public class CreateCourseReports implements IService {
                     if (evaluation instanceof IFinalEvaluation) {
 
                         if (courseReportsExecutionCoursesIDs.add(executionCourse.getIdInternal())) {
-                            ICourseReport courseReport = new CourseReport();
-                            ps.getIPersistentCourseReport().simpleLockWrite(courseReport);
-                            courseReport.setExecutionCourse(executionCourse);
-                            
-                            ps.getIPersistentExecutionCourse().simpleLockWrite(executionCourse);
-                            executionCourse.setCourseReport(courseReport);                            
+                            ICourseReport courseReport = DomainFactory.makeCourseReport();
+                            courseReport.setExecutionCourse(executionCourse);                                                        
                         }
 
                     }

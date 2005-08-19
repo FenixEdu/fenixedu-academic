@@ -32,60 +32,41 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadStudentListByCurricularCourse implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public ReadStudentListByCurricularCourse() {
-    }
-
     public List run(IUserView userView, Integer curricularCourseID, String executionYear)
-            throws ExcepcaoInexistente, FenixServiceException {
-
-        ISuportePersistente sp = null;
-
-        List enrolmentList = null;
+            throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
 
         ICurricularCourse curricularCourse = null;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            // Read the Students
+        // Read the Students
 
-            curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse().readByOID(
-                    CurricularCourse.class, curricularCourseID);
+        curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse().readByOID(
+                CurricularCourse.class, curricularCourseID);
 
-            if (executionYear != null) {
-                enrolmentList = sp.getIPersistentEnrolment().readByCurricularCourseAndYear(
-                        curricularCourseID, executionYear);
-            } else {
-                enrolmentList = curricularCourse.getEnrolments();
-            }
-
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
+        List enrolmentList = null;
+        if (executionYear != null) {
+            enrolmentList = sp.getIPersistentEnrolment().readByCurricularCourseAndYear(
+                    curricularCourseID, executionYear);
+        } else {
+            enrolmentList = curricularCourse.getEnrolments();
         }
 
-        if ((enrolmentList == null) || (enrolmentList.size() == 0)) {
+        if ((enrolmentList == null) || (enrolmentList.isEmpty())) {
             throw new NonExistingServiceException();
         }
 
-        return cleanList(enrolmentList, userView);
+        return cleanList(enrolmentList);
     }
 
     /**
-     * @param studentCurricularPlans
-     * @return A list of Student curricular Plans without the duplicates
+     * @param enrolmentList
+     * @return A list of enrolments without the duplicates
      */
-    private List cleanList(List studentCurricularPlans, IUserView userView) throws FenixServiceException {
-        List result = new ArrayList();
+    private List cleanList(List enrolmentList) throws FenixServiceException {
+        List<InfoEnrolment> result = new ArrayList<InfoEnrolment>();
         Integer numberAux = null;
 
-        BeanComparator numberComparator = new BeanComparator("studentCurricularPlan.student.number");
-        Collections.sort(studentCurricularPlans, numberComparator);
-
-        Iterator iterator = studentCurricularPlans.iterator();
+        Iterator iterator = enrolmentList.iterator();
         while (iterator.hasNext()) {
             IEnrolment enrolment = (IEnrolment) iterator.next();
 
@@ -94,8 +75,9 @@ public class ReadStudentListByCurricularCourse implements IService {
                             .getNumber().intValue())) {
                 numberAux = enrolment.getStudentCurricularPlan().getStudent().getNumber();
 
-                InfoEnrolmentEvaluation infoEnrolmentEvaluation = (new GetEnrolmentGrade()).run(enrolment);
-                
+                InfoEnrolmentEvaluation infoEnrolmentEvaluation = (new GetEnrolmentGrade())
+                        .run(enrolment);
+
                 InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
                         .newInfoFromDomain(enrolment);
                 infoEnrolment.setInfoEnrolmentEvaluation(infoEnrolmentEvaluation);
@@ -103,6 +85,10 @@ public class ReadStudentListByCurricularCourse implements IService {
                 result.add(infoEnrolment);
             }
         }
+
+        BeanComparator numberComparator = new BeanComparator(
+                "infoStudentCurricularPlan.infoStudent.number");
+        Collections.sort(result, numberComparator);
 
         return result;
     }

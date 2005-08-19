@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
@@ -18,6 +17,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
@@ -40,28 +41,17 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward viewInformation(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixFilterException {
         ActionErrors errors = new ActionErrors();
 
-        HttpSession session = request.getSession();
+        IUserView userView = SessionUtils.getUserView(request);
 
-        IUserView userView = (IUserView) session.getAttribute("UserView");
-
-        Integer degreeCurricularPlanID = null;
-        if(request.getParameter("degreeCurricularPlanID") != null){
-            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-        }
-
-        //        Integer infoExecutionDegreeId = getFromRequest("infoExecutionDegreeID", request);
-        //        request.setAttribute("infoExecutionDegreeID", infoExecutionDegreeId);
-
-        Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
-        request.setAttribute("inEnglish", inEnglish);
-
-        //it's necessary to find which information will be edited
-        String info2Edit = getFromRequestString("info", request);
-        request.setAttribute("info", info2Edit);
+        Integer degreeCurricularPlanID = new Integer(RequestUtils.getAndSetStringToRequest(request,
+                "degreeCurricularPlanID"));
+        // it's necessary to find which information will be edited
+        RequestUtils.getAndSetStringToRequest(request, "info");
+        RequestUtils.getAndSetStringToRequest(request, "inEnglish");
 
         Object[] args = { degreeCurricularPlanID };
         InfoDegreeInfo infoDegreeInfo = null;
@@ -80,16 +70,11 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
                 throw new FenixActionException(e);
             }
         }
-        if (infoDegreeInfo == null) {
-            errors.add("impossibleDegreeInfo", new ActionError("error.impossibleDegreeInfo"));
-        }
+
         if (!errors.isEmpty()) {
             saveErrors(request, errors);
             return (new ActionForward(mapping.getInput()));
         }
-
-        Integer infoDegreeInfoId = infoDegreeInfo.getIdInternal();
-        request.setAttribute("infoDegreeInfoID", infoDegreeInfoId);
 
         DynaActionForm degreeInfoForm = (DynaActionForm) form;
         fillForm(infoDegreeInfo, degreeInfoForm);
@@ -98,37 +83,25 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward editDegreeInformation(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixFilterException {
+
+        IUserView userView = SessionUtils.getUserView(request);
+
         ActionErrors errors = new ActionErrors();
 
-        HttpSession session = request.getSession();
-
-        IUserView userView = (IUserView) session.getAttribute("UserView");
-
-        Integer degreeCurricularPlanID = null;
-        if(request.getParameter("degreeCurricularPlanID") != null){
-            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-        }
-
-        //        Integer infoExecutionDegreeId = getFromRequest("infoExecutionDegreeID", request);
-        //        request.setAttribute("infoExecutionDegreeID", infoExecutionDegreeId);
-
-        Integer infoDegreeInfoId = getFromRequest("infoDegreeInfoID", request);
-        request.setAttribute("infoDegreeInfoID", infoDegreeInfoId);
-
-        String info2Edit = getFromRequestString("info", request);
-        request.setAttribute("info", info2Edit);
+        Integer degreeCurricularPlanID = new Integer(RequestUtils.getAndSetStringToRequest(request,
+                "degreeCurricularPlanID"));
+        RequestUtils.getAndSetStringToRequest(request, "info");
 
         DynaActionForm degreeInfoForm = (DynaActionForm) form;
         InfoDegreeInfo infoDegreeInfo = new InfoDegreeInfo();
-        infoDegreeInfo.setIdInternal(infoDegreeInfoId);
         fillInfoDegreeInfo(degreeInfoForm, infoDegreeInfo);
 
-        Object[] args = { degreeCurricularPlanID, infoDegreeInfoId, infoDegreeInfo };
+        Object[] args = { degreeCurricularPlanID, infoDegreeInfo };
 
         try {
-            infoDegreeInfo = (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(userView,
+            ServiceManagerServiceFactory.executeService(userView,
                     "EditDegreeInfoByDegreeCurricularPlanID", args);
         } catch (NotAuthorizedException e) {
             errors.add("notAuthorized", new ActionError("error.exception.notAuthorized2"));
@@ -147,7 +120,6 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
             return (new ActionForward(mapping.getInput()));
         }
 
-        request.setAttribute("infoDegreeID", infoDegreeInfo.getInfoDegree().getIdInternal());
         return mapping.findForward("editOK");
     }
 
@@ -172,7 +144,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
                     .toString());
         }
 
-        //information in english
+        // information in english
         degreeInfoForm.set("descriptionEn", infoDegreeInfo.getDescriptionEn());
         degreeInfoForm.set("objectivesEn", infoDegreeInfo.getObjectivesEn());
         degreeInfoForm.set("historyEn", infoDegreeInfo.getHistoryEn());
@@ -201,7 +173,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
         infoDegreeInfo.setMarkMax(convertString2Double((String) degreeInfoForm.get("markMax")));
         infoDegreeInfo.setMarkAverage(convertString2Double((String) degreeInfoForm.get("markAverage")));
 
-        //information in english
+        // information in english
         infoDegreeInfo.setDescriptionEn((String) degreeInfoForm.get("descriptionEn"));
         infoDegreeInfo.setObjectivesEn((String) degreeInfoForm.get("objectivesEn"));
         infoDegreeInfo.setHistoryEn((String) degreeInfoForm.get("historyEn"));
@@ -213,43 +185,20 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward viewDescriptionCurricularPlan(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixFilterException {
         ActionErrors errors = new ActionErrors();
 
-        HttpSession session = request.getSession();
+        IUserView userView = SessionUtils.getUserView(request);
 
-        IUserView userView = (IUserView) session.getAttribute("UserView");
-
-        //        Integer infoExecutionDegreeId = getFromRequest("infoExecutionDegreeID", request);
-        //        request.setAttribute("infoExecutionDegreeID", infoExecutionDegreeId);
-
-        Integer degreeCurricularPlanID = getFromRequest("degreeCurricularPlanID", request);
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-
-        // Object[] args = { infoExecutionDegreeId };
-
-        //        InfoExecutionDegree infoExecutionDegree = null;
-        //        try {
-        //            infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
-        //                    userView, "ReadExecutionDegreeByOID", args);
-        //        } catch (NotAuthorizedException e) {
-        //            errors.add("notAuthorized", new ActionError("error.exception.notAuthorized2"));
-        //        } catch (NonExistingServiceException e) {
-        //            errors.add("noDegreeCurricularPlan", new ActionError("error.invalidExecutionDegree"));
-        //        } catch (FenixServiceException e) {
-        //            if (e.getMessage().equals("error.invalidExecutionDegree")) {
-        //                errors.add("noDegreeCurricularPlan", new ActionError("error.invalidExecutionDegree"));
-        //            } else {
-        //                e.printStackTrace();
-        //                throw new FenixActionException(e);
-        //            }
-        //        }
+        Integer degreeCurricularPlanID = new Integer(RequestUtils.getAndSetStringToRequest(request,
+                "degreeCurricularPlanID"));
 
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
         Object[] args = { degreeCurricularPlanID };
         try {
-            infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) ServiceManagerServiceFactory.executeService(
-                    userView, "ReadDegreeCurricularPlan", args);
+            infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) ServiceManagerServiceFactory
+                    .executeService(userView, "ReadDegreeCurricularPlan", args);
         } catch (NotAuthorizedException e) {
             errors.add("notAuthorized", new ActionError("error.exception.notAuthorized2"));
         } catch (FenixServiceException e) {
@@ -281,17 +230,13 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward editDescriptionDegreeCurricularPlan(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixFilterException {
         ActionErrors errors = new ActionErrors();
 
-        HttpSession session = request.getSession();
+        IUserView userView = SessionUtils.getUserView(request);
 
-        IUserView userView = (IUserView) session.getAttribute("UserView");
-        Integer degreeCurricularPlanID = null;
-        if(request.getParameter("degreeCurricularPlanID") != null){
-            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-        }
+        RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID");
 
         Integer infoExecutionDegreeId = getFromRequest("infoExecutionDegreeID", request);
         request.setAttribute("infoExecutionDegreeID", infoExecutionDegreeId);
@@ -335,7 +280,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
             return (new ActionForward(mapping.getInput()));
         }
 
-        //request.setAttribute("infoDegreeCurricularPlan",
+        // request.setAttribute("infoDegreeCurricularPlan",
         // infoDegreeCurricularPlan);
         request.setAttribute("infoDegreeID", infoDegreeCurricularPlan.getInfoDegree().getIdInternal());
         return mapping.findForward("editOK");
@@ -345,19 +290,13 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
 
         ActionErrors errors = new ActionErrors();
-        HttpSession session = request.getSession();
-        IUserView userView = (IUserView) session.getAttribute("UserView");
 
-        Integer degreeCurricularPlanID = null;
-        if(request.getParameter("degreeCurricularPlanID") != null){
-            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-        }
-        
-//        Integer executionDegreeId = getFromRequest("infoExecutionDegreeID", request);
-//        request.setAttribute("infoExecutionDegreeID", executionDegreeId);
+        IUserView userView = SessionUtils.getUserView(request);
 
-        //read execution degree
+        Integer degreeCurricularPlanID = new Integer(RequestUtils.getAndSetStringToRequest(request,
+                "degreeCurricularPlanID"));
+
+        // read execution degree
         Object[] args = { degreeCurricularPlanID };
 
         InfoExecutionDegree infoExecutionDegree = null;
@@ -379,10 +318,10 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
             return (new ActionForward(mapping.getInput()));
         }
 
-        //degreeId =
+        // degreeId =
         // infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal();
         degreeId = infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal();
-        //read all execution degres this degree
+        // read all execution degres this degree
         Object[] args2 = { degreeId };
 
         List infoExecutionDegrees = null;
@@ -454,30 +393,4 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
         return parameterCode;
     }
 
-    private Boolean getFromRequestBoolean(String parameter, HttpServletRequest request) {
-        Boolean parameterBoolean = null;
-
-        String parameterCodeString = request.getParameter(parameter);
-        if (parameterCodeString == null) {
-            parameterCodeString = (String) request.getAttribute(parameter);
-        }
-        if (parameterCodeString != null) {
-            try {
-                parameterBoolean = new Boolean(parameterCodeString);
-            } catch (Exception exception) {
-                return null;
-            }
-        }
-
-        return parameterBoolean;
-    }
-
-    private String getFromRequestString(String parameter, HttpServletRequest request) {
-        String parameterString = request.getParameter(parameter);
-        if (parameterString == null) {
-            parameterString = (String) request.getAttribute(parameter);
-        }
-
-        return parameterString;
-    }
 }

@@ -27,7 +27,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class RemoveCoordinators implements IService {
 
-    public Boolean run(List coordinatorsIds) throws ExcepcaoPersistencia {
+    public Boolean run(Integer executionDegreeID, List coordinatorsIds) throws ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
         IPersistentPersonRole persistentPersonRole = sp.getIPersistentPersonRole();

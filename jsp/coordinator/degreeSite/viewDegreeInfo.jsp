@@ -9,8 +9,6 @@
 
 	<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request"/>
 	
-	<bean:define id="infoDegreeInfoID" name="infoDegreeInfoID"/>
-	<html:hidden property="infoDegreeInfoID" value="<%=  infoDegreeInfoID.toString() %>"/>
 	<html:hidden property="degreeCurricularPlanID" value="<%=  degreeCurricularPlanID.toString() %>"/>
 
 	<html:hidden property="method" value="editDegreeInformation" />
