@@ -566,16 +566,16 @@
          autoincrement="true"
       />
       <field-descriptor id="2"
-         name="startTime"
+         name="startTimeDate"
          column="START_TIME"
          jdbc-type="TIME"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
       />
       <field-descriptor id="3"
-         name="endTime"
+         name="endTimeDate"
          column="END_TIME"
          jdbc-type="TIME"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
       />
      <field-descriptor id="4"
          name="dayOfWeek"
@@ -647,16 +647,14 @@
          autoincrement="true"
       />
       <field-descriptor id="2"
-         name="startDate"
+         name="start"
          column="START_DATE"
          jdbc-type="DATE"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
       />
       <field-descriptor id="3"
-         name="endDate"
+         name="end"
          column="END_DATE"
          jdbc-type="DATE"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
       />
       <field-descriptor id="4"
          name="keyPeriod"
