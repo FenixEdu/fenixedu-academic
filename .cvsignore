@@ -64,3 +64,4 @@ ${log.image.directory}
 build.properties.test
 build.properties.prod
 development.properties
+build.properties.tests
