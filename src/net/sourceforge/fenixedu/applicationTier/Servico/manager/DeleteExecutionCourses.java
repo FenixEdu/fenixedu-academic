@@ -88,11 +88,7 @@ public class DeleteExecutionCourses implements IService {
     }
 
     private void dereferenceCurricularCourses(final IExecutionCourse executionCourse) {
-        final List<ICurricularCourse> curricularCourses = executionCourse
-                .getAssociatedCurricularCourses();
-        for (final ICurricularCourse curricularCourse : curricularCourses) {
-            curricularCourse.getAssociatedExecutionCourses().remove(executionCourse);
-        }
+        final List<ICurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
         curricularCourses.clear();
     }
 
