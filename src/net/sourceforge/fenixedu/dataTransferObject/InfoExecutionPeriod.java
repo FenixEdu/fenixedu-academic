@@ -210,9 +210,6 @@ public class InfoExecutionPeriod extends InfoObject implements Serializable {
             setBeginDate(period.getBeginDate());
             setEndDate(period.getEndDate());
             setSemester(period.getSemester());
-            setInfoExecutionYear(InfoExecutionYear.newInfoFromDomain(period.getExecutionYear()));
-//            setPreviousInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(period
-//                    .getPreviousExecutionPeriod()));
         }
     }
 
