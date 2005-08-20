@@ -1,14 +1,12 @@
-/*
- * Created on 2003/07/16
- *  
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
@@ -20,55 +18,21 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-/**
- * @author Luis Cruz & Sara Ribeiro
- *  
- */
-public class ReadAllExecutionPeriods implements IServico {
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-    private ReadAllExecutionPeriods() {
-    }
+public class ReadAllExecutionPeriods implements IService {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.IServico#getNome()
-     */
-    public String getNome() {
-        return "ReadAllExecutionPeriods";
-    }
+	public List run() throws ExcepcaoPersistencia {
+		final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		final IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
-    private static ReadAllExecutionPeriods service = new ReadAllExecutionPeriods();
+		final Collection<IExecutionPeriod> executionPeriods = persistentExecutionPeriod.readAll(ExecutionPeriod.class);
+		final List<InfoExecutionPeriod> infoExecutionPeriods = new ArrayList<InfoExecutionPeriod>(executionPeriods.size());
+		for (final IExecutionPeriod executionPeriod : executionPeriods) {
+			infoExecutionPeriods.add(InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionPeriod));
+		}
 
-    public static ReadAllExecutionPeriods getService() {
-        return service;
-    }
-
-    /**
-     * Returns info list of all execution periods.
-     */
-    public List run() throws FenixServiceException {
-
-        List infoExecutionPeriods = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-
-            Collection executionPeriods = persistentExecutionPeriod.readAll(ExecutionPeriod.class);
-
-            infoExecutionPeriods = (List) CollectionUtils.collect(executionPeriods,
-                    TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD);
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-
-        return infoExecutionPeriods;
-    }
-
-    private Transformer TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD = new Transformer() {
-        public Object transform(Object executionPeriod) {
-            return Cloner.get((IExecutionPeriod) executionPeriod);
-        }
-    };
+		return infoExecutionPeriods;
+	}
 
 }
