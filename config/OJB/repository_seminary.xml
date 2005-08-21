@@ -34,31 +34,29 @@
       />
 
 	 <field-descriptor
-         name="enrollmentBeginDate"
+         name="enrollmentBegin"
          column="ENROLLMENT_BEGIN_DATE"
-        jdbc-type="DATE"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
+         jdbc-type="DATE"
       />
 
 	  <field-descriptor
-         name="enrollmentEndDate"
+         name="enrollmentEnd"
          column="ENROLLMENT_END_DATE"
-        jdbc-type="DATE"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
+         jdbc-type="DATE"
       />
 
 	  <field-descriptor
-         name="enrollmentBeginTime"
+         name="enrollmentBegin"
          column="ENROLLMENT_BEGIN_TIME"
-        jdbc-type="TIME"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
+         jdbc-type="TIME"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
       />
 
 	  <field-descriptor
-         name="enrollmentEndTime"
+         name="enrollmentEnd"
          column="ENROLLMENT_END_TIME"
-        jdbc-type="TIME"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
+         jdbc-type="TIME"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
       />
 
 	  <field-descriptor

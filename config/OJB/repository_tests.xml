@@ -31,10 +31,10 @@
 		jdbc-type="LONGVARCHAR"
     />
 	<field-descriptor id="6"
-		name="learningTime"
+		name="learningTimeDate"
  		column="LEARNINGTIME"
 		jdbc-type="TIME"
-        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
     />
     <field-descriptor id="7"
 		name="level"
@@ -284,28 +284,26 @@
         jdbc-type="LONGVARCHAR"
 	/>
      <field-descriptor id="4"
-        name="beginDate"
+        name="beginDateDate"
         column="TEST_BEGIN_DATE"
         jdbc-type="DATE"
-        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
 	/>
 	<field-descriptor id="5"
-        name="beginHour"
+        name="beginHourDate"
         column="TEST_BEGIN_HOUR"
         jdbc-type="TIME"
-        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
+        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
 	/>
    <field-descriptor id="6"
-        name="endDate"
+        name="endDateDate"
         column="TEST_END_DATE"
         jdbc-type="DATE"
-        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
 	/>
 	<field-descriptor id="7"
-        name="endHour"
+        name="endHourDate"
         column="TEST_END_HOUR"
         jdbc-type="TIME"
-        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
+        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
 	/>
    <field-descriptor id="8"
         name="testType"

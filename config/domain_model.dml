@@ -699,6 +699,10 @@ class net.sourceforge.fenixedu.domain.onlineTests.DistributedTest extends net.so
     String title;
     Integer keyTestScope;
     Integer numberOfQuestions;
+    Date beginDateDate;
+    Date endDateDate;
+    Date beginHourDate;
+    Date endHourDate;
     
     interface "
     public abstract java.util.Calendar getBeginDate();
@@ -1543,7 +1547,8 @@ class net.sourceforge.fenixedu.domain.onlineTests.Metadata extends net.sourcefor
     String author;
     Integer numberOfMembers;
     String secondarySubject;
-    
+    Date learningTimeDate;
+
     interface "
         public abstract java.util.Calendar getLearningTime();
 

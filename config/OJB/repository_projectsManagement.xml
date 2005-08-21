@@ -27,16 +27,14 @@
     	 jdbc-type="INTEGER"
     />
     <field-descriptor
-		name="beginDate"
+		name="begin"
 		column="BEGIN_DATE"
     	jdbc-type="TIMESTAMP"
-        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateTimeFieldConversion"
       />
     <field-descriptor
-		name="endDate"
+		name="end"
 		column="END_DATE"
 		jdbc-type="TIMESTAMP"
-        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateTimeFieldConversion"
     />
    <field-descriptor
 		name="costCenter"

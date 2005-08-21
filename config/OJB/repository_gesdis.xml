@@ -798,17 +798,15 @@
     />
     
     <field-descriptor id="9"
-        name="enrolmentBeginDay"
+        name="enrolmentBeginDayDate"
         column="ENROLMENT_BEGIN_DAY"
         jdbc-type="TIMESTAMP"
-        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateTimeFieldConversion"
     />
 
     <field-descriptor id="10"
-        name="enrolmentEndDay"
+        name="enrolmentEndDayDate"
         column="ENROLMENT_END_DAY"
         jdbc-type="TIMESTAMP"
-        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateTimeFieldConversion"
     /> 
     		
     <field-descriptor id="11"

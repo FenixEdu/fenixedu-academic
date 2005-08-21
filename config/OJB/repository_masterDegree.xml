@@ -1162,10 +1162,9 @@
 	     jdbc-type="INTEGER"
 	  />
 	 <field-descriptor 
-	     name="creationDate"
+	     name="creation"
 	     column="CREATION_DATE"
          jdbc-type="DATE"
-          conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
 	 />
       <field-descriptor
       	name="ackOptLock"
@@ -1239,16 +1238,14 @@
 	     jdbc-type="INTEGER"
 	  />
 	 <field-descriptor 
-	     name="modificationDate"
+	     name="modification"
 	     column="MODIFICATION_DATE"
          jdbc-type="DATE"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
 	 />
 	 <field-descriptor 
-	     name="officialDate"
+	     name="official"
 	     column="OFFICIAL_DATE"
          jdbc-type="DATE"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
 	 />	 
 	 <field-descriptor 
 	     name="reimbursementGuideState"

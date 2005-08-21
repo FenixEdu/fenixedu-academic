@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.onlineTests;
 
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * @author Susana Fernandes
@@ -8,14 +9,19 @@ import java.util.Calendar;
 
 public class Metadata extends Metadata_Base {
 
-    private Calendar learningTime;
-
     public Calendar getLearningTime() {
-        return learningTime;
+        if (getLearningTimeDate() != null) {
+            final Calendar calendar = Calendar.getInstance();
+            calendar.setTime(getLearningTimeDate());
+            return calendar;
+        }
+
+        return null;
     }
 
     public void setLearningTime(Calendar calendar) {
-        learningTime = calendar;
+        final Date date = (calendar != null) ? calendar.getTime() : null;
+        setLearningTimeDate(date);
     }
 
 }

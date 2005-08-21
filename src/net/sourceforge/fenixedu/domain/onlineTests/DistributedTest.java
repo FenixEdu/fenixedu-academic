@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.domain.onlineTests;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.TestType;
@@ -14,32 +15,38 @@ import net.sourceforge.fenixedu.util.tests.TestType;
  */
 public class DistributedTest extends DistributedTest_Base {
 
-    private Calendar beginDate;
-
-    private Calendar endDate;
-
-    private Calendar beginHour;
-
-    private Calendar endHour;
-
     private TestType testType;
 
     private CorrectionAvailability correctionAvailability;
 
     public Calendar getBeginDate() {
-        return beginDate;
+        if (getBeginDateDate() != null) {
+            final Calendar calendar = Calendar.getInstance();
+            calendar.setTime(getBeginDateDate());
+            return calendar;
+        }
+
+        return null;
     }
 
     public void setBeginDate(Calendar beginDate) {
-        this.beginDate = beginDate;
+        final Date date = (beginDate != null) ? beginDate.getTime() : null;
+        setBeginDateDate(date);
     }
 
     public Calendar getBeginHour() {
-        return beginHour;
+        if (getBeginHourDate() != null) {
+            final Calendar calendar = Calendar.getInstance();
+            calendar.setTime(getBeginHourDate());
+            return calendar;
+        }
+
+        return null;
     }
 
     public void setBeginHour(Calendar beginHour) {
-        this.beginHour = beginHour;
+        final Date date = (beginHour != null) ? beginHour.getTime() : null;
+        setBeginHourDate(date);
     }
 
     public CorrectionAvailability getCorrectionAvailability() {
@@ -51,19 +58,33 @@ public class DistributedTest extends DistributedTest_Base {
     }
 
     public Calendar getEndDate() {
-        return endDate;
+        if (getEndDateDate() != null) {
+            final Calendar calendar = Calendar.getInstance();
+            calendar.setTime(getEndDateDate());
+            return calendar;
+        }
+
+        return null;
     }
 
     public void setEndDate(Calendar endDate) {
-        this.endDate = endDate;
+        final Date date = (endDate != null) ? endDate.getTime() : null;
+        setEndDateDate(date);
     }
 
     public Calendar getEndHour() {
-        return endHour;
+        if (getEndHour() != null) {
+            final Calendar calendar = Calendar.getInstance();
+            calendar.setTime(getEndHourDate());
+            return calendar;
+        }
+
+        return null;
     }
 
     public void setEndHour(Calendar endHour) {
-        this.endHour = endHour;
+        final Date date = (endHour != null) ? endHour.getTime() : null;
+        setEndHourDate(date);
     }
 
     public TestType getTestType() {
