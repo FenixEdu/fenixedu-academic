@@ -839,6 +839,12 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="associatedCurricularCourses"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
+			>
+		<inverse-foreignkey field-ref="universityKey"/>
+	</collection-descriptor>
 </class-descriptor>
 
 
