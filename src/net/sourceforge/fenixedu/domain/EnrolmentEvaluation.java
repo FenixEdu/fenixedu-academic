@@ -15,7 +15,8 @@ import net.sourceforge.fenixedu.util.MarkType;
  */
 
 public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
-    private String RECTIFICATION = "RECTIFICAÇÃO";
+
+    private static final String RECTIFICATION = "RECTIFICAÇÃO";
 	
 	
 	public EnrolmentEvaluation() {}

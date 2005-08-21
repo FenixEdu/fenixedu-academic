@@ -8,38 +8,21 @@ import net.sourceforge.fenixedu.util.classProperties.GeneralClassPropertyValue;
  */
 
 public abstract class GeneralClassProperty extends GeneralClassProperty_Base {
-    protected GeneralClassPropertyName name;
 
-    protected GeneralClassPropertyValue value;
-
-    /**
-     * @return Returns the name.
-     */
     public GeneralClassPropertyName getName() {
-        return name;
+        return new GeneralClassPropertyName(getNameString());
     }
 
-    /**
-     * @param name
-     *            The name to set.
-     */
     public void setName(GeneralClassPropertyName name) {
-        this.name = name;
+        setNameString(name.getName());
     }
 
-    /**
-     * @return Returns the value.
-     */
     public GeneralClassPropertyValue getValue() {
-        return value;
+        return new GeneralClassPropertyValue(getValueString());
     }
 
-    /**
-     * @param value
-     *            The value to set.
-     */
     public void setValue(GeneralClassPropertyValue value) {
-        this.value = value;
+        setValueString(value.getValue());
     }
 
 }

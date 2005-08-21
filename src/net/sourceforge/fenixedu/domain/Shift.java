@@ -1,15 +1,5 @@
-/*
- * Shift.java
- *
- * Created on 17 de Outubro de 2002, 19:28
- */
-
 package net.sourceforge.fenixedu.domain;
 
-/**
- * 
- * @author tfc130
- */
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -17,25 +7,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class Shift extends Shift_Base {
-    protected Integer ocupation;
-
-    protected Double percentage;
-
-    public Integer getOcupation() {
-        return ocupation;
-    }
-
-    public void setOcupation(Integer ocupation) {
-        this.ocupation = ocupation;
-    }
-
-    public Double getPercentage() {
-        return percentage;
-    }
-
-    public void setPercentage(Double percentage) {
-        this.percentage = percentage;
-    }
 
     public String toString() {
         String result = "[TURNO";

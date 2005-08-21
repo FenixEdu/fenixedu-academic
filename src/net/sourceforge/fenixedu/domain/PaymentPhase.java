@@ -13,7 +13,6 @@ import org.apache.struts.util.MessageResources;
  * 
  */
 public class PaymentPhase extends PaymentPhase_Base {
-    private List transactionList;
 
     public String toString() {
         StringBuffer object = new StringBuffer();
@@ -25,24 +24,6 @@ public class PaymentPhase extends PaymentPhase_Base {
         return object.toString();
     }
 
-    /**
-     * @return Returns the transactionList.
-     */
-    public List getTransactionList() {
-        return transactionList;
-    }
-
-    /**
-     * @param transactionList
-     *            The transactionList to set.
-     */
-    public void setTransactionList(List transactionList) {
-        this.transactionList = transactionList;
-    }
-
-    /**
-     * @return Returns the description.
-     */
     public String getDescriptionFromMessageResourses() {
         MessageResources messages = MessageResources
             .getMessageResources("ServidorApresentacao.ApplicationResources");

@@ -232,8 +232,6 @@ public class InfoShift extends InfoObject {
             setNome(shift.getNome());
             setTipo(shift.getTipo());
             setLotacao(shift.getLotacao());
-            setOcupation(shift.getOcupation());
-            setPercentage(shift.getPercentage());
            
         }
     }

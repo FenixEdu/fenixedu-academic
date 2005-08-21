@@ -66,8 +66,6 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear impl
             infoShift.setIdInternal(shift.getIdInternal());
             infoShift.setLotacao(shift.getLotacao());
             infoShift.setNome(shift.getNome());
-            infoShift.setOcupation(shift.getOcupation());
-            infoShift.setPercentage(shift.getPercentage());
             infoShift.setTipo(shift.getTipo());
 
             infoShift.setInfoLessons(new ArrayList());

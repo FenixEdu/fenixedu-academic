@@ -188,39 +188,7 @@ public class InsertGratuityData implements IService {
 
     private void validatePaymentPhasesWithTransaction(ISuportePersistente sp,
             IGratuityValues gratuityValues) throws FenixServiceException {
-        // verify if any payment phase has any transaction associated
-        if (gratuityValues.getPaymentPhaseList() != null
-                && gratuityValues.getPaymentPhaseList().size() > 0) {
-            ListIterator iterator = gratuityValues.getPaymentPhaseList().listIterator();
-            while (iterator.hasNext()) {
-                IPaymentPhase paymentPhase = (IPaymentPhase) iterator.next();
-
-                if (paymentPhase.getTransactionList() != null
-                        && paymentPhase.getTransactionList().size() > 0) {
-                    throw new FenixServiceException("error.impossible.paymentPhaseWithTransactional");
-                }
-            }
-        }
     }
-
-    // private void validateGratuitySituationWithTransaction(
-    // ISuportePersistente sp,
-    // IGratuityValues gratuityValues)
-    // throws FenixServiceException
-    // {
-    // //verify if gratuity has any transaction associated
-    // IGratuityTransaction persistentGratuityTransaction =
-    // sp.getIPersistentGratuityTransaction();
-    //
-    // List gratuityTransactions =
-    // persistentGratuityTransaction.readByGratuityValues(gratuityValues);
-    //
-    // if(gratuityTransactions != null && gratuityTransactions.size() > 0){
-    // throw new
-    // FenixServiceException("error.impossible.gratuityWithTransactions");
-    // }
-    //
-    // }
 
     private void registerWhoAndWhen(ISuportePersistente sp, InfoGratuityValues infoGratuityValues,
             IGratuityValues gratuityValues) throws ExcepcaoPersistencia {

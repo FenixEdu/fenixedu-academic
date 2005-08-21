@@ -752,10 +752,6 @@ class net.sourceforge.fenixedu.domain.Employee extends net.sourceforge.fenixedu.
 	Integer workingHours;
 
     interface "
-	public IEmployeeHistoric getEmployeeHistoric();
-	
-	public void setEmployeeHistoric(IEmployeeHistoric employeeHistoric);
-	
 	public ICostCenter findWorkingCostCenter();
 	"
 }
@@ -1125,6 +1121,8 @@ class net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult ext
 
 class net.sourceforge.fenixedu.domain.classProperties.GeneralClassProperty extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
+    String nameString;
+    String valueString;
     
     interface "
     public net.sourceforge.fenixedu.util.classProperties.GeneralClassPropertyName getName();
@@ -1776,12 +1774,6 @@ class net.sourceforge.fenixedu.domain.PaymentPhase extends net.sourceforge.fenix
 	Integer keyGratuityValues;
     Date endDate;
     Date startDate;
-	
-	interface "
-    public java.util.List getTransactionList();
-	    
-    public void setTransactionList(java.util.List transactionList);
-	"
 }
 
 class net.sourceforge.fenixedu.domain.Period extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2332,14 +2324,6 @@ class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.dom
     ShiftType tipo;
 		
 	interface "
-    public Integer getOcupation();
-
-    public void setOcupation(Integer integer);
-
-    public Double getPercentage();
-
-    public void setPercentage(Double percentage);
-
     public double hours();
     
     public void associateSchoolClass(net.sourceforge.fenixedu.domain.ISchoolClass schoolClass);

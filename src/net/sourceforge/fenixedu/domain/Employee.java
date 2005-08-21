@@ -9,15 +9,6 @@ package net.sourceforge.fenixedu.domain;
  * @author Tânia Pousão
  */
 public class Employee extends Employee_Base {
-    private IEmployeeHistoric employeeHistoric = null;
-
-    public IEmployeeHistoric getEmployeeHistoric() {
-        return employeeHistoric;
-    }
-
-    public void setEmployeeHistoric(IEmployeeHistoric employeeHistoric) {
-        this.employeeHistoric = employeeHistoric;
-    }
 
     public String toString() {
         String result = "[Dominio.Employee ";

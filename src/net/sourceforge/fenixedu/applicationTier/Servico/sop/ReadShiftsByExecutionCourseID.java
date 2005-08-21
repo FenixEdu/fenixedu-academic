@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseOccupancy;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithInfoLessons;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
@@ -16,71 +15,35 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.NumberUtils;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- */
+public class ReadShiftsByExecutionCourseID implements IService {
 
-public class ReadShiftsByExecutionCourseID implements IServico {
+    public InfoExecutionCourseOccupancy run(Integer executionCourseID) throws ExcepcaoPersistencia {
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-    private static ReadShiftsByExecutionCourseID _servico = new ReadShiftsByExecutionCourseID();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadShiftsByExecutionCourseID getService() {
-        return _servico;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private ReadShiftsByExecutionCourseID() {
-    }
-
-    /**
-     * Devolve o nome do servico
-     */
-    public final String getNome() {
-        return "ReadShiftsByExecutionCourseID";
-    }
-
-    public InfoExecutionCourseOccupancy run(Integer executionCourseID) throws FenixServiceException {
-
-        InfoExecutionCourseOccupancy infoExecutionCourseOccupancy = new InfoExecutionCourseOccupancy();
+        final InfoExecutionCourseOccupancy infoExecutionCourseOccupancy = new InfoExecutionCourseOccupancy();
         infoExecutionCourseOccupancy.setInfoShifts(new ArrayList());
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
+                .readByOID(ExecutionCourse.class, executionCourseID);
+        final List<IShift> shifts = executionCourse.getAssociatedShifts();
 
-            IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
-                    .readByOID(ExecutionCourse.class, executionCourseID);
+        infoExecutionCourseOccupancy.setInfoExecutionCourse(InfoExecutionCourse
+                .newInfoFromDomain(executionCourse));
 
-            List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse.getIdInternal());
-
-            infoExecutionCourseOccupancy.setInfoExecutionCourse(InfoExecutionCourse
-                    .newInfoFromDomain(executionCourse));
-
-            Iterator iterator = shifts.iterator();
-            while (iterator.hasNext()) {
-                IShift shift = (IShift) iterator.next();
-
-                List studentsInShift = shift.getStudents();
-                
-                shift.setOcupation(new Integer(studentsInShift.size()));
-                Integer capacity = new Integer(1);
-                if (shift.getLotacao() != null && shift.getLotacao().intValue() != 0) {
-                    capacity = shift.getLotacao();
-                }
-                shift.setPercentage(NumberUtils.formatNumber(new Double(shift.getOcupation()
-                        .floatValue()
-                        * 100 / capacity.floatValue()), 1));
-                infoExecutionCourseOccupancy.getInfoShifts().add(
-                        InfoShiftWithInfoLessons.newInfoFromDomain(shift));
+        for (final IShift shift : shifts) {
+            Integer capacity = Integer.valueOf(1);
+            if (shift.getLotacao() != null && shift.getLotacao().intValue() != 0) {
+                capacity = shift.getLotacao();
             }
 
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+            final InfoShift infoShift = InfoShiftWithInfoLessons.newInfoFromDomain(shift);
+            infoShift.setOcupation(new Integer(shift.getStudentsCount()));
+            infoShift.setPercentage(NumberUtils.formatNumber(new Double(infoShift.getOcupation().floatValue()
+                    * 100 / capacity.floatValue()), 1));
+
+            infoExecutionCourseOccupancy.getInfoShifts().add(infoShift);
         }
 
         return infoExecutionCourseOccupancy;
