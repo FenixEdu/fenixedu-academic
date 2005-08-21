@@ -89,7 +89,7 @@ public class ExamVO extends VersionedObjectsBase implements IPersistentExam {
             List<IExam> exams = new ArrayList();
             List<IEvaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
             for(IEvaluation evaluation : associatedEvaluations){
-                if (evaluation instanceof Exam){
+                if (evaluation instanceof IExam){
                     exams.add((IExam) evaluation);
                 }
             }

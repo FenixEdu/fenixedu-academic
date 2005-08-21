@@ -83,7 +83,6 @@ import net.sourceforge.fenixedu.domain.AttendsSet;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Evaluation;
-import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.GroupProperties;
 import net.sourceforge.fenixedu.domain.IAnnouncement;
@@ -724,7 +723,7 @@ public class TeacherAdministrationSiteComponentBuilder {
         List<IEvaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
         List<IExam> exams = new ArrayList();
         for(IEvaluation evaluation : associatedEvaluations){
-            if (evaluation instanceof Exam){
+            if (evaluation instanceof IExam){
                 exams.add((IExam) evaluation);
             }
         }

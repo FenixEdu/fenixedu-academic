@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IEvaluation;
@@ -52,7 +51,6 @@ public class CreateExamNew implements IService {
         }
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentRoomOccupation roomOccupationDAO = sp.getIPersistentRoomOccupation();
             // Exam
             IExam exam = DomainFactory.makeExam(examDate, examStartTime, examEndTime, season);
             // Writing the new exam to the database
@@ -101,7 +99,7 @@ public class CreateExamNew implements IService {
                 List<IExam> associatedExams = new ArrayList();
                 List<IEvaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
                 for (IEvaluation evaluation : associatedEvaluations) {
-                    if (evaluation instanceof Exam && !evaluation.equals(exam)) {
+                    if (evaluation instanceof IExam && !evaluation.equals(exam)) {
                         associatedExams.add((IExam) evaluation);
                     }
                 }

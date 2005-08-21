@@ -111,7 +111,7 @@ public class ReadExamsMap implements IService {
                     List<IEvaluation> associatedEvaluations = ((IExecutionCourse) executionCourses
                             .get(j)).getAssociatedEvaluations();
                     for (IEvaluation evaluation : associatedEvaluations) {
-                        if (evaluation instanceof Exam) {
+                        if (evaluation instanceof IExam) {
                             associatedExams.add((IExam) evaluation);
                         }
                     }

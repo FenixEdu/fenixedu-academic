@@ -388,8 +388,10 @@ public class ReadTeacherInformation implements IService {
         while (iter.hasNext()) {
             IPublicationTeacher publicationTeacher = (IPublicationTeacher) iter.next();
             IPublication publication = publicationTeacher.getPublication();
-            publication.setPublicationString(publicationTeacher.getPublication().toString());
-            infoPublications.add(InfoPublication.newInfoFromDomain(publication));
+
+            InfoPublication infoPublication = InfoPublication.newInfoFromDomain(publication);
+            infoPublication.setPublicationString(publicationTeacher.getPublication().toString());
+            infoPublications.add(infoPublication);
         }
 
         return infoPublications;

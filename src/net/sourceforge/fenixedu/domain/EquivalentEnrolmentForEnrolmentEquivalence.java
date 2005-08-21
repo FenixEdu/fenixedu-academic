@@ -10,4 +10,8 @@ package net.sourceforge.fenixedu.domain;
 public class EquivalentEnrolmentForEnrolmentEquivalence extends
         EquivalentEnrolmentForEnrolmentEquivalence_Base {
 
+    public void delete() {
+        deleteDomainObject();
+    }
+
 }

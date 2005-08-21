@@ -183,8 +183,8 @@ public class Enrolment extends Enrolment_Base {
 			equivalence.removeEnrolment();
 			equivalentEnrolment.removeEnrolmentEquivalence();
 			
-			((EquivalentEnrolmentForEnrolmentEquivalence)equivalentEnrolment).deleteDomainObject();
-			((EnrolmentEquivalence)equivalence).deleteDomainObject();
+			equivalentEnrolment.delete();
+			equivalence.delete();
 		}
 
 		
@@ -203,10 +203,10 @@ public class Enrolment extends Enrolment_Base {
 				equivalentRestrictionIterator.remove();
 				equivalentRestriction.removeEnrolmentEquivalence();
 				
-				((EquivalentEnrolmentForEnrolmentEquivalence)equivalentRestriction).deleteDomainObject();
+				equivalentRestriction.delete();
 			}
 			
-			((EnrolmentEquivalence)equivalence).deleteDomainObject();
+			equivalence.delete();
 			
 		}
 		

@@ -14,4 +14,8 @@ public class EnrolmentEquivalence extends EnrolmentEquivalence_Base {
         return result;
     }
 
+    public void delete() {
+        deleteDomainObject();
+    }
+
 }

@@ -13,6 +13,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 import java.util.ArrayList;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
+
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewExamByDayAndShift;
@@ -28,29 +30,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.Season;
 
-public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod implements IServico {
-
-    private static ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod _servico = new ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod getService() {
-        return _servico;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod() {
-    }
-
-    /**
-     * Devolve o nome do servico
-     */
-    public final String getNome() {
-        return "ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod";
-    }
+public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod implements IService {
 
     public InfoViewExamByDayAndShift run(String executionCourseInitials, Season season,
             InfoExecutionPeriod infoExecutionPeriod) {
@@ -69,7 +49,7 @@ public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod imple
             List<IExam> associatedExams = new ArrayList();
             List<IEvaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
             for(IEvaluation evaluation : associatedEvaluations){
-                if (evaluation instanceof Exam){
+                if (evaluation instanceof IExam){
                     associatedExams.add((IExam) evaluation);
                 }
             }

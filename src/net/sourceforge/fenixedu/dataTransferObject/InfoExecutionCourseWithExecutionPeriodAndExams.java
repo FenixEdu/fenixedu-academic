@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
@@ -26,7 +25,7 @@ public class InfoExecutionCourseWithExecutionPeriodAndExams extends
             List<IExam> associatedExams = new ArrayList();
             List<IEvaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
             for(IEvaluation evaluation : associatedEvaluations){
-                if (evaluation instanceof Exam){
+                if (evaluation instanceof IExam){
                     associatedExams.add((IExam) evaluation);
                 }
             }
