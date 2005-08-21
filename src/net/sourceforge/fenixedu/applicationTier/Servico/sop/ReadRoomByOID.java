@@ -1,10 +1,6 @@
-/*
- * Created on 2003/07/30
- *
- *
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
@@ -16,43 +12,14 @@ import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
-/**
- * @author Luis Cruz & Sara Ribeiro
- * 
- *  
- */
-public class ReadRoomByOID implements IServico {
+public class ReadRoomByOID implements IService {
 
-    private static ReadRoomByOID service = new ReadRoomByOID();
+	public InfoRoom run(Integer oid) throws ExcepcaoPersistencia {
+		final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		final ISalaPersistente roomDAO = sp.getISalaPersistente();
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadRoomByOID getService() {
-        return service;
-    }
+		final IRoom room = (IRoom) roomDAO.readByOID(Room.class, oid);
 
-    /**
-     * @see ServidorAplicacao.IServico#getNome()
-     */
-    public String getNome() {
-        return "ReadRoomByOID";
-    }
-
-    public InfoRoom run(Integer oid) throws FenixServiceException {
-
-        InfoRoom result = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            ISalaPersistente roomDAO = sp.getISalaPersistente();
-            IRoom room = (IRoom) roomDAO.readByOID(Room.class, oid);
-            if (room != null) {
-                result = Cloner.copyRoom2InfoRoom(room);
-            }
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex);
-        }
-
-        return result;
-    }
+		return InfoRoom.newInfoFromDomain(room);
+	}
 }

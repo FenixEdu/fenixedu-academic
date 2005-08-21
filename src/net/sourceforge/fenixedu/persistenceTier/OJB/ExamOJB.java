@@ -1,15 +1,5 @@
-/*
- * ExamOJB.java
- *
- * Created on 2003/03/19
- */
-
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
-/**
- * 
- * @author Luis Cruz & Sara Ribeiro
- */
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -25,15 +15,14 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 
     public List readBy(Calendar day, Calendar beginning) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("day", day);
-        criteria.addEqualTo("beginning", beginning);
+        criteria.addEqualTo("dayDate", day.getTime());
+        criteria.addEqualTo("beginningDate", beginning.getTime());
         return queryList(Exam.class, criteria);
     }
 
 
     public List readByRoomAndExecutionPeriod(String roomName, String executionPeriodName, String year)
             throws ExcepcaoPersistencia {
-        System.out.println("Entering ojb dao");
         Criteria criteria = new Criteria();
         criteria.addEqualTo("associatedRoomOccupation.room.nome", roomName);
         criteria
@@ -47,24 +36,17 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
                 examsWithoutRepetition.add(exam);
             }
         }
-        System.out.println("Exiting ojb dao.");
         return examsWithoutRepetition;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.IPersistentExam#readBy(java.util.Calendar,
-     *      java.util.Calendar, java.util.Calendar)
-     */
     public List readBy(Calendar day, Calendar beginning, Calendar end) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("day", day);
+        criteria.addEqualTo("dayDate", day.getTime());
         if (beginning != null) {
-            criteria.addEqualTo("beginning", beginning);
+            criteria.addEqualTo("beginningDate", beginning.getTime());
         }
         if (end != null) {
-            criteria.addEqualTo("end", end);
+            criteria.addEqualTo("endDate", end.getTime());
         }
         return queryList(Exam.class, criteria);
     }
@@ -74,7 +56,7 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
         day.add(Calendar.DATE, Calendar.MONDAY - day.get(Calendar.DAY_OF_WEEK));
         for (int i = 0; i < 6; i++) {
             Criteria criteria = new Criteria();
-            criteria.addEqualTo("day", day);
+            criteria.addEqualTo("dayDate", day.getTime());
             criteria.addEqualTo("associatedRoomOccupation.room.nome", roomName);
             list.addAll(queryList(Exam.class, criteria));
             day.add(Calendar.DATE, 1);
