@@ -1,0 +1,5 @@
+select concat('update PERSON set PERSON.KEY_AUTHOR = ',
+	AUTHOR.ID_INTERNAL, 
+	' where PERSON.ID_INTERNAL = ', 
+	AUTHOR.KEY_PERSON, ';') 
+as "" from AUTHOR where AUTHOR.KEY_PERSON IS NOT NULL;

@@ -63,7 +63,6 @@ mysql -u$2 -f $1 < /tmp/x
 mysql -u$2 -f $1 < AlterTableCurricularCourseAddCompetenceCourse.sql
 mysql -u$2 -f $1 < CreateCompetenceCourse.sql
 mysql -u$2 -f $1 < DropDepartmentCourse.sql
-
 mysql -u$2 -f $1 < AlterTableADegree.sql
 mysql -u$2 -f $1 < AlterTableBranch.sql
 mysql -u$2 -f $1 < AlterTableCurricularCourseScope.sql
@@ -85,33 +84,7 @@ mysql -u$2 -f $1 < createTablesInquiries.sql
 mysql -u$2 -f $1 < enumerationUpdates.sql
 mysql -u$2 -f $1 < fixSentSms.sql
 mysql -u$2 -f $1 < fixOnlineTestPackageName.sql
+mysql -u$2 -f $1 < AlterTablePublicationDropDidatic.sql
 
 # ?????
-mysql -u$2 -f $1 < FixItemOrder.sql > /tmp/x
-mysql -u$2 -f $1 < /tmp/x
-mysql -u$2 -f $1 < AlterTablePublicationDropDidatic.sql
-mysql -u$2 -f $1 < alterTableProjectAccess.sql
-mysql -u$2 -f $1 < fixDomainNames.sql
-mysql -u$2 -f $1 < seminaries2Sem20042005.sql
-mysql -u$2 -f $1 < updateCurricularCourseWithCourseHistoric.sql > /tmp/x
-mysql -u$2 -f $1 < /tmp/x
-mysql -u$2 -f $1 < updateCurricularCourseWithStudentCourseReport.sql > /tmp/x
-mysql -u$2 -f $1 < /tmp/x
-mysql -u$2 -f $1 < updateExecutionCourseWithCourseReports.sql > /tmp/x
-mysql -u$2 -f $1 < /tmp/x
-mysql -u$2 -f $1 < updateExecutionCourseWithSites.sql > /tmp/x
-mysql -u$2 -f $1 < /tmp/x
-mysql -u$2 -f $1 < updateExecutionDegreeWithGratuityValues.sql > /tmp/x
-mysql -u$2 -f $1 < /tmp/x
-mysql -u$2 -f $1 < updateExecutionPeriodWithExecutionPeriod.sql >/tmp/x
-mysql -u$2 -f $1 < /tmp/x
-mysql -u$2 -f $1 < updateExecutionYearWithInsuranceValue.sql > /tmp/x
-mysql -u$2 -f $1 < /tmp/x
-mysql -u$2 -f $1 < updateGrantContract.sql
-mysql -u$2 -f $1 < updatePersonWithAuthor.sql > /tmp/x
-mysql -u$2 -f $1 < /tmp/x
-mysql -u$2 -f $1 < updateTeacherWithPublicationsNumbers.sql > /tmp/x
-mysql -u$2 -f $1 < /tmp/x
-mysql -u$2 -f $1 < updateTeacherWithServiceProviderRegimes.sql > /tmp/x
-mysql -u$2 -f $1 < /tmp/x
-
+mysql -u$2 -f $1 < FixItemOrder.sql
