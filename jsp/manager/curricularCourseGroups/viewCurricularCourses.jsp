@@ -9,7 +9,7 @@
 	<html:hidden property="groupId" value="<%= groupId.toString() %>"/>
 <%--	
 	<bean:define id="degreeCurricularPlanId" name="degreeCurricularPlanId"/>
-	<html:link page='<%= "/manageCurricularCourseGroups.do?method=viewCurricularCourseGroups&degreeCurricularPlanId=" + degreeCurricularPlanId.toString() %>'>Voltar Atrás</html:link>
+	<html:link page='<%= "/manageCurricularCourseGroups.do?method=viewCurricularCourseGroups&degreeCurricularPlanId=" + degreeCurricularPlanId.toString() %>'>Voltar Atrï¿½s</html:link>
 --%>
 <br/>
 <br/>
@@ -17,6 +17,7 @@
 <table>
 <tr> 
 <td class="listClasses-header">&nbsp</td><td class="listClasses-header">Disciplina</td>
+<td class="listClasses-header">&nbsp</td><td class="listClasses-header">Codigo</td>
 </tr>
 
 <logic:iterate id="infoCurricularCourse" name="groupWithAll" property="infoCurricularCourses">
@@ -25,6 +26,7 @@
 <bean:write name="infoCurricularCourse" property="idInternal"/>
 </html:multibox> </td>
 <td class="listClasses"><bean:write name="infoCurricularCourse" property="name"/></td>
+<td class="listClasses"><bean:write name="infoCurricularCourse" property="code"/></td>
 </tr>
 </logic:iterate>
 </table>
@@ -43,6 +45,7 @@
 <table>
 <tr> 
 <td>&nbsp</td><td class="listClasses-header">Disciplina</td>
+<td>&nbsp</td><td class="listClasses-header">Codigo</td>
 </tr>
 <logic:iterate id="infoCurricularCourse" name="groupWithAll" property="infoCurricularCoursesToAdd">
 <tr> 
@@ -50,6 +53,7 @@
 <bean:write name="infoCurricularCourse" property="idInternal"/>
 </html:multibox> </td>
 <td class="listClasses"><bean:write name="infoCurricularCourse" property="name"/></td>
+<td class="listClasses"><bean:write name="infoCurricularCourse" property="code"/></td>
 </tr>
 </logic:iterate>
 </table>
