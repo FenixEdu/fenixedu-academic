@@ -10,7 +10,9 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfAc
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfCurricularCoursesEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PrecedencesEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PreviousYearsCurricularCourseEnrollmentRule;
+import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PreviousYearsCurricularCourseEnrollmentRuleIgnoringLastYears;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.SpecificLEICEnrollmentRule;
+import net.sourceforge.fenixedu.domain.degree.enrollment.rules.SpecificLEICTagusEnrollmentRule;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -85,7 +87,9 @@ public class DegreeCurricularPlanLEICTAGUS extends DegreeCurricularPlanLEICTAGUS
     }
 
     public List getSecundaryAreas() {
-        return getSpecializationAreas();
+        List sec = super.getSecundaryAreas();
+        sec.addAll(getSpecializationAreas());
+        return sec;
     }
     
     public List getListOfEnrollmentRules(IStudentCurricularPlan studentCurricularPlan,
@@ -100,7 +104,7 @@ public class DegreeCurricularPlanLEICTAGUS extends DegreeCurricularPlanLEICTAGUS
         result.add(new PrecedencesEnrollmentRule(studentCurricularPlan, executionPeriod));
         result.add(new PreviousYearsCurricularCourseEnrollmentRule(studentCurricularPlan,
                 executionPeriod));
-        result.add(new SpecificLEICEnrollmentRule(studentCurricularPlan, executionPeriod));
+        result.add(new SpecificLEICTagusEnrollmentRule(studentCurricularPlan, executionPeriod));
 
         return result;
     }
