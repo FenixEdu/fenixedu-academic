@@ -9,11 +9,15 @@ public enum CurricularCourseEnrollmentType {
 
     NOT_ALLOWED,
 
-    VALIDATED;
+    VALIDATED,
+    
+    NO_EVALUATE;
 
     public CurricularCourseEnrollmentType and(CurricularCourseEnrollmentType other) {
 
-        if ((this == NOT_ALLOWED) && (other == NOT_ALLOWED)) {
+    	if((this == NO_EVALUATE) || (other == NO_EVALUATE)) {
+    		return NO_EVALUATE;
+    	} else if ((this == NOT_ALLOWED) && (other == NOT_ALLOWED)) {
             return NOT_ALLOWED;
         } else if ((this == NOT_ALLOWED) && (other == TEMPORARY)) {
             return NOT_ALLOWED;
@@ -35,7 +39,12 @@ public enum CurricularCourseEnrollmentType {
     }
 
     public CurricularCourseEnrollmentType or(CurricularCourseEnrollmentType other) {
-        if ((this == NOT_ALLOWED) && (other == NOT_ALLOWED)) {
+    	
+    	if(this == NO_EVALUATE) {
+    		return other;
+    	}else if(other == NO_EVALUATE) {
+    		return this;
+    	} else if ((this == NOT_ALLOWED) && (other == NOT_ALLOWED)) {
             return NOT_ALLOWED;
         } else if ((this == NOT_ALLOWED) && (other == TEMPORARY)) {
             return TEMPORARY;
