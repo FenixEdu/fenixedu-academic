@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.util.TipoSala;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.ojb.broker.query.Criteria;
-import org.odmg.QueryException;
 
 public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
 
@@ -49,76 +48,35 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
      */
     public List readSalas(String nome, String edificio, Integer piso, Integer tipo,
             Integer capacidadeNormal, Integer capacidadeExame) throws ExcepcaoPersistencia {
-
-        if (nome == null && edificio == null && piso == null && tipo == null && capacidadeExame == null
-                && capacidadeNormal == null) {
-            return readAll();
+        List<IRoom> rooms = (List<IRoom>) readAll(Room.class);
+        List<IRoom> result = new ArrayList();
+        for (IRoom room : rooms) {
+            boolean isAcceptable = true;
+            if (nome != null && !room.getNome().equalsIgnoreCase(nome)) {
+                isAcceptable = false;
+            }
+            if (edificio != null && !room.getBuilding().getName().equalsIgnoreCase(edificio)) {
+                isAcceptable = false;
+            }
+            if (piso != null && !room.getPiso().equals(piso)) {
+                isAcceptable = false;
+            }
+            if (tipo != null && !room.getTipo().getTipo().equals(tipo)) {
+                isAcceptable = false;
+            }
+            if (capacidadeNormal != null
+                    && room.getCapacidadeNormal().intValue() < capacidadeNormal.intValue()) {
+                isAcceptable = false;
+            }
+            if (capacidadeExame != null
+                    && room.getCapacidadeExame().intValue() < capacidadeExame.intValue()) {
+                isAcceptable = false;
+            }
+            if (isAcceptable) {
+                result.add(room);
+            }
         }
-
-        try {
-            StringBuffer oqlQuery = new StringBuffer("select sala from ");
-            boolean hasPrevious = false;
-
-            oqlQuery.append(Room.class.getName()).append(" where ");
-            if (nome != null) {
-                hasPrevious = true;
-                oqlQuery.append("nome = \"").append(nome).append("\"");
-            }
-
-            if (edificio != null) {
-                if (hasPrevious)
-                    oqlQuery.append(" and ");
-                else
-                    hasPrevious = true;
-
-                oqlQuery.append(" building.name = \"").append(edificio).append("\"");
-            }
-
-            if (piso != null) {
-                if (hasPrevious)
-                    oqlQuery.append(" and ");
-                else
-                    hasPrevious = true;
-
-                oqlQuery.append(" piso = \"").append(piso).append("\"");
-            }
-
-            if (tipo != null) {
-                if (hasPrevious)
-                    oqlQuery.append(" and ");
-                else
-                    hasPrevious = true;
-
-                oqlQuery.append(" tipo = \"").append(tipo).append("\"");
-            }
-
-            if (capacidadeNormal != null) {
-                if (hasPrevious)
-                    oqlQuery.append(" and ");
-                else
-                    hasPrevious = true;
-
-                oqlQuery.append(" capacidadeNormal > \"").append(capacidadeNormal.intValue() - 1)
-                        .append("\"");
-            }
-
-            if (capacidadeExame != null) {
-                if (hasPrevious)
-                    oqlQuery.append(" and ");
-                else
-                    hasPrevious = true;
-
-                oqlQuery.append(" capacidadeExame > \"").append(capacidadeExame.intValue() - 1).append(
-                        "\"");
-            }
-
-            query.create(oqlQuery.toString());
-            List result = (List) query.execute();
-            lockRead(result);
-            return result;
-        } catch (QueryException ex) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+        return result;
     }
 
     public List readAvailableRooms(Integer examOID) throws ExcepcaoPersistencia {
