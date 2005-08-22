@@ -61,6 +61,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.util.LabelValueBean;
 import org.apache.util.Base64;
 
 /**
@@ -1189,6 +1190,80 @@ public class TestsManagementAction extends FenixDispatchAction {
             else
                 request.setAttribute("infoStudentList", infoStudentList);
         }
+        return mapping.findForward("showStudentTest");
+    }
+
+    public ActionForward prepareChangeStudentTestQuestionValue(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
+        request.setAttribute("questionCode", getCodeFromRequest(request, "questionCode"));
+        request.setAttribute("distributedTestCode", getCodeFromRequest(request, "distributedTestCode"));
+        request.setAttribute("studentCode", getCodeFromRequest(request, "studentCode"));
+        List studentsTypeList = (new TestQuestionStudentsChangesType()).getAllTypes();
+        request.setAttribute("studentsTypeList", studentsTypeList);
+        ((DynaActionForm) form).set("studentsType", "1");
+        ((DynaActionForm) form).set("questionValue", request.getParameter("questionValue"));
+        return mapping.findForward("changeStudentTestQuestionValue");
+    }
+
+    public ActionForward changeStudentTestQuestionValue(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+        final IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
+        final Integer objectCode = getCodeFromRequest(request, "objectCode");
+        final Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
+        final Integer studentCode = getCodeFromRequest(request, "studentCode");
+        final Integer questionCode = getCodeFromRequest(request, "questionCode");
+        final String studentTypeString = (String) ((DynaActionForm) form).get("studentsType");
+        final String questionValueString = (String) ((DynaActionForm) form).get("questionValue");
+
+        try {
+            List<LabelValueBean> result = (List<LabelValueBean>) ServiceUtils.executeService(userView, "ChangeStudentTestQuestionValue",
+                    new Object[] { objectCode, distributedTestCode, new Double(questionValueString), questionCode, studentCode,
+                            new TestQuestionStudentsChangesType(new Integer(studentTypeString)) });
+            request.setAttribute("successfulChanged", result);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+        request.setAttribute("objectCode", objectCode);
+        request.setAttribute("distributedTestCode", distributedTestCode);
+        request.setAttribute("studentCode", studentCode);
+        return mapping.findForward("showStudentTest");
+    }
+
+    public ActionForward prepareChangeStudentTestQuestionMark(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
+        request.setAttribute("questionCode", getCodeFromRequest(request, "questionCode"));
+        request.setAttribute("distributedTestCode", getCodeFromRequest(request, "distributedTestCode"));
+        request.setAttribute("studentCode", getCodeFromRequest(request, "studentCode"));
+        List studentsTypeList = (new TestQuestionStudentsChangesType()).getAllTypes();
+        request.setAttribute("studentsTypeList", studentsTypeList);
+        ((DynaActionForm) form).set("studentsType", "1");
+        ((DynaActionForm) form).set("questionValue", request.getParameter("questionValue"));
+        return mapping.findForward("changeStudentTestQuestionMark");
+    }
+
+    public ActionForward changeStudentTestQuestionMark(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+        final IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
+        final Integer objectCode = getCodeFromRequest(request, "objectCode");
+        final Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
+        final Integer studentCode = getCodeFromRequest(request, "studentCode");
+        final Integer questionCode = getCodeFromRequest(request, "questionCode");
+        final String studentTypeString = (String) ((DynaActionForm) form).get("studentsType");
+        final String questionValueString = (String) ((DynaActionForm) form).get("questionValue");
+
+        try {
+            List<LabelValueBean> result = (List<LabelValueBean>) ServiceUtils.executeService(userView, "ChangeStudentTestQuestionMark", new Object[] {
+                    objectCode, distributedTestCode, new Double(questionValueString), questionCode, studentCode,
+                    new TestQuestionStudentsChangesType(new Integer(studentTypeString)) });
+            request.setAttribute("successfulChanged", result);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+        request.setAttribute("objectCode", objectCode);
+        request.setAttribute("distributedTestCode", distributedTestCode);
+        request.setAttribute("studentCode", studentCode);
         return mapping.findForward("showStudentTest");
     }
 

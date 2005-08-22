@@ -23,6 +23,7 @@
             <form-property name="changesType" type="java.lang.String"/>
             <form-property name="studentsType" type="java.lang.String"/>
             <form-property name="deleteVariation" type="java.lang.String"/>
+            <form-property name="questionValue" type="java.lang.String"/>
             <form-property name="order" type="java.lang.String"/>
             <form-property name="asc" type="java.lang.String"/>
             <form-property name="page" type="java.lang.Integer" initial="0"/>
@@ -1175,6 +1176,8 @@
             <forward name="showTestMarks" path="show-Test-Marks"/>
             <forward name="chooseAnotherExercise" path="choose-Another-Exercise"/>
             <forward name="changeStudentTestQuestion" path="change-Student-Test-Question"/>
+            <forward name="changeStudentTestQuestionValue" path="change-Student-Test-Question-Value"/>
+            <forward name="changeStudentTestQuestionMark" path="change-Student-Test-Question-Mark"/>
             <forward name="showStudentTest" path="/studentTestManagement.do?method=showStudentTest"/>
         </action>
 		<action path="/studentTestManagement" name="studentTestForm"

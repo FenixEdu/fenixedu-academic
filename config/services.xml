@@ -4518,6 +4518,26 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>ChangeStudentTestQuestionValue</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ChangeStudentTestQuestionValue</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>ChangeStudentTestQuestionMark</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ChangeStudentTestQuestionMark</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
+		</filterChains>
+	</service>
+	<service>
 		<name>CreateStudentTestAdvisory</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.CreateStudentTestAdvisory</implementationClass>

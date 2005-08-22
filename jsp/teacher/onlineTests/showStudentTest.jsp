@@ -40,20 +40,28 @@
 		</logic:notEqual>
 		
 		<bean:define id="mark" name="testQuestion" property="testQuestionMark"/>
+		<bean:define id="testQuestionValue" name="testQuestion" property="testQuestionValue"/>
+		<bean:define id="mark" name="testQuestion" property="testQuestionMark"/>
 		<logic:equal name="correctionType" value="studentCorrection">
 		<tr><td><div class="gen-button">
 			<html:link page="<%= "/testsManagement.do?method=prepareChangeStudentTestQuestion&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;questionCode=" + pageContext.findAttribute("questionCode") +"&amp;distributedTestCode=" + pageContext.findAttribute("testCode") +"&amp;studentCode=" + pageContext.findAttribute("studentId")%>">
-				<bean:message key="label.change" />
+				<bean:message key="label.changeQuestion" />
+			</html:link>
+		</div><div class="gen-button">
+			<html:link page="<%= "/testsManagement.do?method=prepareChangeStudentTestQuestionValue&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;questionCode=" + pageContext.findAttribute("questionCode") +"&amp;distributedTestCode=" + pageContext.findAttribute("testCode") +"&amp;studentCode=" + pageContext.findAttribute("studentId")+"&amp;questionValue="+testQuestionValue%>">
+				<bean:message key="label.changeQuestionValue" />
+			</html:link>
+		</div><div class="gen-button">
+			<html:link page="<%= "/testsManagement.do?method=prepareChangeStudentTestQuestionMark&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;questionCode=" + pageContext.findAttribute("questionCode") +"&amp;distributedTestCode=" + pageContext.findAttribute("testCode") +"&amp;studentCode=" + pageContext.findAttribute("studentId")+"&amp;questionValue="+mark%>">
+				<bean:message key="label.changeQuestionMark" />
 			</html:link>
 		</div></td></tr>
 		</logic:equal>
 		<tr><td><b><bean:message key="message.tests.question" />:</b>&nbsp;<bean:write name="questionOrder"/></td></tr>
 		<%if(((Integer)testType).intValue()!=3){%>
-			<bean:define id="testQuestionValue" name="testQuestion" property="testQuestionValue"/>
-			<bean:define id="testQuestionValue" value="<%= (new java.text.DecimalFormat("#0.##").format(Double.parseDouble(testQuestionValue.toString())).toString()) %>"/>
+		<bean:define id="testQuestionValue" value="<%= (new java.text.DecimalFormat("#0.##").format(Double.parseDouble(testQuestionValue.toString())).toString()) %>"/>
 			<tr><td><b><bean:message key="message.tests.questionValue" /></b>&nbsp;<bean:write name="testQuestionValue"/></td></tr>
 			<logic:equal name="pageType" value="correction">		
-				<bean:define id="mark" name="testQuestion" property="testQuestionMark"/>
 				<bean:define id="value" value="<%= (new java.text.DecimalFormat("#0.##").format(Double.parseDouble(mark.toString())).toString()) %>"/>
 				<tr><td><b><bean:message key="label.student.classification" /></b>&nbsp;<bean:write name="value"/></td></tr>
 			</logic:equal>

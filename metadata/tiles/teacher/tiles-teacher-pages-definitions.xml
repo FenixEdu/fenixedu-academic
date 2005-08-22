@@ -242,6 +242,12 @@
 	<definition name="change-Student-Test-Question" extends="definition.teacher.testsPage">
 		<put name="body" value="/teacher/onlineTests/changeStudentTestQuestion.jsp"></put>
 	</definition>
+	<definition name="change-Student-Test-Question-Value" extends="definition.teacher.testsPage">
+		<put name="body" value="/teacher/onlineTests/changeStudentTestQuestionValue.jsp"></put>
+	</definition>
+	<definition name="change-Student-Test-Question-Mark" extends="definition.teacher.testsPage">
+		<put name="body" value="/teacher/onlineTests/changeStudentTestQuestionMark.jsp"></put>
+	</definition>	
 	<definition name="choose-Another-Exercise" extends="definition.teacher.testsPage">
 		<put name="body" value="/teacher/onlineTests/chooseAnotherExercise.jsp"></put>		
 	</definition>
