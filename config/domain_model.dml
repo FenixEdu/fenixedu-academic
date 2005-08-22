@@ -399,7 +399,7 @@ class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.f
 	String code;
 	Boolean enrollmentAllowed;
 	Double theoreticalHours;
-	Integer departmentCourseKey;
+	Integer keyCompetenceCourse;
 	Integer keyStudentCourseReport;
 	Integer keyCourseHistoric;
 	Double labHours;
@@ -502,8 +502,8 @@ class net.sourceforge.fenixedu.domain.CurricularCourseScope extends net.sourcefo
     public void setEndDate(java.util.Calendar endDate);
     
     public Boolean isActive();
-	
-	public Boolean isActive(java.util.Date date);
+    
+    public Boolean isActive(java.util.Date date);
 
 	public void edit(IBranch branch, ICurricularSemester curricularSemester, java.util.Calendar beginDate, java.util.Calendar endDate, String Annotation);
 	
@@ -584,6 +584,8 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     
     public java.util.List getCurricularCoursesFromAnyArea();
     
+    public ICurricularCourse getCurricularCourseByCode(String code);
+    
     public java.util.List getCommonAreas();
     
     public java.util.List getSpecializationAreas();
@@ -622,10 +624,13 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     
     class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEM extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
     }
-
-    class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLET extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
+    
+    class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEFT extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
     }
 
+	class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLET extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
+    }
+    
     class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEA extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
     }
 
@@ -686,10 +691,15 @@ class net.sourceforge.fenixedu.domain.Department extends net.sourceforge.fenixed
 }
 
 
-class net.sourceforge.fenixedu.domain.DepartmentCourse extends net.sourceforge.fenixedu.domain.DomainObject {
-	String nome;
-	String sigla;
-	Integer chaveDepartamento;
+class net.sourceforge.fenixedu.domain.CompetenceCourse extends net.sourceforge.fenixedu.domain.DomainObject {
+	String name;
+	String code;
+	Integer keyDepartment;
+	interface "
+	public void delete();
+	public void addCurricularCourses(java.util.List<ICurricularCourse> curricularCourses);
+	public void edit(String code, String name, IDepartment department);
+	"
 }
 
 
@@ -1849,6 +1859,7 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
     Gender gender;
     IDDocumentType idDocumentType; 
 	Integer keyExternalPerson;
+	Boolean isPassInKerberos;
 	
 	interface "
     public String getSlideName();
@@ -2502,6 +2513,8 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
 				net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException, 
 				net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException, 
 				net.sourceforge.fenixedu.domain.exceptions.DomainException;
+    
+    public java.util.List initAcumulatedEnrollments(java.util.List elements);
     "
 }
 
@@ -3161,11 +3174,11 @@ relation CurricularCourseCurriculum {
 }
 
 
-relation CurricularCourseDepartmentCourse {
+relation CurricularCourseCompetenceCourse {
 	net.sourceforge.fenixedu.domain.CurricularCourse playsRole associatedCurricularCourses {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.DepartmentCourse playsRole departmentCourse;
+	net.sourceforge.fenixedu.domain.CompetenceCourse playsRole competenceCourse;
 }
 
 relation CurricularCourseEnrolment {
@@ -3343,11 +3356,11 @@ relation DelegateStudent {
 }
 
 
-relation DepartmentDepartmentCourse {
-	net.sourceforge.fenixedu.domain.DepartmentCourse playsRole disciplinasAssociadas {
+relation DepartmentCompetenceCourse {
+	net.sourceforge.fenixedu.domain.CompetenceCourse playsRole competenceCourses {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Department playsRole departamento;
+	net.sourceforge.fenixedu.domain.Department playsRole department;
 }
 
 
