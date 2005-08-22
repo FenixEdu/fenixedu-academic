@@ -394,6 +394,26 @@
 	<definition name="transfer-enrollments" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/transferEnrollments.jsp" />
 	</definition>
+	
+	<!-- ========== COMPETENCE COURSE MANAGEMENT ========== -->	
+	<definition name="df.page.showAllCompetenceCourses" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/competenceCourse/showAllCompetenceCourses_bd.jsp" />
+	</definition>	
+	<definition name="df.page.createCompetenceCourse" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/competenceCourse/createCompetenceCourse_bd.jsp" />
+	</definition>	
+	<definition name="df.page.editCompetenceCourse" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/competenceCourse/editCompetenceCourse_bd.jsp" />
+	</definition>
+	<definition name="df.page.showCompetenceCourse" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/competenceCourse/showCompetenceCourse_bd.jsp" />
+	</definition>	
+	<definition name="df.page.chooseDegreeCurricularPlan" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/competenceCourse/chooseDegreeCurricularPlan_bd.jsp" />
+	</definition>
+	<definition name="df.page.chooseCurricularCourses" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/competenceCourse/chooseCurricularCourses_bd.jsp" />
+	</definition>	
 
 	<definition name="show-enrolement-periods" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/enrolementPeriods.jsp" />

@@ -483,7 +483,30 @@
 			<form-property name="method" type="java.lang.String"/> 
 			<form-property name="someValue" type="java.lang.String" initial="O galo!"/> 
 		</form-bean>
-
+		
+	<!-- ========== COMPETENCE COURSES MANAGEMENT ========== -->	
+		<form-bean name="competenceCourseForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+			<form-property name="competenceCourseID" type="java.lang.Integer"/>
+			<form-property name="code" type="java.lang.String"/>
+			<form-property name="name" type="java.lang.String"/>
+			<form-property name="departmentID" type="java.lang.Integer"/>
+		</form-bean>		
+		<form-bean name="deleteCompetenceCoursesForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+			<form-property name="competenceCoursesIds" type="java.lang.Integer[]"/>
+			<form-property name="method" type="java.lang.String"/>			
+		</form-bean>	
+		<form-bean name="curricularCoursesCompetenceCourseForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+			<form-property name="competenceCourseID" type="java.lang.Integer"/>
+			<form-property name="curricularCoursesIds" type="java.lang.Integer[]"/>
+			<form-property name="degreeCurricularPlanID" type="java.lang.Integer"/>
+			<form-property name="method" type="java.lang.String"/>			
+		</form-bean>			
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -1636,6 +1659,39 @@
 			<forward name="createStudentCurricularPlan" path="create-student-curricular-plan"/>
 			<forward name="transferEnrollments" path="transfer-enrollments"/>
 		</action>
+		
+	<!-- ========== COMPETENCE COURSES MANAGEMENT ========== -->
+	<action path="/competenceCourseManagement"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.competenceCourses.CompetenceCourseDispatchAction"
+		parameter="method"
+		validate="true"
+		input="/competenceCourseManagement.do?method=showAllCompetences"
+		scope="request"
+		name="competenceCourseForm"
+	>
+		<forward name="showAllCompetenceCourses" path="df.page.showAllCompetenceCourses"/>         
+		<forward name="showCompetenceCourse" path="df.page.showCompetenceCourse"/>
+		<forward name="edit" path="df.page.editCompetenceCourse"/> 
+		<forward name="createCompetenceCourse" path="df.page.createCompetenceCourse"/>
+     </action>
+     
+	 <action path="/deleteCompetenceCourses"
+			parameter="method"
+			name="deleteCompetenceCoursesForm"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.competenceCourses.DeleteCompetenceCoursesAction"
+			scope="request">
+		<forward name="showAllCompetenceCourses" path="/competenceCourseManagement.do?method=showAllCompetences"/>
+     </action>
+     
+	 <action path="/curricularCoursesCompetenceCourse"
+			parameter="method"
+			name="curricularCoursesCompetenceCourseForm"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.competenceCourses.CurricularCourseCompetenceCourseDispatchAction"
+			scope="request">
+		<forward name="showCompetenceCourse" path="/competenceCourseManagement.do?method=showCompetenceCourse"/>
+		<forward name="chooseDegreeCurricularPlan" path="df.page.chooseDegreeCurricularPlan"/>
+		<forward name="chooseCurricularCourses" path="df.page.chooseCurricularCourses"/>		
+     </action>         	
 
 		<action path="/manageEnrolementPeriods"
 				parameter="method"
