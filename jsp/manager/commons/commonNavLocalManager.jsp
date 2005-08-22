@@ -5,7 +5,7 @@
 </center>
 
 <br />
-<strong>Gestão de Execuções</strong>
+<strong>Gestï¿½o de Execuï¿½ï¿½es</strong>
 <p><strong>&raquo; 
 		<html:link page="/readDegrees.do">
 			<bean:message key="label.manager.readDegrees" />
@@ -13,19 +13,19 @@
 </strong></p>
 <p><strong>&raquo; 
 	  	<html:link page="/curricularPlans/chooseCurricularPlan.faces">
-	  		Consulta de Currículo
+	  		Consulta de Currï¿½culo
 	  	</html:link>  
 </strong></p>
 
 <p><strong>&raquo; 
 	  	<html:link page="/degree/chooseDegreeType.faces">
-	  		Criação de Cursos de Execução
+	  		Criaï¿½ï¿½o de Cursos de Execuï¿½ï¿½o
 	  	</html:link>  
 </strong></p>
 
 <p><strong>&raquo; 
 	<html:link page="/manageExecutionPeriods.do?method=prepare">
-		Gest&atilde;o de Periodos Execução
+		Gest&atilde;o de Periodos Execuï¿½ï¿½o
 	</html:link>
 </strong></p>
 
@@ -36,13 +36,19 @@
 </strong></p>
 
 <p><strong>&raquo; 
+	<html:link page="/competenceCourseManagement.do?method=showAllCompetences">
+		<bean:message key="label.manager.competence.course.management" />
+	</html:link>
+</strong></p>
+
+<p><strong>&raquo; 
 	<html:link page="/manageEnrolementPeriods.do?method=prepare">
 		<bean:message key="title.manage.enrolement.period" />
 	</html:link>
 </strong></p>
 
 <br />
-<strong>Gestão de Pessoal</strong>
+<strong>Gestï¿½o de Pessoal</strong>
 <p><strong>&raquo; 
 	<html:link page="/teachersManagement.do?method=firstPage">
 		<bean:message key="link.manager.teachersManagement" />
@@ -84,25 +90,25 @@
 </strong></p>
 <p><strong>&raquo;
 	<html:link page="/gratuity/updateGratuitySituations.faces">
-		Actualizar Situações de Propina
+		Actualizar Situaï¿½ï¿½es de Propina
 	</html:link>
 </strong></p>
 
 <br />
-<strong>Gestão de Suport</strong>
+<strong>Gestï¿½o de Suport</strong>
 <p><strong>&raquo;
 	<html:link page="/manageGlossary.do?method=prepare">
-		Gestão de Glossário
+		Gestï¿½o de Glossï¿½rio
 	</html:link>
 </strong></p>
 <p><strong>&raquo;
 	<html:link page="/manageFAQs.do?method=prepare">
-		Gestão de FAQ's
+		Gestï¿½o de FAQ's
 	</html:link>
 </strong></p>
 
 <br />
-<strong>Gestão do Sistema</strong>
+<strong>Gestï¿½o do Sistema</strong>
 <p><strong>&raquo; 
 
 	<html:link page="/manageCache.do?method=prepare">
@@ -118,7 +124,7 @@
 
 <p><strong>&raquo; 
 	<html:link page="/monitorServices.do?method=monitor">
-		Monitorização de Serviços
+		Monitorizaï¿½ï¿½o de Serviï¿½os
 	</html:link>
 </strong></p>
 
@@ -130,13 +136,13 @@
 
 <p><strong>&raquo; 
 	<html:link page="/monitorUsers.do?method=monitor">
-		Monitorização de Utilizadores
+		Monitorizaï¿½ï¿½o de Utilizadores
 	</html:link>
 </strong></p>
 
 <p><strong>&raquo; 
 	<html:link page="/monitorSystem.do?method=monitor">
-		Informações do Sistema
+		Informaï¿½ï¿½es do Sistema
 	</html:link>
 </strong></p>
 
