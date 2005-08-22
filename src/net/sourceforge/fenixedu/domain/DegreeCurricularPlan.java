@@ -136,6 +136,14 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         return curricularCourses;
     }
+    
+    public ICurricularCourse getCurricularCourseByCode(String code) {
+    	for(ICurricularCourse curricularCourse: getCurricularCourses()) {
+    		if(curricularCourse.getCode().equals(code))
+    			return curricularCourse;
+    	}
+    	return null;
+    }
 
     public List getCommonAreas() {
         return (List) CollectionUtils.select(getAreas(), new Predicate() {
