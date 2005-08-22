@@ -71,7 +71,7 @@ public class Enrolment extends Enrolment_Base {
     }
 
     public void afterInsert(PersistenceBroker arg0) throws PersistenceBrokerException {
-        createNewEnrolmentLog(EnrolmentAction.ENROL, arg0);
+        //createNewEnrolmentLog(EnrolmentAction.ENROL, arg0);
     }
 
     public void afterLookup(PersistenceBroker arg0) throws PersistenceBrokerException {
@@ -118,12 +118,10 @@ public class Enrolment extends Enrolment_Base {
 	
 	
 	public void delete() {
-		
 		removeExecutionPeriod();
 		removeStudentCurricularPlan();
 		removeCurricularCourse();
 			
-		
 		Iterator<IAttends> attendsIter = getAttendsIterator();
 		while (attendsIter.hasNext()) {
 			IAttends attends = attendsIter.next();
@@ -179,8 +177,8 @@ public class Enrolment extends Enrolment_Base {
 			IEnrolmentEquivalence equivalence = equivalentEnrolment.getEnrolmentEquivalence();
 			IEnrolment enrolment = equivalence.getEnrolment();
 			
-			enrolment.delete();
 			equivalence.removeEnrolment();
+			enrolment.delete();
 			equivalentEnrolment.removeEnrolmentEquivalence();
 			
 			equivalentEnrolment.delete();
