@@ -45,7 +45,7 @@ public class RestrictionPeriodToApply extends RestrictionPeriodToApply_Base impl
             return CurricularCourseEnrollmentType.DEFINITIVE;
         }
 
-        return CurricularCourseEnrollmentType.NOT_ALLOWED;
+        return CurricularCourseEnrollmentType.NO_EVALUATE;
     }
 
 }
