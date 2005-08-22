@@ -134,34 +134,7 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
 
         return newCurricularCourses;
     }
-    
-    public boolean isCurricularCourseApproved(ICurricularCourse curricularCourse) {
 
-        final List studentApprovedEnrollments = getStudentEnrollmentsWithApprovedState();
-
-        final List result = new ArrayList(studentApprovedEnrollments.size());
-        for (int i = 0; i < studentApprovedEnrollments.size(); i++) {
-            final IEnrolment enrollment = (IEnrolment) studentApprovedEnrollments.get(i);
-            final ICurricularCourse curricularCourseFromEnrollment = enrollment.getCurricularCourse();
-            if (curricularCourse.getCurricularCourseUniqueKeyForEnrollment().equals(
-                    curricularCourseFromEnrollment.getCurricularCourseUniqueKeyForEnrollment())) {
-                return true;
-            }
-            result.add(curricularCourseFromEnrollment);
-        }
-
-        int size = result.size();
-        for (int i = 0; i < size; i++) {
-            ICurricularCourse curricularCourseDoneByStudent = (ICurricularCourse) result.get(i);
-            List curricularCourseEquivalences = getCurricularCoursesInCurricularCourseEquivalences(curricularCourseDoneByStudent);
-            if (isThisCurricularCoursesInTheList(curricularCourse, curricularCourseEquivalences)) {
-                return true;
-            }
-        }
-        
-        return false;
-    }
-    
     public CurricularCourseEnrollmentType getCurricularCourseEnrollmentType(
             ICurricularCourse curricularCourse, IExecutionPeriod currentExecutionPeriod) {
 
