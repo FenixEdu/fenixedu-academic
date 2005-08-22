@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -278,7 +279,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         }
 
         if (curricularCourseAcumulatedEnrolments.intValue() >= curricularCourse
-                .getMaximumValueForAcumulatedEnrollments().intValue()) {
+                .getMinimumValueForAcumulatedEnrollments().intValue()) {
             curricularCourseAcumulatedEnrolments = curricularCourse
                     .getMaximumValueForAcumulatedEnrollments();
         }
@@ -521,7 +522,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                 curricularCourse, currentExecutionPeriod), new Boolean(false));
     }
 
-    protected List initAcumulatedEnrollments(List elements) {
+    public List initAcumulatedEnrollments(List elements) {
 
         if (getAcumulatedEnrollmentsMap() != null) {
             List result = new ArrayList();
@@ -591,16 +592,18 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     protected boolean isThisCurricularCoursesInTheList(final ICurricularCourse curricularCourse,
             List curricularCourses) {
 
-        ICurricularCourse curricularCourseFound = (ICurricularCourse) CollectionUtils.find(
+        /*ICurricularCourse curricularCourseFound = (ICurricularCourse) CollectionUtils.find(
                 curricularCourses, new Predicate() {
                     public boolean evaluate(Object obj) {
                         ICurricularCourse curricularCourseToCompare = (ICurricularCourse) obj;
                         return curricularCourseToCompare.getCurricularCourseUniqueKeyForEnrollment()
                                 .equals(curricularCourse.getCurricularCourseUniqueKeyForEnrollment());
                     }
-                });
+                });*/
+    	
+    	Collection result = CollectionUtils.intersection(curricularCourse.getCompetenceCourse().getAssociatedCurricularCourses(), curricularCourses);
 
-        return (curricularCourseFound != null);
+        return (!result.isEmpty());
     }
 
     protected List getStudentEnrollmentsWithApprovedState() {
