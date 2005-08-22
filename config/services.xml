@@ -9,7 +9,7 @@
 	</service>
 	<service>
 		<name>Autenticacao</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.Authenticate</implementationClass>
+		<implementationClass>@authenticationService@</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
@@ -2246,7 +2246,7 @@
 	</service>
 	<service>
 		<name>ChangePassword</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePassword</implementationClass>
+		<implementationClass>@changePassService@</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -8573,7 +8573,7 @@
             <chain name="StudentOrMasterDegreeAdministrativeOfficeAuthorization"/>
         </filterChains>
     </service>
-    <service>
+	<service>
     	<name>ReadShiftsToEnroll</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.ReadShiftsToEnroll</implementationClass>
         <description></description>
@@ -8661,7 +8661,7 @@
 		<isTransactional>true</isTransactional>
 		<filterChains>
 		</filterChains>
-	</service>
+	</service> 
 	<service>
 		<name>ReadEnrolmentPeriods</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadEnrolmentPeriods</implementationClass>
@@ -8669,5 +8669,68 @@
 		<isTransactional>true</isTransactional>
 		<filterChains>
 		</filterChains>
-	</service>
+	</service>      
+    <service>
+    	<name>AssociateCurricularCoursesToCompetenceCourse</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCourseManagement.AssociateCurricularCoursesToCompetenceCourse</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+    	<name>CreateEditCompetenceCourse</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCourseManagement.CreateEditCompetenceCourse</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+    	<name>DeleteCompetenceCourses</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCourseManagement.DeleteCompetenceCourses</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>
+    </service>        
+    <service>
+    	<name>ReadAllCompetenceCourses</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCourseManagement.ReadAllCompetenceCourses</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>        
+    </service>    
+    <service>
+    	<name>ReadAllCurricularCoursesByCompetenceCourse</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCourseManagement.ReadAllCurricularCoursesByCompetenceCourse</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>        
+    </service>        
+    <service>
+    	<name>RemoveCurricularCoursesFromCompetenceCourse</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCourseManagement.RemoveCurricularCoursesFromCompetenceCourse</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>        
+    </service>       
+    <service>
+    	<name>ReadCompetenceCourse</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCourseManagement.ReadCompetenceCourse</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>        
+    </service>                     
 </serviceDefinitions>
