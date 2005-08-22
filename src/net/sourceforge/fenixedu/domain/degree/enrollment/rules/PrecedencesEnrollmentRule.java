@@ -54,8 +54,10 @@ public class PrecedencesEnrollmentRule implements IEnrollmentRule {
                     evaluate = evaluate.or(precedence.evaluate(precedenceContext));
                 }
 
-                curricularCourse2Enroll.setEnrollmentType(evaluate.and(curricularCourse2Enroll
-                        .getEnrollmentType()));
+                if(!evaluate.equals(CurricularCourseEnrollmentType.NO_EVALUATE)) {
+	                curricularCourse2Enroll.setEnrollmentType(evaluate.and(curricularCourse2Enroll
+	                        .getEnrollmentType()));	                
+                }
                 curricularCourses2Enroll.add(curricularCourse2Enroll);
             }
         }
