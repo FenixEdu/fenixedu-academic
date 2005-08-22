@@ -5,7 +5,7 @@
 </center>
 
 <br />
-<strong>Gestï¿½o de Execuï¿½ï¿½es</strong>
+<strong>Gestão de Execuções</strong>
 <p><strong>&raquo; 
 		<html:link page="/readDegrees.do">
 			<bean:message key="label.manager.readDegrees" />
@@ -13,19 +13,19 @@
 </strong></p>
 <p><strong>&raquo; 
 	  	<html:link page="/curricularPlans/chooseCurricularPlan.faces">
-	  		Consulta de Currï¿½culo
+	  		Consulta de Currículo
 	  	</html:link>  
 </strong></p>
 
 <p><strong>&raquo; 
 	  	<html:link page="/degree/chooseDegreeType.faces">
-	  		Criaï¿½ï¿½o de Cursos de Execuï¿½ï¿½o
+	  		Criação de Cursos de Execução
 	  	</html:link>  
 </strong></p>
 
 <p><strong>&raquo; 
 	<html:link page="/manageExecutionPeriods.do?method=prepare">
-		Gest&atilde;o de Periodos Execuï¿½ï¿½o
+		Gestão de Periodos Execução
 	</html:link>
 </strong></p>
 
@@ -48,7 +48,7 @@
 </strong></p>
 
 <br />
-<strong>Gestï¿½o de Pessoal</strong>
+<strong>Gestão de Pessoal</strong>
 <p><strong>&raquo; 
 	<html:link page="/teachersManagement.do?method=firstPage">
 		<bean:message key="link.manager.teachersManagement" />
@@ -90,41 +90,41 @@
 </strong></p>
 <p><strong>&raquo;
 	<html:link page="/gratuity/updateGratuitySituations.faces">
-		Actualizar Situaï¿½ï¿½es de Propina
+		Actualizar Situações de Propina
 	</html:link>
 </strong></p>
 
 <br />
-<strong>Gestï¿½o de Suport</strong>
+<strong>Gestão de Suport</strong>
 <p><strong>&raquo;
 	<html:link page="/manageGlossary.do?method=prepare">
-		Gestï¿½o de Glossï¿½rio
+		Gestão de Glossário
 	</html:link>
 </strong></p>
 <p><strong>&raquo;
 	<html:link page="/manageFAQs.do?method=prepare">
-		Gestï¿½o de FAQ's
+		Gestão de FAQ's
 	</html:link>
 </strong></p>
 
 <br />
-<strong>Gestï¿½o do Sistema</strong>
+<strong>Gestão do Sistema</strong>
 <p><strong>&raquo; 
 
 	<html:link page="/manageCache.do?method=prepare">
-		Gest&atilde;o da Cache
+		Gestão da Cache
 	</html:link>
 </strong></p>
 
 <p><strong>&raquo; 
 	<html:link page="/manageAdvisories.do?method=prepare">
-		Gest&atilde;o da Avisos
+		Gestão da Avisos
 	</html:link>
 </strong></p>
 
 <p><strong>&raquo; 
 	<html:link page="/monitorServices.do?method=monitor">
-		Monitorizaï¿½ï¿½o de Serviï¿½os
+		Monitorização de Serviços
 	</html:link>
 </strong></p>
 
@@ -136,13 +136,13 @@
 
 <p><strong>&raquo; 
 	<html:link page="/monitorUsers.do?method=monitor">
-		Monitorizaï¿½ï¿½o de Utilizadores
+		Monitorização de Utilizadores
 	</html:link>
 </strong></p>
 
 <p><strong>&raquo; 
 	<html:link page="/monitorSystem.do?method=monitor">
-		Informaï¿½ï¿½es do Sistema
+		Informações do Sistema
 	</html:link>
 </strong></p>
 
