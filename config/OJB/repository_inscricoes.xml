@@ -135,8 +135,8 @@
 		autoincrement="true"
 	/>
 	<field-descriptor
-		name="departmentCourseKey"
-		column="KEY_DEPARTMENT_COURSE"
+		name="keyCompetenceCourse"
+		column="KEY_COMPETENCE_COURSE"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
@@ -279,10 +279,10 @@
 		<foreignkey field-ref="universityKey"/> 
 	</reference-descriptor>
 	<reference-descriptor auto-retrieve="false"
-			name="departmentCourse"
-			class-ref="net.sourceforge.fenixedu.domain.DepartmentCourse"
+			name="competenceCourse"
+			class-ref="net.sourceforge.fenixedu.domain.CompetenceCourse"
 			>
-		<foreignkey field-ref="departmentCourseKey"/> 
+		<foreignkey field-ref="keyCompetenceCourse"/> 
 	</reference-descriptor>
     <reference-descriptor auto-retrieve="false"
 			name="degreeCurricularPlan"
@@ -897,7 +897,7 @@
       <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 		name="creditsInScientificAreas" 
 		element-class-ref="net.sourceforge.fenixedu.domain.CreditsInScientificArea"
-
+		
 		>
 		<inverse-foreignkey field-ref="scientificAreaKey"/>
 	  </collection-descriptor>
