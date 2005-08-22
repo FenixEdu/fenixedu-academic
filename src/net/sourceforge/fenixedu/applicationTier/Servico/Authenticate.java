@@ -37,9 +37,9 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class Authenticate implements IService, Serializable {
 
-    private static final Logger logger = Logger.getLogger(Authenticate.class);
+    protected static final Logger logger = Logger.getLogger(Authenticate.class);
 
-    private static final Map allowedRolesByHostname = new HashMap();
+    protected static final Map allowedRolesByHostname = new HashMap();
 
     static {
         final String propertiesFilename = "/.authenticationServiceHostnamesFiltering.properties";
@@ -68,7 +68,7 @@ public class Authenticate implements IService, Serializable {
         }
     }
 
-    private class UserView implements IUserView {
+    protected class UserView implements IUserView {
 
         final private String utilizador;
 
@@ -127,14 +127,14 @@ public class Authenticate implements IService, Serializable {
         if (person == null || !PasswordEncryptor.areEquals(person.getPassword(), password)) {
             throw new ExcepcaoAutenticacao("bad.authentication");
         }
-
+        
         final Set allowedRoles = getAllowedRolesByHostname(requestURL);
         final UserView userView = getUserView(person, allowedRoles);
 
         return userView;
     }
 
-    private UserView getUserView(final IPerson person, final Set allowedRoles) {
+    protected UserView getUserView(final IPerson person, final Set allowedRoles) {
         final Collection infoRoles = getInfoRoles(person.getUsername(), person.getPersonRoles(),
                 allowedRoles);
 
