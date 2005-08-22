@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
+ * @author <a href="mailto:joao.mota@ist.utl.pt">Joï¿½o Mota </a>
  */
 public class ReadAllDepartments implements IService {
     public ReadAllDepartments() {
@@ -35,7 +35,7 @@ public class ReadAllDepartments implements IService {
             List infoDepartments = new ArrayList();
             while (iter.hasNext()) {
                 IDepartment department = (IDepartment) iter.next();
-                InfoDepartment infoDepartment = Cloner.copyIDepartment2InfoDepartment(department);
+                InfoDepartment infoDepartment = InfoDepartment.newInfoFromDomain(department);
                 infoDepartments.add(infoDepartment);
             }
             return infoDepartments;
