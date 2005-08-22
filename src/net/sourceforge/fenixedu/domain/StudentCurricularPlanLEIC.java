@@ -5,14 +5,19 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 /**
  * @author Jo�o Mota
@@ -177,9 +182,69 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
             }
         }
     }
-	
+    
+    
+    protected List getCommonBranchAndStudentBranchesCourses(IExecutionPeriod executionPeriod) {
+
+        HashSet curricularCourses = new HashSet();
+        IDegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
+        List commonAreas = degreeCurricularPlan.getCommonAreas();
+        int commonAreasSize = commonAreas.size();
+
+        for (int i = 0; i < commonAreasSize; i++) {
+            IBranch area = (IBranch) commonAreas.get(i);
+            curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(area,
+                    AreaType.BASE));
+        }
+
+        if (getBranch() != null) {
+            curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(getBranch(),
+                    AreaType.SPECIALIZATION));
+        }
+
+        if (getSecundaryBranch() != null) {
+            curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(
+                    getSecundaryBranch(), AreaType.SECONDARY));
+        }
+
+        curricularCourses.addAll(degreeCurricularPlan.getTFCs());
+        
+        List<ICurricularCourseGroup> optionalCurricularCourseGroups = degreeCurricularPlan.getAllOptionalCurricularCourseGroups();
+        for (ICurricularCourseGroup curricularCourseGroup : optionalCurricularCourseGroups) {
+			List<ICurricularCourse> optionalCurricularCourses = curricularCourseGroup.getCurricularCourses();
+			curricularCourses.addAll(optionalCurricularCourses);
+		}
+
+        List allCurricularCourses = new ArrayList(curricularCourses.size());
+        allCurricularCourses.addAll(curricularCourses);
+
+        List result = new ArrayList();
+        int curricularCoursesSize = curricularCourses.size();
+
+        for (int i = 0; i < curricularCoursesSize; i++) {
+            ICurricularCourse curricularCourse = (ICurricularCourse) allCurricularCourses.get(i);
+            result.add(transformToCurricularCourse2Enroll(curricularCourse, executionPeriod));
+        }
+
+        List elementsToRemove = (List) CollectionUtils.select(result, new Predicate() {
+            public boolean evaluate(Object obj) {
+                CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) obj;
+                return curricularCourse2Enroll.getEnrollmentType().equals(
+                        CurricularCourseEnrollmentType.NOT_ALLOWED)
+                        || !curricularCourse2Enroll.getCurricularCourse().getEnrollmentAllowed()
+                                .booleanValue();
+            }
+        });
+
+        result.removeAll(elementsToRemove);
+
+        return result;
+    }
+    
+    	
 	public void delete() throws DomainException {
 		removeSecundaryBranch();
 		super.delete();
 	}
+    
 }
