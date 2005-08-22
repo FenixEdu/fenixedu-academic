@@ -401,10 +401,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new DepartmentOJB();
     }
 
-    public IDisciplinaDepartamentoPersistente getIDisciplinaDepartamentoPersistente() {
-        return new DisciplinaDepartamentoOJB();
-    }
-
     public IPersistentDegreeCurricularPlan getIPersistentDegreeCurricularPlan() {
         return new DegreeCurricularPlanOJB();
     }
@@ -1330,7 +1326,12 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new AuthorshipOJB();
     }
 
-    public IPersistentNotNeedToEnrollInCurricularCourse getIPersistentNotNeedToEnrollInCurricularCourse() {
+	public IPersistentCompetenceCourse getIPersistentCompetenceCourse() {
+		return new CompetenceCourseOJB();
+	}
+	
+	public IPersistentNotNeedToEnrollInCurricularCourse getIPersistentNotNeedToEnrollInCurricularCourse() {
         return new NotNeedToEnrollInCurricularCourseOJB();
     }
+
 }

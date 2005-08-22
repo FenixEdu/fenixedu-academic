@@ -137,8 +137,6 @@ public interface ISuportePersistente {
 
     public IPersistentDepartment getIDepartamentoPersistente();
 
-    public IDisciplinaDepartamentoPersistente getIDisciplinaDepartamentoPersistente();
-
     public IPersistentDegreeCurricularPlan getIPersistentDegreeCurricularPlan();
 
     public IPersistentStudentCurricularPlan getIStudentCurricularPlanPersistente();
@@ -488,6 +486,8 @@ public interface ISuportePersistente {
     public IPersistentNonAffiliatedTeacher getIPersistentNonAffiliatedTeacher();
     
     public IPersistentAuthorship getIPersistentAuthorship();
+    
+    public IPersistentCompetenceCourse getIPersistentCompetenceCourse();
     
     public IPersistentNotNeedToEnrollInCurricularCourse getIPersistentNotNeedToEnrollInCurricularCourse();
 }

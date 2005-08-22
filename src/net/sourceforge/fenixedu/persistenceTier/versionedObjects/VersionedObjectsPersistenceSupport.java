@@ -383,10 +383,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
         return null;
     }
 
-    public IDisciplinaDepartamentoPersistente getIDisciplinaDepartamentoPersistente() {
-        return null;
-    }
-
     public IPersistentSeminaryModality getIPersistentSeminaryModality() {
         return new ModalityVO();
     }
@@ -982,8 +978,13 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 	public IPersistentAuthorship getIPersistentAuthorship() {
         return new AuthorshipVO();
     }
-   
-    public IPersistentNotNeedToEnrollInCurricularCourse getIPersistentNotNeedToEnrollInCurricularCourse() {
+
+	public IPersistentCompetenceCourse getIPersistentCompetenceCourse() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public IPersistentNotNeedToEnrollInCurricularCourse getIPersistentNotNeedToEnrollInCurricularCourse() {
         return new NotNeedToEnrollInCurricularCourseVO();
     }
 }
