@@ -1860,6 +1860,7 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
     IDDocumentType idDocumentType; 
 	Integer keyExternalPerson;
 	Boolean isPassInKerberos;
+	String istUsername;
 	
 	interface "
     public String getSlideName();
