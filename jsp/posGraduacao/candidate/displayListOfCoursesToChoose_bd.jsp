@@ -167,7 +167,7 @@
 		            			<logic:iterate id="curricularCourseScope" name="curricularCourseElem"  indexId="scopeID" property="infoScopes" 
 		            						    offset="<%= new String(offset) %>" length="<%= String.valueOf(ccsSize.intValue() - Integer.parseInt(offset)) %>">
 		                						<html:multibox property="selection">
-		                    						<bean:write name="curricularCourseScope" property="infoCurricularCourse.idInternal"/>
+		                    						<bean:write name="curricularCourseElem" property="idInternal"/>
 		                						</html:multibox>
 		               							<bean:write name="curricularCourseScope" property="infoBranch.name"/> <br/>
 								</logic:iterate>	

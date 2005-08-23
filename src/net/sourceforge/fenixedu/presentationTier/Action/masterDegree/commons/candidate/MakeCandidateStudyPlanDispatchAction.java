@@ -2,8 +2,10 @@ package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.commons.ca
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,6 +30,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NotAuthorizedActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.SituationName;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -43,7 +46,7 @@ import org.apache.struts.util.LabelValueBean;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * 
- *  
+ * 
  */
 public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
 
@@ -52,8 +55,8 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
      * @param form
      * @param request
      * @param response
-     * @return @throws
-     *         Exception
+     * @return
+     * @throws Exception
      */
     public ActionForward prepareSelectCandidates(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -70,15 +73,16 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
             infoExecutionDegree = (InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan) ServiceUtils
                     .executeService(userView, "ReadExecutionDegreeByDegreeCurricularPlanID", args);
         } catch (NonExistingServiceException e) {
-            errors.add("nonExisting", new ActionError("error.exception.masterDegree.nonExistingExecutionDegree"));
+            errors.add("nonExisting", new ActionError(
+                    "error.exception.masterDegree.nonExistingExecutionDegree"));
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
-        
-        if (infoExecutionDegree == null) {
-            errors.add("nonExisting", new ActionError("error.exception.masterDegree.nonExistingExecutionDegree"));
-        }
 
+        if (infoExecutionDegree == null) {
+            errors.add("nonExisting", new ActionError(
+                    "error.exception.masterDegree.nonExistingExecutionDegree"));
+        }
 
         String degree = getFromRequest("degree", request);
         Integer executionDegree = infoExecutionDegree.getIdInternal();
@@ -107,12 +111,12 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
             errors.add("nonExisting", new ActionError(
                     "error.masterDegree.administrativeOffice.nonExistingAdmitedCandidates"));
             saveErrors(request, errors);
-            //return mapping.getInputForward();
+            // return mapping.getInputForward();
 
         } catch (ExistingServiceException e) {
             throw new ExistingActionException(e);
         }
-        
+
         if (!errors.isEmpty()) {
             saveErrors(request, errors);
             return mapping.getInputForward();
@@ -134,8 +138,8 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
      * @param form
      * @param request
      * @param response
-     * @return @throws
-     *         Exception
+     * @return
+     * @throws Exception
      */
     public ActionForward prepareSecondChooseMasterDegree(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -173,8 +177,8 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
         }
 
         // Collections.sort(
-        //    masterDegreeList,
-        //   new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
+        // masterDegreeList,
+        // new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
         Collections.sort(masterDegreeList, new ComparatorByNameForInfoExecutionDegree());
         List newDegreeList = masterDegreeList;
         List executionDegreeLabels = buildExecutionDegreeLabelValueBean(newDegreeList);
@@ -188,8 +192,8 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
      * @param form
      * @param request
      * @param response
-     * @return @throws
-     *         Exception
+     * @return
+     * @throws Exception
      */
     public ActionForward chooseMasterDegree(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -213,8 +217,8 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
      * @param form
      * @param request
      * @param response
-     * @return @throws
-     *         Exception
+     * @return
+     * @throws Exception
      */
     public ActionForward prepareSelectCourseList(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -225,7 +229,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
 
         String executionYear = getFromRequest("executionYear", request);
         Integer degreeCurricularPlanID = null;
-        if(request.getParameter("degreeCurricularPlanID") != null){
+        if (request.getParameter("degreeCurricularPlanID") != null) {
             degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
@@ -284,7 +288,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
         initForm(request, chooseCurricularCoursesForm, candidateID, curricularCourseList,
                 candidateEnrolments);
 
-        //    orderCourseList(curricularCourseList);
+        // orderCourseList(curricularCourseList);
 
         orderCandidateEnrolments(candidateEnrolments);
 
@@ -314,8 +318,8 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
         request.setAttribute("infoExecutionDegree", infoExecutionDegree);
 
         //
-        //		generateToken(request);
-        //		saveToken(request);
+        // generateToken(request);
+        // saveToken(request);
 
         return mapping.findForward("PrepareSuccess");
     }
@@ -354,7 +358,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
             for (int i = 0; i < selection.length; i++) {
                 if (i < candidateEnrolments.size()) {
                     selection[i] = ((InfoCandidateEnrolment) candidateEnrolments.get(i))
-                    //.getInfoCurricularCourseScope()
+                    // .getInfoCurricularCourseScope()
                             .getInfoCurricularCourse().getIdInternal();
                 } else {
                     selection[i] = null;
@@ -371,54 +375,46 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
         chooseCurricularCoursesForm.set("selection", selection);
     }
 
-    //    /**
-    //	 * @param curricularCourseList
-    //	 */
-    //    private void orderCourseList(List curricularCourseList)
-    //    {
-    //        BeanComparator nameCourse = new BeanComparator("name");
-    //        Collections.sort(curricularCourseList, nameCourse);
+    // /**
+    // * @param curricularCourseList
+    // */
+    // private void orderCourseList(List curricularCourseList)
+    // {
+    // BeanComparator nameCourse = new BeanComparator("name");
+    // Collections.sort(curricularCourseList, nameCourse);
     //
-    //        Iterator iterator = curricularCourseList.iterator();
-    //        while (iterator.hasNext())
-    //        {
-    //            InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse)
+    // Iterator iterator = curricularCourseList.iterator();
+    // while (iterator.hasNext())
+    // {
+    // InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse)
     // iterator.next();
-    //            List scopes = infoCurricularCourse.getInfoScopes();
+    // List scopes = infoCurricularCourse.getInfoScopes();
     //
-    //            BeanComparator branchName = new BeanComparator("infoBranch.name");
-    //            Collections.sort(scopes, branchName);
-    //        }
-    //    }
+    // BeanComparator branchName = new BeanComparator("infoBranch.name");
+    // Collections.sort(scopes, branchName);
+    // }
+    // }
 
     /**
      * @param mapping
      * @param form
      * @param request
      * @param response
-     * @return @throws
-     *         Exception
+     * @return
+     * @throws Exception
      */
 
     public ActionForward chooseCurricularCourses(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-
-        //		if (!isTokenValid(request)){
-        //			return mapping.findForward("BackError");
-        //		} else {
-        //			generateToken(request);
-        //			saveToken(request);
-        //		}
+        IUserView userView = SessionUtils.getUserView(request);
 
         DynaActionForm chooseCurricularCoursesForm = (DynaActionForm) form;
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer[] selection = (Integer[]) chooseCurricularCoursesForm.get("selection");
-
         Integer degreeCurricularPlanID = (Integer) chooseCurricularCoursesForm
                 .get("degreeCurricularPlanID");
+
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
         if (!validChoice(selection)) {
@@ -437,10 +433,12 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
         }
 
         String givenCreditsRemarks = (String) chooseCurricularCoursesForm.get("givenCreditsRemarks");
+        
+        Set<Integer> selectedCurricularCourses = convertIntegerArrayToSet(selection);
 
         try {
 
-            Object args[] = { selection, candidateID, attributedCredits, givenCreditsRemarks };
+            Object args[] = { selectedCurricularCourses, candidateID, attributedCredits, givenCreditsRemarks };
             ServiceManagerServiceFactory.executeService(userView, "WriteCandidateEnrolments", args);
         } catch (NotAuthorizedException e) {
             throw new NotAuthorizedActionException(e);
@@ -488,6 +486,14 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
         request.setAttribute("candidateID", candidateID);
 
         return mapping.findForward("ChooseSuccess");
+    }
+
+    private Set<Integer> convertIntegerArrayToSet(Integer[] values) {
+        Set<Integer> selectedCurricularCourses = new HashSet<Integer>();
+        for (int i = 0; i < values.length; i++) {
+            selectedCurricularCourses.add(values[i]);
+        }
+        return selectedCurricularCourses;
     }
 
     /**

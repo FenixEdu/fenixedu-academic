@@ -134,6 +134,13 @@
 	         <!---->
          </collection-descriptor>
 
+         <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	         name="candidateEnrolments"
+	         element-class-ref="net.sourceforge.fenixedu.domain.CandidateEnrolment"
+			>
+           <inverse-foreignkey field-ref="masterDegreeCandidateKey"/>
+	         <!---->
+         </collection-descriptor>
      	
 	</class-descriptor>
 
