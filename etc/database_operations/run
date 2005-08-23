@@ -85,6 +85,7 @@ mysql -u$2 -f $1 < enumerationUpdates.sql
 mysql -u$2 -f $1 < fixSentSms.sql
 mysql -u$2 -f $1 < fixOnlineTestPackageName.sql
 mysql -u$2 -f $1 < AlterTablePublicationDropDidatic.sql
+mysql -u$2 -f $1 < AlterTablePersonISTUsername.sql
 
 # ?????
 mysql -u$2 -f $1 < FixItemOrder.sql
