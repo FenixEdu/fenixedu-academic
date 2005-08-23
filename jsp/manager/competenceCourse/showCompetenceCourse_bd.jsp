@@ -30,7 +30,7 @@
 	<tr>
 		<td class="listClasses-header"><bean:message key="label.manager.degree.code" />
 		</td>
-		<td class="listClasses-header"><bean:message key="label.manager.degree.name" />
+		<td class="listClasses-header"><bean:message key="message.degreeName" />
 		</td>
 		<td class="listClasses-header"><bean:message key="label.manager.department" />
 		</td>
