@@ -2277,11 +2277,6 @@ class net.sourceforge.fenixedu.domain.SchoolClass extends net.sourceforge.fenixe
 	"
 }
 
-class net.sourceforge.fenixedu.domain.SchoolClassShift extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer chaveTurma;
-	Integer chaveTurno;
-}
-
 class net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent extends net.sourceforge.fenixedu.domain.DomainObject {
     String reasonDescription;
     Integer keyStudent;
