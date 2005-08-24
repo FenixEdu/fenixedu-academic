@@ -95,7 +95,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
                 professorships.addAll(teacherProfessorships);
             }
 
-            List teacherResponsibleFors = null;
+            List teacherResponsibleFors = new ArrayList();
             List<IProfessorship> teacherResponsibleForsAux = null;
             
             if (executionYear == null) {
