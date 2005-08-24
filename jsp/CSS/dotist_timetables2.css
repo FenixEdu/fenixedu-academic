@@ -1,4 +1,4 @@
-.timetable{
+.timetable2 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: #003333;
 	text-decoration: bold;
@@ -8,7 +8,7 @@
 	border-style: solid;
 }
 
-.timetable tr{
+.timetable2 tr {
 	font-size: 9px;
 	color: #003333;
 	font-weight:bold;
@@ -16,7 +16,7 @@
 	text-align: left;
 }
 
-.timetable th{
+.timetable2 th {
 	font-size: 11px;
 	color: #333333;
 	background-color: #999999;
@@ -30,26 +30,26 @@
 	border-right-width: 1.5px
 }
 
-.period-first-slot{
+.period-first-slot {
 	border-width: 1.5px;
 	border-style: solid;
 	border-top-style:solid;
 	border-bottom-style:none;
 }
 
-.period-middle-slot{
+.period-middle-slot { 
 	border-width: 1.5px;
 	border-right-style: solid;
 	border-left-style: solid;
 }
 
-.period-last-slot{
+.period-last-slot {
 	border-width: 1.5px;
 	border-style: solid;
 	border-top-style:none;
 }
 
-.period-empty-slot{
+.period-empty-slot {
 	border-width: 1px;
 	border-top-style: dashed;
 	border-left-style: solid;
@@ -57,7 +57,7 @@
 }
 
 .period-hours {
-	font-size: 10px; /*changed from 11px to 10px*/
+	font-size: 10px;
 	color: #333333;
 	background-color: #999999;
 	text-align: center;
@@ -66,18 +66,16 @@
 	border-style:solid;
 	border-width: 1px;
 	border-left-width: 1px;
-	border-right-width: 2px
+	border-right-width: 1px
 }
 
-.timetable a{
+.timetable2 a {
 	color: #003333;
 	font-weight: bold;
 	font-size: 9px;	
 	border-style:none;
 }
 
-table.timetable tr td.period-last-slot img {
-float: right;
-border: none;
-padding: 2px;
+table.bottom {
+margin-top: 2em;
 }

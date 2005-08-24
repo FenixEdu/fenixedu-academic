@@ -2,7 +2,10 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+
+<style>@import url(/ciapl/CSS/navlateralnew.css);</style> <!-- Import new CSS for this section: #navlateral  -->
 <ul>
+	<li class="navheader">Turmas</li>
 	<logic:iterate id="infoClass" name="infoClassList">
 		<bean:define id="infoClassId" name="infoClass" property="idInternal"/>
 		<bean:define id="infoClassName" name="infoClass" property="nome"/>
@@ -18,7 +21,7 @@
 					</html:link>
 				</logic:notEqual>
 				<logic:equal name="infoClassId" value="<%= classIdSelected.toString() %>"> 
-					<b><bean:message key="label.class" />&nbsp;<bean:write name="infoClass" property="nome" /></b>			
+					<span><bean:message key="label.class" />&nbsp;<bean:write name="infoClass" property="nome" /></span>	
 				</logic:equal>
 			</logic:present>			
 			<logic:notPresent name="classId" >
@@ -28,12 +31,6 @@
 			</logic:notPresent>						
 		</li>
 	</logic:iterate> 
-	
-	<p>
-	<li>
-		<html:link href="<%= request.getContextPath() + "/dotIstPortal.do?prefix=/student&amp;page=/index.do" %>">
-			<bean:message key="label.Terminar" />
-		</html:link>	
-	</li>
-	</p>
+	<br />
+	<li><html:link page="/studentShiftEnrollmentManager.do?method=start"><bean:message key="button.back" /></html:link></li>
 </ul>

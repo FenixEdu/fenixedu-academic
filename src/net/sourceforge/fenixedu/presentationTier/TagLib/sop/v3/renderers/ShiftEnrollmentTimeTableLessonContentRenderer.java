@@ -55,7 +55,7 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
             InfoLesson lesson = (InfoLesson) showOccupation;
             strBuffer.append(getURL(lesson));
             strBuffer.append("<img border=\"0\" src=\"").append(getApplication()).append(
-                    "/images/").append(getImage()).append("\"/>").append("</a>");
+                    "/images/").append(getImage()).append("/>").append("</a>");
             return strBuffer;
         }
         return strBuffer.append("");
@@ -67,9 +67,9 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
     private Object getImage() {
         StringBuffer strBuffer = new StringBuffer();
         if(getAction().equalsIgnoreCase("add")){
-            strBuffer.append("add.gif");
+            strBuffer.append("add1.gif\" title=\"Adicionar\"");
         }else if (getAction().equalsIgnoreCase("remove")){
-            strBuffer.append("remove.gif");
+            strBuffer.append("remove1.gif\" title=\"Remover\"");
         }
         return strBuffer;
     }

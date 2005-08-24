@@ -21,7 +21,7 @@
 		<li>Alunos cuja inscrição é efectuada pelo Coordenador de Licenciatura/Tutor</li>
 		<li>Alunos com processos de Equivalência em curso</li>
 	</ul>
-	<li><html:link page="<%= "/studentShiftEnrollmentManager.do?method=start&selectCourses=true" %>"><bean:message key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse.link" /></html:link> <bean:message key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse" /></li>
+	<li><bean:message key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse" /> <html:link page="<%= "/studentShiftEnrollmentManager.do?method=start&selectCourses=true" %>"><bean:message key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse.link" /></html:link></li>
 </ul>
 </div>
 

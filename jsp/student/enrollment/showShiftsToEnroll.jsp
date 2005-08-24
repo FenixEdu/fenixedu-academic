@@ -13,14 +13,30 @@
 <bean:define id="classId" name="classId"/>
 
 <bean:define id="infoClasslessons" name="infoClasslessons"/>	
-		
-<h2 class="redtxt" style="text-align:left"><bean:message key="label.class" />&nbsp;<bean:write name="infoClass" property="nome"/></h2>
 
-<div class="px9"><bean:message key="message.shif.type.help" /></div>
+<h2><bean:message key="message.showShiftsToEnroll.title" /></h2>
+
+<div class="infoselected">		
+<bean:message key="message.showShiftsToEnroll.instructions0" />
+	<ul>
+	<li><bean:message key="message.showShiftsToEnroll.instructions1" /> <img src="<%= request.getContextPath() + "/images/add1.gif" %>" /> <bean:message key="message.showShiftsToEnroll.instructions2" /> <img src="<%= request.getContextPath() + "/images/remove1.gif" %>" /> <bean:message key="message.showShiftsToEnroll.instructions3" /></li>
+	<li><bean:message key="message.showShiftsToEnroll.instructions4" /></li>
+	</ul>
+</div>
+
+<h2 class="redtxt"><bean:message key="label.class" /> <bean:write name="infoClass" property="nome"/></h2>
+
 <app:gerarHorario name="infoClasslessons" type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>" studentID="<%= studentId.toString() %>"
 	application="<%= request.getContextPath() %>" classID="<%= classId.toString() %>" action="add"/>
 	
-<br/><br/>
+<br/>
+<p><strong><bean:message key="message.showShiftsToEnroll.actual.timetable" /></strong></p>
+
 	
 <app:gerarHorario name="infoLessons" type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>" studentID="<%= studentId.toString() %>"
 	application="<%= request.getContextPath() %>" classID="<%= classId.toString() %>" action="remove"/>
+
+<br />
+<ul>
+<li><html:link page="/studentShiftEnrollmentManager.do?method=start"><strong><bean:message key="button.finish" /></strong></html:link></li>
+</ul>
