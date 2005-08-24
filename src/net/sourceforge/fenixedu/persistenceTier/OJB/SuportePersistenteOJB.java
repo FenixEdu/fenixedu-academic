@@ -183,23 +183,17 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimburs
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentSmsTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransaction;
 
+import net.sourceforge.fenixedu.stm.Transaction;
+
+
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.metadata.DescriptorRepository;
-import org.apache.ojb.odmg.HasBroker;
-import org.apache.ojb.odmg.OJB;
-import org.odmg.Database;
-import org.odmg.Implementation;
-import org.odmg.ODMGException;
-import org.odmg.ODMGRuntimeException;
-import org.odmg.Transaction;
 
 import pt.utl.ist.berserk.storage.ITransactionBroker;
 import pt.utl.ist.berserk.storage.exceptions.StorageException;
 
 public class SuportePersistenteOJB implements ISuportePersistente, ITransactionBroker {
-    Implementation _odmg = null;
-
     private static SuportePersistenteOJB _instance = null;
 
     private static HashMap descriptorMap = null;
@@ -213,16 +207,8 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return (DescriptorRepository) descriptorMap.get(hashName);
     }
 
-    protected Implementation getImplementation() {
-        return _odmg;
-    }
-
-    public Transaction getCurrentTransaction() {
-        return _odmg.currentTransaction();
-    }
-
-    public static PersistenceBroker getCurrentPersistenceBroker() throws ExcepcaoPersistencia {
-        return ((HasBroker) getInstance().getCurrentTransaction()).getBroker();
+    public static PersistenceBroker getCurrentPersistenceBroker() {
+        return Transaction.getOJBBroker();
     }
 
 
@@ -232,12 +218,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
      * @see ServidorPersistente.ISuportePersistente#clearCache()
      */
     public void clearCache() {
-        if (_odmg != null) {
-            HasBroker hasBroker = ((HasBroker) _odmg.currentTransaction());
-            if (hasBroker != null) {
-                hasBroker.getBroker().clearCache();
-            }
-        }
+	getCurrentPersistenceBroker().clearCache();
     }
 
     /*
@@ -269,72 +250,22 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
     }
 
     /** Creates a new instance of SuportePersistenteOJB */
-    private SuportePersistenteOJB() throws ExcepcaoPersistencia {
-        init();
-    }
-
-    private void init() throws ExcepcaoPersistencia {
-
-        _odmg = OJB.getInstance();
-        try {
-            openDatabase();
-        } catch (ODMGException e) {
-            throw new ExcepcaoPersistencia();
-        }
+    private SuportePersistenteOJB() {
     }
 
     protected void finalize() throws Throwable {
     }
 
-    public void iniciarTransaccao() throws ExcepcaoPersistencia {
-        try {
-            openDatabase();
-            Transaction tx = _odmg.newTransaction();
-            tx.begin();
-        } catch (ODMGException ex1) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.OPEN_DATABASE, ex1);
-        } catch (ODMGRuntimeException ex) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.BEGIN_TRANSACTION, ex);
-        }
+    public void iniciarTransaccao() {
+	Transaction.begin();
     }
 
-    private void openDatabase() throws ODMGException {
-        Database db = _odmg.getDatabase(null);
-        if (db == null) {
-            db = _odmg.newDatabase();
-            db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
-        }
+    public void confirmarTransaccao() {
+	Transaction.commit();
     }
 
-    public void confirmarTransaccao() throws ExcepcaoPersistencia {
-        try {
-            openDatabase();
-            Transaction tx = _odmg.currentTransaction();
-
-            if (tx != null) {
-                tx.commit();
-            }
-        } catch (ODMGException ex1) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.CLOSE_DATABASE, ex1);
-        } catch (ODMGRuntimeException ex) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.COMMIT_TRANSACTION, ex);
-        }
-    }
-
-    public void cancelarTransaccao() throws ExcepcaoPersistencia {
-        try {
-            openDatabase();
-            Transaction tx = _odmg.currentTransaction();
-
-            if (tx != null) {
-                tx.abort();
-            }
-
-        } catch (ODMGException ex1) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.CLOSE_DATABASE, ex1);
-        } catch (ODMGRuntimeException ex) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.ABORT_TRANSACTION, ex);
-        }
+    public void cancelarTransaccao() {
+	Transaction.abort();
     }
 
     public IAulaPersistente getIAulaPersistente() {
@@ -892,81 +823,35 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new WorkLocationOJB();
     }
 
-    public void beginTransaction() throws StorageException {
-        try {
-            this.iniciarTransaccao();
-        } catch (ExcepcaoPersistencia e) {
-            throw new StorageException("error in wrapping method", e);
-        }
-
+    public void beginTransaction() {
+	this.iniciarTransaccao();
     }
 
     // by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
-    public void commitTransaction() throws StorageException {
-        try {
-            this.confirmarTransaccao();
-        } catch (ExcepcaoPersistencia e) {
-            throw new StorageException("error in wrapping method", e);
-        }
-
+    public void commitTransaction() {
+	this.confirmarTransaccao();
     }
 
     // by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
     public void abortTransaction() throws StorageException {
-        try {
-            this.cancelarTransaccao();
-        } catch (ExcepcaoPersistencia e) {
-            throw new StorageException("error in wrapping method", e);
-        }
-
+	this.cancelarTransaccao();
     }
 
     // by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
     public void lockRead(List list) throws StorageException {
-        try {
-
-            Transaction tx = _odmg.currentTransaction();
-
-            if (tx == null)
-                throw new StorageException("No current transaction!");
-            if (list != null) {
-                for (int i = 0; i < list.size(); i++) {
-                    lockRead(list.get(i));
-                }
-            }
-        } catch (ODMGRuntimeException ex) {
-            throw new StorageException(ExcepcaoPersistencia.READ_LOCK, ex);
-        }
     }
 
     // by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
     public void lockRead(Object obj) throws StorageException {
-        try {
-            Transaction tx = _odmg.currentTransaction();
-            tx.lock(obj, Transaction.READ);
-
-        } catch (ODMGRuntimeException ex) {
-            throw new StorageException(ExcepcaoPersistencia.READ_LOCK, ex);
-        }
     }
 
     // by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
     public void lockWrite(Object obj) throws StorageException {
-        try {
-            Transaction tx = _odmg.currentTransaction();
-            tx.lock(obj, Transaction.WRITE);
-
-        } catch (ODMGRuntimeException ex) {
-            throw new StorageException(ExcepcaoPersistencia.UPGRADE_LOCK, ex);
-        }
     }
 
     // by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
-    public PersistenceBroker currentBroker() throws StorageException {
-        Transaction tx = this._odmg.currentTransaction();
-        if (tx == null)
-            throw new StorageException(StorageException.NO_TRANSACTION_IN_COURSE);
-        return ((HasBroker) tx).getBroker();
+    public PersistenceBroker currentBroker() {
+	return getCurrentPersistenceBroker();
     }
 
     public IPersistentGratuityValues getIPersistentGratuityValues() {
@@ -1333,5 +1218,4 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentNotNeedToEnrollInCurricularCourse getIPersistentNotNeedToEnrollInCurricularCourse() {
         return new NotNeedToEnrollInCurricularCourseOJB();
     }
-
 }

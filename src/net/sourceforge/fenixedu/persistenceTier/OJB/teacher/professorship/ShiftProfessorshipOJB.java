@@ -25,7 +25,6 @@ import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
-import org.apache.ojb.odmg.HasBroker;
 
 /**
  * @author jpvl
@@ -40,7 +39,7 @@ public class ShiftProfessorshipOJB extends PersistentObjectOJB implements IPersi
     public IShiftProfessorship readByUnique(IShiftProfessorship teacherShiftPercentage) {
         IShiftProfessorship teacherShiftPercentageFromBD = null;
 
-        PersistenceBroker broker = ((HasBroker) odmg.currentTransaction()).getBroker();
+        PersistenceBroker broker = getCurrentPersistenceBroker();
 
         Criteria criteria = new Criteria();
 

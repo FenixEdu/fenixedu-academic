@@ -131,23 +131,23 @@ public class AddOJBConstructors extends AbstractDomainPostprocessor {
             if ("<init>".equals(name) && CONSTRUCTOR_DESC.equals(desc)) {
                 // we process it and remove the original, if any, by returning null
                 mv.visitCode();
-                boolean initWrappers = isDomainBaseClass(descToName(classDesc));
+                boolean initInstance = isDomainBaseClass(descToName(classDesc));
                 if (belongsToDomainModel(descToName(superDesc))) {
                     mv.visitVarInsn(ALOAD, 0);
                     mv.visitVarInsn(ALOAD, 1);
                     mv.visitMethodInsn(INVOKESPECIAL, superDesc, "<init>", CONSTRUCTOR_DESC);
-                    if (initWrappers) {
+                    if (initInstance) {
                         mv.visitVarInsn(ALOAD, 0);
-                        mv.visitMethodInsn(INVOKESPECIAL, classDesc, "initWrappers", "()V");
+                        mv.visitMethodInsn(INVOKESPECIAL, classDesc, "initInstance", "()V");
                     }
                     mv.visitInsn(RETURN);
                     mv.visitMaxs(2, 2);
                 } else {
                     mv.visitVarInsn(ALOAD, 0);
                     mv.visitMethodInsn(INVOKESPECIAL, superDesc, "<init>", "()V");
-                    if (initWrappers) {
+                    if (initInstance) {
                         mv.visitVarInsn(ALOAD, 0);
-                        mv.visitMethodInsn(INVOKESPECIAL, classDesc, "initWrappers", "()V");
+                        mv.visitMethodInsn(INVOKESPECIAL, classDesc, "initInstance", "()V");
                     }
                     mv.visitInsn(RETURN);
                     mv.visitMaxs(1, 2);

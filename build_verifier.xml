@@ -151,4 +151,14 @@
     </java>
   </target>
 
+  <target name="find-list-method-calls"
+          depends="analysis-compile"
+          description="Report occurrences of calls to java.util.List methods.">
+    <java classname="pt.utl.ist.analysis.FindListMethodCalls" fork="true">
+      <classpath refid="classpath.analysis"/>
+      <arg value="-f"/>
+      <arg value="${build.home.webinf.classes}/${analysis.subdir}"/>
+    </java>
+  </target>
+
 </project>

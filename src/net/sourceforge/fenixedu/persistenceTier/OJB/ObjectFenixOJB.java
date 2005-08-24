@@ -17,93 +17,33 @@ import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
+import net.sourceforge.fenixedu.stm.Transaction;
+
 import org.apache.ojb.broker.Identity;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.core.proxy.ProxyHelper;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
-import org.apache.ojb.odmg.HasBroker;
-import org.apache.ojb.odmg.TransactionImpl;
-import org.odmg.Database;
-import org.odmg.Implementation;
-import org.odmg.ODMGException;
-import org.odmg.ODMGRuntimeException;
-import org.odmg.OQLQuery;
-import org.odmg.QueryException;
-import org.odmg.Transaction;
+
 
 public abstract class ObjectFenixOJB implements IPersistentObject {
-    protected Implementation odmg = null;
-
-    protected Database db = null;
-
-    protected OQLQuery query = null;
-
-    protected Transaction tx = null;
 
     /** Creates a new instance of ObjectFenixOJB */
     public ObjectFenixOJB() {
-
-        try {
-            odmg = SuportePersistenteOJB.getInstance().getImplementation();
-        } catch (ExcepcaoPersistencia e1) {
-            e1.printStackTrace();
-        }
-
-        db = odmg.getDatabase(null);
-        if (db == null) {
-            db = odmg.newDatabase();
-            try {
-                db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
-            } catch (ODMGException e) {
-                e.printStackTrace();
-            }
-        }
-
-        query = odmg.newOQLQuery();
-
     }
 
-    protected void lockRead(List list) throws ExcepcaoPersistencia {
-        try {
-
-            tx = odmg.currentTransaction();
-
-            if (tx == null)
-                throw new ExcepcaoPersistencia("No current transaction!");
-            if (list != null) {
-                for (int i = 0; i < list.size(); i++) {
-                    Object obj = list.get(i);
-
-                    lockRead(obj);
-                }
-            }
-        } catch (ODMGRuntimeException ex) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.READ_LOCK, ex);
-        }
+    public static PersistenceBroker getCurrentPersistenceBroker() {
+	return Transaction.getOJBBroker();
     }
 
-    public void lockWrite(Object obj) throws ExcepcaoPersistencia {
-        try {
-            tx = odmg.currentTransaction();
-            tx.lock(obj, Transaction.WRITE);
-
-        } catch (ODMGRuntimeException ex) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.UPGRADE_LOCK, ex);
-        }
-
+    protected void lockRead(List list) {
     }
 
-    protected void lockRead(Object obj) throws ExcepcaoPersistencia {
-        try {
-            tx = odmg.currentTransaction();
-            tx.lock(obj, Transaction.READ);
+    public void lockWrite(Object obj) {
+    }
 
-        } catch (ODMGRuntimeException ex) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.READ_LOCK, ex);
-        }
-
+    protected void lockRead(Object obj) {
     }
 
     /*
@@ -111,14 +51,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
      * 
      * @see ServidorPersistente.IPersistentObject#simpleLockWrite(Dominio.IDomainObject)
      */
-    public void simpleLockWrite(IDomainObject obj) throws ExcepcaoPersistencia {
-        try {
-            tx = odmg.currentTransaction();
-            tx.lock(obj, Transaction.WRITE);
-
-        } catch (ODMGRuntimeException ex) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.UPGRADE_LOCK, ex);
-        }
+    public void simpleLockWrite(IDomainObject obj) {
     }
 
     /**
@@ -129,75 +62,25 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
      * @throws ExcepcaoPersistencia
      */
     public void delete(Object obj) throws ExcepcaoPersistencia {
-        try {
-            tx = odmg.currentTransaction();
-            tx.lock(obj, Transaction.WRITE);
-
-            db.deletePersistent(obj);
-
-            PersistenceBroker broker = ((HasBroker) tx).getBroker();
-            broker.removeFromCache(obj);
-        } catch (ODMGRuntimeException ex) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.UPGRADE_LOCK, ex);
-        }
+	Transaction.deleteObject(obj);
     }
 
     public final void deleteByOID(Class classToQuery, Integer oid) throws ExcepcaoPersistencia {
-
         Criteria criteria = new Criteria();
         criteria.addEqualTo("idInternal", oid);
         Object object = queryObject(classToQuery, criteria);
         delete(object);
-
     }
-
-    public void deleteAll(String oqlQuery) throws ExcepcaoPersistencia {
-        try {
-            query.create(oqlQuery);
-            List result = (List) query.execute();
-            ListIterator iterator = result.listIterator();
-            while (iterator.hasNext()) {
-
-                delete(iterator.next());
-            }
-        } catch (QueryException ex) {
-            ex.printStackTrace();
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
-
-    }
-
-    //    public void deleteByCriteria(Object obj) throws ExcepcaoPersistencia {
-    //        List result = readByCriteria(obj);
-    //        ListIterator iterator = result.listIterator();
-    //        while (iterator.hasNext())
-    //            delete(iterator.next());
-    //
-    //    }
 
     /**
      * @see IPersistentObject#readByOId(IDomainObject, boolean)
      * @deprecated
      */
     public IDomainObject readByOId(IDomainObject obj, boolean lockWrite) {
-
-        tx = odmg.currentTransaction();
-        PersistenceBroker broker = ((HasBroker) tx).getBroker();
+        PersistenceBroker broker = getCurrentPersistenceBroker();
         Identity identity = new Identity(obj, broker);
 
-        IDomainObject domainObject = (IDomainObject) ((TransactionImpl) tx)
-                .getObjectByIdentity(identity);
-
-        if (domainObject == null) {
-            return null;
-        }
-
-        if (lockWrite) {
-            tx.lock(domainObject, Transaction.WRITE);
-        } else {
-            tx.lock(domainObject, Transaction.READ);
-        }
-        return domainObject;
+        return (IDomainObject) broker.getObjectByIdentity(identity);
     }
 
     //    public Object readDomainObjectByCriteria(Object obj) throws
@@ -236,11 +119,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
     protected Object queryObject(Class classToQuery, Criteria criteria) throws ExcepcaoPersistencia {
         PersistenceBroker pb = getCurrentPersistenceBroker();
         Query query = getQuery(classToQuery, criteria);
-        Object object = pb.getObjectByQuery(query);
-        if (object != null) {
-            lockRead(object);
-        }
-        return object;
+        return pb.getObjectByQuery(query);
     }
 
     /**
@@ -273,9 +152,6 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
         //            }
         //
         //        }
-        if (object != null) {
-            lockRead(object);
-        }
         return object;
     }
 
@@ -289,17 +165,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("idInternal", oid);
-        IDomainObject domainObject = (IDomainObject) queryObject(classToQuery, criteria);
-
-        if (domainObject == null) {
-            return null;
-        }
-
-        if (lockWrite) {
-            tx.lock(domainObject, Transaction.WRITE);
-        }
-
-        return domainObject;
+        return (IDomainObject) queryObject(classToQuery, criteria);
     }
 
     /**
@@ -339,27 +205,11 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 
         query.setEndAtIndex(endIndex);
         List list = (List) pb.getCollectionByQuery(query);
-        lockRead(list);
         return list;
     }
 
     protected List queryList(Query query) throws ExcepcaoPersistencia {
-        PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
-
-        List list = (List) pb.getCollectionByQuery(query);
-        if (list != null) {
-            //            if (!list.isEmpty()
-            //                    && (list.get(0) instanceof MasterDegreeCandidate
-            //                            || list.get(0) instanceof CandidateSituation
-            //                            || list.get(0) instanceof Summary || list.get(0) instanceof
-            // Person || list
-            //                            .get(0) instanceof Advisory)) {
-            //                lockReadWithReplacement(list, pb);
-            //
-            //            }
-            lockRead(list);
-        }
-        return list;
+        return (List) getCurrentPersistenceBroker().getCollectionByQuery(query);
     }
 
     public List readInterval(Class classToQuery, Criteria criteria, Integer numberOfElementsInSpan,
@@ -373,7 +223,6 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
         query.setEndAtIndex(startIndex.intValue() + numberOfElementsInSpan.intValue());
 
         List list = (List) pb.getCollectionByQuery(query);
-        lockRead(list);
         return list;
     }
 
@@ -475,15 +324,6 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
         return pb.getCount(query);
     }
 
-    /**
-     * Gets the persistenceBroker associated with current transaction
-     * 
-     * @return PersistenceBroker associated with current transaction
-     */
-    protected PersistenceBroker getCurrentPersistenceBroker() {
-        PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
-        return pb;
-    }
 
     /**
      * Returns a QueryByCriteria instance.
@@ -512,14 +352,11 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
      *            object to store
      */
     protected void store(IDomainObject domainObject) {
-        PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
-        pb.store(domainObject);
+	Transaction.storeObject(domainObject);
     }
 
     public Object lockIteratorNextObj(Iterator iterator) throws ExcepcaoPersistencia {
-        Object object = iterator.next();
-        lockRead(object);
-        return object;
+        return iterator.next();
     }
 
     public IDomainObject materialize(IDomainObject domainObject) {

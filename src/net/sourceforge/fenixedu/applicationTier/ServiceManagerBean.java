@@ -129,7 +129,20 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
             if (serviceLoggingIsOn || (userLoggingIsOn && id != null)) {
                 serviceStartTime = Calendar.getInstance();
             }
-            Object serviceResult = manager.execute(id, service, method, args);
+
+	    // Replace this line with the following block if conflicting transactions should restart automatically
+	    Object serviceResult = manager.execute(id, service, method, args);
+
+	    // 	    Object serviceResult = null;
+	    // 	    while (true) {
+	    // 		try {
+	    // 		    serviceResult = manager.execute(id, service, method, args);
+	    // 		    break;
+	    // 		} catch (jvstm.CommitException e) {
+	    // 		    // repeat service
+	    // 		}
+	    // 	    }
+
             if (serviceLoggingIsOn || (userLoggingIsOn && id != null)) {
                 serviceEndTime = Calendar.getInstance();
             }

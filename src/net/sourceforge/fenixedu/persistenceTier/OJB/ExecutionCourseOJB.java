@@ -25,7 +25,7 @@ import org.apache.ojb.broker.metadata.MetadataManager;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryBySQL;
-import org.apache.ojb.odmg.HasBroker;
+
 
 public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersistentExecutionCourse {
 
@@ -200,7 +200,7 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
                 .append(" = ").append(executionPeriodID);
 
         Query query = new QueryBySQL(ExecutionCourse.class, sqlStatement.toString());
-        PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
+        PersistenceBroker pb = getCurrentPersistenceBroker();
         List collection = (List) pb.getCollectionByQuery(query);
 
         lockRead(collection);

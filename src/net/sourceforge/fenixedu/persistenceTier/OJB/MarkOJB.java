@@ -23,11 +23,7 @@ public class MarkOJB extends PersistentObjectOJB implements IPersistentMark {
     }
 
     public void delete(IMark mark) throws ExcepcaoPersistencia {
-        try {
-            super.delete(mark);
-        } catch (ExcepcaoPersistencia ex) {
-            throw ex;
-        }
+	super.delete(mark);
     }
 
     public List readBy(IAttends attend) throws ExcepcaoPersistencia {

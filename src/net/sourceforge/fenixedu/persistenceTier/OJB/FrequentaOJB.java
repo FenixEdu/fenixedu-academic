@@ -25,7 +25,7 @@ import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
-import org.apache.ojb.odmg.HasBroker;
+
 
 public class FrequentaOJB extends PersistentObjectOJB implements IFrequentaPersistente {
 
@@ -101,7 +101,7 @@ public class FrequentaOJB extends PersistentObjectOJB implements IFrequentaPersi
     }
 
     public Integer countStudentsAttendingExecutionCourse(IExecutionCourse executionCourse) {
-        PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
+        PersistenceBroker pb = getCurrentPersistenceBroker();
         Criteria criteria = new Criteria();
         criteria.addEqualTo("disciplinaExecucao.idInternal", executionCourse.getIdInternal());
         Query queryCriteria = new QueryByCriteria(Attends.class, criteria);

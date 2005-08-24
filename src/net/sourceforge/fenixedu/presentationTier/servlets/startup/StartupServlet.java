@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.Collection;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -14,6 +15,14 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+
+import net.sourceforge.fenixedu.stm.OJBFunctionalSetWrapper;
+
+import org.apache.ojb.broker.metadata.ClassDescriptor;
+import org.apache.ojb.broker.metadata.DescriptorRepository;
+import org.apache.ojb.broker.metadata.MetadataManager;
+import org.apache.ojb.broker.metadata.ObjectReferenceDescriptor;
+import org.apache.ojb.broker.metadata.CollectionDescriptor;
 
 /**
  * 17/Fev/2003
@@ -29,6 +38,9 @@ public class StartupServlet extends HttpServlet {
 	 */
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
+		
+		fixDescriptors();
+
 		try {
 			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils
 					.executeService(null, "ReadCurrentExecutionPeriod", null);
@@ -122,4 +134,24 @@ public class StartupServlet extends HttpServlet {
 		}
 
 	}
+
+    private void fixDescriptors() {
+	final MetadataManager metadataManager = MetadataManager.getInstance();
+        final Collection<ClassDescriptor> classDescriptors = 
+	    (Collection<ClassDescriptor>)metadataManager.getGlobalRepository().getDescriptorTable().values();
+
+	for (ClassDescriptor classDescriptor : classDescriptors) {
+	    for (ObjectReferenceDescriptor rd : (Collection<ObjectReferenceDescriptor>)classDescriptor.getObjectReferenceDescriptors()) {
+		rd.setCascadingStore(ObjectReferenceDescriptor.CASCADE_LINK);
+		rd.setCascadeRetrieve(false);
+		rd.setLazy(false);
+	    }
+
+	    for (CollectionDescriptor cod : (Collection<CollectionDescriptor>)classDescriptor.getCollectionDescriptors()) {
+		cod.setCollectionClass(OJBFunctionalSetWrapper.class);
+		cod.setCascadeRetrieve(false);
+		cod.setLazy(false);
+	    }
+	}
+    }
 }

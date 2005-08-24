@@ -5,7 +5,11 @@ import java.util.Map;
 
 import org.apache.ojb.broker.accesslayer.RowReaderDefaultImpl;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
+import org.apache.ojb.broker.metadata.FieldDescriptor;
 import org.apache.ojb.broker.PersistenceBrokerException;
+import org.apache.ojb.broker.util.ClassHelper;
+
+import net.sourceforge.fenixedu.stm.VBox;
 
 
 public class FenixRowReader extends RowReaderDefaultImpl {
@@ -13,6 +17,16 @@ public class FenixRowReader extends RowReaderDefaultImpl {
     public FenixRowReader(ClassDescriptor cld) {
         super(cld);
     }
+
+    protected Object buildOrRefreshObject(Map row, ClassDescriptor targetClassDescriptor, Object targetObject) {
+	boolean previous = VBox.setLoading(true);
+	try {
+	    return super.buildOrRefreshObject(row, targetClassDescriptor, targetObject);
+	} finally {
+	    VBox.setLoading(previous);
+	}
+    }
+
 
     private void forceFactoryClassAndMethod(ClassDescriptor cld) {
         if (cld.getFactoryClass() != DomainAllocator.class) {
@@ -33,6 +47,9 @@ public class FenixRowReader extends RowReaderDefaultImpl {
     protected ClassDescriptor selectClassDescriptor(Map row) throws PersistenceBrokerException {
         ClassDescriptor result = super.selectClassDescriptor(row);
         forceFactoryClassAndMethod(result);
+// 	if (result.getInitializationMethod() == null) {
+// 	    result.setInitializationMethod("afterOJBAllocate");
+// 	}
         return result;
     }
 }

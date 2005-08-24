@@ -11,6 +11,10 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 import org.apache.ojb.broker.core.proxy.ProxyHelper;
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.metadata.ClassDescriptor;
+
+import net.sourceforge.fenixedu.stm.Transaction;
 
 /**
  * @author jpvl
@@ -42,16 +46,37 @@ public abstract class DomainObject extends DomainObject_Base {
         }
     }
 
+    protected static void noteStore(Object obj, String attrName) {
+	Transaction.storeObject(obj);
+    }
+
+
     public DomainObject() {
         super();
 
         // All domain objects become persistent upon there creation.
-        // Locking the object will also set the idInternal which will be
-        // used by both the hashcode and the equals methods
-        doLockWriteOn(this);
+        // Ensure that this object gets an idInternal
+	// The idInternal will be used by both the hashcode and the equals methods
+	// jcachopo: This should be changed in the future...
+
+	ensureIdInternal();
+
+	Transaction.storeNewObject(this);
+    }
+
+    private void ensureIdInternal() {
         if (!lockMode) {
             setIdInternal(new Integer(nextIdInternal++));
-        }
+	} else {
+	    try {
+		PersistenceBroker broker = Transaction.getOJBBroker();
+		ClassDescriptor cld = broker.getClassDescriptor(this.getClass());
+		Integer id = (Integer)broker.serviceSequenceManager().getUniqueValue(cld.getFieldDescriptorByName("idInternal"));
+		setIdInternal(id);
+	    } catch (Exception e) {
+		System.out.println("Something went wrong when initializing the idInternal.  Not setting it...");
+	    }
+	}
     }
 
     public final int hashCode() {
@@ -86,20 +111,5 @@ public abstract class DomainObject extends DomainObject_Base {
                 throw new Error("Couldn't delete object", e);
             }
         }
-    }
-
-    protected void loadRefIfNeeded(Object value, String attrName) {
-		if (lockMode) {
-			if (value == null) {
-	            //System.out.println("++++++ Retrieving " + attrName + " for " + this.getClass() + System.identityHashCode(this));
-	            try {
-	                SuportePersistenteOJB.getCurrentPersistenceBroker().retrieveReference(this, attrName);
-	            } catch (Exception e) {
-                    e.printStackTrace();
-	                System.err.println("Couldn't retrieve " + attrName + " for class " + this.getClass());
-	                // ignore errors
-	            }
-	        }
-		}
     }
 }
