@@ -47,6 +47,8 @@ public final class RenderTimeTableTag extends TagSupport {
 
     private String classID = "";
     
+    private String executionCourseID = "";
+    
     private String action = "";
 
     private final Integer startTimeTableHour = new Integer(8);
@@ -117,6 +119,10 @@ public final class RenderTimeTableTag extends TagSupport {
 
         if ((String) pageContext.findAttribute("classID") != null) {
             setClassID((String) pageContext.findAttribute("classID"));
+        }
+        
+        if ((String) pageContext.findAttribute("executionCourseID") != null) {
+            setExecutionCourseID((String) pageContext.findAttribute("executionCourseID"));
         }
         
         // Gera o horário a partir da lista de aulas.
@@ -300,7 +306,7 @@ public final class RenderTimeTableTag extends TagSupport {
             break;
         case TimeTableType.SHIFT_ENROLLMENT_TIMETABLE:
             this.lessonSlotContentRenderer = new ShiftEnrollmentTimeTableLessonContentRenderer(
-                    getStudentID(), getApplication(), getClassID(), getAction());
+                    getStudentID(), getApplication(), getClassID(), getExecutionCourseID(), getAction());
             this.colorPicker = new ClassTimeTableColorPicker();
             this.endTimeTableHour = new Integer(19);
             break;
@@ -349,6 +355,14 @@ public final class RenderTimeTableTag extends TagSupport {
 
     public void setClassID(String classID) {
         this.classID = classID;
+    }
+
+    public String getExecutionCourseID() {
+        return executionCourseID;
+    }
+
+    public void setExecutionCourseID(String executionCourseID) {
+        this.executionCourseID = executionCourseID;
     }
 
 }
