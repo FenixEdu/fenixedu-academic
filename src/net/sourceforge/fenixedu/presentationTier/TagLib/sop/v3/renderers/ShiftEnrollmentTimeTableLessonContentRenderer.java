@@ -17,15 +17,19 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
     private String studentID;
 
     private String application;
-    
+
     private String action;
-    
+
     private String classID;
 
-    public ShiftEnrollmentTimeTableLessonContentRenderer(String studentID, String application, String classID, String action) {
+    private String executionCourseID;
+
+    public ShiftEnrollmentTimeTableLessonContentRenderer(String studentID, String application,
+            String classID, String executionCourseID, String action) {
         setStudentID(studentID);
         setApplication(application);
         setClassID(classID);
+        setExecutionCourseID(executionCourseID);
         setAction(action);
     }
 
@@ -37,11 +41,13 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
             strBuffer.append("<a href=\"");
             strBuffer.append(getApplication());
             strBuffer.append("/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=");
-            strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getIdInternal()).append("\">");
-            
-            strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla()).append("</a>");
+            strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getIdInternal()).append(
+                    "\">");
+
+            strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla())
+                    .append("</a>");
             strBuffer.append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")&nbsp;");
-            
+
             strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
             return strBuffer;
         }
@@ -75,18 +81,20 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
     }
 
     /**
-     * @param lesson 
+     * @param lesson
      * @return
      */
     private StringBuffer getURL(InfoLesson lesson) {
         StringBuffer strBuffer = new StringBuffer();
-        if(getAction().equalsIgnoreCase("add")){
+        if (getAction().equalsIgnoreCase("add")) {
             strBuffer.append("<a href=\"enrollStudentInShifts.do?studentId=");
-        } else if(getAction().equalsIgnoreCase("remove")){
-            strBuffer.append("<a href=\"studentShiftEnrollmentManager.do?method=unEnroleStudentFromShift&studentId=");            
+        } else if (getAction().equalsIgnoreCase("remove")) {
+            strBuffer
+                    .append("<a href=\"studentShiftEnrollmentManager.do?method=unEnroleStudentFromShift&studentId=");
         }
-        strBuffer.append(getStudentID()).append("&shiftId=").append(lesson.getInfoShift().getIdInternal());
-        strBuffer.append("&classId=").append(getClassID()).append("\">");
+        strBuffer.append(getStudentID()).append("&shiftId=").append(
+                lesson.getInfoShift().getIdInternal());
+        strBuffer.append("&classId=").append(getClassID()).append("&executionCourseID=").append(getExecutionCourseID()).append("\">");
         return strBuffer;
     }
 
@@ -120,5 +128,13 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
 
     public void setClassID(String classID) {
         this.classID = classID;
+    }
+
+    public String getExecutionCourseID() {
+        return executionCourseID;
+    }
+
+    public void setExecutionCourseID(String executionCourseID) {
+        this.executionCourseID = executionCourseID;
     }
 }
