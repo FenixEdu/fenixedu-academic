@@ -40,7 +40,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadClassTimeTableByStudent implements IService {
     
-    public List run(String username, Integer classID) throws ExcepcaoPersistencia {
+    public List run(final String username, final Integer classID, final Integer executionCourseID) throws ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentStudent persistentStudent = sp.getIPersistentStudent();        
         ITurmaPersistente persistentSchoolClass = sp.getITurmaPersistente();
@@ -56,7 +56,11 @@ public class ReadClassTimeTableByStudent implements IService {
             if(CollectionUtils.exists(studentAttends,new Predicate(){
                 public boolean evaluate(Object arg0) {
                     IAttends attends = (IAttends) arg0;
-                    return shift.getDisciplinaExecucao().equals(attends.getDisciplinaExecucao());
+                    boolean result = shift.getDisciplinaExecucao().equals(attends.getDisciplinaExecucao());
+                    if(executionCourseID != null){
+                        result = result & shift.getDisciplinaExecucao().getIdInternal().equals(executionCourseID);
+                    }
+                    return result;
                 }})){
                 classShifts.add(shift);
             }
