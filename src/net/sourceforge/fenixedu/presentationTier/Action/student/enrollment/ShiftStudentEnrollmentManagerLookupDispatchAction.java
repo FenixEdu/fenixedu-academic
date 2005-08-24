@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.WriteSt
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.TransactionalLookupDispatchAction;
@@ -144,12 +145,21 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 
         Integer classIdSelected = readClassSelected(request);        
         Integer studentId = Integer.valueOf((String)request.getParameter("studentId"));
+        Integer executionCourseID = null; 
+        if (request.getParameter("executionCourseID") != null){
+            executionCourseID = Integer.valueOf((String)request.getParameter("executionCourseID"));
+            request.setAttribute("executionCourseID",executionCourseID.toString());
+            InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory
+                    .executeService(userView, "ReadExecutionCourseByOID",
+                            new Object[] { executionCourseID });
+            request.setAttribute("infoExecutionCourse", infoExecutionCourse);
+        }
         if(studentId == null){
             studentId = (Integer) request.getAttribute("studentId");
         }
         request.setAttribute("studentId", studentId);        
         
-        Object[] args = { studentId };
+        Object[] args = { studentId, executionCourseID };
         List infoClassList = (List) ServiceManagerServiceFactory.executeService(userView,
                 "ReadClassesByStudentID", args);        
         request.setAttribute("infoClassList", infoClassList);
@@ -176,7 +186,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
         InfoClass infoClass = (InfoClass) selectedClasses.get(0);
         request.setAttribute("infoClass", infoClass);                
         
-        Object[] args1 = { userView.getUtilizador(), classId };
+        Object[] args1 = { userView.getUtilizador(), classId, executionCourseID };
         List infoClasslessons = (List) ServiceManagerServiceFactory.executeService(userView,
                 "ReadClassTimeTableByStudent", args1);        
         request.setAttribute("infoClasslessons", infoClasslessons);

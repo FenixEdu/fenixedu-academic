@@ -164,10 +164,14 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
         IUserView userView = SessionUtils.getUserView(request);
 
         String studentIDString = request.getParameter("studentId");
-        String shidtIDString = request.getParameter("shiftId");
+        String shiftIDString = request.getParameter("shiftId");
+        String executionCourseID = request.getParameter("executionCourseID");
+        if(executionCourseID != null){
+            request.setAttribute("executionCourseID", executionCourseID);
+        }
 
         Integer studentId = new Integer(studentIDString);
-        Integer shiftId = new Integer(shidtIDString);
+        Integer shiftId = new Integer(shiftIDString);
 
         try {
             Object args[] = { studentId, shiftId };
