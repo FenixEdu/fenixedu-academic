@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -38,7 +39,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadClassesByStudentID implements IService {
 
-    public List run(Integer studentID) throws ExcepcaoPersistencia {
+    public List run(final Integer studentID, final Integer executionCourseID) throws ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         IPersistentStudent persistentStudent = sp.getIPersistentStudent();
@@ -81,6 +82,20 @@ public class ReadClassesByStudentID implements IService {
         }else{
             classList = new ArrayList(allSchooClasses);
         }        
+        
+        if(executionCourseID != null){
+            CollectionUtils.filter(classList, new Predicate(){
+
+                public boolean evaluate(Object arg0) {
+                    ISchoolClass schoolClass = (ISchoolClass) arg0;
+                    for (IShift shift : schoolClass.getAssociatedShifts()) {
+                        if(shift.getDisciplinaExecucao().getIdInternal().equals(executionCourseID)){
+                            return true;
+                        }
+                    }
+                    return false;
+                }});
+        }
         
         Collections.sort(classList, new BeanComparator("nome"));
         
