@@ -24,17 +24,41 @@
 	</ul>
 </div>
 
+<logic:present name="executionCourseID">
+<ul>
+	<li><span>Disciplina: <strong><bean:write name="infoExecutionCourse" property="nome"/></strong></span></li>
+</ul>
+</logic:present>
+
 <h2 class="redtxt"><bean:message key="label.class" /> <bean:write name="infoClass" property="nome"/></h2>
 
+<logic:present name="executionCourseID">
+	<bean:define id="executionCourseID" name="executionCourseID" type="java.lang.String"/>
+	<app:gerarHorario name="infoClasslessons" type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>" studentID="<%= studentId.toString() %>"
+		application="<%= request.getContextPath() %>" classID="<%= classId.toString() %>" executionCourseID="<%= executionCourseID.toString() %>"
+	 action="add"/>
+</logic:present>
+
+<logic:notPresent name="executionCourseID">
 <app:gerarHorario name="infoClasslessons" type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>" studentID="<%= studentId.toString() %>"
-	application="<%= request.getContextPath() %>" classID="<%= classId.toString() %>" action="add"/>
-	
+		application="<%= request.getContextPath() %>" classID="<%= classId.toString() %>" action="add"/>
+</logic:notPresent>	 
+
 <br/>
 <p><strong><bean:message key="message.showShiftsToEnroll.actual.timetable" /></strong></p>
 
 	
+<logic:present name="executionCourseID">
+	<bean:define id="executionCourseID" name="executionCourseID" type="java.lang.String"/>
+	<app:gerarHorario name="infoLessons" type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>" studentID="<%= studentId.toString() %>"
+		application="<%= request.getContextPath() %>" classID="<%= classId.toString() %>" executionCourseID="<%= executionCourseID.toString() %>"
+	 action="remove"/>
+</logic:present>
+
+<logic:notPresent name="executionCourseID">
 <app:gerarHorario name="infoLessons" type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>" studentID="<%= studentId.toString() %>"
-	application="<%= request.getContextPath() %>" classID="<%= classId.toString() %>" action="remove"/>
+		application="<%= request.getContextPath() %>" classID="<%= classId.toString() %>" action="remove"/>
+</logic:notPresent>
 
 <br />
 <ul>
