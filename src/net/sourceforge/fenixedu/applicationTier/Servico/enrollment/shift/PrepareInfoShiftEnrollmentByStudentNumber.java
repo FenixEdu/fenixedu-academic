@@ -5,9 +5,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -83,9 +85,10 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
 
             infoShiftEnrollment.setInfoStudent(InfoStudent.newInfoFromDomain(student));
 
+            List attendingExecutionCourses = new ArrayList();
             // retrieve all courses that student is currently attended in
             infoShiftEnrollment.setInfoAttendingCourses(readAttendingCourses(sp, student.getNumber(),
-                    student.getDegreeType()));
+                    student.getDegreeType(), attendingExecutionCourses));
 
             // retrieve all shifts that student is currently enrollment
             // it will be shift associated with all or some attending courses
@@ -96,6 +99,10 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
             infoShiftEnrollment.setNumberCourseWithShiftEnrollment(calculeNumberCoursesWithEnrollment(
                     infoShiftEnrollment.getInfoAttendingCourses(), infoShiftEnrollment
                             .getInfoShiftEnrollment()));
+
+            // calculate the number of courses in wich are shifts unenrolled
+            infoShiftEnrollment.setNumberCourseUnenrolledShifts(calculeNumberCoursesUnenrolledShifts(
+                    attendingExecutionCourses, infoShiftEnrollment.getInfoShiftEnrollment()));
 
             // read current execution period
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
@@ -132,8 +139,8 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
         return infoShiftEnrollment;
     }
 
-    private List readAttendingCourses(ISuportePersistente sp, Integer studentNumber, DegreeType tipoCurso)
-            throws ExcepcaoPersistencia {
+    private List readAttendingCourses(ISuportePersistente sp, Integer studentNumber,
+            DegreeType tipoCurso, List attendingExecutionCourses) throws ExcepcaoPersistencia {
         List infoAttendingCourses = null;
 
         IFrequentaPersistente frequentaPersistente = sp.getIFrequentaPersistente();
@@ -151,6 +158,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
                                 new PeriodState(PeriodState.CURRENT))) {
                     infoAttendingCourses.add(InfoExecutionCourseWithExecutionPeriod
                             .newInfoFromDomain(executionCourse));
+                    attendingExecutionCourses.add(executionCourse);
                 }
             }
 
@@ -310,6 +318,35 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
         }
         return (InfoExecutionDegree) infoExecutionDegreeList.get(0);
 
+    }
+
+    /**
+     * @param infoAttendingCourses
+     * @param infoShiftEnrollment
+     * @return
+     */
+    private Integer calculeNumberCoursesUnenrolledShifts(List attendingExecutionCourses,
+            List infoShiftEnrollment) {
+        Set executionCoursesWithNonEnrolledShifts = new HashSet();
+        for (Iterator iter = attendingExecutionCourses.iterator(); iter.hasNext();) {
+            final IExecutionCourse executionCourse = (IExecutionCourse) iter.next();
+            for (Iterator iterator = executionCourse.getAssociatedShifts().iterator(); iterator
+                    .hasNext();) {
+                final IShift shift = (IShift) iterator.next();
+                if (!CollectionUtils.exists(infoShiftEnrollment, new Predicate() {
+
+                    public boolean evaluate(Object arg0) {
+                        InfoShift infoShift = (InfoShift) arg0;
+                        return infoShift.getInfoDisciplinaExecucao().getIdInternal().equals(
+                                executionCourse.getIdInternal())
+                                && infoShift.getTipo().equals(shift.getTipo());
+                    }
+                })) {
+                    executionCoursesWithNonEnrolledShifts.add(executionCourse);
+                }
+            }
+        }
+        return executionCoursesWithNonEnrolledShifts.size();
     }
 
 }
