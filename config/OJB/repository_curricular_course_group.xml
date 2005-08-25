@@ -4,6 +4,14 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.CurricularCourseGroup">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup"/>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="curricularCourses"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
+			indirection-table="CURRICULAR_COURSE_CURRICULAR_COURSE_GROUP"
+			>
+		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE_GROUP"/>
+		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE"/>
+	</collection-descriptor>    
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
@@ -29,12 +37,12 @@
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaAreaType2SqlAreaTypeFieldConversion"
 	/>
 	<field-descriptor
-		name="minimumCredits"
+		name="minimumValue"
 		column="MINIMUM_VALUE"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="maximumCredits"
+		name="maximumValue"
 		column="MAXIMUM_VALUE"
 		jdbc-type="INTEGER"
 	/>
@@ -95,12 +103,12 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="minimumNumberOfOptionalCourses"
+		name="minimumValue"
 		column="MINIMUM_VALUE"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="maximumNumberOfOptionalCourses"
+		name="maximumValue"
 		column="MAXIMUM_VALUE"
 		jdbc-type="INTEGER"
 	/>
