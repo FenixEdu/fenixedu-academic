@@ -59,6 +59,11 @@ public class InfoShiftEnrollment extends DataTranferObject {
      * Student enrolling
      */
     private InfoStudent infoStudent;
+    
+    /**
+     * number of courses in wich isn't enrolled in all shifts
+     */
+    private Integer numberCourseUnenrolledShifts; 
 
     /**
      * @return Returns the numberCourseWithShiftEnrollment.
@@ -227,6 +232,14 @@ public class InfoShiftEnrollment extends DataTranferObject {
         string.append(" ]");
 
         return string.toString();
+    }
+
+    public Integer getNumberCourseUnenrolledShifts() {
+        return numberCourseUnenrolledShifts;
+    }
+
+    public void setNumberCourseUnenrolledShifts(Integer numberCourseUnenrolledShifts) {
+        this.numberCourseUnenrolledShifts = numberCourseUnenrolledShifts;
     }
 
 }
