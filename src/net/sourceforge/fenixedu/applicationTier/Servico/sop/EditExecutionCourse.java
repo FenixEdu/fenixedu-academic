@@ -1,16 +1,6 @@
-/*
- *
- * Created on 2003/08/22
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
-/**
- * @author Luis Cruz & Sara Ribeiro
- */
-
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -38,28 +28,24 @@ public class EditExecutionCourse implements IService {
 
         final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, infoExecutionCourse.getIdInternal());
-        if (executionCourse == null)
+        if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
+        }
+
+        final List<InfoCurricularCourse> infoCurricularCourses = getInfoCurricularCoursesFrom(executionCourse);
+        infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
 
         executionCourse.edit(infoExecutionCourse.getNome(), infoExecutionCourse.getSigla(),
                 infoExecutionCourse.getTheoreticalHours(), infoExecutionCourse.getTheoPratHours(),
                 infoExecutionCourse.getPraticalHours(), infoExecutionCourse.getLabHours(),
                 infoExecutionCourse.getComment());
-        
-        final InfoExecutionCourse result = InfoExecutionCourse.newInfoFromDomain(executionCourse);
-        final List<InfoCurricularCourse> infoCurricularCourses = getInfoCurricularCoursesFrom(executionCourse);
-        result.setAssociatedInfoCurricularCourses(infoCurricularCourses);
 
-        return result;
+        return infoExecutionCourse;
     }
 
-    private List<InfoCurricularCourse> getInfoCurricularCoursesFrom(
-            final IExecutionCourse executionCourse) {
-        final List<InfoCurricularCourse> result = new ArrayList();
-        final Iterator associatedCurricularCourses = executionCourse
-                .getAssociatedCurricularCoursesIterator();
-        while (associatedCurricularCourses.hasNext()) {
-            ICurricularCourse curricularCourse = (ICurricularCourse) associatedCurricularCourses.next();
+    private List<InfoCurricularCourse> getInfoCurricularCoursesFrom(final IExecutionCourse executionCourse) {
+        final List<InfoCurricularCourse> result = new ArrayList(executionCourse.getAssociatedCurricularCoursesCount());
+        for (final ICurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
             result.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
         }
         return result;
