@@ -112,13 +112,13 @@ width: 98%;
 <div class="box1">
 
 <logic:present name="infoShiftEnrollment" property="infoShiftEnrollment">
-	<bean:define id="numberCourseWithShiftEnrollment" name="infoShiftEnrollment" property="numberCourseWithShiftEnrollment" />
-	<logic:lessEqual name="numberCourseWithShiftEnrollment" value="0">
+	<bean:define id="numberCourseUnenrolledShifts" name="infoShiftEnrollment" property="numberCourseUnenrolledShifts" />
+	<logic:lessEqual name="numberCourseUnenrolledShifts" value="0">
 	<p><span class="t_success"><strong><bean:message key="message.student.shiftEnrollment.confirmation" /></strong></span></p>
 	</logic:lessEqual>
 	
-	<logic:greaterThan  name="numberCourseWithShiftEnrollment" value="0">
-	<p><span class="t_warning"><strong><bean:message key="message.student.shiftEnrollment.lacksCourses" arg0="<%= numberCourseWithShiftEnrollment.toString()%>"/></strong></span></p>
+	<logic:greaterThan  name="numberCourseUnenrolledShifts" value="0">
+	<p><span class="t_warning"><strong><bean:message key="message.student.shiftEnrollment.lacksCourses" arg0="<%= numberCourseUnenrolledShifts.toString()%>"/></strong></span></p>
 	</logic:greaterThan >
 </logic:present>	
 
