@@ -148,7 +148,8 @@ class DBChanges {
 		pb.close();
 		pb = null;
 	    }
-	    throw new jvstm.CommitException();
+	    // this shouldn't happen
+	    throw new Error(e);
 	} finally {
 	    if (pb != null) {
 		pb.close();
