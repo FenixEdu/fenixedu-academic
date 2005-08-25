@@ -44,9 +44,9 @@ public class ReverseFile {
             throws IOException {
         if ((new File(inputFilename)).exists()) {
             String filecontents = "###\n" + FileUtils.readFile(inputFilename);
-            filecontents.replaceAll(";\ninsert", "###\n;\ninsert");
-            filecontents.replaceAll(";\nupdate", "###\n;\nupdate");
-            filecontents.replaceAll(";\ndelete", "###\n;\ndelete");
+            filecontents = filecontents.replaceAll(";\ninsert", ";\n###\ninsert");
+            filecontents = filecontents.replaceAll(";\nupdate", ";\n###\nupdate");
+            filecontents = filecontents.replaceAll(";\ndelete", ";\n###\ndelete");
             final String[] lines = filecontents.split("###\n");
 
             final FileWriter fileWriter = new FileWriter(outputFilename, false);
@@ -55,8 +55,9 @@ public class ReverseFile {
             }
             fileWriter.close();
 
-            if (logger.isDebugEnabled())
+            if (logger.isDebugEnabled()) {
                 logger.debug("Wrote " + lines.length + " lines to " + outputFilename);
+            }
         }
     }
 
