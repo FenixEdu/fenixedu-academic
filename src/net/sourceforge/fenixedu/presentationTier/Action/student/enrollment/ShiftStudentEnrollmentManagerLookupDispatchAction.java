@@ -146,8 +146,9 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
         Integer classIdSelected = readClassSelected(request);        
         Integer studentId = Integer.valueOf((String)request.getParameter("studentId"));
         Integer executionCourseID = null; 
-        if (request.getParameter("executionCourseID") != null){
-            executionCourseID = Integer.valueOf((String)request.getParameter("executionCourseID"));
+        String executionCourseIDString = request.getParameter("executionCourseID");
+        if ( executionCourseIDString != null && !executionCourseIDString.equals("")){
+            executionCourseID = Integer.valueOf(executionCourseIDString);
             request.setAttribute("executionCourseID",executionCourseID.toString());
             InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory
                     .executeService(userView, "ReadExecutionCourseByOID",

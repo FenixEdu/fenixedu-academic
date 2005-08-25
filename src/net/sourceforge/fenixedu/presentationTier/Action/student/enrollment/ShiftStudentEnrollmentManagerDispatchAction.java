@@ -166,7 +166,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
         String studentIDString = request.getParameter("studentId");
         String shiftIDString = request.getParameter("shiftId");
         String executionCourseID = request.getParameter("executionCourseID");
-        if(executionCourseID != null){
+        if(executionCourseID != null && !executionCourseID.equals("")){
             request.setAttribute("executionCourseID", executionCourseID);
         }
 

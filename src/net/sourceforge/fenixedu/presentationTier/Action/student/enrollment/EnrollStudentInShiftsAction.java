@@ -40,7 +40,7 @@ public class EnrollStudentInShiftsAction extends FenixAction {
         Integer shiftId = new Integer( (String)request.getParameter("shiftId"));
         Integer studentId = new Integer( (String) request.getParameter("studentId"));
         String executionCourseID = (String) request.getParameter("executionCourseID");
-        if( executionCourseID != null){            
+        if( executionCourseID != null && !executionCourseID.equals("")){            
             request.setAttribute("executionCourseID", executionCourseID);
         }        
 
