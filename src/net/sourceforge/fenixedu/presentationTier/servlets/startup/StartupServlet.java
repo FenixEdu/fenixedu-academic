@@ -148,6 +148,7 @@ public class StartupServlet extends HttpServlet {
 	    }
 
 	    for (CollectionDescriptor cod : (Collection<CollectionDescriptor>)classDescriptor.getCollectionDescriptors()) {
+		cod.setCascadingStore(ObjectReferenceDescriptor.CASCADE_NONE);
 		cod.setCollectionClass(OJBFunctionalSetWrapper.class);
 		cod.setCascadeRetrieve(false);
 		cod.setLazy(false);
