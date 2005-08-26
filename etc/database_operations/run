@@ -63,6 +63,10 @@ mysql -u$2 -f $1 < /tmp/x
 mysql -u$2 -f $1 < AlterTableCurricularCourseAddCompetenceCourse.sql
 mysql -u$2 -f $1 < CreateCompetenceCourse.sql
 mysql -u$2 -f $1 < DropDepartmentCourse.sql
+mysql -u$2 -f $1 < competenceCourse.sql > /tmp/x
+mysql -u$2 -f $1 < /tmp/x
+mysql -u$2 -f $1 < curricularCourseCompetenceCourse.sql > /tmp/x
+mysql -u$2 -f $1 < /tmp/x
 mysql -u$2 -f $1 < AlterTableADegree.sql
 mysql -u$2 -f $1 < AlterTableBranch.sql
 mysql -u$2 -f $1 < AlterTableCurricularCourseScope.sql
@@ -86,6 +90,7 @@ mysql -u$2 -f $1 < fixSentSms.sql
 mysql -u$2 -f $1 < fixOnlineTestPackageName.sql
 mysql -u$2 -f $1 < AlterTablePublicationDropDidatic.sql
 mysql -u$2 -f $1 < AlterTablePersonISTUsername.sql
+mysql -u$2 -f $1 < AlterTableBranchChangeSecCredits.sql
 
 # ?????
 mysql -u$2 -f $1 < FixItemOrder.sql
