@@ -1,18 +1,5 @@
-/*
- *
- * Created on 2003/08/15
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
-/**
- * Serviço AdicionarTurno.
- * 
- * @author Luis Cruz & Sara Ribeiro
- * @author Pedro Santos e Rita Carvalho
- */
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
@@ -26,25 +13,22 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class RemoveShifts implements IService {
 
-    public Boolean run(InfoClass infoClass, List shiftOIDs) throws ExcepcaoPersistencia {
+    public Boolean run(final InfoClass infoClass, final List shiftOIDs) throws ExcepcaoPersistencia {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         final ISchoolClass schoolClass = (ISchoolClass) sp.getITurmaPersistente().readByOID(SchoolClass.class,
                 infoClass.getIdInternal());
-        final List shifts = schoolClass.getAssociatedShifts();
-        final List shiftsToRemove = new ArrayList(shifts.size());
-        
-        Iterator iter = shifts.iterator();
-        while (iter.hasNext()){
-            IShift shift = (IShift) iter.next();
-            
-            if (shiftOIDs.contains(shift.getIdInternal())){
-                shiftsToRemove.add(shift);
+        final List<IShift> shifts = schoolClass.getAssociatedShifts();
+
+        for (int i = 0; i < shifts.size(); i++) {
+            final IShift shift = shifts.get(i);
+            if (shiftOIDs.contains(shift.getIdInternal())) {
+                shifts.remove(shift);
+                i--;
             }
         }
-        shifts.removeAll(shiftsToRemove);
-        
-        return new Boolean(true);
+
+        return Boolean.TRUE;
     }
 
 }
