@@ -31,7 +31,6 @@ public class RemoveShifts implements IService {
 
         final ISchoolClass schoolClass = (ISchoolClass) sp.getITurmaPersistente().readByOID(SchoolClass.class,
                 infoClass.getIdInternal());
-        sp.getITurmaPersistente().simpleLockWrite(schoolClass);
         final List shifts = schoolClass.getAssociatedShifts();
         final List shiftsToRemove = new ArrayList(shifts.size());
         
@@ -43,9 +42,8 @@ public class RemoveShifts implements IService {
                 shiftsToRemove.add(shift);
             }
         }
-                
         shifts.removeAll(shiftsToRemove);
-
+        
         return new Boolean(true);
     }
 

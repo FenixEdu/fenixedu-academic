@@ -42,10 +42,8 @@ public class RemoverTurno implements IService {
             return Boolean.FALSE;
         }
 
-        persistentShift.simpleLockWrite(shift);
         shift.getAssociatedClasses().remove(schoolClass);
-        schoolClass.getAssociatedShifts().remove(shift);
-
+        
         return Boolean.TRUE;
     }
 
