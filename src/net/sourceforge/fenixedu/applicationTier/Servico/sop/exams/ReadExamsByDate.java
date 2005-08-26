@@ -56,8 +56,6 @@ public class ReadExamsByDate implements IService {
             tempInfoDegrees = new ArrayList();
             tempInfoExecutionCourses = new ArrayList();
             // int totalNumberStudentsForExam = 0;
-            System.out.println("tempExam --> " + tempExam);
-            System.out.println("tamanho dos executionCourses --> " + tempExam.getAssociatedExecutionCoursesCount());
             IExecutionPeriod executionPeriod = tempExam.getAssociatedExecutionCourses().get(0)
                     .getExecutionPeriod();
 
