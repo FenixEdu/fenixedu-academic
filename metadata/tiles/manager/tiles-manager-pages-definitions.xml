@@ -425,6 +425,13 @@
 	</definition>	
 	<definition name="strutsExampleListExecutionPeriods" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/somePageInStrutsListExecutionPeriods.jsp" />
-	</definition>	
-	
+	</definition>
+		
+	<!-- ========== Kerberos Test ========== -->	
+	<definition name="pass-test-kerberos" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/changePassword_bd.jsp" />
+	</definition>
+	<definition name="pass-test-kerberos-sucess" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/changePasswordSucess_bd.jsp" />
+	</definition>
 </tiles-definitions>
