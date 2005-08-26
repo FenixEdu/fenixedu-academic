@@ -601,9 +601,15 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                     }
                 });*/
     	
-    	Collection result = CollectionUtils.intersection(curricularCourse.getCompetenceCourse().getAssociatedCurricularCourses(), curricularCourses);
-
-        return (!result.isEmpty());
+    	if(curricularCourses.contains(curricularCourse)) {
+    		return true;
+    	} else {
+    		if(curricularCourse.getCompetenceCourse() != null) {
+    			Collection result = CollectionUtils.intersection(curricularCourse.getCompetenceCourse().getAssociatedCurricularCourses(), curricularCourses);
+    			return (!result.isEmpty());
+    		}
+    		return false;
+    	}
     }
 
     protected List getStudentEnrollmentsWithApprovedState() {
