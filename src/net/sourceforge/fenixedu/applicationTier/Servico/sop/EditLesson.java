@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
@@ -32,22 +31,13 @@ public class EditLesson implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IAulaPersistente aulaPersistente = sp.getIAulaPersistente();
-        IRoom salaNova = sp.getISalaPersistente().readByName(aulaNova.getInfoSala().getNome());
 
+        IRoom salaNova = sp.getISalaPersistente().readByName(aulaNova.getInfoSala().getNome());
         ILesson aula = (ILesson) aulaPersistente.readByOID(Lesson.class, aulaAntiga.getIdInternal());
         IShift shift = aula.getShift();
 
         IRoomOccupation roomOccupation = aula.getRoomOccupation();
 
-        List associatedLessons = shift.getAssociatedLessons();
-        for (int i = 0; i < associatedLessons.size(); i++) {
-            ILesson lessonAssociated = (ILesson) associatedLessons.get(i);
-            if (lessonAssociated.getIdInternal().equals(aula.getIdInternal())) {
-                associatedLessons.remove(i);
-                // associatedLessons.set(i, newLesson);
-                break;
-            }
-        }
         if (aula != null) {
             result = valid(aulaNova.getInicio(), aulaNova.getFim());
             if (result.getMessageType() == 1) {
@@ -63,22 +53,14 @@ public class EditLesson implements IService {
 
             InfoShiftServiceResult infoShiftServiceResult = valid(shift, aula.getIdInternal(), aulaNova.getInicio(), aulaNova.getFim());
             if (result.isSUCESS() && resultB && infoShiftServiceResult.isSUCESS()) {
-                // aula = (ILesson) aulaPersistente.readByOId(aula, true);
-                aula = (ILesson) aulaPersistente.readByOID(Lesson.class, aula.getIdInternal());
-                aulaPersistente.simpleLockWrite(aula);
-                // sp.getITurnoPersistente().simpleLockWrite(shift);
+                aula.getShift();
+
                 aula.setDiaSemana(aulaNova.getDiaSemana());
                 aula.setInicio(aulaNova.getInicio());
                 aula.setFim(aulaNova.getFim());
                 aula.setTipo(aulaNova.getTipo());
                 aula.setSala(salaNova);
-                aula.setRoomOccupation(roomOccupation);
-
-                roomOccupation = (IRoomOccupation) sp.getIPersistentRoomOccupation().readByOID(
-                        RoomOccupation.class, roomOccupation.getIdInternal());
-
-                sp.getIPersistentRoomOccupation().simpleLockWrite(roomOccupation);
-
+                
                 roomOccupation.setDayOfWeek(aulaNova.getDiaSemana());
                 roomOccupation.setStartTime(aulaNova.getInicio());
                 roomOccupation.setEndTime(aulaNova.getFim());
@@ -120,7 +102,7 @@ public class EditLesson implements IService {
                 if (roomOccupationInDB.equals(oldroomOccupation)) {
                     continue;
                 }
-                if (roomOccupationInDB.roomOccupationForDateAndTime(null, startTime, endTime, dayOfWeek, frequency, week, null)) {
+                if (roomOccupationInDB.roomOccupationForDateAndTime(oldroomOccupation.getPeriod(), startTime, endTime, dayOfWeek, frequency, week, oldroomOccupation.getRoom())) {
                     return false;
                 }
             }
