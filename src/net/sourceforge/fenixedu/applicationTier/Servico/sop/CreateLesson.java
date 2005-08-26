@@ -102,8 +102,9 @@ public class CreateLesson implements IService {
 
     private boolean validNoInterceptingLesson(InfoRoomOccupation infoRoomOccupation)
             throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        List<IRoomOccupation> roomOccupations = sp.getIPersistentRoomOccupation().readAll();
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IRoom room = (IRoom) sp.getISalaPersistente().readByName(infoRoomOccupation.getInfoRoom().getNome());
+        final List<IRoomOccupation> roomOccupations = room.getRoomOccupations();
 
         for (final IRoomOccupation roomOccupation : roomOccupations) {
             if (roomOccupation.roomOccupationForDateAndTime(
