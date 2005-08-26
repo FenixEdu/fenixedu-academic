@@ -154,5 +154,9 @@
 	<html:link page="/someStrutsPage.do?method=showFirstPage">
 		Struts Example
 	</html:link>
+<p><strong>&raquo; 
+	<html:link page="/changePasswordForward.do">
+		Kerberos Test
+	</html:link>
 	
 </strong></p>
