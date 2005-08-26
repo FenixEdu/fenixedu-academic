@@ -38,7 +38,7 @@ public class DegreeCurricularPlanLEIC extends DegreeCurricularPlanLEIC_Base {
                 allDegreeCurricularPlans, new Predicate() {
                     public boolean evaluate(Object obj) {
                         IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) obj;
-                        return degreeCurricularPlan.getName().equals("LEIC - Currï¿½culo Antigo");
+                        return degreeCurricularPlan.getName().equals("LEIC - Currículo Antigo");
                     }
                 });
 
