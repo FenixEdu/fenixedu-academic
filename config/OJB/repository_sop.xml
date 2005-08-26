@@ -614,6 +614,11 @@
          column="KEY_WRITTEN_EVALUATION"
          jdbc-type="INTEGER"
       />
+      <field-descriptor
+         name="keyLesson"
+         column="KEY_LESSON"
+         jdbc-type="INTEGER"
+      />
       <reference-descriptor auto-retrieve="false"
          name="room"
          class-ref="net.sourceforge.fenixedu.domain.Room"
@@ -631,6 +636,12 @@
          class-ref="net.sourceforge.fenixedu.domain.WrittenEvaluation"
       >
          <foreignkey field-ref="keyWrittenEvaluation"/>
+      </reference-descriptor>
+      <reference-descriptor auto-retrieve="false"
+         name="lesson"
+         class-ref="net.sourceforge.fenixedu.domain.Lesson"
+      >
+         <foreignkey field-ref="keyLesson"/>
       </reference-descriptor>
    </class-descriptor>
 

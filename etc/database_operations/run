@@ -91,6 +91,9 @@ mysql -u$2 -f $1 < fixOnlineTestPackageName.sql
 mysql -u$2 -f $1 < AlterTablePublicationDropDidatic.sql
 mysql -u$2 -f $1 < AlterTablePersonISTUsername.sql
 mysql -u$2 -f $1 < AlterTableBranchChangeSecCredits.sql
+mysql -u$2 -f $1 < AlterTableRoomOccupationAddLesson.sql
+mysql -u$2 -f $1 < updateRoomOccupationWithLessons.sql > /tmp/x
+mysql -u$2 -f $1 < /tmp/x
 
 # ?????
 mysql -u$2 -f $1 < FixItemOrder.sql

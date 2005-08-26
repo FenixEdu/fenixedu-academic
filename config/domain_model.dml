@@ -2148,6 +2148,7 @@ class net.sourceforge.fenixedu.domain.RoomOccupation extends net.sourceforge.fen
     Date startTimeDate;
     Date endTimeDate;
     Integer keyWrittenEvaluation;
+    Integer keyLesson;
 
 	interface "
     public java.util.Calendar getStartTime();
