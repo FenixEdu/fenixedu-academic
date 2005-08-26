@@ -320,10 +320,10 @@ public class RoomOccupation extends RoomOccupation_Base {
     public void delete() {
         final IPeriod period = getPeriod();
 
-        setLesson(null);
-        setPeriod(null);
-        setRoom(null);
-        setWrittenEvaluation(null);
+        removeLesson();
+        removeWrittenEvaluation();
+        removeRoom();
+        removePeriod();
 
         period.deleteIfEmpty();
 

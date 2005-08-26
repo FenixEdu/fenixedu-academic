@@ -110,8 +110,8 @@ public class Period extends Period_Base {
         if (previous != null && next != null) { 
             previous.setNextPeriod(next);
         } else {
-            setPreviousPeriod(null);
-            setNextPeriod(null);
+            removeNextPeriod();
+            removePreviousPeriod();
         }
 
         deleteDomainObject();

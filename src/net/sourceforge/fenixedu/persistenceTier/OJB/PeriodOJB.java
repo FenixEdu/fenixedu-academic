@@ -21,8 +21,8 @@ public class PeriodOJB extends ObjectFenixOJB implements IPersistentPeriod {
     public Object readByCalendarAndNextPeriod(Calendar startDate, Calendar endDate, Integer keyNextPeriod)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("startDate", startDate);
-        criteria.addEqualTo("endDate", endDate);
+        criteria.addEqualTo("start", startDate.getTime());
+        criteria.addEqualTo("end", endDate.getTime());
         if (keyNextPeriod != null) {
             criteria.addEqualTo("nextPeriod.idInternal", keyNextPeriod);
         }
