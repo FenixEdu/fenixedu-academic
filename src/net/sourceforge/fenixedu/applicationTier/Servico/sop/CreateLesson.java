@@ -81,7 +81,6 @@ public class CreateLesson implements IService {
                             .getInicio(), infoLesson.getFim(), infoLesson.getTipo(), sala,
                             roomOccupation, shift);
 
-                    sp.getIPersistentRoomOccupation().simpleLockWrite(roomOccupation);
                     aula2.setExecutionPeriod(executionPeriod);
                 } else {
                     throw new InvalidLoadException(infoShiftServiceResult.toString());
