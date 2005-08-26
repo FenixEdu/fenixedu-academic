@@ -196,6 +196,10 @@ public class InfoExecutionCourse extends InfoObject {
         _labHours = labHours;
     }
 
+    public int hashCode() {
+        return 0;
+    }
+
     public boolean equals(Object obj) {
         boolean resultado = false;
         if (obj instanceof InfoExecutionCourse) {
