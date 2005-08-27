@@ -102,8 +102,8 @@ public class DegreeCurricularPlanLEICTAGUS extends DegreeCurricularPlanLEICTAGUS
         result.add(new MaximumNumberOfCurricularCoursesEnrollmentRule(studentCurricularPlan,
                 executionPeriod));
         result.add(new PrecedencesEnrollmentRule(studentCurricularPlan, executionPeriod));
-        result.add(new PreviousYearsCurricularCourseEnrollmentRule(studentCurricularPlan,
-                executionPeriod));
+        result.add(new PreviousYearsCurricularCourseEnrollmentRuleIgnoringLastYears(
+                studentCurricularPlan, executionPeriod, 4));
         result.add(new SpecificLEICTagusEnrollmentRule(studentCurricularPlan, executionPeriod));
 
         return result;

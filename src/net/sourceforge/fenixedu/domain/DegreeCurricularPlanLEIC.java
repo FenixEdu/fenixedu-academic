@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfAc
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfCurricularCoursesEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PrecedencesEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PreviousYearsCurricularCourseEnrollmentRule;
+import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PreviousYearsCurricularCourseEnrollmentRuleIgnoringLastYears;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.SpecificLEICEnrollmentRule;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
@@ -72,8 +73,8 @@ public class DegreeCurricularPlanLEIC extends DegreeCurricularPlanLEIC_Base {
         result.add(new MaximumNumberOfCurricularCoursesEnrollmentRule(studentCurricularPlan,
                 executionPeriod));
         result.add(new PrecedencesEnrollmentRule(studentCurricularPlan, executionPeriod));
-        result.add(new PreviousYearsCurricularCourseEnrollmentRule(studentCurricularPlan,
-                executionPeriod));
+        result.add(new PreviousYearsCurricularCourseEnrollmentRuleIgnoringLastYears(
+                studentCurricularPlan, executionPeriod, 4));        
         result.add(new SpecificLEICEnrollmentRule(studentCurricularPlan, executionPeriod));
 
         return result;
