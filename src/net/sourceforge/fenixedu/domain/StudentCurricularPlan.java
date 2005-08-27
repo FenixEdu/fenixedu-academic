@@ -7,8 +7,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.cache.EnrollmentInfoCacheOSCacheImpl;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedBranchChangeException;
@@ -74,8 +74,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     // -------------------------------------------------------------
 
     public List getAllEnrollments() {
-        IStudentCurricularPlan pastStudentCurricularPlan = (IStudentCurricularPlan) CollectionUtils
-                .find(getStudent().getStudentCurricularPlans(), new Predicate() {
+        List<IStudentCurricularPlan> pastStudentCurricularPlans = (List<IStudentCurricularPlan>) CollectionUtils
+                .select(getStudent().getStudentCurricularPlans(), new Predicate() {
                     public boolean evaluate(Object obj) {
                         IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) obj;
                         return studentCurricularPlan.getCurrentState().equals(
@@ -85,8 +85,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
         List allEnrollments = new ArrayList();
 
-        if (pastStudentCurricularPlan != null) {
-            allEnrollments.addAll(pastStudentCurricularPlan.getEnrolments());
+        if (pastStudentCurricularPlans != null && !pastStudentCurricularPlans.isEmpty()) {
+        	for (IStudentCurricularPlan plan : pastStudentCurricularPlans) {
+        		allEnrollments.addAll(plan.getEnrolments());
+			}
         }
 
         allEnrollments.addAll(getEnrolments());
@@ -161,7 +163,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         int size = approvedCourses.size();
         for (int i = 0; i < size; i++) {
             ICurricularCourse curricularCourseDoneByStudent = (ICurricularCourse) approvedCourses.get(i);
-            List curricularCourseEquivalences = getCurricularCoursesInCurricularCourseEquivalences(curricularCourseDoneByStudent);
+            Set curricularCourseEquivalences = getCurricularCoursesInCurricularCourseEquivalences(curricularCourseDoneByStudent);
             if (curricularCourseEquivalences.contains(curricularCourse)) {
                 return true;
             }
@@ -177,7 +179,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         for (int i = 0; i < size; i++) {
             ICurricularCourse curricularCourseDoneByStudent = (ICurricularCourse) studentNotNeedToEnrollCourses
                     .get(i);
-            List curricularCourseEquivalences = getCurricularCoursesInCurricularCourseEquivalences(curricularCourseDoneByStudent);
+            Set curricularCourseEquivalences = getCurricularCoursesInCurricularCourseEquivalences(curricularCourseDoneByStudent);
             if (curricularCourseEquivalences.contains(curricularCourse)) {
                 return true;
             }
@@ -550,24 +552,29 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     }
 
-    protected List getCurricularCoursesInCurricularCourseEquivalences(
+    protected Set getCurricularCoursesInCurricularCourseEquivalences(
             final ICurricularCourse curricularCourse) {
+    	Set<ICurricularCourse> curricularCoursesEquivalent = new HashSet<ICurricularCourse>();
+    	List<ICurricularCourse> sameCompetenceCurricularCourses;
+    	
+    	if(curricularCourse.getCompetenceCourse() == null) {
+    		sameCompetenceCurricularCourses = new ArrayList<ICurricularCourse>();
+    		sameCompetenceCurricularCourses.add(curricularCourse);
+    	} else {
+    		sameCompetenceCurricularCourses= curricularCourse.getCompetenceCourse().getAssociatedCurricularCourses();
+    	}
+        
+    	for (ICurricularCourse course : sameCompetenceCurricularCourses) {
+    		for (ICurricularCourseEquivalence curricularCourseEquivalence : course.getOldCurricularCourseEquivalences()) {
+    			curricularCoursesEquivalent.add(curricularCourseEquivalence.getEquivalentCurricularCourse());
+			}
+		}
+    	
 
-        final EnrollmentInfoCacheOSCacheImpl cache = EnrollmentInfoCacheOSCacheImpl.getInstance();
-
-        final StringBuffer stringBuffer = new StringBuffer(96);
-        stringBuffer.append(getDegreeCurricularPlan().getIdInternal());
-        stringBuffer.append(":");
-        stringBuffer.append(curricularCourse.getName());
-        stringBuffer.append(":");
-        stringBuffer.append(curricularCourse.getCode());
-
-        final String cacheKey = stringBuffer.toString();
-        List resultCurricularCourses = (List) cache.lookup(cacheKey);
-        if (resultCurricularCourses == null) {
-            final List curricularCourseEquivalences = getDegreeCurricularPlan()
+        
+            /*final List curricularCourseEquivalences = getDegreeCurricularPlan()
                     .getCurricularCourseEquivalences();
-            resultCurricularCourses = resultCurricularCourses = new ArrayList();
+            List resultCurricularCourses = new ArrayList();
             for (int i = 0; i < curricularCourseEquivalences.size(); i++) {
                 final ICurricularCourseEquivalence curricularCourseEquivalence = (ICurricularCourseEquivalence) curricularCourseEquivalences
                         .get(i);
@@ -576,10 +583,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                     resultCurricularCourses.add(curricularCourseEquivalence
                             .getEquivalentCurricularCourse());
                 }
-            }
-            cache.cache(cacheKey, resultCurricularCourses);
-        }
-        return resultCurricularCourses;
+            }*/
+        
+        
+        return curricularCoursesEquivalent;
     }
 
     protected boolean areTheseCurricularCoursesTheSame(ICurricularCourse curricularCourse1,
@@ -803,7 +810,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         for (int i = 0; i < size; i++) {
             ICurricularCourse tempCurricularCourse = ((IEnrolment) curricularCoursesEnrollments.get(i))
                     .getCurricularCourse();
-            List curricularCourseEquivalences = getCurricularCoursesInCurricularCourseEquivalences(tempCurricularCourse);
+            Set curricularCourseEquivalences = getCurricularCoursesInCurricularCourseEquivalences(tempCurricularCourse);
             if (curricularCourseEquivalences.contains(curricularCourse)) {
                 return true;
             }
@@ -818,7 +825,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         size = studentNotNeedToEnrollCourses.size();
         for (int i = 0; i < size; i++) {
             ICurricularCourse ccNotNeedToDo = (ICurricularCourse) studentNotNeedToEnrollCourses.get(i);
-            List curricularCourseEquivalences = getCurricularCoursesInCurricularCourseEquivalences(ccNotNeedToDo);
+            Set curricularCourseEquivalences = getCurricularCoursesInCurricularCourseEquivalences(ccNotNeedToDo);
             if (curricularCourseEquivalences.contains(curricularCourse)) {
                 return true;
             }
