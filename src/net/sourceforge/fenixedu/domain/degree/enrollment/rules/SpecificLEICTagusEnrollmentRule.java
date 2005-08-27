@@ -44,7 +44,9 @@ public class SpecificLEICTagusEnrollmentRule extends SpecificLEICEnrollmentRule{
 					}
 				}
 				else {
-					optionalCourses++;
+					if(isAnyScopeActive(course.getScopes())) {
+						optionalCourses++;
+					}
 				}
 			}
 		}
@@ -68,7 +70,9 @@ public class SpecificLEICTagusEnrollmentRule extends SpecificLEICEnrollmentRule{
 				}
 			}
 			else {
-				optionalCourses++;
+				if(isAnyScopeActive(curricularCourse.getScopes())) {
+					optionalCourses++;
+				}
 			}
 		}
 		
@@ -83,13 +87,15 @@ public class SpecificLEICTagusEnrollmentRule extends SpecificLEICEnrollmentRule{
 	        for (ICurricularCourseGroup curricularCourseGroup : optionalCurricularCourseGroups) {
 				List<ICurricularCourse> optionalCurricularCourses = curricularCourseGroup.getCurricularCourses();
 				for (ICurricularCourse course : optionalCurricularCourses) {
-					if(isApproved(course) && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(course, executionPeriod)) {
+					if (!isApproved(course) && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(course, executionPeriod)) {
 						if(!studentCurricularPlan.isCurricularCourseApproved(course) && isAnyScopeActive(course.getScopes())) {
 							areaCourses.add(course);
 						}
 					}
 					else {
-						optionalCourses++;
+						if(isAnyScopeActive(course.getScopes())) {
+							optionalCourses++;
+						}
 					}
 				}
 			}
