@@ -23,6 +23,8 @@ import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
+import net.sourceforge.fenixedu.domain.exceptions.EnrolmentRuleDomainException;
+import net.sourceforge.fenixedu.domain.projectsManagement.IRubric;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
@@ -152,6 +154,13 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
         //FIXME
         if(result.isEmpty() || allTemporary(result)){
         	result.addAll(getOptionalCourses(result));
+        }
+        else {
+        	IEnrollmentRule enrollmentRule = new PreviousYearsCurricularCourseEnrollmentRule(studentCurricularPlan, executionPeriod);
+        	try {
+				result = enrollmentRule.apply(result);
+			} catch (EnrolmentRuleDomainException e) {
+			}
         }
         return result;
     }
@@ -336,7 +345,9 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 				}
 			}
 			else {
-				optionalCourses++;
+				if(isAnyScopeActive(course.getScopes())) {
+					optionalCourses++;
+				}
 			}
 		}
 		
@@ -388,7 +399,9 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 						areaCourses.add(course);
 					}
 				} else {
-					optionalCourses++;
+					if(isAnyScopeActive(course.getScopes())) {
+						optionalCourses++;
+					}
 				}
 			}
 
