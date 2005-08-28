@@ -51,6 +51,8 @@
     		dest="${roleback.filename}"/>
     	<get src="http://${htttp.host}:${http.port}/${app.name}/manager/manageCache.do?method=clearResponseCache"
     		dest="${roleback.filename}"/>
+    	<get src="http://${htttp.host}:${http.port}/${app.name}/setAcceptanceTestMode/"
+    		dest="${roleback.filename}"/>
     	<antcall target="delete-artifacts"/>
     </target>
 

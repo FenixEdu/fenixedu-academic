@@ -52,16 +52,7 @@ public class TipoSala extends FenixUtil implements Comparable {
     }
 
     public String toString() {
-        int value = this.tipo.intValue();
-        switch (value) {
-        case ANFITEATRO:
-            return "A";
-        case LABORATORIO:
-            return "L";
-        case PLANA:
-            return "P";
-        }
-        return "Error: Invalid lesson type";
+        return this.tipo.toString();
     }
 
     public int compareTo(Object arg0) {

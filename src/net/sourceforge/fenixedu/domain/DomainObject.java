@@ -9,6 +9,7 @@ import java.lang.reflect.Field;
 
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SequenceUtil;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 import org.apache.ojb.broker.core.proxy.ProxyHelper;
@@ -27,7 +28,13 @@ public abstract class DomainObject extends DomainObject_Base {
     // disabled for writting test cases. Testing domain code can be done
     // without persisting anything.
     private static boolean lockMode = true;
-    
+
+    // This variable was created so that for a predetermined set of data
+    // the next generated ID's will always be the same. This is usefull 
+    // for example for acceptance tests where the same id's must always
+    // be generated.
+    private static boolean autoDetermineId = false;
+
     private static int nextIdInternal =  1; 
 
     public static void turnOffLockMode() {
@@ -36,6 +43,15 @@ public abstract class DomainObject extends DomainObject_Base {
 
     public static void turnOnLockMode() {
         lockMode = true;
+    }
+
+    public static int autoDetermineId() {
+        autoDetermineId = true;
+        return nextIdInternal = SequenceUtil.findMaxID() + 1;
+    }
+
+    public static void stopAutoDetermineId() {
+        autoDetermineId = false;
     }
 
     protected static void doLockWriteOn(Object obj) {
@@ -72,8 +88,8 @@ public abstract class DomainObject extends DomainObject_Base {
     }
 
     private void ensureIdInternal() {
-        if (!lockMode) {
-            setIdInternal(new Integer(nextIdInternal++));
+        if (!lockMode || autoDetermineId) {
+            setIdInternal(Integer.valueOf(nextIdInternal++));
 	} else {
 	    try {
 		PersistenceBroker broker = Transaction.getOJBBroker();
