@@ -2,7 +2,7 @@
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.ExecutionCourseProperty"/>
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR" nullable="false"/>      
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty" table="GENERAL_CLASS_PROPERTY">
@@ -11,7 +11,7 @@
 	<field-descriptor name="nameString" column="NAME" jdbc-type="VARCHAR" nullable="false"/>
 	<field-descriptor name="valueString" column="VALUE" jdbc-type="VARCHAR" nullable="false"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR" nullable="false"/>      
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
     <reference-descriptor auto-retrieve="false" name="executionCourse" class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse">
 	    <foreignkey field-ref="keyExecutionCourse"/>
     </reference-descriptor>

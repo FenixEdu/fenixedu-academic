@@ -35,7 +35,7 @@
          name="version"
          column="VERSION"
          jdbc-type="INTEGER"
-         locking="true"
+         locking="false"
       />
    </class-descriptor>
 

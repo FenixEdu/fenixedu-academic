@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.lang.reflect.Proxy;
+import java.lang.reflect.Field;
 
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -15,6 +16,7 @@ import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
 
 import net.sourceforge.fenixedu.stm.Transaction;
+import net.sourceforge.fenixedu.stm.InvalidateSubject;
 
 /**
  * @author jpvl
@@ -46,8 +48,12 @@ public abstract class DomainObject extends DomainObject_Base {
         }
     }
 
-    protected static void noteStore(Object obj, String attrName) {
-	Transaction.storeObject(obj);
+    protected static void logAttrChange(DomainObject obj, String attrName) {
+	Transaction.logAttrChange(obj, attrName);
+    }
+
+    protected static void noteStore(DomainObject obj, String attrName) {
+	Transaction.storeObject(obj, attrName);
     }
 
 
@@ -62,6 +68,7 @@ public abstract class DomainObject extends DomainObject_Base {
 	ensureIdInternal();
 
 	Transaction.storeNewObject(this);
+	setAckOptLock(new Integer(0));
     }
 
     private void ensureIdInternal() {
@@ -111,5 +118,23 @@ public abstract class DomainObject extends DomainObject_Base {
                 throw new Error("Couldn't delete object", e);
             }
         }
+    }
+
+    public void invalidate(String attrName, int txNumber) {
+	Class myClass = this.getClass();
+	while (myClass != Object.class) {
+	    try {
+		Field f = myClass.getDeclaredField(attrName);
+		f.setAccessible(true);
+		((InvalidateSubject)f.get(this)).invalidate(txNumber);
+		return;
+	    } catch (NoSuchFieldException nsfe) {
+		myClass = myClass.getSuperclass();
+	    } catch (IllegalAccessException iae) {
+		throw new Error("Couldn't invalidate attribute " + attrName + ": " + iae);
+	    } catch (SecurityException se) {
+		throw new Error("Couldn't invalidate attribute " + attrName + ": " + se);
+	    }
+	}
     }
 }

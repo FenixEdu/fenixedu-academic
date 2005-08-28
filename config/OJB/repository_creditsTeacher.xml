@@ -17,7 +17,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
       
       <reference-descriptor auto-retrieve="false" name="professorship" class-ref="net.sourceforge.fenixedu.domain.Professorship">
@@ -45,7 +45,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
       
       <reference-descriptor auto-retrieve="false" name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher">
@@ -67,7 +67,7 @@
       <field-descriptor name="start" column="START_DATE" jdbc-type="DATE" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDate2SqlDateConversion"/>
       <field-descriptor name="end" column="END_DATE" jdbc-type="DATE" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDate2SqlDateConversion"/>            
 
-      <field-descriptor	name="ackOptLock" column="ACK_OPT_LOCK"	jdbc-type="INTEGER"	locking="true"/>
+      <field-descriptor	name="ackOptLock" column="ACK_OPT_LOCK"	jdbc-type="INTEGER"	locking="false"/>
       
       <reference-descriptor auto-retrieve="false" name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher">
          <foreignkey field-ref="keyTeacher"/>
@@ -87,7 +87,7 @@
       <field-descriptor name="start" column="START_DATE" jdbc-type="DATE" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDate2SqlDateConversion"/>
       <field-descriptor name="end" column="END_DATE" jdbc-type="DATE" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDate2SqlDateConversion"/>            
 
-      <field-descriptor	name="ackOptLock" column="ACK_OPT_LOCK"	jdbc-type="INTEGER"	locking="true"/>
+      <field-descriptor	name="ackOptLock" column="ACK_OPT_LOCK"	jdbc-type="INTEGER"	locking="false"/>
       
       <reference-descriptor auto-retrieve="false" name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher">
          <foreignkey field-ref="keyTeacher"/>
@@ -110,7 +110,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 
       <reference-descriptor auto-retrieve="false" name="executionPeriod" class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
@@ -150,7 +150,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	
 	<reference-descriptor auto-retrieve="false" name="teacher"  class-ref="net.sourceforge.fenixedu.domain.Teacher">
@@ -179,7 +179,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="associatedTeachingCareers"

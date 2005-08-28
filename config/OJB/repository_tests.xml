@@ -70,7 +70,7 @@
 		name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
 	/>
     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="visibleQuestions"
@@ -123,7 +123,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	<reference-descriptor auto-retrieve="false"
          name="metadata"
@@ -190,7 +190,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	<reference-descriptor auto-retrieve="false"
          name="testScope"
@@ -247,7 +247,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	<reference-descriptor auto-retrieve="false"
          name="question"
@@ -337,7 +337,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	<reference-descriptor auto-retrieve="false"
          name="testScope"
@@ -430,7 +430,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
      <reference-descriptor auto-retrieve="false"
         name="student"
@@ -486,7 +486,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
     <reference-descriptor auto-retrieve="false"
          name="student"
@@ -534,7 +534,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedExecutionCoursesForOnlineTest"
@@ -584,7 +584,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="tests"
@@ -626,7 +626,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	<reference-descriptor auto-retrieve="false"
          name="distributedTest"

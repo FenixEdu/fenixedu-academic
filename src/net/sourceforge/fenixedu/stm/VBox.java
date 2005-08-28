@@ -2,8 +2,9 @@ package net.sourceforge.fenixedu.stm;
 
 import jvstm.VBoxBody;
 
-public class VBox<E> extends jvstm.VBox<E> {
-    static final VBoxBody NOT_LOADED_YET = new SingleVersionBoxBody(null, -2);
+public class VBox<E> extends jvstm.VBox<E> implements InvalidateSubject {
+    static final Object NOT_LOADED_VALUE = new Object();
+    static final VBoxBody NOT_LOADED_BODY = new SingleVersionBoxBody(NOT_LOADED_VALUE, -2);
 
     public VBox() {
         super();
@@ -25,39 +26,66 @@ public class VBox<E> extends jvstm.VBox<E> {
 	return new SingleVersionBoxBody<E>();
     }
 
-    public boolean isLoaded() {
-	return (this.body != NOT_LOADED_YET);
+    public boolean hasValue() {
+	VBoxBody<E> body = Transaction.currentFenixTransaction().getBodyInTx(this);
+	if (body == null) {
+	    body = this.body;
+	}
+	return (body.value != NOT_LOADED_VALUE);
     }
 
-    public void persistentLoad(E value) {
-	TopLevelTransaction tx = (TopLevelTransaction)Transaction.currentFenixTransaction();
-	VBoxBody exists = tx.getBodyWrittenForBox(this);
-	if (exists != null) {
-	    System.out.println("#### Persistent load for box with existing body written");
-// 	    try {
-// 		throw new Exception("Bump");
-// 	    } catch (Exception e) {
-// 		e.printStackTrace();
-// 	    }
+    protected synchronized void persistentLoad(Object obj, String attr, E value) {
+	int txNumber = Transaction.current().getNumber();
+	if ((body.value == NOT_LOADED_VALUE) && (body.version <= txNumber)) {
+	    int newerVersion = Transaction.findVersionFor(obj, attr, txNumber);
+	    if (newerVersion <= txNumber) {
+		VBoxBody<E> body = new SingleVersionBoxBody(value, txNumber);
+		this.body = body;
+	    } else {
+		invalidate(newerVersion);
+	    }
 	}
-	exists = tx.getBodyReadForBox(this);
-	if (exists != null) {
-	    System.out.println("++++ Persistent load for box with existing body read");
-// 	    try {
-// 		throw new Exception("Bump");
-// 	    } catch (Exception e) {
-// 		e.printStackTrace();
-// 	    }
-	}
-	VBoxBody<E> body = new SingleVersionBoxBody(value, Transaction.current().getNumber());
-	this.body = body;
     }
 
-    public static <T> VBox<T> makeNew(boolean allocateOnly) {
-	if (allocateOnly) {
-	    return new VBox<T>(NOT_LOADED_YET);
+    public synchronized void invalidate(int txNumber) {
+	if (body.version < txNumber) {
+	    VBoxBody<E> body = new SingleVersionBoxBody(NOT_LOADED_VALUE, txNumber);
+	    this.body = body;
+	}
+    }
+
+    boolean reload(Object obj, String attr) {
+	boolean loading = VBox.setLoading(true);
+	try {
+	    doReload(obj, attr);
+	    return true;
+	} catch (Exception e) {
+	    // what to do?
+	    System.err.println("Couldn't reload attribute '" + attr + "'");
+	    //e.printStackTrace();
+	    return false;
+	} finally {
+	    VBox.setLoading(loading);
+	}
+    }
+
+    protected void doReload(Object obj, String attr) {
+	throw new Error("Can't reload a simple VBox.  Use a PrimitiveBox or a ReferenceBox instead.");
+    }
+
+    public static <T> VBox<T> makeNew(boolean allocateOnly, boolean isReference) {
+	if (isReference) {
+	    if (allocateOnly) {
+		return new ReferenceBox<T>(NOT_LOADED_BODY);
+	    } else {
+		return new ReferenceBox<T>();
+	    }
 	} else {
-	    return new VBox<T>();
+	    if (allocateOnly) {
+		return new PrimitiveBox<T>(NOT_LOADED_BODY);
+	    } else {
+		return new PrimitiveBox<T>();
+	    }
 	}
     }
 
@@ -80,9 +108,9 @@ public class VBox<E> extends jvstm.VBox<E> {
 
     
 
-    public void setFromOJB(E value) {
+    public void setFromOJB(Object obj, String attr, E value) {
 	if (isLoading()) {
-	    persistentLoad(value);
+	    persistentLoad(obj, attr, value);
 	} else {
 	    put(value);
 	}

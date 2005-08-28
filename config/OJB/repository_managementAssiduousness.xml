@@ -13,7 +13,7 @@
 	   	name="ackOptLock"
 	  	column="ACK_OPT_LOCK"
 	   	jdbc-type="INTEGER"
-	   	locking="true"
+	   	locking="false"
 	/>
 	<field-descriptor
 	    name="initialValue"
@@ -80,7 +80,7 @@
    		name="ackOptLock"
 	  	column="ACK_OPT_LOCK"
 	   	jdbc-type="INTEGER"
-	   	locking="true"
+	   	locking="false"
   	/>
 	<field-descriptor
     	name="day"
@@ -219,7 +219,7 @@
    		name="ackOptLock"
 	  	column="ACK_OPT_LOCK"
 	   	jdbc-type="INTEGER"
-	   	locking="true"
+	   	locking="false"
   	/>
 	<field-descriptor
     	name="beginDate"
@@ -357,7 +357,7 @@
    		name="ackOptLock"
 	  	column="ACK_OPT_LOCK"
 	   	jdbc-type="INTEGER"
-	   	locking="true"
+	   	locking="false"
   	/>
 	<field-descriptor
     	name="beginDate"
@@ -431,7 +431,7 @@
    		name="ackOptLock"
 	  	column="ACK_OPT_LOCK"
 	   	jdbc-type="INTEGER"
-	   	locking="true"
+	   	locking="false"
   	/>	
   	<field-descriptor
    		name="year"

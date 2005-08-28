@@ -90,7 +90,7 @@
 		name="ackOptLock"
 		column="ACK_OPT_LOCK"
 		jdbc-type="INTEGER"
-		locking="true"
+		locking="false"
 	/>
 	<field-descriptor
 		name="concreteClassForStudentCurricularPlans"
@@ -238,7 +238,7 @@
 		name="ackOptLock"
 		column="ACK_OPT_LOCK"
 		jdbc-type="INTEGER"
-		locking="true"
+		locking="false"
 	/>
 	<field-descriptor
 		name="concreteClassForStudentCurricularPlans"
@@ -385,7 +385,7 @@
 		name="ackOptLock"
 		column="ACK_OPT_LOCK"
 		jdbc-type="INTEGER"
-		locking="true"
+		locking="false"
 	/>
 	<field-descriptor
 		name="concreteClassForStudentCurricularPlans"
@@ -532,7 +532,7 @@
 		name="ackOptLock"
 		column="ACK_OPT_LOCK"
 		jdbc-type="INTEGER"
-		locking="true"
+		locking="false"
 	/>
 	<field-descriptor
 		name="concreteClassForStudentCurricularPlans"
@@ -680,7 +680,7 @@
 		name="ackOptLock"
 		column="ACK_OPT_LOCK"
 		jdbc-type="INTEGER"
-		locking="true"
+		locking="false"
 	/>
 	<field-descriptor
 		name="concreteClassForStudentCurricularPlans"
@@ -828,7 +828,7 @@
 		name="ackOptLock"
 		column="ACK_OPT_LOCK"
 		jdbc-type="INTEGER"
-		locking="true"
+		locking="false"
 	/>
 	<field-descriptor
 		name="concreteClassForStudentCurricularPlans"
@@ -975,7 +975,7 @@
 		name="ackOptLock"
 		column="ACK_OPT_LOCK"
 		jdbc-type="INTEGER"
-		locking="true"
+		locking="false"
 	/>
 	<field-descriptor
 		name="concreteClassForStudentCurricularPlans"
@@ -1122,7 +1122,7 @@
 		name="ackOptLock"
 		column="ACK_OPT_LOCK"
 		jdbc-type="INTEGER"
-		locking="true"
+		locking="false"
 	/>
 	<field-descriptor
 		name="concreteClassForStudentCurricularPlans"

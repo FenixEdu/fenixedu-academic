@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.applicationTier.logging.ServiceExecutionLog;
 import net.sourceforge.fenixedu.applicationTier.logging.SystemInfo;
 import net.sourceforge.fenixedu.applicationTier.logging.UserExecutionLog;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.stm.VersionNotAvailableException;
 
 import org.apache.commons.collections.FastHashMap;
 import org.apache.log4j.Logger;
@@ -131,17 +132,21 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
             }
 
 	    // Replace this line with the following block if conflicting transactions should restart automatically
-	    Object serviceResult = manager.execute(id, service, method, args);
+	    //Object serviceResult = manager.execute(id, service, method, args);
 
-	    // 	    Object serviceResult = null;
-	    // 	    while (true) {
-	    // 		try {
-	    // 		    serviceResult = manager.execute(id, service, method, args);
-	    // 		    break;
-	    // 		} catch (jvstm.CommitException e) {
-	    // 		    // repeat service
-	    // 		}
-	    // 	    }
+	    Object serviceResult = null;
+	    while (true) {
+		try {
+		    serviceResult = manager.execute(id, service, method, args);
+		    break;
+		} catch (VersionNotAvailableException vnae) {
+		    System.out.println("Restarting TX because of VersionNotAvailableException");
+		    // repeat service
+		} catch (jvstm.CommitException ce) {
+		    System.out.println("Restarting TX because of CommitException");
+		    // repeat service
+		}
+	    }
 
             if (serviceLoggingIsOn || (userLoggingIsOn && id != null)) {
                 serviceEndTime = Calendar.getInstance();

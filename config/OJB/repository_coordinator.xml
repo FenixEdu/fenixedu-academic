@@ -16,7 +16,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
      <field-descriptor
 		name="responsible"
@@ -62,7 +62,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 			<field-descriptor
 				name="degreeKey"
@@ -206,7 +206,7 @@
       		name="ackOptLock"
 	      	column="ACK_OPT_LOCK"
     	  	jdbc-type="INTEGER"
-      		locking="true"
+      		locking="false"
       	/>
 		<field-descriptor
 			name="teacherKey"

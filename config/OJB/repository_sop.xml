@@ -10,7 +10,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
       <field-descriptor
          name="name"
@@ -65,7 +65,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
       <field-descriptor
          name="keyBuilding"
@@ -156,7 +156,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
       <reference-descriptor auto-retrieve="false"
          name="executionDegree"
@@ -224,7 +224,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
       <reference-descriptor auto-retrieve="false"
          name="disciplinaExecucao"
@@ -335,7 +335,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
       <reference-descriptor auto-retrieve="false"
          name="sala"
@@ -395,7 +395,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
       <reference-descriptor auto-retrieve="false"
          name="aluno"
@@ -445,7 +445,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
       <reference-descriptor auto-retrieve="false" name="exam" class-ref="net.sourceforge.fenixedu.domain.Exam" >
          <foreignkey field-ref="keyExam"/>
@@ -478,7 +478,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
       <field-descriptor
         name="publishmentMessage"
@@ -536,7 +536,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
       <reference-descriptor auto-retrieve="false"
          name="attend"
@@ -607,7 +607,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
       <field-descriptor
          name="keyWrittenEvaluation"
@@ -676,7 +676,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
       <reference-descriptor auto-retrieve="false"
          name="nextPeriod"
@@ -746,7 +746,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedExecutionCourses"
@@ -829,7 +829,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedExecutionCourses"
@@ -927,7 +927,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedExecutionCourses"
@@ -1029,7 +1029,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedExecutionCourses"

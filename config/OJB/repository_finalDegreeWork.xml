@@ -12,7 +12,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
       <field-descriptor
       	name="proposalNumber"
@@ -204,7 +204,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
       <field-descriptor
       	name="currentProposalNumber"
@@ -305,7 +305,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
       <field-descriptor
          name="keyExecutionDegree"
@@ -347,7 +347,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
       <field-descriptor
          name="keyFinalDegreeDegreeWorkGroup"
@@ -390,7 +390,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
       <field-descriptor
          name="keyFinalDegreeDegreeWorkGroup"

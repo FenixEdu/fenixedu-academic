@@ -6,9 +6,7 @@ import java.util.AbstractList;
 
 import jvstm.PerTxBox;
 
-public abstract class RelationList<E> extends AbstractList<E> {
-    public static boolean report = false;
-
+public abstract class RelationList<E> extends AbstractList<E> implements InvalidateSubject {
     private Object listHolder;
     private String attributeName;
     private VBox<FunctionalSet<E>> elements;
@@ -27,10 +25,14 @@ public abstract class RelationList<E> extends AbstractList<E> {
 	this.listHolder = listHolder;
 	this.attributeName = attributeName;
 	if (allocateOnly) {
-	    elements = VBox.makeNew(allocateOnly);
+	    elements = VBox.makeNew(allocateOnly, true);
 	} else {
 	    elements = new VBox<FunctionalSet<E>>(FunctionalSet.EMPTY);
 	}
+    }
+
+    public void invalidate(int txNumber) {
+	elements.invalidate(txNumber);
     }
 
     protected abstract void addToRelation(E element);
@@ -42,8 +44,12 @@ public abstract class RelationList<E> extends AbstractList<E> {
     }
 
     protected void consolidateElementsIfLoaded() {
-	if (elements.isLoaded()) {
+	if (elements.hasValue()) {
 	    consolidateElements();
+	} else {
+	    if (elementsToAdd.get().size() + elementsToRemove.get().size() > 0) {
+		elements.invalidate(Transaction.current().getNumber());
+	    }
 	}
     }
 
@@ -72,8 +78,8 @@ public abstract class RelationList<E> extends AbstractList<E> {
 	}
     }
 
-    public void setFromOJB(OJBFunctionalSetWrapper ojbList) {
-	elements.setFromOJB(ojbList.getElements());
+    public void setFromOJB(Object obj, String attr, OJBFunctionalSetWrapper ojbList) {
+	elements.setFromOJB(obj, attr, ojbList.getElements());
     }
 
     public void justAdd(E obj) {
@@ -133,7 +139,6 @@ public abstract class RelationList<E> extends AbstractList<E> {
     }
 
     public Iterator<E> iterator() {
-	//System.out.println("calling rellist iterator");
 	return new RelationListIterator<E>(this);
     }
 
@@ -156,9 +161,6 @@ public abstract class RelationList<E> extends AbstractList<E> {
 	    X result = iter.next();
 	    canRemove = true;
 	    previous = result;
-	    if (report) {
-		System.out.println("++++++  next in rellist is " + result);
-	    }
 	    return result;
 	}
 	    

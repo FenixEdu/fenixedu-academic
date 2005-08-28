@@ -1,7 +1,7 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute" table="PUBLICATION_ATTRIBUTE">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
 	<field-descriptor name="keyPublicationType" column="KEY_PUBLICATION_TYPE" jdbc-type="INTEGER"/>
 	<field-descriptor name="keyAttribute" column="KEY_ATTRIBUTE" jdbc-type="INTEGER"/>
 	<field-descriptor name="required" column="REQUIRED" jbdc-type="BIT"/>
@@ -22,7 +22,7 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.publication.PublicationType -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.publication.PublicationType" table="PUBLICATION_TYPE">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
 	<field-descriptor name="publicationType" column="PUBLICATION_TYPE" jdbc-type="VARCHAR"/>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="publicationTypeAttributes"
@@ -45,7 +45,7 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.publication.Attribute -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.publication.Attribute" table="ATTRIBUTE">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
 	<field-descriptor name="attributeType" column="ATTRIBUTE_TYPE" jdbc-type="VARCHAR"/>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="publicationTypeAttributes"
@@ -58,7 +58,7 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.publication.Publication" table="PUBLICATION_DATA">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="keyPublicationType" column="KEY_PUBLICATION_TYPE" jdbc-type="INTEGER" nullable="false"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
 	<field-descriptor name="subType" column="SUB_TYPE" jdbc-type="VARCHAR"/>
 	<field-descriptor name="journalName" column="JOURNAL_NAME" jdbc-type="VARCHAR"/>
 	<field-descriptor name="title" column="TITLE" jdbc-type="VARCHAR"/>
@@ -119,7 +119,7 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.publication.PublicationSubtype -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.publication.PublicationSubtype" table="PUBLICATION_SUBTYPE">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
     <field-descriptor name="keyPublicationType" column="KEY_PUBLICATION_TYPE" jdbc-type="INTEGER" nullable="false"/>
     <field-descriptor name="subtype" column="SUBTYPE" jdbc-type="VARCHAR"/>
 
@@ -132,7 +132,7 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.publication.PublicationFormat -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.publication.PublicationFormat" table="PUBLICATION_FORMAT">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
     <field-descriptor name="format" column="FORMAT" jdbc-type="VARCHAR"/>
 </class-descriptor>
 
@@ -144,7 +144,7 @@
 	<field-descriptor name="keyPublication" column="KEY_PUBLICATION" jdbc-type="INTEGER" />
 	<field-descriptor name="keyAuthor" column="KEY_AUTHOR" jdbc-type="INTEGER" />
 	<field-descriptor name="order" column="AUTHOR_ORDER" jdbc-type="INTEGER" />
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
 	<reference-descriptor auto-retrieve="false" name="author" class-ref="net.sourceforge.fenixedu.domain.Person" 	>
 		<foreignkey field-ref="keyAuthor"/>
 	</reference-descriptor>
@@ -161,7 +161,7 @@
 	<field-descriptor name="keyPublication" column="KEY_PUBLICATION" jdbc-type="INTEGER"/>
 	<field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
 	<field-descriptor name="publicationArea" column="PUBLICATION_AREA" jdbc-type="VARCHAR" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.PublicationArea2SqlPublicationAreaFieldConversion"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
 	<reference-descriptor auto-retrieve="false"
 			name="teacher"
 			class-ref="net.sourceforge.fenixedu.domain.Teacher"

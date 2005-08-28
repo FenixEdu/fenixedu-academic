@@ -98,7 +98,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 
       	  <reference-descriptor auto-retrieve="false"
@@ -194,7 +194,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	  
 	  <reference-descriptor auto-retrieve="false"
@@ -247,7 +247,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	  
 	 </class-descriptor>
@@ -339,7 +339,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	 
  	  <reference-descriptor auto-retrieve="false"
@@ -452,7 +452,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	  
 	   <reference-descriptor auto-retrieve="false"
@@ -525,7 +525,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	  
 	   <reference-descriptor auto-retrieve="false"
@@ -575,7 +575,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="guides"
@@ -671,7 +671,7 @@
 			  name="ackOptLock"
 			  column="ACK_OPT_LOCK"
 			  jdbc-type="INTEGER"
-			  locking="true"
+			  locking="false"
 		  />
 	   <reference-descriptor auto-retrieve="false"
          	name="person"
@@ -729,7 +729,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
         
 	   <reference-descriptor auto-retrieve="false"
@@ -785,7 +785,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
         
     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
@@ -867,7 +867,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
                 
         <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
@@ -1011,7 +1011,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 
 		<reference-descriptor auto-retrieve="false"
@@ -1090,7 +1090,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 
 		<reference-descriptor auto-retrieve="false"
@@ -1177,7 +1177,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
  	 <reference-descriptor auto-retrieve="false"
          	name="guide"
@@ -1264,7 +1264,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
  	  <reference-descriptor auto-retrieve="false"
          	name="reimbursementGuide"
@@ -1321,7 +1321,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
       
 	  <reference-descriptor auto-retrieve="false"
@@ -1371,7 +1371,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
       
   	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
@@ -1462,7 +1462,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
     />   	
     <reference-descriptor auto-retrieve="false"
       	name="executionDegree"
@@ -1568,7 +1568,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
     />    
     <reference-descriptor auto-retrieve="false"
       	name="gratuityValues"
@@ -1645,7 +1645,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
     />      	    
     <reference-descriptor auto-retrieve="false"
       	name="gratuityValues"
@@ -1677,7 +1677,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
     />
     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
     	name="sibsPaymentFileEntries"
@@ -1710,7 +1710,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
     />
     <field-descriptor
    		name="keySibsPaymentFile"

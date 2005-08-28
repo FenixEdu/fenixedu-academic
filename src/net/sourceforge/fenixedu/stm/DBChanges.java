@@ -7,10 +7,14 @@ import java.util.Map;
 import java.util.HashMap;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerException;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
+import org.apache.ojb.broker.OptimisticLockException;
+import org.apache.ojb.broker.accesslayer.LookupException;
 
 import org.apache.ojb.broker.metadata.ClassDescriptor;
 import org.apache.ojb.broker.metadata.CollectionDescriptor;
@@ -18,8 +22,12 @@ import org.apache.ojb.broker.core.ValueContainer;
 
 import org.apache.ojb.broker.util.ObjectModificationDefaultImpl;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
+
+
 class DBChanges {
     private PersistenceBroker broker;
+    private Set<AttrChangeLog> attrChangeLogs = null;
     private Set newObjs = null;
     private Set objsToStore = null;
     private Set objsToDelete = null;
@@ -39,6 +47,12 @@ class DBChanges {
 	return broker;
     }
 
+    public void logAttrChange(DomainObject obj, String attrName) {
+	if (attrChangeLogs == null) {
+	    attrChangeLogs = new HashSet<AttrChangeLog>();
+	}
+	attrChangeLogs.add(new AttrChangeLog(obj, attrName));
+    }
 
     public void storeNewObject(Object obj) {
 	if (newObjs == null) {
@@ -50,7 +64,9 @@ class DBChanges {
 	}
     }
 
-    public void storeObject(Object obj) {
+    public void storeObject(DomainObject obj, String attrName) {
+	logAttrChange(obj, attrName);
+
 	if (objsToStore == null) {
 	    objsToStore = new HashSet();
 	}
@@ -98,63 +114,62 @@ class DBChanges {
 	}
     }
 
-    void makePersistent(int txNumber) {
-	PersistenceBroker pb = null;
+    void makePersistent(int txNumber) throws SQLException, LookupException {
+	PersistenceBroker pb = getOJBBroker();
 
-	try {
-	    pb = getOJBBroker();
-	    pb.beginTransaction();
-
-	    // store new objects
-	    if (newObjs != null) {
-		for (Object obj : newObjs) {
-		    pb.store(obj, ObjectModificationDefaultImpl.INSERT);
-		}
+	// store new objects
+	if (newObjs != null) {
+	    for (Object obj : newObjs) {
+		pb.store(obj, ObjectModificationDefaultImpl.INSERT);
 	    }
-
-	    // update objects
-	    if (objsToStore != null) {
-		for (Object obj : objsToStore) {
-		    //pb.serviceBrokerHelper().link(obj, true);
+	}
+	
+	boolean foundOptimisticException = false;
+	
+	// update objects
+	if (objsToStore != null) {
+	    for (Object obj : objsToStore) {
+		try {
 		    pb.store(obj, ObjectModificationDefaultImpl.UPDATE);
+		} catch (OptimisticLockException ole) {
+		    pb.removeFromCache(obj);
+		    foundOptimisticException = true;
 		}
 	    }
+	}
+	
+	if (foundOptimisticException) {
+	    throw new jvstm.CommitException();
+	}
 
-	    // delete objects
-	    if (objsToDelete != null) {
-		for (Object obj : objsToDelete) {
-		    pb.delete(obj);
-		}
+	// delete objects
+	if (objsToDelete != null) {
+	    for (Object obj : objsToDelete) {
+		pb.delete(obj);
 	    }
+	}
+	
+	// write m-to-n tuples
+	if (mToNTuples != null) {
+	    for (RelationTupleInfo info : mToNTuples.values()) {
+		updateMtoNRelation(pb, info);
+	    }		
+	}
 	    
-	    // write m-to-n tuples
-	    if (mToNTuples != null) {
-		for (RelationTupleInfo info : mToNTuples.values()) {
-		    updateMtoNRelation(pb, info);
-		}		
+	// write change logs
+	if (attrChangeLogs != null) {
+	    Connection conn = pb.serviceConnectionManager().getConnection();
+	    PreparedStatement stmt = conn.prepareStatement("INSERT INTO TX_CHANGE_LOGS VALUES (?,?,?,?)");
+
+	    stmt.setInt(4, txNumber);
+
+	    for (AttrChangeLog log : attrChangeLogs) {
+		stmt.setString(1, log.obj.getClass().getName());
+		stmt.setInt(2, log.obj.getIdInternal());
+		stmt.setString(3, log.attr);
+
+		stmt.executeUpdate();
 	    }
-	    
-	    // write change logs
-	    //Connection conn = pb.serviceConnectionManager().getConnection();
-	    
-	    
-	    pb.commitTransaction();
-	    pb.close();
-	    pb = null;
-	} catch (PersistenceBrokerException e) {
-	    e.printStackTrace();
-	    if (pb != null) {
-		pb.abortTransaction();
-		pb.close();
-		pb = null;
-	    }
-	    // this shouldn't happen
-	    throw new Error(e);
-	} finally {
-	    if (pb != null) {
-		pb.close();
-	    }
-	    broker = null;
 	}
     }
 
@@ -196,12 +211,12 @@ class DBChanges {
     }
 
     static class RelationTupleInfo {
-	String relation;
-	Object obj1;
-	String colNameOnObj1;
-	Object obj2;
-	String colNameOnObj2;
-	boolean remove;
+	final String relation;
+	final Object obj1;
+	final String colNameOnObj1;
+	final Object obj2;
+	final String colNameOnObj2;
+	final boolean remove;
 
 	RelationTupleInfo(String relation, Object obj1, String colNameOnObj1, Object obj2, String colNameOnObj2, boolean remove) {
 	    this.relation = relation;
@@ -220,6 +235,29 @@ class DBChanges {
 	    if ((obj != null) && (obj.getClass() == this.getClass())) {
 		RelationTupleInfo other = (RelationTupleInfo)obj;
 		return this.relation.equals(other.relation) && this.obj1.equals(other.obj1) && this.obj2.equals(other.obj2);
+	    } else {
+		return false;
+	    }
+	}
+    }
+
+    static class AttrChangeLog {
+	final DomainObject obj;
+	final String attr;
+
+	AttrChangeLog(DomainObject obj, String attr) {
+	    this.obj = obj;
+	    this.attr = attr;
+	}
+
+	public int hashCode() {
+	    return System.identityHashCode(obj) + attr.hashCode();
+	}
+	
+	public boolean equals(Object obj) {
+	    if ((obj != null) && (obj.getClass() == this.getClass())) {
+		AttrChangeLog other = (AttrChangeLog)obj;
+		return (this.obj == other.obj) && this.attr.equals(other.attr);
 	    } else {
 		return false;
 	    }

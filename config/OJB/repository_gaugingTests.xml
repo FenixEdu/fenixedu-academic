@@ -45,7 +45,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
         <reference-descriptor auto-retrieve="false" name="student" class-ref="net.sourceforge.fenixedu.domain.Student" >
             <foreignkey field-ref="keyStudent"/>

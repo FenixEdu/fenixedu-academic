@@ -24,7 +24,7 @@
 			name="ackOptLock"
 			column="ACK_OPT_LOCK"
 			jdbc-type="INTEGER"
-			locking="true"
+			locking="false"
 	/>
 	<field-descriptor
 			name="ojbConcreteClass"
@@ -80,7 +80,7 @@
 			name="ackOptLock"
 			column="ACK_OPT_LOCK"
 			jdbc-type="INTEGER"
-			locking="true"
+			locking="false"
 	/>
 	<field-descriptor
 			name="ojbConcreteClass"
@@ -230,7 +230,7 @@
 		name="ackOptLock"
 		column="ACK_OPT_LOCK"
 		jdbc-type="INTEGER"
-		locking="true"
+		locking="false"
 	/>
 	<field-descriptor
 		name="maximumValueForAcumulatedEnrollments"
@@ -435,7 +435,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	  
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
@@ -471,7 +471,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	<reference-descriptor auto-retrieve="false"
 			name="curricularYear"
@@ -525,7 +525,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	<reference-descriptor auto-retrieve="false"
 		name="enrolment"
@@ -566,7 +566,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	<reference-descriptor auto-retrieve="false"
 		name="enrolmentEquivalence"
@@ -633,7 +633,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	<reference-descriptor auto-retrieve="false"
 			name="curricularCourse"
@@ -699,7 +699,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	  
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
@@ -787,7 +787,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	<reference-descriptor auto-retrieve="false"
 			name="personResponsibleForGrade"
@@ -837,7 +837,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedCurricularCourses"
@@ -877,7 +877,7 @@
 		name="ackOptLock"
 		column="ACK_OPT_LOCK"
 		jdbc-type="INTEGER"
-		locking="true"
+		locking="false"
 	/>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="curricularCourseGroups"
@@ -938,7 +938,7 @@
 		name="ackOptLock"
 		column="ACK_OPT_LOCK"
 		jdbc-type="INTEGER"
-		locking="true"
+		locking="false"
 	/>
 	<reference-descriptor auto-retrieve="false"
 			name="studentCurricularPlan"
@@ -990,7 +990,7 @@
 		name="ackOptLock"
 		column="ACK_OPT_LOCK"
 		jdbc-type="INTEGER"
-		locking="true"
+		locking="false"
 	/>
 	<reference-descriptor auto-retrieve="false"
 			name="studentCurricularPlan"
@@ -1031,7 +1031,7 @@
 		name="ackOptLock"
 		column="ACK_OPT_LOCK"
 		jdbc-type="INTEGER"
-		locking="true"
+		locking="false"
 	/>
 	<reference-descriptor auto-retrieve="false"
 			name="curricularCourse"

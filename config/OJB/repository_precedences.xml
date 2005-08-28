@@ -1,7 +1,7 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.precedences.Precedence" table="PRECEDENCE">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
 	<field-descriptor name="keyCurricularCourse" column="KEY_CURRICULAR_COURSE" jdbc-type="INTEGER" nullable="false"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
     <reference-descriptor auto-retrieve="false" name="curricularCourse" class-ref="net.sourceforge.fenixedu.domain.CurricularCourse">
 	    <foreignkey field-ref="keyCurricularCourse"/>
     </reference-descriptor>
@@ -29,7 +29,7 @@
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
     <reference-descriptor auto-retrieve="false" name="precedence" class-ref="net.sourceforge.fenixedu.domain.precedences.Precedence" >
 	    <foreignkey field-ref="keyPrecedence"/>
     </reference-descriptor>
@@ -40,7 +40,7 @@
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
     <reference-descriptor auto-retrieve="false" name="precedence" class-ref="net.sourceforge.fenixedu.domain.precedences.Precedence" >
 	    <foreignkey field-ref="keyPrecedence"/>
     </reference-descriptor>
@@ -52,7 +52,7 @@
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
     <reference-descriptor auto-retrieve="false" name="precedence" class-ref="net.sourceforge.fenixedu.domain.precedences.Precedence" >
 	    <foreignkey field-ref="keyPrecedence"/>
     </reference-descriptor>
@@ -66,7 +66,7 @@
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
     <reference-descriptor auto-retrieve="false" name="precedence" class-ref="net.sourceforge.fenixedu.domain.precedences.Precedence" >
 	    <foreignkey field-ref="keyPrecedence"/>
     </reference-descriptor>
@@ -81,7 +81,7 @@
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
     <reference-descriptor auto-retrieve="false" name="precedence" class-ref="net.sourceforge.fenixedu.domain.precedences.Precedence" >
 	    <foreignkey field-ref="keyPrecedence"/>
     </reference-descriptor>
@@ -97,7 +97,7 @@
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
     <reference-descriptor auto-retrieve="false" name="precedence" class-ref="net.sourceforge.fenixedu.domain.precedences.Precedence" >
 	    <foreignkey field-ref="keyPrecedence"/>
     </reference-descriptor>
@@ -111,7 +111,7 @@
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
     <reference-descriptor auto-retrieve="false" name="precedence" class-ref="net.sourceforge.fenixedu.domain.precedences.Precedence" >
 	    <foreignkey field-ref="keyPrecedence"/>
     </reference-descriptor>
@@ -125,7 +125,7 @@
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
     <reference-descriptor auto-retrieve="false" name="precedence" class-ref="net.sourceforge.fenixedu.domain.precedences.Precedence" >
 	    <foreignkey field-ref="keyPrecedence"/>
     </reference-descriptor>

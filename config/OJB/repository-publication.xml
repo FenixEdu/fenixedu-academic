@@ -35,7 +35,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" name="restrictions" element-class-ref="net.sourceforge.fenixedu.domain.Restriction" >
        <inverse-foreignkey field-ref="keyPrecedence"/>

@@ -10,7 +10,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	  <reference-descriptor auto-retrieve="false"
 			name="executionYear"
@@ -35,7 +35,7 @@
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
+      	locking="false"
       />
 	  <reference-descriptor auto-retrieve="false"
 			name="teacher"

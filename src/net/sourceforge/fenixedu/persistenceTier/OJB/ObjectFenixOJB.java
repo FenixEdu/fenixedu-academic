@@ -345,16 +345,6 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
         return new QueryByCriteria(classToQuery, criteria, distinct.booleanValue());
     }
 
-    /**
-     * Store the object in the database without creating any lock's
-     * 
-     * @param domainObject
-     *            object to store
-     */
-    protected void store(IDomainObject domainObject) {
-	Transaction.storeObject(domainObject);
-    }
-
     public Object lockIteratorNextObj(Iterator iterator) throws ExcepcaoPersistencia {
         return iterator.next();
     }

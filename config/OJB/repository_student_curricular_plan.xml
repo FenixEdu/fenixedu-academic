@@ -95,7 +95,7 @@
 		name="ackOptLock"
 		column="ACK_OPT_LOCK"
 		jdbc-type="INTEGER"
-		locking="true"
+		locking="false"
 	/>
 	<reference-descriptor auto-retrieve="false"
 			name="student"
@@ -257,7 +257,7 @@
 		name="ackOptLock"
 		column="ACK_OPT_LOCK"
 		jdbc-type="INTEGER"
-		locking="true"
+		locking="false"
 	/>
 	<reference-descriptor auto-retrieve="false"
 			name="student"
@@ -400,7 +400,7 @@
 		name="ackOptLock"
 		column="ACK_OPT_LOCK"
 		jdbc-type="INTEGER"
-		locking="true"
+		locking="false"
 	/>
 	<field-descriptor
 		name="secundaryBranchKey"
@@ -553,7 +553,7 @@
 		name="ackOptLock"
 		column="ACK_OPT_LOCK"
 		jdbc-type="INTEGER"
-		locking="true"
+		locking="false"
 	/>
 	<reference-descriptor
 			name="student"
