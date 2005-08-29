@@ -21,41 +21,30 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class EditPublication implements IService {
 
-    public void run(InfoPublication infoPublication) throws FenixServiceException {
+    public void run(InfoPublication infoPublication) throws FenixServiceException, ExcepcaoPersistencia {
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentPublication persistentPublication = sp.getIPersistentPublication();
+        final IPersistentPublicationType persistentPublicationType = sp.getIPersistentPublicationType();
 
-        try {
-            final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            final IPersistentPublication persistentPublication = sp.getIPersistentPublication();
-            final IPersistentPublicationType persistentPublicationType = sp
-                    .getIPersistentPublicationType();
+        final IPublication publication = (IPublication) persistentPublication.readByOID(
+                Publication.class, infoPublication.getIdInternal());
 
-            final IPublication publication = (IPublication) persistentPublication.readByOID(
-                    Publication.class, infoPublication.getIdInternal());
+        final IPublicationType publicationType = (IPublicationType) persistentPublicationType.readByOID(
+                PublicationType.class, infoPublication.getInfoPublicationType().getIdInternal());
 
-            final IPublicationType publicationType = (IPublicationType) persistentPublicationType
-                    .readByOID(PublicationType.class, infoPublication.getInfoPublicationType()
-                            .getIdInternal());
-
-            
-            final List<InfoAuthor> infoAuthors = new ArrayList<InfoAuthor>();
-            final List<InfoPublicationAuthor> infoPublicationAuthors = infoPublication.getInfoPublicationAuthors();
-            for (InfoPublicationAuthor infoPublicationAuthor : infoPublicationAuthors) {
-                infoAuthors.add(infoPublicationAuthor.getInfoAuthor());
-            }
-
-            // Call the InsertInexistentAuthors Service to insert the inexistent
-            //authors as external persons
-            final InsertInexistentAuthors ia = new InsertInexistentAuthors();
-            final List<IPerson> authors = ia.run(infoAuthors);
-
-            
-            
-            publication.edit(infoPublication,publicationType,authors);
-            
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+        final List<InfoAuthor> infoAuthors = new ArrayList<InfoAuthor>();
+        final List<InfoPublicationAuthor> infoPublicationAuthors = infoPublication
+                .getInfoPublicationAuthors();
+        for (InfoPublicationAuthor infoPublicationAuthor : infoPublicationAuthors) {
+            infoAuthors.add(infoPublicationAuthor.getInfoAuthor());
         }
 
+        // Call the InsertInexistentAuthors Service to insert the inexistent
+        // authors as external persons
+        final InsertInexistentAuthors ia = new InsertInexistentAuthors();
+        final List<IPerson> authors = ia.run(infoAuthors);
+
+        publication.edit(infoPublication, publicationType, authors);
     }
 
 }
