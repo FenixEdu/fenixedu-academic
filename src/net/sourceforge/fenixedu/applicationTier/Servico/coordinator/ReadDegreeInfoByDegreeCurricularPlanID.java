@@ -19,7 +19,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * 
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- *
+ * 
  */
 public class ReadDegreeInfoByDegreeCurricularPlanID implements IService {
 
@@ -40,12 +40,12 @@ public class ReadDegreeInfoByDegreeCurricularPlanID implements IService {
 
         // Read degree information
         List<IDegreeInfo> degreeInfoList = degreeCurricularPlan.getDegree().getDegreeInfos();
-        InfoDegreeInfo infoDegreeInfo = new InfoDegreeInfo();
+        InfoDegreeInfo infoDegreeInfo = null;
 
         // Last information about this degree
         if (degreeInfoList != null && !degreeInfoList.isEmpty()) {
-            Collections.sort(degreeInfoList, new BeanComparator("lastModificationDate"));
-            IDegreeInfo degreeInfo = (IDegreeInfo) degreeInfoList.get(degreeInfoList.size() - 1);
+            IDegreeInfo degreeInfo = (IDegreeInfo) Collections.max(degreeInfoList, new BeanComparator(
+                    "lastModificationDate"));
 
             infoDegreeInfo = InfoDegreeInfo.newInfoFromDomain(degreeInfo);
 
