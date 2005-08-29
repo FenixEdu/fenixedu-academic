@@ -27,10 +27,14 @@ public class ChangeStudentInfoAuthorization extends AuthorizationByRoleFilter {
     
     @Override
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+        // Temporaraly unavailable due to syncronization with external systems.
+        // When this service is to be activated just delete these three lines.
+        if (true) {
+            throw new NotAuthorizedFilterException();
+        }
 
         IUserView userView = (IUserView) request.getRequester();
-        if (!AuthorizationUtils.containsRole(userView.getRoles(),
-                RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
+        if (!AuthorizationUtils.containsRole(userView.getRoles(), RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
             super.execute(request, response);
         }
         

@@ -22,8 +22,10 @@
         <logic:present name="personalInfo">
         <bean:define id="personID" name="personalInfo" property="idInternal"/>
 		<bean:define id="studentNumber" name="studentNumber" />
+<!--
 		<html:form action="<%= "/editInformation?method=prepare&personId=" + personID.toString() + "&studentNumber=" + studentNumber.toString() %>">
 			<html:submit styleClass="inputbutton">Editar dados</html:submit>
+-->
 		</html:form>
 		<table width="100%" cellpadding="0" cellspacing="0">
           <!-- Dados Pessoais -->
