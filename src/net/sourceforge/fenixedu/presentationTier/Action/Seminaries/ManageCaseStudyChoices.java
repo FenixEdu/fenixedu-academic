@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudyChoice;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalency;
-import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminary;
+import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalencies;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
@@ -140,11 +140,11 @@ public class ManageCaseStudyChoices extends FenixAction {
         return destiny;
     }
 
-    public InfoSeminary readSeminaryById(IUserView userView, Integer id) throws FenixActionException {
-        InfoSeminary seminary = null;
+    public InfoSeminaryWithEquivalencies readSeminaryById(IUserView userView, Integer id) throws FenixActionException {
+        InfoSeminaryWithEquivalencies seminary = null;
         try {
             Object[] argsReadSeminary = { id };
-            seminary = (InfoSeminary) ServiceManagerServiceFactory.executeService(userView,
+            seminary = (InfoSeminaryWithEquivalencies) ServiceManagerServiceFactory.executeService(userView,
                     "Seminaries.GetSeminary", argsReadSeminary);
         } catch (Exception e) {
             throw new FenixActionException();

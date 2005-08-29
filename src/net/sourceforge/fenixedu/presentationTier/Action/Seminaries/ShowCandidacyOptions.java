@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalency;
-import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminary;
+import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalencies;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -50,14 +50,14 @@ public class ShowCandidacyOptions extends FenixAction {
         } catch (Exception ex) {
             throw new FenixActionException(mapping.findForward("invalidQueryString"));
         }
-        InfoSeminary seminary = null;
+        InfoSeminaryWithEquivalencies seminary = null;
         InfoStudent student = null;
         List disciplines = null;
         ActionForward destiny = null;
         try {
             Object[] argsReadSeminary = { seminaryID };
             Object[] argsReadStudent = { userView.getUtilizador() };
-            seminary = (InfoSeminary) ServiceManagerServiceFactory.executeService(userView,
+            seminary = (InfoSeminaryWithEquivalencies) ServiceManagerServiceFactory.executeService(userView,
                     "Seminaries.GetSeminary", argsReadSeminary);
             student = (InfoStudent) ServiceManagerServiceFactory.executeService(userView,
                     "ReadStudentByUsername", argsReadStudent);

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
-import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminary;
+import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalencies;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -68,7 +68,7 @@ public class ListAllSeminaries extends FenixAction {
                 InfoCandidacy infoCandidacy = (InfoCandidacy) iter.next();
                 Integer seminaryID = infoCandidacy.getInfoSeminary().getIdInternal();
                 for (Iterator iterator = seminaries.iterator(); iterator.hasNext();) {
-                    InfoSeminary infoSeminary = (InfoSeminary) iterator.next();
+                    InfoSeminaryWithEquivalencies infoSeminary = (InfoSeminaryWithEquivalencies) iterator.next();
                     if (infoSeminary.getIdInternal().equals(seminaryID))
                         candidaciesToDisplay.add(infoCandidacy);
                 }

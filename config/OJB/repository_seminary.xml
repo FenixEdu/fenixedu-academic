@@ -46,14 +46,14 @@
       />
 
 	  <field-descriptor
-         name="enrollmentBegin"
+         name="enrollmentTimeBegin"
          column="ENROLLMENT_BEGIN_TIME"
          jdbc-type="TIME"
          conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
       />
 
 	  <field-descriptor
-         name="enrollmentEnd"
+         name="enrollmentTimeEnd"
          column="ENROLLMENT_END_TIME"
          jdbc-type="TIME"
          conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"

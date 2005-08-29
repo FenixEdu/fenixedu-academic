@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudyChoic
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoClassification;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoModality;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminary;
+import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalencies;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
@@ -64,7 +65,7 @@ public class ReadCandidacies implements IService {
             for (Iterator iterator = candidacies.iterator(); iterator.hasNext();) {
                 ICandidacy candidacy = (ICandidacy) iterator.next();
                 IStudent student = candidacy.getStudent();
-                IStudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(student);
+                IStudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan(); //  getStudentCurricularPlan(student);
                 List enrollments = studentCurricularPlan.getEnrolments();
 
                 InfoCandidacyDetails candidacyDTO = new InfoCandidacyDetails();
@@ -74,7 +75,7 @@ public class ReadCandidacies implements IService {
                 candidacyDTO.setInfoClassification(getInfoClassification(enrollments));
                 candidacyDTO.setModality(InfoModality.newInfoFromDomain(candidacy.getModality()));
                 candidacyDTO.setMotivation(candidacy.getMotivation());
-                candidacyDTO.setSeminary(InfoSeminary.newInfoFromDomain(candidacy.getSeminary()));
+                candidacyDTO.setSeminary(InfoSeminaryWithEquivalencies.newInfoFromDomain(candidacy.getSeminary()));
                 candidacyDTO.setStudent(InfoStudentWithInfoPerson.newInfoFromDomain(student));
                 candidacyDTO.setTheme(InfoTheme.newInfoFromDomain(candidacy.getTheme()));
                 candidacyDTO.setCases((List) CollectionUtils.collect(candidacy.getCaseStudyChoices(),
@@ -114,9 +115,7 @@ public class ReadCandidacies implements IService {
             List enrollmentEvaluations = enrollment.getEvaluations();
             IEnrolmentEvaluation enrollmentEvaluation = null;
             if (enrollmentEvaluations != null && !enrollmentEvaluations.isEmpty()) {
-                Collections.sort(enrollmentEvaluations);
-                Collections.reverse(enrollmentEvaluations);
-                enrollmentEvaluation = (IEnrolmentEvaluation) enrollmentEvaluations.get(0);
+                enrollmentEvaluation = (IEnrolmentEvaluation) Collections.max(enrollmentEvaluations);
             }
 
             String stringGrade;
@@ -143,21 +142,5 @@ public class ReadCandidacies implements IService {
         return infoClassification;
     }
 
-    /**
-     * @param student
-     * @return
-     */
-    private IStudentCurricularPlan getStudentCurricularPlan(IStudent student) {
-        List curricularPlans = student.getStudentCurricularPlans();
-        long startDate = Long.MAX_VALUE;
-        IStudentCurricularPlan selectedSCP = null;
-        for (Iterator iter = curricularPlans.iterator(); iter.hasNext();) {
-            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iter.next();
-            if (studentCurricularPlan.getStartDate().getTime() < startDate) {
-                startDate = studentCurricularPlan.getStartDate().getTime();
-                selectedSCP = studentCurricularPlan;
-            }
-        }
-        return selectedSCP;
-    }
+
 }

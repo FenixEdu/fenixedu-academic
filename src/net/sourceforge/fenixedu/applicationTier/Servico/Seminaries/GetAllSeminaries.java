@@ -11,7 +11,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminary;
+import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalencies;
 import net.sourceforge.fenixedu.domain.Seminaries.ISeminary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -40,7 +40,7 @@ public class GetAllSeminaries implements IService {
             List seminaries = persistentSeminary.readAll();
             for (Iterator iterator = seminaries.iterator(); iterator.hasNext();) {
 
-                InfoSeminary infoSeminary = InfoSeminary.newInfoFromDomain((ISeminary) iterator.next());
+                InfoSeminaryWithEquivalencies infoSeminary = InfoSeminaryWithEquivalencies.newInfoFromDomain((ISeminary) iterator.next());
 
                 Calendar now = new GregorianCalendar();
                 Calendar endDate = new GregorianCalendar();

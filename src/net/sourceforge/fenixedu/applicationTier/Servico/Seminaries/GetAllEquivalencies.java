@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalency;
+import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalencyWithCurricularCourse;
 import net.sourceforge.fenixedu.domain.Seminaries.ICourseEquivalency;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -40,7 +41,7 @@ public class GetAllEquivalencies implements IService {
             for (Iterator iterator = equivalencies.iterator(); iterator.hasNext();) {
                 ICourseEquivalency equivalency = (ICourseEquivalency) iterator.next();
 
-                infoEquivalencies.add(InfoEquivalency.newInfoFromDomain(equivalency));
+                infoEquivalencies.add(InfoEquivalencyWithCurricularCourse.newInfoFromDomain(equivalency));
             }
         } catch (ExcepcaoPersistencia ex) {
             throw new BDException(

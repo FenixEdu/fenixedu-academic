@@ -6,9 +6,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.Seminaries;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -162,35 +164,39 @@ public class ShowCandidacies extends FenixAction {
         List equivalencies = null;
         List themes = null;
         List curricularCoursesWithEquivalency = new LinkedList();
+        List avaliableCurricularPlans = new LinkedList();
         try {
             Object[] argsReadSeminaries = { new Boolean(false) };
             Object[] argsReadCasesStudy = {};
-            Object[] argsReadDegrees = {};
             Object[] argsReadModalities = {};
             Object[] argsReadThemes = {};
             Object[] argsReadEquivalencies = {};
-            Object[] argsReadCurrentExecutionPeriod = {};
+            
             seminaries = (List) ServiceManagerServiceFactory.executeService(userView,
                     "Seminaries.GetAllSeminaries", argsReadSeminaries);
             cases = (List) ServiceManagerServiceFactory.executeService(userView,
                     "Seminaries.GetAllCasesStudy", argsReadCasesStudy);
-            degrees = (List) ServiceManagerServiceFactory.executeService(userView,
-                    "manager.ReadDegreeCurricularPlans", argsReadDegrees);
             modalities = (List) ServiceManagerServiceFactory.executeService(userView,
                     "Seminaries.GetAllModalities", argsReadModalities);
             themes = (List) ServiceManagerServiceFactory.executeService(userView,
                     "Seminaries.GetAllThemes", argsReadThemes);
             equivalencies = (List) ServiceManagerServiceFactory.executeService(userView,
                     "Seminaries.GetAllEquivalencies", argsReadEquivalencies);
-            ServiceManagerServiceFactory.executeService(userView, "ReadCurrentExecutionPeriod",
-                    argsReadCurrentExecutionPeriod);
             //
             //
+            final Set<String> addedNames = new HashSet<String>();
             for (Iterator iterator = equivalencies.iterator(); iterator.hasNext();) {
                 InfoEquivalency equivalency = (InfoEquivalency) iterator.next();
 
                 InfoCurricularCourse curricularCourse = equivalency.getCurricularCourse();
-                curricularCoursesWithEquivalency.add(curricularCourse);
+                if (curricularCourse != null) {
+                    curricularCoursesWithEquivalency.add(curricularCourse);
+                    if (!addedNames.contains(curricularCourse.getInfoDegreeCurricularPlan().getName())) {
+                        avaliableCurricularPlans.add(curricularCourse.getInfoDegreeCurricularPlan());
+                        addedNames.add(curricularCourse.getInfoDegreeCurricularPlan().getName());
+                    }
+                } else {
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -199,24 +205,24 @@ public class ShowCandidacies extends FenixAction {
         //this is very ugly, but the boss asked for it :)
         //we will display only the Master Curricular Plans and the actual
         // (current execution period) curricular plans for other degree types
-        List avaliableCurricularPlans = new LinkedList();
-        for (Iterator iter = degrees.iterator(); iter.hasNext();) {
-            InfoDegreeCurricularPlan infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) iter.next();
-            if (infoDegreeCurricularPlan.getInfoDegree().getTipoCurso().equals(DegreeType.MASTER_DEGREE))
-                avaliableCurricularPlans.add(infoDegreeCurricularPlan);
-            else if (infoDegreeCurricularPlan.getName().endsWith("2003/2004")) {
-                String newName = new String();
-                newName = infoDegreeCurricularPlan.getName().replaceAll("2003/2004", "");
-                infoDegreeCurricularPlan.setName(newName);
-                avaliableCurricularPlans.add(infoDegreeCurricularPlan);
-            } else if (infoDegreeCurricularPlan.getName().indexOf("2") != -1) {
-                String newName = new String();
-                newName = infoDegreeCurricularPlan.getName().replaceAll("2003", "");
-                infoDegreeCurricularPlan.setName(newName);
-                avaliableCurricularPlans.add(infoDegreeCurricularPlan);
-            }
-        }
-        Collections.sort(avaliableCurricularPlans, new BeanComparator("name"));
+        
+//        for (Iterator iter = degrees.iterator(); iter.hasNext();) {
+//            InfoDegreeCurricularPlan infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) iter.next();
+//            if (infoDegreeCurricularPlan.getInfoDegree().getTipoCurso().equals(DegreeType.MASTER_DEGREE))
+//                avaliableCurricularPlans.add(infoDegreeCurricularPlan);
+//            else if (infoDegreeCurricularPlan.getName().endsWith("2003/2004")) {
+//                String newName = new String();
+//                newName = infoDegreeCurricularPlan.getName().replaceAll("2003/2004", "");
+//                infoDegreeCurricularPlan.setName(newName);
+//                avaliableCurricularPlans.add(infoDegreeCurricularPlan);
+//            } else if (infoDegreeCurricularPlan.getName().indexOf("2") != -1) {
+//                String newName = new String();
+//                newName = infoDegreeCurricularPlan.getName().replaceAll("2003", "");
+//                infoDegreeCurricularPlan.setName(newName);
+//                avaliableCurricularPlans.add(infoDegreeCurricularPlan);
+//            }
+//        }
+        Collections.sort(avaliableCurricularPlans, new BeanComparator("name")); // TODO gedl remover dupicados
 
         request.setAttribute("seminaries", seminaries);
         request.setAttribute("cases", cases);

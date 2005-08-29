@@ -5,7 +5,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
-import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminary;
+import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalencies;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalenciesWithAll;
 import net.sourceforge.fenixedu.domain.Seminaries.ISeminary;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
@@ -28,8 +28,8 @@ public class GetSeminary implements IService {
     public GetSeminary() {
     }
 
-    public InfoSeminary run(Integer seminaryID) throws BDException {
-        InfoSeminary infoSeminary = null;
+    public InfoSeminaryWithEquivalencies run(Integer seminaryID) throws BDException {
+        InfoSeminaryWithEquivalencies infoSeminary = null;
         try {
             ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentSeminary persistentSeminary = persistenceSupport.getIPersistentSeminary();

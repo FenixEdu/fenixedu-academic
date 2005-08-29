@@ -277,6 +277,7 @@
 										Caso 5
 									</td>
 								</tr>
+								
 				<logic:present name="candidacies">
 						<logic:notEmpty name="candidacies">
 							<logic:iterate name="candidacies" id="candidacy" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacyDetails">

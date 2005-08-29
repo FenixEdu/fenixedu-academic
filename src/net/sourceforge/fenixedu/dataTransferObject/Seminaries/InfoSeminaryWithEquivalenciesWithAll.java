@@ -15,7 +15,7 @@ import org.apache.commons.collections.Transformer;
  * Created at 25/Jun/2004
  *  
  */
-public class InfoSeminaryWithEquivalenciesWithAll extends InfoSeminary {
+public class InfoSeminaryWithEquivalenciesWithAll extends InfoSeminaryWithEquivalencies {
     public void copyFromDomain(ISeminary seminary) {
         super.copyFromDomain(seminary);
         if (seminary != null && seminary.getEquivalencies() != null
@@ -31,7 +31,7 @@ public class InfoSeminaryWithEquivalenciesWithAll extends InfoSeminary {
         }
     }
 
-    public static InfoSeminary newInfoFromDomain(ISeminary seminary) {
+    public static InfoSeminaryWithEquivalencies newInfoFromDomain(ISeminary seminary) {
         InfoSeminaryWithEquivalenciesWithAll infoSeminary = null;
         if (seminary != null) {
             infoSeminary = new InfoSeminaryWithEquivalenciesWithAll();

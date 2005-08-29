@@ -1,8 +1,11 @@
-/*
- * Created on 31/Jul/2003, 16:59:55
- *
- *By Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
+/**
+ * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
+ * 
+ * 
+ * Created at 29/8/2005, 16:05:55
+ *  
  */
+
 package net.sourceforge.fenixedu.dataTransferObject.Seminaries;
 
 import java.util.Calendar;
@@ -11,20 +14,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.Seminaries.ISeminary;
 
-/**
- * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
- * 
- * 
- * Created at 31/Jul/2003, 16:59:55
- *  
- */
-public class InfoSeminary extends InfoObject {
-
+public class InfoSeminary extends InfoObject{
     private String name;
 
     private String description;
-
-    private List equivalencies;
 
     private Integer allowedCandidaciesPerStudent;
 
@@ -47,12 +40,7 @@ public class InfoSeminary extends InfoObject {
         return description;
     }
 
-    /**
-     * @return
-     */
-    public List getEquivalencies() {
-        return equivalencies;
-    }
+
 
     /**
      * @return
@@ -68,12 +56,6 @@ public class InfoSeminary extends InfoObject {
         description = string;
     }
 
-    /**
-     * @param list
-     */
-    public void setEquivalencies(List list) {
-        equivalencies = list;
-    }
 
     /**
      * @param string
@@ -227,5 +209,6 @@ public class InfoSeminary extends InfoObject {
         }
         return infoSeminary;
     }
+
 
 }

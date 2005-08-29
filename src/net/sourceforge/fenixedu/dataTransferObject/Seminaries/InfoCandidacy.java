@@ -118,7 +118,7 @@ public class InfoCandidacy extends InfoObject {
                     .getCurricularCourse()));
             setInfoModality(InfoModality.newInfoFromDomain(candidacy.getModality()));
             setMotivation(candidacy.getMotivation());
-            setInfoSeminary(InfoSeminary.newInfoFromDomain(candidacy.getSeminary()));
+            setInfoSeminary(InfoSeminaryWithEquivalencies.newInfoFromDomain(candidacy.getSeminary()));
             setInfoStudent(InfoStudentWithInfoPerson.newInfoFromDomain(candidacy.getStudent()));
             setTheme(InfoTheme.newInfoFromDomain(candidacy.getTheme()));
         }

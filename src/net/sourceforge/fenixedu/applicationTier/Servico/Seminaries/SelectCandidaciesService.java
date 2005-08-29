@@ -15,7 +15,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.CandidacyDTO;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoClassification;
-import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminary;
+import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalencies;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.SelectCandidaciesDTO;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
@@ -180,7 +180,7 @@ public class SelectCandidaciesService implements IService {
         List result = new ArrayList();
 
         for (Iterator iterator = seminaries.iterator(); iterator.hasNext();) {
-            InfoSeminary infoSeminary = InfoSeminary.newInfoFromDomain((ISeminary) iterator.next());
+            InfoSeminaryWithEquivalencies infoSeminary = InfoSeminaryWithEquivalencies.newInfoFromDomain((ISeminary) iterator.next());
 
             Calendar now = new GregorianCalendar();
             Calendar endDate = new GregorianCalendar();
