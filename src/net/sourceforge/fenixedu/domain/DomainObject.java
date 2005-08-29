@@ -4,20 +4,16 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import java.lang.reflect.Proxy;
 import java.lang.reflect.Field;
 
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SequenceUtil;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.stm.InvalidateSubject;
+import net.sourceforge.fenixedu.stm.Transaction;
 
-import org.apache.ojb.broker.core.proxy.ProxyHelper;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
-
-import net.sourceforge.fenixedu.stm.Transaction;
-import net.sourceforge.fenixedu.stm.InvalidateSubject;
 
 /**
  * @author jpvl
