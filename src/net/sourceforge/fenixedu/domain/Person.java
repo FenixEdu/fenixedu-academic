@@ -25,6 +25,7 @@ public class Person extends Person_Base {
 
         setProperties(personToCreate);
         setPais(country);
+        setIsPassInKerberos(Boolean.FALSE);
     }
     
     public Person(String name, String identificationDocumentNumber, IDDocumentType identificationDocumentType, Gender gender) {
@@ -36,6 +37,7 @@ public class Person extends Person_Base {
         setAvailableWebSite(Boolean.FALSE);
         setAvailablePhoto(Boolean.FALSE);
         setMaritalStatus(MaritalStatus.SINGLE);
+        setIsPassInKerberos(Boolean.FALSE);
     }
     
     public Person(String username, String name, Gender gender, String address, String phone, String mobile, String homepage, String email, String documentIDNumber, IDDocumentType documentType) {
@@ -53,6 +55,7 @@ public class Person extends Person_Base {
     	setAvailableWebSite(Boolean.FALSE);
     	setAvailablePhoto(Boolean.FALSE);
     	setMaritalStatus(MaritalStatus.SINGLE);
+        setIsPassInKerberos(Boolean.FALSE);
     }
     
     public void edit(InfoPerson personToEdit, ICountry country) {
