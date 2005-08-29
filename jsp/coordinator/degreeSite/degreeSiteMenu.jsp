@@ -37,6 +37,14 @@
 					</html:link>
 				</li>
 				<li>
+					<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=professionalStatus&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
+					    <bean:message key="label.professionalStatus" />
+					</html:link>
+					<br/>
+					<br/>
+					</html:link>
+				</li>				
+				<li>
 					<html:link page="<%= "/degreeSiteManagement.do?method=viewDescriptionCurricularPlan&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 					    <bean:message key="label.description" />&nbsp;<bean:message key="label.curricularPlan" /> 
 					</html:link>
