@@ -320,8 +320,8 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
         ActionErrors errors = new ActionErrors();
         IUserView userView = SessionUtils.getUserView(request);
         DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
-        String[] curricularCoursesToEnroll = (String[]) enrollmentForm
-                .get("unenrolledCurricularCourses");
+        String curricularCourseToEnroll = (String) enrollmentForm
+                .get("curricularCourse");
 
         Integer studentCurricularPlanId = Integer.valueOf(request
                 .getParameter("studentCurricularPlanId"));
@@ -329,43 +329,29 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
         Integer degreeCurricularPlanID = (Integer) enrollmentForm.get("degreeCurricularPlanID");
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
-        List toEnrollString = Arrays.asList(curricularCoursesToEnroll);
-        List toEnroll = (List) CollectionUtils.collect(toEnrollString, new Transformer() {
+        Integer toEnroll = Integer.valueOf(curricularCourseToEnroll.split("-")[0]);
 
-            public Object transform(Object arg0) {
-                String string = (String) arg0;
-                return new Integer(string.split("-")[0]);
-            }
-        });
         CurricularCourseEnrollmentType enrollmentType = CurricularCourseEnrollmentType
-                .valueOf((String) ((List) CollectionUtils.collect(toEnrollString,
-                        new Transformer() {
-
-                            public Object transform(Object arg0) {
-                                String string = (String) arg0;
-                                return string.split("-")[1];
-                            }
-                        })).get(0));
-
+                .valueOf(curricularCourseToEnroll.split("-")[1]);
+        
         String courseType = (String) enrollmentForm.get("courseType");
-        if (toEnroll.size() == 1) {
-            Integer executionDegreeId = getExecutionDegree(request);
-            Object[] args = { executionDegreeId, studentCurricularPlanId, toEnroll.get(0), null,
-                    enrollmentType, new Integer(courseType), userView };
-            try {
-                ServiceManagerServiceFactory.executeService(userView, "WriteEnrollment", args);
-            } catch (NotAuthorizedFilterException e) {
-                if (e.getMessage() != null) {
-                    addAuthorizationErrors(errors, e);
-                } else {
-                    errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
-                }
-                saveErrors(request, errors);
-                return mapping.findForward("prepareEnrollmentChooseCurricularCourses");
-            } catch (FenixServiceException e) {
-                throw new FenixActionException(e);
+        Integer executionDegreeId = getExecutionDegree(request);
+        Object[] args = { executionDegreeId, studentCurricularPlanId, toEnroll, null,
+                enrollmentType, new Integer(courseType), userView };
+        try {
+            ServiceManagerServiceFactory.executeService(userView, "WriteEnrollment", args);
+        } catch (NotAuthorizedFilterException e) {
+            if (e.getMessage() != null) {
+                addAuthorizationErrors(errors, e);
+            } else {
+                errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
             }
+            saveErrors(request, errors);
+            return mapping.findForward("prepareEnrollmentChooseCurricularCourses");
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
         }
+        
         return prepareEnrollmentChooseCurricularCourses(mapping, form, request, response);
     }
 
@@ -376,36 +362,30 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
         ActionErrors errors = new ActionErrors();
         IUserView userView = SessionUtils.getUserView(request);
         DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
-        Integer[] enrolledCurricularCoursesBefore = (Integer[]) enrollmentForm
-                .get("enrolledCurricularCoursesBefore");
-        Integer[] enrolledCurricularCoursesAfter = (Integer[]) enrollmentForm
-                .get("enrolledCurricularCoursesAfter");
         
+        Integer unenroll = Integer.valueOf((String) enrollmentForm.get("curricularCourse"));
         Integer degreeCurricularPlanID = (Integer) enrollmentForm.get("degreeCurricularPlanID");
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
-        List enrollmentsBefore = Arrays.asList(enrolledCurricularCoursesBefore);
-        List enrollmentsAfter = Arrays.asList(enrolledCurricularCoursesAfter);
-        List toUnenroll = (List) CollectionUtils.subtract(enrollmentsBefore, enrollmentsAfter);
-        if (toUnenroll.size() == 1) {
-            Integer studentCurricularPlanId = Integer.valueOf(request
-                    .getParameter("studentCurricularPlanId"));
 
-            Integer executionDegreeId = getExecutionDegree(request);
-            Object[] args = { executionDegreeId, studentCurricularPlanId, (Integer) toUnenroll.get(0) };
-            try {
-                ServiceManagerServiceFactory.executeService(userView, "DeleteEnrolment", args);
-            } catch (NotAuthorizedFilterException e) {
-                if (e.getMessage() != null) {
-                    addAuthorizationErrors(errors, e);
-                } else {
-                    errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
-                }
-                saveErrors(request, errors);
-            } catch (FenixServiceException e) {
-                throw new FenixActionException(e);
+        Integer studentCurricularPlanId = Integer.valueOf(request
+                .getParameter("studentCurricularPlanId"));
+
+        Integer executionDegreeId = getExecutionDegree(request);
+        Object[] args = { executionDegreeId, studentCurricularPlanId, unenroll};
+        try {
+            ServiceManagerServiceFactory.executeService(userView, "DeleteEnrolment", args);
+        } catch (NotAuthorizedFilterException e) {
+            if (e.getMessage() != null) {
+                addAuthorizationErrors(errors, e);
+            } else {
+                errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
             }
+            saveErrors(request, errors);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
         }
+
         return prepareEnrollmentChooseCurricularCourses(mapping, form, request, response);
     }
 
