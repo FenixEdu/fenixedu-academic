@@ -107,7 +107,7 @@ import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCa
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryModality;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryTheme;
-import net.sourceforge.fenixedu.persistenceTier.cache.ObjectCacheOSCacheImpl;
+import net.sourceforge.fenixedu.persistenceTier.cache.FenixCache;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPositionCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentOtherTypeCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentServiceExemptionCreditLine;
@@ -227,7 +227,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
      * @see ServidorPersistente.ISuportePersistente#clearCache()
      */
     public Integer getNumberCachedItems() {
-        return new Integer(ObjectCacheOSCacheImpl.getNumberOfCachedItems());
+        return new Integer(FenixCache.getNumberOfCachedItems());
     }
 
     public static synchronized SuportePersistenteOJB getInstance() throws ExcepcaoPersistencia {

@@ -6,11 +6,12 @@ import java.util.concurrent.PriorityBlockingQueue;
 import org.apache.ojb.broker.PersistenceBroker;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.persistenceTier.cache.FenixCache;
 
 public abstract class Transaction extends jvstm.Transaction {
 
     private static final Queue<FenixTransaction> ACTIVE_TXS = new PriorityBlockingQueue<FenixTransaction>();
-
+    private static final FenixCache cache = new FenixCache();
 
     private Transaction() {
 	// this is never to be used!!!
@@ -77,7 +78,7 @@ public abstract class Transaction extends jvstm.Transaction {
 	currentDBChanges().logAttrChange(obj, attrName);
     }
 
-    public static void storeNewObject(Object obj) {
+    public static void storeNewObject(DomainObject obj) {
 	currentDBChanges().storeNewObject(obj);
     }
 
@@ -101,6 +102,9 @@ public abstract class Transaction extends jvstm.Transaction {
 	return currentFenixTransaction().getOJBBroker();
     }
 
+    public static FenixCache getCache() {
+	return cache;
+    }
 
     public static int findVersionFor(Object obj, String attr, int txNumber) {
 	if (txNumber < getCommitted()) {

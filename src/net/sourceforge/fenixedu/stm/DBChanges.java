@@ -23,12 +23,13 @@ import org.apache.ojb.broker.core.ValueContainer;
 import org.apache.ojb.broker.util.ObjectModificationDefaultImpl;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.persistenceTier.cache.FenixCache;
 
 
 class DBChanges {
     private PersistenceBroker broker;
     private Set<AttrChangeLog> attrChangeLogs = null;
-    private Set newObjs = null;
+    private Set<DomainObject> newObjs = null;
     private Set objsToStore = null;
     private Set objsToDelete = null;
     private Map<RelationTupleInfo,RelationTupleInfo> mToNTuples = null;
@@ -54,9 +55,9 @@ class DBChanges {
 	attrChangeLogs.add(new AttrChangeLog(obj, attrName));
     }
 
-    public void storeNewObject(Object obj) {
+    public void storeNewObject(DomainObject obj) {
 	if (newObjs == null) {
-	    newObjs = new HashSet();
+	    newObjs = new HashSet<DomainObject>();
 	}
 	newObjs.add(obj);
 	if (objsToDelete != null) {
@@ -110,6 +111,16 @@ class DBChanges {
 	} else {
 	    if (previous.remove != remove) {
 		mToNTuples.remove(previous);
+	    }
+	}
+    }
+
+    void cache() {
+	FenixCache cache = Transaction.getCache();
+
+	if (newObjs != null) {
+	    for (DomainObject obj : newObjs) {
+		cache.cache(obj);
 	    }
 	}
     }

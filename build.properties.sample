@@ -198,7 +198,7 @@ ftp.degree.grades.server.address=address
 #                          used for the distributed cache to work.
 #   cache.cluster.multicast.ip: multicast ip address to use with javagroups clustering.
 #
-ObjectCacheClass=net.sourceforge.fenixedu.persistenceTier.cache.ObjectCacheOSCacheImpl
+ObjectCacheClass=net.sourceforge.fenixedu.persistenceTier.cache.FenixCacheWrapper
 cache.event.listeners=
 cache.cluster.multicast.ip=231.12.21.132
 #

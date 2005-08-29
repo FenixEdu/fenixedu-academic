@@ -141,6 +141,7 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
     protected void doCommit(int newTxNumber) {
 	try {
 	    dbChanges.makePersistent(newTxNumber);
+	    dbChanges.cache();
 	    super.doCommit(newTxNumber);
 	} catch (SQLException sqle) {
 	    throw new Error("Error while accessing database");
