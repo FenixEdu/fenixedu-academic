@@ -1,7 +1,7 @@
 
 
 <!-- *************************************************************************************************************** -->
-<!-- Definitions for net.sourceforge.fenixedu.domain.InquiryAnswer -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers -->
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers" table="PERSONAL_DATA_USE_INQUIRY_ANSWERS">
   <field-descriptor
