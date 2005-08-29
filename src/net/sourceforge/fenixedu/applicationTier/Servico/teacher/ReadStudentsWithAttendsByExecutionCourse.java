@@ -29,6 +29,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroupWithInfoShift
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttends;
+import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
@@ -110,8 +112,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         Map studentGroupsMap = getStudentGroupsMapFromGroupPropertiesList(groupProperties, sp);
 
         InfoAttendsSummary infoAttendsSummary = new InfoAttendsSummary();
-        Map enrollmentDistribution = new HashMap();
-        List enrollmentDistributionKeys = new ArrayList();
+	int[] enrollmentDistribution = new int[10];
 
         // filter by Course
         if (curricularPlansIds != null) {
@@ -244,27 +245,18 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
 
             IStudent student = iFrequenta.getAluno();
             IEnrolment enrollment = iFrequenta.getEnrolment();
-            Integer numberOfEnrollments = null;
+            int numberOfEnrollments = 0;
 
             if (enrollment != null) {
-                List studentEnrollments = persistentEnrollment
-                        .readEnrollmentsByStudentAndCurricularCourseNameAndDegree(student
-                                .getIdInternal(), enrollment.getCurricularCourse().getName(),
-                                studentCurricularPlan.getDegreeCurricularPlan().getDegree()
-                                        .getIdInternal());
-                numberOfEnrollments = new Integer(studentEnrollments.size());
-            } else {
-                numberOfEnrollments = new Integer(0);
+                numberOfEnrollments = countAllEnrolmentsForSameStudent(studentCurricularPlan, enrollment.getCurricularCourse().getName());
             }
 
-            Integer num = (Integer) enrollmentDistribution.get(numberOfEnrollments);
-            if (num == null)
-                num = new Integer(0);
-            enrollmentDistribution.put(numberOfEnrollments, new Integer(num.intValue() + 1));
-
-            if (!enrollmentDistributionKeys.contains(numberOfEnrollments)) {
-                enrollmentDistributionKeys.add(numberOfEnrollments);
-            }
+	    if (numberOfEnrollments > enrollmentDistribution.length) {
+		int[] newDistribution = new int[Math.max(numberOfEnrollments + 1, enrollmentDistribution.length * 2)];
+		System.arraycopy(enrollmentDistribution, 0, newDistribution, 0, enrollmentDistribution.length);
+		enrollmentDistribution = newDistribution;
+	    }
+	    enrollmentDistribution[numberOfEnrollments]++;
 
             infoComposition.setNumberOfEnrollments(numberOfEnrollments);
 
@@ -284,8 +276,19 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         List infoGroupProperties = getInfoGroupPropertiesFromList(groupProperties);
         infoDTO.setInfoGroupProperties(infoGroupProperties);
 
-        Collections.sort(enrollmentDistributionKeys);
-        infoAttendsSummary.setEnrollmentDistribution(enrollmentDistribution);
+
+	List enrollmentDistributionKeys = new ArrayList(enrollmentDistribution.length);
+	Map enrollmentDistributionMap = new HashMap();
+	for (int i = 0; i < enrollmentDistribution.length; i++) {
+	    if (enrollmentDistribution[i] != 0) {
+		Integer key = new Integer(i);
+		Integer value = new Integer(enrollmentDistribution[i]);
+		enrollmentDistributionKeys.add(key);
+		enrollmentDistributionMap.put(key, value);
+	    }
+	}
+
+        infoAttendsSummary.setEnrollmentDistribution(enrollmentDistributionMap);
         infoAttendsSummary.setNumberOfEnrollments(enrollmentDistributionKeys);
         infoDTO.setInfoAttendsSummary(infoAttendsSummary);
 
@@ -293,6 +296,26 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
 
         return siteView;
     }
+
+    private int countAllEnrolmentsForSameStudent(IStudentCurricularPlan studentCurricularPlan, String curricularCourseName) {
+	int count = 0;
+	IDegree degree = studentCurricularPlan.getDegreeCurricularPlan().getDegree();
+	for (IStudentCurricularPlan scp : studentCurricularPlan.getStudent().getStudentCurricularPlans()) {
+	    if (scp.getDegreeCurricularPlan().getDegree() == degree) {
+		for (IEnrolment enrolment : scp.getEnrolments()) {
+		    ICurricularCourse course = enrolment.getCurricularCourse();
+		    if (course != null) {
+			String name = course.getName();
+			if ((name == curricularCourseName) || ((name != null) && name.equals(curricularCourseName))) {
+			    count++;
+			}
+		    }
+		}
+	    }
+	}
+	return count;
+    }
+
 
     private TeacherAdministrationSiteView createSiteView(
             InfoForReadStudentsWithAttendsByExecutionCourse infoSiteStudents, ISite site)
@@ -340,7 +363,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
             boolean studentInShift = false;
             List<IStudent> students = shift.getStudents();
             for (IStudent student : students) {
-                if (student.getIdInternal().equals(attend.getAluno().getIdInternal())) {
+                if (student == attend.getAluno()) {
                     studentInShift = true;
                     break;
                 }
