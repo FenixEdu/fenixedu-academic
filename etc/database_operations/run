@@ -97,6 +97,7 @@ mysql -u$2 -f $1 < updateRoomOccupationWithLessons.sql > /tmp/x
 mysql -u$2 -f $1 < /tmp/x
 mysql -u$2 -f $1 < createTxChangeLogs.sql
 mysql -u$2 -f $1 < seminaries1sem20052006.sql
+mysql -u$2 -f $1 < AlterTableDegreeInfo.sql
 
 # ?????
 mysql -u$2 -f $1 < FixItemOrder.sql
