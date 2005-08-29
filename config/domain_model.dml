@@ -657,6 +657,10 @@ class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixed
     String history;
     Integer degreeKey;
     Date lastModificationDate;
+    String qualificationLevel;
+    String qualificationLevelEn;
+    String recognitions;
+    String recognitionsEn;    
 	
 	interface "
 

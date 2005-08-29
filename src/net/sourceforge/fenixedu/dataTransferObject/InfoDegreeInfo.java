@@ -41,6 +41,10 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
     private Double markAverage;
 
     private Timestamp lastModificationDate;
+    
+    private String qualificationLevel;
+    
+    private String recognitions;
 
     //Data in english
     private String descriptionEn;
@@ -59,6 +63,10 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
 
     private String classificationsEn;
 
+    private String qualificationLevelEn;
+    
+    private String recognitionsEn;
+    
     public InfoDegreeInfo() {
     }
 
@@ -279,6 +287,39 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
         this.testIngressionEn = testIngressionEn;
     }
 
+
+    public String getQualificationLevel() {
+        return qualificationLevel;
+    }
+
+    public void setQualificationLevel(String qualificationLevel) {
+        this.qualificationLevel = qualificationLevel;
+    }
+
+    public String getQualificationLevelEn() {
+        return qualificationLevelEn;
+    }
+
+    public void setQualificationLevelEn(String qualificationLevelEn) {
+        this.qualificationLevelEn = qualificationLevelEn;
+    }
+
+    public String getRecognitions() {
+        return recognitions;
+    }
+
+    public void setRecognitions(String recognitions) {
+        this.recognitions = recognitions;
+    }
+
+    public String getRecognitionsEn() {
+        return recognitionsEn;
+    }
+
+    public void setRecognitionsEn(String recognitionsEn) {
+        this.recognitionsEn = recognitionsEn;
+    }
+
     public boolean equals(Object obj) {
         boolean result = false;
         if (obj instanceof InfoDegreeInfo) {
@@ -330,6 +371,8 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
             this.objectives = this.objectivesEn;
             this.professionalExits = this.professionalExitsEn;
             this.testIngression = this.testIngressionEn;    
+            this.recognitions = this.recognitionsEn;
+            this.qualificationLevel = this.qualificationLevelEn;
             this.infoDegree.prepareEnglishPresentation(language);
   
         }
@@ -386,6 +429,10 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
             setProfessionalExitsEn(degreeInfo.getProfessionalExitsEn());
             setTestIngression(degreeInfo.getTestIngression());
             setTestIngressionEn(degreeInfo.getTestIngressionEn());
+            setQualificationLevel(degreeInfo.getQualificationLevel());
+            setQualificationLevelEn(degreeInfo.getQualificationLevelEn());
+            setRecognitions(degreeInfo.getRecognitions());
+            setRecognitionsEn(degreeInfo.getRecognitionsEn());
             setInfoDegree(InfoDegree.newInfoFromDomain(degreeInfo.getDegree()));
         }
     }
@@ -398,4 +445,5 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
         }
         return infoDegreeInfo;
     }
+
 }

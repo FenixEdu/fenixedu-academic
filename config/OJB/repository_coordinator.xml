@@ -180,6 +180,26 @@
         jdbc-type="LONGVARCHAR"
    		/>      		
    		<field-descriptor
+   			name="qualificationLevel"
+   			column="QUALIFICATION_LEVEL"
+        jdbc-type="LONGVARCHAR"
+   		/>   
+   		<field-descriptor
+   			name="qualificationLevelEn"
+   			column="QUALIFICATION_LEVEL_EN"
+        jdbc-type="LONGVARCHAR"
+   		/>      
+   		<field-descriptor
+   			name="recognitions"
+   			column="RECOGNITIONS"
+        jdbc-type="LONGVARCHAR"
+   		/>   
+   		<field-descriptor
+   			name="recognitionsEn"
+   			column="RECOGNITIONS_EN"
+        jdbc-type="LONGVARCHAR"
+   		/>    				   		
+   		<field-descriptor
    			name="lastModificationDate"
    			column="LAST_MODIFICATION_DATE"
    			jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"

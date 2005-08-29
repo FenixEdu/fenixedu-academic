@@ -21,7 +21,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class EditDegreeInfoByDegreeCurricularPlanID implements IService {
     public void run(Integer degreeCurricularPlanID, InfoDegreeInfo infoDegreeInfo)
             throws FenixServiceException, ExcepcaoPersistencia {
-
+        
         ISuportePersistente suportePersistente = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
 
@@ -50,6 +50,8 @@ public class EditDegreeInfoByDegreeCurricularPlanID implements IService {
         degreeInfo.setMarkMin(infoDegreeInfo.getMarkMin());
         degreeInfo.setMarkMax(infoDegreeInfo.getMarkMax());
         degreeInfo.setMarkAverage(infoDegreeInfo.getMarkAverage());
+        degreeInfo.setQualificationLevel(infoDegreeInfo.getQualificationLevel());
+        degreeInfo.setRecognitions(infoDegreeInfo.getRecognitions());
 
         // update information in english that it will be displayed in degree
         // site.
@@ -61,6 +63,8 @@ public class EditDegreeInfoByDegreeCurricularPlanID implements IService {
         degreeInfo.setLinksEn(infoDegreeInfo.getLinksEn());
         degreeInfo.setTestIngressionEn(infoDegreeInfo.getTestIngressionEn());
         degreeInfo.setClassificationsEn(infoDegreeInfo.getClassificationsEn());
+        degreeInfo.setQualificationLevelEn(infoDegreeInfo.getQualificationLevelEn());
+        degreeInfo.setRecognitionsEn(infoDegreeInfo.getRecognitionsEn());
 
         // update last modification date
         degreeInfo.setLastModificationDate(Calendar.getInstance().getTime());

@@ -138,7 +138,9 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
         degreeInfoForm.set("markMin", convertDouble2String(infoDegreeInfo.getMarkMin()));
         degreeInfoForm.set("markMax", convertDouble2String(infoDegreeInfo.getMarkMax()));
         degreeInfoForm.set("markAverage", convertDouble2String(infoDegreeInfo.getMarkAverage()));
-
+        degreeInfoForm.set("recognitions", infoDegreeInfo.getRecognitions());
+        degreeInfoForm.set("qualificationLevel", infoDegreeInfo.getQualificationLevel());
+        
         if (infoDegreeInfo.getLastModificationDate() != null) {
             degreeInfoForm.set("lastModificationDate", infoDegreeInfo.getLastModificationDate()
                     .toString());
@@ -153,6 +155,9 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
         degreeInfoForm.set("linksEn", infoDegreeInfo.getLinksEn());
         degreeInfoForm.set("testIngressionEn", infoDegreeInfo.getTestIngressionEn());
         degreeInfoForm.set("classificationsEn", infoDegreeInfo.getClassificationsEn());
+        degreeInfoForm.set("recognitionsEn", infoDegreeInfo.getRecognitionsEn());
+        degreeInfoForm.set("qualificationLevelEn", infoDegreeInfo.getQualificationLevelEn());
+                
     }
 
     private void fillInfoDegreeInfo(DynaActionForm degreeInfoForm, InfoDegreeInfo infoDegreeInfo) {
@@ -172,7 +177,11 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
         infoDegreeInfo.setMarkMin(convertString2Double((String) degreeInfoForm.get("markMin")));
         infoDegreeInfo.setMarkMax(convertString2Double((String) degreeInfoForm.get("markMax")));
         infoDegreeInfo.setMarkAverage(convertString2Double((String) degreeInfoForm.get("markAverage")));
+        infoDegreeInfo.setRecognitions((String) degreeInfoForm.get("recognitions"));
+        infoDegreeInfo.setQualificationLevel((String) degreeInfoForm.get("qualificationLevel"));
 
+         System.out.println(">>>>> ------- <<<<<");
+        
         // information in english
         infoDegreeInfo.setDescriptionEn((String) degreeInfoForm.get("descriptionEn"));
         infoDegreeInfo.setObjectivesEn((String) degreeInfoForm.get("objectivesEn"));
@@ -182,6 +191,8 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
         infoDegreeInfo.setLinksEn((String) degreeInfoForm.get("linksEn"));
         infoDegreeInfo.setTestIngressionEn((String) degreeInfoForm.get("testIngressionEn"));
         infoDegreeInfo.setClassificationsEn((String) degreeInfoForm.get("classificationsEn"));
+        infoDegreeInfo.setRecognitionsEn((String) degreeInfoForm.get("recognitionsEn"));
+        infoDegreeInfo.setQualificationLevelEn((String) degreeInfoForm.get("qualificationLevelEn"));
     }
 
     public ActionForward viewDescriptionCurricularPlan(ActionMapping mapping, ActionForm form,
