@@ -579,7 +579,7 @@
 			>
 		<foreignkey field-ref="employeeKey"/>
 	</reference-descriptor>	
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="enrolments"
 			element-class-ref="net.sourceforge.fenixedu.domain.Enrolment"
 			
@@ -593,21 +593,21 @@
 			>
 		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="creditsInScientificAreas"
 			element-class-ref="net.sourceforge.fenixedu.domain.CreditsInScientificArea"
 			
 			>
 		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="gratuitySituations"
 			element-class-ref="net.sourceforge.fenixedu.domain.GratuitySituation"
 			
 			>
 		<inverse-foreignkey field-ref="keyStudentCurricularPlan"/>
 	</collection-descriptor>	
-    <!--<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+    <!--<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="enrollmentReports"
 			element-class-ref="net.sourceforge.fenixedu.domain.enrollmentReport.EnrollmentReport"
 			
