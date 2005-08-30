@@ -66,6 +66,10 @@ public class DegreeForwardFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
 
         String uri = request.getRequestURI();
+	if (uri.endsWith(".do")) {
+	    chain.doFilter(request, response);
+	    return;
+	}
 
         String context = request.getContextPath();
         String newURI = uri.replaceFirst(app, "");
