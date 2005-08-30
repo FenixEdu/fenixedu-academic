@@ -15,6 +15,49 @@
 	<br />
 	<br />
 
+<bean:message key="label.choose.old.curricular.course"/>
+	<table>
+		<tr>
+			<td class="listClasses-header">
+				<bean:message key="label.choose.degree.old"/>
+			</td>
+			<td class="listClasses">
+				<html:select property="oldDegreeID" onchange="this.form.method.value='prepareCreate';this.form.submit();">
+					<html:option value=""/>
+					<html:options collection="infoDegrees" labelProperty="nome" property="idInternal"/>
+				</html:select>
+			</td>
+		</tr>
+		<logic:present name="oldInfoDegreeCurricularPlans">
+			<tr>
+				<td class="listClasses-header">
+					<bean:message key="label.choose.degree.curricular.plan.old"/>
+				</td>
+				<td class="listClasses">
+					<html:select property="oldDegreeCurricularPlanID" onchange="this.form.method.value='prepareCreate';this.form.submit();">
+						<html:option value=""/>
+						<html:options collection="oldInfoDegreeCurricularPlans" labelProperty="name" property="idInternal"/>
+					</html:select>
+				</td>
+			</tr>
+		</logic:present>
+		<logic:present name="oldInfoCurricularCourses">
+			<tr>
+				<td class="listClasses-header">
+					<bean:message key="label.choose.curricular.course.old"/>
+				</td>
+				<td class="listClasses">
+					<html:select property="oldCurricularCourseID">
+						<html:option value=""/>
+						<html:options collection="oldInfoCurricularCourses" labelProperty="nameAndCode" property="idInternal"/>
+					</html:select>
+				</td>
+			</tr>
+		</logic:present>
+	</table>
+
+<br />
+<bean:message key="label.choose.equivalent.curricular.course"/>
 	<table>
 		<tr>
 			<td class="listClasses-header">
@@ -48,44 +91,7 @@
 				<td class="listClasses">
 					<html:select property="curricularCourseID">
 						<html:option value=""/>
-						<html:options collection="infoCurricularCourses" labelProperty="name" property="idInternal"/>
-					</html:select>
-				</td>
-			</tr>
-		</logic:present>
-		<tr>
-			<td class="listClasses-header">
-				<bean:message key="label.choose.degree.old"/>
-			</td>
-			<td class="listClasses">
-				<html:select property="oldDegreeID" onchange="this.form.method.value='prepareCreate';this.form.submit();">
-					<html:option value=""/>
-					<html:options collection="infoDegrees" labelProperty="nome" property="idInternal"/>
-				</html:select>
-			</td>
-		</tr>
-		<logic:present name="oldInfoDegreeCurricularPlans">
-			<tr>
-				<td class="listClasses-header">
-					<bean:message key="label.choose.degree.curricular.plan.old"/>
-				</td>
-				<td class="listClasses">
-					<html:select property="oldDegreeCurricularPlanID" onchange="this.form.method.value='prepareCreate';this.form.submit();">
-						<html:option value=""/>
-						<html:options collection="oldInfoDegreeCurricularPlans" labelProperty="name" property="idInternal"/>
-					</html:select>
-				</td>
-			</tr>
-		</logic:present>
-		<logic:present name="oldInfoCurricularCourses">
-			<tr>
-				<td class="listClasses-header">
-					<bean:message key="label.choose.curricular.course.old"/>
-				</td>
-				<td class="listClasses">
-					<html:select property="oldCurricularCourseID">
-						<html:option value=""/>
-						<html:options collection="oldInfoCurricularCourses" labelProperty="name" property="idInternal"/>
+						<html:options collection="infoCurricularCourses" labelProperty="nameAndCode" property="idInternal"/>
 					</html:select>
 				</td>
 			</tr>

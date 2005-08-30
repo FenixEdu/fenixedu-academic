@@ -590,5 +590,8 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
         }
     }
     
+    public String getNameAndCode() {
+        return getCode() + " - " + getName();
+    }
 
 }
