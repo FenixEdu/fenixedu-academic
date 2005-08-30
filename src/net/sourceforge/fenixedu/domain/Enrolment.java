@@ -28,10 +28,20 @@ import org.apache.ojb.broker.PersistenceBrokerException;
 
 public class Enrolment extends Enrolment_Base {
 
+    private Integer accumulatedWeight;
+
     public Enrolment() {
         this.setOjbConcreteClass(this.getClass().getName());
     }
 	
+	public Integer getAccumulatedWeight() {
+		return accumulatedWeight;
+	}
+
+	public void setAccumulatedWeight(Integer accumulatedWeight) {
+		this.accumulatedWeight = accumulatedWeight;
+	}
+
 	public void initializeAsNew (IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod, EnrollmentCondition enrolmentCondition, String createdBy) {
 		setCurricularCourse(curricularCourse);
 		setEnrollmentState(EnrollmentState.ENROLLED);
