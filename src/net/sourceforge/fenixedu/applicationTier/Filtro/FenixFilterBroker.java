@@ -43,9 +43,9 @@ public class FenixFilterBroker extends FilterBroker {
         
         ResourceBundle rb = ResourceBundle.getBundle(fileName);
         
-        Set valuesSet = new HashSet<String>();
+        Set<String> valuesSet = new HashSet<String>();
         for (Enumeration keys = rb.getKeys(); keys.hasMoreElements(); ) {
-            valuesSet.add(keys.nextElement());
+            valuesSet.add((String) keys.nextElement());
         }
         
         return valuesSet;        
