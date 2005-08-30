@@ -8535,7 +8535,7 @@
         <description></description>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="StudentOrMasterDegreeAdministrativeOfficeAuthorization"/>
+            <chain name="DegreeOrMasterDegreeAdmininstrativeOfficeChain"/>
         </filterChains>
     </service>
     <service>
@@ -8570,7 +8570,7 @@
         <description></description>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="StudentOrMasterDegreeAdministrativeOfficeAuthorization"/>
+            <chain name="DegreeOrMasterDegreeAdmininstrativeOfficeChain"/>
         </filterChains>
     </service>
 	<service>
