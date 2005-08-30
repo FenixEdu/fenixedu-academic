@@ -10,9 +10,9 @@
 
 <div class="infoselected" style="text-align: left">
 <ul>
+	<li><b>A Reserva de Turmas do 1º ano só será disponibilizada após 19 de Setembro.</b></li>
 	<li><bean:message key="message.warning.student.enrolmentClasses" /> <html:link page="<%= "/warningFirst.do" %>"><bean:message key="message.warning.student.enrolmentClasses.Fenix" /></html:link>.</li>
 	<li><bean:message key="message.warning.student.enrolmentClasses.labs" /></li>
-	<li>A Reserva de Turmas do 1º ano só será disponibilizada após 15 de Setembro.</li>
 	<li><bean:message key="message.warning.student.enrolmentClasses.notEnroll" /></li>
 	<ul>
 		<li>Alunos Externos</li>
