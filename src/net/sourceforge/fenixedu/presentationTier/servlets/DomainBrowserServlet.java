@@ -171,17 +171,28 @@ public class DomainBrowserServlet extends HttpServlet {
                         out.println("null collection");
                     } else {
                         Collection col = (Collection)roleValue;
-                        out.println("<A HREF=\"listRole?domainClass=");
-                        out.println(domObj.getClass().getName());
-                        out.println("&objId=");
-                        out.println(domObj.getIdInternal());
-                        out.println("&role=");
-                        out.println(role.getName());
-                        out.println("\">");
-                        out.println(role.getType().getFullName());
-                        out.println("[");
-                        out.println(col.size());
-                        out.println("]</A>");
+			int colSize = -1;
+			try {
+			    colSize = col.size();
+			} catch (Exception e) {
+			    // ignore it
+			}
+
+			if (colSize == -1) {
+			    out.println("THIS IS NULL: missing from OJB mapping?");
+			} else {
+			    out.println("<A HREF=\"listRole?domainClass=");
+			    out.println(domObj.getClass().getName());
+			    out.println("&objId=");
+			    out.println(domObj.getIdInternal());
+			    out.println("&role=");
+			    out.println(role.getName());
+			    out.println("\">");
+			    out.println(role.getType().getFullName());
+			    out.println("[");
+			    out.println(colSize);
+			    out.println("]</A>");
+			}
                     }
                 }
                 
