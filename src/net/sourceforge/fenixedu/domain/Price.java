@@ -22,7 +22,6 @@ public class Price extends Price_Base {
 
     public String toString() {
         String result = "[GUIDE ENTRY";
-        result += ", codInt=" + getInternalCode();
         result += ", description=" + getDescription();
         result += ", documentType=" + getDocumentType();
         result += ", graduationType=" + getGraduationType();

@@ -1928,7 +1928,6 @@ class net.sourceforge.fenixedu.domain.precedences.Precedence extends net.sourcef
 class net.sourceforge.fenixedu.domain.Price extends net.sourceforge.fenixedu.domain.DomainObject {
 	String description;
 	Double price;
-	Integer internalCode;
     GraduationType graduationType;
     DocumentType documentType;
 }
