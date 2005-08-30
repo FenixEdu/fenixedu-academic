@@ -121,6 +121,7 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 		}
 
 		pb.commitTransaction();
+		pb.close();
 		pb = null;
 	    } else {
 		throw new Error("Couldn't get exclusive commit lock on the database");
