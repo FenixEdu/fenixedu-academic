@@ -20,16 +20,20 @@
 		<h3><bean:message key="title.student.notNeedToEnroll.current"/></h3>
 		<table cellpadding=3>
 			<tr>
-				<th><bean:message key="label.student.notNeedToEnroll.curricularPlan"/></th>
-				<th><bean_message key="label.curricular.course.name"/></th>
+				<td class="listClasses-header"><bean:message key="label.student.notNeedToEnroll.curricularPlan"/></td>
+				<td class="listClasses-header"><bean:message key="label.curricular.course.name"/></td>
+				<td class="listClasses-header"></td>
 			</tr>
 		
 		<bean:define id="studentNumber" name="equivalencesForm" property="studentNumber" type="java.lang.String"/>
 		<logic:iterate id="infoNotNeedToEnroll" name="notNeedToEnrollList">
 			<tr>
-				<td><bean:write name="infoDegreeCurricularPlan" property="name"/></td>
-				<td><bean:write name="infoNotNeedToEnroll" property="infoCurricularCourse.name"/></td>
-				<td>
+				<td class="listClasses"><bean:write name="infoDegreeCurricularPlan" property="name"/></td>
+				<td class="listClasses">
+					<bean:write name="infoNotNeedToEnroll" property="infoCurricularCourse.name"/> - 
+					<bean:write name="infoNotNeedToEnroll" property="infoCurricularCourse.code"/>
+				</td>
+				<td class="listClasses">
 					<html:link page="<%= "/showNotNeedToEnroll.do?method=deleteNotNeedToEnroll&amp;studentNumber=" + studentNumber %>"
 					paramId="notNeedToEnrollID" paramName="infoNotNeedToEnroll" paramProperty="idInternal">
 					<bean:message key="link.notNeedToEnroll.delete"/></html:link>
@@ -43,18 +47,27 @@
 			<html:hidden property="studentCurricularPlanID" value="<%= infoStudentCurricularPlanID.toString() %>"/>			
 
 			<h3><bean:message key="title.student.notNeedToEnroll.toInsert"/></h3>
-			<table>
+			<table cellpadding=3>
+				<tr>
+					<td class="listClasses-header"><bean:message key="label.student.notNeedToEnroll.curricularPlan"/></td>
+					<td class="listClasses-header"><bean:message key="label.curricular.course.name"/></td>
+					<td class="listClasses-header"></td>
+				</tr>
 			<logic:iterate id="infoCurricularCourse" name="infoDegreeCurricularPlan" property="curricularCourses" indexId="index">
 				<tr>
-					<td><bean:write name="infoCurricularCourse" property="name"/></td>
-						<td>
-							<html:multibox property="curricularCoursesID">
-								<bean:write name="infoCurricularCourse" property="idInternal"/> 
-							</html:multibox>
-						</td>
+					<td class="listClasses"><bean:write name="infoDegreeCurricularPlan" property="name"/></td>
+					<td class="listClasses">
+						<bean:write name="infoCurricularCourse" property="name"/> - <bean:write name="infoCurricularCourse" property="code"/>
+					</td>
+					<td class="listClasses">
+						<html:multibox property="curricularCoursesID">
+							<bean:write name="infoCurricularCourse" property="idInternal"/> 
+						</html:multibox>
+					</td>
 				</tr>
 			</logic:iterate>
 			</table>
+			<br/>
 			<html:submit styleClass="inputbutton" onclick="document.forms[0].method.value='insertNotNeedToEnroll'">
 				<bean:message key="button.insert"/></html:submit>
 		</logic:present>
