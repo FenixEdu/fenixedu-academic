@@ -28,6 +28,8 @@ import net.sourceforge.fenixedu.util.ExecutionDegreesFormat;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -71,9 +73,15 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 
         InfoShiftEnrollment infoShiftEnrollment = null;
         Object[] args = { Integer.valueOf(studentNumber), executionDegreeIdChosen };
-
-        infoShiftEnrollment = (InfoShiftEnrollment) ServiceManagerServiceFactory.executeService(
-                userView, "PrepareInfoShiftEnrollmentByStudentNumber", args);
+        try {
+        	infoShiftEnrollment = (InfoShiftEnrollment) ServiceManagerServiceFactory.executeService(
+        			userView, "PrepareInfoShiftEnrollmentByStudentNumber", args);
+        } catch(FenixServiceException e) {
+        	ActionErrors actionErrors = new ActionErrors();
+        	actionErrors.add("noTuitonPayed", new ActionError(e.getMessage()));
+            saveErrors(request, actionErrors);
+        	return mapping.getInputForward();
+        }
 
         // inicialize the form with the degree chosen and student number
         enrolmentForm.set("degree", infoShiftEnrollment.getInfoExecutionDegree().getIdInternal());
