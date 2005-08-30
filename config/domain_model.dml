@@ -75,6 +75,7 @@ valueType net.sourceforge.fenixedu.util.State                                   
 valueType net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState      as StudentCurricularPlanState;
 valueType net.sourceforge.fenixedu.util.StudentState                                            as StudentState;
 valueType net.sourceforge.fenixedu.util.StudentType                                             as StudentType;
+valueType net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice					as StudentPersonalDataAuthorizationChoice;
 valueType net.sourceforge.fenixedu.util.TipoAula                                                as TipoAula;
 valueType net.sourceforge.fenixedu.util.TipoSala                                                as TipoSala; 
 valueType net.sourceforge.fenixedu.domain.transactions.TransactionType                          as TransactionType;
@@ -2531,6 +2532,12 @@ class net.sourceforge.fenixedu.domain.StudentKind extends net.sourceforge.fenixe
     Integer maxNACToEnrol;
     Integer maxCoursesToEnrol;
     StudentType studentType;
+}
+
+class net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyStudent;
+	Integer keyExecutionYear;
+	StudentPersonalDataAuthorizationChoice answer;
 }
 
 class net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -5309,4 +5316,16 @@ relation WebSiteSectionWebSite {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.WebSite playsRole webSite;
+}
+
+relation StudentPersonalDataAuthorizationStudent {
+    net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization playsRole studentPersonalDataAuthorization;
+    net.sourceforge.fenixedu.domain.Student playsRole student;
+}
+
+relation StudentPersonalDataAuthorizationExecutionYear {
+    net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization playsRole studentPersonalDataAuthorizations {
+    	multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 }

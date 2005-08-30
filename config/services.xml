@@ -8732,12 +8732,24 @@
         <filterChains>
             <chain name="ManagerAuthorization"/>
         </filterChains>        
-    </service>     
+    </service>
     <service>
     	<name>ChangePasswordKerberosTest</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePasswordKerberos</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>
         <filterChains />
-    </service>          
+    </service>                               
+    <service>
+    	<name>ReadActualPersonalDataAuthorizationAnswer</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.ReadActualPersonalDataAuthorizationAnswer</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>       
+    </service>
+    <service>
+    	<name>WriteStudentPersonalDataAuthorizationAnswer</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.WriteStudentPersonalDataAuthorizationAnswer</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>       
+    </service>        
 </serviceDefinitions>

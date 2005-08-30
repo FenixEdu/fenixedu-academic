@@ -66,6 +66,7 @@ import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDelegate;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentNotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentSenior;
+import net.sourceforge.fenixedu.persistenceTier.student.IPersistentStudentPersonalDataAuthorization;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCareer;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCategory;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentExternalActivity;
@@ -164,6 +165,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentCurr
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentGroupAttendVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentGroupVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentKindVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentPersonalDataAuthorizationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SummaryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SupportLessonVO;
@@ -986,5 +988,9 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 	
 	public IPersistentNotNeedToEnrollInCurricularCourse getIPersistentNotNeedToEnrollInCurricularCourse() {
         return new NotNeedToEnrollInCurricularCourseVO();
+    }
+    
+    public IPersistentStudentPersonalDataAuthorization getIPersistentStudentPersonalDataAuthorization() {
+        return new StudentPersonalDataAuthorizationVO();
     }
 }

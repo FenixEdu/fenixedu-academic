@@ -473,3 +473,55 @@
 	/>
 
 </class-descriptor>
+
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization -->
+<!-- ******************************************************************************************************************************* -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization"
+                  table="STUDENT_PERSONAL_DATA_AUTHORIZATION">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+
+	<field-descriptor
+	  name="ackOptLock"
+	  column="ACK_OPT_LOCK"
+	  jdbc-type="INTEGER"
+	  locking="false"
+	/>
+	
+   <field-descriptor
+        name="keyStudent"
+        column="KEY_STUDENT"
+        jdbc-type="INTEGER"
+	/>
+   
+    <field-descriptor
+        name="keyExecutionYear"
+        column="KEY_EXECUTION_YEAR"
+        jdbc-type="INTEGER"
+	/>	
+   
+	<field-descriptor
+		name="answer"
+		column="ANSWER"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.StudentPersonalDataAuthorizationChoice2sqlStudentPersonalDataAuthorizationChoiceFieldConversion"
+	/>
+   
+   	<reference-descriptor auto-retrieve="false"
+	  name="student"
+	  class-ref="net.sourceforge.fenixedu.domain.Student">
+	  <foreignkey field-ref="keyStudent"/>
+   </reference-descriptor>
+   
+   <reference-descriptor auto-retrieve="false"
+	  name="executionYear"
+	  class-ref="net.sourceforge.fenixedu.domain.ExecutionYear">
+	  <foreignkey field-ref="keyExecutionYear"/>
+   </reference-descriptor>
+</class-descriptor>   

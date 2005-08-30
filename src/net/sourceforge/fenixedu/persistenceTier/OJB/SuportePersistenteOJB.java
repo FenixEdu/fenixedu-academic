@@ -82,6 +82,7 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.sms.SentSmsOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.student.DelegateOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.student.NotNeedToEnrollInCurricularCourseOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.student.SeniorOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.student.StudentPersonalDataAuthorizationOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.CareerOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.CategoryOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.ExternalActivityOJB;
@@ -165,6 +166,7 @@ import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDelegate;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentNotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentSenior;
+import net.sourceforge.fenixedu.persistenceTier.student.IPersistentStudentPersonalDataAuthorization;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCareer;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCategory;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentExternalActivity;
@@ -182,9 +184,7 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentPaymentT
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentSmsTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransaction;
-
 import net.sourceforge.fenixedu.stm.Transaction;
-
 
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
@@ -1217,5 +1217,9 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	
 	public IPersistentNotNeedToEnrollInCurricularCourse getIPersistentNotNeedToEnrollInCurricularCourse() {
         return new NotNeedToEnrollInCurricularCourseOJB();
+    }
+    
+    public IPersistentStudentPersonalDataAuthorization getIPersistentStudentPersonalDataAuthorization() {
+        return new StudentPersonalDataAuthorizationOJB();
     }
 }

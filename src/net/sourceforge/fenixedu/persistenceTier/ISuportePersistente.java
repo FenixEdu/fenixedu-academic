@@ -71,6 +71,7 @@ import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDelegate;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentNotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentSenior;
+import net.sourceforge.fenixedu.persistenceTier.student.IPersistentStudentPersonalDataAuthorization;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCareer;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCategory;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentExternalActivity;
@@ -490,4 +491,6 @@ public interface ISuportePersistente {
     public IPersistentCompetenceCourse getIPersistentCompetenceCourse();
     
     public IPersistentNotNeedToEnrollInCurricularCourse getIPersistentNotNeedToEnrollInCurricularCourse();
+    
+    public IPersistentStudentPersonalDataAuthorization getIPersistentStudentPersonalDataAuthorization();
 }

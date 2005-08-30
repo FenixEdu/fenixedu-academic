@@ -175,5 +175,10 @@
 		<put name="body" value="/student/inquiries/unavailableInquiry.jsp"></put>
 	</definition>
 
+	<!-- =================== Pre-enrollment Inquiries ============== -->
+	<definition name="show-personal-data-use-inquiry" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/personalDataAuthorizationInquiry.jsp" />		
+	</definition>
+	
 	
 </tiles-definitions>
