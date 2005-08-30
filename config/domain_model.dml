@@ -796,7 +796,6 @@ class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu
     Integer keyExecutionPeriod;
     String ojbConcreteClass;
     Integer studentCurricularPlanKey;
-    Integer accumulatedWeight;
     EnrollmentState enrollmentState;
     EnrollmentCondition condition;
     EnrolmentEvaluationType enrolmentEvaluationType;
@@ -812,6 +811,8 @@ class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu
 	public void createEnrolmentEvaluationForImprovement(IEmployee employee, IExecutionPeriod currentExecutionPeriod, IStudent student);
 	public IEnrolmentEvaluation submitEnrolmentEvaluation (net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType enrolmentEvaluationType, IMark publishedMark, IEmployee employee, IPerson personResponsibleForGrade, java.util.Date evaluationDate, String observation);
 	public boolean isImprovementForExecutionCourse (IExecutionCourse executionCourse);
+	public Integer getAccumulatedWeight();
+	public void setAccumulatedWeight(Integer accumulatedWeight);
 	"
 }
 
