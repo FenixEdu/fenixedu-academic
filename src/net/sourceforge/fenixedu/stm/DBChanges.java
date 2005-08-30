@@ -176,8 +176,8 @@ class DBChanges {
 	}
 	    
 	// write change logs
+	Connection conn = pb.serviceConnectionManager().getConnection();
 	if (attrChangeLogs != null) {
-	    Connection conn = pb.serviceConnectionManager().getConnection();
 	    PreparedStatement stmt = conn.prepareStatement("INSERT INTO TX_CHANGE_LOGS VALUES (?,?,?,?)");
 
 	    stmt.setInt(4, txNumber);
@@ -189,6 +189,17 @@ class DBChanges {
 
 		stmt.executeUpdate();
 	    }
+	}
+
+	// write ServiceInfo
+	ServiceInfo info = ServiceInfo.getCurrentServiceInfo();
+	if (info.shouldLog()) {
+	    PreparedStatement stmt = conn.prepareStatement("INSERT INTO SERVICE_LOG VALUES (?,?,?,?)");
+	    stmt.setTimestamp(1, new java.sql.Timestamp(System.currentTimeMillis()));
+	    stmt.setString(2, info.username);
+	    stmt.setString(3, info.serviceName);
+	    stmt.setString(4, info.getArgumentsAsString());
+	    stmt.executeUpdate();
 	}
     }
 

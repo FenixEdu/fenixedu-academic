@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.logging.SystemInfo;
 import net.sourceforge.fenixedu.applicationTier.logging.UserExecutionLog;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.stm.VersionNotAvailableException;
+import net.sourceforge.fenixedu.stm.ServiceInfo;
 
 import org.apache.commons.collections.FastHashMap;
 import org.apache.log4j.Logger;
@@ -133,6 +134,10 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
 
 	    // Replace this line with the following block if conflicting transactions should restart automatically
 	    //Object serviceResult = manager.execute(id, service, method, args);
+
+	    if (id != null) {
+		ServiceInfo.setCurrentServiceInfo(id.getUtilizador(), service, args);
+	    }
 
 	    Object serviceResult = null;
 	    while (true) {

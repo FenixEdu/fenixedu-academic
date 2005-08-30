@@ -2314,23 +2314,6 @@ class net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime extends net.
     ProviderRegimeType providerRegimeType;
 }
 
-class net.sourceforge.fenixedu.domain.log.ServiceLog extends net.sourceforge.fenixedu.domain.DomainObject {
-	Date invocationDate;
-	String invokerUsername;
-	String serviceName;
-	String serviceArguments;
-
-}
-
-class net.sourceforge.fenixedu.domain.log.MonitoredService extends net.sourceforge.fenixedu.domain.DomainObject {
-	String serviceName;
-
-}
-
-class net.sourceforge.fenixedu.domain.log.MonitoredUser extends net.sourceforge.fenixedu.domain.DomainObject {
-	String username;
-
-}
 
 class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer availabilityFinal;
