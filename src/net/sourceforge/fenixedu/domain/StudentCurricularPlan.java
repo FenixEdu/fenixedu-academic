@@ -156,36 +156,26 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     protected boolean isApproved(ICurricularCourse curricularCourse, List approvedCourses) {
-        if (isThisCurricularCoursesInTheList(curricularCourse, approvedCourses)) {
+	return hasEquivalenceIn(curricularCourse, approvedCourses)
+	    || hasEquivalenceIn(curricularCourse, getStudentNotNeedToEnrollCurricularCourses());
+    }
+
+    protected boolean hasEquivalenceIn(ICurricularCourse curricularCourse, List otherCourses) {
+	if (otherCourses.isEmpty()) {
+	    return false;
+	}
+
+        if (isThisCurricularCoursesInTheList(curricularCourse, otherCourses)) {
             return true;
         }
 
-        int size = approvedCourses.size();
-        for (int i = 0; i < size; i++) {
-            ICurricularCourse curricularCourseDoneByStudent = (ICurricularCourse) approvedCourses.get(i);
-            Set curricularCourseEquivalences = getCurricularCoursesInCurricularCourseEquivalences(curricularCourseDoneByStudent);
-            if (curricularCourseEquivalences.contains(curricularCourse)) {
-                return true;
-            }
-        }
+	for (ICurricularCourseEquivalence equiv : curricularCourse.getCurricularCourseEquivalences()) {
+	    if (isThisCurricularCoursesInTheList(equiv.getOldCurricularCourse(), otherCourses)) {
+		return true;
+	    }
+	}
 
-        List studentNotNeedToEnrollCourses = getStudentNotNeedToEnrollCurricularCourses();
-
-        if (isThisCurricularCoursesInTheList(curricularCourse, studentNotNeedToEnrollCourses)) {
-            return true;
-        }
-
-        size = studentNotNeedToEnrollCourses.size();
-        for (int i = 0; i < size; i++) {
-            ICurricularCourse curricularCourseDoneByStudent = (ICurricularCourse) studentNotNeedToEnrollCourses
-                    .get(i);
-            Set curricularCourseEquivalences = getCurricularCoursesInCurricularCourseEquivalences(curricularCourseDoneByStudent);
-            if (curricularCourseEquivalences.contains(curricularCourse)) {
-                return true;
-            }
-        }
-
-        return false;
+	return false;
     }
 
     public boolean isCurricularCourseApprovedInCurrentOrPreviousPeriod(final ICurricularCourse course,
@@ -607,16 +597,19 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                                 .equals(curricularCourse.getCurricularCourseUniqueKeyForEnrollment());
                     }
                 });*/
-    	
-    	if(curricularCourses.contains(curricularCourse)) {
-    		return true;
-    	} else {
-    		if(curricularCourse.getCompetenceCourse() != null) {
-    			Collection result = CollectionUtils.intersection(curricularCourse.getCompetenceCourse().getAssociatedCurricularCourses(), curricularCourses);
-    			return (!result.isEmpty());
-    		}
-    		return false;
-    	}
+
+	for (ICurricularCourse otherCourse : (List<ICurricularCourse>) curricularCourses) {
+	    if ((curricularCourse == otherCourse) || haveSameCompetence(curricularCourse, otherCourse)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    private boolean haveSameCompetence(ICurricularCourse course1, ICurricularCourse course2) {
+	ICompetenceCourse comp1 = course1.getCompetenceCourse();
+	ICompetenceCourse comp2 = course2.getCompetenceCourse();
+	return (comp1 != null) && (comp1 == comp2);
     }
 
     protected List getStudentEnrollmentsWithApprovedState() {
