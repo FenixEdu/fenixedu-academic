@@ -149,7 +149,7 @@
 	
 	<table>
 		<tr>
-			<td colspan="2">
+			<td colspan="5">
 				<br />
 				<b><bean:message key="message.student.enrolled.curricularCourses" /></b>
 			</td>
@@ -193,11 +193,22 @@
 			</tr>
 		</logic:iterate>
 		<tr>
-			<td colspan="2">
+			<td colspan="5">
 				<br />
 				<b><bean:message key="message.student.unenrolled.curricularCourses" /></b>
 			</td>
 		</tr>
+		<logic:present name="warnings">
+			<tr>
+				<td colspan="5">
+					<ul>
+						<logic:iterate id="messageKey" name="warnings">
+							<li><span style="color:red"><b><bean:message key='<%=messageKey.toString()%>' bundle="STUDENT_RESOURCES"/></b></span></li>
+						</logic:iterate>
+					</ul>
+				</td>
+			</tr>
+		</logic:present>	
 		<tr>
 		<td class="listClasses-header"><bean:message key="label.course" bundle="STUDENT_RESOURCES"/></td>
 		<td class="listClasses-header"><bean:message key="label.course.type" bundle="STUDENT_RESOURCES"/></td>		

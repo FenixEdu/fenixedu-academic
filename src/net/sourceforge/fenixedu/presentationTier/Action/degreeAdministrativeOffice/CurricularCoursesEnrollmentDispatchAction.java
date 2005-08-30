@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,6 +21,7 @@ import net.sourceforge.fenixedu.applicationTier.strategy.enrolment.context.InfoS
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoAreas2Choose;
+import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoCurricularCourse2EnrollWithInfoCurricularCourse;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -33,6 +33,7 @@ import net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionError;
@@ -145,11 +146,33 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
         Collections.sort(infoStudentEnrolmentContext.getStudentCurrentSemesterInfoEnrollments(),
                 new BeanComparator("infoCurricularCourse.name"));
 
-        Integer[] enrolledInArray = buildArrayForForm(infoStudentEnrolmentContext
+        /*Integer[] enrolledInArray = buildArrayForForm(infoStudentEnrolmentContext
                 .getStudentCurrentSemesterInfoEnrollments());
         enrollmentForm.set("enrolledCurricularCoursesBefore", enrolledInArray);
-        enrollmentForm.set("enrolledCurricularCoursesAfter", enrolledInArray);
+        enrollmentForm.set("enrolledCurricularCoursesAfter", enrolledInArray);*/
+        
+        List warnings = new ArrayList();
+        //check if AMII is available to enroll
+        boolean amIItoEnroll = CollectionUtils.exists(infoStudentEnrolmentContext.getCurricularCourses2Enroll(), new Predicate() {
 
+			public boolean evaluate(Object arg0) {
+				InfoCurricularCourse2EnrollWithInfoCurricularCourse curricularCourse2Enroll = (InfoCurricularCourse2EnrollWithInfoCurricularCourse) arg0;
+				if(curricularCourse2Enroll.getInfoCurricularCourse().getName().equals("Análise Matemática II"))
+					return true;
+				return false;
+			}
+        });
+        
+        if(amIItoEnroll)
+        	warnings.add("warning.amIItoEnroll");
+        
+        //check if students belongs to LERCI2003/2004
+        if(infoStudentEnrolmentContext.getInfoStudentCurricularPlan().getInfoDegreeCurricularPlan().getIdInternal().equals(90))
+        	warnings.add("warning.lerci");
+        
+        if(!warnings.isEmpty())
+        	request.setAttribute("warnings", warnings);
+        
         request.setAttribute("infoStudentEnrolmentContext", infoStudentEnrolmentContext);
 
         return mapping.findForward("prepareEnrollmentChooseCurricularCourses");
