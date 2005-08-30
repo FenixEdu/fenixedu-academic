@@ -88,6 +88,21 @@
         column="IST_UNIVERSITY"
         jdbc-type="VARCHAR"
 	/>
+	<field-descriptor
+		name="flunked"
+		column="FLUNKED"
+		jdbc-type="BIT"
+	/>
+	<field-descriptor
+		name="requestedChangeDegree"
+		column="REQUESTED_CHANGE_DEGREE"
+		jdbc-type="BIT"
+	/>
+	<field-descriptor
+		name="requestedChangeBranch"
+		column="REQUESTED_CHANGE_BRANCH"
+		jdbc-type="BIT"
+	/>
 	<reference-descriptor auto-retrieve="false"
 			name="person"
 			class-ref="net.sourceforge.fenixedu.domain.Person"

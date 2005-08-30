@@ -12,3 +12,4 @@ read -s password
 
 # Authorship scripts
 mysql -u$2 -f $1 < CreateStudentPersonalDataAuthorizationTable.sql
+mysql -u$2 -f $1 < alterTableStudent.sql

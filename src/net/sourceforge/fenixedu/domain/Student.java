@@ -35,6 +35,10 @@ public class Student extends Student_Base {
         setState(state);
 		setNumber(studentNumber);
 		setStudentKind(studentKind);
+
+        setFlunked(Boolean.FALSE);
+        setRequestedChangeDegree(Boolean.FALSE);
+        setRequestedChangeBranch(Boolean.FALSE);
 	}
 
     public String toString() {

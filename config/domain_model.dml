@@ -2399,7 +2399,10 @@ class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.d
     StudentState state;
     AgreementType agreementType;
     EntryPhase entryPhase;
-	
+    Boolean flunked;
+    Boolean requestedChangeDegree;
+    Boolean requestedChangeBranch;
+
 	interface "
     public IStudentCurricularPlan getActiveStudentCurricularPlan();
 	"
