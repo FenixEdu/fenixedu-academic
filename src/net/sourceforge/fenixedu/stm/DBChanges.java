@@ -193,7 +193,7 @@ class DBChanges {
 
 	// write ServiceInfo
 	ServiceInfo info = ServiceInfo.getCurrentServiceInfo();
-	if (info.shouldLog()) {
+	if ((info != null) && info.shouldLog()) {
 	    PreparedStatement stmt = conn.prepareStatement("INSERT INTO SERVICE_LOG VALUES (?,?,?,?)");
 	    stmt.setTimestamp(1, new java.sql.Timestamp(System.currentTimeMillis()));
 	    stmt.setString(2, info.username);
