@@ -41,6 +41,14 @@ class DBChanges {
 	    || ((mToNTuples != null) && (! mToNTuples.isEmpty()));
     }
 
+    void finish() {
+	if (broker != null) {
+	    broker.close();
+	    broker = null;
+	}
+    }
+
+
     public PersistenceBroker getOJBBroker() {
 	if (broker == null) {
 	    broker = PersistenceBrokerFactory.defaultPersistenceBroker();

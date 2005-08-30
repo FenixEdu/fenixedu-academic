@@ -34,8 +34,11 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
     }
 
 
-    public void setFinished(boolean finished) {
-	this.finished = finished;
+    public void finish() {
+	this.finished = true;
+	if (finished) {
+	    getDBChanges().finish();
+	}
     }
 
     public boolean isFinished() {
@@ -121,7 +124,6 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 		}
 
 		pb.commitTransaction();
-		pb.close();
 		pb = null;
 	    } else {
 		throw new Error("Couldn't get exclusive commit lock on the database");
@@ -133,7 +135,6 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 	} finally {
 	    if (pb != null) {
 		pb.abortTransaction();
-		pb.close();
 	    }
 	}
     }

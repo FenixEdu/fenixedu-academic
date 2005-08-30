@@ -51,7 +51,7 @@ public abstract class Transaction extends jvstm.Transaction {
     }
 
     private static void noteTxFinished(FenixTransaction tx) {
-	tx.setFinished(true);
+	tx.finish();
 	synchronized (ACTIVE_TXS) {
 	    boolean needsClean = false;
 	    FenixTransaction oldestTx = ACTIVE_TXS.peek();

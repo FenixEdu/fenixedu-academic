@@ -6,7 +6,7 @@ import jvstm.VBoxBody;
 
 interface FenixTransaction extends Comparable<FenixTransaction> {
     int getNumber();
-    void setFinished(boolean finished);
+    void finish();
     boolean isFinished();
     DBChanges getDBChanges();
     PersistenceBroker getOJBBroker();
