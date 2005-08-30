@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
@@ -39,7 +40,7 @@ public class StartupServlet extends HttpServlet {
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
 		
-		fixDescriptors();
+		SuportePersistenteOJB.fixDescriptors();
 
 		try {
 			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils
@@ -135,24 +136,4 @@ public class StartupServlet extends HttpServlet {
 
 	}
 
-    private void fixDescriptors() {
-	final MetadataManager metadataManager = MetadataManager.getInstance();
-        final Collection<ClassDescriptor> classDescriptors = 
-	    (Collection<ClassDescriptor>)metadataManager.getGlobalRepository().getDescriptorTable().values();
-
-	for (ClassDescriptor classDescriptor : classDescriptors) {
-	    for (ObjectReferenceDescriptor rd : (Collection<ObjectReferenceDescriptor>)classDescriptor.getObjectReferenceDescriptors()) {
-		rd.setCascadingStore(ObjectReferenceDescriptor.CASCADE_LINK);
-		rd.setCascadeRetrieve(false);
-		rd.setLazy(false);
-	    }
-
-	    for (CollectionDescriptor cod : (Collection<CollectionDescriptor>)classDescriptor.getCollectionDescriptors()) {
-		cod.setCascadingStore(ObjectReferenceDescriptor.CASCADE_NONE);
-		cod.setCollectionClass(OJBFunctionalSetWrapper.class);
-		cod.setCascadeRetrieve(false);
-		cod.setLazy(false);
-	    }
-	}
-    }
 }

@@ -10,6 +10,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
  * @author ars
  */
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -184,11 +185,16 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentPaymentT
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentSmsTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransaction;
+import net.sourceforge.fenixedu.stm.OJBFunctionalSetWrapper;
 import net.sourceforge.fenixedu.stm.Transaction;
 
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
+import org.apache.ojb.broker.metadata.ClassDescriptor;
+import org.apache.ojb.broker.metadata.CollectionDescriptor;
 import org.apache.ojb.broker.metadata.DescriptorRepository;
+import org.apache.ojb.broker.metadata.MetadataManager;
+import org.apache.ojb.broker.metadata.ObjectReferenceDescriptor;
 
 import pt.utl.ist.berserk.storage.ITransactionBroker;
 import pt.utl.ist.berserk.storage.exceptions.StorageException;
@@ -1222,4 +1228,26 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
     public IPersistentStudentPersonalDataAuthorization getIPersistentStudentPersonalDataAuthorization() {
         return new StudentPersonalDataAuthorizationOJB();
     }
+
+    public static void fixDescriptors() {
+        final MetadataManager metadataManager = MetadataManager.getInstance();
+            final Collection<ClassDescriptor> classDescriptors = 
+            (Collection<ClassDescriptor>)metadataManager.getGlobalRepository().getDescriptorTable().values();
+
+        for (ClassDescriptor classDescriptor : classDescriptors) {
+            for (ObjectReferenceDescriptor rd : (Collection<ObjectReferenceDescriptor>)classDescriptor.getObjectReferenceDescriptors()) {
+            rd.setCascadingStore(ObjectReferenceDescriptor.CASCADE_LINK);
+            rd.setCascadeRetrieve(false);
+            rd.setLazy(false);
+            }
+
+            for (CollectionDescriptor cod : (Collection<CollectionDescriptor>)classDescriptor.getCollectionDescriptors()) {
+            cod.setCascadingStore(ObjectReferenceDescriptor.CASCADE_NONE);
+            cod.setCollectionClass(OJBFunctionalSetWrapper.class);
+            cod.setCascadeRetrieve(false);
+            cod.setLazy(false);
+            }
+        }
+        }
+
 }
