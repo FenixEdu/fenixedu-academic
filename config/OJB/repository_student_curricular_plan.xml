@@ -303,6 +303,13 @@
 			>
 		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
 	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="creditsInScientificAreas"
+			element-class-ref="net.sourceforge.fenixedu.domain.CreditsInScientificArea"
+			
+			>
+		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
+	</collection-descriptor>	
  <!--   <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="enrollmentReports"
 			element-class-ref="net.sourceforge.fenixedu.domain.enrollmentReport.EnrollmentReport"
@@ -451,6 +458,13 @@
 			>
 		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
 	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="creditsInScientificAreas"
+			element-class-ref="net.sourceforge.fenixedu.domain.CreditsInScientificArea"
+			
+			>
+		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
+	</collection-descriptor>	
   <!--  <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="enrollmentReports"
 			element-class-ref="net.sourceforge.fenixedu.domain.enrollmentReport.EnrollmentReport"
