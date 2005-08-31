@@ -162,7 +162,12 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
         
         Object[] args = { studentId, executionCourseID };
         List infoClassList = (List) ServiceManagerServiceFactory.executeService(userView,
-                "ReadClassesByStudentID", args);        
+                "ReadClassesByStudentID", args);   
+        
+        if(infoClassList == null || infoClassList.isEmpty()){
+            return mapping.findForward("prepareShiftEnrollment");
+        }
+        
         request.setAttribute("infoClassList", infoClassList);
         
         Integer tempClassId = null;
