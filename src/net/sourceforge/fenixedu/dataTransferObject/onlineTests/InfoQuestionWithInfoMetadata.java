@@ -13,7 +13,7 @@ public class InfoQuestionWithInfoMetadata extends InfoQuestion {
     public void copyFromDomain(IQuestion question) {
         super.copyFromDomain(question);
         if (question != null) {
-            setInfoMetadata(InfoMetadata.newInfoFromDomain(question.getMetadata()));
+            setInfoMetadata(InfoMetadataWithVisibleQuestions.newInfoFromDomain(question.getMetadata()));
         }
     }
 
