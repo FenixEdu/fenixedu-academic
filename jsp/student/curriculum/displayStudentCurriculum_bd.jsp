@@ -14,6 +14,8 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan" %>
 
   <span class="error"><html:errors/></span>
+  
+<h2>Currículo do Aluno</h2>
 
 	<bean:define id="infoStudentCPs" name="studentCPs" scope="request" type="net.sourceforge.fenixedu.dataTransferObject.util.InfoStudentCurricularPlansWithSelectedEnrollments" />
 	<bean:define id="selectedStudentCPs" name="infoStudentCPs" property="infoStudentCurricularPlans" />
@@ -25,21 +27,12 @@
 		
 		<table width="100%">
 			<tr>
-				<td>
-					<bean:message key="label.studentCurricularPlan" bundle="STUDENT_RESOURCES" />	
-				</td>
-				<td>
-					<html:select property="studentCPID"
-						onchange='document.studentCurricularPlanAndEnrollmentsSelectionForm.submit();'>
-						<html:options collection="allSCPs" property="value" labelProperty="label" />
-					</html:select>
-				</td>
+				<td><bean:message key="label.studentCurricularPlan" bundle="STUDENT_RESOURCES" /></td>
+				<td><html:select property="studentCPID"	onchange='document.studentCurricularPlanAndEnrollmentsSelectionForm.submit();'> <html:options collection="allSCPs" property="value" labelProperty="label" /></html:select></td>
 			</tr>
 			
 			<tr>
-				<td>
-					<bean:message key="label.enrollmentsFilter" bundle="STUDENT_RESOURCES" />	
-				</td>
+				<td><bean:message key="label.enrollmentsFilter" bundle="STUDENT_RESOURCES" /></td>
 				<td>
 					<html:select property="select"
 						onchange='document.studentCurricularPlanAndEnrollmentsSelectionForm.submit();' >
@@ -48,6 +41,7 @@
 				</td>
 			</tr>
 		</table>
+		
 		<logic:present property="studentNumber" name="studentCurricularPlanAndEnrollmentsSelectionForm">
 			<html:hidden name="studentCurricularPlanAndEnrollmentsSelectionForm" property="studentNumber"/>
 		</logic:present>
@@ -65,22 +59,10 @@
 						<table width="100%" border="0" cellpadding="0" cellspacing="0">
 							<tr>
 								<td bgcolor="#FFFFFF" class="infoselected">
-									<bean:message key="label.person.name" />:
-									<bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nome"/>
-									<br/>
-									<bean:message key="label.degree.name" />:
-									<bean:write name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.nome"/>
-									<br/>
-									<bean:message key="label.curricularplan" bundle="STUDENT_RESOURCES" />:
-									<bean:write name="infoStudentCurricularPlan" property="startDate"/> - 
-									<bean:define id="degreeType" name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.tipoCurso.name"/>
-									( <bean:message name="degreeType" bundle="ENUMERATION_RESOURCES"/> )
-									<logic:present name="infoStudentCurricularPlan" property="specialization" >
-										<bean:message name="infoStudentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
-									</logic:present>
-									<br/>
-									<bean:message key="label.number" />:
-									<bean:write name="infoStudentCurricularPlan" property="infoStudent.number"/>
+									<p><strong><bean:message key="label.person.name" />: </strong><bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nome"/></p>
+									<p><strong><bean:message key="label.degree.name" />: </strong><bean:write name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.nome"/></p>
+									<p><strong><bean:message key="label.curricularplan" bundle="STUDENT_RESOURCES" />: </strong><bean:write name="infoStudentCurricularPlan" property="startDate"/> - <bean:define id="degreeType" name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.tipoCurso.name"/> ( <bean:message name="degreeType" bundle="ENUMERATION_RESOURCES"/> )</p>
+									<p><logic:present name="infoStudentCurricularPlan" property="specialization"><bean:message name="infoStudentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/></logic:present><strong><bean:message key="label.number" />: </strong><bean:write name="infoStudentCurricularPlan" property="infoStudent.number"/></p>
 								</td>
 							</tr>
 						</table>
