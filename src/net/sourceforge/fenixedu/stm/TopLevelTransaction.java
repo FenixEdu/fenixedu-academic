@@ -49,6 +49,13 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 	return (this.getNumber() - o.getNumber());
     }
 
+    protected void renumber(int txNumber) {
+	// To keep the queue ordered, we have to remove and reinsert the TX when it is renumbered
+	Transaction.removeFromQueue(this);
+	super.renumber(txNumber);
+	Transaction.addToQueue(this);
+    }
+
 
     public <T> VBoxBody<T> getBodyForRead(VBox<T> vbox, Object obj, String attr) {
         VBoxBody<T> body = getBodyInTx(vbox);

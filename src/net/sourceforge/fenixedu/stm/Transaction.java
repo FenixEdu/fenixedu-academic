@@ -19,6 +19,15 @@ public abstract class Transaction extends jvstm.Transaction {
     }
 
 
+    static void addToQueue(FenixTransaction tx) {
+	ACTIVE_TXS.offer(tx);
+    }
+    
+    static void removeFromQueue(FenixTransaction tx) {
+	ACTIVE_TXS.remove(tx);
+    }
+
+
     public static jvstm.Transaction begin() {
         return begin(-1);
     }
@@ -28,19 +37,23 @@ public abstract class Transaction extends jvstm.Transaction {
         TopLevelTransaction tx = null;
         if (parent == null) {
             tx = new TopLevelTransaction(txNumber);
+            //tx = new ReadOnlyTransaction(txNumber);
         } else {
             //tx = new NestedTransaction(parent);
 	    throw new Error("Nested transactions not supported yet...");
         }        
         current.set(tx);
-	ACTIVE_TXS.add(tx);
+	addToQueue(tx);
         return tx;
     }
 
     public static void abort() {
 	FenixTransaction tx = currentFenixTransaction();
-	jvstm.Transaction.abort();
-	noteTxFinished(tx);
+	try {
+	    jvstm.Transaction.abort();
+	} finally {
+	    noteTxFinished(tx);
+	}
     }
 
     public static int commit() {
@@ -54,6 +67,9 @@ public abstract class Transaction extends jvstm.Transaction {
 	tx.finish();
 	synchronized (ACTIVE_TXS) {
 	    boolean needsClean = false;
+	    if (ACTIVE_TXS.size() > 30) {
+		System.out.println("WARNING: more than 30 Txs in queue to be finished...");
+	    }
 	    FenixTransaction oldestTx = ACTIVE_TXS.peek();
 	    while ((oldestTx != null) && oldestTx.isFinished()) {
 		needsClean = true;
