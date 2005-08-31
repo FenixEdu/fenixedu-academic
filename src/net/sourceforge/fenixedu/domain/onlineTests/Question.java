@@ -10,6 +10,7 @@ package net.sourceforge.fenixedu.domain.onlineTests;
 public class Question extends Question_Base {
 
     public void delete() {
+        getMetadata().setNumberOfMembers(new Integer(getMetadata().getNumberOfMembers().intValue() - 1));
         removeMetadata();
         deleteDomainObject();
     }
