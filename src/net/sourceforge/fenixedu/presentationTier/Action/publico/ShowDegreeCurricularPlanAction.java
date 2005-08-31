@@ -164,6 +164,11 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
         InfoExecutionCourse executionCourse = new InfoExecutionCourse();
         executionCourse.setInfoExecutionPeriod(selectedExecutionPeriod);
 
+        InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
+        request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
+        infoDegreeCurricularPlan.prepareEnglishPresentation(language);
+        infoExecutionDegree1.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+
         if (curricularYear.intValue() != 0) {
 
             Object[] args = { infoExecutionDegree, selectedExecutionPeriod, curricularYear ,language};
@@ -171,10 +176,10 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
                 activeCurricularCourseScopes = (List) ServiceManagerServiceFactory.executeService(null,
                         "ReadActiveDegreeCurricularPlanByID", args);
             } catch (FenixServiceException e) {
-                errors
-                        .add("impossibleCurricularPlan", new ActionError(
-                                "error.impossibleCurricularPlan"));
-                saveErrors(request, errors);
+//                errors
+//                        .add("impossibleCurricularPlan", new ActionError(
+//                                "error.impossibleCurricularPlan"));
+//                saveErrors(request, errors);
                 return (new ActionForward(mapping.getInput()));
             }
         } else {
@@ -184,10 +189,10 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
                 activeCurricularCourseScopes = (List) ServiceManagerServiceFactory.executeService(null,
                         "ReadActiveDegreeCurricularPlanByID", args);
             } catch (FenixServiceException e) {
-                errors
-                        .add("impossibleCurricularPlan", new ActionError(
-                                "error.impossibleCurricularPlan"));
-                saveErrors(request, errors);
+//                errors
+//                        .add("impossibleCurricularPlan", new ActionError(
+//                                "error.impossibleCurricularPlan"));
+//                saveErrors(request, errors);
                 return (new ActionForward(mapping.getInput()));
             }
         }
@@ -196,13 +201,13 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
             errors.add("noDegreeCurricularPlan", new ActionError("error.impossibleCurricularPlan"));
             saveErrors(request, errors);
         }
-        InfoDegreeCurricularPlan infoDegreeCurricularPlan = ((InfoCurricularCourseScope) ((List) activeCurricularCourseScopes.get(0)).get(0)).getInfoCurricularCourse().getInfoDegreeCurricularPlan();
+        //InfoDegreeCurricularPlan infoDegreeCurricularPlan = ((InfoCurricularCourseScope) ((List) activeCurricularCourseScopes.get(0)).get(0)).getInfoCurricularCourse().getInfoDegreeCurricularPlan();
 
-        infoDegreeCurricularPlan.prepareEnglishPresentation(language);
+        //infoDegreeCurricularPlan.prepareEnglishPresentation(language);
         
-        infoExecutionDegree1.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+        //infoExecutionDegree1.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
             
-        request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
+        //request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
         request.setAttribute("allActiveCurricularCourseScopes", activeCurricularCourseScopes);
 
 
