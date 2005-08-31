@@ -15,10 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.SiteView;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.MetadataComparator;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoMetadata;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
+import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteDistributedTestAdvisory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -30,6 +31,8 @@ import net.sourceforge.fenixedu.util.tests.RenderChoise;
 import net.sourceforge.fenixedu.util.tests.RenderFIB;
 import net.sourceforge.fenixedu.util.tests.ResponseCondition;
 import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
+import net.sourceforge.fenixedu.util.tests.TestQuestionChangesType;
+import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.XMLQuestion;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
@@ -41,6 +44,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.upload.FormFile;
+import org.apache.struts.util.LabelValueBean;
 
 /**
  * @author Susana Fernandes
@@ -651,19 +655,22 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         String path = getServlet().getServletContext().getRealPath("/");
         if (variationCode == null)
             variationCode = new Integer(-1);
-        SiteView siteView = null;
+        InfoMetadata infoMetadata = null;
+        request.setAttribute("objectCode", executionCourseId);
+        request.setAttribute("order", request.getParameter("order"));
+        request.setAttribute("asc", request.getParameter("asc"));
         try {
             Object[] args = { executionCourseId, exerciseId, variationCode, path };
-            siteView = (SiteView) ServiceUtils.executeService(userView, "ReadExercise", args);
+            infoMetadata = (InfoMetadata) ServiceUtils.executeService(userView, "ReadExercise", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
-        request.setAttribute("objectCode", executionCourseId);
+        if (infoMetadata == null) {
+            return exercisesFirstPage(mapping, form, request, response);
+        }
         request.setAttribute("exerciseCode", exerciseId);
         request.setAttribute("variationCode", variationCode);
-        request.setAttribute("siteView", siteView);
-        request.setAttribute("order", request.getParameter("order"));
-        request.setAttribute("asc", request.getParameter("asc"));
+        request.setAttribute("infoMetadata", infoMetadata);
         List questionDifficultyList = (new QuestionDifficultyType()).getAllTypes();
         request.setAttribute("questionDifficultyList", questionDifficultyList);
         return mapping.findForward("editExercise");
@@ -697,6 +704,81 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         request.setAttribute("order", request.getParameter("order"));
         request.setAttribute("asc", request.getParameter("asc"));
         return exercisesFirstPage(mapping, form, request, response);
+    }
+
+    public ActionForward prepareRemoveExerciseVariation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+        final IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
+        final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
+        Integer exerciseId = getCodeFromRequest(request, "exerciseCode");
+        Integer variationCode = getCodeFromRequest(request, "variationCode");
+        request.setAttribute("objectCode", executionCourseId);
+        request.setAttribute("order", request.getParameter("order"));
+        request.setAttribute("asc", request.getParameter("asc"));
+        try {
+            List<LabelValueBean> result = (List<LabelValueBean>) ServiceUtils.executeService(userView, "DeleteExerciseVariation", new Object[] {
+                    executionCourseId, variationCode });
+            if (result == null || result.size() == 0) {
+                return prepareEditExercise(mapping, form, request, response);
+            }
+            request.setAttribute("studentsList", result);
+            InfoQuestion infoQuestion = (InfoQuestion) ServiceUtils.executeService(userView, "ReadQuestion", new Object[] { executionCourseId, null,
+                    variationCode, getServlet().getServletContext().getRealPath("/") });
+            request.setAttribute("infoQuestion", infoQuestion);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+        return mapping.findForward("removeExerciseVariation");
+    }
+
+    public ActionForward removeExerciseVariation(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException, FenixFilterException {
+        final IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
+        final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
+        final Integer exerciseId = getCodeFromRequest(request, "exerciseCode");
+        final Integer variationCode = getCodeFromRequest(request, "variationCode");
+        request.setAttribute("objectCode", executionCourseId);
+        request.setAttribute("order", request.getParameter("order"));
+        request.setAttribute("asc", request.getParameter("asc"));
+        request.setAttribute("exerciseCode", exerciseId);
+
+        List<InfoSiteDistributedTestAdvisory> infoSiteDistributedTestAdvisoryList = new ArrayList<InfoSiteDistributedTestAdvisory>();
+        try {
+            infoSiteDistributedTestAdvisoryList = (List<InfoSiteDistributedTestAdvisory>) ServiceUtils.executeService(userView,
+                    "ChangeStudentTestQuestion", new Object[] { executionCourseId, null, variationCode, null, null,
+                            new TestQuestionChangesType(TestQuestionChangesType.CHANGE_VARIATION), new Boolean(true),
+                            new TestQuestionStudentsChangesType(TestQuestionStudentsChangesType.ALL_STUDENTS), request.getContextPath() });
+
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+
+        request.setAttribute("successfulChanged", infoSiteDistributedTestAdvisoryList);
+
+        List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
+        for (InfoSiteDistributedTestAdvisory infoSiteDistributedTestAdvisory : infoSiteDistributedTestAdvisoryList) {
+            List<InfoStudent> studentWithoutAdvisory = infoSiteDistributedTestAdvisory.getInfoStudentList();
+            List<InfoStudent> result = new ArrayList<InfoStudent>();
+            for (int times = 0; times < 3; times++) {
+                for (InfoStudent student : studentWithoutAdvisory) {
+                    try {
+                        ServiceUtils.executeService(userView, "InsertStudentDistributedTestAdvisory", new Object[] { executionCourseId,
+                                infoSiteDistributedTestAdvisory.getInfoAdvisory().getIdInternal(), student.getIdInternal() });
+                    } catch (FenixServiceException e) {
+                        result.add(student);
+                    }
+                }
+                studentWithoutAdvisory = result;
+                if (studentWithoutAdvisory.size() == 0) {
+                    break;
+                }
+            }
+            infoStudentList.addAll(studentWithoutAdvisory);
+        }
+
+        request.setAttribute("infoStudentList", infoStudentList);
+
+        return prepareEditExercise(mapping, form, request, response);
     }
 
     private Integer getCodeFromRequest(HttpServletRequest request, String codeString) {
