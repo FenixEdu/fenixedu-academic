@@ -525,3 +525,72 @@
 	  <foreignkey field-ref="keyExecutionYear"/>
    </reference-descriptor>
 </class-descriptor>   
+
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization -->
+<!-- ******************************************************************************************************************************* -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.DislocatedStudent"
+                  table="DISLOCATED_STUDENT">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+
+	<field-descriptor
+	  name="ackOptLock"
+	  column="ACK_OPT_LOCK"
+	  jdbc-type="INTEGER"
+	  locking="false"
+	/>
+	
+   <field-descriptor
+        name="keyStudent"
+        column="KEY_STUDENT"
+        jdbc-type="INTEGER"
+	/>
+   
+    <field-descriptor
+        name="keyCountry"
+        column="KEY_COUNTRY"
+        jdbc-type="INTEGER"
+	/>	
+	
+    <field-descriptor
+        name="keyDislocatedCountry"
+        column="KEY_DISLOCATED_COUNTRY"
+        jdbc-type="INTEGER"
+	/>		
+   
+    <field-descriptor
+        name="keyDistrict"
+        column="KEY_DISTRICT"
+        jdbc-type="INTEGER"
+	/>	
+	   
+   	<reference-descriptor auto-retrieve="false"
+	  name="student"
+	  class-ref="net.sourceforge.fenixedu.domain.Student">
+	  <foreignkey field-ref="keyStudent"/>
+   </reference-descriptor>
+   
+   <reference-descriptor auto-retrieve="false"
+	  name="country"
+	  class-ref="net.sourceforge.fenixedu.domain.Country">
+	  <foreignkey field-ref="keyCountry"/>
+   </reference-descriptor>
+   
+   <reference-descriptor auto-retrieve="false"
+	  name="dislocatedCountry"
+	  class-ref="net.sourceforge.fenixedu.domain.Country">
+	  <foreignkey field-ref="keyDislocatedCountry"/>
+   </reference-descriptor>  
+   
+   <reference-descriptor auto-retrieve="false"
+	  name="district"
+	  class-ref="net.sourceforge.fenixedu.domain.District">
+	  <foreignkey field-ref="keyDistrict"/>
+   </reference-descriptor>    
+</class-descriptor>   

@@ -708,6 +708,13 @@ class net.sourceforge.fenixedu.domain.CompetenceCourse extends net.sourceforge.f
 	"
 }
 
+class net.sourceforge.fenixedu.domain.DislocatedStudent extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyCountry;
+    Integer keyStudent;
+    Integer keyDislocatedCountry;
+    Integer keyDistrict;
+}
+
 class net.sourceforge.fenixedu.domain.onlineTests.DistributedTest extends net.sourceforge.fenixedu.domain.DomainObject {
     String testInformation;
     Boolean imsFeedback;
@@ -752,6 +759,10 @@ class net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory extend
     "
 }
 
+class net.sourceforge.fenixedu.domain.District extends net.sourceforge.fenixedu.domain.DomainObject {
+	String name;
+	String code;	
+}
 
 class net.sourceforge.fenixedu.domain.Employee extends net.sourceforge.fenixedu.domain.DomainObject {
 	Boolean active;
@@ -3342,6 +3353,33 @@ relation DepartmentCompetenceCourse {
 	net.sourceforge.fenixedu.domain.Department playsRole department;
 }
 
+
+relation DislocatedStudentCountry {
+	net.sourceforge.fenixedu.domain.DislocatedStudent playsRole concluedStudents {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Country playsRole country;
+}
+
+relation DislocatedStudentDislocatedCountry {
+	net.sourceforge.fenixedu.domain.DislocatedStudent playsRole dislocatedStudents {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Country playsRole dislocatedCountry;
+}
+
+relation DislocatedStudentDistrict {
+	net.sourceforge.fenixedu.domain.DislocatedStudent playsRole dislocatedStudents {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.District playsRole district;
+}
+
+relation DislocatedStudentStudent {
+	net.sourceforge.fenixedu.domain.DislocatedStudent playsRole dislocatedStudent;
+	net.sourceforge.fenixedu.domain.Student playsRole student;
+}
+
 relation DistributedTestAdvisories {
     net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory playsRole distributedTestAdvisories {
         multiplicity *;
@@ -3364,7 +3402,6 @@ relation DistributedTestQuestions {
         multiplicity *;
     }
 }
-
 
 relation AdvisoryFromDistributedTests {
     net.sourceforge.fenixedu.domain.Advisory playsRole advisory;
