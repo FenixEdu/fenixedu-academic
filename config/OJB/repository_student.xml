@@ -103,6 +103,11 @@
 		column="REQUESTED_CHANGE_BRANCH"
 		jdbc-type="BIT"
 	/>
+	<field-descriptor
+		name="keyStudentPersonalDataAuthorization"
+		column="KEY_STUDENT_PERSONAL_DATA_AUTHORIZATION"
+		jdbc-type="INTEGER"
+	/>
 	<reference-descriptor auto-retrieve="false"
 			name="person"
 			class-ref="net.sourceforge.fenixedu.domain.Person"
@@ -121,6 +126,11 @@
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionYear">
 		<foreignkey field-ref="keyRegistrationYear"/>
 	</reference-descriptor>
+	<reference-descriptor auto-retrieve="false"
+			name="studentPersonalDataAuthorization"
+			class-ref="net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization">
+		<foreignkey field-ref="keyStudentPersonalDataAuthorization"/>
+	</reference-descriptor>	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="studentCurricularPlans"
 			element-class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"

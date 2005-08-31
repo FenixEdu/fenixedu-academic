@@ -75,4 +75,11 @@
 		>
 	<inverse-foreignkey field-ref="keyRegistrationYear"/>
   </collection-descriptor>  
+  
+   <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+		name="studentPersonalDataAuthorizations"
+		element-class-ref="net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization"		
+		>
+	<inverse-foreignkey field-ref="keyExecutionYear"/>
+  </collection-descriptor>  
 </class-descriptor> 
