@@ -17,25 +17,28 @@
 <table cellpadding=5>
 <tr>
 	<td>&nbsp;</td>
-	<td><html:radio property="answer" value="<%= StudentPersonalDataAuthorizationChoice.PROFESSIONAL_ENDS.toString() %>" /></td>
+	<td><html:radio property="authorizationAnswer" value="<%= StudentPersonalDataAuthorizationChoice.PROFESSIONAL_ENDS.toString() %>" /></td>
 	<td><bean:message key="label.enrollment.personalData.professionalEnds"/></td>	
 </tr>
 <tr>
 	<td>&nbsp;</td>
-	<td><html:radio property="answer" value="<%= StudentPersonalDataAuthorizationChoice.SEVERAL_ENDS.toString() %>" /></td>
+	<td><html:radio property="authorizationAnswer" value="<%= StudentPersonalDataAuthorizationChoice.SEVERAL_ENDS.toString() %>" /></td>
 	<td><bean:message key="label.enrollment.personalData.nonComericalEnds"/></td>	
 </tr>
 <tr>
 	<td>&nbsp;</td>
-	<td><html:radio property="answer" value="<%= StudentPersonalDataAuthorizationChoice.ALL_ENDS.toString() %>" /></td>
+	<td><html:radio property="authorizationAnswer" value="<%= StudentPersonalDataAuthorizationChoice.ALL_ENDS.toString() %>" /></td>
 	<td><bean:message key="label.enrollment.personalData.allEnds"/></td>	
 </tr>
 </table>
 <br/>
 
-<html:radio property="answer" value="<%= StudentPersonalDataAuthorizationChoice.NO_END.toString() %>" />&nbsp;&nbsp;
+<html:radio property="authorizationAnswer" value="<%= StudentPersonalDataAuthorizationChoice.NO_END.toString() %>" />&nbsp;&nbsp;
 <b><bean:message key="label.enrollment.personalData.noAuthorization"/></b>
 
 <br/><br/>
-<html:submit styleClass="inputbutton">Continuar</html:submit>
+<html:submit styleClass="inputbutton"><bean:message key="button.continue"/></html:submit>
 </html:form>
+
+<br/><br/><br/><br/><br/><br/><br/><br/>
+<bean:message key="label.enrollment.personalData.changes"/>
