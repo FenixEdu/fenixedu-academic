@@ -2400,6 +2400,7 @@ class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.d
     Boolean requestedChangeDegree;
     Boolean requestedChangeBranch;
     Integer keyStudentPersonalDataAuthorization;
+    Boolean interruptedStudies;
 
 	interface "
     public IStudentCurricularPlan getActiveStudentCurricularPlan();

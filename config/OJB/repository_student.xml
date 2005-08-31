@@ -108,6 +108,11 @@
 		column="KEY_STUDENT_PERSONAL_DATA_AUTHORIZATION"
 		jdbc-type="INTEGER"
 	/>
+	<field-descriptor
+		name="interruptedStudies"
+		column="INTERRUPTED_STUDIES"
+		jdbc-type="BIT"
+	/>
 	<reference-descriptor auto-retrieve="false"
 			name="person"
 			class-ref="net.sourceforge.fenixedu.domain.Person"
