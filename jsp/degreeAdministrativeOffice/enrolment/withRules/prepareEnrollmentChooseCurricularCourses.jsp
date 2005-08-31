@@ -71,7 +71,9 @@
 		<tr>
 			<td>
 				<logic:equal name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoStudent.payedTuition" value="false">
-					<span class="error"><bean:message key="message.student.noPayed.tuition" /></span>
+					<logic:equal name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoStudent.interruptedStudies" value="false">
+						<span class="error"><bean:message key="message.student.noPayed.tuition" /></span>
+					</logic:equal>
 				</logic:equal>
 			</td>
 		</tr>
