@@ -27,6 +27,12 @@ public class InfoStudent extends InfoObject {
     private InfoStudentKind infoStudentKind;
 
     private Boolean payedTuition;
+    
+    private Boolean flunked;
+    
+    private Boolean requestedChangeDegree;
+    
+    private Boolean interruptedStudies;
 
     public InfoStudent() {
     }
@@ -123,6 +129,9 @@ public class InfoStudent extends InfoObject {
             setState(student.getState());
             setPayedTuition(student.getPayedTuition());
             setInfoPerson(InfoPerson.newInfoFromDomain(student.getPerson()));
+            setFlunked(student.getFlunked());
+            setRequestedChangeDegree(student.getRequestedChangeDegree());
+            setInterruptedStudies(student.getInterruptedStudies());
         }
     }
 
@@ -134,4 +143,28 @@ public class InfoStudent extends InfoObject {
         }
         return infoStudent;
     }
+
+	public Boolean getFlunked() {
+		return flunked;
+	}
+
+	public void setFlunked(Boolean flunked) {
+		this.flunked = flunked;
+	}
+
+	public Boolean getRequestedChangeDegree() {
+		return requestedChangeDegree;
+	}
+
+	public void setRequestedChangeDegree(Boolean requestedChangeDegree) {
+		this.requestedChangeDegree = requestedChangeDegree;
+	}
+
+	public Boolean getInterruptedStudies() {
+		return interruptedStudies;
+	}
+
+	public void setInterruptedStudies(Boolean interruptedStudies) {
+		this.interruptedStudies = interruptedStudies;
+	}
 }
