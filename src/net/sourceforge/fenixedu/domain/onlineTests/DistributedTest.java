@@ -7,18 +7,10 @@ package net.sourceforge.fenixedu.domain.onlineTests;
 import java.util.Calendar;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
-import net.sourceforge.fenixedu.util.tests.TestType;
-
 /**
  * @author Susana Fernandes
  */
 public class DistributedTest extends DistributedTest_Base {
-
-    private TestType testType;
-
-    private CorrectionAvailability correctionAvailability;
-
     public Calendar getBeginDate() {
         if (getBeginDateDate() != null) {
             final Calendar calendar = Calendar.getInstance();
@@ -49,14 +41,6 @@ public class DistributedTest extends DistributedTest_Base {
         setBeginHourDate(date);
     }
 
-    public CorrectionAvailability getCorrectionAvailability() {
-        return correctionAvailability;
-    }
-
-    public void setCorrectionAvailability(CorrectionAvailability correctionAvailability) {
-        this.correctionAvailability = correctionAvailability;
-    }
-
     public Calendar getEndDate() {
         if (getEndDateDate() != null) {
             final Calendar calendar = Calendar.getInstance();
@@ -73,7 +57,7 @@ public class DistributedTest extends DistributedTest_Base {
     }
 
     public Calendar getEndHour() {
-        if (getEndHour() != null) {
+        if (getEndHourDate() != null) {
             final Calendar calendar = Calendar.getInstance();
             calendar.setTime(getEndHourDate());
             return calendar;
@@ -85,14 +69,6 @@ public class DistributedTest extends DistributedTest_Base {
     public void setEndHour(Calendar endHour) {
         final Date date = (endHour != null) ? endHour.getTime() : null;
         setEndHourDate(date);
-    }
-
-    public TestType getTestType() {
-        return testType;
-    }
-
-    public void setTestType(TestType testType) {
-        this.testType = testType;
     }
 
 }

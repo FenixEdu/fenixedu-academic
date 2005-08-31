@@ -11,17 +11,6 @@ import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
  * @author Susana Fernandes
  */
 public class TestQuestion extends TestQuestion_Base {
-
-    private CorrectionFormula formula;
-
-    public CorrectionFormula getCorrectionFormula() {
-        return formula;
-    }
-
-    public void setCorrectionFormula(CorrectionFormula formula) {
-        this.formula = formula;
-    }
-
     public void editTestQuestion(Integer newTestQuestionOrder, final Double newTestQuestionValue, final CorrectionFormula newFormula) {
         organizeTestQuestionsOrder(newTestQuestionOrder, this.getTestQuestionOrder());
         this.setTestQuestionOrder(newTestQuestionOrder);

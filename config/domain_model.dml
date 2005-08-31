@@ -79,6 +79,10 @@ valueType net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice		
 valueType net.sourceforge.fenixedu.util.TipoAula                                                as TipoAula;
 valueType net.sourceforge.fenixedu.util.TipoSala                                                as TipoSala; 
 valueType net.sourceforge.fenixedu.domain.transactions.TransactionType                          as TransactionType;
+valueType net.sourceforge.fenixedu.domain.IDomainObject                  				        as IDomainObject;
+valueType net.sourceforge.fenixedu.util.tests.CorrectionFormula                                 as CorrectionFormula;
+valueType net.sourceforge.fenixedu.util.tests.CorrectionAvailability                            as CorrectionAvailability;
+valueType net.sourceforge.fenixedu.util.tests.TestType                  				        as TestType;
 
 
 /*
@@ -714,6 +718,8 @@ class net.sourceforge.fenixedu.domain.onlineTests.DistributedTest extends net.so
     Date endDateDate;
     Date beginHourDate;
     Date endHourDate;
+    CorrectionAvailability correctionAvailability;
+    TestType testType;
     
     interface "
     public abstract java.util.Calendar getBeginDate();
@@ -724,10 +730,6 @@ class net.sourceforge.fenixedu.domain.onlineTests.DistributedTest extends net.so
 
     public abstract void setBeginHour(java.util.Calendar beginHour);
 
-    public abstract net.sourceforge.fenixedu.util.tests.CorrectionAvailability getCorrectionAvailability();
-
-    public abstract void setCorrectionAvailability(net.sourceforge.fenixedu.util.tests.CorrectionAvailability correctionAvailability);
-
     public abstract java.util.Calendar getEndDate();
 
     public abstract void setEndDate(java.util.Calendar endDate);
@@ -736,10 +738,6 @@ class net.sourceforge.fenixedu.domain.onlineTests.DistributedTest extends net.so
 
     public abstract void setEndHour(java.util.Calendar endHour);
 
-    public abstract net.sourceforge.fenixedu.util.tests.TestType getTestType();
-
-    public abstract void setTestType(net.sourceforge.fenixedu.util.tests.TestType testType);
-    
     public abstract boolean equals(Object obj);
     "
 }
@@ -2560,12 +2558,9 @@ class net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion extends ne
     Integer keyStudent;
     String response;
     Double testQuestionMark;
+    CorrectionFormula correctionFormula;
     
     interface "
-    public abstract net.sourceforge.fenixedu.util.tests.CorrectionFormula getCorrectionFormula();
-
-    public abstract void setCorrectionFormula(net.sourceforge.fenixedu.util.tests.CorrectionFormula formula);
-    
     public void delete();
     "
 }
@@ -2684,12 +2679,9 @@ class net.sourceforge.fenixedu.domain.onlineTests.TestQuestion extends net.sourc
     Integer keyQuestion;
     Integer testQuestionOrder;
     Double testQuestionValue;
+    CorrectionFormula correctionFormula;
     
     interface "
-    public abstract net.sourceforge.fenixedu.util.tests.CorrectionFormula getCorrectionFormula();
-
-  	public abstract void setCorrectionFormula(net.sourceforge.fenixedu.util.tests.CorrectionFormula formula);
-    	
     public void editTestQuestion(Integer newTestQuestionOrder, Double newTestQuestionValue, net.sourceforge.fenixedu.util.tests.CorrectionFormula newFormula);
     
   	public void delete();
@@ -2699,12 +2691,7 @@ class net.sourceforge.fenixedu.domain.onlineTests.TestQuestion extends net.sourc
 class net.sourceforge.fenixedu.domain.onlineTests.TestScope extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyClass;
     String className;
-    
-    interface "
-	    public abstract net.sourceforge.fenixedu.domain.IDomainObject getDomainObject();
-
-	    public abstract void setDomainObject(net.sourceforge.fenixedu.domain.IDomainObject object);
-    "
+    IDomainObject domainObject;
 }
 
 class net.sourceforge.fenixedu.domain.Seminaries.Theme extends net.sourceforge.fenixedu.domain.DomainObject {

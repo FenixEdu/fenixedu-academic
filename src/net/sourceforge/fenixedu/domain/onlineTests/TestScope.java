@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.IDomainObject;
  * 
  */
 public class TestScope extends TestScope_Base {
-    private IDomainObject domainObject;
 
     public TestScope() {
     }
@@ -30,11 +29,4 @@ public class TestScope extends TestScope_Base {
         setKeyClass(classId);
     }
 
-    public IDomainObject getDomainObject() {
-        return domainObject;
-    }
-
-    public void setDomainObject(IDomainObject object) {
-        domainObject = object;
-    }
 }
