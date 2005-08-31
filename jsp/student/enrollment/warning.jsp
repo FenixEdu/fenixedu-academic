@@ -3,4 +3,4 @@
 		<ul>
 		<li><a href="@enrollment.faq.url@" target="_blank"><bean:message key="message.enrollment.instructions"/></a>	</li>		</ul></div>
 
-<div><br/><br/>	<html:form action="/studentCurricularCoursesEnrollment.do">		<html:hidden property="method" value="prepareEnrollment"/>		<html:submit styleClass="inputbutton">			<bean:message key="button.continue.enrolment"/>		</html:submit>	</html:form></div>
+<div><br/><br/>	<html:form action="/dislocatedStudent">		<html:hidden property="method" value="prepareDislocatedStudentInquiry"/>		<html:submit styleClass="inputbutton">			<bean:message key="button.continue.enrolment"/>		</html:submit>	</html:form></div>
