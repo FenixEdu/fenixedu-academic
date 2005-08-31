@@ -4,13 +4,21 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
+import java.beans.XMLEncoder;
+import java.io.ByteArrayOutputStream;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
-import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
+import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest;
+import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteDistributedTestAdvisory;
+import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
+import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionWithInfoQuestionAndInfoDistributedTest;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
@@ -18,27 +26,31 @@ import net.sourceforge.fenixedu.domain.IMark;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.IOnlineTest;
+import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestLog;
 import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
+import net.sourceforge.fenixedu.util.tests.QuestionType;
+import net.sourceforge.fenixedu.util.tests.Response;
+import net.sourceforge.fenixedu.util.tests.ResponseLID;
+import net.sourceforge.fenixedu.util.tests.ResponseNUM;
+import net.sourceforge.fenixedu.util.tests.ResponseSTR;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
-
-import org.apache.struts.util.LabelValueBean;
-
+import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Susana Fernandes
  */
 public class ChangeStudentTestQuestionMark implements IService {
-    public List<LabelValueBean> run(Integer executionCourseId, Integer distributedTestId, Double newMark, Integer questionId, Integer studentId,
-            TestQuestionStudentsChangesType studentsType) throws FenixServiceException, ExcepcaoPersistencia {
-        List<LabelValueBean> result = new ArrayList<LabelValueBean>();
+    public List<InfoSiteDistributedTestAdvisory> run(Integer executionCourseId, Integer distributedTestId, Double newMark, Integer questionId,
+            Integer studentId, TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException, ExcepcaoPersistencia {
+        List<InfoSiteDistributedTestAdvisory> infoSiteDistributedTestAdvisoryList = new ArrayList<InfoSiteDistributedTestAdvisory>();
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
+        path = path.replace('\\', '/');
         IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport.getIPersistentStudentTestQuestion();
         List<IStudentTestQuestion> studentsTestQuestionList = new ArrayList<IStudentTestQuestion>();
         if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.THIS_STUDENT) {
@@ -55,13 +67,45 @@ public class ChangeStudentTestQuestionMark implements IService {
             studentsTestQuestionList.addAll(persistentStudentTestQuestion.readByQuestion(questionId));
         }
         for (IStudentTestQuestion studentTestQuestion : studentsTestQuestionList) {
-            if (!compareDates(studentTestQuestion.getDistributedTest().getEndDate(), studentTestQuestion.getDistributedTest().getEndHour())) {
-                result.add(new LabelValueBean(studentTestQuestion.getDistributedTest().getTitle().concat(" (Ficha Fechada)"), studentTestQuestion
-                        .getStudent().getNumber().toString()));
-            } else {
-                studentTestQuestion.setTestQuestionMark(newMark);
-                if (studentTestQuestion.getResponse() != null
-                        && studentTestQuestion.getDistributedTest().getTestType().equals(new TestType(TestType.EVALUATION))) {
+            InfoSiteDistributedTestAdvisory infoSiteDistributedTestAdvisory = new InfoSiteDistributedTestAdvisory();
+            infoSiteDistributedTestAdvisory.setInfoDistributedTest(InfoDistributedTest.newInfoFromDomain(studentTestQuestion.getDistributedTest()));
+            infoSiteDistributedTestAdvisory.setInfoAdvisory(null);
+            List<InfoStudent> group = new ArrayList<InfoStudent>();
+
+            studentTestQuestion.setTestQuestionMark(newMark);
+            if (!group.contains(studentTestQuestion.getStudent().getPerson()))
+                group.add(InfoStudent.newInfoFromDomain(studentTestQuestion.getStudent()));
+
+            if (studentTestQuestion.getDistributedTest().getTestType().equals(new TestType(TestType.EVALUATION))) {
+                if (studentTestQuestion.getResponse() == null) {
+                    Response response = null;
+                    InfoStudentTestQuestion infoStudentTestQuestion = InfoStudentTestQuestionWithInfoQuestionAndInfoDistributedTest
+                            .newInfoFromDomain(studentTestQuestion);
+                    try {
+                        ParseQuestion parse = new ParseQuestion();
+                        infoStudentTestQuestion = parse.parseStudentTestQuestion(infoStudentTestQuestion, path);
+                    } catch (Exception e) {
+                        throw new FenixServiceException(e);
+                    }
+
+                    if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.STR) {
+                        response = new ResponseSTR();
+                        ((ResponseSTR) response).setResponse("");
+                    } else if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.NUM) {
+                        response = new ResponseNUM();
+                        ((ResponseNUM) response).setResponse("");
+                    } else if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.LID) {
+                        response = new ResponseLID();
+                        ((ResponseLID) response).setResponse(new String[1]);
+                    }
+                    response.setResponsed();
+                    ByteArrayOutputStream out = new ByteArrayOutputStream();
+                    XMLEncoder encoder = new XMLEncoder(out);
+                    encoder.writeObject(response);
+                    encoder.close();
+                    final String outString = out.toString();
+                    studentTestQuestion.setResponse(outString);
+                } else {
                     IOnlineTest onlineTest = (IOnlineTest) persistentSuport.getIPersistentOnlineTest().readByDistributedTest(
                             studentTestQuestion.getDistributedTest().getIdInternal());
                     IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport.getIPersistentExecutionCourse().readByOID(
@@ -72,29 +116,20 @@ public class ChangeStudentTestQuestionMark implements IService {
                     if (mark != null) {
                         mark.setMark(getNewStudentMark(persistentSuport, studentTestQuestion.getDistributedTest(), studentTestQuestion.getStudent()));
                     }
-                    result.add(new LabelValueBean(studentTestQuestion.getDistributedTest().getTitle(), studentTestQuestion.getStudent().getNumber()
-                            .toString()));
                 }
-            }
-        }
-        return result;
-    }
+                IStudentTestLog studentTestLog = DomainFactory.makeStudentTestLog();
+                studentTestLog.setDistributedTest(studentTestQuestion.getDistributedTest());
+                studentTestLog.setStudent(studentTestQuestion.getStudent());
+                studentTestLog.setDate(Calendar.getInstance().getTime());
+                ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
+                studentTestLog.setEvent(MessageFormat.format(bundle.getString("message.changeStudentMarkLogMessage"), new Object[] { newMark }));
 
-    private boolean compareDates(Calendar date, Calendar hour) {
-        Calendar calendar = Calendar.getInstance();
-        CalendarDateComparator dateComparator = new CalendarDateComparator();
-        CalendarHourComparator hourComparator = new CalendarHourComparator();
-        if (dateComparator.compare(calendar, date) <= 0) {
-            if (dateComparator.compare(calendar, date) == 0) {
-                if (hourComparator.compare(calendar, hour) <= 0) {
-                    return true;
-                }
-
-                return false;
             }
-            return true;
+            infoSiteDistributedTestAdvisory.setInfoStudentList(group);
+            infoSiteDistributedTestAdvisoryList.add(infoSiteDistributedTestAdvisory);
+
         }
-        return false;
+        return infoSiteDistributedTestAdvisoryList;
     }
 
     private String getNewStudentMark(ISuportePersistente sp, IDistributedTest dt, IStudent s) throws ExcepcaoPersistencia {

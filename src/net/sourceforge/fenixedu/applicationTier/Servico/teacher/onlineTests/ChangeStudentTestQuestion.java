@@ -4,23 +4,31 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoAdvisory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
+import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest;
+import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteDistributedTestAdvisory;
+import net.sourceforge.fenixedu.domain.DomainFactory;
+import net.sourceforge.fenixedu.domain.IAdvisory;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IMark;
-import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTestAdvisory;
 import net.sourceforge.fenixedu.domain.onlineTests.IMetadata;
 import net.sourceforge.fenixedu.domain.onlineTests.IOnlineTest;
 import net.sourceforge.fenixedu.domain.onlineTests.IQuestion;
@@ -39,7 +47,7 @@ import net.sourceforge.fenixedu.util.tests.TestQuestionChangesType;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
 
-import org.apache.struts.util.LabelValueBean;
+import org.apache.commons.lang.time.DateFormatUtils;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -48,10 +56,11 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ChangeStudentTestQuestion implements IService {
 
-    public List<LabelValueBean> run(Integer executionCourseId, Integer distributedTestId, Integer oldQuestionId, Integer newMetadataId,
-            Integer studentId, TestQuestionChangesType changesType, Boolean delete, TestQuestionStudentsChangesType studentsType)
-            throws FenixServiceException, ExcepcaoPersistencia {
-        List<LabelValueBean> result = new ArrayList<LabelValueBean>();
+    public List<InfoSiteDistributedTestAdvisory> run(Integer executionCourseId, Integer distributedTestId, Integer oldQuestionId,
+            Integer newMetadataId, Integer studentId, TestQuestionChangesType changesType, Boolean delete,
+            TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException, ExcepcaoPersistencia {
+        List<InfoSiteDistributedTestAdvisory> infoSiteDistributedTestAdvisoryList = new ArrayList<InfoSiteDistributedTestAdvisory>();
+
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         IQuestion oldQuestion = (IQuestion) persistentSuport.getIPersistentQuestion().readByOID(Question.class, oldQuestionId);
@@ -86,9 +95,11 @@ public class ChangeStudentTestQuestion implements IService {
 
         }
         boolean canDelete = true;
-        for (int i = 0; i < distributedTestList.size(); i++) {
+        for (IDistributedTest distributedTest : distributedTestList) {
             List<IStudentTestQuestion> studentsTestQuestionList = new ArrayList<IStudentTestQuestion>();
-            IDistributedTest distributedTest = distributedTestList.get(i);
+            InfoSiteDistributedTestAdvisory infoSiteDistributedTestAdvisory = new InfoSiteDistributedTestAdvisory();
+            infoSiteDistributedTestAdvisory.setInfoDistributedTest(InfoDistributedTest.newInfoFromDomain(distributedTest));
+            infoSiteDistributedTestAdvisory.setInfoAdvisory(InfoAdvisory.newInfoFromDomain(getAdvisory(distributedTest, path.replace('\\', '/'))));
 
             if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.THIS_STUDENT) {
                 IStudent student = (IStudent) persistentSuport.getIPersistentStudent().readByOID(Student.class, studentId);
@@ -107,19 +118,12 @@ public class ChangeStudentTestQuestion implements IService {
                 studentsTestQuestionList = persistentStudentTestQuestion.readByQuestionAndDistributedTest(oldQuestion.getIdInternal(),
                         distributedTest.getIdInternal());
 
-            List<IPerson> group = new ArrayList<IPerson>();
+            List<InfoStudent> group = new ArrayList<InfoStudent>();
 
             for (IStudentTestQuestion studentTestQuestion : studentsTestQuestionList) {
                 if (!compareDates(studentTestQuestion.getDistributedTest().getEndDate(), studentTestQuestion.getDistributedTest().getEndHour())) {
-
-                    result.add(new LabelValueBean(studentTestQuestion.getDistributedTest().getTitle().concat(" (Ficha Fechada)"), studentTestQuestion
-                            .getStudent().getNumber().toString()));
                     canDelete = false;
                 } else {
-
-                    result.add(new LabelValueBean(studentTestQuestion.getDistributedTest().getTitle(), studentTestQuestion.getStudent().getNumber()
-                            .toString()));
-
                     if (availableQuestions.size() == 0)
                         availableQuestions.addAll(getNewQuestionList(metadata, oldQuestion));
 
@@ -137,7 +141,7 @@ public class ChangeStudentTestQuestion implements IService {
                     double oldMark = studentTestQuestion.getTestQuestionMark().doubleValue();
                     studentTestQuestion.setTestQuestionMark(new Double(0));
                     if (!group.contains(studentTestQuestion.getStudent().getPerson()))
-                        group.add(studentTestQuestion.getStudent().getPerson());
+                        group.add(InfoStudent.newInfoFromDomain(studentTestQuestion.getStudent()));
                     if (studentTestQuestion.getDistributedTest().getTestType().equals(new TestType(TestType.EVALUATION))) {
                         IOnlineTest onlineTest = (IOnlineTest) persistentSuport.getIPersistentOnlineTest().readByDistributedTest(
                                 studentTestQuestion.getDistributedTest().getIdInternal());
@@ -152,7 +156,8 @@ public class ChangeStudentTestQuestion implements IService {
                 }
 
             }
-
+            infoSiteDistributedTestAdvisory.setInfoStudentList(group);
+            infoSiteDistributedTestAdvisoryList.add(infoSiteDistributedTestAdvisory);
         }
 
         if (delete.booleanValue()) {
@@ -178,7 +183,7 @@ public class ChangeStudentTestQuestion implements IService {
             }
 
         }
-        return result;
+        return infoSiteDistributedTestAdvisoryList;
     }
 
     private IQuestion getNewQuestion(List<IQuestion> questions) {
@@ -250,6 +255,40 @@ public class ChangeStudentTestQuestion implements IService {
             totalMark += studentTestQuestion.getTestQuestionMark().doubleValue();
         }
         return (new java.text.DecimalFormat("#0.##").format(totalMark));
+    }
+
+    private IAdvisory getAdvisory(IDistributedTest distributedTest, String path) {
+        ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
+        // Create Advisory
+        IAdvisory advisory = DomainFactory.makeAdvisory();
+        advisory.setCreated(Calendar.getInstance().getTime());
+        advisory.setExpires(distributedTest.getEndDate().getTime());
+        advisory.setSender(MessageFormat.format(bundle.getString("message.distributedTest.from"), new Object[] { ((IExecutionCourse) distributedTest
+                .getTestScope().getDomainObject()).getNome() }));
+
+        final String beginHour = DateFormatUtils.format(distributedTest.getBeginHour().getTime(), "hh:mm");
+        final String beginDate = DateFormatUtils.format(distributedTest.getBeginDate().getTime(), "dd/MM/yyyy");
+        final String endHour = DateFormatUtils.format(distributedTest.getEndHour().getTime(), "hh:mm");
+        final String endDate = DateFormatUtils.format(distributedTest.getEndDate().getTime(), "dd/MM/yyyy");
+
+        Object[] args = { path, distributedTest.getIdInternal().toString(), beginHour, beginDate, endHour, endDate };
+        if (distributedTest.getTestType().equals(new TestType(TestType.INQUIRY))) {
+            advisory.setSubject(MessageFormat.format(bundle.getString("message.distributedTest.changeInquirySubject"), new Object[] { distributedTest
+                    .getTitle() }));
+            advisory.setMessage(MessageFormat.format(bundle.getString("message.distributedTest.messageChangeInquiry"), args));
+        } else {
+            advisory.setSubject(MessageFormat.format(bundle.getString("message.distributedTest.changeTestSubject"), new Object[] { distributedTest
+                    .getTitle() }));
+            advisory.setMessage(MessageFormat.format(bundle.getString("message.distributedTest.messageChangeTest"), args));
+        }
+
+        advisory.setOnlyShowOnce(new Boolean(false));
+
+        // Create DistributedTestAdvisory
+        IDistributedTestAdvisory distributedTestAdvisory = DomainFactory.makeDistributedTestAdvisory();
+        distributedTestAdvisory.setAdvisory(advisory);
+        distributedTestAdvisory.setDistributedTest(distributedTest);
+        return advisory;
     }
 
 }
