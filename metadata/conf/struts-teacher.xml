@@ -1211,6 +1211,7 @@
             validate="true">
             <forward name="editExercise" path="edit-Exercise"/>
             <forward name="exercisesFirstPage" path="exercises-First-Page"/>
+            <forward name="removeExerciseVariation" path="remove-Exercise-Variation"/>
         </action>
         <action path="/questionsManagementWithValue" name="questionForm" 
             input="/questionsManagement.do?method=prepareInsertTestQuestion&amp;page=0" scope="request"
