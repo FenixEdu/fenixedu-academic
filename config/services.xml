@@ -4508,6 +4508,15 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>DeleteExerciseVariation</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.DeleteExerciseVariation</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
+		</filterChains>
+	</service>
+	<service>
 		<name>ChangeStudentTestQuestion</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ChangeStudentTestQuestion</implementationClass>
@@ -4531,16 +4540,6 @@
 		<name>ChangeStudentTestQuestionMark</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ChangeStudentTestQuestionMark</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>CreateStudentTestAdvisory</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.CreateStudentTestAdvisory</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
