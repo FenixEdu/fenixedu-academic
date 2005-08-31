@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.student.onlineTests;
 
 import java.io.OutputStream;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -30,7 +29,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.tests.CardinalityType;
-import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
 import net.sourceforge.fenixedu.util.tests.Response;
 import net.sourceforge.fenixedu.util.tests.ResponseLID;
@@ -266,11 +264,13 @@ public class StudentTestsAction extends FenixDispatchAction {
             }
 
             InfoStudentTestQuestion infoStudentTestQuestion = (InfoStudentTestQuestion) infoStudentTestQuestionList.get(0);
-//            if (infoStudentTestQuestion.getDistributedTest().getCorrectionAvailability().getAvailability().equals(
-//                    new Integer(CorrectionAvailability.ALWAYS)))
-                request.setAttribute("infoStudentTestQuestionList", infoStudentTestQuestionList);
-//            else
-//                request.setAttribute("infoStudentTestQuestionList", new ArrayList());
+            // if
+            // (infoStudentTestQuestion.getDistributedTest().getCorrectionAvailability().getAvailability().equals(
+            // new Integer(CorrectionAvailability.ALWAYS)))
+            request.setAttribute("infoStudentTestQuestionList", infoStudentTestQuestionList);
+            // else
+            // request.setAttribute("infoStudentTestQuestionList", new
+            // ArrayList());
             request.setAttribute("infoSiteStudentTestFeedback", infoSiteStudentTestFeedback);
         }
 
@@ -298,7 +298,7 @@ public class StudentTestsAction extends FenixDispatchAction {
         } catch (InvalidArgumentsServiceException e) {
             request.setAttribute("invalidTest", new Boolean(true));
             return mapping.findForward("testError");
-        } catch (NotAuthorizedException e) {
+        } catch (NotAuthorizedFilterException e) {
             request.setAttribute("cantShowTestCorrection", new Boolean(true));
             return mapping.findForward("testError");
         } catch (FenixServiceException e) {
