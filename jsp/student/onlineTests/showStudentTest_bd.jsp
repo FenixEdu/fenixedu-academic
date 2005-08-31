@@ -111,7 +111,7 @@
 					<bean:define id="indexOption" value="<%= (new Integer(Integer.parseInt(indexOption)+1)).toString() %>"/>
 					<bean:define id="button" value="true"/>
 					
-					<logic:notEqual name="pageType" value="doTest">
+					<logic:equal name="pageType" value="correction">
 						<logic:notEqual name="correction" property="availability" value="1">
 							<%if(((Integer)testType).intValue()!=3 && ((Integer)formula).intValue()==1){%> <%-- Not TestType.INQUIRY  and CorrectionFormula.FENIX--%>
 							<bean:define id="isResponsed" value="false"/>
@@ -173,7 +173,7 @@
 							</td></tr><tr><td>
 							<%}%>
 						</logic:notEqual>
-					</logic:notEqual>
+					</logic:equal>
 					<logic:equal name="pageType" value="doTest">
 					</td></tr><tr><td>
 					</logic:equal>
@@ -290,7 +290,7 @@
 		</logic:equal>
 		<%if((((Integer)testType).intValue()!=3) &&(((Integer)formula).intValue()==1)){%> <%-- Not TestType.INQUIRY  and CorrectionFormula.FENIX--%>
 			<%if(((Integer)questionType).intValue()==1 ){ %> <%--QuestionType.LID--%>
-				<logic:notEqual name="pageType" value="doTest">
+				<logic:equal name="pageType" value="correction">
 					<logic:notEqual name="correction" property="availability" value="1">
 						<logic:notEmpty name="testQuestion" property="response.response">
 							<logic:notEqual name="indexOption" value="1">
@@ -311,7 +311,7 @@
 							</logic:notEqual>
 						</logic:notEmpty>
 					</logic:notEqual>
-				</logic:notEqual>
+				</logic:equal>
 				</td></tr></table>
 			<%}else{%> <%--QuestionType.STR or QuestionType.NUM --%>
 				<logic:notEqual name="pageType" value="doTest">
