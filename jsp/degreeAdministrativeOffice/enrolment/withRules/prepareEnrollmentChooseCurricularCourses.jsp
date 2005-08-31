@@ -75,6 +75,20 @@
 				</logic:equal>
 			</td>
 		</tr>
+		<tr>
+			<td>
+				<logic:equal name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoStudent.flunked" value="true">
+					<span class="error"><bean:message key="message.student.flunked" /></span>
+				</logic:equal>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<logic:equal name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoStudent.requestedChangeDegree" value="true">
+					<span class="error"><bean:message key="message.student.change.degree" /></span>
+				</logic:equal>
+			</td>
+		</tr>
 	</table>
 	<br />
 	<table>	
