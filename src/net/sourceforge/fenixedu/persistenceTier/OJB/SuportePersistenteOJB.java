@@ -81,6 +81,7 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationTeach
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationTypeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.sms.SentSmsOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.student.DelegateOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.student.DislocatedStudentOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.student.NotNeedToEnrollInCurricularCourseOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.student.SeniorOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.student.StudentPersonalDataAuthorizationOJB;
@@ -165,6 +166,7 @@ import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicati
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationType;
 import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDelegate;
+import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDislocatedStudent;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentNotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentSenior;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentStudentPersonalDataAuthorization;
@@ -1228,7 +1230,15 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
     public IPersistentStudentPersonalDataAuthorization getIPersistentStudentPersonalDataAuthorization() {
         return new StudentPersonalDataAuthorizationOJB();
     }
-
+    
+    public IPersistentDislocatedStudent getIPersistentDislocatedStudent() {
+        return new DislocatedStudentOJB();
+    }
+    
+    public IPersistentDistrict getIPersistentDistrict(){
+        return new DistrictOJB();
+    }
+    
     public static void fixDescriptors() {
         final MetadataManager metadataManager = MetadataManager.getInstance();
             final Collection<ClassDescriptor> classDescriptors = 
@@ -1248,6 +1258,5 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
             cod.setLazy(false);
             }
         }
-        }
-
+    }
 }
