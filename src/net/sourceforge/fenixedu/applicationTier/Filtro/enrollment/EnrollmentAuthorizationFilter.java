@@ -92,7 +92,14 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
                     return "noAuthorization";
                 }
                 if (student.getPayedTuition() == null || student.getPayedTuition().equals(Boolean.FALSE)) {
-                    return "error.message.tuitionNotPayed";
+                    if(student.getInterruptedStudies().equals(Boolean.FALSE))
+                    	return "error.message.tuitionNotPayed";
+                }
+                if (student.getFlunked() == null || student.getFlunked().equals(Boolean.TRUE)) {
+                    return "error.message.flunked";
+                }
+                if (student.getRequestedChangeDegree() == null || student.getRequestedChangeDegree().equals(Boolean.TRUE)) {
+                    return "error.message.requested.change.degree";
                 }
                 if (!curriculumOwner(student, id)) {
                     return "noAuthorization";

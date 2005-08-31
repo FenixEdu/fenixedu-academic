@@ -80,6 +80,11 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
             }
 
             if (student.getPayedTuition() == null || student.getPayedTuition().equals(Boolean.FALSE)) {
+            	if(student.getInterruptedStudies().equals(Boolean.FALSE))
+            		throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
+            }
+            
+            if (student.getFlunked() == null || student.getFlunked().equals(Boolean.TRUE)) {
                 throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
             }
 

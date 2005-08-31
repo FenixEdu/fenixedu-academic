@@ -46,7 +46,8 @@ public class ReadShiftsToEnroll implements IService {
         }
 
         if (student.getPayedTuition() == null || student.getPayedTuition().equals(Boolean.FALSE)) {
-            throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
+        	if(student.getInterruptedStudies().equals(Boolean.FALSE))
+        		throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
         }
 
         IFrequentaPersistente frequentaPersistente = sp.getIFrequentaPersistente();
