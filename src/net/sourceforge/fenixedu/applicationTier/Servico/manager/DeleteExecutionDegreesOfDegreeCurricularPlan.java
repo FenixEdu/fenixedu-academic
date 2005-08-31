@@ -86,15 +86,17 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan implements IService {
                         executionDegree.setExecutionYear(null);
 
                         // GratuityValues
-                        sp.getIPersistentGratuityValues().deleteByOID(GratuityValues.class,
-                                executionDegree.getGratuityValues().getIdInternal());
+                        if(executionDegree.getGratuityValues() != null) {
+                            sp.getIPersistentGratuityValues().deleteByOID(GratuityValues.class,
+                                    executionDegree.getGratuityValues().getIdInternal());                        	
+                        }
 
                         // PERIOD's
                         executionDegree.getPeriodLessonsFirstSemester()
                                 .getExecutionDegreesForLessonsFirstSemester().remove(executionDegree);
                         executionDegree.setPeriodLessonsFirstSemester(null);
-                        if (executionDegree.getPeriodLessonsFirstSemester()
-                                .getExecutionDegreesForLessonsFirstSemester().size() == 1) {
+                        if ((executionDegree.getPeriodLessonsFirstSemester() != null) && (executionDegree.getPeriodLessonsFirstSemester()
+                                .getExecutionDegreesForLessonsFirstSemester().size() == 1)) {
                             sp.getIPersistentPeriod().deleteByOID(Period.class,
                                     executionDegree.getPeriodLessonsFirstSemester().getIdInternal());
                         }
@@ -102,8 +104,8 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan implements IService {
                         executionDegree.getPeriodLessonsSecondSemester()
                                 .getExecutionDegreesForLessonsSecondSemester().remove(executionDegree);
                         executionDegree.setPeriodLessonsSecondSemester(null);
-                        if (executionDegree.getPeriodLessonsSecondSemester()
-                                .getExecutionDegreesForLessonsSecondSemester().size() == 1) {
+                        if ((executionDegree.getPeriodLessonsSecondSemester() != null) && (executionDegree.getPeriodLessonsSecondSemester()
+                                .getExecutionDegreesForLessonsSecondSemester().size() == 1)) {
                             sp.getIPersistentPeriod().deleteByOID(Period.class,
                                     executionDegree.getPeriodLessonsSecondSemester().getIdInternal());
                         }
@@ -111,8 +113,8 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan implements IService {
                         executionDegree.getPeriodExamsFirstSemester()
                                 .getExecutionDegreesForExamsFirstSemester().remove(executionDegree);
                         executionDegree.setPeriodExamsFirstSemester(null);
-                        if (executionDegree.getPeriodExamsFirstSemester()
-                                .getExecutionDegreesForExamsFirstSemester().size() == 1) {
+                        if ((executionDegree.getPeriodExamsFirstSemester() != null) && (executionDegree.getPeriodExamsFirstSemester()
+                                .getExecutionDegreesForExamsFirstSemester().size() == 1)) {
                             sp.getIPersistentPeriod().deleteByOID(Period.class,
                                     executionDegree.getPeriodExamsFirstSemester().getIdInternal());
                         }
@@ -120,8 +122,8 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan implements IService {
                         executionDegree.getPeriodExamsSecondSemester()
                                 .getExecutionDegreesForExamsSecondSemester().remove(executionDegree);
                         executionDegree.setPeriodExamsSecondSemester(null);
-                        if (executionDegree.getPeriodExamsSecondSemester()
-                                .getExecutionDegreesForExamsSecondSemester().size() == 1) {
+                        if ((executionDegree.getPeriodExamsSecondSemester() != null) && (executionDegree.getPeriodExamsSecondSemester()
+                                .getExecutionDegreesForExamsSecondSemester().size() == 1)) {
                             sp.getIPersistentPeriod().deleteByOID(Period.class,
                                     executionDegree.getPeriodExamsSecondSemester().getIdInternal());
                         }
