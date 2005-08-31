@@ -52,7 +52,8 @@ public class ReadExecutionCoursesByCurricularCourse implements IService {
             allExecutionCourses = curricularCourse.getAssociatedExecutionCourses();
 
             if (allExecutionCourses == null || allExecutionCourses.isEmpty()) {
-                return allExecutionCourses;
+                //return allExecutionCourses;
+                return new ArrayList();
             }
 
             // build the result of this service
