@@ -69,6 +69,7 @@ import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicati
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationType;
 import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDelegate;
+import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDislocatedStudent;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentNotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentSenior;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentStudentPersonalDataAuthorization;
@@ -493,4 +494,8 @@ public interface ISuportePersistente {
     public IPersistentNotNeedToEnrollInCurricularCourse getIPersistentNotNeedToEnrollInCurricularCourse();
     
     public IPersistentStudentPersonalDataAuthorization getIPersistentStudentPersonalDataAuthorization();
+    
+    public IPersistentDislocatedStudent getIPersistentDislocatedStudent();
+    
+    public IPersistentDistrict getIPersistentDistrict();
 }

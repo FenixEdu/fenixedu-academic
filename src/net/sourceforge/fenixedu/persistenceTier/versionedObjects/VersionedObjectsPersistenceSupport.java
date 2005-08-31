@@ -64,6 +64,7 @@ import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicati
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationType;
 import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDelegate;
+import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDislocatedStudent;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentNotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentSenior;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentStudentPersonalDataAuthorization;
@@ -111,6 +112,8 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CursoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DegreeCurricularPlanVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DegreeInfoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DepartmentVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DislocatedStudentVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DistrictVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrollmentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentEquivalenceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentEvaluationVO;
@@ -992,5 +995,13 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     
     public IPersistentStudentPersonalDataAuthorization getIPersistentStudentPersonalDataAuthorization() {
         return new StudentPersonalDataAuthorizationVO();
+    }
+    
+    public IPersistentDislocatedStudent getIPersistentDislocatedStudent() {
+        return new DislocatedStudentVO();
+    }
+    
+    public IPersistentDistrict getIPersistentDistrict() {
+        return new DistrictVO();
     }
 }

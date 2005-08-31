@@ -179,6 +179,8 @@
 	<definition name="show-personal-data-use-inquiry" extends="definition.student.masterPage">
 		<put name="body" value="/student/enrollment/personalDataAuthorizationInquiry.jsp" />		
 	</definition>
-	
+		<definition name="show-dislocated-student-inquiry" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/dislocatedStudentInquiry.jsp" />		
+	</definition>
 	
 </tiles-definitions>

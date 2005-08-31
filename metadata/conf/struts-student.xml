@@ -232,8 +232,14 @@
 			
 		</form-bean>
 		
-		<form-bean name="studentPersonalDataAuthorizationForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">		
-			<form-property name="answer" type="java.lang.String" />
+		<form-bean name="studentInquiryDataForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">	
+			<form-property name="method" type="java.lang.String" />
+			<form-property name="authorizationAnswer" type="java.lang.String" />
+			<form-property name="dislocatedAnswer" type="java.lang.String" />			
+			<form-property name="countryID" type="java.lang.Integer" />
+			<form-property name="dislocatedCountryID" type="java.lang.Integer" />
+			<form-property name="districtID" type="java.lang.Integer" />			
+			<form-property name="studentID" type="java.lang.Integer" />
 		</form-bean>
 		
      </form-beans>
@@ -838,7 +844,7 @@
   		<!-- ============== Pre-enrollment inquiries ========= -->
   		<action path="/studentPersonalDataAuthorization"
   			type="net.sourceforge.fenixedu.presentationTier.Action.student.ManagePreEnrollmentInquiriesDispatchAction"
-  			name="studentPersonalDataAuthorizationForm"
+  			name="studentInquiryDataForm"
   			scope="request"
   			input="/studentPersonalDataAuthorization.do?method=preparePersonalDataInquiry"
   			parameter="method"
@@ -846,6 +852,18 @@
   			<forward name="showAuthorizationInquiry" path="show-personal-data-use-inquiry"/>
   			<forward name="proceedToEnrollment" path="/studentCurricularCoursesEnrollment.do?method=prepareEnrollment"/>
   		</action>
+  		
+  		<action path="/dislocatedStudent"
+  			type="net.sourceforge.fenixedu.presentationTier.Action.student.ManagePreEnrollmentInquiriesDispatchAction"
+  			name="studentInquiryDataForm"
+  			scope="request"
+  			input="/dislocatedStudent.do?method=prepareDislocatedStudentInquiry"
+  			parameter="method"
+  			>
+  			<forward name="showDislocatedStudentInquiry" path="show-dislocated-student-inquiry"/>
+  			<forward name="proceedToPersonalDataInquiry" path="/studentPersonalDataAuthorization.do?method=preparePersonalDataInquiry"/>
+  		</action>
+  		
 	</action-mappings>     
 
     
