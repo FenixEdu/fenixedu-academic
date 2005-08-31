@@ -108,19 +108,16 @@ public class InsertExercise implements IService {
                     xmlNumber++;
                 } catch (SAXParseException e) {
                     if (metadataString != null) {
-                        persistentMetadata.simpleLockWrite(metadata);
                         metadata.setMetadataFile(removeLocation(metadataString, xmlZipFile.getFileName()));
                     }
                     badXmls.add(xmlFileName);
                 } catch (ParseQuestionException e) {
                     if (metadataString != null) {
-                        persistentMetadata.simpleLockWrite(metadata);
                         metadata.setMetadataFile(removeLocation(metadataString, xmlZipFile.getFileName()));
                     }
                     badXmls.add(xmlFileName + e);
                 } catch (Exception e) {
                     if (metadataString != null) {
-                        persistentMetadata.simpleLockWrite(metadata);
                         metadata.setMetadataFile(removeLocation(metadataString, xmlZipFile.getFileName()));
                     }
                     badXmls.add(xmlFileName);
@@ -128,10 +125,8 @@ public class InsertExercise implements IService {
             }
 
             if (xmlNumber == 0) {
-                persistentMetadata.simpleLockWrite(metadata);
                 persistentMetadata.deleteByOID(Metadata.class, metadata.getIdInternal());
             } else {
-                persistentMetadata.simpleLockWrite(metadata);
                 metadata.setNumberOfMembers(new Integer(xmlNumber));
             }
 
