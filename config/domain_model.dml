@@ -704,7 +704,6 @@ class net.sourceforge.fenixedu.domain.CompetenceCourse extends net.sourceforge.f
 	"
 }
 
-
 class net.sourceforge.fenixedu.domain.onlineTests.DistributedTest extends net.sourceforge.fenixedu.domain.DomainObject {
     String testInformation;
     Boolean imsFeedback;
@@ -2402,6 +2401,7 @@ class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.d
     Boolean flunked;
     Boolean requestedChangeDegree;
     Boolean requestedChangeBranch;
+    Integer keyStudentPersonalDataAuthorization;
 
 	interface "
     public IStudentCurricularPlan getActiveStudentCurricularPlan();
@@ -3353,7 +3353,6 @@ relation DepartmentCompetenceCourse {
 	}
 	net.sourceforge.fenixedu.domain.Department playsRole department;
 }
-
 
 relation DistributedTestAdvisories {
     net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory playsRole distributedTestAdvisories {
