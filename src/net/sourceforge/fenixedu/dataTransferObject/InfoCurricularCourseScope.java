@@ -152,6 +152,7 @@ public class InfoCurricularCourseScope extends InfoObject {
         if (curricularCourseScope != null) {
             setBeginDate(curricularCourseScope.getBeginDate());
             setEndDate(curricularCourseScope.getEndDate());
+            setAnotation(curricularCourseScope.getAnotation());
         }
     }
 
