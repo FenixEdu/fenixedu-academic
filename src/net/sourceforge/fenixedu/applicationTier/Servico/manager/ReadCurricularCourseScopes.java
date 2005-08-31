@@ -42,7 +42,7 @@ public class ReadCurricularCourseScopes implements IService {
         }
 
         if (allCurricularCourseScopes == null || allCurricularCourseScopes.isEmpty())
-            return allCurricularCourseScopes;
+            return new ArrayList();
 
         Iterator iterator = allCurricularCourseScopes.iterator();
         List result = new ArrayList(allCurricularCourseScopes.size());

@@ -63,7 +63,8 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
         dynaForm.set("basic", oldInfoCurricularCourse.getBasic().toString());
 
         dynaForm.set("credits", oldInfoCurricularCourse.getCredits().toString());
-        dynaForm.set("ectsCredits", oldInfoCurricularCourse.getEctsCredits().toString());
+        dynaForm.set("ectsCredits", (oldInfoCurricularCourse.getEctsCredits() == null) ? ""
+                : oldInfoCurricularCourse.getEctsCredits().toString());
         dynaForm.set("theoreticalHours", oldInfoCurricularCourse.getTheoreticalHours().toString());
         dynaForm.set("praticalHours", oldInfoCurricularCourse.getPraticalHours().toString());
         dynaForm.set("theoPratHours", oldInfoCurricularCourse.getTheoPratHours().toString());
@@ -82,7 +83,8 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException,
+            FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -163,7 +165,7 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
                     .findForward("readDegreeCP"));
         } catch (ExistingServiceException e) {
             throw new ExistingActionException("message.manager.existing.curricular.course");
-        } 
+        }
 
         return mapping.findForward("readCurricularCourse");
     }
