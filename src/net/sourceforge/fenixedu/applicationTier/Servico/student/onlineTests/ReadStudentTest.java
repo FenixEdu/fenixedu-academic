@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.tests.TestType;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -29,11 +28,10 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadStudentTest implements IService {
 
-    private String path = new String();
-
-    public Object run(String userName, Integer distributedTestId, Boolean log, String path) throws FenixServiceException, ExcepcaoPersistencia {
+    public List<InfoStudentTestQuestion> run(String userName, Integer distributedTestId, Boolean log, String path) throws FenixServiceException,
+            ExcepcaoPersistencia {
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
-        this.path = path.replace('\\', '/');
+        path = path.replace('\\', '/');
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IStudent student = persistentSuport.getIPersistentStudent().readByUsername(userName);
         if (student == null)
@@ -53,16 +51,8 @@ public class ReadStudentTest implements IService {
             InfoStudentTestQuestion infoStudentTestQuestion;
             ParseQuestion parse = new ParseQuestion();
             try {
-
-                if (studentTestQuestion.getOptionShuffle() == null) {
-                    boolean shuffle = true;
-                    if (distributedTest.getTestType().equals(new TestType(3))) // INQUIRY
-                        shuffle = false;
-                    studentTestQuestion.setOptionShuffle(parse.shuffleQuestionOptions(studentTestQuestion.getQuestion().getXmlFile(), shuffle,
-                            this.path));
-                }
                 infoStudentTestQuestion = InfoStudentTestQuestionWithAll.newInfoFromDomain(studentTestQuestion);
-                infoStudentTestQuestion = parse.parseStudentTestQuestion(infoStudentTestQuestion, this.path);
+                infoStudentTestQuestion = parse.parseStudentTestQuestion(infoStudentTestQuestion, path);
             } catch (Exception e) {
                 throw new FenixServiceException(e);
             }

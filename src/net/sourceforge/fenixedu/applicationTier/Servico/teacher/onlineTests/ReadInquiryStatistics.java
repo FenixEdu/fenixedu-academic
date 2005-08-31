@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.util.tests.QuestionType;
 import net.sourceforge.fenixedu.util.tests.Response;
 import net.sourceforge.fenixedu.util.tests.ResponseNUM;
 import net.sourceforge.fenixedu.util.tests.ResponseSTR;
-import net.sourceforge.fenixedu.util.tests.TestType;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 
 import org.apache.struts.util.LabelValueBean;
@@ -66,16 +65,11 @@ public class ReadInquiryStatistics implements IService {
                 InfoStudentTestQuestion infoStudentTestQuestion;
                 ParseQuestion parse = new ParseQuestion();
                 try {
-                    if (studentTestQuestion.getOptionShuffle() == null) {
-                        persistentSuport.getIPersistentStudentTestQuestion().simpleLockWrite(studentTestQuestion);
-                        boolean shuffle = true;
-                        if (distributedTest.getTestType().equals(new TestType(3))) // INQUIRY
-                            shuffle = false;
-                        studentTestQuestion.setOptionShuffle(parse.shuffleQuestionOptions(studentTestQuestion.getQuestion().getXmlFile(), shuffle,
-                                this.path));
-                    }
                     infoStudentTestQuestion = InfoStudentTestQuestionWithAll.newInfoFromDomain(studentTestQuestion);
                     infoStudentTestQuestion = parse.parseStudentTestQuestion(infoStudentTestQuestion, this.path);
+                    if (studentTestQuestion.getOptionShuffle() == null) {
+                        studentTestQuestion.setOptionShuffle(infoStudentTestQuestion.getOptionShuffle());
+                    }
                 } catch (Exception e) {
                     throw new FenixServiceException(e);
                 }

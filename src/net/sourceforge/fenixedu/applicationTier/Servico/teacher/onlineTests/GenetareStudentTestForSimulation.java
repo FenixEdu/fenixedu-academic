@@ -34,12 +34,10 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * @author Susana Fernandes
  */
 public class GenetareStudentTestForSimulation implements IService {
-    private String path = new String();
-
     public List run(Integer executionCourseId, Integer testId, String path, TestType testType, CorrectionAvailability correctionAvailability,
             Boolean imsfeedback, String testInformation) throws FenixServiceException, ExcepcaoPersistencia {
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
-        this.path = path.replace('\\', '/');
+        path = path.replace('\\', '/');
         final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         final ITest test = (ITest) persistentSuport.getIPersistentTest().readByOID(Test.class, testId);
@@ -90,14 +88,7 @@ public class GenetareStudentTestForSimulation implements IService {
             infoStudentTestQuestion.setQuestion(InfoQuestion.newInfoFromDomain(question));
             ParseQuestion parse = new ParseQuestion();
             try {
-
-                boolean shuffle = true;
-                if (infoDistributedTest.getTestType().equals(new TestType(3))) // INQUIRY
-                    shuffle = false;
-                infoStudentTestQuestion.setOptionShuffle(parse.shuffleQuestionOptions(question.getXmlFile(), shuffle, this.path));
-
-                infoStudentTestQuestion = parse.parseStudentTestQuestion(infoStudentTestQuestion, this.path);
-
+                infoStudentTestQuestion = parse.parseStudentTestQuestion(infoStudentTestQuestion, path);
             } catch (Exception e) {
                 throw new FenixServiceException(e);
             }

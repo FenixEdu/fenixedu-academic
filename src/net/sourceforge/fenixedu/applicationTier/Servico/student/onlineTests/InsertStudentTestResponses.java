@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentTestFeedback;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionWithInfoQuestion;
+import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionWithInfoQuestionAndInfoDistributedTest;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
@@ -97,7 +98,8 @@ public class InsertStudentTestResponses implements IService {
             ParseQuestion parse = new ParseQuestion();
 
             for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
-                InfoStudentTestQuestion infoStudentTestQuestion = InfoStudentTestQuestionWithInfoQuestion.newInfoFromDomain(studentTestQuestion);
+                InfoStudentTestQuestion infoStudentTestQuestion = InfoStudentTestQuestionWithInfoQuestionAndInfoDistributedTest
+                        .newInfoFromDomain(studentTestQuestion);
                 infoStudentTestQuestion.setResponse(response[studentTestQuestion.getTestQuestionOrder().intValue() - 1]);
 
                 if (logger.isDebugEnabled())
