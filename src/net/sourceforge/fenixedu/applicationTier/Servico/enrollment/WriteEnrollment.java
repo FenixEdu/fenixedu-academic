@@ -51,11 +51,10 @@ public class WriteEnrollment implements IService {
         if (enrollment == null) {
 
             IEnrolment enrolmentToWrite;
-            if (enrollmentClass == null || enrollmentClass.equals(new Integer(1))
-                    || enrollmentClass.equals(new Integer(0))) {
-
+            if (enrollmentClass == null || enrollmentClass.equals(Integer.valueOf(1))
+                    || enrollmentClass.equals(Integer.valueOf(0))) {
                 enrolmentToWrite = DomainFactory.makeEnrolment();
-            } else if (enrollmentClass.equals(new Integer(2))) {
+            } else if (enrollmentClass.equals(Integer.valueOf(2))) {
                 enrolmentToWrite = DomainFactory.makeEnrolmentInOptionalCurricularCourse();
             } else {
                 enrolmentToWrite = DomainFactory.makeEnrolmentInExtraCurricularCourse();
@@ -64,17 +63,14 @@ public class WriteEnrollment implements IService {
 			enrolmentToWrite.initializeAsNew(studentCurricularPlan,curricularCourse,executionPeriod,getEnrollmentCondition(enrollmentType),userView.getUtilizador());
 
 		} else {
-            if (enrollment.getCondition().equals(EnrollmentCondition.INVISIBLE)) {
+            if (enrollment.getCondition() == EnrollmentCondition.INVISIBLE) {
                 enrollment.setCondition(getEnrollmentCondition(enrollmentType));
-            } if (enrollment.getEnrollmentState().equals(EnrollmentState.ANNULED)) {
+            } if (enrollment.getEnrollmentState() == EnrollmentState.ANNULED) {
                 enrollment.setEnrollmentState(EnrollmentState.ENROLLED);
             }
         }
 
-        if (enrollment != null) {
-            return enrollment.getIdInternal();
-        }
-        return null;
+        return (enrollment != null) ? enrollment.getIdInternal() : null;
     }
 
 	
