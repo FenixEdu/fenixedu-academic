@@ -72,7 +72,7 @@
 			<td>
 				<logic:equal name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoStudent.payedTuition" value="false">
 					<logic:equal name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoStudent.interruptedStudies" value="false">
-						<span class="error"><bean:message key="message.student.noPayed.tuition" /></span>
+						<span class="error"><bean:message key="message.student.noPayed.tuition" bundle="DEGREE_ADM_OFFICE"/></span>
 					</logic:equal>
 				</logic:equal>
 			</td>
@@ -80,14 +80,14 @@
 		<tr>
 			<td>
 				<logic:equal name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoStudent.flunked" value="true">
-					<span class="error"><bean:message key="message.student.flunked" /></span>
+					<span class="error"><bean:message key="message.student.flunked" bundle="DEGREE_ADM_OFFICE"/></span>
 				</logic:equal>
 			</td>
 		</tr>
 		<tr>
 			<td>
 				<logic:equal name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoStudent.requestedChangeDegree" value="true">
-					<span class="error"><bean:message key="message.student.change.degree" /></span>
+					<span class="error"><bean:message key="message.student.change.degree" bundle="DEGREE_ADM_OFFICE"/></span>
 				</logic:equal>
 			</td>
 		</tr>
