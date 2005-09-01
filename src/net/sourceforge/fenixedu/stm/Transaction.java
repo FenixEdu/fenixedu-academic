@@ -68,7 +68,7 @@ public abstract class Transaction extends jvstm.Transaction {
 	synchronized (ACTIVE_TXS) {
 	    boolean needsClean = false;
 	    if (ACTIVE_TXS.size() > 30) {
-		System.out.println("WARNING: more than 30 Txs in queue to be finished...");
+		System.out.println("WARNING: more than " + ACTIVE_TXS.size() + " Txs in queue to be finished... : " + ACTIVE_TXS.peek().getNumber());
 	    }
 	    FenixTransaction oldestTx = ACTIVE_TXS.peek();
 	    while ((oldestTx != null) && oldestTx.isFinished()) {
