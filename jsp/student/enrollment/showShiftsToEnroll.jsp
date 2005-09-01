@@ -11,6 +11,8 @@
 <bean:define id="infoLessons" name="infoLessons"/>
 <bean:define id="studentId" name="studentId"/>
 <bean:define id="classId" name="classId"/>
+<bean:define id="infoClasslessonsEndTime" name="infoClasslessonsEndTime"/>
+<bean:define id="infoLessonsEndTime" name="infoLessonsEndTime"/>
 
 <bean:define id="infoClasslessons" name="infoClasslessons"/>	
 
@@ -35,13 +37,13 @@
 <logic:present name="executionCourseID">
 	<bean:define id="executionCourseID" name="executionCourseID" type="java.lang.String"/>
 	<app:gerarHorario name="infoClasslessons" type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>" studentID="<%= studentId.toString() %>"
-		application="<%= request.getContextPath() %>" classID="<%= classId.toString() %>" executionCourseID="<%= executionCourseID.toString() %>"
-	 action="add"/>
+		application="<%= request.getContextPath() %>" classID="<%= classId.toString() %>" executionCourseID="<%= executionCourseID.toString() %>"  
+	 endTime="<%= infoClasslessonsEndTime.toString() %>" action="add"/>
 </logic:present>
 
 <logic:notPresent name="executionCourseID">
 <app:gerarHorario name="infoClasslessons" type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>" studentID="<%= studentId.toString() %>"
-		application="<%= request.getContextPath() %>" classID="<%= classId.toString() %>" action="add"/>
+		application="<%= request.getContextPath() %>" classID="<%= classId.toString() %>" endTime="<%= infoClasslessonsEndTime.toString() %>" action="add"/>
 </logic:notPresent>	 
 
 <br/>
@@ -52,12 +54,12 @@
 	<bean:define id="executionCourseID" name="executionCourseID" type="java.lang.String"/>
 	<app:gerarHorario name="infoLessons" type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>" studentID="<%= studentId.toString() %>"
 		application="<%= request.getContextPath() %>" classID="<%= classId.toString() %>" executionCourseID="<%= executionCourseID.toString() %>"
-	 action="remove"/>
+	 endTime="<%= infoLessonsEndTime.toString() %>" action="remove"/>
 </logic:present>
 
 <logic:notPresent name="executionCourseID">
 <app:gerarHorario name="infoLessons" type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>" studentID="<%= studentId.toString() %>"
-		application="<%= request.getContextPath() %>" classID="<%= classId.toString() %>" action="remove"/>
+		application="<%= request.getContextPath() %>" classID="<%= classId.toString() %>" endTime="<%= infoLessonsEndTime.toString() %>" action="remove"/>
 </logic:notPresent>
 
 <br />

@@ -3,7 +3,9 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.student.enrollment;
 
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +23,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.TransactionalLookupDispatchAction;
@@ -194,13 +197,41 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
         
         Object[] args1 = { userView.getUtilizador(), classId, executionCourseID };
         List infoClasslessons = (List) ServiceManagerServiceFactory.executeService(userView,
-                "ReadClassTimeTableByStudent", args1);        
+                "ReadClassTimeTableByStudent", args1);       
+        
+        int endTime = 0;
+        for (Iterator iter = infoClasslessons.iterator(); iter.hasNext();) {
+            InfoLesson infoLesson = (InfoLesson) iter.next();
+            Calendar end = infoLesson.getFim();
+            int tempEnd = end.get(Calendar.HOUR_OF_DAY);
+            if( end.get(Calendar.MINUTE) > 0 ){
+                tempEnd = tempEnd + 1;
+            }
+            if(endTime < tempEnd){
+                endTime = tempEnd;
+            }
+        }
         request.setAttribute("infoClasslessons", infoClasslessons);
+        request.setAttribute("infoClasslessonsEndTime", new Integer(endTime));
 
         Object[] args2 = { userView.getUtilizador() };
         List infoLessons = (List) ServiceManagerServiceFactory.executeService(userView,
                 "ReadStudentTimeTable", args2);
+        
+        int endTime2 = 0;
+        for (Iterator iter = infoLessons.iterator(); iter.hasNext();) {
+            InfoLesson infoLesson = (InfoLesson) iter.next();
+            Calendar end = infoLesson.getFim();
+            int tempEnd = end.get(Calendar.HOUR_OF_DAY);
+            if( end.get(Calendar.MINUTE) > 0 ){
+                tempEnd = tempEnd + 1;
+            }
+            if(endTime2 < tempEnd){
+                endTime2 = tempEnd;
+            }
+        }
         request.setAttribute("infoLessons", infoLessons);
+        request.setAttribute("infoLessonsEndTime", new Integer(endTime2));
 
         return mapping.findForward("showShiftsToEnroll");
     }

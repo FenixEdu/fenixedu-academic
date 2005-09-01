@@ -46,10 +46,12 @@ public final class RenderTimeTableTag extends TagSupport {
     private String studentID = "";
 
     private String classID = "";
-    
+
     private String executionCourseID = "";
-    
+
     private String action = "";
+
+    private String endTime = "";
 
     private final Integer startTimeTableHour = new Integer(8);
 
@@ -120,11 +122,15 @@ public final class RenderTimeTableTag extends TagSupport {
         if ((String) pageContext.findAttribute("classID") != null) {
             setClassID((String) pageContext.findAttribute("classID"));
         }
-        
+
         if ((String) pageContext.findAttribute("executionCourseID") != null) {
             setExecutionCourseID((String) pageContext.findAttribute("executionCourseID"));
         }
-        
+
+        if ((String) pageContext.findAttribute("endTime") != null) {
+            setEndTime((String) pageContext.findAttribute("endTime"));
+        }
+
         // Gera o horário a partir da lista de aulas.
         Locale locale = (Locale) pageContext.findAttribute(Globals.LOCALE_KEY);
         JspWriter writer = pageContext.getOut();
@@ -212,7 +218,8 @@ public final class RenderTimeTableTag extends TagSupport {
             Collections.sort(listaAuxiliar);
             result.append("<br/><b>");
             result.append(getMessageResource(pageContext, "public.degree.information.label.legend"));
-            result.append("</b><br /><br /><table cellpadding='0' cellspacing='0' style='margin-left:5px'>");
+            result
+                    .append("</b><br /><br /><table cellpadding='0' cellspacing='0' style='margin-left:5px'>");
             for (int i = 0; i < listaAuxiliar.size(); i++) {
                 SubtitleEntry elem = (SubtitleEntry) listaAuxiliar.get(i);
                 boolean oddElement = (i % 2 == 1);
@@ -308,7 +315,15 @@ public final class RenderTimeTableTag extends TagSupport {
             this.lessonSlotContentRenderer = new ShiftEnrollmentTimeTableLessonContentRenderer(
                     getStudentID(), getApplication(), getClassID(), getExecutionCourseID(), getAction());
             this.colorPicker = new ClassTimeTableColorPicker();
-            this.endTimeTableHour = new Integer(20);
+            Integer defaultTime = new Integer(19);
+            Integer endTime = defaultTime;            
+            if (!getEndTime().equals("")) {
+                endTime = new Integer(getEndTime());                
+                if (endTime < defaultTime) {
+                    endTime = defaultTime;
+                }
+            }
+            this.endTimeTableHour = endTime;
             break;
 
         default:
@@ -363,6 +378,14 @@ public final class RenderTimeTableTag extends TagSupport {
 
     public void setExecutionCourseID(String executionCourseID) {
         this.executionCourseID = executionCourseID;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 
 }
