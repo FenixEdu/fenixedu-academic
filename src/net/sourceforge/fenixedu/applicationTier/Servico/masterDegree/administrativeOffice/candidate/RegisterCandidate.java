@@ -123,6 +123,7 @@ public class RegisterCandidate implements IService {
             StudentState state = new StudentState(StudentState.INSCRITO);
             student = DomainFactory.makeStudent(masterDegreeCandidate.getPerson(), number, studentKind, state, false,
                     false, EntryPhase.FIRST_PHASE_OBJ, DegreeType.MASTER_DEGREE);
+            student.setInterruptedStudies(false);
 
             List roles = new ArrayList();
             Iterator iterator = masterDegreeCandidate.getPerson().getPersonRolesIterator();
