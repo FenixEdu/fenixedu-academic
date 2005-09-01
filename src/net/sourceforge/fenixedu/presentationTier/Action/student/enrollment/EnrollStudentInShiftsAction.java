@@ -37,17 +37,14 @@ public class EnrollStudentInShiftsAction extends FenixAction {
         IUserView userView = SessionUtils.getUserView(request);
         ActionErrors actionErrors = new ActionErrors();
 
-        Integer shiftId = new Integer( (String)request.getParameter("shiftId"));
-        Integer studentId = new Integer( (String) request.getParameter("studentId"));
+        Integer shiftId = Integer.valueOf((String) request.getParameter("shiftId"));
+        Integer studentId = Integer.valueOf((String) request.getParameter("studentId"));
         String executionCourseID = (String) request.getParameter("executionCourseID");
         if( executionCourseID != null && !executionCourseID.equals("")){            
             request.setAttribute("executionCourseID", executionCourseID);
         }        
 
-        List shiftList = new ArrayList();
-        shiftList.add(shiftId);
-        
-        Object[] args = { studentId, shiftList };
+        Object[] args = { studentId, shiftId };
         try {
             ShiftEnrollmentErrorReport errorReport = (ShiftEnrollmentErrorReport) ServiceUtils
                     .executeService(userView, "EnrollStudentInShifts", args);
