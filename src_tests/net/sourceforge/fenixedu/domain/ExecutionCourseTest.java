@@ -178,17 +178,17 @@ public class ExecutionCourseTest extends DomainTestBase {
         assertEquals("Size unexpected for AssociatedBibliographicReference!", 1, executionCourse
                 .getAssociatedBibliographicReferencesCount());
         assertEquals("Different Title in BibliographicReference!", "title", executionCourse
-                .getAssociatedBibliographicReferences(0).getTitle());
+                .getAssociatedBibliographicReferences().get(0).getTitle());
         assertEquals("Different Authors in BibliographicReference!", "authors", executionCourse
-                .getAssociatedBibliographicReferences(0).getAuthors());
+                .getAssociatedBibliographicReferences().get(0).getAuthors());
         assertEquals("Different Reference in BibliographicReference!", "reference", executionCourse
-                .getAssociatedBibliographicReferences(0).getReference());
+                .getAssociatedBibliographicReferences().get(0).getReference());
         assertEquals("Different Year in BibliographicReference!", "year", executionCourse
-                .getAssociatedBibliographicReferences(0).getYear());
+                .getAssociatedBibliographicReferences().get(0).getYear());
         assertTrue("Different Optional in BibliographicReference!", executionCourse
-                .getAssociatedBibliographicReferences(0).getOptional());
+                .getAssociatedBibliographicReferences().get(0).getOptional());
         assertEquals("Different ExecutionCourse in BibliographicReference!", executionCourse,
-                executionCourse.getAssociatedBibliographicReferences(0).getExecutionCourse());
+                executionCourse.getAssociatedBibliographicReferences().get(0).getExecutionCourse());
     }
 
     public void testCreateCourseReport() {

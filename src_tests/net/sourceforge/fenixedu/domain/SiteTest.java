@@ -94,7 +94,7 @@ public class SiteTest extends DomainTestBase {
         final Date dateAfterCreation = Calendar.getInstance().getTime();
 
         assertEquals("Size unexpected!", 1, site.getAssociatedAnnouncementsCount());
-        IAnnouncement announcement = (IAnnouncement) site.getAssociatedAnnouncements(0);
+        IAnnouncement announcement = (IAnnouncement) site.getAssociatedAnnouncements().get(0);
 
         assertEquals("Different Announcement Title!", "Title", announcement.getTitle());
         assertEquals("Different Announcement Information!", "Information", announcement.getInformation());
@@ -142,7 +142,7 @@ public class SiteTest extends DomainTestBase {
         sleep(1000);
         dateAfterCreation = Calendar.getInstance().getTime();
         assertEquals("Size unexpected!", 2, site.getAssociatedSectionsCount());
-        section = (ISection) site.getAssociatedSections(1); // Last Inserted
+        section = (ISection) site.getAssociatedSections().get(0); // Last Inserted
         assertEquals("Different Section Name!", "SectionNameLast", section.getName());
         assertNull("Expected Null ParentSection!", section.getSuperiorSection());
         assertEquals("Different ParentSection Order!", new Integer(0), parentSection.getSectionOrder());
@@ -163,12 +163,12 @@ public class SiteTest extends DomainTestBase {
         sleep(1000);
         dateAfterCreation = Calendar.getInstance().getTime();
         assertEquals("Size unexpected!", 3, site.getAssociatedSectionsCount());
-        section = (ISection) site.getAssociatedSections(2); // Last Inserted
+        section = (ISection) site.getAssociatedSections().get(0); // Last Inserted
         assertEquals("Different Section Name!", "SectionNameBetween", section.getName());
         assertNull("Expected Null ParentSection!", section.getSuperiorSection());
         assertEquals("Different Section Order!", new Integer(1), section.getSectionOrder());
         assertEquals("Different ParentSection Order!", new Integer(0), parentSection.getSectionOrder());
-        assertEquals("Different \"SectionNameLast\" Order!", new Integer(2), site.getAssociatedSections(
+        assertEquals("Different \"SectionNameLast\" Order!", new Integer(2), site.getAssociatedSections().get(
                 1).getSectionOrder());
         assertTrue("Expected LastModificationDate After an initial timestamp!", section
                 .getLastModifiedDate().after(dateBeforeCreation));
@@ -185,15 +185,15 @@ public class SiteTest extends DomainTestBase {
         sleep(1000);
         dateAfterCreation = Calendar.getInstance().getTime();
         assertEquals("Size unexpected!", 4, site.getAssociatedSectionsCount());
-        section = (ISection) site.getAssociatedSections(3); // Last Inserted
+        section = (ISection) site.getAssociatedSections().get(0); // Last Inserted
         assertEquals("Different Section Name!", "SectionNameStart", section.getName());
         assertNull("Expected Null ParentSection!", section.getSuperiorSection());
         assertEquals("Different Section Order!", new Integer(0), section.getSectionOrder());
         assertEquals("Different ParentSection Order!", new Integer(1), parentSection.getSectionOrder());
         assertEquals("Different \"SectionNameBetween\" Order!", new Integer(2), site
-                .getAssociatedSections(2).getSectionOrder());
-        assertEquals("Different \"SectionNameLast\" Order!", new Integer(3), site.getAssociatedSections(
-                1).getSectionOrder());
+                .getAssociatedSections().get(1).getSectionOrder());
+        assertEquals("Different \"SectionNameLast\" Order!", new Integer(3), site.getAssociatedSections().get(
+                2).getSectionOrder());
         assertTrue("Expected LastModificationDate After an initial timestamp!", section
                 .getLastModifiedDate().after(dateBeforeCreation));
         assertTrue("Expected LastModificationDate Before an end timestamp!", section
@@ -210,7 +210,7 @@ public class SiteTest extends DomainTestBase {
         dateAfterCreation = Calendar.getInstance().getTime();
         assertEquals("Size unexpected!", 5, site.getAssociatedSectionsCount());
         assertEquals("Size unexpected!", 1, parentSection.getAssociatedSectionsCount());
-        section = (ISection) parentSection.getAssociatedSections(0); // Last
+        section = (ISection) parentSection.getAssociatedSections().get(0); // Last
         // Inserted
         assertEquals("Different SubSection Name!", "SubSectionNameStart", section.getName());
         assertEquals("Different ParentSection!", parentSection, section.getSuperiorSection());
@@ -231,13 +231,13 @@ public class SiteTest extends DomainTestBase {
         dateAfterCreation = Calendar.getInstance().getTime();
         assertEquals("Size unexpected!", 6, site.getAssociatedSectionsCount());
         assertEquals("Size unexpected!", 2, parentSection.getAssociatedSectionsCount());
-        section = (ISection) parentSection.getAssociatedSections(1); // Last
+        section = (ISection) parentSection.getAssociatedSections().get(0); // Last
         // Inserted
         assertEquals("Different SubSection Name!", "SubSectionNameLast", section.getName());
         assertEquals("Different ParentSection!", parentSection, section.getSuperiorSection());
         assertEquals("Different SubSection Order!", new Integer(1), section.getSectionOrder());
         assertEquals("Different \"SubSectionNameStart\" Order!", new Integer(0), parentSection
-                .getAssociatedSections(0).getSectionOrder());
+                .getAssociatedSections().get(1).getSectionOrder());
         assertTrue("Expected LastModificationDate After an initial timestamp!", section
                 .getLastModifiedDate().after(dateBeforeCreation));
         assertTrue("Expected LastModificationDate Before an end timestamp!", section
@@ -255,15 +255,15 @@ public class SiteTest extends DomainTestBase {
         dateAfterCreation = Calendar.getInstance().getTime();
         assertEquals("Size unexpected!", 7, site.getAssociatedSectionsCount());
         assertEquals("Size unexpected!", 3, parentSection.getAssociatedSectionsCount());
-        section = (ISection) parentSection.getAssociatedSections(2); // Last
+        section = (ISection) parentSection.getAssociatedSections().get(0); // Last
         // Inserted
         assertEquals("Different SubSection Name!", "SubSectionNameBetween", section.getName());
         assertEquals("Different ParentSection!", parentSection, section.getSuperiorSection());
         assertEquals("Different SubSection Order!", new Integer(1), section.getSectionOrder());
         assertEquals("Different \"SubSectionNameStart\" Order!", new Integer(0), parentSection
-                .getAssociatedSections(0).getSectionOrder());
+                .getAssociatedSections().get(2).getSectionOrder());
         assertEquals("Different \"SubSectionNameLast\" Order!", new Integer(2), parentSection
-                .getAssociatedSections(1).getSectionOrder());
+                .getAssociatedSections().get(1).getSectionOrder());
         assertTrue("Expected LastModificationDate After an initial timestamp!", section
                 .getLastModifiedDate().after(dateBeforeCreation));
         assertTrue("Expected LastModificationDate Before an end timestamp!", section
@@ -280,17 +280,17 @@ public class SiteTest extends DomainTestBase {
         dateAfterCreation = Calendar.getInstance().getTime();
         assertEquals("Size unexpected!", 8, site.getAssociatedSectionsCount());
         assertEquals("Size unexpected!", 4, parentSection.getAssociatedSectionsCount());
-        section = (ISection) parentSection.getAssociatedSections(3); // Last
+        section = (ISection) parentSection.getAssociatedSections().get(0); // Last
         // Inserted
         assertEquals("Different SubSection Name!", "SubSectionNameFirst", section.getName());
         assertEquals("Different ParentSection!", parentSection, section.getSuperiorSection());
         assertEquals("Different SubSection Order!", new Integer(0), section.getSectionOrder());
         assertEquals("Different \"SubSectionNameStart\" Order!", new Integer(1), parentSection
-                .getAssociatedSections(0).getSectionOrder());
+                .getAssociatedSections().get(3).getSectionOrder());
         assertEquals("Different \"SubSectionNameBetween\" Order!", new Integer(2), parentSection
-                .getAssociatedSections(2).getSectionOrder());
+                .getAssociatedSections().get(1).getSectionOrder());
         assertEquals("Different \"SubSectionNameLast\" Order!", new Integer(3), parentSection
-                .getAssociatedSections(1).getSectionOrder());
+                .getAssociatedSections().get(2).getSectionOrder());
         assertTrue("Expected LastModificationDate After an initial timestamp!", section
                 .getLastModifiedDate().after(dateBeforeCreation));
         assertTrue("Expected LastModificationDate Before an end timestamp!", section
