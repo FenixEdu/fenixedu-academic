@@ -203,11 +203,9 @@ width: 98%;
 		</logic:notEmpty>
 
 
-		
-		
-		
-<p><strong><bean:message key="message.shift.enrollement.extra"/></strong></p>
+				
 		<logic:notEmpty name="infoNotEnrolledNewShiftEnrollmentList">
+		<p><strong><bean:message key="message.shift.enrollement.extra"/></strong></p>
 		<table class="special">
 			<tr>
 				<th><bean:message key="label.curricular.course.name"/></h>
