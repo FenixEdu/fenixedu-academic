@@ -50,7 +50,7 @@ public class TeachingReportAction extends DispatchAction {
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         InfoCourseReport infoCourseReport = getInfoCourseReportFromForm(form);
-        Object[] args = { infoCourseReport.getIdInternal(), infoCourseReport.getReport() };
+        Object[] args = { infoCourseReport.getIdInternal(), infoCourseReport, infoCourseReport.getReport() };
         ServiceUtils.executeService(SessionUtils.getUserView(request), getEditService(), args);
         return read(mapping, form, request, response);
     }
