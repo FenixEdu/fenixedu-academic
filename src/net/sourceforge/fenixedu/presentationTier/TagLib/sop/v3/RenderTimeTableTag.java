@@ -308,7 +308,7 @@ public final class RenderTimeTableTag extends TagSupport {
             this.lessonSlotContentRenderer = new ShiftEnrollmentTimeTableLessonContentRenderer(
                     getStudentID(), getApplication(), getClassID(), getExecutionCourseID(), getAction());
             this.colorPicker = new ClassTimeTableColorPicker();
-            this.endTimeTableHour = new Integer(19);
+            this.endTimeTableHour = new Integer(20);
             break;
 
         default:
