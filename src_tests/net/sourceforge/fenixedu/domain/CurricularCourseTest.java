@@ -65,7 +65,7 @@ public class CurricularCourseTest extends DomainTestBase {
         testOperacionalObjectives("opObjectives", "opObjectivesEn");
         
         assertEquals("Size Unexpected", 1, curricularCourse.getAssociatedCurriculumsCount());        
-        assertEquals("Curriculum Unexpected", curriculum, curricularCourse.getAssociatedCurriculums(0));
+        assertEquals("Curriculum Unexpected", curriculum, curricularCourse.getAssociatedCurriculums().get(0));
     }
 	
 	public void testGetExecutionCoursesByExecutionPeriod() {
@@ -79,8 +79,8 @@ public class CurricularCourseTest extends DomainTestBase {
         assertEquals("General Objectives Unexpected", generalObjectives, curriculum.getGeneralObjectives());
         assertEquals("General Objectives Eng Unexpected", generalObjectivesEng, curriculum.getGeneralObjectivesEn());
         
-        assertEquals("General Objectives Unexpected", generalObjectives, curricularCourse.getAssociatedCurriculums(0).getGeneralObjectives());
-        assertEquals("General Objectives Eng Unexpected", generalObjectivesEng, curricularCourse.getAssociatedCurriculums(0).getGeneralObjectivesEn());       
+        assertEquals("General Objectives Unexpected", generalObjectives, curricularCourse.getAssociatedCurriculums().get(0).getGeneralObjectives());
+        assertEquals("General Objectives Eng Unexpected", generalObjectivesEng, curricularCourse.getAssociatedCurriculums().get(0).getGeneralObjectivesEn());       
     }
     
     private void testOperacionalObjectives(String operacionalObjectives, String operacionalObjectivesEng){
@@ -88,8 +88,8 @@ public class CurricularCourseTest extends DomainTestBase {
         assertEquals("Operacional Objectives Unexpected", operacionalObjectives, curriculum.getOperacionalObjectives());
         assertEquals("Operacional Objectives Eng Unexpected", operacionalObjectivesEng, curriculum.getOperacionalObjectivesEn());
         
-        assertEquals("Operacional Objectives Unexpected", operacionalObjectives, curricularCourse.getAssociatedCurriculums(0).getOperacionalObjectives());
-        assertEquals("Operacional Objectives Eng Unexpected", operacionalObjectivesEng, curricularCourse.getAssociatedCurriculums(0).getOperacionalObjectivesEn());
+        assertEquals("Operacional Objectives Unexpected", operacionalObjectives, curricularCourse.getAssociatedCurriculums().get(0).getOperacionalObjectives());
+        assertEquals("Operacional Objectives Eng Unexpected", operacionalObjectivesEng, curricularCourse.getAssociatedCurriculums().get(0).getOperacionalObjectivesEn());
     }
     
     private void testProgram(String program, String programEng){
@@ -97,7 +97,7 @@ public class CurricularCourseTest extends DomainTestBase {
         assertEquals("Program Unexpected", program, curriculum.getProgram());
         assertEquals("Program Eng Unexpected", programEng, curriculum.getProgramEn());
         
-        assertEquals("Program Unexpected", program, curricularCourse.getAssociatedCurriculums(0).getProgram());
-        assertEquals("Program Eng Unexpected", programEng, curricularCourse.getAssociatedCurriculums(0).getProgramEn());
+        assertEquals("Program Unexpected", program, curricularCourse.getAssociatedCurriculums().get(0).getProgram());
+        assertEquals("Program Eng Unexpected", programEng, curricularCourse.getAssociatedCurriculums().get(0).getProgramEn());
     }
 }

@@ -62,8 +62,8 @@ public class ItemTest extends DomainTestBase {
         // Test Organize Items Order
         assertEquals("Order Unexpected", 0, item2.getItemOrder().intValue());
         assertEquals("Order Unexpected", 1, item3.getItemOrder().intValue());        
-        assertEquals("Order Unexpected", 0, section.getAssociatedItems(0).getItemOrder().intValue());
-        assertEquals("Order Unexpected", 1, section.getAssociatedItems(1).getItemOrder().intValue());               
+        assertEquals("Order Unexpected", 0, section.getAssociatedItems().get(0).getItemOrder().intValue());
+        assertEquals("Order Unexpected", 1, section.getAssociatedItems().get(1).getItemOrder().intValue());               
         
         item2.delete();          
                 
@@ -72,7 +72,7 @@ public class ItemTest extends DomainTestBase {
         
         //Test Organize Items Order
         assertEquals("Order Unexpected", 0, item3.getItemOrder().intValue());        
-        assertEquals("Order Unexpected", 0, section.getAssociatedItems(0).getItemOrder().intValue());
+        assertEquals("Order Unexpected", 0, section.getAssociatedItems().get(0).getItemOrder().intValue());
                 
         item3.delete();
             
@@ -118,8 +118,8 @@ public class ItemTest extends DomainTestBase {
         assertEquals("Order Unexpected", value2, item2.getItemOrder().intValue());   
         assertEquals("Order Unexpected", value3, item3.getItemOrder().intValue());   
         
-        assertEquals("Order Unexpected", value1, section.getAssociatedItems(0).getItemOrder().intValue());
-        assertEquals("Order Unexpected", value2, section.getAssociatedItems(1).getItemOrder().intValue());   
-        assertEquals("Order Unexpected", value3, section.getAssociatedItems(2).getItemOrder().intValue());
+        assertEquals("Order Unexpected", value1, section.getAssociatedItems().get(0).getItemOrder().intValue());
+        assertEquals("Order Unexpected", value2, section.getAssociatedItems().get(1).getItemOrder().intValue());   
+        assertEquals("Order Unexpected", value3, section.getAssociatedItems().get(2).getItemOrder().intValue());
     }
 }

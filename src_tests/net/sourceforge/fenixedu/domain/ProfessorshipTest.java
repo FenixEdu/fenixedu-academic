@@ -86,7 +86,7 @@ public class ProfessorshipTest extends DomainTestBase {
             fail("Unexpected InvalidCategory Exception");
         }
         
-        testProfessorshipCreate(1, 2, 2, true, professorship2);
+        testProfessorshipCreate(0, 2, 2, true, professorship2);
 
         // Insert 1 Professorship Responsible
         try {
@@ -98,7 +98,7 @@ public class ProfessorshipTest extends DomainTestBase {
             fail("Unexpected InvalidCategory Exception");
         }
         
-        testProfessorshipCreate(2, 3, 3, true, professorship2);
+        testProfessorshipCreate(0, 3, 3, true, professorship2);
         
         // Try insert one more Professorship Responsible
         // Test MaxResponsibleForExceed Exception
@@ -107,7 +107,7 @@ public class ProfessorshipTest extends DomainTestBase {
             fail("Expected MaxResponsibleForExceed");           
             
         } catch (MaxResponsibleForExceed e1) {            
-            testProfessorshipCreate(2, 3, 3, false, null);
+            testProfessorshipCreate(0, 3, 3, false, null);
             
         } catch (InvalidCategory e1) {
             fail("Expected MaxResponsibleForExceed");
@@ -123,7 +123,7 @@ public class ProfessorshipTest extends DomainTestBase {
             fail("Unexpected InvalidCategory Exception");
         }
         
-        testProfessorshipCreate(3, 3, 4, true, professorship2);
+        testProfessorshipCreate(0, 3, 4, true, professorship2);
         
         // Test InvalidCategory Exception 
         teacher.getCategory().setCanBeExecutionCourseResponsible(false);        
@@ -134,7 +134,7 @@ public class ProfessorshipTest extends DomainTestBase {
         } catch (MaxResponsibleForExceed e) {
             fail("Expected InvalidCategory");
         } catch (InvalidCategory e) {
-            testProfessorshipCreate(2, 3, 4, false, null);
+            testProfessorshipCreate(0, 3, 4, false, null);
         }
     }
 
@@ -192,8 +192,8 @@ public class ProfessorshipTest extends DomainTestBase {
 
     private void testProfessorshipCreate(int value1, int value2, int value3, boolean first, IProfessorship professorship){
         if(first){
-            assertEquals("Diferent Professorship", professorship, executionCourse.getProfessorships(value1));
-            assertEquals("Professorship Unexpected", executionCourse.getProfessorships(value1), teacher.getProfessorships(value1));
+            assertEquals("Diferent Professorship", professorship, executionCourse.getProfessorships().get(value1));
+            assertEquals("Professorship Unexpected", executionCourse.getProfessorships().get(value1), teacher.getProfessorships().get(value1));
         }
         
         assertEquals("Size Unexpected", value2, executionCourse.responsibleFors().size());
@@ -205,8 +205,8 @@ public class ProfessorshipTest extends DomainTestBase {
     
     private void testProfessorshipDelete(int value1, int value2, IProfessorship professorship){
         
-        assertEquals("Diferent Professorship", professorship, executionCourse.getProfessorships(value1));
-        assertEquals("Professorship Unexpected", executionCourse.getProfessorships(value1), teacher.getProfessorships(value1));
+        assertEquals("Diferent Professorship", professorship, executionCourse.getProfessorships().get(value1));
+        assertEquals("Professorship Unexpected", executionCourse.getProfessorships().get(value1), teacher.getProfessorships().get(value1));
         
         assertEquals("Size Unexpected", value2, executionCourse.getProfessorshipsCount());
         assertEquals("Size Unexpected", value2, teacher.getProfessorshipsCount());        

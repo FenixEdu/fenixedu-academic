@@ -115,7 +115,7 @@ public class SectionTest extends DomainTestBase {
         
         try {
             section.insertItem("ItemName2", "ItemInformation2", false, 1);           
-            testInsertItemInformation(2, "ItemName2", "ItemInformation2", false, 1, 1);
+            testInsertItemInformation(2, "ItemName2", "ItemInformation2", false, 1, 0);
                    
         } catch (DomainException e) {
             assertEquals("Size Unexpected", 1, section.getAssociatedItemsCount());
@@ -123,7 +123,7 @@ public class SectionTest extends DomainTestBase {
               
         try {
             section.insertItem("ItemName3", "ItemInformation3", true, 1);
-            testInsertItemInformation(3, "ItemName3", "ItemInformation3", true, 1, 2);
+            testInsertItemInformation(3, "ItemName3", "ItemInformation3", true, 1, 0);
                            
         } catch (DomainException e) {
             assertEquals("Size Unexpected", 2, section.getAssociatedItemsCount());
@@ -131,17 +131,17 @@ public class SectionTest extends DomainTestBase {
         
         try {
             section.insertItem("ItemName4", "ItemInformation4", false, 2);            
-            testInsertItemInformation(4, "ItemName4", "ItemInformation4", false, 2, 3);            
+            testInsertItemInformation(4, "ItemName4", "ItemInformation4", false, 2, 0);            
         
         } catch (DomainException e) {
             assertEquals("Size Unexpected", 3, section.getAssociatedItemsCount());
         }        
         
         // Test: Organize Existing Items Order
-        assertEquals("Order Unexpected", 0, section.getAssociatedItems(0).getItemOrder().intValue());
-        assertEquals("Order Unexpected", 3, section.getAssociatedItems(1).getItemOrder().intValue());
-        assertEquals("Order Unexpected", 1, section.getAssociatedItems(2).getItemOrder().intValue());
-        assertEquals("Order Unexpected", 2, section.getAssociatedItems(3).getItemOrder().intValue());
+        assertEquals("Order Unexpected", 0, section.getAssociatedItems().get(3).getItemOrder().intValue());
+        assertEquals("Order Unexpected", 3, section.getAssociatedItems().get(2).getItemOrder().intValue());
+        assertEquals("Order Unexpected", 1, section.getAssociatedItems().get(1).getItemOrder().intValue());
+        assertEquals("Order Unexpected", 2, section.getAssociatedItems().get(0).getItemOrder().intValue());
     }  
     
     public void testEdit(){
@@ -160,9 +160,9 @@ public class SectionTest extends DomainTestBase {
         assertEquals("Order Unexpected", 1, section.getSectionOrder().intValue());        
         
         // Test: Organize Superior Sections 
-        assertEquals("Order Unexpected", 0, site.getAssociatedSections(4).getSectionOrder().intValue());
-        assertEquals("Order Unexpected", 1, site.getAssociatedSections(0).getSectionOrder().intValue());
-        assertEquals("Order Unexpected", 2, site.getAssociatedSections(5).getSectionOrder().intValue());
+        assertEquals("Order Unexpected", 0, site.getAssociatedSections().get(4).getSectionOrder().intValue());
+        assertEquals("Order Unexpected", 1, site.getAssociatedSections().get(0).getSectionOrder().intValue());
+        assertEquals("Order Unexpected", 2, site.getAssociatedSections().get(5).getSectionOrder().intValue());
         
         
         // Test: Organize SubSections Order
@@ -171,9 +171,9 @@ public class SectionTest extends DomainTestBase {
         assertEquals("Name Unexpected", "NewSectionName2", section2.getName());
         assertEquals("Order Unexpected", 1, section2.getSectionOrder().intValue());
         
-        assertEquals("Order Unexpected", 0, section.getAssociatedSections(1).getSectionOrder().intValue());
-        assertEquals("Order Unexpected", 1, section.getAssociatedSections(0).getSectionOrder().intValue());
-        assertEquals("Order Unexpected", 2, section.getAssociatedSections(2).getSectionOrder().intValue());
+        assertEquals("Order Unexpected", 0, section.getAssociatedSections().get(1).getSectionOrder().intValue());
+        assertEquals("Order Unexpected", 1, section.getAssociatedSections().get(0).getSectionOrder().intValue());
+        assertEquals("Order Unexpected", 2, section.getAssociatedSections().get(2).getSectionOrder().intValue());
     }
     
     public void testDelete(){
@@ -191,23 +191,23 @@ public class SectionTest extends DomainTestBase {
         assertEquals("Size Unexpected", 2, section.getAssociatedSectionsCount());
         assertEquals("Size Unexpected", 5, site.getAssociatedSectionsCount());
         
-        assertEquals("Name Unexpected", "SectionName2", section.getAssociatedSections(0).getName());
-        assertEquals("Order Unexpected", 0, section.getAssociatedSections(0).getSectionOrder().intValue());
+        assertEquals("Name Unexpected", "SectionName2", section.getAssociatedSections().get(0).getName());
+        assertEquals("Order Unexpected", 0, section.getAssociatedSections().get(0).getSectionOrder().intValue());
         
-        assertEquals("Name Unexpected", "SectionName4", section.getAssociatedSections(1).getName());
-        assertEquals("Order Unexpected", 1, section.getAssociatedSections(1).getSectionOrder().intValue());        
+        assertEquals("Name Unexpected", "SectionName4", section.getAssociatedSections().get(1).getName());
+        assertEquals("Order Unexpected", 1, section.getAssociatedSections().get(1).getSectionOrder().intValue());        
         
-        assertEquals("Order Unexpected", 0, site.getAssociatedSections(0).getSectionOrder().intValue());
-        assertEquals("Order Unexpected", 1, site.getAssociatedSections(3).getSectionOrder().intValue());
-        assertEquals("Order Unexpected", 2, site.getAssociatedSections(4).getSectionOrder().intValue());
+        assertEquals("Order Unexpected", 0, site.getAssociatedSections().get(0).getSectionOrder().intValue());
+        assertEquals("Order Unexpected", 1, site.getAssociatedSections().get(3).getSectionOrder().intValue());
+        assertEquals("Order Unexpected", 2, site.getAssociatedSections().get(4).getSectionOrder().intValue());
                
         section.delete();
         
         assertEquals("Size Unexpected", 2, site.getAssociatedSectionsCount());
         assertEquals("Size Unexpected", 0, section.getAssociatedSectionsCount());
         
-        assertEquals("Name Unexpected", "SectionName5", site.getAssociatedSections(0).getName());
-        assertEquals("Name Unexpected", "SectionName6", site.getAssociatedSections(1).getName());
+        assertEquals("Name Unexpected", "SectionName5", site.getAssociatedSections().get(0).getName());
+        assertEquals("Name Unexpected", "SectionName6", site.getAssociatedSections().get(1).getName());
         
         assertNull("Superior Section Unexpected", section2.getSuperiorSection());
         assertNull("Superior Section Unexpected", section4.getSuperiorSection());
@@ -219,9 +219,9 @@ public class SectionTest extends DomainTestBase {
     
     private void testInsertItemInformation(int size, String name, String information, boolean urgent, int order, int index){
         assertEquals("Size Unexpected", size, section.getAssociatedItemsCount());
-        assertEquals("Name Unexpected", name, section.getAssociatedItems(index).getName());
-        assertEquals("Information Unexpected", information, section.getAssociatedItems(index).getInformation());
-        assertEquals("Urgent Unexpected", urgent, section.getAssociatedItems(index).getUrgent().booleanValue());
-        assertEquals("Order Unexpected", order, section.getAssociatedItems(index).getItemOrder().intValue());
+        assertEquals("Name Unexpected", name, section.getAssociatedItems().get(index).getName());
+        assertEquals("Information Unexpected", information, section.getAssociatedItems().get(index).getInformation());
+        assertEquals("Urgent Unexpected", urgent, section.getAssociatedItems().get(index).getUrgent().booleanValue());
+        assertEquals("Order Unexpected", order, section.getAssociatedItems().get(index).getItemOrder().intValue());
     }
 }

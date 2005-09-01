@@ -356,9 +356,9 @@ public class TeacherTest extends DomainTestBase {
     }
     
     private void testResponsibleForValue(boolean value1, boolean value2, boolean value3){
-        assertEquals("Responsible For Unexpected", value1, teacher3.getProfessorships(0).getResponsibleFor().booleanValue());
-        assertEquals("Responsible For Unexpected", value2, teacher3.getProfessorships(1).getResponsibleFor().booleanValue());
-        assertEquals("Responsible For Unexpected", value3, teacher3.getProfessorships(2).getResponsibleFor().booleanValue());
+        assertEquals("Responsible For Unexpected", value1, teacher3.getProfessorships().get(0).getResponsibleFor().booleanValue());
+        assertEquals("Responsible For Unexpected", value2, teacher3.getProfessorships().get(1).getResponsibleFor().booleanValue());
+        assertEquals("Responsible For Unexpected", value3, teacher3.getProfessorships().get(2).getResponsibleFor().booleanValue());
     }
     
     private void setupTestUpdateResponsabilitiesFor(){
