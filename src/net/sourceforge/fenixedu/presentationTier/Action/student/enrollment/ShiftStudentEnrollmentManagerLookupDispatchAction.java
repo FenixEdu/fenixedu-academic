@@ -199,18 +199,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
         List infoClasslessons = (List) ServiceManagerServiceFactory.executeService(userView,
                 "ReadClassTimeTableByStudent", args1);       
         
-        int endTime = 0;
-        for (Iterator iter = infoClasslessons.iterator(); iter.hasNext();) {
-            InfoLesson infoLesson = (InfoLesson) iter.next();
-            Calendar end = infoLesson.getFim();
-            int tempEnd = end.get(Calendar.HOUR_OF_DAY);
-            if( end.get(Calendar.MINUTE) > 0 ){
-                tempEnd = tempEnd + 1;
-            }
-            if(endTime < tempEnd){
-                endTime = tempEnd;
-            }
-        }
+        int endTime = getEndTime(infoClasslessons);
         request.setAttribute("infoClasslessons", infoClasslessons);
         request.setAttribute("infoClasslessonsEndTime", new Integer(endTime));
 
@@ -218,7 +207,19 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
         List infoLessons = (List) ServiceManagerServiceFactory.executeService(userView,
                 "ReadStudentTimeTable", args2);
         
-        int endTime2 = 0;
+        int endTime2 = getEndTime(infoLessons);
+        request.setAttribute("infoLessons", infoLessons);
+        request.setAttribute("infoLessonsEndTime", new Integer(endTime2));
+
+        return mapping.findForward("showShiftsToEnroll");
+    }
+
+    /**
+     * @param infoLessons
+     * @return
+     */
+    private int getEndTime(List infoLessons) {
+        int endTime = 0;
         for (Iterator iter = infoLessons.iterator(); iter.hasNext();) {
             InfoLesson infoLesson = (InfoLesson) iter.next();
             Calendar end = infoLesson.getFim();
@@ -226,14 +227,11 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
             if( end.get(Calendar.MINUTE) > 0 ){
                 tempEnd = tempEnd + 1;
             }
-            if(endTime2 < tempEnd){
-                endTime2 = tempEnd;
+            if(endTime < tempEnd){
+                endTime= tempEnd;
             }
         }
-        request.setAttribute("infoLessons", infoLessons);
-        request.setAttribute("infoLessonsEndTime", new Integer(endTime2));
-
-        return mapping.findForward("showShiftsToEnroll");
+        return endTime;
     }
 
     private void checkParameter(HttpServletRequest request) {
