@@ -51,10 +51,9 @@ public class WriteEnrollment implements IService {
         if (enrollment == null) {
 
             IEnrolment enrolmentToWrite;
-            if (enrollmentClass == null || enrollmentClass.equals(Integer.valueOf(1))
-                    || enrollmentClass.equals(Integer.valueOf(0))) {
+            if (enrollmentClass == null || enrollmentClass.intValue() == 1 || enrollmentClass.intValue() == 0) {
                 enrolmentToWrite = DomainFactory.makeEnrolment();
-            } else if (enrollmentClass.equals(Integer.valueOf(2))) {
+            } else if (enrollmentClass.intValue() == 2) {
                 enrolmentToWrite = DomainFactory.makeEnrolmentInOptionalCurricularCourse();
             } else {
                 enrolmentToWrite = DomainFactory.makeEnrolmentInExtraCurricularCourse();
