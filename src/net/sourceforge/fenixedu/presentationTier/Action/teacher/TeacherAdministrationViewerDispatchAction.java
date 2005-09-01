@@ -179,6 +179,11 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             return mapping.findForward("showAnnouncements");
         }
 
+        DynaActionForm actionForm = (DynaActionForm) form;
+        if (actionForm.get("editor").equals("") || (actionForm.get("editor").equals("true"))) {
+            request.setAttribute("verEditor", "true");
+        }
+
         return mapping.findForward("insertAnnouncement");
 
     }
