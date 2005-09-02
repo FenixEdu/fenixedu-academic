@@ -69,7 +69,7 @@ public class ReadExpensesReport implements IService {
             infoReport.setSummaryEURReport(InfoSummaryEURReportLine.newInfoFromDomain(persistentExpensesResume.getSummaryEURReportLine(
                     ReportType.SUMMARY_EUR, projectCode)));
             infoReport.setSummaryPTEReport(InfoSummaryPTEReportLine.newInfoFromDomain(persistentExpensesResume.getSummaryPTEReportLine(
-                    ReportType.SUMMARY_EUR, projectCode)));
+                    ReportType.SUMMARY_PTE, projectCode)));
         }
         return infoReport;
     }
