@@ -33,7 +33,6 @@
 .period-first-slot{
 	border-width: 1.5px;
 	border-style: solid;
-	border-top-style:solid;
 	border-bottom-style:none;
 }
 
@@ -47,6 +46,11 @@
 	border-width: 1.5px;
 	border-style: solid;
 	border-top-style:none;
+}
+
+.period-single-slot {
+	border-width: 1.5px;
+	border-style: solid;
 }
 
 .period-empty-slot{
@@ -80,4 +84,14 @@ table.timetable tr td.period-last-slot img {
 float: right;
 border: none;
 padding: 2px;
+}
+
+table.timetable tr td.period-single-slot img {
+float: right;
+border: none;
+padding: 2px;
+}
+
+span.float-left {
+float: left;
 }

@@ -56,7 +56,7 @@ public class TimeTableRenderer {
         this.colorPicker = colorPicker;
     }
 
-    public StringBuffer render(Locale locale, PageContext pageContext) {        
+    public StringBuffer render(Locale locale, PageContext pageContext) {
         StringBuffer strBuffer = new StringBuffer("");
         HashMap slotLessons = new HashMap();
         TimeTableSlot[][] grid = timeTable.getTimeTableGrid();
@@ -73,7 +73,7 @@ public class TimeTableRenderer {
             /* iterate over days */
             for (int dayIndex = 0; dayIndex < timeTable.getNumberOfDays().intValue(); dayIndex++) {
                 DayColumn dayColumn = timeTable.getDayColumn(dayIndex);
-                
+
                 TimeTableSlot timeTableSlot = grid[dayIndex][hourIndex];
 
                 if (timeTableSlot != null) {
@@ -82,7 +82,7 @@ public class TimeTableRenderer {
                     InfoLessonWrapper[] lessonSlotListResolved = resolveColisions(colisionList,
                             timeTable.getDayColumn(dayIndex));
 
-                    for (int slotIndex = 0; slotIndex < lessonSlotListResolved.length; slotIndex++) {                        
+                    for (int slotIndex = 0; slotIndex < lessonSlotListResolved.length; slotIndex++) {
                         InfoLessonWrapper infoLessonWrapper = lessonSlotListResolved[slotIndex];
 
                         strBuffer.append("<td ");
@@ -121,20 +121,26 @@ public class TimeTableRenderer {
                             strBuffer.append(this.lessonSlotContentRenderer.render(infoLessonWrapper
                                     .getLessonSlot()));
                             if (this.lessonSlotContentRenderer instanceof ShiftEnrollmentTimeTableLessonContentRenderer) {
-                                slotLessons.put(slotIndex+"-"+dayIndex, infoLessonWrapper);
+                                if (getSlotCssClass(infoLessonWrapper, hourIndex).equalsIgnoreCase(
+                                        "period-single-slot")) {
+                                    LessonSlotContentRendererShift lessonSlotContentRendererShift = (LessonSlotContentRendererShift) this.lessonSlotContentRenderer;
+                                    strBuffer.append(lessonSlotContentRendererShift
+                                            .lastRender(infoLessonWrapper.getLessonSlot()));
+                                }
+                                slotLessons.put(slotIndex + "-" + dayIndex, infoLessonWrapper);
                             }
                         } else {
                             if (this.lessonSlotContentRenderer instanceof ShiftEnrollmentTimeTableLessonContentRenderer
-                                    && getSlotCssClass((InfoLessonWrapper) slotLessons.get(slotIndex+"-"+dayIndex),
-                                            hourIndex).equalsIgnoreCase("period-last-slot")) {
-                                LessonSlotContentRendererShift lessonSlotContentRendererShift = (LessonSlotContentRendererShift)
-                                        this.lessonSlotContentRenderer;
+                                    && getSlotCssClass(
+                                            (InfoLessonWrapper) slotLessons.get(slotIndex + "-"
+                                                    + dayIndex), hourIndex).equalsIgnoreCase(
+                                            "period-last-slot")) {
+                                LessonSlotContentRendererShift lessonSlotContentRendererShift = (LessonSlotContentRendererShift) this.lessonSlotContentRenderer;
                                 InfoLessonWrapper infoLessonWrapperHashMap = (InfoLessonWrapper) slotLessons
-                                        .get(slotIndex+"-"+dayIndex);
+                                        .get(slotIndex + "-" + dayIndex);
                                 strBuffer.append(lessonSlotContentRendererShift
-                                        .lastRender(infoLessonWrapperHashMap.getLessonSlot()));                                
-                            }
-                            else{                            
+                                        .lastRender(infoLessonWrapperHashMap.getLessonSlot()));
+                            } else {
                                 strBuffer.append("&nbsp;");
                             }
                         }
@@ -201,7 +207,9 @@ public class TimeTableRenderer {
         if (infoLessonWrapper != null) {
 
             LessonSlot lessonSlot = infoLessonWrapper.getLessonSlot();
-            if (lessonSlot.getStartIndex() == hourIndex) {
+            if ((lessonSlot.getStartIndex() == hourIndex) && (lessonSlot.getEndIndex() == hourIndex)) {
+                css = "period-single-slot";
+            } else if (lessonSlot.getStartIndex() == hourIndex) {
                 css = "period-first-slot";
             } else if (lessonSlot.getEndIndex() == hourIndex) {
                 css = "period-last-slot";

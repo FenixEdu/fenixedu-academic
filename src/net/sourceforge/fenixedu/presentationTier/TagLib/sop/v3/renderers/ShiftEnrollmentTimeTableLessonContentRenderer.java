@@ -38,7 +38,7 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
         InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
         if (showOccupation instanceof InfoLesson) {
             InfoLesson lesson = (InfoLesson) showOccupation;
-            strBuffer.append("<a href=\"");
+            strBuffer.append("<span class=\"float-left\"><a href=\"");
             strBuffer.append(getApplication());
             strBuffer.append("/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=");
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getIdInternal()).append(
@@ -48,7 +48,7 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
                     .append("</a>");
             strBuffer.append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")&nbsp;");
 
-            strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
+            strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</span>");
             return strBuffer;
         }
         return new StringBuffer("");
@@ -60,7 +60,7 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
         if (showOccupation instanceof InfoLesson) {
             InfoLesson lesson = (InfoLesson) showOccupation;
             strBuffer.append(getURL(lesson));
-            strBuffer.append("<img border=\"0\" src=\"").append(getApplication()).append(
+            strBuffer.append("<img src=\"").append(getApplication()).append(
                     "/images/").append(getImage()).append("/>").append("</a>");
             return strBuffer;
         }
