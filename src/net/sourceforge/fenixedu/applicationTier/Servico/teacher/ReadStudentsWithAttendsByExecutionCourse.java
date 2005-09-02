@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.GetEnrolmentGrade;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAttendsSummary;
@@ -16,6 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoAttendsWithInfoStudentAnd
 import net.sourceforge.fenixedu.dataTransferObject.InfoCompositionOfAttendAndDegreeCurricularPlanAndShiftsAndStudentGroups;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoForReadStudentsWithAttendsByExecutionCourse;
@@ -33,6 +35,7 @@ import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IEnrolment;
+import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IGroupProperties;
 import net.sourceforge.fenixedu.domain.IShift;
@@ -147,6 +150,9 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
                     .contains(AttendacyStateSelectionType.NOT_ENROLLED);
             boolean improvementFilter = enrollmentTypeFilters
                     .contains(AttendacyStateSelectionType.IMPROVEMENT);
+            boolean specialSeasonFilter = enrollmentTypeFilters
+            		.contains(AttendacyStateSelectionType.SPECIAL_SEASON);
+            
 
             List newAttends = new ArrayList();
             Iterator attendsIterator = attends.iterator();
@@ -169,6 +175,13 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
                     // not enrolled student
                 } else if (notEnrolledFilter && attendacy.getEnrolment() == null) {
                     newAttends.add(attendacy);
+                    // special season student
+                } else if (specialSeasonFilter && attendacy.getEnrolment() != null) {
+                	GetEnrolmentGrade getEnrollmentGrade = new GetEnrolmentGrade();
+                	InfoEnrolmentEvaluation infoEnrolmentEvaluation = getEnrollmentGrade.run(attendacy.getEnrolment());
+                	if(infoEnrolmentEvaluation != null && infoEnrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.SPECIAL_SEASON)) {
+                		newAttends.add(attendacy);
+                	}
                 }
             }
             attends = newAttends;
@@ -220,13 +233,32 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
 
             // determining the EnrolmentEvaluationType
             if (iFrequenta.getEnrolment() != null) {
-                EnrolmentEvaluationType enrollmentEvaluationType = null;
-                if (iFrequenta.getEnrolment().getExecutionPeriod().equals(
+            	GetEnrolmentGrade getEnrollmentGrade = new GetEnrolmentGrade();
+            	InfoEnrolmentEvaluation infoEnrolmentEvaluation = getEnrollmentGrade.run(iFrequenta.getEnrolment());
+                EnrolmentEvaluationType enrollmentEvaluationType = null;            	
+            	if(infoEnrolmentEvaluation == null) {
+            		enrollmentEvaluationType = EnrolmentEvaluationType.NORMAL;
+            	}
+            	else {
+            		if (!iFrequenta.getEnrolment().getExecutionPeriod().equals(
+                            executionCourse.getExecutionPeriod())) {
+                        enrollmentEvaluationType = EnrolmentEvaluationType.IMPROVEMENT;
+            		} else {
+	            		if(infoEnrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT))
+	            			enrollmentEvaluationType = infoEnrolmentEvaluation.getEnrolmentEvaluationType();
+	            		else if(infoEnrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.SPECIAL_SEASON))
+	            			enrollmentEvaluationType = infoEnrolmentEvaluation.getEnrolmentEvaluationType();
+	            		else
+	            			enrollmentEvaluationType = EnrolmentEvaluationType.NORMAL;
+            		}
+            	}
+
+                /*if (iFrequenta.getEnrolment().getExecutionPeriod().equals(
                         executionCourse.getExecutionPeriod())) {
                     enrollmentEvaluationType = EnrolmentEvaluationType.NORMAL;
                 } else {
                     enrollmentEvaluationType = EnrolmentEvaluationType.IMPROVEMENT;
-                }
+                }*/
                 infoFrequenta.getInfoEnrolment().setEnrolmentEvaluationType(enrollmentEvaluationType);
             }
 

@@ -205,11 +205,12 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
         }
         
 //      filling the enrollment filters checkboxes in the form-bean
-        String cbFilters[] = new String[4]; // 4 selection criteria
+        String cbFilters[] = new String[5]; // 4 selection criteria
         cbFilters[0] = AttendacyStateSelectionType.ALL.toString();
         cbFilters[1] = AttendacyStateSelectionType.ENROLLED.toString();
-        cbFilters[2] = AttendacyStateSelectionType.NOT_ENROLLED.toString();
-        cbFilters[3] = AttendacyStateSelectionType.IMPROVEMENT.toString();        
+        cbFilters[2] = AttendacyStateSelectionType.SPECIAL_SEASON.toString();
+        cbFilters[3] = AttendacyStateSelectionType.NOT_ENROLLED.toString();
+        cbFilters[4] = AttendacyStateSelectionType.IMPROVEMENT.toString();        
 
         formBean.set("coursesIDs",cbCourses);
         formBean.set("shiftIDs",cbShifts);
