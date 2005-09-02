@@ -12,10 +12,25 @@ public abstract class Transaction extends jvstm.Transaction {
 
     private static final Queue<FenixTransaction> ACTIVE_TXS = new PriorityBlockingQueue<FenixTransaction>();
     private static final FenixCache cache = new FenixCache();
+    private static boolean initialized = false;
+
 
     private Transaction() {
 	// this is never to be used!!!
 	super(0);
+    }
+
+    static synchronized void initializeIfNeeded() {
+	if (! initialized) {
+	    int maxTx = TransactionChangeLogs.initializeTransactionSystem();
+	    if (maxTx >= 0) {
+		System.out.println("Setting the last committed TX number to " + maxTx);
+		setCommitted(maxTx);
+	    } else {
+		throw new Error("Couldn't determine the last transaction number");
+	    }
+	    initialized = true;
+	}
     }
 
 
@@ -33,11 +48,12 @@ public abstract class Transaction extends jvstm.Transaction {
     }
 
     protected static jvstm.Transaction begin(int txNumber) {
+	initializeIfNeeded();
+
         jvstm.Transaction parent = current.get();
         TopLevelTransaction tx = null;
         if (parent == null) {
             tx = new TopLevelTransaction(txNumber);
-            //tx = new ReadOnlyTransaction(txNumber);
         } else {
             //tx = new NestedTransaction(parent);
 	    throw new Error("Nested transactions not supported yet...");
