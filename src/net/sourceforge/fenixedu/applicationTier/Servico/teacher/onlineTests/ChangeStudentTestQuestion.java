@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTestAdvisory;
 import net.sourceforge.fenixedu.domain.onlineTests.IMetadata;
 import net.sourceforge.fenixedu.domain.onlineTests.IOnlineTest;
 import net.sourceforge.fenixedu.domain.onlineTests.IQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestLog;
 import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.ITest;
 import net.sourceforge.fenixedu.domain.onlineTests.ITestQuestion;
@@ -134,7 +135,6 @@ public class ChangeStudentTestQuestion implements IService {
                         throw new InvalidArgumentsServiceException();
 
                     studentTestQuestion.setQuestion(newQuestion);
-                    studentTestQuestion.setOldResponse(new Integer(0));
                     studentTestQuestion.setResponse(null);
                     studentTestQuestion.setOptionShuffle(null);
                     availableQuestions.remove(newQuestion);
@@ -153,6 +153,12 @@ public class ChangeStudentTestQuestion implements IService {
                                     .getStudent(), oldMark));
                         }
                     }
+                    IStudentTestLog studentTestLog = DomainFactory.makeStudentTestLog();
+                    studentTestLog.setDistributedTest(studentTestQuestion.getDistributedTest());
+                    studentTestLog.setStudent(studentTestQuestion.getStudent());
+                    studentTestLog.setDate(Calendar.getInstance().getTime());
+                    ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
+                    studentTestLog.setEvent(MessageFormat.format(bundle.getString("message.changeStudentQuestionLogMessage"), new Object[] { studentTestQuestion.getTestQuestionOrder() }));
                 }
 
             }
@@ -164,7 +170,6 @@ public class ChangeStudentTestQuestion implements IService {
             metadata = (IMetadata) persistentMetadata.readByOID(Metadata.class, oldQuestion.getKeyMetadata());
             if (metadata == null)
                 throw new InvalidArgumentsServiceException();
-            metadata.setNumberOfMembers(new Integer(metadata.getNumberOfMembers().intValue() - 1));
             removeOldTestQuestion(persistentSuport, oldQuestion);
             List metadataQuestions = metadata.getVisibleQuestions();
 

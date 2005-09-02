@@ -117,14 +117,13 @@ public class ChangeStudentTestQuestionMark implements IService {
                         mark.setMark(getNewStudentMark(persistentSuport, studentTestQuestion.getDistributedTest(), studentTestQuestion.getStudent()));
                     }
                 }
-                IStudentTestLog studentTestLog = DomainFactory.makeStudentTestLog();
-                studentTestLog.setDistributedTest(studentTestQuestion.getDistributedTest());
-                studentTestLog.setStudent(studentTestQuestion.getStudent());
-                studentTestLog.setDate(Calendar.getInstance().getTime());
-                ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
-                studentTestLog.setEvent(MessageFormat.format(bundle.getString("message.changeStudentMarkLogMessage"), new Object[] { newMark }));
-
             }
+            IStudentTestLog studentTestLog = DomainFactory.makeStudentTestLog();
+            studentTestLog.setDistributedTest(studentTestQuestion.getDistributedTest());
+            studentTestLog.setStudent(studentTestQuestion.getStudent());
+            studentTestLog.setDate(Calendar.getInstance().getTime());
+            ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
+            studentTestLog.setEvent(MessageFormat.format(bundle.getString("message.changeStudentMarkLogMessage"), new Object[] { newMark }));
             infoSiteDistributedTestAdvisory.setInfoStudentList(group);
             infoSiteDistributedTestAdvisoryList.add(infoSiteDistributedTestAdvisory);
 
