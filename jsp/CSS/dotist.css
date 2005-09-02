@@ -421,6 +421,33 @@ table#ects {
 	page-break-after: always;
 	}
 
+table.style1 {
+	margin-bottom: 1.5em;
+	border: 2px solid #ccc;
+	border-collapse: collapse;
+	}
+table.style1 tr.header {
+	border-bottom: 2px solid #ccc;
+	}
+table.style1 td.listClasses-header {
+	padding: 0.5em 1em;
+	border: 1px solid #ddd;
+	background-color: #eee;
+	}
+table.style1 td.listClasses {
+	padding: 0 1em;
+	background-color: #fafafa;
+	border: none;
+	border: 1px solid #eee;
+	}
+table.style1 td.courses {
+	border-right: 1px solid #eee;
+	background-color: #ffe;
+	padding: 0 1em;
+	}
+
+
+
 /*****************************************************************
 	Assiduidade - layout verbete
 ******************************************************************/

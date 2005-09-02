@@ -7,73 +7,88 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentInExtraCurricularCourse" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment" %>
 
-<h2><bean:message key="title.student.enrollment" bundle="STUDENT_RESOURCES"/></h2>
+<style>
+.enrollment_confirmation {
+padding: 0.5em;
+background-color: #000;
+color: #efe;
+font-weight: bold;
+}
+</style>
+
+
+<h2><bean:message key="title.student.enrollment.resume" bundle="STUDENT_RESOURCES"/></h2>
 <span class="error"><html:errors/></span>
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
+
+	<div class="infoselected">
+	<p><b><bean:message key="label.student"/>:</b> <bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome" /> / 
+	<bean:message key="label.student.number"/> <bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoStudent.number" /></p>
+	<p><b><bean:message key="label.student.enrollment.executionPeriod"/></b>: <bean:write name="infoStudentEnrolmentContext" property="infoExecutionPeriod.name" /> <bean:write name="infoStudentEnrolmentContext" property="infoExecutionPeriod.infoExecutionYear.year" /></p>
+	</div>
+
+	
+	<br />	
+	<p><span class="enrollment_confirmation"><bean:message key="message.student.enrollment.confirmation" /></span></p>
+	<br />
+	
+	
+	<table class="style1">
 	<tr>
-		<td align="center" class="infoselected">
-			<b><bean:message key="label.student.enrollment.number"/></b>
-			<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoStudent.number" />&nbsp;-&nbsp;
-			<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome" />
-			<br />
-			<b><bean:message key="label.student.enrollment.executionPeriod"/></b>
-			<bean:write name="infoStudentEnrolmentContext" property="infoExecutionPeriod.name" />&nbsp;				
-			<bean:write name="infoStudentEnrolmentContext" property="infoExecutionPeriod.infoExecutionYear.year" />
-		</td>
+		<td class="listClasses-header"><bean:message key="message.student.enrolled.curricularCourses" /></td>
+		<td class="listClasses-header"><bean:message key="label.course.enrollment.state" bundle="STUDENT_RESOURCES"/></td>
 	</tr>
-	<tr>
-		<td style="text-align:center">
-			<br /><br /><b><bean:message key="message.student.enrollment.confirmation" /></b><br /><br />
-		</td>
-	</tr>
-</table>
-<br />
-<table>
-	<tr>
-		<td class="infoop">
-			<strong><bean:message key="label.credits.warning"/></strong>
-		</td>
-	</tr>
-</table>
-<br />
-<table>	
+	<logic:iterate id="enrollmentElem" name="infoStudentEnrolmentContext" property="studentCurrentSemesterInfoEnrollments" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment">
+		<tr>
+			<td class="listClasses courses">
+				<bean:write name="enrollmentElem" property="infoCurricularCourse.name"/>
+			</td>
+			<td class="listClasses">
+				<a href="@enrollment.faq.url@" target="_blank">
+					<bean:define id="condition" name="enrollmentElem" property="condition"/>
+					<bean:message key='<%=condition.toString()%>' bundle="ENUMERATION_RESOURCES"/>
+				</a>
+			</td>
+		</tr>
+	</logic:iterate>
+	</table>
+	
+	
+	<br />
+
+	<div class="infoop">
+	<h4><bean:message key="title.credits.warning"/>:</h4>
+	<bean:message key="label.credits.warning"/>
+	</div>
+	
+	<br />
+
+
+<table class="style1">
 	<logic:present name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch">
 		<tr>
 			<td class="listClasses-header">
-				<bean:message key="label.student.enrollment.specializationArea" />:&nbsp;
-				<br/>(<bean:message key="label.student.enrollment.branch" bundle="STUDENT_RESOURCES"/>)
+				<bean:message key="label.student.enrollment.specializationArea" />: (<bean:message key="label.student.enrollment.branch" bundle="STUDENT_RESOURCES"/>)
 			</td>
 			<td class="listClasses">
 				<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch.name" />&nbsp;
 			</td>
-			
-			
+					
 		<logic:present name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoSecundaryBranch">
 		<td class="listClasses-header">
 				<bean:message key="label.branch.credits" />:&nbsp;
-			</td>
-			<td class="listClasses">
-							<bean:write name="infoStudentEnrolmentContext" property="creditsInSpecializationArea" />
-						&nbsp;<bean:message key="label.student.enrollment.from"/>&nbsp;
-				<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch.specializationCredits" />
-			</td>
+		</td>
+		<td class="listClasses">
+			<bean:write name="infoStudentEnrolmentContext" property="creditsInSpecializationArea" />
+			&nbsp;<bean:message key="label.student.enrollment.from"/>&nbsp;
+			<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch.specializationCredits" />
+		</td>
 		</tr>
 		<tr>
-			<td class="listClasses-header">
-				<bean:message key="label.student.enrollment.secondaryArea" />:&nbsp;
-				
-			</td>
+			<td class="listClasses-header"><bean:message key="label.student.enrollment.secondaryArea" />:&nbsp;</td>
+			<td class="listClasses"><bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoSecundaryBranch.name" /></td> 
+			<td class="listClasses-header"><bean:message key="label.branch.credits" />:&nbsp;</td>
 			<td class="listClasses">
-				<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoSecundaryBranch.name" />
-			</td> 
-			
-			<td class="listClasses-header">
-				<bean:message key="label.branch.credits" />:&nbsp;
-			</td>
-			<td class="listClasses">
-			
-					<bean:write name="infoStudentEnrolmentContext" property="creditsInSecundaryArea" />
-			
+				<bean:write name="infoStudentEnrolmentContext" property="creditsInSecundaryArea" />
 				&nbsp;<bean:message key="label.student.enrollment.from"/>&nbsp;
 				<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoSecundaryBranch.secondaryCredits" />
 			</td>
@@ -86,8 +101,7 @@
 	<logic:notPresent name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch">
 		<tr>
 			<td class="listClasses-header">
-				<bean:message key="label.student.enrollment.specializationArea" />:&nbsp;
-				<br/>(<bean:message key="label.student.enrollment.branch" bundle="STUDENT_RESOURCES"/>)
+				<bean:message key="label.student.enrollment.specializationArea" /> (<bean:message key="label.student.enrollment.branch" bundle="STUDENT_RESOURCES"/>):
 			</td>
 			<td  class="listClasses">
 				<bean:message key="label.student.enrollment.no.area" />
@@ -103,37 +117,15 @@
 		</tr>
 	</logic:notPresent>
 	</table>
+
+	
 	<br/>
-	<table>
-	<tr>
-		<td class="listClasses-header">
-			<b><bean:message key="message.student.enrolled.curricularCourses" /></b>
-		</td>
-		<td class="listClasses-header"><bean:message key="label.course.enrollment.state" bundle="STUDENT_RESOURCES"/></td>
-	</tr>
-	<logic:iterate id="enrollmentElem" name="infoStudentEnrolmentContext" property="studentCurrentSemesterInfoEnrollments" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment">
-		<tr>
-			<td class="listClasses">
-				<bean:write name="enrollmentElem" property="infoCurricularCourse.name"/>
-			</td>
-			<td class="listClasses">
-				<a href="@enrollment.faq.url@" target="_blank">
-					<bean:define id="condition" name="enrollmentElem" property="condition"/>
-					<bean:message key='<%=condition.toString()%>' bundle="ENUMERATION_RESOURCES"/>
-				</a>
-			</td>
-		</tr>
-	</logic:iterate>
-</table>
+
+
 <logic:present name="curriculum">
-	<table>
-		<tr>
-			<td colspan="5">
-				<br />
-				<b><bean:message key="message.student.curriculum" /></b>
-			</td>
-		</tr>
-		<tr>
+	<h4><bean:message key="message.student.curriculum" /></h4>
+	<table class="style1">
+		<tr class="header">
 			<td class="listClasses-header"><bean:message key="label.executionYear" /></td>
 			<td class="listClasses-header"><bean:message key="label.semester" /></td>
 			<td class="listClasses-header"><bean:message key="label.degree.name" /></td>
