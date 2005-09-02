@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.stm;
 
+import java.lang.ref.SoftReference;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.AbstractList;
@@ -9,7 +11,7 @@ import jvstm.PerTxBox;
 public abstract class RelationList<E> extends AbstractList<E> implements InvalidateSubject {
     private Object listHolder;
     private String attributeName;
-    private VBox<FunctionalSet<E>> elements;
+    private SoftReference<VBox<FunctionalSet<E>>> elementsRef;
     private PerTxBox<FunctionalSet<E>> elementsToAdd = new PerTxBox<FunctionalSet<E>>(FunctionalSet.EMPTY) {
         public void commit(FunctionalSet<E> toAdd) {
 	    consolidateElementsIfLoaded();
@@ -24,15 +26,27 @@ public abstract class RelationList<E> extends AbstractList<E> implements Invalid
     public RelationList(Object listHolder, String attributeName, boolean allocateOnly) {
 	this.listHolder = listHolder;
 	this.attributeName = attributeName;
+	VBox elementsBox = null;
 	if (allocateOnly) {
-	    elements = VBox.makeNew(allocateOnly, true);
+	    elementsBox = VBox.makeNew(allocateOnly, true);
 	} else {
-	    elements = new VBox<FunctionalSet<E>>(FunctionalSet.EMPTY);
+	    elementsBox = new VBox<FunctionalSet<E>>(FunctionalSet.EMPTY);
 	}
+	this.elementsRef = new SoftReference<VBox<FunctionalSet<E>>>(elementsBox);
     }
 
+    private VBox<FunctionalSet<E>> getElementsBox() {
+	VBox<FunctionalSet<E>> box = elementsRef.get();
+	if (box == null) {
+	    box = VBox.makeNew(true, true);
+	    this.elementsRef = new SoftReference<VBox<FunctionalSet<E>>>(box);
+	}
+	return box;
+    }
+
+
     public void invalidate(int txNumber) {
-	elements.invalidate(txNumber);
+	getElementsBox().invalidate(txNumber);
     }
 
     protected abstract void addToRelation(E element);
@@ -40,21 +54,23 @@ public abstract class RelationList<E> extends AbstractList<E> implements Invalid
 
     private FunctionalSet<E> elementSet() {
 	consolidateElements();
-	return elements.get(listHolder, attributeName);
+	return getElementsBox().get(listHolder, attributeName);
     }
 
     protected void consolidateElementsIfLoaded() {
-	if (elements.hasValue()) {
+	VBox<FunctionalSet<E>> box = getElementsBox();
+	if (box.hasValue()) {
 	    consolidateElements();
 	} else {
 	    if (elementsToAdd.get().size() + elementsToRemove.get().size() > 0) {
-		elements.invalidate(Transaction.current().getNumber());
+		box.invalidate(Transaction.current().getNumber());
 	    }
 	}
     }
 
     private void consolidateElements() {
-	FunctionalSet<E> origSet = elements.get(listHolder, attributeName);
+	VBox<FunctionalSet<E>> box = getElementsBox();
+	FunctionalSet<E> origSet = box.get(listHolder, attributeName);
 	FunctionalSet<E> newSet = origSet;
 
 	if (elementsToRemove.get().size() > 0) {
@@ -74,12 +90,12 @@ public abstract class RelationList<E> extends AbstractList<E> implements Invalid
 	}
 
 	if (newSet != origSet) {
-	    elements.put(newSet);
+	    box.put(newSet);
 	}
     }
 
     public void setFromOJB(Object obj, String attr, OJBFunctionalSetWrapper ojbList) {
-	elements.setFromOJB(obj, attr, ojbList.getElements());
+	getElementsBox().setFromOJB(obj, attr, ojbList.getElements());
     }
 
     public void justAdd(E obj) {
@@ -88,12 +104,6 @@ public abstract class RelationList<E> extends AbstractList<E> implements Invalid
     }
 
     public boolean justRemove(E obj) {
-// 	FunctionalSet<E> previous = elementSet();
-// 	FunctionalSet<E> next = previous.remove(obj);
-// 	elements.put(next);
-// 	// HACK!!! this assumes that removing a non-existent element from the set always returns the same set...
-// 	return previous != next;
-
 	elementsToRemove.put(elementsToRemove.get().add(obj));
 	elementsToAdd.put(elementsToAdd.get().remove(obj));
 	// HACK!!!! I should look into this 
