@@ -67,7 +67,6 @@ public class AddStudentsToDistributedTest implements IService {
                     studentTestQuestion.setDistributedTest(distributedTest);
                     studentTestQuestion.setTestQuestionOrder(studentTestQuestionExample.getTestQuestionOrder());
                     studentTestQuestion.setTestQuestionValue(studentTestQuestionExample.getTestQuestionValue());
-                    studentTestQuestion.setOldResponse(new Integer(0));
                     studentTestQuestion.setCorrectionFormula(studentTestQuestionExample.getCorrectionFormula());
                     studentTestQuestion.setTestQuestionMark(new Double(0));
                     studentTestQuestion.setResponse(null);

@@ -74,7 +74,7 @@ public class InsertDistributedTest implements IService {
         distributedTest.setTestType(testType);
         distributedTest.setCorrectionAvailability(correctionAvaiability);
         distributedTest.setImsFeedback(imsFeedback);
-        distributedTest.setNumberOfQuestions(test.getNumberOfQuestions());
+        distributedTest.setNumberOfQuestions(test.getTestQuestionsCount());
 
         ITestScope testScope = persistentSuport.getIPersistentTestScope().readByDomainObject(ExecutionCourse.class.getName(), executionCourseId);
 
@@ -101,7 +101,6 @@ public class InsertDistributedTest implements IService {
                 studentTestQuestion.setTestQuestionValue(testQuestion.getTestQuestionValue());
                 studentTestQuestion.setCorrectionFormula(testQuestion.getCorrectionFormula());
                 studentTestQuestion.setTestQuestionMark(new Double(0));
-                studentTestQuestion.setOldResponse(new Integer(0));
                 studentTestQuestion.setResponse(null);
 
                 if (questionList.size() == 0)

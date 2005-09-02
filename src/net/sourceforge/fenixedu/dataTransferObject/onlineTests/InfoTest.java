@@ -145,12 +145,12 @@ public class InfoTest extends InfoObject {
         if (test != null) {
             setTitle(test.getTitle());
             setInformation(test.getInformation());
-            setNumberOfQuestions(test.getNumberOfQuestions());
+            setNumberOfQuestions(test.getTestQuestionsCount());
             setCreationDate(test.getCreationDate());
             setLastModifiedDate(test.getLastModifiedDate());
         }
     }
-    
+
     public static InfoTest newInfoFromDomain(ITest test) {
         InfoTest infoTest = null;
         if (test != null) {

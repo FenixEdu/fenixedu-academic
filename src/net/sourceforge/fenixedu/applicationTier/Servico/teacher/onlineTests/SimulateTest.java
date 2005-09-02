@@ -81,7 +81,7 @@ public class SimulateTest implements IService {
         infoDistributedTest.setImsFeedback(imsfeedback);
         infoDistributedTest.setTestInformation(testInformation);
         infoDistributedTest.setTitle(test.getTitle());
-        infoDistributedTest.setNumberOfQuestions(test.getNumberOfQuestions());
+        infoDistributedTest.setNumberOfQuestions(test.getTestQuestionsCount());
 
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = getInfoStudentTestQuestionList(persistentSuport, questionCodes, optionShuffle,
                 responses, infoDistributedTest, testId);

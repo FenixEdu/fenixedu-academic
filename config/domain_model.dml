@@ -1572,7 +1572,6 @@ class net.sourceforge.fenixedu.domain.onlineTests.Metadata extends net.sourcefor
     String difficulty;
     Integer keyExecutionCourse;
     String author;
-    Integer numberOfMembers;
     String secondarySubject;
     Date learningTimeDate;
 
@@ -2564,7 +2563,6 @@ class net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion extends ne
     Integer keyQuestion;
     Integer testQuestionOrder;
     String optionShuffle;
-    Integer oldResponse;
     Double testQuestionValue;
     Integer keyDistributedTest;
     Integer keyStudent;
@@ -2677,7 +2675,6 @@ class net.sourceforge.fenixedu.domain.onlineTests.Test extends net.sourceforge.f
     String title;
     Date lastModifiedDate;
     Integer keyTestScope;
-    Integer numberOfQuestions;
     
     interface "
     public void insertTestQuestion(IQuestion question, Integer testQuestionOrder, Double testQuestionValue, net.sourceforge.fenixedu.util.tests.CorrectionFormula formula);

@@ -126,8 +126,6 @@ public class InsertExercise implements IService {
 
             if (xmlNumber == 0) {
                 persistentMetadata.deleteByOID(Metadata.class, metadata.getIdInternal());
-            } else {
-                metadata.setNumberOfMembers(new Integer(xmlNumber));
             }
 
             return badXmls;

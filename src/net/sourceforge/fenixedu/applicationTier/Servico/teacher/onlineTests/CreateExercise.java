@@ -55,13 +55,11 @@ public class CreateExercise implements IService {
                 metadata.setSecondarySubject(secondarySubject);
                 metadata.setLevel(level);
                 metadata.setVisibility(new Boolean(true));
-                metadata.setNumberOfMembers(new Integer(1));
             } else {
                 metadata = (IMetadata) persistentSuport.getIPersistentMetadata().readByOID(Metadata.class, metadataId);
                 if (metadata == null) {
                     throw new InvalidArgumentsServiceException();
                 }
-                metadata.setNumberOfMembers(new Integer(metadata.getNumberOfMembers().intValue() + 1));
             }
             IPersistentQuestion persistentQuestion = persistentSuport.getIPersistentQuestion();
             IQuestion question = DomainFactory.makeQuestion();
@@ -74,9 +72,9 @@ public class CreateExercise implements IService {
                 throw new FenixServiceException(e);
             }
             if (metadataId == null)
-                question.setXmlFileName("Pergunta" + metadata.getNumberOfMembers() + ".xml");
+                question.setXmlFileName("Pergunta" + metadata.getVisibleQuestionsCount() + ".xml");
             else
-                question.setXmlFileName(persistentQuestion.correctFileName("Pergunta" + metadata.getNumberOfMembers() + ".xml", metadataId));
+                question.setXmlFileName(persistentQuestion.correctFileName("Pergunta" + metadata.getVisibleQuestionsCount() + ".xml", metadataId));
 
             infoQuestion.setXmlFile(question.getXmlFile());
             ParseQuestion parse = new ParseQuestion();

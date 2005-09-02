@@ -43,7 +43,6 @@ public class InsertExerciseVariation implements IService {
     public List run(Integer executionCourseId, Integer metadataId, FormFile xmlZipFile, String path) throws FenixServiceException,
             NotExecuteException {
         List<String> badXmls = new ArrayList<String>();
-        int xmlNumber = 0;
         this.path = path.replace('\\', '/');
         try {
             ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -75,7 +74,6 @@ public class InsertExerciseVariation implements IService {
                     question.setXmlFile(xmlFile);
                     question.setXmlFileName(persistentQuestion.correctFileName(xmlFileName, metadataId));
                     question.setVisibility(new Boolean("true"));
-                    xmlNumber++;
                 } catch (SAXParseException e) {
                     badXmls.add(xmlFileName);
                 } catch (ParseQuestionException e) {
@@ -84,9 +82,6 @@ public class InsertExerciseVariation implements IService {
                     badXmls.add(xmlFileName);
                 }
             }
-
-            if (xmlNumber != 0)
-                metadata.setNumberOfMembers(new Integer(metadata.getNumberOfMembers().intValue() + xmlNumber));
 
             return badXmls;
         } catch (ExcepcaoPersistencia e) {

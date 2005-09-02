@@ -38,7 +38,6 @@ public class InsertTest implements IService {
         ITest test = DomainFactory.makeTest();
         test.setTitle(title);
         test.setInformation(information);
-        test.setNumberOfQuestions(new Integer(0));
         Date date = Calendar.getInstance().getTime();
         test.setCreationDate(date);
         test.setLastModifiedDate(date);

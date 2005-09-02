@@ -57,11 +57,6 @@
 		jdbc-type="LONGVARCHAR"
 	/>
 	<field-descriptor id="11"
-		name="numberOfMembers"
-		column="NUMBER_OF_MEMBERS"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor id="12"
 		name="visibility"
 		column="VISIBILITY"
 		jdbc-type="BIT"
@@ -165,23 +160,18 @@
     	 jdbc-type="LONGVARCHAR"
     />
     <field-descriptor id="4"
-         name="numberOfQuestions"
-         column="NUMBER_OF_QUESTIONS"
-    	 jdbc-type="INTEGER"
-    />
-    <field-descriptor id="5"
         name="creationDate"
         column="CREATION_DATE"
         jdbc-type="TIMESTAMP"
         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>
-	<field-descriptor id="6"
+	<field-descriptor id="5"
         name="lastModifiedDate"
         column="LAST_MODIFICATION_DATE"
         jdbc-type="TIMESTAMP"
         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>
-   <field-descriptor id="7"
+   <field-descriptor id="6"
         name="keyTestScope"
         column="KEY_TEST_SCOPE"
         jdbc-type="INTEGER"
@@ -408,10 +398,6 @@
         name="testQuestionMark"
         column="TEST_QUESTION_MARK"
         jdbc-type="DOUBLE"/>
-    <field-descriptor
-        name="oldResponse"
-        column="OLD_RESPONSE"
-        jdbc-type="INTEGER"/>
     <field-descriptor
         name="response"
         column="RESPONSE"

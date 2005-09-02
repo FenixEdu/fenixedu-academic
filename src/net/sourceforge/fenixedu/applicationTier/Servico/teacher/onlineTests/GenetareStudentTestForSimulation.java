@@ -62,7 +62,7 @@ public class GenetareStudentTestForSimulation implements IService {
         infoDistributedTest.setImsFeedback(imsfeedback);
         infoDistributedTest.setTitle(test.getTitle());
         infoDistributedTest.setTestInformation(testInformation);
-        infoDistributedTest.setNumberOfQuestions(test.getNumberOfQuestions());
+        infoDistributedTest.setNumberOfQuestions(test.getTestQuestionsCount());
 
         List<ITestQuestion> testQuestionList = persistentSuport.getIPersistentTestQuestion().readByTest(testId);
         for (ITestQuestion testQuestionExample : testQuestionList) {

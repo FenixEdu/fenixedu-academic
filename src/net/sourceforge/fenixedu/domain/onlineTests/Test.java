@@ -24,7 +24,6 @@ public class Test extends Test_Base {
         testQuestion.setTestQuestionValue(testQuestionValue);
         testQuestion.setCorrectionFormula(formula);
         testQuestion.setTest(this);
-        this.setNumberOfQuestions(new Integer(this.getNumberOfQuestions().intValue() + 1));
         this.setLastModifiedDate(Calendar.getInstance().getTime());
 
     }
@@ -59,7 +58,6 @@ public class Test extends Test_Base {
             testQuestion.delete();
         }
 
-        setNumberOfQuestions(new Integer(getNumberOfQuestions().intValue() - 1));
         setLastModifiedDate(Calendar.getInstance().getTime());
     }
 
