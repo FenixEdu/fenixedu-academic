@@ -48,7 +48,6 @@ public class DeleteExercise implements IService {
             if (persistentStudentTestQuestion.countByQuestion(question.getIdInternal()) == 0) {
                 persistentQuestion.deleteByOID(Question.class, question.getIdInternal());
             } else {
-                persistentQuestion.lockWrite(question);
                 question.setVisibility(new Boolean("false"));
                 delete = false;
             }
@@ -57,7 +56,6 @@ public class DeleteExercise implements IService {
             persistentQuestion.deleteByMetadata(metadata);
             persistentMetadata.deleteByOID(Metadata.class, metadata.getIdInternal());
         } else {
-            persistentMetadata.simpleLockWrite(metadata);
             metadata.setVisibility(new Boolean("false"));
         }
     }
@@ -74,13 +72,11 @@ public class DeleteExercise implements IService {
             for (ITestQuestion iterTestQuestion : testQuestionList) {
                 Integer iterQuestionOrder = iterTestQuestion.getTestQuestionOrder();
                 if (questionOrder.compareTo(iterQuestionOrder) <= 0) {
-                    persistentTestQuestion.simpleLockWrite(iterTestQuestion);
                     iterTestQuestion.setTestQuestionOrder(new Integer(iterQuestionOrder.intValue() - 1));
                 }
             }
         }
         persistentTestQuestion.deleteByOID(TestQuestion.class, testQuestion.getIdInternal());
-        test.setNumberOfQuestions(new Integer(test.getNumberOfQuestions().intValue() - 1));
         test.setLastModifiedDate(Calendar.getInstance().getTime());
     }
 }

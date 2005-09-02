@@ -67,7 +67,6 @@ public class InsertTestQuestion implements IService {
                     for (ITestQuestion iterTestQuestion : testQuestionList) {
                         Integer iterQuestionOrder = iterTestQuestion.getTestQuestionOrder();
                         if (questionOrder.compareTo(iterQuestionOrder) <= 0) {
-                            persistentTestQuestion.simpleLockWrite(iterTestQuestion);
                             iterTestQuestion.setTestQuestionOrder(new Integer(iterQuestionOrder.intValue() + 1));
                         }
                     }
@@ -86,8 +85,6 @@ public class InsertTestQuestion implements IService {
                         thisQuestionValue = new Double(0);
                 }
                 ITestQuestion testQuestion = DomainFactory.makeTestQuestion();
-                persistentTest.simpleLockWrite(test);
-                test.setNumberOfQuestions(new Integer(test.getNumberOfQuestions().intValue() + 1));
                 test.setLastModifiedDate(Calendar.getInstance().getTime());
                 testQuestion.setQuestion(question);
                 testQuestion.setTest(test);
