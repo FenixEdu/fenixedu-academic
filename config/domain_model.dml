@@ -79,7 +79,6 @@ valueType net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice		
 valueType net.sourceforge.fenixedu.util.TipoAula                                                as TipoAula;
 valueType net.sourceforge.fenixedu.util.TipoSala                                                as TipoSala; 
 valueType net.sourceforge.fenixedu.domain.transactions.TransactionType                          as TransactionType;
-valueType net.sourceforge.fenixedu.domain.IDomainObject                  				        as IDomainObject;
 valueType net.sourceforge.fenixedu.util.tests.CorrectionFormula                                 as CorrectionFormula;
 valueType net.sourceforge.fenixedu.util.tests.CorrectionAvailability                            as CorrectionAvailability;
 valueType net.sourceforge.fenixedu.util.tests.TestType                  				        as TestType;
@@ -2700,7 +2699,12 @@ class net.sourceforge.fenixedu.domain.onlineTests.TestQuestion extends net.sourc
 class net.sourceforge.fenixedu.domain.onlineTests.TestScope extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyClass;
     String className;
-    IDomainObject domainObject;
+    
+    interface "
+    public void setDomainObject(net.sourceforge.fenixedu.domain.IDomainObject domainObject);
+    public net.sourceforge.fenixedu.domain.IDomainObject getDomainObject();
+    "
+    
 }
 
 class net.sourceforge.fenixedu.domain.Seminaries.Theme extends net.sourceforge.fenixedu.domain.DomainObject {

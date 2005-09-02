@@ -23,19 +23,24 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class DeleteTest implements IService {
 
-    public void run(Integer executionCourseId, Integer testId) throws ExcepcaoPersistencia, InvalidArgumentsServiceException {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentTest persistentTest = persistentSuport.getIPersistentTest();
-        IPersistentTestQuestion persistentTestQuestion = persistentSuport.getIPersistentTestQuestion();
+    public void run(final Integer executionCourseId, final Integer testId) throws ExcepcaoPersistencia, InvalidArgumentsServiceException {
+        final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentTest persistentTest = persistentSuport.getIPersistentTest();
+        final IPersistentTestQuestion persistentTestQuestion = persistentSuport.getIPersistentTestQuestion();
+
         ITest test = (ITest) persistentTest.readByOID(Test.class, testId);
         List<ITestQuestion> testQuestionList = test.getTestQuestions();
-        for (ITestQuestion testQuestion : testQuestionList) {
-            testQuestion.removeQuestion();
-            testQuestion.removeTest();
-            persistentTestQuestion.deleteByOID(TestQuestion.class, testQuestion.getIdInternal());
-        }
+        for (; !testQuestionList.isEmpty(); deleteTestQuestion(persistentTestQuestion, testQuestionList.get(0)))
+            ;
         test.removeTestScope();
         persistentTest.deleteByOID(Test.class, testId);
+    }
+
+    private void deleteTestQuestion(final IPersistentTestQuestion persistentTestQuestion, final ITestQuestion testQuestion)
+            throws ExcepcaoPersistencia {
+        testQuestion.removeQuestion();
+        testQuestion.removeTest();
+        persistentTestQuestion.deleteByOID(TestQuestion.class, testQuestion.getIdInternal());
     }
 
 }

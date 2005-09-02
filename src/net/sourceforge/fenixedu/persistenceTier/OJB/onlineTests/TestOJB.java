@@ -29,9 +29,7 @@ public class TestOJB extends PersistentObjectOJB implements IPersistentTest {
         ITestScope scope = (ITestScope) queryObject(TestScope.class, criteria);
         if (scope == null)
             return new ArrayList<ITest>();
-        criteria = new Criteria();
-        criteria.addEqualTo("keyTestScope", scope.getIdInternal());
-        return queryList(Test.class, criteria);
+        return scope.getTests();
     }
 
     public List<ITest> readAll() throws ExcepcaoPersistencia {

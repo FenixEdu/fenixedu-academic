@@ -42,9 +42,10 @@ public class InsertTestAsNewTest implements IService {
         Date date = Calendar.getInstance().getTime();
         test.setCreationDate(date);
         test.setLastModifiedDate(date);
-        test.setTestScope(oldTest.getTestScope());
+        // test.setTestScope(oldTest.getTestScope());
+        oldTest.getTestScope().addTests(test);
 
-        List<ITestQuestion> testQuestionList = persistentSuport.getIPersistentTestQuestion().readByTest(oldTestId);
+        List<ITestQuestion> testQuestionList = oldTest.getTestQuestions();
 
         for (ITestQuestion testQuestion : testQuestionList) {
             ITestQuestion newTestQuestion = DomainFactory.makeTestQuestion();
