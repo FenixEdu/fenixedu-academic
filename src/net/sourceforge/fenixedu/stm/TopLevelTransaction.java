@@ -106,6 +106,8 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 	    Connection conn = pb.serviceConnectionManager().getConnection();
 	    Statement stmt = conn.createStatement();
 	    
+        conn.commit();
+        
 	    // obtain exclusive lock on db
 	    ResultSet rs = stmt.executeQuery("SELECT GET_LOCK('ciapl.commitlock',100)");
 	    
