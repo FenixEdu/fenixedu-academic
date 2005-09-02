@@ -106,13 +106,12 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 	    Connection conn = pb.serviceConnectionManager().getConnection();
 	    Statement stmt = conn.createStatement();
 	    
-        conn.commit();
-        
-	    // obtain exclusive lock on db
-	    ResultSet rs = stmt.executeQuery("SELECT GET_LOCK('ciapl.commitlock',100)");
-	    
-	    if (rs.next() && (rs.getInt(1) == 1)) {
-		try {
+
+	    try {
+		// obtain exclusive lock on db
+		ResultSet rs = stmt.executeQuery("SELECT GET_LOCK('ciapl.commitlock',100)");
+		
+		if (rs.next() && (rs.getInt(1) == 1)) {
 		    // ensure that we will get the last data in the database
 		    conn.commit();
 		    
@@ -127,16 +126,17 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 		    
 		    // ensure that changes are visible to other TXs before releasing lock
 		    conn.commit();
-		} finally {
-		    // release exclusive lock on db
-		    stmt.executeQuery("SELECT RELEASE_LOCK('ciapl.commitlock')");
+		} else {
+		    throw new Error("Couldn't get exclusive commit lock on the database");
 		}
-
-		pb.commitTransaction();
-		pb = null;
-	    } else {
-		throw new Error("Couldn't get exclusive commit lock on the database");
+	    } finally {
+		// release exclusive lock on db
+		// if the lock was not gained, calling RELEASE_LOCK has no effect
+		stmt.executeUpdate("DO RELEASE_LOCK('ciapl.commitlock')");
 	    }
+
+	    pb.commitTransaction();
+	    pb = null;
 	} catch (SQLException sqle) {
 	    throw new Error("Error while accessing database");
 	} catch (LookupException le) {
