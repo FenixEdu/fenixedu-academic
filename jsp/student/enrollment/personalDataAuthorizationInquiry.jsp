@@ -5,11 +5,13 @@
 
 <html:form action="/studentPersonalDataAuthorization?method=registerPersonalDataInquiryAnswer">
 
-<div class="infoselected">
-	<h2><bean:message key="label.enrollment.personalData.inquiry"/></h2>
+
+<h2><bean:message key="label.enrollment.personalData.inquiry"/></h2>
+
+<div class="infoop">
+<p><bean:message key="label.info.dislocatedStudent.inquiry"/>:</p>
 </div>
 
-<br/>
 <html:errors/>
 <br/>
 <b><bean:message key="label.enrollment.personalData.authorization"/></b>
