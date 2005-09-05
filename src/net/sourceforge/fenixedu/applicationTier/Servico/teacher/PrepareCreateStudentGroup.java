@@ -93,11 +93,9 @@ public class PrepareCreateStudentGroup implements IServico {
             
             if(allStudentsGroups!=null){
             	if (allStudentsGroups.size() != 0) {
-            		Collections.sort(allStudentsGroups, new BeanComparator(
-            		"groupNumber"));
-            		Integer lastGroupNumber = ((IStudentGroup) allStudentsGroups
-            				.get(allStudentsGroups.size() - 1)).getGroupNumber();
-            		groupNumber = new Integer(lastGroupNumber.intValue() + 1);
+                    final IStudentGroup studentGroup = (IStudentGroup) Collections.max(allStudentsGroups, new BeanComparator("groupNumber"));
+            		Integer lastGroupNumber = studentGroup.getGroupNumber();
+            		groupNumber = Integer.valueOf(lastGroupNumber.intValue() + 1);
             	}
 
             	Iterator iterator = allStudentsGroups.iterator();
