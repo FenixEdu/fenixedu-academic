@@ -117,7 +117,7 @@ public class SelectCandidaciesService implements IService {
                 stringGrade = "NA";
             }
 
-            if (stringGrade != null && !stringGrade.equals("RE") && !stringGrade.equals("NA") && !stringGrade.equals("AP")) {
+            if (stringGrade != null && !stringGrade.equals("") && !stringGrade.equals("RE") && !stringGrade.equals("NA") && !stringGrade.equals("AP")) {
                 Float gradeObject = new Float(stringGrade);
                 grade = gradeObject.floatValue();
                 acc += grade;
