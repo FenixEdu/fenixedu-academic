@@ -50,7 +50,7 @@ public abstract class RelationList<E> extends AbstractList<E> implements Invalid
     }
 
     protected abstract void addToRelation(E element);
-    protected abstract boolean removeFromRelation(E element);
+    protected abstract void removeFromRelation(E element);
 
     private FunctionalSet<E> elementSet() {
 	consolidateElements();
@@ -103,11 +103,9 @@ public abstract class RelationList<E> extends AbstractList<E> implements Invalid
 	elementsToRemove.put(elementsToRemove.get().remove(obj));
     }
 
-    public boolean justRemove(E obj) {
+    public void justRemove(E obj) {
 	elementsToRemove.put(elementsToRemove.get().add(obj));
 	elementsToAdd.put(elementsToAdd.get().remove(obj));
-	// HACK!!!! I should look into this 
-	return true;
     }
 
 
@@ -145,7 +143,10 @@ public abstract class RelationList<E> extends AbstractList<E> implements Invalid
 
     public boolean remove(Object o) {
         modCount++;
-        return removeFromRelation((E) o);
+        removeFromRelation((E) o);
+	// HACK!!! What to return here?
+	// I wouldn't like to force a load of the list to be able to return the correct boolean value
+	return true;
     }
 
     public Iterator<E> iterator() {

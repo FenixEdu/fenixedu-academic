@@ -11,18 +11,15 @@ public class PublicationAuthorship extends PublicationAuthorship_Base {
 	 * @param publication the publication from whom the authorship will be removed
 	 * @see relations.PublicationAuthorship_Base#remove(net.sourceforge.fenixedu.domain.publication.IAuthorship, net.sourceforge.fenixedu.domain.publication.IPublication)
 	 */
-    public static boolean remove(net.sourceforge.fenixedu.domain.publication.IAuthorship publicationAuthorships, net.sourceforge.fenixedu.domain.publication.IPublication publication) {
-    	boolean result = PublicationAuthorship_Base.remove(publicationAuthorships, publication);
-    	if (result) {
-	    	int removedOrder = publicationAuthorships.getOrder();
-	    	if (publication != null) {
-		    	for(IAuthorship authorship : publication.getPublicationAuthorships()) {
-		    		if (authorship.getOrder() > removedOrder) {
-		    			authorship.setOrder(authorship.getOrder()-1);
-		    		}
-		    	}
-	    	}
-    	}
-    	return result;    	
+    public static void remove(net.sourceforge.fenixedu.domain.publication.IAuthorship publicationAuthorships, net.sourceforge.fenixedu.domain.publication.IPublication publication) {
+    	PublicationAuthorship_Base.remove(publicationAuthorships, publication);
+	int removedOrder = publicationAuthorships.getOrder();
+	if (publication != null) {
+	    for(IAuthorship authorship : publication.getPublicationAuthorships()) {
+		if (authorship.getOrder() > removedOrder) {
+		    authorship.setOrder(authorship.getOrder()-1);
+		}
+	    }
+	}
     }
 }
