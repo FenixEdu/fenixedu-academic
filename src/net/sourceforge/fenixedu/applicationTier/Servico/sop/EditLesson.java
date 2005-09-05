@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -116,7 +117,7 @@ public class EditLesson implements IService {
         InfoShiftServiceResult result = new InfoShiftServiceResult();
         result.setMessageType(InfoShiftServiceResult.SUCESS);
         double hours = getTotalHoursOfShiftType(shift, lessonId, start, end);
-        double lessonDuration = (getLessonDurationInMinutes(start, end).doubleValue()) / 60;
+        double lessonDuration = (getLessonDurationInMinutes(start.getTime(), end.getTime()).doubleValue()) / 60;
 
         if (shift.getTipo().equals(ShiftType.TEORICA)) {
             if (hours == shift.getDisciplinaExecucao().getTheoreticalHours().doubleValue()) {
@@ -149,26 +150,23 @@ public class EditLesson implements IService {
 
     private double getTotalHoursOfShiftType(IShift shift, Integer lessonId, Calendar start, Calendar end)
             throws ExcepcaoPersistencia {
-        ILesson lesson = null;
         double duration = 0;
-        List associatedLessons = shift.getAssociatedLessons();
-        for (int i = 0; i < associatedLessons.size(); i++) {
-            lesson = (ILesson) associatedLessons.get(i);
+        final List<ILesson> associatedLessons = shift.getAssociatedLessons();
+        for (final ILesson lesson : associatedLessons) {
             if (!lesson.getIdInternal().equals(lessonId)) {
-                duration += (getLessonDurationInMinutes(start, end).doubleValue() / 60);
+                duration += (getLessonDurationInMinutes(lesson.getBegin(), lesson.getEnd()).doubleValue() / 60);
             }
         }
         return duration;
     }
 
-    private Integer getLessonDurationInMinutes(Calendar start, Calendar end) {
-        int beginHour = start.get(Calendar.HOUR_OF_DAY);
-        int beginMinutes = start.get(Calendar.MINUTE);
-        int endHour = end.get(Calendar.HOUR_OF_DAY);
-        int endMinutes = end.get(Calendar.MINUTE);
-        int duration = 0;
-        duration = (endHour - beginHour) * 60 + (endMinutes - beginMinutes);
-        return new Integer(duration);
+    private Integer getLessonDurationInMinutes(Date start, Date end) {
+        int beginHour = start.getHours();
+        int beginMinutes = start.getMinutes();
+        int endHour = end.getHours();
+        int endMinutes = end.getMinutes();
+        int duration = (endHour - beginHour) * 60 + (endMinutes - beginMinutes);
+        return Integer.valueOf(duration);
     }
 
     /**
