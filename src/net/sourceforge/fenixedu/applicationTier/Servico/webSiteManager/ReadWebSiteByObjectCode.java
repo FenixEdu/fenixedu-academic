@@ -55,15 +55,13 @@ public class ReadWebSiteByObjectCode implements IService {
         while (iterSections.hasNext()) {
             IWebSiteSection section = (IWebSiteSection) iterSections.next();
 
-            InfoWebSiteSection infoWebSiteSection = Cloner
-                    .copyIWebSiteSection2InfoWebSiteSection(section);
+            InfoWebSiteSection infoWebSiteSection = InfoWebSiteSection.newInfoFromDomain(section);
 
             List webSiteItems = persistentWebSiteItem.readAllWebSiteItemsByWebSiteSection(section);
             List infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {
                 public Object transform(Object arg0) {
                     IWebSiteItem webSiteItem = (IWebSiteItem) arg0;
-                    InfoWebSiteItem infoWebSiteItem = Cloner
-                            .copyIWebSiteItem2InfoWebSiteItem(webSiteItem);
+                    InfoWebSiteItem infoWebSiteItem = InfoWebSiteItem.newInfoFromDomain(webSiteItem);
 
                     return infoWebSiteItem;
                 }
@@ -80,7 +78,7 @@ public class ReadWebSiteByObjectCode implements IService {
 
             infoWebSiteSection.setInfoItemsList(infoWebSiteItems);
 
-            infoWebSiteSections.add(Cloner.copyIWebSiteSection2InfoWebSiteSection(section));
+            infoWebSiteSections.add(InfoWebSiteSection.newInfoFromDomain(section));
         }
 
         InfoWebSite infoWebSite = new InfoWebSite();
