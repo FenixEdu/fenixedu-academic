@@ -27,9 +27,7 @@ public class Site extends Site_Base {
 
     public void edit(final String initialStatement, final String introduction, final String mail,
             final String alternativeSite) {
-        if (initialStatement == null || introduction == null || mail == null || alternativeSite == null) {
-            throw new NullPointerException();
-        }
+        
         setInitialStatement(initialStatement);
         setIntroduction(introduction);
         setMail(mail);
