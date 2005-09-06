@@ -2,11 +2,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.ShiftEnrollmentErrorReport;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -48,6 +52,21 @@ public class EnrollStudentInShifts implements IService {
         final IShift shift = (IShift) persistentShift.readByOID(Shift.class, shiftId);
         if (shift == null) {
             errorReport.getUnExistingShifts().add(shiftId);
+        }
+        
+        //check if is a 1st year shift  
+        if(CollectionUtils.exists(shift.getAssociatedClasses(), new Predicate() {
+
+			public boolean evaluate(Object arg0) {
+				ISchoolClass schoolClass = (ISchoolClass) arg0;
+				if(schoolClass.getAnoCurricular().equals(1)) {
+					return true;
+				}
+				return false;
+			}
+        	
+        })) {
+        	throw new FenixServiceException("error.cannot.reserve.first.year.shift");
         }
 
         final IShift shiftFromStudent = findShiftOfSameTypeForSameExecutionCourse(student, shift);
