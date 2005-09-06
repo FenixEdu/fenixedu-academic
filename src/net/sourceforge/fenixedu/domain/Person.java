@@ -24,11 +24,17 @@ public class Person extends Person_Base {
         }
 
         setProperties(personToCreate);
+        setUsername(personToCreate.getUsername());
         setPais(country);
+        if(country != null){
+            setNacionalidade(country.getNationality());
+        }
+        
         setIsPassInKerberos(Boolean.FALSE);
     }
-    
-    public Person(String name, String identificationDocumentNumber, IDDocumentType identificationDocumentType, Gender gender) {
+
+    public Person(String name, String identificationDocumentNumber,
+            IDDocumentType identificationDocumentType, Gender gender) {
         setNome(name);
         setNumeroDocumentoIdentificacao(identificationDocumentNumber);
         setIdDocumentType(identificationDocumentType);
@@ -39,28 +45,36 @@ public class Person extends Person_Base {
         setMaritalStatus(MaritalStatus.SINGLE);
         setIsPassInKerberos(Boolean.FALSE);
     }
-    
-    public Person(String username, String name, Gender gender, String address, String phone, String mobile, String homepage, String email, String documentIDNumber, IDDocumentType documentType) {
-    	setUsername(username);
-    	setNome (name);
-    	setGender(gender);
-    	setMorada(address);
-    	setTelefone(phone);
-    	setTelemovel(mobile);
-    	setEnderecoWeb(homepage);
-    	setEmail(email);
-    	setNumeroDocumentoIdentificacao(documentIDNumber);
-    	setIdDocumentType(documentType);
-    	setAvailableEmail(Boolean.FALSE);
-    	setAvailableWebSite(Boolean.FALSE);
-    	setAvailablePhoto(Boolean.FALSE);
-    	setMaritalStatus(MaritalStatus.SINGLE);
+
+    public Person(String username, String name, Gender gender, String address, String phone,
+            String mobile, String homepage, String email, String documentIDNumber,
+            IDDocumentType documentType) {
+        setUsername(username);
+        setNome(name);
+        setGender(gender);
+        setMorada(address);
+        setTelefone(phone);
+        setTelemovel(mobile);
+        setEnderecoWeb(homepage);
+        setEmail(email);
+        setNumeroDocumentoIdentificacao(documentIDNumber);
+        setIdDocumentType(documentType);
+        setAvailableEmail(Boolean.FALSE);
+        setAvailableWebSite(Boolean.FALSE);
+        setAvailablePhoto(Boolean.FALSE);
+        setMaritalStatus(MaritalStatus.SINGLE);
         setIsPassInKerberos(Boolean.FALSE);
     }
-    
+
     public void edit(InfoPerson personToEdit, ICountry country) {
         setProperties(personToEdit);
         setPais(country);
+    }    
+    
+    public void update(InfoPerson updatedPersonalData, ICountry country) {
+        updateProperties(updatedPersonalData);
+        setPais((ICountry) valueToUpdate(getPais(),country));
+        setNacionalidade(valueToUpdate(getNacionalidade(),country.getNationality()));
     }
 
     public void editPersonalContactInformation(InfoPerson personToEdit) {
@@ -73,15 +87,16 @@ public class Person extends Person_Base {
         setAvailablePhoto(personToEdit.getAvailablePhoto());
     }
 
-    public void edit(String name, String address, String phone, String mobile, String homepage, String email) {
-    	setNome(name);
-    	setMorada(address);
-    	setTelefone(phone);
-    	setTelemovel(mobile);
-    	setEnderecoWeb(homepage);
-    	setEmail(email);
+    public void edit(String name, String address, String phone, String mobile, String homepage,
+            String email) {
+        setNome(name);
+        setMorada(address);
+        setTelefone(phone);
+        setTelemovel(mobile);
+        setEnderecoWeb(homepage);
+        setEmail(email);
     }
-    
+
     public static boolean checkIfUsernameExists(String username, List<IPerson> persons) {
         for (IPerson person : persons) {
             if (username.equals(person.getUsername())) {
@@ -90,16 +105,16 @@ public class Person extends Person_Base {
         }
         return false;
     }
-    
+
     public void changeUsername(String newUsername, List<IPerson> persons) {
         if (newUsername == null || newUsername.equals("")) {
             throw new DomainException("error.person.nullOrEmptyUsername");
         }
-        
+
         if (checkIfUsernameExists(newUsername, persons)) {
             throw new DomainException("error.person.existingUsername");
         }
-        
+
         setUsername(newUsername);
     }
 
@@ -135,7 +150,6 @@ public class Person extends Person_Base {
 
         setPassword(PasswordEncryptor.encryptPassword(newPassword));
     }
-
 
     /***************************************************************************
      * PRIVATE METHODS *
@@ -186,6 +200,76 @@ public class Person extends Person_Base {
         setAvailablePhoto(infoPerson.getAvailablePhoto());
         setAvailableWebSite(infoPerson.getAvailableWebSite());
         setWorkPhone(infoPerson.getWorkPhone());
+    }
+
+    private void updateProperties(InfoPerson infoPerson) {
+
+        setNome(valueToUpdate(getNome(), infoPerson.getNome()));
+        setNumeroDocumentoIdentificacao(valueToUpdate(getNumeroDocumentoIdentificacao(), infoPerson
+                .getNumeroDocumentoIdentificacao()));
+        setIdDocumentType((IDDocumentType) valueToUpdate(getIdDocumentType(), infoPerson
+                .getTipoDocumentoIdentificacao()));
+        setCodigoFiscal(valueToUpdate(getCodigoFiscal(), infoPerson.getCodigoFiscal()));
+        setCodigoPostal(valueToUpdate(getCodigoPostal(), infoPerson.getCodigoPostal()));
+        setConcelhoMorada(valueToUpdate(getConcelhoMorada(), infoPerson.getConcelhoMorada()));
+        setConcelhoNaturalidade(valueToUpdate(getConcelhoNaturalidade(), infoPerson
+                .getConcelhoNaturalidade()));
+        setDataEmissaoDocumentoIdentificacao((Date) valueToUpdate(
+                getDataEmissaoDocumentoIdentificacao(), infoPerson
+                        .getDataEmissaoDocumentoIdentificacao()));
+        setDataValidadeDocumentoIdentificacao((Date) valueToUpdate(
+                getDataValidadeDocumentoIdentificacao(), infoPerson
+                        .getDataValidadeDocumentoIdentificacao()));
+        setDistritoMorada(valueToUpdate(getDistritoMorada(), infoPerson.getDistritoMorada()));
+        setDistritoNaturalidade(valueToUpdate(getDistritoNaturalidade(), infoPerson
+                .getDistritoNaturalidade()));
+        setEmail(valueToUpdate(getEmail(), infoPerson.getEmail()));
+        setEnderecoWeb(valueToUpdate(getEnderecoWeb(), infoPerson.getEnderecoWeb()));
+        setMaritalStatus((MaritalStatus) valueToUpdate(getMaritalStatus(), infoPerson.getMaritalStatus()));
+        setFreguesiaMorada(valueToUpdate(getFreguesiaMorada(), infoPerson.getFreguesiaMorada()));
+        setFreguesiaNaturalidade(valueToUpdate(getFreguesiaNaturalidade(), infoPerson
+                .getFreguesiaNaturalidade()));
+        setLocalEmissaoDocumentoIdentificacao(valueToUpdate(getLocalEmissaoDocumentoIdentificacao(),
+                infoPerson.getLocalEmissaoDocumentoIdentificacao()));
+        setLocalidade(valueToUpdate(getLocalidade(), infoPerson.getLocalidade()));
+        setLocalidadeCodigoPostal(valueToUpdate(getLocalidadeCodigoPostal(), infoPerson
+                .getLocalidadeCodigoPostal()));
+        setMorada(valueToUpdate(getMorada(), infoPerson.getMorada()));
+        setNacionalidade(valueToUpdate(getNacionalidade(), infoPerson.getNacionalidade()));
+        setNascimento((Date) valueToUpdate(getNascimento(), infoPerson.getNascimento()));
+        setNomeMae(valueToUpdate(getNomeMae(), infoPerson.getNomeMae()));
+        setNomePai(valueToUpdate(getNomePai(), infoPerson.getNomePai()));
+        setNumContribuinte(valueToUpdate(getNumContribuinte(), infoPerson.getNumContribuinte()));
+        setProfissao(valueToUpdate(getProfissao(), infoPerson.getProfissao()));
+        setGender((Gender) valueToUpdate(getGender(), infoPerson.getSexo()));
+        setTelefone(valueToUpdate(getTelefone(), infoPerson.getTelefone()));
+        setTelemovel(valueToUpdate(getTelemovel(), infoPerson.getTelemovel()));
+        setAvailableEmail((Boolean) valueToUpdate(getAvailableEmail(), infoPerson.getAvailableEmail()));
+        setAvailablePhoto((Boolean) valueToUpdate(getAvailablePhoto(), infoPerson.getAvailablePhoto()));
+        setAvailableWebSite((Boolean) valueToUpdate(getAvailableWebSite(), infoPerson
+                .getAvailableWebSite()));
+        setWorkPhone(valueToUpdate(getWorkPhone(), infoPerson.getWorkPhone()));
+
+        setPassword(valueToUpdate(getPassword(), PasswordEncryptor.encryptPassword(GeneratePassword.generatePassword())));
+        
+    }
+
+    private String valueToUpdate(String actualValue, String newValue) {
+
+        if (actualValue == null || actualValue.length() == 0) {
+            return newValue;
+        }
+        return actualValue;
+
+    }
+
+    private Object valueToUpdate(Object actualValue, Object newValue) {
+
+        if (actualValue == null) {
+            return newValue;
+        }
+        return actualValue;
+
     }
 
     /***************************************************************************
