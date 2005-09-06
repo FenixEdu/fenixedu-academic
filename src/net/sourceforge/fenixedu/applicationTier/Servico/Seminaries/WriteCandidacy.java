@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.Seminaries.ICaseStudyChoice;
 import net.sourceforge.fenixedu.domain.Seminaries.IModality;
 import net.sourceforge.fenixedu.domain.Seminaries.ISeminary;
 import net.sourceforge.fenixedu.domain.Seminaries.ITheme;
+import net.sourceforge.fenixedu.domain.Seminaries.Modality;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -48,7 +49,7 @@ public class WriteCandidacy implements IService {
         
         // Modality
         final IPersistentSeminaryModality persistentModality = persistenceSupport.getIPersistentSeminaryModality();
-        final IModality modality = persistentModality.readByName("Completa");
+        final IModality modality = (IModality) persistentModality.readByOID(Modality.class,infoCandidacy.getInfoModality().getIdInternal());        
         candidacy.setModality(modality);
 
         // Student

@@ -64,7 +64,7 @@
 					</logic:iterate>
 				</table>
 				<br />
-				<html:link page="/showCandidacies.do"><bean:message key="label.seminaries.showCandidacy.Back"/></html:link>
+				<html:link page="/showCandidacies.do?seminaryID=5"><bean:message key="label.seminaries.showCandidacy.Back"/></html:link><br/>				
 					</logic:present>
 				</logic:present>
 			</logic:present>

@@ -6,6 +6,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -17,7 +19,6 @@ import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacyDetai
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudyChoice;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoClassification;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoModality;
-import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminary;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalencies;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
 import net.sourceforge.fenixedu.domain.IEnrolment;
@@ -31,10 +32,6 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
-
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -65,7 +62,7 @@ public class ReadCandidacies implements IService {
             for (Iterator iterator = candidacies.iterator(); iterator.hasNext();) {
                 ICandidacy candidacy = (ICandidacy) iterator.next();
                 IStudent student = candidacy.getStudent();
-                IStudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan(); //  getStudentCurricularPlan(student);
+                IStudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
                 List enrollments = studentCurricularPlan.getEnrolments();
 
                 InfoCandidacyDetails candidacyDTO = new InfoCandidacyDetails();
@@ -78,14 +75,18 @@ public class ReadCandidacies implements IService {
                 candidacyDTO.setSeminary(InfoSeminaryWithEquivalencies.newInfoFromDomain(candidacy.getSeminary()));
                 candidacyDTO.setStudent(InfoStudentWithInfoPerson.newInfoFromDomain(student));
                 candidacyDTO.setTheme(InfoTheme.newInfoFromDomain(candidacy.getTheme()));
-                candidacyDTO.setCases((List) CollectionUtils.collect(candidacy.getCaseStudyChoices(),
-                        new Transformer() {
-
-                            public Object transform(Object arg0) {
-
-                                return InfoCaseStudyChoice.newInfoFromDomain((ICaseStudyChoice) arg0);
-                            }
-                        }));
+                List<InfoCaseStudyChoice> infos = new ArrayList<InfoCaseStudyChoice>();
+                Collection c = candidacy.getCaseStudyChoices();
+                int count = c.size();
+                Iterator i = c.iterator();
+                boolean b = i.hasNext();
+                for (Iterator iter = candidacy.getCaseStudyChoices().iterator(); iter.hasNext();)
+				{
+					ICaseStudyChoice element = (ICaseStudyChoice) iter.next();
+					infos.add(InfoCaseStudyChoice.newInfoFromDomain(element));
+					
+				}                 
+                candidacyDTO.setCases(infos);
                 if (candidacy.getApproved() != null) {
                     candidacyDTO.setApproved(candidacy.getApproved());
                 } else {

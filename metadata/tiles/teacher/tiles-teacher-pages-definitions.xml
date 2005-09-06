@@ -40,7 +40,8 @@
 	</definition>
 	<definition name="definition.showCandidacyDetails" 
 		extends="definition.teacher.two-column">
-		<put name="body" value="/teacher/showCandidacyDetails_bd.jsp"/>
+		<put name="navLocal" value="/teacher/showSeminariesIndex_bd.jsp"/>
+	    <put name="body" value="/teacher/showCandidacyDetails_bd.jsp"/>
 	</definition>
 	<definition name="definition.showSeminariesIndex" 
 		extends="definition.teacher.two-column">
