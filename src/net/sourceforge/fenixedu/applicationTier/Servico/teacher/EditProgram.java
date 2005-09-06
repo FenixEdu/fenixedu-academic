@@ -72,12 +72,12 @@ public class EditProgram implements IService {
                 && !curriculum.getLastModificationDate().after(currentExecutionYear.getEndDate())) {
 
             curriculum.edit(curriculum.getGeneralObjectives(), curriculum.getOperacionalObjectives(),
-                    infoCurriculumNew.getProgram(), curriculum.getGeneralObjectives(), curriculum
+                    infoCurriculumNew.getProgram(), curriculum.getGeneralObjectivesEn(), curriculum
                             .getOperacionalObjectivesEn(), infoCurriculumNew.getProgramEn(), null,
                     person);
 
             curriculum.edit(curriculum.getGeneralObjectives(), curriculum.getOperacionalObjectives(),
-                    infoCurriculumNew.getProgram(), curriculum.getGeneralObjectives(), curriculum
+                    infoCurriculumNew.getProgram(), curriculum.getGeneralObjectivesEn(), curriculum
                             .getOperacionalObjectivesEn(), infoCurriculumNew.getProgramEn(), "Eng",
                     person);
 
