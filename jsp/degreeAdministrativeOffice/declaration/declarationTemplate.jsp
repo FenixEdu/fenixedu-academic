@@ -10,59 +10,37 @@
 </head>
 
 <body class="registration" id="pagewrapper_registration">
-<table class="registration" width="100%">
-<tr>
-	<td>		
-		<h2 class="registration" align="right"><bean:message key="print.declaration.academicOffice"/></p>
-		<hr size=3 width=70% align="right" noshade="true">
-		<h2 class="registration" align="right"><bean:message key="print.declaration.section"/></p>
-	</td>
-</tr>
-</table>
 
-<br><br><br><br><br><br>
-<h3 class="registration" align="center"><bean:message key="print.declaration"/></h3>
-<br><br><br>
+<div style="font-size: 85%; line-height: 200%;">
 
-<table class="registration" width="100%">
-<tr>
-	<td align="justify"><bean:message key="print.declaration.technique"/></td>
-</tr>
-<tr><td> </td></tr>	
-<tr>
-	<td align="justify"><%= request.getAttribute("partOne1") %></td>
-</tr>
-<tr><td> </td></tr>	
-<tr>
-	<td align="justify"><b><%= request.getAttribute("partTwo1") %></b></td>
-</tr>
-<tr><td> </td></tr>	
-<tr>
-	<td align="justify"><%= request.getAttribute("partThree1") %></td>
-</tr>
-<tr><td> </td></tr>	
-<tr>
-	<td align="justify"><%= request.getAttribute("partFour1") %></td>
-</tr>	
-<tr><td> </td></tr>	
-<tr>
-	<td align="justify"><%= request.getAttribute("partFive1") %></td>
-</tr>	
-<tr><td> </td></tr>	
-<tr>
-	<td align="justify"><%= request.getAttribute("partSix1") %></td>
-</tr>	
-<tr><td> </td></tr>	
-<tr>
-	<td align="justify"><%= request.getAttribute("partSeven1") %></td>
-</tr>
-</table>	
+	<div class="registration" style="text-align: right;" width="100%">
+	<h2 class="registration"><bean:message key="print.declaration.academicOffice"/></h2>
+	<hr size="3" width="70%" align="right" noshade="true">
+	<h2 class="registration"><bean:message key="print.declaration.section"/></h2>
+	</div>
 
+	<br /><br /><br /><br /><br />
+	<h3 class="registration" align="center"><bean:message key="print.declaration"/></h3>
+	<br /><br /><br />
 
-<br><br><br><br>
-<%= request.getAttribute("partEight1") %>
-<p align="center"><bean:message key="print.declaration.techniqueSignature"/></p>
+	<div class="registration" width="100%">
+	<p><bean:message key="print.declaration.technique"/></p>
+	<p>
+		<%= request.getAttribute("partOne1") %>
+		<%= request.getAttribute("partTwo1") %>
+		<%= request.getAttribute("partThree1") %>
+		<%= request.getAttribute("partFour1") %>
+		<%= request.getAttribute("partFive1") %>
+		<%= request.getAttribute("partSix1") %>
+		<%= request.getAttribute("partSeven1") %>
+	</p>
+	</div>	
+
+	<br /><br /><br />
+	<%= request.getAttribute("partEight1") %>
+	<p align="center"><bean:message key="print.declaration.techniqueSignature"/></p>
+
+</div>
 
 </body>
-
 </html:html>

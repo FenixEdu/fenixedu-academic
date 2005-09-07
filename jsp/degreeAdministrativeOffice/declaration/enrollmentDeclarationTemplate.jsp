@@ -13,64 +13,43 @@
 <% List allStudentsData = (List) request.getAttribute("allStudentsData");%>
 
 <body class="registration" id="pagewrapper_registration">
+
+<div style="font-size: 85%; line-height: 200%;">
+
 <% for(int iter=0; iter < allStudentsData.size(); iter++) {
 	List studentData = (List) allStudentsData.get(iter); 
 	for(int nrpags=0; nrpags < 2; nrpags++) { %>
-<table class="registration" width="100%">
-<tr>
-	<td>		
-		<h2 class="registration" align="right"><bean:message key="print.declaration.academicOffice"/></p>
-		<hr size=3 width=70% align="right" noshade="true">
-		<h2 class="registration" align="right"><bean:message key="print.declaration.section"/></p>
-	</td>
-</tr>
-</table>
+	
+	<div class="registration" width="100%">
+	<h2 class="registration" align="right"><bean:message key="print.declaration.academicOffice"/></h2>
+	<hr size=3 width=70% align="right" noshade="true">
+	<h2 class="registration" align="right"><bean:message key="print.declaration.section"/></h2>
+	</div>
 
-<br><br><br><br><br><br>
-<h3 class="registration" align="center"><bean:message key="print.declaration"/></h3>
-<br><br><br>
+	<br /><br /><br /><br /><br />
+	<h3 class="registration" align="center"><bean:message key="print.declaration"/></h3>
+	<br /><br /><br />
 
-<table class="registration" width="100%">
-<tr>
-	<td align="justify"><bean:message key="print.declaration.technique"/></td>
-</tr>
-<tr><td> </td></tr>	
-<tr>
-	<td align="justify"><%= studentData.get(0) %></td>
-</tr>
-<tr><td> </td></tr>	
-<tr>
-	<td align="justify"><b><%= studentData.get(1) %></b></td>
-</tr>
-<tr><td> </td></tr>	
-<tr>
-	<td align="justify"><%= studentData.get(2) %></td>
-</tr>
-<tr><td> </td></tr>	
-<tr>
-	<td align="justify"><%= studentData.get(3) %></td>
-</tr>	
-<tr><td> </td></tr>	
-<tr>
-	<td align="justify"><%= studentData.get(4) %></td>
-</tr>	
-<tr><td> </td></tr>	
-<tr>
-	<td align="justify"><%= studentData.get(5) %></td>
-</tr>	
-<tr><td> </td></tr>	
-<tr>
-	<td align="justify"><%= studentData.get(6) %></td>
-</tr>
-</table>	
+	<div class="registration" width="100%">
+	<p><bean:message key="print.declaration.technique"/></p>
+	<p>
+		<%= studentData.get(0) %>
+		<%= studentData.get(1) %>
+		<%= studentData.get(2) %>
+		<%= studentData.get(3) %>
+		<%= studentData.get(4) %>
+		<%= studentData.get(5) %>
+		<%= studentData.get(6) %>
+	</p>
+	</div>	
 
 
-<br><br><br><br>
-<%= studentData.get(7) %>
-<p align="center"><bean:message key="print.declaration.techniqueSignature"/></p>
-<div class="break-before">
-<% 		}
-	} %>
-</body>
+	<br><br><br>
+	<%= studentData.get(7) %>
+	<p align="center"><bean:message key="print.declaration.techniqueSignature"/></p>
+	<div class="break-before">
+	<% 		}
+		} %>
+	</body>
 
 </html:html>

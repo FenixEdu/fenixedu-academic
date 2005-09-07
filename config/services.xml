@@ -5886,18 +5886,14 @@
 		<implementationClass>
             net.sourceforge.fenixedu.applicationTier.Servico.enrollment.ShowAvailableCurricularCourses</implementationClass>
 		<isTransactional>True</isTransactional>
-		<filterChains>
-			<chain name="EnrollmentOrCoordinatorAuthorization" />
-		</filterChains>
+		<filterChains />
 	</service>
 	<service>
 		<name>DeleteEnrolment</name>
 		<description>Deletes enrolment of student in a curricular course</description>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.enrollment.DeleteEnrolment</implementationClass>
 		<isTransactional>True</isTransactional>
-		<filterChains>
-			<chain name="EnrollmentAuthorization" />
-		</filterChains>
+		<filterChains />		
 	</service>
 	<service>
 		<name>WriteStudentAreas</name>
@@ -6051,9 +6047,7 @@
 		<implementationClass>
             net.sourceforge.fenixedu.applicationTier.Servico.enrollment.ShowAvailableCurricularCoursesWithoutEnrollmentPeriod</implementationClass>
 		<isTransactional>True</isTransactional>
-		<filterChains>
-			<chain name="EnrollmentAuthorization" />
-		</filterChains>
+		<filterChains />
 	</service>
 	<service>
 		<name>UnEnrollStudentFromShift</name>

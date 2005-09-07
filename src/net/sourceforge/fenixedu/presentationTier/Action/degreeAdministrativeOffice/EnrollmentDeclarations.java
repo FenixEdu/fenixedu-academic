@@ -91,96 +91,37 @@ public class EnrollmentDeclarations extends FenixDispatchAction {
         String nameOfFather = infoPerson.getNomePai();
         String nameOfMother = infoPerson.getNomeMae();
 
-        String partOne = "DECLARA, a pedido do interessado, que o aluno Número " + studentNumber + " ";
-        String partTwo = infoPerson.getNome().toUpperCase() + " ";
-        String partThree = "portador do Bilhete de Identidade " + idNumber + " ";
+        String partOne = "DECLARA, a pedido do interessado, que o aluno Número " + studentNumber + ", ";
+        String partTwo = infoPerson.getNome().toUpperCase() + ", ";
+        String partThree = "portador do Bilhete de Identidade " + idNumber + ", ";
         String partFour = "natural de " + parishOfBirth.toUpperCase() + ", "
                 + districtOfBirth.toUpperCase() + " ";
         String partFive = "filho de " + nameOfFather.toUpperCase() + " ";
-        String partSix = "e de " + nameOfMother.toUpperCase() + " ";
+        String partSix = "e de " + nameOfMother.toUpperCase() + ", ";
         String partSeven = "no ano lectivo " + calendar.get(Calendar.YEAR) + "/"
                 + (calendar.get(Calendar.YEAR) + 1) + " ESTÁ INSCRITO no curso de "
                 + degreeName.toUpperCase() + " deste instituto.";
         List allMonths = Data.getMonths();
         LabelValueBean label = (LabelValueBean) allMonths.get(calendar.get(Calendar.MONTH) + 1);
         String month = label.getLabel();
-        String partEight = "Secretaria dos Serviços Académicos do Instituto Superior Técnico,<br><br>em Lisboa, "
+        String partEight = "Secretaria dos Serviços Académicos do Instituto Superior Técnico,<br>em Lisboa, "
                 + calendar.get(Calendar.DAY_OF_MONTH)
                 + " de "
                 + month
                 + " de "
                 + calendar.get(Calendar.YEAR);
 
-        String partOne1 = completeLine(partOne, columnNumber);
-        String partTwo1 = adjustLine(partTwo, columnNumber, true);
-        String partThree1 = completeLine(partThree, columnNumber);
-        String partFour1 = adjustLine(partFour, columnNumber, true);
-        String partFive1 = completeLine(partFive, columnNumber);
-        String partSix1 = completeLine(partSix, columnNumber);
-        String partSeven1 = adjustLine(partSeven, columnNumber, false);
-
-        studentData.add(partOne1);
-        studentData.add(partTwo1);
-        studentData.add(partThree1);
-        studentData.add(partFour1);
-        studentData.add(partFive1);
-        studentData.add(partSix1);
-        studentData.add(partSeven1);
+        studentData.add(partOne);
+        studentData.add(partTwo);
+        studentData.add(partThree);
+        studentData.add(partFour);
+        studentData.add(partFive);
+        studentData.add(partSix);
+        studentData.add(partSeven);
         studentData.add(partEight);
 
         allStudentsData.add(studentData);
 
     }
 
-    /**
-     * 
-     * @param line
-     * @param columnNumber
-     * @return
-     */
-    private String completeLine(String line, int columnNumber) {
-        StringBuffer completedLineBuffer = new StringBuffer(line);
-
-        int columnCouter = columnNumber;
-        if (line.length() > columnCouter)
-            columnCouter += columnCouter;
-
-        for (int iter = line.length(); iter < columnCouter; iter++)
-            completedLineBuffer.append('-');
-
-        return completedLineBuffer.toString();
-    }
-
-    /**
-     * 
-     * @param line
-     * @param columnNumber
-     * @param bool
-     * @return
-     */
-    private String adjustLine(String line, int columnNumber, boolean bool) {
-
-        String adjustedLine = new String();
-        if (line.length() < columnNumber)
-            return completeLine(line, columnNumber);
-        String partLine = line.substring(0, columnNumber);
-        if (line.charAt(columnNumber + 1) != ' ') {
-            int lastSpace = partLine.lastIndexOf(" ", columnNumber);
-            adjustedLine = line.substring(0, lastSpace);
-            adjustedLine = completeLine(adjustedLine + " ", columnNumber);
-            adjustedLine += "<tr><td>";
-            if (bool)
-                adjustedLine += completeLine(line.substring(lastSpace + 1, line.length()), columnNumber);
-            else
-                adjustedLine += line.substring(lastSpace + 1, line.length());
-
-            adjustedLine += "</td></tr>";
-        } else {
-            adjustedLine += line.substring(0, columnNumber + 1);
-            adjustedLine += "</td></tr><tr><td>";
-            adjustedLine += line.substring(columnNumber + 1, line.length());
-        }
-
-        return adjustedLine;
-    }
 }
