@@ -48,10 +48,10 @@
 						<bean:message key="label.curricular.course.semester"/>
 					</td>
 					<td class="listClasses-header">
-						<bean:message key="label.course.enrollment.weight2" bundle="STUDENT_RESOURCES"/>
+						<bean:message key="label.course.enrollment.weight" bundle="STUDENT_RESOURCES"/>
 					</td>
 					<td class="listClasses-header">
-						<bean:message key="label.course.enrollment.acumulated.enrollments2" bundle="STUDENT_RESOURCES"/>
+						<bean:message key="label.course.enrollment.acumulated.enrollments" bundle="STUDENT_RESOURCES"/>
 					</td>
 					<td class="listClasses-header">
 						<bean:message key="label.unenroll"/>
