@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoTeachingCareer;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.ICategory;
@@ -52,7 +53,7 @@ public class EditCareer extends EditDomainObjectService {
         	professionalCareer.setOjbConcreteClass(ProfessionalCareer.class.getName());
         	
         	IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readByNumber(infoProfessionalCareer.getInfoTeacher().getTeacherNumber());
+            ITeacher teacher = (ITeacher) persistentTeacher.readByOID(Teacher.class, infoProfessionalCareer.getInfoTeacher().getIdInternal());
             
             professionalCareer.setTeacher(teacher);
         }
@@ -70,7 +71,7 @@ public class EditCareer extends EditDomainObjectService {
             teachingCareer.setOjbConcreteClass(TeachingCareer.class.getName());
             
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readByNumber(infoTeachingCareer.getInfoTeacher().getTeacherNumber());
+            ITeacher teacher = (ITeacher) persistentTeacher.readByOID(Teacher.class, infoTeachingCareer.getInfoTeacher().getIdInternal());
             teachingCareer.setTeacher(teacher);
         }
 	}
