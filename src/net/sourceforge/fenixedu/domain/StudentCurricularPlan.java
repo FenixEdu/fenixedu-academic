@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -702,7 +701,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             result.add(transformToCurricularCourse2Enroll(curricularCourse, executionPeriod));
         }
 
-        markOptionalCurricularCourses(allCurricularCourses, result);
+        markOptionalCurricularCourses(allCurricularCourses, result, executionPeriod);
 
         List elementsToRemove = (List) CollectionUtils.select(result, new Predicate() {
             public boolean evaluate(Object obj) {
@@ -719,7 +718,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return result;
     }
 
-    protected void markOptionalCurricularCourses(List curricularCourses, List result) {
+    protected void markOptionalCurricularCourses(List curricularCourses, List result, IExecutionPeriod executionPeriod) {
 
         List allOptionalCurricularCourseGroups = getDegreeCurricularPlan()
                 .getAllOptionalCurricularCourseGroups();
@@ -736,23 +735,23 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             if (getBranch() != null && getSecundaryBranch() != null) {
                 if (optionalCurricularCourseGroup.getBranch().equals(getBranch())
                         || optionalCurricularCourseGroup.getBranch().equals(getSecundaryBranch())) {
-                    selectOptionaCoursesToBeRemoved(curricularCoursesToRemove, curricularCoursesToKeep,
-                            optionalCurricularCourseGroup);
+                    selectOptionalCoursesToBeRemoved(curricularCoursesToRemove, curricularCoursesToKeep,
+                            optionalCurricularCourseGroup, executionPeriod);
                 }
             } else if (getBranch() != null && getSecundaryBranch() == null) {
                 if (optionalCurricularCourseGroup.getBranch().equals(getBranch())) {
-                    selectOptionaCoursesToBeRemoved(curricularCoursesToRemove, curricularCoursesToKeep,
-                            optionalCurricularCourseGroup);
+                    selectOptionalCoursesToBeRemoved(curricularCoursesToRemove, curricularCoursesToKeep,
+                            optionalCurricularCourseGroup, executionPeriod);
                 }
             } else if (getBranch() == null && getSecundaryBranch() != null) {
                 if (optionalCurricularCourseGroup.getBranch().equals(getSecundaryBranch())) {
-                    selectOptionaCoursesToBeRemoved(curricularCoursesToRemove, curricularCoursesToKeep,
-                            optionalCurricularCourseGroup);
+                    selectOptionalCoursesToBeRemoved(curricularCoursesToRemove, curricularCoursesToKeep,
+                            optionalCurricularCourseGroup, executionPeriod);
                 }
             } else if (getBranch() == null) {
                 if (optionalCurricularCourseGroup.getBranch().getBranchType().equals(BranchType.COMNBR)) {
-                    selectOptionaCoursesToBeRemoved(curricularCoursesToRemove, curricularCoursesToKeep,
-                            optionalCurricularCourseGroup);
+                    selectOptionalCoursesToBeRemoved(curricularCoursesToRemove, curricularCoursesToKeep,
+                            optionalCurricularCourseGroup, executionPeriod);
                 }
             }
 
@@ -775,15 +774,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
      * @param curricularCoursesToRemove
      * @param curricularCoursesToKeep
      * @param optionalCurricularCourseGroup
+     * @param executionPeriod 
      */
-    protected void selectOptionaCoursesToBeRemoved(List curricularCoursesToRemove,
-            List curricularCoursesToKeep, ICurricularCourseGroup optionalCurricularCourseGroup) {
+    protected void selectOptionalCoursesToBeRemoved(List curricularCoursesToRemove,
+            List curricularCoursesToKeep, ICurricularCourseGroup optionalCurricularCourseGroup, IExecutionPeriod executionPeriod) {
         int count = 0;
 
         int size2 = optionalCurricularCourseGroup.getCurricularCourses().size();
         for (int j = 0; j < size2; j++) {
             ICurricularCourse curricularCourse = optionalCurricularCourseGroup.getCurricularCourses().get(j);
-            if (isCurricularCourseEnrolled(curricularCourse)
+            if (isCurricularCourseEnrolledInExecutionPeriod(curricularCourse, executionPeriod)
                     || isCurricularCourseApproved(curricularCourse)) {
                 count++;
             }
