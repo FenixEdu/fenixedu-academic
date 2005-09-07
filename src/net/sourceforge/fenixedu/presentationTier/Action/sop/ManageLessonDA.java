@@ -419,6 +419,7 @@ public class ManageLessonDA extends
         inicio.set(Calendar.MINUTE, Integer.parseInt((String) manageLessonForm.get("minutosInicio")));
         inicio.set(Calendar.SECOND, 0);
         Calendar fim = Calendar.getInstance();
+        fim.setTimeInMillis(inicio.getTimeInMillis());
         fim.set(Calendar.HOUR_OF_DAY, Integer.parseInt((String) manageLessonForm.get("horaFim")));
         fim.set(Calendar.MINUTE, Integer.parseInt((String) manageLessonForm.get("minutosFim")));
         fim.set(Calendar.SECOND, 0);

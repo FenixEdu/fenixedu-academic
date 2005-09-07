@@ -2,14 +2,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidTimeIntervalServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonServiceResult;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftServiceResult;
 import net.sourceforge.fenixedu.domain.ILesson;
@@ -97,7 +95,8 @@ public class EditLesson implements IService {
         final List<IRoomOccupation> roomOccupations = room.getRoomOccupations();
 
         for (final IRoomOccupation roomOccupation : roomOccupations) {
-            if (roomOccupation.roomOccupationForDateAndTime(
+            if (roomOccupation != oldroomOccupation && 
+                    roomOccupation.roomOccupationForDateAndTime(
                     oldroomOccupation.getPeriod().getStartDate(),
                     oldroomOccupation.getPeriod().getEndDate(),
                     startTime, endTime, dayOfWeek, frequency, week)) {
