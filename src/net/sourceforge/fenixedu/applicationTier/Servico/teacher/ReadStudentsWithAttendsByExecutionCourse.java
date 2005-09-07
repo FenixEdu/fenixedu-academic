@@ -62,7 +62,7 @@ import org.apache.commons.collections.Transformer;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
- * @author Andrï¿½ Fernandes / Joï¿½o Brito
+ * @author André Fernandes / João Brito
  */
 public class ReadStudentsWithAttendsByExecutionCourse implements IService {
 
@@ -170,18 +170,15 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
                 } else if (enrolledFilter
                         && attendacy.getEnrolment() != null
                         && (attendacy.getEnrolment().getExecutionPeriod().equals(executionCourse
-                                .getExecutionPeriod()))) {
+                                .getExecutionPeriod())) && !hasSpecialSeasonEnrolmentEvaluation(attendacy.getEnrolment().getEvaluations())) {
                     newAttends.add(attendacy);
                     // not enrolled student
                 } else if (notEnrolledFilter && attendacy.getEnrolment() == null) {
                     newAttends.add(attendacy);
                     // special season student
-                } else if (specialSeasonFilter && attendacy.getEnrolment() != null) {
-                	GetEnrolmentGrade getEnrollmentGrade = new GetEnrolmentGrade();
-                	InfoEnrolmentEvaluation infoEnrolmentEvaluation = getEnrollmentGrade.run(attendacy.getEnrolment());
-                	if(infoEnrolmentEvaluation != null && infoEnrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.SPECIAL_SEASON)) {
+                } else if (specialSeasonFilter && attendacy.getEnrolment() != null && (attendacy.getEnrolment().getExecutionPeriod().equals(executionCourse
+                        .getExecutionPeriod())) && hasSpecialSeasonEnrolmentEvaluation(attendacy.getEnrolment().getEvaluations())) {
                 		newAttends.add(attendacy);
-                	}
                 }
             }
             attends = newAttends;
@@ -233,33 +230,20 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
 
             // determining the EnrolmentEvaluationType
             if (iFrequenta.getEnrolment() != null) {
-            	GetEnrolmentGrade getEnrollmentGrade = new GetEnrolmentGrade();
-            	InfoEnrolmentEvaluation infoEnrolmentEvaluation = getEnrollmentGrade.run(iFrequenta.getEnrolment());
                 EnrolmentEvaluationType enrollmentEvaluationType = null;            	
-            	if(infoEnrolmentEvaluation == null) {
-            		enrollmentEvaluationType = EnrolmentEvaluationType.NORMAL;
-            	}
-            	else {
-            		if (!iFrequenta.getEnrolment().getExecutionPeriod().equals(
-                            executionCourse.getExecutionPeriod())) {
-                        enrollmentEvaluationType = EnrolmentEvaluationType.IMPROVEMENT;
-            		} else {
-	            		if(infoEnrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT))
-	            			enrollmentEvaluationType = infoEnrolmentEvaluation.getEnrolmentEvaluationType();
-	            		else if(infoEnrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.SPECIAL_SEASON))
-	            			enrollmentEvaluationType = infoEnrolmentEvaluation.getEnrolmentEvaluationType();
-	            		else
-	            			enrollmentEvaluationType = EnrolmentEvaluationType.NORMAL;
-            		}
-            	}
-
-                /*if (iFrequenta.getEnrolment().getExecutionPeriod().equals(
+        		if (!iFrequenta.getEnrolment().getExecutionPeriod().equals(
                         executionCourse.getExecutionPeriod())) {
-                    enrollmentEvaluationType = EnrolmentEvaluationType.NORMAL;
-                } else {
                     enrollmentEvaluationType = EnrolmentEvaluationType.IMPROVEMENT;
-                }*/
-                infoFrequenta.getInfoEnrolment().setEnrolmentEvaluationType(enrollmentEvaluationType);
+        		} else {
+        			if(hasSpecialSeasonEnrolmentEvaluation(iFrequenta.getEnrolment().getEvaluations())) {
+        				enrollmentEvaluationType = EnrolmentEvaluationType.SPECIAL_SEASON;
+        			}
+        			else {
+        				enrollmentEvaluationType = EnrolmentEvaluationType.NORMAL;
+        			}
+        			
+        		}
+        		infoFrequenta.getInfoEnrolment().setEnrolmentEvaluationType(enrollmentEvaluationType);
             }
 
             IStudentCurricularPlan studentCurricularPlan = getStudentCurricularPlanFromAttends(iFrequenta);
@@ -517,5 +501,23 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         }
 
         return result;
+    }
+    
+    private boolean hasImprovmentEnrolmentEvaluation(final List<IEnrolmentEvaluation> evaluations) {
+    	return CollectionUtils.exists(evaluations, new Predicate() {
+			public boolean evaluate(Object arg0) {
+				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) arg0;
+				return enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT);
+			}
+    	});
+    }
+    
+    private boolean hasSpecialSeasonEnrolmentEvaluation(final List<IEnrolmentEvaluation> evaluations) {
+    	return CollectionUtils.exists(evaluations, new Predicate() {
+			public boolean evaluate(Object arg0) {
+				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) arg0;
+				return enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.SPECIAL_SEASON);
+			}
+    	});
     }
 }
