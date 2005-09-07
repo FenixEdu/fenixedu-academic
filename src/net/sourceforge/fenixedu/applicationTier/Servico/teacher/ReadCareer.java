@@ -6,6 +6,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.ReadDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.teacher.Career;
@@ -29,7 +31,9 @@ public class ReadCareer extends ReadDomainObjectService {
     }
 
     protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
-        return InfoCareer.newInfoFromDomain((ICareer) domainObject);
+        InfoCareer infoCarrerWithInfoTeacher = InfoCareer.newInfoFromDomain((ICareer) domainObject); 
+    	infoCarrerWithInfoTeacher.setInfoTeacher(InfoTeacherWithPerson.newInfoFromDomain(((ICareer) domainObject).getTeacher()));
+        return infoCarrerWithInfoTeacher;
     }
 
 }
