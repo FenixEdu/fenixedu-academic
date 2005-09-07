@@ -27,8 +27,8 @@ public class StudentCurricularPlanLEM extends StudentCurricularPlanLEM_Base {
      * @param curricularCoursesToKeep
      * @param optionalCurricularCourseGroup
      */
-    protected void selectOptionaCoursesToBeRemoved(List curricularCoursesToRemove,
-            List curricularCoursesToKeep, ICurricularCourseGroup optionalCurricularCourseGroup) {
+    protected void selectOptionalCoursesToBeRemoved(List curricularCoursesToRemove,
+            List curricularCoursesToKeep, ICurricularCourseGroup optionalCurricularCourseGroup, IExecutionPeriod executionPeriod) {
         int count = 0;
 
         ICurricularCourseGroup ccgProd5Year1Sem = getCurricularCourseGroup(FITH_YEAR_1SEM_OPTIONAL_GROUP);
@@ -38,7 +38,7 @@ public class StudentCurricularPlanLEM extends StudentCurricularPlanLEM_Base {
         for (int j = 0; j < size2; j++) {
             ICurricularCourse curricularCourse = optionalCurricularCourseGroup.getCurricularCourses()
                     .get(j);
-            if (isCurricularCourseEnrolled(curricularCourse)
+            if (isCurricularCourseEnrolledInExecutionPeriod(curricularCourse,executionPeriod)
                     || isCurricularCourseApproved(curricularCourse)) {
                 if (getBranch().getName().equalsIgnoreCase(RAMO_PRODUCAO)) {
                     if (curricularCourse.getCode().equals(PLACAS_E_CASCAS_CODE)
