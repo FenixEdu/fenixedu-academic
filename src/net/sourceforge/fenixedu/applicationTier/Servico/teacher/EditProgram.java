@@ -87,7 +87,7 @@ public class EditProgram implements IService {
 
             newCurriculum = curricularCourse.insertCurriculum(infoCurriculumNew.getProgram(),
                     infoCurriculumNew.getProgramEn(), curriculum.getOperacionalObjectives(), curriculum
-                            .getOperacionalObjectivesEn(), curriculum.getGeneralObjectives(), curriculum
+                            .getOperacionalObjectivesEn(), curriculum.getGeneralObjectivesEn(), curriculum
                             .getGeneralObjectivesEn());
 
             newCurriculum.setPersonWhoAltered(person);

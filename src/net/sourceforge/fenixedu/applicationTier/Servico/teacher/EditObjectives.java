@@ -72,12 +72,12 @@ public class EditObjectives implements IService {
                         
             curriculum.edit(infoCurriculumNew.getGeneralObjectives(), infoCurriculumNew
                     .getOperacionalObjectives(), curriculum.getProgram(), infoCurriculumNew
-                    .getGeneralObjectives(), infoCurriculumNew.getOperacionalObjectivesEn(),
+                    .getGeneralObjectivesEn(), infoCurriculumNew.getOperacionalObjectivesEn(),
                     curriculum.getProgramEn(), null, person);
 
             curriculum.edit(infoCurriculumNew.getGeneralObjectives(), infoCurriculumNew
                     .getOperacionalObjectives(), curriculum.getProgram(), infoCurriculumNew
-                    .getGeneralObjectives(), infoCurriculumNew.getOperacionalObjectivesEn(),
+                    .getGeneralObjectivesEn(), infoCurriculumNew.getOperacionalObjectivesEn(),
                     curriculum.getProgramEn(), "Eng", person);
            
         } else {

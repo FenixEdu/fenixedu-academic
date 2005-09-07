@@ -130,12 +130,12 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
         }
 
         // degree information
-        Object[] args = { executionPeriodOId, degreeId };
+        Object[] args = { degreeId };
 
         InfoDegreeInfo infoDegreeInfo = null;
         try {
             infoDegreeInfo = (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(null,
-                    "ReadDegreeInfoByDegreeAndExecutionPeriod", args);
+                    "ReadDegreeInfoByDegree", args);
         } catch (FenixServiceException e) {
             errors.add("impossibleDegreeSite", new ActionError("error.public.DegreeInfoNotPresent"));
             saveErrors(request, errors);
@@ -144,9 +144,10 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 
         // execution degrees of this degree
         List executionDegreeList = null;
+        Object[] args1 = { executionPeriodOId, degreeId };
         try {
             executionDegreeList = (List) ServiceManagerServiceFactory.executeService(null,
-                    "ReadExecutionDegreesByDegreeAndExecutionPeriod", args);
+                    "ReadExecutionDegreesByDegreeAndExecutionPeriod", args1);
         } catch (FenixServiceException e) {
             errors.add("impossibleDegreeSite", new ActionError("error.impossibleExecutionDegreeList"));
             saveErrors(request, errors);
@@ -181,12 +182,12 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
         
         
         // degree information
-        Object[] args = { executionPeriodOId, degreeId };
+        Object[] args = { degreeId };
 
         InfoDegreeInfo infoDegreeInfo = null;
         try {
             infoDegreeInfo = (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(null,
-                    "ReadDegreeInfoByDegreeAndExecutionPeriod", args);
+                    "ReadDegreeInfoByDegree", args);
         } catch (FenixServiceException e) {
             errors.add("impossibleDegreeSite", new ActionError("error.public.DegreeInfoNotPresent"));
             saveErrors(request, errors);

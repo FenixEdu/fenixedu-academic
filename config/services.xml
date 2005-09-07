@@ -5202,9 +5202,9 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>ReadDegreeInfoByDegreeAndExecutionPeriod</name>
+		<name>ReadDegreeInfoByDegree</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadDegreeInfoByDegreeAndExecutionPeriod</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadDegreeInfoByDegree</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />

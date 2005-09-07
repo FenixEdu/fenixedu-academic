@@ -8,12 +8,12 @@
 
 <ul class="treemenu">
 	<li>
-		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID")%>" >	 
+		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" +  request.getAttribute("degreeID") %>" >	 
 	    	 <bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.description" /> 
 	    </html:link>                
     </li>
     <li>
-    	<html:link page="<%= "/showDegreeSite.do?method=showAccessRequirements&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID") %>" >
+    	<html:link page="<%= "/showDegreeSite.do?method=showAccessRequirements&amp;degreeID=" +  request.getAttribute("degreeID") %>" >
         	<bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.accessRequirements"/>
         </html:link>
 	</li>

@@ -54,7 +54,7 @@
 	  		<logic:iterate id="executionDegree" name="infoExecutionDegrees" indexId="indexCampus" >
 				<bean:define id="campusName" name="executionDegree" property="infoCampus.name"/>
 	  			<logic:notMatch name="campus" value="<%= campusName.toString()%>">
-					<bean:write name="campusName" />		
+					<bean:write name="campusName" />
 			  		<bean:define id="campus" value="<%= campus.toString().concat(campusName.toString()) %>" />	
 	  			</logic:notMatch>
 			</logic:iterate>
@@ -66,6 +66,7 @@
 		<p><strong><bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.coordinators" /></strong></p>
 		<bean:size id="executionDegreesSize" name="infoExecutionDegrees" />
 		<bean:define id="coordinators" value="" />
+
 		<logic:iterate id="infoExecutionDegree" name="infoExecutionDegrees" indexId="executionDegreesSize" >
 			<logic:iterate id="infoCoordinator" name="infoExecutionDegree" property="coordinatorsList">
   				<logic:equal name="infoCoordinator" property="responsible" value="true">
@@ -101,6 +102,7 @@
 			 </logic:iterate>
 		</logic:iterate>
 	</logic:present>			
+
 
 <!--
 	<div class="degree_imageplacer">

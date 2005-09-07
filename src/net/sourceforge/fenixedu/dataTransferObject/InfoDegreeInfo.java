@@ -377,31 +377,6 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
   
         }
     }
-    
-    
-    //Once copyProperties in Cloner transform a null Integer in Zero Integer
-    //This method recapture all null values
-    public void recaptureNULLs(IDegreeInfo degreeInfo) {
-        if (degreeInfo.getDriftsInitial() == null) {
-            this.setDriftsInitial(null);
-        }
-        if (degreeInfo.getDriftsFirst() == null) {
-            this.setDriftsFirst(null);
-        }
-        if (degreeInfo.getDriftsSecond() == null) {
-            this.setDriftsSecond(null);
-        }
-
-        if (degreeInfo.getMarkAverage() == null) {
-            this.setMarkAverage(null);
-        }
-        if (degreeInfo.getMarkMax() == null) {
-            this.setMarkMax(null);
-        }
-        if (degreeInfo.getMarkMin() == null) {
-            this.setMarkMin(null);
-        }
-    }
 
     public void copyFromDomain(IDegreeInfo degreeInfo) {
         super.copyFromDomain(degreeInfo);

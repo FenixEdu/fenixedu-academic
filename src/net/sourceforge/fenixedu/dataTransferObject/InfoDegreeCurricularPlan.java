@@ -46,6 +46,8 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
     // by gedl AT rnl dot IST dot UTL dot PT (August the 3rd, 2003)
     private List curricularCourses;
 
+    private List infoExecutionDegrees;
+
     public InfoDegreeCurricularPlan() {
     }
 
@@ -332,6 +334,14 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
 
     public void setAnotation(String anotation) {
         this.anotation = anotation;
+    }
+
+    public List getInfoExecutionDegrees() {
+        return infoExecutionDegrees;
+    }
+
+    public void setInfoExecutionDegrees(List infoExecutionDegrees) {
+        this.infoExecutionDegrees = infoExecutionDegrees;
     }
 
 }

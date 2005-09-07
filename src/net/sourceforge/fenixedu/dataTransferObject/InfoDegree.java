@@ -32,6 +32,8 @@ public class InfoDegree extends InfoObject implements Comparable {
 
     private List infoDegreeInfos = null; //added by Tânia Pousão
 
+    private List infoCoordinators;
+
     public InfoDegree() {
     }
 
@@ -186,4 +188,13 @@ public class InfoDegree extends InfoObject implements Comparable {
             }
         }
     }
+
+    public List getInfoCoordinators() {
+        return infoCoordinators;
+    }
+
+    public void setInfoCoordinators(List infoCoordinators) {
+        this.infoCoordinators = infoCoordinators;
+    }
+
 }
