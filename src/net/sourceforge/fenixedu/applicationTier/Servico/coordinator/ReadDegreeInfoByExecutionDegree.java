@@ -64,8 +64,6 @@ public class ReadDegreeInfoByExecutionDegree implements IService {
 
                 infoDegreeInfo = InfoDegreeInfo.newInfoFromDomain(degreeInfo);
 
-                infoDegreeInfo.recaptureNULLs(degreeInfo);
-
                 //return the degree info with the last modification date
                 //even if this degree info doesn't belong at execution period
                 // used.

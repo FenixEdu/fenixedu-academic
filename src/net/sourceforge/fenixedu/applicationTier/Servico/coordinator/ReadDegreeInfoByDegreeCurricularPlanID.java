@@ -48,9 +48,6 @@ public class ReadDegreeInfoByDegreeCurricularPlanID implements IService {
                     "lastModificationDate"));
 
             infoDegreeInfo = InfoDegreeInfo.newInfoFromDomain(degreeInfo);
-
-            infoDegreeInfo.recaptureNULLs(degreeInfo);
-
         }
 
         return infoDegreeInfo;
