@@ -50,14 +50,17 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         DynaActionForm dynaActionForm = (DynaActionForm) form;
 
         String executionDegreeOID = (String) dynaActionForm.get("executionDegreeOID");
-        IUserView userView = SessionUtils.getUserView(request);
-        checkCandidacyConditions(userView, executionDegreeOID);
-
-        request.setAttribute("infoGroup", infoGroup);
-
-        String idInternal = (String) dynaActionForm.get("idInternal");
-        if (idInternal == null || idInternal.equals("")) {
-            selectExecutionDegree(mapping, form, request, response);
+        if (executionDegreeOID != null && !executionDegreeOID.equals("")) {
+        	// the student's curricular plan may not have an executionDegree
+        	IUserView userView = SessionUtils.getUserView(request);
+	        checkCandidacyConditions(userView, executionDegreeOID);
+	
+	        request.setAttribute("infoGroup", infoGroup);
+	
+	        String idInternal = (String) dynaActionForm.get("idInternal");
+	        if (idInternal == null || idInternal.equals("")) {
+	            selectExecutionDegree(mapping, form, request, response);
+	        }
         }
 
         return mapping.findForward("showCandidacyForm");
