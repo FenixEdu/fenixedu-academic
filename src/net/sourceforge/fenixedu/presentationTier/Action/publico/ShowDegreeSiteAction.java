@@ -202,6 +202,39 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
         return mapping.findForward("showAccessRequirements");
 
     }
+    
+    public ActionForward showProfessionalStatus(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        ActionErrors errors = new ActionErrors();
+        
+        String language = getLocaleLanguageFromRequest(request);
+        
+        Integer degreeId = getFromRequest("degreeID", request);
+        request.setAttribute("degreeID", degreeId);
+
+        Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
+        request.setAttribute("inEnglish", inEnglish);
+                
+        // degree information
+        Object[] args = { degreeId };
+
+        InfoDegreeInfo infoDegreeInfo = null;
+        try {
+            infoDegreeInfo = (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(null,
+                    "ReadDegreeInfoByDegree", args);
+        } catch (FenixServiceException e) {
+            errors.add("impossibleDegreeSite", new ActionError("error.public.DegreeInfoNotPresent"));
+            saveErrors(request, errors);
+
+        }
+
+        infoDegreeInfo.prepareEnglishPresentation(language);        
+        request.setAttribute("infoDegreeInfo", infoDegreeInfo);
+        
+        return mapping.findForward("showProfessionalStatus");
+
+    }
+    
 
     public ActionForward showCurricularPlan(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {

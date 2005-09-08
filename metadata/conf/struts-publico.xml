@@ -623,6 +623,7 @@
 	     <forward  name="showDescription" path="showDescription"/>
 	     <forward  name="showDescriptionEnglish" path="showDescriptionEnglish"/>   	
 	     <forward  name="showAccessRequirements" path="showAccessRequirements"/> 
+   	     <forward  name="showProfessionalStatus" path="showProfessionalStatus"/>
 	     <forward  name="showAccessRequirementsEnglish" path="showAccessRequirementsEnglish"/>  
 	     <forward  name="showCurricularPlans" path="showCurricularPlans"/>
 	     <forward  name="showCurricularPlansEnglish" path="showCurricularPlansEnglish"/>  	  

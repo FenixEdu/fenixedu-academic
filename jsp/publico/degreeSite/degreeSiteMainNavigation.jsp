@@ -17,6 +17,11 @@
         	<bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.accessRequirements"/>
         </html:link>
 	</li>
+    <li>
+    	<html:link page="<%= "/showDegreeSite.do?method=showProfessionalStatus&amp;degreeID=" +  request.getAttribute("degreeID") %>" >
+        	<bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.professionalStatus"/>
+        </html:link>
+	</li>
 	<li>
     	<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" +  request.getAttribute("degreeID") %>" >
 			<bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.curricularPlan"/>
