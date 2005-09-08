@@ -1876,7 +1876,7 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
     
     public String getSlideNameForCandidateDocuments();
     
-    public void delete();
+    public void delete();  
     
     public void edit(net.sourceforge.fenixedu.dataTransferObject.InfoPerson personToEdit, net.sourceforge.fenixedu.domain.ICountry country);
     
