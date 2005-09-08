@@ -5,17 +5,20 @@
 
 <h2><bean:message key="label.person.sendSms"/></h2>
 
-<html:messages id="msg" message="true">
-	<span class="sucessfulOperarion"><bean:write name="msg"/></span><br>
-</html:messages>
 <span class="error">
 	Após uma fase de testes com sucesso, o serviço de envio de SMS encontra-se indisponível até ser celebrado um acordo com as operadoras.
 </span><br/>
 
+<%--
+
+<html:messages id="msg" message="true">
+	<span class="sucessfulOperarion"><bean:write name="msg"/></span><br>
+</html:messages>
+
 <span class="error">
 	<html:errors/>
 </span><br/>
-	
+
 <html:form action="/sendSms.do">  
 	<html:hidden property="page" value="1" />	
 	<html:hidden property="method" value="send" />		
@@ -60,3 +63,5 @@
 	</html:link>
 
 </html:form>
+
+--%>
