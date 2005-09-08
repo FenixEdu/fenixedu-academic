@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingContributorServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
+import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.domain.IContributor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -23,18 +24,18 @@ public class EditContributor implements IService {
 
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        //Read if exists any contributor with the new number
-        IContributor contributor = sp.getIPersistentContributor().readByContributorNumber(
-                contributorNumber);
-        if (contributor != null) {
-            throw new ExistingServiceException();
-        }
+        final IContributor storedContributor = (IContributor) sp.getIPersistentContributor().readByOID(
+                Contributor.class, infoContributor.getIdInternal());
 
-        // Read the Actual Contributor
-        final IContributor storedContributor = sp.getIPersistentContributor().readByContributorNumber(
-                infoContributor.getContributorNumber());
         if (storedContributor == null) {
             throw new NonExistingContributorServiceException();
+        }
+
+        // Read if exists any contributor with the new number
+        IContributor contributor = sp.getIPersistentContributor().readByContributorNumber(
+                contributorNumber);
+        if (contributor != null && !contributor.equals(storedContributor)) {
+            throw new ExistingServiceException();
         }
 
         storedContributor.setContributorNumber(contributorNumber);
