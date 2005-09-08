@@ -37,7 +37,7 @@ public class InsertInexistentAuthors implements IService {
             if (infoAuthor.getIdInternal() == null) {
                 InfoExternalPerson infoExternalPerson = new InfoExternalPerson();
                 InfoPerson infoPerson = new InfoPerson();
-                infoPerson.setIdInternal(infoAuthor.getIdInternal());
+//                infoPerson.setIdInternal(infoAuthor.getIdInternal());
                 infoPerson.setNome(infoAuthor.getAuthor());
                 InfoWorkLocation infoWorkLocation = new InfoWorkLocation();
                 infoWorkLocation.setName(infoAuthor.getOrganization());
