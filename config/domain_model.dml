@@ -1876,7 +1876,7 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
     
     public String getSlideNameForCandidateDocuments();
     
-    public void delete();  
+    public void delete();
     
     public void edit(net.sourceforge.fenixedu.dataTransferObject.InfoPerson personToEdit, net.sourceforge.fenixedu.domain.ICountry country);
     
@@ -1887,6 +1887,8 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
     public void changeUsername(String newUsername, java.util.List<IPerson> persons);
     
     public void edit(String name, String address, String phone, String mobile, String homepage, String email);
+    
+    public void update(net.sourceforge.fenixedu.dataTransferObject.InfoPerson personToEdit, net.sourceforge.fenixedu.domain.ICountry country);
     "
 }
 
