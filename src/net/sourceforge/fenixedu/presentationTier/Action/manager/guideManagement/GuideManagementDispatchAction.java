@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.guideManagement;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
 import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoPaymentTransaction;
@@ -27,10 +29,13 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.util.LabelValueBean;
 
 /**
  * @author <a href="mailto:shezad@ist.utl.pt">Shezad Anavarali </a>
@@ -111,20 +116,32 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
         List degreeCurricularPlans = null;
         try {
             degreeCurricularPlans = (List) ServiceUtils.executeService(userView,
-                    "ReadDegreeCurricularPlansLabelValueBeanList", argsEmpty);
+                    "ReadDegreeCurricularPlans", argsEmpty);
         } catch (FenixServiceException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
+
+        Collection degreeCurricularPlansInLabelValueBeanList = CollectionUtils.collect(
+                degreeCurricularPlans, new Transformer() {
+
+                    public Object transform(Object arg0) {
+                        InfoDegreeCurricularPlan degreeCurricularPlan = (InfoDegreeCurricularPlan) arg0;
+                        return new LabelValueBean(degreeCurricularPlan.getName(), degreeCurricularPlan
+                                .getIdInternal().toString());
+                    }
+
+                });
 
         guideForm.set("guideID", guide.getIdInternal());
         guideForm.set("newExecutionYear", guide.getInfoExecutionDegree().getInfoExecutionYear()
                 .getYear());
         guideForm.set("newDegreeCurricularPlanID", guide.getInfoExecutionDegree()
                 .getInfoDegreeCurricularPlan().getIdInternal());
-        guideForm.set("newPaymentType", (guide.getPaymentType() != null) ? guide.getPaymentType().name() : null);   
+        guideForm.set("newPaymentType", (guide.getPaymentType() != null) ? guide.getPaymentType().name()
+                : null);
         request.setAttribute("paymentTransactions", paymentTransactions);
-        request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);
+        request.setAttribute("degreeCurricularPlans", degreeCurricularPlansInLabelValueBeanList);
         request.setAttribute("executionYears", executionYears);
         request.setAttribute("guide", guide);
         request.setAttribute("days", Data.getMonthDays());
@@ -208,8 +225,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 
         DynaActionForm guideForm = (DynaActionForm) actionForm;
 
-        String selectedGuideEntryDocumentType = (String) guideForm
-                .get("selectedGuideEntryDocumentType");
+        String selectedGuideEntryDocumentType = (String) guideForm.get("selectedGuideEntryDocumentType");
         Integer selectedGuideEntryID = (Integer) guideForm.get("selectedGuideEntryID");
 
         Object[] args = { selectedGuideEntryID, userView };
