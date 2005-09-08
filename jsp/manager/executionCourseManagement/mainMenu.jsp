@@ -3,3 +3,9 @@
 		<bean:message key="link.manager.createCourseReports" />
 	</html:link>
 </strong></p>
+
+<p><strong>&raquo; 
+	<html:link page="/createExecutionCourses.do?method=chooseDegreeType">
+		<bean:message key="link.manager.createExecutionCourses" />
+	</html:link>
+</strong></p>

@@ -8076,17 +8076,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadDegreeCurricularPlansLabelValueBeanList</name>
-		<implementationClass>
-			net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadDegreeCurricularPlansLabelValueBeanList
-		</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>DeleteGuideSituationInManager</name>
 		<implementationClass>
 			net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.DeleteGuideSituationInManager
@@ -8763,4 +8752,13 @@
         <description></description>
         <isTransactional>true</isTransactional>       
     </service>            
-</serviceDefinitions>
+    <service>
+    	<name>CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>        
+    </service>
+</serviceDefinitions>    

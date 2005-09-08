@@ -222,6 +222,16 @@
 				<form-property name="executionPeriodId" type="java.lang.String" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
+		
+		<form-bean name="createExecutionCoursesForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+				<form-property name="degreeType" type="java.lang.String" />				
+				<form-property name="degreeCurricularPlansIDs" type="java.lang.Integer[]" />
+				<form-property name="executionPeriodID" type="java.lang.Integer" />
+				<form-property name="method" type="java.lang.String" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
 
 	  <!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
 
@@ -1485,6 +1495,17 @@
 			input="/editExecutionCourseChooseExPeriod.do?method=prepareEditECChooseExecutionPeriod&amp;page=0">
 		<forward name="ShowCreatedSites" path="df.executionCourseManagement.showCreatedSites"/>
 	</action>
+	
+	<action path="/createExecutionCourses"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.CreateExecutionCoursesDispatchAction"
+			parameter="method"
+			name="createExecutionCoursesForm"
+			scope="request"
+			input="/createExecutionCourses.do?method=chooseDegreeType">
+		<forward name="chooseDegreeType" path="df.executionCourseManagement.chooseDegreeType"/>
+		<forward name="chooseDegreeCurricularPlans" path="df.executionCourseManagement.chooseDegreeCurricularPlans"/>
+		<forward name="createExecutionCoursesSuccess" path="df.executionCourseManagement.createExecutionCoursesSuccess"/>		
+	</action>	
 	
 	<!-- ========== PERSON MANAGEMENT ========== -->
 	<action path="/personManagement"
