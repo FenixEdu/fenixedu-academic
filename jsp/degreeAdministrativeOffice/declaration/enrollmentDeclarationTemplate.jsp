@@ -30,7 +30,7 @@
 	<h3 class="registration" align="center"><bean:message key="print.declaration"/></h3>
 	<br /><br /><br />
 
-	<div class="registration" width="100%">
+	<div class="registration" width="100%" style="text-align: justify;">
 	<p><bean:message key="print.declaration.technique"/></p>
 	<p>
 		<%= studentData.get(0) %>
