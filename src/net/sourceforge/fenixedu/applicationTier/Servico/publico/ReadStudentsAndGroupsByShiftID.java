@@ -16,16 +16,14 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentAndGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentInformation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsAndGroups;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroupAttend;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroupAttendWithAllUntilPersons;
-import net.sourceforge.fenixedu.domain.GroupProperties;
-import net.sourceforge.fenixedu.domain.IGroupProperties;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.IAttends;
+import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
-import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupProperties;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -45,11 +43,11 @@ public class ReadStudentsAndGroupsByShiftID implements IService {
         InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentGroupProperties persistentGroupProperties = sp.getIPersistentGroupProperties();
+        IPersistentGrouping persistentGroupProperties = sp.getIPersistentGrouping();
         ITurnoPersistente persistentShift = sp.getITurnoPersistente();
 
-        IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties.readByOID(
-                GroupProperties.class, groupPropertiesId);
+        IGrouping groupProperties = (IGrouping) persistentGroupProperties.readByOID(Grouping.class,
+                groupPropertiesId);
         IShift shift = (IShift) persistentShift.readByOID(Shift.class, shiftId);
 
         if (groupProperties == null) {
@@ -65,34 +63,27 @@ public class ReadStudentsAndGroupsByShiftID implements IService {
             List studentGroupAttendList = new ArrayList();
             IStudentGroup studentGroup = (IStudentGroup) iterStudentGroups.next();
 
-            studentGroupAttendList = studentGroup.getStudentGroupAttends();
+            studentGroupAttendList = studentGroup.getAttends();
 
             Iterator iterStudentGroupAttendList = studentGroupAttendList.iterator();
             InfoSiteStudentInformation infoSiteStudentInformation = null;
             InfoSiteStudentAndGroup infoSiteStudentAndGroup = null;
-            InfoStudentGroupAttend infoStudentGroupAttend = null;
+            IAttends attend = null;
 
             while (iterStudentGroupAttendList.hasNext()) {
                 infoSiteStudentInformation = new InfoSiteStudentInformation();
                 infoSiteStudentAndGroup = new InfoSiteStudentAndGroup();
 
-                IStudentGroupAttend studentGroupAttend = (IStudentGroupAttend) iterStudentGroupAttendList
-                        .next();
+                attend = (IAttends) iterStudentGroupAttendList.next();
 
                 infoSiteStudentAndGroup.setInfoStudentGroup(InfoStudentGroup
                         .newInfoFromDomain(studentGroup));
 
-                infoStudentGroupAttend = InfoStudentGroupAttendWithAllUntilPersons
-                        .newInfoFromDomain(studentGroupAttend);
+                infoSiteStudentInformation.setNumber(attend.getAluno().getNumber());
 
-                infoSiteStudentInformation.setNumber(infoStudentGroupAttend.getInfoAttend().getAluno()
-                        .getNumber());
+                infoSiteStudentInformation.setName(attend.getAluno().getPerson().getNome());
 
-                infoSiteStudentInformation.setName(infoStudentGroupAttend.getInfoAttend().getAluno()
-                        .getInfoPerson().getNome());
-
-                infoSiteStudentInformation.setEmail(infoStudentGroupAttend.getInfoAttend().getAluno()
-                        .getInfoPerson().getEmail());
+                infoSiteStudentInformation.setEmail(attend.getAluno().getPerson().getEmail());
 
                 infoSiteStudentAndGroup.setInfoSiteStudentInformation(infoSiteStudentInformation);
 
@@ -107,9 +98,9 @@ public class ReadStudentsAndGroupsByShiftID implements IService {
         return infoSiteStudentsAndGroups;
     }
 
-    private List getStudentGroupsByShiftAndGroupProperties(IGroupProperties groupProperties, IShift shift) {
+    private List getStudentGroupsByShiftAndGroupProperties(IGrouping groupProperties, IShift shift) {
         List result = new ArrayList();
-        List studentGroups = groupProperties.getAttendsSet().getStudentGroupsWithShift();
+        List studentGroups = groupProperties.getStudentGroupsWithShift();
         Iterator iter = studentGroups.iterator();
         while (iter.hasNext()) {
             IStudentGroup sg = (IStudentGroup) iter.next();

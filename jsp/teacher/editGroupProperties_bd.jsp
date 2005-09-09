@@ -11,7 +11,7 @@
 <h2><bean:message key="title.editGroupProperties"/></h2>
 
 <bean:define id="infoSiteGroupProperties" name="siteView" property="component"/>
-<bean:define id="groupProperties" name="infoSiteGroupProperties" property="infoGroupProperties"/>
+<bean:define id="groupProperties" name="infoSiteGroupProperties" property="infoGrouping"/>
 
 <html:form action="/editGroupProperties">
 <html:hidden property="page" value="1"/>

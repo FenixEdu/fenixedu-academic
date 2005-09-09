@@ -5,9 +5,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGroupProperties"%>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoShift"%>
-
 
 <logic:present name="siteView" property="component">
 	<bean:define id="component" name="siteView" property="component" />
@@ -57,7 +54,7 @@
 		</tr>
 	<logic:iterate id="infoGroupProperties" name="component" property="infoGroupPropertiesList" >
 		<bean:define id="groupPropertiesCode" name="infoGroupProperties" property="idInternal"/>
-		<logic:iterate id="infoGroupPropertiesExecutionCourseElement" name="infoGroupProperties" property="infoGroupPropertiesExecutionCourse">              	             	                		
+		<logic:iterate id="infoGroupPropertiesExecutionCourseElement" name="infoGroupProperties" property="infoExportGroupings">
 	       <bean:define id="infoExecutionCourse" name="infoGroupPropertiesExecutionCourseElement" property="infoExecutionCourse" />
 	       <bean:define id="executionCourseCode" name="infoExecutionCourse" property="idInternal"/>
 			<tr>

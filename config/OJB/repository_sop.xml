@@ -260,6 +260,12 @@
 		>
 		<inverse-foreignkey field-ref="keyShift"/>
 	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+		name="associatedStudentGroups" 
+		element-class-ref="net.sourceforge.fenixedu.domain.StudentGroup"
+		>
+		<inverse-foreignkey field-ref="keyShift"/>
+	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="students"
 			element-class-ref="net.sourceforge.fenixedu.domain.Student"
@@ -268,13 +274,6 @@
 		<fk-pointing-to-this-class column="KEY_SHIFT"/>
 		<fk-pointing-to-element-class column="KEY_STUDENT"/>
 	</collection-descriptor>
-	    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-			name="associatedStudentGroups" 
-			element-class-ref="net.sourceforge.fenixedu.domain.StudentGroup"
-		
-			>
-			<inverse-foreignkey field-ref="keyShift"/>
-		</collection-descriptor>
 	</class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.Lesson -->
@@ -371,8 +370,9 @@
 </class-descriptor>
 
       
- 
+<!-- ******************************************************************************************************************************* --> 
 <!-- Definitions for net.sourceforge.fenixedu.domain.Attends -->
+<!-- ******************************************************************************************************************************* -->
    <class-descriptor class="net.sourceforge.fenixedu.domain.Attends"
    	  table="ATTEND"
    >
@@ -425,22 +425,25 @@
          <foreignkey field-ref="keyEnrolment"/>
       </reference-descriptor> 
 
-	  <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-			name="attendInAttendsSet" 
-			element-class-ref="net.sourceforge.fenixedu.domain.AttendInAttendsSet"
-			>
-			<inverse-foreignkey field-ref="keyAttend"/>
-      </collection-descriptor>
+	  <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="groupings"
+			element-class-ref="net.sourceforge.fenixedu.domain.Grouping"
+			indirection-table="GROUPING_ATTENDS">
+		<fk-pointing-to-element-class column="KEY_GROUPING" />
+		<fk-pointing-to-this-class column="KEY_ATTEND" />
+	  </collection-descriptor>
 
-	  <collection-descriptor proxy="true" auto-retrieve="false" 
-			name="studentGroupAttends" 
-			element-class-ref="net.sourceforge.fenixedu.domain.StudentGroupAttend"
-		>
-			<inverse-foreignkey field-ref="keyAttend"/>
-      </collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="studentGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.StudentGroup"
+			indirection-table="STUDENT_GROUP_ATTEND">
+		<fk-pointing-to-element-class column="KEY_STUDENT_GROUP" />
+		<fk-pointing-to-this-class column="KEY_ATTEND" />
+	</collection-descriptor>
 
    </class-descriptor>   
 
+<!-- ******************************************************************************************************************************* -->
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.ExamStudentRoom"  table="EXAM_STUDENT_ROOM">
       <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" 

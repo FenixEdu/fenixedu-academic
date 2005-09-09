@@ -14,13 +14,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentInformation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroupAttend;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroupAttendWithAllUntilPersons;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroupWithAllUntilLessons;
-import net.sourceforge.fenixedu.domain.IAttendsSet;
-import net.sourceforge.fenixedu.domain.IGroupProperties;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroupWithAttendsAndGroupingAndShift;
+import net.sourceforge.fenixedu.domain.IAttends;
+import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
-import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -40,11 +38,9 @@ public class ReadStudentGroupInformation implements IService {
             ExcepcaoPersistencia {
 
         InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
-        List studentGroupAttendInformationList = null;
-        List studentGroupAttendList = null;
         IStudentGroup studentGroup = null;
-        IGroupProperties groupProperties = null;
-        IAttendsSet attendsSet = null;
+        IGrouping grouping = null;
+        List groupAttendsList = null;
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOID(StudentGroup.class,
@@ -54,47 +50,38 @@ public class ReadStudentGroupInformation implements IService {
             return null;
         }
 
-        studentGroupAttendList = studentGroup.getStudentGroupAttends();
+        List studentGroupInformationList = new ArrayList();
+        grouping = studentGroup.getGrouping();
+        groupAttendsList = studentGroup.getAttends();
 
-        attendsSet = studentGroup.getAttendsSet();
-
-        groupProperties = attendsSet.getGroupProperties();
-
-        studentGroupAttendInformationList = new ArrayList(studentGroupAttendList.size());
-        Iterator iter = studentGroupAttendList.iterator();
+        Iterator iter = groupAttendsList.iterator();
         InfoSiteStudentInformation infoSiteStudentInformation = null;
-        InfoStudentGroupAttend infoStudentGroupAttend = null;
+        IAttends attend = null;
 
         while (iter.hasNext()) {
             infoSiteStudentInformation = new InfoSiteStudentInformation();
 
-            infoStudentGroupAttend = InfoStudentGroupAttendWithAllUntilPersons
-                    .newInfoFromDomain((IStudentGroupAttend) iter.next());
+            attend = (IAttends) iter.next();
 
-            infoSiteStudentInformation.setNumber(infoStudentGroupAttend.getInfoAttend().getAluno()
-                    .getNumber());
+            infoSiteStudentInformation.setNumber(attend.getAluno().getNumber());
 
-            infoSiteStudentInformation.setName(infoStudentGroupAttend.getInfoAttend().getAluno()
-                    .getInfoPerson().getNome());
+            infoSiteStudentInformation.setName(attend.getAluno().getPerson().getNome());
 
-            infoSiteStudentInformation.setEmail(infoStudentGroupAttend.getInfoAttend().getAluno()
-                    .getInfoPerson().getEmail());
+            infoSiteStudentInformation.setEmail(attend.getAluno().getPerson().getEmail());
 
-            infoSiteStudentInformation.setUsername(infoStudentGroupAttend.getInfoAttend().getAluno()
-                    .getInfoPerson().getUsername());
+            infoSiteStudentInformation.setUsername(attend.getAluno().getPerson().getUsername());
 
-            studentGroupAttendInformationList.add(infoSiteStudentInformation);
+            studentGroupInformationList.add(infoSiteStudentInformation);
 
         }
 
-        Collections.sort(studentGroupAttendInformationList, new BeanComparator("number"));
-        infoSiteStudentGroup.setInfoSiteStudentInformationList(studentGroupAttendInformationList);
-        infoSiteStudentGroup.setInfoStudentGroup(InfoStudentGroupWithAllUntilLessons
-                .newInfoFromDomain(studentGroup));
+        Collections.sort(studentGroupInformationList, new BeanComparator("number"));
+        infoSiteStudentGroup.setInfoSiteStudentInformationList(studentGroupInformationList);
+        infoSiteStudentGroup.setInfoStudentGroup(InfoStudentGroupWithAttendsAndGroupingAndShift.newInfoFromDomain(studentGroup));
 
-        if (groupProperties.getMaximumCapacity() != null) {
+        if (grouping.getMaximumCapacity() != null) {
 
-            int vagas = groupProperties.getMaximumCapacity().intValue() - studentGroupAttendList.size();
+            int vagas = grouping.getMaximumCapacity().intValue() - groupAttendsList.size();
 
             infoSiteStudentGroup.setNrOfElements(new Integer(vagas));
         } else

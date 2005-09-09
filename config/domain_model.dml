@@ -119,56 +119,16 @@ class net.sourceforge.fenixedu.domain.Announcement extends net.sourceforge.fenix
     "
 }
 
-
-class net.sourceforge.fenixedu.domain.AttendInAttendsSet extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyAttend;
-	Integer keyAttendsSet;
-        
-}
-
-
 class net.sourceforge.fenixedu.domain.Attends extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer chaveDisciplinaExecucao;
 	Integer chaveAluno;
 	Integer keyEnrolment;
 	
 	interface "
-	public java.util.List getAttendsSets();
-
-	public boolean existsAttendInAttendsSet(IAttendInAttendsSet attendInAttendsSet);
 	
 	public void delete() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
 	"	
 }
-
-
-class net.sourceforge.fenixedu.domain.AttendsSet extends net.sourceforge.fenixedu.domain.DomainObject {
-    String name;
-    Integer keyGroupProperties;
-    
-    interface "
-   	public java.util.List getAttends();
-    
-    public boolean existsAttendInAttendsSet(IAttendInAttendsSet attendInAttendsSet);
-
-	public void addStudentGroup(IStudentGroup studentGroup);
-
-	public void removeStudentGroup(IStudentGroup studentGroup);
-
-	public boolean existsStudentGroup(IStudentGroup studentGroup);
-
-	public IAttends getStudentAttend(IStudent student);
-
-	public java.util.List getStudentGroupsWithoutShift();
-
-	public java.util.List getStudentGroupsWithShift();
-
-	public Integer getNumberOfStudentsInAttendsSet();
-
-	public Integer getNumberOfStudentsNotInAttendsSet();
-	"
-}
-
 
 class net.sourceforge.fenixedu.domain.BibliographicReference extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionCourse;
@@ -796,8 +756,7 @@ class net.sourceforge.fenixedu.domain.EmployeeNotTeacher extends net.sourceforge
 }
 
 
-class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu.domain.DomainObject 
-    implements org.apache.ojb.broker.PersistenceBrokerAware {
+class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu.domain.DomainObject {
     String createdBy;
     Date creationDate;
     Integer curricularCourseKey;
@@ -1008,13 +967,13 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
 	
 	public net.sourceforge.fenixedu.fileSuport.INode getParentNode();
 
-	public java.util.List getGroupProperties();
+	public java.util.List<IGrouping> getGroupings();
 	
-	public IGroupProperties getGroupPropertiesByName(String name);
+	public IGrouping getGroupingByName(String groupingName);
 	
-	public boolean existsGroupPropertiesExecutionCourse(IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse);
+	public boolean existsGroupingExecutionCourse(IExportGrouping groupingExecutionCourse);
 		
-	public boolean existsGroupPropertiesExecutionCourse();
+	public boolean existsGroupingExecutionCourse();
 	
 	public boolean hasProposals();
 	
@@ -1328,9 +1287,8 @@ class net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent extends net.s
 }
 
 
-class net.sourceforge.fenixedu.domain.GroupProperties extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.Grouping extends net.sourceforge.fenixedu.domain.DomainObject {
     String projectDescription;
-    Integer keyAttendsSet;
     Integer maximumCapacity;
     Integer groupMaximumNumber;
     Integer idealCapacity;
@@ -1350,17 +1308,55 @@ class net.sourceforge.fenixedu.domain.GroupProperties extends net.sourceforge.fe
 
 	public void setEnrolmentEndDay(java.util.Calendar enrolmentEndDay);
     
-    public java.util.List getExecutionCourses();
+    public java.util.List<IExecutionCourse> getExecutionCourses();
+    
+    public java.util.List getStudentGroupsWithoutShift();
+    
+    public java.util.List getStudentGroupsWithShift();
+    
+    public java.util.List getStudentGroupsWithShift(IShift shift);
+    
+    public Integer getNumberOfStudentsNotInGrouping();
+    
+    public Integer getNumberOfStudentsInGrouping();
+    
+    public IAttends getStudentAttend(IStudent student);
+    
+    public IAttends getStudentAttend(String studentUsername);
+    
+    public IStudentGroup readStudentGroupBy(Integer studentGroupNumber);
+    
+    public java.util.List<IStudentGroup> readAllStudentGroupsBy(IShift shift);
+    
+    public void checkShiftCapacity(IShift shift);
+    
+    public void edit(String goupingName, java.util.Date enrolmentBeginDay, java.util.Date enrolmentEndDay,
+            net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType enrolmentGroupPolicyType, Integer groupMaximumNumber,
+            Integer idealCapacity, Integer maximumCapacity, Integer minimumCapacity,
+            String projectDescription, ShiftType shiftType);
+
+    public void createStudentGroup(IShift shift, Integer groupNumber, java.util.List<IStudent> students);
+    
+    public void delete();
     "
 }
 
-class net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.GroupingAttends extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyGrouping;
+	Integer keyAttend;
+}
+
+class net.sourceforge.fenixedu.domain.ExportGrouping extends net.sourceforge.fenixedu.domain.DomainObject {
         Integer keySenderExecutionCourse;
         Integer keySenderPerson;
         Integer keyExecutionCourse;
         Integer keyReceiverPerson;
-        Integer keyGroupProperties;
+        Integer keyGrouping;
     ProposalState proposalState;
+    
+    interface"
+    public void delete();
+    "
 }
         
         
@@ -2531,13 +2527,16 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
     
 class net.sourceforge.fenixedu.domain.StudentGroup extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyShift;
+    Integer keyGrouping;
     Integer groupNumber;
-    Integer keyAttendsSet;
-}
-
-class net.sourceforge.fenixedu.domain.StudentGroupAttend extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer keyStudentGroup;
-    Integer keyAttend;        
+    
+    interface "
+    public void delete();
+    
+    public void editShift(IShift shift);
+    
+    public boolean checkStudentUsernames(java.util.List<String> studentUsernames);
+    "
 }
 
 class net.sourceforge.fenixedu.domain.StudentKind extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2929,20 +2928,11 @@ class net.sourceforge.fenixedu.domain.WorkLocation extends net.sourceforge.fenix
  */
 
 relation AnswerExportProposal {
-	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourseReceiver {
+	net.sourceforge.fenixedu.domain.ExportGrouping playsRole exportGroupingReceivers {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Person playsRole receiverPerson;
 }
-
-
-relation AttendBelongsToAttendsSet {
-	net.sourceforge.fenixedu.domain.AttendInAttendsSet playsRole attendInAttendsSet {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Attends playsRole attend;
-}
-
 
 relation AttendsEnrolment {
 	net.sourceforge.fenixedu.domain.Attends playsRole attends {
@@ -2951,15 +2941,6 @@ relation AttendsEnrolment {
 	net.sourceforge.fenixedu.domain.Enrolment playsRole enrolment;
 }
 
-
-relation AttendsSetHasAttend {
-	net.sourceforge.fenixedu.domain.AttendInAttendsSet playsRole attendInAttendsSet {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.AttendsSet playsRole attendsSet;
-}
-
-
 relation AttendsStudent {
 	net.sourceforge.fenixedu.domain.Attends playsRole associatedAttends {
 		multiplicity *;
@@ -2967,12 +2948,11 @@ relation AttendsStudent {
 	net.sourceforge.fenixedu.domain.Student playsRole aluno;
 }
 
-
 relation BelongsTo {
-	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+	net.sourceforge.fenixedu.domain.ExportGrouping playsRole exportGroupings {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.GroupProperties playsRole groupProperties;
+	net.sourceforge.fenixedu.domain.Grouping playsRole grouping;
 }
 
 relation BranchCurricularCourseGroup {
@@ -3750,9 +3730,8 @@ relation GaugingTestResultStudent {
     net.sourceforge.fenixedu.domain.Student playsRole student;
 }
 
-
 relation GoalExecutionCourse {
-	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+	net.sourceforge.fenixedu.domain.ExportGrouping playsRole exportGroupings {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
@@ -3995,12 +3974,6 @@ relation GroupStudentStudent {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Student playsRole student;
-}
-
-
-relation GroupPropertiesAttendsSet {
-	net.sourceforge.fenixedu.domain.AttendsSet playsRole attendsSet;
-	net.sourceforge.fenixedu.domain.GroupProperties playsRole groupProperties;
 }
 
 relation GuideContributor {
@@ -4272,7 +4245,7 @@ relation MarkEvaluation {
 
 
 relation MakeExportProposal {
-	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourseSender {
+	net.sourceforge.fenixedu.domain.ExportGrouping playsRole exportGroupingSenders {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Person playsRole senderPerson;
@@ -4817,7 +4790,7 @@ relation SeminaryCandidacy {
 
 
 relation SendProposal {
-	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesSenderExecutionCourse {
+	net.sourceforge.fenixedu.domain.ExportGrouping playsRole groupingSenderExecutionCourse {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole senderExecutionCourse;
@@ -5007,28 +4980,11 @@ relation StudentGroup {
 	net.sourceforge.fenixedu.domain.Shift playsRole shift;
 }
 
-
-relation StudentGroupAttendAttends {
-	net.sourceforge.fenixedu.domain.StudentGroupAttend playsRole studentGroupAttends {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Attends playsRole attend;
-}
-
-
-relation StudentGroupAttendStudentGroup {
-	net.sourceforge.fenixedu.domain.StudentGroupAttend playsRole studentGroupAttends {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.StudentGroup playsRole studentGroup;
-}
-
-
-relation StudentGroupBelongsToGroupProperties {
+relation StudentGroupBelongsToGrouping {
 	net.sourceforge.fenixedu.domain.StudentGroup playsRole studentGroups {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.AttendsSet playsRole attendsSet;
+	net.sourceforge.fenixedu.domain.Grouping playsRole grouping;
 }
 
 relation StudentPerson {
@@ -5358,4 +5314,24 @@ relation StudentPersonalDataAuthorizationExecutionYear {
     	multiplicity *;
     }
     net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
+}
+
+relation GroupingAttends {
+    net.sourceforge.fenixedu.domain.Attends playsRole attends {
+    	multiplicity *;
+    }
+    	
+    net.sourceforge.fenixedu.domain.Grouping playsRole groupings {
+    	multiplicity *;
+    }
+}
+
+relation AttendsStudentGroup {
+    net.sourceforge.fenixedu.domain.Attends playsRole attends {
+    	multiplicity *;
+    }
+    	
+    net.sourceforge.fenixedu.domain.StudentGroup playsRole studentGroups {
+    	multiplicity *;
+    }
 }

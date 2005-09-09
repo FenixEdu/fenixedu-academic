@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
@@ -26,19 +25,19 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
-
 public class FrequentaOJB extends PersistentObjectOJB implements IFrequentaPersistente {
 
-	public List readByDegreeCurricularPlanAndExecutionPeriodOrderedByStudentId(Integer degreeCurricularPlanId,
-			Integer executionPeriodId)
-	throws ExcepcaoPersistencia {
+    public List readByDegreeCurricularPlanAndExecutionPeriodOrderedByStudentId(
+            Integer degreeCurricularPlanId, Integer executionPeriodId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("enrolment.studentCurricularPlan.degreeCurricularPlan.idInternal", degreeCurricularPlanId);
-//        criteria.addEqualTo("enrolment.executionPeriod.idInternal", executionPeriodId);
-		criteria.addEqualTo("disciplinaExecucao.executionPeriod.idInternal", executionPeriodId);
-		criteria.addOrderBy("aluno.idInternal");
+        criteria.addEqualTo("enrolment.studentCurricularPlan.degreeCurricularPlan.idInternal",
+                degreeCurricularPlanId);
+        // criteria.addEqualTo("enrolment.executionPeriod.idInternal",
+        // executionPeriodId);
+        criteria.addEqualTo("disciplinaExecucao.executionPeriod.idInternal", executionPeriodId);
+        criteria.addOrderBy("aluno.idInternal");
         return queryList(Attends.class, criteria);
-	}
+    }
 
     public List readByUsername(String username) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
@@ -46,23 +45,12 @@ public class FrequentaOJB extends PersistentObjectOJB implements IFrequentaPersi
         return queryList(Attends.class, crit);
     }
 
-    public IAttends readByAlunoAndDisciplinaExecucao(IStudent aluno,
-            IExecutionCourse disciplinaExecucao) throws ExcepcaoPersistencia {
-
-        Criteria crit = new Criteria();
-        crit.addEqualTo("aluno.idInternal", aluno.getIdInternal());
-        crit.addEqualTo("chaveDisciplinaExecucao", disciplinaExecucao.getIdInternal());
-        return (IAttends) queryObject(Attends.class, crit);
-
-    }
-
-    //by gedl AT rnl DOT IST DOT UTL DOT PT , september the 16th, 2003
-    public IAttends readByAlunoIdAndDisciplinaExecucaoId(Integer alunoId, Integer disciplinaExecucaoId)
+    public IAttends readByAlunoAndDisciplinaExecucao(Integer studentID, Integer executionCourseID)
             throws ExcepcaoPersistencia {
 
         Criteria crit = new Criteria();
-        crit.addEqualTo("chaveAluno", alunoId);
-        crit.addEqualTo("chaveDisciplinaExecucao", disciplinaExecucaoId);
+        crit.addEqualTo("aluno.idInternal", studentID);
+        crit.addEqualTo("chaveDisciplinaExecucao", executionCourseID);
         return (IAttends) queryObject(Attends.class, crit);
 
     }
@@ -86,7 +74,8 @@ public class FrequentaOJB extends PersistentObjectOJB implements IFrequentaPersi
         return queryList(Attends.class, crit);
     }
 
-    public List readByStudentIdAndExecutionPeriodId(Integer studentId, Integer executionPeriodId) throws ExcepcaoPersistencia {
+    public List readByStudentIdAndExecutionPeriodId(Integer studentId, Integer executionPeriodId)
+            throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("aluno.idInternal", studentId);
         crit.addEqualTo("disciplinaExecucao.executionPeriod.idInternal", executionPeriodId);

@@ -14,19 +14,15 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 public interface IFrequentaPersistente extends IPersistentObject {
 
-	public List readByDegreeCurricularPlanAndExecutionPeriodOrderedByStudentId(Integer degreeCurricularPlanId, Integer executionPeriodId)
-			throws ExcepcaoPersistencia;
-	
-	public IAttends readByAlunoIdAndDisciplinaExecucaoId(Integer alunoId, Integer disciplinaExecucaoId)
-            throws ExcepcaoPersistencia;
+    public List readByDegreeCurricularPlanAndExecutionPeriodOrderedByStudentId(
+            Integer degreeCurricularPlanId, Integer executionPeriodId) throws ExcepcaoPersistencia;
 
-    public IAttends readByAlunoAndDisciplinaExecucao(IStudent aluno,
-            IExecutionCourse disciplinaExecucao) throws ExcepcaoPersistencia;
+    public IAttends readByAlunoAndDisciplinaExecucao(Integer studentID, Integer executionCourseID)
+            throws ExcepcaoPersistencia;
 
     public void delete(IAttends frequenta) throws ExcepcaoPersistencia;
 
@@ -35,7 +31,8 @@ public interface IFrequentaPersistente extends IPersistentObject {
 
     public List readByStudentNumberInCurrentExecutionPeriod(Integer number) throws ExcepcaoPersistencia;
 
-    public List readByStudentIdAndExecutionPeriodId(Integer studentId, Integer executionPeriodId) throws ExcepcaoPersistencia;
+    public List readByStudentIdAndExecutionPeriodId(Integer studentId, Integer executionPeriodId)
+            throws ExcepcaoPersistencia;
 
     public List readByStudentNumber(Integer id, DegreeType tipoCurso) throws ExcepcaoPersistencia;
 

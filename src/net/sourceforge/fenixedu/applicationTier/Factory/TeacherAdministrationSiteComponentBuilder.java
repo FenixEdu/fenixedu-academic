@@ -14,8 +14,6 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAnnouncement;
-import net.sourceforge.fenixedu.dataTransferObject.InfoAttendsSet;
-import net.sourceforge.fenixedu.dataTransferObject.InfoAttendsSetWithInfoAttendsWithInfoGroupProperties;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
@@ -29,9 +27,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamWithRoomOccupations;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoGroupProperties;
-import net.sourceforge.fenixedu.dataTransferObject.InfoGroupPropertiesWithInfoGroupPropertiesExecutionCourseAccepted;
-import net.sourceforge.fenixedu.dataTransferObject.InfoGroupPropertiesWithInfoGroupPropertiesExecutionCourseWaiting;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGroupingWithAttends;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGroupingWithExportGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoItem;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSection;
@@ -41,7 +39,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithInfoLessons;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAnnouncement;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAttendsSet;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteBibliography;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluation;
@@ -49,7 +46,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluationExecutionCo
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluationMethods;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteExamExecutionCourses;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteGroupProperties;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteGroupsByShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteInstructions;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteItems;
@@ -71,22 +68,18 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentInformation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsAndShiftByStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTeachers;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroupAttend;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroupAttendWithAllUntilPersons;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroupWithAllUntilLessons;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroupWithoutShift;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroupWithAttendsAndGroupingAndShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
 import net.sourceforge.fenixedu.dataTransferObject.util.CMSUtils;
 import net.sourceforge.fenixedu.domain.Announcement;
-import net.sourceforge.fenixedu.domain.AttendsSet;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.GroupProperties;
+import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.IAnnouncement;
-import net.sourceforge.fenixedu.domain.IAttendsSet;
+import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IBibliographicReference;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurriculum;
@@ -94,9 +87,9 @@ import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IEvaluationMethod;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IExportGrouping;
 import net.sourceforge.fenixedu.domain.IFinalEvaluation;
-import net.sourceforge.fenixedu.domain.IGroupProperties;
-import net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse;
+import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.domain.IItem;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IProfessorship;
@@ -105,7 +98,6 @@ import net.sourceforge.fenixedu.domain.ISection;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
-import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
@@ -124,7 +116,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExamStudentRoom;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
@@ -157,7 +148,7 @@ public class TeacherAdministrationSiteComponentBuilder {
     }
 
     public ISiteComponent getComponent(ISiteComponent component, ISite site,
-            ISiteComponent commonComponent, Object obj1, Object obj2) throws FenixServiceException {
+            ISiteComponent commonComponent, Object obj1, Object obj2) throws FenixServiceException, ExcepcaoPersistencia {
 
         if (component instanceof InfoSiteCommon) {
             return getInfoSiteCommon((InfoSiteCommon) component, site);
@@ -179,9 +170,6 @@ public class TeacherAdministrationSiteComponentBuilder {
             return getInfoEvaluationMethods((InfoSiteEvaluationMethods) component, site);
         } else if (component instanceof InfoEvaluationMethod) {
             return getInfoEvaluationMethod((InfoEvaluationMethod) component, site);
-            // } else if (component instanceof InfoCurriculum) {
-            // return getInfoEvaluationMethod((InfoCurriculum) component, site,
-            // (Integer) obj1);
         } else if (component instanceof InfoSiteBibliography) {
             return getInfoSiteBibliography((InfoSiteBibliography) component, site);
         } else if (component instanceof InfoBibliographicReference) {
@@ -219,12 +207,10 @@ public class TeacherAdministrationSiteComponentBuilder {
             return getInfoSiteShiftsAndGroups((InfoSiteShiftsAndGroups) component, (Integer) obj1);
         } else if (component instanceof InfoSiteStudentGroup) {
             return getInfoSiteStudentGroup((InfoSiteStudentGroup) component, (Integer) obj1);
-        } else if (component instanceof InfoSiteGroupProperties) {
-            return getInfoSiteGroupProperties((InfoSiteGroupProperties) component, (Integer) obj1);
+        } else if (component instanceof InfoSiteGrouping) {
+            return getInfoSiteGroupProperties((InfoSiteGrouping) component, (Integer) obj1);
         } else if (component instanceof InfoSiteShifts) {
             return getInfoSiteShifts((InfoSiteShifts) component, (Integer) obj1, (Integer) obj2);
-        } else if (component instanceof InfoSiteAttendsSet) {
-            return getInfoSiteAttendsSet((InfoSiteAttendsSet) component, (Integer) obj1);
         } else if (component instanceof InfoSiteStudentGroupAndStudents) {
             return getInfoSiteStudentGroupAndStudents((InfoSiteStudentGroupAndStudents) component,
                     (Integer) obj1, (Integer) obj2);
@@ -722,8 +708,8 @@ public class TeacherAdministrationSiteComponentBuilder {
         IExecutionCourse executionCourse = site.getExecutionCourse();
         List<IEvaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
         List<IExam> exams = new ArrayList();
-        for(IEvaluation evaluation : associatedEvaluations){
-            if (evaluation instanceof IExam){
+        for (IEvaluation evaluation : associatedEvaluations) {
+            if (evaluation instanceof IExam) {
                 exams.add((IExam) evaluation);
             }
         }
@@ -1097,7 +1083,7 @@ public class TeacherAdministrationSiteComponentBuilder {
             FenixServiceException {
 
         List projects = null;
-        IGroupProperties groupProperties;
+        IGrouping groupProperties;
 
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -1105,15 +1091,14 @@ public class TeacherAdministrationSiteComponentBuilder {
                     .readByOID(ExecutionCourse.class, executionCourseCode);
 
             List executionCourseProjects = new ArrayList();
-            List groupPropertiesExecutionCourseList = executionCourse
-                    .getGroupPropertiesExecutionCourse();
+            List groupPropertiesExecutionCourseList = executionCourse.getExportGroupings();
             Iterator iterGroupPropertiesExecutionCourse = groupPropertiesExecutionCourseList.iterator();
             while (iterGroupPropertiesExecutionCourse.hasNext()) {
-                IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse) iterGroupPropertiesExecutionCourse
+                IExportGrouping groupPropertiesExecutionCourse = (IExportGrouping) iterGroupPropertiesExecutionCourse
                         .next();
                 if ((groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 1)
                         || (groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 2)) {
-                    executionCourseProjects.add(groupPropertiesExecutionCourse.getGroupProperties());
+                    executionCourseProjects.add(groupPropertiesExecutionCourse.getGrouping());
                 }
             }
 
@@ -1122,12 +1107,12 @@ public class TeacherAdministrationSiteComponentBuilder {
 
             while (iterator.hasNext()) {
                 // projects
-                groupProperties = (IGroupProperties) iterator.next();
+                groupProperties = (IGrouping) iterator.next();
 
-                InfoGroupProperties infoGroupProperties = InfoGroupPropertiesWithInfoGroupPropertiesExecutionCourseAccepted
+                InfoGrouping infoGrouping = InfoGroupingWithExportGrouping
                         .newInfoFromDomain(groupProperties);
 
-                projects.add(infoGroupProperties);
+                projects.add(infoGrouping);
             }
         } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();
@@ -1156,7 +1141,7 @@ public class TeacherAdministrationSiteComponentBuilder {
             throws ExcepcaoInexistente, FenixServiceException {
 
         List projects = null;
-        IGroupProperties groupProperties;
+        IGrouping groupProperties;
 
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -1164,14 +1149,13 @@ public class TeacherAdministrationSiteComponentBuilder {
                     .readByOID(ExecutionCourse.class, executionCourseCode);
 
             List executionCourseProjects = new ArrayList();
-            List groupPropertiesExecutionCourseList = executionCourse
-                    .getGroupPropertiesExecutionCourse();
+            List groupPropertiesExecutionCourseList = executionCourse.getExportGroupings();
             Iterator iterGroupPropertiesExecutionCourse = groupPropertiesExecutionCourseList.iterator();
             while (iterGroupPropertiesExecutionCourse.hasNext()) {
-                IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse) iterGroupPropertiesExecutionCourse
+                IExportGrouping groupPropertiesExecutionCourse = (IExportGrouping) iterGroupPropertiesExecutionCourse
                         .next();
                 if (groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 3) {
-                    executionCourseProjects.add(groupPropertiesExecutionCourse.getGroupProperties());
+                    executionCourseProjects.add(groupPropertiesExecutionCourse.getGrouping());
                 }
             }
 
@@ -1180,10 +1164,9 @@ public class TeacherAdministrationSiteComponentBuilder {
 
             while (iterator.hasNext()) {
 
-                groupProperties = (IGroupProperties) iterator.next();
+                groupProperties = (IGrouping) iterator.next();
 
-                InfoGroupProperties infoGroupProperties = InfoGroupPropertiesWithInfoGroupPropertiesExecutionCourseAccepted
-                        .newInfoFromDomain(groupProperties);
+                InfoGrouping infoGroupProperties = InfoGrouping.newInfoFromDomain(groupProperties);
 
                 projects.add(infoGroupProperties);
             }
@@ -1221,21 +1204,19 @@ public class TeacherAdministrationSiteComponentBuilder {
                     .readByOID(ExecutionCourse.class, executionCourseCode);
 
             List executionCourseSentedProjects = new ArrayList();
-            List groupPropertiesList = executionCourse.getGroupProperties();
+            List groupPropertiesList = executionCourse.getGroupings();
             Iterator iterGroupPropertiesList = groupPropertiesList.iterator();
             while (iterGroupPropertiesList.hasNext()) {
                 boolean found = false;
-                IGroupProperties groupProperties = (IGroupProperties) iterGroupPropertiesList.next();
-                List groupPropertiesExecutionCourseList = groupProperties
-                        .getGroupPropertiesExecutionCourse();
+                IGrouping groupProperties = (IGrouping) iterGroupPropertiesList.next();
+                List groupPropertiesExecutionCourseList = groupProperties.getExportGroupings();
                 Iterator iterGroupPropertiesExecutionCourseList = groupPropertiesExecutionCourseList
                         .iterator();
                 while (iterGroupPropertiesExecutionCourseList.hasNext() && !found) {
-                    IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse) iterGroupPropertiesExecutionCourseList
+                    IExportGrouping groupPropertiesExecutionCourse = (IExportGrouping) iterGroupPropertiesExecutionCourseList
                             .next();
                     if (groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 3) {
-                        executionCourseSentedProjects.add(groupPropertiesExecutionCourse
-                                .getGroupProperties());
+                        executionCourseSentedProjects.add(groupPropertiesExecutionCourse.getGrouping());
                         found = true;
                     }
                 }
@@ -1246,9 +1227,9 @@ public class TeacherAdministrationSiteComponentBuilder {
 
             while (iterator.hasNext()) {
 
-                IGroupProperties groupProperties = (IGroupProperties) iterator.next();
+                IGrouping groupProperties = (IGrouping) iterator.next();
 
-                InfoGroupProperties infoGroupProperties = InfoGroupPropertiesWithInfoGroupPropertiesExecutionCourseWaiting
+                InfoGrouping infoGroupProperties = InfoGroupingWithExportGrouping
                         .newInfoFromDomain(groupProperties);
 
                 projects.add(infoGroupProperties);
@@ -1271,59 +1252,49 @@ public class TeacherAdministrationSiteComponentBuilder {
     private ISiteComponent getInfoSiteShiftsAndGroups(InfoSiteShiftsAndGroups component,
             Integer groupPropertiesCode) throws FenixServiceException {
 
-        IGroupProperties groupProperties = null;
+        IGrouping groupProperties = null;
 
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            groupProperties = (IGroupProperties) sp.getIPersistentGroupProperties().readByOID(
-                    GroupProperties.class, groupPropertiesCode);
+            groupProperties = (IGrouping) sp.getIPersistentGrouping().readByOID(Grouping.class,
+                    groupPropertiesCode);
 
             List infoSiteShiftsAndGroups = readShiftsAndGroups(groupProperties);
             component.setInfoSiteGroupsByShiftList(infoSiteShiftsAndGroups);
-            Integer numberOfStudentsOutsideAttendsSet = readNumberOfStudentsOutsideAttendsSet(groupProperties);
-            component.setNumberOfStudentsOutsideAttendsSet(numberOfStudentsOutsideAttendsSet);
-            Integer numberOfStudentsInsideAttendsSet = readNumberOfStudentsInsideAttendsSet(groupProperties);
-            component.setNumberOfStudentsInsideAttendsSet(numberOfStudentsInsideAttendsSet);
-            InfoAttendsSet infoAttendsSet = readAttendsSetCode(groupProperties);
-            component.setInfoAttendsSet(infoAttendsSet);
 
+            Integer numberOfStudentsOutsideGrouping = readNumberOfStudentsOutsideGrouping(groupProperties);
+            component.setNumberOfStudentsOutsideAttendsSet(numberOfStudentsOutsideGrouping);
+
+            Integer numberOfStudentsInsideAttendsSet = readNumberOfStudentsInsideGrouping(groupProperties);
+            component.setNumberOfStudentsInsideAttendsSet(numberOfStudentsInsideAttendsSet);
+
+            InfoGrouping infoGrouping = InfoGroupingWithAttends.newInfoFromDomain(groupProperties);
+            component.setInfoGrouping(infoGrouping);
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
         return component;
     }
 
-    private InfoAttendsSet readAttendsSetCode(IGroupProperties groupProperties) {
-
-        IAttendsSet attendsSet = null;
+    private Integer readNumberOfStudentsOutsideGrouping(IGrouping groupProperties) {
 
         if (groupProperties == null)
             return null;
 
-        attendsSet = groupProperties.getAttendsSet();
+        return groupProperties.getNumberOfStudentsNotInGrouping();
 
-        return InfoAttendsSet.newInfoFromDomain(attendsSet);
     }
 
-    private Integer readNumberOfStudentsOutsideAttendsSet(IGroupProperties groupProperties) {
+    private Integer readNumberOfStudentsInsideGrouping(IGrouping groupProperties) {
 
         if (groupProperties == null)
             return null;
 
-        return groupProperties.getAttendsSet().getNumberOfStudentsNotInAttendsSet();
+        return groupProperties.getNumberOfStudentsInGrouping();
 
     }
 
-    private Integer readNumberOfStudentsInsideAttendsSet(IGroupProperties groupProperties) {
-
-        if (groupProperties == null)
-            return null;
-
-        return groupProperties.getAttendsSet().getNumberOfStudentsInAttendsSet();
-
-    }
-
-    private List readShiftsAndGroups(IGroupProperties groupProperties) throws ExcepcaoInexistente,
+    private List readShiftsAndGroups(IGrouping grouping) throws ExcepcaoInexistente,
             FenixServiceException {
 
         List infoSiteShiftsAndGroups = null;
@@ -1331,28 +1302,25 @@ public class TeacherAdministrationSiteComponentBuilder {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             ITurnoPersistente persistentShift = sp.getITurnoPersistente();
-            IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
 
-            if (groupProperties == null)
+            if (grouping == null)
                 return null;
 
             IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
                     .getInstance();
             IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-                    .getGroupEnrolmentStrategyInstance(groupProperties);
+                    .getGroupEnrolmentStrategyInstance(grouping);
 
-            if (strategy.checkHasShift(groupProperties)) {
+            if (strategy.checkHasShift(grouping)) {
                 infoSiteShiftsAndGroups = new ArrayList();
 
                 List executionCourseList = new ArrayList();
-                Iterator iterGroupPropertiesExecutionCourse = groupProperties
-                        .getGroupPropertiesExecutionCourse().iterator();
-                while (iterGroupPropertiesExecutionCourse.hasNext()) {
-                    IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse) iterGroupPropertiesExecutionCourse
-                            .next();
-                    if (groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 1
-                            || groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 2) {
-                        executionCourseList.add(groupPropertiesExecutionCourse.getExecutionCourse());
+                Iterator iterExportGrouping = grouping.getExportGroupings().iterator();
+                while (iterExportGrouping.hasNext()) {
+                    IExportGrouping exportGrouping = (IExportGrouping) iterExportGrouping.next();
+                    if (exportGrouping.getProposalState().getState().intValue() == 1
+                            || exportGrouping.getProposalState().getState().intValue() == 2) {
+                        executionCourseList.add(exportGrouping.getExecutionCourse());
                     }
                 }
 
@@ -1363,12 +1331,12 @@ public class TeacherAdministrationSiteComponentBuilder {
                 while (iterExecutionCourses.hasNext()) {
                     IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses.next();
                     List someShifts = persistentShift.readByExecutionCourseAndType(executionCourse
-                            .getIdInternal(), groupProperties.getShiftType());
+                            .getIdInternal(), grouping.getShiftType());
 
                     allShifts.addAll(someShifts);
                 }
 
-                List allStudentsGroup = groupProperties.getAttendsSet().getStudentGroupsWithShift();
+                List allStudentsGroup = grouping.getStudentGroupsWithShift();
 
                 if (allStudentsGroup.size() != 0) {
 
@@ -1390,9 +1358,8 @@ public class TeacherAdministrationSiteComponentBuilder {
                     while (iter.hasNext()) {
 
                         IShift shift = (IShift) iter.next();
-                        List allStudentGroups = persistentStudentGroup
-                                .readAllStudentGroupByAttendsSetAndShift(groupProperties.getAttendsSet()
-                                        .getIdInternal(), shift.getIdInternal());
+                        List allStudentGroups = grouping.readAllStudentGroupsBy(shift);
+
                         infoSiteShift = new InfoSiteShift();
                         infoSiteShift.setInfoShift(InfoShiftWithInfoLessons.newInfoFromDomain(shift));
                         List infoLessons = infoSiteShift.getInfoShift().getInfoLessons();
@@ -1423,9 +1390,9 @@ public class TeacherAdministrationSiteComponentBuilder {
                         infoSiteShift.setOrderByEndHour(endDay.toString());
                         infoSiteShift.setOrderByRoom(room.toString());
 
-                        if (groupProperties.getGroupMaximumNumber() != null) {
+                        if (grouping.getGroupMaximumNumber() != null) {
 
-                            int vagas = groupProperties.getGroupMaximumNumber().intValue()
+                            int vagas = grouping.getGroupMaximumNumber().intValue()
                                     - allStudentGroups.size();
                             infoSiteShift.setNrOfGroups(new Integer(vagas));
 
@@ -1472,17 +1439,16 @@ public class TeacherAdministrationSiteComponentBuilder {
 
                 }
 
-                if (!groupProperties.getAttendsSet().getStudentGroupsWithoutShift().isEmpty()) {
+                if (!grouping.getStudentGroupsWithoutShift().isEmpty()) {
                     InfoSiteGroupsByShift infoSiteGroupsByShift = null;
                     InfoSiteShift infoSiteShift = new InfoSiteShift();
 
                     infoSiteGroupsByShift = new InfoSiteGroupsByShift();
-                    List allStudentGroups = groupProperties.getAttendsSet()
-                            .getStudentGroupsWithoutShift();
+                    List allStudentGroups = grouping.getStudentGroupsWithoutShift();
 
-                    if (groupProperties.getGroupMaximumNumber() != null) {
+                    if (grouping.getGroupMaximumNumber() != null) {
 
-                        int vagas = groupProperties.getGroupMaximumNumber().intValue()
+                        int vagas = grouping.getGroupMaximumNumber().intValue()
                                 - allStudentGroups.size();
                         infoSiteShift.setNrOfGroups(new Integer(vagas));
 
@@ -1516,10 +1482,10 @@ public class TeacherAdministrationSiteComponentBuilder {
 
                 infoSiteShiftsAndGroups = new ArrayList();
 
-                if (!groupProperties.getAttendsSet().getStudentGroupsWithShift().isEmpty()) {
+                if (!grouping.getStudentGroupsWithShift().isEmpty()) {
 
                     List allShifts = new ArrayList();
-                    List allStudentsGroup = groupProperties.getAttendsSet().getStudentGroupsWithShift();
+                    List allStudentsGroup = grouping.getStudentGroupsWithShift();
                     if (allStudentsGroup.size() != 0) {
                         Iterator iterator = allStudentsGroup.iterator();
                         while (iterator.hasNext()) {
@@ -1537,9 +1503,8 @@ public class TeacherAdministrationSiteComponentBuilder {
 
                         while (iter.hasNext()) {
                             IShift shift = (IShift) iter.next();
-                            List allStudentGroupsAux = persistentStudentGroup
-                                    .readAllStudentGroupByAttendsSetAndShift(groupProperties
-                                            .getAttendsSet().getIdInternal(), shift.getIdInternal());
+                            List allStudentGroupsAux = grouping.readAllStudentGroupsBy(shift);
+
                             infoSiteShiftAux = new InfoSiteShift();
                             infoSiteShiftAux.setInfoShift(InfoShiftWithInfoLessons
                                     .newInfoFromDomain(shift));
@@ -1571,9 +1536,9 @@ public class TeacherAdministrationSiteComponentBuilder {
                             infoSiteShiftAux.setOrderByEndHour(endDay.toString());
                             infoSiteShiftAux.setOrderByRoom(room.toString());
 
-                            if (groupProperties.getGroupMaximumNumber() != null) {
+                            if (grouping.getGroupMaximumNumber() != null) {
 
-                                int vagas = groupProperties.getGroupMaximumNumber().intValue()
+                                int vagas = grouping.getGroupMaximumNumber().intValue()
                                         - allStudentGroupsAux.size();
                                 infoSiteShiftAux.setNrOfGroups(new Integer(vagas));
                             } else
@@ -1624,12 +1589,11 @@ public class TeacherAdministrationSiteComponentBuilder {
 
                 infoSiteGroupsByShift = new InfoSiteGroupsByShift();
 
-                List allStudentGroups = groupProperties.getAttendsSet().getStudentGroupsWithoutShift();
+                List allStudentGroups = grouping.getStudentGroupsWithoutShift();
 
-                if (groupProperties.getGroupMaximumNumber() != null) {
+                if (grouping.getGroupMaximumNumber() != null) {
 
-                    int vagas = groupProperties.getGroupMaximumNumber().intValue()
-                            - allStudentGroups.size();
+                    int vagas = grouping.getGroupMaximumNumber().intValue() - allStudentGroups.size();
                     infoSiteShift.setNrOfGroups(new Integer(vagas));
 
                 } else {
@@ -1666,100 +1630,36 @@ public class TeacherAdministrationSiteComponentBuilder {
         return infoSiteShiftsAndGroups;
     }
 
-    /**
-     * @param component
-     * @param site
-     * @param groupPropertiesCode
-     * @return
-     */
+    private ISiteComponent getInfoSiteStudentGroup(InfoSiteStudentGroup component, Integer studentGroupID)
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-    private ISiteComponent getInfoSiteStudentGroup(InfoSiteStudentGroup component,
-            Integer studentGroupCode) throws FenixServiceException {
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IStudentGroup studentGroup = (IStudentGroup) persistentSupport
+                .getIPersistentStudentGroup().readByOID(StudentGroup.class, studentGroupID);
 
-        List studentGroupAttendInformationList = null;
-        List studentGroupAttendList = null;
-        IStudentGroup studentGroup = null;
-        IAttendsSet attendsSet = null;
-        IGroupProperties groupProperties = null;
-
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-            studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOID(StudentGroup.class,
-                    studentGroupCode);
-
-            if (studentGroup == null) {
-                return null;
-            }
-
-            studentGroupAttendList = studentGroup.getStudentGroupAttends();
-
-            attendsSet = studentGroup.getAttendsSet();
-
-            groupProperties = attendsSet.getGroupProperties();
-
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
-
-            throw new FenixServiceException("error.impossibleReadStudentGroupInformation");
+        if (studentGroup == null) {
+            return null;
         }
 
-        studentGroupAttendInformationList = new ArrayList(studentGroupAttendList.size());
-        Iterator iter = studentGroupAttendList.iterator();
-        InfoSiteStudentInformation infoSiteStudentInformation = null;
-        InfoStudentGroupAttend infoStudentGroupAttend = null;
-
-        while (iter.hasNext()) {
-            infoSiteStudentInformation = new InfoSiteStudentInformation();
-
-            infoStudentGroupAttend = InfoStudentGroupAttendWithAllUntilPersons
-                    .newInfoFromDomain((IStudentGroupAttend) iter.next());
-
-            infoSiteStudentInformation.setNumber(infoStudentGroupAttend.getInfoAttend().getAluno()
-                    .getNumber());
-
-            infoSiteStudentInformation.setName(infoStudentGroupAttend.getInfoAttend().getAluno()
-                    .getInfoPerson().getNome());
-
-            infoSiteStudentInformation.setEmail(infoStudentGroupAttend.getInfoAttend().getAluno()
-                    .getInfoPerson().getEmail());
-
-            infoSiteStudentInformation.setUsername(infoStudentGroupAttend.getInfoAttend().getAluno()
-                    .getInfoPerson().getUsername());
-
-            studentGroupAttendInformationList.add(infoSiteStudentInformation);
-
+        final List<InfoSiteStudentInformation> infoSiteStudentInformations = new ArrayList<InfoSiteStudentInformation>();
+        for (final IAttends attend : studentGroup.getAttends()) {
+            infoSiteStudentInformations.add(new InfoSiteStudentInformation(attend.getAluno().getPerson()
+                    .getNome(), attend.getAluno().getPerson().getEmail(), attend.getAluno().getPerson()
+                    .getUsername(), attend.getAluno().getNumber()));
         }
+        Collections.sort(infoSiteStudentInformations, new BeanComparator("number"));
+        component.setInfoSiteStudentInformationList(infoSiteStudentInformations);
+        component.setInfoStudentGroup(InfoStudentGroupWithAttendsAndGroupingAndShift
+                .newInfoFromDomain(studentGroup));
 
-        Collections.sort(studentGroupAttendInformationList, new BeanComparator("number"));
-        component.setInfoSiteStudentInformationList(studentGroupAttendInformationList);
-
-        if (studentGroup.getShift() != null) {
-            component.setInfoStudentGroup(InfoStudentGroupWithAllUntilLessons
-                    .newInfoFromDomain(studentGroup));
-        } else {
-            component.setInfoStudentGroup(InfoStudentGroupWithoutShift.newInfoFromDomain(studentGroup));
-        }
-
-        if (groupProperties.getMaximumCapacity() != null) {
-
-            int vagas = groupProperties.getMaximumCapacity().intValue() - studentGroupAttendList.size();
-            // if (vagas >= 0)
-            component.setNrOfElements(new Integer(vagas));
-            // else
-            // component.setNrOfElements(new Integer(0));
+        if (studentGroup.getGrouping().getMaximumCapacity() != null) {
+            int freeGroups = studentGroup.getGrouping().getMaximumCapacity()
+                    - studentGroup.getAttendsCount();
+            component.setNrOfElements(Integer.valueOf(freeGroups));
         } else
             component.setNrOfElements("Sem limite");
-
         return component;
     }
-
-    /**
-     * @param component
-     * @param site
-     * @param groupPropertiesCode
-     * @return
-     */
 
     private ISiteComponent getInfoSiteStudentGroupAndStudents(InfoSiteStudentGroupAndStudents component,
             Integer groupPropertiesCode, Integer shiftCode) throws FenixServiceException {
@@ -1781,12 +1681,11 @@ public class TeacherAdministrationSiteComponentBuilder {
         try {
 
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
 
-            IGroupProperties groupProperties = (IGroupProperties) sp.getIPersistentGroupProperties()
-                    .readByOID(GroupProperties.class, groupPropertiesCode);
+            IGrouping grouping = (IGrouping) sp.getIPersistentGrouping().readByOID(Grouping.class,
+                    groupPropertiesCode);
 
-            if (groupProperties == null)
+            if (grouping == null)
                 return null;
 
             IShift shift = (IShift) sp.getITurnoPersistente().readByOID(Shift.class, shiftCode);
@@ -1795,11 +1694,10 @@ public class TeacherAdministrationSiteComponentBuilder {
             InfoSiteShift infoSiteShift = new InfoSiteShift();
             infoSiteShift.setInfoShift(InfoShiftWithInfoLessons.newInfoFromDomain(shift));
 
-            List allStudentGroups = persistentStudentGroup.readAllStudentGroupByAttendsSetAndShift(
-                    groupProperties.getAttendsSet().getIdInternal(), shift.getIdInternal());
+            List allStudentGroups = grouping.readAllStudentGroupsBy(shift);
 
-            if (groupProperties.getGroupMaximumNumber() != null) {
-                int vagas = groupProperties.getGroupMaximumNumber().intValue() - allStudentGroups.size();
+            if (grouping.getGroupMaximumNumber() != null) {
+                int vagas = grouping.getGroupMaximumNumber().intValue() - allStudentGroups.size();
                 infoSiteShift.setNrOfGroups(new Integer(vagas));
             } else
                 infoSiteShift.setNrOfGroups("Sem limite");
@@ -1841,15 +1739,15 @@ public class TeacherAdministrationSiteComponentBuilder {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IGroupProperties groupProperties = (IGroupProperties) sp.getIPersistentGroupProperties()
-                    .readByOID(GroupProperties.class, groupPropertiesCode);
+            IGrouping groupProperties = (IGrouping) sp.getIPersistentGrouping().readByOID(
+                    Grouping.class, groupPropertiesCode);
             if (groupProperties == null)
                 return null;
 
             IShift shift = (IShift) sp.getITurnoPersistente().readByOID(Shift.class, shiftCode);
 
             List aux = new ArrayList();
-            List studentGroupsWithShift = groupProperties.getAttendsSet().getStudentGroupsWithShift();
+            List studentGroupsWithShift = groupProperties.getStudentGroupsWithShift();
             Iterator iterStudentGroupsWithShift = studentGroupsWithShift.iterator();
             while (iterStudentGroupsWithShift.hasNext()) {
                 IStudentGroup studentGroup = (IStudentGroup) iterStudentGroupsWithShift.next();
@@ -1858,7 +1756,7 @@ public class TeacherAdministrationSiteComponentBuilder {
                 }
             }
             List allStudentGroups = new ArrayList();
-            allStudentGroups.addAll(groupProperties.getAttendsSet().getStudentGroups());
+            allStudentGroups.addAll(groupProperties.getStudentGroups());
 
             Iterator iterAux = aux.iterator();
             while (iterAux.hasNext()) {
@@ -1877,21 +1775,19 @@ public class TeacherAdministrationSiteComponentBuilder {
                         .newInfoFromDomain(studentGroup));
                 infoSiteStudentsAndShiftByStudentGroup.setInfoShift(InfoShift.newInfoFromDomain(turno));
 
-                List studentGroupAttendList = studentGroup.getStudentGroupAttends();
+                List attendsList = studentGroup.getAttends();
 
                 List studentGroupAttendInformationList = new ArrayList();
-                Iterator iterStudentGroupAttendList = studentGroupAttendList.iterator();
+                Iterator iterAttendsList = attendsList.iterator();
                 InfoSiteStudentInformation infoSiteStudentInformation = null;
-                InfoStudentGroupAttend infoStudentGroupAttend = null;
+                IAttends attend = null;
 
-                while (iterStudentGroupAttendList.hasNext()) {
+                while (iterAttendsList.hasNext()) {
                     infoSiteStudentInformation = new InfoSiteStudentInformation();
 
-                    infoStudentGroupAttend = InfoStudentGroupAttendWithAllUntilPersons
-                            .newInfoFromDomain((IStudentGroupAttend) iterStudentGroupAttendList.next());
+                    attend = (IAttends) iterAttendsList.next();
 
-                    infoSiteStudentInformation.setNumber(infoStudentGroupAttend.getInfoAttend()
-                            .getAluno().getNumber());
+                    infoSiteStudentInformation.setNumber(attend.getAluno().getNumber());
 
                     studentGroupAttendInformationList.add(infoSiteStudentInformation);
 
@@ -1920,29 +1816,29 @@ public class TeacherAdministrationSiteComponentBuilder {
      * @return
      */
 
-    private ISiteComponent getInfoSiteGroupProperties(InfoSiteGroupProperties component,
+    private ISiteComponent getInfoSiteGroupProperties(InfoSiteGrouping component,
             Integer groupPropertiesCode) throws FenixServiceException {
 
-        InfoGroupProperties infoGroupProperties = readGroupProperties(groupPropertiesCode);
-        component.setInfoGroupProperties(infoGroupProperties);
+        InfoGrouping infoGrouping = readGroupProperties(groupPropertiesCode);
+        component.setInfoGrouping(infoGrouping);
         return component;
     }
 
-    private InfoGroupProperties readGroupProperties(Integer groupPropertiesCode)
-            throws ExcepcaoInexistente, FenixServiceException {
+    private InfoGrouping readGroupProperties(Integer groupPropertiesCode) throws ExcepcaoInexistente,
+            FenixServiceException {
 
-        IGroupProperties groupProperties = null;
+        IGrouping groupProperties = null;
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            groupProperties = (IGroupProperties) sp.getIPersistentGroupProperties().readByOID(
-                    GroupProperties.class, groupPropertiesCode);
+            groupProperties = (IGrouping) sp.getIPersistentGrouping().readByOID(Grouping.class,
+                    groupPropertiesCode);
 
         } catch (ExcepcaoPersistencia e) {
 
             throw new FenixServiceException("error.impossibleReadGroupProperties");
         }
 
-        return InfoGroupProperties.newInfoFromDomain(groupProperties);
+        return InfoGroupingWithAttends.newInfoFromDomain(groupProperties);
     }
 
     /**
@@ -1953,13 +1849,13 @@ public class TeacherAdministrationSiteComponentBuilder {
     private ISiteComponent getInfoSiteShifts(InfoSiteShifts component, Integer groupPropertiesCode,
             Integer studentGroupCode) throws FenixServiceException {
         List infoShifts = new ArrayList();
-        IGroupProperties groupProperties = null;
+        IGrouping groupProperties = null;
         IExecutionCourse executionCourse = null;
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IStudentGroup studentGroup = null;
-            groupProperties = (IGroupProperties) sp.getIPersistentGroupProperties().readByOID(
-                    GroupProperties.class, groupPropertiesCode);
+            groupProperties = (IGrouping) sp.getIPersistentGrouping().readByOID(Grouping.class,
+                    groupPropertiesCode);
             if (groupProperties == null) {
                 return null;
             }
@@ -2035,43 +1931,4 @@ public class TeacherAdministrationSiteComponentBuilder {
 
         return component;
     }
-
-    /**
-     * @param component
-     * @param site
-     * @return
-     */
-
-    private ISiteComponent getInfoSiteAttendsSet(InfoSiteAttendsSet component, Integer attendsSetCode)
-            throws FenixServiceException {
-
-        InfoAttendsSet infoAttendsSet = readAttendsSet(attendsSetCode);
-        component.setInfoAttendsSet(infoAttendsSet);
-
-        return component;
-    }
-
-    private InfoAttendsSet readAttendsSet(Integer attendsSetCode) throws FenixServiceException {
-
-        IAttendsSet attendsSet = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            attendsSet = (IAttendsSet) sp.getIPersistentAttendsSet().readByOID(AttendsSet.class,
-                    attendsSetCode);
-
-        } catch (ExcepcaoPersistencia e) {
-
-            throw new FenixServiceException(e);
-        }
-
-        InfoAttendsSet infoAttendsSetWithInfoAttendsWithInfoGroupProperties = InfoAttendsSetWithInfoAttendsWithInfoGroupProperties
-                .newInfoFromDomain(attendsSet);
-
-        if (infoAttendsSetWithInfoAttendsWithInfoGroupProperties != null) {
-            List infoAttends = infoAttendsSetWithInfoAttendsWithInfoGroupProperties.getInfoAttends();
-            Collections.sort(infoAttends, new BeanComparator("aluno.number"));
-        }
-        return infoAttendsSetWithInfoAttendsWithInfoGroupProperties;
-    }
-
 }

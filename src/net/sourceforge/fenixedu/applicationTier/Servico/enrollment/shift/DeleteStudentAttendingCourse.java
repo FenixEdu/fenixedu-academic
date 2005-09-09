@@ -1,16 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
+import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
@@ -26,105 +23,94 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  *  
  */
 public class DeleteStudentAttendingCourse implements IService {
-    public class AlreadyEnrolledInGroupServiceException extends FenixServiceException {
 
+    public class AlreadyEnrolledInGroupServiceException extends FenixServiceException {
     }
 
     public class AlreadyEnrolledServiceException extends FenixServiceException {
-
     }
 
     public class AlreadyEnrolledInShiftServiceException extends FenixServiceException {
-
     }
 
-    public DeleteStudentAttendingCourse() {
-    }
-
-    public Boolean run(InfoStudent infoStudent, Integer executionCourseId) throws FenixServiceException {
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-
-            if (infoStudent == null) {
-                return new Boolean(false);
-            }
-            if (executionCourseId != null) {
-                IStudent student = findStudent(infoStudent, persistentStudent);
-
-                IExecutionCourse executionCourse = findExecutionCourse(executionCourseId,
-                        persistentExecutionCourse);
-
-                deleteAttend(executionCourse, student, sp);
-            }
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-            throw new FenixServiceException(e);
-        }
-        return new Boolean(true);
-    }
-
-    private IExecutionCourse findExecutionCourse(Integer executionCourseId,
-            IPersistentExecutionCourse persistentExecutionCourse) throws FenixServiceException,
+    public Boolean run(InfoStudent infoStudent, Integer executionCourseID) throws FenixServiceException,
             ExcepcaoPersistencia {
-        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
-                ExecutionCourse.class, executionCourseId);
 
+        if (infoStudent == null) {
+            return Boolean.FALSE;
+        }
+
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
+        final IStudent student = readStudent(persistentSupport, infoStudent);
+        final IExecutionCourse executionCourse = readExecutionCourse(persistentSupport,
+                executionCourseID);
+
+        deleteAttend(persistentSupport, student, executionCourse);
+
+        return Boolean.TRUE;
+    }
+
+    private IExecutionCourse readExecutionCourse(final ISuportePersistente persistentSupport,
+            final Integer executionCourseID) throws ExcepcaoPersistencia, FenixServiceException {
+
+        final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
+                .getIPersistentExecutionCourse();
+        final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                ExecutionCourse.class, executionCourseID);
         if (executionCourse == null) {
-            throw new FenixServiceException("noExecutionCourse");
+            throw new FenixServiceException("error.noExecutionCourse");
         }
         return executionCourse;
     }
 
-    private IStudent findStudent(InfoStudent infoStudent, IPersistentStudent persistentStudent)
-            throws FenixServiceException, ExcepcaoPersistencia {
-        IStudent student = (IStudent) persistentStudent.readByOID(Student.class, infoStudent
+    private IStudent readStudent(final ISuportePersistente persistentSupport,
+            final InfoStudent infoStudent) throws FenixServiceException, ExcepcaoPersistencia {
+
+        final IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
+        final IStudent student = (IStudent) persistentStudent.readByOID(Student.class, infoStudent
                 .getIdInternal());
         if (student == null) {
-            throw new FenixServiceException("noStudent");
+            throw new FenixServiceException("error.exception.noStudents");
         }
         return student;
     }
 
-    private void deleteAttend(IExecutionCourse executionCourse, IStudent student, ISuportePersistente sp)
-            throws FenixServiceException {
-        try {
-            IFrequentaPersistente persistentAttends = sp.getIFrequentaPersistente();
+    private void deleteAttend(final ISuportePersistente persistentSupport, final IStudent student,
+            final IExecutionCourse executionCourse) throws FenixServiceException, ExcepcaoPersistencia {
 
-            IAttends attend = persistentAttends.readByAlunoAndDisciplinaExecucao(student,
-                    executionCourse);
-            List<IStudentGroupAttend> studentGroupAttends = attend.getStudentGroupAttends();
-            IStudentGroupAttend studentGroupAttend = (studentGroupAttends.isEmpty()) ? null
-                    : studentGroupAttends.get(0);
-            if (studentGroupAttend != null) {
-                throw new AlreadyEnrolledInGroupServiceException();
+        final IFrequentaPersistente persistentAttends = persistentSupport.getIFrequentaPersistente();
+        final IAttends attend = persistentAttends.readByAlunoAndDisciplinaExecucao(student
+                .getIdInternal(), executionCourse.getIdInternal());
+
+        if (attend != null) {
+            checkIfHasStudentGroups(attend);
+            checkIfIsEnrolled(attend);
+            checkStudentShifts(student, executionCourse);
+
+            persistentAttends.deleteByOID(Attends.class, attend.getIdInternal());
+        }
+    }
+
+    private void checkStudentShifts(final IStudent student, final IExecutionCourse executionCourse)
+            throws AlreadyEnrolledInShiftServiceException {
+        for (final IShift shift : student.getShifts()) {
+            if (shift.getDisciplinaExecucao() == executionCourse) {
+                throw new AlreadyEnrolledInShiftServiceException();
             }
+        }
+    }
 
-            if (attend != null) {
-                if (attend.getEnrolment() != null) {
-                    throw new AlreadyEnrolledServiceException();
-                }
+    private void checkIfIsEnrolled(final IAttends attend) throws AlreadyEnrolledInGroupServiceException {
+        if (attend.getEnrolment() != null) {
+            throw new AlreadyEnrolledInGroupServiceException();
+        }
+    }
 
-                List shiftAttendsToDelete = new ArrayList();
-                List<IShift> shifts = student.getShifts();
-
-                for (IShift shift : shifts) {
-                    if (shift.getDisciplinaExecucao().getIdInternal().equals(
-                            executionCourse.getIdInternal())) {
-                        shiftAttendsToDelete.add(shift);
-                    }
-
-                }
-
-                if (shiftAttendsToDelete != null && shiftAttendsToDelete.size() > 0) {
-                    throw new AlreadyEnrolledInShiftServiceException();
-                }
-                persistentAttends.delete(attend);
-            }
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-            throw new FenixServiceException(e);
+    private void checkIfHasStudentGroups(final IAttends attend)
+            throws AlreadyEnrolledInGroupServiceException {
+        if (attend.getStudentGroupsCount() > 0) {
+            throw new AlreadyEnrolledInGroupServiceException();
         }
     }
 }

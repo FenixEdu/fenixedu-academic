@@ -412,8 +412,8 @@ public class Person extends Person_Base {
         this.setExternalPerson(null);
         this.setGender(null);
         this.setGrantOwner(null);
-        this.getGroupPropertiesExecutionCourseReceiver().clear();
-        this.getGroupPropertiesExecutionCourseSender().clear();
+        this.getExportGroupingReceivers().clear();
+        this.getExportGroupingSenders().clear();
         this.getGuides().clear();
         this.setIdDocumentType(null);
         this.getManageableDepartmentCredits().clear();

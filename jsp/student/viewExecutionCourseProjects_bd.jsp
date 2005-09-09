@@ -3,7 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGroupProperties"%>
 
 <logic:present name="infoGroupPropertiesList">
 
@@ -86,7 +85,7 @@
                    	 </logic:notEmpty>
                    	 
                    	 <b><bean:message key="label.student.viewExecutionCourseProjects.GroupEnrolmentPolicy"/>:</b>
-                   	 <%if((((InfoGroupProperties)infoGroupProperties).getEnrolmentPolicy()).getType().intValue()==1){%>
+                   	 <%if((((net.sourceforge.fenixedu.dataTransferObject.InfoGrouping) infoGroupProperties).getEnrolmentPolicy()).getType().intValue()==1){%>
                    	 <bean:message key="label.atomic"/>
                    	 <%}else{%>
                    	 <bean:message key="label.individual"/>
@@ -94,9 +93,9 @@
                 	</td>
                 	
                 	<td class="listClasses">
-                		<bean:size id="count" name="infoGroupProperties" property="infoGroupPropertiesExecutionCourse"/>
+                		<bean:size id="count" name="infoGroupProperties" property="infoExportGroupings"/>
                 		<logic:greaterThan name="count" value="1">
-            		    <logic:iterate id="infoGroupPropertiesExecutionCourseElement" name="infoGroupProperties" property="infoGroupPropertiesExecutionCourse" >
+            		    <logic:iterate id="infoGroupPropertiesExecutionCourseElement" name="infoGroupProperties" property="infoExportGroupings" >
                 		<bean:define id="infoExecutionCourse" name="infoGroupPropertiesExecutionCourseElement" property="infoExecutionCourse" />
 							<bean:write name="infoExecutionCourse" property="nome"/></br>
                     	 </logic:iterate>

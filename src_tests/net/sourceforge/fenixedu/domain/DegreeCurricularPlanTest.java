@@ -93,10 +93,8 @@ public class DegreeCurricularPlanTest extends DomainTestBase {
 		curricularCourseEquivalence1.setDegreeCurricularPlan(dcpWithAll);
 		curricularCourseEquivalence2.setDegreeCurricularPlan(dcpWithCurricularCourseEquivalences);
 		
-		IEnrolmentPeriod enrolmentPeriod1 = new EnrolmentPeriodInCurricularCourses();
-		IEnrolmentPeriod enrolmentPeriod2 = new EnrolmentPeriodInCurricularCourses();
-		enrolmentPeriod1.setDegreeCurricularPlan(dcpWithAll);
-		enrolmentPeriod2.setDegreeCurricularPlan(dcpWithEnrolmentPeriods);
+		IEnrolmentPeriod enrolmentPeriod1 = new EnrolmentPeriodInCurricularCourses(dcpWithAll, null, null, null);
+		IEnrolmentPeriod enrolmentPeriod2 = new EnrolmentPeriodInCurricularCourses(dcpWithEnrolmentPeriods, null, null, null);
 		
 		ICurricularCourse curricularCourse1 = new CurricularCourse();
 		ICurricularCourse curricularCourse2 = new CurricularCourse();

@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoForReadStudentsWithAttendsByExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta;
-import net.sourceforge.fenixedu.dataTransferObject.InfoGroupProperties;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
@@ -166,7 +166,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
         if (groupProperties != null && !groupProperties.isEmpty()) {
             Iterator gpIterator = groupProperties.iterator();
             while (gpIterator.hasNext()) {
-                InfoGroupProperties gp = (InfoGroupProperties) gpIterator.next();
+                InfoGrouping gp = (InfoGrouping) gpIterator.next();
                 fileContents += GROUP + gp.getName() + SEPARATOR;
             }
         }
@@ -253,7 +253,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
                 Iterator gpIterator = groupProperties.iterator();
                 Map studentGroups = attendacy.getInfoStudentGroups();
                 while (gpIterator.hasNext()) {
-                    InfoGroupProperties gp = (InfoGroupProperties) gpIterator.next();
+                    InfoGrouping gp = (InfoGrouping) gpIterator.next();
                     String groupNumber = "";
                     InfoStudentGroup infoStudentGroup = (InfoStudentGroup) studentGroups.get(gp
                             .getName());

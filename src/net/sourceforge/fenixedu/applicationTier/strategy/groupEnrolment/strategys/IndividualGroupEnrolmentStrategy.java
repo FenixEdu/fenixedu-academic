@@ -4,13 +4,14 @@
  */
 package net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys;
 
-import net.sourceforge.fenixedu.domain.IGroupProperties;
+import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author asnr and scpo
- *  
+ * 
  */
 
 public class IndividualGroupEnrolmentStrategy extends GroupEnrolmentStrategy implements
@@ -20,8 +21,8 @@ public class IndividualGroupEnrolmentStrategy extends GroupEnrolmentStrategy imp
 
     }
 
-    public Integer enrolmentPolicyNewGroup(IGroupProperties groupProperties,
-            int numberOfStudentsToEnrole, IShift shift) {
+    public Integer enrolmentPolicyNewGroup(IGrouping groupProperties, int numberOfStudentsToEnrole,
+            IShift shift) throws ExcepcaoPersistencia {
 
         if (checkNumberOfGroups(groupProperties, shift)) {
             return new Integer(1);
@@ -31,9 +32,7 @@ public class IndividualGroupEnrolmentStrategy extends GroupEnrolmentStrategy imp
 
     }
 
-    public boolean checkNumberOfGroupElements(IGroupProperties groupProperties,
-            IStudentGroup studentGroup) {
+    public boolean checkNumberOfGroupElements(IGrouping groupProperties, IStudentGroup studentGroup) {
         return true;
     }
 }
-

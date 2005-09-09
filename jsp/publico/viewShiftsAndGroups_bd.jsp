@@ -19,7 +19,7 @@
 	
 	<logic:notEmpty name="component" property="infoSiteGroupsByShiftList">	
 		<h2>
-			<bean:define id="groupProperties" name="component" property="infoGroupProperties" />
+			<bean:define id="groupProperties" name="component" property="infoGrouping" />
 			<bean:define id="groupPropertiesId" name="groupProperties" property="idInternal" />
 			<bean:message key="label.grouping"/>:
 			<bean:write name="groupProperties" property="name" />

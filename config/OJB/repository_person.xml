@@ -345,14 +345,14 @@
 		<inverse-foreignkey field-ref="personKey"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="groupPropertiesExecutionCourseReceiver"
-			element-class-ref="net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse"
+			name="exportGroupingReceivers"
+			element-class-ref="net.sourceforge.fenixedu.domain.ExportGrouping"
 			refresh="true" >
 		<inverse-foreignkey field-ref="keyReceiverPerson"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="groupPropertiesExecutionCourseSender"
-			element-class-ref="net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse"
+			name="exportGroupingSenders"
+			element-class-ref="net.sourceforge.fenixedu.domain.ExportGrouping"
 			refresh="true" >
 		<inverse-foreignkey field-ref="keySenderPerson"/>
 	</collection-descriptor>

@@ -4,29 +4,18 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.GroupProperties;
+import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IAttendsSet;
-import net.sourceforge.fenixedu.domain.IGroupProperties;
+import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
-import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupProperties;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroupAttend;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -38,109 +27,38 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class CreateStudentGroup implements IService {
 
-    private IPersistentStudentGroup persistentStudentGroup = null;
-
-    private void checkIfStudentGroupExists(Integer groupNumber, IGroupProperties groupProperties)
+  
+    private List buildStudentList(List<String> studentUserNames, IGrouping grouping)
             throws FenixServiceException, ExcepcaoPersistencia {
-
-        IStudentGroup studentGroup = null;
-
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
-
-        studentGroup = persistentStudentGroup.readStudentGroupByAttendsSetAndGroupNumber(groupProperties
-                .getAttendsSet().getIdInternal(), groupNumber);
-
-        if (studentGroup != null)
-            throw new ExistingServiceException();
+      
+        List studentList = new ArrayList();
+        for (final String studantUserName : studentUserNames) {
+            IAttends attend = grouping.getStudentAttend(studantUserName);
+            IStudent student = attend.getAluno();
+            studentList.add(student);
+        }
+        return studentList;
     }
 
-    private void checkStudentsForCreation(List studentCodes, IGroupProperties groupProperties)
-            throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentStudent persistentStudent = null;
-        IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
+    public boolean run(Integer executionCourseID, Integer groupNumber, Integer groupingID,
+            Integer shiftID, List studentUserNames) throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        persistentStudent = persistentSupport.getIPersistentStudent();
-        persistentStudentGroupAttend = persistentSupport.getIPersistentStudentGroupAttend();
-
-        List allStudentGroup = groupProperties.getAttendsSet().getStudentGroups();
-        if (allStudentGroup == null)
-            return;
-
-        Iterator iterGroups = allStudentGroup.iterator();
-
-        while (iterGroups.hasNext()) {
-            IStudentGroup existingStudentGroup = (IStudentGroup) iterGroups.next();
-            IStudentGroupAttend newStudentGroupAttend = null;
-            Iterator iterator = studentCodes.iterator();
-
-            while (iterator.hasNext()) {
-                IStudent student = persistentStudent.readByUsername((String) iterator.next());
-
-                IAttends attend = groupProperties.getAttendsSet().getStudentAttend(student);
-
-                if (attend == null) {
-                    throw new InvalidArgumentsServiceException();
-                }
-
-                newStudentGroupAttend = persistentStudentGroupAttend.readByStudentGroupAndAttend(
-                        existingStudentGroup.getIdInternal(), attend.getIdInternal());
-
-                if (newStudentGroupAttend != null)
-                    throw new InvalidSituationServiceException();
-            }
-        }
-    }
-
-    public boolean run(Integer executionCourseCode, Integer groupNumber, Integer groupPropertiesCode,
-            Integer shiftCode, List studentCodes) throws FenixServiceException, ExcepcaoPersistencia {
-
-        IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
-        IPersistentGroupProperties persistentGroupProperites = null;
-        IPersistentStudent persistentStudent = null;
-        ITurnoPersistente persistentShift = null;
-
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        persistentGroupProperites = persistentSupport.getIPersistentGroupProperties();
-        IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperites.readByOID(
-                GroupProperties.class, groupPropertiesCode);
-
-        if (groupProperties == null) {
-            throw new NotAuthorizedException();
-        }
-
-        checkIfStudentGroupExists(groupNumber, groupProperties);
-        checkStudentsForCreation(studentCodes, groupProperties);
-
-        persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
-        IAttendsSet attendsSet = groupProperties.getAttendsSet();
-        IStudentGroup newStudentGroup = null;
-
-        if (shiftCode != null) {
-            persistentShift = persistentSupport.getITurnoPersistente();
-            IShift shift = (IShift) persistentShift.readByOID(Shift.class, shiftCode);
-            newStudentGroup = DomainFactory.makeStudentGroup(groupNumber, attendsSet, shift);
-        } else {
-            newStudentGroup = DomainFactory.makeStudentGroup(groupNumber, attendsSet);
-        }
-        persistentStudentGroup.simpleLockWrite(newStudentGroup);
-        attendsSet.addStudentGroup(newStudentGroup);
-        persistentStudent = persistentSupport.getIPersistentStudent();
-        persistentStudentGroupAttend = persistentSupport.getIPersistentStudentGroupAttend();
-
-        Iterator iter = studentCodes.iterator();
-
-        while (iter.hasNext()) {
-
-            IStudent student = persistentStudent.readByUsername((String) iter.next());
-            IAttends attend = groupProperties.getAttendsSet().getStudentAttend(student);
-
-            IStudentGroupAttend notExistingSGAttend = DomainFactory.makeStudentGroupAttend(
-                    newStudentGroup, attend);
-        }
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
+        final IPersistentGrouping persistentGrouping = persistentSupport.getIPersistentGrouping();
+        final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
+        
+        final IGrouping grouping = (IGrouping) persistentGrouping.readByOID(Grouping.class, groupingID);
+        
+        if (grouping == null)
+            throw new FenixServiceException();
+        
+        IShift shift = (IShift) persistentShift.readByOID(Shift.class, shiftID);
+        
+        List studentList = buildStudentList(studentUserNames, grouping);
+        
+        grouping.createStudentGroup(shift, groupNumber, studentList);
+                
         return true;
     }
 }

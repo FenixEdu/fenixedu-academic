@@ -5,9 +5,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse;
+import net.sourceforge.fenixedu.domain.IExportGrouping;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupPropertiesExecutionCourse;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExportGrouping;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -28,8 +28,8 @@ public class VerifyIfGroupPropertiesHasProjectProposal implements IService
 		boolean result = true;
 		try{
 			ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-			IPersistentGroupPropertiesExecutionCourse persistentGroupPropertiesExecutionCourse = sp.getIPersistentGroupPropertiesExecutionCourse();
-			IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = persistentGroupPropertiesExecutionCourse.readByIDs(groupPropertiesId,executionCourseId);
+			IPersistentExportGrouping persistentExportGrouping = sp.getIPersistentExportGrouping();
+			IExportGrouping groupPropertiesExecutionCourse = persistentExportGrouping.readBy(groupPropertiesId,executionCourseId);
 			if(groupPropertiesExecutionCourse==null){
 				result = false;
 			}

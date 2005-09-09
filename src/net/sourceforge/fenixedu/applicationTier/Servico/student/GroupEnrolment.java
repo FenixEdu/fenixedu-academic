@@ -5,10 +5,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
@@ -21,153 +19,112 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.GroupProperties;
+import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IGroupProperties;
+import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
-import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author asnr and scpo
- *  
+ * 
  */
 public class GroupEnrolment implements IService {
 
-    public boolean run(Integer groupPropertiesCode, Integer shiftCode,
-            Integer groupNumber, List studentCodes, String username)
-            throws FenixServiceException, ExcepcaoPersistencia {
+    public boolean run(Integer groupingID, Integer shiftID, Integer groupNumber, List studentIDs,
+            String username) throws FenixServiceException, ExcepcaoPersistencia {
 
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentStudentGroupAttend persistentStudentGroupAttend = sp
-            .getIPersistentStudentGroupAttend();
-            IPersistentStudentGroup persistentStudentGroup = sp
-            .getIPersistentStudentGroup();
-            IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
+        final IGrouping grouping = (IGrouping) persistentSupport.getIPersistentGrouping().readByOID(
+                Grouping.class, groupingID);
+        if (grouping == null) {
+            throw new NonExistingServiceException();
+        }
 
-            IGroupProperties groupProperties = (IGroupProperties) sp
-                    .getIPersistentGroupProperties().readByOID(
-                            GroupProperties.class, groupPropertiesCode);
+        final IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
+        final IStudent userStudent = persistentStudent.readByUsername(username);
 
-            if(groupProperties == null){
-            	throw new NonExistingServiceException();
-            }
-            
-            IStudent userStudent = sp.getIPersistentStudent().readByUsername(
-                    username);
-       
-            List<IStudent> studentsList = new ArrayList<IStudent>();
-            Iterator iterator = studentCodes.iterator();
-    		while (iterator.hasNext()) {
-    			IStudent student = (IStudent) persistentStudent.readByOID(
-    					Student.class, (Integer) iterator.next());
-    			studentsList.add(student);
-    		}
-            
-            
-    		IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-			.getInstance();
-    		IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-			.getGroupEnrolmentStrategyInstance(groupProperties);
- 
-            if(!strategy.checkStudentInAttendsSet(groupProperties,userStudent.getPerson().getUsername()))
-            {
-            	throw new NoChangeMadeServiceException();
-            }
+        List<IStudent> studentsList = new ArrayList<IStudent>();
+        for (final Integer studentID : (List<Integer>) studentIDs) {
+            IStudent student = (IStudent) persistentStudent.readByOID(Student.class, studentID);
+            studentsList.add(student);
+        }
 
-            IShift shift = null;
-            
-            Integer result= null;
-            if(shiftCode != null){
-           	 shift = (IShift) sp.getITurnoPersistente().readByOID(
-                       Shift.class, shiftCode);
-            }
-             result = strategy.enrolmentPolicyNewGroup(groupProperties,
-                    studentCodes.size() + 1, shift);
-            
-            if (result.equals(new Integer(-1))) {
-                throw new InvalidArgumentsServiceException();
-            }
-            if (result.equals(new Integer(-2))) {
-                throw new NonValidChangeServiceException();
-            }
-            if (result.equals(new Integer(-3))) {
-                throw new NotAuthorizedException();
-            }
-            
+        IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
+                .getInstance();
+        IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
+                .getGroupEnrolmentStrategyInstance(grouping);
+        if (!strategy.checkStudentInGrouping(grouping, userStudent.getPerson().getUsername())) {
+            throw new NoChangeMadeServiceException();
+        }
 
-            IStudentGroup newStudentGroup = persistentStudentGroup
-                    .readStudentGroupByAttendsSetAndGroupNumber(
-                            groupProperties.getAttendsSet().getIdInternal(), groupNumber);
+        IShift shift = null;
+        if (shiftID != null) {
+            shift = (IShift) persistentSupport.getITurnoPersistente().readByOID(Shift.class, shiftID);
+        }
+        Integer result = strategy.enrolmentPolicyNewGroup(grouping, studentIDs.size() + 1, shift);
 
-            if (newStudentGroup != null) {
-                throw new FenixServiceException();
-            }
-            
-            if(!strategy.checkStudentsInAttendsSet(studentCodes,groupProperties)){
-            	throw new InvalidStudentNumberServiceException();
-            }
+        if (result.equals(Integer.valueOf(-1))) {
+            throw new InvalidArgumentsServiceException();
+        }
+        if (result.equals(Integer.valueOf(-2))) {
+            throw new NonValidChangeServiceException();
+        }
+        if (result.equals(Integer.valueOf(-3))) {
+            throw new NotAuthorizedException();
+        }
 
-            IAttends userAttend = groupProperties.getAttendsSet().getStudentAttend(userStudent);
-           
-            checkStudentCodesAndUserAttendInStudentGroup(studentsList,groupProperties,userAttend);
+        IStudentGroup newStudentGroup = grouping.readStudentGroupBy(groupNumber);
+        if (newStudentGroup != null) {
+            throw new FenixServiceException();
+        }
 
-            
-            newStudentGroup = DomainFactory.makeStudentGroup(groupNumber, groupProperties.getAttendsSet(),
-                    shift);
-            
-            groupProperties.getAttendsSet().addStudentGroup(newStudentGroup);
-            
-            
-            Iterator iter = studentsList.iterator();
+        if (!strategy.checkStudentsInGrouping(studentIDs, grouping)) {
+            throw new InvalidStudentNumberServiceException();
+        }
 
-            while (iter.hasNext()) {
+        final IAttends userAttend = grouping.getStudentAttend(userStudent);
 
-                IStudent student = (IStudent)iter.next();
+        checkStudentCodesAndUserAttendInStudentGroup(studentsList, grouping, userAttend);
+        newStudentGroup = DomainFactory.makeStudentGroup(groupNumber, grouping, shift);
 
-                IAttends attend = groupProperties.getAttendsSet().getStudentAttend(student);
+        grouping.addStudentGroups(newStudentGroup);
 
-                IStudentGroupAttend notExistingSGAttend = DomainFactory.makeStudentGroupAttend(
-                        newStudentGroup, attend);
-            }
-            IStudentGroupAttend notExistingUserSGAttend = DomainFactory.makeStudentGroupAttend(
-                    newStudentGroup, userAttend);
+        for (final IStudent student : studentsList) {
+            IAttends attend = grouping.getStudentAttend(student);
+            attend.addStudentGroups(newStudentGroup);
+
+        }
 
         return true;
     }
 
-    
-    private void checkStudentCodesAndUserAttendInStudentGroup (List studentsList, IGroupProperties groupProperties, IAttends userAttend) 
-    throws FenixServiceException {
-    	
-    	try {
-    		IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-			.getInstance();
-    		IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-			.getGroupEnrolmentStrategyInstance(groupProperties);
-            
-    		Iterator iterator = studentsList.iterator();
-    		while (iterator.hasNext()) {
-    			IStudent student = (IStudent) iterator.next();
-    			if(strategy.checkAlreadyEnroled(groupProperties,student.getPerson().getUsername())){
-    				throw new ExistingServiceException();
-    			}
-    		}
-    		if(strategy.checkAlreadyEnroled(groupProperties,userAttend.getAluno().getPerson().getUsername())){
-    			throw new InvalidSituationServiceException();
-    		}
-    	} catch (ExcepcaoPersistencia ex) {
-    		ex.printStackTrace();
-    	}
+    private void checkStudentCodesAndUserAttendInStudentGroup(final List<IStudent> students,
+            final IGrouping grouping, final IAttends userAttend) throws FenixServiceException,
+            ExcepcaoPersistencia {
+
+        IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
+                .getInstance();
+        IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
+                .getGroupEnrolmentStrategyInstance(grouping);
+
+        if (strategy.checkAlreadyEnroled(grouping, userAttend.getAluno().getPerson().getUsername())) {
+            throw new InvalidSituationServiceException();
+        }
+
+        for (final IStudent student : students) {
+            if (strategy.checkAlreadyEnroled(grouping, student.getPerson().getUsername())) {
+                throw new InvalidSituationServiceException();
+            }
+        }
     }
-	}
+}

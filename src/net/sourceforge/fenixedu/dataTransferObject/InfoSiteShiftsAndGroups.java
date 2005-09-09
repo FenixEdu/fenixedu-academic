@@ -14,10 +14,9 @@ import java.util.ListIterator;
 public class InfoSiteShiftsAndGroups extends DataTranferObject implements ISiteComponent {
 
 	private List infoSiteGroupsByShiftList;
-	private InfoAttendsSet infoAttendsSet;
-	private InfoGroupProperties infoGroupProperties;
-	private Integer numberOfStudentsOutsideAttendsSet;
-	private Integer numberOfStudentsInsideAttendsSet;
+	private InfoGrouping infoGrouping;
+	private Integer numberOfStudentsOutsideGrouping;
+	private Integer numberOfStudentsInsideGrouping;
 	
 	
 	/**
@@ -33,22 +32,7 @@ public class InfoSiteShiftsAndGroups extends DataTranferObject implements ISiteC
 	public void setInfoSiteGroupsByShiftList(List infoSiteGroupsByShiftList) {
 		this.infoSiteGroupsByShiftList = infoSiteGroupsByShiftList;
 	}
-	
-	/**
-	* @return
-	*/
-	public InfoAttendsSet getInfoAttendsSet() {
-		return infoAttendsSet;
-	}
-
-	/**
-	 * @param InfoAttendsSet
-	 */
-	public void setInfoAttendsSet(InfoAttendsSet infoAttendsSet) {
-		this.infoAttendsSet = infoAttendsSet;
-	}
-
-	
+		
 	public boolean equals(Object objectToCompare) {
 			boolean result = true;
 			
@@ -85,28 +69,26 @@ public class InfoSiteShiftsAndGroups extends DataTranferObject implements ISiteC
 			return result;
 		}
 
-    public void setInfoGroupProperties(InfoGroupProperties infoGroupProperties) {
-        this.infoGroupProperties = infoGroupProperties;
+    public void setInfoGrouping(InfoGrouping infoGrouping) {
+        this.infoGrouping = infoGrouping;
     }
-    public InfoGroupProperties getInfoGroupProperties() {
-        return infoGroupProperties;
+    public InfoGrouping getInfoGrouping() {
+        return infoGrouping;
     }
     
     public Integer getNumberOfStudentsOutsideAttendsSet() {
-		return numberOfStudentsOutsideAttendsSet;
+		return numberOfStudentsOutsideGrouping;
 	}
 
 	public void setNumberOfStudentsOutsideAttendsSet(Integer numberOfStudentsOutsideAttendsSet) {
-		this.numberOfStudentsOutsideAttendsSet = numberOfStudentsOutsideAttendsSet;
+		this.numberOfStudentsOutsideGrouping = numberOfStudentsOutsideAttendsSet;
 	}
 
     public Integer getNumberOfStudentsInsideAttendsSet() {
-		return numberOfStudentsInsideAttendsSet;
+		return numberOfStudentsInsideGrouping;
 	}
 
 	public void setNumberOfStudentsInsideAttendsSet(Integer numberOfStudentsInsideAttendsSet) {
-		this.numberOfStudentsInsideAttendsSet = numberOfStudentsInsideAttendsSet;
+		this.numberOfStudentsInsideGrouping = numberOfStudentsInsideAttendsSet;
 	}
-
-    
 }

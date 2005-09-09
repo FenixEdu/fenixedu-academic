@@ -8,7 +8,7 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoDegree" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGroupProperties" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGrouping" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoLesson" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoAttendsSummary" %>
@@ -314,7 +314,7 @@ function cleanSelect(checkboxes) {
 		<tr>
 		   <logic:present name="groupsProperties">
 			<logic:notEmpty name="groupsProperties">
-				<logic:iterate name="groupsProperties" id="gp" type="net.sourceforge.fenixedu.dataTransferObject.InfoGroupProperties">
+				<logic:iterate name="groupsProperties" id="gp" type="net.sourceforge.fenixedu.dataTransferObject.InfoGrouping">
 					<td class="listClasses-header">
 					<bean:write name="gp" property="name"/>
 					</td>
@@ -422,7 +422,7 @@ function cleanSelect(checkboxes) {
 				
 				for (Iterator groupsPropertiesIterator=((List)groupsProperties).iterator(); groupsPropertiesIterator.hasNext();)
 				{
-					InfoGroupProperties gProperties = (InfoGroupProperties) groupsPropertiesIterator.next();
+					InfoGrouping gProperties = (InfoGrouping) groupsPropertiesIterator.next();
 					Integer groupPropertiesIdInternal = gProperties.getIdInternal();
 
 					Integer studentGroupId = null;

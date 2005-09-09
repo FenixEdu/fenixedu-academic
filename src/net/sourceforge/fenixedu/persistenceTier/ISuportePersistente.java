@@ -227,9 +227,7 @@ public interface ISuportePersistente {
 
     public IPersistentStudentGroup getIPersistentStudentGroup();
 
-    public IPersistentStudentGroupAttend getIPersistentStudentGroupAttend();
-
-    public IPersistentGroupProperties getIPersistentGroupProperties();
+    public IPersistentGrouping getIPersistentGrouping();
 
     public IPersistentCurricularCourseEquivalence getIPersistentCurricularCourseEquivalence();
 
@@ -444,11 +442,7 @@ public interface ISuportePersistente {
     // Ricardo Rodrigues
 	public IPersistentPublicationTeacher getIPersistentPublicationTeacher();
 
-    public IPersistentAttendInAttendsSet getIPersistentAttendInAttendsSet();
-
-    public IPersistentAttendsSet getIPersistentAttendsSet();
-
-    public IPersistentGroupPropertiesExecutionCourse getIPersistentGroupPropertiesExecutionCourse();
+    public IPersistentExportGrouping getIPersistentExportGrouping();
     
     // Rita Ferreira e João Fialho
     public IPersistentOldInquiriesSummary getIPersistentOldInquiriesSummary();

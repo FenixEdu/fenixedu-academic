@@ -6,76 +6,56 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 /**
  * @author asnr and scpo
- *  
+ * 
  */
 public class InfoSiteStudentInformation extends DataTranferObject implements ISiteComponent {
     private String name;
-
     private Integer number;
-
     private String email;
-
     private String username;
 
-    /**
-     * @return
-     */
+    public InfoSiteStudentInformation() {
+    }
+
+    public InfoSiteStudentInformation(String name, String email, String username, Integer number) {
+        this.name = name;
+        this.email = email;
+        this.username = username;
+        this.number = number;
+    }
+
     public String getName() {
         return name;
     }
 
-    /**
-     * @param name
-     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * @return
-     */
     public String getUsername() {
         return username;
     }
 
-    /**
-     * @param name
-     */
     public void setUsername(String username) {
         this.username = username;
     }
 
-    /**
-     * @return
-     */
     public String getEmail() {
         return email;
     }
 
-    /**
-     * @param email
-     */
     public void setEmail(String email) {
         this.email = email;
     }
 
-    /**
-     * @return
-     */
     public Integer getNumber() {
         return number;
     }
 
-    /**
-     * @param number
-     */
     public void setNumber(Integer number) {
         this.number = number;
     }
 
-    /**
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
     public boolean equals(Object arg0) {
         boolean result = false;
         if (arg0 instanceof InfoSiteStudentInformation) {
@@ -86,5 +66,4 @@ public class InfoSiteStudentInformation extends DataTranferObject implements ISi
         }
         return result;
     }
-
 }

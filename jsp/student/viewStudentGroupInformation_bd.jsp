@@ -12,10 +12,9 @@
 	
 	<bean:define id="infoStudentGroup" name="infoSiteStudentGroup" property="infoStudentGroup"/>
 	<bean:define id="studentGroupCode" name="infoStudentGroup" property="idInternal"/>
-	<bean:define id="infoAttendsSet" name="infoStudentGroup" property="infoAttendsSet"/>
-	<bean:define id="groupPropertiesCode" name="infoAttendsSet" property="infoGroupProperties.idInternal"/>
-	
-	
+	<bean:define id="infoAttends" name="infoStudentGroup" property="infoAttends"/>
+	<bean:define id="infoGrouping" name="infoStudentGroup" property="infoGrouping"/>
+	<bean:define id="groupPropertiesCode" name="infoGrouping" property="idInternal"/>
 	
 <logic:empty name="infoSiteStudentGroup" property="infoSiteStudentInformationList">
 		

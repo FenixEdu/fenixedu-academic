@@ -51,7 +51,7 @@ public class ViewStudentGroupInformationAction extends FenixContextAction {
 		
 		try {
 			
-			Integer type = (Integer) ServiceUtils.executeService(userView, "VerifyGroupPropertiesAndStudentGroupWithoutShift",argsAux);
+			Integer type = (Integer) ServiceUtils.executeService(userView, "VerifyGroupingAndStudentGroupWithoutShift",argsAux);
 			viewStudentGroup = (InfoSiteStudentGroup) ServiceUtils.executeService(userView, "ReadStudentGroupInformation", args);
 			request.setAttribute("ShiftType",type);
 		}catch (ExistingServiceException e){

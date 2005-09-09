@@ -4,9 +4,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys;
 
-import java.util.List;
-
-import net.sourceforge.fenixedu.domain.IGroupProperties;
+import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -22,48 +20,41 @@ public class AtomicGroupEnrolmentStrategy extends GroupEnrolmentStrategy impleme
     public AtomicGroupEnrolmentStrategy() {
     }
 
-    public Integer enrolmentPolicyNewGroup(IGroupProperties groupProperties,
-            int numberOfStudentsToEnrole, IShift shift) {
+    public Integer enrolmentPolicyNewGroup(IGrouping grouping, int numberOfStudentsToEnrole, IShift shift) throws ExcepcaoPersistencia {
 
-        if (checkNumberOfGroups(groupProperties, shift)) {
-            Integer maximumCapacity = groupProperties.getMaximumCapacity();
-            Integer minimumCapacity = groupProperties.getMinimumCapacity();
-            Integer nrStudents = new Integer(numberOfStudentsToEnrole);
+        if (checkNumberOfGroups(grouping, shift)) {
+            Integer maximumCapacity = grouping.getMaximumCapacity();
+            Integer minimumCapacity = grouping.getMinimumCapacity();
+            Integer nrStudents = Integer.valueOf(numberOfStudentsToEnrole);
 
             if (maximumCapacity == null && minimumCapacity == null)
-                return new Integer(1);
+                return Integer.valueOf(1);
             if (minimumCapacity != null) {
                 if (nrStudents.compareTo(minimumCapacity) < 0)
-                    return new Integer(-2);
+                    return Integer.valueOf(-2);
             }
             if (maximumCapacity != null) {
                 if (nrStudents.compareTo(maximumCapacity) > 0)
-                    return new Integer(-3);
+                    return Integer.valueOf(-3);
             }
         } else
-            return new Integer(-1);
+            return Integer.valueOf(-1);
 
-        return new Integer(1);
+        return Integer.valueOf(1);
 
     }
 
-    public boolean checkNumberOfGroupElements(IGroupProperties groupProperties,
-            IStudentGroup studentGroup) throws ExcepcaoPersistencia {
+    public boolean checkNumberOfGroupElements(IGrouping grouping, IStudentGroup studentGroup) throws ExcepcaoPersistencia {
 
         boolean result = false;
-        Integer minimumCapacity = groupProperties.getMinimumCapacity();
-
+        final Integer minimumCapacity = grouping.getMinimumCapacity();
+        
         if (minimumCapacity == null)
             result = true;
         else {
-
-            List allStudentGroupAttend = studentGroup.getStudentGroupAttends();
-
-            int numberOfGroupElements = allStudentGroupAttend.size();
-
+            final int numberOfGroupElements = studentGroup.getAttendsCount();
             if (numberOfGroupElements > minimumCapacity.intValue())
                 result = true;
-
         }
         return result;
     }

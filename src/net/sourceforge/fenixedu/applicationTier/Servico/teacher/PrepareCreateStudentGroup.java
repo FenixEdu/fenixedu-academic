@@ -6,149 +6,94 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentInformation;
-import net.sourceforge.fenixedu.domain.GroupProperties;
+import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IAttendsSet;
-import net.sourceforge.fenixedu.domain.IGroupProperties;
+import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
-import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
+
 /**
  * @author ansr and scpo
- *  
+ * 
  */
-public class PrepareCreateStudentGroup implements IServico {
+public class PrepareCreateStudentGroup implements IService {
 
-    private static PrepareCreateStudentGroup service = new PrepareCreateStudentGroup();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static PrepareCreateStudentGroup getService() {
-        return service;
-    }
-
-    /**
-     * The constructor of this class.
-     */
-    private PrepareCreateStudentGroup() {
-    }
-
-    /**
-     * The name of the service
-     */
-    public final String getNome() {
-        return "PrepareCreateStudentGroup";
-    }
-
-    /**
-     * Executes the service.
-     */
-
-    public ISiteComponent run(Integer executionCourseCode,
-            Integer groupPropertiesCode) throws FenixServiceException {
-
-        List frequentas = new ArrayList();
+    public ISiteComponent run(Integer executionCourseCode, Integer groupPropertiesCode)
+            throws FenixServiceException {
 
         List infoStudentInformationList = new ArrayList();
         InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
         Integer groupNumber = null;
-        IGroupProperties groupProperties;
+        IGrouping grouping;
         try {
 
             ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        
-             groupProperties = (IGroupProperties) ps
-                    .getIPersistentGroupProperties().readByOID(
-                            GroupProperties.class, groupPropertiesCode);
 
-             if(groupProperties == null){
-            	throw new ExistingServiceException();
-             }
-             
-            frequentas.addAll(groupProperties.getAttendsSet().getAttends());
-            
-            
-            IAttendsSet attendsSet = groupProperties.getAttendsSet();
-            
+            grouping = (IGrouping) ps.getIPersistentGrouping().readByOID(Grouping.class,
+                    groupPropertiesCode);
 
-            List allStudentsGroups = attendsSet.getStudentGroups();
-            
+            if (grouping == null) {
+                throw new ExistingServiceException();
+            }
+
+            List<IAttends> attendsGrouping = new ArrayList();
+            attendsGrouping.addAll(grouping.getAttends());
+
+            List<IStudentGroup> allStudentsGroups = grouping.getStudentGroups();
+
             groupNumber = new Integer(1);
-            
-            if(allStudentsGroups!=null){
-            	if (allStudentsGroups.size() != 0) {
-                    final IStudentGroup studentGroup = (IStudentGroup) Collections.max(allStudentsGroups, new BeanComparator("groupNumber"));
-            		Integer lastGroupNumber = studentGroup.getGroupNumber();
-            		groupNumber = Integer.valueOf(lastGroupNumber.intValue() + 1);
-            	}
 
-            	Iterator iterator = allStudentsGroups.iterator();
-            	List allStudentGroupAttend;
-            
-            	while (iterator.hasNext()) {
-                    IStudentGroup studentGroup = (IStudentGroup) iterator.next();
-            		allStudentGroupAttend =  studentGroup.getStudentGroupAttends();
-            
-            		Iterator iterator2 = allStudentGroupAttend.iterator();
-            		IAttends frequenta = null;
-            		while (iterator2.hasNext()) {
-            			frequenta = ((IStudentGroupAttend) iterator2.next())
-						.getAttend();
-            			if (frequentas.contains(frequenta)) {
-            				frequentas.remove(frequenta);
-            			}
-            		}
-            	}
+            if (allStudentsGroups != null) {
+                if (allStudentsGroups.size() != 0) {
+                    IStudentGroup studentGroup = (IStudentGroup) Collections.max(allStudentsGroups,
+                            new BeanComparator("groupNumber"));
+                    groupNumber = studentGroup.getGroupNumber() + 1;                            
+                }
+
+                List<IAttends> allStudentGroupAttends;
+                for(IStudentGroup studentGroup : allStudentsGroups){
+                    allStudentGroupAttends = studentGroup.getAttends();
+                    for(IAttends attend : allStudentGroupAttends){
+                        if(attendsGrouping.contains(attend))
+                            attendsGrouping.remove(attend);
+                    }                    
+                }               
             }
-            
-            IStudent student = null;
-            Iterator iterator3 = frequentas.iterator();
 
-            while (iterator3.hasNext()) {
-                student = ((IAttends) iterator3.next()).getAluno();
+            IStudent student = null;                        
+            for(IAttends attend : attendsGrouping){
+                student = attend.getAluno();
                 InfoSiteStudentInformation infoSiteStudentInformation = new InfoSiteStudentInformation();
-
-                infoSiteStudentInformation.setEmail(student.getPerson()
-                        .getEmail());
-                infoSiteStudentInformation.setName(student.getPerson()
-                        .getNome());
+                infoSiteStudentInformation.setEmail(student.getPerson().getEmail());
+                infoSiteStudentInformation.setName(student.getPerson().getNome());
                 infoSiteStudentInformation.setNumber(student.getNumber());
-                infoSiteStudentInformation.setUsername(student.getPerson()
-                        .getUsername());
+                infoSiteStudentInformation.setUsername(student.getPerson().getUsername());
                 infoStudentInformationList.add(infoSiteStudentInformation);
-            }
+            }          
 
-            
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia.getMessage());
         }
-        Collections.sort(infoStudentInformationList, new BeanComparator(
-                "number"));
+        Collections.sort(infoStudentInformationList, new BeanComparator("number"));
 
-        infoSiteStudentGroup
-                .setInfoSiteStudentInformationList(infoStudentInformationList);
+        infoSiteStudentGroup.setInfoSiteStudentInformationList(infoStudentInformationList);
         infoSiteStudentGroup.setNrOfElements(groupNumber);
-        
+
         return infoSiteStudentGroup;
 
     }
 }
-
-
-

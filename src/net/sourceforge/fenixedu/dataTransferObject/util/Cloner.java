@@ -11,7 +11,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoAdvisory;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAnnouncement;
-import net.sourceforge.fenixedu.dataTransferObject.InfoAttendsSet;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCampus;
@@ -37,11 +36,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExportGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
-import net.sourceforge.fenixedu.dataTransferObject.InfoGroupProperties;
-import net.sourceforge.fenixedu.dataTransferObject.InfoGroupPropertiesExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoItem;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
@@ -89,7 +88,6 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InfoTeacherI
 import net.sourceforge.fenixedu.domain.IAdvisory;
 import net.sourceforge.fenixedu.domain.IAnnouncement;
 import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IAttendsSet;
 import net.sourceforge.fenixedu.domain.IBibliographicReference;
 import net.sourceforge.fenixedu.domain.IBranch;
 import net.sourceforge.fenixedu.domain.ICampus;
@@ -113,10 +111,10 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.IExportGrouping;
 import net.sourceforge.fenixedu.domain.IExternalPerson;
 import net.sourceforge.fenixedu.domain.IGratuityValues;
-import net.sourceforge.fenixedu.domain.IGroupProperties;
-import net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse;
+import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.domain.IItem;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
@@ -1103,23 +1101,23 @@ public abstract class Cloner {
      * @return infoGroupProperties
      */
 
-    public static InfoGroupProperties copyIGroupProperties2InfoGroupProperties(
-            IGroupProperties groupProperties) {
-        InfoGroupProperties infoGroupProperties = new InfoGroupProperties();
+    public static InfoGrouping copyIGroupProperties2InfoGroupProperties(
+            IGrouping groupProperties) {
+        InfoGrouping infoGrouping = new InfoGrouping();
 
-        infoGroupProperties.setEnrolmentBeginDay(groupProperties.getEnrolmentBeginDay());
-        infoGroupProperties.setEnrolmentEndDay(groupProperties.getEnrolmentEndDay());
-        infoGroupProperties.setMaximumCapacity(groupProperties.getMaximumCapacity());
-        infoGroupProperties.setMinimumCapacity(groupProperties.getMinimumCapacity());
-        infoGroupProperties.setIdealCapacity(groupProperties.getIdealCapacity());
-        infoGroupProperties.setGroupMaximumNumber(groupProperties.getGroupMaximumNumber());
-        infoGroupProperties.setEnrolmentPolicy(groupProperties.getEnrolmentPolicy());
-        infoGroupProperties.setIdInternal(groupProperties.getIdInternal());
-        infoGroupProperties.setName(groupProperties.getName());
-        infoGroupProperties.setShiftType(groupProperties.getShiftType());
-        infoGroupProperties.setProjectDescription(groupProperties.getProjectDescription());
+        infoGrouping.setEnrolmentBeginDay(groupProperties.getEnrolmentBeginDay());
+        infoGrouping.setEnrolmentEndDay(groupProperties.getEnrolmentEndDay());
+        infoGrouping.setMaximumCapacity(groupProperties.getMaximumCapacity());
+        infoGrouping.setMinimumCapacity(groupProperties.getMinimumCapacity());
+        infoGrouping.setIdealCapacity(groupProperties.getIdealCapacity());
+        infoGrouping.setGroupMaximumNumber(groupProperties.getGroupMaximumNumber());
+        infoGrouping.setEnrolmentPolicy(groupProperties.getEnrolmentPolicy());
+        infoGrouping.setIdInternal(groupProperties.getIdInternal());
+        infoGrouping.setName(groupProperties.getName());
+        infoGrouping.setShiftType(groupProperties.getShiftType());
+        infoGrouping.setProjectDescription(groupProperties.getProjectDescription());
 
-        return infoGroupProperties;
+        return infoGrouping;
     }
 
     /**
@@ -1127,31 +1125,17 @@ public abstract class Cloner {
      * @return infoGroupPropertiesExecutionCourse
      */
 
-    public static InfoGroupPropertiesExecutionCourse copyIGroupPropertiesExecutionCourse2InfoGroupPropertiesExecutionCourse(
-            IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse) {
-        InfoGroupPropertiesExecutionCourse infoGroupPropertiesExecutionCourse = new InfoGroupPropertiesExecutionCourse();
+    public static InfoExportGrouping copyIGroupPropertiesExecutionCourse2InfoGroupPropertiesExecutionCourse(
+            IExportGrouping groupPropertiesExecutionCourse) {
+        InfoExportGrouping infoGroupPropertiesExecutionCourse = new InfoExportGrouping();
         infoGroupPropertiesExecutionCourse.setIdInternal(groupPropertiesExecutionCourse.getIdInternal());
-        InfoGroupProperties infoGroupProperties = copyIGroupProperties2InfoGroupProperties(groupPropertiesExecutionCourse
-                .getGroupProperties());
+        InfoGrouping infoGroupProperties = copyIGroupProperties2InfoGroupProperties(groupPropertiesExecutionCourse
+                .getGrouping());
         InfoExecutionCourse infoExecutionCourse = copy(groupPropertiesExecutionCourse
                 .getExecutionCourse());
         infoGroupPropertiesExecutionCourse.setInfoExecutionCourse(infoExecutionCourse);
-        infoGroupPropertiesExecutionCourse.setInfoGroupProperties(infoGroupProperties);
+        infoGroupPropertiesExecutionCourse.setInfoGrouping(infoGroupProperties);
         return infoGroupPropertiesExecutionCourse;
-    }
-
-    /**
-     * @param attendsSet
-     * @return infoAttendsSet
-     */
-
-    public static InfoAttendsSet copyIAttendsSet2InfoAttendsSet(IAttendsSet attendsSet) {
-
-        InfoAttendsSet infoAttendsSet = new InfoAttendsSet();
-        infoAttendsSet.setIdInternal(attendsSet.getIdInternal());
-        infoAttendsSet.setName(attendsSet.getName());
-
-        return infoAttendsSet;
     }
 
     public static InfoCurricularYear copyICurricularYear2InfoCurricularYear(

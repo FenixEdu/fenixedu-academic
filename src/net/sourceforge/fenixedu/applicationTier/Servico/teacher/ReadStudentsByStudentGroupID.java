@@ -11,9 +11,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
-import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -43,11 +43,12 @@ public class ReadStudentsByStudentGroupID implements IService {
 
         IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
                 StudentGroup.class, groupId);
-        List studentGroupAttendacies = studentGroup.getStudentGroupAttends();
+       
+        Iterator iter = studentGroup.getAttends().iterator();
 
-        for (Iterator iter = studentGroupAttendacies.iterator(); iter.hasNext();) {
-            IStudentGroupAttend studentGroupAttend = (IStudentGroupAttend) iter.next();
-            Integer studentID = studentGroupAttend.getAttend().getAluno().getIdInternal();
+        while(iter.hasNext()) {
+            IAttends attend = (IAttends) iter.next();
+            Integer studentID = attend.getAluno().getIdInternal();
             IStudent student = (IStudent) persistentStudent.readByOID(Student.class, studentID);
             infoStudents.add(Cloner.copyIStudent2InfoStudent(student));
         }

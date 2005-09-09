@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys;
 
-import net.sourceforge.fenixedu.domain.IGroupProperties;
+import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
 
 /**
@@ -32,10 +32,10 @@ public class GroupEnrolmentStrategyFactory implements IGroupEnrolmentStrategyFac
         }
     }
 
-    public IGroupEnrolmentStrategy getGroupEnrolmentStrategyInstance(IGroupProperties groupProperties) {
+    public IGroupEnrolmentStrategy getGroupEnrolmentStrategyInstance(IGrouping grouping) {
 
         IGroupEnrolmentStrategy strategyInstance = null;
-        EnrolmentGroupPolicyType policy = groupProperties.getEnrolmentPolicy();
+        EnrolmentGroupPolicyType policy = grouping.getEnrolmentPolicy();
 
         if (policy == null)
             throw new IllegalArgumentException("Must initialize Group Properties!");

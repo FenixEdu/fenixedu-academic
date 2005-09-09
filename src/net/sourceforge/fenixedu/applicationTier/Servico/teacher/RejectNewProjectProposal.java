@@ -13,18 +13,19 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.GroupProperties;
+import net.sourceforge.fenixedu.domain.ExportGrouping;
+import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.IAdvisory;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IGroupProperties;
-import net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse;
+import net.sourceforge.fenixedu.domain.IExportGrouping;
+import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupProperties;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupPropertiesExecutionCourse;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExportGrouping;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -47,20 +48,20 @@ public class RejectNewProjectProposal implements IService {
 
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentGroupProperties persistentGroupProperties = sp.getIPersistentGroupProperties();
-            IPersistentGroupPropertiesExecutionCourse persistentGroupPropertiesExecutionCourse = sp
-                    .getIPersistentGroupPropertiesExecutionCourse();
+            IPersistentGrouping persistentGroupProperties = sp.getIPersistentGrouping();
+            IPersistentExportGrouping persistentExportGrouping = sp
+                    .getIPersistentExportGrouping();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
-            IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties.readByOID(
-                    GroupProperties.class, groupPropertiesId);
+            IGrouping groupProperties = (IGrouping) persistentGroupProperties.readByOID(Grouping.class,
+                    groupPropertiesId);
 
             if (groupProperties == null) {
                 throw new NotAuthorizedException();
             }
 
-            IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = persistentGroupPropertiesExecutionCourse
-                    .readByIDs(groupPropertiesId, executionCourseId);
+            IExportGrouping groupPropertiesExecutionCourse = persistentExportGrouping
+                    .readBy(groupPropertiesId, executionCourseId);
 
             if (groupPropertiesExecutionCourse == null) {
                 throw new ExistingServiceException();
@@ -72,26 +73,28 @@ public class RejectNewProjectProposal implements IService {
             IExecutionCourse executionCourse = groupPropertiesExecutionCourse.getExecutionCourse();
             groupPropertiesExecutionCourse.setReceiverPerson(receiverPerson);
             groupPropertiesExecutionCourse.getProposalState().setState(3);
-            executionCourse.removeGroupPropertiesExecutionCourse(groupPropertiesExecutionCourse);
-            groupProperties.removeGroupPropertiesExecutionCourse(groupPropertiesExecutionCourse);
+            executionCourse.removeExportGroupings(groupPropertiesExecutionCourse);
+            groupProperties.removeExportGroupings(groupPropertiesExecutionCourse);
 
-            persistentGroupPropertiesExecutionCourse.delete(groupPropertiesExecutionCourse);
+            persistentExportGrouping.deleteByOID(ExportGrouping.class,
+                    groupPropertiesExecutionCourse.getIdInternal());
 
             List group = new ArrayList();
 
             List groupPropertiesExecutionCourseList = groupProperties
-                    .getGroupPropertiesExecutionCourse();
+                    .getExportGroupings();
             Iterator iterGroupPropertiesExecutionCourseList = groupPropertiesExecutionCourseList
                     .iterator();
 
             while (iterGroupPropertiesExecutionCourseList.hasNext()) {
 
-                IGroupPropertiesExecutionCourse groupPropertiesExecutionCourseAux = (IGroupPropertiesExecutionCourse) iterGroupPropertiesExecutionCourseList
+                IExportGrouping groupPropertiesExecutionCourseAux = (IExportGrouping) iterGroupPropertiesExecutionCourseList
                         .next();
                 if (groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 1
                         || groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 2) {
 
-                    List professorships = groupPropertiesExecutionCourseAux.getExecutionCourse().getProfessorships();
+                    List professorships = groupPropertiesExecutionCourseAux.getExecutionCourse()
+                            .getProfessorships();
 
                     Iterator iterProfessorship = professorships.iterator();
                     while (iterProfessorship.hasNext()) {
@@ -142,11 +145,11 @@ public class RejectNewProjectProposal implements IService {
     }
 
     private IAdvisory createRejectAdvisory(IExecutionCourse executionCourse, IPerson senderPerson,
-            IPerson receiverPerson, IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse) {
+            IPerson receiverPerson, IExportGrouping groupPropertiesExecutionCourse) {
         IAdvisory advisory = DomainFactory.makeAdvisory();
         advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
-        if (groupPropertiesExecutionCourse.getGroupProperties().getEnrolmentEndDay() != null) {
-            advisory.setExpires(groupPropertiesExecutionCourse.getGroupProperties().getEnrolmentEndDay()
+        if (groupPropertiesExecutionCourse.getGrouping().getEnrolmentEndDay() != null) {
+            advisory.setExpires(groupPropertiesExecutionCourse.getGrouping().getEnrolmentEndDay()
                     .getTime());
         } else {
             advisory.setExpires(new Date(Calendar.getInstance().getTimeInMillis() + 1728000000));
@@ -158,7 +161,7 @@ public class RejectNewProjectProposal implements IService {
 
         String msg;
         msg = new String("A proposta de co-avalia��o do agrupamento "
-                + groupPropertiesExecutionCourse.getGroupProperties().getName()
+                + groupPropertiesExecutionCourse.getGrouping().getName()
                 + ", enviada pelo docente " + senderPerson.getNome() + " da disciplina "
                 + groupPropertiesExecutionCourse.getSenderExecutionCourse().getNome()
                 + " foi rejeitada pelo docente " + receiverPerson.getNome() + " da disciplina "

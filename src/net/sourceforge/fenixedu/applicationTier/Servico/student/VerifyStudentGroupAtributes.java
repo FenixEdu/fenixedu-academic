@@ -5,7 +5,6 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -15,8 +14,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
-import net.sourceforge.fenixedu.domain.GroupProperties;
-import net.sourceforge.fenixedu.domain.IGroupProperties;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -24,69 +23,46 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author asnr and scpo
- *  
+ * 
  */
 
-public class VerifyStudentGroupAtributes implements IServico {
+public class VerifyStudentGroupAtributes implements IService {
 
-    private static VerifyStudentGroupAtributes service = new VerifyStudentGroupAtributes();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static VerifyStudentGroupAtributes getService() {
-        return service;
-    }
-
-    /**
-     * The constructor of this class.
-     */
-    private VerifyStudentGroupAtributes() {
-    }
-
-    /**
-     * The name of the service
-     */
-    public final String getNome() {
-        return "VerifyStudentGroupAtributes";
-    }
-
-    private boolean checkGroupStudentEnrolment(Integer studentGroupCode,
-            String username) throws FenixServiceException {
+    private boolean checkGroupStudentEnrolment(Integer studentGroupCode, String username)
+            throws FenixServiceException {
 
         boolean result = false;
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IStudentGroup studentGroup = (IStudentGroup) sp
-                    .getIPersistentStudentGroup().readByOID(StudentGroup.class,
-                            studentGroupCode);
-            
+            IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOID(
+                    StudentGroup.class, studentGroupCode);
+
             if (studentGroup == null) {
                 throw new FenixServiceException();
             }
-            
-            IGroupProperties groupProperties = studentGroup.getAttendsSet().getGroupProperties();
-           
-            IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-			.getInstance();
-            IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-			.getGroupEnrolmentStrategyInstance(groupProperties);
 
-            
-            if(!strategy.checkStudentInAttendsSet(groupProperties,username)){
-        		throw new NotAuthorizedException();
-        	}
-            
+            IGrouping groupProperties = studentGroup.getGrouping();
+
+            IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
+                    .getInstance();
+            IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
+                    .getGroupEnrolmentStrategyInstance(groupProperties);
+
+            if (!strategy.checkStudentInGrouping(groupProperties, username)) {
+                throw new NotAuthorizedException();
+            }
+
             result = strategy.checkAlreadyEnroled(groupProperties, username);
             if (result)
                 throw new InvalidSituationServiceException();
 
-            result = strategy.checkPossibleToEnrolInExistingGroup(
-                    groupProperties, studentGroup, studentGroup.getShift());
+            result = strategy.checkPossibleToEnrolInExistingGroup(groupProperties, studentGroup,
+                    studentGroup.getShift());
             if (!result)
                 throw new InvalidArgumentsServiceException();
 
@@ -96,35 +72,31 @@ public class VerifyStudentGroupAtributes implements IServico {
         return true;
     }
 
-    private boolean checkGroupEnrolment(Integer groupPropertiesCode,
-            Integer shiftCode, String username) throws FenixServiceException {
+    private boolean checkGroupEnrolment(Integer groupPropertiesCode, Integer shiftCode, String username)
+            throws FenixServiceException {
 
         boolean result = false;
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IGroupProperties groupProperties = (IGroupProperties) sp
-                    .getIPersistentStudentGroup().readByOID(
-                            GroupProperties.class, groupPropertiesCode);
+            IGrouping groupProperties = (IGrouping) sp.getIPersistentStudentGroup().readByOID(
+                    Grouping.class, groupPropertiesCode);
 
-            if(groupProperties == null){
-            	throw new InvalidChangeServiceException();
+            if (groupProperties == null) {
+                throw new InvalidChangeServiceException();
             }
-            
-            IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-			.getInstance();
-            IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-			.getGroupEnrolmentStrategyInstance(groupProperties);
 
-        	
-        	if(!strategy.checkStudentInAttendsSet(groupProperties,username)){
-        		throw new NotAuthorizedException();
-        	}
-        
-        	
-        		IShift shift = (IShift) sp.getITurnoPersistente().readByOID(Shift.class, shiftCode);
-        		result = strategy.checkNumberOfGroups(groupProperties, shift);
-            
+            IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
+                    .getInstance();
+            IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
+                    .getGroupEnrolmentStrategyInstance(groupProperties);
+
+            if (!strategy.checkStudentInGrouping(groupProperties, username)) {
+                throw new NotAuthorizedException();
+            }
+
+            IShift shift = (IShift) sp.getITurnoPersistente().readByOID(Shift.class, shiftCode);
+            result = strategy.checkNumberOfGroups(groupProperties, shift);
 
             if (!result)
                 throw new InvalidArgumentsServiceException();
@@ -133,48 +105,42 @@ public class VerifyStudentGroupAtributes implements IServico {
 
             if (result)
                 throw new InvalidSituationServiceException();
-        	
+
         } catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace();
         }
         return true;
     }
 
-    private boolean checkUnEnrollStudentInGroup(Integer studentGroupCode,
-            String username) throws FenixServiceException {
+    private boolean checkUnEnrollStudentInGroup(Integer studentGroupCode, String username)
+            throws FenixServiceException {
 
         boolean result = false;
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IStudentGroup studentGroup = (IStudentGroup) sp
-                    .getIPersistentStudentGroup().readByOID(StudentGroup.class,
-                            studentGroupCode);
+            IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOID(
+                    StudentGroup.class, studentGroupCode);
 
-            
-            
             if (studentGroup == null) {
                 throw new FenixServiceException();
             }
-            IGroupProperties groupProperties = studentGroup.getAttendsSet().getGroupProperties();
-            
-            GroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-			.getInstance();
-            IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-			.getGroupEnrolmentStrategyInstance(groupProperties);
+            IGrouping groupProperties = studentGroup.getGrouping();
 
-            
-            if(!strategy.checkStudentInAttendsSet(groupProperties,username)){
-            	throw new NotAuthorizedException();
+            GroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
+                    .getInstance();
+            IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
+                    .getGroupEnrolmentStrategyInstance(groupProperties);
+
+            if (!strategy.checkStudentInGrouping(groupProperties, username)) {
+                throw new NotAuthorizedException();
             }
-            
-            result = strategy.checkNotEnroledInGroup(groupProperties,
-                    studentGroup, username);
+
+            result = strategy.checkNotEnroledInGroup(groupProperties, studentGroup, username);
             if (result)
                 throw new InvalidSituationServiceException();
 
-            result = strategy.checkNumberOfGroupElements(groupProperties,
-                    studentGroup);
+            result = strategy.checkNumberOfGroupElements(groupProperties, studentGroup);
             if (!result)
                 throw new InvalidArgumentsServiceException();
 
@@ -184,95 +150,85 @@ public class VerifyStudentGroupAtributes implements IServico {
         return true;
     }
 
-    private boolean checkEditStudentGroupShift(Integer studentGroupCode,Integer groupPropertiesCode,
+    private boolean checkEditStudentGroupShift(Integer studentGroupCode, Integer groupPropertiesCode,
             String username) throws FenixServiceException {
 
         boolean result = false;
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            
-            IGroupProperties groupProperties = (IGroupProperties) sp
-			.getIPersistentGroupProperties().readByOID(
-					GroupProperties.class, groupPropertiesCode);
-            
-            if(groupProperties == null){
-            	throw new ExistingServiceException();
+            IGrouping groupProperties = (IGrouping) sp.getIPersistentGrouping().readByOID(
+                    Grouping.class, groupPropertiesCode);
+
+            if (groupProperties == null) {
+                throw new ExistingServiceException();
             }
-            
-            IStudentGroup studentGroup = (IStudentGroup) sp
-                    .getIPersistentStudentGroup().readByOID(StudentGroup.class,
-                            studentGroupCode);
+
+            IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOID(
+                    StudentGroup.class, studentGroupCode);
             if (studentGroup == null) {
                 throw new FenixServiceException();
             }
-            
-            GroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-			.getInstance();
-            IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-			.getGroupEnrolmentStrategyInstance(groupProperties);
 
-            if(!strategy.checkStudentInAttendsSet(groupProperties,username)){
-        		throw new NotAuthorizedException();
-        	}
-            
-            result = strategy.checkNotEnroledInGroup(groupProperties,
-                    studentGroup, username);
+            GroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
+                    .getInstance();
+            IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
+                    .getGroupEnrolmentStrategyInstance(groupProperties);
+
+            if (!strategy.checkStudentInGrouping(groupProperties, username)) {
+                throw new NotAuthorizedException();
+            }
+
+            result = strategy.checkNotEnroledInGroup(groupProperties, studentGroup, username);
             if (result)
                 throw new InvalidSituationServiceException();
-            
-            if(groupProperties.getShiftType() == null || studentGroup.getShift() == null){
-             	throw new InvalidChangeServiceException();
-             }
+
+            if (groupProperties.getShiftType() == null || studentGroup.getShift() == null) {
+                throw new InvalidChangeServiceException();
+            }
 
         } catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace();
         }
         return true;
     }
-    
-    
-    private boolean checkEnrollStudentGroupShift(Integer studentGroupCode,Integer groupPropertiesCode,
+
+    private boolean checkEnrollStudentGroupShift(Integer studentGroupCode, Integer groupPropertiesCode,
             String username) throws FenixServiceException {
 
         boolean result = false;
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            
-            IGroupProperties groupProperties = (IGroupProperties) sp
-			.getIPersistentGroupProperties().readByOID(
-					GroupProperties.class, groupPropertiesCode);
-            
-            if(groupProperties == null){
-            	throw new ExistingServiceException();
+            IGrouping groupProperties = (IGrouping) sp.getIPersistentGrouping().readByOID(
+                    Grouping.class, groupPropertiesCode);
+
+            if (groupProperties == null) {
+                throw new ExistingServiceException();
             }
-            
-            IStudentGroup studentGroup = (IStudentGroup) sp
-                    .getIPersistentStudentGroup().readByOID(StudentGroup.class,
-                            studentGroupCode);
+
+            IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOID(
+                    StudentGroup.class, studentGroupCode);
             if (studentGroup == null) {
                 throw new FenixServiceException();
             }
-            
-            GroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-			.getInstance();
-            IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-			.getGroupEnrolmentStrategyInstance(groupProperties);
 
-            if(!strategy.checkStudentInAttendsSet(groupProperties,username)){
-        		throw new NotAuthorizedException();
-        	}
-            
-            result = strategy.checkNotEnroledInGroup(groupProperties,
-                    studentGroup, username);
+            GroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
+                    .getInstance();
+            IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
+                    .getGroupEnrolmentStrategyInstance(groupProperties);
+
+            if (!strategy.checkStudentInGrouping(groupProperties, username)) {
+                throw new NotAuthorizedException();
+            }
+
+            result = strategy.checkNotEnroledInGroup(groupProperties, studentGroup, username);
             if (result)
                 throw new InvalidSituationServiceException();
-            
-            
-            if(groupProperties.getShiftType() == null || studentGroup.getShift() != null){
-             	throw new InvalidChangeServiceException();
-             }
+
+            if (groupProperties.getShiftType() == null || studentGroup.getShift() != null) {
+                throw new InvalidChangeServiceException();
+            }
 
         } catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace();
@@ -284,9 +240,8 @@ public class VerifyStudentGroupAtributes implements IServico {
      * Executes the service.
      */
 
-    public boolean run(Integer groupPropertiesCode, Integer shiftCode,
-            Integer studentGroupCode, String username, Integer option)
-            throws FenixServiceException {
+    public boolean run(Integer groupPropertiesCode, Integer shiftCode, Integer studentGroupCode,
+            String username, Integer option) throws FenixServiceException {
 
         boolean result = false;
 
@@ -297,8 +252,7 @@ public class VerifyStudentGroupAtributes implements IServico {
             return result;
 
         case 2:
-            result = checkGroupEnrolment(groupPropertiesCode, shiftCode,
-                    username);
+            result = checkGroupEnrolment(groupPropertiesCode, shiftCode, username);
             return result;
 
         case 3:
@@ -308,7 +262,7 @@ public class VerifyStudentGroupAtributes implements IServico {
         case 4:
             result = checkEditStudentGroupShift(studentGroupCode, groupPropertiesCode, username);
             return result;
-            
+
         case 5:
             result = checkEnrollStudentGroupShift(studentGroupCode, groupPropertiesCode, username);
             return result;

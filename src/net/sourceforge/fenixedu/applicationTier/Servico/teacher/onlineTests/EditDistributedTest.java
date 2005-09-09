@@ -109,7 +109,7 @@ public class EditDistributedTest implements IService {
                 for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
                     studentMark += studentTestQuestion.getTestQuestionMark().doubleValue();
                 }
-                IAttends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student, executionCourse);
+                IAttends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student.getIdInternal(), executionCourse.getIdInternal());
                 if (attend != null) {
                     IMark mark = DomainFactory.makeMark();
                     mark.setAttend(attend);

@@ -19,16 +19,19 @@ public class AttendsTest extends DomainTestBase {
 		
 		IStudent student = new Student();
 		IEnrolment enrolment = new Enrolment();
-		IExecutionCourse executionCourse = new ExecutionCourse();
-		
-		IStudentGroupAttend sga1 = new StudentGroupAttend();
-		IStudentGroupAttend sga2 = new StudentGroupAttend();
-		
-		IAttendInAttendsSet aias1 = new AttendInAttendsSet();
-		IAttendInAttendsSet aias2 = new AttendInAttendsSet();
+		IExecutionCourse executionCourse = new ExecutionCourse();		
 		
 		IMark mark1 = new Mark();
 		IMark mark2 = new Mark();
+        
+        IGrouping grouping = new Grouping();
+        
+        IStudentGroup studentGroup1 = new StudentGroup();
+        studentGroup1.setGrouping(grouping);
+        IStudentGroup studentGroup2 = new StudentGroup();
+        studentGroup2.setGrouping(grouping);
+        IStudentGroup studentGroup3 = new StudentGroup();
+        studentGroup3.setGrouping(grouping);
 
 		attendToDelete.setAluno(student);
 		attendToDelete.setEnrolment(enrolment);
@@ -37,19 +40,21 @@ public class AttendsTest extends DomainTestBase {
 		attendNotToDelete1.setAluno(student);
 		attendNotToDelete1.setEnrolment(enrolment);
 		attendNotToDelete1.setDisciplinaExecucao(executionCourse);
-		attendNotToDelete1.addStudentGroupAttends(sga1);
-		attendNotToDelete1.addAttendInAttendsSet(aias1);
+		attendNotToDelete1.addStudentGroups(studentGroup1);
+        attendNotToDelete1.addGroupings(grouping);
 		attendNotToDelete1.setMark(mark1);
 		
 		attendNotToDelete2.setAluno(student);
 		attendNotToDelete2.setEnrolment(enrolment);
 		attendNotToDelete2.setDisciplinaExecucao(executionCourse);
-		attendNotToDelete2.addStudentGroupAttends(sga2);
+        attendNotToDelete2.addStudentGroups(studentGroup2);
+        attendNotToDelete2.addGroupings(grouping);
 		
 		attendNotToDelete3.setAluno(student);
 		attendNotToDelete3.setEnrolment(enrolment);
 		attendNotToDelete3.setDisciplinaExecucao(executionCourse);
-		attendNotToDelete3.addAttendInAttendsSet(aias2);
+        attendNotToDelete3.addStudentGroups(studentGroup3);
+        attendNotToDelete3.addGroupings(grouping);
 		
 		attendNotToDelete4.setAluno(student);
 		attendNotToDelete4.setEnrolment(enrolment);
@@ -97,15 +102,15 @@ public class AttendsTest extends DomainTestBase {
 		assertFalse("Failed to dereference ExecutionCourse", attendToDelete.hasDisciplinaExecucao());
 
 		assertAttendsNotDereferenced(attendNotToDelete1);
-		assertTrue("Should not dereference StudentGroupAttends", attendNotToDelete1.hasAnyStudentGroupAttends());
-		assertTrue("Should not dereference AttendInAttendsSets", attendNotToDelete1.hasAnyAttendInAttendsSet());
+		assertTrue("Should not dereference StudentGroups", attendNotToDelete1.hasAnyStudentGroups());
+		assertTrue("Should not dereference Groupings", attendNotToDelete1.hasAnyGroupings());
 		assertTrue("Should not dereference Mark", attendNotToDelete1.hasMark());
 		
 		assertAttendsNotDereferenced(attendNotToDelete2);
-		assertTrue("Should not dereference StudentGroupAttends", attendNotToDelete2.hasAnyStudentGroupAttends());
+		assertTrue("Should not dereference StudentGroups", attendNotToDelete2.hasAnyStudentGroups());
 		
 		assertAttendsNotDereferenced(attendNotToDelete3);
-		assertTrue("Should not dereference AttendInAttendsSets", attendNotToDelete3.hasAnyAttendInAttendsSet());
+		assertTrue("Should not dereference Groupings", attendNotToDelete3.hasAnyGroupings());
 		
 		assertAttendsNotDereferenced(attendNotToDelete4);
 		assertTrue("Should not dereference Mark", attendNotToDelete4.hasMark());

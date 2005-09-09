@@ -54,8 +54,8 @@ public class InfoSiteNewProjectProposals extends DataTranferObject implements IS
 		ListIterator iter2 = this.getInfoGroupPropertiesList().listIterator();
 		while (result && iter1.hasNext()) {
 			
-			InfoGroupProperties groupProperties1 = (InfoGroupProperties) iter1.next();
-			InfoGroupProperties groupProperties2 = (InfoGroupProperties) iter2.next();
+			InfoGrouping groupProperties1 = (InfoGrouping) iter1.next();
+			InfoGrouping groupProperties2 = (InfoGrouping) iter2.next();
 			if (!groupProperties1.equals(groupProperties2)) {
 			
 				result = false;

@@ -5,15 +5,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
-import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -27,47 +25,31 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class PrepareEditStudentGroupMembers implements IService {
 
-    public List run(Integer executionCourseCode, Integer studentGroupCode) throws FenixServiceException,
+    public List run(Integer executionCourseID, Integer studentGroupID) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        List frequentas = new ArrayList();
-        List infoStudentList = new ArrayList();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
 
-        ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IStudentGroup studentGroup = (IStudentGroup) persistentSupport
+                .getIPersistentStudentGroup().readByOID(StudentGroup.class, studentGroupID);
+        if (studentGroup == null) {
+            throw new InvalidArgumentsServiceException();
+        }
 
-        IStudentGroup studentGroup = (IStudentGroup) ps.getIPersistentStudentGroup().readByOID(
-                StudentGroup.class, studentGroupCode);
+        final List<IAttends> groupingAttends = new ArrayList<IAttends>();
+        groupingAttends.addAll(studentGroup.getGrouping().getAttends());;
 
-        frequentas.addAll(studentGroup.getAttendsSet().getAttends());
-
-        List allStudentsGroups = studentGroup.getAttendsSet().getStudentGroups();
-
-        List allStudentGroupAttend = null;
-
-        Iterator iterator = allStudentsGroups.iterator();
-        while (iterator.hasNext()) {
-            IStudentGroup studentGroup2 = (IStudentGroup) iterator.next();
-            allStudentGroupAttend = studentGroup2.getStudentGroupAttends();
-
-            Iterator iterator2 = allStudentGroupAttend.iterator();
-            IAttends frequenta = null;
-            while (iterator2.hasNext()) {
-                frequenta = ((IStudentGroupAttend) iterator2.next()).getAttend();
-                if (frequentas.contains(frequenta)) {
-                    frequentas.remove(frequenta);
-                }
+        final List<IStudentGroup> studentsGroups = studentGroup.getGrouping().getStudentGroups();
+        for (final IStudentGroup studentGroupIter : studentsGroups) {
+            for (final IAttends attend : studentGroupIter.getAttends()) {
+                groupingAttends.remove(attend);                
             }
         }
-
-        IStudent student = null;
-        Iterator iterator3 = frequentas.iterator();
-
-        while (iterator3.hasNext()) {
-
-            student = ((IAttends) iterator3.next()).getAluno();
-            infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));
+        final List<InfoStudent> infoStudents = new ArrayList();
+        for (final IAttends attend : groupingAttends) {
+            infoStudents.add(InfoStudent.newInfoFromDomain(attend.getAluno()));
         }
-        return infoStudentList;
-
+        return infoStudents;
     }
 }

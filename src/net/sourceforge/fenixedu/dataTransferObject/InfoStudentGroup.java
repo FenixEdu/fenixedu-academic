@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.IStudentGroup;
 
 /**
@@ -17,7 +19,9 @@ public class InfoStudentGroup extends InfoObject {
 
     private InfoShift infoShift;
 
-    private InfoAttendsSet infoAttendsSet;
+    private InfoGrouping infoGrouping;
+
+    private List<InfoFrequenta> infoAttends;
 
     /**
      * Construtor
@@ -29,20 +33,20 @@ public class InfoStudentGroup extends InfoObject {
      * Construtor
      */
     public InfoStudentGroup(Integer groupNumber,
-            InfoAttendsSet infoAttendsSet) {
+            InfoGrouping infoGrouping) {
 
         this.groupNumber = groupNumber;
-        this.infoAttendsSet = infoAttendsSet;
+        this.infoGrouping = infoGrouping;
     }
 
     /**
      * Construtor
      */
     public InfoStudentGroup(Integer groupNumber,
-            InfoAttendsSet infoAttendsSet, InfoShift infoShift) {
+            InfoGrouping infoAttendsSet, InfoShift infoShift) {
 
         this.groupNumber = groupNumber;
-        this.infoAttendsSet = infoAttendsSet;
+        this.infoGrouping = infoAttendsSet;
         this.infoShift = infoShift;
     }
 
@@ -52,8 +56,8 @@ public class InfoStudentGroup extends InfoObject {
     public boolean equals(Object arg0) {
         boolean result = false;
         if (arg0 instanceof InfoStudentGroup) {
-            result = (getInfoAttendsSet().equals(((InfoStudentGroup) arg0)
-                    .getInfoAttendsSet()))
+            result = (getInfoGrouping().equals(((InfoStudentGroup) arg0)
+                    .getInfoGrouping()))
                     && (getGroupNumber().equals(((InfoStudentGroup) arg0)
                             .getGroupNumber()));
             if (getInfoShift() != null) {
@@ -73,7 +77,7 @@ public class InfoStudentGroup extends InfoObject {
     public String toString() {
         String result = "[INFO_STUDENT_GROUP";
         result += ", groupNumber=" + getGroupNumber();
-        result += ", infoAttendsSet=" + getInfoAttendsSet();
+        result += ", infoAttendsSet=" + getInfoGrouping();
         result += ", infoShift" + getInfoShift();
         result += "]";
         return result;
@@ -89,8 +93,8 @@ public class InfoStudentGroup extends InfoObject {
     /**
      * @return InfoGroupProperties
      */
-    public InfoAttendsSet getInfoAttendsSet() {
-        return infoAttendsSet;
+    public InfoGrouping getInfoGrouping() {
+        return infoGrouping;
     }
 
     /**
@@ -116,8 +120,8 @@ public class InfoStudentGroup extends InfoObject {
      * @param infoGroupProperties
      *            The infoGroupProperties to set
      */
-    public void setInfoAttendsSet(InfoAttendsSet infoAttendsSet) {
-        this.infoAttendsSet = infoAttendsSet;
+    public void setInfoGrouping(InfoGrouping infoGrouping) {
+        this.infoGrouping = infoGrouping;
     }
 
     /**
@@ -147,5 +151,13 @@ public class InfoStudentGroup extends InfoObject {
         }
         
         return infoStudentGroup;
+    }
+
+    public List<InfoFrequenta> getInfoAttends() {
+        return infoAttends;
+    }
+
+    public void setInfoAttends(List<InfoFrequenta> infoAttends) {
+        this.infoAttends = infoAttends;
     }
 }

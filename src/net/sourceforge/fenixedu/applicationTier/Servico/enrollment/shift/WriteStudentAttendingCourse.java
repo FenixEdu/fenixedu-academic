@@ -65,7 +65,7 @@ public class WriteStudentAttendingCourse implements IService {
             }
 
             IAttends attendsEntry = persistentAttend.readByAlunoAndDisciplinaExecucao(
-                    studentCurricularPlan.getStudent(), executionCourse);
+                    studentCurricularPlan.getStudent().getIdInternal(), executionCourse.getIdInternal() );
 
             if (attendsEntry == null) {
                 attendsEntry = DomainFactory.makeAttends();

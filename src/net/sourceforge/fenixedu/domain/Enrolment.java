@@ -75,37 +75,7 @@ public class Enrolment extends Enrolment_Base {
         enrolmentLog.setStudent(this.getStudentCurricularPlan().getStudent());
         arg0.store(enrolmentLog);
     }
-
-    public void afterDelete(PersistenceBroker arg0) throws PersistenceBrokerException {
-        //createNewEnrolmentLog(EnrolmentAction.UNENROL, arg0);
-    }
-
-    public void afterInsert(PersistenceBroker arg0) throws PersistenceBrokerException {
-        //createNewEnrolmentLog(EnrolmentAction.ENROL, arg0);
-    }
-
-    public void afterLookup(PersistenceBroker arg0) throws PersistenceBrokerException {
-    }
-
-    public void afterUpdate(PersistenceBroker arg0) throws PersistenceBrokerException {
-    }
-
-    public void beforeDelete(PersistenceBroker arg0) throws PersistenceBrokerException {
-    }
-
-    public void beforeInsert(PersistenceBroker arg0) throws PersistenceBrokerException {
-    }
-
-    public void beforeUpdate(PersistenceBroker arg0) throws PersistenceBrokerException {
-    }
-	
-	
-	
-	
-
-	
-	
-	
+    
 	public void unEnroll() throws DomainException {
 		
 		for (IEnrolmentEvaluation eval : getEvaluations()) {
@@ -122,11 +92,6 @@ public class Enrolment extends Enrolment_Base {
 		delete();
 	}
 	
-	
-	
-	
-	
-	
 	public void delete() {
 		removeExecutionPeriod();
 		removeStudentCurricularPlan();
@@ -142,8 +107,7 @@ public class Enrolment extends Enrolment_Base {
 				attends.delete();
 			}
 			catch (DomainException e) {}
-		}
-		
+		}		
 		
 		Iterator<IEnrolmentEvaluation>  evalsIter = getEvaluationsIterator();
 		while (evalsIter.hasNext()) {
@@ -151,19 +115,14 @@ public class Enrolment extends Enrolment_Base {
 			evalsIter.remove();
 			eval.delete();
 		}
-		
-		
-		
+				
 		Iterator<ICreditsInAnySecundaryArea> creditsInAnysecundaryAreaIterator = getCreditsInAnySecundaryAreasIterator();
 		
 		while (creditsInAnysecundaryAreaIterator.hasNext()) {
 			ICreditsInAnySecundaryArea credits = creditsInAnysecundaryAreaIterator.next();
 			creditsInAnysecundaryAreaIterator.remove();
 			credits.delete();
-		}
-		
-
-		
+		}		
 		
 		Iterator<ICreditsInScientificArea> creditsInScientificAreaIterator = getCreditsInScientificAreasIterator();
 		
@@ -172,11 +131,7 @@ public class Enrolment extends Enrolment_Base {
 			creditsInScientificAreaIterator.remove();
 			credits.delete();
 		}
-		
-		
-	
-		
-		
+				
 		Iterator<IEquivalentEnrolmentForEnrolmentEquivalence> equivalentEnrolmentIterator = getEquivalentEnrolmentForEnrolmentEquivalencesIterator();
 		
 		while (equivalentEnrolmentIterator.hasNext()) {
@@ -195,7 +150,6 @@ public class Enrolment extends Enrolment_Base {
 			equivalence.delete();
 		}
 
-		
 		Iterator<IEnrolmentEquivalence> equivalenceIterator = getEnrolmentEquivalencesIterator();
 		
 		while (equivalenceIterator.hasNext()) {
@@ -212,27 +166,14 @@ public class Enrolment extends Enrolment_Base {
 				equivalentRestriction.removeEnrolmentEquivalence();
 				
 				equivalentRestriction.delete();
-			}
-			
-			equivalence.delete();
-			
+			}			
+			equivalence.delete();		
 		}
 		
 		super.deleteDomainObject();
 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	public IEnrolmentEvaluation getImprovementEvaluation() {
 		
 		for (IEnrolmentEvaluation evaluation : getEvaluations()) {
@@ -245,7 +186,6 @@ public class Enrolment extends Enrolment_Base {
 		return null;
 	}
 
-	
 	public IEnrolmentEvaluation getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade (final EnrolmentEvaluationType evaluationType, final String grade) {
 		
 		return (IEnrolmentEvaluation)CollectionUtils.find(getEvaluations(),new Predicate() {
@@ -357,9 +297,7 @@ public class Enrolment extends Enrolment_Base {
             }
         }
     }
-	
-	
-	
+
 	public void createEnrolmentEvaluationForImprovement(IEmployee employee, IExecutionPeriod currentExecutionPeriod,
 														IStudent student) {
 		
@@ -373,9 +311,7 @@ public class Enrolment extends Enrolment_Base {
 		
 		createAttendForImprovment(currentExecutionPeriod, student);
 	}
-	
-	
-	
+
     private void createAttendForImprovment(final IExecutionPeriod currentExecutionPeriod, final IStudent student) {
         
         List executionCourses = getCurricularCourse().getAssociatedExecutionCourses();
@@ -410,9 +346,7 @@ public class Enrolment extends Enrolment_Base {
                 attend = new Attends(student, currentExecutionCourse);
                 attend.setEnrolment(this);                
             }
-            
-        }
-        
+        } 
     }
 	
 	

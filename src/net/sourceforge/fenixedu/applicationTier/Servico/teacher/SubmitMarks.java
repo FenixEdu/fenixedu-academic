@@ -239,7 +239,7 @@ public class SubmitMarks implements IService {
     }
 
     private Object createSiteView(ISite site, IEvaluation evaluation, Integer submited,
-            List notEnrolledList, List mestradoList) throws FenixServiceException {
+            List notEnrolledList, List mestradoList) throws FenixServiceException, ExcepcaoPersistencia {
 
         InfoSiteSubmitMarks infoSiteSubmitMarks = new InfoSiteSubmitMarks();
 

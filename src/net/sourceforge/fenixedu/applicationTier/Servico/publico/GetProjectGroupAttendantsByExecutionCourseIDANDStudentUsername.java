@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
+import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -44,26 +44,26 @@ public class GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername impl
         IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, executionCourseID);
 
-        IAttends attendacy = persistentAttendacy.readByAlunoAndDisciplinaExecucao(student,
-                executionCourse);
+        IAttends attendacy = persistentAttendacy.readByAlunoAndDisciplinaExecucao(student
+                .getIdInternal(), executionCourse.getIdInternal());
         if (attendacy == null)
             return null; // the student is not enrolled on this course
 
-        List<IStudentGroupAttend> studentGroupAttends = attendacy.getStudentGroupAttends();
-        IStudentGroupAttend groupAttend = (studentGroupAttends.isEmpty()) ? null : studentGroupAttends
-                .get(0);
-        StudentGroupAttendacyInformation info = new StudentGroupAttendacyInformation();
-        if (groupAttend == null)
+        List<IStudentGroup> attendStudentGroup = attendacy.getStudentGroups();
+        IStudentGroup studentGroup = (attendStudentGroup.isEmpty()) ? null : attendStudentGroup.get(0);
+
+        if (studentGroup == null)
             return null; // the student has not a group, at least at this
                             // course
-        info.setShiftName(groupAttend.getStudentGroup().getShift().getNome());
-        List lessons = groupAttend.getStudentGroup().getShift().getAssociatedLessons();
+
+        StudentGroupAttendacyInformation info = new StudentGroupAttendacyInformation();
+        info.setShiftName(studentGroup.getShift().getNome());
+        List lessons = studentGroup.getShift().getAssociatedLessons();
         info.setDegreesNames(executionCourse.getAssociatedCurricularCourses());
         info.setLessons(lessons);
-        info.setGroupNumber(groupAttend.getStudentGroup().getGroupNumber());
+        info.setGroupNumber(studentGroup.getGroupNumber());
 
-        List groupAttends = groupAttend.getStudentGroup().getStudentGroupAttends();
-
+        List groupAttends = studentGroup.getAttends();
         info.setGroupAttends(groupAttends);
 
         return info;

@@ -1,17 +1,13 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits;
-import net.sourceforge.fenixedu.domain.credits.event.CreditsEvent;
-import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
 import net.sourceforge.fenixedu.domain.credits.util.InfoCreditsBuilder;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
 import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;

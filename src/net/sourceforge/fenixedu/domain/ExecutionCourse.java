@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
 import net.sourceforge.fenixedu.fileSuport.INode;
+import net.sourceforge.fenixedu.util.ProposalState;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -39,50 +40,43 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return executionPeriod;
     }
 
-    public List getGroupProperties() {
-        List groupProperties = new ArrayList();
-        if (getGroupPropertiesExecutionCourse() != null) {
-            Iterator iterGroupPropertiesExecutionCourse = getGroupPropertiesExecutionCourse().iterator();
-            IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = null;
-            while (iterGroupPropertiesExecutionCourse.hasNext()) {
-                groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse) iterGroupPropertiesExecutionCourse
-                        .next();
-                if (groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 1
-                        || groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 2) {
-                    groupProperties.add(groupPropertiesExecutionCourse.getGroupProperties());
-                }
+    public List<IGrouping> getGroupings() {
+        List<IGrouping> result = new ArrayList();       
+        for (final IExportGrouping exportGrouping : this.getExportGroupings()) {
+            if (exportGrouping.getProposalState().getState() == ProposalState.ACEITE || 
+                    exportGrouping.getProposalState().getState() == ProposalState.CRIADOR) {
+                result.add(exportGrouping.getGrouping());
             }
         }
-        return groupProperties;
+        return result;
     }
 
-    public IGroupProperties getGroupPropertiesByName(String name) {
-        Iterator iter = getGroupProperties().iterator();
-        while (iter.hasNext()) {
-            IGroupProperties gp = (IGroupProperties) iter.next();
-            if ((gp.getName()).equals(name))
-                return gp;
+    public IGrouping getGroupingByName(String groupingName) {
+        for (final IGrouping grouping : this.getGroupings()) {
+            if (grouping.getName().equals(groupingName)) {
+                return grouping;
+            }
         }
         return null;
     }
 
-    public boolean existsGroupPropertiesExecutionCourse(
-            IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse) {
-        return getGroupPropertiesExecutionCourse().contains(groupPropertiesExecutionCourse);
+    public boolean existsGroupingExecutionCourse(
+            IExportGrouping groupPropertiesExecutionCourse) {
+        return getExportGroupings().contains(groupPropertiesExecutionCourse);
     }
 
-    public boolean existsGroupPropertiesExecutionCourse() {
-        return getGroupPropertiesExecutionCourse().isEmpty();
+    public boolean existsGroupingExecutionCourse() {
+        return getExportGroupings().isEmpty();
     }
 
     public boolean hasProposals() {
         boolean result = false;
         boolean found = false;
-        List groupPropertiesExecutionCourseList = getGroupPropertiesExecutionCourse();
+        List groupPropertiesExecutionCourseList = getExportGroupings();
         Iterator iter = groupPropertiesExecutionCourseList.iterator();
         while (iter.hasNext() && !found) {
 
-            IGroupPropertiesExecutionCourse groupPropertiesExecutionCourseAux = (IGroupPropertiesExecutionCourse) iter
+            IExportGrouping groupPropertiesExecutionCourseAux = (IExportGrouping) iter
                     .next();
             if (groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 3) {
                 result = true;

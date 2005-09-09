@@ -553,12 +553,8 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new StudentGroupOJB();
     }
 
-    public IPersistentStudentGroupAttend getIPersistentStudentGroupAttend() {
-        return new StudentGroupAttendOJB();
-    }
-
-    public IPersistentGroupProperties getIPersistentGroupProperties() {
-        return new GroupPropertiesOJB();
+    public IPersistentGrouping getIPersistentGrouping() {
+        return new GroupingOJB();
     }
 
     public IPersistentCurricularCourseEquivalence getIPersistentCurricularCourseEquivalence() {
@@ -1117,18 +1113,10 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new GlossaryEntriesOJB();
     }
 
-    public IPersistentGroupPropertiesExecutionCourse getIPersistentGroupPropertiesExecutionCourse() {
-        return new GroupPropertiesExecutionCourseOJB();
+    public IPersistentExportGrouping getIPersistentExportGrouping() {
+        return new ExportGroupingOJB();
     }
-
-    public IPersistentAttendInAttendsSet getIPersistentAttendInAttendsSet() {
-        return new AttendInAttendsSetOJB();
-    }
-
-    public IPersistentAttendsSet getIPersistentAttendsSet() {
-        return new AttendsSetOJB();
-    }
-
+ 
     public IPersistentEnrolmentLog getIPersistentEnrolmentLog() {
         return new EnrolmentLogOJB();
     }

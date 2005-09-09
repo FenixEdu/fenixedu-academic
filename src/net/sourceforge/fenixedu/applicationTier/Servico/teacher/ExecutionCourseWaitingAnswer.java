@@ -4,88 +4,49 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IGroupProperties;
-import net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse;
+import net.sourceforge.fenixedu.domain.IGrouping;
+import net.sourceforge.fenixedu.domain.IExportGrouping;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import net.sourceforge.fenixedu.util.ProposalState;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author joaosa & rmalo
- *  
+ * 
  */
-public class ExecutionCourseWaitingAnswer implements IServico {
+public class ExecutionCourseWaitingAnswer implements IService {
 
-    private static ExecutionCourseWaitingAnswer service = new ExecutionCourseWaitingAnswer();
+    public boolean run(Integer executionCourseID) throws FenixServiceException, ExcepcaoPersistencia {
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static ExecutionCourseWaitingAnswer getService() {
-        return service;
-    }
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
+        final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
+                .getIPersistentExecutionCourse();
 
-    /**
-     * The constructor of this class.
-     */
-    private ExecutionCourseWaitingAnswer() {
-    }
+        final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                ExecutionCourse.class, executionCourseID);
+        if (executionCourse == null)
+            throw new InvalidArgumentsServiceException();
 
-    /**
-     * The name of the service
-     */
-    public final String getNome() {
-        return "ExecutionCourseWaitingAnswer";
-    }
-
-    /**
-     * Executes the service.
-     */
-
-    public boolean run(Integer executionCourseCode) throws FenixServiceException {
-
-        boolean result = false;
-        IPersistentExecutionCourse persistentExecutionCourse = null;
-         
-        try {
-
-            ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        
-            
-            persistentExecutionCourse = ps.getIPersistentExecutionCourse();
-            
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
-            		ExecutionCourse.class, executionCourseCode);
-            
-            
-            List groupPropertiesList = executionCourse.getGroupProperties();
-            Iterator iterGroupPropertiesList = groupPropertiesList.iterator();
-            while(iterGroupPropertiesList.hasNext() && !result){
-            	IGroupProperties groupProperties = (IGroupProperties)iterGroupPropertiesList.next();
-            	List groupPropertiesExecutionCourseList = groupProperties.getGroupPropertiesExecutionCourse();
-            	Iterator iterGroupPropertiesExecutionCourseList = groupPropertiesExecutionCourseList.iterator();
-            	while(iterGroupPropertiesExecutionCourseList.hasNext() && !result){
-            		IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse)iterGroupPropertiesExecutionCourseList.next();
-            		if(groupPropertiesExecutionCourse.getProposalState().getState().intValue()==3){
-            			result=true;
-            		}
-            	}
+        List<IGrouping> groupings = executionCourse.getGroupings();
+        for (final IGrouping grouping : groupings) {
+            final List<IExportGrouping> groupingExecutionCourses = grouping
+                    .getExportGroupings();
+            for (final IExportGrouping groupingExecutionCourse : groupingExecutionCourses) {
+                if (groupingExecutionCourse.getProposalState().getState().intValue() == ProposalState.EM_ESPERA) {
+                    return true;
+                }
             }
-            
-                        
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia.getMessage());
         }
-        
-        return result;
-
+        return false;
     }
 }

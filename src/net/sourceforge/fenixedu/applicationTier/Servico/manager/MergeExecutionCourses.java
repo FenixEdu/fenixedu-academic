@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IEvaluationMethod;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IFinalEvaluation;
-import net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse;
+import net.sourceforge.fenixedu.domain.IExportGrouping;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.ISection;
 import net.sourceforge.fenixedu.domain.IShift;
@@ -173,11 +173,11 @@ public class MergeExecutionCourses implements IService {
 
     private void copyGroupPropertiesExecutionCourse(final IExecutionCourse executionCourseFrom,
             final IExecutionCourse executionCourseTo) throws ExcepcaoPersistencia {
-        final List<IGroupPropertiesExecutionCourse> associatedGroupPropertiesExecutionCourse = new ArrayList();
+        final List<IExportGrouping> associatedGroupPropertiesExecutionCourse = new ArrayList();
         associatedGroupPropertiesExecutionCourse.addAll(executionCourseFrom
-                .getGroupPropertiesExecutionCourse());
+                .getExportGroupings());
 
-        for (final IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse : associatedGroupPropertiesExecutionCourse) {
+        for (final IExportGrouping groupPropertiesExecutionCourse : associatedGroupPropertiesExecutionCourse) {
             groupPropertiesExecutionCourse.setExecutionCourse(executionCourseTo);
         }
     }

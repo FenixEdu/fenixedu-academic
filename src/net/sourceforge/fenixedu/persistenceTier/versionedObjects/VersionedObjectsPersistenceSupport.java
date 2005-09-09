@@ -87,8 +87,6 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentSmsTrans
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransaction;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AdvisoryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AnnouncementVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AttendInAttendsSetVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AttendsSetVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AulaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AuthorshipVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.BibliographicReferenceVO;
@@ -130,7 +128,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExternalPer
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuitySituationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuityTransactionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuityValuesVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GroupPropertiesVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GroupingVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GuideSituationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GuideVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.InsuranceTransactionVO;
@@ -165,7 +163,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SibsPayment
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SiteVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SmsTransactionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentCurricularPlanVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentGroupAttendVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentGroupVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentKindVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentPersonalDataAuthorizationVO;
@@ -256,10 +253,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPessoaPersistente getIPessoaPersistente() {
         return new PessoaVO();
-    }
-
-    public IPersistentStudentGroupAttend getIPersistentStudentGroupAttend() {
-        return new StudentGroupAttendVO();
     }
 
     public IPersistentPrice getIPersistentPrice() {
@@ -390,10 +383,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentSeminaryModality getIPersistentSeminaryModality() {
         return new ModalityVO();
-    }
-
-    public IPersistentAttendsSet getIPersistentAttendsSet() {
-        return new AttendsSetVO();
     }
 
     public IPersistentRole getIPersistentRole() {
@@ -712,16 +701,12 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
         return new GrantTypeVO();
     }
 
-    public IPersistentGroupPropertiesExecutionCourse getIPersistentGroupPropertiesExecutionCourse() {
+    public IPersistentExportGrouping getIPersistentExportGrouping() {
         return null;
     }
 
     public IAulaPersistente getIAulaPersistente() {
         return new AulaVO();
-    }
-
-    public IPersistentAttendInAttendsSet getIPersistentAttendInAttendsSet() {
-        return new AttendInAttendsSetVO();
     }
 
     public IPersistentSibsPaymentFileEntry getIPersistentSibsPaymentFileEntry() {
@@ -740,8 +725,8 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
         return new EquivalentEnrolmentForEnrolmentEquivalenceVO();
     }
 
-    public IPersistentGroupProperties getIPersistentGroupProperties() {
-        return new GroupPropertiesVO();
+    public IPersistentGrouping getIPersistentGrouping() {
+        return new GroupingVO();
     }
 
     public IPersistentMasterDegreeProofVersion getIPersistentMasterDegreeProofVersion() {

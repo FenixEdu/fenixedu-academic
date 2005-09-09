@@ -632,9 +632,9 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>VerifyGroupPropertiesAndStudentGroupWithoutShift</name>
+		<name>VerifyGroupingAndStudentGroupWithoutShift</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.student.VerifyGroupPropertiesAndStudentGroupWithoutShift</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.student.VerifyGroupingAndStudentGroupWithoutShift</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -746,9 +746,9 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadGroupPropertiesShifts</name>
+		<name>ReadGroupingShifts</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.student.ReadGroupPropertiesShifts</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.student.ReadGroupingShifts</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -2978,9 +2978,9 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>CreateGroupProperties</name>
+		<name>CreateGrouping</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateGroupProperties</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateGrouping</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -2998,8 +2998,8 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>EditGroupProperties</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditGroupProperties</implementationClass>
+		<name>EditGrouping</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditGrouping</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -3007,8 +3007,8 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>DeleteGroupProperties</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteGroupProperties</implementationClass>
+		<name>DeleteGrouping</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteGrouping</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -3469,9 +3469,9 @@
 		<isTransactional>true</isTransactional>
 	</service>
 	<service>
-		<name>PrepareEditAttendsSetMembers</name>
+		<name>PrepareEditGroupingMembers</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.PrepareEditAttendsSetMembers</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.PrepareEditGroupingMembers</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -3509,9 +3509,9 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>InsertAttendsSetMembers</name>
+		<name>InsertGroupingMembers</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.InsertAttendsSetMembers</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.InsertGroupingMembers</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -3519,9 +3519,9 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>InsertStudentsInAttendsSet</name>
+		<name>InsertStudentsInGrouping</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.InsertStudentsInAttendsSet</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.InsertStudentsInGrouping</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -3529,9 +3529,9 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>DeleteAttendsSetMembers</name>
+		<name>DeleteGroupingMembers</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteAttendsSetMembers</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteGroupingMembers</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -3539,9 +3539,9 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>DeleteAttendsSetMembersByExecutionCourseID</name>
+		<name>DeleteGroupingMembersByExecutionCourseID</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteAttendsSetMembersByExecutionCourseID</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteGroupingMembersByExecutionCourseID</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -3549,9 +3549,9 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>DeleteAllAttendsSetMembers</name>
+		<name>DeleteAllGroupingMembers</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteAllAttendsSetMembers</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteAllGroupingMembers</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4797,16 +4797,6 @@
 		<name>teacher.ReadStudentsByShiftID</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadStudentsByShiftID</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ExecutionCourseLecturingTeacherOrDegreeCoordinatorAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>teacher.ReadStudentsByAttendsSetID</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadStudentsByAttendsSetID</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -8764,5 +8754,11 @@
         <filterChains>
             <chain name="ManagerAuthorization"/>
         </filterChains>        
+    </service>
+    <service>
+    	<name>PrepareEditGroupingMembers</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.PrepareEditGroupingMembers</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>       
     </service>
 </serviceDefinitions>    

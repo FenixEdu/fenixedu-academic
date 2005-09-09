@@ -138,10 +138,10 @@
                 	</td>
                 	
                 	<td class="listClasses" align="left">
-                		<bean:size id="count" name="infoGroupProperties" property="infoGroupPropertiesExecutionCourse"/>
+                		<bean:size id="count" name="infoGroupProperties" property="infoExportGroupings"/>
                 		<logic:greaterThan name="count" value="1">
-            		    <logic:iterate id="infoGroupPropertiesExecutionCourseElement" name="infoGroupProperties" property="infoGroupPropertiesExecutionCourse" >
-                		<bean:define id="infoExecutionCourse" name="infoGroupPropertiesExecutionCourseElement" property="infoExecutionCourse" />
+            		    <logic:iterate id="infoExportGrouping" name="infoGroupProperties" property="infoExportGroupings" >
+                		<bean:define id="infoExecutionCourse" name="infoExportGrouping" property="infoExecutionCourse" />
 							<bean:write name="infoExecutionCourse" property="nome"/></br>
                     	 </logic:iterate>
                     		</logic:greaterThan>

@@ -52,6 +52,10 @@ function cleanSelect() {
 		
 <html:form action="/insertStudentsInAttendsSet" method="get">
 <html:hidden property="page" value="1"/>
+<html:hidden property="method" value="insertStudentsInAttendsSet"/>
+<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
+
 
 <logic:empty name="infoStudentList"> 
 <h2>
@@ -103,17 +107,9 @@ function cleanSelect() {
 			</td>
 	 	</tr>	
 	 </logic:iterate>
-	 
 
 </table>
 <br>
-
-<html:hidden property="method" value="insertStudentsInAttendsSet"/>
-<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
-<html:hidden  property="attendsSetCode" value="<%= request.getParameter("attendsSetCode") %>" />
-
-
 
 <html:submit styleClass="inputbutton"><bean:message key="button.insertAluno"/>                    		         	
 </html:submit>       

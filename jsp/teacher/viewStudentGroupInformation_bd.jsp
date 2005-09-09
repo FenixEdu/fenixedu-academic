@@ -28,9 +28,9 @@
 	
 	<bean:define id="infoStudentGroup" name="component" property="infoStudentGroup"/>
 	<bean:define id="studentGroupCode" name="infoStudentGroup" property="idInternal"/>
-	<bean:define id="infoAttendsSet" name="infoStudentGroup" property="infoAttendsSet"/>
-	<bean:define id="groupPropertiesCode" name="infoAttendsSet" property="infoGroupProperties.idInternal"/>
-	
+	<bean:define id="infoAttends" name="infoStudentGroup" property="infoAttends"/>
+	<bean:define id="infoGrouping" name="infoStudentGroup" property="infoGrouping"/>
+	<bean:define id="groupPropertiesCode" name="infoGrouping" property="idInternal"/>
 	
 	<logic:empty name="component" property="infoSiteStudentInformationList">
 	
@@ -57,7 +57,7 @@
 	</logic:greaterEqual>
 	
 	</logic:empty>	
-	
+
 	<logic:notEmpty name="component" property="infoSiteStudentInformationList">
 	
 	<logic:lessEqual name="ShiftType" value="2">
@@ -84,8 +84,9 @@
 	<br />
 </logic:greaterEqual> 
 	
-	</logic:notEmpty>	
-	
+	</logic:notEmpty>
+
+
 		<logic:lessEqual name="ShiftType" value="2">
 		<bean:define id="infoShift" name="infoStudentGroup" property="infoShift"/>	
 		<bean:define id="shiftCode" name="infoShift" property="idInternal"/>

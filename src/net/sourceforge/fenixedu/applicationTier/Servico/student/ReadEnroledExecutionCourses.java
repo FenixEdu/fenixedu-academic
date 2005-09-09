@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IGroupProperties;
+import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
@@ -36,7 +36,7 @@ public class ReadEnroledExecutionCourses implements IService {
 
         Iterator iter = allGroupProperties.iterator();
         while (iter.hasNext()) {
-            IGroupProperties groupProperties = (IGroupProperties) iter.next();
+            IGrouping groupProperties = (IGrouping) iter.next();
 
             IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
                     .getInstance();
@@ -53,8 +53,8 @@ public class ReadEnroledExecutionCourses implements IService {
 
         Iterator iter = allGroupProperties.iterator();
         while (iter.hasNext()) {
-            IGroupProperties groupProperties = (IGroupProperties) iter.next();
-            if (groupProperties.getAttendsSet().getStudentAttend(student) != null)
+            IGrouping groupProperties = (IGrouping) iter.next();
+            if (groupProperties.getStudentAttend(student) != null)
                 return true;
         }
 
@@ -78,7 +78,7 @@ public class ReadEnroledExecutionCourses implements IService {
         while (iter.hasNext()) {
             IExecutionCourse executionCourse = ((IAttends) iter.next()).getDisciplinaExecucao();
             if (executionCourse.getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
-                List allGroupProperties = executionCourse.getGroupProperties();
+                List allGroupProperties = executionCourse.getGroupings();
                 boolean result = checkPeriodEnrollment(allGroupProperties);
                 if (result && checkStudentInAttendsSet(allGroupProperties, student)) {
                     final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse

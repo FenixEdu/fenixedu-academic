@@ -108,7 +108,7 @@ public class DeleteExecutionCourses implements IService {
         if (!executionCourse.getAssociatedSummaries().isEmpty()) {
             return false;
         }
-        if (!executionCourse.getGroupProperties().isEmpty()) {
+        if (!executionCourse.getGroupings().isEmpty()) {
             return false;
         }
         if (!executionCourse.getAssociatedBibliographicReferences().isEmpty()) {

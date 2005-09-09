@@ -17,15 +17,15 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
-import net.sourceforge.fenixedu.domain.GroupProperties;
-import net.sourceforge.fenixedu.domain.IGroupProperties;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.IAttends;
+import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
-import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupProperties;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -42,14 +42,14 @@ public class UnEnrollGroupShift implements IService {
             throws FenixServiceException, ExcepcaoPersistencia {
 
         IPersistentStudentGroup persistentStudentGroup = null;
-        IPersistentGroupProperties persistentGroupProperties = null;
+        IPersistentGrouping persistentGroupProperties = null;
 
         ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        persistentGroupProperties = persistentSupport.getIPersistentGroupProperties();
+        persistentGroupProperties = persistentSupport.getIPersistentGrouping();
 
-        IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties.readByOID(
-                GroupProperties.class, groupPropertiesCode);
+        IGrouping groupProperties = (IGrouping) persistentGroupProperties.readByOID(
+                Grouping.class, groupPropertiesCode);
 
         if (groupProperties == null) {
             throw new ExistingServiceException();
@@ -74,7 +74,7 @@ public class UnEnrollGroupShift implements IService {
         IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
                 .getGroupEnrolmentStrategyInstance(groupProperties);
 
-        if (!strategy.checkStudentInAttendsSet(groupProperties, username)) {
+        if (!strategy.checkStudentInGrouping(groupProperties, username)) {
             throw new NotAuthorizedException();
         }
 
@@ -97,12 +97,12 @@ public class UnEnrollGroupShift implements IService {
             throws ExcepcaoPersistencia {
         boolean found = false;
 
-        List studentGroupAttends = studentGroup.getStudentGroupAttends();
-        IStudentGroupAttend studentGroupAttend = null;
+        List studentGroupAttends = studentGroup.getAttends();
+        IAttends attend = null;
         Iterator iterStudentGroupAttends = studentGroupAttends.iterator();
         while (iterStudentGroupAttends.hasNext() && !found) {
-            studentGroupAttend = ((IStudentGroupAttend) iterStudentGroupAttends.next());
-            if (studentGroupAttend.getAttend().getAluno().equals(student)) {
+            attend = ((IAttends) iterStudentGroupAttends.next());
+            if (attend.getAluno().equals(student)) {
                 found = true;
             }
         }

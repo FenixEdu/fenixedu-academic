@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -22,12 +21,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoForReadStudentsWithAttendsByExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta;
-import net.sourceforge.fenixedu.dataTransferObject.InfoGroupProperties;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithInfoExecutionCourseAndInfoLessons;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroupWithInfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttends;
@@ -37,19 +35,17 @@ import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IGroupProperties;
+import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
-import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -95,7 +91,6 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         ISite site = null;
 
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentEnrollment persistentEnrollment = sp.getIPersistentEnrolment();
 
         final IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
                 .readByOID(ExecutionCourse.class, executionCourseCode);
@@ -110,7 +105,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         List allDegreeCurricularPlans = getDegreeCurricularPlansFromAttends(attends);
         List allShifts = sp.getITurnoPersistente()
                 .readByExecutionCourse(executionCourse.getIdInternal());
-        List groupProperties = executionCourse.getGroupProperties();
+        List groupProperties = executionCourse.getGroupings();
 
         Map studentGroupsMap = getStudentGroupsMapFromGroupPropertiesList(groupProperties, sp);
 
@@ -259,7 +254,6 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
             Map infoStudentGroups = getInfoStudentGroupsByAttends(studentGroupsMap, iFrequenta);
             infoComposition.setInfoStudentGroups(infoStudentGroups);
 
-            IStudent student = iFrequenta.getAluno();
             IEnrolment enrollment = iFrequenta.getEnrolment();
             int numberOfEnrollments = 0;
 
@@ -338,7 +332,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
 
     private TeacherAdministrationSiteView createSiteView(
             InfoForReadStudentsWithAttendsByExecutionCourse infoSiteStudents, ISite site)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
 
         TeacherAdministrationSiteComponentBuilder componentBuilder = new TeacherAdministrationSiteComponentBuilder();
         ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null,
@@ -445,8 +439,8 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         List result = new ArrayList();
 
         for (Iterator gpIterator = groupProperties.iterator(); gpIterator.hasNext();) {
-            IGroupProperties gp = (IGroupProperties) gpIterator.next();
-            InfoGroupProperties infoGP = InfoGroupProperties.newInfoFromDomain(gp);
+            IGrouping gp = (IGrouping) gpIterator.next();
+            InfoGrouping infoGP = InfoGrouping.newInfoFromDomain(gp);
             result.add(infoGP);
         }
 
@@ -462,17 +456,16 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         Iterator gpIt = groupPropertiesList.iterator();
         while (gpIt.hasNext()) {
             allStudentsGroups
-                    .addAll(((IGroupProperties) gpIt.next()).getAttendsSet().getStudentGroups());
+                    .addAll(((IGrouping) gpIt.next()).getStudentGroups());
         }
 
         for (Iterator sgIterator = allStudentsGroups.iterator(); sgIterator.hasNext();) {
             IStudentGroup sg = (IStudentGroup) sgIterator.next();
-            List groupAttends = sg.getStudentGroupAttends();
+            List groupAttends = sg.getAttends();
             List attendsList = (List) CollectionUtils.collect(groupAttends, new Transformer() {
 
-                public Object transform(Object input) {
-                    IStudentGroupAttend studentGroupAttend = (IStudentGroupAttend) input;
-                    IAttends attendacy = studentGroupAttend.getAttend();
+                public Object transform(Object input) {                    
+                    IAttends attendacy = (IAttends) input;
                     return attendacy;
                 }
             });
@@ -494,8 +487,8 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
             List attendsList = (List) studentsGroupsAttendsListMap.get(sg);
 
             if (attendsList.contains(attends)) {
-                String groupPropertiesName = sg.getAttendsSet().getGroupProperties().getName();
-                InfoStudentGroup infoSG = InfoStudentGroupWithInfoShift.newInfoFromDomain(sg);
+                String groupPropertiesName = sg.getGrouping().getName();
+                InfoStudentGroup infoSG = InfoStudentGroup.newInfoFromDomain(sg);
                 result.put(groupPropertiesName, infoSG);
             }
         }

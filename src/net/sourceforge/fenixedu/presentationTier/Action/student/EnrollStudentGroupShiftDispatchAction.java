@@ -109,7 +109,7 @@ public class EnrollStudentGroupShiftDispatchAction extends FenixDispatchAction
         Object[] args2 = { groupPropertiesCode, studentGroupCode};
         try
         {
-        	infoSiteShifts = (InfoSiteShifts) ServiceUtils.executeService(userView, "ReadGroupPropertiesShifts", args2);
+        	infoSiteShifts = (InfoSiteShifts) ServiceUtils.executeService(userView, "ReadGroupingShifts", args2);
 
         }catch (ExistingServiceException e){
 			ActionErrors actionErrors = new ActionErrors();

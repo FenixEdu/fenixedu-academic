@@ -641,111 +641,49 @@
          column="KEY_SHIFT"
     	  jdbc-type="INTEGER"
     />
-    	 
-    <field-descriptor id="4"
-         name="keyAttendsSet"
-         column="KEY_ATTENDS_SET"
+    
+	<field-descriptor id="4"
+         name="keyGrouping"
+         column="KEY_GROUPING"
     	  jdbc-type="INTEGER"
-    />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-        
+    />	 
+
+	 <field-descriptor
+	  	name="ackOptLock"
+	  	column="ACK_OPT_LOCK"
+	  	jdbc-type="INTEGER"
+	  	locking="false"
+	  />
+	    
     <reference-descriptor auto-retrieve="false"
          name="shift"
-         class-ref="net.sourceforge.fenixedu.domain.Shift"
-         
-		
-    >
-	<foreignkey field-ref="keyShift"/>
-	
+         class-ref="net.sourceforge.fenixedu.domain.Shift">
+		<foreignkey field-ref="keyShift"/>	
 	</reference-descriptor>
 
-
-    <reference-descriptor auto-retrieve="false"
-         name="attendsSet"
-         class-ref="net.sourceforge.fenixedu.domain.AttendsSet"
-         
-		
-    >
-	<foreignkey field-ref="keyAttendsSet"/>
-	
+	<reference-descriptor auto-retrieve="false"
+         name="grouping"
+         class-ref="net.sourceforge.fenixedu.domain.Grouping">
+		<foreignkey field-ref="keyGrouping"/>	
 	</reference-descriptor>
 
-	<collection-descriptor proxy="true" auto-retrieve="false" 
-			name="studentGroupAttends" 
-			element-class-ref="net.sourceforge.fenixedu.domain.StudentGroupAttend"
-		>
-		<inverse-foreignkey field-ref="keyStudentGroup"/>
-
-    </collection-descriptor>
-
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="attends"
+			element-class-ref="net.sourceforge.fenixedu.domain.Attends"
+			indirection-table="STUDENT_GROUP_ATTEND">
+		<fk-pointing-to-element-class column="KEY_ATTEND" />
+		<fk-pointing-to-this-class column="KEY_STUDENT_GROUP" />
+	</collection-descriptor>
 
 </class-descriptor>
 
-
 <!-- ******************************************************************************************************************************* -->
-<!-- Definitions for net.sourceforge.fenixedu.domain.StudentGroupAttend -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.Grouping -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.StudentGroupAttend"
-                  table="STUDENT_GROUP_ATTEND">
-    <field-descriptor id="1"
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />
-         
-    <field-descriptor id="2"
-         name="keyAttend"
-         column="KEY_ATTEND"
-    	  jdbc-type="INTEGER"
-    />
-    	 
-    <field-descriptor id="3"
-         name="keyStudentGroup"
-         column="KEY_STUDENT_GROUP"
-    	  jdbc-type="INTEGER"
-    />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-        
-    <reference-descriptor auto-retrieve="false"
-         name="attend"
-         class-ref="net.sourceforge.fenixedu.domain.Attends"
-         
-    >
-	<foreignkey field-ref="keyAttend"/>
-	</reference-descriptor>
-
+<class-descriptor class="net.sourceforge.fenixedu.domain.Grouping"
+                  table="GROUPING">
     
-    <reference-descriptor auto-retrieve="false"
-         name="studentGroup"
-         class-ref="net.sourceforge.fenixedu.domain.StudentGroup"
-         
-		
-    >
-	<foreignkey field-ref="keyStudentGroup"/>
-	
-	</reference-descriptor>
-
-</class-descriptor>
-
-
-<!-- ******************************************************************************************************************************* -->
-<!-- Definitions for net.sourceforge.fenixedu.domain.GroupProperties -->
-<!-- ******************************************************************************************************************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.GroupProperties"
-                  table="GROUP_PROPERTIES">
-    <field-descriptor id="1"
+	<field-descriptor id="1"
         name="idInternal"
         column="ID_INTERNAL"
         jdbc-type="INTEGER"
@@ -813,39 +751,35 @@
          name="projectDescription"
          column="PROJECT_DESCRIPTION"
     	  jdbc-type="LONGVARCHAR"
-       />
-           
-    <field-descriptor id="12"
-         name="keyAttendsSet"
-         column="KEY_ATTENDS_SET"
-    	  jdbc-type="INTEGER"
-    />
+       />           
       <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
       	locking="false"
-      />
-            
-    <reference-descriptor auto-retrieve="false"
-         name="attendsSet"
-         class-ref="net.sourceforge.fenixedu.domain.AttendsSet"
-         
-    >
-	<foreignkey field-ref="keyAttendsSet"/>
+      />       
 	
-	</reference-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="attends"
+			element-class-ref="net.sourceforge.fenixedu.domain.Attends"
+			indirection-table="GROUPING_ATTENDS">
+		<fk-pointing-to-element-class column="KEY_ATTEND" />
+		<fk-pointing-to-this-class column="KEY_GROUPING" />
+	</collection-descriptor>
+	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+			name="exportGroupings" 
+			element-class-ref="net.sourceforge.fenixedu.domain.ExportGrouping">
+		<inverse-foreignkey field-ref="keyGrouping"/>
+    </collection-descriptor>
 
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-			name="groupPropertiesExecutionCourse" 
-			element-class-ref="net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse"
-			>
-		<inverse-foreignkey field-ref="keyGroupProperties"/>
-
+			name="studentGroups" 
+			element-class-ref="net.sourceforge.fenixedu.domain.StudentGroup">
+		<inverse-foreignkey field-ref="keyGrouping"/>
     </collection-descriptor>
-			
+		
 </class-descriptor>
-
 
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.gesdis.CourseReport -->
@@ -962,73 +896,11 @@
     </reference-descriptor> 
 </class-descriptor>
 
-
-
 <!-- ******************************************************************************************************************************* -->
-<!-- Definitions for net.sourceforge.fenixedu.domain.AttendsSet -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.ExportGrouping -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.AttendsSet"
-                  table="ATTENDS_SET">
-    <field-descriptor id="1"
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />
-            
-	<field-descriptor id="2"
-		name="name"
-        column="NAME"
-    	jdbc-type="VARCHAR"
-    />
-	
-    <field-descriptor id="3"
-         name="keyGroupProperties"
-         column="KEY_GROUP_PROPERTIES"
-    	  jdbc-type="INTEGER"
-    />
-
-	<field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-    />
-    
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-			name="attendInAttendsSet" 
-			element-class-ref="net.sourceforge.fenixedu.domain.AttendInAttendsSet"
-			>
-		<inverse-foreignkey field-ref="keyAttendsSet"/>
-    </collection-descriptor>
-
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-			name="studentGroups" 
-			element-class-ref="net.sourceforge.fenixedu.domain.StudentGroup"
-			
-			
-	>
-		<inverse-foreignkey field-ref="keyAttendsSet"/>
-    </collection-descriptor>
-
-	<reference-descriptor auto-retrieve="false"
-         name="groupProperties"
-         class-ref="net.sourceforge.fenixedu.domain.GroupProperties"
-         
-    >
-	<foreignkey field-ref="keyGroupProperties"/>
-	</reference-descriptor>
-			
-</class-descriptor>
-
-
-
-<!-- ******************************************************************************************************************************* -->
-<!-- Definitions for net.sourceforge.fenixedu.domain.AttendInAttendsSet -->
-<!-- ******************************************************************************************************************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.AttendInAttendsSet"
-                  table="ATTEND_ATTENDS_SET">
+<class-descriptor class="net.sourceforge.fenixedu.domain.ExportGrouping"
+                  table="GROUPING_EXECUTION_COURSE">
     <field-descriptor id="1"
         name="idInternal"
         column="ID_INTERNAL"
@@ -1037,55 +909,8 @@
         autoincrement="true"
     /> 
     <field-descriptor id="2"
-         name="keyAttend"
-         column="KEY_ATTEND"
-    	  jdbc-type="INTEGER"
-    />
-    <field-descriptor id="3"
-         name="keyAttendsSet"
-         column="KEY_ATTENDS_SET"
-    	  jdbc-type="INTEGER"
-    />
-    <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-    />
-    <reference-descriptor auto-retrieve="false"
-         name="attend"
-         class-ref="net.sourceforge.fenixedu.domain.Attends"
-         
-    >
-	<foreignkey field-ref="keyAttend"/>
-	</reference-descriptor>
-	
-	<reference-descriptor auto-retrieve="false"
-         name="attendsSet"
-         class-ref="net.sourceforge.fenixedu.domain.AttendsSet"
-         
-    >
-	<foreignkey field-ref="keyAttendsSet"/>
-	</reference-descriptor>
-</class-descriptor>
-
-
-
-<!-- ******************************************************************************************************************************* -->
-<!-- Definitions for net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse -->
-<!-- ******************************************************************************************************************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse"
-                  table="GROUP_PROPERTIES_EXECUTION_COURSE">
-    <field-descriptor id="1"
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    /> 
-    <field-descriptor id="2"
-         name="keyGroupProperties"
-         column="KEY_GROUP_PROPERTIES"
+         name="keyGrouping"
+         column="KEY_GROUPING"
     	  jdbc-type="INTEGER"
     />
     <field-descriptor id="3"
@@ -1122,11 +947,10 @@
     />
         
     <reference-descriptor auto-retrieve="false"
-         name="groupProperties"
-         class-ref="net.sourceforge.fenixedu.domain.GroupProperties"
-         
+         name="grouping"
+         class-ref="net.sourceforge.fenixedu.domain.Grouping"         
     >
-	<foreignkey field-ref="keyGroupProperties"/>
+		<foreignkey field-ref="keyGrouping"/>
 	</reference-descriptor>
 	
 	<reference-descriptor auto-retrieve="false"

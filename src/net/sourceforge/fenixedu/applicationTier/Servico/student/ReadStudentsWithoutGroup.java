@@ -16,16 +16,14 @@ import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsWithoutGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.GroupProperties;
+import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IAttendsSet;
-import net.sourceforge.fenixedu.domain.IGroupProperties;
+import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
-import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupProperties;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
@@ -45,19 +43,18 @@ public class ReadStudentsWithoutGroup implements IService {
 			ExcepcaoPersistencia {
 
 		final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		final IPersistentGroupProperties persistentGroupProperties = persistentSupport
-				.getIPersistentGroupProperties();
+		final IPersistentGrouping persistentGroupProperties = persistentSupport
+				.getIPersistentGrouping();
 
 		final InfoSiteStudentsWithoutGroup infoSiteStudentsWithoutGroup = new InfoSiteStudentsWithoutGroup();
-		final IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties
-				.readByOID(GroupProperties.class, groupPropertiesCode);
+		final IGrouping grouping = (IGrouping) persistentGroupProperties
+				.readByOID(Grouping.class, groupPropertiesCode);
 
-		if (groupProperties == null) {
+		if (grouping == null) {
 			throw new ExistingServiceException();
 		}
-
-		final IAttendsSet attendsSet = groupProperties.getAttendsSet();
-		final List allStudentsGroups = attendsSet.getStudentGroups();
+		
+		final List allStudentsGroups = grouping.getStudentGroups();
 		
 		int nextGroupNumber = 1;
 		for (final Iterator iterator = allStudentsGroups.iterator(); iterator.hasNext(); ) {
@@ -71,7 +68,7 @@ public class ReadStudentsWithoutGroup implements IService {
 		
 		infoSiteStudentsWithoutGroup.setGroupNumber(groupNumber);
 
-		final List attends = attendsSet.getAttends();
+		final List attends = grouping.getAttends();
 
 //		userStudent = persistentStudent.readByUsername(username);
 		IStudent userStudent = null;
@@ -87,7 +84,7 @@ public class ReadStudentsWithoutGroup implements IService {
 		final InfoStudent infoStudent = getInfoStudentFromStudent(userStudent);
 		infoSiteStudentsWithoutGroup.setInfoUserStudent(infoStudent);
 
-		if (groupProperties.getEnrolmentPolicy().equals(
+		if (grouping.getEnrolmentPolicy().equals(
 				new EnrolmentGroupPolicyType(2))) {
 			return infoSiteStudentsWithoutGroup;
 		}
@@ -96,10 +93,12 @@ public class ReadStudentsWithoutGroup implements IService {
 		final Set attendsWithOutGroupsSet = new HashSet(attends);
 		for (final Iterator iterator = allStudentsGroups.iterator(); iterator.hasNext(); ) {
 			final IStudentGroup studentGroup = (IStudentGroup) iterator.next();
-			final List allStudentGroupAttend = studentGroup.getStudentGroupAttends();
-			for (final Iterator iterator2 = allStudentGroupAttend.iterator(); iterator2.hasNext(); ) {
-				final IStudentGroupAttend studentGroupAttend = (IStudentGroupAttend) iterator2.next();
-				attendsWithOutGroupsSet.remove(studentGroupAttend.getAttend());
+			
+            final List allStudentGroupsAttends = studentGroup.getAttends();
+			
+            for (final Iterator iterator2 = allStudentGroupsAttends.iterator(); iterator2.hasNext(); ) {
+				final IAttends studentGroupAttend = (IAttends) iterator2.next();
+				attendsWithOutGroupsSet.remove(studentGroupAttend);
 			}
 		}
 

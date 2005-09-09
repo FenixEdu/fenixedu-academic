@@ -5,7 +5,6 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -15,16 +14,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
-import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IGroupProperties;
+import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
-import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -38,59 +34,58 @@ public class GroupStudentEnrolment implements IService {
     public Boolean run(Integer studentGroupCode, String username) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentStudentGroupAttend persistentStudentGroupAttend = sp
-                .getIPersistentStudentGroupAttend();
-        IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
+        final IPersistentStudentGroup persistentStudentGroup = persistentSupport
+                .getIPersistentStudentGroup();
 
-        IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
+        final IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
                 StudentGroup.class, studentGroupCode);
-        IStudent student = sp.getIPersistentStudent().readByUsername(username);
-
         if (studentGroup == null) {
-            throw new FenixServiceException();
+            throw new InvalidArgumentsServiceException();
+        }
+        final IStudent student = persistentSupport.getIPersistentStudent().readByUsername(username);
+        if (student == null) {
+            throw new InvalidArgumentsServiceException();
         }
 
-        IGroupProperties groupProperties = studentGroup.getAttendsSet().getGroupProperties();
-
-        IAttends attend = groupProperties.getAttendsSet().getStudentAttend(student);
-
-        if (attend == null) {
+        final IGrouping grouping = studentGroup.getGrouping();
+        final IAttends studentAttend = grouping.getStudentAttend(student);
+        if (studentAttend == null) {
             throw new NotAuthorizedException();
         }
-
-        IStudentGroupAttend studentGroupAttend = persistentStudentGroupAttend
-                .readByStudentGroupAndAttend(studentGroup.getIdInternal(), attend.getIdInternal());
-
-        if (studentGroupAttend != null)
+        if (studentGroup.getAttends().contains(studentAttend)) {
             throw new InvalidSituationServiceException();
+        }
 
-        IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
+        final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
                 .getInstance();
-        IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-                .getGroupEnrolmentStrategyInstance(groupProperties);
+        final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
+                .getGroupEnrolmentStrategyInstance(grouping);
 
-        boolean result = strategy.checkPossibleToEnrolInExistingGroup(groupProperties, studentGroup,
+        boolean result = strategy.checkPossibleToEnrolInExistingGroup(grouping, studentGroup,
                 studentGroup.getShift());
         if (!result) {
             throw new InvalidArgumentsServiceException();
         }
-        IStudentGroupAttend newStudentGroupAttend = DomainFactory.makeStudentGroupAttend(studentGroup, attend);
 
-        List allStudentGroup = groupProperties.getAttendsSet().getStudentGroups();
+        checkIfStudentIsNotEnrolledInOtherGroups(grouping.getStudentGroups(), studentGroup,
+                studentAttend);
+        
+        studentGroup.addAttends(studentAttend);      
 
-        Iterator iter = allStudentGroup.iterator();
-        IStudentGroup group = null;
-        IStudentGroupAttend existingStudentAttend = null;
-        while (iter.hasNext()) {
-            group = (IStudentGroup) iter.next();
-            existingStudentAttend = persistentStudentGroupAttend.readByStudentGroupAndAttend(group
-                    .getIdInternal(), attend.getIdInternal());
-            if (existingStudentAttend != null) {
+        return Boolean.TRUE;
+    }
+
+    private void checkIfStudentIsNotEnrolledInOtherGroups(final List<IStudentGroup> studentGroups,
+            final IStudentGroup studentGroupEnrolled, final IAttends studentAttend)
+            throws InvalidSituationServiceException {
+        
+        for (final IStudentGroup studentGroup : studentGroups) {
+            if (studentGroup != studentGroupEnrolled
+                    && studentGroup.getAttends().contains(studentAttend)) {
                 throw new InvalidSituationServiceException();
             }
         }
-
-        return new Boolean(true);
     }
 }

@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.utils.MockUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoGroupProperties;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteGroupsByShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteProjects;
@@ -73,7 +73,7 @@ public class ShowStudentGroupInfo extends Action {
 
             for (Iterator iterProjects = projects.getInfoGroupPropertiesList().iterator(); iterProjects
                     .hasNext();) {
-                InfoGroupProperties project = (InfoGroupProperties) iterProjects.next();
+                InfoGrouping project = (InfoGrouping) iterProjects.next();
 
                 if (project != null) {
 

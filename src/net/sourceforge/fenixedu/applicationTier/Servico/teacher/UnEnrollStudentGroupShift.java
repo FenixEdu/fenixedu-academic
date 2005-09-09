@@ -8,13 +8,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
-import net.sourceforge.fenixedu.domain.GroupProperties;
-import net.sourceforge.fenixedu.domain.IGroupProperties;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupProperties;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -40,15 +40,15 @@ public class UnEnrollStudentGroupShift implements IService {
     public Boolean run(Integer executionCourseCode, Integer studentGroupCode,Integer groupPropertiesCode) throws FenixServiceException {
 
         IPersistentStudentGroup persistentStudentGroup = null;
-        IPersistentGroupProperties persistentGroupProperties = null;
+        IPersistentGrouping persistentGrouping = null;
 
         try {
             ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            persistentGroupProperties = persistentSupport.getIPersistentGroupProperties();
+            persistentGrouping = persistentSupport.getIPersistentGrouping();
             
-            IGroupProperties groupProperties = (IGroupProperties)persistentGroupProperties.readByOID(
-            		GroupProperties.class, groupPropertiesCode);
+            IGrouping groupProperties = (IGrouping)persistentGrouping.readByOID(
+            		Grouping.class, groupPropertiesCode);
             
             if(groupProperties == null){
             	throw new ExistingServiceException();

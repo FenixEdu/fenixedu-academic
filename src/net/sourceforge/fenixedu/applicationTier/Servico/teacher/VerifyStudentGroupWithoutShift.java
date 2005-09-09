@@ -4,57 +4,31 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
-import net.sourceforge.fenixedu.domain.GroupProperties;
-import net.sourceforge.fenixedu.domain.IGroupProperties;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupProperties;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author joaosa & rmalo
  *  
  */
-public class VerifyStudentGroupWithoutShift implements IServico {
-
-    private static VerifyStudentGroupWithoutShift service = new VerifyStudentGroupWithoutShift();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static VerifyStudentGroupWithoutShift getService() {
-        return service;
-    }
-
-    /**
-     * The constructor of this class.
-     */
-    private VerifyStudentGroupWithoutShift() {
-    }
-
-    /**
-     * The name of the service
-     */
-    public final String getNome() {
-        return "VerifyStudentGroupWithoutShift";
-    }
-
-    /**
-     * Executes the service.
-     */
+public class VerifyStudentGroupWithoutShift implements IService {
 
     public Integer run(Integer executionCourseCode,Integer studentGroupCode, Integer groupPropertiesCode, String shiftCodeString) throws FenixServiceException {
 
         IPersistentStudentGroup persistentStudentGroup = null;
-        IPersistentGroupProperties persistentGroupProperties = null;
+        IPersistentGrouping persistentGrouping = null;
 		   
         
         try {
@@ -64,10 +38,10 @@ public class VerifyStudentGroupWithoutShift implements IServico {
             
             persistentStudentGroup = ps.getIPersistentStudentGroup();
             
-            persistentGroupProperties = ps.getIPersistentGroupProperties();
+            persistentGrouping = ps.getIPersistentGrouping();
         
-            IGroupProperties groupProperties = (IGroupProperties)persistentGroupProperties.readByOID(
-            		GroupProperties.class, groupPropertiesCode);
+            IGrouping groupProperties = (IGrouping) persistentGrouping.readByOID(
+            		Grouping.class, groupPropertiesCode);
             
             if(groupProperties == null){
             	throw new ExistingServiceException();

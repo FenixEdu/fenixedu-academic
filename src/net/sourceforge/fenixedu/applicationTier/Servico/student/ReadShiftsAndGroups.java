@@ -9,7 +9,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -24,13 +23,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShiftsAndGroups;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
-import net.sourceforge.fenixedu.domain.GroupProperties;
+import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IGroupProperties;
+import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -38,74 +36,51 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
+
 /**
  * @author asnr and scpo
  * 
  */
-public class ReadShiftsAndGroups implements IServico {
+public class ReadShiftsAndGroups implements IService {
 
-    private static ReadShiftsAndGroups service = new ReadShiftsAndGroups();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadShiftsAndGroups getService() {
-        return service;
-    }
-
-    /**
-     * The constructor of this class.
-     */
-    private ReadShiftsAndGroups() {
-    }
-
-    /**
-     * The name of the service
-     */
-    public final String getNome() {
-        return "ReadShiftsAndGroups";
-    }
-
-    /**
-     * Executes the service.
-     */
-    public ISiteComponent run(Integer groupPropertiesCode, String username) throws FenixServiceException {
+    
+    public ISiteComponent run(Integer groupingCode, String username) throws FenixServiceException {
 
         InfoSiteShiftsAndGroups infoSiteShiftsAndGroups = new InfoSiteShiftsAndGroups();
         List infoSiteShiftsAndGroupsList = null;
 
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            ITurnoPersistente persistentShift = sp.getITurnoPersistente();
-            IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
+            ITurnoPersistente persistentShift = sp.getITurnoPersistente();            
 
-            IGroupProperties groupProperties = (IGroupProperties) sp.getIPersistentGroupProperties()
-                    .readByOID(GroupProperties.class, groupPropertiesCode);
+            IGrouping grouping = (IGrouping) sp.getIPersistentGrouping()
+                    .readByOID(Grouping.class, groupingCode);
 
-            if (groupProperties == null)
+            if (grouping == null)
                 throw new InvalidSituationServiceException();
 
             IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
                     .getInstance();
             IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-                    .getGroupEnrolmentStrategyInstance(groupProperties);
+                    .getGroupEnrolmentStrategyInstance(grouping);
 
-            if (!strategy.checkStudentInAttendsSet(groupProperties, username)) {
+            if (!strategy.checkStudentInGrouping(grouping, username)) {
                 throw new NotAuthorizedException();
             }
 
-            if (strategy.checkHasShift(groupProperties)) {
+            if (strategy.checkHasShift(grouping)) {
                 infoSiteShiftsAndGroupsList = new ArrayList();
-                Iterator iterExecutionCourses = groupProperties.getExecutionCourses().iterator();
+                Iterator iterExecutionCourses = grouping.getExecutionCourses().iterator();
                 List allShifts = new ArrayList();
                 List allShiftsAux = new ArrayList();
                 while (iterExecutionCourses.hasNext()) {
                     IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses.next();
                     allShiftsAux = persistentShift.readByExecutionCourseAndType(executionCourse
-                            .getIdInternal(), groupProperties.getShiftType());
+                            .getIdInternal(), grouping.getShiftType());
                     allShifts.addAll(allShiftsAux);
                 }
-                List allStudentsGroup = groupProperties.getAttendsSet().getStudentGroupsWithShift();
+                List allStudentsGroup = grouping.getStudentGroupsWithShift();
                 if (allStudentsGroup.size() != 0) {
 
                     Iterator iterator = allStudentsGroup.iterator();
@@ -127,9 +102,7 @@ public class ReadShiftsAndGroups implements IServico {
                     while (iter.hasNext()) {
 
                         IShift shift = (IShift) iter.next();
-                        List allStudentGroups = persistentStudentGroup
-                                .readAllStudentGroupByAttendsSetAndShift(groupProperties.getAttendsSet()
-                                        .getIdInternal(), shift.getIdInternal());
+                        List allStudentGroups = grouping.readAllStudentGroupsBy(shift);
 
                         infoSiteShift = new InfoSiteShift();
                         infoSiteShift.setInfoShift(InfoShiftWithInfoLessons.newInfoFromDomain(shift));
@@ -161,9 +134,9 @@ public class ReadShiftsAndGroups implements IServico {
                         infoSiteShift.setOrderByEndHour(endDay.toString());
                         infoSiteShift.setOrderByRoom(room.toString());
 
-                        if (groupProperties.getGroupMaximumNumber() != null) {
+                        if (grouping.getGroupMaximumNumber() != null) {
 
-                            int vagas = groupProperties.getGroupMaximumNumber().intValue()
+                            int vagas = grouping.getGroupMaximumNumber().intValue()
                                     - allStudentGroups.size();
 
                             infoSiteShift.setNrOfGroups(new Integer(vagas));
@@ -208,17 +181,16 @@ public class ReadShiftsAndGroups implements IServico {
                     Collections.sort(infoSiteShiftsAndGroupsList, chainComparator);
                 }
 
-                if (!groupProperties.getAttendsSet().getStudentGroupsWithoutShift().isEmpty()) {
+                if (!grouping.getStudentGroupsWithoutShift().isEmpty()) {
                     InfoSiteGroupsByShift infoSiteGroupsByShift = null;
                     InfoSiteShift infoSiteShift = new InfoSiteShift();
 
                     infoSiteGroupsByShift = new InfoSiteGroupsByShift();
-                    List allStudentGroups = groupProperties.getAttendsSet()
-                            .getStudentGroupsWithoutShift();
+                    List allStudentGroups = grouping.getStudentGroupsWithoutShift();
 
-                    if (groupProperties.getGroupMaximumNumber() != null) {
+                    if (grouping.getGroupMaximumNumber() != null) {
 
-                        int vagas = groupProperties.getGroupMaximumNumber().intValue()
+                        int vagas = grouping.getGroupMaximumNumber().intValue()
                                 - allStudentGroups.size();
                         infoSiteShift.setNrOfGroups(new Integer(vagas));
 
@@ -252,10 +224,10 @@ public class ReadShiftsAndGroups implements IServico {
 
                 infoSiteShiftsAndGroupsList = new ArrayList();
 
-                if (!groupProperties.getAttendsSet().getStudentGroupsWithShift().isEmpty()) {
+                if (!grouping.getStudentGroupsWithShift().isEmpty()) {
 
                     List allShifts = new ArrayList();
-                    List allStudentsGroup = groupProperties.getAttendsSet().getStudentGroupsWithShift();
+                    List allStudentsGroup = grouping.getStudentGroupsWithShift();
                     if (allStudentsGroup.size() != 0) {
                         Iterator iterator = allStudentsGroup.iterator();
                         while (iterator.hasNext()) {
@@ -273,9 +245,7 @@ public class ReadShiftsAndGroups implements IServico {
 
                         while (iter.hasNext()) {
                             IShift shift = (IShift) iter.next();
-                            List allStudentGroupsAux = persistentStudentGroup
-                                    .readAllStudentGroupByAttendsSetAndShift(groupProperties
-                                            .getAttendsSet().getIdInternal(), shift.getIdInternal());
+                            List allStudentGroupsAux = grouping.readAllStudentGroupsBy(shift);
                             infoSiteShiftAux = new InfoSiteShift();
                             infoSiteShiftAux.setInfoShift(InfoShiftWithInfoLessons
                                     .newInfoFromDomain(shift));
@@ -305,9 +275,9 @@ public class ReadShiftsAndGroups implements IServico {
                             infoSiteShiftAux.setOrderByEndHour(endDay.toString());
                             infoSiteShiftAux.setOrderByRoom(room.toString());
 
-                            if (groupProperties.getGroupMaximumNumber() != null) {
+                            if (grouping.getGroupMaximumNumber() != null) {
 
-                                int vagas = groupProperties.getGroupMaximumNumber().intValue()
+                                int vagas = grouping.getGroupMaximumNumber().intValue()
                                         - allStudentGroupsAux.size();
                                 infoSiteShiftAux.setNrOfGroups(new Integer(vagas));
                             } else
@@ -358,11 +328,11 @@ public class ReadShiftsAndGroups implements IServico {
 
                 infoSiteGroupsByShift = new InfoSiteGroupsByShift();
 
-                List allStudentGroups = groupProperties.getAttendsSet().getStudentGroupsWithoutShift();
+                List allStudentGroups = grouping.getStudentGroupsWithoutShift();
 
-                if (groupProperties.getGroupMaximumNumber() != null) {
+                if (grouping.getGroupMaximumNumber() != null) {
 
-                    int vagas = groupProperties.getGroupMaximumNumber().intValue()
+                    int vagas = grouping.getGroupMaximumNumber().intValue()
                             - allStudentGroups.size();
                     infoSiteShift.setNrOfGroups(new Integer(vagas));
 

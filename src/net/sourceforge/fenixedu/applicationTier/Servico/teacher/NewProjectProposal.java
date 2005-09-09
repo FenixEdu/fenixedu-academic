@@ -14,25 +14,21 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
-import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.GroupProperties;
+import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.IAdvisory;
-import net.sourceforge.fenixedu.domain.IAttendInAttendsSet;
 import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IAttendsSet;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IGroupProperties;
-import net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse;
+import net.sourceforge.fenixedu.domain.IExportGrouping;
+import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentAttendInAttendsSet;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupProperties;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupPropertiesExecutionCourse;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -54,16 +50,12 @@ public class NewProjectProposal implements IService {
             return result;
         }
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentGroupProperties persistentGroupProperties = sp.getIPersistentGroupProperties();
-        IPersistentGroupPropertiesExecutionCourse persistentGroupPropertiesExecutionCourse = sp
-                .getIPersistentGroupPropertiesExecutionCourse();
+        IPersistentGrouping persistentGroupProperties = sp.getIPersistentGrouping();   
         IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
         IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
-        IPersistentAttendInAttendsSet persistentAttendInAttendsSet = sp
-                .getIPersistentAttendInAttendsSet();
-
-        IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties.readByOID(
-                GroupProperties.class, groupPropertiesId);
+      
+        IGrouping groupProperties = (IGrouping) persistentGroupProperties.readByOID(
+                Grouping.class, groupPropertiesId);
         IExecutionCourse goalExecutionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, goalExecutionCourseId);
         IExecutionCourse startExecutionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
@@ -84,10 +76,10 @@ public class NewProjectProposal implements IService {
             throw new InvalidArgumentsServiceException("error.noPerson");
         }
 
-        List listaRelation = groupProperties.getGroupPropertiesExecutionCourse();
+        List listaRelation = groupProperties.getExportGroupings();
         Iterator iterRelation = listaRelation.iterator();
         while (iterRelation.hasNext()) {
-            IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse) iterRelation
+            IExportGrouping groupPropertiesExecutionCourse = (IExportGrouping) iterRelation
                     .next();
             if (groupPropertiesExecutionCourse.getExecutionCourse().equals(goalExecutionCourse)
                     && groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 1) {
@@ -105,13 +97,13 @@ public class NewProjectProposal implements IService {
 
         boolean acceptProposal = false;
 
-        IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = DomainFactory.makeGroupPropertiesExecutionCourse(
+        IExportGrouping groupPropertiesExecutionCourse = DomainFactory.makeExportGrouping(
                 groupProperties, goalExecutionCourse);
         groupPropertiesExecutionCourse.setProposalState(new ProposalState(new Integer(3)));
         groupPropertiesExecutionCourse.setSenderPerson(senderPerson);
         groupPropertiesExecutionCourse.setSenderExecutionCourse(startExecutionCourse);
-        groupProperties.addGroupPropertiesExecutionCourse(groupPropertiesExecutionCourse);
-        goalExecutionCourse.addGroupPropertiesExecutionCourse(groupPropertiesExecutionCourse);
+        groupProperties.addExportGroupings(groupPropertiesExecutionCourse);
+        goalExecutionCourse.addExportGroupings(groupPropertiesExecutionCourse);
 
         List group = new ArrayList();
         List allOtherProfessors = new ArrayList();
@@ -165,24 +157,20 @@ public class NewProjectProposal implements IService {
         if (acceptProposal == true) {
             result = Boolean.TRUE;
             groupPropertiesExecutionCourse.setProposalState(new ProposalState(new Integer(2)));
-            List attendsSetStudentNumbers = new ArrayList();
-            IAttendsSet attendsSet = groupPropertiesExecutionCourse.getGroupProperties().getAttendsSet();
-            List attendsInAttendsSet = attendsSet.getAttendInAttendsSet();
-            Iterator iterAttendsInAttendsSet = attendsInAttendsSet.iterator();
-            while (iterAttendsInAttendsSet.hasNext()) {
-                IAttendInAttendsSet attendInAttendsSet = (IAttendInAttendsSet) iterAttendsInAttendsSet
-                        .next();
-                attendsSetStudentNumbers.add(attendInAttendsSet.getAttend().getAluno().getNumber());
-            }
-
-            List attends = persistentAttend.readByExecutionCourse(goalExecutionCourse.getIdInternal());
-            Iterator iterAttends = attends.iterator();
+            List groupingStudentNumbers = new ArrayList();
+     
+            Iterator iterAttends = groupPropertiesExecutionCourse.getGrouping().getAttends().iterator();
+                        
             while (iterAttends.hasNext()) {
                 IAttends attend = (IAttends) iterAttends.next();
-                if (!attendsSetStudentNumbers.contains(attend.getAluno().getNumber())) {
-                    IAttendInAttendsSet attendInAttendsSet = DomainFactory.makeAttendInAttendsSet(attend, attendsSet);
-                    attendsSet.addAttendInAttendsSet(attendInAttendsSet);
-                    attend.addAttendInAttendsSet(attendInAttendsSet);
+                groupingStudentNumbers.add(attend.getAluno().getNumber());
+            }
+            
+            Iterator iterAttends2 = persistentAttend.readByExecutionCourse(goalExecutionCourse.getIdInternal()).iterator();
+            while (iterAttends2.hasNext()) {
+                IAttends attend = (IAttends) iterAttends2.next();
+                if (!groupingStudentNumbers.contains(attend.getAluno().getNumber())) {
+                    groupPropertiesExecutionCourse.getGrouping().addAttends(attend);                    
                 }
             }
 
@@ -212,7 +200,7 @@ public class NewProjectProposal implements IService {
     }
 
     private IAdvisory createNewProjectProposalAdvisory(IExecutionCourse goalExecutionCourse,
-            IExecutionCourse startExecutionCourse, IGroupProperties groupProperties, IPerson senderPerson) {
+            IExecutionCourse startExecutionCourse, IGrouping groupProperties, IPerson senderPerson) {
         IAdvisory advisory = DomainFactory.makeAdvisory();
         advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
         if (groupProperties.getEnrolmentEndDay() != null) {
@@ -238,7 +226,7 @@ public class NewProjectProposal implements IService {
     }
 
     private IAdvisory createNewProjectProposalAdvisoryAux(IExecutionCourse goalExecutionCourse,
-            IExecutionCourse startExecutionCourse, IGroupProperties groupProperties, IPerson senderPerson) {
+            IExecutionCourse startExecutionCourse, IGrouping groupProperties, IPerson senderPerson) {
         IAdvisory advisory = DomainFactory.makeAdvisory();
         advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
         if (groupProperties.getEnrolmentEndDay() != null) {
@@ -263,7 +251,7 @@ public class NewProjectProposal implements IService {
     }
 
     private IAdvisory createNewProjectProposalAcceptedAdvisory(IExecutionCourse goalExecutionCourse,
-            IExecutionCourse startExecutionCourse, IGroupProperties groupProperties, IPerson senderPerson) {
+            IExecutionCourse startExecutionCourse, IGrouping groupProperties, IPerson senderPerson) {
         IAdvisory advisory = DomainFactory.makeAdvisory();
         advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
         if (groupProperties.getEnrolmentEndDay() != null) {

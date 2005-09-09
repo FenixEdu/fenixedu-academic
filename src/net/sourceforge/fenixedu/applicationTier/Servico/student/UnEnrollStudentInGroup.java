@@ -1,23 +1,19 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IGroupProperties;
+import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
-import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.domain.StudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -35,8 +31,6 @@ public class UnEnrollStudentInGroup implements IService {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         IPersistentStudentGroup persistentStudentGroup = persistentSuport.getIPersistentStudentGroup();
-        IPersistentStudentGroupAttend persistentStudentGroupAttend = persistentSuport
-                .getIPersistentStudentGroupAttend();
         IPersistentStudent persistentStudent = persistentSuport.getIPersistentStudent();
 
         IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
@@ -48,41 +42,27 @@ public class UnEnrollStudentInGroup implements IService {
 
         IStudent student = persistentStudent.readByUsername(userName);
 
-        IGroupProperties groupProperties = studentGroup.getAttendsSet().getGroupProperties();
+        IGrouping groupProperties = studentGroup.getGrouping();
 
-        IAttends attend = studentGroup.getAttendsSet().getStudentAttend(student);
+        IAttends attend = groupProperties.getStudentAttend(student);
 
         if (attend == null) {
             throw new NotAuthorizedException();
         }
-
-        IStudentGroupAttend studentGroupAttendToDelete = persistentStudentGroupAttend
-                .readByStudentGroupAndAttend(studentGroup.getIdInternal(), attend.getIdInternal());
-
-        if (studentGroupAttendToDelete == null) {
-            throw new InvalidArgumentsServiceException();
-        }
-
+        
         IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
                 .getInstance();
+        
         IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
                 .getGroupEnrolmentStrategyInstance(groupProperties);
 
-        boolean resultEmpty = strategy.checkIfStudentGroupIsEmpty(studentGroupAttendToDelete,
+        boolean resultEmpty = strategy.checkIfStudentGroupIsEmpty(attend,
                 studentGroup);
-
-        studentGroupAttendToDelete.getStudentGroup().getStudentGroupAttends().remove(
-                studentGroupAttendToDelete);
-        studentGroupAttendToDelete.setStudentGroup(null);
-        studentGroupAttendToDelete.getAttend().getStudentGroupAttends().remove(
-                studentGroupAttendToDelete);
-        studentGroupAttendToDelete.setAttend(null);
-        persistentStudentGroupAttend.deleteByOID(StudentGroupAttend.class, studentGroupAttendToDelete
-                .getIdInternal());
-
+        
+        studentGroup.removeAttends(attend);
+                               
         if (resultEmpty) {
-            groupProperties.getAttendsSet().removeStudentGroup(studentGroup);
-            studentGroup.setAttendsSet(null);
+            groupProperties.removeStudentGroups(studentGroup);
             if (studentGroup.getShift().getAssociatedStudentGroups() != null) {
                 studentGroup.getShift().getAssociatedStudentGroups().remove(studentGroup);
             }

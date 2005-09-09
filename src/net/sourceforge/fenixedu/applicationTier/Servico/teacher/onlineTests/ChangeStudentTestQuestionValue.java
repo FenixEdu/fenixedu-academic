@@ -74,8 +74,8 @@ public class ChangeStudentTestQuestionValue implements IService {
                         studentTestQuestion.getDistributedTest().getIdInternal());
                 IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport.getIPersistentExecutionCourse().readByOID(
                         ExecutionCourse.class, executionCourseId);
-                IAttends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(studentTestQuestion.getStudent(),
-                        executionCourse);
+                IAttends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(studentTestQuestion.getStudent().getIdInternal(),
+                        executionCourse.getIdInternal());
                 IMark mark = persistentSuport.getIPersistentMark().readBy(onlineTest, attend);
                 if (mark != null) {
                     mark.setMark(getNewStudentMark(persistentSuport, studentTestQuestion.getDistributedTest(), studentTestQuestion.getStudent()));

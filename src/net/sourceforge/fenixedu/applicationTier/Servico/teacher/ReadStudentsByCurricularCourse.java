@@ -101,7 +101,7 @@ public class ReadStudentsByCurricularCourse implements IService {
     }
 
     private TeacherAdministrationSiteView createSiteView(List infoStudentList, ISite site,
-            ICurricularCourse curricularCourse) throws FenixServiceException {
+            ICurricularCourse curricularCourse) throws FenixServiceException, ExcepcaoPersistencia {
         InfoSiteStudents infoSiteStudents = new InfoSiteStudents();
         infoSiteStudents.setStudents(infoStudentList);
 

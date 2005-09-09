@@ -109,7 +109,7 @@
 </logic:notPresent>
 
 
- <logic:present name="infoStudentList"> 
+<logic:present name="infoStudentList"> 
 		
 <html:form action="/insertStudentGroupMembers" method="get">
 <html:hidden property="page" value="1"/>
@@ -143,8 +143,9 @@
 	<logic:iterate id="infoStudent" name="infoStudentList">			
 		<tr>	
 			<td class="listClasses">
-			<html:multibox property="studentCodes">
-			<bean:write name="infoStudent" property="idInternal"/>
+			<html:multibox property="studentsToInsert">
+			<bean:define id="infoPerson" name="infoStudent" property="infoPerson" />
+			<bean:write name="infoPerson" property="username"/>
 			</html:multibox>
 			</td>	
 			<td class="listClasses"><bean:write name="infoStudent" property="number"/>

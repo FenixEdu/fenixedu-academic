@@ -4,44 +4,72 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import java.util.List;
+
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
 /**
  * @author asnr and scpo
  */
 public class StudentGroup extends StudentGroup_Base {
 
-    /**
-     * Construtor
-     */
     public StudentGroup() {
     }
 
-    /**
-     * Construtor
-     */
-    public StudentGroup(Integer groupNumber, IAttendsSet attendsSet) {
+    public StudentGroup(Integer groupNumber, IGrouping grouping) {
         super.setGroupNumber(groupNumber);
-        super.setAttendsSet(attendsSet);
+        super.setGrouping(grouping);
     }
 
-    /**
-     * Construtor
-     */
-    public StudentGroup(Integer groupNumber, IAttendsSet attendsSet, IShift shift) {
+    public StudentGroup(Integer groupNumber, IGrouping grouping, IShift shift) {
         super.setGroupNumber(groupNumber);
-        super.setAttendsSet(attendsSet);
+        super.setGrouping(grouping);
         super.setShift(shift);
     }
 
-    /**
-     * @see java.lang.Object#toString()
-     */
     public String toString() {
         String result = "[STUDENT_GROUP";
         result += ", groupNumber=" + getGroupNumber();
-        result += ", attendsSet=" + getAttendsSet();
+        result += ", grouping=" + getGrouping();
         result += ", shift =" + getShift();
         result += "]";
         return result;
     }
 
+    public void delete(){
+        List attendsList = this.getAttends();
+
+        if (attendsList.size() != 0) {
+            throw new DomainException(this.getClass().getName(), "");
+        }
+        
+        this.setShift(null);
+        this.setGrouping(null);
+    }
+    
+    public void editShift(IShift shift){
+        if (this.getGrouping().getShiftType() == null
+                || (!this.getGrouping().getShiftType().equals(shift.getTipo()))) {
+            throw new DomainException(this.getClass().getName(), "");
+        }
+
+        this.setShift(shift);
+    }
+    
+    public boolean checkStudentUsernames(List<String> studentUsernames) {
+        boolean found;
+        for (final String studentUsername :  studentUsernames) {
+            found = false;
+            for (final IAttends attend : this.getAttends()) {
+                if (attend.getAluno().getPerson().getUsername() == studentUsername) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

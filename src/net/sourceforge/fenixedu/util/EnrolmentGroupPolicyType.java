@@ -16,7 +16,6 @@ public class EnrolmentGroupPolicyType extends FenixUtil {
 
     private Integer type;
 
-    /** Creates a new instance of EnrolmentPolicyType */
     public EnrolmentGroupPolicyType() {
     }
 
@@ -28,29 +27,13 @@ public class EnrolmentGroupPolicyType extends FenixUtil {
         this.type = type;
     }
 
-    /**
-     * Getter for property type.
-     * 
-     * @return Value of property type.
-     *  
-     */
-
     public java.lang.Integer getType() {
         return type;
     }
 
-    /**
-     * Setter for property type.
-     * 
-     * @param type
-     *            New value of property type.
-     *  
-     */
-
     public void setType(Integer type) {
         this.type = type;
     }
-
     
     public String getTypeFullName() {
 
@@ -70,9 +53,6 @@ public class EnrolmentGroupPolicyType extends FenixUtil {
 
         return stringValue;
     }
-    
-    
-    
     
     public boolean equals(Object o) {
         if (o instanceof EnrolmentGroupPolicyType) {

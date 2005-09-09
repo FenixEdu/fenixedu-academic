@@ -166,8 +166,8 @@ public class InsertStudentTestResponses implements IService {
             }
             if (distributedTest.getTestType().equals(new TestType(TestType.EVALUATION))) {
                 IOnlineTest onlineTest = (IOnlineTest) persistentSuport.getIPersistentOnlineTest().readByDistributedTest(distributedTestId);
-                IAttends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student,
-                        (IExecutionCourse) distributedTest.getTestScope().getDomainObject());
+                IAttends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student.getIdInternal(),
+                        ((IExecutionCourse) distributedTest.getTestScope().getDomainObject()).getIdInternal());
                 IMark mark = persistentSuport.getIPersistentMark().readBy(onlineTest, attend);
 
                 if (mark == null) {

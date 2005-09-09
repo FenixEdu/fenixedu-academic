@@ -17,16 +17,16 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
-import net.sourceforge.fenixedu.domain.GroupProperties;
-import net.sourceforge.fenixedu.domain.IGroupProperties;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.IAttends;
+import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
-import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupProperties;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
@@ -35,101 +35,76 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author asnr and scpo
- *  
+ * 
  */
 
 public class EditGroupShift implements IService {
 
-    /**
-     * The constructor of this class.
-     */
-    public EditGroupShift() {
-    }
+    public boolean run(Integer studentGroupID, Integer groupingID, Integer newShiftID, String username)
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-    /**
-     * Executes the service.
-     */
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
 
-
-    public boolean run(Integer studentGroupCode, Integer groupPropertiesCode,Integer newShiftCode,
-            String username) throws FenixServiceException {
-
-        ITurnoPersistente persistentShift = null;
-        IPersistentStudentGroup persistentStudentGroup = null;
-        IPersistentGroupProperties persistentGroupProperties = null;
-        
-        try {
-            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-            persistentGroupProperties = persistentSupport.getIPersistentGroupProperties();
-            
-            IGroupProperties groupProperties = (IGroupProperties)persistentGroupProperties.readByOID(
-            		GroupProperties.class, groupPropertiesCode);
-            
-            if(groupProperties == null){
-            	throw new ExistingServiceException();
-            }
-
-            persistentStudentGroup = persistentSupport
-                    .getIPersistentStudentGroup();
-            IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup
-                    .readByOID(StudentGroup.class, studentGroupCode);
-
-            if (studentGroup == null)
-                throw new InvalidArgumentsServiceException();
-            
-            persistentShift = persistentSupport.getITurnoPersistente();
-            IShift shift = (IShift) persistentShift.readByOID(Shift.class,
-                    newShiftCode);
-            
-            if(groupProperties.getShiftType() == null || 
-             	   (!groupProperties.getShiftType().equals(shift.getTipo()))) {
-             	throw new InvalidStudentNumberServiceException();
-             }
-            
-            IStudent student = persistentSupport.getIPersistentStudent()
-            .readByUsername(username);
-            
-            IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-			.getInstance();
-            IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-			.getGroupEnrolmentStrategyInstance(groupProperties);
-    
-            if(!strategy.checkStudentInAttendsSet(groupProperties,username)){
-            	throw new NotAuthorizedException();
-            }
-            
-            if(!checkStudentInStudentGroup(student,studentGroup)){
-                throw new InvalidSituationServiceException();
-            }
-            
-            boolean result = strategy.checkNumberOfGroups(groupProperties,shift);
-            if (!result) {
-                throw new InvalidChangeServiceException();
-            }
-            persistentStudentGroup.simpleLockWrite(studentGroup);
-            studentGroup.setShift(shift);
-            
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia.getMessage());
+        final IPersistentGrouping persistentGroupProperties = persistentSupport.getIPersistentGrouping();
+        final IGrouping grouping = (IGrouping) persistentGroupProperties.readByOID(Grouping.class,
+                groupingID);
+        if (grouping == null) {
+            throw new ExistingServiceException();
         }
+
+        final IPersistentStudentGroup persistentStudentGroup = persistentSupport
+                .getIPersistentStudentGroup();
+        final IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
+                StudentGroup.class, studentGroupID);
+        if (studentGroup == null) {
+            throw new InvalidArgumentsServiceException();
+        }
+
+        final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
+        final IShift shift = (IShift) persistentShift.readByOID(Shift.class, newShiftID);
+        if (grouping.getShiftType() == null || !grouping.getShiftType().equals(shift.getTipo())) {
+            throw new InvalidStudentNumberServiceException();
+        }
+
+        final IStudent student = persistentSupport.getIPersistentStudent().readByUsername(username);
+
+        IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
+                .getInstance();
+        IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
+                .getGroupEnrolmentStrategyInstance(grouping);
+
+        if (!strategy.checkStudentInGrouping(grouping, username)) {
+            throw new NotAuthorizedException();
+        }
+
+        if (!checkStudentInStudentGroup(student, studentGroup)) {
+            throw new InvalidSituationServiceException();
+        }
+
+        boolean result = strategy.checkNumberOfGroups(grouping, shift);
+        if (!result) {
+            throw new InvalidChangeServiceException();
+        }
+        persistentStudentGroup.simpleLockWrite(studentGroup);
+        studentGroup.setShift(shift);
 
         return true;
     }
-    
-    private boolean checkStudentInStudentGroup(IStudent student,IStudentGroup studentGroup)throws FenixServiceException{
-    	boolean found = false;
-    	List studentGroupAttends = studentGroup.getStudentGroupAttends();
-    	IStudentGroupAttend studentGroupAttend = null;
-    	Iterator iterStudentGroupAttends = studentGroupAttends.iterator();
-    	while(iterStudentGroupAttends.hasNext() && !found){
-    		studentGroupAttend = ((IStudentGroupAttend)iterStudentGroupAttends.next());
-    		if(studentGroupAttend.getAttend().getAluno().equals(student)){
-    			found = true;
-    		}
-    	}
-    	return found;
+
+    private boolean checkStudentInStudentGroup(IStudent student, IStudentGroup studentGroup)
+            throws FenixServiceException {
+        boolean found = false;
+        List studentGroupAttends = studentGroup.getAttends();
+        IAttends attend = null;
+        Iterator iterStudentGroupAttends = studentGroupAttends.iterator();
+        while (iterStudentGroupAttends.hasNext() && !found) {
+            attend = ((IAttends) iterStudentGroupAttends.next());
+            if (attend.getAluno().equals(student)) {
+                found = true;
+            }
+        }
+        return found;
     }
-    
-    
+
 }

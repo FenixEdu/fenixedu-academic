@@ -117,7 +117,7 @@ public class InsertEvaluationMarks implements IService {
 
     private Object createSiteView(ISite site, IEvaluation evaluation, HashMap hashMarks,
             List marksErrorsInvalidMark, List attendList, HashMap nonExistingStudents)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
         InfoSiteMarks infoSiteMarks = new InfoSiteMarks();
 
         infoSiteMarks.setInfoEvaluation(InfoEvaluation.newInfoFromDomain(evaluation));
