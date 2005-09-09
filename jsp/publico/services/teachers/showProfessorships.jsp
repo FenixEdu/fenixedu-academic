@@ -8,7 +8,7 @@
 <h1 align="center">
 	<%= request.getAttribute("searchDetails").toString() %>
 </h1>
-<h2 align="center">
+<h2 align="center" class="print_smaller">
 	<bean:message key="label.teachers.search"/>
 	-
 	<%= request.getAttribute("searchType").toString() %>
@@ -48,7 +48,7 @@
 	
 		
 <logic:present name="detailedProfessorShipsListofLists">
-    <table width="90%" class="invisible">
+    <table width="90%">
     <tr>
 	<td class="box_header"><b>Disciplina</b></td>
 		<td class="box_header"><b>Cursos</b></td>
