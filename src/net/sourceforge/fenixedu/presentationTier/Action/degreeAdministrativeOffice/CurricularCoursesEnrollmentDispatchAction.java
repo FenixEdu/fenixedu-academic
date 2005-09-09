@@ -370,7 +370,6 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
                 errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
             }
             saveErrors(request, errors);
-            return mapping.findForward("prepareEnrollmentChooseCurricularCourses");
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
