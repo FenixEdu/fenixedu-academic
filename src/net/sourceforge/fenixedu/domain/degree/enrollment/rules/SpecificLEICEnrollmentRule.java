@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.exceptions.EnrolmentRuleDomainException;
-import net.sourceforge.fenixedu.domain.projectsManagement.IRubric;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
@@ -35,6 +34,8 @@ import org.apache.commons.collections.Predicate;
  * @author nmgo
  */
 public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements IEnrollmentRule {
+	
+	private final static String PORTFOLIO_V_CODE = "B3K";
 
 	protected Integer optionalCourses = 0;
 	
@@ -433,4 +434,27 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 		}
 		return false;
 	}
+	
+    protected List removeAreaCurricularCourses(List curricularCoursesToBeEnrolledIn) {
+    	//remove all optional, area and Portfólio V
+    	
+        final List areasCurricularCourses = studentCurricularPlan.getDegreeCurricularPlan().getCurricularCoursesFromAnyArea();
+        final List optionalCurricularCourses = new ArrayList();
+        for (ICurricularCourseGroup curricularCourseGroup : (List<ICurricularCourseGroup>) studentCurricularPlan.getDegreeCurricularPlan().getAllOptionalCurricularCourseGroups()){
+        	optionalCurricularCourses.addAll(curricularCourseGroup.getCurricularCourses());
+        }
+        
+        List result = (List) CollectionUtils.select(curricularCoursesToBeEnrolledIn, new Predicate() {
+
+            public boolean evaluate(Object arg0) {
+                CurricularCourse2Enroll course2Enroll = (CurricularCourse2Enroll) arg0;
+                return (!areasCurricularCourses.contains(course2Enroll.getCurricularCourse())
+                		&& !optionalCurricularCourses.contains(course2Enroll.getCurricularCourse())
+                		&& !course2Enroll.getCurricularCourse().getCode().equals(PORTFOLIO_V_CODE)
+                		&& !studentCurricularPlan.getDegreeCurricularPlan().getTFCs().contains(course2Enroll.getCurricularCourse()));
+            }
+            
+        });
+        return result;
+    }
 }
