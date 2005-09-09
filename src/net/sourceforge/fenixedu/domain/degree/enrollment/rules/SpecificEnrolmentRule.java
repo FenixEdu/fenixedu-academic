@@ -86,7 +86,7 @@ public abstract class SpecificEnrolmentRule {
     /**
      * @param curricularCoursesToBeEnrolledIn
      */
-    private List removeAreaCurricularCourses(List curricularCoursesToBeEnrolledIn) {
+    protected List removeAreaCurricularCourses(List curricularCoursesToBeEnrolledIn) {
         final List areasCurricularCourses = studentCurricularPlan.getDegreeCurricularPlan().getCurricularCoursesFromAnyArea();
         List result = (List) CollectionUtils.select(curricularCoursesToBeEnrolledIn, new Predicate() {
 
