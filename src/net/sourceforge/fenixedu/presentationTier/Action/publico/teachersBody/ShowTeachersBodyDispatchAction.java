@@ -40,8 +40,8 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
 	
 	private String makeBodyHeader(String executionYear, Integer semester, Integer teacherType) {
 		
-		String sem = semester.intValue() == 0 ? "Ambos Semestres" : (semester.intValue() + "ï¿½ Semestre");
-		String teacher = teacherType.intValue() == 0 ? "Todos os Docentes" : "Apenas Responsï¿½veis";		
+		String sem = semester.intValue() == 0 ? "Ambos Semestres" : (semester.intValue() + "1º Semestre");
+		String teacher = teacherType.intValue() == 0 ? "Todos os Docentes" : "Apenas Responsáveis";		
 		String header = "Ano Lectivo " + executionYear + " - " + sem + " - " + teacher;
 		
 		return header;
