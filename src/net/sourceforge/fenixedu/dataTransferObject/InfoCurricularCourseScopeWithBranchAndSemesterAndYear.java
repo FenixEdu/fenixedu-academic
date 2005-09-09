@@ -20,6 +20,7 @@ public class InfoCurricularCourseScopeWithBranchAndSemesterAndYear extends InfoC
     public void copyFromDomain(ICurricularCourseScope curricularCourseScope) {
         super.copyFromDomain(curricularCourseScope);
         if (curricularCourseScope != null) {
+        	setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curricularCourseScope.getCurricularCourse()));
             setInfoBranch(InfoBranch.newInfoFromDomain(curricularCourseScope.getBranch()));
             setInfoCurricularSemester(InfoCurricularSemesterWithInfoCurricularYear
                     .newInfoFromDomain(curricularCourseScope.getCurricularSemester()));
