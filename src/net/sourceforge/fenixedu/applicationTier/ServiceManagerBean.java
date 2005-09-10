@@ -135,9 +135,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
 	    // Replace this line with the following block if conflicting transactions should restart automatically
 	    //Object serviceResult = manager.execute(id, service, method, args);
 
-	    if (id != null) {
-		ServiceInfo.setCurrentServiceInfo(id.getUtilizador(), service, args);
-	    }
+	    ServiceInfo.setCurrentServiceInfo((id == null) ? null : id.getUtilizador(), service, args);
 
 	    Object serviceResult = null;
 	    while (true) {

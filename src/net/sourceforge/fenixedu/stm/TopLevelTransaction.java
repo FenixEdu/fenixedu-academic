@@ -15,10 +15,12 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 
     private boolean finished = false;
     private DBChanges dbChanges = null;
+    private ServiceInfo serviceInfo = null;
 
     TopLevelTransaction(int number) {
         super(number);
-	dbChanges = new DBChanges();
+	this.serviceInfo = ServiceInfo.getCurrentServiceInfo();
+	this.dbChanges = new DBChanges();
 	updateFromTxLogsOnDatabase();
 	setNumber((number == -1) ? getCommitted() : number);
     }
@@ -33,6 +35,12 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 	}
     }
 
+    public void logServiceInfo() {
+	System.out.println("Transaction " + this 
+			   + " created for service: " + serviceInfo.serviceName 
+			   + ", username = " + serviceInfo.username 
+			   + ", args = " + serviceInfo.getArgumentsAsString());
+    }
 
     public void finish() {
 	this.finished = true;

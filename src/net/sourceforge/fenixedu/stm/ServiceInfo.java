@@ -19,7 +19,7 @@ public class ServiceInfo {
     }
 
     public boolean shouldLog() {
-	return USERS_TO_MONITOR.contains(username.toUpperCase()) 
+	return ((username != null) && USERS_TO_MONITOR.contains(username.toUpperCase()))
 	    || SERVICES_TO_MONITOR.contains(serviceName.toUpperCase());
     }
 

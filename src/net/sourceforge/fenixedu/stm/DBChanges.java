@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.sql.SQLException;
 
 import org.apache.ojb.broker.PersistenceBroker;
@@ -27,6 +28,13 @@ import net.sourceforge.fenixedu.persistenceTier.cache.FenixCache;
 
 
 class DBChanges {
+    private static final String SQL_CHANGE_LOGS_CMD_PREFIX = "INSERT INTO TX_CHANGE_LOGS VALUES ";
+    // The following value is the approximate length of each tuple to add after the VALUES
+    private static final int PER_RECORD_LENGTH = 100;
+    private static final int MIN_BUFFER_CAPACITY = 256;
+    private static final int MAX_BUFFER_CAPACITY = 10000;
+    private static final int BUFFER_THRESHOLD = 256;
+
     private PersistenceBroker broker;
     private Set<AttrChangeLog> attrChangeLogs = null;
     private Set<DomainObject> newObjs = null;
@@ -177,19 +185,7 @@ class DBChanges {
 	    
 	// write change logs
 	Connection conn = pb.serviceConnectionManager().getConnection();
-	if (attrChangeLogs != null) {
-	    PreparedStatement stmt = conn.prepareStatement("INSERT INTO TX_CHANGE_LOGS VALUES (?,?,?,?)");
-
-	    stmt.setInt(4, txNumber);
-
-	    for (AttrChangeLog log : attrChangeLogs) {
-		stmt.setString(1, log.obj.getClass().getName());
-		stmt.setInt(2, log.obj.getIdInternal());
-		stmt.setString(3, log.attr);
-
-		stmt.executeUpdate();
-	    }
-	}
+	writeAttrChangeLogs(conn, txNumber);
 
 	// write ServiceInfo
 	ServiceInfo info = ServiceInfo.getCurrentServiceInfo();
@@ -200,6 +196,45 @@ class DBChanges {
 	    stmt.setString(3, info.serviceName);
 	    stmt.setString(4, info.getArgumentsAsString());
 	    stmt.executeUpdate();
+	}
+    }
+
+    private void writeAttrChangeLogs(Connection conn, int txNumber) throws SQLException {
+	if (attrChangeLogs != null) {
+	    // allocate a large capacity StringBuilder to avoid reallocation
+	    int bufferCapacity = Math.min(MIN_BUFFER_CAPACITY + (attrChangeLogs.size() * PER_RECORD_LENGTH), 
+					  MAX_BUFFER_CAPACITY);
+	    StringBuilder sqlCmd = new StringBuilder(bufferCapacity);
+	    sqlCmd.append(SQL_CHANGE_LOGS_CMD_PREFIX);
+
+	    Statement stmt = conn.createStatement();
+
+	    boolean addedRecord = false;
+	    for (AttrChangeLog log : attrChangeLogs) {
+		if (addedRecord) {
+		    sqlCmd.append(",");
+		}
+		sqlCmd.append("('");
+		sqlCmd.append(log.obj.getClass().getName());
+		sqlCmd.append("',");
+		sqlCmd.append(log.obj.getIdInternal());
+		sqlCmd.append(",'");
+		sqlCmd.append(log.attr);
+		sqlCmd.append("',");
+		sqlCmd.append(txNumber);
+		sqlCmd.append(")");
+		addedRecord = true;
+
+		if ((bufferCapacity - sqlCmd.length()) < BUFFER_THRESHOLD) {
+		    stmt.execute(sqlCmd.toString());
+		    sqlCmd.setLength(0);
+		    sqlCmd.append(SQL_CHANGE_LOGS_CMD_PREFIX);
+		    addedRecord = false;
+		}
+	    }
+	    if (addedRecord) {
+		stmt.execute(sqlCmd.toString());
+	    }
 	}
     }
 

@@ -83,10 +83,11 @@ public abstract class Transaction extends jvstm.Transaction {
 	tx.finish();
 	synchronized (ACTIVE_TXS) {
 	    boolean needsClean = false;
-	    if (ACTIVE_TXS.size() > 30) {
-		System.out.println("WARNING: more than " + ACTIVE_TXS.size() + " Txs in queue to be finished... : " + ACTIVE_TXS.peek().getNumber());
-	    }
 	    FenixTransaction oldestTx = ACTIVE_TXS.peek();
+	    if (ACTIVE_TXS.size() > 30) {
+		System.out.println("WARNING: more than " + ACTIVE_TXS.size() + " Txs in queue to be finished... : " + oldestTx.getNumber());
+		((TopLevelTransaction)oldestTx).logServiceInfo();
+	    }
 	    while ((oldestTx != null) && oldestTx.isFinished()) {
 		needsClean = true;
 		ACTIVE_TXS.poll();
