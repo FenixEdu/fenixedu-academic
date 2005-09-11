@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
@@ -19,7 +20,6 @@ import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -40,16 +40,16 @@ public class ReadStudentsByCurricularCourse implements IService {
 
     public Object run(Integer executionCourseCode, Integer courseCode) throws ExcepcaoInexistente,
             FenixServiceException, ExcepcaoPersistencia {
-        List infoStudentList = null;
-        ISite site = null;
-        ICurricularCourse curricularCourse = null;
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentSite persistentSite = sp.getIPersistentSite();
 
-        IPersistentSite persistentSite = sp.getIPersistentSite();
-        site = persistentSite.readByExecutionCourse(executionCourseCode);
+        List infoStudentList = null;
+        ICurricularCourse curricularCourse = null;
+
+        final ISite site = persistentSite.readByExecutionCourse(executionCourseCode);
 
         if (courseCode == null) {
-            infoStudentList = getAllAttendingStudents(sp, executionCourseCode);
+            infoStudentList = getAllAttendingStudents(sp, site);
         } else {
             IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
             curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
@@ -81,22 +81,13 @@ public class ReadStudentsByCurricularCourse implements IService {
         return infoStudentList;
     }
 
-    private List getAllAttendingStudents(ISuportePersistente sp, Integer executionCourseID)
-            throws ExcepcaoPersistencia {
-        List infoStudentList;
-        //	all students that attend this execution course
-        IFrequentaPersistente frequentaPersistente = sp.getIFrequentaPersistente();
-        List attendList = frequentaPersistente.readByExecutionCourse(executionCourseID);
-
-        infoStudentList = (List) CollectionUtils.collect(attendList, new Transformer() {
-
-            public Object transform(Object input) {
-                IAttends attend = (IAttends) input;
-                IStudent student = attend.getAluno();
-                InfoStudent infoStudent = InfoStudentWithInfoPerson.newInfoFromDomain(student);
-                return infoStudent;
-            }
-        });
+    private List getAllAttendingStudents(final ISuportePersistente sp, final ISite site) throws ExcepcaoPersistencia {
+        final List<IAttends> attendList = site.getExecutionCourse().getAttends();
+        final List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
+        for (final IAttends attends : attendList) {
+            final IStudent student = attends.getAluno();
+            infoStudentList.add(InfoStudentWithInfoPerson.newInfoFromDomain(student));
+        }
         return infoStudentList;
     }
 
