@@ -119,7 +119,7 @@ public class Grouping extends Grouping_Base {
                 }
             }
         }
-        return numberOfStudents;
+        return Integer.valueOf(numberOfStudents);
     }
 
     public void checkShiftCapacity(IShift shift) {
