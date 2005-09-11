@@ -16,11 +16,9 @@
 
 <logic:present name="siteView" property="component">
 	<bean:define id="component" name="siteView" property="component" />
-	<bean:define id="infoGrouping" name="component" property="infoGrouping" />
-	<bean:define id="attends" name="infoGrouping" property="infoAttends" />
 	<bean:define id="numberOfStudentsOutsideAttendsSet" name="component" property="numberOfStudentsOutsideAttendsSet" />
 	<bean:define id="numberOfStudentsInsideAttendsSet" name="component" property="numberOfStudentsInsideAttendsSet" />
-	<bean:define id="groupingOID" name="infoGrouping" property="idInternal" />
+	<bean:define id="groupingOID" name="component" property="infoGrouping.idInternal" />
 	<bean:define id="onclick">
 		return confirm('<bean:message key="message.confirm.delete.groupProperties"/>')
 	</bean:define>
@@ -293,8 +291,9 @@
 								 <td class="listClasses">
 		                        <logic:notEmpty name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList">
 		                        [<logic:iterate id="infoSiteStudentGroup" name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList" >
-									<bean:define id="infoStudentGroup" name="infoSiteStudentGroup" property="infoStudentGroup"/>	
-		                        	<html:link page="<%="/viewStudentGroupInformation.do?method=viewStudentGroupInformation&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+									<bean:define id="infoStudentGroup" name="infoSiteStudentGroup" property="infoStudentGroup"/>
+									<bean:define id="urlString" type="java.lang.String">/viewStudentGroupInformation.do?method=viewStudentGroupInformation&amp;objectCode=<%= pageContext.findAttribute("objectCode") %>&amp;groupPropertiesCode=<%= request.getParameter("groupPropertiesCode") %></bean:define>
+		                        	<html:link page="<%= urlString %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
 		               					<bean:write name="infoStudentGroup" property="groupNumber"/>
 									</html:link>
 								</logic:iterate>]

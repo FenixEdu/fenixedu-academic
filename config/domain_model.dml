@@ -1338,6 +1338,8 @@ class net.sourceforge.fenixedu.domain.Grouping extends net.sourceforge.fenixedu.
     public void createStudentGroup(IShift shift, Integer groupNumber, java.util.List<IStudent> students);
     
     public void delete();
+
+	public int findMaxGroupNumber();
     "
 }
 

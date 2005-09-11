@@ -163,13 +163,7 @@ public class Grouping extends Grouping_Base {
     }
 
     public List<IStudentGroup> readAllStudentGroupsBy(IShift shift) {
-        List<IStudentGroup> result = new ArrayList();
-        for (final IStudentGroup studentGroup : this.getStudentGroups()) {
-            if (studentGroup.getShift() == shift) {
-                result.add(studentGroup);
-            }
-        }
-        return result;
+        return shift.getAssociatedStudentGroups();
     }
 
     public static IGrouping create(String goupingName, Date enrolmentBeginDay, Date enrolmentEndDay,
@@ -346,4 +340,13 @@ public class Grouping extends Grouping_Base {
             exportGrouping.delete();
         }
     }
+
+    public int findMaxGroupNumber() {
+        int max = 0;
+        for (final IStudentGroup studentGroup : getStudentGroups()) {
+            max = Math.max(max, studentGroup.getGroupNumber().intValue());
+        }
+        return max;
+    }
+
 }

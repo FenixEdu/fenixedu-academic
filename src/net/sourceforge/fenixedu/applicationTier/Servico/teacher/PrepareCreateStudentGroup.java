@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentInformation;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IGrouping;
+import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -33,67 +34,47 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class PrepareCreateStudentGroup implements IService {
 
     public ISiteComponent run(Integer executionCourseCode, Integer groupPropertiesCode)
-            throws FenixServiceException {
+            throws ExcepcaoPersistencia, ExistingServiceException {
 
-        List infoStudentInformationList = new ArrayList();
-        InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
-        Integer groupNumber = null;
-        IGrouping grouping;
-        try {
+        final ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IGrouping grouping = (IGrouping) ps.getIPersistentGrouping().readByOID(Grouping.class,
+                groupPropertiesCode);
 
-            grouping = (IGrouping) ps.getIPersistentGrouping().readByOID(Grouping.class,
-                    groupPropertiesCode);
-
-            if (grouping == null) {
-                throw new ExistingServiceException();
-            }
-
-            List<IAttends> attendsGrouping = new ArrayList();
-            attendsGrouping.addAll(grouping.getAttends());
-
-            List<IStudentGroup> allStudentsGroups = grouping.getStudentGroups();
-
-            groupNumber = new Integer(1);
-
-            if (allStudentsGroups != null) {
-                if (allStudentsGroups.size() != 0) {
-                    IStudentGroup studentGroup = (IStudentGroup) Collections.max(allStudentsGroups,
-                            new BeanComparator("groupNumber"));
-                    groupNumber = studentGroup.getGroupNumber() + 1;                            
-                }
-
-                List<IAttends> allStudentGroupAttends;
-                for(IStudentGroup studentGroup : allStudentsGroups){
-                    allStudentGroupAttends = studentGroup.getAttends();
-                    for(IAttends attend : allStudentGroupAttends){
-                        if(attendsGrouping.contains(attend))
-                            attendsGrouping.remove(attend);
-                    }                    
-                }               
-            }
-
-            IStudent student = null;                        
-            for(IAttends attend : attendsGrouping){
-                student = attend.getAluno();
-                InfoSiteStudentInformation infoSiteStudentInformation = new InfoSiteStudentInformation();
-                infoSiteStudentInformation.setEmail(student.getPerson().getEmail());
-                infoSiteStudentInformation.setName(student.getPerson().getNome());
-                infoSiteStudentInformation.setNumber(student.getNumber());
-                infoSiteStudentInformation.setUsername(student.getPerson().getUsername());
-                infoStudentInformationList.add(infoSiteStudentInformation);
-            }          
-
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia.getMessage());
+        if (grouping == null) {
+            throw new ExistingServiceException();
         }
+
+        final List<IStudentGroup> allStudentsGroups = grouping.getStudentGroups();
+        final List<IAttends> attendsGrouping = new ArrayList(grouping.getAttends());
+        for (final IStudentGroup studentGroup : allStudentsGroups) {
+            for (IAttends attend : studentGroup.getAttends()) {
+                attendsGrouping.remove(attend);
+            }
+        }
+
+        final List<InfoSiteStudentInformation> infoStudentInformationList = new ArrayList<InfoSiteStudentInformation>(attendsGrouping.size());
+        for (IAttends attend : attendsGrouping) {
+            final IStudent student = attend.getAluno();
+            final IPerson person = student.getPerson();
+            InfoSiteStudentInformation infoSiteStudentInformation = new InfoSiteStudentInformation();
+            infoSiteStudentInformation.setEmail(person.getEmail());
+            infoSiteStudentInformation.setName(person.getNome());
+            infoSiteStudentInformation.setNumber(student.getNumber());
+            infoSiteStudentInformation.setUsername(person.getUsername());
+            infoStudentInformationList.add(infoSiteStudentInformation);
+        }
+
         Collections.sort(infoStudentInformationList, new BeanComparator("number"));
 
+        InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
         infoSiteStudentGroup.setInfoSiteStudentInformationList(infoStudentInformationList);
-        infoSiteStudentGroup.setNrOfElements(groupNumber);
+
+        final int groupNumber = grouping.findMaxGroupNumber() + 1;
+        infoSiteStudentGroup.setNrOfElements(Integer.valueOf(groupNumber));
 
         return infoSiteStudentGroup;
 
     }
+
 }
