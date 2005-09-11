@@ -158,6 +158,7 @@ import net.sourceforge.fenixedu.domain.teacher.IOldPublication;
 import net.sourceforge.fenixedu.domain.teacher.IProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.ITeachingCareer;
 import net.sourceforge.fenixedu.domain.teacher.workTime.ITeacherInstitutionWorkTime;
+import net.sourceforge.fenixedu.stm.VersionNotAvailableException;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
@@ -335,8 +336,13 @@ public abstract class Cloner {
     private static void copyObjectProperties(Object destination, Object source) {
         if (source != null)
             try {
-
                 CopyUtils.copyProperties(destination, source);
+            } catch (InvocationTargetException e) {
+                if (e.getCause() instanceof VersionNotAvailableException) {
+                    throw (VersionNotAvailableException) e.getCause();
+                } else {
+                    throw new RuntimeException(e);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);
