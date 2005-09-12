@@ -83,7 +83,8 @@
 			<tr>	
 				<td width="5%" class="listClasses">
 				<html:multibox property="studentsNotEnroled">
-				<bean:write name="infoStudent" property="idInternal"/>
+				<bean:define id="infoPerson" name="infoStudent" property="infoPerson" />
+				<bean:write name="infoPerson" property="username"/>
 				</html:multibox>
 				</td>	
 				<td width="10%" class="listClasses"><bean:write name="infoStudent" property="number"/>
@@ -135,5 +136,3 @@
 	
 </tr>
 </table>
-			
-

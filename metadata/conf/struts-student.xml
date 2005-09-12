@@ -72,7 +72,8 @@
        <form-bean name="groupEnrolmentForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
-        <form-property name="studentsNotEnroled" type="java.lang.Integer[]" />
+       <!-- <form-property name="studentsNotEnroled" type="java.lang.Integer[]" /> -->
+		<form-property name="studentsNotEnroled" type="java.lang.String[]" />
         <form-property name="shift" type="java.lang.String" />
       </form-bean>
       

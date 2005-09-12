@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -26,7 +25,6 @@ import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -39,8 +37,8 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class GroupEnrolment implements IService {
 
-    public boolean run(Integer groupingID, Integer shiftID, Integer groupNumber, List studentIDs,
-            String username) throws FenixServiceException, ExcepcaoPersistencia {
+    public boolean run(Integer groupingID, Integer shiftID, Integer groupNumber, List studentUsernames,
+            String studentUsername) throws FenixServiceException, ExcepcaoPersistencia {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
@@ -51,27 +49,21 @@ public class GroupEnrolment implements IService {
         }
 
         final IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-        final IStudent userStudent = persistentStudent.readByUsername(username);
+        final IStudent userStudent = persistentStudent.readByUsername(studentUsername);
 
-        List<IStudent> studentsList = new ArrayList<IStudent>();
-        for (final Integer studentID : (List<Integer>) studentIDs) {
-            IStudent student = (IStudent) persistentStudent.readByOID(Student.class, studentID);
-            studentsList.add(student);
-        }
-
-        IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
+        final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
                 .getInstance();
-        IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
+        final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
                 .getGroupEnrolmentStrategyInstance(grouping);
-        if (!strategy.checkStudentInGrouping(grouping, userStudent.getPerson().getUsername())) {
+        
+        if (grouping.getStudentAttend(studentUsername) == null) {
             throw new NoChangeMadeServiceException();
         }
-
         IShift shift = null;
         if (shiftID != null) {
             shift = (IShift) persistentSupport.getITurnoPersistente().readByOID(Shift.class, shiftID);
         }
-        Integer result = strategy.enrolmentPolicyNewGroup(grouping, studentIDs.size() + 1, shift);
+        Integer result = strategy.enrolmentPolicyNewGroup(grouping, studentUsernames.size() + 1, shift);
 
         if (result.equals(Integer.valueOf(-1))) {
             throw new InvalidArgumentsServiceException();
@@ -83,46 +75,41 @@ public class GroupEnrolment implements IService {
             throw new NotAuthorizedException();
         }
 
+        final IAttends userAttend = grouping.getStudentAttend(userStudent);
+        if (userAttend == null) {
+            throw new InvalidStudentNumberServiceException();
+        }
+        if (strategy.checkAlreadyEnroled(grouping, studentUsername)) {
+            throw new InvalidSituationServiceException();
+        }
+
         IStudentGroup newStudentGroup = grouping.readStudentGroupBy(groupNumber);
         if (newStudentGroup != null) {
             throw new FenixServiceException();
         }
 
-        if (!strategy.checkStudentsInGrouping(studentIDs, grouping)) {
+        if (!strategy.checkStudentsUserNamesInGrouping(studentUsernames, grouping)) {
             throw new InvalidStudentNumberServiceException();
         }
+        checkStudentUsernamesAlreadyEnroledInStudentGroup(strategy, studentUsernames, grouping);
 
-        final IAttends userAttend = grouping.getStudentAttend(userStudent);
-
-        checkStudentCodesAndUserAttendInStudentGroup(studentsList, grouping, userAttend);
         newStudentGroup = DomainFactory.makeStudentGroup(groupNumber, grouping, shift);
-
-        grouping.addStudentGroups(newStudentGroup);
-
-        for (final IStudent student : studentsList) {
-            IAttends attend = grouping.getStudentAttend(student);
+        for (final String studentUsernameIter : (List<String>) studentUsernames) {
+            IAttends attend = grouping.getStudentAttend(studentUsernameIter);
             attend.addStudentGroups(newStudentGroup);
-
         }
+        userAttend.addStudentGroups(newStudentGroup);
+        grouping.addStudentGroups(newStudentGroup);
 
         return true;
     }
 
-    private void checkStudentCodesAndUserAttendInStudentGroup(final List<IStudent> students,
-            final IGrouping grouping, final IAttends userAttend) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    private void checkStudentUsernamesAlreadyEnroledInStudentGroup(
+            final IGroupEnrolmentStrategy strategy, final List<String> studentUsernames,
+            final IGrouping grouping) throws FenixServiceException {
 
-        IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-                .getInstance();
-        IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-                .getGroupEnrolmentStrategyInstance(grouping);
-
-        if (strategy.checkAlreadyEnroled(grouping, userAttend.getAluno().getPerson().getUsername())) {
-            throw new InvalidSituationServiceException();
-        }
-
-        for (final IStudent student : students) {
-            if (strategy.checkAlreadyEnroled(grouping, student.getPerson().getUsername())) {
+        for (final String studentUsername : studentUsernames) {
+            if (strategy.checkAlreadyEnroled(grouping, studentUsername)) {
                 throw new InvalidSituationServiceException();
             }
         }

@@ -55,22 +55,13 @@ public class ReadStudentsWithoutGroup implements IService {
 		}
 		
 		final List allStudentsGroups = grouping.getStudentGroups();
-		
-		int nextGroupNumber = 1;
-		for (final Iterator iterator = allStudentsGroups.iterator(); iterator.hasNext(); ) {
-			final IStudentGroup studentGroup = (IStudentGroup) iterator.next();
-			final int studentGroupNumber = studentGroup.getGroupNumber().intValue();
-			if (studentGroupNumber > nextGroupNumber) {
-				nextGroupNumber = studentGroupNumber;
-			}
-		}
-		final Integer groupNumber = new Integer(nextGroupNumber + 1);
+			
+		final Integer groupNumber = grouping.findMaxGroupNumber() + 1;
 		
 		infoSiteStudentsWithoutGroup.setGroupNumber(groupNumber);
 
 		final List attends = grouping.getAttends();
 
-//		userStudent = persistentStudent.readByUsername(username);
 		IStudent userStudent = null;
 		for (final Iterator iterator = attends.iterator(); iterator.hasNext(); ) {
 			final IAttends attend = (IAttends) iterator.next();
