@@ -167,7 +167,13 @@ public class Grouping extends Grouping_Base {
     }
 
     public List<IStudentGroup> readAllStudentGroupsBy(IShift shift) {
-        return shift.getAssociatedStudentGroups();
+        final List<IStudentGroup> result = new ArrayList<IStudentGroup>();
+        for (final IStudentGroup studentGroup : shift.getAssociatedStudentGroups()) {
+            if (studentGroup.getGrouping().equals(this)) {
+                result.add(studentGroup);
+            }
+        }
+        return result;
     }
 
     public static IGrouping create(String goupingName, Date enrolmentBeginDay, Date enrolmentEndDay,
