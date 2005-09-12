@@ -144,6 +144,19 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
 
         return false;
     }
+    
+    public boolean checkPossibleToEnrolInExistingGroup(IGrouping grouping, IStudentGroup studentGroup,
+            Integer numberOfStudents) {
+
+        final int numberOfElements = studentGroup.getAttendsCount() + numberOfStudents;
+        final Integer maximumCapacity = grouping.getMaximumCapacity();
+        if (maximumCapacity == null)
+            return true;
+        if (numberOfElements <= maximumCapacity)
+            return true;
+
+        return false;
+    }
 
     public boolean checkIfStudentGroupIsEmpty(IAttends attend, IStudentGroup studentGroup) {
 

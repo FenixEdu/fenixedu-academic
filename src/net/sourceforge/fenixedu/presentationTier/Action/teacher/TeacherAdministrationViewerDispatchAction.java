@@ -2735,29 +2735,25 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             ServiceManagerServiceFactory.executeService(userView, "InsertStudentGroupMembers", args);
         } catch (ExistingServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
-            ActionError error = null;
-            error = new ActionError("error.noGroup");
+            ActionError error = new ActionError("error.noGroup");
             actionErrors.add("error.noGroup", error);
             saveErrors(request, actionErrors);
             return viewShiftsAndGroups(mapping, form, request, response);
         } catch (InvalidChangeServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
-            ActionError error = null;
-            error = new ActionError("error.insertStudentGroupMembers.AttendsSet");
+            ActionError error = new ActionError("error.insertStudentGroupMembers.AttendsSet");
             actionErrors.add("error.insertStudentGroupMembers.AttendsSet", error);
             saveErrors(request, actionErrors);
             return prepareViewExecutionCourseProjects(mapping, form, request, response);
         } catch (InvalidSituationServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
-            ActionError error = null;
-            error = new ActionError("errors.existing.studentInGroup");
+            ActionError error = new ActionError("errors.existing.studentInGroup");
             actionErrors.add("errors.existing.studentInGroup", error);
             saveErrors(request, actionErrors);
             return prepareEditStudentGroupMembers(mapping, form, request, response);
         } catch (InvalidArgumentsServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
-            ActionError error = null;
-            error = new ActionError("error.editStudentGroupMembers");
+            ActionError error = new ActionError(e.getMessage());
             actionErrors.add("error.editStudentGroupMembers", error);
             saveErrors(request, actionErrors);
             return prepareEditStudentGroupMembers(mapping, form, request, response);

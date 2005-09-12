@@ -51,13 +51,17 @@ public class InsertStudentGroupMembers implements IService {
                 .getGroupEnrolmentStrategyInstance(grouping);
 
         if (!strategy.checkStudentsUserNamesInGrouping(studentUsernames, grouping)) {
-            throw new InvalidArgumentsServiceException();
+            throw new InvalidArgumentsServiceException("error.editStudentGroupMembers");
         }
 
-        for (final String studentUsername : (List<String>) studentUsernames) {           
+        if (!strategy.checkPossibleToEnrolInExistingGroup(grouping, studentGroup, studentUsernames
+                .size()))
+            throw new InvalidArgumentsServiceException("error.invalidNumberOfStudents");
+
+        for (final String studentUsername : (List<String>) studentUsernames) {
             final IAttends attend = grouping.getStudentAttend(studentUsername);
             if (attend == null) {
-                throw new InvalidArgumentsServiceException();
+                throw new InvalidArgumentsServiceException("error.editStudentGroupMembers");
             }
             for (final IStudentGroup studentGroupIter : grouping.getStudentGroups()) {
                 if (studentGroupIter.getAttends().contains(attend)) {
