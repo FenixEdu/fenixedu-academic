@@ -1,0 +1,5 @@
+select concat('update PERSON set PERSON.KEY_STUDENT = ',
+	STUDENT.ID_INTERNAL,
+	' where PERSON.ID_INTERNAL = ', 
+	STUDENT.KEY_PERSON, ';')
+as "" from STUDENT where STUDENT.KEY_PERSON IS NOT NULL;
