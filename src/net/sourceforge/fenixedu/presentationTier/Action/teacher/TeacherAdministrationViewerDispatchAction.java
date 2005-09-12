@@ -1893,13 +1893,13 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             actionErrors.add("error.noGroupProperties", error);
             saveErrors(request, actionErrors);
             return prepareViewExecutionCourseProjects(mapping, form, request, response);
-        } catch (ExistingServiceException e) {
+        } catch (DomainException e) {
             ActionErrors actionErrors = new ActionErrors();
             ActionError error = null;
-            error = new ActionError("error.exception.existing.groupProperties");
-            actionErrors.add("error.exception.existing.groupProperties", error);
+            error = new ActionError(e.getArgs()[0]);
+            actionErrors.add("error.noGroupProperties", error);
             saveErrors(request, actionErrors);
-            return prepareEditGroupProperties(mapping, form, request, response);
+            return prepareViewExecutionCourseProjects(mapping, form, request, response);      
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

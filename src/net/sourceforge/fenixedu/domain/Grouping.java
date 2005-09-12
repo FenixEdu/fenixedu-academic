@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
+import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
+import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
 import net.sourceforge.fenixedu.util.ProposalState;
@@ -243,7 +247,7 @@ public class Grouping extends Grouping_Base {
         if (!this.getName().equals(groupingName)) {
             for (final IExecutionCourse executionCourse : this.getExecutionCourses()) {
                 if (executionCourse.getGroupingByName(groupingName) != null) {
-                    throw new DomainException("error.exception.existing.groupProperties");
+                    throw new DomainException(this.getClass().getName(), "error.exception.existing.groupProperties");
                 }
             }
         }
@@ -285,35 +289,30 @@ public class Grouping extends Grouping_Base {
     }
 
     private void checkCapacities(IShift shift, List<IStudent> students, Integer minCapacity, Integer maxCapacity, Integer groupMaximumNumber) {
-        if (minCapacity != null && maxCapacity != null) {
-            if (students.size() < minCapacity || students.size() > maxCapacity)
-                throw new DomainException(this.getClass().getName(), "error.invalidNumberOfStudents");
-        }
-
-        if (groupMaximumNumber != null) {
-            if (shift == null) {
-                List studentGroupsWithoutShift = this.getStudentGroupsWithoutShift();
-                if (studentGroupsWithoutShift != null
-                        && studentGroupsWithoutShift.size() == groupMaximumNumber)
-                    throw new DomainException(this.getClass().getName(),
-                            "error.invalidNumberOfStudentGroupsWithoutGroup");
-            } else {
-                List studentGroupsWithShift = this.getStudentGroupsWithShift(shift);
-                if (studentGroupsWithShift != null
-                        && studentGroupsWithShift.size() == groupMaximumNumber)
-                    throw new DomainException(this.getClass().getName(),
-                            "error.invalidNumberOfStudentGroups");
-            }
-        }
+        
+        IGroupEnrolmentStrategyFactory enrolmentStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+        IGroupEnrolmentStrategy enrolmentStrategy = enrolmentStrategyFactory.getGroupEnrolmentStrategyInstance(this);
+        
+        Integer result = null;
+        if(students != null){
+            result = enrolmentStrategy.enrolmentPolicyNewGroup(this, students.size(), shift);
+            if(result == -3)
+                throw new DomainException(this.getClass().getName(), "error.invalidMaximunNumberOfStudents");
+            else if(result == -2)
+                throw new DomainException(this.getClass().getName(), "error.invalidMinimumNumberOfStudents");
+            else if(result == -1)
+                throw new DomainException(this.getClass().getName(), "error.invalidNumberOfStudentGroups");
+        }       
     }
 
     private void checkForStudentsInStudentGroupsAndGrouping(List<IStudent> students) {
         for (IStudent student : students) {
             IAttends attend = getStudentAttend(student);
             for (final IStudentGroup studentGroup : this.getStudentGroups()) {
-                if (studentGroup.getAttends().contains(attend) || !this.getAttends().contains(attend)) {
-                    throw new DomainException(this.getClass().getName(), "");
-                }
+                if (studentGroup.getAttends().contains(attend))
+                    throw new DomainException(this.getClass().getName(), "errors.existing.studentEnrolment");                
+                else if(!this.getAttends().contains(attend))
+                    throw new DomainException(this.getClass().getName(), "errors.notExisting.studentInGroupig");
             }
         }
     }

@@ -20,7 +20,7 @@ public class AtomicGroupEnrolmentStrategy extends GroupEnrolmentStrategy impleme
     public AtomicGroupEnrolmentStrategy() {
     }
 
-    public Integer enrolmentPolicyNewGroup(IGrouping grouping, int numberOfStudentsToEnrole, IShift shift) throws ExcepcaoPersistencia {
+    public Integer enrolmentPolicyNewGroup(IGrouping grouping, int numberOfStudentsToEnrole, IShift shift) {
 
         if (checkNumberOfGroups(grouping, shift)) {
             Integer maximumCapacity = grouping.getMaximumCapacity();
@@ -41,7 +41,6 @@ public class AtomicGroupEnrolmentStrategy extends GroupEnrolmentStrategy impleme
             return Integer.valueOf(-1);
 
         return Integer.valueOf(1);
-
     }
 
     public boolean checkNumberOfGroupElements(IGrouping grouping, IStudentGroup studentGroup) throws ExcepcaoPersistencia {

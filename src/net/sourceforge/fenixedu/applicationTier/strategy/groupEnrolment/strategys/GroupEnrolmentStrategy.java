@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy {
 
-    public boolean checkNumberOfGroups(IGrouping grouping, IShift shift) throws ExcepcaoPersistencia {
+    public boolean checkNumberOfGroups(IGrouping grouping, IShift shift) {
 
         if (grouping.getGroupMaximumNumber() == null) {
             return true;
@@ -94,14 +94,9 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
         return result;
     }
 
-    public boolean checkAlreadyEnroled(IGrouping grouping, String studentUsername)
-            throws ExcepcaoPersistencia {
+    public boolean checkAlreadyEnroled(IGrouping grouping, String studentUsername) {
 
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-        final IStudent student = persistentSupport.getIPersistentStudent().readByUsername(
-                studentUsername);
-        final IAttends studentAttend = grouping.getStudentAttend(student);
+        final IAttends studentAttend = grouping.getStudentAttend(studentUsername);
 
         if (studentAttend != null) {
             List<IStudentGroup> groupingStudentGroups = grouping.getStudentGroups();
@@ -211,7 +206,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
     }
 
     public abstract Integer enrolmentPolicyNewGroup(IGrouping grouping, int numberOfStudentsToEnrole,
-            IShift shift) throws ExcepcaoPersistencia;
+            IShift shift);
 
     public abstract boolean checkNumberOfGroupElements(IGrouping grouping, IStudentGroup studentGroup)
             throws ExcepcaoPersistencia;
