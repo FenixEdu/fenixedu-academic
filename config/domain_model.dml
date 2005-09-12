@@ -1862,6 +1862,7 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 	Date nascimento;
 	String freguesiaMorada;
 	Integer keyAuthor;
+	Integer keyEmployee;
     MaritalStatus maritalStatus;
     Gender gender;
     IDDocumentType idDocumentType; 

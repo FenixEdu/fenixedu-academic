@@ -205,6 +205,11 @@
 	   column="KEY_EXTERNAL_PERSON"  
 	   jdbc-type="INTEGER"
     />
+	<field-descriptor 
+	   name="keyEmployee"    
+	   column="KEY_EMPLOYEE"  
+	   jdbc-type="INTEGER"
+    />
 	<field-descriptor
         name="isPassInKerberos"
         column="IS_PASS_KERBEROS"
@@ -214,7 +219,7 @@
         name="istUsername"
         column="IST_USERNAME"
         jdbc-type="VARCHAR"
-    />       
+    />  
     <reference-descriptor auto-retrieve="false"
     	name="externalPerson"
         class-ref="net.sourceforge.fenixedu.domain.ExternalPerson">
@@ -226,6 +231,12 @@
          
     >
          <foreignkey field-ref="chavePais"/>
+    </reference-descriptor>
+    <reference-descriptor auto-retrieve="false"
+         name="employee"
+         class-ref="net.sourceforge.fenixedu.domain.Employee"
+         >
+         <foreignkey field-ref="keyEmployee"/>
     </reference-descriptor>
     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="personRoles"
