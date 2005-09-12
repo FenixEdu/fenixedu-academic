@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
@@ -90,6 +91,10 @@ public class InfoPerson extends InfoObject {
     private MaritalStatus maritalStatus;
 
     private InfoCountry infoPais;
+    
+    private InfoEmployee infoEmployee;
+    
+    private InfoStudent infoStudent;
     
     private InfoExternalPerson infoExternalPerson;
 
@@ -824,7 +829,7 @@ public class InfoPerson extends InfoObject {
     public void copyFromDomain(IPerson person) {
         super.copyFromDomain(person);
         if (person != null) {
-            setNome(person.getNome());
+        	setNome(person.getNome());
             setNumeroDocumentoIdentificacao(person.getNumeroDocumentoIdentificacao());
             setTipoDocumentoIdentificacao(person.getIdDocumentType());
             setLocalEmissaoDocumentoIdentificacao(person.getLocalEmissaoDocumentoIdentificacao());
@@ -876,9 +881,28 @@ public class InfoPerson extends InfoObject {
                 setInfoExternalPerson(infoExternalPerson);
             }
 
+            if (person.getEmployee()!= null){
+        		InfoEmployee infoEmployee = new InfoEmployee();
+        		infoEmployee.setIdInternal(person.getEmployee().getIdInternal());
+        		infoEmployee.setEmployeeNumber(person.getEmployee().getEmployeeNumber());
+        		
+    			if(person.getEmployee().getHistoricList().get(0).getMailingCostCenter()!=null){
+    				infoEmployee.setWorkingPlaceInfoCostCenter(InfoCostCenter.newInfoFromDomain(person.getEmployee().getHistoricList().get(0).getMailingCostCenter()));
+    				
+    			}else {
+    				if (person.getEmployee().getHistoricList().get(0).getWorkingPlaceCostCenter()!=null)
+    					infoEmployee.setWorkingPlaceInfoCostCenter(InfoCostCenter.newInfoFromDomain(person.getEmployee().getHistoricList().get(0).getWorkingPlaceCostCenter()));
+  
+    				
+        		}
+    			setInfoEmployee(infoEmployee);
+    			
+        	}
+            
             setAvailablePhoto(person.getAvailablePhoto());
             
             setInfoPais(InfoCountry.newInfoFromDomain(person.getPais()));
+            
 
         }
     }
@@ -945,5 +969,21 @@ public class InfoPerson extends InfoObject {
 
         person.setAvailablePhoto(infoPerson.getAvailablePhoto());
     }
+
+	public InfoEmployee getInfoEmployee() {
+		return infoEmployee;
+	}
+
+	public void setInfoEmployee(InfoEmployee infoEmployee) {
+		this.infoEmployee = infoEmployee;
+	}
+
+	public InfoStudent getInfoStudent() {
+		return infoStudent;
+	}
+
+	public void setInfoStudent(InfoStudent infoStudent) {
+		this.infoStudent = infoStudent;
+	}
 
 }

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -59,7 +60,17 @@ public class FindPersonAction extends FenixDispatchAction {
         } else if (findPersonForm.get("startIndex") != null) {
             startIndex = new Integer((String) findPersonForm.get("startIndex"));
         }
-
+        
+        String roleType = null;
+        
+        if (request.getParameter("roleType") != null
+                && request.getParameter("roleType").length() > 0) {
+        	roleType =  (String) request.getParameter("roleType");
+        	
+        } else if (findPersonForm.get("roleType") != null) {
+        	roleType =(String) findPersonForm.get("roleType");
+        }
+        
         HashMap parametersSearch = new HashMap();
         parametersSearch.put(new String("name"), putSearchChar(name));
         parametersSearch.put(new String("email"), putSearchChar(null));
@@ -68,6 +79,8 @@ public class FindPersonAction extends FenixDispatchAction {
         parametersSearch.put(new String("startIndex"), startIndex);
         parametersSearch.put(new String("numberOfElements"), new Integer(
                 SessionConstants.LIMIT_FINDED_PERSONS - 1));
+        parametersSearch.put(new String("roleType"),roleType);
+        
 
         Object[] args = { parametersSearch };
 
@@ -86,17 +99,25 @@ public class FindPersonAction extends FenixDispatchAction {
             saveErrors(request, errors);
             return mapping.getInputForward();
         }
-
+        
+        List infoPerson = (List) personListFinded.get(1);
+        if (infoPerson.size() == 0){
+       	 errors.add("PersonNotExist", new ActionError("error.manager.implossible.findPerson"));
+       	 saveErrors(request, errors);
+         return mapping.getInputForward();
+       }
+        InfoPerson iinfoPerson = (InfoPerson)infoPerson.get(0);
         request.setAttribute("totalFindedPersons", personListFinded.get(0));
-
         //Collections.sort((List) personListFinded.get(1), new
         // BeanComparator("nome"));
         request.setAttribute("personListFinded", personListFinded.get(1));
         request.setAttribute("name", name);
+        request.setAttribute("roleType", roleType);
         request.setAttribute("previousStartIndex", new Integer(startIndex.intValue()
                 - SessionConstants.LIMIT_FINDED_PERSONS));
-        request.setAttribute("startIndex", new Integer(startIndex.intValue()
-                + SessionConstants.LIMIT_FINDED_PERSONS));
+	    request.setAttribute("startIndex", new Integer(startIndex.intValue()
+	                + SessionConstants.LIMIT_FINDED_PERSONS));
+       
 
         if (isEmployeeOrTeacher(userView)) {
             request.setAttribute("show", Boolean.TRUE);

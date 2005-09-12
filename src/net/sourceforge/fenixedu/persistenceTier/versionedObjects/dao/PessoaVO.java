@@ -7,6 +7,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -74,7 +75,7 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
      */
     public List<IPerson> readActivePersonByNameAndEmailAndUsernameAndDocumentId(final String name,
             final String email, final String username, final String documentIdNumber,
-            final Integer startIndex, final Integer numberOfElementsInSpan) throws ExcepcaoPersistencia {
+            final Integer startIndex, final Integer numberOfElementsInSpan,IRole role) throws ExcepcaoPersistencia {
 
         final List<IPerson> persons = new ArrayList<IPerson>();
 
@@ -82,6 +83,7 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
         final String emailToMatch = email.replaceAll("%", ".*");
         final String usernameToMatch = email.replaceAll("%", ".*");
         final String documentIdNumberToMatch = documentIdNumber.replaceAll("%", ".*");
+       
 
         final List<IPerson> allPersons = (List<IPerson>) readAll(Person.class);
 
@@ -102,11 +104,15 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
                     continue;
                 }
             }
-
             if (documentIdNumber != null && documentIdNumber.length() > 0
                     && !person.getNumeroDocumentoIdentificacao().matches(documentIdNumberToMatch)) {
                 continue;
             }
+            if (role != null
+            		&& !person.getPersonRoles().contains(role)){
+            			continue;
+            }
+            
             filteredPersons.add(person);
         }
 
@@ -123,7 +129,7 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
 
     public Integer countActivePersonByNameAndEmailAndUsernameAndDocumentId(final String name,
             final String email, final String username, final String documentIdNumber,
-            final Integer startIndex) throws ExcepcaoPersistencia {
+            final Integer startIndex,IRole role) throws ExcepcaoPersistencia {
 
         final String nameToMatch = name.replaceAll("%", ".*");
         final String emailToMatch = email.replaceAll("%", ".*");
@@ -148,7 +154,9 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
                     continue;
                 }
             }
-
+            if (role != null && !person.getPersonRoles().contains(role)){
+            			continue;
+            }
             if (documentIdNumber != null && documentIdNumber.length() > 0
                     && !person.getNumeroDocumentoIdentificacao().matches(documentIdNumberToMatch)) {
                 continue;
@@ -193,5 +201,8 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
         });
 
     }
+    
+    
+  
 
 }

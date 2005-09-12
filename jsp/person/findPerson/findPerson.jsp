@@ -1,13 +1,25 @@
+<%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
+
+
+
 <h2><bean:message key="label.manager.findPerson" /></h2>
 <br />
 <span class="error"><html:errors/></span>
+  
 
-<html:form action="/findPerson" focus="name">
+
+<html:form action="/findPerson" focus="name" >
 <html:hidden property="method" value="findPerson" />
 <html:hidden property="startIndex" value="1" />
 <html:hidden property="page" value="1" />
+
+
+  
+
 <table>
 	<tr>
 		<td colspan="2" class="infoop">
@@ -19,6 +31,7 @@
 			<br /><br />
 		</td>
 	</tr>
+	
 	<tr>
 		<td>
 			<bean:message key="label.viewPhoto" />
@@ -30,6 +43,18 @@
 	<tr>
 		<td>
 			<br /><br />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<bean:message key="label.type"/>:
+		</td>
+		<td>	
+		   	<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.RoleType" bundle="ENUMERATION_RESOURCES" includedFields="STUDENT,TEACHER,GRANT_OWNER,EMPLOYEE" />
+			<html:select property="roleType" >
+				<html:option key="dropDown.Default" value=""/>
+				<html:options collection="values" property="value" labelProperty="label"/>
+			</html:select>
 		</td>
 	</tr>
 	<tr>

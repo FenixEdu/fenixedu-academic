@@ -112,6 +112,8 @@
 	    	<form-property name="startIndex" type="java.lang.String"/>
 	    	<form-property name="page" type="java.lang.Integer" initial="0"/>     		    		
 			<form-property name="viewPhoto" type="java.lang.String"/>
+			<form-property name="roleType" type="java.lang.String"/>
+			<form-property name="departmentId" type="java.lang.Integer" />
 	  </form-bean> 
     </form-beans>
     
@@ -276,6 +278,7 @@
     <!-- ========== Message Resources Definitions ============================ -->
    	<message-resources parameter="ServidorApresentacao.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
     <message-resources parameter="ServidorApresentacao.ApplicationResources" key="DEFAULT" null="false"/>
+    <message-resources parameter="ServidorApresentacao.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
