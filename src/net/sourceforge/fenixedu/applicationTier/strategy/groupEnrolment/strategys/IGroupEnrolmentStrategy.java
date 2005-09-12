@@ -32,6 +32,6 @@ public interface IGroupEnrolmentStrategy {
 	public boolean checkNotEnroledInGroup(IGrouping grouping,IStudentGroup studentGroup, String username) throws ExcepcaoPersistencia;
 	public boolean checkStudentInGrouping (IGrouping grouping, String username)throws ExcepcaoPersistencia;
     public boolean checkStudentsInGrouping(List<Integer> studentIDs, IGrouping grouping) throws ExcepcaoPersistencia;
-	public boolean checkHasShift(IGrouping groupProperties);
+	public boolean checkHasShift(IGrouping grouping);
     public boolean checkStudentsUserNamesInGrouping(List<String> studentUsernames, IGrouping grouping);
 }
