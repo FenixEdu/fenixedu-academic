@@ -4,7 +4,9 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 
 public interface IPessoaPersistente extends IPersistentObject {
 
@@ -14,10 +16,10 @@ public interface IPessoaPersistente extends IPersistentObject {
 
     public List<IPerson> readActivePersonByNameAndEmailAndUsernameAndDocumentId(String name,
             String email, String username, String documentIdNumber, Integer spanNumber,
-            Integer numberOfElementsInSpan) throws ExcepcaoPersistencia;
+            Integer numberOfElementsInSpan,IRole role) throws ExcepcaoPersistencia;
 
     public Integer countActivePersonByNameAndEmailAndUsernameAndDocumentId(String name, String email,
-            String username, String documentIdNumber, Integer spanNumber) throws ExcepcaoPersistencia;
+            String username, String documentIdNumber, Integer spanNumber,IRole role) throws ExcepcaoPersistencia;
 
     public List<IPerson> findPersonByName(String name, Integer startIndex, Integer numberOfElementsInSpan)
             throws ExcepcaoPersistencia;
@@ -31,5 +33,6 @@ public interface IPessoaPersistente extends IPersistentObject {
 
     public Collection<IPerson> readByIdentificationDocumentNumber(String identificationDocumentNumber)
             throws ExcepcaoPersistencia;
-
+    
+   
 }
