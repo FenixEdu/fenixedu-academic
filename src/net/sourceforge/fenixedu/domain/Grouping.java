@@ -9,9 +9,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
-import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
-import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
 import net.sourceforge.fenixedu.util.ProposalState;
@@ -273,13 +270,7 @@ public class Grouping extends Grouping_Base {
         if (readStudentGroupBy(groupNumber) != null) {
             throw new DomainException(this.getClass().getName(), "error.invalidGroupNumber");
         }
-
-        Integer minCapacity = this.getMinimumCapacity();
-        Integer maxCapacity = this.getMaximumCapacity();
-        Integer groupMaximumNumber = this.getGroupMaximumNumber();
-
-        checkCapacities(shift, students, minCapacity, maxCapacity, groupMaximumNumber);
-
+      
         checkForStudentsInStudentGroupsAndGrouping(students);
 
         IStudentGroup newStudentGroup = null;
@@ -292,24 +283,7 @@ public class Grouping extends Grouping_Base {
             IAttends attend = getStudentAttend(student);
             newStudentGroup.addAttends(attend);
         }
-    }
-
-    private void checkCapacities(IShift shift, List<IStudent> students, Integer minCapacity, Integer maxCapacity, Integer groupMaximumNumber) {
-        
-        IGroupEnrolmentStrategyFactory enrolmentStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
-        IGroupEnrolmentStrategy enrolmentStrategy = enrolmentStrategyFactory.getGroupEnrolmentStrategyInstance(this);
-        
-        Integer result = null;
-        if(students != null){
-            result = enrolmentStrategy.enrolmentPolicyNewGroup(this, students.size(), shift);
-            if(result == -3)
-                throw new DomainException(this.getClass().getName(), "error.invalidMaximunNumberOfStudents");
-            else if(result == -2)
-                throw new DomainException(this.getClass().getName(), "error.invalidMinimumNumberOfStudents");
-            else if(result == -1)
-                throw new DomainException(this.getClass().getName(), "error.invalidNumberOfStudentGroups");
-        }       
-    }
+    }   
 
     private void checkForStudentsInStudentGroupsAndGrouping(List<IStudent> students) {
         for (IStudent student : students) {

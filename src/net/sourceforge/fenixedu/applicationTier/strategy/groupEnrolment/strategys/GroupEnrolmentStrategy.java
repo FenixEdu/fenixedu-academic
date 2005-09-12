@@ -115,11 +115,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
     public boolean checkNotEnroledInGroup(IGrouping grouping, IStudentGroup studentGroup,
             String studentUsername) throws ExcepcaoPersistencia {
 
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-        final IStudent student = persistentSupport.getIPersistentStudent().readByUsername(
-                studentUsername);
-        final IAttends studentAttend = grouping.getStudentAttend(student);
+        final IAttends studentAttend = grouping.getStudentAttend(studentUsername);
 
         if (studentAttend != null) {
             List<IAttends> studentGroupAttends = studentGroup.getAttends();

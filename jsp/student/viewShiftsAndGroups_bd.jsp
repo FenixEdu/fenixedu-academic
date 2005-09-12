@@ -125,9 +125,14 @@
 						 		</td>
 								
 								<td class="listClasses">
-							 		<html:link page="<%="/groupEnrolment.do?method=prepareEnrolment&executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
-								       <bean:message key="link.insertGroup"/>
-							        </html:link>		   
+							 		<logic:equal name="nrOfGroups" value="0">
+								 		<bean:message key="link.insertGroup"/>										
+									</logic:equal>	
+							 		<logic:notEqual name="nrOfGroups" value="0">
+								 		<html:link page="<%="/groupEnrolment.do?method=prepareEnrolment&executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+									       <bean:message key="link.insertGroup"/>
+								        </html:link>	
+									</logic:notEqual>									        	   
 								</td>					
 			
 			
@@ -184,23 +189,22 @@
 				 		</td>
 				 		
 				 		<bean:define id="nrOfGroups" name="infoSiteShift" property="nrOfGroups"/>
-				 		<td class="listClasses" width="10%" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size() %>">
-				 			 		
-				 			<b><bean:message key="label.nrOfGroups"/> </b><bean:write name="nrOfGroups"/>
-				 			
-				 			
+				 		<td class="listClasses" width="10%" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size() %>">				 			 		
+				 			<b><bean:message key="label.nrOfGroups"/> </b><bean:write name="nrOfGroups"/>				 							 			
 						</td>
 				 		
 				 		<td class="listClasses" width="13%" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size() %>">
-					 		<html:link page="<%="/groupEnrolment.do?method=prepareEnrolment&executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
-								<bean:message key="link.insertGroup"/>
-							</html:link>	
-
-   
-						</td>		
-				 		
+					 		<logic:equal name="nrOfGroups" value="0">
+								 		<bean:message key="link.insertGroup"/>										
+							</logic:equal>	
+							<logic:notEqual name="nrOfGroups" value="0">
+						 		<html:link page="<%="/groupEnrolment.do?method=prepareEnrolment&executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+									<bean:message key="link.insertGroup"/>
+								</html:link>	   
+							</logic:notEqual>	
+						</td>						 		
 						
-						 <td class="listClasses" width="20%" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size()%>">
+						<td class="listClasses" width="20%" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size()%>">
                         <logic:notEmpty name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList">
                         [<logic:iterate id="infoSiteStudentGroup" name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList" >
 							<bean:define id="infoStudentGroup" name="infoSiteStudentGroup" property="infoStudentGroup"/>	
