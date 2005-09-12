@@ -295,13 +295,19 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 
     protected boolean verifyCoordinator(ITeacher teacher, Object[] arguments, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
-
+    	
         IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
         ICoordinator coordinator = persistentCoordinator.readCoordinatorByTeacherIdAndExecutionDegreeId(
                 teacher.getIdInternal(), (Integer) arguments[0]);
         if (coordinator == null) {
             return false;
         }
+        
+    	//check if is LEEC coordinator
+    	if(!coordinator.getExecutionDegree().getDegreeCurricularPlan().getName().equals("LEEC 2003")) {
+    		return false;
+    	}
+
         IStudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments, sp);
         if (studentCurricularPlan == null) {
             return false;
