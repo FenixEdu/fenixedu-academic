@@ -146,9 +146,9 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
     }
     
     public boolean checkPossibleToEnrolInExistingGroup(IGrouping grouping, IStudentGroup studentGroup,
-            Integer numberOfStudents) {
+            Integer numberOfStudentsToInsert) {
 
-        final int numberOfElements = studentGroup.getAttendsCount() + numberOfStudents;
+        final int numberOfElements = studentGroup.getAttendsCount() + numberOfStudentsToInsert;
         final Integer maximumCapacity = grouping.getMaximumCapacity();
         if (maximumCapacity == null)
             return true;
