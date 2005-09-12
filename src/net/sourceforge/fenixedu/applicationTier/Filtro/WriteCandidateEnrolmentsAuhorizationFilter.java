@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
@@ -93,7 +94,7 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
             // Read The ExecutionDegree
             try {
 
-                Integer selection[] = (Integer[]) arguments[0];
+            	Set<Integer> selection = (Set<Integer>) arguments[0];
                 Integer candidateID = (Integer) arguments[1];
                 teacher = sp.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
 
@@ -113,13 +114,13 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
                     return false;
                 }
 
-                for (int i = 0; i < selection.length; i++) {
-
+                for (Integer selectedCurricularCourse : selection) {
+					
                     // Modified by Fernanda Quitério
 
                     ICurricularCourse curricularCourse = (ICurricularCourse) sp
                             .getIPersistentCurricularCourse().readByOID(CurricularCourse.class,
-                                    selection[i]);
+                            		selectedCurricularCourse);
                     if (!curricularCourse.getDegreeCurricularPlan().equals(
                             masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan())) {
                         return false;
