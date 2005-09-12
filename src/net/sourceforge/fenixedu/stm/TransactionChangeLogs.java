@@ -105,6 +105,7 @@ class TransactionChangeLogs {
 
     public static synchronized boolean updateFromTxLogsOnDatabase(PersistenceBroker pb) throws SQLException,LookupException {
 	Connection conn = pb.serviceConnectionManager().getConnection();
+    conn.commit();
 	Statement stmt = conn.createStatement();
 
 	// read tx logs
@@ -244,7 +245,9 @@ class TransactionChangeLogs {
 
 		this.lastTxNumber = currentTxNumber;
 	    } catch (Exception e) {
-		throw new Error("Couldn't initialize the clean thread");
+            e.printStackTrace();
+            System.out.println("Couldn't initialize the clean thread");
+            //throw new Error("Couldn't initialize the clean thread");
 	    } finally {
 		if (broker != null) {
 		    broker.close();
@@ -282,7 +285,9 @@ class TransactionChangeLogs {
 
 		this.lastTxNumber = currentTxNumber;
 	    } catch (Exception e) {
-		throw new Error("Couldn't update database in the clean thread");
+            e.printStackTrace();
+            System.out.println("Couldn't update database in the clean thread");
+            //throw new Error("Couldn't update database in the clean thread");
 	    } finally {
 		if (broker != null) {
 		    broker.close();

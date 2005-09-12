@@ -64,7 +64,7 @@ public abstract class DomainObject extends DomainObject_Base {
 	Transaction.logAttrChange(obj, attrName);
     }
 
-    protected static void noteStore(DomainObject obj, String attrName) {
+    public static void noteStore(DomainObject obj, String attrName) {
 	Transaction.storeObject(obj, attrName);
     }
 

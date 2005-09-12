@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.stm;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
+
+import com.thoughtworks.xstream.io.xml.Dom4JDriver;
+
 import jvstm.VBoxBody;
 
 public class VBox<E> extends jvstm.VBox<E> implements InvalidateSubject {
@@ -112,6 +116,7 @@ public class VBox<E> extends jvstm.VBox<E> implements InvalidateSubject {
 	if (isLoading()) {
 	    persistentLoad(obj, attr, value);
 	} else {
+        DomainObject.noteStore((DomainObject) obj, attr);
 	    put(value);
 	}
     }
