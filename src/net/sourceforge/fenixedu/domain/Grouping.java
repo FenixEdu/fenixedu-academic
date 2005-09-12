@@ -168,8 +168,8 @@ public class Grouping extends Grouping_Base {
 
     public List<IStudentGroup> readAllStudentGroupsBy(IShift shift) {
         final List<IStudentGroup> result = new ArrayList<IStudentGroup>();
-        for (final IStudentGroup studentGroup : shift.getAssociatedStudentGroups()) {
-            if (studentGroup.getGrouping().equals(this)) {
+        for (final IStudentGroup studentGroup : this.getStudentGroups()) {
+            if (studentGroup.getGrouping().equals(shift)) {
                 result.add(studentGroup);
             }
         }
