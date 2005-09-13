@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +11,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
+import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.util.UsernameUtils;
 
 public class Person extends Person_Base {
 
@@ -69,11 +72,17 @@ public class Person extends Person_Base {
     public void edit(InfoPerson personToEdit, ICountry country) {
         setProperties(personToEdit);
         setPais(country);
+        if(country != null){
+            setNacionalidade(country.getNationality());
+        }
     }    
     
     public void update(InfoPerson updatedPersonalData, ICountry country) {
         updateProperties(updatedPersonalData);
         setPais((ICountry) valueToUpdate(getPais(),country));
+        if(country != null){
+            setNacionalidade(((ICountry) valueToUpdate(getPais(),country)).getNationality());
+        }
         setNacionalidade(valueToUpdate(getNacionalidade(),country.getNationality()));
     }
 
@@ -151,6 +160,36 @@ public class Person extends Person_Base {
         setPassword(PasswordEncryptor.encryptPassword(newPassword));
     }
 
+    public void updateUsername(){
+    	List<RoleType> rolesImportance = new ArrayList<RoleType>();
+    	rolesImportance.add(RoleType.TEACHER);
+    	rolesImportance.add(RoleType.EMPLOYEE);
+    	rolesImportance.add(RoleType.STUDENT);
+    	rolesImportance.add(RoleType.GRANT_OWNER);
+    	rolesImportance.add(RoleType.PERSON);
+    	
+    	this.setUsername(UsernameUtils.updateUsername(this, rolesImportance));
+    }
+    
+	public IRole getPersonRole(RoleType roleType){
+		
+		for (IRole role : this.getPersonRoles()) {
+			if(role.getRoleType().equals(roleType)){
+				return role;
+			}
+		}
+		return null;
+	}    
+    
+	public Boolean hasRole(RoleType roleType){
+		for (IRole role : this.getPersonRoles()) {
+			if(role.getRoleType().equals(roleType)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
     /***************************************************************************
      * PRIVATE METHODS *
      **************************************************************************/

@@ -2,7 +2,7 @@
  *
  * The Fenix Project Domain Model
  * 
- */
+ */ 
 
 
 /*
@@ -1888,6 +1888,12 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
     public void edit(String name, String address, String phone, String mobile, String homepage, String email);
     
     public void update(net.sourceforge.fenixedu.dataTransferObject.InfoPerson personToEdit, net.sourceforge.fenixedu.domain.ICountry country);
+    
+    public void updateUsername();
+    
+    public net.sourceforge.fenixedu.domain.IRole getPersonRole(net.sourceforge.fenixedu.domain.person.RoleType roleType);
+    
+    public Boolean hasRole(net.sourceforge.fenixedu.domain.person.RoleType roleType);
     "
 }
 
