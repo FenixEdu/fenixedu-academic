@@ -25,13 +25,11 @@ public interface IGroupEnrolmentStrategy {
 	public boolean checkNumberOfGroupElements(IGrouping grouping,IStudentGroup studentGroup) throws ExcepcaoPersistencia;
     public boolean checkIfStudentGroupIsEmpty(IAttends attend, IStudentGroup studentGroup);
 	public List checkShiftsType(IGrouping groupProperties,List shifts);
-	public boolean checkPossibleToEnrolInExistingGroup(IGrouping grouping,IStudentGroup studentGroup,IShift shift)throws ExcepcaoPersistencia;
-    public boolean checkPossibleToEnrolInExistingGroup(IGrouping grouping, IStudentGroup studentGroup, Integer numberOfStudents);
+	public boolean checkPossibleToEnrolInExistingGroup(IGrouping grouping,IStudentGroup studentGroup)throws ExcepcaoPersistencia;
 	public Integer enrolmentPolicyNewGroup(IGrouping grouping,int numberOfStudentsToEnrole,IShift shift);
 	public boolean checkAlreadyEnroled(IGrouping grouping, String username);
 	public boolean checkNotEnroledInGroup(IGrouping grouping,IStudentGroup studentGroup, String username) throws ExcepcaoPersistencia;
 	public boolean checkStudentInGrouping (IGrouping grouping, String username)throws ExcepcaoPersistencia;
-    public boolean checkStudentsInGrouping(List<Integer> studentIDs, IGrouping grouping) throws ExcepcaoPersistencia;
 	public boolean checkHasShift(IGrouping grouping);
     public boolean checkStudentsUserNamesInGrouping(List<String> studentUsernames, IGrouping grouping);
 }

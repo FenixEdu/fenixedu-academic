@@ -11,13 +11,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author asnr and scpo
@@ -128,8 +123,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
         return true;
     }
 
-    public boolean checkPossibleToEnrolInExistingGroup(IGrouping grouping, IStudentGroup studentGroup,
-            IShift shift) {
+    public boolean checkPossibleToEnrolInExistingGroup(IGrouping grouping, IStudentGroup studentGroup) {
 
         final int numberOfElements = studentGroup.getAttendsCount();
         final Integer maximumCapacity = grouping.getMaximumCapacity();
@@ -140,20 +134,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
 
         return false;
     }
-    
-    public boolean checkPossibleToEnrolInExistingGroup(IGrouping grouping, IStudentGroup studentGroup,
-            Integer numberOfStudentsToInsert) {
-
-        final int numberOfElements = studentGroup.getAttendsCount() + numberOfStudentsToInsert;
-        final Integer maximumCapacity = grouping.getMaximumCapacity();
-        if (maximumCapacity == null)
-            return true;
-        if (numberOfElements <= maximumCapacity)
-            return true;
-
-        return false;
-    }
-
+   
     public boolean checkIfStudentGroupIsEmpty(IAttends attend, IStudentGroup studentGroup) {
 
         final List allStudentGroupAttends = studentGroup.getAttends();
@@ -166,30 +147,8 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
     public boolean checkStudentInGrouping(IGrouping grouping, String username)
             throws ExcepcaoPersistencia {
 
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-        final IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-
-        final IStudent student = persistentStudent.readByUsername(username);
-        final List<IStudent> groupingStudents = getGroupingStudents(grouping);
-
-        return groupingStudents.contains(student);
-    }
-
-    public boolean checkStudentsInGrouping(List<Integer> studentIDs, IGrouping grouping)
-            throws ExcepcaoPersistencia {
-
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-
-        final List<IStudent> groupingStudents = getGroupingStudents(grouping);
-        for (final Integer studentID : studentIDs) {
-            final IStudent student = (IStudent) persistentStudent.readByOID(Student.class, studentID);
-            if (groupingStudents.contains(student)) {
-                return false;
-            }
-        }
-        return true;
+        final IAttends attend = grouping.getStudentAttend(username);          
+        return attend != null;
     }
 
     public boolean checkStudentsUserNamesInGrouping(List<String> studentUsernames, IGrouping grouping) {
@@ -199,15 +158,6 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
             }
         }
         return true;
-    }
-
-    private List<IStudent> getGroupingStudents(final IGrouping grouping) {
-
-        final List<IStudent> result = new ArrayList();
-        for (final IAttends attend : grouping.getAttends()) {
-            result.add(attend.getAluno());
-        }
-        return result;
     }
 
     public boolean checkHasShift(IGrouping grouping) {

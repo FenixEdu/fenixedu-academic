@@ -61,8 +61,7 @@ public class VerifyStudentGroupAtributes implements IService {
             if (result)
                 throw new InvalidSituationServiceException();
 
-            result = strategy.checkPossibleToEnrolInExistingGroup(groupProperties, studentGroup,
-                    studentGroup.getShift());
+            result = strategy.checkPossibleToEnrolInExistingGroup(groupProperties, studentGroup);
             if (!result)
                 throw new InvalidArgumentsServiceException();
 

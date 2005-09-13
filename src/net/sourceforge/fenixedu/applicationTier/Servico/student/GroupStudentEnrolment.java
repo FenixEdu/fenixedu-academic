@@ -63,8 +63,7 @@ public class GroupStudentEnrolment implements IService {
         final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
                 .getGroupEnrolmentStrategyInstance(grouping);
 
-        boolean result = strategy.checkPossibleToEnrolInExistingGroup(grouping, studentGroup,
-                studentGroup.getShift());
+        boolean result = strategy.checkPossibleToEnrolInExistingGroup(grouping, studentGroup);
         if (!result) {
             throw new InvalidArgumentsServiceException();
         }
