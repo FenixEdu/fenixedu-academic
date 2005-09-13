@@ -483,6 +483,15 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             }
         });
     }
+    
+    protected List getAprovedEnrolments() {
+        return (List) CollectionUtils.select(getEnrolments(), new Predicate() {
+            public boolean evaluate(Object obj) {
+                IEnrolment enrollment = (IEnrolment) obj;
+                return enrollment.getEnrollmentState().equals(EnrollmentState.APROVED);
+            }
+        });
+    }
 
     // -------------------------------------------------------------
 
