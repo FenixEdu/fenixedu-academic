@@ -66,8 +66,8 @@
 	<inverse-foreignkey field-ref="keyEmployee"/>
   </collection-descriptor>   
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="employeesNotTeacher"
-		element-class-ref="net.sourceforge.fenixedu.domain.EmployeeNotTeacher"
+		name="administratives"
+		element-class-ref="net.sourceforge.fenixedu.domain.Administrative"
 		>
 		<inverse-foreignkey field-ref="keyEmployee"/>
 	</collection-descriptor>
@@ -96,12 +96,6 @@
 		<inverse-foreignkey field-ref="keyEmployee"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="nonTeacherEmployees"
-		element-class-ref="net.sourceforge.fenixedu.domain.NonTeacherEmployee"
-		>
-		<inverse-foreignkey field-ref="chaveFuncionario"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="responsibleEmployeeAssociatedEmployeeHistorics"
 		element-class-ref="net.sourceforge.fenixedu.domain.EmployeeHistoric"
 		>
@@ -115,7 +109,7 @@
 	</collection-descriptor>
 </class-descriptor>
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.EmployeeNotTeacher"
+<class-descriptor class="net.sourceforge.fenixedu.domain.Administrative"
   table="ass_FUNC_NAO_DOCENTE"
 >
   <field-descriptor
@@ -309,6 +303,7 @@
 
 <!-- Old classes -->
 
+<!--
 <class-descriptor class="net.sourceforge.fenixedu.domain.NonTeacherEmployee"
   table="ass_FUNC_NAO_DOCENTE"
 >
@@ -336,6 +331,7 @@
   	<foreignkey field-ref="chaveFuncionario"/>
   </reference-descriptor>  
 </class-descriptor>
+-->
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.StatusAssiduidade" 
 	table="ass_STATUS">

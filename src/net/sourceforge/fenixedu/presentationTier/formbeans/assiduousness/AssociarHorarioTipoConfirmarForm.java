@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import net.sourceforge.fenixedu.domain.Administrative;
 import net.sourceforge.fenixedu.domain.Funcionario;
 import net.sourceforge.fenixedu.domain.Horario;
 import net.sourceforge.fenixedu.domain.HorarioTipo;
 import net.sourceforge.fenixedu.domain.IStrategyHorarios;
-import net.sourceforge.fenixedu.domain.NonTeacherEmployee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.SuporteStrategyHorarios;
 
@@ -582,7 +582,7 @@ public class AssociarHorarioTipoConfirmarForm extends ActionForm {
     }
 
     public void setForm(Locale locale, Person pessoa, Funcionario funcionario,
-            NonTeacherEmployee funcNaoDocente, HorarioTipo horarioTipo, Horario horario, List listaRegime,
+            Administrative funcNaoDocente, HorarioTipo horarioTipo, Horario horario, List listaRegime,
             boolean isExcepcaoHorario) {
 
         IStrategyHorarios horarioStrategy = SuporteStrategyHorarios.getInstance().callStrategy(

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTierJDBC;
 
-import net.sourceforge.fenixedu.domain.NonTeacherEmployee;
+import net.sourceforge.fenixedu.domain.Administrative;
 
 /**
  * 
@@ -8,6 +8,6 @@ import net.sourceforge.fenixedu.domain.NonTeacherEmployee;
  */
 public interface IFuncNaoDocentePersistente {
 
-    public NonTeacherEmployee lerFuncNaoDocentePorNumMecanografico(int numMecanografico);
+    public Administrative lerFuncNaoDocentePorNumMecanografico(int numMecanografico);
 
 }

@@ -8,11 +8,11 @@ import java.util.ListIterator;
 import net.sourceforge.fenixedu.applicationTier.ServicoAutorizacao;
 import net.sourceforge.fenixedu.applicationTier.ServicoSeguro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteException;
+import net.sourceforge.fenixedu.domain.Administrative;
 import net.sourceforge.fenixedu.domain.CostCenter;
 import net.sourceforge.fenixedu.domain.Funcionario;
 import net.sourceforge.fenixedu.domain.Horario;
 import net.sourceforge.fenixedu.domain.HorarioTipo;
-import net.sourceforge.fenixedu.domain.NonTeacherEmployee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StatusAssiduidade;
 import net.sourceforge.fenixedu.persistenceTierJDBC.ICentroCustoPersistente;
@@ -40,7 +40,7 @@ public class ServicoSeguroConsultarFuncionario extends ServicoSeguro {
 
     private Person _pessoa = null;
 
-    private NonTeacherEmployee _funcNaoDocente = null;
+    private Administrative _funcNaoDocente = null;
 
     private List _rotacaoHorario = null;
 
@@ -163,7 +163,7 @@ public class ServicoSeguroConsultarFuncionario extends ServicoSeguro {
         return _pessoa;
     }
 
-    public NonTeacherEmployee getFuncNaoDocente() {
+    public Administrative getFuncNaoDocente() {
         return _funcNaoDocente;
     }
 

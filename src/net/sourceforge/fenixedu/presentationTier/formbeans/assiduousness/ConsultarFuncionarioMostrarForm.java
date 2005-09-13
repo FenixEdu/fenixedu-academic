@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.constants.assiduousness.Constants;
+import net.sourceforge.fenixedu.domain.Administrative;
 import net.sourceforge.fenixedu.domain.CostCenter;
 import net.sourceforge.fenixedu.domain.Funcionario;
 import net.sourceforge.fenixedu.domain.Horario;
-import net.sourceforge.fenixedu.domain.NonTeacherEmployee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StatusAssiduidade;
 
@@ -340,7 +340,7 @@ public class ConsultarFuncionarioMostrarForm extends ActionForm {
 
     public void setForm(Date dataInicialConsulta, Date dataFinalConsulta, Person pessoa,
             Funcionario funcionario, StatusAssiduidade statusAssiduidade, CostCenter centroCusto,
-            NonTeacherEmployee funcNaoDocente, List rotacaoHorario, HashMap listaRegimesRotacao) {
+            Administrative funcNaoDocente, List rotacaoHorario, HashMap listaRegimesRotacao) {
 
         _listaEscolhas.clear();
         _listaEscolhas.add(new String("consultar.marcacao"));

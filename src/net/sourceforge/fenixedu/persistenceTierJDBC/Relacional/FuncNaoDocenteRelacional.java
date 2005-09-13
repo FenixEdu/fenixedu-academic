@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.persistenceTierJDBC.Relacional;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import net.sourceforge.fenixedu.domain.NonTeacherEmployee;
+import net.sourceforge.fenixedu.domain.Administrative;
 import net.sourceforge.fenixedu.persistenceTierJDBC.IFuncNaoDocentePersistente;
 
 /**
@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.persistenceTierJDBC.IFuncNaoDocentePersistente;
  */
 public class FuncNaoDocenteRelacional implements IFuncNaoDocentePersistente {
 
-    public NonTeacherEmployee lerFuncNaoDocentePorNumMecanografico(int numMecanografico) {
-        NonTeacherEmployee funcionario = null;
+    public Administrative lerFuncNaoDocentePorNumMecanografico(int numMecanografico) {
+        Administrative funcionario = null;
 
         try {
             PreparedStatement sql = UtilRelacional
@@ -35,7 +35,7 @@ public class FuncNaoDocenteRelacional implements IFuncNaoDocentePersistente {
 
             resultado = sql.executeQuery();
             if (resultado.next()) {
-                funcionario = new NonTeacherEmployee(resultado.getInt("codigoInterno"), resultado
+                funcionario = new Administrative(resultado.getInt("codigoInterno"), resultado
                         .getInt("chaveFuncionario"));
             }
             sql.close();
