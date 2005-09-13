@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExportGrouping;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -30,8 +29,7 @@ public class DeleteGrouping implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentGrouping persistentGrouping = sp.getIPersistentGrouping();
-        IPersistentExportGrouping persistentExportGrouping = sp.getIPersistentExportGrouping();
-
+     
         IGrouping groupProperties = (IGrouping) persistentGrouping.readByOID(Grouping.class,
                 groupPropertiesId);
 
@@ -40,9 +38,7 @@ public class DeleteGrouping implements IService {
         }
 
         groupProperties.delete();
-        
-        persistentGrouping.deleteByOID(Grouping.class, groupPropertiesId);
-
+               
         return Boolean.TRUE;
     }
 

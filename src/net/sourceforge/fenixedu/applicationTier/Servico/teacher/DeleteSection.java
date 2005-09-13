@@ -7,13 +7,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;
 import net.sourceforge.fenixedu.domain.ISection;
-import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.fileSuport.FileSuport;
 import net.sourceforge.fenixedu.fileSuport.IFileSuport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -23,11 +21,9 @@ public class DeleteSection implements IService {
     public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode)
             throws FenixServiceException, ExcepcaoPersistencia {
         
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentSite persistentSite = sp.getIPersistentSite();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();            
             IPersistentSection persistentSection = sp.getIPersistentSection();
-            
-            ISite site = persistentSite.readByExecutionCourse(infoExecutionCourseCode);
+                        
             ISection sectionToDelete = (ISection) persistentSection.readByOID(Section.class, sectionCode);
            
             if (sectionToDelete == null) {
@@ -37,10 +33,8 @@ public class DeleteSection implements IService {
             testFilesExistence(sectionToDelete);
             
             sectionToDelete.delete();
-            
-            persistentSection.deleteByOID(Section.class, sectionToDelete.getIdInternal());
-            
-            return new Boolean(true);
+                                    
+            return Boolean.TRUE;
     }
 
     private void testFilesExistence(ISection sectionToDelete) throws notAuthorizedServiceDeleteException {

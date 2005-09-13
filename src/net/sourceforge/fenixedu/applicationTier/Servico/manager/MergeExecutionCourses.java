@@ -13,9 +13,7 @@ import java.util.Map;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.utils.ExecutionCourseUtils;
-import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.Evaluation;
-import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAnnouncement;
 import net.sourceforge.fenixedu.domain.IAttends;
@@ -23,8 +21,8 @@ import net.sourceforge.fenixedu.domain.IBibliographicReference;
 import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IEvaluationMethod;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IFinalEvaluation;
 import net.sourceforge.fenixedu.domain.IExportGrouping;
+import net.sourceforge.fenixedu.domain.IFinalEvaluation;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.ISection;
 import net.sourceforge.fenixedu.domain.IShift;
@@ -32,23 +30,17 @@ import net.sourceforge.fenixedu.domain.IShiftProfessorship;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.ISummary;
 import net.sourceforge.fenixedu.domain.ISupportLesson;
-import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.SupportLesson;
-import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluation;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseReport;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
@@ -140,13 +132,10 @@ public class MergeExecutionCourses implements IService {
 
     private void removeEvaluationMethod(final ISuportePersistente persistentSupport,
             final IExecutionCourse executionCourseFrom) throws ExcepcaoPersistencia {
-        final IPersistentEvaluationMethod persistentEvaluationMethod = persistentSupport
-                .getIPersistentEvaluationMethod();
+       
         final IEvaluationMethod evaluationMethod = executionCourseFrom.getEvaluationMethod();
         if (evaluationMethod != null) {
             evaluationMethod.delete();
-            persistentEvaluationMethod.deleteByOID(EvaluationMethod.class, evaluationMethod
-                    .getIdInternal());
         }
     }
 
@@ -162,12 +151,10 @@ public class MergeExecutionCourses implements IService {
 
     private void removeCourseReport(final ISuportePersistente persistentSupport,
             final IExecutionCourse executionCourseFrom) throws ExcepcaoPersistencia {
-        final IPersistentCourseReport persistentCourseReport = persistentSupport
-                .getIPersistentCourseReport();
+        
         final ICourseReport courseReport = executionCourseFrom.getCourseReport();
         if (courseReport != null) {
             courseReport.delete();
-            persistentCourseReport.deleteByOID(CourseReport.class, courseReport.getIdInternal());
         }
     }
 
@@ -213,12 +200,9 @@ public class MergeExecutionCourses implements IService {
     private void removeBibliographicReferences(final ISuportePersistente persistentSupport,
             final List<IBibliographicReference> notCopiedBibliographicReferences)
             throws ExcepcaoPersistencia {
-        final IPersistentBibliographicReference persistentBibliographicReference = persistentSupport
-                .getIPersistentBibliographicReference();
+        
         for (final IBibliographicReference bibliographicReference : notCopiedBibliographicReferences) {
             bibliographicReference.delete();
-            persistentBibliographicReference.deleteByOID(BibliographicReference.class,
-                    bibliographicReference.getIdInternal());
         }
     }
 
@@ -363,11 +347,8 @@ public class MergeExecutionCourses implements IService {
     }
 
     private void deleteProfessorship(final ISuportePersistente persistentSupport,
-            final IProfessorship professorshipToDelete) throws ExcepcaoPersistencia {
-        final IPersistentProfessorship persistentProfessorship = persistentSupport
-                .getIPersistentProfessorship();
+            final IProfessorship professorshipToDelete) throws ExcepcaoPersistencia {                
         professorshipToDelete.delete();
-        persistentProfessorship.deleteByOID(Professorship.class, professorshipToDelete.getIdInternal());
     }
 
 }

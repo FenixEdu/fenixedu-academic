@@ -92,6 +92,7 @@ public class Summary extends Summary_Base {
         setShift(null);
         setRoom(null);
         setTeacher(null);
+        super.deleteDomainObject();
     }
 
 }

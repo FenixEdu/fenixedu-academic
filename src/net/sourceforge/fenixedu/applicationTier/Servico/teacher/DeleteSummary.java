@@ -36,8 +36,7 @@ public class DeleteSummary implements IService {
             throw new InvalidArgumentsServiceException();
 
         summary.delete();
-        persistentSummary.deleteByOID(Summary.class, summary.getIdInternal());
-
+                
         return true;
     }
 

@@ -34,9 +34,7 @@ public class DeleteItem implements IService {
        
         deletedItem.delete();
 
-        persistentItem.deleteByOID(Item.class, deletedItem.getIdInternal());
-
-        return new Boolean(true);
+        return Boolean.TRUE;
     }
 
     private void testFilesExistence(final IItem deletedItem) throws notAuthorizedServiceDeleteException {

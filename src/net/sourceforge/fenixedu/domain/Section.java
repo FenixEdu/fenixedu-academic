@@ -164,6 +164,8 @@ public class Section extends Section_Base {
                 section.setSectionOrder(new Integer(sectionOrder.intValue() - 1));
             }
         }
+        
+        super.deleteDomainObject();
     }
 
     public static List<ISection> getSections(ISection superiorSection, ISite site) {

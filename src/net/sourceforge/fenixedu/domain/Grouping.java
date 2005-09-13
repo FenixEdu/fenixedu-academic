@@ -318,6 +318,8 @@ public class Grouping extends Grouping_Base {
             executionCourse.removeExportGroupings(exportGrouping);
             exportGrouping.delete();
         }
+        
+        super.deleteDomainObject();
     }
 
     public int findMaxGroupNumber() {

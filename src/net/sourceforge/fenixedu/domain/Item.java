@@ -49,8 +49,10 @@ public class Item extends Item_Base {
                 if (associatedItemOrder > this.getItemOrder().intValue()) {
                     item.setItemOrder(new Integer(associatedItemOrder - 1));
                 }
-            }
+            }                       
         }
+        
+        super.deleteDomainObject();
     }
 
     public void edit(String newItemName, String newItemInformation, Boolean newItemUrgent,

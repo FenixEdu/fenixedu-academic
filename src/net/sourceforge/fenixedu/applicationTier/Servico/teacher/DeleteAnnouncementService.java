@@ -30,8 +30,7 @@ public class DeleteAnnouncementService implements IService {
             throw new InvalidArgumentsServiceException();
         }
         announcement.delete();
-        persistentAnnouncement.deleteByOID(Announcement.class, announcement.getIdInternal());
-
+       
         return true;
     }
 }
