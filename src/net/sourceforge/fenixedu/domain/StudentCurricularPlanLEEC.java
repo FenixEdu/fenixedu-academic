@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreT
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
+import net.sourceforge.fenixedu.domain.degree.enrollment.INotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 
@@ -26,6 +27,21 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
 
     public List getAllEnrollments() {
         return super.getEnrolments();
+    }
+    
+    public int getNumberOfApprovedCurricularCourses() {
+    	int counter = 0;
+        List<IEnrolment> aprovedEnrolments = getAprovedEnrolments();
+    	List<INotNeedToEnrollInCurricularCourse> notNeedToEnroll = getNotNeedToEnrollCurricularCourses();
+    	
+    	for (INotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse : notNeedToEnroll) {
+			if(notNeedToEnrollInCurricularCourse.getCurricularCourse().getDegreeCurricularPlan().equals(getDegreeCurricularPlan())) {
+				counter++;
+			}
+		}
+    	
+    	counter += aprovedEnrolments.size();
+        return counter;
     }
 
     public boolean areNewAreasCompatible(IBranch specializationArea, IBranch secundaryArea)
