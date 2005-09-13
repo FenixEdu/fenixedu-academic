@@ -8,7 +8,7 @@ import java.util.AbstractList;
 
 import jvstm.PerTxBox;
 
-public abstract class RelationList<E> extends AbstractList<E> implements InvalidateSubject {
+public abstract class RelationList<E> extends AbstractList<E> implements VersionedSubject {
     private Object listHolder;
     private String attributeName;
     private SoftReference<VBox<FunctionalSet<E>>> elementsRef;
@@ -45,9 +45,14 @@ public abstract class RelationList<E> extends AbstractList<E> implements Invalid
     }
 
 
-    public void invalidate(int txNumber) {
-	getElementsBox().invalidate(txNumber);
+    public void addNewVersion(int txNumber) {
+	getElementsBox().addNewVersion(txNumber);
     }
+
+    public void initKnownVersions(Object obj, String attr) {
+	getElementsBox().initKnownVersions(obj, attr);
+    }
+
 
     protected abstract void addToRelation(E element);
     protected abstract void removeFromRelation(E element);
@@ -63,7 +68,7 @@ public abstract class RelationList<E> extends AbstractList<E> implements Invalid
 	    consolidateElements();
 	} else {
 	    if (elementsToAdd.get().size() + elementsToRemove.get().size() > 0) {
-		box.invalidate(Transaction.current().getNumber());
+		box.addNewVersion(Transaction.current().getNumber());
 	    }
 	}
     }

@@ -21,9 +21,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import jvstm.VBoxBody;
 
-
-class TransactionChangeLogs {
+public class TransactionChangeLogs {
 
     private static class OIDInfo {
 	final Class realClass;
@@ -78,52 +78,92 @@ class TransactionChangeLogs {
 	}
     }
 
-    private static ConcurrentLinkedQueue<ChangeLogSet> CHANGE_LOGS = new ConcurrentLinkedQueue<ChangeLogSet>();
+    // this var is public because we need to access it in
+    // FenixRowReader.  See comment on the allocateBodiesFor method
+    public static final ConcurrentLinkedQueue<ChangeLogSet> CHANGE_LOGS = new ConcurrentLinkedQueue<ChangeLogSet>();
+
+    static {
+	Transaction.addTxQueueListener(new jvstm.TxQueueListener() {
+		public void noteOldestTransaction(int previousOldest, int newOldest) {
+		    if (previousOldest != newOldest) {
+			cleanOldLogs(newOldest);
+		    }
+		}
+	    });
+    }
 
     public static void cleanOldLogs(int txNumber) {
-	while ((! CHANGE_LOGS.isEmpty()) && (CHANGE_LOGS.peek().txNumber <= txNumber)) {
-	    CHANGE_LOGS.poll();
+	synchronized (CHANGE_LOGS) {
+	    while ((! CHANGE_LOGS.isEmpty()) && (CHANGE_LOGS.peek().txNumber <= txNumber)) {
+		ChangeLogSet clSet = CHANGE_LOGS.poll();
+	    }
 	}
     }
 
-    private static boolean registerChangeLogSet(PersistenceBroker pb, ChangeLogSet clSet) {
-	CHANGE_LOGS.add(clSet);
+    private static void registerChangeLogSet(PersistenceBroker pb, ChangeLogSet clSet) {
+	synchronized (CHANGE_LOGS) {
+	    if (CHANGE_LOGS.isEmpty() || (CHANGE_LOGS.peek().txNumber < clSet.txNumber)) {
+		CHANGE_LOGS.add(clSet);
 
-	// invalidate cache
-	boolean updatedCache = false;
+		// add new version to cached object
+		for (ChangeLog log : clSet.changeLogs) {
+		    DomainObject existingObject = (DomainObject)pb.serviceObjectCache().lookup(log.oid);
+		    if (existingObject != null) {
+			existingObject.addNewVersion(log.attr, clSet.txNumber);
+		    }
+		}
+	    }
+	}
+    }
 
-	for (ChangeLog log : clSet.changeLogs) {
-	    DomainObject existingObject = (DomainObject)pb.serviceObjectCache().lookup(log.oid);
-	    if (existingObject != null) {
-		updatedCache = true;
-		existingObject.invalidate(log.attr, clSet.txNumber);
+    public static VBoxBody allocateBodiesFor(VBox box, Object obj, String attr) {
+	// This method should be called in a context where the lock
+	// for CHANGE_LOGS is acquired It cannot be done here because
+	// we need to acquire the lock before the object is created
+	// and inserted into the cache, so that no version is missed
+	// by a concurrent registerChangeLogSet while the object is
+	// being constructed
+	// For now, this lock is acquired in the class FenixRowReader
+	Class objClass = obj.getClass();
+	VBoxBody body = box.allocateBody(0);
+	    
+	for (ChangeLogSet clSet : CHANGE_LOGS) {
+	    for (ChangeLog log : clSet.changeLogs) {
+		if ((log.oid.getObjectsRealClass() == objClass) && log.attr.equals(attr)) {
+		    VBoxBody newBody = box.allocateBody(clSet.txNumber);
+		    newBody.setPrevious(body);
+		    body = newBody;
+		}
 	    }
 	}
 
-	return updatedCache;
+	return body;
     }
 
-    public static synchronized boolean updateFromTxLogsOnDatabase(PersistenceBroker pb) throws SQLException,LookupException {
+
+    public static int updateFromTxLogsOnDatabase(PersistenceBroker pb, int txNumber) throws SQLException,LookupException {
 	Connection conn = pb.serviceConnectionManager().getConnection();
-    conn.commit();
+
+	// ensure that the connection is up-to-date
+	conn.commit();
+
 	Statement stmt = conn.createStatement();
 
 	// read tx logs
-	int maxTxNumber = Transaction.getCommitted();
+	int maxTxNumber = txNumber;
 	ResultSet rs = stmt.executeQuery("SELECT OBJ_CLASS,OBJ_ID,OBJ_ATTR,TX_NUMBER FROM TX_CHANGE_LOGS WHERE TX_NUMBER > " 
 					 + maxTxNumber 
 					 + " ORDER BY TX_NUMBER");
 
 	int previousTxNum = -1;
 	ChangeLogSet clSet = null;
-	boolean updatedCache = false;
 
 	while (rs.next()) {
 	    int txNum = rs.getInt(4);
 
 	    if (txNum != previousTxNum) {
 		if (clSet != null) {
-		    updatedCache |= registerChangeLogSet(pb, clSet);
+		    registerChangeLogSet(pb, clSet);
 		}
 		maxTxNumber = Math.max(maxTxNumber, txNum);
 		clSet = new ChangeLogSet(txNum);
@@ -139,26 +179,12 @@ class TransactionChangeLogs {
 
 	// add last built ChangeLogSet, if any
 	if (clSet != null) {
-	    updatedCache |= registerChangeLogSet(pb, clSet);
+	    registerChangeLogSet(pb, clSet);
 	}
 
 	Transaction.setCommitted(maxTxNumber);
 
-	return updatedCache;
-    }
-
-    public static int findNewerVersionFor(Object obj, String attr, int txNumber) {
-	Class objClass = obj.getClass();
-	for (ChangeLogSet clSet : CHANGE_LOGS) {
-	    if (clSet.txNumber > txNumber) {
-		for (ChangeLog log : clSet.changeLogs) {
-		    if ((log.oid.getObjectsRealClass() == objClass) && log.attr.equals(attr)) {
-			return clSet.txNumber;
-		    }
-		}
-	    }
-	}
-	return txNumber;
+	return maxTxNumber;
     }
 
     public static int initializeTransactionSystem() {
@@ -245,9 +271,9 @@ class TransactionChangeLogs {
 
 		this.lastTxNumber = currentTxNumber;
 	    } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Couldn't initialize the clean thread");
-            //throw new Error("Couldn't initialize the clean thread");
+		e.printStackTrace();
+		System.out.println("Couldn't initialize the clean thread");
+		//throw new Error("Couldn't initialize the clean thread");
 	    } finally {
 		if (broker != null) {
 		    broker.close();
@@ -285,9 +311,9 @@ class TransactionChangeLogs {
 
 		this.lastTxNumber = currentTxNumber;
 	    } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Couldn't update database in the clean thread");
-            //throw new Error("Couldn't update database in the clean thread");
+		e.printStackTrace();
+		System.out.println("Couldn't update database in the clean thread");
+		//throw new Error("Couldn't update database in the clean thread");
 	    } finally {
 		if (broker != null) {
 		    broker.close();

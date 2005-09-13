@@ -4,10 +4,7 @@ import org.apache.ojb.broker.PersistenceBroker;
 
 import jvstm.VBoxBody;
 
-interface FenixTransaction extends Comparable<FenixTransaction> {
-    int getNumber();
-    void finish();
-    boolean isFinished();
+interface FenixTransaction {
     DBChanges getDBChanges();
     PersistenceBroker getOJBBroker();
     <T> VBoxBody<T> getBodyForRead(VBox<T> vbox, Object obj, String attr);

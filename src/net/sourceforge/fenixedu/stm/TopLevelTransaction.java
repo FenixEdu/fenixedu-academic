@@ -13,7 +13,6 @@ import java.sql.SQLException;
 
 public class TopLevelTransaction extends jvstm.TopLevelTransaction implements FenixTransaction {
 
-    private boolean finished = false;
     private DBChanges dbChanges = null;
     private ServiceInfo serviceInfo = null;
 
@@ -21,17 +20,26 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
         super(number);
 	this.serviceInfo = ServiceInfo.getCurrentServiceInfo();
 	this.dbChanges = new DBChanges();
-	updateFromTxLogsOnDatabase();
-	setNumber((number == -1) ? getCommitted() : number);
+
+	// open a connection to the database and set this tx number to the number that
+	// corresponds to that connection number.  The connection number should always be 
+	// greater than the current number, because the current number is obtained from
+	// Transaction.getCommitted, which is set only after the commit to the database
+	setNumber(updateFromTxLogsOnDatabase(number));
     }
 
 
-    private void updateFromTxLogsOnDatabase() {
+    Transaction makeNestedTransaction() {
+	throw new Error("Nested transactions not supported yet...");
+    }
+
+
+    private int updateFromTxLogsOnDatabase(int currentNumber) {
 	try {
-	    TransactionChangeLogs.updateFromTxLogsOnDatabase(getOJBBroker());
+	    return TransactionChangeLogs.updateFromTxLogsOnDatabase(getOJBBroker(), currentNumber);
 	} catch (Exception sqle) {
-	    System.err.println("Error while updating from TX_CHANGE_LOGS: " + sqle);
-	    // ignore it
+	    sqle.printStackTrace();
+	    throw new Error("Error while updating from TX_CHANGE_LOGS: Cannot proceed.");
 	}
     }
 
@@ -42,26 +50,10 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 			   + ", args = " + serviceInfo.getArgumentsAsString());
     }
 
-    public void finish() {
-	this.finished = true;
-	if (finished) {
-	    getDBChanges().finish();
-	}
-    }
-
-    public boolean isFinished() {
-	return finished;
-    }
-
-    public int compareTo(FenixTransaction o) {
-	return (this.getNumber() - o.getNumber());
-    }
-
-    protected void renumber(int txNumber) {
-	// To keep the queue ordered, we have to remove and reinsert the TX when it is renumbered
-	Transaction.removeFromQueue(this);
-	super.renumber(txNumber);
-	Transaction.addToQueue(this);
+    protected void finish() {
+	super.finish();
+	getDBChanges().finish();
+	dbChanges = null;
     }
 
 
@@ -103,7 +95,7 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 	return dbChanges.needsWrite() || super.isWriteTransaction();
     }
 
-    protected void performValidCommit() {
+    protected int performValidCommit() {
 	// in memory everything is ok, but we need to check against the db
 	PersistenceBroker pb = getOJBBroker();
 
@@ -113,7 +105,8 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 	    }
 	    Connection conn = pb.serviceConnectionManager().getConnection();
 	    Statement stmt = conn.createStatement();
-	    
+
+	    int txNumber = getNumber();
 
 	    try {
 		// obtain exclusive lock on db
@@ -123,14 +116,14 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 		    // ensure that we will get the last data in the database
 		    conn.commit();
 		    
-		    if (TransactionChangeLogs.updateFromTxLogsOnDatabase(pb)) {
-			// if cache updated perform the tx-validation again
+		    if (TransactionChangeLogs.updateFromTxLogsOnDatabase(pb, txNumber) != txNumber) {
+			// the cache may have been updated, so perform the tx-validation again
 			if (! validateCommit()) {
 			    throw new jvstm.CommitException();
 			}
 		    }
 		    
-		    super.performValidCommit();
+		    txNumber = super.performValidCommit();
 		    
 		    // ensure that changes are visible to other TXs before releasing lock
 		    conn.commit();
@@ -145,6 +138,8 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 
 	    pb.commitTransaction();
 	    pb = null;
+
+	    return txNumber;
 	} catch (SQLException sqle) {
 	    throw new Error("Error while accessing database");
 	} catch (LookupException le) {

@@ -6,9 +6,8 @@ import com.thoughtworks.xstream.io.xml.Dom4JDriver;
 
 import jvstm.VBoxBody;
 
-public class VBox<E> extends jvstm.VBox<E> implements InvalidateSubject {
+public class VBox<E> extends jvstm.VBox<E> implements VersionedSubject {
     static final Object NOT_LOADED_VALUE = new Object();
-    static final VBoxBody NOT_LOADED_BODY = new SingleVersionBoxBody(NOT_LOADED_VALUE, -2);
 
     public VBox() {
         super();
@@ -26,10 +25,6 @@ public class VBox<E> extends jvstm.VBox<E> implements InvalidateSubject {
         return Transaction.currentFenixTransaction().getBodyForRead(this, obj, attrName).value;
     }
     
-    public VBoxBody<E> makeNewBody() {
-	return new SingleVersionBoxBody<E>();
-    }
-
     public boolean hasValue() {
 	VBoxBody<E> body = Transaction.currentFenixTransaction().getBodyInTx(this);
 	if (body == null) {
@@ -38,24 +33,37 @@ public class VBox<E> extends jvstm.VBox<E> implements InvalidateSubject {
 	return (body.value != NOT_LOADED_VALUE);
     }
 
-    protected synchronized void persistentLoad(Object obj, String attr, E value) {
+    protected synchronized void persistentLoad(E value) {
 	int txNumber = Transaction.current().getNumber();
-	if ((body.value == NOT_LOADED_VALUE) && (body.version <= txNumber)) {
-	    int newerVersion = Transaction.findVersionFor(obj, attr, txNumber);
-	    if (newerVersion <= txNumber) {
-		VBoxBody<E> body = new SingleVersionBoxBody(value, txNumber);
-		this.body = body;
-	    } else {
-		invalidate(newerVersion);
+
+	if (this.body == null) {
+	    // handle special case of idInternal, where the initKnownVersions was not called yet
+	    VBoxBody<E> body = makeNewBody();
+	    body.version = 0;
+	    body.value = value;
+	    this.body = body;
+	} else {
+	    // find appropriate body
+	    VBoxBody<E> body = this.body.getBody(txNumber);
+	    if (body.value == NOT_LOADED_VALUE) {
+		body.value = value;
 	    }
 	}
     }
 
-    public synchronized void invalidate(int txNumber) {
+    public synchronized void addNewVersion(int txNumber) {
 	if (body.version < txNumber) {
-	    VBoxBody<E> body = new SingleVersionBoxBody(NOT_LOADED_VALUE, txNumber);
-	    this.body = body;
+	    commit(allocateBody(txNumber));
+	} else {
+	    System.out.println("WARNING: adding older version for a box.  This should not happen...");
 	}
+    }
+
+    // override this method just to make it synchronized, because
+    // bodies may be changed in other places besides the commit of a
+    // write transaction.  E.g., when reading a non-loaded body
+    public synchronized void commit(VBoxBody<E> newBody) {
+	super.commit(newBody);
     }
 
     boolean reload(Object obj, String attr) {
@@ -77,16 +85,29 @@ public class VBox<E> extends jvstm.VBox<E> implements InvalidateSubject {
 	throw new Error("Can't reload a simple VBox.  Use a PrimitiveBox or a ReferenceBox instead.");
     }
 
+    public synchronized void initKnownVersions(Object obj, String attr) {
+	this.body = TransactionChangeLogs.allocateBodiesFor(this, obj, attr);
+    }
+
+
+    public VBoxBody<E> allocateBody(int txNumber) {
+	VBoxBody<E> body = makeNewBody();
+	body.version = txNumber;
+	body.value = (E)NOT_LOADED_VALUE;
+	return body;
+    }
+
+
     public static <T> VBox<T> makeNew(boolean allocateOnly, boolean isReference) {
 	if (isReference) {
 	    if (allocateOnly) {
-		return new ReferenceBox<T>(NOT_LOADED_BODY);
+		return new ReferenceBox<T>((VBoxBody)null);
 	    } else {
 		return new ReferenceBox<T>();
 	    }
 	} else {
 	    if (allocateOnly) {
-		return new PrimitiveBox<T>(NOT_LOADED_BODY);
+		return new PrimitiveBox<T>((VBoxBody)null);
 	    } else {
 		return new PrimitiveBox<T>();
 	    }
@@ -114,9 +135,9 @@ public class VBox<E> extends jvstm.VBox<E> implements InvalidateSubject {
 
     public void setFromOJB(Object obj, String attr, E value) {
 	if (isLoading()) {
-	    persistentLoad(obj, attr, value);
+	    persistentLoad(value);
 	} else {
-        DomainObject.noteStore((DomainObject) obj, attr);
+	    DomainObject.noteStore((DomainObject) obj, attr);
 	    put(value);
 	}
     }

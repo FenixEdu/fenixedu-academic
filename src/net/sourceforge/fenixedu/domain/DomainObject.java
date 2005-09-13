@@ -5,11 +5,13 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.InvocationTargetException;
 
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SequenceUtil;
-import net.sourceforge.fenixedu.stm.InvalidateSubject;
+import net.sourceforge.fenixedu.stm.VersionedSubject;
 import net.sourceforge.fenixedu.stm.Transaction;
 
 import org.apache.ojb.broker.PersistenceBroker;
@@ -136,21 +138,43 @@ public abstract class DomainObject extends DomainObject_Base {
         }
     }
 
-    public void invalidate(String attrName, int txNumber) {
+    public void addNewVersion(String attrName, int txNumber) {
 	Class myClass = this.getClass();
 	while (myClass != Object.class) {
 	    try {
 		Field f = myClass.getDeclaredField(attrName);
 		f.setAccessible(true);
-		((InvalidateSubject)f.get(this)).invalidate(txNumber);
+		((VersionedSubject)f.get(this)).addNewVersion(txNumber);
 		return;
 	    } catch (NoSuchFieldException nsfe) {
 		myClass = myClass.getSuperclass();
 	    } catch (IllegalAccessException iae) {
-		throw new Error("Couldn't invalidate attribute " + attrName + ": " + iae);
+		throw new Error("Couldn't addNewVersion to attribute " + attrName + ": " + iae);
 	    } catch (SecurityException se) {
-		throw new Error("Couldn't invalidate attribute " + attrName + ": " + se);
+		throw new Error("Couldn't addNewVersion to attribute " + attrName + ": " + se);
 	    }
+	}
+    }
+
+    public void addKnownVersionsFromLogs() {
+	Class myClass = this.getClass();
+	while (myClass != Object.class) {
+	    try {
+		Method m = myClass.getDeclaredMethod("initKnownVersions");
+		m.setAccessible(true);
+		m.invoke(this);
+	    } catch (NoSuchMethodException nsme) {
+		// ok
+	    } catch (IllegalAccessException iae) {
+		throw new Error("Couldn't addKnownVersions to obj from class " + this.getClass() + ": " + iae);
+	    } catch (IllegalArgumentException iae) {
+		throw new Error("Couldn't addKnownVersions to obj from class " + this.getClass() + ": " + iae);
+	    } catch (InvocationTargetException ite) {
+		throw new Error("Couldn't addKnownVersions to obj from class " + this.getClass() + ": " + ite);
+	    } catch (SecurityException se) {
+		throw new Error("Couldn't addKnownVersions to obj from class " + this.getClass() + ": " + se);
+	    }
+	    myClass = myClass.getSuperclass();
 	}
     }
 }

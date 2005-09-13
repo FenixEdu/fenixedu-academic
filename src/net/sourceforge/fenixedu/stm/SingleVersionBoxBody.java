@@ -20,7 +20,11 @@ class SingleVersionBoxBody<E> extends jvstm.VBoxBody<E> {
 	}
     }
 
-    public void commit(jvstm.VBoxBody<E> previous) {
+    public void setPrevious(jvstm.VBoxBody<E> previous) {
+	// do nothing
+    }
+
+    public void clearPrevious() {
 	// do nothing
     }
 }

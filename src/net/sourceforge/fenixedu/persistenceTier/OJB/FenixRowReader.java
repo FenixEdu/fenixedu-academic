@@ -10,6 +10,7 @@ import org.apache.ojb.broker.PersistenceBrokerException;
 import org.apache.ojb.broker.util.ClassHelper;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.stm.TransactionChangeLogs;
 import net.sourceforge.fenixedu.stm.Transaction;
 import net.sourceforge.fenixedu.stm.VBox;
 
@@ -35,17 +36,26 @@ public class FenixRowReader extends RowReaderDefaultImpl {
         FieldDescriptor fmd = null;
 
         if (targetObject == null) {
-            // 1. create new object instance if needed
-            result = ClassHelper.buildNewObjectInstance(targetClassDescriptor);
+	    result = ClassHelper.buildNewObjectInstance(targetClassDescriptor);
 
 	    // if it is a domain object
 	    if (targetClassDescriptor.getFactoryClass() == DomainAllocator.class) {
 		// read idInternal
 		fmd = targetClassDescriptor.getFieldDescriptorByName("idInternal");
 		fmd.getPersistentField().set(result, row.get(fmd.getColumnName()));
-		
-		// cache object
-		result = Transaction.getCache().cache((DomainObject)result);
+
+		// we need to lock on the CHANGE_LOGS to avoid concurrent updates
+		// while the object is being constructed and not in the cache
+		synchronized (TransactionChangeLogs.CHANGE_LOGS) {
+		    // cache object
+		    Object cached = Transaction.getCache().cache((DomainObject)result);
+
+		    if (cached == result) {
+			// only initialize versions if it was not cached already
+			((DomainObject)result).addKnownVersionsFromLogs();
+		    }
+		    result = cached;
+		}
 	    }
         }
 
