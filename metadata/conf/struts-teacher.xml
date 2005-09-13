@@ -1732,7 +1732,7 @@
 			input="/teachingReport.do?page=0&amp;method=prepareEdit" 
 			parameter="method" validate="true" scope="request">
 			<exception 
-				type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException" 
+				type="net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException" 
 				key="error.exception.notAuthorized" 
 				handler="net.sourceforge.fenixedu.presentationTier.config.FenixNotAuthorizedExceptionHandler" 
 				/>
