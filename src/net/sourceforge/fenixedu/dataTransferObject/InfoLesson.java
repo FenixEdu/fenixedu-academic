@@ -18,7 +18,10 @@ import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
-public class InfoLesson extends InfoShowOccupation implements ISmsDTO {
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
+
+public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparable<InfoLesson> {
     protected DiaSemana _diaSemana;
 
     protected Calendar _fim;
@@ -276,6 +279,18 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO {
         result += "\n\n";
 
         return result;
+    }
+
+    private final static ComparatorChain INFO_LESSON_COMPARATOR_CHAIN = new ComparatorChain();
+    static {
+        INFO_LESSON_COMPARATOR_CHAIN.addComparator(new BeanComparator("diaSemana.diaSemana"));
+        INFO_LESSON_COMPARATOR_CHAIN.addComparator(new BeanComparator("inicio"));
+        INFO_LESSON_COMPARATOR_CHAIN.addComparator(new BeanComparator("fim"));
+        INFO_LESSON_COMPARATOR_CHAIN.addComparator(new BeanComparator("infoSala.nome"));
+    }
+
+    public int compareTo(InfoLesson arg0) {
+        return INFO_LESSON_COMPARATOR_CHAIN.compare(this, arg0);
     }
 
 }

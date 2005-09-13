@@ -1314,8 +1314,6 @@ class net.sourceforge.fenixedu.domain.Grouping extends net.sourceforge.fenixedu.
     
     public java.util.List getStudentGroupsWithShift();
     
-    public java.util.List getStudentGroupsWithShift(IShift shift);
-    
     public Integer getNumberOfStudentsNotInGrouping();
     
     public Integer getNumberOfStudentsInGrouping();

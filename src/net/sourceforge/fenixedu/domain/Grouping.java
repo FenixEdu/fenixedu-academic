@@ -98,16 +98,6 @@ public class Grouping extends Grouping_Base {
         return result;
     }
 
-    public List getStudentGroupsWithShift(IShift shift) {
-        final List result = new ArrayList();
-        for (final IStudentGroup studentGroup : this.getStudentGroups()) {
-            if (studentGroup.getShift() == shift) {
-                result.add(studentGroup);
-            }
-        }
-        return result;
-    }
-
     public Integer getNumberOfStudentsNotInGrouping() {
         int numberOfStudents = 0;
         for (final IExportGrouping exportGrouping : this.getExportGroupings()) {
@@ -124,7 +114,7 @@ public class Grouping extends Grouping_Base {
     }
 
     public void checkShiftCapacity(IShift shift) {
-        List shiftStudentGroups = this.getStudentGroupsWithShift(shift);
+        List shiftStudentGroups = this.readAllStudentGroupsBy(shift);
         Integer groupMaximumNumber = this.getGroupMaximumNumber();
         if (shiftStudentGroups != null && groupMaximumNumber != null
                 && shiftStudentGroups.size() == groupMaximumNumber)
@@ -166,7 +156,7 @@ public class Grouping extends Grouping_Base {
     public List<IStudentGroup> readAllStudentGroupsBy(IShift shift) {
         final List<IStudentGroup> result = new ArrayList<IStudentGroup>();
         for (final IStudentGroup studentGroup : this.getStudentGroups()) {
-            if (studentGroup.getShift().equals(shift)) {
+            if (studentGroup.getShift() == shift) {
                 result.add(studentGroup);
             }
         }

@@ -1735,7 +1735,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         enrolmentPolicyValues.add(new Integer(2));
 
         List enrolmentPolicyNames = new ArrayList();
-        enrolmentPolicyNames.add("Atï¿½mica");
+        enrolmentPolicyNames.add("Atómica");
         enrolmentPolicyNames.add("Individual");
 
         InfoGrouping infoGroupProperties = ((InfoSiteGrouping) siteView.getComponent())
