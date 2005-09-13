@@ -46,24 +46,24 @@ public class UpdateKerberos {
 		cmd.append(" ");
 		cmd.append(user);
 		
-		try {
-			Process process = Runtime.getRuntime().exec(cmd.toString());
-
-			BufferedWriter outCommand = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
-			outCommand.write(pass);
-			outCommand.newLine();
-			outCommand.flush();
-			outCommand.close();
-
-			if (process.waitFor() != 0) {
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-				returnCode = bufferedReader.readLine();
-				bufferedReader.close();
-			}
-			return returnCode;
-		} catch (Exception e) {
-			throw new ExcepcaoPersistencia(e.getMessage());
-		} 
+		RunScript scriptThread = new RunScript(cmd.toString(), pass);
+		scriptThread.start();
+		
+		long delayMillis = 5000; // 5 seconds
+	    try {
+	    	scriptThread.join(delayMillis);
+	        if (scriptThread.isAlive()) {
+	            throw new ExcepcaoPersistencia("Timeout");
+	        } else {
+	             if(scriptThread.getExitCode() == -1)
+	            	 throw new ExcepcaoPersistencia(scriptThread.getReturnCode());
+	             else if(scriptThread.getExitCode() > 0)
+	            	 returnCode = scriptThread.getReturnCode();
+	        }
+	        return returnCode;
+	    } catch (InterruptedException e) {
+	        throw new ExcepcaoPersistencia(e.getMessage());
+	    }
 	}
 	
 	private static class RunScript extends Thread{
