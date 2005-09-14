@@ -63,15 +63,12 @@ public class UnEnrollStudentInGroup implements IService {
                                
         if (resultEmpty) {
             groupProperties.removeStudentGroups(studentGroup);
-            if (studentGroup.getShift().getAssociatedStudentGroups() != null) {
-                studentGroup.getShift().getAssociatedStudentGroups().remove(studentGroup);
-            }
             studentGroup.setShift(null);
             persistentStudentGroup.deleteByOID(StudentGroup.class, studentGroup.getIdInternal());
-            return new Boolean(false);
+            return Boolean.FALSE;
         }
 
-        return new Boolean(true);
+        return Boolean.TRUE;
     }
 
 }
