@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide;
 
 import java.util.Date;
-import java.util.Iterator;
 
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Guide;
@@ -28,16 +27,12 @@ public class CreateGuideSituation implements IService {
 
         IGuide guide = (IGuide) sp.getIPersistentGuide().readByOID(Guide.class, guideID, true);
 
-        IGuideSituation guideSituation = DomainFactory.makeGuideSituation(situation, remarks, date, guide, new State(
-                State.ACTIVE));
-
-
-        for (Iterator iter = guide.getGuideSituations().iterator(); iter.hasNext();) {
-            IGuideSituation guideSituationTmp = (IGuideSituation) iter.next();
-            guideSituationTmp.setState(new State(State.INACTIVE));
-            sp.getIPersistentGuideSituation().simpleLockWrite(guideSituationTmp);
-
+        for (IGuideSituation guideSituation : guide.getGuideSituations()) {
+            guideSituation.setState(new State(State.INACTIVE));
         }
+
+        IGuideSituation guideSituation = DomainFactory.makeGuideSituation(situation, remarks, date,
+                guide, new State(State.ACTIVE));
 
         guide.getGuideSituations().add(guideSituation);
 
