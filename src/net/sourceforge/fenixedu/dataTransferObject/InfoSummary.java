@@ -4,6 +4,8 @@
 
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ListIterator;
@@ -310,55 +312,21 @@ public class InfoSummary extends InfoObject implements Comparable {
     /***************************************************************************
      * Usefull methods for form in user's interface
      **************************************************************************/
+
+    private static final DateFormat dateAndHourFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    private static final DateFormat hourFormat = new SimpleDateFormat("HH:mm");
+
     public String getSummaryDateInput() {
-        String result = "";
-        if (getSummaryDate() != null) {
-            Calendar date = getSummaryDate();
-            result += date.get(Calendar.DAY_OF_MONTH);
-            result += "/";
-            result += date.get(Calendar.MONTH) + 1;
-            result += "/";
-            result += date.get(Calendar.YEAR);
-        }
-        return result;
+        return getSummaryDate() != null ? dateFormat.format(getSummaryDate().getTime()) : "";
     }
 
     public String getSummaryHourInput() {
-        String result = "";
-        if (getSummaryHour() != null) {
-            Calendar date = getSummaryHour();
-            result += date.get(Calendar.HOUR_OF_DAY);
-            result += ":";
-            if (date.get(Calendar.MINUTE) < 10) {
-                result += "0";
-            }
-            result += date.get(Calendar.MINUTE);
-        }
-        return result;
+        return getSummaryHour() != null ? hourFormat.format(getSummaryHour().getTime()) : "";
     }
 
     public String getLastModifiedDateFormatted() {
-        String result = "";
-
-        if (getLastModifiedDate() != null) {
-            Date date = getLastModifiedDate();
-
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(date.getTime());
-            result += calendar.get(Calendar.DAY_OF_MONTH);
-            result += "/";
-            result += calendar.get(Calendar.MONTH) + 1;
-            result += "/";
-            result += calendar.get(Calendar.YEAR);
-            result += " ";
-            result += calendar.get(Calendar.HOUR_OF_DAY);
-            result += ":";
-            if (calendar.get(Calendar.MINUTE) < 10) {
-                result += "0";
-            }
-            result += calendar.get(Calendar.MINUTE);
-        }
-        return result;
+        return getLastModifiedDate() != null ? dateAndHourFormat.format(getLastModifiedDate()) : "";
     }
 
     /**

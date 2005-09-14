@@ -9,6 +9,8 @@ package net.sourceforge.fenixedu.dataTransferObject;
 /**
  * @author tfc130
  */
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -125,39 +127,34 @@ public class InfoShift extends InfoObject {
 
     }
 
+    private static final DateFormat hourFormat = new SimpleDateFormat("HH:mm");
+
     public String getLessons() {
+        final StringBuilder stringBuilder = new StringBuilder();
 
-        String result = new String();
+        final List<InfoLesson> infoLessonsList = getInfoLessons();
+        if (infoLessonsList != null) {
+            int index = 0;
+            for (final InfoLesson infoLesson : infoLessonsList) {
+                index = index + 1;
+                stringBuilder.append(infoLesson.getDiaSemana().toString());          
+                stringBuilder.append(" (");
+                stringBuilder.append(hourFormat.format(infoLesson.getInicio().getTime()));
+                stringBuilder.append("-");
+                stringBuilder.append(hourFormat.format(infoLesson.getFim().getTime()));
+                stringBuilder.append(") ");
+                stringBuilder.append(infoLesson.getInfoSala().getNome().toString());
 
-        List infoLessonsList = getInfoLessons();
-        if (infoLessonsList == null) {
-            return "";
-        }
-        Iterator itLesson = infoLessonsList.iterator();
-        int index = 0;
-        while (itLesson.hasNext()) {
-            index = index + 1;
-            InfoLesson lesson = (InfoLesson) itLesson.next();
-            result += lesson.getDiaSemana().toString();          
-            result += " (";
-            result += lesson.getInicio().get(Calendar.HOUR_OF_DAY);
-            result += ":";
-            result += minutesFormatter(lesson.getInicio().get(Calendar.MINUTE));            
-            result += "-";
-            result += lesson.getFim().get(Calendar.HOUR_OF_DAY);          
-            result += ":";
-            result += minutesFormatter(lesson.getFim().get(Calendar.MINUTE));  
-            result += ") ";
-            result += lesson.getInfoSala().getNome().toString();
-                      
-            int last = (infoLessonsList.size());
-            if (index != last || (index != 1 && index != last)) {
-                result += " , ";
-            } else {
-                result += " ";
+                int last = (infoLessonsList.size());
+                if (index != last || (index != 1 && index != last)) {
+                    stringBuilder.append(" , ");
+                } else {
+                    stringBuilder.append(" ");
+                }
             }
         }
-        return result;
+
+        return stringBuilder.toString();
     }
 
     private String minutesFormatter(int minute) {

@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSummaries;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSummary;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.ILesson;
@@ -146,7 +145,7 @@ public class ReadSummaries implements IService {
 
         InfoSiteSummaries bodyComponent = new InfoSiteSummaries();
         bodyComponent.setInfoSummaries(result);
-        bodyComponent.setExecutionCourse((InfoExecutionCourse) Cloner.get(executionCourse));
+        bodyComponent.setExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
         bodyComponent.setLessonTypes(lessonTypes);
         bodyComponent.setInfoShifts(infoShifts);
         bodyComponent.setInfoProfessorships(infoProfessorships);
