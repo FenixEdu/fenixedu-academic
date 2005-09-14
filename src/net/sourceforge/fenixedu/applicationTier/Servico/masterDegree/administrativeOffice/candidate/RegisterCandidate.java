@@ -274,10 +274,8 @@ public class RegisterCandidate implements IService {
 
     private void changeUsernameIfNeccessary(IStudent student) throws ExcepcaoPersistencia {
 
-        if ((student.getPerson().getUsername().indexOf("Mes") != -1)
-                || (student.getPerson().getUsername().indexOf("Esp") != -1)
-                || (student.getPerson().getUsername().indexOf("Int") != -1)) {
-
+        String currentUsername = student.getPerson().getUsername();
+        if (!currentUsername.matches("[a-zA-Z][0-9]+")) {
             student.getPerson().setUsername("M" + student.getNumber());
         }
     }
