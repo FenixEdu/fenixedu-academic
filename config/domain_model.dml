@@ -1312,8 +1312,8 @@ class net.sourceforge.fenixedu.domain.Grouping extends net.sourceforge.fenixedu.
     
     public java.util.List getStudentGroupsWithoutShift();
     
-    public java.util.List getStudentGroupsWithShift();
-
+    public java.util.List getStudentGroupsWithShift();   
+    
     public Integer getNumberOfStudentsNotInGrouping();
     
     public Integer getNumberOfStudentsInGrouping();
@@ -1328,7 +1328,7 @@ class net.sourceforge.fenixedu.domain.Grouping extends net.sourceforge.fenixedu.
     
     public void checkShiftCapacity(IShift shift);
     
-    public void edit(String goupingName, java.util.Date enrolmentBeginDay, java.util.Date enrolmentEndDay,
+    public void edit(String groupingName, java.util.Date enrolmentBeginDay, java.util.Date enrolmentEndDay,
             net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType enrolmentGroupPolicyType, Integer groupMaximumNumber,
             Integer idealCapacity, Integer maximumCapacity, Integer minimumCapacity,
             String projectDescription, ShiftType shiftType);
@@ -2075,7 +2075,7 @@ class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSitua
 class net.sourceforge.fenixedu.domain.student.ResidenceCandidacies extends net.sourceforge.fenixedu.domain.DomainObject {
     Date creationDate;
     String observations;
-    Boolean dislocated;
+    Boolean candidate;
     Integer keyStudent;
 }
 

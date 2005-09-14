@@ -9,3 +9,5 @@
 echo Using database: $1
 echo Enter password for $2:
 read -s password
+
+mysql -u$2 -f $1 < alterTableResidenceCandidacies.sql

@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.student.IResidenceCandidacies;
  */
 public class InfoResidenceCandidacy extends InfoObject {
 
-    private Boolean dislocated;
+    private Boolean candidate;
 
     private String observations;
 
@@ -34,7 +34,7 @@ public class InfoResidenceCandidacy extends InfoObject {
         setCreationDate(creationDate);
         setObservations(observations);
         setInfoStudent(infostudent);
-        setDislocated(dislocated);
+        setCandidate(dislocated);
     }
 
     /**
@@ -47,8 +47,8 @@ public class InfoResidenceCandidacy extends InfoObject {
     /**
      * @return Returns the dislocated.
      */
-    public Boolean getDislocated() {
-        return dislocated;
+    public Boolean getCandidate() {
+        return candidate;
     }
 
     /**
@@ -77,8 +77,8 @@ public class InfoResidenceCandidacy extends InfoObject {
      * @param dislocated
      *            The dislocated to set.
      */
-    public void setDislocated(Boolean dislocated) {
-        this.dislocated = dislocated;
+    public void setCandidate(Boolean dislocated) {
+        this.candidate = dislocated;
     }
 
     /**
@@ -112,7 +112,7 @@ public class InfoResidenceCandidacy extends InfoObject {
 
         if (residentCandidacy != null) {
             setCreationDate(residentCandidacy.getCreationDate());
-            setDislocated(residentCandidacy.getDislocated());
+            setCandidate(residentCandidacy.getCandidate());
             setObservations(residentCandidacy.getObservations());
         }
     }

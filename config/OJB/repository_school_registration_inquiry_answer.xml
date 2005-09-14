@@ -66,6 +66,9 @@
   </reference-descriptor>
 </class-descriptor>
 
+<!-- *************************************************************************************************************** -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.student.ResidenceCandidacies		 -->
+<!-- *************************************************************************************************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.student.ResidenceCandidacies" table="RESIDENCE_CANDIDACIES">
 	<field-descriptor
     	name="idInternal"
@@ -80,8 +83,8 @@
    	 	jdbc-type="INTEGER"
  	/>
   	<field-descriptor
-    	name="dislocated"
-    	column="DISLOCATED"
+    	name="candidate"
+    	column="CANDIDATE"
    	 	jdbc-type="BIT"
  	/>
   	<field-descriptor

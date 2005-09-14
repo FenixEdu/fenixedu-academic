@@ -16,7 +16,7 @@ public class ResidenceCandidacies extends ResidenceCandidacies_Base {
         result += "\n  - Student : " + getStudent();
         result += "\n  - Creation Date : " + getCreationDate();
         result += "\n  - Observations : " + getObservations();
-        result += "\n  - Dislocated : " + getDislocated();
+        result += "\n  - Candidate : " + getCandidate();
         return result;
     }
 
