@@ -16,6 +16,10 @@ class ReferenceBox<E> extends VBox<E> {
 	super(body);
     }
 
+    public ReferenceBox(E value) {
+    super(value);
+    }
+
     protected void doReload(Object obj, String attr) {
 	PersistenceBroker pb = Transaction.getOJBBroker();
 	try {
