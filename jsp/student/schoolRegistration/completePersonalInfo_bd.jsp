@@ -6,7 +6,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
 <%@ page import="java.util.Date" %>
- <strong>Página 2 de 6</strong>
+ <strong>Página 2 de 7</strong>
  <br/>
  <h2><bean:message key="label.person.title.personalConsult" bundle="DEFAULT" /></h2>
 
@@ -14,11 +14,11 @@
 <logic:present name="incompleteData" scope="request">
 	<p align="center"><span class="error"><%= request.getAttribute("incompleteData") %></span></p>
 </logic:present>
-<html:form action="/showStudentInquiry?method=viewInquiryQuestions">
+<html:form action="/studentPersonalDataAuthorization?method=preparePersonalDataUseInquiry">
  <html:hidden property="page" value="3"/>
  <br/>
- <logic:present name="personalInfo">
- <bean:define id="infoPersonId" name="personalInfo" property="idInternal"/>
+ <logic:present name="infoPerson">
+ <bean:define id="infoPersonId" name="infoPerson" property="idInternal"/>
  <html:hidden property="idInternal" value="<%= infoPersonId.toString()%>"/>
 
 		<table width="100%" cellpadding="0" cellspacing="0">
@@ -33,35 +33,37 @@
           <!-- Nome -->
           <tr>
             <td width="30%"><bean:message key="label.person.name" bundle="DEFAULT"/></td>
-            <td class="greytxt"><bean:write name="personalInfo" property="nome"/></td>
+            <td class="greytxt"><bean:write name="infoPerson" property="nome"/></td>
           </tr>
           <!-- Username -->
           <tr>
             <td width="30%"><bean:message key="label.person.username" bundle="DEFAULT"/></td>
-            <td class="greytxt"><bean:write name="personalInfo" property="username"/></td> 
+            <td class="greytxt"><bean:write name="infoPerson" property="username"/></td> 
           </tr>
           <!-- Sexo -->
           <tr>
             <td width="30%"><bean:message key="label.person.sex" bundle="DEFAULT" /></td>
-            <td class="greytxt"><bean:write name="personalInfo" property="sexo"/></td>
+            <td class="greytxt">
+            <bean:define id="sex" name="infoPerson" property="sexo"/>
+            <bean:message key='<%= sex.toString() %>' bundle="ENUMERATION_RESOURCES"/></td>
           </tr>
  	      <!-- Numero do Documento de Identificacao -->
           <tr>
             <td width="30%"><bean:message key="label.person.identificationDocumentNumber" bundle="DEFAULT" /></td>
-            <td class="greytxt"><bean:write name="personalInfo" property="numeroDocumentoIdentificacao"/></td>
+            <td class="greytxt"><bean:write name="infoPerson" property="numeroDocumentoIdentificacao"/></td>
           </tr>
           <!-- Tipo do Documento de Identificacao -->
           <tr>
             <td width="30%"><bean:message key="label.person.identificationDocumentType" bundle="DEFAULT" /></td>
             <td class="greytxt">
-            	<bean:define id="idType" name="personalInfo" property="tipoDocumentoIdentificacao"/>
-            	<bean:message key='<%=idType.toString()%>'/>
+            	<bean:define id="idType" name="infoPerson" property="tipoDocumentoIdentificacao"/>
+            	<bean:message key='<%=idType.toString()%>' bundle="ENUMERATION_RESOURCES"/>
             </td>
           </tr>
           <!-- Local de Emissao do Documento de Identificacao -->
           <tr>
             <td width="30%"><bean:message key="label.person.identificationDocumentIssuePlace" bundle="DEFAULT" /></td>
-            <td class="greytxt"><bean:write name="personalInfo" property="localEmissaoDocumentoIdentificacao"/></td>
+            <td class="greytxt"><bean:write name="infoPerson" property="localEmissaoDocumentoIdentificacao"/></td>
           </tr>
           <!-- Data de Emissao do Documento de Identificacao -->
           <tr>
@@ -72,7 +74,7 @@
 			</td>
 		  </tr>
           <tr>
-            <td width="30%"><bean:message key="label.person.identificationDocumentIssueDate" bundle="DEFAULT" /></td>
+            <td width="30%"><bean:message key="label.person.identificationDocumentIssueDate" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
 			<td class="greytxt">
 				<html:text size="2" maxlength="2" property="dayOfEmissionDateOfDocumentId"/> /
 				<html:text size="2" maxlength="2" property="monthOfEmissionDateOfDocumentId"/> /
@@ -88,7 +90,7 @@
 			</td>
 		  </tr>
           <tr>
-            <td width="30%"><bean:message key="label.person.identificationDocumentExpirationDate" bundle="DEFAULT" /></td>
+            <td width="30%"><bean:message key="label.person.identificationDocumentExpirationDate" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
             <td class="greytxt">
 				<html:text size="2" maxlength="2" property="dayOfExpirationDateOfDocumentId"/> /
 				<html:text size="2" maxlength="2" property="monthOfExpirationDateOfDocumentId"/> /
@@ -119,7 +121,6 @@
             <td class="greytxt">
             	<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.MaritalStatus" bundle="DEFAULT"/>
                 <html:select property="maritalStatus">
-                	<html:option key="dropDown.Default" value=""/>
                     <html:options collection="values" property="value" labelProperty="label"/>
                  </html:select>          
             </td>
@@ -138,8 +139,8 @@
           <!-- Data de Nascimento -->
           <tr>
             <td width="30%"><bean:message key="label.person.birth" bundle="DEFAULT" /></td>
-            <logic:present name="personalInfo" property="nascimento" >
-	            <bean:define id="date" name="personalInfo" property="nascimento" />
+            <logic:present name="infoPerson" property="nascimento" >
+	            <bean:define id="date" name="infoPerson" property="nascimento" />
 				<td class="greytxt"><%= Data.format2DayMonthYear((Date) date) %></td>            
 			</logic:present>
           </tr>
@@ -148,17 +149,17 @@
             <td width="30%"><bean:message key="label.person.country" bundle="DEFAULT" /></td>
 		     	<td class="greytxt">
 		     		<html:select property="nacionality">
-	                	<html:options collection="<%= SessionConstants.NATIONALITY_LIST_KEY %>" property="value" labelProperty="label"/>
+	                	<html:options collection="nationalityList" property="value" labelProperty="label"/>
                 	</html:select>
                 </td>
           </tr>
           <!-- Freguesia de Naturalidade -->
           <tr>
           	<td></td>
-          	<td></span><span class="error"><html:errors property="parishOfBirth"/></span></td>
+          	<td><span class="error"><html:errors property="parishOfBirth"/></span></td>
 	      </tr>
           <tr>
-            <td width="30%"><bean:message key="label.person.birthPlaceParish" bundle="DEFAULT" /></td>
+            <td width="30%"><bean:message key="label.person.birthPlaceParish" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
             <td class="greytxt"><html:text size="40" maxlength="40" property="parishOfBirth"/></td>
           </tr>
           <!-- Concelho de Naturalidade -->
@@ -167,7 +168,7 @@
           	<td><span class="error"><html:errors property="districtSubvisionOfBirth"/></span></td>
 		  </tr>
           <tr>
-            <td width="30%"><bean:message key="label.person.birthPlaceMunicipality" bundle="DEFAULT" /></td>
+            <td width="30%"><bean:message key="label.person.birthPlaceMunicipality" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
             <td class="greytxt"><html:text size="40" maxlength="40" property="districtSubvisionOfBirth"/></td>
           </tr>
            <!-- Distrito de Naturalidade -->
@@ -176,7 +177,7 @@
           	<td><span class="error"><html:errors property="districtOfBirth"/></span></td> 
           </tr>
           <tr>
-            <td width="30%"><bean:message key="label.person.birthPlaceDistrict" bundle="DEFAULT" /></td>
+            <td width="30%"><bean:message key="label.person.birthPlaceDistrict" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
             <td class="greytxt"><html:text size="40" maxlength="40" property="districtOfBirth"/></td>
           </tr>
           <!-- Nome do Pai -->
@@ -185,7 +186,7 @@
           	<td><span class="error"><html:errors property="nameOfFather"/></span></td>
           </tr>
           <tr>
-            <td width="30%"><bean:message key="label.person.fatherName" bundle="DEFAULT" /></td>
+            <td width="30%"><bean:message key="label.person.fatherName" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
             <td class="greytxt"><html:text size="40" maxlength="56" property="nameOfFather"/></td>
           </tr>
           <!-- Nome da Mae -->
@@ -194,7 +195,7 @@
           	<td><span class="error"><html:errors property="nameOfMother" /></td>
 		  </tr>		
           <tr>
-            <td width="30%"><bean:message key="label.person.motherName" bundle="DEFAULT" /></td>
+            <td width="30%"><bean:message key="label.person.motherName" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
             <td class="greytxt"><html:text size="40" maxlength="60" property="nameOfMother"/></td>
           </tr>
 		</table>
@@ -203,7 +204,7 @@
           <!-- Dados de Residencia -->
           <tr>
             <td class="infoop" width="25"><span class="emphasis-box">3</span></td>
-            <td class="infoop"><strong><bean:message key="label.person.title.addressInfo" bundle="DEFAULT" /></strong></td>
+            <td class="infoop"><strong><bean:message key="label.person.title.addressInfo" bundle="DEFAULT" /> <span class="redtxt">*</span></strong></td>
           </tr>
 		</table>
 		<br />
@@ -214,7 +215,7 @@
           	<td><span class="error"><html:errors property="address"/></span></td>
           </tr>
           <tr>
-            <td width="30%"><bean:message key="label.person.address" bundle="DEFAULT" /></td>
+            <td width="30%"><bean:message key="label.person.address" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
             <td class="greytxt"><html:text size="40" maxlength="40" property="address"/></td>
           </tr>
           <!-- Codigo Postal -->
@@ -227,7 +228,7 @@
           	</td>
           </tr>
           <tr>
-            <td width="30%"><bean:message key="label.person.postCode" bundle="DEFAULT" /></td>
+            <td width="30%"><bean:message key="label.person.postCode" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
             <td class="greytxt">
             	<html:text size="4" maxlength="4" property="primaryAreaCode"/> - 
             	<html:text size="3" maxlength="3" property="secondaryAreaCode"/> (XXXX-XXX)
@@ -248,7 +249,7 @@
           	<td><span class="error"><html:errors property="area"/></span></td>
           </tr>
           <tr>
-            <td width="30%"><bean:message key="label.person.place" bundle="DEFAULT" /></td>
+            <td width="30%"><bean:message key="label.person.place" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
             <td class="greytxt"><html:text size="25" maxlength="25" property="area"/></td>
           </tr>
           <!-- Freguesia de Residencia -->
@@ -257,7 +258,7 @@
           	<td><span class="error"><html:errors property="parishOfResidence"/></span></td>
           </tr>
           <tr>
-            <td width="30%"><bean:message key="label.person.addressParish" bundle="DEFAULT" /></td>
+            <td width="30%"><bean:message key="label.person.addressParish" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
             <td class="greytxt"><html:text size="40" maxlength="40" property="parishOfResidence"/></td>
           </tr>
           <!-- Concelho de Residencia -->
@@ -266,7 +267,7 @@
           	<td><span class="error"><html:errors property="districtSubdivisionOfResidence"/></span></td>
           </tr>
           <tr>
-            <td width="30%"><bean:message key="label.person.addressMunicipality" bundle="DEFAULT" /></td>
+            <td width="30%"><bean:message key="label.person.addressMunicipality" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
             <td class="greytxt"><html:text size="40" maxlength="40" property="districtSubdivisionOfResidence"/></td>
           </tr>
           <!-- Distrito de Residencia -->
@@ -275,7 +276,7 @@
           	<td><span class="error"><html:errors property="districtOfResidence"/></span></td>
           </tr>
           <tr>
-            <td width="30%"><bean:message key="label.person.addressDistrict" bundle="DEFAULT" /></td>
+            <td width="30%"><bean:message key="label.person.addressDistrict" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
             <td class="greytxt"><html:text size="40" maxlength="40" property="districtOfResidence"/></td>
           </tr>
 		</table>
@@ -295,7 +296,7 @@
           	<td><span class="error"><html:errors property="phone"/></span><td>
           </tr>
           <tr>
-            <td width="30%"><bean:message key="label.person.telephone" bundle="DEFAULT" /></td>
+            <td width="30%"><bean:message key="label.person.telephone" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
             <td class="greytxt"><html:text size="9" maxlength="9" property="phone"/></td>
           </tr>
           <!-- Telemovel -->
@@ -328,8 +329,7 @@
           <!-- Photo -->
           <tr>
             <td width="30%"><bean:message key="label.person.photo" bundle="DEFAULT" /></td>
-          	<td class="greytxt">
-          		<!-- <html:img align="middle" height="100" width="100" src="<%= request.getContextPath() +"/person/viewPhoto.do?personCode="+infoPersonId.toString()%>"/> -->
+          	<td class="greytxt">          		
           		<bean:message key="label.person.availablePhoto" bundle="DEFAULT" />
           		<html:checkbox property="availablePhoto"/>
           	</td>

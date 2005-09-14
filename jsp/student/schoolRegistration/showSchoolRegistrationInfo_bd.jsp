@@ -7,7 +7,7 @@
 <bean:define id="infoClass" name="infoClass" scope="request"/>
 
 <html:form action="<%= "/viewEnrollments?method=declarations&amp;degreeName="+ request.getAttribute("degreeName")%>">
- <strong>Página 5 de 6</strong>
+ <strong>Página 6 de 7</strong>
 <p align="center"><span class="error"><html:errors/></span></p>
 <p align="center">
 	<logic:present name="studentRegistered" scope="request">

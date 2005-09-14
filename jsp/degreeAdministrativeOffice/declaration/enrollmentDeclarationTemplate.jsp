@@ -14,7 +14,7 @@
 
 <body class="registration" id="pagewrapper_registration">
 
-<div style="font-size: 85%; line-height: 200%;">
+<div style="font-size: 95%; line-height: 200%;">
 
 <% for(int iter=0; iter < allStudentsData.size(); iter++) {
 	List studentData = (List) allStudentsData.get(iter); 

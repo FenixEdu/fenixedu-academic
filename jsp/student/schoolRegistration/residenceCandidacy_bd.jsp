@@ -3,8 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
 <html:form action="/enrollStudent?method=enrollStudent">
-<html:hidden property="page" value="5"/>
- <strong>Página 4 de 6</strong>
+<html:hidden property="page" value="6"/>
+ <strong>Página 5 de 7</strong>
  <h3 align="center"><bean:message key="schoolRegistration.Header.residenceTitle"/></h3>
 	<p align="center"><span class="error"><html:errors property="residenceCandidate"/></span></p>	
 	<p align="center"><span class="error"><html:errors property="dislocated"/></span></p>
@@ -14,11 +14,6 @@
 			<td><bean:message key="label.schoolRegistration.residenceCandidate"/></td>
 			<td>Sim<html:radio property="residenceCandidate" value="true" /></td>
 			<td>Não<html:radio property="residenceCandidate" value="false" /></td>
-		</tr>
-		<tr>
-			<td><bean:message key="label.schoolRegistration.dislocated"/></td>
-			<td>Sim<html:radio property="dislocated" value="true" /></td>
-			<td>Não<html:radio property="dislocated" value="false" /></td>
 		</tr>
 	</table>
 	<table>

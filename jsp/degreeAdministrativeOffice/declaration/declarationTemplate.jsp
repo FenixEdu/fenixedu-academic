@@ -11,7 +11,11 @@
 
 <body class="registration" id="pagewrapper_registration">
 
-<div style="font-size: 85%; line-height: 200%;">
+<bean:define id="studentName" name="infoPerson" property="nome"/>
+<bean:define id="nameOfFather" name="infoPerson" property="nomePai"/>
+<bean:define id="nameOfMother" name="infoPerson" property="nomeMae"/>
+
+<div style="font-size: 95%; line-height: 200%;">
 
 	<div class="registration" style="text-align: right;" width="100%">
 	<h2 class="registration"><bean:message key="print.declaration.academicOffice"/></h2>
@@ -26,18 +30,19 @@
 	<div class="registration" width="100%" style="text-align: justify;">
 	<p><bean:message key="print.declaration.technique"/></p>
 	<p>
-		<%= request.getAttribute("partOne1") %>
-		<%= request.getAttribute("partTwo1") %>
-		<%= request.getAttribute("partThree1") %>
-		<%= request.getAttribute("partFour1") %>
-		<%= request.getAttribute("partFive1") %>
-		<%= request.getAttribute("partSix1") %>
-		<%= request.getAttribute("partSeven1") %>
+		<bean:message key="schoolRegistration.declaration.declares"/> <bean:write name="studentNumber"/>, <%= studentName.toString().toUpperCase() %>, 
+		<bean:message key="schoolRegistration.declaration.ID"/> <bean:write name="infoPerson" property="numeroDocumentoIdentificacao"/>, <bean:message key="schoolRegistration.declaration.naturality"/>
+		 <bean:write name="schoolRegistrationForm" property="parishOfBirth"/>, <bean:write name="infoPerson" property="distritoNaturalidade"/>, <bean:message key="schoolRegistration.declaration.sonOf"/> 
+		 <%= nameOfFather.toString().toUpperCase() %> <bean:message key="schoolRegistration.declaration.andSonOf"/> <%= nameOfMother.toString().toUpperCase() %>,
+		<bean:message key="schoolRegistration.declaration.inLectiveYear"/> <bean:write name="lectiveYear"/> <bean:message key="schoolRegistration.declaration.enrolledInDegree"/>
+		<bean:write name="degreeName"/> <bean:message key="schoolRegistration.declaration.thisInstitue"/>
 	</p>
 	</div>	
 
 	<br /><br /><br />
-	<%= request.getAttribute("partEight1") %>
+	<bean:message key="schoolRegistration.declaration.academicOfficeIST"/> <bean:write name="day"/> <bean:message key="schoolRegistration.declaration.Of"/>
+	<bean:write name="month"/> <bean:message key="schoolRegistration.declaration.Of"/> <bean:write name="year"/>
+
 	<p align="center"><bean:message key="print.declaration.techniqueSignature"/></p>
 
 </div>

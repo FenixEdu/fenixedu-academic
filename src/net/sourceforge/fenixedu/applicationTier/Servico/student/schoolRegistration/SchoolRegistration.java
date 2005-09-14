@@ -5,31 +5,31 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student.schoolRegistration;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.student.schoolRegistration.InfoResidenceCandidacy;
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainFactory;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ICountry;
+import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.student.IPersonalDataUseInquiryAnswers;
 import net.sourceforge.fenixedu.domain.student.IResidenceCandidacies;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCountry;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonalDataUseInquiryAnswers;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRole;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -46,7 +46,7 @@ public class SchoolRegistration implements IService {
         super();
     }
 
-    public Boolean run(IUserView userView, HashMap answers, InfoPerson infoPerson,
+    public Boolean run(IUserView userView, InfoPerson infoPerson,
             InfoResidenceCandidacy infoResidenceCandidacy) throws ExcepcaoPersistencia {
 
         ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -61,7 +61,6 @@ public class SchoolRegistration implements IService {
             return Boolean.FALSE;
         }
         updatePersonalInfo(suportePersistente, infoPerson, pessoa);
-        writeInquiryAnswers(suportePersistente, student, answers);
         writeResidenceCandidacy(student, infoResidenceCandidacy);
         updateStudentInfo(suportePersistente, student);
 
@@ -82,85 +81,40 @@ public class SchoolRegistration implements IService {
         return !result;
     }
 
-    private void writeInquiryAnswers(ISuportePersistente sp, IStudent student, HashMap answers)
-            throws ExcepcaoPersistencia {
-
-        IPersistentPersonalDataUseInquiryAnswers persistentPDUIA = sp
-                .getIPersistentPersonalDataUseInquiryAnswers();
-        IPersonalDataUseInquiryAnswers personalDataUseInquiryAnswers = persistentPDUIA
-                .readAnswersByStudent(student);
-
-        if (personalDataUseInquiryAnswers == null) {
-            personalDataUseInquiryAnswers = DomainFactory.makePersonalDataUseInquiryAnswers();
-        }
-
-        persistentPDUIA.simpleLockWrite(personalDataUseInquiryAnswers);
-
-        personalDataUseInquiryAnswers.setStudent(student);
-
-        Iterator iterator = answers.keySet().iterator();
-        while (iterator.hasNext()) {
-            String key = (String) iterator.next();
-            personalDataUseInquiryAnswers.setAnswer(new Integer(key), new Boolean((String) answers
-                    .get(key)));
-        }
-    }
-
-    private void updatePersonalInfo(ISuportePersistente sp, InfoPerson infoPerson, IPerson pessoa)
+    private void updatePersonalInfo(ISuportePersistente sp, final InfoPerson infoPerson, IPerson person)
             throws ExcepcaoPersistencia {
 
         IPersistentRole pRole = sp.getIPersistentRole();
-        IRole newRole = pRole.readByRoleType(RoleType.STUDENT);
+        
+        List<IRole> roles = pRole.readAll();
         IPersistentCountry pCountry = sp.getIPersistentCountry();
-        ICountry country = pCountry.readCountryByNationality(infoPerson.getNacionalidade());
-
-        IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente();
-
-        pessoaPersistente.simpleLockWrite(pessoa);
-
-        pessoa.setCodigoPostal(infoPerson.getCodigoPostal());
-        pessoa.setConcelhoMorada(infoPerson.getConcelhoMorada());
-        pessoa.setConcelhoNaturalidade(infoPerson.getConcelhoNaturalidade());
-        pessoa.setDataEmissaoDocumentoIdentificacao(infoPerson.getDataEmissaoDocumentoIdentificacao());
-        pessoa.setDataValidadeDocumentoIdentificacao(infoPerson.getDataValidadeDocumentoIdentificacao());
-        pessoa.setDistritoMorada(infoPerson.getDistritoMorada());
-        pessoa.setDistritoNaturalidade(infoPerson.getDistritoNaturalidade());
-        pessoa.setEmail(infoPerson.getEmail());
-        pessoa.setAvailableEmail(infoPerson.getAvailableEmail());
-        pessoa.setEnderecoWeb(infoPerson.getEnderecoWeb());
-        pessoa.setAvailableWebSite(infoPerson.getAvailableWebSite());
-        pessoa.setMaritalStatus(infoPerson.getMaritalStatus());
-        pessoa.setFreguesiaMorada(infoPerson.getFreguesiaMorada());
-        pessoa.setFreguesiaNaturalidade(infoPerson.getFreguesiaNaturalidade());
-        pessoa.setLocalidade(infoPerson.getLocalidade());
-        pessoa.setLocalidadeCodigoPostal(infoPerson.getLocalidadeCodigoPostal());
-        pessoa.setMorada(infoPerson.getMorada());
-        pessoa.setNacionalidade(infoPerson.getNacionalidade());
-        pessoa.setNomeMae(infoPerson.getNomeMae());
-        pessoa.setNomePai(infoPerson.getNomePai());
-        pessoa.setNumContribuinte(infoPerson.getNumContribuinte());
-        pessoa.setPassword(PasswordEncryptor.encryptPassword(infoPerson.getPassword()));
-        pessoa.setProfissao(infoPerson.getProfissao());
-        pessoa.setTelefone(infoPerson.getTelefone());
-        pessoa.setTelemovel(infoPerson.getTelemovel());
-        pessoa.setPais(country);
-        pessoa.setAvailablePhoto(infoPerson.getAvailablePhoto());
-
-        //remove firstTimeStudentRole and add studentRole
-        CollectionUtils.filter(pessoa.getPersonRoles(), new Predicate() {
+        List<ICountry> countries = (List<ICountry>) pCountry.readAll(Country.class);
+        ICountry country = (ICountry) CollectionUtils.find(countries, new Predicate(){
 
             public boolean evaluate(Object arg0) {
-                IRole role = (IRole) arg0;
-                return !role.getRoleType().equals(RoleType.FIRST_TIME_STUDENT);
+                ICountry country = (ICountry) arg0;
+                return country.getNationality().equals(infoPerson.getNacionalidade());
+            }});         
+
+        person.edit(infoPerson,country);
+
+        IRole roleToAdd = null;
+        IRole roleToRemove = null;
+        
+        for (IRole role : roles) {
+            if(role.getRoleType().equals(RoleType.FIRST_TIME_STUDENT)){
+                roleToRemove = role;
+            } else {
+                if(role.getRoleType().equals(RoleType.STUDENT)){
+                    roleToAdd = role;
+                }
             }
-        });
-
-        Object[] obj = { newRole };
-
-        CollectionUtils.addAll(pessoa.getPersonRoles(), obj);
-
+        }
+        
+        person.addPersonRoles(roleToAdd);        
+        person.removePersonRoles(roleToRemove);
     }
-
+    
     private void writeResidenceCandidacy(IStudent student,
             InfoResidenceCandidacy infoResidenceCandidacy) throws ExcepcaoPersistencia {
 
@@ -169,7 +123,7 @@ public class SchoolRegistration implements IService {
 
             residenceCandidacy.setStudent(student);
             residenceCandidacy.setCreationDate(new Date());
-            residenceCandidacy.setDislocated(infoResidenceCandidacy.getDislocated());
+            residenceCandidacy.setCandidate(infoResidenceCandidacy.getCandidate());
             residenceCandidacy.setObservations(infoResidenceCandidacy.getObservations());
         }
     }
@@ -178,10 +132,15 @@ public class SchoolRegistration implements IService {
             throws ExcepcaoPersistencia {
 
         IPersistentExecutionYear pExecutionYear = sp.getIPersistentExecutionYear();
-        IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+        List<IExecutionYear> executionYears = (List<IExecutionYear>) pExecutionYear.readAll(ExecutionYear.class);
+        IExecutionYear executionYear = (IExecutionYear) CollectionUtils.find(executionYears,new Predicate(){
 
-        persistentStudent.simpleLockWrite(student);
-        student.setRegistrationYear(pExecutionYear.readCurrentExecutionYear());
+            public boolean evaluate(Object arg0) {
+                IExecutionYear executionYear = (IExecutionYear) arg0;
+                return executionYear.getState().equals(PeriodState.CURRENT);
+            }});
+        
+        student.setRegistrationYear(executionYear);
     }
 
 }

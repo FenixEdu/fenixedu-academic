@@ -213,28 +213,12 @@
   	      <arg0 key="errors.invalid.email" />
      	</field>
 
-		<field property="answersMap" depends="multiRadioSelect" page="4">
-		</field>
+<!--		<field property="answersMap" depends="multiRadioSelect" page="4">
+		</field> -->
 
 		<field property="residenceCandidate" depends="required" page="5">
 			<arg0 key="label.schoolRegistration.residenceCandidate" />			
-		</field>
-		
-		<field property="dislocated" depends="requiredif" page="5">
-	        <arg0 key="label.schoolRegistration.dislocated" />
-			<var>
-			    <var-name>field[0]</var-name>
-			    <var-value>residenceCandidate</var-value>
-			</var>
-			<var>
-			    <var-name>fieldTest[0]</var-name>
-			    <var-value>EQUAL</var-value>
-			</var>
-			<var>
-			    <var-name>fieldValue[0]</var-name>
-			    <var-value>true</var-value>
-			</var>		     			
-		</field>
+		</field>		
 
 		<field property="observations" depends="maxlength" page="5">
 			<arg0 key="error.schoolRegistration.residenceCandidacy" />
