@@ -1,7 +1,3 @@
-/*
- * Created on 26/Ago/2003
- *
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import java.util.ArrayList;
@@ -13,6 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IGrouping;
@@ -25,27 +22,22 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.PeriodState;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author asnr and scpo
- * 
- */
 public class ReadEnroledExecutionCourses implements IService {
 
-    private boolean checkPeriodEnrollment(List allGroupProperties) {
-        boolean result = false;
+    private boolean checkPeriodEnrollment(final IGrouping grouping) {
+        final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+        final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
+        return strategy.checkEnrolmentDate(grouping, Calendar.getInstance());
+        
+    }
 
-        Iterator iter = allGroupProperties.iterator();
-        while (iter.hasNext()) {
-            IGrouping groupProperties = (IGrouping) iter.next();
-
-            IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-                    .getInstance();
-            IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-                    .getGroupEnrolmentStrategyInstance(groupProperties);
-            result = result || strategy.checkEnrolmentDate(groupProperties, Calendar.getInstance());
+    private boolean checkPeriodEnrollment(List<IGrouping> allGroupProperties) {
+        for (final IGrouping grouping : allGroupProperties) {
+            if (checkPeriodEnrollment(grouping)) {
+                return true;
+            }
         }
-
-        return result;
+        return false;
     }
 
     private boolean checkStudentInAttendsSet(List allGroupProperties, IStudent student) {
@@ -81,8 +73,14 @@ public class ReadEnroledExecutionCourses implements IService {
                 List allGroupProperties = executionCourse.getGroupings();
                 boolean result = checkPeriodEnrollment(allGroupProperties);
                 if (result && checkStudentInAttendsSet(allGroupProperties, student)) {
-                    final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
-                            .newInfoFromDomain(executionCourse);
+                    final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
+                    final List<InfoGrouping> infoGroupings = new ArrayList<InfoGrouping>();
+                    for (final IGrouping grouping : executionCourse.getGroupings()) {
+                        if (checkPeriodEnrollment(grouping)) {
+                            infoGroupings.add(InfoGrouping.newInfoFromDomain(grouping));
+                        }
+                    }
+                    infoExecutionCourse.setInfoGroupings(infoGroupings);
                     allInfoExecutionCourses.add(infoExecutionCourse);
                 }
             }

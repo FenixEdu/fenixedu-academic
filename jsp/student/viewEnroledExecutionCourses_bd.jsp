@@ -33,12 +33,36 @@
 
 	<table width="50%" cellpadding="0" border="0">	
 		<tr>
-	 	<td><bean:message key="label.executionCourse"/></td>
-		
-		<td>
-		<html:select property="executionCourseCode" size="1">
-    	<html:options collection="infoExecutionCourses" property="value" labelProperty="label"/>
-    	</html:select>	
+			<td>
+		 	</td>
+		 	<td>
+		 		<bean:message key="label.executionCourse"/>
+		 	</td>
+		 	<td>
+			 	<bean:message key="Label.groupings"/>
+		 	</td>
+		</tr>
+		<logic:iterate id="infoExecutionCourse" name="infoExecutionCourses">
+			<tr>
+				<td>
+					<bean:define id="executionCourseID" name="infoExecutionCourse" property="idInternal" type="java.lang.Integer"/>
+					<html:radio property="executionCourseCode" value="<%= executionCourseID.toString() %>"/>
+			 	</td>
+				<td>
+					<bean:write name="infoExecutionCourse" property="nome"/>
+			 	</td>
+				<td>
+					<logic:iterate id="infoGrouping" name="infoExecutionCourse" property="infoGroupings" length="1">
+						<bean:write name="infoGrouping" property="name"/>
+					</logic:iterate>
+					<logic:iterate id="infoGrouping" name="infoExecutionCourse" property="infoGroupings" offset="1">
+						, <bean:write name="infoGrouping" property="name"/>
+					</logic:iterate>
+			 	</td>
+			</tr>
+		</logic:iterate>
+		<tr>
+			<td>
     	</td>
     	</tr>	
 

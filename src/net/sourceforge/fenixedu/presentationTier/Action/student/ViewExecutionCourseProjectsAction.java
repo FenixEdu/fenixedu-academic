@@ -41,7 +41,7 @@ public class ViewExecutionCourseProjectsAction extends FenixContextAction {
 
 		String executionCourseCodeString = request.getParameter("executionCourseCode");
 
-		if (executionCourseCodeString.equals("")) {
+		if (executionCourseCodeString == null || executionCourseCodeString.equals("")) {
 			ActionErrors actionErrors1 = new ActionErrors();
 			ActionError error1 = null;
 			// Create an ACTION_ERROR 

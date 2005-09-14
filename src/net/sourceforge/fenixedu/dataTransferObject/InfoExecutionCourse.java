@@ -43,6 +43,8 @@ public class InfoExecutionCourse extends InfoObject {
     
     protected List nonAffiliatedTeachers;
 
+    protected List infoGroupings;
+
     protected String comment;
 
     // useful for coordinator portal
@@ -433,6 +435,14 @@ public class InfoExecutionCourse extends InfoObject {
 
     public void setNonAffiliatedTeachers(List nonAffiliatedTeachers) {
         this.nonAffiliatedTeachers = nonAffiliatedTeachers;
+    }
+
+    public List getInfoGroupings() {
+        return infoGroupings;
+    }
+
+    public void setInfoGroupings(List infoGroupings) {
+        this.infoGroupings = infoGroupings;
     }
     
     
