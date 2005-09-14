@@ -30,7 +30,7 @@ public abstract class RelationList<E> extends AbstractList<E> implements Version
 	if (allocateOnly) {
 	    elementsBox = VBox.makeNew(allocateOnly, true);
 	} else {
-	    elementsBox = new VBox<FunctionalSet<E>>(FunctionalSet.EMPTY);
+	    elementsBox = new ReferenceBox<FunctionalSet<E>>(FunctionalSet.EMPTY);
 	}
 	this.elementsRef = new SoftReference<VBox<FunctionalSet<E>>>(elementsBox);
     }
