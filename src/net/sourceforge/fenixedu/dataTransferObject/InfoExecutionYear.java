@@ -149,4 +149,12 @@ public class InfoExecutionYear extends InfoObject {
         executionYear.setYear(infoExecutionYear.getYear());
     }
 
+    public String getNextExecutionYearYear() {
+        final int year1 = Integer.valueOf(year.substring(0, 4)).intValue() + 1;
+        final int year2 = Integer.valueOf(year.substring(5, 9));
+
+        final StringBuilder stringBuilder = new StringBuilder();
+        return stringBuilder.append(year1).append('/').append(year2).toString();
+    }
+
 }

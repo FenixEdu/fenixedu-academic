@@ -5,6 +5,7 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoTeacher" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoPerson" %>
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
+<bean:define id="executionDegreeOID" name="executionDegreeOID" scope="request" />
 
 <h2><bean:message key="title.teacher.finalWorkInformation"/></h2>
 <span class="error">
@@ -14,6 +15,7 @@
 <html:form action="/finalDegreeWorkProposal">
 	<html:hidden property="page" value="2"/>
 	<html:hidden property="method" value="submit"/>
+	<html:hidden property="executionDegreeOID" value="<%= executionDegreeOID.toString() %>"/>
 	<html:hidden property="degree"/>
 	<html:hidden property="idInternal"/>
 	<html:hidden property="orientatorOID"/>

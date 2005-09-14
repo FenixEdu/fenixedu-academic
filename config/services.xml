@@ -1005,7 +1005,6 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="ManagerOrMasterDegreeAdministrativeOfficeAuthorization" />
 		</filterChains>
 	</service>
 	<service>

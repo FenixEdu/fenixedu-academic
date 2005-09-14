@@ -190,6 +190,7 @@
 				   type="org.apache.struts.validator.DynaValidatorForm" 
 				   dynamic="true">
 			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="executionDegreeOID" type="java.lang.String"/>
 			<form-property name="startOfProposalPeriodDate" type="java.lang.String"/>
 			<form-property name="startOfProposalPeriodHour" type="java.lang.String"/>
 			<form-property name="endOfProposalPeriodDate" type="java.lang.String"/>
@@ -204,6 +205,7 @@
 				   type="org.apache.struts.validator.DynaValidatorForm" 
 				   dynamic="true">
 			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="executionDegreeOID" type="java.lang.String"/>
 			<form-property name="startOfCandidacyPeriodDate" type="java.lang.String"/>
 			<form-property name="startOfCandidacyPeriodHour" type="java.lang.String"/>
 			<form-property name="endOfCandidacyPeriodDate" type="java.lang.String"/>
@@ -214,6 +216,7 @@
 				   type="org.apache.struts.validator.DynaValidatorForm" 
 				   dynamic="true">
 			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="executionDegreeOID" type="java.lang.String"/>
 			<form-property name="minimumNumberOfCompletedCourses" type="java.lang.String"/>
 			<form-property name="minimumNumberOfStudents" type="java.lang.String"/>
 			<form-property name="maximumNumberOfStudents" type="java.lang.String"/>
@@ -226,6 +229,7 @@
 				   dynamic="true"
 				   >
 			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="executionDegreeOID" type="java.lang.String"/>
 			<form-property name="degree" type="java.lang.String"/>
 			<form-property name="idInternal" type="java.lang.String"/>
 			<form-property name="title" type="java.lang.String"/>
@@ -736,6 +740,7 @@
 			scope="request"
 			validate="true"
 			>
+		<forward name="show-choose-execution-degree-page" path="df.page.showFinalDegreeChooseExecutionDegree"/>
 		<forward name="show-final-degree-work-list" path="df.page.showFinalDegreeWorkList"/>
 		<forward name="show-final-degree-work-proposal" path="df.page.showFinalDegreeWorkProposal"/>
 		<forward name="prepare-show-final-degree-work-proposal" path="/manageFinalDegreeWork.do?method=prepare&amp;page=0"/>

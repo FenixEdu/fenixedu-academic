@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
+<bean:define id="executionDegreeOID" name="executionDegreeOID" scope="request" />
 
 <br />
 <span class="error"><html:errors/><br /><br /></span>
@@ -20,6 +21,7 @@
 	<html:hidden property="method" value="setFinalDegreeProposalPeriod"/>
 	<html:hidden property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID.toString() %>"/>
 	<html:hidden property="page" value="1"/>
+	<html:hidden property="executionDegreeOID" value="<%= executionDegreeOID.toString() %>"/>
 
 	<strong><bean:message key="finalDegreeWorkProposal.setProposalPeriod.header"/></strong>
 	<br />
@@ -67,6 +69,7 @@
 <html:form action="/setFinalDegreeWorkCandidacyPeriod">
 	<html:hidden property="method" value="setFinalDegreeCandidacyPeriod"/>
 	<html:hidden property="page" value="1"/>
+	<html:hidden property="executionDegreeOID" value="<%= executionDegreeOID.toString() %>"/>
 
 	<strong><bean:message key="finalDegreeWorkCandidacy.setCandidacyPeriod.header"/></strong>
 	<br />
@@ -119,6 +122,7 @@
 	<html:hidden property="method" value="setFinalDegreeCandidacyRequirements"/>
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID.toString() %>"/>
+	<html:hidden property="executionDegreeOID" value="<%= executionDegreeOID.toString() %>"/>
 
 	<html:messages id="msg" message="true">
 		<span class="sucessfulOperarion"><bean:write name="msg"/></span><br>
@@ -175,6 +179,8 @@
 	<html:hidden property="method" value="createNewFinalDegreeWorkProposal"/>
 	<html:hidden property="page" value="0"/>
 	<html:hidden property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID.toString() %>"/>
+	<html:hidden property="executionDegreeOID" value="<%= executionDegreeOID.toString() %>"/>
+
 	<html:submit>
 		<bean:message key="finalDegreeWorkProposal.create.new.button"/>
 	</html:submit>
@@ -183,6 +189,8 @@
 	<html:hidden property="method" value="publishAprovedProposals"/>
 	<html:hidden property="page" value="0"/>
 	<html:hidden property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID.toString() %>"/>
+	<html:hidden property="executionDegreeOID" value="<%= executionDegreeOID.toString() %>"/>
+
 	<html:submit>
 		<bean:message key="finalDegreeWorkProposal.publishAproved.button"/>
 	</html:submit>
@@ -195,6 +203,7 @@
 		<html:hidden property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID.toString() %>"/>
 		<html:hidden property="selectedGroupProposal"/>
 		<html:hidden property="page" value="0"/>
+		<html:hidden property="executionDegreeOID" value="<%= executionDegreeOID.toString() %>"/>
 
 		<table>
 			<tr>
@@ -241,7 +250,10 @@
 						<bean:write name="finalDegreeWorkProposalHeader" property="proposalNumber"/>
 					</td>
 					<td class="listClasses" rowspan="2">
-			        	<html:link page="<%= "/finalDegreeWorkProposal.do?method=viewFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getIdInternal().toString() + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
+			        	<html:link page="<%= "/finalDegreeWorkProposal.do?method=viewFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getIdInternal().toString() + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanID 
+			        			+ "&amp;executionDegreeOID="
+								+ executionDegreeOID.toString()
+			        	%>">
 							<bean:write name="finalDegreeWorkProposalHeader" property="title"/>
 				        </html:link>
 					</td>

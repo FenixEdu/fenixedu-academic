@@ -197,7 +197,7 @@
 		</li>
 
        	<li>
-        	<html:link page="<%= "/manageFinalDegreeWork.do?method=prepare&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
+        	<html:link page="<%= "/manageFinalDegreeWork.do?method=showChooseExecutionDegreeForm&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
 	        	<bean:message key="link.coordinator.managefinalDegreeWorks" />
 	        </html:link>
         </li>
