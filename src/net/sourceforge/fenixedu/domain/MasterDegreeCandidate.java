@@ -112,13 +112,13 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
     }
 
     public ICandidateSituation getActiveCandidateSituation() {
-        Iterator iterator = this.getSituations().iterator();
-        while (iterator.hasNext()) {
-            ICandidateSituation candidateSituationTemp = (ICandidateSituation) iterator.next();
-            if (candidateSituationTemp.getValidation().equals(new State(State.ACTIVE))) {
-                return candidateSituationTemp;
+
+        for (ICandidateSituation candidateSituation : getSituations()) {
+            if (candidateSituation.getValidation().equals(new State(State.ACTIVE))) {
+                return candidateSituation;
             }
         }
+
         return null;
     }
 
