@@ -399,6 +399,8 @@ class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.f
     	String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn);
 	 
 	 public java.util.List getExecutionCoursesByExecutionPeriod (final IExecutionPeriod executionPeriod);
+
+	 public ICurriculum findLatestCurriculum();
 	"
 }
 

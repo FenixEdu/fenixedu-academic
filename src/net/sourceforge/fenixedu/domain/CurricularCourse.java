@@ -279,4 +279,8 @@ public class CurricularCourse extends CurricularCourse_Base {
 			}
 		});
 	}
+
+    public ICurriculum findLatestCurriculum() {
+        return (ICurriculum) Collections.max(getAssociatedCurriculums(), new BeanComparator("lastModificationDate"));
+    }
 }
