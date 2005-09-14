@@ -303,36 +303,6 @@
 
 <!-- Old classes -->
 
-<!--
-<class-descriptor class="net.sourceforge.fenixedu.domain.NonTeacherEmployee"
-  table="ass_FUNC_NAO_DOCENTE"
->
-  <field-descriptor id="0"
-    name="idInternal"
-    column="codigoInterno"
-    jdbc-type="INTEGER"
-    primarykey="true"
-    autoincrement="true"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-  <field-descriptor id="1"
-    name="chaveFuncionario"
-    column="chaveFuncionario"
-    jdbc-type="INTEGER"
-  />
-  <reference-descriptor auto-retrieve="false"
-  	name="funcionario"
-  	class-ref="net.sourceforge.fenixedu.domain.Employee">
-  	<foreignkey field-ref="chaveFuncionario"/>
-  </reference-descriptor>  
-</class-descriptor>
--->
-
 <class-descriptor class="net.sourceforge.fenixedu.domain.StatusAssiduidade" 
 	table="ass_STATUS">
   <field-descriptor 

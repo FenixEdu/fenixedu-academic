@@ -1466,7 +1466,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             return prepareViewExecutionCourseProjects(mapping, form, request, response);
         }
 
-        if (((InfoSiteShiftsAndGroups) shiftsAndGroupsView).getInfoSiteGroupsByShiftList() == null) {
+        if (((InfoSiteShiftsAndGroups) shiftsAndGroupsView).getInfoSiteGroupsByShiftList().isEmpty()) {
             request.setAttribute("noShifts", new Boolean(true));
         } else {
             boolean found = false;
@@ -1475,7 +1475,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             while (iterShiftsAndGroups.hasNext() && !found) {
                 InfoSiteGroupsByShift shiftsAndGroups = (InfoSiteGroupsByShift) iterShiftsAndGroups
                         .next();
-                if (shiftsAndGroups.getInfoSiteStudentGroupsList() != null) {
+                if (!shiftsAndGroups.getInfoSiteStudentGroupsList().isEmpty()) {
                     request.setAttribute("hasGroups", new Boolean(true));
                     found = true;
                 }
