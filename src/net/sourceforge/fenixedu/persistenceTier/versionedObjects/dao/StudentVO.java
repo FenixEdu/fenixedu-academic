@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
@@ -16,141 +17,154 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
 
 import org.apache.commons.collections.Predicate;
 
-public class StudentVO extends VersionedObjectsBase implements
-		IPersistentStudent {
+public class StudentVO extends VersionedObjectsBase implements IPersistentStudent {
 
-	public IStudent readStudentByNumberAndDegreeType(final Integer number,
-			final DegreeType degreeType) throws ExcepcaoPersistencia {
-		
-		List students = (List)readAll(Student.class);
-		
-		return (IStudent) CollectionUtils.find(students,new Predicate() {
+    public IStudent readStudentByNumberAndDegreeType(final Integer number, final DegreeType degreeType)
+            throws ExcepcaoPersistencia {
 
-			public boolean evaluate(Object arg0) {
-				IStudent student = (IStudent)arg0;
-				return student.getNumber().equals(number) &&
-						student.getDegreeType().equals(degreeType);
-			}
-		});
-	}
+        List students = (List) readAll(Student.class);
 
-	public List readAll() throws ExcepcaoPersistencia {
-		return (List) readAll(Student.class);
-	}
+        return (IStudent) CollectionUtils.find(students, new Predicate() {
 
-	public IStudent readByUsername(final String username) throws ExcepcaoPersistencia {
+            public boolean evaluate(Object arg0) {
+                IStudent student = (IStudent) arg0;
+                return student.getNumber().equals(number) && student.getDegreeType().equals(degreeType);
+            }
+        });
+    }
 
-		List students = (List)readAll(Student.class);
-		
-		return (IStudent) CollectionUtils.find(students,new Predicate() {
+    public List readAll() throws ExcepcaoPersistencia {
+        return (List) readAll(Student.class);
+    }
 
-			public boolean evaluate(Object arg0) {
-				IStudent student = (IStudent)arg0;
-				return student.getPerson().getUsername().equals(username);
-			}
-		});
-	}
+    public IStudent readByUsername(final String username) throws ExcepcaoPersistencia {
 
-	public IStudent readByPersonAndDegreeType(Integer personId,
-			final DegreeType degreeType) throws ExcepcaoPersistencia {
-		
-		IPerson person = (IPerson)readByOID(Person.class,personId);
-		
-		if (person != null) {
+        List students = (List) readAll(Student.class);
 
-			List students = person.getStudents();
-			
-			return (IStudent) CollectionUtils.find(students,new Predicate() {
+        return (IStudent) CollectionUtils.find(students, new Predicate() {
 
-				public boolean evaluate(Object arg0) {
-					IStudent student = (IStudent)arg0;
-					return student.getDegreeType().equals(degreeType);
-				}
-			});			
-		}
+            public boolean evaluate(Object arg0) {
+                IStudent student = (IStudent) arg0;
+                return student.getPerson().getUsername().equals(username);
+            }
+        });
+    }
 
-		return null;
-	}
+    public IStudent readByPersonAndDegreeType(Integer personId, final DegreeType degreeType)
+            throws ExcepcaoPersistencia {
 
-	public Integer generateStudentNumber(final DegreeType degreeType)
-			throws ExcepcaoPersistencia {
-		Integer number = new Integer(0);
+        IPerson person = (IPerson) readByOID(Person.class, personId);
 
-		List students = (List) readAll(Student.class);
-		List<IStudent> result = (List) CollectionUtils.select(students,new Predicate () {
-			public boolean evaluate(Object arg0) {
-				return ((IStudent)arg0).getDegreeType().equals(degreeType);
-			}		
-		});
+        if (person != null) {
 
-		for (IStudent student : result) {
-			number = Math.max(number,student.getNumber());
-		}
+            List students = person.getStudents();
+
+            return (IStudent) CollectionUtils.find(students, new Predicate() {
+
+                public boolean evaluate(Object arg0) {
+                    IStudent student = (IStudent) arg0;
+                    return student.getDegreeType().equals(degreeType);
+                }
+            });
+        }
+
+        return null;
+    }
+
+    public Integer generateStudentNumber(final DegreeType degreeType) throws ExcepcaoPersistencia {
+        Integer number = new Integer(0);
+
+        List students = (List) readAll(Student.class);
+        List<IStudent> result = (List) CollectionUtils.select(students, new Predicate() {
+            public boolean evaluate(Object arg0) {
+                return ((IStudent) arg0).getDegreeType().equals(degreeType);
+            }
+        });
+
+        for (IStudent student : result) {
+            number = Math.max(number, student.getNumber());
+        }
 
         return new Integer(number.intValue() + 1);
-	}
+    }
 
-	public List readMasterDegreeStudentsByNameIDnumberIDtypeAndStudentNumber(
-			final String studentName, final String idNumber, final IDDocumentType idType,
-			final Integer studentNumber) throws ExcepcaoPersistencia {
-		List students = (List)readAll(Student.class);
-		
-		return (List) CollectionUtils.select(students,new Predicate() {
+    public List readMasterDegreeStudentsByNameIDnumberIDtypeAndStudentNumber(final String studentName,
+            final String idNumber, final IDDocumentType idType, final Integer studentNumber)
+            throws ExcepcaoPersistencia {
+        List students = (List) readAll(Student.class);
 
-			public boolean evaluate(Object arg0) {
-				IStudent student = (IStudent)arg0;
-				
-				boolean cond = (studentName == null || studentName.contains(student.getPerson().getNome()));// preventing the %string% behaviour
-				cond = cond && (idNumber == null || student.getPerson().getNumeroDocumentoIdentificacao().equals(idNumber));
-				cond = cond && (idType == null || student.getPerson().getIdDocumentType().equals(idType));
-				cond = cond && (studentNumber == null || student.getNumber().equals(studentNumber));
-				cond = cond && student.getDegreeType().equals(DegreeType.MASTER_DEGREE);				
-				
-				return cond;
-			}
-		});
-	}
+        return (List) CollectionUtils.select(students, new Predicate() {
 
-	public Integer countAll() throws ExcepcaoPersistencia {
-		return readAll(Student.class).size();
-	}
+            public boolean evaluate(Object arg0) {
+                IStudent student = (IStudent) arg0;
 
-	public List readStudentByPersonRole(final RoleType roleType)
-			throws ExcepcaoPersistencia {
-		List students = (List)readAll(Student.class);
-		
-		return (List) CollectionUtils.select(students,new Predicate() {
+                boolean cond = (studentName == null || studentName.contains(student.getPerson()
+                        .getNome()));// preventing the %string% behaviour
+                cond = cond
+                        && (idNumber == null || student.getPerson().getNumeroDocumentoIdentificacao()
+                                .equals(idNumber));
+                cond = cond
+                        && (idType == null || student.getPerson().getIdDocumentType().equals(idType));
+                cond = cond && (studentNumber == null || student.getNumber().equals(studentNumber));
+                cond = cond && student.getDegreeType().equals(DegreeType.MASTER_DEGREE);
 
-			public boolean evaluate(Object arg0) {
-				IStudent student = (IStudent)arg0;
-				return student.getPerson().getPersonRoles().contains(roleType);
-			}
-		});
-	}
+                return cond;
+            }
+        });
+    }
 
-	public List readAllBetweenNumbers(final Integer fromNumber, final Integer toNumber)
-			throws ExcepcaoPersistencia {
-		List students = (List)readAll(Student.class);
-		
-		return (List) CollectionUtils.select(students,new Predicate() {
+    public Integer countAll() throws ExcepcaoPersistencia {
+        return readAll(Student.class).size();
+    }
 
-			public boolean evaluate(Object arg0) {
-				IStudent student = (IStudent)arg0;
-				return student.getNumber().intValue() < toNumber.intValue() &&
-						student.getNumber().intValue() > fromNumber.intValue();
-			}
-		});
-	}
+    public List readStudentByPersonRole(final RoleType roleType) throws ExcepcaoPersistencia {
+        List students = (List) readAll(Student.class);
 
-	public List readAllWithPayedTuition() throws ExcepcaoPersistencia {
-		List students = (List)readAll(Student.class);
-		
-		return (List) CollectionUtils.select(students,new Predicate() {
+        return (List) CollectionUtils.select(students, new Predicate() {
 
-			public boolean evaluate(Object arg0) {
-				IStudent student = (IStudent)arg0;
-				return student.getPayedTuition();
-			}
-		});
-	}
+            public boolean evaluate(Object arg0) {
+                IStudent student = (IStudent) arg0;
+                return student.getPerson().getPersonRoles().contains(roleType);
+            }
+        });
+    }
+
+    public List readAllBetweenNumbers(final Integer fromNumber, final Integer toNumber)
+            throws ExcepcaoPersistencia {
+        List students = (List) readAll(Student.class);
+
+        return (List) CollectionUtils.select(students, new Predicate() {
+
+            public boolean evaluate(Object arg0) {
+                IStudent student = (IStudent) arg0;
+                return student.getNumber().intValue() < toNumber.intValue()
+                        && student.getNumber().intValue() > fromNumber.intValue();
+            }
+        });
+    }
+
+    public List readAllWithPayedTuition() throws ExcepcaoPersistencia {
+        List students = (List) readAll(Student.class);
+
+        return (List) CollectionUtils.select(students, new Predicate() {
+
+            public boolean evaluate(Object arg0) {
+                IStudent student = (IStudent) arg0;
+                return student.getPayedTuition();
+            }
+        });
+    }
+
+    public Collection<IStudent> readStudentsByDegreeType(final DegreeType degreeType)
+            throws ExcepcaoPersistencia {
+        Collection<IStudent> students = readAll(Student.class);
+
+        return CollectionUtils.select(students, new Predicate() {
+
+            public boolean evaluate(Object arg0) {
+                IStudent student = (IStudent) arg0;
+                return student.getDegreeType().equals(degreeType);
+            }
+        });
+    }
 }
