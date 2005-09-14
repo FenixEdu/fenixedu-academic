@@ -39,6 +39,7 @@ public abstract class RelationList<E> extends AbstractList<E> implements Version
 	VBox<FunctionalSet<E>> box = elementsRef.get();
 	if (box == null) {
 	    box = VBox.makeNew(true, true);
+	    box.initKnownVersions(listHolder, attributeName);
 	    this.elementsRef = new SoftReference<VBox<FunctionalSet<E>>>(box);
 	}
 	return box;
@@ -46,7 +47,10 @@ public abstract class RelationList<E> extends AbstractList<E> implements Version
 
 
     public void addNewVersion(int txNumber) {
-	getElementsBox().addNewVersion(txNumber);
+	VBox<FunctionalSet<E>> box = elementsRef.get();
+	if (box != null) {
+	    box.addNewVersion(txNumber);
+	}
     }
 
     public void initKnownVersions(Object obj, String attr) {
