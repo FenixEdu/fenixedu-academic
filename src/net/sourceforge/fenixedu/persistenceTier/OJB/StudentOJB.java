@@ -10,6 +10,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
  * @author Ricardo Nortadas
  */
 
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IStudent;
@@ -133,6 +134,12 @@ public class StudentOJB extends PersistentObjectOJB implements IPersistentStuden
     public List readAllWithPayedTuition() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("payedTuition", new Boolean(true));
+        return queryList(Student.class, criteria);
+    }
+
+    public Collection<IStudent> readStudentsByDegreeType(DegreeType degreeType) throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("degreeType", degreeType);
         return queryList(Student.class, criteria);
     }
 

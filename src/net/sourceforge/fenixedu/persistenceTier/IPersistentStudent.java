@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IStudent;
@@ -54,4 +55,6 @@ public interface IPersistentStudent extends IPersistentObject {
     public List readAllBetweenNumbers(Integer fromNumber, Integer toNumber) throws ExcepcaoPersistencia;
 
     public List readAllWithPayedTuition() throws ExcepcaoPersistencia;
+    
+    public Collection<IStudent> readStudentsByDegreeType(DegreeType degreeType) throws ExcepcaoPersistencia;
 }
