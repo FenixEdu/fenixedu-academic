@@ -55,7 +55,7 @@ public class EditStudentCurricularCoursePlan extends DispatchAction {
             throw new FenixActionException(e);
         }
 
-        //put request
+        // put request
         request.setAttribute(SessionConstants.BRANCH, branchList);
         request.setAttribute("currentState", infoStudentCurricularPlan.getCurrentState());
 
@@ -105,7 +105,8 @@ public class EditStudentCurricularCoursePlan extends DispatchAction {
         String currentState = (String) editStudentCurricularPlanForm.get("currentState");
         String specialization = (String) editStudentCurricularPlanForm.get("specialization");
         Integer branch = (Integer) editStudentCurricularPlanForm.get("branch");
-        Double credits = Double.valueOf((String) editStudentCurricularPlanForm.get("credits"));
+        Double credits = (editStudentCurricularPlanForm.get("credits") != null) ? (Double
+                .valueOf((String) editStudentCurricularPlanForm.get("credits"))) : 0.0;
         String startDate = (String) editStudentCurricularPlanForm.get("startDate");
 
         Integer studentCurricularPlanId = new Integer(studentCurricularPlanIdString);
