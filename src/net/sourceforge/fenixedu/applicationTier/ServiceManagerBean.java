@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.applicationTier.logging.UserExecutionLog;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.stm.VersionNotAvailableException;
 import net.sourceforge.fenixedu.stm.ServiceInfo;
+import net.sourceforge.fenixedu.stm.Transaction;
 
 import org.apache.commons.collections.FastHashMap;
 import org.apache.log4j.Logger;
@@ -148,6 +149,17 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
 		} catch (jvstm.CommitException ce) {
 		    System.out.println("Restarting TX because of CommitException");
 		    // repeat service
+		} catch (Throwable t) {
+		    // At this point there should be no current transaction
+		    // The transaction should have been either committed or aborted by the ServiceManager
+		    // if that is not the case, then we have to abort it ourselves...
+		    if (Transaction.current() != null) {
+			System.out.println("WARNING: Forcing the abort of the current transaction.  This shouldn't happen here...");
+			System.out.println("The stackTrace of the error is:");
+			t.printStackTrace();
+			Transaction.abort();
+		    }
+		    throw t;
 		}
 	    }
 
