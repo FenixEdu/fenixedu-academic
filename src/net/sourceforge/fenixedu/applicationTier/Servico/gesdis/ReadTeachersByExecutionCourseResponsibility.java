@@ -1,8 +1,3 @@
-/*
- * Created on 25/Mar/2003
- *
- * 
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.gesdis;
 
 import java.util.ArrayList;
@@ -23,62 +18,24 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author João Mota
- * 
- * 
- */
 public class ReadTeachersByExecutionCourseResponsibility implements IService {
 
-    public List run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException,
-            ExcepcaoPersistencia {
-
-        ISuportePersistente suportePersistente = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-        IPersistentExecutionCourse persistentExecutionCourse = suportePersistente
-                .getIPersistentExecutionCourse();
-        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
-                ExecutionCourse.class, infoExecutionCourse.getIdInternal());
-
-        List result = executionCourse.responsibleFors();
-
-        List infoResult = new ArrayList();
-        if (result != null) {
-            Iterator iter = result.iterator();
-            while (iter.hasNext()) {
-                IProfessorship responsibleFor = (IProfessorship) iter.next();
-                ITeacher teacher = responsibleFor.getTeacher();
-                InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
-                infoResult.add(infoTeacher);
-            }
-            return infoResult;
-        }
-
-        return result;
+    public List run(InfoExecutionCourse infoExecutionCourse) throws ExcepcaoPersistencia {
+        return run(infoExecutionCourse.getIdInternal());
     }
 
-    public List run(Integer executionCourseID) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(Integer executionCourseID) throws ExcepcaoPersistencia {
+        final ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentExecutionCourse persistentExecutionCourse = suportePersistente.getIPersistentExecutionCourse();
 
-        ISuportePersistente suportePersistente = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-        IPersistentExecutionCourse persistentExecutionCourse = suportePersistente
-                .getIPersistentExecutionCourse();
-        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+        final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, executionCourseID);
 
-        List result = executionCourse.responsibleFors();
-
-        List infoResult = new ArrayList();
-        if (result != null) {
-            Iterator iter = result.iterator();
-            while (iter.hasNext()) {
-                IProfessorship responsibleFor = (IProfessorship) iter.next();
-                ITeacher teacher = responsibleFor.getTeacher();
-                InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
-                infoResult.add(infoTeacher);
-            }
-            return infoResult;
+        final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
+        for (final IProfessorship professorship : executionCourse.responsibleFors()) {
+            result.add(InfoTeacher.newInfoFromDomain(professorship.getTeacher()));
         }
         return result;
     }
+
 }
