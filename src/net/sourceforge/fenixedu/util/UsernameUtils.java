@@ -4,7 +4,6 @@
 package net.sourceforge.fenixedu.util;
 
 import java.util.Collection;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IRole;
@@ -21,7 +20,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
  * @author - Carlos Gonzalez Pereira (cgmp@mega.ist.utl.pt)
  * 
  */
-public class UsernameUtils<T> extends FenixUtil {
+public class UsernameUtils extends FenixUtil {
 
     /**
      * This method is used to determine what should be the person's current
@@ -83,10 +82,11 @@ public class UsernameUtils<T> extends FenixUtil {
 
         return oldUsername;
 
-    } /*
-         * Given a list of roles returns the most important role
-         */
-
+    }
+    
+    /*
+     * Given a list of roles returns the most important role
+     */
     private static IRole getMostImportantRole(Collection<IRole> roles) {
         for (RoleType roleType : RoleType.getRolesImportance()) {
             for (IRole role : roles) {
