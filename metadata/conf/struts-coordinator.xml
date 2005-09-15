@@ -740,6 +740,7 @@
 			scope="request"
 			validate="true"
 			>
+		<forward name="error" path="/indexCoordinator.jsp"/>
 		<forward name="show-choose-execution-degree-page" path="df.page.showFinalDegreeChooseExecutionDegree"/>
 		<forward name="show-final-degree-work-list" path="df.page.showFinalDegreeWorkList"/>
 		<forward name="show-final-degree-work-proposal" path="df.page.showFinalDegreeWorkProposal"/>

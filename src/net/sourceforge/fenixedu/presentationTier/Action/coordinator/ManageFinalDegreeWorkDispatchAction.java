@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfPeriodException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
@@ -92,6 +93,15 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
                 request.setAttribute("finalDegreeWorkProposalHeaders", finalDegreeWorkProposalHeaders);
             }
+        } catch (FenixFilterException e) {
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("notAuthorized", new ActionError("error.exception.notAuthorized"));
+            saveErrors(request, actionErrors);
+            
+            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+            
+            return mapping.findForward("error");
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
