@@ -21,100 +21,104 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
 
 /**
  * @author jdnf
- *  
+ * 
  */
-public class TeacherVO extends VersionedObjectsBase implements IPersistentTeacher {
+public class TeacherVO extends VersionedObjectsBase implements
+		IPersistentTeacher {
 
-    public ITeacher readTeacherByUsername(final String userName) throws ExcepcaoPersistencia {
-        final Collection<ITeacher> teachers = readAll(Teacher.class);
-        for (final ITeacher teacher : teachers) {
-            if (teacher.getPerson().getUsername().equals(userName))
-                return teacher;
-        }
-        return null;
-    }
-   
-    public List readByDepartment(String departmentCode) throws ExcepcaoPersistencia {
+	public ITeacher readTeacherByUsername(final String userName)
+			throws ExcepcaoPersistencia {
+		final Collection<ITeacher> teachers = readAll(Teacher.class);
+		for (final ITeacher teacher : teachers) {
+			if (teacher.getPerson().getUsername().equals(userName))
+				return teacher;
+		}
+		return null;
+	}
 
-        final List<ITeacher> result = new ArrayList<ITeacher>();
-        final List<IEmployee> employees = getEmployees(departmentCode);
+	public List readByDepartment(String departmentCode)
+			throws ExcepcaoPersistencia {
 
-        for (final IEmployee employee : employees) {
-            final List<ITeacher> teachers = employee.getPerson().getAssociatedTeachers();
-            if (teachers != null) {
-                for (final ITeacher teacher : teachers) {
-                    if (teacher.getTeacherNumber().equals(employee.getEmployeeNumber())) {
-                        result.add(teacher);
-                    }
-                }
-            }
+		final List<ITeacher> result = new ArrayList<ITeacher>();
+		final List<IEmployee> employees = getEmployees(departmentCode);
 
-        }
-        return result;
-    }
+		for (final IEmployee employee : employees) {
+			final ITeacher teacher = employee.getPerson().getTeacher();
+			if (teacher.getTeacherNumber().equals(employee.getEmployeeNumber())) {
+				result.add(teacher);
+			}
+		}
 
-    public ITeacher readByNumber(final Integer teacherNumber) throws ExcepcaoPersistencia {
-        final Collection<ITeacher> teachers = readAll(Teacher.class);
-        for (final ITeacher teacher : teachers) {
-            if (teacher.getTeacherNumber().equals(teacherNumber))
-                return teacher;
-        }
-        return null;
-    }
+		return result;
+	}
 
-    private List<IEmployee> getEmployees(final String departmentCode) {
-        final String lowerCaseDepartmentCode = departmentCode.toLowerCase();
-        final Date actualDate = Calendar.getInstance().getTime();
-        final List<IEmployee> selectedEmployee = new ArrayList<IEmployee>();
+	public ITeacher readByNumber(final Integer teacherNumber)
+			throws ExcepcaoPersistencia {
+		final Collection<ITeacher> teachers = readAll(Teacher.class);
+		for (final ITeacher teacher : teachers) {
+			if (teacher.getTeacherNumber().equals(teacherNumber))
+				return teacher;
+		}
+		return null;
+	}
 
-        final Collection<IEmployeeHistoric> employeeHistorics = readAll(EmployeeHistoric.class);
-        for (final IEmployeeHistoric employeeHistoric : employeeHistorics) {
-            if (employeeHistoric.getEmployee().getActive().booleanValue()
-                    && ((criteriaWorkingPlaceCostCenter(employeeHistoric, lowerCaseDepartmentCode) && criteriaBeginDate(
-                            employeeHistoric, actualDate)) || criteriaAlternativeDate(employeeHistoric,
-                            actualDate))) {
+	private List<IEmployee> getEmployees(final String departmentCode) {
+		final String lowerCaseDepartmentCode = departmentCode.toLowerCase();
+		final Date actualDate = Calendar.getInstance().getTime();
+		final List<IEmployee> selectedEmployee = new ArrayList<IEmployee>();
 
-                selectedEmployee.add(employeeHistoric.getEmployee());
-            }
-        }
-        return selectedEmployee;
-    }
+		final Collection<IEmployeeHistoric> employeeHistorics = readAll(EmployeeHistoric.class);
+		for (final IEmployeeHistoric employeeHistoric : employeeHistorics) {
+			if (employeeHistoric.getEmployee().getActive().booleanValue()
+					&& ((criteriaWorkingPlaceCostCenter(employeeHistoric,
+							lowerCaseDepartmentCode) && criteriaBeginDate(
+							employeeHistoric, actualDate)) || criteriaAlternativeDate(
+							employeeHistoric, actualDate))) {
 
-    private boolean criteriaAlternativeDate(final IEmployeeHistoric employeeHistoric,
-            final Date actualDate) {
-        return (employeeHistoric.getBeginDate().before(actualDate) || employeeHistoric.getBeginDate()
-                .equals(actualDate))
-                && (employeeHistoric.getEndDate() != null)
-                && (employeeHistoric.getEndDate().equals(actualDate) || employeeHistoric.getEndDate()
-                        .after(actualDate));
-    }
+				selectedEmployee.add(employeeHistoric.getEmployee());
+			}
+		}
+		return selectedEmployee;
+	}
 
-    private boolean criteriaWorkingPlaceCostCenter(final IEmployeeHistoric employeeHistoric,
-            final String lowerCaseDepartmentCode) {
-        return employeeHistoric.getWorkingPlaceCostCenter().getCode().toLowerCase().startsWith(
-                lowerCaseDepartmentCode);
-    }
+	private boolean criteriaAlternativeDate(
+			final IEmployeeHistoric employeeHistoric, final Date actualDate) {
+		return (employeeHistoric.getBeginDate().before(actualDate) || employeeHistoric
+				.getBeginDate().equals(actualDate))
+				&& (employeeHistoric.getEndDate() != null)
+				&& (employeeHistoric.getEndDate().equals(actualDate) || employeeHistoric
+						.getEndDate().after(actualDate));
+	}
 
-    private boolean criteriaBeginDate(final IEmployeeHistoric employeeHistoric, final Date actualDate) {
-        return (employeeHistoric.getBeginDate().before(actualDate) || employeeHistoric.getBeginDate()
-                .equals(actualDate))
-                && (employeeHistoric.getEndDate() == null);
-    }
+	private boolean criteriaWorkingPlaceCostCenter(
+			final IEmployeeHistoric employeeHistoric,
+			final String lowerCaseDepartmentCode) {
+		return employeeHistoric.getWorkingPlaceCostCenter().getCode()
+				.toLowerCase().startsWith(lowerCaseDepartmentCode);
+	}
 
-    public Collection<ITeacher> readByNumbers(final Collection<Integer> teacherNumbers)
-            throws ExcepcaoPersistencia {
+	private boolean criteriaBeginDate(final IEmployeeHistoric employeeHistoric,
+			final Date actualDate) {
+		return (employeeHistoric.getBeginDate().before(actualDate) || employeeHistoric
+				.getBeginDate().equals(actualDate))
+				&& (employeeHistoric.getEndDate() == null);
+	}
 
-        final Collection<ITeacher> result = new ArrayList<ITeacher>();
-        final Collection<ITeacher> teachers = readAll(Teacher.class);
+	public Collection<ITeacher> readByNumbers(
+			final Collection<Integer> teacherNumbers)
+			throws ExcepcaoPersistencia {
 
-        for (final Integer teacherNumber : teacherNumbers) {
-            for (final ITeacher teacher : teachers) {
-                if (teacher.getTeacherNumber().equals(teacherNumber)) {
-                    result.add(teacher);
-                    break;
-                }
-            }
-        }
-        return result;
-    }
+		final Collection<ITeacher> result = new ArrayList<ITeacher>();
+		final Collection<ITeacher> teachers = readAll(Teacher.class);
+
+		for (final Integer teacherNumber : teacherNumbers) {
+			for (final ITeacher teacher : teachers) {
+				if (teacher.getTeacherNumber().equals(teacherNumber)) {
+					result.add(teacher);
+					break;
+				}
+			}
+		}
+		return result;
+	}
 }

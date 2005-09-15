@@ -444,7 +444,7 @@ public class Person extends Person_Base {
         this.getAssociatedAlteredCurriculums().clear();
         this.setAssociatedPersonAccount(null);
         this.getAssociatedPersonRoles().clear();
-        this.getAssociatedTeachers().clear();
+        this.removeTeacher();
         this.getEditedWebSiteItems().clear();
         this.setEmployee(null);
         this.getEnrolmentEvaluations().clear();

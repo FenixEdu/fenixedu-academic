@@ -210,6 +210,11 @@
 	   column="KEY_EMPLOYEE"  
 	   jdbc-type="INTEGER"
     />
+   	<field-descriptor 
+	   name="keyTeacher"    
+	   column="KEY_TEACHER"  
+	   jdbc-type="INTEGER"
+    />
 	<field-descriptor
         name="isPassInKerberos"
         column="IS_PASS_KERBEROS"
@@ -224,6 +229,11 @@
     	name="externalPerson"
         class-ref="net.sourceforge.fenixedu.domain.ExternalPerson">
 	    <foreignkey field-ref="keyExternalPerson"/>
+	</reference-descriptor>
+    <reference-descriptor auto-retrieve="false"
+    	name="teacher"
+        class-ref="net.sourceforge.fenixedu.domain.Teacher">
+	    <foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>
     <reference-descriptor auto-retrieve="false"
          name="pais"

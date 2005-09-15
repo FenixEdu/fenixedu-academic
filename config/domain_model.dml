@@ -1822,6 +1822,10 @@ class net.sourceforge.fenixedu.domain.Period extends net.sourceforge.fenixedu.do
 }
 
 class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyAuthor;
+	Integer keyEmployee;
+	Integer keyTeacher;
+	Integer keyExternalPerson;	
 	String localidade;
 	String codigoFiscal;
 	String telemovel;
@@ -1855,12 +1859,9 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 	String concelhoMorada;
 	Date nascimento;
 	String freguesiaMorada;
-	Integer keyAuthor;
-	Integer keyEmployee;
     MaritalStatus maritalStatus;
     Gender gender;
     IDDocumentType idDocumentType; 
-	Integer keyExternalPerson;
 	Boolean isPassInKerberos;
 	String istUsername;
 	
@@ -4545,9 +4546,7 @@ relation PersonRolePerson {
 
 
 relation PersonTeacher {
-	net.sourceforge.fenixedu.domain.Teacher playsRole associatedTeachers {
-		multiplicity *;
-	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 	net.sourceforge.fenixedu.domain.Person playsRole person;
 }
 
