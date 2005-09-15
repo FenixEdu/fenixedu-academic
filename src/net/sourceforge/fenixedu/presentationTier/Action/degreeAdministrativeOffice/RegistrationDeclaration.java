@@ -57,8 +57,6 @@ public class RegistrationDeclaration extends FenixDispatchAction {
 
         String degreeName = infoRegistrationDeclaration.getDegreeName();
 
-        final int columnNumber = 73;
-
         InfoPerson infoPerson = infoRegistrationDeclaration.getInfoPerson();
         Calendar calendar = Calendar.getInstance();
 

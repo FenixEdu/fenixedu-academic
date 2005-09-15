@@ -103,21 +103,18 @@ public class ScientificCouncilComponentBuilder {
             List infoBasicCurricularCourses = new ArrayList();
             while (iter.hasNext()) {
                 ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
-                InfoCurricularCourse infoCurricularCourse = Cloner
-                        .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
                 infoNonBasicCurricularCourses.add(infoCurricularCourse);
             }
             while (iter1.hasNext()) {
                 ICurricularCourse curricularCourse = (ICurricularCourse) iter1.next();
-                InfoCurricularCourse infoCurricularCourse = Cloner
-                        .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
                 infoBasicCurricularCourses.add(infoCurricularCourse);
             }
 
             component.setBasicCurricularCourses(infoBasicCurricularCourses);
             component.setNonBasicCurricularCourses(infoNonBasicCurricularCourses);
-            component.setInfoDegreeCurricularPlan(Cloner
-                    .copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(degreeCurricularPlan));
+            component.setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan));
 
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
@@ -154,8 +151,7 @@ public class ScientificCouncilComponentBuilder {
             List infoCurricularCourses = new ArrayList();
             while (iter.hasNext()) {
                 ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
-                InfoCurricularCourse infoCurricularCourse = Cloner
-                        .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
                 infoCurricularCourses.add(infoCurricularCourse);
             }
             component.setCurricularCourses(infoCurricularCourses);

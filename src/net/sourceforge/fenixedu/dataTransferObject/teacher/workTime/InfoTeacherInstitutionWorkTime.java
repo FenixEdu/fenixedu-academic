@@ -7,8 +7,11 @@ package net.sourceforge.fenixedu.dataTransferObject.teacher.workTime;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
+import net.sourceforge.fenixedu.domain.teacher.workTime.ITeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
 /**
@@ -129,6 +132,22 @@ public class InfoTeacherInstitutionWorkTime extends InfoObject {
      */
     public void setWeekDay(DiaSemana weekDay) {
         this.weekDay = weekDay;
+    }
+
+    public static InfoTeacherInstitutionWorkTime newInfoFromDomain(ITeacherInstitutionWorkTime item) {
+        InfoTeacher infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(item.getTeacher());
+        InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(item.getExecutionPeriod());
+
+        InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = new InfoTeacherInstitutionWorkTime();
+        infoTeacherInstitutionWorkTime.setEndTime(item.getEndTime());
+        infoTeacherInstitutionWorkTime.setIdInternal(item.getIdInternal());
+        infoTeacherInstitutionWorkTime.setStartTime(item.getStartTime());
+        infoTeacherInstitutionWorkTime.setWeekDay(item.getWeekDay());
+
+        infoTeacherInstitutionWorkTime.setInfoTeacher(infoTeacher);
+        infoTeacherInstitutionWorkTime.setInfoExecutionPeriod(infoExecutionPeriod);
+
+        return infoTeacherInstitutionWorkTime;
     }
 
 }

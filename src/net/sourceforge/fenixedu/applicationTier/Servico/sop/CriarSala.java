@@ -17,7 +17,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IBuilding;
 import net.sourceforge.fenixedu.domain.IRoom;
@@ -49,7 +48,7 @@ public class CriarSala implements IService {
 
         final IRoom room = writeRoom(roomDAO, infoSala, building);
 
-        return Cloner.copyRoom2InfoRoom(room);
+        return InfoRoom.newInfoFromDomain(room);
 
     }
 

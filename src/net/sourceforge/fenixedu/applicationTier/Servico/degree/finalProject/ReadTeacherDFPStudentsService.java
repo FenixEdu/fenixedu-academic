@@ -6,12 +6,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.degree.finalProject;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
+import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson;
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.TeacherDegreeFinalProjectStudentsDTO;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ITeacher;
@@ -35,46 +34,40 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ReadTeacherDFPStudentsService implements IService {
 
     public TeacherDegreeFinalProjectStudentsDTO run(InfoTeacher infoTeacher, Integer executionPeriodId)
-            throws FenixServiceException {
+            throws ExcepcaoPersistencia {
         TeacherDegreeFinalProjectStudentsDTO teacherDfpStudentsDTO = new TeacherDegreeFinalProjectStudentsDTO();
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
-            IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
+        IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
 
-            IExecutionPeriod executionPeriod = getExecutionPeriod(executionPeriodId, executionPeriodDAO);
+        IExecutionPeriod executionPeriod = getExecutionPeriod(executionPeriodId, executionPeriodDAO);
 
-            InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
+        InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
 
-            ITeacher teacher = (ITeacher) teacherDAO.readByOID(Teacher.class, infoTeacher
-                    .getIdInternal());
-            InfoTeacher infoTeacher2 = Cloner.copyITeacher2InfoTeacher(teacher);
+        ITeacher teacher = (ITeacher) teacherDAO.readByOID(Teacher.class, infoTeacher.getIdInternal());
+        InfoTeacher infoTeacher2 = InfoTeacher.newInfoFromDomain(teacher);
 
-            IPersistentTeacherDegreeFinalProjectStudent teacherDfpStudentDAO = sp
-                    .getIPersistentTeacherDegreeFinalProjectStudent();
+        IPersistentTeacherDegreeFinalProjectStudent teacherDfpStudentDAO = sp
+                .getIPersistentTeacherDegreeFinalProjectStudent();
 
-            List teacherDFPStudentList = teacherDfpStudentDAO.readByTeacherAndExecutionPeriod(
-                    teacher.getIdInternal(),
-                    executionPeriod.getIdInternal());
+        List teacherDFPStudentList = teacherDfpStudentDAO.readByTeacherAndExecutionPeriod(teacher
+                .getIdInternal(), executionPeriod.getIdInternal());
 
-            List infoteacherDFPStudentList = (List) CollectionUtils.collect(teacherDFPStudentList,
-                    new Transformer() {
+        List infoteacherDFPStudentList = (List) CollectionUtils.collect(teacherDFPStudentList,
+                new Transformer() {
 
-                        public Object transform(Object input) {
-                            ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (ITeacherDegreeFinalProjectStudent) input;
-                            InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = Cloner
-                                    .copyITeacherDegreeFinalProjectStudent2InfoTeacherDegreeFinalProjectStudent(teacherDegreeFinalProjectStudent);
-                            return infoTeacherDegreeFinalProjectStudent;
-                        }
-                    });
+                    public Object transform(Object input) {
+                        ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (ITeacherDegreeFinalProjectStudent) input;
+                        InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson.newInfoFromDomain(
+                                teacherDegreeFinalProjectStudent);
+                        return infoTeacherDegreeFinalProjectStudent;
+                    }
+                });
 
-            teacherDfpStudentsDTO.setInfoTeacher(infoTeacher2);
-            teacherDfpStudentsDTO.setInfoExecutionPeriod(infoExecutionPeriod);
-            teacherDfpStudentsDTO.setInfoTeacherDegreeFinalProjectStudentList(infoteacherDFPStudentList);
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException("Problems on database!");
-        }
+        teacherDfpStudentsDTO.setInfoTeacher(infoTeacher2);
+        teacherDfpStudentsDTO.setInfoExecutionPeriod(infoExecutionPeriod);
+        teacherDfpStudentsDTO.setInfoTeacherDegreeFinalProjectStudentList(infoteacherDFPStudentList);
 
         return teacherDfpStudentsDTO;
 
@@ -83,8 +76,8 @@ public class ReadTeacherDFPStudentsService implements IService {
     /**
      * @param infoExecutionPeriodParam
      * @param executionPeriodDAO
-     * @return @throws
-     *         ExcepcaoPersistencia
+     * @return
+     * @throws ExcepcaoPersistencia
      */
     private IExecutionPeriod getExecutionPeriod(Integer executionPeriodId,
             IPersistentExecutionPeriod executionPeriodDAO) throws ExcepcaoPersistencia {

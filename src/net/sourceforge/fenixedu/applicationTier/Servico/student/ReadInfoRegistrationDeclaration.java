@@ -32,22 +32,15 @@ public class ReadInfoRegistrationDeclaration implements IService {
 
     public InfoRegistrationDeclaration run(Integer studentNumber, DegreeType degreeType)
             throws FenixServiceException, ExcepcaoPersistencia {
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 
-        ISuportePersistente sp = null;
-        IPersistentStudent persistentStudent = null;
-        IStudent student = null;
-
-        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        persistentStudent = sp.getIPersistentStudent();
-        student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber, degreeType);
-
+        IStudent student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber, degreeType);
         if (student == null) {
             throw new NonExistingStudentServiceException();
         }
 
         IStudentCurricularPlan scp = student.getActiveStudentCurricularPlan();
-
         if (scp == null) {
             throw new NonExistingActiveSCPServiceException();
         }

@@ -48,7 +48,7 @@ public class ChangeDegreeDA extends FenixDispatchAction {
         ENROLEMENT_COMPARATOR.addComparator(new BeanComparator("infoCurricularCourse.name"));
     }
 
-    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+    private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {

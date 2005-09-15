@@ -54,7 +54,7 @@ public abstract class ReadDomainObjectService implements IService {
             throws ExcepcaoPersistencia;
 
     /**
-     * This method invokes the Cloner to convert from IDomainObject to
+     * This method invokes the cloneing to convert from IDomainObject to
      * InfoObject
      * 
      * @param infoObject

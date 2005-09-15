@@ -84,8 +84,7 @@ public class ReadExamsMapByRooms implements IService {
     private Transformer TRANSFORM_EXAM_TO_INFOEXAM = new Transformer() {
         public Object transform(Object exam) {
             InfoExam infoExam = Cloner.copyIExam2InfoExam((IExam) exam);
-            infoExam.setInfoExecutionCourse((InfoExecutionCourse) Cloner
-                    .get(((IExam) exam).getAssociatedExecutionCourses().get(0)));
+            infoExam.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(((IExam) exam).getAssociatedExecutionCourses().get(0)));
             return infoExam;
         }
     };

@@ -53,7 +53,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSummaryWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
 import net.sourceforge.fenixedu.dataTransferObject.util.CMSUtils;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IAnnouncement;
 import net.sourceforge.fenixedu.domain.IBibliographicReference;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;

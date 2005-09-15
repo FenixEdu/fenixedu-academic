@@ -1,43 +1,37 @@
-/*
- * Created on 2004/11/17
- *  
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement;
 
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.utils.ExecutionCourseUtils;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.IExportGrouping;
+import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * 
- * @author Luis Cruz
- * 
- */
 public class SeperateExecutionCourse implements IService {
 
     public void run(final Integer originExecutionCourseOid, final Integer destinationExecutionCourseId,
@@ -47,106 +41,100 @@ public class SeperateExecutionCourse implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentObject persistentObject = sp.getIPersistentObject();
 
-        final IExecutionCourse originExecutionCourse = (IExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, originExecutionCourseOid);
-        IExecutionCourse destinationExecutionCourse = (IExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, destinationExecutionCourseId);
+        final IExecutionCourse originExecutionCourse = (IExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, originExecutionCourseOid);
+        IExecutionCourse destinationExecutionCourse = (IExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, destinationExecutionCourseId);
         if (destinationExecutionCourse == null) {
-            destinationExecutionCourse = createNewExecutionCourse(persistentObject,
-                    originExecutionCourse);
-            createNewSite(destinationExecutionCourse);
+            destinationExecutionCourse = createNewExecutionCourse(persistentObject, originExecutionCourse);
+            destinationExecutionCourse.createSite();
             ExecutionCourseUtils.copyBibliographicReference(originExecutionCourse, destinationExecutionCourse);
             ExecutionCourseUtils.copyEvaluationMethod(originExecutionCourse, destinationExecutionCourse);           
         }
 
-        final Collection curricularCoursesToTransfer = getCurricularCoursesToTransfer(
-                curricularCourseIdsToTransfer, originExecutionCourse.getAssociatedCurricularCourses());
+        transferCurricularCourses(originExecutionCourse, destinationExecutionCourse, curricularCourseIdsToTransfer);
 
-        persistentObject.simpleLockWrite(originExecutionCourse);
-        persistentObject.simpleLockWrite(destinationExecutionCourse);
+        transferAttends(originExecutionCourse, destinationExecutionCourse);
 
-        final Collection transferedStudents = transferAttends(persistentObject,
-                curricularCourseIdsToTransfer, originExecutionCourse.getAttends(),
-                destinationExecutionCourse);
+        transferShifts(originExecutionCourse, destinationExecutionCourse, shiftIdsToTransfer);
 
-        transferShifts(persistentObject, sp, getShifts(sp, originExecutionCourse), shiftIdsToTransfer,
-                transferedStudents, destinationExecutionCourse);
+        fixStudentShiftEnrolements(originExecutionCourse);
+        fixStudentShiftEnrolements(destinationExecutionCourse);
 
-        originExecutionCourse.getAssociatedCurricularCourses().removeAll(curricularCoursesToTransfer);
-        destinationExecutionCourse.getAssociatedCurricularCourses().addAll(curricularCoursesToTransfer);
+        associateGroupings(originExecutionCourse, destinationExecutionCourse);
     }
 
-    private void createNewSite(IExecutionCourse destinationExecutionCourse) throws ExcepcaoPersistencia {        
-        destinationExecutionCourse.createSite();
+    private void transferCurricularCourses(final IExecutionCourse originExecutionCourse, final IExecutionCourse destinationExecutionCourse, 
+            final Integer[] curricularCourseIdsToTransfer) {
+        for (final Integer curricularCourseID : curricularCourseIdsToTransfer) {
+            final ICurricularCourse curricularCourse = (ICurricularCourse) findDomainObjectByID(
+                    originExecutionCourse.getAssociatedCurricularCourses(), curricularCourseID);
+            destinationExecutionCourse.addAssociatedCurricularCourses(curricularCourse);
+            originExecutionCourse.removeAssociatedCurricularCourses(curricularCourse);
+        }
+    }
+
+    private void transferAttends(final IExecutionCourse originExecutionCourse, final IExecutionCourse destinationExecutionCourse) {
+        final List<ICurricularCourse> curricularCourses = destinationExecutionCourse.getAssociatedCurricularCourses();
+        for (int i = 0; i < originExecutionCourse.getAttends().size(); i++) {
+            final IAttends attends = originExecutionCourse.getAttends().get(i);
+            final IEnrolment enrolment = attends.getEnrolment();
+            if (enrolment != null && curricularCourses.contains(enrolment.getCurricularCourse())) {
+                attends.setDisciplinaExecucao(destinationExecutionCourse);
+                i--;
+            }
+        }
+    }
+
+    private void transferShifts(final IExecutionCourse originExecutionCourse, final IExecutionCourse destinationExecutionCourse, 
+            final Integer[] shiftIdsToTransfer) {
+        for (final Integer shiftId : shiftIdsToTransfer) {
+            final IShift shift = (IShift) findDomainObjectByID(originExecutionCourse.getAssociatedShifts(), shiftId);
+            shift.setDisciplinaExecucao(destinationExecutionCourse);
+        }
+    }
+
+    private IDomainObject findDomainObjectByID(final List domainObjects, final Integer id) {
+        for (final IDomainObject domainObject : (List<IDomainObject>) domainObjects) {
+            if (domainObject.getIdInternal().equals(id)) {
+                return domainObject;
+            }
+        }
+        return null;
+    }
+
+    private void fixStudentShiftEnrolements(final IExecutionCourse executionCourse) {
+        for (final IShift shift : executionCourse.getAssociatedShifts()) {
+            for (int i = 0; i < shift.getStudents().size(); i++) {
+                final IStudent student = shift.getStudents().get(i);
+                if (!student.attends(executionCourse)) {
+                    shift.removeStudents(student);
+                }
+            }
+        }
+    }
+
+    private void associateGroupings(final IExecutionCourse originExecutionCourse, final IExecutionCourse destinationExecutionCourse) {
+        for (final IGrouping grouping : originExecutionCourse.getGroupings()) {
+            for (final IStudentGroup studentGroup : grouping.getStudentGroups()) {
+                studentGroup.getAttends().clear();
+                studentGroup.delete();
+            }
+            grouping.delete();
+        }
+    }
+
+    private boolean contains(final IExecutionCourse executionCourse, final IGrouping grouping) {
+        for (final IExportGrouping exportGrouping : executionCourse.getExportGroupings()) {
+            if (exportGrouping.getGrouping() == grouping) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private List getShifts(final ISuportePersistente sp, final IExecutionCourse originExecutionCourse)
             throws ExcepcaoPersistencia {
         final ITurnoPersistente persistentShift = sp.getITurnoPersistente();
         return persistentShift.readByExecutionCourse(originExecutionCourse.getIdInternal());
-    }
-
-    private void transferShifts(final IPersistentObject persistentObject, final ISuportePersistente sp,
-            final List shifts, final Integer[] shiftIdsToTransfer, final Collection transferedStudents,
-            final IExecutionCourse destinationExecutionCourse) throws ExcepcaoPersistencia {
-        
-        for (Iterator iterator = shifts.iterator(); iterator.hasNext();) {
-            IShift shift = (IShift) iterator.next();
-            if (contains(shiftIdsToTransfer, shift.getIdInternal())) {
-                persistentObject.simpleLockWrite(shift);
-                shift.setDisciplinaExecucao(destinationExecutionCourse);
-
-                // This is very ugly code to find in a service. It should not
-                // be necessary. The above lock and set should take care of
-                // everything. However, the first shift doesn't get
-                // transfered...
-                // and I don't know why. This is the workaround we found unit
-                // the mystory can be resolved.
-                try {
-                    ((SuportePersistenteOJB) sp).currentBroker().store(shift);
-                } catch (Exception ex) {
-                    throw new ExcepcaoPersistencia("Failed to store shift", ex);
-                }
-            }
-            List<IStudent> students = shift.getStudents();
-            Iterator<IStudent> iter = students.iterator();
-            while(iter.hasNext()){
-                IStudent student = iter.next();
-                if (transferedStudents.contains(student.getIdInternal())) {
-                    iter.remove();
-                }
-            }
-       	}
-    }
-
-    private Collection transferAttends(final IPersistentObject persistentObject,
-            final Integer[] curricularCourseIdsToTransfer, Collection attends,
-            final IExecutionCourse destinationExecutionCourse) throws ExcepcaoPersistencia {
-
-        final Set transferedStudents = new HashSet();
-
-        for (IAttends attend : (List<IAttends>) attends) {
-            if (attend.getEnrolment() != null
-                    && contains(curricularCourseIdsToTransfer, attend.getEnrolment()
-                            .getCurricularCourse().getIdInternal())) {
-                persistentObject.simpleLockWrite(attend);
-                attend.setDisciplinaExecucao(destinationExecutionCourse);
-
-                transferedStudents.add(attend.getAluno().getIdInternal());
-            }
-        }
-
-        return transferedStudents;
-    }
-
-    private Collection getCurricularCoursesToTransfer(final Integer[] curricularCourseIdsToTransfer,
-            final Collection curricularCourses) {
-        return CollectionUtils.select(curricularCourses, new Predicate() {
-            public boolean evaluate(Object arg0) {
-                ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
-                return contains(curricularCourseIdsToTransfer, curricularCourse.getIdInternal());
-            }
-        });
     }
 
     private IExecutionCourse createNewExecutionCourse(IPersistentObject persistentObject,
@@ -157,6 +145,7 @@ public class SeperateExecutionCourse implements IService {
         destinationExecutionCourse.setLabHours(originExecutionCourse.getLabHours());
         destinationExecutionCourse.setNome(originExecutionCourse.getNome());
         destinationExecutionCourse.setPraticalHours(originExecutionCourse.getPraticalHours());
+        destinationExecutionCourse.setSigla(originExecutionCourse.getSigla() + System.currentTimeMillis());
 
         for (int i = 0; i < originExecutionCourse.getProfessorships().size(); i++) {
             IProfessorship professorship = originExecutionCourse.getProfessorships().get(i);

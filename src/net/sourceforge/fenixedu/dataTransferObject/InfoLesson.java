@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSupportLesson;
 import net.sourceforge.fenixedu.domain.ILesson;
+import net.sourceforge.fenixedu.domain.ISupportLesson;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
@@ -291,6 +293,21 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
 
     public int compareTo(InfoLesson arg0) {
         return INFO_LESSON_COMPARATOR_CHAIN.compare(this, arg0);
+    }
+
+    public static InfoSupportLesson newInfoFromDomain(ISupportLesson supportLesson) {
+        InfoSupportLesson infoSupportLesson = new InfoSupportLesson();
+        InfoProfessorship infoProfessorship = InfoProfessorship.newInfoFromDomain(supportLesson.getProfessorship());
+
+        infoSupportLesson.setEndTime(supportLesson.getEndTime());
+        infoSupportLesson.setIdInternal(supportLesson.getIdInternal());
+        infoSupportLesson.setPlace(supportLesson.getPlace());
+        infoSupportLesson.setStartTime(supportLesson.getStartTime());
+        infoSupportLesson.setWeekDay(supportLesson.getWeekDay());
+
+        infoSupportLesson.setInfoProfessorship(infoProfessorship);
+
+        return infoSupportLesson;
     }
 
 }

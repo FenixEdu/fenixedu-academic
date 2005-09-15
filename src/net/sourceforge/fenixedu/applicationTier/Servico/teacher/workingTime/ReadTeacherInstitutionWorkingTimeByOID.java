@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.workingTime;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.ReadDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InfoTeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.teacher.workTime.ITeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime;
@@ -27,8 +27,7 @@ public class ReadTeacherInstitutionWorkingTimeByOID extends ReadDomainObjectServ
     }
 
     protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
-        return Cloner
-                .copyITeacherInstitutionWorkingTime2InfoTeacherInstitutionWorkTime((ITeacherInstitutionWorkTime) domainObject);
+        return InfoTeacherInstitutionWorkTime.newInfoFromDomain((ITeacherInstitutionWorkTime) domainObject);
     }
 
 }

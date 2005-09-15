@@ -13,14 +13,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 import java.util.ArrayList;
 import java.util.List;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
-
-import net.sourceforge.fenixedu.applicationTier.IServico;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewExamByDayAndShift;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
-import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IEvaluation;
@@ -30,6 +27,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.Season;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod implements IService {
 
@@ -57,7 +55,7 @@ public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod imple
             for (int i = 0; i < associatedExams.size(); i++) {
                 IExam exam = associatedExams.get(i);
                 if (exam.getSeason().equals(season)) {
-                    infoViewExamByDayAndShift.setInfoExam(Cloner.copyIExam2InfoExam(exam));
+                    infoViewExamByDayAndShift.setInfoExam(InfoExam.newInfoFromDomain(exam));
 
                     List infoExecutionCourses = new ArrayList();
                     List infoDegrees = new ArrayList();
@@ -72,7 +70,7 @@ public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod imple
                         for (int k = 0; k < tempAssociatedCurricularCourses.size(); k++) {
                             IDegree tempDegree = ((ICurricularCourse) tempAssociatedCurricularCourses
                                     .get(k)).getDegreeCurricularPlan().getDegree();
-                            infoDegrees.add(Cloner.copyIDegree2InfoDegree(tempDegree));
+                            infoDegrees.add(InfoDegree.newInfoFromDomain(tempDegree));
                         }
                     }
                     infoViewExamByDayAndShift.setInfoExecutionCourses(infoExecutionCourses);

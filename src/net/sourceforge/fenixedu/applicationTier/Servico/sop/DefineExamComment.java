@@ -55,10 +55,6 @@ public class DefineExamComment implements IServico {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
-//            IExecutionPeriod executionPeriod = Cloner
-//                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionCourse
-//                            .getInfoExecutionPeriod());
-
             IExecutionCourse executionCourse = executionCourseDAO
                     .readByExecutionCourseInitialsAndExecutionPeriodId(infoExecutionCourse.getSigla(),
                             infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());

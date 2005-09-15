@@ -37,13 +37,9 @@ public class LerTurmas implements IService {
 
         ITurmaPersistente classDAO = sp.getITurmaPersistente();
 
-        // IExecutionPeriod executionPeriod = Cloner
-        // .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
         IExecutionPeriod executionPeriod = (IExecutionPeriod) sp.getIPersistentExecutionPeriod()
                 .readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
 
-        // IExecutionDegree executionDegree = Cloner
-        // .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
         IExecutionDegree executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree()
                 .readByOID(ExecutionDegree.class, infoExecutionDegree.getIdInternal());
 

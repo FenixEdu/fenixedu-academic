@@ -5,8 +5,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -49,8 +49,7 @@ public class ReadNotClosedPublicExecutionPeriodsByExecutionYear implements IServ
 
                 public Object transform(Object input) {
                     IExecutionPeriod executionPeriod = (IExecutionPeriod) input;
-                    InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner
-                            .get(executionPeriod);
+                    InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionPeriod);
                     return infoExecutionPeriod;
                 }
             });

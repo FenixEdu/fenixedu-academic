@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
@@ -26,7 +27,7 @@ public class ReadExecutionPeriodsByExecutionYear implements IService {
 
         final List<InfoExecutionPeriod> infoExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
         for (final IExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
-            infoExecutionPeriods.add(InfoExecutionPeriod.newInfoFromDomain(executionPeriod));
+            infoExecutionPeriods.add(InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionPeriod));
         }
         return infoExecutionPeriods;
     }

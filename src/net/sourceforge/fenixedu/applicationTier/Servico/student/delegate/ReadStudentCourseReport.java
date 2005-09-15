@@ -182,8 +182,7 @@ public class ReadStudentCourseReport implements IService {
             IExecutionPeriod executionPeriod = (IExecutionPeriod) iter.next();
 
             InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
-            infoSiteEvaluationStatistics.setInfoExecutionPeriod((InfoExecutionPeriod) Cloner
-                    .get(executionPeriod));
+            infoSiteEvaluationStatistics.setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(executionPeriod));
             List enrolled = getEnrolled(executionPeriod, curricularCourse, sp);
             infoSiteEvaluationStatistics.setEnrolled(new Integer(enrolled.size()));
             infoSiteEvaluationStatistics.setEvaluated(getEvaluated(enrolled));

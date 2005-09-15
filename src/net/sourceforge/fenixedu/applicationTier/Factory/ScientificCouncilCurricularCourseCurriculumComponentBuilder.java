@@ -7,9 +7,9 @@ package net.sourceforge.fenixedu.applicationTier.Factory;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCurriculum;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurriculum;
@@ -64,11 +64,10 @@ public class ScientificCouncilCurricularCourseCurriculumComponentBuilder {
             ICurriculum curriculum = persistentCurriculum
                     .readCurriculumByCurricularCourse(curricularCourse.getIdInternal());
             if (curriculum != null) {
-                InfoCurriculum infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
+                InfoCurriculum infoCurriculum = InfoCurriculum.newInfoFromDomain(curriculum);
                 component.setInfoCurriculum(infoCurriculum);
             }
-            component.setInfoCurricularCourse(Cloner
-                    .copyCurricularCourse2InfoCurricularCourse(curricularCourse));
+            component.setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }

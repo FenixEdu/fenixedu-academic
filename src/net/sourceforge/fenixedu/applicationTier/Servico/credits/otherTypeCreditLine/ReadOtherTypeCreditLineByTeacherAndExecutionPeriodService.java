@@ -8,6 +8,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPersonAndCategory;
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoOtherTypeCreditLine;
 import net.sourceforge.fenixedu.dataTransferObject.credits.TeacherOtherTypeCreditLineDTO;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
@@ -86,16 +88,14 @@ public class ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService implement
 
                 public Object transform(Object input) {
                     IOtherTypeCreditLine otherTypeCreditLine = (IOtherTypeCreditLine) input;
-                    InfoOtherTypeCreditLine infoOtherTypeCreditLine = Cloner
-                            .copyIOtherTypeCreditLine2InfoOtherCreditLine(otherTypeCreditLine);
+                    InfoOtherTypeCreditLine infoOtherTypeCreditLine = InfoOtherTypeCreditLine.newInfoFromDomain(otherTypeCreditLine);
                     return infoOtherTypeCreditLine;
                 }
             });
 
             teacherOtherTypeCreditLineDTO.setCreditLines(infoOtherTypesList);
-            teacherOtherTypeCreditLineDTO.setInfoExecutionPeriod((InfoExecutionPeriod) Cloner
-                    .get(executionPeriod));
-            teacherOtherTypeCreditLineDTO.setInfoTeacher(Cloner.copyITeacher2InfoTeacher(teacher));
+            teacherOtherTypeCreditLineDTO.setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(executionPeriod));
+            teacherOtherTypeCreditLineDTO.setInfoTeacher(InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher));
             return teacherOtherTypeCreditLineDTO;
         } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();

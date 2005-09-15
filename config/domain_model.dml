@@ -2418,6 +2418,7 @@ class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.d
 
 	interface "
     public IStudentCurricularPlan getActiveStudentCurricularPlan();
+    public boolean attends(IExecutionCourse executionCourse);
 	"
 }
 

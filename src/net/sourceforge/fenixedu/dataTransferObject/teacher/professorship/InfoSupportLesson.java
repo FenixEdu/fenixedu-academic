@@ -4,6 +4,8 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
+import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithInfoExecutionCourse;
+import net.sourceforge.fenixedu.domain.ISupportLesson;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
 /**
@@ -119,4 +121,20 @@ public class InfoSupportLesson extends InfoObject {
     public void setInfoProfessorship(InfoProfessorship infoProfessorship) {
         this.infoProfessorship = infoProfessorship;
     }
+
+    public static InfoSupportLesson newInfoFromDomain(ISupportLesson supportLesson) {
+        InfoSupportLesson infoSupportLesson = new InfoSupportLesson();
+        InfoProfessorship infoProfessorship = InfoProfessorshipWithInfoExecutionCourse.newInfoFromDomain(supportLesson.getProfessorship());
+
+        infoSupportLesson.setEndTime(supportLesson.getEndTime());
+        infoSupportLesson.setIdInternal(supportLesson.getIdInternal());
+        infoSupportLesson.setPlace(supportLesson.getPlace());
+        infoSupportLesson.setStartTime(supportLesson.getStartTime());
+        infoSupportLesson.setWeekDay(supportLesson.getWeekDay());
+
+        infoSupportLesson.setInfoProfessorship(infoProfessorship);
+
+        return infoSupportLesson;
+    }
+
 }

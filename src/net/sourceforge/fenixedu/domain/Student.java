@@ -69,4 +69,13 @@ public class Student extends Student_Base {
         return studentCurricularPlan;
     }
 
+    public boolean attends(final IExecutionCourse executionCourse) {
+        for (final IAttends attends : getAssociatedAttends()) {
+            if (attends.getDisciplinaExecucao() == executionCourse) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

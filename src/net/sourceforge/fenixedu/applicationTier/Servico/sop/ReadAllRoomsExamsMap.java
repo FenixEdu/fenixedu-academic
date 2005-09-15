@@ -17,6 +17,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExam;
@@ -66,7 +67,7 @@ public class ReadAllRoomsExamsMap implements IService {
             InfoRoomExamsMap infoExamsMap = new InfoRoomExamsMap();
 
             // Set Exam Season info
-            infoExamsMap.setInfoRoom(Cloner.copyRoom2InfoRoom(room));
+            infoExamsMap.setInfoRoom(InfoRoom.newInfoFromDomain(room));
             infoExamsMap.setStartSeason1(startSeason1);
             infoExamsMap.setEndSeason1(null);
             infoExamsMap.setStartSeason2(null);
@@ -85,8 +86,7 @@ public class ReadAllRoomsExamsMap implements IService {
     private Transformer TRANSFORM_EXAM_TO_INFOEXAM = new Transformer() {
         public Object transform(Object exam) {
             InfoExam infoExam = Cloner.copyIExam2InfoExam((IExam) exam);
-            infoExam.setInfoExecutionCourse((InfoExecutionCourse) Cloner
-                    .get(((IExam) exam).getAssociatedExecutionCourses().get(0)));
+            infoExam.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(((IExam) exam).getAssociatedExecutionCourses().get(0)));
             return infoExam;
         }
     };

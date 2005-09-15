@@ -10,7 +10,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.SearchService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -23,7 +23,7 @@ public class FindTeachersService extends SearchService {
 
     @Override
     protected InfoObject newInfoFromDomain(IDomainObject object) {
-        return Cloner.copyITeacher2InfoTeacher((ITeacher) object);
+        return InfoTeacher.newInfoFromDomain((ITeacher) object);
     }
 
     @Override

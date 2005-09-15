@@ -5,7 +5,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IStudent;
@@ -65,8 +64,7 @@ public class ReadDisciplinesByStudent implements IServico {
             if (disciplines != null)
                 for (int i = 0; i < disciplines.size(); i++) {
                     IExecutionCourse executionCourse = (IExecutionCourse) disciplines.get(i);
-                    InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner
-                            .get(executionCourse);
+                    InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
                     courses.add(infoExecutionCourse);
                 }
 

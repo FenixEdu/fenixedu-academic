@@ -9,8 +9,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithInfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
@@ -25,7 +27,6 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftProf
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.DetailedProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSupportLesson;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InfoTeacherInstitutionWorkTime;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
@@ -145,8 +146,7 @@ public class ReadTeacherCreditsSheet implements IService {
         for (int i = 0; i < supportLessonList.size(); i++) {
             ISupportLesson supportLesson = (ISupportLesson) supportLessonList.get(i);
 
-            InfoSupportLesson infoSupportLesson = Cloner
-                    .copyISupportLesson2InfoSupportLesson(supportLesson);
+            InfoSupportLesson infoSupportLesson = InfoSupportLesson.newInfoFromDomain(supportLesson);
             infoSupportLessonList.add(infoSupportLesson);
         }
         return infoSupportLessonList;
@@ -167,8 +167,7 @@ public class ReadTeacherCreditsSheet implements IService {
             ITeacherInstitutionWorkTime item = (ITeacherInstitutionWorkTime) teacherInstitutionWorkingTimeList
                     .get(i);
             if (item.getExecutionPeriod().equals(executionPeriod)) {
-                InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = Cloner
-                        .copyITeacherInstitutionWorkingTime2InfoTeacherInstitutionWorkTime(item);
+                InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = InfoTeacherInstitutionWorkTime.newInfoFromDomain(item);
                 infoTeacherInstitutionWorkingTimeList.add(infoTeacherInstitutionWorkTime);
             }
         }
@@ -242,7 +241,7 @@ public class ReadTeacherCreditsSheet implements IService {
 
         List infoServiceExemptions = readServiceExcemptions(teacher, executionPeriod, sp);
 
-        InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+        InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
         InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionPeriod);
 
         teacherCreditsSheetDTO.setInfoTeacher(infoTeacher);
@@ -287,8 +286,7 @@ public class ReadTeacherCreditsSheet implements IService {
 
                     public Object transform(Object input) {
                         IServiceExemptionCreditLine serviceExemptionCreditLine = (IServiceExemptionCreditLine) input;
-                        InfoServiceExemptionCreditLine infoServiceExemptionCreditLine = Cloner
-                                .copyIServiceExemptionCreditLine2InfoServiceExemptionCreditLine(serviceExemptionCreditLine);
+                        InfoServiceExemptionCreditLine infoServiceExemptionCreditLine = InfoServiceExemptionCreditLine.newInfoFromDomain(serviceExemptionCreditLine);
                         return infoServiceExemptionCreditLine;
                     }
                 });
@@ -309,8 +307,7 @@ public class ReadTeacherCreditsSheet implements IService {
 
                     public Object transform(Object input) {
                         IManagementPositionCreditLine managementPositionCreditLine = (IManagementPositionCreditLine) input;
-                        InfoManagementPositionCreditLine infoManagementPositionCreditLine = Cloner
-                                .copyIManagementPositionCreditLine2InfoManagementPositionCreditLine(managementPositionCreditLine);
+                        InfoManagementPositionCreditLine infoManagementPositionCreditLine = InfoManagementPositionCreditLine.newInfoFromDomain(managementPositionCreditLine);
                         return infoManagementPositionCreditLine;
                     }
                 });
@@ -325,8 +322,7 @@ public class ReadTeacherCreditsSheet implements IService {
         for (int i = 0; i < otherCreditLines.size(); i++) {
             IOtherTypeCreditLine otherTypeCreditLine = (IOtherTypeCreditLine) otherCreditLines.get(i);
             if (otherTypeCreditLine.getExecutionPeriod().equals(executionPeriod)) {
-                InfoOtherTypeCreditLine infoOtherTypeCreditLine = Cloner
-                        .copyIOtherTypeCreditLine2InfoOtherCreditLine(otherTypeCreditLine);
+                InfoOtherTypeCreditLine infoOtherTypeCreditLine = InfoOtherTypeCreditLine.newInfoFromDomain(otherTypeCreditLine);
                 infoOtherCreditLines.add(infoOtherTypeCreditLine);
             }
         }
@@ -374,8 +370,7 @@ public class ReadTeacherCreditsSheet implements IService {
 
                             public Object transform(Object input) {
                                 ICurricularCourse curricularCourse = (ICurricularCourse) input;
-                                InfoCurricularCourse infoCurricularCourse = Cloner
-                                        .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                                InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse);
                                 if (curricularCourse.getDegreeCurricularPlan().getDegree()
                                         .getTipoCurso().equals(DegreeType.DEGREE)) {
                                     detailedProfessorship.setMasterDegreeOnly(Boolean.FALSE);

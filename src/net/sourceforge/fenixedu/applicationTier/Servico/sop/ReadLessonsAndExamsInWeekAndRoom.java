@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
@@ -130,7 +129,7 @@ public class ReadLessonsAndExamsInWeekAndRoom implements IService {
 
         while (iteratorExams.hasNext()) {
             IExam elem = (IExam) iteratorExams.next();
-            InfoExam infoExam = Cloner.copyIExam2InfoExam(elem);
+            InfoExam infoExam = InfoExam.newInfoFromDomain(elem);
 
             infoShowOccupations.add(infoExam);
         }

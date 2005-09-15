@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
@@ -50,7 +50,7 @@ public class ReadStudentsByStudentGroupID implements IService {
             IAttends attend = (IAttends) iter.next();
             Integer studentID = attend.getAluno().getIdInternal();
             IStudent student = (IStudent) persistentStudent.readByOID(Student.class, studentID);
-            infoStudents.add(Cloner.copyIStudent2InfoStudent(student));
+            infoStudents.add(InfoStudent.newInfoFromDomain(student));
         }
         return infoStudents;
     }

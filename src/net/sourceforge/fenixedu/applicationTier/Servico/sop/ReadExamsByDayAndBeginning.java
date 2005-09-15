@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewExam;
@@ -58,7 +59,7 @@ public class ReadExamsByDayAndBeginning implements IService {
         for (int i = 0; i < exams.size(); i++) {
             // prepare exam info
             tempExam = (IExam) exams.get(i);
-            tempInfoExam = Cloner.copyIExam2InfoExam(tempExam);
+            tempInfoExam = InfoExam.newInfoFromDomain(tempExam);
             tempInfoDegrees = new ArrayList();
             tempInfoExecutionCourses = new ArrayList();
             int totalNumberStudentsForExam = 0;
@@ -74,7 +75,7 @@ public class ReadExamsByDayAndBeginning implements IService {
                     for (int j = 0; j < tempAssociatedCurricularCourses.size(); j++) {
                         tempDegree = ((ICurricularCourse) tempAssociatedCurricularCourses.get(j))
                                 .getDegreeCurricularPlan().getDegree();
-                        tempInfoDegrees.add(Cloner.copyIDegree2InfoDegree(tempDegree));
+                        tempInfoDegrees.add(InfoDegree.newInfoFromDomain(tempDegree));
                     }
 
                     // determine number of students attending course and

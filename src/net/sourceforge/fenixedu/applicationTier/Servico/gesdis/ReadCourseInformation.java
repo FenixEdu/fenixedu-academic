@@ -593,7 +593,7 @@ public class ReadCourseInformation implements IService {
         while (iter.hasNext()) {
             ILesson lesson = (ILesson) iter.next();
 
-            InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(lesson);
+            InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
             IShift shift = lesson.getShift();
             InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
             infoLesson.setInfoShift(infoShift);

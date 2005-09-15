@@ -158,7 +158,7 @@ public class RoomSiteComponentBuilder {
 
             while (iteratorExams.hasNext()) {
                 IExam elem = (IExam) iteratorExams.next();
-                InfoExam infoExam = Cloner.copyIExam2InfoExam(elem);
+                InfoExam infoExam = InfoExam.newInfoFromDomain(elem);
 
                 infoShowOccupations.add(infoExam);
             }
@@ -169,7 +169,7 @@ public class RoomSiteComponentBuilder {
         }
 
         component.setInfoShowOccupation(infoShowOccupations);
-        component.setInfoRoom(Cloner.copyRoom2InfoRoom(room));
+        component.setInfoRoom(InfoRoom.newInfoFromDomain(room));
 
         return component;
     }

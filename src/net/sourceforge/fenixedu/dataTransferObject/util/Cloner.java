@@ -359,8 +359,7 @@ public abstract class Cloner {
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = Cloner
                 .copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(executionDegree
                         .getDegreeCurricularPlan());
-        InfoExecutionYear infoExecutionYear = (InfoExecutionYear) Cloner.get(executionDegree
-                .getExecutionYear());
+        InfoExecutionYear infoExecutionYear = InfoExecutionYear.newInfoFromDomain(executionDegree.getExecutionYear());
         try {
             BeanUtils.copyProperties(infoExecutionDegree, executionDegree);
         } catch (Exception e) {
@@ -499,8 +498,7 @@ public abstract class Cloner {
 
         InfoMasterDegreeCandidate infoMasterDegreeCandidate = new InfoMasterDegreeCandidate();
 
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner.get(masterDegreeCandidate
-                .getExecutionDegree());
+        InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(masterDegreeCandidate.getExecutionDegree());
         infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
 
         InfoPerson infoPerson = Cloner.copyIPerson2InfoPerson(masterDegreeCandidate.getPerson());
@@ -558,8 +556,7 @@ public abstract class Cloner {
     public static InfoSite copyISite2InfoSite(ISite site) {
         InfoSite infoSite = new InfoSite();
 
-        InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner.get(site
-                .getExecutionCourse());
+        InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(site.getExecutionCourse());
 
         copyObjectProperties(infoSite, site);
         infoSite.setInfoExecutionCourse(infoExecutionCourse);
@@ -1004,7 +1001,7 @@ public abstract class Cloner {
 
         InfoProfessorship infoProfessorShip = Cloner
                 .copyIProfessorship2InfoProfessorship(teacherShiftPercentage.getProfessorship());
-        InfoShift infoShift = (InfoShift) Cloner.get(teacherShiftPercentage.getShift());
+        InfoShift infoShift = InfoShift.newInfoFromDomain(teacherShiftPercentage.getShift());
 
         copyObjectProperties(infoTeacherShiftPercentage, teacherShiftPercentage);
 
@@ -1019,8 +1016,7 @@ public abstract class Cloner {
 
         InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(professorship.getTeacher());
 
-        InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner.get(professorship
-                .getExecutionCourse());
+        InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(professorship.getExecutionCourse());
 
         copyObjectProperties(infoProfessorShip, professorship);
 
@@ -1044,8 +1040,7 @@ public abstract class Cloner {
         InfoStudent infoStudent = new InfoStudent();
         infoStudent = Cloner.copyIStudent2InfoStudent(frequenta.getAluno());
 
-        InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
-        infoExecutionCourse = (InfoExecutionCourse) Cloner.get(frequenta.getDisciplinaExecucao());
+        InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(frequenta.getDisciplinaExecucao());
 
         InfoEnrolment infoEnrolment = null;
         if (frequenta.getEnrolment() != null) {
@@ -1409,10 +1404,13 @@ public abstract class Cloner {
      */
     public static InfoSupportLesson copyISupportLesson2InfoSupportLesson(ISupportLesson supportLesson) {
         InfoSupportLesson infoSupportLesson = new InfoSupportLesson();
-        InfoProfessorship infoProfessorship = Cloner.copyIProfessorship2InfoProfessorship(supportLesson
-                .getProfessorship());
+        InfoProfessorship infoProfessorship = InfoProfessorship.newInfoFromDomain(supportLesson.getProfessorship());
 
-        copyObjectProperties(infoSupportLesson, supportLesson);
+        infoSupportLesson.setEndTime(supportLesson.getEndTime());
+        infoSupportLesson.setIdInternal(supportLesson.getIdInternal());
+        infoSupportLesson.setPlace(supportLesson.getPlace());
+        infoSupportLesson.setStartTime(supportLesson.getStartTime());
+        infoSupportLesson.setWeekDay(supportLesson.getWeekDay());
 
         infoSupportLesson.setInfoProfessorship(infoProfessorship);
 
@@ -1482,7 +1480,7 @@ public abstract class Cloner {
 
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner.get(gratuityValues
                 .getExecutionDegree());
-        InfoEmployee infoEmployee = Cloner.copyIEmployee2InfoEmployee(gratuityValues.getEmployee());
+        InfoEmployee infoEmployee = InfoEmployee.newInfoFromDomain(gratuityValues.getEmployee());
 
         infoGratuityValues.setInfoExecutionDegree(infoExecutionDegree);
         infoGratuityValues.setInfoEmployee(infoEmployee);

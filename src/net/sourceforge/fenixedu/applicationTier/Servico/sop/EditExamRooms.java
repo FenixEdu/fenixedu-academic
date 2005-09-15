@@ -6,7 +6,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.Room;
@@ -59,7 +58,7 @@ public class EditExamRooms implements IService {
                 }
             });
 
-            return Cloner.copyIExam2InfoExam(exam);
+            return InfoExam.newInfoFromDomain(exam);
 
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);

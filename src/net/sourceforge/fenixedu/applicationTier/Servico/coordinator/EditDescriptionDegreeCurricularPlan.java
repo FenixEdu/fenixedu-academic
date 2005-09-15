@@ -4,7 +4,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -41,8 +40,7 @@ public class EditDescriptionDegreeCurricularPlan implements IService {
             degreeCP.setDescription(newInfoDegreeCP.getDescription());
             degreeCP.setDescriptionEn(newInfoDegreeCP.getDescriptionEn());
 
-            infoDegreeCurricularPlan = Cloner
-                    .copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(degreeCP);
+            infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCP);
         } catch (ExistingPersistentException ex) {
             throw new ExistingServiceException(ex);
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
@@ -74,8 +72,7 @@ public class EditDescriptionDegreeCurricularPlan implements IService {
             degreeCP.setDescription(newInfoDegreeCP.getDescription());
             degreeCP.setDescriptionEn(newInfoDegreeCP.getDescriptionEn());
 
-            infoDegreeCurricularPlan = Cloner
-                    .copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(degreeCP);
+            infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCP);
         } catch (ExistingPersistentException ex) {
             throw new ExistingServiceException(ex);
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
