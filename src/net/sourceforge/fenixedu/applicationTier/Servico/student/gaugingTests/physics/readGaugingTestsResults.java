@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student.gaugingTests.ph
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.gaugingTests.physics.InfoGaugingTestResult;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -55,8 +54,7 @@ public class readGaugingTestsResults implements IService {
             IGaugingTestResult gaugingTestsResult = persistentGaugingTestResult.readByStudent(student);
             if (gaugingTestsResult != null) {
 
-                InfoGaugingTestResult infoGaugingTestResult = Cloner
-                        .copyIGaugingTestResult2IngoGaugingTestResult(gaugingTestsResult);
+                InfoGaugingTestResult infoGaugingTestResult = InfoGaugingTestResult.newInfoFromDomain(gaugingTestsResult);
                 return infoGaugingTestResult;
             }
 

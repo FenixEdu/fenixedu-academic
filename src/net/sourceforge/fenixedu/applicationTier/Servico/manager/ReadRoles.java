@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -31,7 +31,7 @@ public class ReadRoles implements IService {
             result = (List) CollectionUtils.collect(sp.getIPersistentRole().readAll(),
                     new Transformer() {
                         public Object transform(Object arg0) {
-                            return Cloner.copyIRole2InfoRole((IRole) arg0);
+                            return InfoRole.newInfoFromDomain((IRole) arg0);
                         }
                     });
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {

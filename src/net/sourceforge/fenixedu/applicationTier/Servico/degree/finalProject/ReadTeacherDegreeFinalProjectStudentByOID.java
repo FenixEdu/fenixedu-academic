@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.degree.finalProject;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.ReadDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
@@ -35,8 +35,7 @@ public class ReadTeacherDegreeFinalProjectStudentByOID extends ReadDomainObjectS
     }
 
     protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
-        return Cloner
-                .copyITeacherDegreeFinalProjectStudent2InfoTeacherDegreeFinalProjectStudent((ITeacherDegreeFinalProjectStudent) domainObject);
+        return InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson.newInfoFromDomain((ITeacherDegreeFinalProjectStudent) domainObject);
     }
 
 }

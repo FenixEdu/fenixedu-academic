@@ -15,11 +15,11 @@ import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteBasicCurricularCourses;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCurricularCourses;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteDegreeCurricularPlans;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSCDegrees;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
@@ -186,8 +186,7 @@ public class ScientificCouncilComponentBuilder {
             List infoDegreeCurricularPlans = new ArrayList();
             while (iter.hasNext()) {
                 IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) iter.next();
-                InfoDegreeCurricularPlan infoDegreeCurricularPlan = Cloner
-                        .copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(degreeCurricularPlan);
+                InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(degreeCurricularPlan);
                 infoDegreeCurricularPlans.add(infoDegreeCurricularPlan);
             }
             component.setDegreeCurricularPlans(infoDegreeCurricularPlans);
@@ -214,7 +213,7 @@ public class ScientificCouncilComponentBuilder {
             List infoDegrees = new ArrayList();
             while (degreeIterator.hasNext()) {
                 IDegree degree = (IDegree) degreeIterator.next();
-                InfoDegree infoDegree = Cloner.copyIDegree2InfoDegree(degree);
+                InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
                 infoDegrees.add(infoDegree);
             }
 

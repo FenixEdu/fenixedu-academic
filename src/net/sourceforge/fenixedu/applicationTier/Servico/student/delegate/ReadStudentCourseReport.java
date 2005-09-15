@@ -11,11 +11,12 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteEvaluationStatistics;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoSiteStudentCourseReport;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoStudentCourseReport;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
@@ -67,8 +68,7 @@ public class ReadStudentCourseReport implements IService {
 
                         public Object transform(Object arg0) {
                             ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
-                            return Cloner
-                                    .copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
+                            return InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear.newInfoFromDomain(curricularCourseScope);
                         }
 
                     });
@@ -76,13 +76,11 @@ public class ReadStudentCourseReport implements IService {
             InfoStudentCourseReport infoStudentCourseReport = null;
             if (studentCourseReport == null) {
                 infoStudentCourseReport = new InfoStudentCourseReport();
-                InfoCurricularCourse infoCurricularCourse = Cloner
-                        .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse);
                 infoCurricularCourse.setInfoScopes(infoScopes);
                 infoStudentCourseReport.setInfoCurricularCourse(infoCurricularCourse);
             } else {
-                infoStudentCourseReport = Cloner
-                        .copyIStudentCourseReport2InfoStudentCourseReport(studentCourseReport);
+                infoStudentCourseReport = InfoStudentCourseReport.newInfoFromDomain(studentCourseReport);
                 InfoCurricularCourse infoCurricularCourse = infoStudentCourseReport
                         .getInfoCurricularCourse();
                 infoCurricularCourse.setInfoScopes(infoScopes);

@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPrice;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.IPrice;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -45,7 +45,7 @@ public class ReadCertificateList implements IService {
 
         while (iterator.hasNext()) {
             IPrice price = (IPrice) iterator.next();
-            result.add(Cloner.copyIPrice2InfoPrice(price));
+            result.add(InfoPrice.newInfoFromDoaim(price));
         }
         return result;
     }

@@ -8,10 +8,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluationWithResponsibleForGrade;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPersonWithInfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IEnrolment;
@@ -149,7 +151,7 @@ public class ReadStudentMarksByCurricularCourse implements IService {
                     IPerson person = ((IEnrolmentEvaluation) enrolmentEvaluations.get(0))
                             .getPersonResponsibleForGrade();
                     ITeacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
-                    infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+                    infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(teacher);
                     infoTeachers.add(infoTeacher);
                 }
 
@@ -158,8 +160,7 @@ public class ReadStudentMarksByCurricularCourse implements IService {
                     ListIterator iter = enrolmentEvaluations.listIterator();
                     while (iter.hasNext()) {
                         IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iter.next();
-                        InfoEnrolmentEvaluation infoEnrolmentEvaluation = Cloner
-                                .copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrolmentEvaluation);
+                        InfoEnrolmentEvaluation infoEnrolmentEvaluation = InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolmentEvaluation);
                         InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
                                 .newInfoFromDomain(enrolmentEvaluation.getEnrolment());
                         infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
@@ -170,8 +171,7 @@ public class ReadStudentMarksByCurricularCourse implements IService {
                                         Person.class,
                                         enrolmentEvaluation.getEmployee().getPerson().getIdInternal(),
                                         false);
-                                infoEnrolmentEvaluation.setInfoEmployee(Cloner
-                                        .copyIPerson2InfoPerson(person2));
+                                infoEnrolmentEvaluation.setInfoEmployee(InfoPersonWithInfoCountry.newInfoFromDomain(person2));
                             }
 
                         }

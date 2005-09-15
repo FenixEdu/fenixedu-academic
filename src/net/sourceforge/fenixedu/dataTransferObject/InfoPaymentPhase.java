@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.IPaymentPhase;
+
 /**
  * @author Fernanda Quitério 10/Jan/2004
  *  
@@ -133,6 +135,20 @@ public class InfoPaymentPhase extends InfoObject {
      */
     public void setValue(Double value) {
         this.value = value;
+    }
+
+    public static Object newInfoFromDoamin(IPaymentPhase paymentPhase) {
+        InfoPaymentPhase infoPaymentPhase = new InfoPaymentPhase();
+        infoPaymentPhase.setDescription(paymentPhase.getDescription());
+        infoPaymentPhase.setEndDate(paymentPhase.getEndDate());
+        infoPaymentPhase.setIdInternal(paymentPhase.getIdInternal());
+        infoPaymentPhase.setStartDate(paymentPhase.getStartDate());
+        infoPaymentPhase.setValue(paymentPhase.getValue());
+
+        InfoGratuityValues infoGratuityValues = InfoGratuityValues.newInfoFromDomain(paymentPhase.getGratuityValues());
+        infoPaymentPhase.setInfoGratuityValues(infoGratuityValues);
+
+        return infoPaymentPhase;
     }
 
 }

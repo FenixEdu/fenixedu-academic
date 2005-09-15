@@ -9,7 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPersonAndCategory;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -34,7 +34,7 @@ public class ReadAllTeachers implements IService {
 
         if (allTeachers != null) {
             for (final ITeacher teacher : allTeachers) {
-                result.add(Cloner.copyITeacher2InfoTeacher(teacher));
+                result.add(InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher));
             }
         }
         return result;

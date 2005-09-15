@@ -7,7 +7,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoServiceExemptionCreditLine;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.credits.IServiceExemptionCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -37,8 +36,7 @@ public class ReadTeacherServiceExemptionsService implements IService {
 
                         public Object transform(Object input) {
                             IServiceExemptionCreditLine serviceExemptionCreditLine = (IServiceExemptionCreditLine) input;
-                            InfoServiceExemptionCreditLine infoServiceExemptionCreditLine = Cloner
-                                    .copyIServiceExemptionCreditLine2InfoServiceExemptionCreditLine(serviceExemptionCreditLine);
+                            InfoServiceExemptionCreditLine infoServiceExemptionCreditLine = InfoServiceExemptionCreditLine.newInfoFromDomain(serviceExemptionCreditLine);
                             return infoServiceExemptionCreditLine;
                         }
                     });

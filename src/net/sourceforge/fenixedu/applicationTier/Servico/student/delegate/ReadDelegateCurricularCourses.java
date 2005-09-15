@@ -9,8 +9,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.SearchService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IDomainObject;
@@ -33,15 +34,13 @@ public class ReadDelegateCurricularCourses extends SearchService {
     @Override
     protected InfoObject newInfoFromDomain(IDomainObject object) {
         ICurricularCourse curricularCourse = (ICurricularCourse) object;
-        InfoCurricularCourse infoCurricularCourse = Cloner
-                .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+        InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse);
 
         List infoScopes = (List) CollectionUtils.collect(curricularCourse.getScopes(),
                 new Transformer() {
                     public Object transform(Object arg0) {
                         ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
-                        return Cloner
-                                .copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
+                        return InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear.newInfoFromDomain(curricularCourseScope);
                     }
 
                 });

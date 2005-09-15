@@ -38,9 +38,6 @@ public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod imple
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-//            IExecutionPeriod executionPeriod = Cloner
-//                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
-
             IExecutionCourse executionCourse = sp.getIPersistentExecutionCourse()
                     .readByExecutionCourseInitialsAndExecutionPeriodId(executionCourseInitials,
                             infoExecutionPeriod.getIdInternal());

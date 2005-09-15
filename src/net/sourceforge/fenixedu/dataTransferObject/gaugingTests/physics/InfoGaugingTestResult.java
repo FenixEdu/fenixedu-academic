@@ -6,6 +6,8 @@ package net.sourceforge.fenixedu.dataTransferObject.gaugingTests.physics;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
+import net.sourceforge.fenixedu.domain.gaugingTests.physics.IGaugingTestResult;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 26/Nov/2003
@@ -589,6 +591,46 @@ public class InfoGaugingTestResult extends InfoObject {
      */
     public void setWrong(Integer wrong) {
         this.wrong = wrong;
+    }
+
+    public static InfoGaugingTestResult newInfoFromDomain(IGaugingTestResult gaugingTestsResult) {
+        InfoStudent infoStudent = InfoStudentWithInfoPerson.newInfoFromDomain(gaugingTestsResult.getStudent());
+        InfoGaugingTestResult infoGaugingTestResult = new InfoGaugingTestResult();
+        infoGaugingTestResult.setCf(gaugingTestsResult.getCf());
+        infoGaugingTestResult.setCorrect(gaugingTestsResult.getCorrect());
+        infoGaugingTestResult.setIdInternal(gaugingTestsResult.getIdInternal());
+        infoGaugingTestResult.setP1(gaugingTestsResult.getP1());
+        infoGaugingTestResult.setP10(gaugingTestsResult.getP10());
+        infoGaugingTestResult.setP11(gaugingTestsResult.getP11());
+        infoGaugingTestResult.setP12(gaugingTestsResult.getP12());
+        infoGaugingTestResult.setP13(gaugingTestsResult.getP13());
+        infoGaugingTestResult.setP14(gaugingTestsResult.getP14());
+        infoGaugingTestResult.setP15(gaugingTestsResult.getP15());
+        infoGaugingTestResult.setP16(gaugingTestsResult.getP16());
+        infoGaugingTestResult.setP17(gaugingTestsResult.getP17());
+        infoGaugingTestResult.setP18(gaugingTestsResult.getP18());
+        infoGaugingTestResult.setP19(gaugingTestsResult.getP19());
+        infoGaugingTestResult.setP20(gaugingTestsResult.getP20());
+        infoGaugingTestResult.setP21(gaugingTestsResult.getP21());
+        infoGaugingTestResult.setP22(gaugingTestsResult.getP22());
+        infoGaugingTestResult.setP23(gaugingTestsResult.getP23());
+        infoGaugingTestResult.setP24(gaugingTestsResult.getP24());
+        infoGaugingTestResult.setP25(gaugingTestsResult.getP25());
+        infoGaugingTestResult.setP26(gaugingTestsResult.getP26());
+        infoGaugingTestResult.setP27(gaugingTestsResult.getP27());
+        infoGaugingTestResult.setP28(gaugingTestsResult.getP28());
+        infoGaugingTestResult.setP3(gaugingTestsResult.getP3());
+        infoGaugingTestResult.setP4(gaugingTestsResult.getP4());
+        infoGaugingTestResult.setP5(gaugingTestsResult.getP5());
+        infoGaugingTestResult.setP6(gaugingTestsResult.getP6());
+        infoGaugingTestResult.setP7(gaugingTestsResult.getP7());
+        infoGaugingTestResult.setP8(gaugingTestsResult.getP8());
+        infoGaugingTestResult.setP9(gaugingTestsResult.getP9());
+        infoGaugingTestResult.setTest(gaugingTestsResult.getTest());
+        infoGaugingTestResult.setUnanswered(gaugingTestsResult.getUnanswered());
+        infoGaugingTestResult.setWrong(gaugingTestsResult.getWrong());
+        infoGaugingTestResult.setInfoStudent(infoStudent);
+        return infoGaugingTestResult;
     }
 
 }

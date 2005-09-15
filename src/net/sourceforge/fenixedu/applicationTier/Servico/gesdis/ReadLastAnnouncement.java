@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.gesdis;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAnnouncement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IAnnouncement;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -26,7 +25,7 @@ public class ReadLastAnnouncement implements IService {
 
         InfoAnnouncement infoAnnouncement = null;
         if (announcement != null)
-            infoAnnouncement = Cloner.copyIAnnouncement2InfoAnnouncement(announcement);
+            infoAnnouncement = InfoAnnouncement.newInfoFromDomain(announcement);
 
         return infoAnnouncement;
     }

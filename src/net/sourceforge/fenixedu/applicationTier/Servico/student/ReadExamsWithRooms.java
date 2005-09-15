@@ -19,9 +19,9 @@ import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExamStudentRoomWithInfoStudentAndInfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentExamDistributions;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExamStudentRoom;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
@@ -80,8 +80,7 @@ public class ReadExamsWithRooms implements IServico {
                 if (currentPeriod != null && executionCourse != null
                         && executionCourse.getExecutionPeriod() != null
                         && currentPeriod.equals(executionCourse.getExecutionPeriod())) {
-                    validDistributions.add(Cloner
-                            .copyIExamStudentRoom2InfoExamStudentRoom(examStudentRoom));
+                    validDistributions.add(InfoExamStudentRoomWithInfoStudentAndInfoRoom.newInfoFromDomain(examStudentRoom));
                 }
             }
             ISiteComponent component = new InfoSiteStudentExamDistributions(validDistributions);

@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateRegistration;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentAndDegree;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.IStudent;
@@ -48,8 +48,7 @@ public class GetCandidateRegistrationInformation implements IService {
             infoCandidateRegistration
                     .setInfoMasterDegreeCandidate(InfoMasterDegreeCandidateWithInfoPerson
                             .newInfoFromDomain(masterDegreeCandidate));
-            infoCandidateRegistration.setInfoStudentCurricularPlan(Cloner
-                    .copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
+            infoCandidateRegistration.setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentAndDegree.newInfoFromDomain(studentCurricularPlan));
 
             if (studentCurricularPlan.getEnrolments().size() == 0) {
                 infoCandidateRegistration.setEnrolments(null);

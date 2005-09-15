@@ -10,9 +10,9 @@ import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoWebSite;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteItem;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteSection;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IWebSiteItem;
 import net.sourceforge.fenixedu.domain.IWebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -97,8 +97,7 @@ public class ReadLimitedWebSiteSectionByName implements IServico {
             List infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {
                 public Object transform(Object arg0) {
                     IWebSiteItem webSiteItem = (IWebSiteItem) arg0;
-                    InfoWebSiteItem infoWebSiteItem = Cloner
-                            .copyIWebSiteItem2InfoWebSiteItem(webSiteItem);
+                    InfoWebSiteItem infoWebSiteItem = InfoWebSiteItem.newInfoFromDomain(webSiteItem);
 
                     return infoWebSiteItem;
                 }
@@ -129,7 +128,7 @@ public class ReadLimitedWebSiteSectionByName implements IServico {
 
         infoWebSiteSection.setIdInternal(webSiteSection.getIdInternal());
         infoWebSiteSection.setExcerptSize(webSiteSection.getExcerptSize());
-        infoWebSiteSection.setInfoWebSite(Cloner.copyIWebSite2InfoWebSite(webSiteSection.getWebSite()));
+        infoWebSiteSection.setInfoWebSite(InfoWebSite.newInfoFromDomain(webSiteSection.getWebSite()));
         infoWebSiteSection.setName(webSiteSection.getName());
         infoWebSiteSection.setSize(webSiteSection.getSize());
         infoWebSiteSection.setSortingOrder(webSiteSection.getSortingOrder());

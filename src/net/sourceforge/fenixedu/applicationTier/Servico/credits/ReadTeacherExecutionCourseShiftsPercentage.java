@@ -10,13 +10,13 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftPercentage;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftProfessorshipAndTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.TeacherExecutionCourseProfessorshipShiftsDTO;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.ILesson;
@@ -55,7 +55,7 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IService {
             ITeacher teacher = readTeacher(infoTeacher, sp);
 
             result.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
-            result.setInfoTeacher(Cloner.copyITeacher2InfoTeacher(teacher));
+            result.setInfoTeacher(InfoTeacher.newInfoFromDomain(teacher));
 
             ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
 
@@ -93,7 +93,7 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IService {
                         new Transformer() {
                             public Object transform(Object input) {
                                 ILesson lesson = (ILesson) input;
-                                return Cloner.copyILesson2InfoLesson(lesson);
+                                return InfoLesson.newInfoFromDomain(lesson);
                             }
                         });
                 infoShiftPercentage.setInfoLessons(infoLessons);

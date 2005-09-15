@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.GraduationType;
+import net.sourceforge.fenixedu.domain.IPrice;
 
 /**
  * 
@@ -97,6 +98,16 @@ public class InfoPrice extends InfoObject {
      */
     public void setPrice(Double double1) {
         price = double1;
+    }
+
+    public static Object newInfoFromDoaim(IPrice price2) {
+        InfoPrice infoPrice = new InfoPrice();
+        infoPrice.setDescription(price2.getDescription());
+        infoPrice.setDocumentType(price2.getDocumentType());
+        infoPrice.setGraduationType(price2.getGraduationType());
+        infoPrice.setIdInternal(price2.getIdInternal());
+        infoPrice.setPrice(price2.getPrice());
+        return infoPrice;
     }
 
 }

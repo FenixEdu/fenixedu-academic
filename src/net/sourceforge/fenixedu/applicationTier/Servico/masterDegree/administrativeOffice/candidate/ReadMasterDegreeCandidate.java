@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ICandidateSituation;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.IPerson;
@@ -47,9 +46,7 @@ public class ReadMasterDegreeCandidate implements IService {
                 .newInfoFromDomain(masterDegreeCandidate);
         List situations = new ArrayList();
         while (iterator.hasNext()) {
-            InfoCandidateSituation infoCandidateSituation = Cloner
-                    .copyICandidateSituation2InfoCandidateSituation((ICandidateSituation) iterator
-                            .next());
+            InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation.newInfoFromDomain((ICandidateSituation) iterator.next());
             situations.add(infoCandidateSituation);
 
             // Check if this is the Active Situation
@@ -83,9 +80,7 @@ public class ReadMasterDegreeCandidate implements IService {
                 .newInfoFromDomain(masterDegreeCandidate);
         List situations = new ArrayList();
         while (iterator.hasNext()) {
-            InfoCandidateSituation infoCandidateSituation = Cloner
-                    .copyICandidateSituation2InfoCandidateSituation((ICandidateSituation) iterator
-                            .next());
+            InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation.newInfoFromDomain((ICandidateSituation) iterator.next());
             situations.add(infoCandidateSituation);
 
             // Check if this is the Active Situation

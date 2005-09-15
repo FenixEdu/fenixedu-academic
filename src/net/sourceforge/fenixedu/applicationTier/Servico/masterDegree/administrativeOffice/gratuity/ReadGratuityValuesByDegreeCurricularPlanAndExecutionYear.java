@@ -10,7 +10,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValuesWithInfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
@@ -87,7 +87,7 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear implements
             CollectionUtils.collect(gratuityValues.getPaymentPhaseList(), new Transformer() {
                 public Object transform(Object input) {
                     IPaymentPhase paymentPhase = (IPaymentPhase) input;
-                    return Cloner.copyIPaymentPhase2InfoPaymentPhase(paymentPhase);
+                    return InfoPaymentPhase.newInfoFromDoamin(paymentPhase);
                 }
             }, infoPaymentPhases);
 

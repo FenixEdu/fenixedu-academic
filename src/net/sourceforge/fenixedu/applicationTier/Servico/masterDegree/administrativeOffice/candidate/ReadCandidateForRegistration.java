@@ -9,9 +9,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ICandidateSituation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -49,8 +49,7 @@ public class ReadCandidateForRegistration implements IService {
 					.newInfoFromDomain(candidateSituation
 							.getMasterDegreeCandidate());
 			infoMasterDegreeCandidate
-					.setInfoCandidateSituation(Cloner
-							.copyICandidateSituation2InfoCandidateSituation(candidateSituation));
+					.setInfoCandidateSituation(InfoCandidateSituation.newInfoFromDomain(candidateSituation));
 			candidateList.add(infoMasterDegreeCandidate);
 		}
 

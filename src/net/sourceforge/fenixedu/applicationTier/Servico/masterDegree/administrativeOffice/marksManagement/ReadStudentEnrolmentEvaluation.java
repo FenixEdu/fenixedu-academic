@@ -6,10 +6,12 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluationWithResponsibleForGrade;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IPerson;
@@ -47,14 +49,12 @@ public class ReadStudentEnrolmentEvaluation implements IService {
 
             IPerson person = enrolmentEvaluation.getPersonResponsibleForGrade();
             ITeacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
-            infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+            infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(teacher);
 
-            infoEnrolmentEvaluation = Cloner
-                    .copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrolmentEvaluation);
+            infoEnrolmentEvaluation = InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolmentEvaluation);
             infoEnrolmentEvaluation.setInfoPersonResponsibleForGrade(infoTeacher.getInfoPerson());
             if (enrolmentEvaluation.getEmployee() != null)
-                infoEnrolmentEvaluation.setInfoEmployee(Cloner
-                        .copyIPerson2InfoPerson(enrolmentEvaluation.getEmployee().getPerson()));
+                infoEnrolmentEvaluation.setInfoEmployee(InfoPerson.newInfoFromDomain(enrolmentEvaluation.getEmployee().getPerson()));
             infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
             infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
 

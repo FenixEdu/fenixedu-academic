@@ -18,7 +18,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoRoomWithInfoInquiriesRoom;
 import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
@@ -60,7 +60,7 @@ public class SearchRooms implements IServico {
             Iterator iter = rooms.iterator();
             while (iter.hasNext()) {
                 IRoom room = (IRoom) iter.next();
-                infoRooms.add(Cloner.copyRoom2InfoRoom(room));
+                infoRooms.add(InfoRoomWithInfoInquiriesRoom.newInfoFromDomain(room));
             }
 
             return infoRooms;

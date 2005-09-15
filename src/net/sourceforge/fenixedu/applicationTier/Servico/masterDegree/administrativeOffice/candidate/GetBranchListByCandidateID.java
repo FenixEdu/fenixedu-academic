@@ -10,7 +10,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IBranch;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
@@ -59,7 +58,7 @@ public class GetBranchListByCandidateID implements IService {
 
         while (iterator.hasNext()) {
             IBranch branch = (IBranch) iterator.next();
-            InfoBranch infoBranch = Cloner.copyIBranch2InfoBranch(branch);
+            InfoBranch infoBranch = InfoBranch.newInfoFromDomain(branch);
 
             if ((infoBranch.getName() == null) || (infoBranch.getName().length() == 0)) {
 

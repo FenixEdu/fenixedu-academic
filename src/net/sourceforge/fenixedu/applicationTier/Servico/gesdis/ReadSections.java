@@ -11,8 +11,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSectionWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ISection;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.Site;
@@ -52,7 +52,7 @@ public class ReadSections implements IService {
         List result = new ArrayList(allSections.size());
 
         while (iterator.hasNext())
-            result.add(Cloner.copyISection2InfoSection((ISection) iterator.next()));
+            result.add(InfoSectionWithAll.newInfoFromDomain((ISection) iterator.next()));
 
         return result;
     }

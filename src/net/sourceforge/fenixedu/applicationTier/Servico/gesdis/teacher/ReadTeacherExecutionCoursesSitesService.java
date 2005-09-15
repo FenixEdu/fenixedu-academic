@@ -10,8 +10,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteWithInfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
@@ -40,19 +40,10 @@ public class ReadTeacherExecutionCoursesSitesService implements IService {
         final List<IProfessorship> professorships = persistentProfessorship
                 .readByTeacherNumber(infoTeacher.getTeacherNumber());
         for (final IProfessorship professorship : professorships) {
-            InfoSite infoSite = Cloner.copyISite2InfoSite(professorship.getExecutionCourse().getSite());
+            InfoSite infoSite = InfoSiteWithInfoExecutionCourse.newInfoFromDomain(professorship.getExecutionCourse().getSite());
             infoSites.add(infoSite);
         }
 
-        /*
-         * Iterator iter = professorships.iterator(); while (iter.hasNext()) {
-         * IProfessorship professorship = (IProfessorship) iter.next();
-         * IExecutionCourse executionCourse =
-         * professorship.getExecutionCourse(); ISite site =
-         * persistentSite.readByExecutionCourse(executionCourse.getIdInternal());
-         * InfoSite infoSite = Cloner.copyISite2InfoSite(site);
-         * infoSites.add(infoSite); }
-         */
         return infoSites;
     }
 }

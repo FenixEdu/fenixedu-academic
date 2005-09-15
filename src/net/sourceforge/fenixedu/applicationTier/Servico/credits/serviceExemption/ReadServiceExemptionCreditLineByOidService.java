@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.credits.serviceExemptio
 
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.ReadDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.credits.InfoServiceExemptionCreditLine;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.credits.IServiceExemptionCreditLine;
 import net.sourceforge.fenixedu.domain.credits.ServiceExemptionCreditLine;
@@ -26,8 +26,7 @@ public class ReadServiceExemptionCreditLineByOidService extends ReadDomainObject
     }
 
     protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
-        return Cloner
-                .copyIServiceExemptionCreditLine2InfoServiceExemptionCreditLine((IServiceExemptionCreditLine) domainObject);
+        return InfoServiceExemptionCreditLine.newInfoFromDomain((IServiceExemptionCreditLine) domainObject);
     }
 
 }

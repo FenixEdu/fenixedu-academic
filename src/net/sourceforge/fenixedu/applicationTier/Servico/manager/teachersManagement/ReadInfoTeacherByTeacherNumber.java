@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPersonAndCategory;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -66,7 +66,7 @@ public class ReadInfoTeacherByTeacherNumber implements IService {
                 infoResponsibleFors.add(infoProfessorship);
         }
 
-        infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+        infoTeacher = InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher);
         infoTeacher.setResponsibleForExecutionCourses(infoResponsibleFors);
         infoTeacher.setProfessorShipsExecutionCourses(infoProfessorShips);
         return infoTeacher;

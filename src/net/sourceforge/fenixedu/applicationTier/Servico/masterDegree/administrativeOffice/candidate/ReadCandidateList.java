@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ICandidateSituation;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
@@ -54,9 +53,7 @@ public class ReadCandidateList implements IService {
             final Iterator situationIterator = masterDegreeCandidate.getSituations().iterator();
             final List situations = new ArrayList();
             while (situationIterator.hasNext()) {
-                final InfoCandidateSituation infoCandidateSituation = Cloner
-                        .copyICandidateSituation2InfoCandidateSituation((ICandidateSituation) situationIterator
-                                .next());
+                final InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation.newInfoFromDomain((ICandidateSituation) situationIterator.next());
                 situations.add(infoCandidateSituation);
             }
             infoMasterDegreeCandidate.setSituationList(situations);

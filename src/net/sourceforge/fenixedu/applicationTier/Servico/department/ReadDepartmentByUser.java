@@ -8,7 +8,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IDepartment;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -33,7 +32,7 @@ public class ReadDepartmentByUser implements IService {
             IPerson person = personDAO.lerPessoaPorUsername(username);
             List departmentList = person.getManageableDepartmentCredits();
             if (departmentList != null && !departmentList.isEmpty()) {
-                infoDepartment = Cloner.copyIDepartment2InfoDepartment((IDepartment) departmentList
+                infoDepartment = InfoDepartment.newInfoFromDomain((IDepartment) departmentList
                         .get(0));
             }
         } catch (ExcepcaoPersistencia e) {

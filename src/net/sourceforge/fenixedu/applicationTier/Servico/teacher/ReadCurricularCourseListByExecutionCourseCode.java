@@ -10,10 +10,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAssociatedCurricularCourses;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
@@ -52,15 +52,13 @@ public class ReadCurricularCourseListByExecutionCourseCode implements IService {
                 ICurricularCourse curricularCourse = executionCourse
                         .getAssociatedCurricularCourses().get(i);
 
-                InfoCurricularCourse infoCurricularCourse = Cloner
-                        .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse);
                 infoCurricularCourse.setInfoScopes((List) CollectionUtils.collect(curricularCourse
                         .getScopes(), new Transformer() {
 
                     public Object transform(Object arg0) {
                         ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
-                        return Cloner
-                                .copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
+                        return InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope);
                     }
                 }));
 

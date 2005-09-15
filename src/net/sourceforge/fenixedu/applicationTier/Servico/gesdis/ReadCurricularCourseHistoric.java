@@ -11,8 +11,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseHistoric;
+import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseHistoricWithInfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseHistoric;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
@@ -69,8 +69,7 @@ public class ReadCurricularCourseHistoric implements IService {
     private InfoSiteCourseHistoric getInfoSiteCourseHistoric(ICurricularCourse curricularCourse,
             Integer semester, ISuportePersistente sp) throws ExcepcaoPersistencia {
         InfoSiteCourseHistoric infoSiteCourseHistoric = new InfoSiteCourseHistoric();
-        InfoCurricularCourse infoCurricularCourse = Cloner
-                .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+        InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
         infoSiteCourseHistoric.setInfoCurricularCourse(infoCurricularCourse);
 
         IPersistentCourseHistoric persistentCourseHistoric = sp.getIPersistentCourseHistoric();
@@ -79,7 +78,7 @@ public class ReadCurricularCourseHistoric implements IService {
         List infoCoursesHistoric = (List) CollectionUtils.collect(coursesHistoric, new Transformer() {
             public Object transform(Object arg0) {
                 ICourseHistoric courseHistoric = (ICourseHistoric) arg0;
-                return Cloner.copyICourseHistoric2InfoCourseHistoric(courseHistoric);
+                return InfoCourseHistoricWithInfoCurricularCourse.newInfoFromDomain(courseHistoric);
             }
 
         });

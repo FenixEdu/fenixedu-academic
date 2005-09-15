@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
@@ -40,9 +40,7 @@ public class ReadCPlanFromChosenMasterDegree implements IService {
         Iterator iterator = degreeCurricularPlansList.iterator();
         List result = new ArrayList();
         while (iterator.hasNext()) {
-            result.add(Cloner
-                    .copyIDegreeCurricularPlan2InfoDegreeCurricularPlan((IDegreeCurricularPlan) iterator
-                            .next()));
+            result.add(InfoDegreeCurricularPlanWithDegree.newInfoFromDomain((IDegreeCurricularPlan) iterator.next()));
         }
 
         return result;

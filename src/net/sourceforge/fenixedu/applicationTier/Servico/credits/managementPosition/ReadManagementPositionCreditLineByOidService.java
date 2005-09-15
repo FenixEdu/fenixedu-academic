@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.credits.managementPosit
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.ReadDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoManagementPositionCreditLine;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.credits.IManagementPositionCreditLine;
 import net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine;
@@ -27,8 +26,7 @@ public class ReadManagementPositionCreditLineByOidService extends ReadDomainObje
     }
 
     protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
-        return Cloner
-                .copyIManagementPositionCreditLine2InfoManagementPositionCreditLine((IManagementPositionCreditLine) domainObject);
+        return InfoManagementPositionCreditLine.newInfoFromDomain((IManagementPositionCreditLine) domainObject);
     }
 
 }

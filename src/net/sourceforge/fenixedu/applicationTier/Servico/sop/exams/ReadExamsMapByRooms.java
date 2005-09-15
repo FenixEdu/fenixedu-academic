@@ -16,12 +16,12 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomExamsMap;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -83,7 +83,7 @@ public class ReadExamsMapByRooms implements IService {
 
     private Transformer TRANSFORM_EXAM_TO_INFOEXAM = new Transformer() {
         public Object transform(Object exam) {
-            InfoExam infoExam = Cloner.copyIExam2InfoExam((IExam) exam);
+            InfoExam infoExam = InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear.newInfoFromDomain((IExam) exam);
             infoExam.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(((IExam) exam).getAssociatedExecutionCourses().get(0)));
             return infoExam;
         }

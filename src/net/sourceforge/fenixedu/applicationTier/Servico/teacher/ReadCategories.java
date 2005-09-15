@@ -8,7 +8,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
 import net.sourceforge.fenixedu.domain.teacher.ICategory;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -52,7 +52,7 @@ public class ReadCategories implements IServico {
             List result = (List) CollectionUtils.collect(categories, new Transformer() {
                 public Object transform(Object input) {
                     ICategory category = (ICategory) input;
-                    return Cloner.copyICategory2InfoCategory(category);
+                    return InfoCategory.newInfoFromDomain(category);
                 }
             });
             return result;

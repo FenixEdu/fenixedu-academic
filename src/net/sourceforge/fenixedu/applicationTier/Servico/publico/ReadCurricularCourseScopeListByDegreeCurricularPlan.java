@@ -7,7 +7,7 @@ import java.util.ListIterator;
 
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
@@ -84,9 +84,7 @@ public class ReadCurricularCourseScopeListByDegreeCurricularPlan implements ISer
                     iteratorScopes = curricularCourseScopes.listIterator();
                     while (iteratorScopes.hasNext()) {
                         allCurricularCourseScope
-                                .add(Cloner
-                                        .copyICurricularCourseScope2InfoCurricularCourseScope((ICurricularCourseScope) iteratorScopes
-                                                .next()));
+                                .add(InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear.newInfoFromDomain((ICurricularCourseScope) iteratorScopes.next()));
                     }
                 }
             }

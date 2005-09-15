@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPersonAndCategory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IProfessorship;
@@ -47,7 +47,7 @@ public class ReadExecutionCourseTeachers implements IService {
 
         while (iter.hasNext()) {
             teacher = ((IProfessorship) iter.next()).getTeacher();
-            infoTeachers.add(Cloner.copyITeacher2InfoTeacher(teacher));
+            infoTeachers.add(InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher));
         }
 
         return infoTeachers;

@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValuesWithInfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IGratuityValues;
 import net.sourceforge.fenixedu.domain.IPaymentPhase;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -60,7 +59,7 @@ public class ReadGratuityValuesByExecutionDegree implements IService {
             CollectionUtils.collect(gratuityValues.getPaymentPhaseList(), new Transformer() {
                 public Object transform(Object input) {
                     IPaymentPhase paymentPhase = (IPaymentPhase) input;
-                    return Cloner.copyIPaymentPhase2InfoPaymentPhase(paymentPhase);
+                    return InfoPaymentPhase.newInfoFromDoamin(paymentPhase);
                 }
             }, infoPaymentPhases);
 

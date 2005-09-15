@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IBibliographicReference;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
@@ -64,13 +63,11 @@ public class ReadBibliographicReference implements IService {
 
                 if (optional != null) {
                     if (bibRef.getOptional().equals(optional)) {
-                        InfoBibliographicReference infoBibRef = Cloner
-                                .copyIBibliographicReference2InfoBibliographicReference(bibRef);
+                        InfoBibliographicReference infoBibRef = InfoBibliographicReference.newInfoFromDomain(bibRef);
                         infoBibRefs.add(infoBibRef);
                     }
                 } else {
-                    InfoBibliographicReference infoBibRef = Cloner
-                            .copyIBibliographicReference2InfoBibliographicReference(bibRef);
+                    InfoBibliographicReference infoBibRef = InfoBibliographicReference.newInfoFromDomain(bibRef);
                     infoBibRefs.add(infoBibRef);
                 }
             }

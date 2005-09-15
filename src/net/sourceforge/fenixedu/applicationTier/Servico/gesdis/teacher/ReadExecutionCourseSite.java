@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteWithInfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -25,7 +25,7 @@ public class ReadExecutionCourseSite implements IService {
 
         final ISite site = sp.getIPersistentSite().readByExecutionCourse(infoExecutionCourse.getIdInternal());
         if (site != null)
-            infoSite = Cloner.copyISite2InfoSite(site);
+            infoSite = InfoSiteWithInfoExecutionCourse.newInfoFromDomain(site);
 
         return infoSite;
     }

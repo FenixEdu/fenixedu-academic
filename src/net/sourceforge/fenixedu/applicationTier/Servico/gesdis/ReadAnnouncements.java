@@ -9,7 +9,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAnnouncement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IAnnouncement;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -36,7 +35,7 @@ public class ReadAnnouncements implements IService {
 
         if (announcementsList != null) {
             for (final IAnnouncement announcement : announcementsList) {
-                infoAnnouncementsList.add(Cloner.copyIAnnouncement2InfoAnnouncement(announcement));
+                infoAnnouncementsList.add(InfoAnnouncement.newInfoFromDomain(announcement));
             }
         }
         return infoAnnouncementsList;

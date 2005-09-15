@@ -9,9 +9,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPersonAndCategory;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteCareers;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.CareerType;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.teacher.ICareer;
@@ -59,7 +60,7 @@ public class ReadCareers implements IServico {
 
             IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
             ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
-            InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+            InfoTeacher infoTeacher = InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher);
 
             IPersistentCareer persistentCareer = persistentSuport.getIPersistentCareer();
             List careers = persistentCareer.readAllByTeacherAndCareerType(teacher, careerType);
@@ -67,7 +68,7 @@ public class ReadCareers implements IServico {
             List result = (List) CollectionUtils.collect(careers, new Transformer() {
                 public Object transform(Object o) {
                     ICareer career = (ICareer) o;
-                    return Cloner.copyICareer2InfoCareer(career);
+                    return InfoCareer.newInfoFromDomain(career);
                 }
             });
 

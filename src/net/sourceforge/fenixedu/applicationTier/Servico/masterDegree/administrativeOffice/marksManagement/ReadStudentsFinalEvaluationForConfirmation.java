@@ -12,11 +12,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituat
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluationWithResponsibleForGrade;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IEnrolment;
@@ -102,14 +103,13 @@ public class ReadStudentsFinalEvaluationForConfirmation implements IService {
                 IPerson person = ((IEnrolmentEvaluation) temporaryEnrolmentEvaluations.get(0))
                         .getPersonResponsibleForGrade();
                 ITeacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
-                infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+                infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(teacher);
 
                 //				transform evaluations in databeans
                 ListIterator iter = temporaryEnrolmentEvaluations.listIterator();
                 while (iter.hasNext()) {
                     IEnrolmentEvaluation elem = (IEnrolmentEvaluation) iter.next();
-                    InfoEnrolmentEvaluation infoEnrolmentEvaluation = Cloner
-                            .copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(elem);
+                    InfoEnrolmentEvaluation infoEnrolmentEvaluation = InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(elem);
 
                     InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
                             .newInfoFromDomain(elem.getEnrolment());

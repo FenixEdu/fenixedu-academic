@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ICurriculum;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -58,7 +57,7 @@ public class ReadCurriculumByOIdService implements IServico {
             IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
             ICurriculum curriculum = (ICurriculum) persistentCurriculum.readByOID(Curriculum.class,
                     curriculumId);
-            InfoCurriculum infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
+            InfoCurriculum infoCurriculum = InfoCurriculum.newInfoFromDomain(curriculum);
             SiteView siteView = new SiteView(infoCurriculum);
 
             return siteView;

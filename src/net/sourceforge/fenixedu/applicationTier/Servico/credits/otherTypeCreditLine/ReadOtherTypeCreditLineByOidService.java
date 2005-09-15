@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.credits.otherTypeCredit
 
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.ReadDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.credits.InfoOtherTypeCreditLine;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.credits.IOtherTypeCreditLine;
 import net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine;
@@ -26,7 +26,7 @@ public class ReadOtherTypeCreditLineByOidService extends ReadDomainObjectService
     }
 
     protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
-        return Cloner.copyIOtherTypeCreditLine2InfoOtherCreditLine((IOtherTypeCreditLine) domainObject);
+        return InfoOtherTypeCreditLine.newInfoFromDomain((IOtherTypeCreditLine) domainObject);
     }
 
 }
