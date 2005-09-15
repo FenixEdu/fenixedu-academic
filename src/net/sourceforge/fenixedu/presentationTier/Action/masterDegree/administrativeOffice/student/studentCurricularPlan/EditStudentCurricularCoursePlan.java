@@ -72,8 +72,9 @@ public class EditStudentCurricularCoursePlan extends DispatchAction {
 
         editStudentCurricularPlanForm.set("currentState", infoStudentCurricularPlan.getCurrentState()
                 .toString());
-        editStudentCurricularPlanForm.set("credits", String.valueOf(infoStudentCurricularPlan
-                .getGivenCredits()));
+        editStudentCurricularPlanForm.set("credits",
+                (infoStudentCurricularPlan.getGivenCredits() == null) ? "0.0" : String
+                        .valueOf(infoStudentCurricularPlan.getGivenCredits()));
         editStudentCurricularPlanForm
                 .set("startDate", infoStudentCurricularPlan.getStartDateFormatted());
         String[] formValues = new String[infoStudentCurricularPlan.getInfoEnrolments().size()];
