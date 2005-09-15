@@ -1889,6 +1889,8 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
     public net.sourceforge.fenixedu.domain.IRole getPersonRole(net.sourceforge.fenixedu.domain.person.RoleType roleType);
     
     public Boolean hasRole(net.sourceforge.fenixedu.domain.person.RoleType roleType);
+    
+    public net.sourceforge.fenixedu.domain.IStudent getStudentByType(net.sourceforge.fenixedu.domain.degree.DegreeType degreeType);
     "
 }
 

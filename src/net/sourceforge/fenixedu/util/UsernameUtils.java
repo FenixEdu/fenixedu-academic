@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 /**
@@ -29,17 +30,11 @@ public class UsernameUtils<T> extends FenixUtil {
 	 * 
 	 * @param person
 	 *            person for whom the username is being determined
-	 * @param rolesImportance
-	 *            list of the precedency in roles regarding username.Note the
-	 *            1st element is the most important role and the last is the
-	 *            least important.
 	 * @return a string representing what should be the person's username
 	 */
-	public static String updateUsername(IPerson person,
-			List<RoleType> rolesImportance) {
+	public static String updateUsername(IPerson person) {
 
-		IRole mostImportantRole = getMostImportantRole(person.getPersonRoles(),
-				rolesImportance);
+		IRole mostImportantRole = getMostImportantRole(person.getPersonRoles());
 
 		if (mostImportantRole == null) {
 			return person.getUsername();
@@ -56,32 +51,33 @@ public class UsernameUtils<T> extends FenixUtil {
 			return oldUsername;
 		}
 
-		char firstLetter = 'T';
 		if (roleType.equals(RoleType.TEACHER)) {
-			firstLetter = 'D';
+		    return "D" + person.getTeacher().getTeacherNumber();
 		} else if (roleType.equals(RoleType.EMPLOYEE))
-			firstLetter = 'F';
+            return "F" + person.getEmployee().getEmployeeNumber();
 		else if (roleType.equals(RoleType.STUDENT)) {
-			firstLetter = 'L';
-			// Verify if it is a Master student
-			for (IStudent student : person.getStudents()) {
-				if (student.getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
-					firstLetter = 'M';
-					break;
-				}
-			}
-		} else if (roleType.equals(RoleType.GRANT_OWNER))
-			firstLetter = 'B';
+            IStudent student = person.getStudentByType(DegreeType.MASTER_DEGREE);
+            if (student != null) {
+                return "M" + student.getNumber();
+            }
+            student = person.getStudentByType(DegreeType.DEGREE);
+            if (student != null) {
+                return "L" + student.getNumber();
+            }
+            throw new DomainException("error.person.addingInvalidRole", RoleType.STUDENT.getName());
 
-		return oldUsername.replace(oldUsername.charAt(0), firstLetter);
+        } else if (roleType.equals(RoleType.GRANT_OWNER)){
+            return "B" + person.getGrantOwner().getNumber();
+        }
+
+		return oldUsername;
 
 	} /*
 		 * Given a list of roles returns the most important role
 		 */
 
-	private static IRole getMostImportantRole(Collection<IRole> roles,
-			List<RoleType> rolesImportance) {
-		for (RoleType roleType : rolesImportance) {
+	private static IRole getMostImportantRole(Collection<IRole> roles) {
+		for (RoleType roleType : RoleType.getRolesImportance()) {
 			for (IRole role : roles) {
 				if (role.getRoleType().equals(roleType)) {
 					return role;

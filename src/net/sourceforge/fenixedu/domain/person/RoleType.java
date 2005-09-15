@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain.person;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum RoleType {
 
     PERSON,
@@ -65,6 +68,16 @@ public enum RoleType {
     public String getName() {
         return name();    
 
+    }
+    
+    public static List<RoleType> getRolesImportance(){
+        List<RoleType> rolesImportance = new ArrayList<RoleType>();
+        rolesImportance.add(RoleType.TEACHER);
+        rolesImportance.add(RoleType.EMPLOYEE);
+        rolesImportance.add(RoleType.STUDENT);
+        rolesImportance.add(RoleType.GRANT_OWNER);
+        rolesImportance.add(RoleType.PERSON);
+        return rolesImportance;
     }
 
 }

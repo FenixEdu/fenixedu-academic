@@ -215,6 +215,11 @@
 	   column="KEY_TEACHER"  
 	   jdbc-type="INTEGER"
     />
+ 	<field-descriptor 
+	   name="keyGrantOwner"    
+	   column="KEY_GRANT_OWNER"  
+	   jdbc-type="INTEGER"
+    />
 	<field-descriptor
         name="isPassInKerberos"
         column="IS_PASS_KERBEROS"
@@ -225,6 +230,11 @@
         column="IST_USERNAME"
         jdbc-type="VARCHAR"
     />  
+    <reference-descriptor auto-retrieve="false"
+    	name="grantOwner"
+        class-ref="net.sourceforge.fenixedu.domain.grant.owner.GrantOwner">
+	    <foreignkey field-ref="keyGrantOwner"/>
+	</reference-descriptor>
     <reference-descriptor auto-retrieve="false"
     	name="externalPerson"
         class-ref="net.sourceforge.fenixedu.domain.ExternalPerson">

@@ -7,6 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -161,14 +162,7 @@ public class Person extends Person_Base {
     }
 
     public void updateUsername(){
-    	List<RoleType> rolesImportance = new ArrayList<RoleType>();
-    	rolesImportance.add(RoleType.TEACHER);
-    	rolesImportance.add(RoleType.EMPLOYEE);
-    	rolesImportance.add(RoleType.STUDENT);
-    	rolesImportance.add(RoleType.GRANT_OWNER);
-    	rolesImportance.add(RoleType.PERSON);
-    	
-    	this.setUsername(UsernameUtils.updateUsername(this, rolesImportance));
+    	this.setUsername(UsernameUtils.updateUsername(this));
     }
     
 	public IRole getPersonRole(RoleType roleType){
@@ -190,6 +184,15 @@ public class Person extends Person_Base {
 		return false;
 	}
 	
+    public IStudent getStudentByType(DegreeType degreeType) {
+        for (IStudent student : this.getStudents()) {
+            if (student.getDegreeType().equals(degreeType)){
+                return student;
+            }
+        }
+        return null;
+    }
+    
     /***************************************************************************
      * PRIVATE METHODS *
      **************************************************************************/

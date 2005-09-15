@@ -19,3 +19,9 @@ mysql -u$2 -f $1 < updatePersonWithTeacher.sql > res
 mysql -u$2 -f $1 < res
 rm -r res
 echo Adding Teacher To Person Table ... completed
+echo Adding GrantOwner To Person Table ... started
+mysql -u$2 -f $1 < AlterTablePersonAddGrantOwner.sql
+mysql -u$2 -f $1 < updatePersonWithGrantOwner.sql > res
+mysql -u$2 -f $1 < res
+rm -r res
+echo Adding GrantOwner To Person Table ... completed
