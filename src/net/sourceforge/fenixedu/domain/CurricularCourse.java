@@ -281,6 +281,12 @@ public class CurricularCourse extends CurricularCourse_Base {
 	}
 
     public ICurriculum findLatestCurriculum() {
-        return (ICurriculum) Collections.max(getAssociatedCurriculums(), new BeanComparator("lastModificationDate"));
+        ICurriculum latestCurriculum = null;
+        for (final ICurriculum curriculum : getAssociatedCurriculums()) {
+            if (latestCurriculum == null || latestCurriculum.getLastModificationDate().before(curriculum.getLastModificationDate())) {
+                latestCurriculum = curriculum;
+            }
+        }
+        return latestCurriculum;
     }
 }
