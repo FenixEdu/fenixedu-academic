@@ -1,7 +1,3 @@
-/*
- * Created on 7/Abr/2004
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
@@ -40,10 +36,6 @@ import org.apache.commons.beanutils.BeanComparator;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author Tânia Pousão
- * @author modified by Gonçalo Luiz, 18/October/2004
- */
 public class PrepareInsertSummary implements IService {
 
     public SiteView run(Integer executionCourseId, String userLogged) throws FenixServiceException,
@@ -110,7 +102,7 @@ public class PrepareInsertSummary implements IService {
             }
         }
 
-        bodyComponent.setExecutionCourse((InfoExecutionCourse) Cloner.get(executionCourse));
+        bodyComponent.setExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
         bodyComponent.setInfoShifts(infoShifts);
         bodyComponent.setInfoProfessorships(infoProfessorships);
         bodyComponent.setInfoRooms(infoRooms);
