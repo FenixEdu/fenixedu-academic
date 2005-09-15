@@ -1826,6 +1826,7 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 	Integer keyEmployee;
 	Integer keyTeacher;
 	Integer keyExternalPerson;	
+	Integer keyGrantOwner;
 	String localidade;
 	String codigoFiscal;
 	String telemovel;
