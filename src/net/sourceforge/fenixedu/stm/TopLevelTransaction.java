@@ -63,14 +63,16 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
         if (body == null) {
             body = vbox.body.getBody(number);
 	    if (body.value == VBox.NOT_LOADED_VALUE) {
-		if (vbox.reload(obj, attr)) {
-		    return getBodyForRead(vbox, obj, attr);
-		} else {
-		    throw new Error("Couldn't load the attribute " + attr + " for class " + obj.getClass());
+		vbox.reload(obj, attr);
+		// after the reload, the same body should have a new value
+		// if not, then something gone wrong and its better to abort
+		if (body.value == VBox.NOT_LOADED_VALUE) {
+		    System.out.println("Couldn't load the attribute " + attr + " for class " + obj.getClass());
+		    throw new VersionNotAvailableException();
 		}
-	    } else {
-		bodiesRead.put(vbox, body);
 	    }
+	    
+	    bodiesRead.put(vbox, body);
         }
         return body;
     }
