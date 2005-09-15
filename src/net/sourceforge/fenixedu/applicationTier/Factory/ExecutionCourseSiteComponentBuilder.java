@@ -609,8 +609,7 @@ public class ExecutionCourseSiteComponentBuilder {
             infoLesson.setInicio(lesson.getInicio());
             infoLesson.setTipo(lesson.getTipo());
 
-            InfoRoomOccupation infoRoomOccupation = Cloner.copyIRoomOccupation2InfoRoomOccupation(lesson
-                    .getRoomOccupation());
+            InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(lesson.getRoomOccupation());
             InfoRoom infoRoom = InfoRoom.newInfoFromDomain(lesson.getRoomOccupation().getRoom());
             infoRoomOccupation.setInfoRoom(infoRoom);
             infoLesson.setInfoRoomOccupation(infoRoomOccupation);

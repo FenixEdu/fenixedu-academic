@@ -125,7 +125,7 @@ public class RoomSiteComponentBuilder {
                             }
                         }
                         if (add) {
-                            InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(aula);
+                            InfoLesson infoLesson = InfoLesson.newInfoFromDomain(aula);
                             IShift shift = aula.getShift();
                             if (shift == null) {
                                 continue;
@@ -133,8 +133,7 @@ public class RoomSiteComponentBuilder {
 							InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
                             infoLesson.setInfoShift(infoShift);
 
-                            InfoRoomOccupation infoRoomOccupation = Cloner.copyIRoomOccupation2InfoRoomOccupation(aula
-                                    .getRoomOccupation());
+                            InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(aula.getRoomOccupation());
                             InfoRoom infoRoom = InfoRoom.newInfoFromDomain(aula
                                     .getRoomOccupation().getRoom());
                             infoRoomOccupation.setInfoRoom(infoRoom);
