@@ -105,7 +105,7 @@ public class PrepareInsertSummary implements IService {
 
                 public Object transform(Object arg0) {
                     IRoom room = (IRoom) arg0;
-                    return Cloner.copyRoom2InfoRoom(room);
+                    return InfoRoom.newInfoFromDomain(room);
                 }
             });
         }
@@ -125,7 +125,7 @@ public class PrepareInsertSummary implements IService {
         }
 
         InfoSiteSummaries bodyComponent = new InfoSiteSummaries();
-        bodyComponent.setExecutionCourse((InfoExecutionCourse) Cloner.get(executionCourse));
+        bodyComponent.setExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
         bodyComponent.setInfoShifts(infoShifts);
         bodyComponent.setInfoProfessorships(infoProfessorships);
         bodyComponent.setInfoRooms(infoRooms);

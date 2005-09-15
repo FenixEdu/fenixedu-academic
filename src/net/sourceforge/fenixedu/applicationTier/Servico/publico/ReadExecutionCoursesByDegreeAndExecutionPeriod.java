@@ -75,7 +75,7 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriod implements IServico 
 
             for (int i = 0; i < executionCourseList.size(); i++) {
                 IExecutionCourse aux = (IExecutionCourse) executionCourseList.get(i);
-                InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner.get(aux);
+                InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(aux);
                 infoExecutionCourseList.add(infoExecutionCourse);
             }
 

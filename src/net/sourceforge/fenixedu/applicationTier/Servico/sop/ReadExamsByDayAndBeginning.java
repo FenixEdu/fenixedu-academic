@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewExamByDayAndShift;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
@@ -66,7 +67,7 @@ public class ReadExamsByDayAndBeginning implements IService {
                 for (int k = 0; k < tempExam.getAssociatedExecutionCourses().size(); k++) {
                     IExecutionCourse executionCourse = tempExam
                             .getAssociatedExecutionCourses().get(k);
-                    tempInfoExecutionCourses.add(Cloner.get(executionCourse));
+                    tempInfoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
 
                     // prepare degrees associated with exam
                     tempAssociatedCurricularCourses = executionCourse.getAssociatedCurricularCourses();

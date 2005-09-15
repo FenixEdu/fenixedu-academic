@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -66,7 +67,7 @@ public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYe
             CollectionUtils.collect(executionCourseList, new Transformer() {
                 public Object transform(Object input) {
                     IExecutionCourse executionCourse = (IExecutionCourse) input;
-                    return Cloner.get(executionCourse);
+                    return InfoExecutionCourse.newInfoFromDomain(executionCourse);
                 }
             }, infoExecutionCourseList);
         } catch (ExcepcaoPersistencia e) {

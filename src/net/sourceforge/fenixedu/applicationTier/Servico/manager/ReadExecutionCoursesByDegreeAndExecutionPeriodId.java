@@ -10,6 +10,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -77,7 +78,7 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriodId implements IServic
             List infoExecutionCourses = (List) CollectionUtils.collect(executionCourses,
                     new Transformer() {
                         public Object transform(Object arg0) {
-                            return Cloner.get((IExecutionCourse) arg0);
+                            return InfoExecutionCourse.newInfoFromDomain((IExecutionCourse) arg0);
                         }
                     });
             return infoExecutionCourses;

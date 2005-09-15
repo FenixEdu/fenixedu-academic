@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -31,7 +32,7 @@ public class ReadPublicExecutionPeriods implements IService {
 
             if (executionPeriods != null) {
                 for (int i = 0; i < executionPeriods.size(); i++) {
-                    result.add(Cloner.get((IExecutionPeriod) executionPeriods.get(i)));
+                    result.add(InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain((IExecutionPeriod) executionPeriods.get(i)));
                 }
             }
         } catch (ExcepcaoPersistencia ex) {

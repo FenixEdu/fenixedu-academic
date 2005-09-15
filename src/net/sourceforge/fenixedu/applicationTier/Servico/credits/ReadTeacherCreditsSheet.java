@@ -10,6 +10,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithInfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
@@ -242,7 +243,7 @@ public class ReadTeacherCreditsSheet implements IService {
         List infoServiceExemptions = readServiceExcemptions(teacher, executionPeriod, sp);
 
         InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
-        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
+        InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionPeriod);
 
         teacherCreditsSheetDTO.setInfoTeacher(infoTeacher);
         teacherCreditsSheetDTO.setInfoExecutionPeriod(infoExecutionPeriod);

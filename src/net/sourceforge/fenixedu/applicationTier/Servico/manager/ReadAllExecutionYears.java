@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
@@ -50,7 +51,7 @@ public class ReadAllExecutionYears implements IService {
         List result = new ArrayList(allExecutionYears.size());
 
         while (iterator.hasNext())
-            result.add(Cloner.get((IExecutionYear) iterator.next()));
+            result.add(InfoExecutionYear.newInfoFromDomain((IExecutionYear) iterator.next()));
 
         return result;
     }

@@ -24,7 +24,7 @@ public class ReadExecutionCourse implements IService {
                         .getIdInternal());
 
         if (iExecCourse != null) {
-            return (InfoExecutionCourse) Cloner.get(iExecCourse);
+            return InfoExecutionCourse.newInfoFromDomain(iExecCourse);
         }
         return null;
     }

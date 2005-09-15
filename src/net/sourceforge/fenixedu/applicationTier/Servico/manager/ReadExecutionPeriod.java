@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
@@ -47,7 +48,7 @@ public class ReadExecutionPeriod implements IService {
             throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
         }
 
-        infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
+        infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionPeriod);
         return infoExecutionPeriod;
     }
 }

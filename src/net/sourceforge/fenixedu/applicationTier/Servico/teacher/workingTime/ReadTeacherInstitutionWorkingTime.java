@@ -73,7 +73,7 @@ public class ReadTeacherInstitutionWorkingTime implements IServico {
                 executionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
                         executionPeriodId);
             }
-            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
+            InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
 
             List teacherInstitutionWorkTimeList = teacherInstitutionWorkingTimeDAO
                     .readByTeacherAndExecutionPeriod(teacher, executionPeriod);

@@ -16,6 +16,7 @@ import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 import net.sourceforge.fenixedu.applicationTier.IServico;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewExamByDayAndShift;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
@@ -63,7 +64,7 @@ public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod imple
                     for (int j = 0; j < exam.getAssociatedExecutionCourses().size(); j++) {
                         IExecutionCourse tempExecutionCourse = exam
                                 .getAssociatedExecutionCourses().get(j);
-                        infoExecutionCourses.add(Cloner.get(tempExecutionCourse));
+                        infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(tempExecutionCourse));
 
                         // prepare degrees associated with exam
                         List tempAssociatedCurricularCourses = executionCourse

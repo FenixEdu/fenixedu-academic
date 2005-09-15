@@ -54,7 +54,7 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IService {
             IExecutionCourse executionCourse = readExecutionCourse(infoExecutionCourse, sp);
             ITeacher teacher = readTeacher(infoTeacher, sp);
 
-            result.setInfoExecutionCourse((InfoExecutionCourse) Cloner.get(executionCourse));
+            result.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
             result.setInfoTeacher(Cloner.copyITeacher2InfoTeacher(teacher));
 
             ITurnoPersistente shiftDAO = sp.getITurnoPersistente();

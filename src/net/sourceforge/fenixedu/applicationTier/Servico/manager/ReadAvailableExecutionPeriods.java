@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
@@ -55,7 +57,7 @@ public class ReadAvailableExecutionPeriods implements IService {
 
     private Transformer TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD = new Transformer() {
         public Object transform(Object executionPeriod) {
-            return Cloner.get((IExecutionPeriod) executionPeriod);
+            return InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain((IExecutionPeriod) executionPeriod);
         }
     };
 

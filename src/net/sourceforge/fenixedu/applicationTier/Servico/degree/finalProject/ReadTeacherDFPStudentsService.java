@@ -45,7 +45,7 @@ public class ReadTeacherDFPStudentsService implements IService {
 
             IExecutionPeriod executionPeriod = getExecutionPeriod(executionPeriodId, executionPeriodDAO);
 
-            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
+            InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
 
             ITeacher teacher = (ITeacher) teacherDAO.readByOID(Teacher.class, infoTeacher
                     .getIdInternal());

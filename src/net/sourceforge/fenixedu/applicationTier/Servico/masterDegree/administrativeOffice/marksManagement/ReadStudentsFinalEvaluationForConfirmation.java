@@ -121,7 +121,7 @@ public class ReadStudentsFinalEvaluationForConfirmation implements IService {
                 throw new NonExistingServiceException();
             }
             IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
-            infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
+            infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
 
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");

@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExamStudentRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExportGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
@@ -225,8 +226,7 @@ public abstract class Cloner {
     // DO NOT DELETE - this is used locally through introspection!!!
     private static InfoExecutionCourse copy(IExecutionCourse executionCourse) {
         InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
-        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionCourse
-                .getExecutionPeriod());
+        InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionCourse.getExecutionPeriod());
 
         if (infoExecutionPeriod != null) {
             infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
@@ -278,10 +278,7 @@ public abstract class Cloner {
         }
 
         InfoLesson infoLesson = new InfoLesson();
-        /*
-         * InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse)
-         * Cloner.get(lesson .getDisciplinaExecucao());
-         */
+
         InfoRoom infoRoom = Cloner.copyRoom2InfoRoom(lesson.getSala());
         InfoRoomOccupation infoRoomOccupation = Cloner.copyIRoomOccupation2InfoRoomOccupation(lesson
                 .getRoomOccupation());
