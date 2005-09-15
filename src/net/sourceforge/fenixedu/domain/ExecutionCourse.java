@@ -211,11 +211,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return summary;
     }
     
-    public List responsibleFors() {
-        List<IProfessorship> professorships = this.getProfessorships();
-        List res = new ArrayList();
-
-        for (IProfessorship professorship : professorships) {
+    public List<IProfessorship> responsibleFors() {
+        final List<IProfessorship> res = new ArrayList<IProfessorship>();
+        for (final IProfessorship professorship : this.getProfessorships()) {
             if (professorship.getResponsibleFor())
                 res.add(professorship);
         }

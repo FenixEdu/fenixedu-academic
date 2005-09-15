@@ -1001,7 +1001,7 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
     public ISummary createSummary(String title, String summaryText, Integer studentsNumber,
             Boolean isExtraLesson, String teacherName);
 
-	public java.util.List responsibleFors();	
+	public java.util.List<IProfessorship> responsibleFors();
 
 	public IAttends getAttendsByStudent (final IStudent student);
     "
