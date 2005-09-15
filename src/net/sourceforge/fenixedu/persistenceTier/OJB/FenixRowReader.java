@@ -40,21 +40,17 @@ public class FenixRowReader extends RowReaderDefaultImpl {
 
 	    // if it is a domain object
 	    if (targetClassDescriptor.getFactoryClass() == DomainAllocator.class) {
-		// read idInternal
-		fmd = targetClassDescriptor.getFieldDescriptorByName("idInternal");
-		fmd.getPersistentField().set(result, row.get(fmd.getColumnName()));
-
 		// we need to lock on the CHANGE_LOGS to avoid concurrent updates
 		// while the object is being constructed and not in the cache
 		synchronized (TransactionChangeLogs.CHANGE_LOGS) {
-		    // cache object
-		    Object cached = Transaction.getCache().cache((DomainObject)result);
+		    ((DomainObject)result).addKnownVersionsFromLogs();
+		    
+		    // read idInternal
+		    fmd = targetClassDescriptor.getFieldDescriptorByName("idInternal");
+		    fmd.getPersistentField().set(result, row.get(fmd.getColumnName()));
 
-		    if (cached == result) {
-			// only initialize versions if it was not cached already
-			((DomainObject)result).addKnownVersionsFromLogs();
-		    }
-		    result = cached;
+		    // cache object
+		    result = Transaction.getCache().cache((DomainObject)result);
 		}
 	    }
         }

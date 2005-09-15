@@ -40,18 +40,10 @@ public class VBox<E> extends jvstm.VBox<E> implements VersionedSubject {
     protected synchronized void persistentLoad(E value) {
 	int txNumber = Transaction.current().getNumber();
 
-	if (this.body == null) {
-	    // handle special case of idInternal, where the initKnownVersions was not called yet
-	    VBoxBody<E> body = makeNewBody();
-	    body.version = 0;
+	// find appropriate body
+	VBoxBody<E> body = this.body.getBody(txNumber);
+	if (body.value == NOT_LOADED_VALUE) {
 	    body.value = value;
-	    this.body = body;
-	} else {
-	    // find appropriate body
-	    VBoxBody<E> body = this.body.getBody(txNumber);
-	    if (body.value == NOT_LOADED_VALUE) {
-		body.value = value;
-	    }
 	}
     }
 
@@ -100,7 +92,6 @@ public class VBox<E> extends jvstm.VBox<E> implements VersionedSubject {
 	body.value = (E)NOT_LOADED_VALUE;
 	return body;
     }
-
 
     public static <T> VBox<T> makeNew(boolean allocateOnly, boolean isReference) {
 	if (isReference) {
