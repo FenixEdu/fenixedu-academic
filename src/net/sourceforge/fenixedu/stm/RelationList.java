@@ -67,12 +67,12 @@ public abstract class RelationList<E> extends AbstractList<E> implements Version
     }
 
     protected void consolidateElementsIfLoaded() {
-	VBox<FunctionalSet<E>> box = getElementsBox();
-	if (box.hasValue()) {
-	    consolidateElements();
-	} else {
-	    if (elementsToAdd.get().size() + elementsToRemove.get().size() > 0) {
-		box.addNewVersion(Transaction.current().getNumber());
+	if (elementsToAdd.get().size() + elementsToRemove.get().size() > 0) {
+	    VBox<FunctionalSet<E>> box = getElementsBox();
+	    if (box.hasValue()) {
+		consolidateElements();
+	    } else {
+		box.putNotLoadedValue();
 	    }
 	}
     }

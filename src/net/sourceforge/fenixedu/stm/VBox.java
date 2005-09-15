@@ -33,6 +33,10 @@ public class VBox<E> extends jvstm.VBox<E> implements VersionedSubject {
 	return (body.value != NOT_LOADED_VALUE);
     }
 
+    public void putNotLoadedValue() {
+	this.put((E)NOT_LOADED_VALUE);
+    }
+
     protected synchronized void persistentLoad(E value) {
 	int txNumber = Transaction.current().getNumber();
 
