@@ -116,16 +116,13 @@ public class ReadSummary implements IService {
         }
 
         ISalaPersistente persistentRoom = sp.getISalaPersistente();
-        List rooms = persistentRoom.readAll();
-        List infoRooms = new ArrayList();
-        if (rooms != null && rooms.size() > 0) {
-            infoRooms = (List) CollectionUtils.collect(rooms, new Transformer() {
-
-                public Object transform(Object arg0) {
-                    IRoom room = (IRoom) arg0;
-                    return InfoRoom.newInfoFromDomain(room);
-                }
-            });
+        List<IRoom> rooms = persistentRoom.readAll();
+        List<InfoRoom> infoRooms = new ArrayList(rooms.size());
+        for (final IRoom room : rooms) {
+            final InfoRoom infoRoom = new InfoRoom();
+            infoRooms.add(infoRoom);
+            infoRoom.setIdInternal(room.getIdInternal());
+            infoRoom.setNome(room.getNome());
         }
         Collections.sort(infoRooms, new BeanComparator("nome"));
 
