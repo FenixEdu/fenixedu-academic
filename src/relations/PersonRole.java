@@ -81,6 +81,7 @@ public class PersonRole extends PersonRole_Base {
 			removeRoleIfPresent(person, RoleType.OPERATOR);
 			removeRoleIfPresent(person, RoleType.TIME_TABLE_MANAGER);
 			removeRoleIfPresent(person, RoleType.WEBSITE_MANAGER);
+            removeRoleIfPresent(person, RoleType.FIRST_TIME_STUDENT);
 			break;
 
 		case TEACHER:
