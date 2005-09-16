@@ -26,10 +26,7 @@ public class SendMail implements IService {
 
     private static String mailServer = null;
 
-    //returns the list of the e-mail addresses to which it wasn't possible to
-    // deliver the mail
-    public List run(List toList, List ccList, List bccList, String fromName, String from,
-            String subject, String text) {
+    public List run(List toList, List ccList, List bccList, String fromName, String from, String subject, String text) {
         if (bundle == null) {
             try {
                 SendMail.bundle = ResourceBundle.getBundle(SendMail.bundleFile);
@@ -42,9 +39,7 @@ public class SendMail implements IService {
                 SendMail.mailServer = "mail.adm";
             }
         }
-        List failedMails;
-        failedMails = EMail.send(SendMail.mailServer, fromName, from, subject, toList, ccList, bccList,
-                text);
-        return failedMails;
+        return EMail.send(SendMail.mailServer, fromName, from, subject, toList, ccList, bccList, text);
     }
+
 }
