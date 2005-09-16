@@ -5750,10 +5750,10 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadGratuitySituationsByStudentNumber</name>
+		<name>UpdateAndReadGratuitySituationsByStudentNumber</name>
 		<description>Retrieves gratuity situations associated with this student</description>
 		<implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationsByStudentNumber
+            net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.UpdateAndReadGratuitySituationsByStudentNumber
         </implementationClass>
 		<isTransactional>True</isTransactional>
 		<filterChains>
@@ -8759,5 +8759,5 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.PrepareEditGroupingMembers</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>       
-    </service>
+    </service>     
 </serviceDefinitions>    

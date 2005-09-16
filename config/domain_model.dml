@@ -1018,6 +1018,13 @@ class net.sourceforge.fenixedu.domain.ExecutionDegree extends net.sourceforge.fe
 	Integer keyCurricularPlan;
 	Integer keyCampus;
 	Integer keyGratuityValues;
+	
+	interface "
+	
+	public boolean isFirstYear();
+	
+	"
+	
 }
 
 
@@ -1039,6 +1046,12 @@ class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.feni
 	String year;
 	Integer keyInsuranceValue;
     PeriodState state;
+    
+    interface "
+    
+	public java.util.Collection<IExecutionDegree> getExecutionDegreesByType(final net.sourceforge.fenixedu.domain.degree.DegreeType degreeType);
+	
+    "
 }
 
 
@@ -1252,6 +1265,12 @@ class net.sourceforge.fenixedu.domain.GratuitySituation extends net.sourceforge.
 	Integer keyGratuityValues;
 	Double remainingValue;
     ExemptionGratuityType exemptionType;
+    
+    interface "
+    
+    public void updateValues();
+    
+    "
 }
 
 
@@ -1267,6 +1286,14 @@ class net.sourceforge.fenixedu.domain.GratuityValues extends net.sourceforge.fen
 	Double finalProofValue;
 	Integer keyExecutionDegree;
 	Integer keyEmployee;
+	
+	interface "
+	
+	public Double calculateTotalValueForMasterDegree();
+	
+	public Double calculateTotalValueForSpecialization(net.sourceforge.fenixedu.domain.IStudentCurricularPlan studentCurricularPlan);
+	
+	"
 }
 
 
@@ -2516,6 +2543,8 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
 				net.sourceforge.fenixedu.domain.exceptions.DomainException;
     
     public java.util.List initAcumulatedEnrollments(java.util.List elements);
+    
+    public IGratuitySituation getGratuitySituationByGratuityValues(final IGratuityValues gratuityValues);
     "
 }
 

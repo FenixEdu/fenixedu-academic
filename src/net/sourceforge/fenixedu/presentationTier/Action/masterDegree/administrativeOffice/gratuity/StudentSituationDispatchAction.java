@@ -23,6 +23,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.Sessi
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -33,7 +35,7 @@ import org.apache.struts.action.DynaActionForm;
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- *  
+ * 
  */
 public class StudentSituationDispatchAction extends FenixDispatchAction {
 
@@ -77,7 +79,7 @@ public class StudentSituationDispatchAction extends FenixDispatchAction {
 
         try {
             gratuitySituations = (List) ServiceUtils.executeService(userView,
-                    "ReadGratuitySituationsByStudentNumber", argsGratuitySituations);
+                    "UpdateAndReadGratuitySituationsByStudentNumber", argsGratuitySituations);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.ICandidateSituation;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IGratuitySituation;
 import net.sourceforge.fenixedu.domain.IGratuityValues;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.IPerson;
@@ -36,7 +35,6 @@ import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -89,7 +87,7 @@ public class RegisterCandidate implements IService {
 
         copyQualifications(masterDegreeCandidate, person);
 
-        createGratuitySituations(masterDegreeCandidate, studentCurricularPlan);
+        createGratuitySituation(masterDegreeCandidate, studentCurricularPlan);
 
         return createNewInfoCandidateRegistration(masterDegreeCandidate, studentCurricularPlan);
 
@@ -114,9 +112,10 @@ public class RegisterCandidate implements IService {
         return infoCandidateRegistration;
     }
 
-    private void createGratuitySituations(IMasterDegreeCandidate masterDegreeCandidate,
+    private void createGratuitySituation(IMasterDegreeCandidate masterDegreeCandidate,
             IStudentCurricularPlan studentCurricularPlan)
             throws GratuityValuesNotDefinedServiceException {
+
         IGratuityValues gratuityValues = masterDegreeCandidate.getExecutionDegree().getGratuityValues();
 
         if (gratuityValues == null) {
@@ -124,26 +123,8 @@ public class RegisterCandidate implements IService {
                     "error.exception.masterDegree.gratuity.gratuityValuesNotDefined");
         }
 
-        IGratuitySituation gratuitySituation = DomainFactory.makeGratuitySituation();
+        DomainFactory.makeGratuitySituation(gratuityValues, studentCurricularPlan);
 
-        gratuitySituation.setGratuityValues(gratuityValues);
-        gratuitySituation.setStudentCurricularPlan(studentCurricularPlan);
-        gratuitySituation.setWhen(Calendar.getInstance().getTime());
-        Double totalValue = null;
-
-        if (studentCurricularPlan.getSpecialization().equals(Specialization.MASTER_DEGREE)) {
-            totalValue = calculateTotalValueForMasterDegree(gratuityValues);
-        } else if (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION)) {
-            totalValue = new Double(0);
-        }
-
-        if (totalValue == null) {
-            throw new GratuityValuesNotDefinedServiceException(
-                    "error.exception.masterDegree.gratuity.gratuityValuesNotDefined");
-        }
-
-        gratuitySituation.setRemainingValue(totalValue);
-        gratuitySituation.setTotalValue(totalValue);
     }
 
     private void copyQualifications(IMasterDegreeCandidate masterDegreeCandidate, IPerson person) {
