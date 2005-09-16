@@ -147,6 +147,13 @@
 			
 			>
 		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
+	</collection-descriptor>	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="creditsInAnySecundaryAreas"
+			element-class-ref="net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea"
+			
+			>
+		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="gratuitySituations"
@@ -154,7 +161,7 @@
 			
 			>
 		<inverse-foreignkey field-ref="keyStudentCurricularPlan"/>
-	</collection-descriptor>	
+	</collection-descriptor>		
     <!--<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="enrollmentReports"
 			element-class-ref="net.sourceforge.fenixedu.domain.enrollmentReport.EnrollmentReport"
@@ -309,6 +316,20 @@
 			
 			>
 		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="creditsInAnySecundaryAreas"
+			element-class-ref="net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea"
+			
+			>
+		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
+	</collection-descriptor>	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="gratuitySituations"
+			element-class-ref="net.sourceforge.fenixedu.domain.GratuitySituation"
+			
+			>
+		<inverse-foreignkey field-ref="keyStudentCurricularPlan"/>
 	</collection-descriptor>	
  <!--   <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="enrollmentReports"
@@ -464,7 +485,21 @@
 			
 			>
 		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="creditsInAnySecundaryAreas"
+			element-class-ref="net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea"
+			
+			>
+		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
 	</collection-descriptor>	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="gratuitySituations"
+			element-class-ref="net.sourceforge.fenixedu.domain.GratuitySituation"
+			
+			>
+		<inverse-foreignkey field-ref="keyStudentCurricularPlan"/>
+	</collection-descriptor>			
   <!--  <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="enrollmentReports"
 			element-class-ref="net.sourceforge.fenixedu.domain.enrollmentReport.EnrollmentReport"
@@ -621,6 +656,20 @@
 			>
 		<inverse-foreignkey field-ref="keyStudentCurricularPlan"/>
 	</collection-descriptor>	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="creditsInAnySecundaryAreas"
+			element-class-ref="net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea"
+			
+			>
+		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
+	</collection-descriptor>	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="gratuitySituations"
+			element-class-ref="net.sourceforge.fenixedu.domain.GratuitySituation"
+			
+			>
+		<inverse-foreignkey field-ref="keyStudentCurricularPlan"/>
+	</collection-descriptor>		
     <!--<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="enrollmentReports"
 			element-class-ref="net.sourceforge.fenixedu.domain.enrollmentReport.EnrollmentReport"
