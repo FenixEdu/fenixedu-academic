@@ -20,7 +20,7 @@
 	</td>
 	<td class="listClasses">
 		<html:link page="/studentTimeTable.do" target="_blank" >
-		<bean:message key="link.registration.see"/></html:link>
+		<bean:message key="link.registration.print"/></html:link>
 	</td>
 </tr>
 </table>
