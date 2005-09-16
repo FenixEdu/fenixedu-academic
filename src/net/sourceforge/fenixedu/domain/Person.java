@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -469,4 +468,12 @@ public class Person extends Person_Base {
         this.getSentSms().clear();
         this.getStudents().clear();
     }
+
+    public void removeRoleByType(final RoleType roleType) {
+        final IRole role = getPersonRole(roleType);
+        if (role != null) {
+            removePersonRoles(role);
+        }
+    }
+
 }
