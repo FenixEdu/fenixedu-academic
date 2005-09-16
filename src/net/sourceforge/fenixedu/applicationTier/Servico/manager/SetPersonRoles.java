@@ -1,8 +1,6 @@
-/*
- * Created on 2003/12/04
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -14,28 +12,21 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author Luis Cruz
- */
-
 public class SetPersonRoles implements IService {
 
-    public Boolean run(String username, List roleOIDs) throws FenixServiceException {
-        Boolean result = new Boolean(false);
-        try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPerson person = persistentSuport.getIPessoaPersistente().lerPessoaPorUsername(username);
-            persistentSuport.getIPessoaPersistente().simpleLockWrite(person);
-            person.getPersonRoles().clear();
-            for (int i = 0; i < roleOIDs.size(); i++) {
-                IRole role = (IRole) persistentSuport.getIPessoaPersistente().readByOID(Role.class,
-                        ((Integer) roleOIDs.get(i)));
-                person.getPersonRoles().add(role);
-            }
-            result = new Boolean(true);
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+    public Boolean run(final String username, final List<Integer> roleOIDs) throws ExcepcaoPersistencia {
+        final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+
+        final IPerson person = persistentSuport.getIPessoaPersistente().lerPessoaPorUsername(username);
+
+        final List<IRole> roles = new ArrayList<IRole>();
+        for (final Integer roleId : roleOIDs) {
+            roles.add((IRole) persistentSuport.getIPersistentObject().readByOID(Role.class, roleId));
         }
-        return result;
+
+        person.indicatePrivledges(roles);
+
+        return Boolean.TRUE;
     }
+
 }

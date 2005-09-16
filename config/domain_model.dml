@@ -1921,6 +1921,8 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
     public net.sourceforge.fenixedu.domain.IStudent getStudentByType(net.sourceforge.fenixedu.domain.degree.DegreeType degreeType);
 
 	public void removeRoleByType(net.sourceforge.fenixedu.domain.person.RoleType roleType);
+
+	public void indicatePrivledges(java.util.List<IRole> roles);
     "
 }
 

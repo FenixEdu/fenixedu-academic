@@ -174,9 +174,9 @@ public class Person extends Person_Base {
 		return null;
 	}    
     
-	public Boolean hasRole(RoleType roleType){
-		for (IRole role : this.getPersonRoles()) {
-			if(role.getRoleType().equals(roleType)) {
+	public Boolean hasRole(final RoleType roleType){
+		for (final IRole role : this.getPersonRoles()) {
+			if (role.getRoleType() == roleType) {
 				return true;
 			}
 		}
@@ -473,6 +473,21 @@ public class Person extends Person_Base {
         final IRole role = getPersonRole(roleType);
         if (role != null) {
             removePersonRoles(role);
+        }
+    }
+
+    public void indicatePrivledges(final List<IRole> roles) {
+        for (int i = 0; i < getPersonRolesCount(); i++) {
+            final IRole role = getPersonRoles().get(i);
+            if (!roles.contains(role)) {
+                removePersonRoles(role);
+            }
+        }
+
+        for (final IRole role : roles) {
+            if (!hasPersonRoles(role)) {
+                addPersonRoles(role);
+            }
         }
     }
 
