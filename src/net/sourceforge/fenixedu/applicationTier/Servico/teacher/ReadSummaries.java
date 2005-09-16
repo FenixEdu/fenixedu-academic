@@ -359,7 +359,7 @@ public class ReadSummaries implements IService {
                         endLesson.set(Calendar.MINUTE, lesson.getFim().get(Calendar.MINUTE));
                         endLesson.set(Calendar.SECOND, 00);
 
-                        if (summary.getSummaryType().equals(shift.getTipo())
+                        if (summary.getSummaryType() == shift.getTipo()
                                 && dateAndHourSummary.get(Calendar.DAY_OF_WEEK) == lesson.getDiaSemana()
                                         .getDiaSemana().intValue()
                                 && !beginLesson.after(dateAndHourSummary)
