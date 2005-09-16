@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student.schoolRegistration;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -14,10 +15,12 @@ import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ICountry;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.IResidenceCandidacies;
@@ -140,7 +143,16 @@ public class SchoolRegistration implements IService {
                 return executionYear.getState().equals(PeriodState.CURRENT);
             }});
         
-        student.setRegistrationYear(executionYear);
+        Date actualDate = Calendar.getInstance().getTime();
+        student.setRegistrationYear(executionYear);        
+        IStudentCurricularPlan scp = student.getActiveStudentCurricularPlan();
+        //update the dates, since this objects were already created and only now the student is a registrated student in the campus
+        scp.setStartDate(actualDate);
+        scp.setWhen(actualDate);
+        List<IEnrolment> enrollments = scp.getEnrolments();
+        for (IEnrolment enrolment : enrollments) {
+            enrolment.setCreationDate(actualDate);
+        }
     }
 
 }
