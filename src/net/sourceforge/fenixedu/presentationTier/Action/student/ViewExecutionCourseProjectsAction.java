@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteProjects;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -34,7 +35,7 @@ import org.apache.struts.action.ActionMapping;
 public class ViewExecutionCourseProjectsAction extends FenixContextAction {
 
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws FenixActionException, FenixFilterException {
+		throws FenixActionException, FenixFilterException, FenixServiceException {
 
 		HttpSession session = request.getSession(false);
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -52,14 +53,12 @@ public class ViewExecutionCourseProjectsAction extends FenixContextAction {
 		}
 		Integer executionCourseCode = new Integer(executionCourseCodeString);
 
-		ISiteComponent viewProjectsComponent;
 		Object[] args = {executionCourseCode, userView.getUtilizador()};
-		try {
-			viewProjectsComponent = (InfoSiteProjects) ServiceUtils.executeService(userView, "ReadExecutionCourseProjects", args);
+        ISiteComponent viewProjectsComponent = (InfoSiteProjects) ServiceUtils.executeService(userView, "ReadExecutionCourseProjects", args);
 
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        Object[] args2 = { executionCourseCode };
+        InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceUtils.executeService(userView, "ReadExecutionCourseByOID", args2);        
+        request.setAttribute("infoExecutionCourse", infoExecutionCourse);
 
 		InfoSiteProjects infoSiteProjects = (InfoSiteProjects) viewProjectsComponent;
 		List infoGroupPropertiesList = new ArrayList();

@@ -18,8 +18,11 @@
 </table>
 <br>	
 
-	<span class="error"><html:errors/></span> 	
-	
+	<span class="error"><html:errors/></span>
+
+	<bean:write name="infoExecutionCourse" property="nome"/>
+	<br />
+
 	<logic:empty name="infoGroupPropertiesList">
 	<h2><bean:message key="message.infoGroupPropertiesList.not.available" /></h2>
 	</logic:empty>
