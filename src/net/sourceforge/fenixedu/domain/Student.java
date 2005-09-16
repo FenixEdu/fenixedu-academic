@@ -52,21 +52,12 @@ public class Student extends Student_Base {
     }
 
     public IStudentCurricularPlan getActiveStudentCurricularPlan() {
-        List curricularPlans = getStudentCurricularPlans();
-        IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) CollectionUtils.find(
-                curricularPlans, new Predicate() {
-
-                    public boolean evaluate(Object arg0) {
-                        IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) arg0;
-                        return studentCurricularPlan.getCurrentState().equals(
-                                StudentCurricularPlanState.ACTIVE);
-                    }
-                });
-
-        if (studentCurricularPlan == null) {
-            studentCurricularPlan = (IStudentCurricularPlan) curricularPlans.get(0);
+        for (final IStudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
+            if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.ACTIVE) {
+                return studentCurricularPlan;
+            }
         }
-        return studentCurricularPlan;
+        return null;
     }
 
     public boolean attends(final IExecutionCourse executionCourse) {
