@@ -5,19 +5,26 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.operator;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 import net.sourceforge.fenixedu.util.RandomStringGenerator;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -37,25 +44,33 @@ public class GenerateNewStudentsPasswordsService implements IService {
         List studentsList = null;
         List infoPersonList = new ArrayList();
         IPersistentStudent persistentStudent = null;
-        IPessoaPersistente persistentPerson = null;
 
         sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         persistentStudent = sp.getIPersistentStudent();
-        persistentPerson = sp.getIPessoaPersistente();
         studentsList = persistentStudent.readAllBetweenNumbers(fromNumber, toNumber);
+        Set<IStudent> studentsUniqueList = new HashSet(studentsList);
 
-        for (int iterator = 0; iterator < studentsList.size(); iterator++) {
-            IStudent student = (IStudent) studentsList.get(iterator);
+        for (IStudent student : studentsUniqueList) {
 
             IPerson person = student.getPerson();
-            persistentPerson.simpleLockWrite(person);
-            String password = RandomStringGenerator.getRandomStringGenerator(8);
+            boolean isFirstTimeStudent = CollectionUtils.exists(person.getPersonRoles(),
+                    new Predicate() {
 
-            InfoPerson infoPerson = InfoPerson.newInfoFromDomain(person);
-            infoPerson.setPassword(password);
-            infoPersonList.add(infoPerson);
+                        public boolean evaluate(Object arg0) {
+                            IRole role = (IRole) arg0;
+                            return role.getRoleType().equals(RoleType.FIRST_TIME_STUDENT);
+                        }
+                    });
 
-            person.setPassword(PasswordEncryptor.encryptPassword(password));
+            if (!isFirstTimeStudent) {
+                String password = RandomStringGenerator.getRandomStringGenerator(8);
+
+                InfoPerson infoPerson = InfoPerson.newInfoFromDomain(person);
+                infoPerson.setPassword(password);
+                infoPersonList.add(infoPerson);
+
+                person.setPassword(PasswordEncryptor.encryptPassword(password));
+            }
         }
 
         return infoPersonList;
