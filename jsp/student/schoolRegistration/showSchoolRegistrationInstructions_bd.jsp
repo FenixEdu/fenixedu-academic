@@ -4,16 +4,26 @@
 <html:form action="/changePassword?method=start">
 <html:hidden property="page" value="1"/>
 
-<table align="center" width="70%">
-<tr>
-	<td align="center"><h4 class="registration">Ler com Atenção</h4></td>
-</tr>	
-<tr>
-	<td class="infoop" align="justify">
-		<h4 class="registration_cell"><bean:message key="label.registration.info" /></h4>
-	</td>
-</tr>
-</table>
-<br>
+	<div align="center" style="text-align: center;">
+	<h4 class="registration"><bean:message key="label.registration.title" /></h4>
+	<div class="infoop" style="text-align: justify; width: 70%; margin: 0 14%;">
+		<p><strong>Leia com atenção:</strong></p>
+		<p><bean:message key="label.registration.info1" />:</p>
+		<ul style="list-style: none;">
+		<li><bean:message key="label.registration.info.step1" /></li>
+		<li><bean:message key="label.registration.info.step2" /></li>
+		<li><bean:message key="label.registration.info.step3" /></li>
+		<li><bean:message key="label.registration.info.step4" /></li>
+		<li><bean:message key="label.registration.info.step5" /></li>
+		<li><bean:message key="label.registration.info.step6" /></li>
+		</ul>
+		<p><bean:message key="label.registration.info2" /></p>
+		<p><bean:message key="label.registration.info3" /></p>
+	</div>
+	
+	</div>
+
+
+<br />
 <p align="center"><html:submit value="Continuar" styleClass="inputbutton"/></p>
 </html:form>

@@ -1,19 +1,23 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-	<strong>Página 1 de 7</strong>
-   <h2><p align="center">Por razões de segurança mude a sua senha</p></h2>
-	<p align="center">
-   		<font color='#FF0000'><strong>
-   			Atenção: A alteração da senha só será efectuada no final do processo de Matricula.<br/>
-   			Se o processo de Matricula for cancelado a nova senha não ficará guardada.
-   		</strong></font>
-   	</p>
-   	
-	<p align="center"><span class="error"><html:errors/></span></p>
+<p><strong>Página 1 de 6</strong></p>
 
-<html:form action="/viewPersonalInfo?method=visualizeFirstTimeStudentPersonalInfoAction">
-<html:hidden property="page" value="2"/>
+<div style="width: 50%; margin: 0 24%;">
+	
+	<div style="text-align: center;">
+	<h2>Alteração da Password</h2>
+	<p><strong>Por razões de segurança deve mudar a sua password.</strong></p>
+	<p style="color: #770; background-color: #ffe;">
+	<strong>Atenção:</strong> A alteração da password só terá efeito quando terminar o processo de matrícula.
+	Se o processo for cancelado a nova password não ficará guardada.
+	</p>
+	</div>
+<div class="infoop">
+	<p style="text-align: center"><span class="error"><html:errors/></span></p>
+	
+	<html:form action="/viewPersonalInfo?method=visualizeFirstTimeStudentPersonalInfoAction">
+	<html:hidden property="page" value="2"/>
     
     <!-- Old Password -->
 	<table align="center">
@@ -35,10 +39,11 @@
          </td>
        </tr>
 	</table>
+</div>
 
 	<br />
-	<p align="center">
-		<html:submit value="Alterar" styleClass="inputbutton" property="ok" />
-		<html:reset value="Limpar" styleClass="inputbutton"/>
-	</p>
+	<p align="center"><html:submit value="Confirmar" styleClass="inputbutton" property="ok" /></p>
+	
 </html:form>
+
+</div>

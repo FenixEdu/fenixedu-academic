@@ -75,8 +75,7 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
         } catch (InvalidPasswordServiceException e) {
             throw new InvalidPasswordActionException(e);
         }
-
-        registrationForm.set("maritalStatus", MaritalStatus.SINGLE.toString());
+        
         registrationForm.set("name", infoPerson.getNome());
 
         // Get List of available Countries

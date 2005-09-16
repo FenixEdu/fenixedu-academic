@@ -6,41 +6,66 @@
 <bean:define id="infoEnrollments" name="infoEnrollments" scope="request"/>
 <bean:define id="infoClass" name="infoClass" scope="request"/>
 
-<html:form action="<%= "/viewEnrollments?method=declarations&amp;degreeName="+ request.getAttribute("degreeName")%>">
- <strong>Página 6 de 7</strong>
+<%-- <html:form action="<%= "/viewEnrollments?method=declarations&amp;degreeName="+ request.getAttribute("degreeName")%>"> --%>
+<html:form action="/declaration.do?method=logOff" >
+
+<p><strong>Página 6 de 6</strong></p>
+
 <p align="center"><span class="error"><html:errors/></span></p>
-<p align="center">
+
+<div style="text-align: center; width: 60%; margin: 0 19%;">
 	<logic:present name="studentRegistered" scope="request">
-		<p align="center"><span class="error"><%= request.getAttribute("studentRegistered") %></span></p>
+		<p><span style="color: #070; padding: 1em;"><strong><bean:message key="label.register.success1" /></strong></span></p>
+		<p style="background-color: #ffd; padding: 0.5em;"><strong><bean:message key="label.register.success3" /></strong></p>
 	</logic:present>
 	<logic:notPresent name="studentRegistered" scope="request">
-		<p align="center"><b><font color="red"><bean:message key="label.register.success" /></font></b></p>
+		<p><span style="background-color: #cfc; color: #070; padding: 1em;"><strong><bean:message key="label.register.success1" /></strong></span></p>
+		<p><b><bean:message key="label.register.success2" /></b></p>
 	</logic:notPresent>
-</p>
-<br/></br/>
-<p align="center"><b><bean:message key="label.enrollments" /></b><br/></p>
+</div>
 
-	<table border="0" cellpadding="5" cellspacing="0" align="center">
+<div style="width: 70%; margin: 0 14%; border-top: 1px solid #aaa;">
+
+<p align="center"><em><bean:message key="label.enrollments" /></em></p>
+
+	<table class="table1" align="center">
 		<tr>
-		  	<td class="listClasses-header">
-		  		<bean:message key="label.curricular.course.name" bundle="DEFAULT"/>
-		  	</td>
-		  	<td class="listClasses-header">
-		  		<bean:message key="label.class" bundle="DEFAULT" />
-		  	</td>
+			<td class="listClasses-header">
+			<bean:message key="label.curricular.course.name" bundle="DEFAULT"/>
+			</td>
 		</tr>
-	  	
-		<logic:iterate id="enrolment" name="infoEnrollments">
-	  		<tr>
-			  <td class="listClasses">
-			    <bean:write name="enrolment" property="infoCurricularCourse.name"/>
-			  </td>
- 			  <td class="listClasses">
-			  	<bean:write name="infoClass" property="nome"/>
-			  </td>
-			 </tr>
-		</logic:iterate>
-		
-	</table>
-<p align="center"><html:submit value="Continuar" styleClass="inputbutton"/></p>
+	<logic:iterate id="enrolment" name="infoEnrollments">
+	  	<tr>
+			<td class="listClasses">
+			<bean:write name="enrolment" property="infoCurricularCourse.name"/>
+			</td>
+		</tr>
+	</logic:iterate>
+</table>
+
+<br/>
+
+<table align="center" border="0" cellpadding="5" cellspacing="1">
+	<tr>
+		<td class="listClasses"><strong><bean:message key="label.registration.declarations"/></strong></td>
+		<td class="listClasses">
+			<html:link page="<%="/declaration.do?method=printDeclaration&amp;degreeName=" +
+				request.getAttribute("degreeName")%>" target="_blank">
+				<bean:message key="link.registration.print"/></html:link>
+		</td>
+	</tr>
+	<tr>
+		<td class="listClasses"><strong><bean:message key="link.my.timetable"/></strong></td>
+		<td class="listClasses">
+			<html:link page="/studentTimeTable.do" target="_blank" >
+			<bean:message key="link.registration.print"/></html:link>
+		</td>
+	</tr>
+</table>
+
+</div>
+
+<br/><br/>
+
+<p align="center"><html:submit value="Terminar" styleClass="inputbutton"/></p>
 </html:form>

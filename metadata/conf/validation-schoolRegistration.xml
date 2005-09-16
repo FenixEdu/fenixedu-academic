@@ -118,7 +118,7 @@
                 <var-value>yearOfEmissionDateOfDocumentId</var-value>
             </var>
         </field>
-        
+
         <field property="nameOfFather" depends="required" page="3">
         	<arg0 key="label.person.fatherNameError"  />
         </field>
@@ -183,8 +183,13 @@
         	<arg0 key="label.person.addressDistrictError"  />
         </field>
         
-        <field property="contributorNumber" depends="long" page="3">
+        <field property="contributorNumber" depends="long,mask" page="3">
         	<arg0 key="label.person.contributorNumber"  />
+        	<msg name="mask" key="errors.invalid.contributorNumber" />
+				<var>
+					<var-name>mask</var-name>
+			       	<var-value>^\d{9}$</var-value>
+			    </var>
         </field>
         
         <field property="maritalStatus" depends="required" page="3">
