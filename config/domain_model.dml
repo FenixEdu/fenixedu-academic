@@ -2411,6 +2411,10 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 	public void createAnnouncement(String announcementTitle, String announcementInformation);			
 	
 	public net.sourceforge.fenixedu.domain.ISection createSection(String sectionName, ISection parentSection, Integer sectionOrder);
+
+	public net.sourceforge.fenixedu.domain.IAnnouncement getLastAnnouncement();
+
+	public java.util.Set<net.sourceforge.fenixedu.domain.IAnnouncement> getSortedAnnouncements();
 	"
 }
 

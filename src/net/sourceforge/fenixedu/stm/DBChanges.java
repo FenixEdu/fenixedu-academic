@@ -12,8 +12,6 @@ import java.sql.Statement;
 import java.sql.SQLException;
 
 import org.apache.ojb.broker.PersistenceBroker;
-import org.apache.ojb.broker.PersistenceBrokerException;
-import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.OptimisticLockException;
 import org.apache.ojb.broker.accesslayer.LookupException;
 
@@ -35,7 +33,6 @@ class DBChanges {
     private static final int MAX_BUFFER_CAPACITY = 10000;
     private static final int BUFFER_THRESHOLD = 256;
 
-    private PersistenceBroker broker;
     private Set<AttrChangeLog> attrChangeLogs = null;
     private Set<DomainObject> newObjs = null;
     private Set objsToStore = null;
@@ -49,20 +46,6 @@ class DBChanges {
 	    || ((mToNTuples != null) && (! mToNTuples.isEmpty()));
     }
 
-    void finish() {
-	if (broker != null) {
-	    broker.close();
-	    broker = null;
-	}
-    }
-
-
-    public PersistenceBroker getOJBBroker() {
-	if (broker == null) {
-	    broker = PersistenceBrokerFactory.defaultPersistenceBroker();
-	}
-	return broker;
-    }
 
     public void logAttrChange(DomainObject obj, String attrName) {
 	if (attrChangeLogs == null) {
@@ -141,9 +124,7 @@ class DBChanges {
 	}
     }
 
-    void makePersistent(int txNumber) throws SQLException, LookupException {
-	PersistenceBroker pb = getOJBBroker();
-
+    void makePersistent(PersistenceBroker pb, int txNumber) throws SQLException, LookupException {
 	// store new objects
 	if (newObjs != null) {
 	    for (Object obj : newObjs) {

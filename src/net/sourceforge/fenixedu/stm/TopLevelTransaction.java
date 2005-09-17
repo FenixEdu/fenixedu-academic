@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.stm;
 
 import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.accesslayer.LookupException;
 
 import jvstm.VBoxBody;
@@ -10,16 +11,47 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.ArrayList;
+
 
 public class TopLevelTransaction extends jvstm.TopLevelTransaction implements FenixTransaction {
 
-    private DBChanges dbChanges = null;
-    private ServiceInfo serviceInfo = null;
+    private static final ArrayList<CommitListener> COMMIT_LISTENERS = new ArrayList<CommitListener>();
+
+    public static void addCommitListener(CommitListener listener) {
+	synchronized (COMMIT_LISTENERS) {
+	    COMMIT_LISTENERS.add(listener);
+	}
+    }
+
+    public static void removeCommitListener(CommitListener listener) {
+	synchronized (COMMIT_LISTENERS) {
+	    COMMIT_LISTENERS.remove(listener);
+	}
+    }
+
+    private static void notifyBeforeCommit(TopLevelTransaction tx) {
+	for (CommitListener cl : COMMIT_LISTENERS) {
+	    cl.beforeCommit(tx);
+	}
+    }
+
+    private static void notifyAfterCommit(TopLevelTransaction tx) {
+	for (CommitListener cl : COMMIT_LISTENERS) {
+	    cl.afterCommit(tx);
+	}
+    }
+
+
+    // Each TopLevelTx has its DBChanges 
+    // If this slot is changed to null, it is an indication that the
+    // transaction does not allow more changes
+    private DBChanges dbChanges = new DBChanges();
+    private ServiceInfo serviceInfo = ServiceInfo.getCurrentServiceInfo();
+    private PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
 
     TopLevelTransaction(int number) {
         super(number);
-	this.serviceInfo = ServiceInfo.getCurrentServiceInfo();
-	this.dbChanges = new DBChanges();
 
 	// open a connection to the database and set this tx number to the number that
 	// corresponds to that connection number.  The connection number should always be 
@@ -28,11 +60,18 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 	setNumber(updateFromTxLogsOnDatabase(number));
     }
 
-
-    Transaction makeNestedTransaction() {
-	throw new Error("Nested transactions not supported yet...");
+    public PersistenceBroker getOJBBroker() {
+	return broker;
     }
 
+    public void setReadOnly() {
+	// a null dbChanges indicates a read-only tx
+	this.dbChanges = null;
+    }
+
+    protected Transaction makeNestedTransaction() {
+	throw new Error("Nested transactions not supported yet...");
+    }
 
     private int updateFromTxLogsOnDatabase(int currentNumber) {
 	try {
@@ -52,10 +91,38 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 
     protected void finish() {
 	super.finish();
-	getDBChanges().finish();
+	if (broker != null) {
+	    broker.close();
+	    broker = null;
+	}
 	dbChanges = null;
     }
 
+    protected void doCommit() {
+	notifyBeforeCommit(this);
+	super.doCommit();
+	notifyAfterCommit(this);
+    }
+
+    public ReadSet getReadSet() {
+	return new ReadSet(bodiesRead);
+    }
+
+    protected <T> jvstm.VBoxBody<T> getBodyForWrite(jvstm.VBox<T> vbox) {
+	if (dbChanges == null) {
+	    throw new IllegalWriteException();
+	} else {
+	    return super.getBodyForWrite(vbox);
+	}
+    }
+
+    protected <T> void setPerTxValue(jvstm.PerTxBox<T> box, T value) {
+	if (dbChanges == null) {
+	    throw new IllegalWriteException();
+	} else {
+	    super.setPerTxValue(box, value);
+	}
+    }
 
     public <T> VBoxBody<T> getBodyForRead(VBox<T> vbox, Object obj, String attr) {
         VBoxBody<T> body = getBodyInTx(vbox);
@@ -86,15 +153,17 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
     }
 
     public DBChanges getDBChanges() {
-	return dbChanges;
-    }
-
-    public PersistenceBroker getOJBBroker() {
-	return getDBChanges().getOJBBroker();
+	if (dbChanges == null) {
+	    // if it is null, it means that the transaction is a read-only transaction
+	    throw new IllegalWriteException();
+	} else {
+	    return dbChanges;
+	}
     }
 
     protected boolean isWriteTransaction() {
-	return dbChanges.needsWrite() || super.isWriteTransaction();
+	return ((dbChanges != null) && dbChanges.needsWrite())
+	    || super.isWriteTransaction();
     }
 
     protected int performValidCommit() {
@@ -156,7 +225,7 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 
     protected void doCommit(int newTxNumber) {
 	try {
-	    dbChanges.makePersistent(newTxNumber);
+	    dbChanges.makePersistent(getOJBBroker(), newTxNumber);
 	    dbChanges.cache();
 	    super.doCommit(newTxNumber);
 	} catch (SQLException sqle) {

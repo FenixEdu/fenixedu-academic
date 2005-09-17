@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -282,30 +283,16 @@ public class TeacherAdministrationSiteComponentBuilder {
         return component;
     }
 
-    private InfoSiteAnnouncement getInfoSiteAnnouncement(InfoSiteAnnouncement component, ISite site)
-            throws FenixServiceException {
-        try {
+    private InfoSiteAnnouncement getInfoSiteAnnouncement(InfoSiteAnnouncement component, ISite site) {
+	Set<IAnnouncement> announcements = site.getSortedAnnouncements();
+	List infoAnnouncementsList = new ArrayList(announcements.size());
 
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-            List announcementsList = sp.getIPersistentAnnouncement().readAnnouncementsBySite(
-                    site.getIdInternal());
-            List infoAnnouncementsList = new ArrayList();
-
-            if (announcementsList != null && announcementsList.isEmpty() == false) {
-                Iterator iterAnnouncements = announcementsList.iterator();
-                while (iterAnnouncements.hasNext()) {
-                    IAnnouncement announcement = (IAnnouncement) iterAnnouncements.next();
-
-                    infoAnnouncementsList.add(InfoAnnouncement.newInfoFromDomain(announcement));
-                }
-            }
-
-            component.setAnnouncements(infoAnnouncementsList);
-            return component;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
+	for (IAnnouncement ann : announcements) {
+	    infoAnnouncementsList.add(InfoAnnouncement.newInfoFromDomain(ann));
+	}
+	
+	component.setAnnouncements(infoAnnouncementsList);
+	return component;
     }
 
     /**

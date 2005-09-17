@@ -9,7 +9,6 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import com.opensymphony.oscache.general.GeneralCacheAdministrator;
-import com.opensymphony.oscache.web.filter.ResponseContent;
 
 /**
  * @author Luis Cruz
@@ -61,21 +60,21 @@ public class ResponseCacheOSCacheImpl {
         return instance;
     }
 
-    public void cache(String id, ResponseContent response) {
+    public void cache(String id, ResponseContentEntry responseEntry) {
         try {
             if (lookup(id) == null) {
                 numberOfCachedItems++;
             }
             admin.flushEntry(id);
-            admin.putInCache(id, response);
+            admin.putInCache(id, responseEntry);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }
 
-    public ResponseContent lookup(String id) {
+    public ResponseContentEntry lookup(String id) {
         try {
-            return (ResponseContent) admin.getFromCache(id, refreshTimeout);
+            return (ResponseContentEntry) admin.getFromCache(id, refreshTimeout);
         } catch (Exception e) {
             admin.cancelUpdate(id);
             return null;

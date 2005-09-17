@@ -43,6 +43,16 @@ public abstract class Transaction extends jvstm.Transaction {
 	return jvstm.Transaction.begin();
     }
 
+    public static void forceFinish() {
+	if (current() != null) {
+	    try {
+		commit();
+	    } catch (Throwable t) {
+		abort();
+	    }
+	}
+    }
+
     public static FenixTransaction currentFenixTransaction() {
 	return (FenixTransaction)current();
     }
@@ -76,7 +86,7 @@ public abstract class Transaction extends jvstm.Transaction {
     }
 
     public static PersistenceBroker getOJBBroker() {
-	return currentDBChanges().getOJBBroker();
+	return currentFenixTransaction().getOJBBroker();
     }
 
     public static FenixCache getCache() {

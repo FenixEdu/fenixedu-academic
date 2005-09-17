@@ -20,8 +20,7 @@ public class ReadLastAnnouncement implements IService {
         ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         ISite site = persistentSupport.getIPersistentSite().readByExecutionCourse(
                 infoSite.getInfoExecutionCourse().getIdInternal());
-        IAnnouncement announcement = persistentSupport.getIPersistentAnnouncement()
-                .readLastAnnouncementForSite(site.getIdInternal());
+        IAnnouncement announcement = site.getLastAnnouncement();
 
         InfoAnnouncement infoAnnouncement = null;
         if (announcement != null)

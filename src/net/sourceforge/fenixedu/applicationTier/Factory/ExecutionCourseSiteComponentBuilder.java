@@ -158,7 +158,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
             // execution courses's shifts for display to filter summary
             ITurnoPersistente persistentShift = persistentSuport.getITurnoPersistente();
-            List shifts = persistentShift.readByExecutionCourse(executionCourse.getIdInternal());
+            List shifts = executionCourse.getAssociatedShifts();
             List infoShifts = new ArrayList();
             if (shifts != null && shifts.size() > 0) {
                 infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {
@@ -173,8 +173,7 @@ public class ExecutionCourseSiteComponentBuilder {
             // execution courses's professorships for display to filter summary
             IPersistentProfessorship persistentProfessorship = persistentSuport
                     .getIPersistentProfessorship();
-            List professorships = persistentProfessorship.readByExecutionCourse(executionCourse
-                    .getIdInternal());
+            List professorships = executionCourse.getProfessorships();
             List infoProfessorships = new ArrayList();
             if (professorships != null && professorships.size() > 0) {
                 infoProfessorships = (List) CollectionUtils.collect(professorships, new Transformer() {
@@ -701,19 +700,15 @@ public class ExecutionCourseSiteComponentBuilder {
     private ISiteComponent getInfoSiteFirstPage(InfoSiteFirstPage component, ISite site)
             throws FenixServiceException {
         try {
-            ISuportePersistente persistentSupport = PersistenceSupportFactory
-                    .getDefaultPersistenceSupport();
-
             IExecutionCourse executionCourse = site.getExecutionCourse();
 
-            InfoAnnouncement infoAnnouncement = readLastAnnouncement(persistentSupport, executionCourse);
+            InfoAnnouncement infoAnnouncement = readLastAnnouncement(executionCourse);
 
-            List infoAnnouncements = readLastFiveAnnouncements(persistentSupport, executionCourse);
+            List infoAnnouncements = readLastFiveAnnouncements(executionCourse);
 
-            List responsibleInfoTeachersList = readResponsibleTeachers(persistentSupport,
-                    executionCourse);
+            List responsibleInfoTeachersList = readResponsibleTeachers(executionCourse);
 
-            List lecturingInfoTeachersList = readLecturingTeachers(persistentSupport, executionCourse);
+            List lecturingInfoTeachersList = readLecturingTeachers(executionCourse);
 
             // set all the required information to the component
 
@@ -744,73 +739,37 @@ public class ExecutionCourseSiteComponentBuilder {
         return component;
     }
 
-    private List readLastFiveAnnouncements(ISuportePersistente persistentSupport,
-            IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
+    private List readLastFiveAnnouncements(IExecutionCourse executionCourse) {
+        Set<IAnnouncement> announcements = executionCourse.getSite().getSortedAnnouncements();
 
-        ISite site = persistentSupport.getIPersistentSite().readByExecutionCourse(
-                executionCourse.getIdInternal());
-        List announcementsList = persistentSupport.getIPersistentAnnouncement().readAnnouncementsBySite(
-                site.getIdInternal());
+	int count = 5;
+        List infoAnnouncementsList = new ArrayList(count);
 
-        List infoAnnouncementsList = new ArrayList();
-
-        if (announcementsList != null && announcementsList.isEmpty() == false) {
-            Iterator iterAnnouncements = announcementsList.iterator();
-            while (iterAnnouncements.hasNext()) {
-                IAnnouncement announcement = (IAnnouncement) iterAnnouncements.next();
-                infoAnnouncementsList.add(copyFromDomain(announcement));
-            }
+	for (IAnnouncement ann : announcements) {
+	    infoAnnouncementsList.add(copyFromDomain(ann));
+	    count--;
+	    if (count == 0) {
+		break;
+	    }
         }
 
-        Collections.sort(infoAnnouncementsList, new ComparatorChain(new BeanComparator(
-                "lastModifiedDate"), true));
-
-        List lastFiveInfoAnnouncements = new ArrayList();
-        Iterator iterAnnouncements = infoAnnouncementsList.iterator();
-
-        int aux = 0;
-        while (iterAnnouncements.hasNext() && aux < 5) {
-            lastFiveInfoAnnouncements.add(iterAnnouncements.next());
-            aux++;
-        }
-
-        return lastFiveInfoAnnouncements;
+        return infoAnnouncementsList;
     }
 
-    private InfoSiteAnnouncement getInfoSiteAnnouncement(InfoSiteAnnouncement component, ISite site)
-            throws FenixServiceException {
-        try {
+    private InfoSiteAnnouncement getInfoSiteAnnouncement(InfoSiteAnnouncement component, ISite site) {
+	Set<IAnnouncement> announcements = site.getSortedAnnouncements();
+	List infoAnnouncementsList = new ArrayList(announcements.size());
 
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-            List announcementsList = sp.getIPersistentAnnouncement().readAnnouncementsBySite(
-                    site.getIdInternal());
-            List infoAnnouncementsList = new ArrayList();
-
-            if (announcementsList != null && announcementsList.isEmpty() == false) {
-                Iterator iterAnnouncements = announcementsList.iterator();
-                while (iterAnnouncements.hasNext()) {
-                    IAnnouncement announcement = (IAnnouncement) iterAnnouncements.next();
-                    infoAnnouncementsList.add(copyFromDomain(announcement));
-                }
-            }
-
-            Collections.sort(infoAnnouncementsList, new ComparatorChain(new BeanComparator(
-                    "lastModifiedDate"), true));
-            component.setAnnouncements(infoAnnouncementsList);
-            return component;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
+	for (IAnnouncement ann : announcements) {
+	    infoAnnouncementsList.add(copyFromDomain(ann));
+	}
+	
+	component.setAnnouncements(infoAnnouncementsList);
+	return component;
     }
 
-    private List readLecturingTeachers(ISuportePersistente persistentSupport,
-            IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
-        List domainLecturingTeachersList = null;
-        IPersistentProfessorship persistentProfessorship = persistentSupport
-                .getIPersistentProfessorship();
-        domainLecturingTeachersList = persistentProfessorship.readByExecutionCourse(executionCourse
-                .getIdInternal());
+    private List readLecturingTeachers(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
+        List domainLecturingTeachersList = executionCourse.getProfessorships();
 
         List lecturingInfoTeachersList = new ArrayList();
         if (domainLecturingTeachersList != null) {
@@ -826,14 +785,9 @@ public class ExecutionCourseSiteComponentBuilder {
         return lecturingInfoTeachersList;
     }
 
-    private List readResponsibleTeachers(ISuportePersistente persistentSupport,
-            IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
-        List responsibleDomainTeachersList = null;
+    private List readResponsibleTeachers(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
 
-        IPersistentProfessorship persistentProfessorship = persistentSupport
-                .getIPersistentProfessorship();
-
-        responsibleDomainTeachersList = executionCourse.responsibleFors();
+        List responsibleDomainTeachersList = executionCourse.responsibleFors();
 
         List responsibleInfoTeachersList = new ArrayList();
         if (responsibleDomainTeachersList != null) {
@@ -849,12 +803,8 @@ public class ExecutionCourseSiteComponentBuilder {
         return responsibleInfoTeachersList;
     }
 
-    private InfoAnnouncement readLastAnnouncement(ISuportePersistente persistentSupport,
-            IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
-        ISite site = persistentSupport.getIPersistentSite().readByExecutionCourse(
-                executionCourse.getIdInternal());
-        IAnnouncement announcement = persistentSupport.getIPersistentAnnouncement()
-                .readLastAnnouncementForSite(site.getIdInternal());
+    private InfoAnnouncement readLastAnnouncement(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
+        IAnnouncement announcement = executionCourse.getSite().getLastAnnouncement();
         InfoAnnouncement infoAnnouncement = null;
         if (announcement != null) {
             infoAnnouncement = copyFromDomain(announcement);

@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.presentationTier.mapping.MappingUtils;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.cache.ResponseCacheOSCacheImpl;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.cache.ResponseContentEntry;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.Action;
@@ -27,11 +28,18 @@ import org.apache.struts.action.Action;
 import com.opensymphony.oscache.web.filter.CacheHttpServletResponseWrapper;
 import com.opensymphony.oscache.web.filter.ResponseContent;
 
+import net.sourceforge.fenixedu.stm.CommitListener;
+import net.sourceforge.fenixedu.stm.ReadSet;
+import net.sourceforge.fenixedu.stm.TopLevelTransaction;
+
+
 /**
  * @author Luis Cruz
  *  
  */
-public class FenixCacheFilter implements Filter {
+public class FenixCacheFilter implements Filter,CommitListener {
+
+    private static final ThreadLocal<ResponseContentEntry> CACHING_RESPONSE = new ThreadLocal<ResponseContentEntry>();
 
     ServletContext servletContext;
 
@@ -52,6 +60,8 @@ public class FenixCacheFilter implements Filter {
         excludePattern = filterConfig.getInitParameter("exclude-url-pattern");
 
         ResponseCacheOSCacheImpl.getInstance().setRefreshTimeout(time);
+
+	TopLevelTransaction.addCommitListener(this);
     }
 
     public void destroy() {
@@ -60,7 +70,7 @@ public class FenixCacheFilter implements Filter {
     }
 
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException,
-            ServletException {
+											    ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
@@ -69,20 +79,39 @@ public class FenixCacheFilter implements Filter {
 
         String url = getPageURL(request);
 
-       	ResponseContent respContent = ResponseCacheOSCacheImpl.getInstance().lookup(url);
-       	if (respContent != null && !matchesExcludePattern(url)) {
-       		respContent.writeTo(response);
-       	} else {
-       		CacheHttpServletResponseWrapper cacheResponse = new CacheHttpServletResponseWrapper(response);
-       		chain.doFilter(request, cacheResponse);
-       		cacheResponse.flushBuffer();
+	if (! matchesExcludePattern(url)) {
 
-       		// Only cache if the response was 200
-       		if (cacheResponse.getStatus() == HttpServletResponse.SC_OK && !matchesExcludePattern(url)) {
-       			//Store as the cache content the result of the response
-       			ResponseCacheOSCacheImpl.getInstance().cache(url, cacheResponse.getContent());
-       		}
-        }
+	    ResponseCacheOSCacheImpl cache = ResponseCacheOSCacheImpl.getInstance();
+
+	    ResponseContentEntry respEntry = cache.lookup(url);
+	    if ((respEntry != null) && (! respEntry.isValid())) {
+		cache.remove(url);
+		respEntry = null;
+	    }
+	    
+	    if (respEntry != null) {
+		respEntry.getContent().writeTo(response);
+	    } else {
+		respEntry = new ResponseContentEntry();
+		CACHING_RESPONSE.set(respEntry);
+		try {
+		    CacheHttpServletResponseWrapper cacheResponse = new CacheHttpServletResponseWrapper(response);
+		    chain.doFilter(request, cacheResponse);
+		    cacheResponse.flushBuffer();
+		    
+		    // Only cache if the response was 200
+		    if (cacheResponse.getStatus() == HttpServletResponse.SC_OK) {
+			//Store as the cache content the result of the response
+			respEntry.setContent(cacheResponse.getContent());
+			cache.cache(url, respEntry);
+		    }
+		} finally {
+		    CACHING_RESPONSE.remove();
+		}
+	    }
+	} else {
+	    chain.doFilter(request, response);
+	}
     }
 
     public static String getPageURL(HttpServletRequest request) {
@@ -104,9 +133,18 @@ public class FenixCacheFilter implements Filter {
         return id.toString();
     }
 
-	private boolean matchesExcludePattern(String id) {
-		return StringUtils.contains(id, excludePattern);
+    private boolean matchesExcludePattern(String id) {
+	return StringUtils.contains(id, excludePattern);
+    }
+
+    public void beforeCommit(TopLevelTransaction tx) {
+	ResponseContentEntry entry = CACHING_RESPONSE.get();
+	if (entry != null) {
+	    entry.addReadSet(tx.getReadSet());
 	}
+    }
 
-
+    public void afterCommit(TopLevelTransaction tx) {
+	// nop
+    }
 }

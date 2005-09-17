@@ -7,6 +7,10 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Comparator;
+import java.util.TreeSet;
+import java.util.Set;
+import java.util.Collections;
 
 /**
  * @author Ivo Brandão
@@ -81,5 +85,37 @@ public class Site extends Site_Base {
             }
         }
         return sectionOrder;
+    }
+
+
+    private static final Comparator<IAnnouncement> ANNOUNCEMENT_ORDER = new Comparator<IAnnouncement>() {
+	public int compare(IAnnouncement an1, IAnnouncement an2) {
+	    return an2.getLastModifiedDate().compareTo(an1.getLastModifiedDate());
+	}
+    };
+
+    // NOTE: The two following methods could be made much simpler if we supported sorted sets 
+    // in the description of DML relations
+    // This approach is not good because we are copying the set everytime we need it...
+
+    public Set<IAnnouncement> getSortedAnnouncements() {
+	TreeSet<IAnnouncement> sortedAnnouncements = new TreeSet<IAnnouncement>(ANNOUNCEMENT_ORDER);
+	sortedAnnouncements.addAll(getAssociatedAnnouncements());
+	return Collections.unmodifiableSet(sortedAnnouncements);
+    }
+
+    public IAnnouncement getLastAnnouncement() {
+	List<IAnnouncement> allAnnouncements = getAssociatedAnnouncements();
+	if (allAnnouncements.isEmpty()) {
+	    return null;
+	} else {
+	    IAnnouncement last = allAnnouncements.get(0);
+	    for (IAnnouncement ann : allAnnouncements) {
+		if (last.getLastModifiedDate().before(ann.getLastModifiedDate())) {
+		    last = ann;
+		}
+	    }
+	    return last;
+	}
     }
 }

@@ -265,11 +265,16 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
     }
 
     public void iniciarTransaccao() {
+	// commit any current transaction
+	if (Transaction.current() != null) {
+	    Transaction.commit();
+	}
 	Transaction.begin();
     }
 
     public void confirmarTransaccao() {
-	Transaction.commit();
+	Transaction.checkpoint();
+	Transaction.currentFenixTransaction().setReadOnly();
     }
 
     public void cancelarTransaccao() {
