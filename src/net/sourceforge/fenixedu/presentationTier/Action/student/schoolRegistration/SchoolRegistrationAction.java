@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.student.schoolRegistration.InfoResidenceCandidacy;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.TransactionalDispatchAction;
@@ -75,7 +76,7 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
         } catch (InvalidPasswordServiceException e) {
             throw new InvalidPasswordActionException(e);
         }
-        
+
         registrationForm.set("name", infoPerson.getNome());
 
         // Get List of available Countries
@@ -94,6 +95,7 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
 
         request.setAttribute("nationalityList", nationalityList);
         registrationForm.set("nacionality", "PORTUGUESA NATURAL DO CONTINENTE");
+        registrationForm.set("identificationDocumentType",IDDocumentType.IDENTITY_CARD);
 
         if (request.getParameter("error") != null) {
             request.setAttribute("incompleteData",
@@ -197,6 +199,7 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
         DynaActionForm totalForm = (DynaActionForm) form;
 
         Integer idInternal = Integer.valueOf((String) totalForm.get("idInternal"));
+        String identificationDocumentType = (String) totalForm.get("identificationDocumentType");
         String dayOfEmissionDateOfDocumentId = (String) totalForm.get("dayOfEmissionDateOfDocumentId");
         String monthOfEmissionDateOfDocumentId = (String) totalForm
                 .get("monthOfEmissionDateOfDocumentId");
@@ -255,6 +258,7 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
         InfoPerson infoPerson = new InfoPerson();
 
         infoPerson.setIdInternal(idInternal);
+        infoPerson.setTipoDocumentoIdentificacao(IDDocumentType.valueOf(identificationDocumentType));
         infoPerson.setDataEmissaoDocumentoIdentificacao(EmissionDateOfDocumentId);
         infoPerson.setDataValidadeDocumentoIdentificacao(ExpirationDateOfDocumentId);
         infoPerson.setNome(name);
@@ -271,9 +275,8 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
         infoPerson.setFreguesiaMorada(parishOfResidence);
         infoPerson.setConcelhoMorada(districtSubdivisionOfResidence);
         infoPerson.setDistritoMorada(districtOfResidence);
-        if (phone != null) {
-            infoPerson.setTelefone(phone.toString());
-        }
+        infoPerson.setTelefone(phone.toString());
+
         if (mobile != null) {
             infoPerson.setTelemovel(mobile.toString());
         }

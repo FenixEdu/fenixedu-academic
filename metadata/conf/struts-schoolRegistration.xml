@@ -22,6 +22,7 @@
       	<form-property name="idInternal" type="java.lang.String" />
       	<form-property name="method" type="java.lang.String" />
       	<form-property name="documentIdNumber" type="java.lang.String" />
+		<form-property name="identificationDocumentType" type="java.lang.String" />      	
 		<form-property name="emissionLocationOfDocumentID" type="java.lang.String" />
 		<form-property name="dayOfEmissionDateOfDocumentId" type="java.lang.String" />
 		<form-property name="monthOfEmissionDateOfDocumentId" type="java.lang.String" />
