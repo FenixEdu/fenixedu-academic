@@ -59,6 +59,9 @@ public class UsernameUtils extends FenixUtil {
             } else {
                 throw new DomainException("error.person.addingInvalidRole", RoleType.EMPLOYEE.getName());
             }
+        } else if (roleType.equals(RoleType.FIRST_TIME_STUDENT)) {
+            IStudent student = person.getStudentByType(DegreeType.DEGREE);
+            return "L" + student.getNumber();
         } else if (roleType.equals(RoleType.STUDENT)) {
             IStudent student = person.getStudentByType(DegreeType.MASTER_DEGREE);
             if (student != null) {
@@ -73,17 +76,19 @@ public class UsernameUtils extends FenixUtil {
         } else if (roleType.equals(RoleType.GRANT_OWNER)) {
             if (person.getGrantOwner() != null) {
                 return "B" + person.getGrantOwner().getNumber();
-            } else {
-                throw new DomainException("error.person.addingInvalidRole", RoleType.GRANT_OWNER
-                        .getName());
             }
+            // else {
+            // throw new DomainException("error.person.addingInvalidRole",
+            // RoleType.GRANT_OWNER
+            // .getName());
+            // }
 
         }
 
         return oldUsername;
 
     }
-    
+
     /*
      * Given a list of roles returns the most important role
      */

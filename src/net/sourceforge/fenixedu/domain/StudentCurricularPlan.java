@@ -962,13 +962,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             notNeedToEnrollInCurricularCourse.delete();
         }
 
-        for (Iterator iter = getCreditsInAnySecundaryAreasIterator(); iter.hasNext();) {
-            ICreditsInAnySecundaryArea creditsInAnySecundaryArea = (ICreditsInAnySecundaryArea) iter
-                    .next();
-            iter.remove();
-            creditsInAnySecundaryArea.removeStudentCurricularPlan();
-            creditsInAnySecundaryArea.delete();
-        }
+        for (;!getCreditsInAnySecundaryAreas().isEmpty(); getCreditsInAnySecundaryAreas().get(0).delete());
 
         for (Iterator iter = getCreditsInScientificAreasIterator(); iter.hasNext();) {
             ICreditsInScientificArea creditsInScientificArea = (ICreditsInScientificArea) iter.next();
@@ -1016,7 +1010,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         else
             throw new DomainException("error.student.curricular.plan.areas.conflict");
     }
-
+    
     public IGratuitySituation getGratuitySituationByGratuityValues(final IGratuityValues gratuityValues) {
 
         return (IGratuitySituation) CollectionUtils.find(getGratuitySituations(), new Predicate() {
@@ -1026,6 +1020,5 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             }
         });
 
-    }
-
+    }    
 }

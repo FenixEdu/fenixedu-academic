@@ -64,10 +64,9 @@ width: 20em;
             <td class="leftcell"><bean:message key="label.person.identificationDocumentType" bundle="DEFAULT" /></td>
             <td class="greytxt">
 	            <e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.IDDocumentType" bundle="ENUMERATION_RESOURCES"/>
-            	<html:select property="type">
+            	<html:select property="identificationDocumentType">
 					<html:options collection="values" property="value" labelProperty="label"/>
 				</html:select>
-<!--            	<bean:message key='<%=idType.toString()%>' bundle="ENUMERATION_RESOURCES"/> -->
             </td>
           </tr>
           <!-- Local de Emissao do Documento de Identificacao -->
@@ -127,11 +126,10 @@ width: 20em;
           	<td><span class="error"><html:errors property="maritalStatus"/></span><td>
           </tr>
           <tr>
-            <td class="leftcell"><bean:message key="label.person.maritalStatus" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
+            <td class="leftcell"><bean:message key="label.person.maritalStatus" bundle="DEFAULT" /></td>
             <td class="greytxt">
             	<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.MaritalStatus" bundle="DEFAULT"/>
                 <html:select property="maritalStatus">
-	            	<html:option value=""/>
                     <html:options collection="values" property="value" labelProperty="label"/>
                  </html:select>          
             </td>
@@ -241,7 +239,7 @@ width: 20em;
           <tr>
             <td class="leftcell"><bean:message key="label.person.postCode" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
             <td class="greytxt">
-            	<html:text size="4" maxlength="4" property="primaryAreaCode"/><bean:write name="infoPerson" property="codigoPostal"/>
+            	<html:text size="4" maxlength="4" property="primaryAreaCode"/>
             	 - 
             	<html:text size="3" maxlength="3" property="secondaryAreaCode"/> (XXXX-XXX)
             </td>

@@ -57,7 +57,8 @@
 	<tr>
 		<td class="listClasses"><strong><bean:message key="link.my.timetable"/></strong></td>
 		<td class="listClasses">
-			<html:link page="/studentTimeTable.do" target="_blank" >
+			<html:link page="<%="/studentTimeTable.do?method=printSchedule&amp;degreeName=" +
+				request.getAttribute("degreeName")%>" target="_blank" >
 			<bean:message key="link.registration.print"/></html:link>
 		</td>
 	</tr>

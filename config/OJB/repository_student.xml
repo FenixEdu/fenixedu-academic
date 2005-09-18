@@ -109,6 +109,11 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
+		name="keyDislocatedStudent"
+		column="KEY_DISLOCATED_STUDENT"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
 		name="interruptedStudies"
 		column="INTERRUPTED_STUDIES"
 		jdbc-type="BIT"
@@ -136,6 +141,11 @@
 			class-ref="net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization">
 		<foreignkey field-ref="keyStudentPersonalDataAuthorization"/>
 	</reference-descriptor>	
+	<reference-descriptor auto-retrieve="false"
+			name="dislocatedStudent"
+			class-ref="net.sourceforge.fenixedu.domain.DislocatedStudent">
+		<foreignkey field-ref="keyDislocatedStudent"/>
+	</reference-descriptor>		
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="studentCurricularPlans"
 			element-class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"

@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
@@ -33,6 +34,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixTransactionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidPasswordActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
 
@@ -79,6 +81,7 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
         }
 
         registrationForm.set("name", infoPerson.getNome());
+        registrationForm.set("primaryAreaCode", infoPerson.getCodigoPostal());
 
         // Get List of available Countries
         List countries = (List) ServiceManagerServiceFactory.executeService(userView,
@@ -96,7 +99,7 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
 
         request.setAttribute("nationalityList", nationalityList);
         registrationForm.set("nacionality", "PORTUGUESA NATURAL DO CONTINENTE");
-        registrationForm.set("identificationDocumentType",IDDocumentType.IDENTITY_CARD);
+        registrationForm.set("identificationDocumentType", IDDocumentType.IDENTITY_CARD.toString());
 
         if (request.getParameter("error") != null) {
             request.setAttribute("incompleteData",
@@ -179,6 +182,14 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
         if (answer == null || answer.equals("")) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("error", new ActionError("error.enrollment.inquiry.mandatory"));
+            saveErrors(request, actionErrors);
+            return mapping.findForward("errorValidating");
+        }
+
+        Integer dislocatedCountryID = (Integer) schoolRegistrationForm.get("dislocatedCountryID");
+        if (answer.equals("true") && dislocatedCountryID == 0) {
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("error", new ActionError("error.enrollment.inquiry.country"));
             saveErrors(request, actionErrors);
             return mapping.findForward("errorValidating");
         }
@@ -371,6 +382,29 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
 
     }
 
+    public ActionForward printSchedule(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+            FenixServiceException, FenixActionException {
+        HttpSession session = request.getSession(false);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+        Object[] args = { userView.getUtilizador() };
+        List infoLessons;
+        try {
+            infoLessons = (List) ServiceUtils.executeService(userView, "ReadStudentTimeTable", args);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+        request.setAttribute("infoLessons", infoLessons);
+        DynaActionForm schoolRegistrationFrom = (DynaActionForm) form;
+        String name = (String) schoolRegistrationFrom.get("name");
+        request.setAttribute("name",name);
+        request.setAttribute("studentNumber",userView.getUtilizador().substring(1));
+        request.setAttribute("degreeName", request.getParameter("degreeName"));
+
+        return mapping.findForward("sucess");
+    }
+
     public ActionForward printDeclaration(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
             FenixServiceException {
@@ -406,7 +440,7 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
     }
 
     private void validatePassword(InfoPerson infoPerson, String oldPassword, String newPassword)
-            throws InvalidPasswordServiceException, InvalidNewPassword {
+            throws InvalidPasswordServiceException {
 
         if (newPassword == null
                 || newPassword.equals("")
@@ -416,10 +450,10 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
                 || (infoPerson.getNumContribuinte() != null && infoPerson.getNumContribuinte()
                         .equalsIgnoreCase(newPassword))
                 || PasswordEncryptor.areEquals(infoPerson.getPassword(), newPassword)) {
-            throw new InvalidNewPassword();
+            throw new InvalidPasswordServiceException("error.exception.invalid.new.password");
         }
         if (!PasswordEncryptor.areEquals(infoPerson.getPassword(), oldPassword)) {
-            throw new InvalidPasswordServiceException("Invalid Existing Password!");
+            throw new InvalidPasswordServiceException("error.exception.invalid.existing.password");
         }
     }
 
@@ -431,9 +465,5 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
                 return infoCountry.getName().equalsIgnoreCase(country.getName());
             }
         });
-    }
-    
-    private class InvalidNewPassword extends FenixActionException{
-        
     }
 }

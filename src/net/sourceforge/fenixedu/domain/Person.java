@@ -83,7 +83,7 @@ public class Person extends Person_Base {
         if(country != null){
             setNacionalidade(((ICountry) valueToUpdate(getPais(),country)).getNationality());
         }
-        setNacionalidade(valueToUpdate(getNacionalidade(),country.getNationality()));
+        setNacionalidade(valueToUpdate(getNacionalidade(),null));
     }
 
     public void editPersonalContactInformation(InfoPerson personToEdit) {
@@ -440,36 +440,8 @@ public class Person extends Person_Base {
     public String getSlideNameForCandidateDocuments() {
         return "/candidateDocuments/person/P" + getIdInternal();
     }
-
-    public void delete() {
-        this.getAdvisories().clear();
-        this.getAssociatedAlteredCurriculums().clear();
-        this.setAssociatedPersonAccount(null);
-        this.getAssociatedPersonRoles().clear();
-        this.removeTeacher();
-        this.getEditedWebSiteItems().clear();
-        this.setEmployee(null);
-        this.getEnrolmentEvaluations().clear();
-        this.setExternalPerson(null);
-        this.setGender(null);
-        this.setGrantOwner(null);
-        this.getExportGroupingReceivers().clear();
-        this.getExportGroupingSenders().clear();
-        this.getGuides().clear();
-        this.setIdDocumentType(null);
-        this.getManageableDepartmentCredits().clear();
-        this.setMaritalStatus(null);
-        this.getMasterDegreeCandidates().clear();
-        this.setPais(null);
-        this.getPersonRoles().clear();
-        this.getProjectAccesses().clear();
-        this.setQualification(null);
-        this.getResponsabilityTransactions().clear();
-        this.getSentSms().clear();
-        this.getStudents().clear();
-    }
-
-    public void removeRoleByType(final RoleType roleType) {
+    
+        public void removeRoleByType(final RoleType roleType) {
         final IRole role = getPersonRole(roleType);
         if (role != null) {
             removePersonRoles(role);
@@ -490,5 +462,5 @@ public class Person extends Person_Base {
             }
         }
     }
-
+    
 }

@@ -562,7 +562,7 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     
     public java.util.List getAllOptionalCurricularCourseGroups();
     
-    public java.util.List getCurricularCoursesByYearAndSemesterAndBranch(int year, Integer semester, IBranch area);
+    public java.util.List getActiveCurricularCoursesByYearAndSemester(int year, Integer semester);
     
     public java.util.List getSpecialListOfCurricularCourses();
 	
@@ -1896,9 +1896,7 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 	interface "
     public String getSlideName();
     
-    public String getSlideNameForCandidateDocuments();
-    
-    public void delete();
+    public String getSlideNameForCandidateDocuments();    
     
     public void edit(net.sourceforge.fenixedu.dataTransferObject.InfoPerson personToEdit, net.sourceforge.fenixedu.domain.ICountry country);
     
@@ -1916,7 +1914,7 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
     
     public net.sourceforge.fenixedu.domain.IRole getPersonRole(net.sourceforge.fenixedu.domain.person.RoleType roleType);
     
-    public Boolean hasRole(net.sourceforge.fenixedu.domain.person.RoleType roleType);
+    public Boolean hasRole(net.sourceforge.fenixedu.domain.person.RoleType roleType);    
     
     public net.sourceforge.fenixedu.domain.IStudent getStudentByType(net.sourceforge.fenixedu.domain.degree.DegreeType degreeType);
 
@@ -2449,6 +2447,7 @@ class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.d
     Boolean requestedChangeDegree;
     Boolean requestedChangeBranch;
     Integer keyStudentPersonalDataAuthorization;
+    Integer keyDislocatedStudent;
     Boolean interruptedStudies;
 
 	interface "

@@ -8,7 +8,7 @@
 <div style="width:79%; margin: 0 10%;">
 
 <html:form action="/dislocatedStudent?method=prepareDislocatedStudentInquiry">
-	<h2 style="text-align: center;"><bean:message key="label.enrollment.personalData.inquiry"/></h2>
+	<h2 style="text-align: center;"><bean:message key="label.schoolRegistration.personalData.inquiry"/></h2>
 	<span class="error"><html:errors/></span>
 	<br/>
 

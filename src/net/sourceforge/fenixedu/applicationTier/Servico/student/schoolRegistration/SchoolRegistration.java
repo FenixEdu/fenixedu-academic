@@ -9,11 +9,11 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.student.schoolRegistration.InfoResidenceCandidacy;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ICountry;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.IResidenceCandidacies;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -29,10 +28,8 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCountry;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRole;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -84,6 +81,7 @@ public class SchoolRegistration implements IService {
             }});         
 
         person.edit(infoPerson,country);
+        person.setPassword(PasswordEncryptor.encryptPassword(infoPerson.getPassword()));
 
         final IRole studentRole = findRole(pRole.readAll(), RoleType.STUDENT);
         final IRole firstTimeStudentRole = findRole(person.getPersonRoles(), RoleType.FIRST_TIME_STUDENT);

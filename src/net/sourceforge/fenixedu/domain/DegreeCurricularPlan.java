@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -37,15 +35,16 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public DegreeCurricularPlan() {
         setOjbConcreteClass(getClass().getName());
     }
-	
-	public DegreeCurricularPlan(IDegree degree, String name, DegreeCurricularPlanState state, Date inicialDate,
-								Date endDate, Integer degreeDuration, Integer minimalYearForOptionalCourses,
-								Double neededCredits, MarkType markType, Integer numerusClausus, String annotation) {
-		
-		setOjbConcreteClass(getClass().getName());
-		
-		setDegree(degree);
-		setName(name);
+
+    public DegreeCurricularPlan(IDegree degree, String name, DegreeCurricularPlanState state,
+            Date inicialDate, Date endDate, Integer degreeDuration,
+            Integer minimalYearForOptionalCourses, Double neededCredits, MarkType markType,
+            Integer numerusClausus, String annotation) {
+
+        setOjbConcreteClass(getClass().getName());
+
+        setDegree(degree);
+        setName(name);
         setState(state);
         setInitialDate(inicialDate);
         setEndDate(endDate);
@@ -56,7 +55,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         setNumerusClausus(numerusClausus);
         setAnotation(annotation);
         setConcreteClassForStudentCurricularPlans(degree.getConcreteClassForDegreeCurricularPlans());
-	}
+    }
 
     public String toString() {
         String result = "[" + this.getClass().getName() + ": ";
@@ -113,17 +112,17 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
         List scopes = area.getScopes();
 
-		int scopesSize = scopes.size();
+        int scopesSize = scopes.size();
 
-		for (int i = 0; i < scopesSize; i++) {
-		    ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) scopes.get(i);
+        for (int i = 0; i < scopesSize; i++) {
+            ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) scopes.get(i);
 
-		    ICurricularCourse curricularCourse = curricularCourseScope.getCurricularCourse();
+            ICurricularCourse curricularCourse = curricularCourseScope.getCurricularCourse();
 
-		    if (!curricularCourses.contains(curricularCourse)) {
-		        curricularCourses.add(curricularCourse);
-		    }
-		}
+            if (!curricularCourses.contains(curricularCourse)) {
+                curricularCourses.add(curricularCourse);
+            }
+        }
 
         return curricularCourses;
     }
@@ -136,13 +135,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         return curricularCourses;
     }
-    
+
     public ICurricularCourse getCurricularCourseByCode(String code) {
-    	for(ICurricularCourse curricularCourse: getCurricularCourses()) {
-    		if(curricularCourse.getCode().equals(code))
-    			return curricularCourse;
-    	}
-    	return null;
+        for (ICurricularCourse curricularCourse : getCurricularCourses()) {
+            if (curricularCourse.getCode().equals(code))
+                return curricularCourse;
+        }
+        return null;
     }
 
     public List getCommonAreas() {
@@ -203,41 +202,21 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         });
     }
 
-    public List getCurricularCoursesByYearAndSemesterAndBranch(int year, Integer semester, IBranch area) {
-
-        List finalCurricularCourses = new ArrayList();
-        List curricularCourses = getCurricularCourses();
-        final Integer wantedSemester = semester;
-        final IBranch branch = area;
-
-        Collections.sort(curricularCourses, new Comparator() {
-
-            public int compare(Object obj1, Object obj2) {
-
-                ICurricularCourse curricularCourse1 = (ICurricularCourse) obj1;
-                ICurricularCourse curricularCourse2 = (ICurricularCourse) obj2;
-                ICurricularYear curricularYear1 = curricularCourse1
-                        .getCurricularYearByBranchAndSemester(branch, wantedSemester);
-                ICurricularYear curricularYear2 = curricularCourse2
-                        .getCurricularYearByBranchAndSemester(branch, wantedSemester);
-
-                return curricularYear1.getYear().intValue() - curricularYear2.getYear().intValue();
+    public List getActiveCurricularCoursesByYearAndSemester(int year, Integer semester) {
+        final List<ICurricularCourse> result = new ArrayList<ICurricularCourse>();
+        for (final ICurricularCourse curricularCourse : getCurricularCourses()) {
+            for (final ICurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
+                final ICurricularSemester curricularSemester = curricularCourseScope
+                        .getCurricularSemester();
+                if (curricularSemester.getSemester().equals(semester)
+                        && curricularSemester.getCurricularYear().getYear().intValue() == year
+                        && curricularCourseScope.isActive()) {
+                    result.add(curricularCourse);
+                    break;
+                }
             }
-        });
-
-        ICurricularCourse cc = null;
-        ICurricularYear curricularYear = null;
-        for (int iter = 0; iter < curricularCourses.size(); iter++) {
-            cc = (ICurricularCourse) curricularCourses.get(iter);
-            curricularYear = cc.getCurricularYearByBranchAndSemester(branch, wantedSemester);
-
-            if ((curricularYear.getYear().intValue() == year) && belongsToSemester(cc, semester))
-                finalCurricularCourses.add(cc);
-            else if (curricularYear.getYear().intValue() > year)
-                break;
         }
-
-        return finalCurricularCourses;
+        return result;
     }
 
     public List getSpecialListOfCurricularCourses() {
@@ -276,15 +255,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return groups;
     }
 
+    public void edit(String name, DegreeCurricularPlanState state, Date inicialDate, Date endDate,
+            Integer degreeDuration, Integer minimalYearForOptionalCourses, Double neededCredits,
+            MarkType markType, Integer numerusClausus, String annotation) {
 
-	
-	
-	
-	
-	public void edit(String name, DegreeCurricularPlanState state, Date inicialDate, Date endDate,
-					Integer degreeDuration, Integer minimalYearForOptionalCourses, Double neededCredits,
-					MarkType markType, Integer numerusClausus, String annotation) {
-		
         setName(name);
         setState(state);
         setInitialDate(inicialDate);
@@ -295,43 +269,35 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         setMarkType(markType);
         setNumerusClausus(numerusClausus);
         setAnotation(annotation);
-	}
-	
-	
-	private Boolean canBeDeleted() {
-		
-		return !(hasAnyStudentCurricularPlans() ||
-				 hasAnyCurricularCourseEquivalences() ||
-				 hasAnyEnrolmentPeriods() ||
-				 hasAnyCurricularCourses() ||
-				 hasAnyExecutionDegrees() ||
-				 hasAnyAreas());
-	}
-	
-	
-	public void delete() {
-		
-		if (canBeDeleted()) {
-			removeDegree();
-			deleteDomainObject();
-		}
-		else
-			throw new DomainException("error.degree.curricular.plan.cant.delete");
-		
-	}
-	
-	
-	
-	public boolean isGradeValid(String grade) {
-		
-		IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory.getInstance();
-		IDegreeCurricularPlanStrategy degreeCurricularPlanStrategy = degreeCurricularPlanStrategyFactory
-        																.getDegreeCurricularPlanStrategy(this);
-		
-		if (grade == null || grade.length() == 0)
-			return false;
+    }
 
-		return degreeCurricularPlanStrategy.checkMark(grade.toUpperCase());
-	}
-	
+    private Boolean canBeDeleted() {
+
+        return !(hasAnyStudentCurricularPlans() || hasAnyCurricularCourseEquivalences()
+                || hasAnyEnrolmentPeriods() || hasAnyCurricularCourses() || hasAnyExecutionDegrees() || hasAnyAreas());
+    }
+
+    public void delete() {
+
+        if (canBeDeleted()) {
+            removeDegree();
+            deleteDomainObject();
+        } else
+            throw new DomainException("error.degree.curricular.plan.cant.delete");
+
+    }
+
+    public boolean isGradeValid(String grade) {
+
+        IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory
+                .getInstance();
+        IDegreeCurricularPlanStrategy degreeCurricularPlanStrategy = degreeCurricularPlanStrategyFactory
+                .getDegreeCurricularPlanStrategy(this);
+
+        if (grade == null || grade.length() == 0)
+            return false;
+
+        return degreeCurricularPlanStrategy.checkMark(grade.toUpperCase());
+    }
+
 }
