@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.TransactionalDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixTransactionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidPasswordActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -405,7 +406,7 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
     }
 
     private void validatePassword(InfoPerson infoPerson, String oldPassword, String newPassword)
-            throws InvalidPasswordServiceException {
+            throws InvalidPasswordServiceException, InvalidNewPassword {
 
         if (newPassword == null
                 || newPassword.equals("")
@@ -415,7 +416,7 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
                 || (infoPerson.getNumContribuinte() != null && infoPerson.getNumContribuinte()
                         .equalsIgnoreCase(newPassword))
                 || PasswordEncryptor.areEquals(infoPerson.getPassword(), newPassword)) {
-            throw new InvalidPasswordServiceException("Invalid New Password!");
+            throw new InvalidNewPassword();
         }
         if (!PasswordEncryptor.areEquals(infoPerson.getPassword(), oldPassword)) {
             throw new InvalidPasswordServiceException("Invalid Existing Password!");
@@ -430,5 +431,9 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
                 return infoCountry.getName().equalsIgnoreCase(country.getName());
             }
         });
+    }
+    
+    private class InvalidNewPassword extends FenixActionException{
+        
     }
 }
