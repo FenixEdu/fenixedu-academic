@@ -138,20 +138,16 @@ public class DegreeForwardFilter implements Filter {
      */
     private boolean isDegree(final String string) throws FenixServiceException, FenixFilterException {
 
-        List listDegrees = (List) ServiceUtils.executeService(null, "ReadDegrees", null);
+        List<InfoDegree> listDegrees = (List<InfoDegree>) ServiceUtils.executeService(null, "ReadDegrees", null);
 
         if (listDegrees != null) {
-            CollectionUtils.filter(listDegrees, new Predicate() {
-
-                public boolean evaluate(Object arg0) {
-                    InfoDegree infoDegree = (InfoDegree) arg0;
-                    return infoDegree.getSigla().equalsIgnoreCase(string);
+            for (final InfoDegree infoDegree : listDegrees) {
+                if (infoDegree.getSigla().equalsIgnoreCase(string)) {
+                    return true;
                 }
-
-            });
-
-            return !listDegrees.isEmpty();
+            }
         }
+
         return false;
     }
 
