@@ -82,6 +82,7 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
 
         registrationForm.set("name", infoPerson.getNome());
         registrationForm.set("primaryAreaCode", infoPerson.getCodigoPostal());
+        registrationForm.set("areaOfAreaCode", infoPerson.getLocalidadeCodigoPostal());
 
         // Get List of available Countries
         List countries = (List) ServiceManagerServiceFactory.executeService(userView,
