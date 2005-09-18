@@ -31,8 +31,6 @@ public class TeacherAdministrationSiteComponentService implements IService {
         commonComponent = componentBuilder.getComponent(commonComponent, site, null, null, null);
         bodyComponent = componentBuilder.getComponent(bodyComponent, site, commonComponent, obj1, obj2);
 
-        TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(commonComponent, bodyComponent);
-	siteView.site = site;
-	return siteView;
+        return new TeacherAdministrationSiteView(commonComponent, bodyComponent);
     }
 }
