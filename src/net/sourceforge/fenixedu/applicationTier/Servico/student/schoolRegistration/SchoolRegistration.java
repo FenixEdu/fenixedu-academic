@@ -45,25 +45,21 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class SchoolRegistration implements IService {
 
-    public SchoolRegistration() {
-        super();
-    }
+    public Boolean run(final IUserView userView, final InfoPerson infoPerson, final InfoResidenceCandidacy infoResidenceCandidacy) 
+            throws ExcepcaoPersistencia {
 
-    public Boolean run(IUserView userView, InfoPerson infoPerson,
-            InfoResidenceCandidacy infoResidenceCandidacy) throws ExcepcaoPersistencia {
+        final ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentStudent persistentStudent = suportePersistente.getIPersistentStudent();
 
-        ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentStudent persistentStudent = suportePersistente.getIPersistentStudent();
-        String username = userView.getUtilizador();
-        IStudent student = persistentStudent.readByUsername(username);
-        IPessoaPersistente pessoaPersistente = suportePersistente.getIPessoaPersistente();
+        final String username = userView.getUtilizador();
+        final IStudent student = persistentStudent.readByUsername(username);
+        final IPerson person = student.getPerson();
 
-        IPerson pessoa = (IPerson) pessoaPersistente.readByOID(Person.class, infoPerson.getIdInternal());
-
-        if (isStudentRegistered(pessoa)) {
+        if (isStudentRegistered(person)) {
             return Boolean.FALSE;
         }
-        updatePersonalInfo(suportePersistente, infoPerson, pessoa);
+
+        updatePersonalInfo(suportePersistente, infoPerson, person);
         writeResidenceCandidacy(student, infoResidenceCandidacy);
         updateStudentInfo(suportePersistente, student);
 
@@ -71,29 +67,17 @@ public class SchoolRegistration implements IService {
     }
 
     private boolean isStudentRegistered(IPerson pessoa) {
-
-        boolean result;
-        result = CollectionUtils.exists(pessoa.getPersonRoles(), new Predicate() {
-
-            public boolean evaluate(Object arg0) {
-                IRole role = (IRole) arg0;
-                return role.getRoleType().equals(RoleType.FIRST_TIME_STUDENT);
-            }
-        });
-
-        return !result;
+        return !pessoa.hasRole(RoleType.FIRST_TIME_STUDENT);
     }
 
-    private void updatePersonalInfo(ISuportePersistente sp, final InfoPerson infoPerson, IPerson person)
+    private void updatePersonalInfo(final ISuportePersistente sp, final InfoPerson infoPerson, final IPerson person)
             throws ExcepcaoPersistencia {
 
-        IPersistentRole pRole = sp.getIPersistentRole();
-        
-        List<IRole> roles = pRole.readAll();
-        IPersistentCountry pCountry = sp.getIPersistentCountry();
-        List<ICountry> countries = (List<ICountry>) pCountry.readAll(Country.class);
-        ICountry country = (ICountry) CollectionUtils.find(countries, new Predicate(){
+        final IPersistentCountry pCountry = sp.getIPersistentCountry();
+        final IPersistentRole pRole = sp.getIPersistentRole();
 
+        final List<ICountry> countries = (List<ICountry>) pCountry.readAll(Country.class);
+        final ICountry country = (ICountry) CollectionUtils.find(countries, new Predicate(){
             public boolean evaluate(Object arg0) {
                 ICountry country = (ICountry) arg0;
                 return country.getNationality().equals(infoPerson.getNacionalidade());
@@ -101,28 +85,27 @@ public class SchoolRegistration implements IService {
 
         person.edit(infoPerson,country);
 
-        IRole roleToAdd = null;
-        IRole roleToRemove = null;
-        
-        for (IRole role : roles) {
-            if(role.getRoleType().equals(RoleType.FIRST_TIME_STUDENT)){
-                roleToRemove = role;
-            } else {
-                if(role.getRoleType().equals(RoleType.STUDENT)){
-                    roleToAdd = role;
-                }
+        final IRole studentRole = findRole(pRole.readAll(), RoleType.STUDENT);
+        final IRole firstTimeStudentRole = findRole(person.getPersonRoles(), RoleType.FIRST_TIME_STUDENT);
+
+        person.addPersonRoles(studentRole);
+        person.removePersonRoles(firstTimeStudentRole);
+    }
+
+    private IRole findRole(final List<IRole> roles, final RoleType roleType) {
+        for (final IRole role : roles) {
+            if (role.getRoleType() == roleType) {
+                return role;
             }
         }
-        
-        person.addPersonRoles(roleToAdd);        
-        person.removePersonRoles(roleToRemove);
+        return null;
     }
-    
-    private void writeResidenceCandidacy(IStudent student,
-            InfoResidenceCandidacy infoResidenceCandidacy) throws ExcepcaoPersistencia {
+
+    private void writeResidenceCandidacy(final IStudent student, final InfoResidenceCandidacy infoResidenceCandidacy) 
+            throws ExcepcaoPersistencia {
 
         if (infoResidenceCandidacy != null) {
-            IResidenceCandidacies residenceCandidacy = DomainFactory.makeResidenceCandidacies();
+            final IResidenceCandidacies residenceCandidacy = DomainFactory.makeResidenceCandidacies();
 
             residenceCandidacy.setStudent(student);
             residenceCandidacy.setCreationDate(new Date());
@@ -131,26 +114,22 @@ public class SchoolRegistration implements IService {
         }
     }
 
-    private void updateStudentInfo(ISuportePersistente sp, IStudent student)
+    private void updateStudentInfo(final ISuportePersistente sp, final IStudent student)
             throws ExcepcaoPersistencia {
 
-        IPersistentExecutionYear pExecutionYear = sp.getIPersistentExecutionYear();
-        List<IExecutionYear> executionYears = (List<IExecutionYear>) pExecutionYear.readAll(ExecutionYear.class);
-        IExecutionYear executionYear = (IExecutionYear) CollectionUtils.find(executionYears,new Predicate(){
+        final IPersistentExecutionYear pExecutionYear = sp.getIPersistentExecutionYear();
+ 
+        final IExecutionYear executionYear = pExecutionYear.readCurrentExecutionYear();
+        student.setRegistrationYear(executionYear);
 
-            public boolean evaluate(Object arg0) {
-                IExecutionYear executionYear = (IExecutionYear) arg0;
-                return executionYear.getState().equals(PeriodState.CURRENT);
-            }});
-        
-        Date actualDate = Calendar.getInstance().getTime();
-        student.setRegistrationYear(executionYear);        
-        IStudentCurricularPlan scp = student.getActiveStudentCurricularPlan();
+        final IStudentCurricularPlan scp = student.getActiveStudentCurricularPlan();
+        final Date actualDate = Calendar.getInstance().getTime();
         //update the dates, since this objects were already created and only now the student is a registrated student in the campus
         scp.setStartDate(actualDate);
         scp.setWhen(actualDate);
-        List<IEnrolment> enrollments = scp.getEnrolments();
-        for (IEnrolment enrolment : enrollments) {
+
+        final List<IEnrolment> enrollments = scp.getEnrolments();
+        for (final IEnrolment enrolment : enrollments) {
             enrolment.setCreationDate(actualDate);
         }
     }
