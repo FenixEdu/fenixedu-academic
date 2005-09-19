@@ -41,7 +41,6 @@ public class ReadCandidateListByPersonAndExecutionDegree implements IService {
             // Read the candidates
 
             IPerson person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class,infoPerson.getIdInternal());
-            infoPerson.copyToDomain(infoPerson,person);
 
             result = sp.getIPersistentMasterDegreeCandidate().readByExecutionDegreeAndPersonAndNumber(
                     infoExecutionDegree.getIdInternal(), person.getIdInternal(), number);

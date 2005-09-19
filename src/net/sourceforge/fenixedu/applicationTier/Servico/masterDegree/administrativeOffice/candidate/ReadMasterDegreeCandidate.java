@@ -65,7 +65,6 @@ public class ReadMasterDegreeCandidate implements IService {
 
         IPerson person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class,
                 infoPerson.getIdInternal());
-        infoPerson.copyToDomain(infoPerson, person);
 
         // Read the candidates
 
