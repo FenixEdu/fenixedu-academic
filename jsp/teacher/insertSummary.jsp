@@ -242,12 +242,21 @@
 		<td colspan='2'><strong><bean:message key="label.summaryText"/></strong></td>
 	</tr>
 	<tr>
-		<td colspan='2'>		
-		    <bean:message key="label.editor"/>
-			<html:radio property="editor" value="true" onclick="this.form.method.value='prepareInsertSummary';this.form.summaryText.value='';this.form.page.value=0;this.form.submit();"/>
-			&nbsp;
-			<bean:message key="label.plain.text"/>
-			<html:radio property="editor" value="false" onclick="this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.submit();"/>					
+		<td colspan='2'>	
+			<logic:present name="naoVerEditor">
+				<bean:message key="label.editor"/>
+				<html:radio property="editor" value="false" disabled="true"/>
+				&nbsp;
+				<bean:message key="label.plain.text"/>
+				<html:radio property="editor" value="true"/>						
+			</logic:present>
+			<logic:notPresent name="naoVerEditor">						
+			    <bean:message key="label.editor"/>
+				<html:radio property="editor" value="true" onclick="this.form.method.value='prepareInsertSummary';this.form.summaryText.value='';this.form.page.value=0;this.form.submit();"/>
+				&nbsp;
+				<bean:message key="label.plain.text"/>
+				<html:radio property="editor" value="false" onclick="this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.submit();"/>					
+			</logic:notPresent>				
 		</td>
 	</tr>
 	<tr>
@@ -298,6 +307,8 @@
 
 <html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
 </html:reset>  
+<br><br>
+<bean:message key="message.text.editor.requires"/>
 </html:form>
 </logic:present>
 

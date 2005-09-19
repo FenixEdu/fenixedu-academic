@@ -48,36 +48,37 @@ import org.apache.struts.action.DynaActionForm;
  * @author Tânia Pousão
  */
 public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAction {
-    
+
     public ActionForward showSummaries(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-        
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+            FenixFilterException {
+
         DynaActionForm actionForm = (DynaActionForm) form;
-        
+
         IUserView userView = SessionUtils.getUserView(request);
-        
+
         Integer executionCourseId = getObjectCode(request);
         request.setAttribute("objectCode", executionCourseId);
-        
+
         String lessonType = getLessonType(request);
 
-        
         Integer shiftId = getShiftId(request);
-        
+
         Integer professorShipId = getProfessorShipId(request, actionForm, userView, executionCourseId);
-      
-        SiteView siteView = getSiteView(userView, executionCourseId, lessonType, shiftId, professorShipId);
-        
+
+        SiteView siteView = getSiteView(userView, executionCourseId, lessonType, shiftId,
+                professorShipId);
+
         selectChoices(request,
                 ((InfoSiteSummaries) ((ExecutionCourseSiteView) siteView).getComponent()), lessonType);
-        
+
         Collections.sort(((InfoSiteSummaries) ((ExecutionCourseSiteView) siteView).getComponent())
                 .getInfoSummaries(), Collections.reverseOrder());
-        
+
         request.setAttribute("siteView", siteView);
         return mapping.findForward("showSummaries");
     }
-    
+
     /**
      * @param userView
      * @param executionCourseId
@@ -89,15 +90,15 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
      */
     protected SiteView getSiteView(IUserView userView, Integer executionCourseId, String lessonType,
             Integer shiftId, Integer professorShipId) throws FenixServiceException, FenixFilterException {
-  
+
         Object[] args = { executionCourseId, lessonType, shiftId, professorShipId };
         SiteView siteView = null;
-       
+
         siteView = (SiteView) ServiceUtils.executeService(userView, "ReadSummaries", args);
 
         return siteView;
-    } 
-    
+    }
+
     /**
      * @param request
      * @param actionForm
@@ -107,23 +108,24 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
      * @throws FenixServiceException
      */
     protected Integer getProfessorShipId(HttpServletRequest request, DynaActionForm actionForm,
-            IUserView userView, Integer executionCourseId) throws FenixServiceException, FenixFilterException {
-        
+            IUserView userView, Integer executionCourseId) throws FenixServiceException,
+            FenixFilterException {
+
         Integer professorShipId = null;
-        
+
         if (request.getParameter("byTeacher") != null && request.getParameter("byTeacher").length() > 0) {
             professorShipId = new Integer(request.getParameter("byTeacher"));
-            
+
         } else {
             Object[] args = { userView.getUtilizador(), executionCourseId };
             InfoProfessorship infoProfessorship = (InfoProfessorship) ServiceUtils.executeService(
                     userView, "ReadProfessorshipByTeacherNumberAndExecutionCourseID", args);
-            professorShipId = infoProfessorship.getIdInternal();   
+            professorShipId = infoProfessorship.getIdInternal();
             actionForm.set("byTeacher", professorShipId.toString());
         }
         return professorShipId;
     }
-    
+
     /**
      * @param request
      * @return
@@ -135,7 +137,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
         }
         return shiftId;
     }
-    
+
     /**
      * @param request
      * @return
@@ -148,34 +150,34 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
         }
         return lessonType;
     }
-    
-    private void selectChoices(HttpServletRequest request, InfoSiteSummaries summaries,
-            String lessonType) {
-        //&& lessonType.intValue() != 0
+
+    private void selectChoices(HttpServletRequest request, InfoSiteSummaries summaries, String lessonType) {
+        // && lessonType.intValue() != 0
         if (lessonType != null && !lessonType.equals("0")) {
             final ShiftType lessonTypeSelect = ShiftType.valueOf(lessonType);
             List infoShiftsOnlyType = (List) CollectionUtils.select(summaries.getInfoShifts(),
                     new Predicate() {
-                
-                public boolean evaluate(Object arg0) {
-                    return ((InfoShift) arg0).getTipo().equals(lessonTypeSelect);
-                }
-            });
-            
+
+                        public boolean evaluate(Object arg0) {
+                            return ((InfoShift) arg0).getTipo().equals(lessonTypeSelect);
+                        }
+                    });
+
             summaries.setInfoShifts(infoShiftsOnlyType);
         }
     }
-    
+
     public ActionForward prepareInsertSummary(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+            FenixFilterException {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        
+
         Integer objectCode = getObjectCode(request);
         request.setAttribute("objectCode", objectCode);
-        
+
         processAnotherDate(request, form);
-        
+
         boolean loggedIsResponsible = false;
         List responsibleTeachers = null;
         Object argsReadResponsibleTeachers[] = { objectCode };
@@ -188,27 +190,27 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
                     loggedIsResponsible = true;
                 break;
             }
-            
+
             request.setAttribute("loggedIsResponsible", new Boolean(loggedIsResponsible));
-            
+
             if (!loggedIsResponsible) {
                 InfoTeacher infoTeacher = (InfoTeacher) ServiceManagerServiceFactory.executeService(
                         userView, "ReadTeacherByUsername", new Object[] { userView.getUtilizador() });
-                
+
                 InfoProfessorship infoProfessorship = (InfoProfessorship) ServiceManagerServiceFactory
-                .executeService(userView, "ReadProfessorshipByTeacherIDandExecutionCourseID",
-                        new Object[] { infoTeacher.getIdInternal(), objectCode });
-                
+                        .executeService(userView, "ReadProfessorshipByTeacherIDandExecutionCourseID",
+                                new Object[] { infoTeacher.getIdInternal(), objectCode });
+
                 request.setAttribute("loggedTeacherProfessorship", infoProfessorship.getIdInternal());
             }
-            
+
         } catch (Exception e) {
             ActionErrors errors = new ActionErrors();
             errors.add("error", new ActionError("Can't find course's responsible teacher"));
             saveErrors(request, errors);
             return showSummaries(mapping, form, request, response);
         }
-        
+
         Object args[] = { objectCode, userView.getUtilizador() /* userLogged */};
         SiteView siteView = null;
         try {
@@ -226,8 +228,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             saveErrors(request, errors);
             return showSummaries(mapping, form, request, response);
         }
-        
-        
+
         try {
             choosenShift(request, ((InfoSiteSummaries) siteView.getComponent()).getInfoShifts());
             choosenLesson(request, (InfoSummary) request.getAttribute("summaryToInsert"));
@@ -235,20 +236,18 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
         } catch (Exception e) {
             return showSummaries(mapping, form, request, response);
         }
-        
+
         DynaActionForm actionForm = (DynaActionForm) form;
-                 
-        if(actionForm.get("summaryDateInputOption").equals("on"))
+
+        if (actionForm.get("summaryDateInputOption").equals("on"))
             request.setAttribute("checked", "");
-        
-        if(actionForm.get("editor").equals("") || (actionForm.get("editor").equals("true"))){
-            request.setAttribute("verEditor", "true");    
-        }    
-        
+
+        htmlEditorConfigurations(request, actionForm);
+
         request.setAttribute("siteView", siteView);
         return mapping.findForward("insertSummary");
     }
-    
+
     /**
      * @param request
      */
@@ -256,20 +255,20 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
         DynaActionForm actionForm = (DynaActionForm) form;
         String summaryDateInputOption = request.getParameter("summaryDateInputOption");
         String summaryDateInput = (String) actionForm.get("summaryDateInput");
-        
-        if((summaryDateInput != null) && (summaryDateInput.equals(""))){
+
+        if ((summaryDateInput != null) && (summaryDateInput.equals(""))) {
             actionForm.set("dateEmpty", "");
         }
-        
-        if((summaryDateInputOption != null) && (summaryDateInputOption.equals("on"))){         
+
+        if ((summaryDateInputOption != null) && (summaryDateInputOption.equals("on"))) {
             actionForm.set("dateEmpty", "");
         }
-        
-        else if((summaryDateInputOption == null) && (actionForm.get("dateEmpty") != null) && (actionForm.get("dateEmpty").equals("")))
+
+        else if ((summaryDateInputOption == null) && (actionForm.get("dateEmpty") != null)
+                && (actionForm.get("dateEmpty").equals("")))
             actionForm.set("summaryDateInput", "");
     }
-    
-    
+
     private void choosenShift(HttpServletRequest request, List infoShifts) {
         if (request.getParameter("shift") != null && request.getParameter("shift").length() > 0) {
             if (infoShifts != null && infoShifts.size() > 0) {
@@ -284,7 +283,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
                     }
                 }
             }
-        }      
+        }
         if (infoShifts != null && infoShifts.size() > 0) {
             InfoSummary infoSummaryToInsert = new InfoSummary();
             infoSummaryToInsert.setInfoShift((InfoShift) infoShifts.get(0));
@@ -292,12 +291,13 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             request.setAttribute("shift", ((InfoShift) infoShifts.get(0)).getIdInternal());
         }
     }
-    
+
     private void choosenLesson(HttpServletRequest request, InfoSummary infoSummary) throws Exception {
         if (request.getParameter("forHidden") != null && request.getParameter("forHidden").length() > 0) {
             request.setAttribute("forHidden", request.getParameter("forHidden"));
         }
-        if (request.getAttribute("teste") == null && request.getParameter("lesson") != null && request.getParameter("lesson").length() > 0) {
+        if (request.getAttribute("teste") == null && request.getParameter("lesson") != null
+                && request.getParameter("lesson").length() > 0) {
             if (!request.getParameter("lesson").equals("0")) {
                 request.setAttribute("forHidden", "true");
                 Integer lessonSelected = new Integer(request.getParameter("lesson"));
@@ -309,14 +309,15 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             }
         }
     }
-    
+
     /**
      * @param request
      * @param infoSummary
      * @param lessonSelected
      * @throws FenixServiceException
      */
-    protected void findNextSummaryDate(HttpServletRequest request, InfoSummary infoSummary, Integer lessonSelected) throws FenixServiceException, FenixFilterException {
+    protected void findNextSummaryDate(HttpServletRequest request, InfoSummary infoSummary,
+            Integer lessonSelected) throws FenixServiceException, FenixFilterException {
         List lessons = infoSummary.getInfoShift().getInfoLessons();
         for (Iterator iter = lessons.iterator(); iter.hasNext();) {
             InfoLesson element = (InfoLesson) iter.next();
@@ -324,25 +325,26 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
                 GregorianCalendar calendar = new GregorianCalendar();
                 InfoSummary summaryBefore;
                 IUserView userView = SessionUtils.getUserView(request);
-                Object args[] = { getObjectCode(request),
-                        infoSummary.getInfoShift().getIdInternal(), lessonSelected};
-                summaryBefore = (InfoSummary) ServiceManagerServiceFactory.executeService(
-                        userView, "ReadLastSummary", args);
+                Object args[] = { getObjectCode(request), infoSummary.getInfoShift().getIdInternal(),
+                        lessonSelected };
+                summaryBefore = (InfoSummary) ServiceManagerServiceFactory.executeService(userView,
+                        "ReadLastSummary", args);
                 List dates = new ArrayList();
                 if (summaryBefore != null) {
                     calendar.setTime(summaryBefore.getSummaryDate().getTime());
-                    calendar.set(Calendar.DAY_OF_WEEK, element.getDiaSemana().getDiaSemana()
-                            .intValue());
+                    calendar.set(Calendar.DAY_OF_WEEK, element.getDiaSemana().getDiaSemana().intValue());
                     calendar.add(Calendar.DATE, 7);
-                    dates.add(calendar.getTime());                         
+                    dates.add(calendar.getTime());
                     request.setAttribute("dates", dates);
                 } else {
                     Object argsLesson[] = { element.getIdInternal() };
-                    Calendar lessonStartDate = (Calendar) ServiceManagerServiceFactory.executeService(userView, "ReadLessonStartDate", argsLesson);
-                    lessonStartDate.set(Calendar.DAY_OF_WEEK, element.getDiaSemana().getDiaSemana().intValue());                 
+                    Calendar lessonStartDate = (Calendar) ServiceManagerServiceFactory.executeService(
+                            userView, "ReadLessonStartDate", argsLesson);
+                    lessonStartDate.set(Calendar.DAY_OF_WEEK, element.getDiaSemana().getDiaSemana()
+                            .intValue());
                     dates.add(lessonStartDate.getTime());
                     request.setAttribute("dates", dates);
-                }                
+                }
                 break;
             }
         }
@@ -350,98 +352,98 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             request.setAttribute("dates", new ArrayList());
         }
     }
-    
+
     private void preSelectTeacherLogged(HttpServletRequest request, ActionForm form,
             InfoSiteSummaries summaries) {
         if (request.getParameter("teacher") == null || request.getParameter("teacher").length() == 0) {
             if (summaries.getTeacherId() != null) {
                 DynaActionForm insertSummaryForm = (DynaActionForm) form;
-                
+
                 insertSummaryForm.set("teacher", summaries.getTeacherId().toString());
             }
         }
     }
-    
+
     public ActionForward insertSummary(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+            FenixServiceException {
         try {
             HttpSession session = request.getSession(false);
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-            
+
             Integer executionCourseId = getObjectCode(request);
             request.setAttribute("objectCode", executionCourseId);
-            
+
             InfoSummary infoSummaryToInsert = buildSummaryToInsert(request);
-            
-            /*HtmlValidator htmlValidator = new HtmlValidator();     
-            htmlValidator.validateHTMLString(infoSummaryToInsert.getSummaryText());
-            String errors = htmlValidator.getErrors();           
-            
-            if((errors != null) && (!errors.equals(""))){
-                ActionErrors actionErrors = new ActionErrors();
-                request.setAttribute("errors", errors);
-                actionErrors.add("htmlErrors", new ActionError("html.validate.error"));
-                saveErrors(request, actionErrors);
-                return mapping.getInputForward();
-            }*/
-            
+
+            /*
+             * HtmlValidator htmlValidator = new HtmlValidator();
+             * htmlValidator.validateHTMLString(infoSummaryToInsert.getSummaryText());
+             * String errors = htmlValidator.getErrors();
+             * 
+             * if((errors != null) && (!errors.equals(""))){ ActionErrors
+             * actionErrors = new ActionErrors(); request.setAttribute("errors",
+             * errors); actionErrors.add("htmlErrors", new
+             * ActionError("html.validate.error")); saveErrors(request,
+             * actionErrors); return mapping.getInputForward(); }
+             */
+
             Object[] args = { executionCourseId, infoSummaryToInsert };
             ServiceUtils.executeService(userView, "InsertSummary", args);
-            
+
         } catch (Exception e) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("error.insertSummary", new ActionError((e.getMessage())));
             actionErrors
-            .add("error.insertSummary", new ActionError(("error.summary.impossible.insert")));            
+                    .add("error.insertSummary", new ActionError(("error.summary.impossible.insert")));
             saveErrors(request, actionErrors);
             return mapping.findForward("doPrepareInsertSummary");
         }
-        
+
         DynaActionForm actionForm = (DynaActionForm) form;
         Integer saveValue = (Integer) actionForm.get("save");
-        
-        if(saveValue.equals(new Integer(0)))
+
+        if (saveValue.equals(new Integer(0)))
             return mapping.findForward("doShowSummariesAction");
-        else if(saveValue.equals(new Integer(1))){
+        else if (saveValue.equals(new Integer(1))) {
             resetActionForm(actionForm, true);
             request.setAttribute("teste", "true");
             return prepareInsertSummary(mapping, actionForm, request, response);
-        }
-        else{
+        } else {
             resetActionForm(actionForm, false);
             request.setAttribute("teste", "true");
             return prepareInsertSummary(mapping, actionForm, request, response);
         }
     }
-    
+
     /**
      * @param actionForm
      */
-    protected void resetActionForm(DynaActionForm actionForm, boolean teste) {        
-        if(teste){
+    protected void resetActionForm(DynaActionForm actionForm, boolean teste) {
+        if (teste) {
             actionForm.set("summaryText", "");
             actionForm.set("title", "");
         }
-        actionForm.set("studentsNumber", "");         
+        actionForm.set("studentsNumber", "");
         actionForm.set("summaryDateInput", "");
         actionForm.set("summaryDateInputOption", "");
         actionForm.set("summaryHourInput", "");
         actionForm.set("lesson", "");
         actionForm.set("room", "");
     }
-    
+
     private InfoSummary buildSummaryToInsert(HttpServletRequest request) {
         InfoSummary infoSummary = new InfoSummary();
-        
+
         if (request.getParameter("shift") != null && request.getParameter("shift").length() > 0) {
             InfoShift infoShift = new InfoShift();
             infoShift.setIdInternal(new Integer(request.getParameter("shift")));
             infoSummary.setInfoShift(infoShift);
         }
-        
+
         if (request.getParameter("summaryDateInput") != null
                 && request.getParameter("summaryDateInput").length() > 0) {
-            String summaryDateString = request.getParameter("summaryDateInput");                
+            String summaryDateString = request.getParameter("summaryDateInput");
             String[] dateTokens = summaryDateString.split("/");
             Calendar summaryDate = Calendar.getInstance();
             summaryDate.set(Calendar.DAY_OF_MONTH, (new Integer(dateTokens[0])).intValue());
@@ -449,89 +451,90 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             summaryDate.set(Calendar.YEAR, (new Integer(dateTokens[2])).intValue());
             infoSummary.setSummaryDate(summaryDate);
         }
-        
-        //Summary's number of attended student
+
+        // Summary's number of attended student
         if (request.getParameter("studentsNumber") != null
                 && request.getParameter("studentsNumber").length() > 0) {
             infoSummary.setStudentsNumber(new Integer(request.getParameter("studentsNumber")));
         }
-        
-        //lesson extra or not
+
+        // lesson extra or not
         if (request.getParameter("lesson") != null && request.getParameter("lesson").length() > 0) {
             Integer lessonId = new Integer(request.getParameter("lesson"));
-            //extra lesson
-            
+            // extra lesson
+
             if (lessonId.equals(new Integer(0))) {
-                infoSummary.setIsExtraLesson(Boolean.TRUE);                
-                //Summary's hour
+                infoSummary.setIsExtraLesson(Boolean.TRUE);
+                // Summary's hour
                 String summaryHourString = request.getParameter("summaryHourInput");
                 String[] hourTokens = summaryHourString.split(":");
                 Calendar summaryHour = Calendar.getInstance();
                 summaryHour.set(Calendar.HOUR_OF_DAY, (new Integer(hourTokens[0])).intValue());
                 summaryHour.set(Calendar.MINUTE, (new Integer(hourTokens[1])).intValue());
                 infoSummary.setSummaryHour(summaryHour);
-                
+
                 if (request.getParameter("room") != null && request.getParameter("room").length() > 0) {
-                    //lesson's room
+                    // lesson's room
                     InfoRoom infoRoom = new InfoRoom();
                     infoRoom.setIdInternal(new Integer(request.getParameter("room")));
                     infoSummary.setInfoRoom(infoRoom);
                 }
             } else if (lessonId.intValue() >= 0) {
-                infoSummary.setIsExtraLesson(Boolean.FALSE);              
+                infoSummary.setIsExtraLesson(Boolean.FALSE);
                 infoSummary.setLessonIdSelected(lessonId);
             }
         }
-        
+
         if (request.getParameter("teacher") != null && request.getParameter("teacher").length() > 0) {
             Integer teacherId = new Integer(request.getParameter("teacher"));
-            if (teacherId.equals(new Integer(0))) //school's teacher
+            if (teacherId.equals(new Integer(0))) // school's teacher
             {
                 InfoTeacher infoTeacher = new InfoTeacher();
                 infoTeacher.setTeacherNumber(new Integer(request.getParameter("teacherNumber")));
                 infoSummary.setInfoTeacher(infoTeacher);
-            } else if (teacherId.equals(new Integer(-1))) //external teacher
+            } else if (teacherId.equals(new Integer(-1))) // external teacher
             {
                 infoSummary.setTeacherName(request.getParameter("teacherName"));
-            } else { //teacher belong to course
+            } else { // teacher belong to course
                 InfoProfessorship infoProfessorship = new InfoProfessorship();
                 infoProfessorship.setIdInternal(teacherId);
                 infoSummary.setInfoProfessorship(infoProfessorship);
             }
         }
-        
+
         infoSummary.setTitle(request.getParameter("title"));
         infoSummary.setSummaryText(request.getParameter("summaryText"));
-        
+
         return infoSummary;
     }
-    
+
     public ActionForward prepareEditSummary(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-        
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+            FenixFilterException {
+
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         DynaActionForm summaryForm = (DynaActionForm) form;
-        
+
         String summaryIdString = request.getParameter("summaryCode");
         Integer summaryId = new Integer(summaryIdString);
-        
+
         Integer executionCourseId = getObjectCode(request);
         request.setAttribute("objectCode", executionCourseId);
-        
+
         Object[] args = { executionCourseId, summaryId, userView.getUtilizador() };
         SiteView siteView = null;
         try {
             siteView = (SiteView) ServiceUtils.executeService(userView, "ReadSummary", args);
-            
-            if(request.getAttribute("summaryTextFlag") == null){
-                String summaryText = ((InfoSiteSummary) siteView.getComponent()).getInfoSummary().getSummaryText();
-                if(summaryText != null)
+
+            if (request.getAttribute("summaryTextFlag") == null) {
+                String summaryText = ((InfoSiteSummary) siteView.getComponent()).getInfoSummary()
+                        .getSummaryText();
+                if (summaryText != null)
                     summaryForm.set("summaryText", summaryText);
-            }            
-            else              
+            } else
                 summaryForm.set("summaryText", request.getAttribute("summaryTextFlag"));
-            
+
             boolean loggedIsResponsible = false;
             List responsibleTeachers = null;
             Object argsReadResponsibleTeachers[] = { executionCourseId };
@@ -543,27 +546,27 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
                     loggedIsResponsible = true;
                 break;
             }
-            
+
             request.setAttribute("loggedIsResponsible", new Boolean(loggedIsResponsible));
-            
+
             if (!loggedIsResponsible) {
                 InfoTeacher infoTeacher = (InfoTeacher) ServiceManagerServiceFactory.executeService(
                         userView, "ReadTeacherByUsername", new Object[] { userView.getUtilizador() });
-                
+
                 InfoProfessorship infoProfessorship = (InfoProfessorship) ServiceManagerServiceFactory
-                .executeService(userView, "ReadProfessorshipByTeacherIDandExecutionCourseID",
-                        new Object[] { infoTeacher.getIdInternal(), executionCourseId });
-                
+                        .executeService(userView, "ReadProfessorshipByTeacherIDandExecutionCourseID",
+                                new Object[] { infoTeacher.getIdInternal(), executionCourseId });
+
                 request.setAttribute("loggedTeacherProfessorship", infoProfessorship.getIdInternal());
             } else {
-                
+
                 if ((((InfoSiteSummary) siteView.getComponent())).getInfoSummary().getInfoTeacher() != null) {
                     summaryForm.set("teacherNumber", (((InfoSiteSummary) siteView.getComponent()))
                             .getInfoSummary().getInfoTeacher().getTeacherNumber().toString());
                     summaryForm.set("teacher", "0");
                 } else if ((((InfoSiteSummary) siteView.getComponent())).getInfoSummary()
                         .getInfoProfessorship() != null) {
-                    
+
                     summaryForm.set("teacher", (((InfoSiteSummary) siteView.getComponent()))
                             .getInfoSummary().getInfoProfessorship().getIdInternal().toString());
                 } else {
@@ -572,7 +575,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
                             .getInfoSummary().getTeacherName());
                 }
             }
-            
+
         } catch (FenixServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("error.editSummary", new ActionError("error.summary.impossible.preedit"));
@@ -586,24 +589,22 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             saveErrors(request, errors);
             return showSummaries(mapping, form, request, response);
         }
-        
+
         try {
             shiftChanged(request, siteView);
             choosenLesson(request, (InfoSiteSummary) siteView.getComponent());
         } catch (Exception e) {
-            
+
             return showSummaries(mapping, form, request, response);
         }
-                            
-        if(summaryForm.get("editor").equals("") || (summaryForm.get("editor").equals("true"))){
-            request.setAttribute("verEditor", "true");            
-        }   
-        
+
+        htmlEditorConfigurations(request, summaryForm);
+
         request.setAttribute("siteView", siteView);
-        
+
         return mapping.findForward("editSummary");
     }
-    
+
     private void shiftChanged(HttpServletRequest request, SiteView siteView) {
         if (request.getParameter("shift") != null && request.getParameter("shift").length() > 0) {
             List infoShifts = ((InfoSiteSummary) siteView.getComponent()).getInfoShifts();
@@ -616,17 +617,17 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             }
         }
     }
-    
+
     private void choosenLesson(HttpServletRequest request, InfoSiteSummary siteSummary) {
         if (request.getParameter("lesson") != null && request.getParameter("lesson").length() > 0) {
             if (!request.getParameter("lesson").equals("0")) {
-                //normal lesson
+                // normal lesson
                 request.setAttribute("forHidden", "true");
                 siteSummary.getInfoSummary().setIsExtraLesson(Boolean.FALSE);
                 siteSummary.getInfoSummary().setLessonIdSelected(
                         new Integer(request.getParameter("lesson")));
             } else {
-                //extra lesson
+                // extra lesson
                 request.setAttribute("forHidden", "false");
                 siteSummary.getInfoSummary().setIsExtraLesson(Boolean.TRUE);
                 siteSummary.getInfoSummary().setLessonIdSelected(new Integer(0));
@@ -639,40 +640,42 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             }
         }
     }
-    
+
     public ActionForward editSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException, FenixFilterException {
         try {
             HttpSession session = request.getSession(false);
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-            
+
             String summaryIdString = request.getParameter("summaryCode");
             Integer summaryId = new Integer(summaryIdString);
-            
+
             Integer executionCourseId = getObjectCode(request);
             request.setAttribute("objectCode", executionCourseId);
-            
+
             InfoSummary infoSummaryToEdit = buildSummaryToInsert(request);
             infoSummaryToEdit.setIdInternal(summaryId);
-            
-//          HtmlValidator htmlValidator = new HtmlValidator();
-//          htmlValidator.validateHTMLString(infoSummaryToEdit.getSummaryText());
-//          String errors = htmlValidator.getErrors();        
-//          
-//          if((errors != null) && (!errors.equals(""))){
-//          ActionErrors actionErrors = new ActionErrors();
-//          request.setAttribute("errors", errors);
-//          actionErrors.add("htmlErrors", new ActionError("html.validate.error"));
-//          saveErrors(request, actionErrors);
-//          request.setAttribute("summaryTextFlag", infoSummaryToEdit.getSummaryText());
-//          return prepareEditSummary(mapping, form, request, response);
-//          }
-            
+
+            // HtmlValidator htmlValidator = new HtmlValidator();
+            // htmlValidator.validateHTMLString(infoSummaryToEdit.getSummaryText());
+            // String errors = htmlValidator.getErrors();
+            //          
+            // if((errors != null) && (!errors.equals(""))){
+            // ActionErrors actionErrors = new ActionErrors();
+            // request.setAttribute("errors", errors);
+            // actionErrors.add("htmlErrors", new
+            // ActionError("html.validate.error"));
+            // saveErrors(request, actionErrors);
+            // request.setAttribute("summaryTextFlag",
+            // infoSummaryToEdit.getSummaryText());
+            // return prepareEditSummary(mapping, form, request, response);
+            // }
+
             Object[] args = { executionCourseId, infoSummaryToEdit };
-            
+
             ServiceUtils.executeService(userView, "EditSummary", args);
         } catch (Exception e) {
-            
+
             ActionErrors actionErrors = new ActionErrors();
             if (e.getMessage() == null && e instanceof NotAuthorizedException) {
                 actionErrors.add("error.editSummary", new ActionError("error.summary.not.authorized"));
@@ -681,32 +684,32 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             }
             actionErrors.add("error.editSummary", new ActionError("error.summary.impossible.edit"));
             saveErrors(request, actionErrors);
-            
+
             String text = request.getParameter("summaryText");
             request.setAttribute("summaryTextFlag", text);
-            
-            return prepareEditSummary(mapping, form, request, response);//mudei
+
+            return prepareEditSummary(mapping, form, request, response);// mudei
         }
-        
+
         return mapping.findForward("doShowSummariesAction");
     }
-    
+
     public ActionForward deleteSummary(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
         try {
             HttpSession session = request.getSession(false);
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-            
+
             String summaryIdString = request.getParameter("summaryCode");
             Integer summaryId = new Integer(summaryIdString);
-            
+
             Integer executionCourseId = getObjectCode(request);
             request.setAttribute("objectCode", executionCourseId);
-            
+
             Object[] args = { executionCourseId, summaryId };
             ServiceUtils.executeService(userView, "DeleteSummary", args);
         } catch (Exception e) {
-            
+
             ActionErrors actionErrors = new ActionErrors();
             if (e instanceof NotAuthorizedException) {
                 actionErrors.add("error.editSummary", new ActionError("error.summary.not.authorized"));
@@ -716,7 +719,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
         }
         return mapping.findForward("doShowSummariesAction");
     }
-    
+
     private Integer getObjectCode(HttpServletRequest request) {
         Integer objectCode = null;
         String objectCodeString = request.getParameter("objectCode");
@@ -727,5 +730,17 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             objectCode = new Integer(objectCodeString);
         }
         return objectCode;
+    }
+
+    private void htmlEditorConfigurations(HttpServletRequest request, DynaActionForm actionForm) {
+        String header = request.getHeader("User-Agent");
+        if (header.indexOf("Safari/") == -1 && header.indexOf("Opera/") == -1
+                && header.indexOf("Konqueror/") == -1) {
+
+            if (actionForm.get("editor").equals("") || (actionForm.get("editor").equals("true")))
+                request.setAttribute("verEditor", "true");
+
+        } else
+            request.setAttribute("naoVerEditor", "true");
     }
 }

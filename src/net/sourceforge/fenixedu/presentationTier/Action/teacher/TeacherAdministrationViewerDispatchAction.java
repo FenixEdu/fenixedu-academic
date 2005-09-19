@@ -180,9 +180,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
 
         DynaActionForm actionForm = (DynaActionForm) form;
-        if (actionForm.get("editor").equals("") || (actionForm.get("editor").equals("true"))) {
-            request.setAttribute("verEditor", "true");
-        }
+        htmlEditorConfigurations(request, actionForm);
 
         return mapping.findForward("insertAnnouncement");
 
@@ -194,10 +192,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         readSiteView(request, null, null, null, null);
 
         DynaActionForm actionForm = (DynaActionForm) form;
-
-        if (actionForm.get("editor").equals("") || (actionForm.get("editor").equals("true"))) {
-            request.setAttribute("verEditor", "true");
-        }
+        htmlEditorConfigurations(request, actionForm);
 
         return mapping.findForward("insertAnnouncement");
     }
@@ -245,9 +240,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         if (request.getAttribute("announcementTextFlag") != null)
             actionForm.set("information", request.getAttribute("announcementTextFlag"));
 
-        if (actionForm.get("editor").equals("") || (actionForm.get("editor").equals("true"))) {
-            request.setAttribute("verEditor", "true");
-        }
+        htmlEditorConfigurations(request, actionForm);
 
         return mapping.findForward("editAnnouncement");
     }
@@ -1020,10 +1013,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         readSiteView(request, sectionComponent, null, sectionCode, null);
 
         DynaActionForm actionForm = (DynaActionForm) form;
-
-        if (actionForm.get("editor").equals("") || (actionForm.get("editor").equals("true"))) {
-            request.setAttribute("verEditor", "true");
-        }
+        htmlEditorConfigurations(request, actionForm);
 
         return mapping.findForward("insertItem");
     }
@@ -1084,10 +1074,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
 
         DynaActionForm actionForm = (DynaActionForm) form;
+        htmlEditorConfigurations(request, actionForm);
 
-        if (actionForm.get("editor").equals("") || (actionForm.get("editor").equals("true"))) {
-            request.setAttribute("verEditor", "true");
-        }
         return mapping.findForward("editItem");
     }
 
@@ -1884,8 +1872,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Object args[] = { objectCode, infoGroupProperties };
         List errors = new ArrayList();
         try {
-            errors = (List) ServiceManagerServiceFactory.executeService(userView, "EditGrouping",
-                    args);
+            errors = (List) ServiceManagerServiceFactory.executeService(userView, "EditGrouping", args);
         } catch (InvalidSituationServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
             ActionError error = null;
@@ -1899,7 +1886,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             error = new ActionError(e.getArgs()[0]);
             actionErrors.add("error.noGroupProperties", error);
             saveErrors(request, actionErrors);
-            return prepareViewExecutionCourseProjects(mapping, form, request, response);      
+            return prepareViewExecutionCourseProjects(mapping, form, request, response);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -1964,8 +1951,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
         Boolean result = Boolean.FALSE;
         try {
-            result = (Boolean) ServiceManagerServiceFactory.executeService(userView,
-                    "DeleteGrouping", args);
+            result = (Boolean) ServiceManagerServiceFactory.executeService(userView, "DeleteGrouping",
+                    args);
         } catch (ExistingServiceException e) {
             ActionErrors actionErrors1 = new ActionErrors();
             ActionError error = null;
@@ -2031,12 +2018,12 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             return viewNewProjectProposals(mapping, form, request, response);
         }
 
-        String enrolmentPolicyName = ((InfoSiteGrouping) siteView.getComponent())
-                .getInfoGrouping().getEnrolmentPolicy().getTypeFullName();
+        String enrolmentPolicyName = ((InfoSiteGrouping) siteView.getComponent()).getInfoGrouping()
+                .getEnrolmentPolicy().getTypeFullName();
         request.setAttribute("enrolmentPolicyName", enrolmentPolicyName);
 
-        ShiftType shiftType = ((InfoSiteGrouping) siteView.getComponent())
-                .getInfoGrouping().getShiftType();
+        ShiftType shiftType = ((InfoSiteGrouping) siteView.getComponent()).getInfoGrouping()
+                .getShiftType();
         String shiftTypeName = "Sem Turno";
         if (shiftType != null) {
             shiftTypeName = shiftType.getFullNameTipoAula();
@@ -2169,7 +2156,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
         } catch (InvalidArgumentsServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
-            ActionError error = new ActionError("errors.notExisting.studentInAttendsSetToCreateStudentGroup");
+            ActionError error = new ActionError(
+                    "errors.notExisting.studentInAttendsSetToCreateStudentGroup");
             actionErrors.add("errors.notExisting.studentInAttendsSetToCreateStudentGroup", error);
             saveErrors(request, actionErrors);
             return prepareCreateStudentGroup(mapping, form, request, response);
@@ -2380,7 +2368,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
                 actionErrors.add("error.noGroupProperties", error);
                 saveErrors(request, actionErrors);
                 return prepareViewExecutionCourseProjects(mapping, form, request, response);
-          
+
             } catch (InvalidArgumentsServiceException e) {
                 ActionErrors actionErrors = new ActionErrors();
                 ActionError error = null;
@@ -2388,7 +2376,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
                 actionErrors.add("error.noGroup", error);
                 saveErrors(request, actionErrors);
                 return viewShiftsAndGroups(mapping, form, request, response);
-            
+
             } catch (DomainException e) {
                 ActionErrors actionErrors = new ActionErrors();
                 ActionError error = null;
@@ -2835,8 +2823,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
             return prepareViewExecutionCourseProjects(mapping, form, request, response);
         }
-        
-        Collections.sort(infoSiteAttendsSet.getInfoGrouping().getInfoAttends(), new BeanComparator("aluno.number"));
+
+        Collections.sort(infoSiteAttendsSet.getInfoGrouping().getInfoAttends(), new BeanComparator(
+                "aluno.number"));
         return mapping.findForward("viewAttendsSet");
     }
 
@@ -2865,7 +2854,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             saveErrors(request, actionErrors);
             return prepareViewExecutionCourseProjects(mapping, form, request, response);
         }
-        
+
         Object args[] = { objectCode, groupingID };
         List infoStudentList = null;
         try {
@@ -2874,7 +2863,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
-        Collections.sort(component.getInfoGrouping().getInfoAttends(), new BeanComparator("aluno.number"));
+        Collections.sort(component.getInfoGrouping().getInfoAttends(),
+                new BeanComparator("aluno.number"));
         Collections.sort(infoStudentList, new BeanComparator("number"));
         request.setAttribute("infoStudentList", infoStudentList);
         return mapping.findForward("editAttendsSetMembers");
@@ -3153,4 +3143,15 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         return prepareViewExecutionCourseProjects(mapping, form, request, response);
     }
 
+    private void htmlEditorConfigurations(HttpServletRequest request, DynaActionForm actionForm) {
+        String header = request.getHeader("User-Agent");        
+        if (header.indexOf("Safari/") == -1 && header.indexOf("Opera/") == -1
+                && header.indexOf("Konqueror/") == -1) {
+
+            if (actionForm.get("editor").equals("") || (actionForm.get("editor").equals("true")))
+                request.setAttribute("verEditor", "true");
+
+        } else
+            request.setAttribute("naoVerEditor", "true");
+    }
 }
