@@ -83,7 +83,6 @@ public class InsertDistributedTest implements IService {
         }
         distributedTest.setTestScope(testScope);
 
-        IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport.getIPersistentStudentTestQuestion();
         IPersistentTestQuestion persistentTestQuestion = persistentSuport.getIPersistentTestQuestion();
 
         List<ITestQuestion> testQuestionList = persistentTestQuestion.readByTest(testId);
@@ -149,7 +148,6 @@ public class InsertDistributedTest implements IService {
         advisory.setExpires(distributedTest.getEndDate().getTime());
         advisory.setSender(MessageFormat.format(bundle.getString("message.distributedTest.from"), new Object[] { sender }));
         advisory.setSubject(distributedTest.getTitle());
-        String msgBeginning;
         final String beginHour = DateFormatUtils.format(distributedTest.getBeginHour().getTime(), "hh:mm");
         final String beginDate = DateFormatUtils.format(distributedTest.getBeginDate().getTime(), "dd/MM/yyyy");
         final String endHour = DateFormatUtils.format(distributedTest.getEndHour().getTime(), "hh:mm");

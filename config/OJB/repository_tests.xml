@@ -68,11 +68,9 @@
       	locking="false"
 	/>
     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="visibleQuestions"
+		name="questions"
 		element-class-ref="net.sourceforge.fenixedu.domain.onlineTests.Question">
 		<inverse-foreignkey field-ref="keyMetadata"/>
-		<query-customizer class="net.sourceforge.fenixedu.persistenceTier.customQueries.QuestionFilter">
-	    </query-customizer>
 	</collection-descriptor>
 	<reference-descriptor auto-retrieve="false"
          name="executionCourse"

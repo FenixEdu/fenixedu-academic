@@ -1607,6 +1607,8 @@ class net.sourceforge.fenixedu.domain.onlineTests.Metadata extends net.sourcefor
         public abstract java.util.Calendar getLearningTime();
 
 	    public abstract void setLearningTime(java.util.Calendar calendar);
+
+		public java.util.List<IQuestion> getVisibleQuestions();
     "
 }
 
@@ -4680,7 +4682,7 @@ relation QualificationPerson {
 }
 
 relation QuestionsFromMetadata {
-    net.sourceforge.fenixedu.domain.onlineTests.Question playsRole visibleQuestions {
+    net.sourceforge.fenixedu.domain.onlineTests.Question playsRole questions {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.onlineTests.Metadata playsRole metadata;

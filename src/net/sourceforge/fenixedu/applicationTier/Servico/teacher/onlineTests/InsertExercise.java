@@ -97,7 +97,6 @@ public class InsertExercise implements IService {
 
                 try {
                     ParseQuestion parseQuestion = new ParseQuestion();
-                    IPersistentQuestion persistentQuestion = persistentSuport.getIPersistentQuestion();
 
                     parseQuestion.parseQuestion(xmlFile, new InfoQuestion(), this.path);
                     IQuestion question = DomainFactory.makeQuestion();
