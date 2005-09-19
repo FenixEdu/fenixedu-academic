@@ -183,7 +183,7 @@ public class InfoMetadata extends InfoObject {
             setMainSubject(metadata.getMainSubject());
             setSecondarySubject(metadata.getSecondarySubject());
             setAuthor(metadata.getAuthor());
-            setNumberOfMembers(metadata.getVisibleQuestionsCount());
+            setNumberOfMembers(metadata.getVisibleQuestions().size());
             setVisibility(metadata.getVisibility());
         }
     }

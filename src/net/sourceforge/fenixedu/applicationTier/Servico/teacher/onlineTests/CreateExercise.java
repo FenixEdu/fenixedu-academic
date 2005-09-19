@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
+import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -45,7 +46,7 @@ public class CreateExercise implements IService {
             }
             IMetadata metadata = null;
             if (metadataId == null) {
-                metadata = DomainFactory.makeMetadata();
+                metadata = DomainFactory.makeMetadata(executionCourse, null, null);
                 metadata.setAuthor(author);
                 metadata.setDescription(description);
                 metadata.setDifficulty(questionDifficultyType.getTypeString());
@@ -71,10 +72,11 @@ public class CreateExercise implements IService {
             } catch (UnsupportedEncodingException e) {
                 throw new FenixServiceException(e);
             }
+            final List<IQuestion> visibleQuestions = metadata.getVisibleQuestions();
             if (metadataId == null)
-                question.setXmlFileName("Pergunta" + metadata.getVisibleQuestionsCount() + ".xml");
+                question.setXmlFileName("Pergunta" + visibleQuestions.size() + ".xml");
             else
-                question.setXmlFileName(persistentQuestion.correctFileName("Pergunta" + metadata.getVisibleQuestionsCount() + ".xml", metadataId));
+                question.setXmlFileName(persistentQuestion.correctFileName("Pergunta" + visibleQuestions.size() + ".xml", metadataId));
 
             infoQuestion.setXmlFile(question.getXmlFile());
             ParseQuestion parse = new ParseQuestion();
