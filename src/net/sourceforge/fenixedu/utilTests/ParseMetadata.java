@@ -37,7 +37,7 @@ public class ParseMetadata extends DefaultHandler {
 
     private Element current = null;
 
-    public IMetadata parseMetadata(String file, IMetadata metadata, String path) throws IOException, ParserConfigurationException, SAXException {
+    public IMetadata parseMetadata(IMetadata metadata, String path) throws IOException, ParserConfigurationException, SAXException {
         SAXParserFactory spf = SAXParserFactory.newInstance();
         spf.setValidating(true);
         SAXParser saxParser = spf.newSAXParser();
@@ -45,7 +45,7 @@ public class ParseMetadata extends DefaultHandler {
         reader.setContentHandler(this);
         reader.setErrorHandler(this);
         try {
-            StringReader sr = new StringReader(file);
+            StringReader sr = new StringReader(metadata.getMetadataFile());
             InputSource input = new InputSource(sr);
             MetadataResolver resolver = new MetadataResolver(path);
             reader.setEntityResolver(resolver);
