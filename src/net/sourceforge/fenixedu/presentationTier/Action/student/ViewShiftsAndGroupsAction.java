@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.student;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -13,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExportGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShiftsAndGroups;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -32,16 +35,20 @@ import org.apache.struts.action.ActionMapping;
 public class ViewShiftsAndGroupsAction extends FenixContextAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
 
-        Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
+        Integer groupPropertiesCode = Integer.valueOf(groupPropertiesCodeString);
         
         String username = userView.getUtilizador();
+
+        List<InfoExportGrouping> infoExportGroupings = (List<InfoExportGrouping>) ServiceUtils.
+                executeService(userView, "ReadExportGroupingsByGrouping", new Object[]{ groupPropertiesCode });
+        request.setAttribute("infoExportGroupings", infoExportGroupings);
 
         InfoSiteShiftsAndGroups infoSiteShiftsAndGroups;
         Object[] args = { groupPropertiesCode, username};

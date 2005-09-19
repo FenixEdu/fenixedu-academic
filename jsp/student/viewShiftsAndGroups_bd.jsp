@@ -15,7 +15,7 @@
 
 <logic:present name="infoSiteShiftsAndGroups">
 
-	
+
 	<logic:empty name="infoSiteShiftsAndGroups" property="infoSiteGroupsByShiftList">
 		
 		
@@ -41,6 +41,15 @@
 			</td>
 		</tr>
 	</table>
+
+	<br />
+	<logic:iterate id="infoExportGrouping" name="infoExportGroupings" length="1">
+		<bean:write name="infoExportGrouping" property="infoExecutionCourse.nome"/>
+	</logic:iterate>
+	<logic:iterate id="infoExportGrouping" name="infoExportGroupings" offset="1">
+		, <bean:write name="infoExportGrouping" property="infoExecutionCourse.nome"/>
+	</logic:iterate>
+	<br />
 
 	<br>	
      <span class="error"><html:errors/></span> 	

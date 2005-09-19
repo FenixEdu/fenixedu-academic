@@ -8738,7 +8738,7 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.WriteDislocatedStudentAnswer</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>       
-    </service>     
+    </service>
     <service>
     	<name>ReadAllDistricts</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.general.ReadAllDistricts</implementationClass>
@@ -8759,5 +8759,11 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.PrepareEditGroupingMembers</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>       
-    </service>     
+    </service>
+    <service>
+    	<name>ReadExportGroupingsByGrouping</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.ReadExportGroupingsByGrouping</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>       
+    </service>
 </serviceDefinitions>    
