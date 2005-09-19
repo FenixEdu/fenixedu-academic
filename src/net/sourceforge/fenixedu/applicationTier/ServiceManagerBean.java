@@ -109,19 +109,11 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
      * @param argumentos
      *            is a vector with the arguments of the service to execute.
      * 
-     * @throws FenixServiceException
-     * @throws NotAuthorizedException
      */
     public Object execute(IUserView id, String service, Object args[]) {
         return execute(id, service, "run", args);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see pt.utl.ist.berserk.logic.serviceManager.IServiceManagerWrapper#execute(java.lang.Object,
-     *      java.lang.String, java.lang.String, java.lang.Object[])
-     */
     public Object execute(IUserView id, String service, String method, Object[] args)
             throws EJBException {
         try {
@@ -133,24 +125,26 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
                 serviceStartTime = Calendar.getInstance();
             }
 
-	    // Replace this line with the following block if conflicting transactions should restart automatically
-	    //Object serviceResult = manager.execute(id, service, method, args);
+            // Replace this line with the following block if conflicting
+            // transactions should restart automatically
+            // Object serviceResult = manager.execute(id, service, method,
+            // args);
 
-	    ServiceInfo.setCurrentServiceInfo((id == null) ? null : id.getUtilizador(), service, args);
+            ServiceInfo.setCurrentServiceInfo((id == null) ? null : id.getUtilizador(), service, args);
 
-	    Object serviceResult = null;
-	    while (true) {
-		try {
-		    serviceResult = manager.execute(id, service, method, args);
-		    break;
-		} catch (VersionNotAvailableException vnae) {
-		    System.out.println("Restarting TX because of VersionNotAvailableException");
-		    // repeat service
-		} catch (jvstm.CommitException ce) {
-		    System.out.println("Restarting TX because of CommitException");
-		    // repeat service
-		}
-	    }
+            Object serviceResult = null;
+            while (true) {
+                try {
+                    serviceResult = manager.execute(id, service, method, args);
+                    break;
+                } catch (VersionNotAvailableException vnae) {
+                    System.out.println("Restarting TX because of VersionNotAvailableException");
+                    // repeat service
+                } catch (jvstm.CommitException ce) {
+                    System.out.println("Restarting TX because of CommitException");
+                    // repeat service
+                }
+            }
 
             if (serviceLoggingIsOn || (userLoggingIsOn && id != null)) {
                 serviceEndTime = Calendar.getInstance();
@@ -220,38 +214,18 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see javax.ejb.SessionBean#ejbActivate()
-     */
     public void ejbCreate() {
         // nothing to do
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see javax.ejb.SessionBean#ejbActivate()
-     */
     public void ejbActivate() throws EJBException {
         // nothing to do
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see javax.ejb.SessionBean#ejbPassivate()
-     */
     public void ejbPassivate() throws EJBException {
         // nothing to do
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see javax.ejb.SessionBean#ejbRemove()
-     */
     public void ejbRemove() throws EJBException {
         // nothing to do
     }
@@ -283,13 +257,6 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
         mapUsersToWatch.clear();
     }
 
-    /**
-     * @param service
-     * @param method
-     * @param args
-     * @param serviceStartTime
-     * @param serviceEndTime
-     */
     private void registerServiceExecutionTime(String service, String method, Object[] args,
             Calendar serviceStartTime, Calendar serviceEndTime) {
         String hashKey = generateServiceHashKey(service, method, args);
@@ -303,14 +270,6 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
         serviceExecutionLog.addExecutionTime(serviceExecutionTime);
     }
 
-    /**
-     * @param id
-     * @param service
-     * @param method
-     * @param args
-     * @param serviceStartTime
-     * @param serviceEndTime
-     */
     private void registerUserExecutionOfService(IUserView id, String service, String method,
             Object[] args, Calendar serviceStartTime, Calendar serviceEndTime) {
         UserExecutionLog userExecutionLog = (UserExecutionLog) mapUsersToWatch.get(id.getUtilizador());
@@ -322,21 +281,10 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
         userExecutionLog.addServiceCall(generateServiceHashKey(service, method, args), serviceStartTime);
     }
 
-    /**
-     * @param serviceStartTime
-     * @param serviceEndTime
-     * @return
-     */
     private long calculateServiceExecutionTime(Calendar serviceStartTime, Calendar serviceEndTime) {
         return serviceEndTime.getTimeInMillis() - serviceStartTime.getTimeInMillis();
     }
 
-    /**
-     * @param service
-     * @param method
-     * @param args
-     * @return
-     */
     private String generateServiceHashKey(String service, String method, Object[] args) {
         String hashKey = service + "." + method + "(";
         if (args != null) {
@@ -355,34 +303,18 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
         return hashKey;
     }
 
-    /**
-     * @return Returns the mapServicesToWatch.
-     */
     public HashMap getMapServicesToWatch(IUserView id) {
         return mapServicesToWatch;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.IServiceManagerWrapper#loggingIsOn()
-     */
     public Boolean serviceLoggingIsOn(IUserView id) {
         return new Boolean(serviceLoggingIsOn);
     }
 
-    /**
-     * @return Returns the mapUsersToWatch.
-     */
     public HashMap getMapUsersToWatch(IUserView id) {
         return mapUsersToWatch;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.IServiceManagerWrapper#loggingIsOn()
-     */
     public Boolean userLoggingIsOn(IUserView id) {
         return new Boolean(userLoggingIsOn);
     }
