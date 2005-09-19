@@ -133,6 +133,8 @@
 
 <html:reset styleClass="inputbutton">
 	<bean:message key="label.clear"/>
-</html:reset>			
+</html:reset>	
+<br><br>
+<bean:message key="message.text.editor.requires"/>		
 </html:form>
 </logic:present>
