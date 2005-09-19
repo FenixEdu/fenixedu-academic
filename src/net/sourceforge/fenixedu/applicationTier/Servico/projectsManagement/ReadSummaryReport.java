@@ -32,7 +32,7 @@ public class ReadSummaryReport implements IService {
         if (coordinatorCode == null)
             coordinatorCode = new Integer(userNumber);
         List lines = null;
-        if (new Integer(userNumber).equals(coordinatorCode)) {
+        if (Integer.valueOf(userNumber).equals(coordinatorCode)) {
             lines = p.getIPersistentSummaryReport().readByCoordinatorCode(ReportType.SUMMARY, coordinatorCode);
         } else {
             List<Integer> projectCodes = persistentSuport.getIPersistentProjectAccess().readProjectCodesByPersonUsernameAndCoordinator(username,
