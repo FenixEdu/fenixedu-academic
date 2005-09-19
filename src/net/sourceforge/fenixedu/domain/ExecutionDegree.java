@@ -7,8 +7,9 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 /**
  * 
@@ -20,19 +21,11 @@ public class ExecutionDegree extends ExecutionDegree_Base {
     public boolean isFirstYear() {
 
         List<IExecutionDegree> executionDegrees = this.getDegreeCurricularPlan().getExecutionDegrees();
-        Collections.sort(executionDegrees, new Comparator() {
 
-            public int compare(Object o1, Object o2) {
-                IExecutionDegree executionDegree1 = (IExecutionDegree) o1;
-                IExecutionDegree executionDegree2 = (IExecutionDegree) o2;
+        IExecutionDegree firstExecutionDegree = (IExecutionDegree) Collections.min(executionDegrees,
+                new BeanComparator("executionYear.year"));
 
-                return executionDegree1.getExecutionYear().getYear().compareTo(
-                        executionDegree2.getExecutionYear().getYear());
-            }
-
-        });
-
-        if (executionDegrees.get(executionDegrees.size() - 1).equals(this)) {
+        if (firstExecutionDegree.equals(this)) {
             return true;
         }
 
