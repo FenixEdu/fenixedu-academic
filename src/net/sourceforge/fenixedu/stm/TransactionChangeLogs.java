@@ -1,27 +1,26 @@
 package net.sourceforge.fenixedu.stm;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
+import jvstm.VBoxBody;
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.util.StringAppender;
 
 import org.apache.ojb.broker.Identity;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.accesslayer.LookupException;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
-
-import java.sql.Connection;
-import java.sql.Statement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
-import java.util.List;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
-
-import jvstm.VBoxBody;
 
 public class TransactionChangeLogs {
 
@@ -223,7 +222,10 @@ public class TransactionChangeLogs {
 	
 	CleanThread() {
 	    try {
-		this.server = InetAddress.getLocalHost().getHostAddress();
+        final String hostAddress = InetAddress.getLocalHost().getHostAddress();
+        final String username = getUsername();
+        final String appName = getAppName();
+		this.server = StringAppender.append(username, "@", hostAddress, ":", appName);
 	    } catch (UnknownHostException uhe) {
 		throw new Error("Couldn't get this host address, which is needed to register in the database");
 	    }
@@ -231,7 +233,18 @@ public class TransactionChangeLogs {
 	    setDaemon(true);
 	}
 	
-	public void run() {
+	private String getAppName() {
+        return PropertiesManager.getProperty("app.name");
+    }
+
+    private String getUsername() {
+        final String user = System.getenv("USER");
+        final String username = System.getenv("USERNAME");
+
+        return (user != null) ? user : (username != null) ? username : "unknown"; 
+    }
+
+    public void run() {
 	    while (lastTxNumber == -1) {
 		initializeServerRecord();
 		try {
