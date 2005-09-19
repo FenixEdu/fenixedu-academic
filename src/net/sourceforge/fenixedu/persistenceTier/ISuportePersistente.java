@@ -492,4 +492,6 @@ public interface ISuportePersistente {
     public IPersistentDislocatedStudent getIPersistentDislocatedStudent();
     
     public IPersistentDistrict getIPersistentDistrict();
+    
+    public IPersistentUnit getIPersistentUnit();
 }

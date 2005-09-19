@@ -1232,6 +1232,10 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new DistrictOJB();
     }
     
+    public IPersistentUnit getIPersistentUnit(){
+        return new UnitOJB();
+    }
+    
     public static void fixDescriptors() {
         final MetadataManager metadataManager = MetadataManager.getInstance();
             final Collection<ClassDescriptor> classDescriptors = 

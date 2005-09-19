@@ -23,19 +23,28 @@
 		column="CODE"
 		jdbc-type="VARCHAR"
 	/>
-      <field-descriptor
+	<field-descriptor
+		name="keyUnit"
+		column="KEY_UNIT"
+		jdbc-type="INTEGER"
+	 />
+     <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
       	locking="false"
-      />
+     />
+
+	<reference-descriptor auto-retrieve="false"
+         name="unit"
+         class-ref="net.sourceforge.fenixedu.domain.Unit">
+         <foreignkey field-ref="keyUnit"/>
+    </reference-descriptor>
+
     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="associatedPersons"
-         element-class-ref="net.sourceforge.fenixedu.domain.Person"
-         
-         indirection-table = "crd_CREDITS_MANAGER_DEPARTMENT"
-         
-         
+         element-class-ref="net.sourceforge.fenixedu.domain.Person"         
+         indirection-table = "crd_CREDITS_MANAGER_DEPARTMENT"                  
          auto-update="false"
          auto-delete="false"
 		>
@@ -48,6 +57,7 @@
 		>
 		<inverse-foreignkey field-ref="keyDepartment"/>
 	</collection-descriptor>
+	
 </class-descriptor>   
 
 <!-- *************************************************************************************************************** -->

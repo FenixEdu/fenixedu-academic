@@ -29,6 +29,11 @@ public class DepartmentOJB extends PersistentObjectOJB implements IPersistentDep
         return queryList(Department.class, crit);
     }
 
+    public IDepartment readByName(String name) throws ExcepcaoPersistencia{
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("name", name);  
+        return (IDepartment) queryObject(Department.class, criteria);                
+    }
  
 	public IDepartment readByTeacher(Integer teacherId) throws ExcepcaoPersistencia {
 

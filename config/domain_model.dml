@@ -655,6 +655,7 @@ class net.sourceforge.fenixedu.domain.student.Delegate extends net.sourceforge.f
 class net.sourceforge.fenixedu.domain.Department extends net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
 	String name;
+	Integer keyUnit;
 }
 
 
@@ -730,6 +731,9 @@ class net.sourceforge.fenixedu.domain.Employee extends net.sourceforge.fenixedu.
 	Integer employeeNumber;
 	Date antiquity;
 	Integer keyPerson;
+	Integer keySalaryUnit;
+	Integer keyMailingUnit;
+	Integer keyWorkingUnit;
 	Integer workingHours;
 
     interface "
@@ -2758,12 +2762,17 @@ class net.sourceforge.fenixedu.domain.Seminaries.Theme extends net.sourceforge.f
     String name;
 }
 
+class net.sourceforge.fenixedu.domain.Unit extends net.sourceforge.fenixedu.domain.DomainObject {
+	String name;
+	Integer costCenterCode;
+	Integer keyParentUnit;
+	Integer keyDepartment;	
+}
 
 class net.sourceforge.fenixedu.domain.University extends net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
 	String name;
 }
-
 
 class net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyTeacher;
@@ -5367,4 +5376,40 @@ relation AttendsStudentGroup {
     net.sourceforge.fenixedu.domain.StudentGroup playsRole studentGroups {
     	multiplicity *;
     }
+}
+
+relation EmployeeSalaryUnit {
+    net.sourceforge.fenixedu.domain.Employee playsRole salaryEmployees{
+    	multiplicity *;
+    }
+	
+	net.sourceforge.fenixedu.domain.Unit playsRole salaryUnit;
+}
+
+relation EmployeeMailingUnit {
+    net.sourceforge.fenixedu.domain.Employee playsRole mailingEmployees{
+    	multiplicity *;
+    }
+	
+	net.sourceforge.fenixedu.domain.Unit playsRole mailingUnit;
+}
+
+relation EmployeeWorkUnit {
+    net.sourceforge.fenixedu.domain.Employee playsRole workingEmployees{
+    	multiplicity *;
+    }
+	
+	net.sourceforge.fenixedu.domain.Unit playsRole workingUnit;
+}
+
+relation UnitParentUnit {
+    net.sourceforge.fenixedu.domain.Unit playsRole associatedUnits{
+    	multiplicity *;
+    }
+	net.sourceforge.fenixedu.domain.Unit playsRole parentUnit;
+}
+
+relation DepartmentUnit {
+    net.sourceforge.fenixedu.domain.Department playsRole department;    
+	net.sourceforge.fenixedu.domain.Unit playsRole unit;
 }

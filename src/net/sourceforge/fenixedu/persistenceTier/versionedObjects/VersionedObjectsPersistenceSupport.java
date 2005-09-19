@@ -173,6 +173,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TeacherVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TransactionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TurmaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TurnoVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.UnitVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.UniversityVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.WorkLocationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.WrittenTestVO;
@@ -988,5 +989,9 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     
     public IPersistentDistrict getIPersistentDistrict() {
         return new DistrictVO();
+    }
+    
+    public IPersistentUnit getIPersistentUnit() {
+        return new UnitVO();
     }
 }

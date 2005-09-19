@@ -22,114 +22,120 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
 
 public class DepartmentVO extends VersionedObjectsBase implements IPersistentDepartment {
 
-	
-	   public List readAll() {
-		   return (List)readAll(Department.class);
-	   }
+    public List readAll() {
+        return (List) readAll(Department.class);
+    }
+    
+    public IDepartment readByName(String name){
+        Collection<IDepartment> departments = readAll(Department.class);
+        
+        for(IDepartment department : departments){
+            if(department.getName().equals(name))
+                return department;
+        }        
+        return null;
+    }
 
-	 
-		public IDepartment readByTeacher(Integer teacherId) throws ExcepcaoPersistencia {
+    public IDepartment readByTeacher(Integer teacherId) throws ExcepcaoPersistencia {
 
-			ITeacher teacher = (ITeacher)readByOID(Teacher.class, teacherId);
-            IEmployee employee = getEmployee(teacher);
-            ICostCenter workingCC = employee.findWorkingCostCenter();
+        ITeacher teacher = (ITeacher) readByOID(Teacher.class, teacherId);
+        IEmployee employee = getEmployee(teacher);
+        ICostCenter workingCC = employee.findWorkingCostCenter();
 
-	        List<IDepartment> departmentList = new ArrayList();
-	        IDepartment department = null;
+        List<IDepartment> departmentList = new ArrayList();
+        IDepartment department = null;
 
-	        if (workingCC != null) {
-	            String code = workingCC.getCode();
+        if (workingCC != null) {
+            String code = workingCC.getCode();
 
-	            if (code != null && !(code.equals(""))) {
-					Collection<IDepartment> departments = readAll(Department.class);
-					
-					for (IDepartment departmentIt : departments){
-						String subCodeIt = departmentIt.getCode().substring(0, 2);
-						String subCode = code.substring(0,2);
-						
-						if (subCodeIt.equals(subCode))
-							departmentList.add(departmentIt);
-					}
-	            }
+            if (code != null && !(code.equals(""))) {
+                Collection<IDepartment> departments = readAll(Department.class);
 
-	            if (departmentList.size() != 1) {
-					
-					Collection<IDepartment> departments = readAll(Department.class);
-					
-					for (IDepartment departmentIt : departments){
-						if (departmentIt.getCode().equals(code)){
-							department = departmentIt;
-							break;
-						}		
-					}
-	            } else {
-	                department = departmentList.get(0);
-	            }
-	        }
-	        return department;
-	    }
+                for (IDepartment departmentIt : departments) {
+                    String subCodeIt = departmentIt.getCode().substring(0, 2);
+                    String subCode = code.substring(0, 2);
 
-	 
-		
-		public IDepartment readByEmployee(Integer employeeId) throws ExcepcaoPersistencia {
+                    if (subCodeIt.equals(subCode))
+                        departmentList.add(departmentIt);
+                }
+            }
 
-			IEmployee employee = (IEmployee)readByOID(Employee.class, employeeId);
-	        List employeeHistoricList = employee.getHistoricList();
+            if (departmentList.size() != 1) {
 
-	        ICostCenter workingCC = null;
-	        Date date = null;
+                Collection<IDepartment> departments = readAll(Department.class);
 
-	        for (Iterator iter = employeeHistoricList.iterator(); iter.hasNext();) {
-	            IEmployeeHistoric element = (IEmployeeHistoric) iter.next();
-	            if (element.getWorkingPlaceCostCenter() != null
-	                    && (date == null || element.getBeginDate().after(date))) {
-	                workingCC = element.getWorkingPlaceCostCenter();
-	                date = element.getBeginDate();
-	            }
-	        }
+                for (IDepartment departmentIt : departments) {
+                    if (departmentIt.getCode().equals(code)) {
+                        department = departmentIt;
+                        break;
+                    }
+                }
+            } else {
+                department = departmentList.get(0);
+            }
+        }
+        return department;
+    }
 
-	        List departmentList = new ArrayList();
+    public IDepartment readByEmployee(Integer employeeId) throws ExcepcaoPersistencia {
 
-	        String code = workingCC.getCode();
+        IEmployee employee = (IEmployee) readByOID(Employee.class, employeeId);
+        List employeeHistoricList = employee.getHistoricList();
 
-	        if (code != null && !(code.equals(""))) {
-				
-				Collection<IDepartment> departments = readAll(Department.class);
-				
-				for (IDepartment departmentIt : departments){
-					String subCodeIt = departmentIt.getCode().substring(0, 2);
-					String subCode = code.substring(0,2);
-					
-					if (subCodeIt.equals(subCode))
-						departmentList.add(departmentIt);
-				}
-	        }
-	        IDepartment department = null;
-	        if (departmentList.size() != 1) {
-				
-				Collection<IDepartment> departments = readAll(Department.class);
-				
-				for (IDepartment departmentIt : departments){
-					if (departmentIt.getCode().equals(code)){
-						department = departmentIt;
-						break;
-					}		
-				}
+        ICostCenter workingCC = null;
+        Date date = null;
 
-	        } else {
-	            department = (IDepartment) departmentList.get(0);
-	        }
-	        return department;
-	    }
+        for (Iterator iter = employeeHistoricList.iterator(); iter.hasNext();) {
+            IEmployeeHistoric element = (IEmployeeHistoric) iter.next();
+            if (element.getWorkingPlaceCostCenter() != null
+                    && (date == null || element.getBeginDate().after(date))) {
+                workingCC = element.getWorkingPlaceCostCenter();
+                date = element.getBeginDate();
+            }
+        }
 
-	    /**
-	     * @param teacher
-	     * @return
-	     */
-	    private IEmployee getEmployee(ITeacher teacher) throws ExcepcaoPersistencia {
-	        IPersistentEmployee employeeDAO = new EmployeeOJB();
+        List departmentList = new ArrayList();
 
-	        IEmployee employee = employeeDAO.readByNumber(teacher.getTeacherNumber());
-            return employee;
-	    }
+        String code = workingCC.getCode();
+
+        if (code != null && !(code.equals(""))) {
+
+            Collection<IDepartment> departments = readAll(Department.class);
+
+            for (IDepartment departmentIt : departments) {
+                String subCodeIt = departmentIt.getCode().substring(0, 2);
+                String subCode = code.substring(0, 2);
+
+                if (subCodeIt.equals(subCode))
+                    departmentList.add(departmentIt);
+            }
+        }
+        IDepartment department = null;
+        if (departmentList.size() != 1) {
+
+            Collection<IDepartment> departments = readAll(Department.class);
+
+            for (IDepartment departmentIt : departments) {
+                if (departmentIt.getCode().equals(code)) {
+                    department = departmentIt;
+                    break;
+                }
+            }
+
+        } else {
+            department = (IDepartment) departmentList.get(0);
+        }
+        return department;
+    }
+
+    /**
+     * @param teacher
+     * @return
+     */
+    private IEmployee getEmployee(ITeacher teacher) throws ExcepcaoPersistencia {
+        IPersistentEmployee employeeDAO = new EmployeeOJB();
+
+        IEmployee employee = employeeDAO.readByNumber(teacher.getTeacherNumber());
+        return employee;
+    }
 }
