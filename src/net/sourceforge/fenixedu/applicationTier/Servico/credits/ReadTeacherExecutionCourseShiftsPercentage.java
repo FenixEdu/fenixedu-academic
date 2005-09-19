@@ -11,6 +11,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoLessonWithInfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftPercentage;
@@ -42,70 +43,66 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ReadTeacherExecutionCourseShiftsPercentage implements IService {
 
     public TeacherExecutionCourseProfessorshipShiftsDTO run(InfoTeacher infoTeacher,
-            InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
+            InfoExecutionCourse infoExecutionCourse) throws FenixServiceException, ExcepcaoPersistencia {
 
         TeacherExecutionCourseProfessorshipShiftsDTO result = new TeacherExecutionCourseProfessorshipShiftsDTO();
 
         List infoShiftPercentageList = new ArrayList();
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IExecutionCourse executionCourse = readExecutionCourse(infoExecutionCourse, sp);
-            ITeacher teacher = readTeacher(infoTeacher, sp);
+        IExecutionCourse executionCourse = readExecutionCourse(infoExecutionCourse, sp);
+        ITeacher teacher = readTeacher(infoTeacher, sp);
 
-            result.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
-            result.setInfoTeacher(InfoTeacher.newInfoFromDomain(teacher));
+        result.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+        result.setInfoTeacher(InfoTeacher.newInfoFromDomain(teacher));
 
-            ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
+        ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
 
-            List executionCourseShiftsList = null;
+        List executionCourseShiftsList = null;
 
-            executionCourseShiftsList = shiftDAO
-                    .readByExecutionCourse(executionCourse.getIdInternal());
+        executionCourseShiftsList = shiftDAO.readByExecutionCourse(executionCourse.getIdInternal());
 
-            Iterator iterator = executionCourseShiftsList.iterator();
-            while (iterator.hasNext()) {
-                IShift shift = (IShift) iterator.next();
+        Iterator iterator = executionCourseShiftsList.iterator();
+        while (iterator.hasNext()) {
+            IShift shift = (IShift) iterator.next();
 
-                InfoShiftPercentage infoShiftPercentage = new InfoShiftPercentage();
-                final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
-                infoShiftPercentage.setShift(infoShift);
-                double availablePercentage = 100;
-                InfoShiftProfessorship infoShiftProfessorship = null;
+            InfoShiftPercentage infoShiftPercentage = new InfoShiftPercentage();
+            final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
+            infoShiftPercentage.setShift(infoShift);
+            double availablePercentage = 100;
+            InfoShiftProfessorship infoShiftProfessorship = null;
 
-                Iterator iter = shift.getAssociatedShiftProfessorship().iterator();
-                while (iter.hasNext()) {
-                    IShiftProfessorship shiftProfessorship = (IShiftProfessorship) iter.next();
-                    /**
-                     * if shift's type is LABORATORIAL the shift professorship
-                     * percentage can exceed 100%
-                     */
-                    if ((shift.getTipo() != net.sourceforge.fenixedu.domain.ShiftType.LABORATORIAL)
-                            && (!shiftProfessorship.getProfessorship().getTeacher().equals(teacher))) {
-                        availablePercentage -= shiftProfessorship.getPercentage().doubleValue();
-                    }
-                    infoShiftProfessorship = InfoShiftProfessorshipAndTeacher.newInfoFromDomain(shiftProfessorship);
-                    infoShiftPercentage.addInfoShiftProfessorship(infoShiftProfessorship);
+            Iterator iter = shift.getAssociatedShiftProfessorship().iterator();
+            while (iter.hasNext()) {
+                IShiftProfessorship shiftProfessorship = (IShiftProfessorship) iter.next();
+                /**
+                 * if shift's type is LABORATORIAL the shift professorship
+                 * percentage can exceed 100%
+                 */
+                if ((shift.getTipo() != net.sourceforge.fenixedu.domain.ShiftType.LABORATORIAL)
+                        && (shiftProfessorship.getProfessorship().getTeacher() != teacher)) {
+                    availablePercentage -= shiftProfessorship.getPercentage().doubleValue();
                 }
-
-                List infoLessons = (List) CollectionUtils.collect(shift.getAssociatedLessons(),
-                        new Transformer() {
-                            public Object transform(Object input) {
-                                ILesson lesson = (ILesson) input;
-                                return InfoLesson.newInfoFromDomain(lesson);
-                            }
-                        });
-                infoShiftPercentage.setInfoLessons(infoLessons);
-
-                infoShiftPercentage.setAvailablePercentage(new Double(availablePercentage));
-
-                infoShiftPercentageList.add(infoShiftPercentage);
+                infoShiftProfessorship = InfoShiftProfessorshipAndTeacher
+                        .newInfoFromDomain(shiftProfessorship);
+                infoShiftPercentage.addInfoShiftProfessorship(infoShiftProfessorship);
             }
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-            throw new FenixServiceException(e);
+
+            List infoLessons = (List) CollectionUtils.collect(shift.getAssociatedLessons(),
+                    new Transformer() {
+                        public Object transform(Object input) {
+                            ILesson lesson = (ILesson) input;
+                            return InfoLessonWithInfoRoom.newInfoFromDomain(lesson);
+                        }
+                    });
+            infoShiftPercentage.setInfoLessons(infoLessons);
+
+            infoShiftPercentage.setAvailablePercentage(Double.valueOf(availablePercentage));
+
+            infoShiftPercentageList.add(infoShiftPercentage);
         }
+
         result.setInfoShiftPercentageList(infoShiftPercentageList);
         return result;
     }
@@ -113,17 +110,14 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IService {
     private ITeacher readTeacher(InfoTeacher infoTeacher, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
-
-        ITeacher teacher = (ITeacher) teacherDAO.readByOID(Teacher.class, infoTeacher.getIdInternal());
-        return teacher;
+        return (ITeacher) teacherDAO.readByOID(Teacher.class, infoTeacher.getIdInternal());
     }
 
     private IExecutionCourse readExecutionCourse(InfoExecutionCourse infoExecutionCourse,
             ISuportePersistente sp) throws ExcepcaoPersistencia {
         IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
-        IExecutionCourse executionCourse = (IExecutionCourse) executionCourseDAO.readByOID(
+        return (IExecutionCourse) executionCourseDAO.readByOID(
                 ExecutionCourse.class, infoExecutionCourse.getIdInternal());
-        return executionCourse;
     }
 }
