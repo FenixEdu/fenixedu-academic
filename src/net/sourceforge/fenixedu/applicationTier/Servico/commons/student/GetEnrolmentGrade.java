@@ -23,12 +23,15 @@ public class GetEnrolmentGrade {
     }
 
     public InfoEnrolmentEvaluation run(IEnrolment enrolment) throws FenixServiceException {
-        List enrolmentEvaluations = enrolment.getEvaluations();
-
-        if ((enrolment == null) || (enrolment.getEvaluations() == null)
-                || (enrolment.getEvaluations().size() == 0)) {
+        if (enrolment == null) {
             return null;
         }
+        
+        List enrolmentEvaluations = enrolment.getAllFinalEnrolmentEvaluations();
+        if(enrolmentEvaluations == null || enrolmentEvaluations.isEmpty()) {
+        	return null;
+        }
+        
         IEnrolmentEvaluation evaluation = (IEnrolmentEvaluation) Collections.max(enrolmentEvaluations);
         try {
             return getInfoLatestEvaluation(evaluation);
