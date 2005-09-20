@@ -627,7 +627,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			<include name="**/*.jsp"/>
 		</jspc>
 		<javac destdir="${build.home.webinf.classes}"
-               extdirs="${lib};${build.home.webinf.classes}"
+               extdirs="${lib};${build.home.webinf.classes};${env.CATALINA_HOME}/common/lib"
                debug="${compile.debug}"
                optimize="${compile.optimize}"
                deprecation="${compile.deprecation}"
