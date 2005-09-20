@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCourseManagement;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCompetenceCourse;
@@ -29,15 +32,20 @@ public class CreateEditCompetenceCourse implements IService {
 		}
 		try {
 			ICompetenceCourse competenceCourse = null;
+			List<IDepartment> departments = null;
+			if(department != null) {
+				departments = new ArrayList<IDepartment>(1);
+				departments.add(department);
+			}
 			if(competenceCourseID == null) {
-				competenceCourse = new CompetenceCourse(code, name, department);
+				competenceCourse = new CompetenceCourse(code, name, departments);
 			} else {
 				IPersistentCompetenceCourse persistentCompetenceCourse = suportePersistente.getIPersistentCompetenceCourse();
 				competenceCourse = (ICompetenceCourse) persistentCompetenceCourse.readByOID(CompetenceCourse.class, competenceCourseID);
 				if(competenceCourse == null) {
 					throw new NonExistingServiceException("error.manager.noCompetenceCourse");
 				}
-				competenceCourse.edit(code, name, department);
+				competenceCourse.edit(code, name, departments);
 			}
 			return InfoCompetenceCourseWithCurricularCourses.newInfoFromDomain(competenceCourse);
 		}catch(DomainException domainException) {

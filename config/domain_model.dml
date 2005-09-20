@@ -662,11 +662,11 @@ class net.sourceforge.fenixedu.domain.Department extends net.sourceforge.fenixed
 class net.sourceforge.fenixedu.domain.CompetenceCourse extends net.sourceforge.fenixedu.domain.DomainObject {
 	String name;
 	String code;
-	Integer keyDepartment;
 	interface "
 	public void delete();
-	public void addCurricularCourses(java.util.List<ICurricularCourse> curricularCourses);
-	public void edit(String code, String name, IDepartment department);
+	public void addCurricularCourses(java.util.Collection<ICurricularCourse> curricularCourses);
+	public void edit(String code, String name, java.util.Collection<IDepartment> departments);
+    public void addDepartments(java.util.Collection<IDepartment> departments);
 	"
 }
 
@@ -786,6 +786,7 @@ class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu
 	public boolean isImprovementForExecutionCourse (IExecutionCourse executionCourse);
 	public Integer getAccumulatedWeight();
 	public void setAccumulatedWeight(Integer accumulatedWeight);
+	public java.util.List<IEnrolmentEvaluation> getAllFinalEnrolmentEvaluations();
 	"
 }
 
@@ -3387,7 +3388,9 @@ relation DepartmentCompetenceCourse {
 	net.sourceforge.fenixedu.domain.CompetenceCourse playsRole competenceCourses {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Department playsRole department;
+	net.sourceforge.fenixedu.domain.Department playsRole departments {
+		multiplicity *;
+	}
 }
 
 

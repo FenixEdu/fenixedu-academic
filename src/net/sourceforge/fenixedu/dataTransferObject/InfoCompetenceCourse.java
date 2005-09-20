@@ -1,13 +1,16 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ICompetenceCourse;
+import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.IDepartment;
 
 public class InfoCompetenceCourse extends InfoObject {
     private String name;
     private String code;
-    private InfoDepartment department;
+    private List<InfoDepartment> departments;
     private List<InfoCurricularCourse> associatedCurricularCourses;
     
 	public String getCode() {
@@ -16,11 +19,11 @@ public class InfoCompetenceCourse extends InfoObject {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public InfoDepartment getDepartment() {
-		return department;
+	public List<InfoDepartment> getDepartments() {
+		return departments;
 	}
-	public void setDepartment(InfoDepartment department) {
-		this.department = department;
+	public void setDepartment(List<InfoDepartment> departments) {
+		this.departments = departments;
 	}
 	public String getName() {
 		return name;
@@ -41,7 +44,11 @@ public class InfoCompetenceCourse extends InfoObject {
 		if(competenceCourse != null) {
 			setCode(competenceCourse.getCode());
 			setName(competenceCourse.getName());
-			setDepartment(InfoDepartment.newInfoFromDomain(competenceCourse.getDepartment()));
+			List<InfoDepartment> infoDepartments = new ArrayList<InfoDepartment>();
+        	for (IDepartment department : competenceCourse.getDepartments()) {
+				infoDepartments.add(InfoDepartment.newInfoFromDomain(department));
+			}
+            setDepartment(infoDepartments);
 		}
 	}
 	

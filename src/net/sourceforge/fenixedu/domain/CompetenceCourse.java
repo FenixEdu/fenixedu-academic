@@ -1,43 +1,49 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class CompetenceCourse extends CompetenceCourse_Base {
     
-    public CompetenceCourse(String code, String name, IDepartment department) {
-    	fillfields(code, name, department);
+    public CompetenceCourse(String code, String name, Collection<IDepartment> departments) {
+    	fillfields(code, name, departments);
     }
     
-    private void fillfields(String code, String name, IDepartment department) {
+    private void fillfields(String code, String name, Collection<IDepartment> departments) {
     	if(code == null || code.length() == 0) {
 			throw new DomainException("Invalid code argument");
 		}
 		if(name == null || name.length() == 0) {
-			throw new DomainException("Invalid code argument");
+			throw new DomainException("Invalid name argument");
 		}
 		
         setCode(code);
         setName(name);
-        setDepartment(department);		
+        if(departments != null) {
+        	addDepartments(departments);
+        }
 	}
     
-    public void edit(String code, String name, IDepartment department) {
-    	fillfields(code, name, department);
+    public void edit(String code, String name, Collection<IDepartment> departments) {
+    	fillfields(code, name, departments);
     }
 
 	public void delete() {
-    	removeDepartment();
+		getDepartments().clear();
     	getAssociatedCurricularCourses().clear();
     	super.deleteDomainObject();
     }
     
-    public void addCurricularCourses(List<ICurricularCourse> curricularCourses) {
+    public void addCurricularCourses(Collection<ICurricularCourse> curricularCourses) {
     	for (ICurricularCourse curricularCourse : curricularCourses) {
-			if(!hasAssociatedCurricularCourses(curricularCourse)) {
-				addAssociatedCurricularCourses(curricularCourse);
-			}
+    		addAssociatedCurricularCourses(curricularCourse);
+		}
+    }
+    
+    public void addDepartments(Collection<IDepartment> departments) {
+    	for (IDepartment department : departments) {
+			addDepartments(department);
 		}
     }
 }
