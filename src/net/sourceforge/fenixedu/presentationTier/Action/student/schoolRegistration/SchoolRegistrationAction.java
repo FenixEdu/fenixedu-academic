@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.student.schoolRegistration.InfoResidenceCandidacy;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -83,6 +84,8 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
         registrationForm.set("name", infoPerson.getNome());
         registrationForm.set("primaryAreaCode", infoPerson.getCodigoPostal());
         registrationForm.set("areaOfAreaCode", infoPerson.getLocalidadeCodigoPostal());
+        registrationForm.set("sex", infoPerson.getSexo().toString());
+        registrationForm.set("emissionLocationOfDocumentID", infoPerson.getLocalEmissaoDocumentoIdentificacao());
 
         // Get List of available Countries
         List countries = (List) ServiceManagerServiceFactory.executeService(userView,
@@ -224,7 +227,9 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
                 .get("monthOfExpirationDateOfDocumentId");
         String yearOfExpirationDateOfDocumentId = (String) totalForm
                 .get("yearOfExpirationDateOfDocumentId");
+        String emissionLocationOfDocumentID = (String) totalForm.get("emissionLocationOfDocumentID");
         String name = (String) totalForm.get("name");
+        String gender = (String) totalForm.get("sex");
         String nameOfFather = (String) totalForm.get("nameOfFather");
         String nameOfMother = (String) totalForm.get("nameOfMother");
         String nacionality = (String) totalForm.get("nacionality");
@@ -289,6 +294,8 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
         infoPerson.setConcelhoMorada(districtSubdivisionOfResidence);
         infoPerson.setDistritoMorada(districtOfResidence);
         infoPerson.setTelefone(phone.toString());
+        infoPerson.setSexo(Gender.valueOf(gender));
+        infoPerson.setLocalEmissaoDocumentoIdentificacao(emissionLocationOfDocumentID);
 
         if (mobile != null) {
             infoPerson.setTelemovel(mobile.toString());
