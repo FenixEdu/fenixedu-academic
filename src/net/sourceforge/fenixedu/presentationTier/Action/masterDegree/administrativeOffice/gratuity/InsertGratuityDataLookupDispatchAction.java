@@ -1,10 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +35,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 
 /**
  * @author Fernanda Quitério 6/Jan/2003
- *  
+ * 
  */
 public class InsertGratuityDataLookupDispatchAction extends LookupDispatchAction {
     public ActionForward addPhase(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -49,7 +48,7 @@ public class InsertGratuityDataLookupDispatchAction extends LookupDispatchAction
         String phaseValue = (String) gratuityForm.get("phaseValue");
         maintainState(request, gratuityForm);
 
-        List infoPaymentPhases = collectPaymentPhases(gratuityForm);
+        List<InfoPaymentPhase> infoPaymentPhases = collectPaymentPhases(gratuityForm);
 
         if (finalDate == null || finalDate.length() == 0 || phaseValue == null
                 || phaseValue.length() == 0) {
@@ -75,9 +74,9 @@ public class InsertGratuityDataLookupDispatchAction extends LookupDispatchAction
         return mapping.findForward("insertGratuityData");
     }
 
-    private List collectPaymentPhases(DynaValidatorForm gratuityForm) {
+    private List<InfoPaymentPhase> collectPaymentPhases(DynaValidatorForm gratuityForm) {
         String[] paymentPhases = (String[]) gratuityForm.get("paymentPhases");
-        List infoPaymentPhases = new ArrayList();
+        List<InfoPaymentPhase> infoPaymentPhases = new ArrayList<InfoPaymentPhase>();
         for (int i = 0; i < paymentPhases.length; i = i + 3) {
             fillPaymentPhasesList(paymentPhases[i], paymentPhases[i + 1], paymentPhases[i + 2],
                     infoPaymentPhases);
@@ -86,7 +85,7 @@ public class InsertGratuityDataLookupDispatchAction extends LookupDispatchAction
     }
 
     private void fillPaymentPhasesList(String initialDate, String finalDate, String phaseValue,
-            List infoPaymentPhases) {
+            List<InfoPaymentPhase> infoPaymentPhases) {
         InfoPaymentPhase newInfoPaymentPhase = new InfoPaymentPhase();
         if (initialDate != null && initialDate.length() > 0) {
             newInfoPaymentPhase.setStartDate(Data.convertStringDate(initialDate, "/"));
@@ -101,7 +100,7 @@ public class InsertGratuityDataLookupDispatchAction extends LookupDispatchAction
         DynaValidatorForm gratuityForm = (DynaValidatorForm) form;
         maintainState(request, gratuityForm);
 
-        List infoPaymentPhases = collectPaymentPhases(gratuityForm);
+        List<InfoPaymentPhase> infoPaymentPhases = collectPaymentPhases(gratuityForm);
 
         removePhasesFromList(gratuityForm, infoPaymentPhases);
 
@@ -121,15 +120,16 @@ public class InsertGratuityDataLookupDispatchAction extends LookupDispatchAction
         request.setAttribute("executionYear", executionYear);
     }
 
-    private void removePhasesFromList(DynaValidatorForm gratuityForm, List infoPaymentPhases) {
+    private void removePhasesFromList(DynaValidatorForm gratuityForm,
+            List<InfoPaymentPhase> infoPaymentPhases) {
+
         String[] phasesToRemove = (String[]) gratuityForm.get("removedPhases");
-        List objectsToRemove = new ArrayList();
-        List toRemoveList = Arrays.asList(phasesToRemove);
-        Iterator iterToRemove = toRemoveList.iterator();
-        while (iterToRemove.hasNext()) {
-            String toRemove = (String) iterToRemove.next();
-            objectsToRemove.add(infoPaymentPhases.get(Integer.valueOf(toRemove).intValue()));
+        Collection<InfoPaymentPhase> objectsToRemove = new ArrayList<InfoPaymentPhase>(
+                phasesToRemove.length);
+        for (String phaseToRemoveIndex : phasesToRemove) {
+            objectsToRemove.add(infoPaymentPhases.get(Integer.valueOf(phaseToRemoveIndex)));
         }
+
         infoPaymentPhases.removeAll(objectsToRemove);
 
         gratuityForm.set("removedPhases", new String[] {});
@@ -216,9 +216,10 @@ public class InsertGratuityDataLookupDispatchAction extends LookupDispatchAction
                 && ((String) actionForm.get("scholarPart")).length() > 0) {
             infoGratuityValues.setScholarShipValue(Double
                     .valueOf((String) actionForm.get("scholarPart")));
-            
-            String thesisPart = (String) actionForm.get("thesisPart");            
-            infoGratuityValues.setFinalProofValue((thesisPart.length() > 0) ? new Double(thesisPart) : 0);
+
+            String thesisPart = (String) actionForm.get("thesisPart");
+            infoGratuityValues
+                    .setFinalProofValue((thesisPart.length() > 0) ? new Double(thesisPart) : 0);
         }
         if (actionForm.get("unitaryValueCredit") != null
                 && ((String) actionForm.get("unitaryValueCredit")).length() > 0) {

@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.IPaymentPhase;
 
 /**
  * @author Fernanda Quitério 10/Jan/2004
- *  
+ * 
  */
 public class InfoPaymentPhase extends InfoObject {
     private Date startDate;
@@ -52,20 +52,20 @@ public class InfoPaymentPhase extends InfoObject {
      */
     public String getDescription() {
 
-        //MessageResources messageResources =
+        // MessageResources messageResources =
         // MessageResources.getMessageResources("ServidorApresentacao.ApplicationResources");
-        //		ResourceBundle bundle =
+        // ResourceBundle bundle =
         // ResourceBundle.getBundle(Globals.MESSAGES_KEY);
         String newDescription = null;
-        //		try {
-        //			newDescription = bundle.getString(this.description);
-        //		newDescription = messageResources.getMessage(this.description);
-        //		}catch(NullPointerException npe) {
-        //		if (newDescription == null)
-        //		{
+        // try {
+        // newDescription = bundle.getString(this.description);
+        // newDescription = messageResources.getMessage(this.description);
+        // }catch(NullPointerException npe) {
+        // if (newDescription == null)
+        // {
         newDescription = this.description;
-        //		}
-        //		}
+        // }
+        // }
         return newDescription;
     }
 
@@ -145,10 +145,15 @@ public class InfoPaymentPhase extends InfoObject {
         infoPaymentPhase.setStartDate(paymentPhase.getStartDate());
         infoPaymentPhase.setValue(paymentPhase.getValue());
 
-        InfoGratuityValues infoGratuityValues = InfoGratuityValues.newInfoFromDomain(paymentPhase.getGratuityValues());
+        InfoGratuityValues infoGratuityValues = InfoGratuityValues.newInfoFromDomain(paymentPhase
+                .getGratuityValues());
         infoPaymentPhase.setInfoGratuityValues(infoGratuityValues);
 
         return infoPaymentPhase;
+    }
+
+    public boolean equals(Object obj) {
+        return (this == obj);
     }
 
 }
