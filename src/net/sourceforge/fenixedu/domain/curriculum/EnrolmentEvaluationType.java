@@ -24,17 +24,17 @@ public enum EnrolmentEvaluationType {
     
     EQUIVALENCE,
     
-    CLOSED,
+    CLOSED;
     
-    FIRST_SEASON,
+    //FIRST_SEASON,
     
     //só para a classe Enrolment Evaluation, usada apenas na migracao dos
     //Enrolments para guardar histórico, não usar para mais nada!
-    SECOND_SEASON,
+    //SECOND_SEASON,
     
     //  só para a classe Enrolment Evaluation, usada apenas na migracao dos
     //  Enrolments para guardar histórico, não usar para mais nada!
-    NO_SEASON;
+    //NO_SEASON;
     
     private static final Map<Locale, LabelValueBean[]> enrolmentEvaluationTypeLabelValuesByLocale = new HashMap(2);
 
