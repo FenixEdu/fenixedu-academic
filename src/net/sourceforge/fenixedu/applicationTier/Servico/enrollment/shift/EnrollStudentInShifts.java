@@ -2,25 +2,24 @@ package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.ShiftEnrollmentErrorReport;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class EnrollStudentInShifts implements IService {
@@ -34,7 +33,6 @@ public class EnrollStudentInShifts implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentStudent persistentStudent = sp.getIPersistentStudent();
         final ITurnoPersistente persistentShift = sp.getITurnoPersistente();
-        final IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
         final ShiftEnrollmentErrorReport errorReport = new ShiftEnrollmentErrorReport();
 
@@ -46,8 +44,6 @@ public class EnrollStudentInShifts implements IService {
         if (student.getPayedTuition() == null || student.getPayedTuition().equals(Boolean.FALSE)) {
             throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
         }
-
-        final IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
 
         final IShift shift = (IShift) persistentShift.readByOID(Shift.class, shiftId);
         if (shift == null) {
