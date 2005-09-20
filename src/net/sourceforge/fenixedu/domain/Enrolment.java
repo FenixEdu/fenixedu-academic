@@ -398,4 +398,15 @@ public class Enrolment extends Enrolment_Base {
 			throw new DomainException("error.enrolment.cant.unenroll.improvement");
 		}
 	}
+	
+	public List<IEnrolmentEvaluation> getAllFinalEnrolmentEvaluations(){
+		return (List<IEnrolmentEvaluation>) CollectionUtils.select(getEvaluations(), new Predicate() {
+
+			public boolean evaluate(Object arg0) {
+				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) arg0;
+				return enrolmentEvaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.FINAL_OBJ);
+			}
+				
+		});
+	}
 }
