@@ -376,8 +376,6 @@ public interface ISuportePersistente {
 
     public IPersistentTutor getIPersistentTutor();
 
-    public IPersistentCourseHistoric getIPersistentCourseHistoric();
-
     public IPersistentStudentCourseReport getIPersistentStudentCourseReport();
 
     public IPersistentDelegate getIPersistentDelegate();

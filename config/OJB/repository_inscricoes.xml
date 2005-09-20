@@ -145,11 +145,6 @@
 		jdbc-type="INTEGER"
 	/>	
 	<field-descriptor
-		name="keyCourseHistoric"
-		column="KEY_COURSE_HISTORIC"
-		jdbc-type="INTEGER"
-	/>	
-	<field-descriptor
 		name="degreeCurricularPlanKey"
 		column="KEY_DEGREE_CURRICULAR_PLAN"
 		jdbc-type="INTEGER"
@@ -302,13 +297,12 @@
          >
 	  <foreignkey field-ref="keyStudentCourseReport"/>
     </reference-descriptor>	 
-	<reference-descriptor auto-retrieve="false"
-         name="courseHistoric"
-         class-ref="net.sourceforge.fenixedu.domain.gesdis.CourseHistoric"
-         >
-        <foreignkey field-ref="keyCourseHistoric"/>
-    </reference-descriptor> 
-    
+   	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="associatedCourseHistorics"
+			element-class-ref="net.sourceforge.fenixedu.domain.gesdis.CourseHistoric"
+			>
+		<inverse-foreignkey field-ref="keyCurricularCourse"/>
+	</collection-descriptor>   
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedExecutionCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"

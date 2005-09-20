@@ -3231,7 +3231,9 @@ relation CurricularCourseExecutionCourse {
 
 
 relation CurricularCourseHistoric {
-	net.sourceforge.fenixedu.domain.gesdis.CourseHistoric playsRole courseHistoric;
+	net.sourceforge.fenixedu.domain.gesdis.CourseHistoric playsRole associatedCourseHistorics {
+		multiplicity *;
+	}
 	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
 }
 

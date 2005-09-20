@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.gesdis;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -16,10 +17,12 @@ import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseHistoric
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.gesdis.ICourseHistoric;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseHistoric;
@@ -72,18 +75,20 @@ public class ReadCurricularCourseHistoric implements IService {
         InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
         infoSiteCourseHistoric.setInfoCurricularCourse(infoCurricularCourse);
 
-        IPersistentCourseHistoric persistentCourseHistoric = sp.getIPersistentCourseHistoric();
-        List coursesHistoric = persistentCourseHistoric.readByCurricularCourseAndSemester(
-                curricularCourse, semester);
-        List infoCoursesHistoric = (List) CollectionUtils.collect(coursesHistoric, new Transformer() {
-            public Object transform(Object arg0) {
-                ICourseHistoric courseHistoric = (ICourseHistoric) arg0;
-                return InfoCourseHistoricWithInfoCurricularCourse.newInfoFromDomain(courseHistoric);
-            }
-
-        });
-
-        Collections.sort(infoCoursesHistoric, new Comparator() {
+        
+        final List<ICourseHistoric> courseHistorics = curricularCourse.getAssociatedCourseHistorics();
+        
+        // the historic must only show info regarding the years previous to the year chosen by the user
+        List<InfoCourseHistoric> infoCourseHistorics = new ArrayList<InfoCourseHistoric>();
+        final IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+        for (ICourseHistoric courseHistoric : courseHistorics) {
+			IExecutionYear courseHistoricExecutionYear = persistentExecutionYear.readExecutionYearByName(courseHistoric.getCurricularYear());
+			if (courseHistoric.getSemester().equals(semester)) {
+				infoCourseHistorics.add(InfoCourseHistoricWithInfoCurricularCourse.newInfoFromDomain(courseHistoric));
+			}
+		}
+        
+        Collections.sort(infoCourseHistorics, new Comparator() {
 
             public int compare(Object o1, Object o2) {
                 InfoCourseHistoric infoCourseHistoric1 = (InfoCourseHistoric) o1;
@@ -93,7 +98,7 @@ public class ReadCurricularCourseHistoric implements IService {
             }
         });
 
-        infoSiteCourseHistoric.setInfoCourseHistorics(infoCoursesHistoric);
+        infoSiteCourseHistoric.setInfoCourseHistorics(infoCourseHistorics);
         return infoSiteCourseHistoric;
     }
 }

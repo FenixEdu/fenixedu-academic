@@ -27,11 +27,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseHistoric;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.Transformer;
-
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -86,39 +81,19 @@ public class ReadCourseHistoric implements IService {
                 .newInfoFromDomain(curricularCourse);
         infoSiteCourseHistoric.setInfoCurricularCourse(infoCurricularCourse);
 
-        IPersistentCourseHistoric persistentCourseHistoric = sp.getIPersistentCourseHistoric();
-        List coursesHistoric = persistentCourseHistoric.readByCurricularCourseAndSemester(
-                curricularCourse, semester);
-        List infoCoursesHistoric = (List) CollectionUtils.collect(coursesHistoric, new Transformer() {
-            public Object transform(Object arg0) {
-                ICourseHistoric courseHistoric = (ICourseHistoric) arg0;
-                return InfoCourseHistoricWithInfoCurricularCourse.newInfoFromDomain(courseHistoric);
-            }
-
-        });
-
+        final List<ICourseHistoric> courseHistorics = curricularCourse.getAssociatedCourseHistorics();
         
         // the historic must only show info regarding the years previous to the year chosen by the user
+        List<InfoCourseHistoric> infoCourseHistorics = new ArrayList<InfoCourseHistoric>();
         final IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-        List infoCoursesHistoricToView = (List) CollectionUtils.select(infoCoursesHistoric, new Predicate() {
-            public boolean evaluate(Object arg0) {
-                InfoCourseHistoric infoCourseHistoric = (InfoCourseHistoric) arg0;
-                
-                boolean evaluation = false;
-                try{
-                    IExecutionYear courseHistoricExecutionYear = persistentExecutionYear.readExecutionYearByName(infoCourseHistoric.getCurricularYear());
-                    evaluation = courseHistoricExecutionYear.getBeginDate().before(executionYear.getBeginDate());
-                }catch (ExcepcaoPersistencia e) {
-                }
-                
-                return evaluation;
-            }
-
-        });
-
+        for (ICourseHistoric courseHistoric : courseHistorics) {
+			IExecutionYear courseHistoricExecutionYear = persistentExecutionYear.readExecutionYearByName(courseHistoric.getCurricularYear());
+			if (courseHistoric.getSemester().equals(semester) && courseHistoricExecutionYear.getBeginDate().before(executionYear.getBeginDate())) {
+				infoCourseHistorics.add(InfoCourseHistoricWithInfoCurricularCourse.newInfoFromDomain(courseHistoric));
+			}
+		}
         
-        Collections.sort(infoCoursesHistoricToView, new Comparator() {
-
+        Collections.sort(infoCourseHistorics, new Comparator() {
             public int compare(Object o1, Object o2) {
                 InfoCourseHistoric infoCourseHistoric1 = (InfoCourseHistoric) o1;
                 InfoCourseHistoric infoCourseHistoric2 = (InfoCourseHistoric) o2;
@@ -127,7 +102,7 @@ public class ReadCourseHistoric implements IService {
             }
         });
 
-        infoSiteCourseHistoric.setInfoCourseHistorics(infoCoursesHistoricToView);
+        infoSiteCourseHistoric.setInfoCourseHistorics(infoCourseHistorics);
         return infoSiteCourseHistoric;
     }
 }

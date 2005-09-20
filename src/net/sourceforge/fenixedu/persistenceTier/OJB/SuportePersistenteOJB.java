@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.credits.ServiceExemptionCred
 import net.sourceforge.fenixedu.persistenceTier.OJB.degree.finalProject.TeacherDegreeFinalProjectStudentOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.GaugingTestResultOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
-import net.sourceforge.fenixedu.persistenceTier.OJB.gesdis.CourseHistoricOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gesdis.CourseReportOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gesdis.StudentCourseReportOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantContractMovementOJB;
@@ -948,15 +947,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
      */
     public IPersistentTutor getIPersistentTutor() {
         return new TutorOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentCourseHistoric()
-     */
-    public IPersistentCourseHistoric getIPersistentCourseHistoric() {
-        return new CourseHistoricOJB();
     }
 
     /*
