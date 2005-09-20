@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class DeleteExamNew implements IService {
+public class DeleteExam implements IService {
 
     public Object run(Integer examOID) throws FenixServiceException, ExcepcaoPersistencia {
 
@@ -24,7 +24,7 @@ public class DeleteExamNew implements IService {
 
         IExam examToDelete = (IExam) sp.getIPersistentExam().readByOID(Exam.class, examOID);
         if (examToDelete == null) {
-            throw new FenixServiceException("The exam does not exist");
+            throw new FenixServiceException("error.noExam");
         }
 
         examToDelete.delete();

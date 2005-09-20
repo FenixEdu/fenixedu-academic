@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateExecutionPeriod.ExistingExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateExecutionPeriod.InvalidExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -137,28 +138,23 @@ public class ManageExecutionPeriodsDA extends FenixDispatchAction {
     public ActionForward alterExecutionPeriodState(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        String year = request.getParameter("year");
         Integer semester = new Integer(request.getParameter("semester"));
         String periodStateToSet = request.getParameter("periodState");
 
-        InfoExecutionYear infoExecutionYear = new InfoExecutionYear(year);
+        InfoExecutionYear infoExecutionYear = new InfoExecutionYear(request.getParameter("year"));
         InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod(semester + " Semestre",
                 infoExecutionYear);
-        infoExecutionPeriod.setSemester(new Integer(semester.intValue()));
+        infoExecutionPeriod.setSemester(semester);
 
-        PeriodState periodState = new PeriodState(periodStateToSet);
+        final IUserView userView = SessionUtils.getUserView(request);
+        final PeriodState periodState = new PeriodState(periodStateToSet);
 
-        IUserView userView = SessionUtils.getUserView(request);
-
-        Object[] argsAlterExecutionPeriodState = { infoExecutionPeriod, periodState };
+        final Object[] args = { infoExecutionPeriod, periodState };
         try {
-            ServiceUtils.executeService(userView, "AlterExecutionPeriodState",
-                    argsAlterExecutionPeriodState);
-        } catch (InvalidExecutionPeriod ex) {
-            throw new FenixActionException("O periodo execução selecionado não existe.", ex);
-        } catch (FenixServiceException ex) {
-            throw new FenixActionException("Problemas a apagar a área de trabalho.", ex);
-        }
+            ServiceUtils.executeService(userView, "AlterExecutionPeriodState", args);
+        } catch (InvalidArgumentsServiceException ex) {
+            throw new FenixActionException("errors.nonExisting.executionPeriod", ex);
+        } 
 
         return prepare(mapping, form, request, response);
     }

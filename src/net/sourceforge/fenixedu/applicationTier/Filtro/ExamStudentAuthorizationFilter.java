@@ -7,6 +7,11 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
+import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.IAttends;
+import net.sourceforge.fenixedu.domain.IExam;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -65,7 +70,19 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
 
             final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             final IPersistentExam persistentExam = sp.getIPersistentExam();
-            return persistentExam.isExamOfExecutionCourseTheStudentAttends(examId, username);
+            final IExam exam = (IExam) persistentExam.readByOID(Exam.class, examId);
+            
+            for (IExecutionCourse executionCourse : exam.getAssociatedExecutionCourses()) {
+                for (final IAttends attends : executionCourse.getAttends()) {
+                    final IStudent student = attends.getAluno();
+                    if (student.getPerson().getUsername().equals(username)) {
+                        return true;
+                    }
+                }
+
+            }
+            return false;
+            
         } catch (Exception ex) {
             return false;
         }

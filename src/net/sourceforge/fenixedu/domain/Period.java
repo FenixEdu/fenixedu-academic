@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import net.sourceforge.fenixedu.util.CalendarUtil;
 
@@ -17,14 +18,11 @@ public class Period extends Period_Base {
     public Period() {
     }
 
-    public Period(Calendar startDate, Calendar endDate) {
-        this.setStartDate(startDate);
-        this.setEndDate(endDate);
+    public Period(Date startDate, Date endDate) {
+        this.setStart(startDate);
+        this.setEnd(endDate);
     }
 
-    /**
-     * @return
-     */
     public Calendar getStartDate() {
         if (this.getStart() != null) {
             Calendar result = Calendar.getInstance();
@@ -34,9 +32,6 @@ public class Period extends Period_Base {
         return null;
     }
 
-    /**
-     * @param calendar
-     */
     public void setEndDate(Calendar calendar) {
         if (calendar != null) {
             this.setEnd(calendar.getTime());
@@ -45,9 +40,6 @@ public class Period extends Period_Base {
         }
     }
 
-    /**
-     * @return
-     */
     public Calendar getEndDate() {
         if (this.getEnd() != null) {
             Calendar result = Calendar.getInstance();
@@ -57,9 +49,6 @@ public class Period extends Period_Base {
         return null;
     }
 
-    /**
-     * @param calendar
-     */
     public void setStartDate(Calendar calendar) {
         if (calendar != null) {
             this.setStart(calendar.getTime());
@@ -113,7 +102,6 @@ public class Period extends Period_Base {
             removeNextPeriod();
             removePreviousPeriod();
         }
-
         deleteDomainObject();
     }
 }

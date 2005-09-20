@@ -114,7 +114,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExamStudentRoom;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
@@ -692,12 +692,6 @@ public class TeacherAdministrationSiteComponentBuilder {
         return component;
     }
 
-    /**
-     * @param component
-     * @param site
-     * @param evaluation
-     * @return
-     */
     private ISiteComponent getInfoSiteEvaluationExecutionCourses(
             InfoSiteEvaluationExecutionCourses component, ISite site, Integer evaluationCode)
             throws FenixServiceException {
@@ -714,9 +708,9 @@ public class TeacherAdministrationSiteComponentBuilder {
             if (evaluation instanceof IExam) {
                 InfoSiteExamExecutionCourses componentExam = (InfoSiteExamExecutionCourses) component;
                 IExam exam = (IExam) evaluation;
-                IPersistentExamStudentRoom persistentExamStudentRoom = sp
-                        .getIPersistentExamStudentRoom();
-                List enrolledStudents = persistentExamStudentRoom.readByExamOID(exam.getIdInternal());
+                IPersistentWrittenEvaluationEnrolment persistentWrittenEvaluationEnrolment = sp
+                        .getIPersistentWrittenEvaluationEnrolment();
+                List enrolledStudents = persistentWrittenEvaluationEnrolment.readByExamOID(exam.getIdInternal());
 
                 InfoExam infoExam = InfoExamWithRoomOccupations.newInfoFromDomain(exam);
                 infoExam.setEnrolledStudents(new Integer(enrolledStudents.size()));

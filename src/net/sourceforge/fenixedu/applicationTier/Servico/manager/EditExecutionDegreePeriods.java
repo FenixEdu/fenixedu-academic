@@ -81,7 +81,7 @@ public class EditExecutionDegreePeriods implements IService {
         if (period == null) {
             Calendar startDate = infoPeriodNew.getStartDate();
             Calendar endDate = infoPeriodNew.getEndDate();
-            period = DomainFactory.makePeriod(startDate, endDate);
+            period = DomainFactory.makePeriod(startDate.getTime(), endDate.getTime());
         }
 
         // iteracoes
@@ -98,7 +98,7 @@ public class EditExecutionDegreePeriods implements IService {
             if (period == null) {
                 Calendar startDate = infoPeriodNew.getStartDate();
                 Calendar endDate = infoPeriodNew.getEndDate();
-                period = DomainFactory.makePeriod(startDate, endDate);
+                period = DomainFactory.makePeriod(startDate.getTime(), endDate.getTime());
                 period.setNextPeriod(nextPeriod);
             }
         }

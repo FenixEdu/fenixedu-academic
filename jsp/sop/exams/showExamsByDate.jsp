@@ -36,8 +36,7 @@
 			<td class="listClasses-header">Faltam X Lugares</td>	
 		</tr>
 		<logic:iterate id="infoViewExam" indexId="index" name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="request">
-			<% int seatsReserved = 0; %>
-			
+				
 			<logic:iterate id="infoScope" name="infoViewExam" property="infoExam.associatedCurricularCourseScope">
 				<bean:define id="curricularYearOID" name="infoScope" property="infoCurricularSemester.infoCurricularYear.year"/>				
 			</logic:iterate>
@@ -110,7 +109,6 @@
 					<logic:notEmpty name="infoViewExam" property="infoExam.associatedRoomOccupation">
 						<logic:iterate id="infoRoomOccupation" name="infoViewExam" property="infoExam.associatedRoomOccupation">
 							<bean:write name="infoRoomOccupation" property="infoRoom.nome"/>; 
-							<% seatsReserved += ((InfoRoomOccupation) infoRoomOccupation).getInfoRoom().getCapacidadeExame().intValue(); %>
 						</logic:iterate> 
 					</logic:notEmpty>
 					<logic:empty name="infoViewExam" property="infoExam.associatedRoomOccupation">
@@ -124,7 +122,7 @@
 				</td>
 				<td class="listClasses">
 					<%-- N LUGARES A FALTAR --%>
-					<%= ((InfoViewExamByDayAndShift) infoViewExam).getNumberStudentesAttendingCourse().intValue() - seatsReserved %>
+					<bean:write name="infoViewExam" property="availableRoomOccupation"/>
 				</td>
 				
 			</tr>

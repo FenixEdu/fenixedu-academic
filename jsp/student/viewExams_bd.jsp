@@ -65,8 +65,8 @@
 			<td class="listClasses-header" >&nbsp;</td>
 			
 		</tr>	
-		<logic:iterate id="examStudentRoom" name="examsEnrolled" type="net.sourceforge.fenixedu.dataTransferObject.InfoExamStudentRoom">
-			<bean:define id="exam" name="examStudentRoom" property="infoExam"/>
+		<logic:iterate id="writtenEvaluationEnrolment" name="examsEnrolled" type="net.sourceforge.fenixedu.dataTransferObject.InfoWrittenEvaluationEnrolment">
+			<bean:define id="exam" name="writtenEvaluationEnrolment" property="infoExam"/>
 			<bean:define id="objectCode" name="exam" property="idInternal"/>	
 			<logic:present name="exam" property="infoExecutionCourses">
 			<bean:size id="numberOfExecutionCourses" name="exam" property="infoExecutionCourses"/>
@@ -77,7 +77,7 @@
 				<td class="listClasses" rowspan="<%= numberOfExecutionCourses %>"><bean:write name="exam" property="date"/></td>
 				<td class="listClasses" rowspan="<%= numberOfExecutionCourses %>"><bean:write name="exam" property="beginningHour"/></td>
 				<td class="listClasses" rowspan="<%= numberOfExecutionCourses %>">
-					<logic:notPresent name="examStudentRoom" property="infoRoom">
+					<logic:notPresent name="writtenEvaluationEnrolment" property="infoRoom">
 						<logic:match name="exam" property="enrollmentAuthorization" value="true">
 						<html:link 
 							page="<%= "/examEnrollmentManager.do?method=unEnrollStudent&amp;objectCode="+ pageContext.findAttribute("objectCode") %>" >
@@ -88,8 +88,8 @@
 						&nbsp;
 						</logic:notMatch>
 					</logic:notPresent>
-					<logic:present name="examStudentRoom" property="infoRoom">
-							<bean:write name="examStudentRoom" property="infoRoom.nome"/>						
+					<logic:present name="writtenEvaluationEnrolment" property="infoRoom">
+							<bean:write name="writtenEvaluationEnrolment" property="infoRoom.nome"/>						
 					</logic:present>		
 				</td>
 			</tr>

@@ -23,15 +23,15 @@ public class InfoStudentSiteExams extends DataTranferObject implements ISiteComp
         this.examsEnrolledDistributions = studentDistributions;
     }
 
-    public InfoExamStudentRoom getInfoExamStudentRoom(int examIdInternal) {
-        InfoExamStudentRoom infoExamStudentRoom = null;
+    public InfoWrittenEvaluationEnrolment getInfoWrittenEvaluationEnrolment(int examIdInternal) {
+        InfoWrittenEvaluationEnrolment infoWrittenEvaluationEnrolment = null;
         for (int i = 0; i < examsEnrolledDistributions.size(); i++) {
-            infoExamStudentRoom = (InfoExamStudentRoom) examsEnrolledDistributions.get(0);
-            if (infoExamStudentRoom.getIdInternal().intValue() == examIdInternal) {
+            infoWrittenEvaluationEnrolment = (InfoWrittenEvaluationEnrolment) examsEnrolledDistributions.get(0);
+            if (infoWrittenEvaluationEnrolment.getIdInternal().intValue() == examIdInternal) {
                 break;
             }
         }
-        return infoExamStudentRoom;
+        return infoWrittenEvaluationEnrolment;
     }
 
     /**

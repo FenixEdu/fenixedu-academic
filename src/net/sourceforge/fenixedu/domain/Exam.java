@@ -4,14 +4,14 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.Season;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -22,13 +22,57 @@ public class Exam extends Exam_Base {
         this.setOjbConcreteClass(Exam.class.getName());
     }
 
-    public Exam(Calendar day, Calendar beginning, Calendar end, Season season) {
-        this.setOjbConcreteClass(Exam.class.getName());
-        this.setDay(day);
-        this.setBeginning(beginning);
-        this.setEnd(end);
-        this.setSeason(season);
-    }
+    public Exam(Date day, Date beginning, Date end, Season season,
+			List<IExecutionCourse> executionCoursesToAssociate,
+			List<ICurricularCourseScope> curricularCourseScopesToAssociate,
+			List<IRoom> rooms, IPeriod period) {
+		checkScopeAndSeasonConstrains(executionCoursesToAssociate, curricularCourseScopesToAssociate,
+				season);
+		checkValidHours(beginning, end);
+
+		this.setOjbConcreteClass(Exam.class.getName());
+		this.setDayDate(day);
+		this.setBeginningDate(beginning);
+		this.setEndDate(end);
+		this.setSeason(season);
+		
+		this.getAssociatedExecutionCourses().addAll(executionCoursesToAssociate);
+		this.getAssociatedCurricularCourseScope().addAll(curricularCourseScopesToAssociate);
+		
+        associateRooms(rooms, period);
+	}
+
+	private boolean checkValidHours(Date beginning, Date end) {
+		if (beginning.after(end)) {
+			throw new DomainException("error.data.exame.inválida");
+		}
+
+		return true;
+	}
+
+	private boolean checkScopeAndSeasonConstrains(List<IExecutionCourse> executionCoursesToAssociate,
+			List<ICurricularCourseScope> curricularCourseScopesToAssociate, Season season) {
+
+		// for each execution course, there must not exist an exam for the same season and scope
+		for (IExecutionCourse executionCourse : executionCoursesToAssociate) {
+			for (IEvaluation evaluation : executionCourse.getAssociatedEvaluations()) {
+				if (evaluation instanceof Exam) {
+					Exam existingExam = (Exam) evaluation;
+					if (existingExam.getSeason().equals(season)) {
+						// is necessary to confirm if is for the same scope
+						for (ICurricularCourseScope scope : existingExam
+								.getAssociatedCurricularCourseScope()) {
+							if (curricularCourseScopesToAssociate.contains(scope)) {
+								throw new DomainException("error.existingExam");
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return true;
+	}
 
     public String toString() {
         return "[EXAM:" + " id= '" + this.getIdInternal() + "'\n" + " day= '" + this.getDay() + "'\n"
@@ -36,31 +80,74 @@ public class Exam extends Exam_Base {
                 + " season= '" + this.getSeason() + "'\n" + "";
     }
 
-    /**
-     * @return
-     */
     public List getAssociatedRooms() {
-        return (List) CollectionUtils.collect(super.getAssociatedRoomOccupation(), new Transformer() {
-
-            public Object transform(Object arg0) {
-                IRoomOccupation roomOccupation = (IRoomOccupation) arg0;
-                return roomOccupation.getRoom();
-            }
-        });
+        final List<IRoom> result = new ArrayList<IRoom>();
+        for (final IRoomOccupation roomOccupation : this.getAssociatedRoomOccupation()) {
+            result.add(roomOccupation.getRoom());
+        }
+        return result;
     }
 
-    public void delete() throws notAuthorizedServiceDeleteException {
-        if (!hasAnyExamStudentRooms()) {
-            getAssociatedExecutionCourses().clear();
+    public void edit(Date examDate, Date examStartTime, Date examEndTime, Season season,
+            List<IExecutionCourse> executionCoursesToAssociate,
+            List<ICurricularCourseScope> curricularCourseScopesToAssociate, List<IRoom> rooms,
+            IPeriod period) {
 
-            final List<IRoomOccupation> roomOccupations = getAssociatedRoomOccupation();
-            for (; !roomOccupations.isEmpty(); roomOccupations.get(0).delete());
+        // It's necessary to remove this associations before check some constrains
+        this.getAssociatedExecutionCourses().clear();
+        this.getAssociatedCurricularCourseScope().clear();
+        
+        checkScopeAndSeasonConstrains(executionCoursesToAssociate, curricularCourseScopesToAssociate,
+                season);
 
-            getAssociatedCurricularCourseScope().clear();
-            deleteDomainObject();
-        } else {
-            throw new notAuthorizedServiceDeleteException("error.notAuthorizedExamDelete.withStudent");
+        this.setDayDate(examDate);
+        this.setBeginningDate(examStartTime);
+        this.setEndDate(examEndTime);
+        this.setSeason(season);
+        
+        this.getAssociatedExecutionCourses().addAll(executionCoursesToAssociate);        
+        this.getAssociatedCurricularCourseScope().addAll(curricularCourseScopesToAssociate);
+
+        associateRooms(rooms, period);
+    }
+
+    public void delete() {
+        if (hasAnyWrittenEvaluationEnrolments()) {
+            throw new DomainException("error.notAuthorizedExamDelete.withStudent");
+        }
+        getAssociatedExecutionCourses().clear();
+        deleteRoomOccupationsNotContainedInList(null);
+        getAssociatedCurricularCourseScope().clear();
+
+        super.deleteDomainObject();
+    }
+
+    private void associateRooms(final List<IRoom> rooms, final IPeriod period) {
+        final DiaSemana dayOfWeek = new DiaSemana(this.getDay().get(Calendar.DAY_OF_WEEK));
+        for (final IRoom room : rooms) {
+            if (!hasOccupationForRoom(room)) {
+                room.createRoomOccupation(period, this.getBeginning(), this.getEnd(), dayOfWeek,
+                        RoomOccupation.DIARIA, null, this);
+            }
+        }
+
+        deleteRoomOccupationsNotContainedInList(rooms);
+    }
+
+    private boolean hasOccupationForRoom(IRoom room) {
+        for (final IRoomOccupation roomOccupation : this.getAssociatedRoomOccupation()) {
+            if (roomOccupation.getRoom() == room) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void deleteRoomOccupationsNotContainedInList(final List<IRoom> rooms) {
+        for (final IRoomOccupation roomOccupation : this.getAssociatedRoomOccupation()) {
+            if (rooms == null || !rooms.contains(roomOccupation.getRoom())) {
+                roomOccupation.delete();
+            }
         }
     }
-
 }

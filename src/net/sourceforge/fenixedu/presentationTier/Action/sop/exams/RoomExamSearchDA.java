@@ -78,19 +78,19 @@ public class RoomExamSearchDA extends FenixContextDispatchAction {
         Integer normal = null;
         Integer exam = null;
         try {
-            floor = new Integer((String) roomExamForm.get("floor"));
+            floor = Integer.valueOf((String)roomExamForm.get("floor"));
         } catch (NumberFormatException ex) {
         }
         try {
-            type = new Integer((String) roomExamForm.get("type"));
+            type = Integer.valueOf((String) roomExamForm.get("type"));
         } catch (NumberFormatException ex) {
         }
         try {
-            normal = new Integer((String) roomExamForm.get("normal"));
+            normal = Integer.valueOf((String) roomExamForm.get("normal"));
         } catch (NumberFormatException ex) {
         }
         try {
-            exam = new Integer((String) roomExamForm.get("exam"));
+            exam = Integer.valueOf((String) roomExamForm.get("exam"));
         } catch (NumberFormatException ex) {
         }
 

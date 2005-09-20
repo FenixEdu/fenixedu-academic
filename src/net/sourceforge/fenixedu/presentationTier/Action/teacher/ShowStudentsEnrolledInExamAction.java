@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExamStudentRoom;
+import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTeacherStudentsEnrolledList;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
@@ -72,19 +72,19 @@ public class ShowStudentsEnrolledInExamAction extends FenixAction {
         comparatorChain.addComparator(new BeanComparator("infoStudent.number"));
 
         //Select all the objects with room to later sort them
-        List infoExamStudentRoomList = (List) CollectionUtils.select(infoSiteTeacherStudentsEnrolledList
-                .getInfoExamStudentRoomList(), new Predicate() {
+        List infoWrittenEvaluationEnrolmentList = (List) CollectionUtils.select(infoSiteTeacherStudentsEnrolledList
+                .getInfoWrittenEvaluationEnrolmentList(), new Predicate() {
             public boolean evaluate(Object input) {
-                InfoExamStudentRoom infoExamStudentRoom = (InfoExamStudentRoom) input;
-                return infoExamStudentRoom.getInfoRoom() != null;
+                InfoWrittenEvaluationEnrolment infoWrittenEvaluationEnrolment = (InfoWrittenEvaluationEnrolment) input;
+                return infoWrittenEvaluationEnrolment.getInfoRoom() != null;
             }
         });
 
-        Collections.sort(infoExamStudentRoomList, comparatorChain);
+        Collections.sort(infoWrittenEvaluationEnrolmentList, comparatorChain);
         Collection collection = CollectionUtils.subtract(infoSiteTeacherStudentsEnrolledList
-                .getInfoExamStudentRoomList(), infoExamStudentRoomList);
-        infoSiteTeacherStudentsEnrolledList.setInfoExamStudentRoomList((List) collection);
-        infoSiteTeacherStudentsEnrolledList.getInfoExamStudentRoomList().addAll(infoExamStudentRoomList);
+                .getInfoWrittenEvaluationEnrolmentList(), infoWrittenEvaluationEnrolmentList);
+        infoSiteTeacherStudentsEnrolledList.setInfoWrittenEvaluationEnrolmentList((List) collection);
+        infoSiteTeacherStudentsEnrolledList.getInfoWrittenEvaluationEnrolmentList().addAll(infoWrittenEvaluationEnrolmentList);
 
         request.setAttribute("siteView", siteView);
         request.setAttribute("objectCode", executionCourseCode);

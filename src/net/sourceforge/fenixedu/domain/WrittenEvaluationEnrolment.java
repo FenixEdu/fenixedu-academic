@@ -9,6 +9,6 @@ package net.sourceforge.fenixedu.domain;
  * @author João Mota
  * 
  */
-public class ExamStudentRoom extends ExamStudentRoom_Base {
+public class WrittenEvaluationEnrolment extends WrittenEvaluationEnrolment_Base {
 
 }

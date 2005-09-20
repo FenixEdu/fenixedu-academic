@@ -40,9 +40,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Ana e Ricardo
  */
-public class ShowExamsManagement
-//	extends FenixExecutionDegreeAndCurricularYearContextDispatchAction {
-        extends FenixContextDispatchAction {
+public class ShowExamsManagement extends FenixContextDispatchAction {
 
     public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {

@@ -42,7 +42,7 @@ public class AttendsTest extends DomainTestBase {
 		attendNotToDelete1.setDisciplinaExecucao(executionCourse);
 		attendNotToDelete1.addStudentGroups(studentGroup1);
         attendNotToDelete1.addGroupings(grouping);
-		attendNotToDelete1.setMark(mark1);
+		attendNotToDelete1.addAssociatedMarks(mark1);
 		
 		attendNotToDelete2.setAluno(student);
 		attendNotToDelete2.setEnrolment(enrolment);
@@ -59,7 +59,7 @@ public class AttendsTest extends DomainTestBase {
 		attendNotToDelete4.setAluno(student);
 		attendNotToDelete4.setEnrolment(enrolment);
 		attendNotToDelete4.setDisciplinaExecucao(executionCourse);
-		attendNotToDelete4.setMark(mark2);
+		attendNotToDelete4.addAssociatedMarks(mark2);
 	}
 
 	public void testDelete() {
@@ -104,7 +104,7 @@ public class AttendsTest extends DomainTestBase {
 		assertAttendsNotDereferenced(attendNotToDelete1);
 		assertTrue("Should not dereference StudentGroups", attendNotToDelete1.hasAnyStudentGroups());
 		assertTrue("Should not dereference Groupings", attendNotToDelete1.hasAnyGroupings());
-		assertTrue("Should not dereference Mark", attendNotToDelete1.hasMark());
+		assertTrue("Should not dereference Mark", attendNotToDelete1.hasAnyAssociatedMarks());
 		
 		assertAttendsNotDereferenced(attendNotToDelete2);
 		assertTrue("Should not dereference StudentGroups", attendNotToDelete2.hasAnyStudentGroups());
@@ -113,7 +113,7 @@ public class AttendsTest extends DomainTestBase {
 		assertTrue("Should not dereference Groupings", attendNotToDelete3.hasAnyGroupings());
 		
 		assertAttendsNotDereferenced(attendNotToDelete4);
-		assertTrue("Should not dereference Mark", attendNotToDelete4.hasMark());
+		assertTrue("Should not dereference Mark", attendNotToDelete4.hasAnyAssociatedMarks());
 	}
 
 	private void assertAttendsNotDereferenced(IAttends attends) {

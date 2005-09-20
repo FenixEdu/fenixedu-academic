@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.IDomainObject;
 /**
  * @author jpvl
  */
-public class InfoExamStudentRoom extends InfoObject {
+public class InfoWrittenEvaluationEnrolment extends InfoObject {
     private InfoExam infoExam;
 
     private InfoStudent infoStudent;
@@ -58,12 +58,12 @@ public class InfoExamStudentRoom extends InfoObject {
         this.infoStudent = infoStudent;
     }
 
-    public static InfoExamStudentRoom newInfoFromDomain(IDomainObject domainObject) {
-        InfoExamStudentRoom infoExamStudentRoom = null;
+    public static InfoWrittenEvaluationEnrolment newInfoFromDomain(IDomainObject domainObject) {
+        InfoWrittenEvaluationEnrolment infoWrittenEvaluationEnrolment = null;
         if (domainObject != null) {
-            infoExamStudentRoom = new InfoExamStudentRoom();
-            infoExamStudentRoom.copyFromDomain(domainObject);
+            infoWrittenEvaluationEnrolment = new InfoWrittenEvaluationEnrolment();
+            infoWrittenEvaluationEnrolment.copyFromDomain(domainObject);
         }
-        return infoExamStudentRoom;
+        return infoWrittenEvaluationEnrolment;
     }
 }

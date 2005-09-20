@@ -67,7 +67,7 @@ public class AddClassesDA extends
 
         Object args[] = { infoShift, classOIDs };
         try {
-            ServiceUtils.executeService(SessionUtils.getUserView(request), "AddClassesToShift", args);
+            ServiceUtils.executeService(SessionUtils.getUserView(request), "AddSchoolClassesToShift", args);
         } catch (FenixServiceException ex) {
             // No probem, the user refreshed the page after adding classes
             request.setAttribute("selectMultipleItemsForm", null);

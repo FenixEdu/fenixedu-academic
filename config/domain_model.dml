@@ -925,7 +925,12 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
             
 			interface "
 			public java.util.List getAssociatedRooms();
-			public void delete() throws net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;
+			
+			public void edit(java.util.Date examDate, java.util.Date examStartTime, java.util.Date examEndTime,
+							 net.sourceforge.fenixedu.util.Season season, java.util.List<IExecutionCourse> executionCourses,
+				 	         java.util.List<ICurricularCourseScope> curricularCourseScopes, java.util.List<IRoom> rooms, IPeriod period);
+			
+			public void delete();
 			"	
 		}
 
@@ -948,10 +953,10 @@ class net.sourceforge.fenixedu.domain.EvaluationMethod extends net.sourceforge.f
 
 	
 
-class net.sourceforge.fenixedu.domain.ExamStudentRoom extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyRoom;
 	Integer keyStudent;
-	Integer keyExam;
+	Integer keyWrittenEvaluation;
 }
 
 
@@ -2186,7 +2191,8 @@ class net.sourceforge.fenixedu.domain.Room extends net.sourceforge.fenixedu.doma
 
 	interface "
 	public void createRoomOccupation(net.sourceforge.fenixedu.domain.IPeriod period, java.util.Calendar startTime, java.util.Calendar endTime,
-            net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week, net.sourceforge.fenixedu.domain.IWrittenEvaluation writtenEvaluation) throws net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+            net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week, net.sourceforge.fenixedu.domain.IWrittenEvaluation writtenEvaluation);
+	public void delete();
 	"
 }
 
@@ -3584,22 +3590,22 @@ relation EvaluationExecutionCourse {
 	}
 }
 
-relation ExamStudentRoomExam {
-	net.sourceforge.fenixedu.domain.ExamStudentRoom playsRole examStudentRooms {
+relation WrittenEvaluationEnrolmentExam {
+	net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment playsRole writtenEvaluationEnrolments {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Exam playsRole exam;
+	net.sourceforge.fenixedu.domain.WrittenEvaluation playsRole writtenEvaluation;
 }
 
-relation ExamStudentRoomRoom {
-	net.sourceforge.fenixedu.domain.ExamStudentRoom playsRole examStudentRooms {
+relation WrittenEvaluationEnrolmentRoom {
+	net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment playsRole writtenEvaluationEnrolments {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Room playsRole room;
 }
 
-relation ExamStudentRoomStudent {
-	net.sourceforge.fenixedu.domain.ExamStudentRoom playsRole examStudentRooms {
+relation WrittenEvaluationEnrolmentStudent {
+	net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment playsRole writtenEvaluationEnrolments {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Student playsRole student;
@@ -4278,7 +4284,9 @@ relation LessonShift {
 }
 
 relation MarkAttends {
-	net.sourceforge.fenixedu.domain.Mark playsRole mark;
+	net.sourceforge.fenixedu.domain.Mark playsRole associatedMarks {
+		multiplicity *;
+	}
 	net.sourceforge.fenixedu.domain.Attends playsRole attend;
 }
 

@@ -48,29 +48,30 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
      */
     public List readSalas(String nome, String edificio, Integer piso, Integer tipo,
             Integer capacidadeNormal, Integer capacidadeExame) throws ExcepcaoPersistencia {
+        
         List<IRoom> rooms = (List<IRoom>) readAll(Room.class);
         List<IRoom> result = new ArrayList();
         for (IRoom room : rooms) {
             boolean isAcceptable = true;
             if (nome != null && !room.getNome().equalsIgnoreCase(nome)) {
-                isAcceptable = false;
+                continue;
             }
             if (edificio != null && !room.getBuilding().getName().equalsIgnoreCase(edificio)) {
-                isAcceptable = false;
+                continue;
             }
             if (piso != null && !room.getPiso().equals(piso)) {
-                isAcceptable = false;
+                continue;
             }
             if (tipo != null && !room.getTipo().getTipo().equals(tipo)) {
-                isAcceptable = false;
+                continue;
             }
             if (capacidadeNormal != null
                     && room.getCapacidadeNormal().intValue() < capacidadeNormal.intValue()) {
-                isAcceptable = false;
+                continue;
             }
             if (capacidadeExame != null
                     && room.getCapacidadeExame().intValue() < capacidadeExame.intValue()) {
-                isAcceptable = false;
+                continue;
             }
             if (isAcceptable) {
                 result.add(room);
@@ -113,8 +114,6 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
     public List readForRoomReservation() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addNotEqualTo("tipo", new TipoSala(TipoSala.LABORATORIO));
-        // criteria.addNotLike("building.name", "Tagus%");
-        // criteria.addNotLike("building.name", "Local%");
         return queryList(Room.class, criteria);
     }
 

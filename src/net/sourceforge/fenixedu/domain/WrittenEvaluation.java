@@ -11,9 +11,6 @@ import java.util.Calendar;
  */
 public class WrittenEvaluation extends WrittenEvaluation_Base {
 
-    /**
-     * @return
-     */
     public Calendar getBeginning() {
         if (this.getBeginningDate() != null) {
             Calendar result = Calendar.getInstance();
@@ -23,9 +20,6 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         return null;
     }
 
-    /**
-     * @param calendar
-     */
     public void setBeginning(Calendar calendar) {
         if (calendar != null) {
             this.setBeginningDate(calendar.getTime());
@@ -34,9 +28,6 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
     }
 
-    /**
-     * @return
-     */
     public Calendar getDay() {
         if (this.getDayDate() != null) {
             Calendar result = Calendar.getInstance();
@@ -46,9 +37,6 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         return null;
     }
 
-    /**
-     * @param calendar
-     */
     public void setDay(Calendar calendar) {
         if (calendar != null) {
             this.setDayDate(calendar.getTime());
@@ -57,9 +45,6 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
     }
 
-    /**
-     * @return
-     */
     public Calendar getEnd() {
         if(this.getEndDate() != null) {
             Calendar result = Calendar.getInstance();
@@ -69,9 +54,6 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         return null;
     }
 
-    /**
-     * @param calendar
-     */
     public void setEnd(Calendar calendar) {
         if (calendar != null) {
             this.setEndDate(calendar.getTime());    
@@ -80,9 +62,6 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
     }
 
-    /**
-     * @return
-     */
     public Calendar getEnrollmentBeginDay() {
         if (this.getEnrollmentBeginDayDate() != null) {
             Calendar result = Calendar.getInstance();
@@ -92,9 +71,6 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         return null;
     }
 
-    /**
-     * @param calendar
-     */
     public void setEnrollmentBeginDay(Calendar calendar) {
         if (calendar != null) {
             this.setEnrollmentBeginDayDate(calendar.getTime());    
@@ -103,9 +79,6 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
     }
 
-    /**
-     * @return
-     */
     public Calendar getEnrollmentBeginTime() {
         if (this.getEnrollmentBeginTimeDate() != null) {
             Calendar result = Calendar.getInstance();
@@ -115,9 +88,6 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         return null;
     }
 
-    /**
-     * @param calendar
-     */
     public void setEnrollmentBeginTime(Calendar calendar) {
         if (calendar != null) {
             this.setEnrollmentBeginTimeDate(calendar.getTime());
@@ -126,9 +96,6 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
     }
 
-    /**
-     * @return
-     */
     public Calendar getEnrollmentEndDay() {
         if (this.getEnrollmentEndDayDate() != null) {
             Calendar result = Calendar.getInstance();
@@ -138,9 +105,6 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         return null;
     }
 
-    /**
-     * @param calendar
-     */
     public void setEnrollmentEndDay(Calendar calendar) {
         if (calendar != null) {
             this.setEnrollmentEndDayDate(calendar.getTime());
@@ -149,9 +113,6 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
     }
 
-    /**
-     * @return
-     */
     public Calendar getEnrollmentEndTime() {
         if(this.getEnrollmentEndTimeDate() != null) {
             Calendar result = Calendar.getInstance();
@@ -161,9 +122,6 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         return null;
     }
 
-    /**
-     * @param calendar
-     */
     public void setEnrollmentEndTime(Calendar calendar) {
         if (calendar != null) {
             this.setEnrollmentEndTimeDate(calendar.getTime());
@@ -177,5 +135,4 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
                 + this.getDay() + "'\n" + " beginning= '" + this.getBeginning() + "'\n" + " end= '"
                 + this.getEnd() + "'\n" + "";
     }
-
 }

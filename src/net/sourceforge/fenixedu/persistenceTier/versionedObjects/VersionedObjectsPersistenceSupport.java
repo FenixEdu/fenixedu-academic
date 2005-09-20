@@ -119,7 +119,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentPe
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EquivalentEnrolmentForEnrolmentEquivalenceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EvaluationMethodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EvaluationVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamStudentRoomVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.WrittenEvaluationEnrolmentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionCourseVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionPeriodVO;
@@ -306,8 +306,8 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
         return new ReimbursementGuideVO();
     }
 
-    public IPersistentExamStudentRoom getIPersistentExamStudentRoom() {
-        return new ExamStudentRoomVO();
+    public IPersistentWrittenEvaluationEnrolment getIPersistentWrittenEvaluationEnrolment() {
+        return new WrittenEvaluationEnrolmentVO();
     }
 
     public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion() {

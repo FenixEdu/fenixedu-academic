@@ -27,10 +27,6 @@ public class InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegree
         }
     }
 
-    /**
-     * @param associatedCurricularCourseScope
-     * @return
-     */
     private List copyICurricularCourseScope2InfoCurricularCourseScope(
             List associatedCurricularCourseScopes) {
         List associatedInfoCCScopes = (List) CollectionUtils.collect(associatedCurricularCourseScopes,

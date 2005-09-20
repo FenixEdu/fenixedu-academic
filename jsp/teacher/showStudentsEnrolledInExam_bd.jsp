@@ -35,7 +35,7 @@
 	</tr>
 </table>
 <br/>
-<bean:size id="sizeOfExamStudentRooms" name="component" property="infoExamStudentRoomList" />
+<bean:size id="sizeOfWrittenEvaluationEnrolments" name="component" property="infoWrittenEvaluationEnrolmentList" />
 
 <logic:notEmpty name="component" property="infoStudents" >
 	<h2><bean:message key="label.students.enrolled.exam"/></h2>
@@ -45,7 +45,7 @@
 			<td class="listClasses-header"><bean:message key="label.name"/></td>
 			<td class="listClasses-header"><bean:message key="label.room"/></td>	
 		</tr>
-		<logic:equal name="sizeOfExamStudentRooms" value="0">
+		<logic:equal name="sizeOfWrittenEvaluationEnrolments" value="0">
 			<logic:iterate id="student" name="component" property="infoStudents">
 				<tr>
 					<td class="listClasses"><bean:write name="student" property="number"/></td>
@@ -54,16 +54,16 @@
 				</tr>
 			</logic:iterate>
 		</logic:equal>
-		<logic:notEqual name="sizeOfExamStudentRooms" value="0">
-			<logic:iterate id="infoExamStudentRoom" name="component" property="infoExamStudentRoomList">
+		<logic:notEqual name="sizeOfWrittenEvaluationEnrolments" value="0">
+			<logic:iterate id="infoWrittenEvaluationEnrolment" name="component" property="infoWrittenEvaluationEnrolmentList">
 				<tr>
-					<td class="listClasses"><bean:write name="infoExamStudentRoom" property="infoStudent.number"/></td>
-					<td class="listClasses"><bean:write name="infoExamStudentRoom" property="infoStudent.infoPerson.nome"/></td>
+					<td class="listClasses"><bean:write name="infoWrittenEvaluationEnrolment" property="infoStudent.number"/></td>
+					<td class="listClasses"><bean:write name="infoWrittenEvaluationEnrolment" property="infoStudent.infoPerson.nome"/></td>
 					<td class="listClasses">
-						<logic:present name="infoExamStudentRoom" property="infoRoom">
-							<bean:write name="infoExamStudentRoom" property="infoRoom.nome"/>			
+						<logic:present name="infoWrittenEvaluationEnrolment" property="infoRoom">
+							<bean:write name="infoWrittenEvaluationEnrolment" property="infoRoom.nome"/>			
 						</logic:present>
-						<logic:notPresent name="infoExamStudentRoom" property="infoRoom">
+						<logic:notPresent name="infoWrittenEvaluationEnrolment" property="infoRoom">
 							&nbsp;
 						</logic:notPresent>
 					</td>

@@ -209,7 +209,7 @@ public interface ISuportePersistente {
 
     public IPersistentShiftProfessorship getIPersistentTeacherShiftPercentage();
 
-    public IPersistentExamStudentRoom getIPersistentExamStudentRoom();
+    public IPersistentWrittenEvaluationEnrolment getIPersistentWrittenEvaluationEnrolment();
 
     public IPersistentMark getIPersistentMark();
 

@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.IExamStudentRoom;
+import net.sourceforge.fenixedu.domain.IWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IStudent;
@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.domain.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExamStudentRoom;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -52,7 +52,7 @@ public class ExamRoomDistribution implements IService {
         ISalaPersistente persistentRoom = sp.getISalaPersistente();
 
         IFrequentaPersistente persistentAttends = sp.getIFrequentaPersistente();
-        IPersistentExamStudentRoom persistentExamStudentRoom = sp.getIPersistentExamStudentRoom();
+        IPersistentWrittenEvaluationEnrolment persistentWrittenEvaluationEnrolment = sp.getIPersistentWrittenEvaluationEnrolment();
         IExam exam = (IExam) persistentExam.readByOID(Exam.class, examCode);
         if (exam == null) {
             throw new InvalidArgumentsServiceException("exam");
@@ -104,10 +104,10 @@ public class ExamRoomDistribution implements IService {
                 throw new FenixServiceException(ExamRoomDistribution.OUT_OF_ENROLLMENT_PERIOD);
             }
 
-            List examStudentRoomList = persistentExamStudentRoom.readByExamOID(exam.getIdInternal());
-            Iterator iterExamStudentRoomList = examStudentRoomList.iterator();
-            while (iterExamStudentRoomList.hasNext()) {
-                students.add(((IExamStudentRoom) iterExamStudentRoomList.next()).getStudent());
+            List writtenEvaluationEnrolmentList = persistentWrittenEvaluationEnrolment.readByExamOID(exam.getIdInternal());
+            Iterator iterWrittenEvaluationEnrolmentList = writtenEvaluationEnrolmentList.iterator();
+            while (iterWrittenEvaluationEnrolmentList.hasNext()) {
+                students.add(((IWrittenEvaluationEnrolment) iterWrittenEvaluationEnrolmentList.next()).getStudent());
             }
 
         }
@@ -133,20 +133,20 @@ public class ExamRoomDistribution implements IService {
             while (i <= room.getCapacidadeExame().intValue()) {
                 if (students.size() > 0) {
                     IStudent student = (IStudent) getRandomObjectFromList(students);
-                    IExamStudentRoom examStudentRoom = persistentExamStudentRoom.readBy(exam
+                    IWrittenEvaluationEnrolment writtenEvaluationEnrolment = persistentWrittenEvaluationEnrolment.readBy(exam
                             .getIdInternal(), student.getIdInternal());
-                    if (examStudentRoom == null) {
-                        examStudentRoom = DomainFactory.makeExamStudentRoom();
-                        examStudentRoom.setExam(exam);
-                        examStudentRoom.setRoom(room);
-                        examStudentRoom.setStudent(student);
+                    if (writtenEvaluationEnrolment == null) {
+                        writtenEvaluationEnrolment = DomainFactory.makeWrittenEvaluationEnrolment();
+                        writtenEvaluationEnrolment.setWrittenEvaluation(exam);
+                        writtenEvaluationEnrolment.setRoom(room);
+                        writtenEvaluationEnrolment.setStudent(student);
                     } else {
-                        persistentExamStudentRoom.simpleLockWrite(examStudentRoom);
-                        examStudentRoom.setRoom(room);
+                        persistentWrittenEvaluationEnrolment.simpleLockWrite(writtenEvaluationEnrolment);
+                        writtenEvaluationEnrolment.setRoom(room);
                     }
 
                     if (sms.booleanValue()) {
-                        sendSMSToStudent(examStudentRoom);
+                        sendSMSToStudent(writtenEvaluationEnrolment);
                     }
                 } else {
                     break;
@@ -173,7 +173,7 @@ public class ExamRoomDistribution implements IService {
         return calendar;
     }
 
-    private void sendSMSToStudent(IExamStudentRoom examStudentRoom) {
+    private void sendSMSToStudent(IWrittenEvaluationEnrolment writtenEvaluationEnrolment) {
         // TODO: Send SMS method: fill this method when we have sms
 
     }

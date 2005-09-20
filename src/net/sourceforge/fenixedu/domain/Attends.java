@@ -33,7 +33,7 @@ public class Attends extends Attends_Base {
 
 	public void delete() throws DomainException {
 		
-		if (!hasAnyStudentGroups() && !hasMark() && !hasEnrolment()) {
+		if (!hasAnyStudentGroups() && !hasAnyAssociatedMarks() && !hasEnrolment()) {
 			removeAluno();
 			removeDisciplinaExecucao();
 			super.deleteDomainObject();

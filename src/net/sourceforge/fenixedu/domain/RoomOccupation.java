@@ -55,7 +55,7 @@ public class RoomOccupation extends RoomOccupation_Base {
      */
     public void setStartTime(Calendar calendar) {
         if (calendar != null) {
-            this.setStartTimeDate(calendar.getTime());            
+            this.setStartTimeDate(calendar.getTime());
         } else {
             this.setStartTimeDate(null);
         }
@@ -78,7 +78,7 @@ public class RoomOccupation extends RoomOccupation_Base {
      */
     public void setEndTime(Calendar calendar) {
         if (calendar != null) {
-            this.setEndTimeDate(calendar.getTime());            
+            this.setEndTimeDate(calendar.getTime());
         } else {
             this.setEndTimeDate(null);
         }
@@ -117,36 +117,40 @@ public class RoomOccupation extends RoomOccupation_Base {
                     /** * */
                     if (this.getFrequency().intValue() == DIARIA) {
                         if (frequency.intValue() == QUINZENAL) {
-                            return periodQuinzenalContainsDay(period.getStartDate(), period.getEndDate(), week.intValue(), dayOfWeek, this
-                                    .getPeriod().getStartDate());
+                            return periodQuinzenalContainsDay(period.getStartDate(),
+                                    period.getEndDate(), week.intValue(), dayOfWeek, this.getPeriod()
+                                            .getStartDate());
                         }
                         return true;
 
                     }
                     if (this.getFrequency().intValue() == SEMANAL) {
                         if (frequency.intValue() == QUINZENAL) {
-                            return periodQuinzenalContainsWeekPeriod(period.getStartDate(), period.getEndDate(), week.intValue(), dayOfWeek,
-                                    this.getPeriod().getStartDate(), this.getPeriod().getEndDate(),
-                                    this.getPeriod().getNextPeriod());
+                            return periodQuinzenalContainsWeekPeriod(period.getStartDate(), period
+                                    .getEndDate(), week.intValue(), dayOfWeek, this.getPeriod()
+                                    .getStartDate(), this.getPeriod().getEndDate(), this.getPeriod()
+                                    .getNextPeriod());
                         }
                         return true;
                     }
                     if (this.getFrequency().intValue() == QUINZENAL) {
                         if (frequency.intValue() == QUINZENAL) {
-                            return periodQuinzenalContainsQuinzenalPeriod(this.getPeriod().getStartDate(), this.getPeriod().getEndDate(),
-                                    this.getWeekOfQuinzenalStart().intValue(), dayOfWeek, period.getStartDate(), period.getEndDate(), week
-                                    .intValue());
+                            return periodQuinzenalContainsQuinzenalPeriod(this.getPeriod()
+                                    .getStartDate(), this.getPeriod().getEndDate(), this
+                                    .getWeekOfQuinzenalStart().intValue(), dayOfWeek, period
+                                    .getStartDate(), period.getEndDate(), week.intValue());
                         }
                         if (frequency.intValue() == SEMANAL) {
-                            return periodQuinzenalContainsWeekPeriod(this.getPeriod().getStartDate(), this.getPeriod().getEndDate(), this
-                                    .getWeekOfQuinzenalStart().intValue(), dayOfWeek,
-                                    this.getPeriod().getStartDate(), this.getPeriod().getEndDate(),
-                                    this.getPeriod().getNextPeriod());
+                            return periodQuinzenalContainsWeekPeriod(this.getPeriod().getStartDate(),
+                                    this.getPeriod().getEndDate(), this.getWeekOfQuinzenalStart()
+                                            .intValue(), dayOfWeek, this.getPeriod().getStartDate(),
+                                    this.getPeriod().getEndDate(), this.getPeriod().getNextPeriod());
                         }
                         if (frequency.intValue() == DIARIA) {
-                            return periodQuinzenalContainsDay(this.getPeriod().getStartDate(), this.getPeriod().getEndDate(), this
-                                    .getWeekOfQuinzenalStart().intValue(), dayOfWeek, period
-                                    .getStartDate());
+                            return periodQuinzenalContainsDay(this.getPeriod().getStartDate(), this
+                                    .getPeriod().getEndDate(),
+                                    this.getWeekOfQuinzenalStart().intValue(), dayOfWeek, period
+                                            .getStartDate());
                         }
                     }
                     return true;
@@ -156,42 +160,45 @@ public class RoomOccupation extends RoomOccupation_Base {
         return false;
     }
 
-    public boolean roomOccupationForDateAndTime(Calendar startDate, Calendar endDate, Calendar startTime, Calendar endTime,
-            DiaSemana dayOfWeek, Integer frequency, Integer week) {
+    public boolean roomOccupationForDateAndTime(Calendar startDate, Calendar endDate,
+            Calendar startTime, Calendar endTime, DiaSemana dayOfWeek, Integer frequency, Integer week) {
         if (this.getPeriod().intersectPeriods(startDate, endDate)) {
             if (dayOfWeek.equals(this.getDayOfWeek())) {
                 if (CalendarUtil.intersectTimes(this.getStartTime(), this.getEndTime(), startTime,
                         endTime)) {
                     if (this.getFrequency().intValue() == DIARIA) {
                         if (frequency.intValue() == QUINZENAL) {
-                            return periodQuinzenalContainsDay(startDate, endDate, week.intValue(), dayOfWeek, this
-                                    .getPeriod().getStartDate());
+                            return periodQuinzenalContainsDay(startDate, endDate, week.intValue(),
+                                    dayOfWeek, this.getPeriod().getStartDate());
                         }
                         return true;
                     }
                     if (this.getFrequency().intValue() == SEMANAL) {
                         if (frequency.intValue() == QUINZENAL) {
-                            return periodQuinzenalContainsWeekPeriod(startDate, endDate, week.intValue(), dayOfWeek,
-                                    this.getPeriod().getStartDate(), this.getPeriod().getEndDate(),
-                                    this.getPeriod().getNextPeriod());
+                            return periodQuinzenalContainsWeekPeriod(startDate, endDate,
+                                    week.intValue(), dayOfWeek, this.getPeriod().getStartDate(), this
+                                            .getPeriod().getEndDate(), this.getPeriod().getNextPeriod());
                         }
                         return true;
 
                     }
                     if (this.getFrequency().intValue() == QUINZENAL) {
                         if (frequency.intValue() == QUINZENAL) {
-                            return periodQuinzenalContainsQuinzenalPeriod(this.getPeriod().getStartDate(), this.getPeriod().getEndDate(),
-                                    this.getWeekOfQuinzenalStart().intValue(), dayOfWeek, startDate, endDate, week.intValue());
+                            return periodQuinzenalContainsQuinzenalPeriod(this.getPeriod()
+                                    .getStartDate(), this.getPeriod().getEndDate(), this
+                                    .getWeekOfQuinzenalStart().intValue(), dayOfWeek, startDate,
+                                    endDate, week.intValue());
                         }
                         if (frequency.intValue() == SEMANAL) {
-                            return periodQuinzenalContainsWeekPeriod(this.getPeriod().getStartDate(), this.getPeriod().getEndDate(), this
-                                    .getWeekOfQuinzenalStart().intValue(), dayOfWeek,
-                                    this.getPeriod().getStartDate(), this.getPeriod().getEndDate(),
-                                    this.getPeriod().getNextPeriod());
+                            return periodQuinzenalContainsWeekPeriod(this.getPeriod().getStartDate(),
+                                    this.getPeriod().getEndDate(), this.getWeekOfQuinzenalStart()
+                                            .intValue(), dayOfWeek, this.getPeriod().getStartDate(),
+                                    this.getPeriod().getEndDate(), this.getPeriod().getNextPeriod());
                         }
                         if (frequency.intValue() == DIARIA) {
-                            return periodQuinzenalContainsDay(this.getPeriod().getStartDate(), this.getPeriod().getEndDate(), this
-                                    .getWeekOfQuinzenalStart().intValue(), dayOfWeek, startDate);
+                            return periodQuinzenalContainsDay(this.getPeriod().getStartDate(), this
+                                    .getPeriod().getEndDate(),
+                                    this.getWeekOfQuinzenalStart().intValue(), dayOfWeek, startDate);
                         }
                     }
                     return true;
@@ -203,11 +210,12 @@ public class RoomOccupation extends RoomOccupation_Base {
 
     public boolean roomOccupationForDateAndTime(IPeriod period, Calendar startTime, Calendar endTime,
             DiaSemana dayOfWeek, Integer frequency, Integer week) {
-        return roomOccupationForDateAndTime(period.getStartDate(), period.getEndDate(), startTime, endTime, dayOfWeek, frequency, week);
+        return roomOccupationForDateAndTime(period.getStartDate(), period.getEndDate(), startTime,
+                endTime, dayOfWeek, frequency, week);
     }
 
-    public static boolean periodQuinzenalContainsDay(Calendar startDate, Calendar endDate, int startWeek, DiaSemana weekDay,
-            Calendar date) {
+    public static boolean periodQuinzenalContainsDay(Calendar startDate, Calendar endDate,
+            int startWeek, DiaSemana weekDay, Calendar date) {
         ArrayList list = quinzenalDatesInPeriod(startDate, endDate, startWeek, weekDay);
         for (int i = 0; i < list.size(); i++) {
             Calendar quinzenalDate = (Calendar) list.get(i);
@@ -221,8 +229,8 @@ public class RoomOccupation extends RoomOccupation_Base {
         return false;
     }
 
-    public static boolean periodQuinzenalContainsWeekPeriod(Calendar startDate, Calendar endDate, int startWeek,
-            DiaSemana weekDay, Calendar day, Calendar endDay, IPeriod nextPeriod) {
+    public static boolean periodQuinzenalContainsWeekPeriod(Calendar startDate, Calendar endDate,
+            int startWeek, DiaSemana weekDay, Calendar day, Calendar endDay, IPeriod nextPeriod) {
         ArrayList listWeekly = weeklyDatesInPeriod(day, endDay, weekDay, nextPeriod);
         ArrayList listQuinzenal = quinzenalDatesInPeriod(startDate, endDate, startWeek, weekDay);
         for (int i = 0; i < listQuinzenal.size(); i++) {
@@ -240,8 +248,9 @@ public class RoomOccupation extends RoomOccupation_Base {
         return false;
     }
 
-    public static boolean periodQuinzenalContainsQuinzenalPeriod(Calendar startDatePeriod1, Calendar endDatePeriod1,
-            int startWeek1, DiaSemana weekDay, Calendar startDatePeriod2, Calendar endDatePeriod2, int startWeek2) {
+    public static boolean periodQuinzenalContainsQuinzenalPeriod(Calendar startDatePeriod1,
+            Calendar endDatePeriod1, int startWeek1, DiaSemana weekDay, Calendar startDatePeriod2,
+            Calendar endDatePeriod2, int startWeek2) {
         ArrayList list1 = quinzenalDatesInPeriod(startDatePeriod1, endDatePeriod1, startWeek1, weekDay);
         ArrayList list2 = quinzenalDatesInPeriod(startDatePeriod2, endDatePeriod2, startWeek2, weekDay);
         for (int i = 0; i < list1.size(); i++) {
@@ -259,7 +268,8 @@ public class RoomOccupation extends RoomOccupation_Base {
         return false;
     }
 
-    public static ArrayList quinzenalDatesInPeriod(Calendar startDate, Calendar endDate, int startWeek, DiaSemana weekDay) {
+    public static ArrayList quinzenalDatesInPeriod(Calendar startDate, Calendar endDate, int startWeek,
+            DiaSemana weekDay) {
         ArrayList list = new ArrayList();
         Calendar date = Calendar.getInstance();
         date.setTimeInMillis(startDate.getTimeInMillis());
@@ -274,7 +284,8 @@ public class RoomOccupation extends RoomOccupation_Base {
         return list;
     }
 
-    public static ArrayList weeklyDatesInPeriod(Calendar day, Calendar endDay, DiaSemana weekDay, IPeriod nextPeriod) {
+    public static ArrayList weeklyDatesInPeriod(Calendar day, Calendar endDay, DiaSemana weekDay,
+            IPeriod nextPeriod) {
         ArrayList list = new ArrayList();
         Calendar date = Calendar.getInstance();
         date.setTimeInMillis(day.getTimeInMillis());
@@ -288,7 +299,8 @@ public class RoomOccupation extends RoomOccupation_Base {
                         - endDay.get(Calendar.DAY_OF_YEAR) - 1;
                 if (interval < 0) {
                     interval = nextPeriod.getStartDate().get(Calendar.DAY_OF_YEAR) - 1;
-                    interval += (endDay.getActualMaximum(Calendar.DAY_OF_YEAR) - endDay.get(Calendar.DAY_OF_YEAR));
+                    interval += (endDay.getActualMaximum(Calendar.DAY_OF_YEAR) - endDay
+                            .get(Calendar.DAY_OF_YEAR));
                 }
 
                 day = nextPeriod.getStartDate();

@@ -5,13 +5,13 @@ import java.util.Calendar;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.ExamStudentRoom;
+import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.IExamStudentRoom;
+import net.sourceforge.fenixedu.domain.IWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExamStudentRoom;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -40,21 +40,21 @@ public class UnEnrollStudentInExam implements IService {
                 throw new notAuthorizedServiceDeleteException();
             }
 
-            IPersistentExamStudentRoom persistentExamStudentRoom = sp.getIPersistentExamStudentRoom();
-            IExamStudentRoom examStudentRoom = persistentExamStudentRoom.readBy(exam
+            IPersistentWrittenEvaluationEnrolment persistentWrittenEvaluationEnrolment = sp.getIPersistentWrittenEvaluationEnrolment();
+            IWrittenEvaluationEnrolment writtenEvaluationEnrolment = persistentWrittenEvaluationEnrolment.readBy(exam
                     .getIdInternal(), student.getIdInternal());
-            if (examStudentRoom != null) {
-                if (examStudentRoom.getRoom() != null) {
+            if (writtenEvaluationEnrolment != null) {
+                if (writtenEvaluationEnrolment.getRoom() != null) {
                     throw new notAuthorizedServiceDeleteException();
                 }
-                examStudentRoom.getExam().getExamStudentRooms().remove(examStudentRoom);
-                examStudentRoom.getStudent().getExamStudentRooms().remove(examStudentRoom);
+                writtenEvaluationEnrolment.getWrittenEvaluation().getWrittenEvaluationEnrolments().remove(writtenEvaluationEnrolment);
+                writtenEvaluationEnrolment.getStudent().getWrittenEvaluationEnrolments().remove(writtenEvaluationEnrolment);
                 
-                examStudentRoom.setExam(null);
-                examStudentRoom.setStudent(null);
+                writtenEvaluationEnrolment.setWrittenEvaluation(null);
+                writtenEvaluationEnrolment.setStudent(null);
                 
-                sp.getIPersistentExamStudentRoom().deleteByOID(ExamStudentRoom.class,
-                        examStudentRoom.getIdInternal());
+                sp.getIPersistentWrittenEvaluationEnrolment().deleteByOID(WrittenEvaluationEnrolment.class,
+                        writtenEvaluationEnrolment.getIdInternal());
             }
         }
 

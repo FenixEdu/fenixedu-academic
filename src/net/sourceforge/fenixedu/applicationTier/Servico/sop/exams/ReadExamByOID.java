@@ -1,15 +1,5 @@
-/*
- * ReadExamsByOID.java
- *
- * Created on 12/11/2003
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.sop.exams;
 
-/**
- * @author Ana e Ricardo
- *  
- */
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.domain.Exam;
@@ -21,21 +11,14 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadExamByOID implements IService {
 
-    public InfoExam run(Integer oid) throws FenixServiceException {
-        InfoExam infoExam = null;
+    public InfoExam run(Integer examID) throws FenixServiceException, ExcepcaoPersistencia {
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-            IExam exam = (IExam) sp.getIPersistentExam().readByOID(Exam.class, oid);
-            if (exam == null) {
-                throw new FenixServiceException("The exam does not exist");
-            }
-            infoExam = InfoExam.newInfoFromDomain(exam);
-
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
+        final IExam exam = (IExam) persistentSupport.getIPersistentExam().readByOID(Exam.class, examID);
+        if (exam == null) {
+            throw new FenixServiceException("error.noExam");
         }
-        return infoExam;
+        return InfoExam.newInfoFromDomain(exam);
     }
 }

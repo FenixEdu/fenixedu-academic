@@ -17,11 +17,6 @@ import net.sourceforge.fenixedu.domain.IRoomOccupation;
  */
 public class InfoExamWithRoomOccupations extends InfoExam {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoExam#copyFromDomain(Dominio.IExam)
-     */
     public void copyFromDomain(IExam exam) {
         super.copyFromDomain(exam);
         if (exam != null) {
@@ -30,10 +25,6 @@ public class InfoExamWithRoomOccupations extends InfoExam {
         }
     }
 
-    /**
-     * @param associatedRoomOccupation
-     * @return
-     */
     private List copyIRoomOccupation2InfoRoomOccupation(List associatedRoomOccupation) {
         final List infoRoomOccupations = new ArrayList(associatedRoomOccupation.size());
         for (final Iterator iterator = associatedRoomOccupation.iterator(); iterator.hasNext(); ) {

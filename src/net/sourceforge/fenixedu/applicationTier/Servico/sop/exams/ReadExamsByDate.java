@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop.exams;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
@@ -10,102 +12,105 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExamWithRoomOccupationsAn
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewExamByDayAndShift;
+import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IRoom;
+import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoSala;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadExamsByDate implements IService {
 
-    public InfoViewExam run(Calendar day, Calendar beginning, Calendar end) throws ExcepcaoPersistencia {
-        InfoViewExam infoViewExam = new InfoViewExam();
-        List infoViewExams = new ArrayList();
+    public InfoViewExam run(Calendar examDay, Calendar examStartTime, Calendar examEndTime)
+            throws ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
+        final List<IExam> filteredExams = persistentSupport.getIPersistentExam().readBy(examDay,
+                examStartTime, examEndTime);
 
-        // Read exams on requested day, start and end time
-        List exams = sp.getIPersistentExam().readBy(day, beginning, end);
+        final InfoViewExam infoViewExam = new InfoViewExam();
+        List<InfoViewExamByDayAndShift> infoViewExamsByDayAndShiftList = new ArrayList<InfoViewExamByDayAndShift>();
+        infoViewExam.setInfoViewExamsByDayAndShift(infoViewExamsByDayAndShiftList);
 
-        IExam tempExam = null;
-        InfoExam tempInfoExam = null;
-        // List tempAssociatedCurricularCourses = null;
-        IDegree tempDegree = null;
-        List tempInfoExecutionCourses = null;
-        List tempInfoDegrees = null;
-        // Integer numberStudentesAttendingCourse = null;
-        int totalNumberStudents = 0;
+        for (final IExam exam : filteredExams) {
+            final InfoViewExamByDayAndShift viewExamByDayAndShift = new InfoViewExamByDayAndShift();
 
-        // For every exam return:
-        // - exam info
-        // - degrees associated with exam
-        // - number of students attending course (potentially attending
-        // exam)
-        for (int i = 0; i < exams.size(); i++) {
-            // prepare exam info
-            tempExam = (IExam) exams.get(i);
-            tempInfoExam = InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear.newInfoFromDomain(tempExam);
-            tempInfoDegrees = new ArrayList();
-            tempInfoExecutionCourses = new ArrayList();
-            // int totalNumberStudentsForExam = 0;
-            IExecutionPeriod executionPeriod = tempExam.getAssociatedExecutionCourses().get(0)
-                    .getExecutionPeriod();
+            final InfoExam infoExam = InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear
+                    .newInfoFromDomain(exam);
+            final List<InfoExecutionCourse> infoExecutionCourses = readInfoExecutionCourses(exam);
+            final List<InfoDegree> infoDegrees = readInfoDegrees(exam, viewExamByDayAndShift);
+            final Integer availableRoomOccupation = calculateAvailableRoomOccupation(exam,
+                    viewExamByDayAndShift.getNumberStudentesAttendingCourse());
 
-            if (tempExam.getAssociatedExecutionCourses() != null) {
-                for (int k = 0; k < tempExam.getAssociatedExecutionCourses().size(); k++) {
-                    IExecutionCourse executionCourse = tempExam.getAssociatedExecutionCourses().get(k);
-                    tempInfoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
-
-                }
-            }
-            int numberOfStudentsForExam = 0;
-            List curricularCourseIDs = new ArrayList();
-            for (int j = 0; j < tempExam.getAssociatedCurricularCourseScope().size(); j++) {
-                ICurricularCourseScope scope = tempExam.getAssociatedCurricularCourseScope().get(j);
-                if (!curricularCourseIDs.contains(scope.getCurricularCourse().getIdInternal())) {
-                    curricularCourseIDs.add(scope.getCurricularCourse().getIdInternal());
-                    List enroledStudents = persistentEnrolment
-                            .readByCurricularCourseAndExecutionPeriod(scope.getCurricularCourse()
-                                    .getIdInternal(), executionPeriod.getIdInternal());
-                    numberOfStudentsForExam += enroledStudents.size();
-
-                    tempDegree = scope.getCurricularCourse().getDegreeCurricularPlan().getDegree();
-                    tempInfoDegrees.add(InfoDegree.newInfoFromDomain(tempDegree));
-
-                }
-            }
-            totalNumberStudents += numberOfStudentsForExam;
-
-            // add exam and degree info to result list
-            infoViewExams.add(new InfoViewExamByDayAndShift(tempInfoExam, tempInfoExecutionCourses,
-                    tempInfoDegrees, new Integer(numberOfStudentsForExam)));
-
+            viewExamByDayAndShift.setInfoExam(infoExam);
+            viewExamByDayAndShift.setInfoExecutionCourses(infoExecutionCourses);
+            viewExamByDayAndShift.setInfoDegrees(infoDegrees);
+            viewExamByDayAndShift.setAvailableRoomOccupation(availableRoomOccupation);
+            infoViewExamsByDayAndShiftList.add(viewExamByDayAndShift);
         }
-
-        infoViewExam.setInfoViewExamsByDayAndShift(infoViewExams);
-
-        // Read all rooms to determine total exam capacity
-        // TODO : This can be done more efficiently.
-        List rooms = sp.getISalaPersistente().readAll();
-        int totalExamCapacity = 0;
-        for (int i = 0; i < rooms.size(); i++) {
-            IRoom room = (IRoom) rooms.get(i);
-            if (!room.getTipo().equals(new TipoSala(TipoSala.LABORATORIO))) {
-                totalExamCapacity += room.getCapacidadeExame().intValue();
-            }
-        }
-
-        infoViewExam.setAvailableRoomOccupation(new Integer(totalExamCapacity - totalNumberStudents));
-
         return infoViewExam;
     }
 
+    private Integer calculateAvailableRoomOccupation(final IExam exam,
+            final Integer numberStudentesAttendingCourse) {
+        int totalExamCapacity = 0;
+        for (final IRoomOccupation roomOccupation : exam.getAssociatedRoomOccupation()) {
+            totalExamCapacity += roomOccupation.getRoom().getCapacidadeExame().intValue();
+        }
+        int result = numberStudentesAttendingCourse.intValue() - totalExamCapacity;
+        
+        return (result > 0) ? result : 0;
+    }
+
+    private List<InfoDegree> readInfoDegrees(final IExam exam,
+            InfoViewExamByDayAndShift viewExamByDayAndShift) {
+
+        final List<InfoDegree> result = new ArrayList<InfoDegree>();
+        final Set<Integer> curricularCourseIDs = new HashSet<Integer>();
+
+        // Select an ExecutionPeriod from any ExecutionCourses
+        final IExecutionPeriod executionPeriod = exam.getAssociatedExecutionCourses().get(0)
+                .getExecutionPeriod();
+        int numberStudentes = 0;
+
+        for (final ICurricularCourseScope curricularCourseScope : exam
+                .getAssociatedCurricularCourseScope()) {
+            final ICurricularCourse curricularCourse = curricularCourseScope.getCurricularCourse();
+            if (!curricularCourseIDs.contains(curricularCourse.getIdInternal())) {
+                curricularCourseIDs.add(curricularCourse.getIdInternal());
+                result.add(InfoDegree.newInfoFromDomain(curricularCourse.getDegreeCurricularPlan()
+                        .getDegree()));
+                numberStudentes += calculateNumberOfEnrolmentStudents(curricularCourse, executionPeriod);
+            }
+        }
+        viewExamByDayAndShift.setNumberStudentesAttendingCourse(Integer.valueOf(numberStudentes));
+
+        return result;
+    }
+
+    private Integer calculateNumberOfEnrolmentStudents(final ICurricularCourse curricularCourse,
+            final IExecutionPeriod executionPeriod) {
+        int numberOfStudents = 0;
+        for (final IEnrolment enrolment : curricularCourse.getEnrolments()) {
+            if (enrolment.getExecutionPeriod() == executionPeriod) {
+                numberOfStudents++;
+            }
+        }
+        return Integer.valueOf(numberOfStudents);
+    }
+
+    private List<InfoExecutionCourse> readInfoExecutionCourses(final IExam exam) {
+        final List<InfoExecutionCourse> result = new ArrayList<InfoExecutionCourse>(exam
+                .getAssociatedExecutionCoursesCount());
+        for (final IExecutionCourse executionCourse : exam.getAssociatedExecutionCourses()) {
+            result.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+        }
+        return result;
+    }
 }

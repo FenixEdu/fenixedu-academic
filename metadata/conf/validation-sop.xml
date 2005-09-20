@@ -646,21 +646,6 @@
       </field>
     </form>
 
-    <!-- Validacao para o formulario de Adicionar Aulas De Turno -->
-    <form name="adicionarAulasForm">
-      	<field property="lessonsList" depends="validateMultiBox" >
-			<arg0 key="aula" resource="false"/>
-			<var>
-	        	<var-name>arrayProperty</var-name>
-	            <var-value>lessonsList</var-value>
-	        </var>
-	        <var>
-	        	<var-name>femininProperty</var-name>
-	            <var-value>true</var-value>
-	        </var>
-      </field>
-    </form>
-    
     <!-- Validacao para o formulario de criar turma -->
     <form name="classForm">
       <field property="className" depends="required" page="1">

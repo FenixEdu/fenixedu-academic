@@ -74,17 +74,6 @@ public class DistributeStudentsByRoomDispatchAction extends DispatchAction {
             attendStudents += infoExecutionCourse.getNumberOfAttendingStudents().intValue();
         }
 
-        /*
-         * List infoExamList = infoSiteExam.getInfoExams(); InfoExam
-         * infoExamFromList = null; for (int i = 0; i < infoExamList.size();
-         * i++) { infoExamFromList = (InfoExam)infoExamList.get(i); if
-         * (infoExamFromList.getIdInternal().equals(examCode)) {
-         * Collections.sort( infoExamFromList.getAssociatedRooms(), new
-         * ReverseComparator(new BeanComparator("capacidadeExame")));
-         * 
-         * request.setAttribute("infoExam", infoExamFromList); break; }
-         */
-
         Collections.sort(infoExam.getAssociatedRooms(), new ReverseComparator(new BeanComparator(
                 "capacidadeExame")));
 

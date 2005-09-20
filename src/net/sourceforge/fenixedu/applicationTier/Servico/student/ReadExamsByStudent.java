@@ -8,7 +8,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.utils.ExamsNotEnrolledPredicate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExamStudentRoom;
+import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
@@ -17,11 +17,11 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.IExamStudentRoom;
+import net.sourceforge.fenixedu.domain.IWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExamStudentRoom;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
@@ -43,40 +43,40 @@ public class ReadExamsByStudent implements IService {
         List examsToEnroll = new ArrayList();
 
         List infoExamsToEnroll = new ArrayList();
-        List infoExamStudentRoomList = new ArrayList();
+        List infoWrittenEvaluationEnrolmentList = new ArrayList();
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentExamStudentRoom examStudentRoomDAO = sp.getIPersistentExamStudentRoom();
+        IPersistentWrittenEvaluationEnrolment writtenEvaluationEnrolmentDAO = sp.getIPersistentWrittenEvaluationEnrolment();
         IStudent student = sp.getIPersistentStudent().readByUsername(username);
 
         if (student != null) {
-            List examsStudentRooms = examStudentRoomDAO.readByStudentOID(student.getIdInternal());
+            List examsStudentRooms = writtenEvaluationEnrolmentDAO.readByStudentOID(student.getIdInternal());
             Iterator iter = examsStudentRooms.iterator();
-            List examsEnrolled = new ArrayList();
+            List<IExam> examsEnrolled = new ArrayList<IExam>();
 
             while (iter.hasNext()) {
-                IExamStudentRoom examStudentRoom = (IExamStudentRoom) iter.next();
+                IWrittenEvaluationEnrolment writtenEvaluationEnrolment = (IWrittenEvaluationEnrolment) iter.next();
 
-                InfoExamStudentRoom infoExamStudentRoom = new InfoExamStudentRoom();
-                infoExamStudentRoom.setIdInternal(examStudentRoom.getIdInternal());
-                InfoExam infoExam = InfoExam.newInfoFromDomain(examStudentRoom.getExam());
-                infoExamStudentRoom.setInfoExam(infoExam);
-                infoExamStudentRoom.getInfoExam().setInfoExecutionCourses(
-                        (List) CollectionUtils.collect(examStudentRoom.getExam()
+                InfoWrittenEvaluationEnrolment infoWrittenEvaluationEnrolment = new InfoWrittenEvaluationEnrolment();
+                infoWrittenEvaluationEnrolment.setIdInternal(writtenEvaluationEnrolment.getIdInternal());
+                InfoExam infoExam = InfoExam.newInfoFromDomain((IExam)writtenEvaluationEnrolment.getWrittenEvaluation());
+                infoWrittenEvaluationEnrolment.setInfoExam(infoExam);
+                infoWrittenEvaluationEnrolment.getInfoExam().setInfoExecutionCourses(
+                        (List) CollectionUtils.collect(writtenEvaluationEnrolment.getWrittenEvaluation()
                                 .getAssociatedExecutionCourses(), new Transformer() {
 
                             public Object transform(Object arg0) {
                                 return InfoExecutionCourse.newInfoFromDomain((IExecutionCourse) arg0);
                             }
                         }));
-                InfoStudent infoStudent = InfoStudent.newInfoFromDomain(examStudentRoom.getStudent());
-                infoExamStudentRoom.setInfoStudent(infoStudent);
-                if (examStudentRoom.getRoom() != null) {
-                    InfoRoom infoRoom = InfoRoom.newInfoFromDomain(examStudentRoom.getRoom());
-                    infoExamStudentRoom.setInfoRoom(infoRoom);
+                InfoStudent infoStudent = InfoStudent.newInfoFromDomain(writtenEvaluationEnrolment.getStudent());
+                infoWrittenEvaluationEnrolment.setInfoStudent(infoStudent);
+                if (writtenEvaluationEnrolment.getRoom() != null) {
+                    InfoRoom infoRoom = InfoRoom.newInfoFromDomain(writtenEvaluationEnrolment.getRoom());
+                    infoWrittenEvaluationEnrolment.setInfoRoom(infoRoom);
                 }
-                infoExamStudentRoomList.add(infoExamStudentRoom);
-                examsEnrolled.add(examStudentRoom.getExam());
+                infoWrittenEvaluationEnrolmentList.add(infoWrittenEvaluationEnrolment);
+                examsEnrolled.add((IExam) writtenEvaluationEnrolment.getWrittenEvaluation());
             }
 
             List attends = sp.getIFrequentaPersistente().readByStudentNumber(student.getNumber(),
@@ -120,7 +120,7 @@ public class ReadExamsByStudent implements IService {
         }
 
         InfoStudentSiteExams component = new InfoStudentSiteExams(infoExamsToEnroll,
-                infoExamStudentRoomList);
+                infoWrittenEvaluationEnrolmentList);
         SiteView siteView = new SiteView(component);
         return siteView;
 

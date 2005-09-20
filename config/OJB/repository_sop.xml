@@ -104,8 +104,8 @@
 	  </collection-descriptor>
 
       <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-		name="examStudentRooms" 
-		element-class-ref="net.sourceforge.fenixedu.domain.ExamStudentRoom"
+		name="writtenEvaluationEnrolments" 
+		element-class-ref="net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment"
 		
 		>
 		<inverse-foreignkey field-ref="keyRoom"/>
@@ -445,10 +445,10 @@
 
 <!-- ******************************************************************************************************************************* -->
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.ExamStudentRoom"  table="EXAM_STUDENT_ROOM">
+<class-descriptor class="net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment"  table="WRITTEN_EVALUATION_ENROLMENT">
       <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" 
       					autoincrement="true"/>
-      <field-descriptor name="keyExam" column="KEY_EVALUATION"  jdbc-type="INTEGER"/>      
+      <field-descriptor name="keyWrittenEvaluation" column="KEY_WRITTEN_EVALUATION"  jdbc-type="INTEGER"/>      
       <field-descriptor name="keyStudent" column="KEY_STUDENT"  jdbc-type="INTEGER"/>      
       <field-descriptor name="keyRoom" column="KEY_ROOM"  jdbc-type="INTEGER"/>
       <field-descriptor
@@ -457,8 +457,8 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-      <reference-descriptor auto-retrieve="false" name="exam" class-ref="net.sourceforge.fenixedu.domain.Exam" >
-         <foreignkey field-ref="keyExam"/>
+      <reference-descriptor auto-retrieve="false" name="writtenEvaluation" class-ref="net.sourceforge.fenixedu.domain.WrittenEvaluation" >
+         <foreignkey field-ref="keyWrittenEvaluation"/>
       </reference-descriptor> 
       <reference-descriptor auto-retrieve="false" name="student" class-ref="net.sourceforge.fenixedu.domain.Student" >
          <foreignkey field-ref="keyStudent"/>
@@ -962,10 +962,10 @@
 		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE_SCOPE"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="examStudentRooms"
-			element-class-ref="net.sourceforge.fenixedu.domain.ExamStudentRoom"
+			name="writtenEvaluationEnrolments"
+			element-class-ref="net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment"
 			>
-		<inverse-foreignkey field-ref="keyExam"/>
+		<inverse-foreignkey field-ref="keyWrittenEvaluation"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="marks"

@@ -173,8 +173,8 @@
 		<inverse-foreignkey field-ref="chaveAluno"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="examStudentRooms"
-			element-class-ref="net.sourceforge.fenixedu.domain.ExamStudentRoom"
+			name="writtenEvaluationEnrolments"
+			element-class-ref="net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment"
 			
 			>
 		<inverse-foreignkey field-ref="keyStudent"/>

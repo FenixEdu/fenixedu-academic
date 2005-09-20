@@ -16,7 +16,7 @@ public class InfoSiteTeacherStudentsEnrolledList extends DataTranferObject imple
 
     private InfoExam infoExam;
 
-    private List infoExamStudentRoomList;
+    private List infoWrittenEvaluationEnrolmentList;
 
     /**
      *  
@@ -26,24 +26,24 @@ public class InfoSiteTeacherStudentsEnrolledList extends DataTranferObject imple
     }
 
     public InfoSiteTeacherStudentsEnrolledList(List infoStudents, InfoExam infoExam,
-            List infoExamStudentRoomList) {
+            List infoWrittenEvaluationEnrolmentList) {
         setInfoExam(infoExam);
         setInfoStudents(infoStudents);
-        setInfoExamStudentRoomList(infoExamStudentRoomList);
+        setInfoWrittenEvaluationEnrolmentList(infoWrittenEvaluationEnrolmentList);
     }
 
     /**
      * @return
      */
-    public List getInfoExamStudentRoomList() {
-        return this.infoExamStudentRoomList;
+    public List getInfoWrittenEvaluationEnrolmentList() {
+        return this.infoWrittenEvaluationEnrolmentList;
     }
 
     /**
-     * @param infoExamStudentRoomList
+     * @param infoWrittenEvaluationEnrolmentList
      */
-    public void setInfoExamStudentRoomList(List infoExamStudentRoomList) {
-        this.infoExamStudentRoomList = infoExamStudentRoomList;
+    public void setInfoWrittenEvaluationEnrolmentList(List infoWrittenEvaluationEnrolmentList) {
+        this.infoWrittenEvaluationEnrolmentList = infoWrittenEvaluationEnrolmentList;
     }
 
     public int getSize() {

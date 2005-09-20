@@ -6,11 +6,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.IExamStudentRoom;
+import net.sourceforge.fenixedu.domain.IWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExamStudentRoom;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -28,20 +28,20 @@ public class EnrollStudentInExam implements IService {
         IPersistentStudent persistentStudent = sp.getIPersistentStudent();
         IStudent student = persistentStudent.readByUsername(username);
         IPersistentExam persistentExam = sp.getIPersistentExam();
-        IPersistentExamStudentRoom persistentExamStudentRoom = sp.getIPersistentExamStudentRoom();
+        IPersistentWrittenEvaluationEnrolment persistentWrittenEvaluationEnrolment = sp.getIPersistentWrittenEvaluationEnrolment();
         IExam exam = (IExam) persistentExam.readByOID(Exam.class, examId, true);
         if (exam == null || student == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        IExamStudentRoom examStudentRoom = persistentExamStudentRoom.readBy(exam.getIdInternal(),
+        IWrittenEvaluationEnrolment writtenEvaluationEnrolment = persistentWrittenEvaluationEnrolment.readBy(exam.getIdInternal(),
                 student.getIdInternal());
-        if (examStudentRoom != null) {
+        if (writtenEvaluationEnrolment != null) {
             throw new ExistingServiceException();
         }
-        examStudentRoom = DomainFactory.makeExamStudentRoom();
-        examStudentRoom.setExam(exam);
-        examStudentRoom.setStudent(student);
+        writtenEvaluationEnrolment = DomainFactory.makeWrittenEvaluationEnrolment();
+        writtenEvaluationEnrolment.setWrittenEvaluation(exam);
+        writtenEvaluationEnrolment.setStudent(student);
 
         return new Boolean(true);
     }

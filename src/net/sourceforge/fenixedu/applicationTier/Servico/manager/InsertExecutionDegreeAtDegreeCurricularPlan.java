@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -72,9 +71,6 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IService {
 
                 throw new NonExistingServiceException("message.non.existing.execution.year", null);
             }
-
-            IPersistentExecutionDegree persistentExecutionDegree = persistentSuport
-                    .getIPersistentExecutionDegree();
 
             IExecutionDegree executionDegree = DomainFactory.makeExecutionDegree();
             executionDegree.setDegreeCurricularPlan(degreeCurricularPlan);
@@ -137,7 +133,7 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IService {
             if (period == null) {
                 Calendar startDate = infoPeriodNew.getStartDate();
                 Calendar endDate = infoPeriodNew.getEndDate();
-                period = DomainFactory.makePeriod(startDate, endDate);
+                period = DomainFactory.makePeriod(startDate.getTime(), endDate.getTime());
             }
 
             // iteracoes
@@ -154,7 +150,7 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IService {
                 if (period == null) {
                     Calendar startDate = infoPeriodNew.getStartDate();
                     Calendar endDate = infoPeriodNew.getEndDate();
-                    period = DomainFactory.makePeriod(startDate, endDate);
+                    period = DomainFactory.makePeriod(startDate.getTime(), endDate.getTime());
                     period.setNextPeriod(nextPeriod);
                 }
             }

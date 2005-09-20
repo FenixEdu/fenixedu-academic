@@ -510,10 +510,10 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentExamStudentRoom()
+     * @see ServidorPersistente.ISuportePersistente#getIpersistentWrittenEvaluationEnrolment()
      */
-    public IPersistentExamStudentRoom getIPersistentExamStudentRoom() {
-        return new ExamStudentRoomOJB();
+    public IPersistentWrittenEvaluationEnrolment getIPersistentWrittenEvaluationEnrolment() {
+        return new WrittenEvaluationEnrolmentOJB();
     }
 
     public IPersistentMark getIPersistentMark() {

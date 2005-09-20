@@ -36,11 +36,6 @@ public class CursoExecucaoOJB extends PersistentObjectOJB implements IPersistent
 
     public IExecutionDegree readByDegreeCurricularPlanAndExecutionYear(String degreeCurricularPlanName,
             String degreeCurricularPlanAcronym, String year) throws ExcepcaoPersistencia {
-        /*
-         * return
-         * readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
-         * degreeCurricularPlanAcronym, degreeCurricularPlanName, year);
-         */
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionYear.year", year);

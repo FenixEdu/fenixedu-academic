@@ -16,22 +16,21 @@ import java.util.List;
 public class InfoViewExamByDayAndShift extends InfoObject {
 
     protected InfoExam infoExam;
-
     protected List infoExecutionCourses;
-
     protected List infoDegrees;
-
     protected Integer numberStudentesAttendingCourse;
+    protected Integer availableRoomOccupation;
 
     public InfoViewExamByDayAndShift() {
     }
 
     public InfoViewExamByDayAndShift(InfoExam infoExam, List infoExecutionCourses, List infoDegrees,
-            Integer numberStudentesAttendingCourse) {
+            Integer numberStudentesAttendingCourse, Integer availableRoomOccupation) {
         this.setInfoExam(infoExam);
         this.setInfoExecutionCourses(infoExecutionCourses);
         this.setInfoDegrees(infoDegrees);
         this.setNumberStudentesAttendingCourse(numberStudentesAttendingCourse);
+        this.setAvailableRoomOccupation(availableRoomOccupation);
     }
 
     public boolean equals(Object obj) {
@@ -47,60 +46,44 @@ public class InfoViewExamByDayAndShift extends InfoObject {
         return "[INFOVIEWEXAMBYDAYANDSHIFT:" + " exam= '" + this.getInfoExam() + "'" + "]";
     }
 
-    /**
-     * @return
-     */
     public InfoExam getInfoExam() {
         return infoExam;
     }
 
-    /**
-     * @param exam
-     */
     public void setInfoExam(InfoExam exam) {
         infoExam = exam;
     }
 
-    /**
-     * @return
-     */
     public List getInfoDegrees() {
         return infoDegrees;
     }
 
-    /**
-     * @param list
-     */
-    public void setInfoDegrees(List list) {
+     public void setInfoDegrees(List list) {
         infoDegrees = list;
     }
 
-    /**
-     * @return
-     */
     public Integer getNumberStudentesAttendingCourse() {
         return numberStudentesAttendingCourse;
     }
 
-    /**
-     * @param integer
-     */
     public void setNumberStudentesAttendingCourse(Integer integer) {
         numberStudentesAttendingCourse = integer;
     }
 
-    /**
-     * @return
-     */
     public List getInfoExecutionCourses() {
         return infoExecutionCourses;
     }
 
-    /**
-     * @param list
-     */
     public void setInfoExecutionCourses(List list) {
         infoExecutionCourses = list;
+    }
+
+    public Integer getAvailableRoomOccupation() {
+        return availableRoomOccupation;
+    }
+
+    public void setAvailableRoomOccupation(Integer availableRoomOccupation) {
+        this.availableRoomOccupation = availableRoomOccupation;
     }
 
 }

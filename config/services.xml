@@ -22,8 +22,8 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>AddClassesToShift</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.AddClassesToShift</implementationClass>
+		<name>AddSchoolClassesToShift</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.AddSchoolClassesToShift</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -31,8 +31,8 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>AddShiftsToClass</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.AddShiftsToClass</implementationClass>
+		<name>AddShiftsToSchoolClass</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.AddShiftsToSchoolClass</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -40,8 +40,8 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ApagarSala</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.ApagarSala</implementationClass>
+		<name>DeleteRoom</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.DeleteRoom</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -340,14 +340,6 @@
 	<service>
 		<name>LerAulasDeTurma</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.LerAulasDeTurma</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
-		<name>ReadExamsByDayAndBeginning</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadExamsByDayAndBeginning</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
@@ -4014,15 +4006,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadExamsWithRooms</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.ReadExamsWithRooms</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="StudentAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ReadStudentByNumberAndDegreeType</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentByNumberAndDegreeType</implementationClass>
@@ -6440,8 +6423,8 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>CreateExamNew</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.CreateExamNew</implementationClass>
+		<name>CreateExam</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.CreateExam</implementationClass>
 		<description></description>
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -6450,7 +6433,7 @@
 	</service>
 	<service>
 		<name>EditExamNew</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.EditExamNew</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.EditExam</implementationClass>
 		<description></description>
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -6509,8 +6492,8 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadExecutionCoursewithAssociatedCurricularCourses</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.ReadExecutionCoursewithAssociatedCurricularCourses</implementationClass>
+		<name>ReadExecutionCourseWithAssociatedCurricularCourses</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.ReadExecutionCourseWithAssociatedCurricularCourses</implementationClass>
 		<description></description>
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -6553,7 +6536,7 @@
 	</service>
 	<service>
 		<name>DeleteExamNew</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.DeleteExamNew</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.DeleteExam</implementationClass>
 		<description>
 		</description>
 		<isTransactional>true</isTransactional>

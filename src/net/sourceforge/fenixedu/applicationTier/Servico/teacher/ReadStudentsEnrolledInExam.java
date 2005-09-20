@@ -1,82 +1,73 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExamStudentRoomWithInfoStudentAndInfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTeacherStudentsEnrolledList;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
+import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenEvaluationEnrolment;
+import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenEvaluationEnrolmentWithInfoStudentAndInfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.IExamStudentRoom;
 import net.sourceforge.fenixedu.domain.ISite;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.IWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExamStudentRoom;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
-
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author João Mota
- *  
- */
 public class ReadStudentsEnrolledInExam implements IService {
 
-    public Object run(Integer executionCourseCode, Integer examCode) throws FenixServiceException,
+    public Object run(Integer executionCourseID, Integer examID) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentExam persistentExam = sp.getIPersistentExam();
-        IPersistentSite persistentSite = sp.getIPersistentSite();
-        IPersistentExamStudentRoom examStudentRoomDAO = sp.getIPersistentExamStudentRoom();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
 
-        ISite site = persistentSite.readByExecutionCourse(executionCourseCode);
-        IExam exam = (IExam) persistentExam.readByOID(Exam.class, examCode);
-        List examStudentRoomList = examStudentRoomDAO.readByExamOID(exam.getIdInternal());
-        List infoExamStudentRoomList = (List) CollectionUtils.collect(examStudentRoomList,
-                new Transformer() {
-
-                    public Object transform(Object input) {
-                        IExamStudentRoom examStudentRoom = (IExamStudentRoom) input;
-
-                        return InfoExamStudentRoomWithInfoStudentAndInfoRoom
-                                .newInfoFromDomain(examStudentRoom);
-
-                    }
-                });
-
-                   List infoStudents = new ArrayList();
-        Iterator iter = examStudentRoomList.iterator();
-        while (iter.hasNext()) {
-            IStudent student = ((IExamStudentRoom) iter.next()).getStudent();
-
-            infoStudents.add(InfoStudent.newInfoFromDomain(student));
+        final IPersistentExam persistentExam = persistentSupport.getIPersistentExam();
+        final IExam exam = (IExam) persistentExam.readByOID(Exam.class, examID);
+        if (examID == null) {
+            throw new FenixServiceException("error.noExam");
         }
 
-        InfoExam infoExam = InfoExam.newInfoFromDomain(exam);
-        ISiteComponent component = new InfoSiteTeacherStudentsEnrolledList(infoStudents, infoExam,
-                infoExamStudentRoomList);
+        final IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
+        final ISite site = persistentSite.readByExecutionCourse(executionCourseID);
+        if (site == null) {
+            throw new FenixServiceException("error.noSite");
+        }
 
-        TeacherAdministrationSiteComponentBuilder componentBuilder = TeacherAdministrationSiteComponentBuilder
+        final List<IWrittenEvaluationEnrolment> writtenEvaluationEnrolmentList = exam
+                .getWrittenEvaluationEnrolments();
+
+        final List<InfoStudent> infoStudents = new ArrayList<InfoStudent>(writtenEvaluationEnrolmentList
+                .size());
+        final List<InfoWrittenEvaluationEnrolment> infoWrittenEvaluationEnrolments = new ArrayList<InfoWrittenEvaluationEnrolment>(
+                writtenEvaluationEnrolmentList.size());
+
+        for (final IWrittenEvaluationEnrolment writtenEvaluationEnrolment : writtenEvaluationEnrolmentList) {
+            infoStudents.add(InfoStudent.newInfoFromDomain(writtenEvaluationEnrolment.getStudent()));
+            infoWrittenEvaluationEnrolments.add(InfoWrittenEvaluationEnrolmentWithInfoStudentAndInfoRoom
+                    .newInfoFromDomain(writtenEvaluationEnrolment));
+        }
+
+        final InfoExam infoExam = InfoExam.newInfoFromDomain(exam);
+        final ISiteComponent component = new InfoSiteTeacherStudentsEnrolledList(infoStudents, infoExam,
+                infoWrittenEvaluationEnrolments);
+        final TeacherAdministrationSiteComponentBuilder componentBuilder = TeacherAdministrationSiteComponentBuilder
                 .getInstance();
-        ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null,
-                null, null);
-        TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(commonComponent,
-                component);
+        final ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site,
+                null, null, null);
+        final TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(
+                commonComponent, component);
+
         return siteView;
     }
 }

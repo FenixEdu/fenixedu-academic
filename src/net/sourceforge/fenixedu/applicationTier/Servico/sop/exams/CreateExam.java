@@ -1,0 +1,118 @@
+package net.sourceforge.fenixedu.applicationTier.Servico.sop.exams;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.DomainFactory;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IPeriod;
+import net.sourceforge.fenixedu.domain.IRoom;
+import net.sourceforge.fenixedu.domain.Room;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
+import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import net.sourceforge.fenixedu.util.Season;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
+
+public class CreateExam implements IService {
+
+	public void run(Calendar examDate, Calendar examStartTime, Calendar examEndTime, Season season,
+			List<String> executionCourseIDs, List<String> curricularCourseScopeIDs, List<String> roomIDs)
+			throws FenixServiceException, ExcepcaoPersistencia {
+
+		final ISuportePersistente persistentSupport = PersistenceSupportFactory
+				.getDefaultPersistenceSupport();
+
+		// reading the execution course list to associate with the exam
+		final List<IExecutionCourse> executionCoursesToAssociate = readExecutionCourses(
+				persistentSupport, executionCourseIDs);
+
+		// reading the curricular course scopes to associate with the exam
+		final List<ICurricularCourseScope> curricularCourseScopesToAssociate = readCurricularCourseScopes(
+				persistentSupport, curricularCourseScopeIDs);
+
+		// reading the rooms to associate with the exam
+		final List<IRoom> roomsToAssociate = readRooms(persistentSupport, roomIDs);
+
+		// reading or creating the period to associate with the exam
+        final IPeriod period = readPeriod(persistentSupport, examDate);
+		
+		// creating the new exam
+		DomainFactory.makeExam(examDate.getTime(), examStartTime.getTime(), examEndTime.getTime(), season,
+				executionCoursesToAssociate, curricularCourseScopesToAssociate, roomsToAssociate, period);
+	}
+
+	private List<IExecutionCourse> readExecutionCourses(final ISuportePersistente persistentSupport,
+			final List<String> executionCourseIDs) throws ExcepcaoPersistencia, FenixServiceException {
+
+		if (executionCourseIDs.isEmpty()) {
+			throw new FenixServiceException("error.InvalidExecutionCourse");
+		}
+		final List<IExecutionCourse> result = new ArrayList<IExecutionCourse>();
+		final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
+				.getIPersistentExecutionCourse();
+		for (final String executionCourseID : executionCourseIDs) {
+			final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+					.readByOID(ExecutionCourse.class, Integer.valueOf(executionCourseID));
+			if (executionCourse == null) {
+				throw new FenixServiceException("error.InvalidExecutionCourse");
+			}
+			result.add(executionCourse);
+		}
+		return result;
+	}
+
+	private List<ICurricularCourseScope> readCurricularCourseScopes(
+			final ISuportePersistente persistentSupport, final List<String> curricularCourseScopeIDs)
+			throws FenixServiceException, ExcepcaoPersistencia {
+
+		if (curricularCourseScopeIDs.isEmpty()) {
+			throw new FenixServiceException("error.InvalidCurricularCourseScope");
+		}
+		final List<ICurricularCourseScope> result = new ArrayList<ICurricularCourseScope>();
+		final IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport
+				.getIPersistentCurricularCourseScope();
+		for (final String curricularCourseScopeID : curricularCourseScopeIDs) {
+			final ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope
+					.readByOID(CurricularCourseScope.class, Integer.valueOf(curricularCourseScopeID));
+			if (curricularCourseScope == null) {
+				throw new FenixServiceException("error.InvalidCurricularCourseScope");
+			}
+			result.add(curricularCourseScope);
+		}
+		return result;
+	}
+
+	private List<IRoom> readRooms(final ISuportePersistente persistentSupport, final List<String> roomIDs)
+			throws ExcepcaoPersistencia, FenixServiceException {
+
+		final List<IRoom> result = new ArrayList<IRoom>();
+		final ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
+		for (final String roomID : roomIDs) {
+			final IRoom room = (IRoom) persistentRoom.readByOID(Room.class, Integer.valueOf(roomID));
+			if (room == null) {
+				throw new FenixServiceException("error.noRoom");
+			}
+			result.add(room);
+		}
+		return result;
+	}
+
+    private IPeriod readPeriod(final ISuportePersistente persistentSupport, final Calendar examDate) throws ExcepcaoPersistencia {
+        final IPersistentPeriod persistentPeriod = persistentSupport.getIPersistentPeriod();
+        IPeriod period = (IPeriod) persistentPeriod.readByCalendarAndNextPeriod(examDate, examDate, null);
+        if (period == null) {
+            period = DomainFactory.makePeriod(examDate.getTime(), examDate.getTime());
+        }        
+        return period;
+    }
+}

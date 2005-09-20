@@ -1458,7 +1458,7 @@ class net.sourceforge.fenixedu.domain.gesdis.CourseReport extends net.sourceforg
 class net.sourceforge.fenixedu.domain.precedences.Restriction extends net.sourceforge.fenixedu.domain.DomainObject {
 }
 
-class net.sourceforge.fenixedu.domain.ExamStudentRoom extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyRoom;
 	Integer keyStudent;
 	Integer keyExam;
@@ -3120,7 +3120,7 @@ relation ??? {
 }
 
 relation ??? {
-	net.sourceforge.fenixedu.domain.ExamStudentRoom playsRole ??? {
+	net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment playsRole ??? {
 		multiplicity ???;
 	}
 	net.sourceforge.fenixedu.domain.Student playsRole student;
@@ -3353,7 +3353,7 @@ relation ??? {
 }
 
 relation ??? {
-	net.sourceforge.fenixedu.domain.ExamStudentRoom playsRole ??? {
+	net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment playsRole ??? {
 		multiplicity ???;
 	}
 	net.sourceforge.fenixedu.domain.Exam playsRole exam;
@@ -5173,7 +5173,7 @@ relation ??? {
 }
 
 relation ??? {
-	net.sourceforge.fenixedu.domain.ExamStudentRoom playsRole ??? {
+	net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment playsRole ??? {
 		multiplicity ???;
 	}
 	net.sourceforge.fenixedu.domain.Room playsRole room;

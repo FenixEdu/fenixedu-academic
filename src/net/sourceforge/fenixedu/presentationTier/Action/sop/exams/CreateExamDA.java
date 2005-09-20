@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.sop.exams;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
@@ -9,8 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InterceptingRoomsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
@@ -39,11 +39,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 /**
  * @author Ana e Ricardo
  */
-public class CreateExamDA extends FenixDateAndTimeContextDispatchAction
-//extends
-// FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction
-{
-    //extends FenixContextDispatchAction{
+public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -57,7 +53,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction
         InfoExecutionCourse executionCourse;
         try {
             executionCourse = (InfoExecutionCourse) ServiceUtils.executeService(userView,
-                    "ReadExecutionCoursewithAssociatedCurricularCourses", args);
+                    "ReadExecutionCourseWithAssociatedCurricularCourses", args);
         } catch (Exception ex) {
             throw new Exception(ex);
         }
@@ -101,8 +97,8 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction
         Season season = new Season(new Integer((String) createExamForm.get("season")));
 
         // exam execution course
-        String[] executionCourseIDArray = (String[]) createExamForm.get("executionCourses");
-
+        List<String> executionCourseIDs = Arrays.asList((String[]) createExamForm.get("executionCourses")); 
+        
         // exam date
         Calendar examDate = Calendar.getInstance();
         Integer day = new Integer((String) createExamForm.get("day"));
@@ -112,9 +108,9 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction
         examDate.set(Calendar.MONTH, month.intValue() - 1);
         examDate.set(Calendar.DAY_OF_MONTH, day.intValue());
         if (examDate.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-            ActionError actionError = new ActionError("error.sunday");
             ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("error.sunday", actionError);
+            actionErrors.add("error.sunday", new ActionError("error.sunday"));
+            
             saveErrors(request, actionErrors);
             return prepare(mapping, form, request, response);
         }
@@ -135,37 +131,34 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction
         examEndTime.set(Calendar.MINUTE, endMinute.intValue());
         examEndTime.set(Calendar.SECOND, 0);
         if (examStartTime.after(examEndTime)) {
-            ActionError actionError = new ActionError("error.timeSwitched");
             ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("error.timeSwitched", actionError);
+            actionErrors.add("error.timeSwitched", new ActionError("error.timeSwitched"));
+
             saveErrors(request, actionErrors);
             return prepare(mapping, form, request, response);
         }
 
         // associated scopes
-        String[] scopeIDArray = (String[]) createExamForm.get("scopes");
-
+        List<String> curricularCourseScopeIDs = Arrays.asList((String[]) createExamForm.get("scopes"));
+        
         // associated rooms
-        String[] roomIDArray = (String[]) createExamForm.get("rooms");
-
+        List<String> roomIDs = Arrays.asList((String[]) createExamForm.get("rooms"));
+        
         // Create an exam with season, examDateAndTime and executionCourse
         Object argsCreateExam[] = { examDate, examStartTime, examEndTime, season,
-                executionCourseIDArray, scopeIDArray, roomIDArray };
+                executionCourseIDs, curricularCourseScopeIDs, roomIDs };
         try {
-            ServiceUtils.executeService(userView, "CreateExamNew", argsCreateExam);
-        } catch (ExistingServiceException ex) {
-            ActionError actionError = new ActionError("error.existingExam", season);
+            ServiceUtils.executeService(userView, "CreateExam", argsCreateExam);
+        } catch (FenixServiceException ex) {
             ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("error.existingExam", actionError);
+            actionErrors.add("errors", new ActionError(ex.getMessage()));
             saveErrors(request, actionErrors);
             return prepare(mapping, form, request, response);
-
-            //throw new ExistingActionException("O exame", ex);
         }
 
         return mapping.findForward("Sucess");
     }
-
+    
     public ActionForward associateExecutionCourse(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         String infoExamId = (String) request.getAttribute(SessionConstants.EXAM_OID);
@@ -205,7 +198,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction
             InfoExecutionCourse executionCourse;
             try {
                 executionCourse = (InfoExecutionCourse) ServiceUtils.executeService(userView,
-                        "ReadExecutionCoursewithAssociatedCurricularCourses", args);
+                        "ReadExecutionCourseWithAssociatedCurricularCourses", args);
             } catch (Exception ex) {
                 throw new Exception(ex);
             }
@@ -276,7 +269,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction
             InfoExecutionCourse executionCourse;
             try {
                 executionCourse = (InfoExecutionCourse) ServiceUtils.executeService(userView,
-                        "ReadExecutionCoursewithAssociatedCurricularCourses", args);
+                        "ReadExecutionCourseWithAssociatedCurricularCourses", args);
             } catch (Exception ex) {
                 throw new Exception(ex);
             }
@@ -393,8 +386,6 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction
 
         String executionDegreeOID = (String) request.getAttribute(SessionConstants.EXECUTION_DEGREE_OID);
         request.setAttribute("executionDegreeOID", executionDegreeOID);
-        //		request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID,
-        // executionDegreeOID);
 
         IUserView userView = SessionUtils.getUserView(request);
         DynaValidatorForm createExamForm = (DynaValidatorForm) form;
@@ -407,7 +398,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction
             InfoExecutionCourse executionCourse;
             try {
                 executionCourse = (InfoExecutionCourse) ServiceUtils.executeService(userView,
-                        "ReadExecutionCoursewithAssociatedCurricularCourses", args);
+                        "ReadExecutionCourseWithAssociatedCurricularCourses", args);
             } catch (Exception ex) {
                 throw new Exception(ex);
             }
@@ -421,7 +412,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction
 
         List examSeasons = Util.getExamSeasons();
         request.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
-        ///////////////////////////////////////////////////////
+
         String[] scopeIDArray = (String[]) createExamForm.get("scopes");
         request.setAttribute("scopes", scopeIDArray);
 
@@ -462,7 +453,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction
             InfoExecutionCourse executionCourse;
             try {
                 executionCourse = (InfoExecutionCourse) ServiceUtils.executeService(userView,
-                        "ReadExecutionCoursewithAssociatedCurricularCourses", args);
+                        "ReadExecutionCourseWithAssociatedCurricularCourses", args);
             } catch (Exception ex) {
                 throw new Exception(ex);
             }
@@ -522,11 +513,9 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction
             HttpServletResponse response) throws Exception {
 
         IUserView userView = SessionUtils.getUserView(request);
-
         DynaValidatorForm createExamForm = (DynaValidatorForm) form;
 
-        Integer infoExamID = new Integer((String) createExamForm.get("exam_oid"));
-
+        Integer infoExamID = Integer.valueOf(((String) createExamForm.get("exam_oid")));
         String infoExamIdInteger = (String) request.getAttribute(SessionConstants.EXAM_OID);
         if (infoExamIdInteger == null) {
             infoExamIdInteger = request.getParameter(SessionConstants.EXAM_OID);
@@ -534,10 +523,8 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction
         request.setAttribute(SessionConstants.EXAM_OID, infoExamIdInteger);
 
         // exam season
-        Season season = new Season(new Integer((String) createExamForm.get("season")));
-
-        // exam execution course
-        String[] executionCourseIDArray = (String[]) createExamForm.get("executionCourses");
+        Season season = new Season(Integer.valueOf(((String) createExamForm.get("season"))));
+        List<String> executionCourseIDs = Arrays.asList((String[]) createExamForm.get("executionCourses"));
 
         // exam date
         Calendar examDate = Calendar.getInstance();
@@ -553,7 +540,6 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction
             actionErrors.add("error.sunday", actionError);
             saveErrors(request, actionErrors);
             return prepare(mapping, form, request, response);
-            //return mapping.findForward("showCreateForm");
         }
 
         // exam start time
@@ -577,33 +563,19 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction
             actionErrors.add("error.timeSwitched", actionError);
             saveErrors(request, actionErrors);
             return prepare(mapping, form, request, response);
-
-            //return mapping.findForward("showCreateForm");
         }
 
-        // associated scopes
-        String[] scopeIDArray = (String[]) createExamForm.get("scopes");
+        List<String> scopeIDs = Arrays.asList((String[]) createExamForm.get("scopes"));
+        List<String> roomIDs = Arrays.asList((String[]) createExamForm.get("rooms"));
 
-        // associated rooms
-        String[] roomIDArray = (String[]) createExamForm.get("rooms");
-
-        // Create an exam with season, examDateAndTime and executionCourse
-        Object argsEditExam[] = { examDate, examStartTime, examEndTime, season, executionCourseIDArray,
-                scopeIDArray, roomIDArray, infoExamID };
+        Object argsEditExam[] = { examDate, examStartTime, examEndTime, season, executionCourseIDs, scopeIDs, roomIDs, infoExamID };
         try {
             ServiceUtils.executeService(userView, "EditExamNew", argsEditExam);
-        } catch (ExistingServiceException ex) {
-            ActionError actionError = new ActionError("error.existingExam", season);
+        } 
+        catch (FenixServiceException ex) {
+            ActionError actionError = new ActionError(ex.getMessage());
             ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("error.existingExam", actionError);
-            saveErrors(request, actionErrors);
-            return prepare(mapping, form, request, response);
-
-            //throw new ExistingActionException("O exame", ex);
-        } catch (InterceptingRoomsServiceException ex) {
-            ActionError actionError = new ActionError("error.roomOccupied", ex.getMessage());
-            ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("error.roomOccupied", actionError);
+            actionErrors.add("errors", actionError);
             saveErrors(request, actionErrors);
             return prepare(mapping, form, request, response);
         }
@@ -615,7 +587,6 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction
         if (date == null) {
             return mapping.findForward("Sucess");
         }
-
         return mapping.findForward("sucessSearchByDate");
 
     }
@@ -665,7 +636,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction
             InfoExecutionCourse executionCourse;
             try {
                 executionCourse = (InfoExecutionCourse) ServiceUtils.executeService(userView,
-                        "ReadExecutionCoursewithAssociatedCurricularCourses", args);
+                        "ReadExecutionCourseWithAssociatedCurricularCourses", args);
             } catch (Exception ex) {
                 throw new Exception(ex);
             }

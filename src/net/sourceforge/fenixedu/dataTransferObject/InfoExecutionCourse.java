@@ -228,133 +228,74 @@ public class InfoExecutionCourse extends InfoObject {
         return result;
     }
 
-    /**
-     * Returns the infoExecutionPeriod.
-     * 
-     * @return InfoExecutionPeriod
-     */
     public InfoExecutionPeriod getInfoExecutionPeriod() {
         return infoExecutionPeriod;
     }
 
-    /**
-     * Sets the infoExecutionPeriod.
-     * 
-     * @param infoExecutionPeriod
-     *            The infoExecutionPeriod to set
-     */
     public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
         this.infoExecutionPeriod = infoExecutionPeriod;
     }
 
-    /**
-     * @return
-     */
     public List getAssociatedInfoCurricularCourses() {
         return associatedInfoCurricularCourses;
     }
 
-    /**
-     * @return
-     */
     public List getAssociatedInfoExams() {
         return associatedInfoExams;
     }
 
-    /**
-     * @param list
-     */
     public void setAssociatedInfoCurricularCourses(List list) {
         associatedInfoCurricularCourses = list;
     }
 
-    /**
-     * @param list
-     */
     public void setAssociatedInfoExams(List list) {
         associatedInfoExams = list;
     }
 
-    /**
-     * @return
-     */
     public Integer getCurricularYear() {
         return curricularYear;
     }
 
-    /**
-     * @param integer
-     */
     public void setCurricularYear(Integer integer) {
         curricularYear = integer;
     }
 
-    /**
-     * @return
-     */
     public String getComment() {
         return comment;
     }
 
-    /**
-     * @param string
-     */
     public void setComment(String string) {
         comment = string;
     }
 
-    /**
-     * @return
-     */
     public List getAssociatedInfoEvaluations() {
         return associatedInfoEvaluations;
     }
 
-    /**
-     * @param list
-     */
     public void setAssociatedInfoEvaluations(List list) {
         associatedInfoEvaluations = list;
     }
 
-    /**
-     * @return
-     */
     public Double getOccupancy() {
         return occupancy;
     }
 
-    /**
-     * @param occupancy
-     */
     public void setOccupancy(Double occupancy) {
         this.occupancy = occupancy;
     }
 
-    /**
-     * @return
-     */
     public Integer getNumberOfAttendingStudents() {
         return numberOfAttendingStudents;
     }
 
-    /**
-     * @param numberOfAttendingStudents
-     */
     public void setNumberOfAttendingStudents(Integer attendingStudents) {
         this.numberOfAttendingStudents = attendingStudents;
     }
 
-    /**
-     * @return
-     */
     public String getEqualLoad() {
         return equalLoad;
     }
 
-    /**
-     * @param equalLoad
-     */
     public void setEqualLoad(String equalLoad) {
         this.equalLoad = equalLoad;
     }
@@ -367,32 +308,18 @@ public class InfoExecutionCourse extends InfoObject {
         this.hasSite = hasSite;
     }
 
-    /**
-     * @return Returns the courseReportFilled.
-     */
     public String getCourseReportFilled() {
         return courseReportFilled;
     }
 
-    /**
-     * @param courseReportFilled
-     *            The courseReportFilled to set.
-     */
     public void setCourseReportFilled(String courseReportFilled) {
         this.courseReportFilled = courseReportFilled;
     }
 
-    /**
-     * @return Returns the infoSiteEvaluationStatistics.
-     */
     public InfoSiteEvaluationStatistics getInfoSiteEvaluationStatistics() {
         return infoSiteEvaluationStatistics;
     }
 
-    /**
-     * @param infoSiteEvaluationStatistics
-     *            The infoSiteEvaluationStatistics to set.
-     */
     public void setInfoSiteEvaluationStatistics(InfoSiteEvaluationStatistics infoSiteEvaluationStatistics) {
         this.infoSiteEvaluationStatistics = infoSiteEvaluationStatistics;
     }
