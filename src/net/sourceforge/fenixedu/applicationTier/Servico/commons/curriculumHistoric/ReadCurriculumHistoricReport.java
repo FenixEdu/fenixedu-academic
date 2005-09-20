@@ -172,10 +172,7 @@ public class ReadCurriculumHistoricReport implements IService {
         Iterator iterator = evaluations.iterator();
         while(iterator.hasNext()) {
             IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
-            if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NORMAL)
-                    || enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.FIRST_SEASON)
-                    || enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.SECOND_SEASON)
-                    || enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NO_SEASON))
+            if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NORMAL))
                 normalEnrolmentEvaluations.add(enrolmentEvaluation);
             
             if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT))
