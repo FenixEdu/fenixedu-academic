@@ -285,26 +285,35 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward deleteAnnouncement(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixFilterException {
+        
         HttpSession session = request.getSession(false);
         String announcementCodeString = request.getParameter("announcementCode");
+        
         if (announcementCodeString == null) {
             announcementCodeString = (String) request.getAttribute("announcementCode");
         }
+        
         Integer announcementCode = new Integer(announcementCodeString);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { announcementCode };
+        
         try {
             ServiceManagerServiceFactory.executeService(userView, "DeleteAnnouncementService", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
+        
         ISiteComponent announecementsComponent = new InfoSiteAnnouncement();
         readSiteView(request, announecementsComponent, null, null, null);
         TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) request
                 .getAttribute("siteView");
+        
         if (!((InfoSiteAnnouncement) siteView.getComponent()).getAnnouncements().isEmpty()) {
             return showAnnouncements(mapping, form, request, response);
         }
+        
+        DynaActionForm actionForm = (DynaActionForm) form;
+        htmlEditorConfigurations(request, actionForm);
         return mapping.findForward("insertAnnouncement");
     }
 
