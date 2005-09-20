@@ -41,4 +41,8 @@ public class PropertiesManager {
         return properties.getProperty(key);
     }
 
+    public static void setProperty(final String key, final String value) {
+        properties.setProperty(key, value);
+    }
+
 }
