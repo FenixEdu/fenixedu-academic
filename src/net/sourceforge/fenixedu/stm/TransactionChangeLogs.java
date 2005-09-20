@@ -279,7 +279,7 @@ public class TransactionChangeLogs {
 		Statement stmt = conn.createStatement();
 
 		// delete previous record for this server and insert a new one
-		stmt.executeUpdate("DELETE FROM LAST_TX_PROCESSED WHERE SERVER = '" + server + "' or LAST_UPDATE < ADDDATE(NOW(), -1)");
+		stmt.executeUpdate("DELETE FROM LAST_TX_PROCESSED WHERE SERVER = '" + server + "' or LAST_UPDATE < ADDDATE(NOW(),-1)");
 		stmt.executeUpdate("INSERT INTO LAST_TX_PROCESSED VALUES ('" + server + "'," + currentTxNumber + ",null)");
 		
 		broker.commitTransaction();
