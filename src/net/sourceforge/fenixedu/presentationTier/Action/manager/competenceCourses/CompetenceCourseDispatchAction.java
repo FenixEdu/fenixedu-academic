@@ -95,8 +95,8 @@ public class CompetenceCourseDispatchAction extends FenixDispatchAction {
         actionForm.set("competenceCourseID", competenceCourse.getIdInternal());
         actionForm.set("code", competenceCourse.getCode());
         actionForm.set("name", competenceCourse.getName());
-        if(competenceCourse.getDepartment() != null) {
-        	actionForm.set("departmentID", competenceCourse.getDepartment().getIdInternal());
+        if(competenceCourse.getDepartments() != null) {
+        	actionForm.set("departmentID", competenceCourse.getDepartments().get(0).getIdInternal());
         }
         
         return mapping.findForward("edit");
