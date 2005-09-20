@@ -17,7 +17,7 @@ public class CourseHistoric extends CourseHistoric_Base {
         result += ", evaluated=" + getEvaluated();
         result += ", approved=" + getApproved();
         result += ", curricularYear=" + getCurricularYear();
-        result += ", semester=" + getEnrolled();
+        result += ", semester=" + getSemester();
         result += ", curricularCourse=" + getCurricularCourse();
         result += "]";
         return result;
