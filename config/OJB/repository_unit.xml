@@ -52,19 +52,19 @@
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
         name="salaryEmployees"
         element-class-ref="net.sourceforge.fenixedu.domain.Employee">
-		<inverse-foreignkey field-ref="keyUnit"/>
+		<inverse-foreignkey field-ref="keySalaryUnit"/>
     </collection-descriptor>
 
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
         name="mailingEmployees"
         element-class-ref="net.sourceforge.fenixedu.domain.Employee">
-		<inverse-foreignkey field-ref="keyUnit"/>
+		<inverse-foreignkey field-ref="keyMailingUnit"/>
      </collection-descriptor>
 
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
         name="workingEmployees"
         element-class-ref="net.sourceforge.fenixedu.domain.Employee">
-		<inverse-foreignkey field-ref="keyUnit"/>
+		<inverse-foreignkey field-ref="keyWorkingUnit"/>
     </collection-descriptor>
 
 </class-descriptor>
