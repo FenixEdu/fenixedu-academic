@@ -41,3 +41,9 @@ mysql -u$2 -f $1 < AlterEnrolmentEvaluationStateBefore80.sql > res
 mysql -u$2 -f $1 < res
 echo Alter Enrolment Evaluation State ... completed
 rm -r res
+echo Altering Person's Nationality ... started
+mysql -u$2 -f $1 < alterTableCountry.sql
+mysql -u$2 -f $1 < updatePersonWithKeyCountry.sql > res
+mysql -u$2 -f $1 < res
+rm -r res
+echo Altering Person's Nationality ... completed
