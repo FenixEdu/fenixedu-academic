@@ -50,6 +50,8 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
     private ServiceInfo serviceInfo = ServiceInfo.getCurrentServiceInfo();
     private PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
 
+    private Thread executingThread = Thread.currentThread();
+
     TopLevelTransaction(int number) {
         super(number);
 
@@ -86,7 +88,13 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 	System.out.println("Transaction " + this 
 			   + " created for service: " + serviceInfo.serviceName 
 			   + ", username = " + serviceInfo.username 
-			   + ", args = " + serviceInfo.getArgumentsAsString());
+			   //+ ", args = " + serviceInfo.getArgumentsAsString()
+			   );
+	System.out.println("Currently executing:");
+	StackTraceElement[] txStack = executingThread.getStackTrace();
+	for (int i = 0; (i < txStack.length) && (i < 5); i++) {
+	    System.out.println("-----> " + txStack[i]);
+	}
     }
 
     protected void finish() {
