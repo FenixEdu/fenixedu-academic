@@ -53,6 +53,9 @@ public class ReadStudentTest implements IService {
             try {
                 infoStudentTestQuestion = InfoStudentTestQuestionWithAll.newInfoFromDomain(studentTestQuestion);
                 infoStudentTestQuestion = parse.parseStudentTestQuestion(infoStudentTestQuestion, path);
+                if (studentTestQuestion.getOptionShuffle() == null) {
+                    studentTestQuestion.setOptionShuffle(infoStudentTestQuestion.getOptionShuffle());
+                }
             } catch (Exception e) {
                 throw new FenixServiceException(e);
             }
