@@ -282,7 +282,7 @@ public class Grouping extends Grouping_Base {
                 if (studentGroup.getAttends().contains(attend))
                     throw new DomainException(this.getClass().getName(), "errors.existing.studentEnrolment");                
                 else if(!this.getAttends().contains(attend))
-                    throw new DomainException(this.getClass().getName(), "errors.notExisting.studentInGroupig");
+                    throw new DomainException(this.getClass().getName(), "errors.notExisting.studentInGrouping");
             }
         }
     }
