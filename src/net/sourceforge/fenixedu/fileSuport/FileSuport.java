@@ -180,6 +180,7 @@ public class FileSuport implements IFileSuport {
         } catch (SlideException e) {
             throw e;
         } catch (Exception e) {
+            e.printStackTrace();
             throw new SlideException("runtime exception");
         }
     }
@@ -220,6 +221,7 @@ public class FileSuport implements IFileSuport {
         try {
             structure.create(slideToken, new SubjectNode(), folder);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new SlideException("");
         }
     }
