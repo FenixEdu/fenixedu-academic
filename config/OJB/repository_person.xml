@@ -58,11 +58,6 @@
         jdbc-type="VARCHAR"
     />
     <field-descriptor
-        name="nacionalidade"
-        column="NATIONALITY"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor
         name="freguesiaNaturalidade"
         column="PARISH_OF_BIRTH"
         jdbc-type="VARCHAR"

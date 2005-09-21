@@ -136,7 +136,6 @@ public class PersonLoader extends BaseLoader {
             person.setGender(Gender.valueOf(gender));
             person.setPais(countries.get(COUNTRY));
             person.setNascimento(nascimento);
-            person.setNacionalidade(nacionalidade);
             person.setFreguesiaNaturalidade(freguesiaNaturalidade);
             person.setConcelhoNaturalidade(concelhoNaturalidade);
             person.setDistritoNaturalidade(distritoNaturalidade);

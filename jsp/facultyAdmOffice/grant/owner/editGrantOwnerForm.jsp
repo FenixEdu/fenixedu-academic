@@ -174,14 +174,6 @@
 	</tr>
 	<tr>
 		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.nationality"/>:&nbsp;
-		</td>
-		<td>
-			<html:text property="nationality"/>
-		</td>
-	</tr>
-	<tr>
-		<td align="left">
 			<bean:message key="label.grant.owner.infoperson.country"/>:&nbsp;
 		</td>
 		<td>

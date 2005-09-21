@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
@@ -16,26 +17,24 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 public class PersonTest extends DomainTestBase {
 
 	InfoPerson infoPerson1;
-
 	InfoPerson infoPerson2;
-
 	InfoPerson infoPerson3;
 
 	IRole personRole;
-
 	IRole teacherRole;
-
 	IRole coordinatorRole;
-
 	IRole grantOwnerRole;
-
 	IRole studentRole;
-
 	IRole employeeRole;
 
 	IStudent degreeStudent;
-
 	IStudent masterDegreeStudent;
+    
+    ITeacher teacher;
+    
+    IGrantOwner grantOwner;
+    
+    IEmployee employee;
 
 	IDDocumentType documentType;
 
@@ -44,63 +43,42 @@ public class PersonTest extends DomainTestBase {
 	MaritalStatus maritalStatus = MaritalStatus.WIDOWER;
 
 	Boolean availableEmail = Boolean.TRUE;
-
 	Boolean availablePhoto = Boolean.FALSE;
-
 	Boolean availableWebSite = Boolean.TRUE;
 
+    Integer teacherNumber = 11111;
+    Integer grantOwnerNumber = 22222;
+    Integer degreeStudentNumber = 33333;
+    Integer masterDegreeStudentNumber = 44444;
+    Integer employeeNumber = 55555;
+    
 	String username = "Z12345";
-
 	String codigoFiscal = "codigoFiscal";
-
 	String codigoPostal = "codigoPostal";
-
 	String concelhoMorada = "concelhoMorada";
-
 	String concelhoNaturalidade = "concelhoNaturalidade";
-
 	String distritoMorada = "distritoMorada";
-
 	String email = "email@host.com";
-
 	String enderecoWeb = "http://enderecoWeb.com";
-
 	String freguesiaMorada = "freguesiaMorada";
-
 	String freguesiaNaturalidade = "freguesiaNaturalidade";
-
 	String localEmissaoDocumentoIdentificacao = "localEmissao";
-
 	String localidade = "localidade";
-
 	String localidadeCodigoPostal = "localidadeCodigoPostal";
-
 	String address = "endereco";
-
 	String nacionalidade = "nacionalidade";
-
 	String nome = "nome";
-
 	String nomeMae = "nomeMae";
-
 	String nomePai = "nomePai";
-
 	String numContribuinte = "numContribuinte";
-
 	String numDocumentoIdentificacao = "numDocID";
-
 	String profissao = "profissao";
-
 	String telefone = "telefone";
-
 	String telemovel = "telemovel";
-
 	String workPhone = "workPhone";
 
 	Date dataEmissao = new Date(System.currentTimeMillis() - 7000000);
-
 	Date dataValidade = new Date(System.currentTimeMillis() + 7000000);
-
 	Date dataNascimento = new Date(System.currentTimeMillis() - 20000000);
 
 	Gender sexo = Gender.MALE;
@@ -114,22 +92,38 @@ public class PersonTest extends DomainTestBase {
 
 		personRole = new Role();
 		personRole.setRoleType(RoleType.PERSON);
+        
 		teacherRole = new Role();
 		teacherRole.setRoleType(RoleType.TEACHER);
+        
 		coordinatorRole = new Role();
 		coordinatorRole.setRoleType(RoleType.COORDINATOR);
+        
 		grantOwnerRole = new Role();
 		grantOwnerRole.setRoleType(RoleType.GRANT_OWNER);
+        
 		studentRole = new Role();
 		studentRole.setRoleType(RoleType.STUDENT);
+
 		employeeRole = new Role();
 		employeeRole.setRoleType(RoleType.EMPLOYEE);
 
-		degreeStudent = new Student();
-		degreeStudent.setDegreeType(DegreeType.DEGREE);
+        teacher = new Teacher();
+        teacher.setTeacherNumber(teacherNumber);
+        
+        employee = new Employee();
+        employee.setEmployeeNumber(employeeNumber);
+
+        degreeStudent = new Student();
+        degreeStudent.setNumber(degreeStudentNumber);
+        degreeStudent.setDegreeType(DegreeType.DEGREE);                
+
 		masterDegreeStudent = new Student();
 		masterDegreeStudent.setDegreeType(DegreeType.MASTER_DEGREE);
+        masterDegreeStudent.setNumber(masterDegreeStudentNumber);
 
+        
+        
 		infoPerson1 = new InfoPerson();
 		infoPerson1.setAvailableEmail(availableEmail);
 		infoPerson1.setAvailablePhoto(availablePhoto);
@@ -151,7 +145,6 @@ public class PersonTest extends DomainTestBase {
 		infoPerson1.setLocalidadeCodigoPostal(localidadeCodigoPostal);
 		infoPerson1.setMaritalStatus(maritalStatus);
 		infoPerson1.setMorada(address);
-		infoPerson1.setNacionalidade(nacionalidade);
 		infoPerson1.setNascimento(dataNascimento);
 		infoPerson1.setNome(nome);
 		infoPerson1.setNomeMae(nomeMae);
@@ -186,7 +179,6 @@ public class PersonTest extends DomainTestBase {
 		infoPerson2.setLocalidadeCodigoPostal(localidadeCodigoPostal + 1);
 		infoPerson2.setMaritalStatus(MaritalStatus.CIVIL_UNION);
 		infoPerson2.setMorada(address + 1);
-		infoPerson2.setNacionalidade(nacionalidade + 1);
 		infoPerson2.setNascimento(new Date(3));
 		infoPerson2.setNome(nome + 1);
 		infoPerson2.setNomeMae(nomeMae + 1);
@@ -203,7 +195,7 @@ public class PersonTest extends DomainTestBase {
 
 		infoPerson3 = new InfoPerson();
 		infoPerson3.setAvailableEmail(!availableEmail);
-		infoPerson3.setAvailablePhoto(!availablePhoto);
+		infoPerson3.setAvailablePhoto(!availablePhoto);        
 		infoPerson3.setAvailableWebSite(!availableWebSite);
 		infoPerson3.setCodigoFiscal(codigoFiscal);
 		infoPerson3.setCodigoPostal(codigoPostal);
@@ -222,7 +214,6 @@ public class PersonTest extends DomainTestBase {
 		infoPerson3.setLocalidadeCodigoPostal(localidadeCodigoPostal);
 		infoPerson3.setMaritalStatus(maritalStatus);
 		infoPerson3.setMorada(address);
-		infoPerson3.setNacionalidade(nacionalidade);
 		infoPerson3.setNascimento(dataNascimento);
 		infoPerson3.setNome(nome);
 		infoPerson3.setNomeMae(nomeMae);
@@ -239,7 +230,7 @@ public class PersonTest extends DomainTestBase {
 	}
 
 	public void testCreatePerson1() {
-		IPerson person = new Person(infoPerson1, country);
+		IPerson person = new Person(infoPerson1, country);        
 
 		assertPersonContent(person, country);
 	}
@@ -415,7 +406,7 @@ public class PersonTest extends DomainTestBase {
 				newPassword));
 	}
 
-	public void testAddRole1() {
+	public void testAddRoleNormal() {
 		IPerson person = new Person(username, nome, Gender.MALE, address,
 				telefone, telemovel, enderecoWeb, email,
 				numDocumentoIdentificacao, IDDocumentType.EXTERNAL);
@@ -423,18 +414,22 @@ public class PersonTest extends DomainTestBase {
 		person.getPersonRoles().add(personRole);
 		assertEquals(person.getPersonRolesCount(), 1);
 		assertTrue(person.getPersonRoles().contains(personRole));
+        
+        person.setTeacher(teacher);
 		person.getPersonRoles().add(teacherRole);
 		assertEquals(person.getPersonRolesCount(), 2);
 		assertTrue(person.getPersonRoles().contains(teacherRole));
+        
 		person.getPersonRoles().add(coordinatorRole);
 		assertEquals(person.getPersonRolesCount(), 3);
 		assertTrue(person.getPersonRoles().contains(coordinatorRole));
 	}
 
-	public void testAddRole2() {
+	public void testAddRoleDependencies() {
 		IPerson person = new Person(username, nome, Gender.MALE, address,
 				telefone, telemovel, enderecoWeb, email,
 				numDocumentoIdentificacao, IDDocumentType.EXTERNAL);
+        person.setTeacher(teacher);
 		assertEquals(person.getPersonRolesCount(), 0);
 		try {
 			person.getPersonRoles().add(teacherRole);
@@ -451,8 +446,20 @@ public class PersonTest extends DomainTestBase {
 			fail("The test should have successfully added the TeacherRole - Dependencies not working correctly");
 		}
 	}
+    
+    public void testAddRoleWhenTheConnectionDoesntExist()
+    {
+        IPerson person = new Person(username, nome, Gender.MALE, address,
+                telefone, telemovel, enderecoWeb, email,
+                numDocumentoIdentificacao, IDDocumentType.EXTERNAL);   
+        try {
+            person.getPersonRoles().add(teacherRole);
+        } catch (DomainException domainException) {
+            //Everything went has planned
+        }
+    }
 
-	public void testAddRole3() {
+	public void testAddRoleTwice() {
 		IPerson person = new Person(username, nome, Gender.MALE, address,
 				telefone, telemovel, enderecoWeb, email,
 				numDocumentoIdentificacao, IDDocumentType.EXTERNAL);
@@ -460,9 +467,9 @@ public class PersonTest extends DomainTestBase {
 		person.getPersonRoles().add(personRole);
 		try {
 			person.getPersonRoles().add(personRole);
-			fail("The test shouldn't have successfully added the PersonRole - the person already had that role");
-		} catch (DomainException domainException) {
-			// everything went has planned
+			//Everything went has planned
+		} catch (Exception exception) {
+            fail("The test should have run successfully since there is no problem adding a role to a person that already had that role.");
 		}
 	}
 
@@ -497,18 +504,21 @@ public class PersonTest extends DomainTestBase {
 				telefone, telemovel, enderecoWeb, email,
 				numDocumentoIdentificacao, IDDocumentType.EXTERNAL);
 		person.getStudents().add(degreeStudent);
+        person.setGrantOwner(grantOwner);
+        person.setEmployee(employee);
+        person.setTeacher(teacher);
 
 		assertEquals(person.getUsername(), username);
 		person.getPersonRoles().add(personRole);
 		assertEquals(person.getUsername(), "T12345");
 		person.getPersonRoles().add(grantOwnerRole);
-		assertEquals(person.getUsername(), "B12345");
+		assertEquals(person.getUsername(), "B"+grantOwnerNumber);
 		person.getPersonRoles().add(studentRole);
-		assertEquals(person.getUsername(), "L12345");
+		assertEquals(person.getUsername(), "L"+degreeStudentNumber);
 		person.getPersonRoles().add(employeeRole);
-		assertEquals(person.getUsername(), "F12345");
+		assertEquals(person.getUsername(), "F"+employeeNumber);
 		person.getPersonRoles().add(teacherRole);
-		assertEquals(person.getUsername(), "D12345");
+		assertEquals(person.getUsername(), "D"+teacherNumber);
 	}
 
 	public void testUsernameUpdate2() {
@@ -517,18 +527,21 @@ public class PersonTest extends DomainTestBase {
 				numDocumentoIdentificacao, IDDocumentType.EXTERNAL);
 		person.getStudents().add(degreeStudent);
 		person.getStudents().add(masterDegreeStudent);
+        person.setGrantOwner(grantOwner);
+        person.setEmployee(employee);
+        person.setTeacher(teacher);
 
 		assertEquals(person.getUsername(), username);
 		person.getPersonRoles().add(personRole);
 		assertEquals(person.getUsername(), "T12345");
 		person.getPersonRoles().add(grantOwnerRole);
-		assertEquals(person.getUsername(), "B12345");
+        assertEquals(person.getUsername(), "B"+grantOwnerNumber);
 		person.getPersonRoles().add(studentRole);
-		assertEquals(person.getUsername(), "M12345");
+		assertEquals(person.getUsername(), "M"+masterDegreeStudentNumber);
 		person.getPersonRoles().add(employeeRole);
-		assertEquals(person.getUsername(), "F12345");
+        assertEquals(person.getUsername(), "F"+employeeNumber);
 		person.getPersonRoles().add(teacherRole);
-		assertEquals(person.getUsername(), "D12345");
+        assertEquals(person.getUsername(), "D"+teacherNumber);
 	}
 
 	public void testUsernameUpdate3() {
@@ -536,6 +549,9 @@ public class PersonTest extends DomainTestBase {
 				telefone, telemovel, enderecoWeb, email,
 				numDocumentoIdentificacao, IDDocumentType.EXTERNAL);
 		person.getStudents().add(degreeStudent);
+        person.setGrantOwner(grantOwner);
+        person.setEmployee(employee);
+        person.setTeacher(teacher);
 
 		person.getPersonRoles().add(personRole);
 		person.getPersonRoles().add(grantOwnerRole);
@@ -557,13 +573,15 @@ public class PersonTest extends DomainTestBase {
 		Person person = new Person(username, nome, Gender.MALE, address,
 				telefone, telemovel, enderecoWeb, email,
 				numDocumentoIdentificacao, IDDocumentType.EXTERNAL);
+        person.getStudents().add(degreeStudent);
+        person.setGrantOwner(grantOwner);
 
 		assertEquals(person.getUsername(), username);
 		person.getPersonRoles().add(personRole);
 		person.getPersonRoles().add(grantOwnerRole);
 		person.getPersonRoles().add(studentRole);
 		person.getPersonRoles().remove(grantOwnerRole);
-		assertEquals(person.getUsername(), "L12345");
+		assertEquals(person.getUsername(), "L"+degreeStudentNumber);
 	}
 
 	private void assertPersonContent(IPerson person, ICountry country) {

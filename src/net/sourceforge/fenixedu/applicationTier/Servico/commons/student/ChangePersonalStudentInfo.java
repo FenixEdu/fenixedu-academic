@@ -49,6 +49,11 @@ public class ChangePersonalStudentInfo implements IService {
                         newInfoPerson.getInfoPais().getNationality());
             }
         }
+        else {
+            //If the person country is undefined it is set to default "PORTUGUESA NATURAL DO CONTINENTE" 
+            //In a not distance future this will not be needed since the coutry can never be null
+            country = (ICountry) sp.getIPersistentCountry().readCountryByNationality("PORTUGUESA NATURAL DO CONTINENTE");
+        }
 
         // Change personal Information
         person.edit(newInfoPerson, country);

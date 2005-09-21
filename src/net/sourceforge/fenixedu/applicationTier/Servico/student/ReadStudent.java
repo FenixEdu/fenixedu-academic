@@ -12,6 +12,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
  * @author tfc130
  */
 import net.sourceforge.fenixedu.applicationTier.IServico;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
@@ -66,7 +67,7 @@ public class ReadStudent implements IServico {
                 infoPerson.setUsername(student.getPerson().getUsername());
                 infoPerson.setPassword(student.getPerson().getPassword());
                 infoPerson.setDistritoNaturalidade(student.getPerson().getDistritoNaturalidade());
-                infoPerson.setNacionalidade(student.getPerson().getNacionalidade());
+                infoPerson.setInfoPais(InfoCountry.newInfoFromDomain(student.getPerson().getPais()));
                 infoPerson.setNomePai(student.getPerson().getNomePai());
                 infoPerson.setNomeMae(student.getPerson().getNomeMae());
                 infoPerson.setIdInternal(student.getPerson().getIdInternal());

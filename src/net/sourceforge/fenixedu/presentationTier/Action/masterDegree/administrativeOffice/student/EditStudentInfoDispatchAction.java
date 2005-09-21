@@ -111,8 +111,8 @@ public class EditStudentInfoDispatchAction extends DispatchAction {
                 infoPerson.setDataValidadeDocumentoIdentificacao(idDocumentExpirationDate.getTime());
             }
 
-            InfoCountry nationality = new InfoCountry();
-            nationality.setNationality((String) changeApplicationInfoForm.get("nationality"));
+            InfoCountry infoCountry = new InfoCountry();
+            infoCountry.setNationality((String) changeApplicationInfoForm.get("nationality"));
 
             infoPerson.setTipoDocumentoIdentificacao(IDDocumentType.valueOf((String) changeApplicationInfoForm.get("identificationDocumentType")));
             infoPerson.setNumeroDocumentoIdentificacao((String) changeApplicationInfoForm
@@ -132,8 +132,7 @@ public class EditStudentInfoDispatchAction extends DispatchAction {
                 infoPerson.setMaritalStatus(null);
             else
                 infoPerson.setMaritalStatus(MaritalStatus.valueOf(aux));
-            infoPerson.setNacionalidade((String) changeApplicationInfoForm.get("nationality"));
-            infoPerson.setInfoPais(nationality);
+            infoPerson.setInfoPais(infoCountry);
             infoPerson.setNomePai((String) changeApplicationInfoForm.get("fatherName"));
             infoPerson.setNomeMae((String) changeApplicationInfoForm.get("motherName"));
             infoPerson.setFreguesiaNaturalidade((String) changeApplicationInfoForm

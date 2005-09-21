@@ -274,6 +274,8 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
         Date ExpirationDateOfDocumentId = Data.convertStringDate(dayOfExpirationDateOfDocumentId + "-"
                 + monthOfExpirationDateOfDocumentId + "-" + yearOfExpirationDateOfDocumentId, "-");
         InfoPerson infoPerson = new InfoPerson();
+        InfoCountry infoCountry = new InfoCountry();
+        infoCountry.setNationality(nacionality);
 
         infoPerson.setIdInternal(idInternal);
         infoPerson.setTipoDocumentoIdentificacao(IDDocumentType.valueOf(identificationDocumentType));
@@ -282,7 +284,7 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
         infoPerson.setNome(name);
         infoPerson.setNomePai(nameOfFather);
         infoPerson.setNomeMae(nameOfMother);
-        infoPerson.setNacionalidade(nacionality);
+        infoPerson.setInfoPais(infoCountry);
         infoPerson.setFreguesiaNaturalidade(parishOfBirth);
         infoPerson.setConcelhoNaturalidade(districtSubvisionOfBirth);
         infoPerson.setDistritoNaturalidade(districtOfBirth);

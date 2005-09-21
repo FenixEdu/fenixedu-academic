@@ -41,6 +41,30 @@ public class UsernameUtils extends FenixUtil {
         return generateNewUsername(person.getUsername(), mostImportantRole.getRoleType(), person);
 
     }
+    
+    public static String updateIstUsername(IPerson person) {
+        if (person.getIstUsername() != null) {
+            String ist = "ist";
+            String istUsername = null;
+            istUsername = person.getUsername();
+            istUsername = istUsername.toUpperCase().trim();
+            
+            if(istUsername.startsWith("D")) {
+                istUsername = ist + sumNumber(istUsername.substring(1), 10000);
+            }else if(istUsername.startsWith("F")) {
+                istUsername = ist + sumNumber(istUsername.substring(1), 20000);
+            }else if(istUsername.startsWith("B")) {
+                istUsername = ist + sumNumber(istUsername.substring(1), 30000);
+            }else if(istUsername.startsWith("M")) {
+                istUsername = ist + sumNumber(istUsername.substring(1), 40000);
+            }else if(istUsername.startsWith("L")) {
+                istUsername = ist + sumNumber(istUsername.substring(1), 100000);
+            }
+            
+            return istUsername;
+        }
+        return person.getIstUsername();
+    }
 
     private static String generateNewUsername(String oldUsername, RoleType roleType, IPerson person) {
         if (oldUsername.startsWith("INA") || roleType.equals(RoleType.MASTER_DEGREE_CANDIDATE)) {
@@ -77,12 +101,6 @@ public class UsernameUtils extends FenixUtil {
             if (person.getGrantOwner() != null) {
                 return "B" + person.getGrantOwner().getNumber();
             }
-            // else {
-            // throw new DomainException("error.person.addingInvalidRole",
-            // RoleType.GRANT_OWNER
-            // .getName());
-            // }
-
         }
 
         return oldUsername;
@@ -103,4 +121,10 @@ public class UsernameUtils extends FenixUtil {
         return null;
     }
 
+    
+    private static String sumNumber(String number, Integer sum) {
+        Integer num = Integer.valueOf(number);
+        Integer result = num + sum;
+        return result.toString();
+    }
 }

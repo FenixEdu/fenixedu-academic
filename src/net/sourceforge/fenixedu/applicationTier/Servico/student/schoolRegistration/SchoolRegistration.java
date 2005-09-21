@@ -50,6 +50,8 @@ public class SchoolRegistration implements IService {
 
         final String username = userView.getUtilizador();
         final IStudent student = persistentStudent.readByUsername(username);
+
+        
         final IPerson person = student.getPerson();
 
         if (isStudentRegistered(person)) {
@@ -70,16 +72,19 @@ public class SchoolRegistration implements IService {
     private void updatePersonalInfo(final ISuportePersistente sp, final InfoPerson infoPerson, final IPerson person)
             throws ExcepcaoPersistencia {
 
-        final IPersistentCountry pCountry = sp.getIPersistentCountry();
+        final IPersistentCountry persistentCountry = sp.getIPersistentCountry();
         final IPersistentRole pRole = sp.getIPersistentRole();
 
-        final List<ICountry> countries = (List<ICountry>) pCountry.readAll(Country.class);
-        final ICountry country = (ICountry) CollectionUtils.find(countries, new Predicate(){
-            public boolean evaluate(Object arg0) {
-                ICountry country = (ICountry) arg0;
-                return country.getNationality().equals(infoPerson.getNacionalidade());
-            }});         
+        ICountry country = null;
 
+        if (infoPerson.getInfoPais() != null && infoPerson.getInfoPais().getNationality() != null){
+            country = (ICountry) persistentCountry.readCountryByNationality(infoPerson.getInfoPais().getNationality());
+        } else {
+            //If the person country is undefined it is set to default "PORTUGUESA NATURAL DO CONTINENTE" 
+            //In a not distance future this will not be needed since the coutry can never be null
+            country = persistentCountry.readCountryByNationality("PORTUGUESA NATURAL DO CONTINENTE");
+        }
+        
         person.edit(infoPerson,country);
         person.setPassword(PasswordEncryptor.encryptPassword(infoPerson.getPassword()));
 

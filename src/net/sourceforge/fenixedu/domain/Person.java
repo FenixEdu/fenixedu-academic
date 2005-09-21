@@ -29,10 +29,6 @@ public class Person extends Person_Base {
         setProperties(personToCreate);
         setUsername(personToCreate.getUsername());
         setPais(country);
-        if(country != null){
-            setNacionalidade(country.getNationality());
-        }
-        
         setIsPassInKerberos(Boolean.FALSE);
     }
 
@@ -72,18 +68,11 @@ public class Person extends Person_Base {
     public void edit(InfoPerson personToEdit, ICountry country) {
         setProperties(personToEdit);
         setPais(country);
-        if(country != null){
-            setNacionalidade(country.getNationality());
-        }
     }    
     
     public void update(InfoPerson updatedPersonalData, ICountry country) {
         updateProperties(updatedPersonalData);
         setPais((ICountry) valueToUpdate(getPais(),country));
-        if(country != null){
-            setNacionalidade(((ICountry) valueToUpdate(getPais(),country)).getNationality());
-        }
-        setNacionalidade(valueToUpdate(getNacionalidade(),null));
     }
 
     public void editPersonalContactInformation(InfoPerson personToEdit) {
@@ -164,6 +153,10 @@ public class Person extends Person_Base {
     	this.setUsername(UsernameUtils.updateUsername(this));
     }
     
+    public void updateIstUsername(){
+        this.setIstUsername(UsernameUtils.updateIstUsername(this));
+    }
+    
 	public IRole getPersonRole(RoleType roleType){
 		
 		for (IRole role : this.getPersonRoles()) {
@@ -192,6 +185,11 @@ public class Person extends Person_Base {
         return null;
     }
     
+    public String getNacionalidade(){
+        return this.getPais().getNationality();
+    }
+    
+
     /***************************************************************************
      * PRIVATE METHODS *
      **************************************************************************/
@@ -222,7 +220,6 @@ public class Person extends Person_Base {
         setLocalidade(infoPerson.getLocalidade());
         setLocalidadeCodigoPostal(infoPerson.getLocalidadeCodigoPostal());
         setMorada(infoPerson.getMorada());
-        setNacionalidade(infoPerson.getNacionalidade());
         setNascimento(infoPerson.getNascimento());
         setNomeMae(infoPerson.getNomeMae());
         setNomePai(infoPerson.getNomePai());
@@ -276,7 +273,6 @@ public class Person extends Person_Base {
         setLocalidadeCodigoPostal(valueToUpdate(getLocalidadeCodigoPostal(), infoPerson
                 .getLocalidadeCodigoPostal()));
         setMorada(valueToUpdate(getMorada(), infoPerson.getMorada()));
-        setNacionalidade(valueToUpdate(getNacionalidade(), infoPerson.getNacionalidade()));
         setNascimento((Date) valueToUpdate(getNascimento(), infoPerson.getNascimento()));
         setNomeMae(valueToUpdate(getNomeMae(), infoPerson.getNomeMae()));
         setNomePai(valueToUpdate(getNomePai(), infoPerson.getNomePai()));
@@ -351,7 +347,6 @@ public class Person extends Person_Base {
         this.setNascimento(nascimento);
         this.setNomePai(nomePai);
         this.setNomeMae(nomeMae);
-        this.setNacionalidade(nacionalidade);
         this.setFreguesiaNaturalidade(freguesiaNaturalidade);
         this.setConcelhoNaturalidade(concelhoNaturalidade);
         this.setDistritoNaturalidade(distritoNaturalidade);
@@ -397,7 +392,6 @@ public class Person extends Person_Base {
         this.setNascimento(nascimento);
         this.setNomePai(nomePai);
         this.setNomeMae(nomeMae);
-        this.setNacionalidade(nacionalidade);
         this.setFreguesiaNaturalidade(freguesiaNaturalidade);
         this.setConcelhoNaturalidade(concelhoNaturalidade);
         this.setDistritoNaturalidade(distritoNaturalidade);

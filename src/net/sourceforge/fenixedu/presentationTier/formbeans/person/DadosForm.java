@@ -51,8 +51,6 @@ public final class DadosForm extends ActionForm {
 
     private String nomeMae = "";
 
-    private String nacionalidade = "";
-
     private String freguesiaNaturalidade = "";
 
     private String concelhoNaturalidade = "";
@@ -169,10 +167,6 @@ public final class DadosForm extends ActionForm {
 
     public String getNomeMae() {
         return nomeMae;
-    }
-
-    public String getNacionalidade() {
-        return nacionalidade;
     }
 
     public String getFreguesiaNaturalidade() {
@@ -339,10 +333,6 @@ public final class DadosForm extends ActionForm {
         this.nomeMae = nomeMae;
     }
 
-    public void setNacionalidade(String nacionalidade) {
-        this.nacionalidade = nacionalidade;
-    }
-
     public void setFreguesiaNaturalidade(String freguesiaNaturalidade) {
         this.freguesiaNaturalidade = freguesiaNaturalidade;
     }
@@ -455,7 +445,6 @@ public final class DadosForm extends ActionForm {
         anoNascimento = 0;
         nomePai = "";
         nomeMae = "";
-        nacionalidade = "";
         freguesiaNaturalidade = "";
         concelhoNaturalidade = "";
         distritoNaturalidade = "";
@@ -521,7 +510,6 @@ public final class DadosForm extends ActionForm {
         setAnoNascimento(calendar.get(Calendar.YEAR));
         setNomePai(pessoa.getNomePai());
         setNomeMae(pessoa.getNomeMae());
-        setNacionalidade(pessoa.getNacionalidade());
         setFreguesiaNaturalidade(pessoa.getFreguesiaNaturalidade());
         setConcelhoNaturalidade(pessoa.getConcelhoNaturalidade());
         setDistritoNaturalidade(pessoa.getDistritoNaturalidade());
@@ -587,7 +575,6 @@ public final class DadosForm extends ActionForm {
             pessoa.setNascimento(calendar.getTime());
             pessoa.setNomePai(getNomePai());
             pessoa.setNomeMae(getNomeMae());
-            pessoa.setNacionalidade(getNacionalidade());
             pessoa.setFreguesiaNaturalidade(getFreguesiaNaturalidade());
             pessoa.setConcelhoNaturalidade(getConcelhoNaturalidade());
             pessoa.setDistritoNaturalidade(getDistritoNaturalidade());

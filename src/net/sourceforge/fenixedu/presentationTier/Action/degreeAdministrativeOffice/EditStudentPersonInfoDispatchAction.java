@@ -210,7 +210,6 @@ public class EditStudentPersonInfoDispatchAction extends DispatchAction {
                 infoPerson.setMaritalStatus(null);
             else
                 infoPerson.setMaritalStatus(MaritalStatus.valueOf(aux));
-            infoPerson.setNacionalidade((String) changeApplicationInfoForm.get("nationality"));
             infoPerson.setInfoPais(nationality);
             infoPerson.setNomePai((String) changeApplicationInfoForm.get("fatherName"));
             infoPerson.setNomeMae((String) changeApplicationInfoForm.get("motherName"));

@@ -310,7 +310,6 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
         infoPerson.setNome((String) editGrantOwnerForm.get("name"));
         infoPerson.setNomePai((String) editGrantOwnerForm.get("fatherName"));
         infoPerson.setNomeMae((String) editGrantOwnerForm.get("motherName"));
-        infoPerson.setNacionalidade((String) editGrantOwnerForm.get("nationality"));
         infoPerson.setFreguesiaNaturalidade((String) editGrantOwnerForm.get("parishOfBirth"));
         infoPerson.setConcelhoNaturalidade((String) editGrantOwnerForm.get("districtSubBirth"));
         infoPerson.setDistritoNaturalidade((String) editGrantOwnerForm.get("districtBirth"));

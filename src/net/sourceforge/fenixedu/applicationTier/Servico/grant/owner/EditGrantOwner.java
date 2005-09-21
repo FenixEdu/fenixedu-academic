@@ -80,6 +80,10 @@ public class EditGrantOwner implements IService {
         
         if (infoGrantOwner.getPersonInfo().getInfoPais() != null) {
             country = (ICountry) sp.getIPersistentCountry().readByOID(Country.class, infoGrantOwner.getPersonInfo().getInfoPais().getIdInternal());
+        } else {
+            //If the person country is undefined it is set to default "PORTUGUESA NATURAL DO CONTINENTE" 
+            //In a not distance future this will not be needed since the coutry can never be null
+            country = (ICountry) sp.getIPersistentCountry().readCountryByNationality("PORTUGUESA NATURAL DO CONTINENTE");
         }
         
         //create or edit person information

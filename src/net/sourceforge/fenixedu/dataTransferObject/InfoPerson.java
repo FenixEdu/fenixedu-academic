@@ -9,12 +9,16 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.ICountry;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author tfc130
@@ -37,8 +41,6 @@ public class InfoPerson extends InfoObject {
     private String nomePai;
 
     private String nomeMae;
-
-    private String nacionalidade;
 
     private String freguesiaNaturalidade;
 
@@ -110,7 +112,7 @@ public class InfoPerson extends InfoObject {
             IDDocumentType tipoDocumentoIdentificacao,
             String localEmissaoDocumentoIdentificacao, Date dataEmissaoDocumentoIdentificacao,
             Date dataValidadeDocumentoIdentificacao, String nome, Gender sex, MaritalStatus estadoCivil,
-            Date nascimento, String nomePai, String nomeMae, String nacionalidade,
+            Date nascimento, String nomePai, String nomeMae,
             String freguesiaNaturalidade, String concelhoNaturalidade, String distritoNaturalidade,
             String morada, String localidade, String codigoPostal, String localidadeCodigoPostal,
             String freguesiaMorada, String concelhoMorada, String distritoMorada, String telefone,
@@ -128,7 +130,6 @@ public class InfoPerson extends InfoObject {
         setNascimento(nascimento);
         setNomePai(nomePai);
         setNomeMae(nomeMae);
-        setNacionalidade(nacionalidade);
         setFreguesiaNaturalidade(freguesiaNaturalidade);
         setConcelhoNaturalidade(concelhoNaturalidade);
         setDistritoNaturalidade(distritoNaturalidade);
@@ -175,7 +176,7 @@ public class InfoPerson extends InfoObject {
         result += "\n  - Birth : " + nascimento;
         result += "\n  - Father Name : " + nomePai;
         result += "\n  - Mother Name : " + nomeMae;
-        result += "\n  - Nationality : " + nacionalidade;
+        result += "\n  - Nationality : " + getInfoPais().getNationality();
         result += "\n  - Birth Place Parish : " + freguesiaNaturalidade;
         result += "\n  - Birth Place Municipality : " + concelhoNaturalidade;
         result += "\n  - Birth Place District : " + distritoNaturalidade;
@@ -327,7 +328,7 @@ public class InfoPerson extends InfoObject {
      * @return String
      */
     public String getNacionalidade() {
-        return nacionalidade;
+        return this.getInfoPais().getNationality();
     }
 
     /**
@@ -599,16 +600,6 @@ public class InfoPerson extends InfoObject {
     }
 
     /**
-     * Sets the nacionalidade.
-     * 
-     * @param nacionalidade
-     *            The nacionalidade to set
-     */
-    public void setNacionalidade(String nacionalidade) {
-        this.nacionalidade = nacionalidade;
-    }
-
-    /**
      * Sets the nascimento.
      * 
      * @param nascimento
@@ -829,6 +820,8 @@ public class InfoPerson extends InfoObject {
     public void copyFromDomain(IPerson person) {
         super.copyFromDomain(person);
         if (person != null) {
+            setInfoPais(InfoCountry.newInfoFromDomain(person.getPais()));
+            
         	setNome(person.getNome());
             setNumeroDocumentoIdentificacao(person.getNumeroDocumentoIdentificacao());
             setTipoDocumentoIdentificacao(person.getIdDocumentType());
@@ -861,7 +854,6 @@ public class InfoPerson extends InfoObject {
             setFreguesiaNaturalidade(person.getFreguesiaNaturalidade());
 
             setLocalidadeCodigoPostal(person.getLocalidadeCodigoPostal());
-            setNacionalidade(person.getNacionalidade());
 
             setNascimento(person.getNascimento());
             setNomeMae(person.getNomeMae());
@@ -923,6 +915,11 @@ public class InfoPerson extends InfoObject {
     public void copyToDomain(InfoPerson infoPerson, IPerson person) throws ExcepcaoPersistencia {
         super.copyToDomain(infoPerson, person);
 
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ICountry country = (ICountry) sp.getIPersistentCountry().readByOID(Country.class,
+                infoPerson.getInfoPais().getIdInternal());
+        person.setPais(country);
+        
         person.setNome(infoPerson.getNome());
         person.setNumeroDocumentoIdentificacao(infoPerson.getNumeroDocumentoIdentificacao());
         person.setIdDocumentType(infoPerson.getTipoDocumentoIdentificacao());
@@ -955,7 +952,6 @@ public class InfoPerson extends InfoObject {
         person.setFreguesiaNaturalidade(infoPerson.getFreguesiaNaturalidade());
 
         person.setLocalidadeCodigoPostal(infoPerson.getLocalidadeCodigoPostal());
-        person.setNacionalidade(infoPerson.getNacionalidade());
 
         person.setNascimento(infoPerson.getNascimento());
         person.setNomeMae(infoPerson.getNomeMae());

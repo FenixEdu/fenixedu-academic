@@ -31,6 +31,7 @@ public class PersonRole extends PersonRole_Base {
         }
 
         person.updateUsername();
+        person.updateIstUsername();
     }
 
     /**
@@ -50,6 +51,7 @@ public class PersonRole extends PersonRole_Base {
 
         // Update person's username according to the removal of the role
         person.updateUsername();
+        person.updateIstUsername();
     }
 
     private static Boolean verifiesDependencies(IPerson person, IRole role) {

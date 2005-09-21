@@ -1879,7 +1879,6 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 	Date dataEmissaoDocumentoIdentificacao;
 	String morada;
 	Boolean availableWebSite;
-	String nacionalidade;
 	String numContribuinte;
 	String localidadeCodigoPostal;
 	String username;
@@ -1924,6 +1923,8 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
     
     public void updateUsername();
     
+    public void updateIstUsername();
+    
     public net.sourceforge.fenixedu.domain.IRole getPersonRole(net.sourceforge.fenixedu.domain.person.RoleType roleType);
     
     public Boolean hasRole(net.sourceforge.fenixedu.domain.person.RoleType roleType);    
@@ -1933,6 +1934,8 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 	public void removeRoleByType(net.sourceforge.fenixedu.domain.person.RoleType roleType);
 
 	public void indicatePrivledges(java.util.List<IRole> roles);
+	
+	public String getNacionalidade();
     "
 }
 
