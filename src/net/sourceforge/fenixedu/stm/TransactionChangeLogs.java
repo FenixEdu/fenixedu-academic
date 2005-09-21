@@ -118,22 +118,25 @@ public class TransactionChangeLogs {
     }
 
     public static VBoxBody allocateBodiesFor(VBox box, Object obj, String attr) {
-	// This method should be called in a context where the lock
-	// for CHANGE_LOGS is acquired It cannot be done here because
-	// we need to acquire the lock before the object is created
-	// and inserted into the cache, so that no version is missed
-	// by a concurrent registerChangeLogSet while the object is
-	// being constructed
-	// For now, this lock is acquired in the class FenixRowReader
 	Class objClass = obj.getClass();
 	VBoxBody body = box.allocateBody(0);
 	    
-	for (ChangeLogSet clSet : CHANGE_LOGS) {
-	    for (ChangeLog log : clSet.changeLogs) {
-		if ((log.oid.getObjectsRealClass() == objClass) && log.attr.equals(attr)) {
-		    VBoxBody newBody = box.allocateBody(clSet.txNumber);
-		    newBody.setPrevious(body);
-		    body = newBody;
+	synchronized (CHANGE_LOGS) {
+	    // We acquire the lock here so that we have a coherent view of 
+	    // the CHANGE_LOGS.
+	    // However, the lock should be acquired also when an object is 
+	    // being constructed, because all of the objects slots are
+	    // initialized before the object enters the cache, so that no 
+	    // version is missed by a concurrent registerChangeLogSet while 
+	    // the object is being constructed
+	    // For now, this lock is acquired also in the class FenixRowReader
+	    for (ChangeLogSet clSet : CHANGE_LOGS) {
+		for (ChangeLog log : clSet.changeLogs) {
+		    if ((log.oid.getObjectsRealClass() == objClass) && log.attr.equals(attr)) {
+			VBoxBody newBody = box.allocateBody(clSet.txNumber);
+			newBody.setPrevious(body);
+			body = newBody;
+		    }
 		}
 	    }
 	}

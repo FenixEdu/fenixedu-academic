@@ -35,7 +35,8 @@ public abstract class RelationList<E> extends AbstractList<E> implements Version
 	this.elementsRef = new SoftReference<VBox<FunctionalSet<E>>>(elementsBox);
     }
 
-    private VBox<FunctionalSet<E>> getElementsBox() {
+    // The access to the elementsRef field should be synchronized
+    private synchronized VBox<FunctionalSet<E>> getElementsBox() {
 	VBox<FunctionalSet<E>> box = elementsRef.get();
 	if (box == null) {
 	    box = VBox.makeNew(true, true);
@@ -46,7 +47,8 @@ public abstract class RelationList<E> extends AbstractList<E> implements Version
     }
 
 
-    public void addNewVersion(int txNumber) {
+    // The access to the elementsRef field should be synchronized
+    public synchronized void addNewVersion(int txNumber) {
 	VBox<FunctionalSet<E>> box = elementsRef.get();
 	if (box != null) {
 	    box.addNewVersion(txNumber);

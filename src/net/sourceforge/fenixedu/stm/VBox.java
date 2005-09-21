@@ -111,7 +111,7 @@ public class VBox<E> extends jvstm.VBox<E> implements VersionedSubject {
 
 
     protected static final ThreadLocal<Boolean> isLoading = new ThreadLocal<Boolean>() {
-         protected synchronized Boolean initialValue() {
+         protected Boolean initialValue() {
              return Boolean.FALSE;
          }
     };
