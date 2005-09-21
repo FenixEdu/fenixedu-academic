@@ -3,41 +3,40 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
 
-
+<style>
+form {
+margin: 0;
+padding: 0;
+}
+</style>
 
 
 <h2><bean:message key="title.enrolmentGroup.insertNewGroup"/></h2>
 
-	<table width="100%" cellpadding="0" cellspacing="0">
-		<tr>
-			<td class="infoop">
-				<bean:message key="label.student.viewGroupEnrolment.description" />
-			</td>
-		</tr>
-	</table>
-	<br>
+	<div class="infoop">
+		<p><strong><bean:message key="label.student.viewGroupEnrolment.description.title1" />:</strong><br/>
+		<bean:message key="label.student.viewGroupEnrolment.description.2" /></p>
+		<p><strong><bean:message key="label.student.viewGroupEnrolment.description.title2" />:</strong><br/>
+		<bean:message key="label.student.viewGroupEnrolment.description.2" /></p>
+	</div>
 
-<html:form action="/groupEnrolment" method="get">
 
-<br>
+	<html:form action="/groupEnrolment" method="get">
 
-<h2><span class="error"><html:errors/></span></h2>		 
+	<br/>
 
-<bean:define id="groupNumber" name="groupNumber"/>
+	<h2><span class="error"><html:errors/></span></h2>		 
 
-<table width="100%" cellpadding="0" cellspacing="0">
-	<tr>
-		<td>
-			<b><bean:message key="label.GroupNumber"/> </b><bean:write name="groupNumber"/>
-			<br/><br/>
-			<b><bean:message key="label.infoStudents.studentsWithoutGroup" /></b>
-		</td>
-	</tr>
-</table>
-<br/>
+	<br/>
+
+	<bean:define id="groupNumber" name="groupNumber"/>
+
+		<p><b class="infoop3"><bean:message key="label.GroupNumber"/><bean:write name="groupNumber"/></b></p>
+		<p><bean:message key="label.infoStudents.studentsWithoutGroup" /></p>
+
 <logic:present name="infoUserStudent"> 
-	
-	<table width="70%" cellpadding="0" border="0">	
+
+	<table class="style1" width="80%" cellpadding="0" border="0">	
 		<tr>
 		
 		<td width="5%" class="listClasses-header">
@@ -76,7 +75,7 @@
 	<logic:notEmpty name="infoStudents">
 	
 	<br>
-	<table width="70%" cellpadding="0" border="0">	
+	<table class="style1" width="80%" cellpadding="0" border="0">	
 		
 	
 		<logic:iterate id="infoStudent" name="infoStudents">			
@@ -114,25 +113,22 @@
 
 <table>
 <tr>
-	<td><html:submit styleClass="inputbutton"><bean:message key="button.finalize.enrolment"/>                    		         	
-		</html:submit>       
-		<html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
-		</html:reset>  
-
+	<td>
+		<html:submit styleClass="inputbutton"><bean:message key="button.finalize.enrolment"/></html:submit>       
+	</td>
+	
+	<td>
+		<html:reset styleClass="inputbutton"><bean:message key="label.clear"/></html:reset>  
 		</html:form>
 	</td>
+	
 	<td>
 		<html:form action="/viewShiftsAndGroups" method="get">
-	
-		<html:cancel styleClass="inputbutton"><bean:message key="button.cancel"/>                    		         	
-		</html:cancel>
-	
+		<html:cancel styleClass="inputbutton"><bean:message key="button.cancel"/></html:cancel>
 		<html:hidden property="method" value="execute"/>
 		<html:hidden  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>
 		<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode")%>"/>		
-
-	</html:form>
+		</html:form>
 	</td>
-	
 </tr>
 </table>

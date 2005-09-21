@@ -17,31 +17,26 @@
 
 
 	<logic:empty name="infoSiteShiftsAndGroups" property="infoSiteGroupsByShiftList">
-		
-		
 		<html:link page="<%="/viewExecutionCourseProjects.do?method=execute&executionCourseCode=" + request.getParameter("executionCourseCode")%>">
-				<bean:message key="link.backToProjects"/>
+			<bean:message key="link.backToProjects"/>
 		</html:link>
-
-		<br/>
-	
+		<br />
 		<h2><bean:message key="message.shifts.not.available" /></h2>
 	</logic:empty>
 	
-
-
+	
 	<logic:notEmpty name="infoSiteShiftsAndGroups" property="infoSiteGroupsByShiftList">
 	<h2><bean:message key="title.ShiftsAndGroups"/></h2>
-	<br>
+	
+	
+	<span class="error"><html:errors/></span>
 
-	<table width="100%" cellpadding="0" cellspacing="0">
-		<tr>
-			<td class="infoop">
-				<bean:message key="label.student.viewShiftsAndGroups.description" />
-			</td>
-		</tr>
-	</table>
+	<ul>
+	<li><html:link page="<%="/viewExecutionCourseProjects.do?method=execute&executionCourseCode=" + request.getParameter("executionCourseCode")%>"><bean:message key="link.backToProjects"/></html:link> - <bean:message key="link.backToProjects.description"/></li>
+	<li><html:link page="<%="/viewAllStudentsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>"><bean:message key="link.viewAllStudentsAndGroups"/></html:link> - <bean:message key="link.viewAllStudentsAndGroups.description"/></li>
+	</ul>
 
+<!-- ASD -->
 	<br />
 	<logic:iterate id="infoExportGrouping" name="infoExportGroupings" length="1">
 		<bean:write name="infoExportGrouping" property="infoExecutionCourse.nome"/>
@@ -51,26 +46,8 @@
 	</logic:iterate>
 	<br />
 
-	<br>	
-     <span class="error"><html:errors/></span> 	
-
-	<html:link page="<%="/viewExecutionCourseProjects.do?method=execute&executionCourseCode=" + request.getParameter("executionCourseCode")%>">
-				<bean:message key="link.backToProjects"/>
-	</html:link>
-
-	<br/>
 	
-	<br>
-	<html:link page="<%="/viewAllStudentsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
-    	<bean:message key="link.viewAllStudentsAndGroups"/>
-    	</html:link>
-	
-	<br/>
-	
-	
-	<br/>
-	
-  <table align="left" width="95%" cellspacing='1' cellpadding='1'>	
+  <table class="style1" cellspacing='1' cellpadding='1'>	
 	<tbody>		
 	
 		<tr >
@@ -258,8 +235,19 @@
       
           </logic:iterate>
         </tbody>
-    
 	</table>
+	
+	<br />
+	
+	<div class="infoop">
+	<ul>
+	<li><bean:message key="label.student.viewShiftsAndGroups.description.item1" /></li>
+	<li><bean:message key="label.student.viewShiftsAndGroups.description.item2" /></li>
+	<li><bean:message key="label.student.viewShiftsAndGroups.description.item3" /></li>
+	<li><bean:message key="label.student.viewShiftsAndGroups.description.item4" /></li>
+	</ul>
+	</div>
+	
 </logic:notEmpty>	
 
 </logic:present>

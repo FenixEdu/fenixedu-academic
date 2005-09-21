@@ -5,30 +5,35 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
+<style>
+form {
+margin: 0;
+padding: 0;
+}
+</style>
 
 <logic:present name="infoSiteStudentGroup">
 
-	<table width="100%" cellpadding="0" cellspacing="0">
-		<tr>
-			<td class="infoop">
-				<bean:message key="label.student.removeStudentInGroup.description" />
-			</td>
-		</tr>
-	</table>
-<br>
 
-	<logic:empty name="infoSiteStudentGroup" property="infoSiteStudentInformationList">
+<logic:empty name="infoSiteStudentGroup" property="infoSiteStudentInformationList">
 	<h2><bean:message key="message.infoSiteStudentGroupList.not.available" /></h2>
-	</logic:empty> 
-	
+</logic:empty> 
+
 	<h2><span class="error"><html:errors/></span></h2>
 	
 	<logic:notEmpty name="infoSiteStudentGroup" property="infoSiteStudentInformationList">
 
 	<html:form action="/removeGroupEnrolment" method="get">
-	<table width="50%" cellpadding="0" border="0">
+	
 	<h2><bean:message key="title.RemoveEnrolment"/></h2>
-	<h2><bean:message key="label.StudentGroup"/></h2>
+
+	<div class="infoop">
+		<bean:message key="label.student.removeStudentInGroup.description" />
+	</div>
+
+	<p><strong><bean:message key="label.StudentGroup"/></strong></p>
+
+	<table class="style1" width="70%" cellpadding="0" border="0">
 	<tr>
 		<td class="listClasses-header"><bean:message key="label.numberWord" />
 		</td>
@@ -61,12 +66,12 @@
 			</logic:iterate>
 	 		
 	</table>
-	<br>
-	<br>
+
+	<br/>
 	<bean:message key="label.confirmGroupStudentUnrolment"/>
-	<br>
-	<br>
-	<br>
+	<br/>
+	<br/>
+	
 	<table>
 		<tr>
 			<td>

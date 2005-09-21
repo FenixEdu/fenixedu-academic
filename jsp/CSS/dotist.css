@@ -325,7 +325,23 @@ select.degrees {
 	padding: 10px 10px;
 	border-bottom: 1px solid #ccc;
 	}
-
+	
+.infoop2 {
+	background-color: #fafade;
+	vertical-align: middle;
+	padding: 10px 10px;
+	border-bottom: 1px solid #f2f2a6;
+	}
+.infoop3 {
+	background-color: #fafade;
+	padding: 2px 4px;
+	border-bottom: 1px solid #f2f2a6;
+	}
+.infoop4 {
+	background-color: #ffc;
+	padding: 2px 4px;
+	}
+	
 .infoop-blue {
 	background-color: #9CF;
 	vertical-align: middle;
@@ -422,7 +438,7 @@ table#ects {
 	}
 
 table.style1 {
-	margin-bottom: 1.5em;
+	margin-bottom: 1em;
 	border: 2px solid #ccc;
 	border-collapse: collapse;
 	}

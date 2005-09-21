@@ -13,56 +13,27 @@
 
 <logic:present name="infoSiteStudentsAndGroups">
 
-<table align="left" width="100%">
-<tbody>
-<tr>
-<td>
+
 	
-	<br/>
 	<h2><bean:message key="title.viewStudentsAndGroupsByShift"/></h2>
-	<br/>
 	
 
 	<logic:empty name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList">
-		
-	<table width="100%" cellpadding="0" cellspacing="0">
-			<tr>
-				<td class="infoop">
-					<bean:message key="label.student.viewStudentsAndGroupsByShift.description" />
-				</td>
-			</tr>
-	</table>
-	<br />
-	
-	
+		<!-- <div class="infoop"><bean:message key="label.student.viewStudentsAndGroupsByShift.description" /></div> -->
 	</logic:empty>	
 	
 	<logic:notEmpty name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList">
-	
-	<table width="100%" cellpadding="0" cellspacing="0">
-			<tr>
-				<td class="infoop">
-					<bean:message key="label.student.viewStudentsAndGroupsByShift.description" />
-				</td>
-			</tr>
-	</table>
-	
+		<!-- <div class="infoop"><bean:message key="label.student.viewStudentsAndGroupsByShift.description" /></div> -->
 	</logic:notEmpty>		
-	
-<br/>
+
 <span class="error"><html:errors/></span>
-<br/>
-<br/>
-	
-	
-</td>
-</tr>
 
-<tr>
-<td>
-	
 
-<table align="left" width="75%" cellpadding="0" border="0">	
+	<logic:empty name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList">
+		<p><span class="infoop4"><strong><bean:message key="message.infoSiteStudentsAndGroupsList.not.available" /></strong></span></p>
+ 	</logic:empty> 
+
+<table class="style1" width="75%" cellpadding="0" border="0">	
 	<tbody>		
 	
 		<tr >
@@ -136,53 +107,25 @@
 							</td>
 						</tr>
 					</logic:iterate>
-
         </tbody>
-    
 	</table>
 
-</td>
-</tr>
-
-<tr>
-<td>
-<br/>
-
-
 <span class="error"><html:errors/></span>
-<br/>
-<br/>
+
+	<p>
+		<html:link page="<%="/viewShiftsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+   		<bean:message key="link.backToShiftsAndGroups"/></html:link> - <bean:message key="link.backToShiftsAndGroups.description"/>
+   	</p>
 
 
-<logic:empty name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList">
-<html:link page="<%="/viewShiftsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
-    	<bean:message key="link.backToShiftsAndGroups"/></html:link><br/>
-
-	<br/>
-		
-	<h2><bean:message key="message.infoSiteStudentsAndGroupsList.not.available" /></h2>
- 	
-	</logic:empty> 
-	
-	
 	
 	<logic:notEmpty name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList">
-	<html:link page="<%="/viewShiftsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
-    	<bean:message key="link.backToShiftsAndGroups"/></html:link><br/>
-
-	
-
-	<br/>
 				 			 		
-	
-	<table width="75%" cellpadding="0" border="0">
+ 	<bean:size id="count" name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList"/> <bean:message key="label.student.NumberOfStudentsInShift" /> <%= count %>
+	<br/><br/>
+
+<table class="style1" width="75%" cellpadding="0" border="0">
 	<tbody>
-	
-	<br/>
- 	<bean:size id="count" name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList"/>
-	<bean:message key="label.student.NumberOfStudentsInShift" /><%= count %>
-	<br/>	
-	<br/>
 	
 	<tr>
 		<td class="listClasses-header" width="10%"><bean:message key="label.studentGroupNumber" />
@@ -221,7 +164,6 @@
 </tbody>
 </table>
 
-<br/>
 <br/>
 
   </logic:notEmpty>
