@@ -112,9 +112,9 @@ public class AddStudentsToDistributedTest implements IService {
                 .getTestScope().getDomainObject()).getNome() }));
         String msgBeginning;
         advisory.setSubject(distributedTest.getTitle());
-        final String beginHour = DateFormatUtils.format(distributedTest.getBeginHour().getTime(), "hh:mm");
+        final String beginHour = DateFormatUtils.format(distributedTest.getBeginHour().getTime(), "HH:mm");
         final String beginDate = DateFormatUtils.format(distributedTest.getBeginDate().getTime(), "dd/MM/yyyy");
-        final String endHour = DateFormatUtils.format(distributedTest.getEndHour().getTime(), "hh:mm");
+        final String endHour = DateFormatUtils.format(distributedTest.getEndHour().getTime(), "HH:mm");
         final String endDate = DateFormatUtils.format(distributedTest.getEndDate().getTime(), "dd/MM/yyyy");
 
         Object[] args = { this.contextPath, distributedTest.getIdInternal().toString(), beginHour, beginDate, endHour, endDate };

@@ -109,7 +109,8 @@ public class EditDistributedTest implements IService {
                 for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
                     studentMark += studentTestQuestion.getTestQuestionMark().doubleValue();
                 }
-                IAttends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student.getIdInternal(), executionCourse.getIdInternal());
+                IAttends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student.getIdInternal(),
+                        executionCourse.getIdInternal());
                 if (attend != null) {
                     IMark mark = DomainFactory.makeMark();
                     mark.setAttend(attend);
@@ -135,9 +136,9 @@ public class EditDistributedTest implements IService {
         advisory.setSubject(MessageFormat.format(bundle.getString("message.distributedTest.subjectChangeDates"), new Object[] { distributedTest
                 .getTitle() }));
 
-        final String beginHour = DateFormatUtils.format(distributedTest.getBeginHour().getTime(), "hh:mm");
+        final String beginHour = DateFormatUtils.format(distributedTest.getBeginHour().getTime(), "HH:mm");
         final String beginDate = DateFormatUtils.format(distributedTest.getBeginDate().getTime(), "dd/MM/yyyy");
-        final String endHour = DateFormatUtils.format(distributedTest.getEndHour().getTime(), "hh:mm");
+        final String endHour = DateFormatUtils.format(distributedTest.getEndHour().getTime(), "HH:mm");
         final String endDate = DateFormatUtils.format(distributedTest.getEndDate().getTime(), "dd/MM/yyyy");
 
         Object[] args = { this.contextPath, distributedTest.getIdInternal().toString(), beginHour, beginDate, endHour, endDate };
