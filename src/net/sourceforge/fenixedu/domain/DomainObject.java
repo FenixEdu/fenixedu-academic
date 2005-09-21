@@ -22,6 +22,8 @@ import org.apache.ojb.broker.metadata.ClassDescriptor;
  */
 public abstract class DomainObject extends DomainObject_Base {
 
+    public class UnableToDetermineIdException extends RuntimeException {}
+
     // This variable was created so that locking of domain objects can be
     // disabled for writting test cases. Testing domain code can be done
     // without persisting anything.
@@ -95,7 +97,8 @@ public abstract class DomainObject extends DomainObject_Base {
 		Integer id = (Integer)broker.serviceSequenceManager().getUniqueValue(cld.getFieldDescriptorByName("idInternal"));
 		setIdInternal(id);
 	    } catch (Exception e) {
-		System.out.println("Something went wrong when initializing the idInternal.  Not setting it...");
+            System.out.println("Something went wrong when initializing the idInternal.  Not setting it...");
+            throw new UnableToDetermineIdException();
 	    }
 	}
     }

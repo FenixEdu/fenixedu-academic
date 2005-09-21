@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.applicationTier.logging.ServiceExecutionLog;
 import net.sourceforge.fenixedu.applicationTier.logging.SystemInfo;
 import net.sourceforge.fenixedu.applicationTier.logging.UserExecutionLog;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.stm.VersionNotAvailableException;
 import net.sourceforge.fenixedu.stm.ServiceInfo;
@@ -142,6 +143,9 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
                     // repeat service
                 } catch (jvstm.CommitException ce) {
                     System.out.println("Restarting TX because of CommitException");
+                    // repeat service
+                } catch (DomainObject.UnableToDetermineIdException ce) {
+                    System.out.println("Restarting TX because of UnableToDetermineIdException");
                     // repeat service
                 }
             }
