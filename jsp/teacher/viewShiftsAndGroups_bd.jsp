@@ -278,14 +278,9 @@
 						 		</td>
 								
 								<td class="listClasses">
-									<logic:equal name="nrOfGroups" value="0">
-								 		<bean:message key="link.insertGroup"/>										
-									</logic:equal>	
-									<logic:notEqual name="nrOfGroups" value="0">
-								 		<html:link page="<%= "/insertStudentGroup.do?method=prepareCreateStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
-											<bean:message key="link.insertGroup"/>
-										</html:link>		   
-									</logic:notEqual>									
+									<html:link page="<%= "/insertStudentGroup.do?method=prepareCreateStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+										<bean:message key="link.insertGroup"/>
+									</html:link>		   								
 								</td>						
 			
 								 <td class="listClasses">
