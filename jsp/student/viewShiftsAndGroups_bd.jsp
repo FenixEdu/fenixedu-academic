@@ -36,7 +36,11 @@
 	<li><html:link page="<%="/viewAllStudentsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>"><bean:message key="link.viewAllStudentsAndGroups"/></html:link> - <bean:message key="link.viewAllStudentsAndGroups.description"/></li>
 	</ul>
 
-<!-- ASD -->
+	<br/>
+<!-- ASD : nome do agrupamento -->
+	<bean:write name="infoSiteShiftsAndGroups" property="infoGrouping.name"/>
+	<br/>
+<!-- ASD : nome das disciplinas -->
 	<br />
 	<logic:iterate id="infoExportGrouping" name="infoExportGroupings" length="1">
 		<bean:write name="infoExportGrouping" property="infoExecutionCourse.nome"/>
@@ -45,6 +49,7 @@
 		, <bean:write name="infoExportGrouping" property="infoExecutionCourse.nome"/>
 	</logic:iterate>
 	<br />
+	<br/>
 
 	
   <table class="style1" cellspacing='1' cellpadding='1'>	

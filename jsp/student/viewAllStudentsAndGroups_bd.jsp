@@ -21,6 +21,12 @@
 
 <span class="error"><html:errors/></span>
 
+	<br/>
+<!-- ASD : nome do agrupamento -->
+	<bean:write name="infoSiteStudentsAndGroups" property="infoGrouping.name"/>
+	<br/>
+	<br/>
+
 
 	<logic:empty name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList">
 			<p>
@@ -61,21 +67,53 @@
 	
 		<bean:define id="infoSiteStudentInformation" name="infoSiteStudentAndGroup" property="infoSiteStudentInformation"/>
 		<bean:define id="infoStudentGroup" name="infoSiteStudentAndGroup" property="infoStudentGroup"/>
-		
-		<tr>		
-			<td class="listClasses"><bean:write name="infoStudentGroup" property="groupNumber"/>
-			</td>
+		<bean:define id="username" name="UserView" property="utilizador" type="java.lang.String"/>
+		<logic:equal name="infoSiteStudentInformation" property="username" value="<%= username %>">
+			<tr>
+				<td class="listClasses">
+					<strong>
+						<bean:write name="infoStudentGroup" property="groupNumber"/>
+					</strong>
+				</td>
 			
-			<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="number"/>
-			</td>	
+				<td class="listClasses">
+					<strong>
+						<bean:write name="infoSiteStudentInformation" property="number"/>
+					</strong>
+				</td>	
 			
-			<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="name"/>
-			</td>		
+				<td class="listClasses">
+					<strong>
+						<bean:write name="infoSiteStudentInformation" property="name"/>
+					</strong>
+				</td>		
 			
-			<td class="listClasses">
+				<td class="listClasses">
+					<strong>
+						<bean:write name="infoSiteStudentInformation" property="email"/>
+					</strong>
+				</td>
+			</tr>
+		</logic:equal>
+		<logic:notEqual name="infoSiteStudentInformation" property="username" value="<%= username %>">
+			<tr>
+				<td class="listClasses">
+					<bean:write name="infoStudentGroup" property="groupNumber"/>
+				</td>
+			
+				<td class="listClasses">
+					<bean:write name="infoSiteStudentInformation" property="number"/>
+				</td>	
+			
+				<td class="listClasses">
+					<bean:write name="infoSiteStudentInformation" property="name"/>
+				</td>		
+			
+				<td class="listClasses">
 					<bean:write name="infoSiteStudentInformation" property="email"/>
-			</td>
-		</tr>				
+				</td>
+			</tr>
+		</logic:notEqual>
 	 </logic:iterate>
 
 </tbody>

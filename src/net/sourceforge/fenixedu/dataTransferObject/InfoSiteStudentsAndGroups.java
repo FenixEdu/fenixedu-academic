@@ -15,6 +15,7 @@ public class InfoSiteStudentsAndGroups extends DataTranferObject implements ISit
 
 	private List infoSiteStudentsAndGroupsList;
 	private InfoShift infoShift;
+    private InfoGrouping infoGrouping;
 	
 	
 	/**
@@ -82,4 +83,12 @@ public class InfoSiteStudentsAndGroups extends DataTranferObject implements ISit
 			}
 			return result;
 		}
+
+    public InfoGrouping getInfoGrouping() {
+        return infoGrouping;
+    }
+
+    public void setInfoGrouping(InfoGrouping infoGrouping) {
+        this.infoGrouping = infoGrouping;
+    }
 }

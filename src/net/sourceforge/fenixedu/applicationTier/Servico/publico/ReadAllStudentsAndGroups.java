@@ -11,6 +11,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentAndGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentInformation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsAndGroups;
@@ -77,6 +78,8 @@ public class ReadAllStudentsAndGroups implements IService {
 
                 infoSiteStudentInformation.setName(attend.getAluno().getPerson().getNome());
 
+                infoSiteStudentInformation.setUsername((attend.getAluno().getPerson().getUsername()));
+
                 infoSiteStudentInformation.setEmail(attend.getAluno().getPerson().getEmail());
 
                 infoSiteStudentAndGroup.setInfoSiteStudentInformation(infoSiteStudentInformation);
@@ -89,6 +92,7 @@ public class ReadAllStudentsAndGroups implements IService {
                 "infoSiteStudentInformation.number"));
 
         infoSiteStudentsAndGroups.setInfoSiteStudentsAndGroupsList(infoSiteStudentsAndGroupsList);
+        infoSiteStudentsAndGroups.setInfoGrouping(InfoGrouping.newInfoFromDomain(grouping));
 
         return infoSiteStudentsAndGroups;
     }

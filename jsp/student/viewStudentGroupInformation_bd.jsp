@@ -17,6 +17,15 @@
 	<bean:define id="groupPropertiesCode" name="infoGrouping" property="idInternal"/>
 
 
+	<br/>
+	<bean:write name="infoGrouping" property="name"/>
+	<br/>
+	<br/>
+	<br/>
+	<bean:write name="infoStudentGroup" property="groupNumber"/>
+	<br/>
+	<br/>
+
 <logic:empty name="infoSiteStudentGroup" property="infoSiteStudentInformationList">
 		<div class="infoop">
 			<bean:message key="label.student.emptyStudentGroupInformation.description" />
@@ -151,24 +160,50 @@
 	
 		
 	<logic:iterate id="infoSiteStudentInformation" name="infoSiteStudentGroup" property="infoSiteStudentInformationList">			
-		<tr>		
-			<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="number"/>
-			</td>	
-			
-			<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="name"/>
-			</td>		
-			
-			<td class="listClasses">
-				<logic:present name="infoSiteStudentInformation" property="email">
-					<bean:define id="mail" name="infoSiteStudentInformation" property="email"/>
-					<html:link href="<%= "mailto:"+ mail %>"><bean:write name="infoSiteStudentInformation" property="email"/></html:link>
-				</logic:present>
-				<logic:notPresent name="infoSiteStudentInformation" property="email">
-					&nbsp;
-				</logic:notPresent>
-				
-			</td>
-		</tr>
+ 		<bean:define id="username" name="UserView" property="utilizador" type="java.lang.String"/>
+		<logic:equal name="infoSiteStudentInformation" property="username" value="<%= username %>">
+			<tr>
+				<td class="listClasses">
+					<strong>
+						<bean:write name="infoSiteStudentInformation" property="number"/>
+					</strong>
+				</td>
+				<td class="listClasses">
+					<strong>
+						<bean:write name="infoSiteStudentInformation" property="name"/>
+					</strong>
+				</td>		
+				<td class="listClasses">
+					<strong>
+					<logic:present name="infoSiteStudentInformation" property="email">
+						<bean:define id="mail" name="infoSiteStudentInformation" property="email"/>
+						<html:link href="<%= "mailto:"+ mail %>"><bean:write name="infoSiteStudentInformation" property="email"/></html:link>
+					</logic:present>
+					<logic:notPresent name="infoSiteStudentInformation" property="email">
+						&nbsp;
+					</logic:notPresent>
+					</strong>
+				</td>
+			</tr>
+		</logic:equal>
+
+		<logic:notEqual name="infoSiteStudentInformation" property="username" value="<%= username %>">
+			<tr>
+				<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="number"/>
+				</td>
+				<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="name"/>
+				</td>		
+				<td class="listClasses">
+					<logic:present name="infoSiteStudentInformation" property="email">
+						<bean:define id="mail" name="infoSiteStudentInformation" property="email"/>
+						<html:link href="<%= "mailto:"+ mail %>"><bean:write name="infoSiteStudentInformation" property="email"/></html:link>
+					</logic:present>
+					<logic:notPresent name="infoSiteStudentInformation" property="email">
+						&nbsp;
+					</logic:notPresent>
+				</td>
+			</tr>
+		</logic:notEqual>
 	</logic:iterate>
 	</tbody>
 </table>
