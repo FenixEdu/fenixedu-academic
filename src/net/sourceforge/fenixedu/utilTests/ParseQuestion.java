@@ -69,9 +69,12 @@ public class ParseQuestion extends DefaultHandler {
         parseFile(infoStudentTestQuestion.getQuestion().getXmlFile(), path);
         infoStudentTestQuestion.setQuestion(list2Question(infoStudentTestQuestion.getQuestion()));
         if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.LID) {
-            if (infoStudentTestQuestion.getOptionShuffle() == null
-                    && !infoStudentTestQuestion.getDistributedTest().getTestType().equals(new TestType(3))) {
-                infoStudentTestQuestion.setOptionShuffle(shuffleOptions());
+            if (infoStudentTestQuestion.getOptionShuffle() == null) {
+                boolean shuffle = true;
+                if (infoStudentTestQuestion.getDistributedTest().getTestType().equals(new TestType(3))) {
+                    shuffle = false;
+                }
+                infoStudentTestQuestion.setOptionShuffle(shuffleOptions(shuffle));
             }
 
             infoStudentTestQuestion.getQuestion()
@@ -504,7 +507,7 @@ public class ParseQuestion extends DefaultHandler {
         return null;
     }
 
-    private String shuffleOptions() {
+    private String shuffleOptions(boolean shuffle) {
         Iterator it = listOptions.iterator();
         Vector v = new Vector();
         Vector vRandom = new Vector();
@@ -516,7 +519,7 @@ public class ParseQuestion extends DefaultHandler {
 
             if (tag.equals("response_label") || tag.equals("response_na")) {
                 optionNumber++;
-                if (atts.getValue(atts.getIndex("rshuffle")).equals("Yes")) {
+                if (atts.getValue(atts.getIndex("rshuffle")).equals("Yes") && shuffle == true) {
                     v.add("");
                     vRandom.add(new Integer(v.size()).toString());
                     continue;
