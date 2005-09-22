@@ -224,9 +224,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
         if(formBean.get("summaryDateInputOption").equals("on"))
             request.setAttribute("checked", "");
                 
-        if(formBean.get("editor").equals("") || (formBean.get("editor").equals("true"))){
-            request.setAttribute("verEditor", "true");    
-        }  
+        htmlEditorConfigurations(request, formBean);  
         
         request.setAttribute("siteView", siteView);
         return mapping.findForward("insertSummary");
@@ -524,9 +522,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
             return showSummaries(mapping, form, request, response);
         }            
         
-        if(summaryForm.get("editor").equals("") || (summaryForm.get("editor").equals("true"))){
-            request.setAttribute("verEditor", "true");    
-        }
+        htmlEditorConfigurations(request, summaryForm);
         
         request.setAttribute("siteView", siteView);
         
@@ -631,5 +627,17 @@ public class SummaryManagerAction extends FenixDispatchAction {
             saveErrors(request, actionErrors);
         }
         return showSummaries(mapping, form, request, response);
+    }
+    
+    private void htmlEditorConfigurations(HttpServletRequest request, DynaActionForm actionForm) {
+        String header = request.getHeader("User-Agent");        
+        if (header.indexOf("Safari/") == -1 && header.indexOf("Opera/") == -1
+                && header.indexOf("Konqueror/") == -1) {
+
+            if (actionForm.get("editor").equals("") || (actionForm.get("editor").equals("true")))
+                request.setAttribute("verEditor", "true");
+
+        } else
+            request.setAttribute("naoVerEditor", "true");
     }
 }
