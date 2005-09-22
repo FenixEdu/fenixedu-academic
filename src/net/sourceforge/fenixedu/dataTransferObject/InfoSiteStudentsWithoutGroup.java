@@ -17,6 +17,7 @@ public class InfoSiteStudentsWithoutGroup extends DataTranferObject implements I
 	private List infoStudentList;
 	private Integer groupNumber;
 	private InfoStudent infoUserStudent;
+    private InfoGrouping infoGrouping;
 	
 	public boolean equals(Object objectToCompare) {
 		boolean result = false;
@@ -105,4 +106,12 @@ public class InfoSiteStudentsWithoutGroup extends DataTranferObject implements I
 		result += "]";
 		return result;
 	}
+
+    public InfoGrouping getInfoGrouping() {
+        return infoGrouping;
+    }
+
+    public void setInfoGrouping(InfoGrouping infoGrouping) {
+        this.infoGrouping = infoGrouping;
+    }
 }

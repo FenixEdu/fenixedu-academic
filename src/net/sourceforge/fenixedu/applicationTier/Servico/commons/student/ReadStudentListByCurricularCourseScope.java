@@ -72,8 +72,9 @@ public class ReadStudentListByCurricularCourseScope implements IService {
     /**
      * @param studentCurricularPlans
      * @return A list of Student curricular Plans without the duplicates
+     * @throws ExcepcaoPersistencia 
      */
-    private List cleanList(List studentCurricularPlans, IUserView userView) throws FenixServiceException {
+    private List cleanList(List studentCurricularPlans, IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
         List result = new ArrayList();
         Integer numberAux = null;
 

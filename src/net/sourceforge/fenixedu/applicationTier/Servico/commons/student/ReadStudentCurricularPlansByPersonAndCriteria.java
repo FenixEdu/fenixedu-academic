@@ -51,7 +51,7 @@ public class ReadStudentCurricularPlansByPersonAndCriteria implements IService
 	 * - StudentCurricularPlan's do aluno
 	 * - Enrolments do aluno (filtrados por um criterio)
 	 * */
-	public InfoStudentCurricularPlansWithSelectedEnrollments run(String username, StudentCurricularPlanIDDomainType curricularPlanID, EnrollmentStateSelectionType criterio) throws ExcepcaoInexistente, FenixServiceException
+	public InfoStudentCurricularPlansWithSelectedEnrollments run(String username, StudentCurricularPlanIDDomainType curricularPlanID, EnrollmentStateSelectionType criterio) throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia
 	{
 		// curricularPlanID pode ser: ID do CP do aluno, 'all ou 'newest
 		// criterio define que IEnrolments vamos ver: pode ser 'aprovado ou null (selecciona todos) 

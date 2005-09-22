@@ -13,6 +13,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsWithoutGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
@@ -59,6 +60,7 @@ public class ReadStudentsWithoutGroup implements IService {
 		final Integer groupNumber = grouping.findMaxGroupNumber() + 1;
 		
 		infoSiteStudentsWithoutGroup.setGroupNumber(groupNumber);
+        infoSiteStudentsWithoutGroup.setInfoGrouping(InfoGrouping.newInfoFromDomain(grouping));
 
 		final List attends = grouping.getAttends();
 

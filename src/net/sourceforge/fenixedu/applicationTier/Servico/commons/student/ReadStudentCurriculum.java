@@ -26,21 +26,11 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ReadStudentCurriculum implements IService {
 
     public List run(Integer executionDegreeCode, Integer studentCurricularPlanID)
-            throws ExcepcaoInexistente, FenixServiceException {
-        ISuportePersistente sp = null;
+            throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
+         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IStudentCurricularPlan studentCurricularPlan = null;
-
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-            studentCurricularPlan = (IStudentCurricularPlan) sp.getIStudentCurricularPlanPersistente()
-                    .readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
-
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);
-            throw newEx;
-        }
+        IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) sp.getIStudentCurricularPlanPersistente()
+                .readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
 
         if (studentCurricularPlan == null) {
             throw new NonExistingServiceException();
@@ -64,5 +54,5 @@ public class ReadStudentCurriculum implements IService {
         }
 
         return result;
-    }    
+    }
 }

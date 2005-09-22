@@ -3,11 +3,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -16,30 +20,26 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class GetEnrolmentGrade {
 
-    /**
-     * The actor of this class.
-     */
-    public GetEnrolmentGrade() {
-    }
-
-    public InfoEnrolmentEvaluation run(IEnrolment enrolment) throws FenixServiceException {
+    public InfoEnrolmentEvaluation run(IEnrolment enrolment) throws ExcepcaoPersistencia {
         if (enrolment == null) {
             return null;
         }
-        
-        List enrolmentEvaluations = enrolment.getAllFinalEnrolmentEvaluations();
+
+        final IStudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
+        final IDegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+        final IDegree degree = degreeCurricularPlan.getDegree();
+
+        return (degree.getTipoCurso() == DegreeType.DEGREE) ?
+                    run(enrolment.getAllFinalEnrolmentEvaluations()) : run(enrolment.getEvaluations());
+    }
+
+    private InfoEnrolmentEvaluation run(List<IEnrolmentEvaluation> enrolmentEvaluations) throws ExcepcaoPersistencia {
         if(enrolmentEvaluations == null || enrolmentEvaluations.isEmpty()) {
-        	return null;
+            return null;
         }
         
-        IEnrolmentEvaluation evaluation = (IEnrolmentEvaluation) Collections.max(enrolmentEvaluations);
-        try {
-            return getInfoLatestEvaluation(evaluation);
-        } catch (ExcepcaoPersistencia e) {
-
-            throw new FenixServiceException(e);
-        }
-
+        final IEnrolmentEvaluation evaluation = (IEnrolmentEvaluation) Collections.max(enrolmentEvaluations);
+        return getInfoLatestEvaluation(evaluation);
     }
 
     private InfoEnrolmentEvaluation getInfoLatestEvaluation(IEnrolmentEvaluation latestEvaluation)

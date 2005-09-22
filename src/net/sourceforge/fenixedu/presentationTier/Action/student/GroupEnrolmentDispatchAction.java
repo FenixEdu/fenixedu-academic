@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonValidChangeServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentsWithoutGroup.NewStudentGroupAlreadyExists;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExportGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsWithoutGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -50,7 +51,7 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
         ActionForm form,
         HttpServletRequest request,
         HttpServletResponse response)
-        throws FenixActionException, FenixFilterException {
+        throws FenixActionException, FenixFilterException, FenixServiceException {
 
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -138,12 +139,17 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
         request.setAttribute("groupPropertiesCode", groupPropertiesCode);
         request.setAttribute("shiftCode", shiftCode);
         request.setAttribute("infoUserStudent", studentsNotEnroled.getInfoUserStudent());
+        request.setAttribute("infoGrouping", studentsNotEnroled.getInfoGrouping());
+
+        List<InfoExportGrouping> infoExportGroupings = (List<InfoExportGrouping>) ServiceUtils.
+                executeService(userView, "ReadExportGroupingsByGrouping", new Object[]{ groupPropertiesCode });
+        request.setAttribute("infoExportGroupings", infoExportGroupings);
 
         return mapping.findForward("sucess");
 
     }
     public ActionForward enrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-        throws FenixActionException, FenixFilterException {
+        throws FenixActionException, FenixFilterException, FenixServiceException {
 
         HttpSession session = request.getSession(false);
         DynaActionForm enrolmentForm = (DynaActionForm) form;

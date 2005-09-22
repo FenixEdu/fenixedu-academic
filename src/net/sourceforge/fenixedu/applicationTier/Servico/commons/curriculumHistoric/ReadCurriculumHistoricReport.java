@@ -92,9 +92,10 @@ public class ReadCurriculumHistoricReport implements IService {
     /**
      * @param enrollments
      * @return
+     * @throws ExcepcaoPersistencia 
      */
     private InfoCurriculumHistoricReport createInfoCurriculumHistoricReport(List enrollments)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
 
         List notAnulledEnrollments = (List) CollectionUtils.select(enrollments, new Predicate() {
 

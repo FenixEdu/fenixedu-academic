@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.GetEnrolmentGrade;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IEnrolment;
@@ -81,12 +80,7 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
             IEnrolment enrolment = (IEnrolment) iterator.next();
             if (enrolment.getEnrollmentState().equals(EnrollmentState.APROVED)) {
 
-                try {
-                    infoEnrolmentEvaluation = new GetEnrolmentGrade().run(enrolment);
-                } catch (FenixServiceException e) {
-                    e.printStackTrace();
-                    continue;
-                }
+                infoEnrolmentEvaluation = new GetEnrolmentGrade().run(enrolment);
 
                 if (infoEnrolmentEvaluation.getExamDate() == null) {
                     continue;

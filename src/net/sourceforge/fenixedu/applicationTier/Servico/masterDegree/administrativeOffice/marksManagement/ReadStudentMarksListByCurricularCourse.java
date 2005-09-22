@@ -34,32 +34,23 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ReadStudentMarksListByCurricularCourse implements IService {
 
     public List run(IUserView userView, Integer curricularCourseID, String executionYear)
-            throws ExcepcaoInexistente, FenixServiceException {
-
-        ISuportePersistente sp = null;
+            throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
 
         List enrolmentList = null;
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            ICurricularCourse curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse()
-                    .readByOID(CurricularCourse.class, curricularCourseID);
+        ICurricularCourse curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse()
+                .readByOID(CurricularCourse.class, curricularCourseID);
 
-            if (executionYear != null) {
-                enrolmentList = sp.getIPersistentEnrolment().readByCurricularCourseAndYear(
-                        curricularCourseID, executionYear);
-            } else {
-                enrolmentList = curricularCourse.getEnrolments();
-            }
-            if ((enrolmentList == null) || (enrolmentList.size() == 0)) {
-                throw new NonExistingServiceException();
-            }
-
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
+        if (executionYear != null) {
+            enrolmentList = sp.getIPersistentEnrolment().readByCurricularCourseAndYear(
+                    curricularCourseID, executionYear);
+        } else {
+            enrolmentList = curricularCourse.getEnrolments();
+        }
+        if ((enrolmentList == null) || (enrolmentList.size() == 0)) {
+            throw new NonExistingServiceException();
         }
 
         return cleanList(enrolmentList, userView);
@@ -68,13 +59,16 @@ public class ReadStudentMarksListByCurricularCourse implements IService {
     /**
      * @param enrollments
      * @return A list of Student curricular Plans without the duplicates
+     * @throws ExcepcaoPersistencia
      */
-    private List cleanList(List enrollments, IUserView userView) throws FenixServiceException {
+    private List cleanList(List enrollments, IUserView userView) throws FenixServiceException,
+            ExcepcaoPersistencia {
         List result = new ArrayList();
         Integer numberAux = null;
 
-        BeanComparator numberComparator = new BeanComparator("infoStudentCurricularPlan.infoStudent.number");
- 
+        BeanComparator numberComparator = new BeanComparator(
+                "infoStudentCurricularPlan.infoStudent.number");
+
         Iterator iterator = enrollments.iterator();
         while (iterator.hasNext()) {
             IEnrolment enrolment = (IEnrolment) iterator.next();
@@ -84,19 +78,20 @@ public class ReadStudentMarksListByCurricularCourse implements IService {
                             .getNumber().intValue())) {
                 numberAux = enrolment.getStudentCurricularPlan().getStudent().getNumber();
 
-                InfoEnrolmentEvaluation infoEnrolmentEvaluation = (new GetEnrolmentGrade()).run(enrolment);
-                
+                InfoEnrolmentEvaluation infoEnrolmentEvaluation = (new GetEnrolmentGrade())
+                        .run(enrolment);
+
                 if (infoEnrolmentEvaluation != null) {
 
                     InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
                             .newInfoFromDomain(enrolment);
                     infoEnrolment.setInfoEnrolmentEvaluation(infoEnrolmentEvaluation);
                     result.add(infoEnrolment);
-					
+
                 }
             }
         }
-		Collections.sort(result,numberComparator);
+        Collections.sort(result, numberComparator);
         return result;
     }
 }

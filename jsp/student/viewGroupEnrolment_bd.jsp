@@ -14,11 +14,27 @@ padding: 0;
 <h2><bean:message key="title.enrolmentGroup.insertNewGroup"/></h2>
 
 	<div class="infoop">
-		<p><strong><bean:message key="label.student.viewGroupEnrolment.description.title1" />:</strong><br/>
-		<bean:message key="label.student.viewGroupEnrolment.description.2" /></p>
-		<p><strong><bean:message key="label.student.viewGroupEnrolment.description.title2" />:</strong><br/>
-		<bean:message key="label.student.viewGroupEnrolment.description.2" /></p>
+		<logic:equal name="infoGrouping" property="enrolmentPolicy.type" value="1">
+			<p><strong><bean:message key="label.student.viewGroupEnrolment.description.title1" />:</strong><br/>
+			<bean:message key="label.student.viewGroupEnrolment.description.1" /></p>
+		</logic:equal>
+		<logic:equal name="infoGrouping" property="enrolmentPolicy.type" value="2">
+			<p><strong><bean:message key="label.student.viewGroupEnrolment.description.title2" />:</strong><br/>
+			<bean:message key="label.student.viewGroupEnrolment.description.2" /></p>
+		</logic:equal>
 	</div>
+
+	<br />
+	<bean:write name="infoGrouping" property="name"/>
+	<br />
+	<logic:iterate id="infoExportGrouping" name="infoExportGroupings" length="1">
+		<bean:write name="infoExportGrouping" property="infoExecutionCourse.nome"/>
+	</logic:iterate>
+	<logic:iterate id="infoExportGrouping" name="infoExportGroupings" offset="1">
+		, <bean:write name="infoExportGrouping" property="infoExecutionCourse.nome"/>
+	</logic:iterate>
+	<br/>
+	<br />
 
 
 	<html:form action="/groupEnrolment" method="get">

@@ -115,9 +115,10 @@ public class ReadStudentExternalInformation implements IService {
 	 * @param student
 	 * @return
 	 * @throws FenixServiceException
+	 * @throws ExcepcaoPersistencia 
 	 */
 	private Collection buildExternalEnrollmentsInfo(IStudent student)
-			throws FenixServiceException {
+			throws FenixServiceException, ExcepcaoPersistencia {
 		Collection enrollments = new ArrayList();
 		Collection curricularPlans = student.getStudentCurricularPlans();
 		for (Iterator iter = curricularPlans.iterator(); iter.hasNext();) {

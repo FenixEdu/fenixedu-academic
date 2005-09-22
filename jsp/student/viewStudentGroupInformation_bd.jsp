@@ -20,6 +20,13 @@
 	<br/>
 	<bean:write name="infoGrouping" property="name"/>
 	<br/>
+	<br />
+	<logic:iterate id="infoExportGrouping" name="infoExportGroupings" length="1">
+		<bean:write name="infoExportGrouping" property="infoExecutionCourse.nome"/>
+	</logic:iterate>
+	<logic:iterate id="infoExportGrouping" name="infoExportGroupings" offset="1">
+		, <bean:write name="infoExportGrouping" property="infoExecutionCourse.nome"/>
+	</logic:iterate>
 	<br/>
 	<br/>
 	<bean:write name="infoStudentGroup" property="groupNumber"/>

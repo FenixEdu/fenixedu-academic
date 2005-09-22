@@ -61,8 +61,9 @@ public class ReadStudentListByCurricularCourse implements IService {
     /**
      * @param enrolmentList
      * @return A list of enrolments without the duplicates
+     * @throws ExcepcaoPersistencia 
      */
-    private List cleanList(List enrolmentList) throws FenixServiceException {
+    private List cleanList(List enrolmentList) throws FenixServiceException, ExcepcaoPersistencia {
         List<InfoEnrolment> result = new ArrayList<InfoEnrolment>();
         Integer numberAux = null;
 

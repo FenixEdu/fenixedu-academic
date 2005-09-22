@@ -20,37 +20,14 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadInfoEnrolmentEvaluationByEvaluationOID implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public ReadInfoEnrolmentEvaluationByEvaluationOID() {
-    }
-
     public InfoEnrolmentEvaluation run(IUserView userView, Integer enrolmentOID)
-            throws ExcepcaoInexistente, FenixServiceException {
-        ISuportePersistente sp = null;
+            throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IEnrolment enrolment = null;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IEnrolment enrolment = (IEnrolment) sp.getIPersistentEnrolment().readByOID(Enrolment.class,
+                enrolmentOID);
 
-            enrolment = (IEnrolment) sp.getIPersistentEnrolment().readByOID(Enrolment.class,
-                    enrolmentOID);
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-
-        InfoEnrolmentEvaluation enrolmentEvaluation = null;
-
-        try {
-            
-            enrolmentEvaluation = (new GetEnrolmentGrade()).run(enrolment);
-        } catch (FenixServiceException e) {
-            throw new FenixServiceException(e);
-        }
-
-        return enrolmentEvaluation;
+        return (new GetEnrolmentGrade()).run(enrolment);
     }
 
 }
