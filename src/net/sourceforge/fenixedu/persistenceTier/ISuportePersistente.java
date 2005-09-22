@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPos
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentOtherTypeCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentServiceExemptionCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
-import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseHistoric;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseReport;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentStudentCourseReport;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
@@ -489,7 +488,5 @@ public interface ISuportePersistente {
     
     public IPersistentDislocatedStudent getIPersistentDislocatedStudent();
     
-    public IPersistentDistrict getIPersistentDistrict();
-    
-    public IPersistentUnit getIPersistentUnit();
+    public IPersistentDistrict getIPersistentDistrict();    
 }

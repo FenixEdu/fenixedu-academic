@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.IDepartment;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.ITutor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -43,17 +42,15 @@ public class ReadStudentsByTutor implements IService {
         }
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        IPersistentDepartment persistentDepartment = sp.getIDepartamentoPersistente();
-        IDepartment department = persistentDepartment.readByTeacher(tutorNumber);
+        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        ITeacher teacherDB = persistentTeacher.readByNumber(tutorNumber);
+        
+        IDepartment department = teacherDB.getWorkingDepartment();
 
         // Now only LEEC's teachers can be tutor
         if (!department.getCode().equals(new String("21"))) {
             throw new FenixServiceException("error.tutor.tutor.notLEEC");
         }
-
-        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-        ITeacher teacherDB = persistentTeacher.readByNumber(tutorNumber);
 
         List teacherAndStudentsList = new ArrayList();
         teacherAndStudentsList.add(InfoTeacherWithPerson.newInfoFromDomain(teacherDB));

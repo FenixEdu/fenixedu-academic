@@ -12,7 +12,7 @@ public class InfoEmployeeWithAll extends InfoEmployee {
         super.copyFromDomain(employee);
         if (employee != null) {
             setPerson(InfoPerson.newInfoFromDomain(employee.getPerson()));
-            setWorkingPlaceInfoCostCenter(InfoCostCenter.newInfoFromDomain(employee.findWorkingCostCenter()));
+            setWorkingUnit(InfoUnit.newInfoFromDomain(employee.getWorkingUnit()));
         }
     }
 

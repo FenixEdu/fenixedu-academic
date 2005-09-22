@@ -58,7 +58,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -328,14 +327,14 @@ public class ReadCourseInformation implements IService {
      */
     private List getInfoDepartments(List responsiblesFor, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
-        IPersistentDepartment persistentDepartment = sp.getIDepartamentoPersistente();
+        
         List infoDepartments = new ArrayList();
         responsiblesFor = removeDuplicates(responsiblesFor);
         Iterator iter = responsiblesFor.iterator();
         while (iter.hasNext()) {
             IProfessorship responsibleFor = (IProfessorship) iter.next();
             ITeacher teacher = responsibleFor.getTeacher();
-            IDepartment department = persistentDepartment.readByTeacher(teacher.getIdInternal());
+            IDepartment department = teacher.getWorkingDepartment();
 
             infoDepartments.add(InfoDepartment.newInfoFromDomain(department));
         }

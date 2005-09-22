@@ -12,7 +12,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.ICountry;
 import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
@@ -878,14 +877,8 @@ public class InfoPerson extends InfoObject {
         		infoEmployee.setIdInternal(person.getEmployee().getIdInternal());
         		infoEmployee.setEmployeeNumber(person.getEmployee().getEmployeeNumber());
         		
-    			if(person.getEmployee().getHistoricList().get(0).getMailingCostCenter()!=null){
-    				infoEmployee.setWorkingPlaceInfoCostCenter(InfoCostCenter.newInfoFromDomain(person.getEmployee().getHistoricList().get(0).getMailingCostCenter()));
-    				
-    			}else {
-    				if (person.getEmployee().getHistoricList().get(0).getWorkingPlaceCostCenter()!=null)
-    					infoEmployee.setWorkingPlaceInfoCostCenter(InfoCostCenter.newInfoFromDomain(person.getEmployee().getHistoricList().get(0).getWorkingPlaceCostCenter()));
-  
-    				
+    			if(person.getEmployee().getWorkingUnit()!=null){
+    				infoEmployee.setWorkingUnit(InfoUnit.newInfoFromDomain(person.getEmployee().getWorkingUnit()));    				                    		
         		}
     			setInfoEmployee(infoEmployee);
     			

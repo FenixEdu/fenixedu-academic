@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -54,9 +53,8 @@ public class CreditsAuthorizationFilter extends Filtro {
             IPessoaPersistente personDAO = sp.getIPessoaPersistente();
             IPerson requesterPerson = personDAO.lerPessoaPorUsername(requester.getUtilizador());
 
-            List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
-            IPersistentDepartment departmentDAO = sp.getIDepartamentoPersistente();
-            IDepartment department = departmentDAO.readByTeacher(teacherToEdit.getIdInternal());
+            List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();            
+            IDepartment department = teacherToEdit.getWorkingDepartment();
             authorizedRequester = departmentsWithAccessGranted.contains(department);
 
         } else if (AuthorizationUtils.containsRole(roles, RoleType.TEACHER)) {

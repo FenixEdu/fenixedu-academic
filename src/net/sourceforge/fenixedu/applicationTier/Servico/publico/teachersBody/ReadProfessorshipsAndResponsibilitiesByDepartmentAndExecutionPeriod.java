@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
@@ -67,9 +66,8 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
 
         IDepartment department = (IDepartment) persistentObject
                 .readByOID(Department.class, departmentId);
-
-        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-        List teachers = persistentTeacher.readByDepartment(department.getCode());
+        
+        List teachers = department.getTeachers();
 
         Iterator iter = teachers.iterator();
         IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();

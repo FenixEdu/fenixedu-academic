@@ -15,15 +15,15 @@ import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.util.PublicationArea;
 
 public class Teacher extends Teacher_Base {
-    
-    /********************************************************************
-     *                        BUSINESS SERVICES                         *
-     ********************************************************************/
-    
+
+    /***************************************************************************
+     * BUSINESS SERVICES *
+     **************************************************************************/
+
     public void addToTeacherInformationSheet(IPublication publication, PublicationArea publicationArea) {
         new PublicationTeacher(publication, this, publicationArea);
     }
-    
+
     public void removeFromTeacherInformationSheet(IPublication publication) {
         Iterator<IPublicationTeacher> iterator = getTeacherPublications().iterator();
 
@@ -36,13 +36,13 @@ public class Teacher extends Teacher_Base {
             }
         }
     }
-    
+
     public Boolean canAddPublicationToTeacherInformationSheet(PublicationArea area) {
-    	//NOTA : a linha seguinte contém um número explícito quando não deve
-    	// isto deve ser mudado! Mas esta mudança implica tornar explícito o 
-    	// conceito de Ficha de docente.
-    	return new Boolean(countPublicationsInArea(area) < 5);
-        
+        // NOTA : a linha seguinte contém um número explícito quando não deve
+        // isto deve ser mudado! Mas esta mudança implica tornar explícito o
+        // conceito de Ficha de docente.
+        return new Boolean(countPublicationsInArea(area) < 5);
+
     }
 
     public List responsibleFors() {
@@ -67,7 +67,8 @@ public class Teacher extends Teacher_Base {
         return null;
     }
 
-    public void updateResponsabilitiesFor(Integer executionYearId, List<Integer> executionCourses) throws MaxResponsibleForExceed, InvalidCategory {
+    public void updateResponsabilitiesFor(Integer executionYearId, List<Integer> executionCourses)
+            throws MaxResponsibleForExceed, InvalidCategory {
 
         if (executionYearId == null || executionCourses == null)
             throw new NullPointerException();
@@ -76,18 +77,38 @@ public class Teacher extends Teacher_Base {
 
         for (IProfessorship professorship : professorships) {
             IExecutionCourse executionCourse = professorship.getExecutionCourse();
-            ResponsibleForValidator.getInstance().validateResponsibleForList(this, executionCourse, professorship);
+            ResponsibleForValidator.getInstance().validateResponsibleForList(this, executionCourse,
+                    professorship);
             if (executionCourse.getExecutionPeriod().getExecutionYear().getIdInternal().equals(
-                    executionYearId)) {                                               
-                    professorship.setResponsibleFor(executionCourses.contains(executionCourse.getIdInternal()));                
+                    executionYearId)) {
+                professorship.setResponsibleFor(executionCourses.contains(executionCourse
+                        .getIdInternal()));
             }
         }
     }
-    
-    /********************************************************************
-     *                          OTHER METHODS                           *
-     ********************************************************************/    
-    
+
+    public IDepartment getWorkingDepartment() {
+
+        IEmployee employee = this.getPerson().getEmployee();
+        if (employee != null) {            
+            return employee.getDepartmentWorkingPlace();
+        }
+        return null;
+    }
+
+    public IDepartment getMailingDepartment() {
+
+        IEmployee employee = this.getPerson().getEmployee();
+        if (employee != null) {
+            return employee.getDepartmentMailingPlace();
+        }        
+        return null;
+    }
+
+    /***************************************************************************
+     * OTHER METHODS *
+     **************************************************************************/
+
     public String toString() {
         String result = "[Dominio.Teacher ";
         result += ", teacherNumber=" + getTeacherNumber();
@@ -101,10 +122,10 @@ public class Teacher extends Teacher_Base {
         return InfoCreditsBuilder.build(this, executionPeriod);
     }
 
-    /********************************************************************
-     *                         PRIVATE METHODS                          *
-     ********************************************************************/
-    
+    /***************************************************************************
+     * PRIVATE METHODS *
+     **************************************************************************/
+
     private int countPublicationsInArea(PublicationArea area) {
         int count = 0;
         for (IPublicationTeacher publicationTeacher : getTeacherPublications()) {

@@ -15,8 +15,4 @@ public interface IPersistentDepartment extends IPersistentObject {
     public List readAll() throws ExcepcaoPersistencia;
     
     public IDepartment readByName(String name) throws ExcepcaoPersistencia;
-
-    public IDepartment readByTeacher(Integer teacherId) throws ExcepcaoPersistencia;
-    
-    public IDepartment readByEmployee(Integer employeeId) throws ExcepcaoPersistencia;
 }

@@ -105,7 +105,7 @@ public class EmployeeBelongsToTeacherDepartment extends Filtro{
      * @throws NotAuthorizedFilterException
      */
     protected IDepartment getDepartment(IPersistentDepartment persistentDepartment, ITeacher teacher) throws ExcepcaoPersistencia, NotAuthorizedFilterException {
-        IDepartment department = persistentDepartment.readByTeacher(teacher.getIdInternal());
+        IDepartment department = teacher.getWorkingDepartment();
         if(department == null)
             throw new NotAuthorizedFilterException("error.noDepartment");
         return department;
@@ -119,7 +119,7 @@ public class EmployeeBelongsToTeacherDepartment extends Filtro{
      * @throws NotAuthorizedFilterException
      */
     protected IDepartment getDepartment(IPersistentDepartment persistentDepartment, IEmployee employee) throws ExcepcaoPersistencia, NotAuthorizedFilterException {
-        IDepartment department = persistentDepartment.readByEmployee(employee.getIdInternal());
+        IDepartment department = employee.getDepartmentWorkingPlace();
         if(department == null)
             throw new NotAuthorizedFilterException("error.noDepartment");
         return department;

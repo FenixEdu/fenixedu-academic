@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -63,9 +62,8 @@ public class TeacherDegreeFinalProjectFilter extends AuthorizationByRoleFilter {
             }
 
             List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
-            IPersistentDepartment departmentDAO = sp.getIDepartamentoPersistente();
-
-            IDepartment department = departmentDAO.readByTeacher(teacher.getIdInternal());
+            
+            IDepartment department = teacher.getWorkingDepartment();
 
             if (department == null) {
                 throw new NotAuthorizedException("Teacher number " + teacher.getTeacherNumber()

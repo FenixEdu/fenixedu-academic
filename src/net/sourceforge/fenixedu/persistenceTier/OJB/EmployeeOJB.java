@@ -4,11 +4,7 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
-import java.util.Calendar;
-import java.util.List;
-
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.EmployeeHistoric;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -44,26 +40,4 @@ public class EmployeeOJB extends PersistentObjectOJB implements IPersistentEmplo
         criteria.addEqualTo("person.idInternal", person.getIdInternal());
         return (IEmployee) queryObject(Employee.class, criteria);
     }
-
-    public List readHistoricByKeyEmployee(int keyEmployee) throws ExcepcaoPersistencia {
-
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyEmployee", new Integer(keyEmployee));
-
-        Criteria criteria2 = new Criteria();
-        criteria2.addLessOrEqualThan("beginDate", Calendar.getInstance().getTime());
-        criteria2.addIsNull("endDate");
-
-        Criteria criteria3 = new Criteria();
-        criteria3.addLessOrEqualThan("beginDate", Calendar.getInstance().getTime());
-        criteria3.addNotNull("endDate");
-        criteria3.addGreaterOrEqualThan("endDate", Calendar.getInstance().getTime());
-
-        criteria.addAndCriteria(criteria2);
-        criteria2.addOrCriteria(criteria3);
-
-        return queryList(EmployeeHistoric.class, criteria); //employee's
-        // historic list
-    }
-
 }

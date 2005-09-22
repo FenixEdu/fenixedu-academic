@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-
 /**
  * 
  * @author Tânia Pousão
@@ -18,13 +17,40 @@ public class Employee extends Employee_Base {
         return result;
     }
 
-    public ICostCenter findWorkingCostCenter() {
-        for (final IEmployeeHistoric employeeHistoric : getHistoricList()) {
-            if (employeeHistoric.getWorkingPlaceCostCenter() != null) {
-                return employeeHistoric.getWorkingPlaceCostCenter();
+    public IDepartment getDepartmentWorkingPlace() {
+
+        IUnit unit = this.getWorkingUnit();
+
+        if (unit != null) {
+
+            if (unit.getParentUnit() == null) {
+                return unit.getDepartment();
+
+            } else {
+                while (unit.getParentUnit() != null) {
+                    unit = unit.getParentUnit();
+                }
+                return unit.getDepartment();
             }
         }
         return null;
     }
 
+    public IDepartment getDepartmentMailingPlace() {
+
+        IUnit unit = this.getMailingUnit();
+        if (unit != null) {
+            
+            if (unit.getParentUnit() == null) {
+                return unit.getDepartment();
+            
+            } else {
+                while (unit.getParentUnit() != null) {
+                    unit = unit.getParentUnit();
+                }
+                return unit.getDepartment();
+            }
+        }
+        return null;
+    }
 }

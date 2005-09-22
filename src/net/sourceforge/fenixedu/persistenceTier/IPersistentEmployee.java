@@ -21,5 +21,4 @@ public interface IPersistentEmployee extends IPersistentObject {
 
     public IEmployee readByPerson(IPerson person) throws ExcepcaoPersistencia;
 
-    public List readHistoricByKeyEmployee(int keyEmployee) throws ExcepcaoPersistencia;
 }

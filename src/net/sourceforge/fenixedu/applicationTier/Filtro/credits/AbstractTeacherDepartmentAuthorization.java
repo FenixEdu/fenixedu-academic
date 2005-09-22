@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -48,8 +47,7 @@ public abstract class AbstractTeacherDepartmentAuthorization extends Filtro {
         }
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentDepartment departmentDAO = sp.getIDepartamentoPersistente();
-
+        
         Integer teacherId = getTeacherId(serviceRequest.getServiceParameters().parametersArray(), sp);
         if (teacherId != null) {
 
@@ -59,7 +57,7 @@ public abstract class AbstractTeacherDepartmentAuthorization extends Filtro {
 
             ITeacher teacher = (ITeacher) teacherDAO.readByOID(Teacher.class, teacherId);
 
-            IDepartment teacherDepartment = departmentDAO.readByTeacher(teacher.getIdInternal());
+            IDepartment teacherDepartment = teacher.getWorkingDepartment();
 
             List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
 

@@ -656,6 +656,11 @@ class net.sourceforge.fenixedu.domain.Department extends net.sourceforge.fenixed
 	String code;
 	String name;
 	Integer keyUnit;
+	
+	interface"
+	public java.util.List getWorkingEmployees();
+	public java.util.List getTeachers();
+	"
 }
 
 
@@ -737,7 +742,8 @@ class net.sourceforge.fenixedu.domain.Employee extends net.sourceforge.fenixedu.
 	Integer workingHours;
 
     interface "
-	public ICostCenter findWorkingCostCenter();
+	public IDepartment getDepartmentWorkingPlace();
+	public IDepartment getDepartmentMailingPlace();
 	"
 }
 
@@ -2705,6 +2711,10 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	public void updateResponsabilitiesFor(Integer executionYearId, java.util.List<Integer> executionCourses) 
 		throws net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed, 
 		net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
+	
+	public IDepartment getMailingDepartment();
+	
+	public IDepartment getWorkingDepartment();
 	"
 }
 

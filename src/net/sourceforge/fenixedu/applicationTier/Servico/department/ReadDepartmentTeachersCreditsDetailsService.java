@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.tools.Profiler;
@@ -91,8 +90,8 @@ public class ReadDepartmentTeachersCreditsDetailsService implements IService {
         Integer departmentId = Integer.valueOf((String) searchParameters.get("idInternal"));
         IPersistentDepartment departmentDAO = sp.getIDepartamentoPersistente();
         IDepartment department = (IDepartment) departmentDAO.readByOID(Department.class, departmentId);
-        IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
-        List teachers = teacherDAO.readByDepartment(department.getCode());
+        
+        List teachers = department.getTeachers();
         return teachers;
     }
 }

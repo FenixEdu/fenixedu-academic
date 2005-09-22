@@ -85,12 +85,12 @@
 	      </tr>
 	      <logic:present  name="personalInfo" property="infoEmployee" >
 		      <!-- Locale de Trabalho -->                    
-		      <logic:present  name="personalInfo" property="infoEmployee.workingPlaceInfoCostCenter" >
+		      <logic:present  name="personalInfo" property="infoEmployee.workingUnit" >
 		      <tr>
 		      	<td width="30%"><bean:message key="label.person.workPlace" /></td>
 		      	
-			      	<bean:define id="costCenterNumber" name="personalInfo" property="infoEmployee.workingPlaceInfoCostCenter.code"/>
-			      	<bean:define id="costCenterName" name="personalInfo" property="infoEmployee.workingPlaceInfoCostCenter.departament"/>
+			      	<bean:define id="costCenterNumber" name="personalInfo" property="infoEmployee.workingUnit.costCenterCode"/>
+			      	<bean:define id="costCenterName" name="personalInfo" property="infoEmployee.workingUnit.department"/>
 			      	<td class="greytxt"><bean:write name="costCenterNumber"/> - <bean:write name="costCenterName"/></td>
 		      </tr>
 		        </logic:present>
