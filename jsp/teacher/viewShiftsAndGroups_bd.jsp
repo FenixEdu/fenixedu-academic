@@ -346,14 +346,11 @@
 								</td>
 								
 								<td class="listClasses" width="13%" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size() %>">							 		
-		   							<logic:equal name="nrOfGroups" value="0">
-								 		<bean:message key="link.insertGroup"/>										
-									</logic:equal>	
-									<logic:notEqual name="nrOfGroups" value="0">
-								 		<html:link page="<%= "/insertStudentGroup.do?method=prepareCreateStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+		   																
+								 	<html:link page="<%= "/insertStudentGroup.do?method=prepareCreateStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
 										<bean:message key="link.insertGroup"/>
 									</html:link>	   
-									</logic:notEqual>				
+									
 								</td>					
 			
 			
