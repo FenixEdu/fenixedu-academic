@@ -39,7 +39,7 @@ public class ReadStudentListByCurricularCourseScope implements IService {
     }
 
     public List run(IUserView userView, Integer curricularCourseScopeID) throws ExcepcaoInexistente,
-            FenixServiceException {
+            FenixServiceException, ExcepcaoPersistencia {
 
         ISuportePersistente sp = null;
 
