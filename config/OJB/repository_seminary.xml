@@ -160,8 +160,6 @@
         name="themes"
         element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.Theme"
 	    indirection-table="EQUIVALENCY_THEME"
-        orderby="name"
-        sort="ASC"
      >
          <fk-pointing-to-this-class column="EQUIVALENCY_ID"/>
          <fk-pointing-to-element-class column="THEME_ID"/>
@@ -238,10 +236,7 @@
 	  <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
         name="caseStudies"
         element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.CaseStudy"
-		
-        
-        orderby="code"
-        sort="ASC"
+		       
      >
         <inverse-foreignkey field-ref="seminaryThemeIdInternal"/>
      </collection-descriptor>
@@ -301,12 +296,7 @@
 	 	<!-- Choices made to this case study -->
       <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="seminaryCandidacies"
-         element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice"
-		 orderby="order"
-         sort="ASC"
-         
-         
-      >
+         element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice">
        <inverse-foreignkey field-ref="caseStudyIdInternal"/>
       </collection-descriptor> 
     	 
@@ -414,12 +404,7 @@
 	<!-- Choosen case studies -->
       <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="caseStudyChoices"
-         element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice"
-		 orderby="order"
-         sort="ASC"
-         
-         
-      >
+         element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice">
        <inverse-foreignkey field-ref="candidacyIdInternal"/>
       </collection-descriptor>    	 
 </class-descriptor>
