@@ -16,21 +16,25 @@
 	<logic:notEqual name="numberFindedPersons" value="1">
 		<b><bean:message key="label.manager.numberFindedPersons" arg0="<%= pageContext.findAttribute("totalFindedPersons").toString() %>" /></b>	
 	</logic:notEqual>
-	
+
 	<logic:equal name="numberFindedPersons" value="1">
 		<b><bean:message key="label.manager.findedOnePersons" arg0="<%= pageContext.findAttribute("totalFindedPersons").toString() %>" /></b>
 	</logic:equal>
 	<br />
 	
 	<logic:greaterThan name="previousStartIndex" value="0">
-		<html:link page="<%= "/findPerson.do?method=findPerson&amp;name=" + pageContext.findAttribute("name") + "&amp;startIndex=" + pageContext.findAttribute("previousStartIndex") + "&amp;roleType=" + pageContext.findAttribute("roleType") %>"> anteriores </html:link>			
+		<html:link page="<%= "/findPerson.do?method=findPerson&amp;name=" + pageContext.findAttribute("name") + "&amp;startIndex=" + pageContext.findAttribute("previousStartIndex") + "&amp;roleType=" + pageContext.findAttribute("roleType")+ "&amp;degreeId=" + pageContext.findAttribute("degreeId") + "&amp;degreeType=" + pageContext.findAttribute("degreeType")+ "&amp;departmentId=" + pageContext.findAttribute("departmentId")%>"> anteriores </html:link>			
 	</logic:greaterThan>
 	<bean:define id="limitFindedPersons">
 		<%= SessionConstants.LIMIT_FINDED_PERSONS %>
 	</bean:define>
-	<logic:equal name="numberFindedPersons" value="<%= limitFindedPersons %>">    
-			<html:link page="<%= "/findPerson.do?method=findPerson&amp;name=" + pageContext.findAttribute("name") + "&amp;startIndex=" + pageContext.findAttribute("startIndex")+ "&amp;roleType=" + pageContext.findAttribute("roleType") %>"> próximos </html:link>			
-	</logic:equal>
+	<logic:lessThan name="startIndex" value="<%= pageContext.findAttribute("totalFindedPersons").toString()%>">
+		<logic:equal name="numberFindedPersons" value="<%= limitFindedPersons %>">    
+				<html:link page="<%= "/findPerson.do?method=findPerson&amp;name=" + pageContext.findAttribute("name") + "&amp;startIndex=" + pageContext.findAttribute("startIndex")+ "&amp;roleType=" + pageContext.findAttribute("roleType") + "&amp;degreeId=" + pageContext.findAttribute("degreeId") + "&amp;degreeType=" + pageContext.findAttribute("degreeType")+ "&amp;departmentId=" + pageContext.findAttribute("departmentId")%>"> próximos </html:link>			
+		</logic:equal>
+	</logic:lessThan>
+	
+	
 	<br /><br />
 	<logic:iterate id="personalInfo" name="personListFinded" indexId="personIndex">	    
 		<bean:define id="personID" name="personalInfo" property="idInternal"/>
@@ -65,7 +69,7 @@
 	      			<b><bean:message key="student"/></b>
 	      		</logic:match>	     
 	      		<logic:match name="personalInfo" property="username" location="start" value="M">
-	      			<b><bean:message key="studentMasterDegree"/></b>
+	      			<b><bean:message key="student"/></b>
 	      		</logic:match>
 	      		<logic:match name="personalInfo" property="username" location="start" value="B">
 	      			<b><bean:message key="grantOwner"/></b>
@@ -93,9 +97,28 @@
 			      	<bean:define id="costCenterName" name="personalInfo" property="infoEmployee.workingUnit.department"/>
 			      	<td class="greytxt"><bean:write name="costCenterNumber"/> - <bean:write name="costCenterName"/></td>
 		      </tr>
+	         </logic:present>
+	         <logic:present  name="personalInfo" property="infoEmployee.mailingInfoCostCenter" >
+	         <tr>
+	      		<td width="30%"><bean:message key="label.person.mailingPlace" /></td>
+	      	
+		      	<bean:define id="costCenterNumber" name="personalInfo" property="infoEmployee.mailingInfoCostCenter.code"/>
+		      	<bean:define id="costCenterName" name="personalInfo" property="infoEmployee.mailingInfoCostCenter.departament"/>
+		      	<td class="greytxt"><bean:write name="costCenterNumber"/> - <bean:write name="costCenterName"/></td>
+	      	</tr>
+	        </logic:present>
+          </logic:present>
+          <logic:present  name="personalInfo" property="infoTeacher" >
+		                        
+		      <tr>
+		      	<td width="30%"><bean:message key="label.teacher.category" />:</td>
+		      	
+			      	<bean:define id="categoryCode" name="personalInfo" property="infoTeacher.infoCategory.code"/>
+			      	<bean:define id="categoryName" name="personalInfo" property="infoTeacher.infoCategory.longName"/>
+			      	<td class="greytxt"><bean:write name="categoryCode"/> - <bean:write name="categoryName"/></td>
+		      </tr>
 		        </logic:present>
           </logic:present>
-          
           
           <logic:equal name="show" value="true">
           	  <!-- E-Mail -->
@@ -154,14 +177,34 @@
 		       	</tr>
 	          </logic:equal>
           </logic:equal> 
+          <logic:present  name="personalInfo" property="infoStudentCurricularPlanList" >
+		      <!-- Locale de Trabalho -->   
+		      <tr>   
+		      <td width="30%"><bean:message key="label.degree" />:</td>  
+		      
+		      <logic:iterate id="infoStudent" name="personalInfo" property="infoStudentCurricularPlanList">		
+			       <bean:define id="degreeName" name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.nome"/>
+			       <logic:match name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" location="start" value="DEGREE"> 
+			        <td class="greytxt"> <bean:message key="link.degree"/> <bean:write name="degreeName" /></td>
+			       </logic:match>
+			       <logic:match name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" location="start" value="MASTER_DEGREE"> 
+			        <td class="greytxt"> <bean:message key="link.master"/> <bean:write name="degreeName" /></td>
+			       </logic:match>
+		      </tr><tr><td>&nbsp;</td>
+		      
+		      </logic:iterate>
+          </logic:present>
     	</table>
     	
     	<br />
 	</logic:iterate>	
 	<logic:greaterThan name="previousStartIndex" value="0">
-		<html:link page="<%= "/findPerson.do?method=findPerson&amp;name=" + pageContext.findAttribute("name") + "&amp;startIndex=" + pageContext.findAttribute("previousStartIndex") + "&amp;roleType=" + pageContext.findAttribute("roleType") %>"> anteriores </html:link>			
+		<html:link page="<%= "/findPerson.do?method=findPerson&amp;name=" + pageContext.findAttribute("name") + "&amp;startIndex=" + pageContext.findAttribute("previousStartIndex") + "&amp;roleType=" + pageContext.findAttribute("roleType")+ "&amp;degreeId=" + pageContext.findAttribute("degreeId") + "&amp;degreeType=" + pageContext.findAttribute("degreeType")+ "&amp;departmentId=" + pageContext.findAttribute("departmentId")%>"> anteriores </html:link>			
 	</logic:greaterThan>
-	<logic:equal name="numberFindedPersons" value="<%= limitFindedPersons %>">
-					<html:link page="<%= "/findPerson.do?method=findPerson&amp;name=" + pageContext.findAttribute("name") + "&amp;startIndex=" + pageContext.findAttribute("startIndex")+ "&amp;roleType=" + pageContext.findAttribute("roleType") %>"> próximos </html:link>	
-	</logic:equal>
+	<logic:lessThan name="startIndex" value="<%= pageContext.findAttribute("totalFindedPersons").toString()%>">	
+		<logic:equal name="numberFindedPersons" value="<%= limitFindedPersons %>">
+			<html:link page="<%= "/findPerson.do?method=findPerson&amp;name=" + pageContext.findAttribute("name") + "&amp;startIndex=" + pageContext.findAttribute("startIndex")+ "&amp;roleType=" + pageContext.findAttribute("roleType") + "&amp;degreeId=" + pageContext.findAttribute("degreeId") + "&amp;degreeType=" + pageContext.findAttribute("degreeType")+ "&amp;departmentId=" + pageContext.findAttribute("departmentId")%>"> próximos </html:link>	
+		</logic:equal>
+	</logic:lessThan>
+
 </logic:present>

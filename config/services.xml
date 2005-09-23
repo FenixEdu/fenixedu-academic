@@ -2578,6 +2578,14 @@
 		<filterChains />
 	</service>
 	<service>
+		<name>ReadAllDegreesByType</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.commons.degree.ReadAllDegreesByType</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains />
+	</service>
+	<service>
 		<name>ReadExecutionDegreeByCandidateID</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.commons.degree.ReadExecutionDegreeByCandidateID</implementationClass>
@@ -7775,6 +7783,14 @@
 		<filterChains>
 			<chain name="ManagementAssiduousnessAuthorization" />
 		</filterChains>
+	</service>
+		<service>
+		<name>ReadAllCostCenters</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.managementAssiduousness.ReadAllCostCenters
+		</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
 	</service>
 	<service>
 		<name>UpdateAllMoneyCostCenterByYear</name>
