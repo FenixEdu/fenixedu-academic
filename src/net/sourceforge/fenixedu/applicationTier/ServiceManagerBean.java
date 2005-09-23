@@ -138,9 +138,6 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
                 try {
                     serviceResult = manager.execute(id, service, method, args);
                     break;
-                } catch (VersionNotAvailableException vnae) {
-                    System.out.println("Restarting TX because of VersionNotAvailableException");
-                    // repeat service
                 } catch (jvstm.CommitException ce) {
                     System.out.println("Restarting TX because of CommitException");
                     // repeat service
