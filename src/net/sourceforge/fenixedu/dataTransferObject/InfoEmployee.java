@@ -14,9 +14,8 @@ import net.sourceforge.fenixedu.domain.IEmployee;
 public class InfoEmployee extends InfoObject {
     private InfoPerson person = null;
     private Integer employeeNumber  = null;
-    private InfoCostCenter workingPlaceInfoCostCenter = null;
-    private InfoCostCenter MailingInfoCostCenter = null;
     private InfoUnit workingUnit = null;
+    private InfoUnit mailingUnit = null;
 
     public void setPerson(InfoPerson person) {
         this.person = person;
@@ -59,6 +58,7 @@ public class InfoEmployee extends InfoObject {
         if (employee != null) {
             setEmployeeNumber(employee.getEmployeeNumber());
             setWorkingUnit(InfoUnit.newInfoFromDomain(employee.getWorkingUnit()));
+            setMailingUnit(InfoUnit.newInfoFromDomain(employee.getMailingUnit()));
         }
     }
     
@@ -71,20 +71,19 @@ public class InfoEmployee extends InfoObject {
         return infoEmployee;
     }
 
-	
-	public InfoCostCenter getMailingInfoCostCenter() {
-		return MailingInfoCostCenter;
-	}
-
-	public void setMailingInfoCostCenter(InfoCostCenter mailingInfoCostCenter) {
-		MailingInfoCostCenter = mailingInfoCostCenter;
-	}
-
     public InfoUnit getWorkingUnit() {
         return workingUnit;
     }
 
     public void setWorkingUnit(InfoUnit workingUnit) {
         this.workingUnit = workingUnit;
+    }
+
+    public InfoUnit getMailingUnit() {
+        return mailingUnit;
+    }
+
+    public void setMailingUnit(InfoUnit mailingUnit) {
+        this.mailingUnit = mailingUnit;
     }
 }

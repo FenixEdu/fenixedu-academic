@@ -7,7 +7,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -24,8 +23,6 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPl
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-
-import org.apache.commons.beanutils.BeanComparator;
 
 /**
  * @author tfc130
@@ -894,17 +891,13 @@ public class InfoPerson extends InfoObject {
         		infoEmployee.setIdInternal(person.getEmployee().getIdInternal());
         		infoEmployee.setEmployeeNumber(person.getEmployee().getEmployeeNumber());
         		
-    			if(person.getEmployee().getHistoricList().get(0).getMailingCostCenter()!=null){
-    				//infoEmployee.setWorkingPlaceInfoCostCenter(InfoCostCenter.newInfoFromDomain(person.getEmployee().getHistoricList().get(0).getMailingCostCenter()));
-    				infoEmployee.setMailingInfoCostCenter(InfoCostCenter.newInfoFromDomain(person.getEmployee().getHistoricList().get(0).getMailingCostCenter()));
-    
-    			}
-    			if (person.getEmployee().getHistoricList().get(0).getWorkingPlaceCostCenter()!=null){
-    				infoEmployee.setWorkingPlaceInfoCostCenter(InfoCostCenter.newInfoFromDomain(person.getEmployee().getHistoricList().get(0).getWorkingPlaceCostCenter()));
- 
-    			if(person.getEmployee().getWorkingUnit()!=null){
+    			if(person.getEmployee().getWorkingUnit() != null){
     				infoEmployee.setWorkingUnit(InfoUnit.newInfoFromDomain(person.getEmployee().getWorkingUnit()));    				                    		
         		}
+                if(person.getEmployee().getMailingUnit() != null){
+                    infoEmployee.setMailingUnit(InfoUnit.newInfoFromDomain(person.getEmployee().getMailingUnit()));
+                }
+                    
     			setInfoEmployee(infoEmployee);
         	}
                    
@@ -951,10 +944,6 @@ public class InfoPerson extends InfoObject {
     }
  
 
-    /**
-     * @param pessoa
-     * @return
-     */
     public static InfoPerson newInfoFromDomain(IPerson person) {
         InfoPerson infoPerson = null;
         if (person != null) {

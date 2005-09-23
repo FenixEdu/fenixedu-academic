@@ -12,14 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -32,7 +28,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.util.LabelValueBean;
 
 /**
  * @author Tânia Pousão
@@ -65,10 +60,7 @@ public class FindPersonAction extends FenixDispatchAction {
          } else if (findPersonForm.get("degreeType") != null) {
          	degreeType =(String) findPersonForm.get("degreeType");
          }
-        
-         Integer departmentId =null;
-         
-         
+                 
          if (roleType != null ){
         	 if(roleType.equals(RoleType.EMPLOYEE.getName())||roleType.equals(RoleType.TEACHER.getName())){
 	         	if(roleType.equals(RoleType.TEACHER.getName())){
@@ -111,16 +103,11 @@ public class FindPersonAction extends FenixDispatchAction {
 
         DynaActionForm findPersonForm = (DynaActionForm) actionForm;
         String name = null;
-        Integer incrementPerson = null;
         if (request.getParameter("name") != null && request.getParameter("name").length() > 0) {
             name = request.getParameter("name");
         } else if (findPersonForm.get("name") != null) {
             name = (String) findPersonForm.get("name");
-        }
-
-      
-        	incrementPerson = (Integer)request.getAttribute("incrementPerson");
-       
+        }                    
         
         Integer startIndex = null;
         if (request.getParameter("startIndex") != null

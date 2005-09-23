@@ -52,7 +52,7 @@ public class EditStudentGroupShift implements IService {
 
             IShift shift = (IShift) persistentShift.readByOID(Shift.class, newShiftCode);
 
-            grouping.checkShiftCapacity(shift);
+            //grouping.checkShiftCapacity(shift);
 
             IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
                     StudentGroup.class, studentGroupCode);

@@ -91,20 +91,23 @@
 		      <!-- Locale de Trabalho -->                    
 		      <logic:present  name="personalInfo" property="infoEmployee.workingUnit" >
 		      <tr>
-		      	<td width="30%"><bean:message key="label.person.workPlace" /></td>
-		      	
+		      	<td width="30%"><bean:message key="message.teachingReport.courseDepartment" /></td>
+	    			<bean:define id="departmentName" name="personalInfo" property="infoEmployee.workingUnit.department"/>
+			      	<td class="greytxt"><bean:write name="departmentName"/></td>		      	
+		      </tr>
+		      <tr>
+		      	<td width="30%"><bean:message key="label.person.sectionPlace" /></td>		      	
 			      	<bean:define id="costCenterNumber" name="personalInfo" property="infoEmployee.workingUnit.costCenterCode"/>
-			      	<bean:define id="costCenterName" name="personalInfo" property="infoEmployee.workingUnit.department"/>
-			      	<td class="greytxt"><bean:write name="costCenterNumber"/> - <bean:write name="costCenterName"/></td>
+			      	<bean:define id="unitName" name="personalInfo" property="infoEmployee.workingUnit.name"/>			      
+			      	<td class="greytxt"><bean:write name="costCenterNumber"/> - <bean:write name="unitName"/></td>
 		      </tr>
 	         </logic:present>
-	         <logic:present  name="personalInfo" property="infoEmployee.mailingInfoCostCenter" >
+	         <logic:present  name="personalInfo" property="infoEmployee.mailingUnit" >
 	         <tr>
-	      		<td width="30%"><bean:message key="label.person.mailingPlace" /></td>
-	      	
-		      	<bean:define id="costCenterNumber" name="personalInfo" property="infoEmployee.mailingInfoCostCenter.code"/>
-		      	<bean:define id="costCenterName" name="personalInfo" property="infoEmployee.mailingInfoCostCenter.departament"/>
-		      	<td class="greytxt"><bean:write name="costCenterNumber"/> - <bean:write name="costCenterName"/></td>
+	      		<td width="30%"><bean:message key="label.person.mailingPlace" /></td>	     
+		      	<bean:define id="costCenterNumber" name="personalInfo" property="infoEmployee.mailingUnit.costCenterCode"/>
+		      	<bean:define id="unitName" name="personalInfo" property="infoEmployee.mailingUnit.name"/>
+		      	<td class="greytxt"><bean:write name="costCenterNumber"/> - <bean:write name="unitName"/></td>
 	      	</tr>
 	        </logic:present>
           </logic:present>

@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRole;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -72,6 +71,12 @@ public class SearchPerson implements IService {
         }
 		if(department != null){		    
 	        List<ITeacher> teachers = department.getTeachers();
+            
+            
+            for(ITeacher teacher : teachers){
+                System.out.println("TEACHER: " + teacher.getPerson().getNome());
+            }
+            
 	        persons = persistentPerson.PersonByDepartment(name,teachers,startIndex,numberOfElementsInSpan);
 	        totalPersons = persistentPerson.CountPersonByDepartment(name,teachers,startIndex,numberOfElementsInSpan);
 	    }else{

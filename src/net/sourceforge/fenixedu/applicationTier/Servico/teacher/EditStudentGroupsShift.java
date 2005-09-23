@@ -63,7 +63,7 @@ public class EditStudentGroupsShift implements IService {
                 throw new InvalidChangeServiceException();
             }
             
-            grouping.checkShiftCapacity(shift);
+            //grouping.checkShiftCapacity(shift);
             
             if (grouping.getShiftType() == null
                     || !grouping.getShiftType().equals(shift.getTipo())) {
