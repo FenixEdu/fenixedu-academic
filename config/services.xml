@@ -3881,8 +3881,8 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>EnrollStudentInExam</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.EnrollStudentInExam</implementationClass>
+		<name>EnrolStudentInWrittenEvaluation</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.EnrolStudentInWrittenEvaluation</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -3890,9 +3890,9 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>UnEnrollStudentInExam</name>
+		<name>UnEnrollStudentInWrittenEvaluation</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.student.UnEnrollStudentInExam</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.student.UnEnrollStudentInWrittenEvaluation</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -3900,9 +3900,9 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadStudentsEnrolledInExam</name>
+		<name>ReadStudentsEnrolledInWrittenEvaluation</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadStudentsEnrolledInExam</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadStudentsEnrolledInWrittenEvaluation</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -3910,8 +3910,8 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>EditExamEnrollment</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditExamEnrollment</implementationClass>
+		<name>EditWrittenEvaluationEnrolmentPeriod</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditWrittenEvaluationEnrolmentPeriod</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4005,8 +4005,8 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>ExamRoomDistribution</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ExamRoomDistribution</implementationClass>
+		<name>WrittenEvaluationRoomDistribution</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.WrittenEvaluationRoomDistribution</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -6431,8 +6431,8 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>CreateExam</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.CreateExam</implementationClass>
+		<name>CreateWrittenEvaluation</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.CreateWrittenEvaluation</implementationClass>
 		<description></description>
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -6440,8 +6440,8 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>EditExamNew</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.EditExam</implementationClass>
+		<name>EditWrittenEvaluation</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.EditWrittenEvaluation</implementationClass>
 		<description></description>
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -6543,8 +6543,8 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>DeleteExamNew</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.DeleteExam</implementationClass>
+		<name>DeleteWrittenEvaluation</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.DeleteWrittenEvaluation</implementationClass>
 		<description>
 		</description>
 		<isTransactional>true</isTransactional>

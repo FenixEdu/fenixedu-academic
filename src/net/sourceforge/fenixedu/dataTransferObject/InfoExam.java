@@ -22,11 +22,6 @@ import org.apache.commons.collections.Transformer;
 public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
 
     protected Season season;
-
-    protected String publishmentMessage;
-
-    protected Integer enrolledStudents;
-
     private List infoExecutionCourses;
 
     /**
@@ -53,38 +48,22 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
                 + "'" + " end= '" + this.getEnd() + "'" + " season= '" + this.getSeason() + "'" + "";
     }
 
-    /**
-     * @return
-     */
     public Season getSeason() {
         return season;
     }
 
-    /**
-     * @param season
-     */
     public void setSeason(Season season) {
         this.season = season;
     }
 
-    /**
-     * @return
-     */
     public InfoExecutionCourse getInfoExecutionCourse() {
         return infoExecutionCourse;
     }
 
-    /**
-     * @param course
-     */
     public void setInfoExecutionCourse(InfoExecutionCourse course) {
         infoExecutionCourse = course;
     }
 
-    /**
-     * 
-     * @return
-     */
     public List getAssociatedRooms() {
         return (List) CollectionUtils.collect(super.getAssociatedRoomOccupation(), new Transformer() {
 
@@ -93,20 +72,6 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
                 return roomOccupation.getInfoRoom();
             }
         });
-    }
-
-    /**
-     * @return
-     */
-    public String getPublishmentMessage() {
-        return publishmentMessage;
-    }
-
-    /**
-     * @param publishmentMessage
-     */
-    public void setPublishmentMessage(String publishmentMessage) {
-        this.publishmentMessage = publishmentMessage;
     }
 
     public String getDate() {
@@ -141,30 +106,11 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
         return result;
     }
 
-    /**
-     * @param string
-     * @return
-     */
     private String format(String string) {
         if (string.length() == 1) {
             string = "0" + string;
         }
         return string;
-    }
-
-    /**
-     * @return Returns the enrolledStudents.
-     */
-    public Integer getEnrolledStudents() {
-        return enrolledStudents;
-    }
-
-    /**
-     * @param enrolledStudents
-     *            The enrolledStudents to set.
-     */
-    public void setEnrolledStudents(Integer enrolledStudents) {
-        this.enrolledStudents = enrolledStudents;
     }
 
     public String dateFormatter(Calendar calendar) {
@@ -249,17 +195,10 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
         return new DiaSemana(day.get(Calendar.DAY_OF_WEEK));
     }
 
-    /**
-     * @return Returns the infoExecutionCourses.
-     */
     public List getInfoExecutionCourses() {
         return infoExecutionCourses;
     }
 
-    /**
-     * @param infoExecutionCourses
-     *            The infoExecutionCourses to set.
-     */
     public void setInfoExecutionCourses(List infoExecutionCourses) {
         this.infoExecutionCourses = infoExecutionCourses;
     }
@@ -272,10 +211,6 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
         }
     }
 
-    /**
-     * @param evaluation
-     * @return
-     */
     public static InfoExam newInfoFromDomain(IExam exam) {
         InfoExam infoExam = null;
         if (exam != null) {

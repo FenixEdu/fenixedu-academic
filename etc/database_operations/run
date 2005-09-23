@@ -47,3 +47,6 @@ mysql -u$2 -f $1 < updatePersonWithKeyCountry.sql > res
 mysql -u$2 -f $1 < res
 rm -r res
 echo Altering Person's Nationality ... completed
+echo Changing Evaluation Table ... started
+mysql -u$2 -f $1 < alterTableEvaluation.sql
+echo Changing Evaluation Table ... completed

@@ -145,10 +145,10 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
         List<String> roomIDs = Arrays.asList((String[]) createExamForm.get("rooms"));
         
         // Create an exam with season, examDateAndTime and executionCourse
-        Object argsCreateExam[] = { examDate, examStartTime, examEndTime, season,
-                executionCourseIDs, curricularCourseScopeIDs, roomIDs };
+        Object argsCreateExam[] = { examDate, examStartTime, examEndTime, 
+                executionCourseIDs, curricularCourseScopeIDs, roomIDs, season, null };
         try {
-            ServiceUtils.executeService(userView, "CreateExam", argsCreateExam);
+            ServiceUtils.executeService(userView, "CreateWrittenEvaluation", argsCreateExam);
         } catch (FenixServiceException ex) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("errors", new ActionError(ex.getMessage()));
@@ -568,9 +568,9 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
         List<String> scopeIDs = Arrays.asList((String[]) createExamForm.get("scopes"));
         List<String> roomIDs = Arrays.asList((String[]) createExamForm.get("rooms"));
 
-        Object argsEditExam[] = { examDate, examStartTime, examEndTime, season, executionCourseIDs, scopeIDs, roomIDs, infoExamID };
+        Object argsEditExam[] = { examDate, examStartTime, examEndTime, executionCourseIDs, scopeIDs, roomIDs, infoExamID, season, null };
         try {
-            ServiceUtils.executeService(userView, "EditExamNew", argsEditExam);
+            ServiceUtils.executeService(userView, "EditWrittenEvaluation", argsEditExam);
         } 
         catch (FenixServiceException ex) {
             ActionError actionError = new ActionError(ex.getMessage());

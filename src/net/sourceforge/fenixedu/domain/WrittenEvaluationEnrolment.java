@@ -1,14 +1,32 @@
-/*
- * Created on 30/Mai/2003
- *
- * 
- */
 package net.sourceforge.fenixedu.domain;
 
-/**
- * @author João Mota
- * 
- */
-public class WrittenEvaluationEnrolment extends WrittenEvaluationEnrolment_Base {
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+public class WrittenEvaluationEnrolment extends WrittenEvaluationEnrolment_Base {
+	
+	public WrittenEvaluationEnrolment() {		
+	}
+	
+	public WrittenEvaluationEnrolment(IWrittenEvaluation writtenEvaluation, IStudent student) {
+		this.setWrittenEvaluation(writtenEvaluation);
+		this.setStudent(student);
+	}
+    
+    public WrittenEvaluationEnrolment(IWrittenEvaluation writtenEvaluation, IStudent student, IRoom room) {
+        this.setWrittenEvaluation(writtenEvaluation);
+        this.setStudent(student);
+        this.setRoom(room);
+    }
+
+	public void delete() {
+    	if (this.getRoom() != null) {
+    		throw new DomainException("error.notAuthorizedUnEnrollment");
+    	}
+            
+    	this.setWrittenEvaluation(null);
+    	this.setStudent(null);
+            
+    	super.deleteDomainObject();
+	}
+	
 }

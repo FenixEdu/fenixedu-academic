@@ -18,13 +18,13 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -157,28 +157,13 @@ public class ShowExamsManagement extends FenixContextDispatchAction {
         Object[] args = { examID };
 
         try {
-            Boolean result = (Boolean) ServiceUtils.executeService(userView, "DeleteExamNew", args);
-
-            if (!result.booleanValue())
-                throw new Exception("error.notAuthorizedExamDelete");
-
-        } catch (notAuthorizedServiceDeleteException exception) {
-            if (exception.getMessage() != null && exception.getMessage().length() > 0) {
-                actionErrors.add("error.deleteExam.withStudents",
-                        new ActionError(exception.getMessage()));
-            }
-        } catch (Exception exception) {
-            if (exception.getMessage() != null && exception.getMessage().length() > 0) {
-                actionErrors.add("error.deleteExam", new ActionError(exception.getMessage()));
-            }
-        }
-
-        if (!actionErrors.isEmpty()) {
+            ServiceUtils.executeService(userView, "DeleteWrittenEvaluation", args);
+        } catch (FenixServiceException exception) {
+            actionErrors.add(exception.getMessage(), new ActionError(exception.getMessage()));
             saveErrors(request, actionErrors);
-
             return mapping.getInputForward();
         }
-
+        
         return mapping.findForward("deleteExam");
     }
 }

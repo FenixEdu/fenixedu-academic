@@ -924,6 +924,22 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 		public java.util.Calendar getEnrollmentEndTime();
 	    
 	    public void setEnrollmentEndTime(java.util.Calendar calendar);
+
+		public java.util.List getAssociatedRooms();
+		
+		public void delete();
+
+		public void editEnrolmentPeriod(java.util.Date enrolmentBeginDay, java.util.Date enrolmentEndDay,
+                                       java.util.Date enrolmentBeginTime, java.util.Date enrolmentEndTime);
+
+		public void enrolStudent(IStudent student);
+
+		public void unEnrolStudent(IStudent student);
+		
+		public void checkIfCanDistributeStudentsByRooms();
+		
+		public void distributeStudentsByRooms(java.util.List<IStudent> studentsToDistribute, 
+                                              java.util.List<IRoom> selectedRooms);
 		"
 	}
 
@@ -931,17 +947,20 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
             Season season;
             
 			interface "
-			public java.util.List getAssociatedRooms();
-			
-			public void edit(java.util.Date examDate, java.util.Date examStartTime, java.util.Date examEndTime,
-							 net.sourceforge.fenixedu.util.Season season, java.util.List<IExecutionCourse> executionCourses,
-				 	         java.util.List<ICurricularCourseScope> curricularCourseScopes, java.util.List<IRoom> rooms, IPeriod period);
-			
-			public void delete();
+			public void edit(java.util.Date examDay, java.util.Date examStartTime, java.util.Date examEndTime,
+							 java.util.List<IExecutionCourse> executionCourses, java.util.List<ICurricularCourseScope> curricularCourseScopes, 
+							 java.util.List<IRoom> rooms, IPeriod period, net.sourceforge.fenixedu.util.Season season);
 			"	
 		}
 
 		class net.sourceforge.fenixedu.domain.WrittenTest extends net.sourceforge.fenixedu.domain.WrittenEvaluation {
+			String description;
+
+			interface "
+			public void edit(java.util.Date testDay, java.util.Date testStartTime, java.util.Date testEndTime,
+							 java.util.List<IExecutionCourse> executionCourses, java.util.List<ICurricularCourseScope> curricularCourseScopes, 
+							 java.util.List<IRoom> rooms, IPeriod period, String description);			
+			"	
 		}
 
 
@@ -964,6 +983,10 @@ class net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment extends net.sou
 	Integer keyRoom;
 	Integer keyStudent;
 	Integer keyWrittenEvaluation;
+	
+	interface "
+	public void delete();	
+	"
 }
 
 

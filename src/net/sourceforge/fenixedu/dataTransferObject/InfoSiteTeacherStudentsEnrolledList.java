@@ -9,18 +9,17 @@ import java.util.List;
 
 /**
  * @author João Mota
- *  
+ * 
  */
 public class InfoSiteTeacherStudentsEnrolledList extends DataTranferObject implements ISiteComponent {
     private List infoStudents;
 
     private InfoExam infoExam;
 
+    private InfoWrittenTest infoWrittenTest;
+
     private List infoWrittenEvaluationEnrolmentList;
 
-    /**
-     *  
-     */
     public InfoSiteTeacherStudentsEnrolledList() {
 
     }
@@ -28,20 +27,23 @@ public class InfoSiteTeacherStudentsEnrolledList extends DataTranferObject imple
     public InfoSiteTeacherStudentsEnrolledList(List infoStudents, InfoExam infoExam,
             List infoWrittenEvaluationEnrolmentList) {
         setInfoExam(infoExam);
+        setInfoWrittenTest(null);
         setInfoStudents(infoStudents);
         setInfoWrittenEvaluationEnrolmentList(infoWrittenEvaluationEnrolmentList);
     }
 
-    /**
-     * @return
-     */
+    public InfoSiteTeacherStudentsEnrolledList(List infoStudents, InfoWrittenTest infoWrittenTest,
+            List infoWrittenEvaluationEnrolmentList) {
+        setInfoExam(null);
+        setInfoWrittenTest(infoWrittenTest);
+        setInfoStudents(infoStudents);
+        setInfoWrittenEvaluationEnrolmentList(infoWrittenEvaluationEnrolmentList);
+    }
+
     public List getInfoWrittenEvaluationEnrolmentList() {
         return this.infoWrittenEvaluationEnrolmentList;
     }
 
-    /**
-     * @param infoWrittenEvaluationEnrolmentList
-     */
     public void setInfoWrittenEvaluationEnrolmentList(List infoWrittenEvaluationEnrolmentList) {
         this.infoWrittenEvaluationEnrolmentList = infoWrittenEvaluationEnrolmentList;
     }
@@ -54,16 +56,10 @@ public class InfoSiteTeacherStudentsEnrolledList extends DataTranferObject imple
 
     }
 
-    /**
-     * @return
-     */
     public List getInfoStudents() {
         return infoStudents;
     }
 
-    /**
-     * @param list
-     */
     public void setInfoStudents(List list) {
         infoStudents = list;
     }
@@ -80,18 +76,19 @@ public class InfoSiteTeacherStudentsEnrolledList extends DataTranferObject imple
         return result;
     }
 
-    /**
-     * @return
-     */
     public InfoExam getInfoExam() {
         return infoExam;
     }
 
-    /**
-     * @param exam
-     */
     public void setInfoExam(InfoExam exam) {
         infoExam = exam;
     }
 
+    public InfoWrittenTest getInfoWrittenTest() {
+        return infoWrittenTest;
+    }
+
+    public void setInfoWrittenTest(InfoWrittenTest infoWrittenTest) {
+        this.infoWrittenTest = infoWrittenTest;
+    }
 }

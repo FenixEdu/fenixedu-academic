@@ -448,6 +448,13 @@
 		<fk-pointing-to-this-class column="KEY_ATTEND" />
 	</collection-descriptor>
 
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="associatedMarks"
+			element-class-ref="net.sourceforge.fenixedu.domain.Mark"
+			>
+		<inverse-foreignkey field-ref="keyAttend"/>
+	</collection-descriptor>
+
    </class-descriptor>   
 
 <!-- ******************************************************************************************************************************* -->
@@ -793,6 +800,12 @@
          primarykey="true"
          autoincrement="true"
       />
+       <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="false"
+      />
       <field-descriptor
          name="ojbConcreteClass"
          column="CLASS_NAME"
@@ -842,27 +855,32 @@
          column="PUBLISHMENT_MESSAGE"
         jdbc-type="VARCHAR"
       />
-       <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
+      <field-descriptor
+         name="description"
+         column="DESCRIPTION"
+        jdbc-type="VARCHAR"
       />
-   <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedExecutionCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
-			indirection-table="EXAM_EXECUTION_COURSE"
-			
+			indirection-table="EXAM_EXECUTION_COURSE"			
 			>
 		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
 		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
 	</collection-descriptor>
-
      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedRoomOccupation"
 			element-class-ref="net.sourceforge.fenixedu.domain.RoomOccupation"
 			>
 		<inverse-foreignkey field-ref="keyWrittenEvaluation"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="associatedCurricularCourseScope"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseScope"
+			indirection-table="WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE"
+			>
+		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
+		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE_SCOPE"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="marks"

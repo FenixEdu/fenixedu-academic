@@ -13,12 +13,12 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidTimeIntervalServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -181,12 +181,13 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
                 endTime };
 
         try {
-            ServiceUtils.executeService(userView, "EditExamEnrollment", args);
-        } catch (InvalidTimeIntervalServiceException e) {
-            setErrorMessage(request, e.getMessage());
+            ServiceUtils.executeService(userView, "EditWrittenEvaluationEnrolmentPeriod", args);
+        } catch (DomainException e) {
+            setErrorMessage(request, e.getKey());
             return mapping.getInputForward();
         } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
+            setErrorMessage(request, e.getMessage());
+            return mapping.getInputForward();
         }
 
         request.setAttribute("evaluationCode", examIdInternal);

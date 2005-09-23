@@ -1,26 +1,19 @@
-/*
- * Created on 11/Jun/2003 by jpvl
- *  
- */
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ExamRoomDistribution;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteExamExecutionCourses;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
@@ -34,44 +27,30 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
-/**
- * @author jpvl
- */
 public class DistributeStudentsByRoomDispatchAction extends DispatchAction {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping,
-     *      org.apache.struts.action.ActionForm,
-     *      javax.servlet.http.HttpServletRequest,
-     *      javax.servlet.http.HttpServletResponse)
-     */
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        DynaActionForm distributionExam = (DynaActionForm) form;
+        final DynaActionForm distributionExam = (DynaActionForm) form;
+        final Integer evaluationCode = Integer.valueOf((String) distributionExam.get("evaluationCode"));
+        final Integer executionCourseCode = Integer.valueOf((String) distributionExam.get("objectCode"));
 
-        Integer examCode = new Integer((String) distributionExam.get("evaluationCode"));
-        Integer executionCourseCode = new Integer((String) distributionExam.get("objectCode"));
+        final InfoSiteExamExecutionCourses infoSiteExamExecutionCourses = new InfoSiteExamExecutionCourses();
+        final Object[] args = { executionCourseCode, new InfoSiteCommon(), infoSiteExamExecutionCourses,
+                null, evaluationCode, null };
 
-        InfoSiteExamExecutionCourses infoSiteExamExecutionCourses = new InfoSiteExamExecutionCourses();
-        Object[] args = { executionCourseCode, new InfoSiteCommon(), infoSiteExamExecutionCourses, null,
-                examCode, null };
-
-        TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) ServiceUtils
+        final TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) ServiceUtils
                 .executeService(SessionUtils.getUserView(request),
                         "TeacherAdministrationSiteComponentService", args);
 
-        infoSiteExamExecutionCourses = (InfoSiteExamExecutionCourses) siteView.getComponent();
-        InfoExam infoExam = infoSiteExamExecutionCourses.getInfoExam();
-        List executionCourses = infoSiteExamExecutionCourses.getInfoExecutionCourses();
+        final InfoExam infoExam = infoSiteExamExecutionCourses.getInfoExam();
+        final List<InfoExecutionCourse> infoExecutionCourses = infoSiteExamExecutionCourses
+                .getInfoExecutionCourses();
 
-        Iterator iter = executionCourses.iterator();
-        int attendStudents = 0;
-        while (iter.hasNext()) {
-            InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) iter.next();
-            attendStudents += infoExecutionCourse.getNumberOfAttendingStudents().intValue();
+        int totalAttendStudents = 0;
+        for (final InfoExecutionCourse infoExecutionCourse : infoExecutionCourses) {
+            totalAttendStudents += infoExecutionCourse.getNumberOfAttendingStudents().intValue();
         }
 
         Collections.sort(infoExam.getAssociatedRooms(), new ReverseComparator(new BeanComparator(
@@ -80,93 +59,42 @@ public class DistributeStudentsByRoomDispatchAction extends DispatchAction {
         request.setAttribute("infoExam", infoExam);
         request.setAttribute("siteView", siteView);
         request.setAttribute("objectCode", executionCourseCode);
-        request.setAttribute("evaluationCode", examCode);
-        request.setAttribute("attendStudents", new Integer(attendStudents));
-
-        ActionErrors actionErrors = checkEnrolmentDatesAndExamRooms(request, infoExam);
-        if (actionErrors != null && actionErrors.size() > 0) {
-            return mapping.getInputForward();
-        }
+        request.setAttribute("evaluationCode", evaluationCode);
+        request.setAttribute("attendStudents", Integer.valueOf(totalAttendStudents));
 
         return mapping.findForward("show-rooms");
-    }
-
-    private ActionErrors checkEnrolmentDatesAndExamRooms(HttpServletRequest request,
-            InfoExam infoExamFromList) {
-        ActionErrors actionErrors = new ActionErrors();
-
-        Calendar examDay = infoExamFromList.getDay();
-        Calendar today = Calendar.getInstance();
-        Calendar endEnrollmentDay = infoExamFromList.getEnrollmentEndDay();
-
-        if (today.after(examDay)) {
-            actionErrors.add("error", new ActionError("error.out.of.period.enrollment.period"));
-            saveErrors(request, actionErrors);
-            return actionErrors;
-        }
-
-        if (endEnrollmentDay != null) {
-            Calendar endHourDay = infoExamFromList.getEnrollmentEndTime();
-
-            endEnrollmentDay.set(Calendar.HOUR_OF_DAY, 0);
-            endEnrollmentDay.set(Calendar.MINUTE, 0);
-            endEnrollmentDay.roll(Calendar.HOUR_OF_DAY, endHourDay.get(Calendar.HOUR_OF_DAY));
-            endEnrollmentDay.roll(Calendar.MINUTE, endHourDay.get(Calendar.MINUTE));
-
-            if (today.before(endEnrollmentDay)) {
-                actionErrors.add("error", new ActionError("error.out.of.period.enrollment.period"));
-                saveErrors(request, actionErrors);
-                return actionErrors;
-            }
-        }
-
-        //		if there are no rooms associated with this evaluation, this is an
-        // error
-        if (infoExamFromList.getAssociatedRooms() == null
-                || infoExamFromList.getAssociatedRooms().size() == 0) {
-            actionErrors.add("error", new ActionError("error.no.roms.associated"));
-            saveErrors(request, actionErrors);
-        }
-        return actionErrors;
     }
 
     public ActionForward distribute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        DynaActionForm distributionExam = (DynaActionForm) form;
-        Integer examCode = new Integer((String) distributionExam.get("evaluationCode"));
-        Integer executionCourseCode = new Integer((String) distributionExam.get("objectCode"));
-        Boolean enrolledStudents = new Boolean((String) distributionExam.get("enroll"));
+        final DynaActionForm distributionExam = (DynaActionForm) form;
+        final Integer evaluationCode = Integer.valueOf((String) distributionExam.get("evaluationCode"));
+        final Integer executionCourseCode = Integer.valueOf((String) distributionExam.get("objectCode"));
+        final Boolean distributeOnlyEnroledStudents = Boolean.valueOf((String) distributionExam
+                .get("enroll"));
+        final List rooms = Arrays.asList((Integer[]) distributionExam.get("rooms"));
 
-        Integer[] rooms = (Integer[]) distributionExam.get("rooms");
-        Object[] args = { executionCourseCode, examCode, Arrays.asList(rooms), Boolean.FALSE,
-                enrolledStudents };
+        final Object[] args = { executionCourseCode, evaluationCode, rooms, Boolean.FALSE,
+                distributeOnlyEnroledStudents };
         try {
-            ServiceUtils.executeService(SessionUtils.getUserView(request), "ExamRoomDistribution", args);
+            ServiceUtils.executeService(SessionUtils.getUserView(request),
+                    "WrittenEvaluationRoomDistribution", args);            
+            request.setAttribute("objectCode", executionCourseCode);
+            request.setAttribute("evaluationCode", evaluationCode);            
+            return mapping.findForward("show-distribution");
 
-        } catch (InvalidArgumentsServiceException ex) {
+        } catch (DomainException e) {
             ActionErrors actionErrors = new ActionErrors();
-            ActionError actionError = null;
-            actionError = new ActionError("error.not.enough.room.space");
-
-            actionErrors.add("error", actionError);
+            actionErrors.add("error", new ActionError(e.getKey()));
             saveErrors(request, actionErrors);
             return prepare(mapping, form, request, response);
-
         } catch (FenixServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
-            ActionError actionError = null;
-            if (e.getErrorType() == ExamRoomDistribution.OUT_OF_ENROLLMENT_PERIOD) {
-                actionError = new ActionError("error.out.of.period.enrollment.period");
-            } else {
-                throw e;
-            }
-            actionErrors.add("error", actionError);
+            actionErrors.add("error", new ActionError(e.getMessage()));
             saveErrors(request, actionErrors);
+            return prepare(mapping, form, request, response);
         }
-        request.setAttribute("objectCode", executionCourseCode);
-        request.setAttribute("evaluationCode", examCode);
-        return mapping.findForward("show-distribution");
     }
 
 }

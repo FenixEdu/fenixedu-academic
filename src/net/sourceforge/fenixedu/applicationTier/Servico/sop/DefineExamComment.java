@@ -1,78 +1,26 @@
-/*
- * CreateExam.java
- *
- * Created on 2003/03/26
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
-/**
- * Servi�o CriarAula.
- * 
- * @author Luis Cruz & Sara Ribeiro
- */
-
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class DefineExamComment implements IServico {
+public class DefineExamComment implements IService {
 
-    private static DefineExamComment _servico = new DefineExamComment();
+    public void run(InfoExecutionCourse infoExecutionCourse, String comment)
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static DefineExamComment getService() {
-        return _servico;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private DefineExamComment() {
-    }
-
-    /**
-     * Devolve o nome do servico
-     */
-    public final String getNome() {
-        return "DefineExamComment";
-    }
-
-    public Boolean run(InfoExecutionCourse infoExecutionCourse, String comment)
-            throws FenixServiceException {
-
-        Boolean result = new Boolean(false);
-
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
-
-            IExecutionCourse executionCourse = executionCourseDAO
-                    .readByExecutionCourseInitialsAndExecutionPeriodId(infoExecutionCourse.getSigla(),
-                            infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
-
-            // TODO: Temporary solution to lock object for write. In the future
-            // we'll use readByUnique()
-            executionCourse = (IExecutionCourse) executionCourseDAO.readByOID(ExecutionCourse.class,
-                    executionCourse.getIdInternal(), true);
-            executionCourse.setComment(comment);
-
-            result = new Boolean(true);
-
-        } catch (ExcepcaoPersistencia ex) {
-
-            throw new FenixServiceException(ex.getMessage());
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
+        final IExecutionCourse executionCourse = persistentSupport.getIPersistentExecutionCourse()
+                .readByExecutionCourseInitialsAndExecutionPeriodId(infoExecutionCourse.getSigla(),
+                        infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
+        if (executionCourse == null) {
+            throw new FenixServiceException("error.noExecutionCourse");
         }
-
-        return result;
+        executionCourse.setComment(comment);
     }
-
 }

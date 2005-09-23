@@ -5,20 +5,23 @@ import java.util.Calendar;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IPeriod;
 import net.sourceforge.fenixedu.domain.IRoom;
+import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
+import net.sourceforge.fenixedu.domain.IWrittenTest;
 import net.sourceforge.fenixedu.domain.Room;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -26,19 +29,22 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.Season;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class EditExam implements IService {
+public class EditWrittenEvaluation implements IService {
 
-    public void run(Calendar examDate, Calendar examStartTime, Calendar examEndTime, Season season,
-            List<String> executionCourseIDs, List<String> curricularCourseScopeIDs,
-            List<String> roomIDs, Integer examID) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(Calendar writtenEvaluationDate, Calendar writtenEvaluationStartTime,
+            Calendar writtenEvaluationEndTime, List<String> executionCourseIDs,
+            List<String> curricularCourseScopeIDs, List<String> roomIDs, Integer writtenEvaluationOID,
+            Season examSeason, String writtenTestDescription) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-        final IPersistentExam persistentExam = persistentSupport.getIPersistentExam();
+        final IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
 
-        final IExam exam = (IExam) persistentExam.readByOID(Exam.class, examID);
-        if (exam == null) {
-            throw new FenixServiceException("error.noExam");
+        final IWrittenEvaluation writtenEvaluation = (IWrittenEvaluation) persistentObject.readByOID(
+                WrittenEvaluation.class, writtenEvaluationOID);
+        if (writtenEvaluation == null) {
+            throw new FenixServiceException("error.noWrittenEvaluation");
         }
 
         final List<IExecutionCourse> executionCoursesToAssociate = readExecutionCourses(
@@ -46,29 +52,40 @@ public class EditExam implements IService {
         final List<ICurricularCourseScope> curricularCourseScopeToAssociate = readCurricularCourseScopes(
                 persistentSupport, curricularCourseScopeIDs);
         final List<IRoom> roomsToAssociate = readRooms(persistentSupport, roomIDs);
-        final IPeriod period = readPeriod(persistentSupport, exam, examDate);
+        final IPeriod period = readPeriod(persistentSupport, writtenEvaluation, writtenEvaluationDate);
 
-        exam.edit(examDate.getTime(), examStartTime.getTime(), examEndTime.getTime(), season,
-                executionCoursesToAssociate, curricularCourseScopeToAssociate, roomsToAssociate, period);
+        if (examSeason != null) {
+            ((IExam) writtenEvaluation).edit(writtenEvaluationDate.getTime(), writtenEvaluationStartTime
+                    .getTime(), writtenEvaluationEndTime.getTime(), executionCoursesToAssociate,
+                    curricularCourseScopeToAssociate, roomsToAssociate, period, examSeason);
+        } else if (writtenTestDescription != null) {
+            ((IWrittenTest) writtenEvaluation).edit(writtenEvaluationDate.getTime(),
+                    writtenEvaluationStartTime.getTime(), writtenEvaluationEndTime.getTime(),
+                    executionCoursesToAssociate, curricularCourseScopeToAssociate, roomsToAssociate,
+                    period, writtenTestDescription);
+        } else {
+            throw new InvalidArgumentsServiceException();
+        }
     }
 
-    private IPeriod readPeriod(final ISuportePersistente persistentSupport, final IExam exam,
-            final Calendar examDate) throws ExcepcaoPersistencia {
+    private IPeriod readPeriod(final ISuportePersistente persistentSupport,
+            final IWrittenEvaluation writtenEvaluation, final Calendar writtenEvaluationDate)
+            throws ExcepcaoPersistencia {
         IPeriod period = null;
-        if (!exam.getAssociatedRoomOccupation().isEmpty()) {
-            period = exam.getAssociatedRoomOccupation().get(0).getPeriod();
-            if (exam.getAssociatedRoomOccupation().containsAll(period.getRoomOccupations())) {
-                period.setStartDate(examDate);
-                period.setEndDate(examDate);
+        if (!writtenEvaluation.getAssociatedRoomOccupation().isEmpty()) {
+            period = writtenEvaluation.getAssociatedRoomOccupation().get(0).getPeriod();
+            if (writtenEvaluation.getAssociatedRoomOccupation().containsAll(period.getRoomOccupations())) {
+                period.setStartDate(writtenEvaluationDate);
+                period.setEndDate(writtenEvaluationDate);
             } else {
                 period = null;
             }
         }
         if (period == null) {
             final IPersistentPeriod persistentPeriod = persistentSupport.getIPersistentPeriod();
-            period = (IPeriod) persistentPeriod.readByCalendarAndNextPeriod(examDate, examDate, null);
+            period = (IPeriod) persistentPeriod.readByCalendarAndNextPeriod(writtenEvaluationDate, writtenEvaluationDate, null);
             if (period == null) {
-                period = DomainFactory.makePeriod(examDate.getTime(), examDate.getTime());
+                period = DomainFactory.makePeriod(writtenEvaluationDate.getTime(), writtenEvaluationDate.getTime());
             }
         }
         return period;
@@ -76,7 +93,7 @@ public class EditExam implements IService {
 
     private List<IRoom> readRooms(final ISuportePersistente persistentSupport, final List<String> roomIDs)
             throws ExcepcaoPersistencia, FenixServiceException {
-        
+
         final List<IRoom> result = new ArrayList<IRoom>();
         final ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
         for (final String roomID : roomIDs) {
@@ -92,7 +109,7 @@ public class EditExam implements IService {
     private List<ICurricularCourseScope> readCurricularCourseScopes(
             final ISuportePersistente persistentSupport, final List<String> curricularCourseScopeIDs)
             throws FenixServiceException, ExcepcaoPersistencia {
-        
+
         if (curricularCourseScopeIDs.isEmpty()) {
             throw new FenixServiceException("error.InvalidCurricularCourseScope");
         }
@@ -112,7 +129,7 @@ public class EditExam implements IService {
 
     private List<IExecutionCourse> readExecutionCourses(final ISuportePersistente persistentSupport,
             final List<String> executionCourseIDs) throws ExcepcaoPersistencia, FenixServiceException {
-        
+
         if (executionCourseIDs.isEmpty()) {
             throw new FenixServiceException("error.InvalidExecutionCourse");
         }
@@ -129,4 +146,5 @@ public class EditExam implements IService {
         }
         return result;
     }
+
 }

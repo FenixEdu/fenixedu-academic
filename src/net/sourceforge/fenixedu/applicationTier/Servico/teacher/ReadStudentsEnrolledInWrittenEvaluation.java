@@ -12,30 +12,33 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTeacherStudentsEnroll
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenEvaluationEnrolmentWithInfoStudentAndInfoRoom;
+import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
+import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
-import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.ISite;
+import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
 import net.sourceforge.fenixedu.domain.IWrittenEvaluationEnrolment;
+import net.sourceforge.fenixedu.domain.IWrittenTest;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class ReadStudentsEnrolledInExam implements IService {
+public class ReadStudentsEnrolledInWrittenEvaluation implements IService {
 
-    public Object run(Integer executionCourseID, Integer examID) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    public SiteView run(Integer executionCourseID, Integer writtenEvaluationID)
+            throws FenixServiceException, ExcepcaoPersistencia {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
 
-        final IPersistentExam persistentExam = persistentSupport.getIPersistentExam();
-        final IExam exam = (IExam) persistentExam.readByOID(Exam.class, examID);
-        if (examID == null) {
-            throw new FenixServiceException("error.noExam");
+        final IWrittenEvaluation writtenEvaluation = (IWrittenEvaluation) persistentSupport
+                .getIPersistentEvaluation().readByOID(WrittenEvaluation.class, writtenEvaluationID);
+        if (writtenEvaluation == null) {
+            throw new FenixServiceException("error.noWrittenEvaluation");
         }
 
         final IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
@@ -44,7 +47,7 @@ public class ReadStudentsEnrolledInExam implements IService {
             throw new FenixServiceException("error.noSite");
         }
 
-        final List<IWrittenEvaluationEnrolment> writtenEvaluationEnrolmentList = exam
+        final List<IWrittenEvaluationEnrolment> writtenEvaluationEnrolmentList = writtenEvaluation
                 .getWrittenEvaluationEnrolments();
 
         final List<InfoStudent> infoStudents = new ArrayList<InfoStudent>(writtenEvaluationEnrolmentList
@@ -58,9 +61,20 @@ public class ReadStudentsEnrolledInExam implements IService {
                     .newInfoFromDomain(writtenEvaluationEnrolment));
         }
 
-        final InfoExam infoExam = InfoExam.newInfoFromDomain(exam);
-        final ISiteComponent component = new InfoSiteTeacherStudentsEnrolledList(infoStudents, infoExam,
-                infoWrittenEvaluationEnrolments);
+        ISiteComponent component = null;
+        if (writtenEvaluation instanceof IExam) {
+            final InfoExam infoExam = InfoExam.newInfoFromDomain((IExam) writtenEvaluation);
+            component = new InfoSiteTeacherStudentsEnrolledList(infoStudents, infoExam,
+                    infoWrittenEvaluationEnrolments);
+        } else if (writtenEvaluation instanceof IWrittenTest) {
+            final InfoWrittenTest infoWrittenTest = InfoWrittenTest
+                    .newInfoFromDomain((IWrittenTest) writtenEvaluation);
+            component = new InfoSiteTeacherStudentsEnrolledList(infoStudents, infoWrittenTest,
+                    infoWrittenEvaluationEnrolments);
+        } else {
+            throw new FenixServiceException("error.noWrittenEvaluation");
+        }
+
         final TeacherAdministrationSiteComponentBuilder componentBuilder = TeacherAdministrationSiteComponentBuilder
                 .getInstance();
         final ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site,

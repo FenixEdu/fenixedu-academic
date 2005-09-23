@@ -22,7 +22,6 @@ import org.apache.ojb.broker.core.proxy.ProxyHelper;
 public class InfoEvaluation extends InfoShowOccupation implements ISiteComponent {
 
     private String publishmentMessage;
-
     private EvaluationType evaluationType;
 
     public InfoEvaluation() {

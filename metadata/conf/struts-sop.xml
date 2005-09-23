@@ -1083,38 +1083,6 @@
         <forward name="showForm" path="/chooseExecutionCourse.jsp"/>        
     </action>
 
-	<action path="/createExam"
-			name="examForm"
-			input="/createExam.do?method=prepare&amp;page=0"
-    		type="net.sourceforge.fenixedu.presentationTier.Action.sop.CreateExamActionDA"
-            parameter="method"
-    		>
-    	<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
-        		   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
-        		   />
-    	<forward name="showCreateForm" path="/createExam.jsp"/>
-    	<forward name="Sucess" path="/mainExams.do?method=prepare&amp;page=0"/>
-    	<forward name="viewExamsMap" path="/viewExamsMap.do?method=view"/>
-	</action>
-
-	<action path="/editExam"
-			name="examForm"
-			input="/editExam.jsp"
-    		type="net.sourceforge.fenixedu.presentationTier.Action.sop.EditExamAction"
-    		>
-    	<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
-        		   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
-        		   />
-    	<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InterceptingRoomsActionException"
-        		   key="ServidorApresentacao.Action.exceptions.InterceptingRoomsActionException"
-                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
-        		   />
-    	<forward name="viewExamsByDayAndShift" path="/viewExamsDayAndShiftForm.do?method=view"/>
-    	<forward name="viewExamsMap" path="/viewExamsMap.do?method=view"/>
-	</action>
-
     <action input="/chooseExamsMapContextDA.do?method=prepare&amp;page=0"
             name="chooseExamsMapContextForm"
             parameter="method"

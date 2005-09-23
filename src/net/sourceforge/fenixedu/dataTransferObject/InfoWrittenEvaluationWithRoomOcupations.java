@@ -26,10 +26,6 @@ public class InfoWrittenEvaluationWithRoomOcupations extends InfoWrittenEvaluati
         }
     }
 
-    /**
-     * @param associatedRoomOccupation
-     * @return
-     */
     private List copyIRoomOccupation2InfoRoomOccupation(List associatedRoomOccupation) {
         List infoRoomOccupation = null;
 

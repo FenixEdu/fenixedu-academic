@@ -7,14 +7,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.base.FenixCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
@@ -23,6 +21,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstan
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -37,14 +37,10 @@ public class DefineCommentAction extends
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        ////////////
-        //InfoExamsMap infoExamsMap =
-        //	(InfoExamsMap) request.getAttribute(
-        //		SessionConstants.INFO_EXAMS_MAP);
         InfoExamsMap infoExamsMap = getExamsMap(request);
         request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
 
-        Integer indexExecutionCourse = new Integer(request.getParameter("indexExecutionCourse"));
+        Integer indexExecutionCourse = Integer.valueOf(request.getParameter("indexExecutionCourse"));
 
         InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) infoExamsMap
                 .getExecutionCourses().get(indexExecutionCourse.intValue());
@@ -55,7 +51,6 @@ public class DefineCommentAction extends
 
         request.setAttribute(SessionConstants.EXECUTION_COURSE_KEY, infoExecutionCourse);
 
-        ///////////
         request.setAttribute(SessionConstants.INFO_EXAMS_KEY, infoExamsMap);
 
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
@@ -72,7 +67,6 @@ public class DefineCommentAction extends
 
         request.setAttribute(SessionConstants.CURRICULAR_YEAR_OID, curricularYear.toString());
         ContextUtils.setCurricularYearContext(request);
-        ///////////
 
         return mapping.findForward("defineExamComment");
     }
@@ -86,45 +80,35 @@ public class DefineCommentAction extends
 
         String comment = (String) defineExamCommentForm.get("comment");
         String executionCourseCode = request.getParameter("executionCourseCode");
-        //		String executionPeriodName =
-        //			((InfoExecutionPeriod) request.getAttribute(
-        //				SessionConstants.INFO_EXECUTION_PERIOD_KEY)).getName();
-        //			//request.getParameter("executionPeriodName");
-        //		String executionYear = request.getParameter("executionYear");
-        //
-        //		InfoExecutionYear infoExecutionYear =
-        //			new InfoExecutionYear(executionYear);
-        //		InfoExecutionPeriod infoExecutionPeriod =
-        //			new InfoExecutionPeriod(executionPeriodName, infoExecutionYear);
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
         InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
         infoExecutionCourse.setSigla(executionCourseCode);
         infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 
-        // Define comment
         Object argsDefineComment[] = { infoExecutionCourse, comment };
         try {
             ServiceUtils.executeService(userView, "DefineExamComment", argsDefineComment);
-        } catch (ExistingServiceException ex) {
-            throw new ExistingActionException("O comentario do exame", ex);
+        } catch (FenixServiceException e) {
+           ActionErrors actionErrors = new ActionErrors();
+           actionErrors.add(e.getMessage(), new ActionError(e.getMessage()));
+           saveErrors(request, actionErrors);           
         }
-
         return mapping.findForward("showExamsMap");
     }
 
     private InfoExamsMap getExamsMap(HttpServletRequest request) throws FenixActionException, FenixFilterException {
-        IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
+        final IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
 
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
+        final InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
                 .getAttribute(SessionConstants.EXECUTION_DEGREE);
 
-        List curricularYears = (List) request.getAttribute(SessionConstants.CURRICULAR_YEARS_LIST);
+        final List curricularYears = (List) request.getAttribute(SessionConstants.CURRICULAR_YEARS_LIST);
 
-        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+        final InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-        Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
+        final Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
         InfoExamsMap infoExamsMap;
         try {
             infoExamsMap = (InfoExamsMap) ServiceUtils.executeService(userView, "ReadExamsMap", args);

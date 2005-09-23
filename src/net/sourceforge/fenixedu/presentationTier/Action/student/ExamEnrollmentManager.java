@@ -11,9 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -71,15 +69,10 @@ public class ExamEnrollmentManager extends FenixDispatchAction {
         Object[] args = { userView.getUtilizador(), examId };
 
         try {
-
-            ServiceUtils.executeService(userView, "EnrollStudentInExam", args);
-        } catch (ExistingServiceException e) {
-            request.setAttribute("alreadyEnrolledError", "error.alreadyEnrolledError");
-        } catch (InvalidArgumentsServiceException e) {
-            throw new FenixActionException(e);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+			ServiceUtils.executeService(userView, "EnrolStudentInWrittenEvaluation", args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
 
         return viewExamsToEnroll(mapping, form, request, response);
     }
@@ -97,7 +90,7 @@ public class ExamEnrollmentManager extends FenixDispatchAction {
 
         try {
 
-            ServiceUtils.executeService(userView, "UnEnrollStudentInExam", args);
+            ServiceUtils.executeService(userView, "UnEnrollStudentInWrittenEvaluation", args);
         } catch (notAuthorizedServiceDeleteException e) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("notAuthorizedUnEnrollment", new ActionError(

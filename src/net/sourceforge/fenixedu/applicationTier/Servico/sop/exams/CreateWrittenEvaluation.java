@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -23,32 +24,38 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.Season;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class CreateExam implements IService {
+public class CreateWrittenEvaluation implements IService {
 
-	public void run(Calendar examDate, Calendar examStartTime, Calendar examEndTime, Season season,
-			List<String> executionCourseIDs, List<String> curricularCourseScopeIDs, List<String> roomIDs)
-			throws FenixServiceException, ExcepcaoPersistencia {
+	public void run(Calendar writtenEvaluationDate, Calendar writtenEvaluationStartTime,
+			Calendar writtenEvaluationEndTime, List<String> executionCourseIDs,
+			List<String> curricularCourseScopeIDs, List<String> roomIDs, Season examSeason,
+			String writtenTestDescription) throws FenixServiceException, ExcepcaoPersistencia {
 
 		final ISuportePersistente persistentSupport = PersistenceSupportFactory
 				.getDefaultPersistenceSupport();
 
-		// reading the execution course list to associate with the exam
 		final List<IExecutionCourse> executionCoursesToAssociate = readExecutionCourses(
 				persistentSupport, executionCourseIDs);
 
-		// reading the curricular course scopes to associate with the exam
 		final List<ICurricularCourseScope> curricularCourseScopesToAssociate = readCurricularCourseScopes(
 				persistentSupport, curricularCourseScopeIDs);
 
-		// reading the rooms to associate with the exam
 		final List<IRoom> roomsToAssociate = readRooms(persistentSupport, roomIDs);
 
-		// reading or creating the period to associate with the exam
-        final IPeriod period = readPeriod(persistentSupport, examDate);
-		
-		// creating the new exam
-		DomainFactory.makeExam(examDate.getTime(), examStartTime.getTime(), examEndTime.getTime(), season,
-				executionCoursesToAssociate, curricularCourseScopesToAssociate, roomsToAssociate, period);
+		final IPeriod period = readPeriod(persistentSupport, writtenEvaluationDate);
+
+		// creating the new written evaluation, according to the service arguments
+		if (examSeason != null) {
+			DomainFactory.makeExam(writtenEvaluationDate.getTime(), writtenEvaluationStartTime.getTime(),
+					writtenEvaluationEndTime.getTime(), executionCoursesToAssociate,
+					curricularCourseScopesToAssociate, roomsToAssociate, period, examSeason);
+		} else if (writtenTestDescription != null) {
+			DomainFactory.makeWrittenTest(writtenEvaluationDate.getTime(), writtenEvaluationStartTime.getTime(),
+					writtenEvaluationEndTime.getTime(), executionCoursesToAssociate,
+					curricularCourseScopesToAssociate, roomsToAssociate, period, writtenTestDescription);
+		} else {
+			throw new InvalidArgumentsServiceException();
+		}
 	}
 
 	private List<IExecutionCourse> readExecutionCourses(final ISuportePersistente persistentSupport,
@@ -107,12 +114,15 @@ public class CreateExam implements IService {
 		return result;
 	}
 
-    private IPeriod readPeriod(final ISuportePersistente persistentSupport, final Calendar examDate) throws ExcepcaoPersistencia {
-        final IPersistentPeriod persistentPeriod = persistentSupport.getIPersistentPeriod();
-        IPeriod period = (IPeriod) persistentPeriod.readByCalendarAndNextPeriod(examDate, examDate, null);
-        if (period == null) {
-            period = DomainFactory.makePeriod(examDate.getTime(), examDate.getTime());
-        }        
-        return period;
-    }
+	private IPeriod readPeriod(final ISuportePersistente persistentSupport, final Calendar writtenEvaluationDate)
+			throws ExcepcaoPersistencia {
+		final IPersistentPeriod persistentPeriod = persistentSupport.getIPersistentPeriod();
+		IPeriod period = (IPeriod) persistentPeriod
+				.readByCalendarAndNextPeriod(writtenEvaluationDate, writtenEvaluationDate, null);
+		if (period == null) {
+			period = DomainFactory.makePeriod(writtenEvaluationDate.getTime(), writtenEvaluationDate.getTime());
+		}
+		return period;
+	}
+
 }

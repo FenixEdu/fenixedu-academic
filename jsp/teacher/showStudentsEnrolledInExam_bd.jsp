@@ -6,9 +6,14 @@
 <span class="error"><html:errors/></span>	
 
 <bean:define id="component" name="siteView" property="component"/>
-<bean:define id="exam" name="component" property="infoExam"/>
+<logic:notEmpty name="component" property="infoExam">
+	<bean:define id="evaluation" name="component" property="infoExam"/>
+</logic:notEmpty>
+<logic:notEmpty name="component" property="infoWrittenTest">
+	<bean:define id="evaluation" name="component" property="infoWrittenTest"/>
+</logic:notEmpty>
 <bean:define id="executionCourseCode"  name="siteView" property="commonComponent.executionCourse.idInternal"/>
-<bean:define id="examCode"  name="exam" property="idInternal"/>
+<bean:define id="evaluationCode"  name="evaluation" property="idInternal"/>
 <br/>
 <table cellspacing="1" border="0">
 	<tr>
@@ -21,13 +26,18 @@
 		</logic:notEqual> --%>
 	</tr>
 	<tr>
-		<td class="listClasses"><bean:write name="exam" property="season"/></td>
-		<td class="listClasses"><bean:write name="exam" property="date"/></td>
-		<td class="listClasses"><bean:write name="exam" property="beginningHour"/></td>
+		<logic:notEmpty name="component" property="infoExam">
+			<td class="listClasses"><bean:write name="evaluation" property="season"/></td>
+		</logic:notEmpty>
+		<logic:notEmpty name="component" property="infoWrittenTest">
+			<td class="listClasses"><bean:write name="evaluation" property="description"/></td>
+		</logic:notEmpty>
+		<td class="listClasses"><bean:write name="evaluation" property="date"/></td>
+		<td class="listClasses"><bean:write name="evaluation" property="beginningHour"/></td>
 		<td class="listClasses"><bean:write name="component" property="size"/></td>
 <%--		<logic:notEqual name="component" property="size" value="0">		
 			<td class="listClasses">
-				<html:link page='<%= "/distributeStudentsByRoom.do?method=prepare&objectCode=" + executionCourseCode + "&examCode=" + examCode %>'>
+				<html:link page='<%= "/distributeStudentsByRoom.do?method=prepare&objectCode=" + executionCourseCode + "&examCode=" + evaluationCode %>'>
 					<bean:message key="link.student.room.distribution"/>
 				</html:link>
 			</td>		

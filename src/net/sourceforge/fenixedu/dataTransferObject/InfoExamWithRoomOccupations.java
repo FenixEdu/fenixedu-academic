@@ -24,8 +24,8 @@ public class InfoExamWithRoomOccupations extends InfoExam {
                     .getAssociatedRoomOccupation()));
         }
     }
-
-    private List copyIRoomOccupation2InfoRoomOccupation(List associatedRoomOccupation) {
+    
+    private List<InfoRoomOccupation> copyIRoomOccupation2InfoRoomOccupation(List associatedRoomOccupation) {
         final List infoRoomOccupations = new ArrayList(associatedRoomOccupation.size());
         for (final Iterator iterator = associatedRoomOccupation.iterator(); iterator.hasNext(); ) {
             final IRoomOccupation roomOccupation = (IRoomOccupation) iterator.next();

@@ -101,6 +101,7 @@ import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.IWrittenTest;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -114,7 +115,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
@@ -244,10 +244,13 @@ public class TeacherAdministrationSiteComponentBuilder {
                 .newInfoFromDomain(executionCourse);
         component.setExecutionCourse(infoExecutionCourse);
 
-        final List<ICurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
-        final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>(curricularCourses.size());
+        final List<ICurricularCourse> curricularCourses = executionCourse
+                .getAssociatedCurricularCourses();
+        final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>(
+                curricularCourses.size());
         for (final ICurricularCourse curricularCourse : curricularCourses) {
-            infoCurricularCourses.add(InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse));
+            infoCurricularCourses.add(InfoCurricularCourseWithInfoDegree
+                    .newInfoFromDomain(curricularCourse));
         }
         component.setAssociatedDegrees(infoCurricularCourses);
 
@@ -284,15 +287,15 @@ public class TeacherAdministrationSiteComponentBuilder {
     }
 
     private InfoSiteAnnouncement getInfoSiteAnnouncement(InfoSiteAnnouncement component, ISite site) {
-	Set<IAnnouncement> announcements = site.getSortedAnnouncements();
-	List infoAnnouncementsList = new ArrayList(announcements.size());
+        Set<IAnnouncement> announcements = site.getSortedAnnouncements();
+        List infoAnnouncementsList = new ArrayList(announcements.size());
 
-	for (IAnnouncement ann : announcements) {
-	    infoAnnouncementsList.add(InfoAnnouncement.newInfoFromDomain(ann));
-	}
-	
-	component.setAnnouncements(infoAnnouncementsList);
-	return component;
+        for (IAnnouncement ann : announcements) {
+            infoAnnouncementsList.add(InfoAnnouncement.newInfoFromDomain(ann));
+        }
+
+        component.setAnnouncements(infoAnnouncementsList);
+        return component;
     }
 
     /**
@@ -693,56 +696,40 @@ public class TeacherAdministrationSiteComponentBuilder {
     }
 
     private ISiteComponent getInfoSiteEvaluationExecutionCourses(
-            InfoSiteEvaluationExecutionCourses component, ISite site, Integer evaluationCode)
-            throws FenixServiceException {
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
-            IEvaluation evaluation = (IEvaluation) persistentEvaluation.readByOID(Evaluation.class,
-                    evaluationCode);
+            InfoSiteEvaluationExecutionCourses component, ISite site, Integer evaluationID)
+            throws ExcepcaoPersistencia {
 
-            if (evaluation instanceof Proxy) {
-                evaluation = (IEvaluation) ProxyHelper.getRealObject(evaluation);
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
+        final IEvaluation evaluation = (IEvaluation) persistentSupport.getIPersistentEvaluation()
+                .readByOID(Evaluation.class, evaluationID);
+
+        if (evaluation instanceof IExam) {
+            final IExam exam = (IExam) evaluation;
+            exam.checkIfCanDistributeStudentsByRooms();
+            final InfoExam infoExam = InfoExamWithRoomOccupations.newInfoFromDomain(exam);
+            infoExam.setEnrolledStudents(exam.getWrittenEvaluationEnrolmentsCount());
+
+            final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>(
+                    exam.getAssociatedExecutionCoursesCount());
+            for (final IExecutionCourse executionCourse : exam.getAssociatedExecutionCourses()) {
+                final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
+                        .newInfoFromDomain(executionCourse);
+                infoExecutionCourse.setNumberOfAttendingStudents(executionCourse.getAttendsCount());
+                infoExecutionCourses.add(infoExecutionCourse);
             }
 
-            if (evaluation instanceof IExam) {
-                InfoSiteExamExecutionCourses componentExam = (InfoSiteExamExecutionCourses) component;
-                IExam exam = (IExam) evaluation;
-                IPersistentWrittenEvaluationEnrolment persistentWrittenEvaluationEnrolment = sp
-                        .getIPersistentWrittenEvaluationEnrolment();
-                List enrolledStudents = persistentWrittenEvaluationEnrolment.readByExamOID(exam.getIdInternal());
+            final InfoSiteExamExecutionCourses infoSiteExamExecutionCourses = (InfoSiteExamExecutionCourses) component;
+            infoSiteExamExecutionCourses.setInfoExam(infoExam);
+            infoSiteExamExecutionCourses.setInfoExecutionCourses(infoExecutionCourses);
 
-                InfoExam infoExam = InfoExamWithRoomOccupations.newInfoFromDomain(exam);
-                infoExam.setEnrolledStudents(new Integer(enrolledStudents.size()));
-                List executionCourses = exam.getAssociatedExecutionCourses();
-                List infoExecutionCourses = new ArrayList();
-                Iterator iter = executionCourses.iterator();
-                while (iter.hasNext()) {
-                    IExecutionCourse element = (IExecutionCourse) iter.next();
-
-                    InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
-                            .newInfoFromDomain(element);
-                    infoExecutionCourse.setNumberOfAttendingStudents(element.getAttendsCount());
-                    infoExecutionCourses.add(infoExecutionCourse);
-                }
-
-                componentExam.setInfoExam(infoExam);
-                componentExam.setInfoExecutionCourses(infoExecutionCourses);
-                component = componentExam;
-            }
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+        } else if (evaluation instanceof IWrittenTest) {
+            // TODO: Return InfoWrittenTest
+        } else {
+            // TODO: Error
         }
-
         return component;
     }
-
-    /**
-     * @param evaluation
-     * @param site
-     * @return
-     */
 
     private ISiteComponent getInfoEvaluation(InfoEvaluation component, ISite site, Integer evaluationCode)
             throws FenixServiceException {
@@ -1220,7 +1207,8 @@ public class TeacherAdministrationSiteComponentBuilder {
             groupProperties = (IGrouping) sp.getIPersistentGrouping().readByOID(Grouping.class,
                     groupPropertiesCode);
 
-            List infoSiteShiftsAndGroups = ReadShiftsAndGroups.run(groupProperties).getInfoSiteGroupsByShiftList();
+            List infoSiteShiftsAndGroups = ReadShiftsAndGroups.run(groupProperties)
+                    .getInfoSiteGroupsByShiftList();
             component.setInfoSiteGroupsByShiftList(infoSiteShiftsAndGroups);
 
             Integer numberOfStudentsOutsideGrouping = readNumberOfStudentsOutsideGrouping(groupProperties);

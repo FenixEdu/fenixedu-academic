@@ -5,10 +5,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
-/**
- * @author lmac1
- *  
- */
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -33,6 +29,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -42,23 +40,22 @@ public class ShowStudentsEnrolledInExamAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        HttpSession session = request.getSession(false);
+        final HttpSession session = request.getSession(false);
+        final IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        
+        final Integer executionCourseCode = Integer.valueOf(request.getParameter("objectCode"));
+        final Integer writtenEvaluationCode = Integer.valueOf(request.getParameter("evaluationCode"));
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-
-        String executionCourseCodeString = request.getParameter("objectCode");
-        Integer executionCourseCode = new Integer(executionCourseCodeString);
-
-        String examCodeString = request.getParameter("evaluationCode");
-        Integer examCode = new Integer(examCodeString);
-
-        Object[] args = { executionCourseCode, examCode };
+        final Object[] args = { executionCourseCode, writtenEvaluationCode };
         SiteView siteView = null;
         try {
-            siteView = (SiteView) ServiceUtils.executeService(userView, "ReadStudentsEnrolledInExam",
+            siteView = (SiteView) ServiceUtils.executeService(userView, "ReadStudentsEnrolledInWrittenEvaluation",
                     args);
         } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add(e.getMessage(), new ActionError(e.getMessage()));
+            saveErrors(request, actionErrors);
+            return mapping.getInputForward();
         }
 
         InfoSiteTeacherStudentsEnrolledList infoSiteTeacherStudentsEnrolledList = (InfoSiteTeacherStudentsEnrolledList) siteView
@@ -88,7 +85,8 @@ public class ShowStudentsEnrolledInExamAction extends FenixAction {
 
         request.setAttribute("siteView", siteView);
         request.setAttribute("objectCode", executionCourseCode);
-        request.setAttribute("evaluationCode", examCode);
+        request.setAttribute("evaluationCode", writtenEvaluationCode);
+        
         return mapping.findForward("showStudents");
 
     }
