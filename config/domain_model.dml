@@ -782,6 +782,7 @@ class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu
 	interface "
 	public void delete();
 	public void initializeAsNew(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod, net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition enrolmentCondition, String createdBy);
+	public void initializeAsNewWithoutEnrolmentEvaluation (IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod, net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition enrolmentCondition, String createdBy);
 	public void unEnroll() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
 	public void unEnrollImprovement(IExecutionPeriod executionPeriod) throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
 	public IEnrolmentEvaluation getImprovementEvaluation();

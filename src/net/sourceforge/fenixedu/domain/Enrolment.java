@@ -43,6 +43,11 @@ public class Enrolment extends Enrolment_Base {
 	}
 
 	public void initializeAsNew (IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod, EnrollmentCondition enrolmentCondition, String createdBy) {
+		initializeAsNewWithoutEnrolmentEvaluation(studentCurricularPlan, curricularCourse, executionPeriod, enrolmentCondition, createdBy);
+		createEnrolmentEvaluationWithoutGrade();
+	}
+	
+	public void initializeAsNewWithoutEnrolmentEvaluation (IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod, EnrollmentCondition enrolmentCondition, String createdBy) {
 		setCurricularCourse(curricularCourse);
 		setEnrollmentState(EnrollmentState.ENROLLED);
 		setExecutionPeriod(executionPeriod);
@@ -52,7 +57,6 @@ public class Enrolment extends Enrolment_Base {
 		setCondition(enrolmentCondition);
 		setCreatedBy(createdBy);
 		
-		createEnrolmentEvaluationWithoutGrade();
 		createAttend(studentCurricularPlan.getStudent(), curricularCourse, executionPeriod);
 	}
 
