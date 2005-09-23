@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.util.StudentCurricularPlanIDDomainType;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -214,7 +215,7 @@ public class CurriculumDispatchAction extends DispatchAction {
 
     private String getStudent(HttpServletRequest request) {
         String studentNumber = request.getParameter("studentNumber");
-        if (studentNumber == null) {
+        if (studentNumber == null && StringUtils.isNumeric(studentNumber)) {
             studentNumber = (String) request.getAttribute("studentNumber");
         }
         return studentNumber;
