@@ -7784,14 +7784,6 @@
 			<chain name="ManagementAssiduousnessAuthorization" />
 		</filterChains>
 	</service>
-		<service>
-		<name>ReadAllCostCenters</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.managementAssiduousness.ReadAllCostCenters
-		</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-	</service>
 	<service>
 		<name>UpdateAllMoneyCostCenterByYear</name>
 		<implementationClass> 
