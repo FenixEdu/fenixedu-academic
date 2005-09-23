@@ -6,18 +6,26 @@
 
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.ICountry;
 import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 /**
  * @author tfc130
@@ -95,9 +103,11 @@ public class InfoPerson extends InfoObject {
     
     private InfoEmployee infoEmployee;
     
-    private InfoStudent infoStudent;
+    private List<InfoStudentCurricularPlan> infoStudentCurricularPlanList;
     
     private InfoExternalPerson infoExternalPerson;
+    
+    private InfoTeacher infoTeacher;
 
     private List infoAdvisories;
 
@@ -194,6 +204,7 @@ public class InfoPerson extends InfoObject {
         result += "\n  - Password : " + password;
         result += "\n  - Occupation : " + profissao;
         result += "\n  - Codigo Fiscal : " + codigoFiscal;
+        result += "\n  - studentList : " + infoStudentCurricularPlanList;
         return result;
     }
 
@@ -871,26 +882,74 @@ public class InfoPerson extends InfoObject {
                 infoExternalPerson.setInfoWorkLocation(InfoWorkLocation.newInfoFromDomain(person.getExternalPerson().getWorkLocation()));
                 setInfoExternalPerson(infoExternalPerson);
             }
-
+            if (person.getTeacher() != null){
+            	InfoTeacher infoTeacher = new InfoTeacher();
+            	infoTeacher.setIdInternal( person.getTeacher().getIdInternal());
+            	infoTeacher.setTeacherNumber(person.getTeacher().getTeacherNumber());
+            	infoTeacher.setInfoCategory(InfoCategory.newInfoFromDomain(person.getTeacher().getCategory()));
+            	setInfoTeacher(infoTeacher);
+            }
             if (person.getEmployee()!= null){
         		InfoEmployee infoEmployee = new InfoEmployee();
         		infoEmployee.setIdInternal(person.getEmployee().getIdInternal());
         		infoEmployee.setEmployeeNumber(person.getEmployee().getEmployeeNumber());
         		
+    			if(person.getEmployee().getHistoricList().get(0).getMailingCostCenter()!=null){
+    				//infoEmployee.setWorkingPlaceInfoCostCenter(InfoCostCenter.newInfoFromDomain(person.getEmployee().getHistoricList().get(0).getMailingCostCenter()));
+    				infoEmployee.setMailingInfoCostCenter(InfoCostCenter.newInfoFromDomain(person.getEmployee().getHistoricList().get(0).getMailingCostCenter()));
+    
+    			}
+    			if (person.getEmployee().getHistoricList().get(0).getWorkingPlaceCostCenter()!=null){
+    				infoEmployee.setWorkingPlaceInfoCostCenter(InfoCostCenter.newInfoFromDomain(person.getEmployee().getHistoricList().get(0).getWorkingPlaceCostCenter()));
+ 
     			if(person.getEmployee().getWorkingUnit()!=null){
     				infoEmployee.setWorkingUnit(InfoUnit.newInfoFromDomain(person.getEmployee().getWorkingUnit()));    				                    		
         		}
     			setInfoEmployee(infoEmployee);
-    			
         	}
+                   
+            if(person.getStudentsCount() != 0){
+          
+            	List<InfoStudentCurricularPlan> infoStudentList = new ArrayList<InfoStudentCurricularPlan>();
+            	
+            	for(IStudent student : person.getStudents()){
+            		
+
+            		InfoStudent infoStudent = new InfoStudent();
+	            	InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
+	            	InfoDegree infoDegree = new InfoDegree();
+	            	for(IStudentCurricularPlan studentCurricularPlan : student.getStudentCurricularPlans()){ 
+	            		
+	            		if ((!studentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.ACTIVE)) && (!studentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.SCHOOLPARTCONCLUDED))){
+	            			
+	            			continue;
+	            		}
+	            	infoStudentCurricularPlan = InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
+            		
+            		infoDegree = InfoDegree.newInfoFromDomain(studentCurricularPlan.getDegreeCurricularPlan().getDegree());
+            		infoDegree.setNome(studentCurricularPlan.getDegreeCurricularPlan().getDegree().getNome());
+            		infoDegree.setSigla(studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla());
+            		
+            		infoStudentCurricularPlan.getInfoDegreeCurricularPlan().setInfoDegree(infoDegree);
+            		infoStudent.setInfoStudentCurricularPlan(infoStudentCurricularPlan);	
+
+            		infoStudentList.add(infoStudent.getInfoStudentCurricularPlan());
+            		
+	            	}
+     	           setInfoStudentCurricularPlanList(infoStudentList);
+            	}
+            	
+            }
+            
             
             setAvailablePhoto(person.getAvailablePhoto());
             
             setInfoPais(InfoCountry.newInfoFromDomain(person.getPais()));
             
-
         }
+        
     }
+ 
 
     /**
      * @param pessoa
@@ -967,12 +1026,24 @@ public class InfoPerson extends InfoObject {
 		this.infoEmployee = infoEmployee;
 	}
 
-	public InfoStudent getInfoStudent() {
-		return infoStudent;
+
+	public List<InfoStudentCurricularPlan> getInfoStudentCurricularPlanList() {
+		return infoStudentCurricularPlanList;
 	}
 
-	public void setInfoStudent(InfoStudent infoStudent) {
-		this.infoStudent = infoStudent;
+	public void setInfoStudentCurricularPlanList(
+			List<InfoStudentCurricularPlan> infoStudentCurricularPlanList) {
+		this.infoStudentCurricularPlanList = infoStudentCurricularPlanList;
 	}
+
+	public InfoTeacher getInfoTeacher() {
+		return infoTeacher;
+	}
+
+	public void setInfoTeacher(InfoTeacher infoTeacher) {
+		this.infoTeacher = infoTeacher;
+	}
+
+	
 
 }

@@ -16,6 +16,9 @@ public interface IPersistentDegreeCurricularPlan extends IPersistentObject {
     public IDegreeCurricularPlan readByNameAndDegree(String name, Integer degreeId)
         throws ExcepcaoPersistencia;
     
+    public List readByDegree(Integer degreeId)
+    throws ExcepcaoPersistencia;
+
     public List readByDegreeTypeAndState(DegreeType degreeType, DegreeCurricularPlanState state)
         throws ExcepcaoPersistencia;
 }

@@ -40,7 +40,14 @@ public class DegreeCurricularPlanOJB extends PersistentObjectOJB implements
             
             return (IDegreeCurricularPlan) queryObject(DegreeCurricularPlan.class, criteria);
     }
-    
+    public List readByDegree(Integer degreeId)
+    	throws ExcepcaoPersistencia {
+
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("degreeKey", degreeId);
+        
+        return queryList(DegreeCurricularPlan.class, criteria);
+    }
     public List readByDegreeTypeAndState(DegreeType degreeType, DegreeCurricularPlanState state)
         throws ExcepcaoPersistencia {
             Criteria criteria = new Criteria();

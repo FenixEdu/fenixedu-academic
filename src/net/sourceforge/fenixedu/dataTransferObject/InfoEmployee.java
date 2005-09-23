@@ -14,6 +14,8 @@ import net.sourceforge.fenixedu.domain.IEmployee;
 public class InfoEmployee extends InfoObject {
     private InfoPerson person = null;
     private Integer employeeNumber  = null;
+    private InfoCostCenter workingPlaceInfoCostCenter = null;
+    private InfoCostCenter MailingInfoCostCenter = null;
     private InfoUnit workingUnit = null;
 
     public void setPerson(InfoPerson person) {
@@ -68,6 +70,15 @@ public class InfoEmployee extends InfoObject {
         }
         return infoEmployee;
     }
+
+	
+	public InfoCostCenter getMailingInfoCostCenter() {
+		return MailingInfoCostCenter;
+	}
+
+	public void setMailingInfoCostCenter(InfoCostCenter mailingInfoCostCenter) {
+		MailingInfoCostCenter = mailingInfoCostCenter;
+	}
 
     public InfoUnit getWorkingUnit() {
         return workingUnit;

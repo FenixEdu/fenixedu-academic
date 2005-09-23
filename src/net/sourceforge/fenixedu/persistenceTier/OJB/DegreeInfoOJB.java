@@ -3,7 +3,9 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeInfo;
 
@@ -28,4 +30,12 @@ public class DegreeInfoOJB extends PersistentObjectOJB implements IPersistentDeg
 
         return queryList(DegreeInfo.class, criteria);
     }
+    public List readDegreeByType(DegreeType degreeType)
+		    throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("tipoCurso", degreeType);
+		
+		
+		return queryList(Degree.class, criteria);
+		}
 }

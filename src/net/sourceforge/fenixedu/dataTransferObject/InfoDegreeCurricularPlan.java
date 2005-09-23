@@ -88,6 +88,7 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
         result += "Curricular Courses=" + this.curricularCourses + ";";
         result += "Descrição = " + this.description + ";";
         result += "Anotation = " + this.anotation + ";";
+        result += "degree = " + this.infoDegree + ";";
         result += "]";
         return result;
     }
@@ -298,7 +299,8 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
             setDegreeDuration(plan.getDegreeDuration());
             setMinimalYearForOptionalCourses(plan.getMinimalYearForOptionalCourses());
             setAnotation(plan.getAnotation());
-			//setInfoDegree(InfoDegree.newInfoFromDomain(plan.getDegree()));
+            
+           
         }
     }
 

@@ -9,7 +9,8 @@ package net.sourceforge.fenixedu.domain.teacher;
  * @author Sergio Montelobo
  *  
  */
-public abstract class Career extends Career_Base {
+//
+public  class Career extends Career_Base {
 
     public Career() {
         this.setOjbConcreteClass(this.getClass().getName());

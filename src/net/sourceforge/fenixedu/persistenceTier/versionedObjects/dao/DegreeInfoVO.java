@@ -4,14 +4,17 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeInfo;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeInfo;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.ojb.broker.query.Criteria;
 
 public class DegreeInfoVO extends VersionedObjectsBase implements IPersistentDegreeInfo
 {
@@ -37,5 +40,20 @@ public class DegreeInfoVO extends VersionedObjectsBase implements IPersistentDeg
                     }});
 
         return degreeInfos;
+    }
+    public List readDegreeByType(final DegreeType degreeType)
+    	throws ExcepcaoPersistencia {
+    	  final List degrees = (List) readAll(Degree.class);
+    	  List degreeInfos = (List)CollectionUtils.select(degrees,new Predicate ()
+                  {
+                      public boolean evaluate(Object o) {
+                          IDegree degree = (IDegree)o;
+                          
+                          return (degree.getTipoCurso().equals(degreeType.getName()));
+                      }
+                  }
+    	  );
+
+          return degreeInfos;
     }
 }

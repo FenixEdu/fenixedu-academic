@@ -44,6 +44,15 @@ public class DegreeCurricularPlanVO extends VersionedObjectsBase implements
         
         return (IDegreeCurricularPlan) result.get(0);
     }
+    
+    public List readByDegree(Integer degreeId)
+    throws ExcepcaoPersistencia {
+
+    IDegree degree = (IDegree)readByOID(Degree.class,degreeId);
+    List result = (List) degree.getDegreeCurricularPlans();
+    
+    return (List) result;
+}
 
     public List readByDegreeTypeAndState(final DegreeType degreeType, final DegreeCurricularPlanState state) throws ExcepcaoPersistencia
     {

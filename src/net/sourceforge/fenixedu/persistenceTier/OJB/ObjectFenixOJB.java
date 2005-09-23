@@ -236,7 +236,26 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
         if (orderByString != null) {
             queryCriteria.addOrderBy(orderByString, reverseOrder);
         }
+        
+        queryCriteria.setStartAtIndex(startIndex.intValue());
+        queryCriteria.setEndAtIndex(startIndex.intValue() + numberOfElementsInSpan.intValue());
 
+        return queryList(queryCriteria);
+
+    }
+    public List readInterval(Class classToQuery, Criteria criteria, Integer numberOfElementsInSpan,
+            Integer startIndex, String orderByString, boolean reverseOrder,Boolean groupBy) throws ExcepcaoPersistencia {
+        if (numberOfElementsInSpan == null || numberOfElementsInSpan.intValue() == 0) {
+            throw new IllegalArgumentException("Invalid numberOfElementsInSpan!");
+        }
+
+        QueryByCriteria queryCriteria = new QueryByCriteria(classToQuery, criteria);
+        if (orderByString != null) {
+            queryCriteria.addOrderBy(orderByString, reverseOrder);
+        }
+        if (groupBy != null){
+        	queryCriteria.setDistinct(groupBy);
+        }
         queryCriteria.setStartAtIndex(startIndex.intValue());
         queryCriteria.setEndAtIndex(startIndex.intValue() + numberOfElementsInSpan.intValue());
 

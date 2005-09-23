@@ -6,7 +6,10 @@
 
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.util.StudentState;
 
@@ -33,6 +36,9 @@ public class InfoStudent extends InfoObject {
     private Boolean requestedChangeDegree;
     
     private Boolean interruptedStudies;
+    
+    private InfoStudentCurricularPlan infoStudentCurricularPlan;
+
 
     public InfoStudent() {
     }
@@ -167,4 +173,16 @@ public class InfoStudent extends InfoObject {
 	public void setInterruptedStudies(Boolean interruptedStudies) {
 		this.interruptedStudies = interruptedStudies;
 	}
+
+
+	public InfoStudentCurricularPlan getInfoStudentCurricularPlan() {
+		return infoStudentCurricularPlan;
+	}
+
+	public void setInfoStudentCurricularPlan(
+			InfoStudentCurricularPlan infoStudentCurricularPlan) {
+		this.infoStudentCurricularPlan = infoStudentCurricularPlan;
+	}
+
+	
 }

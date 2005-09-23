@@ -347,6 +347,9 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
             setGivenCredits(studentCurricularPlan.getGivenCredits());
             setCompletedCourses(studentCurricularPlan.getCompletedCourses());
             setEnrolledCourses(studentCurricularPlan.getEnrolledCourses());
+            setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan.newInfoFromDomain(studentCurricularPlan.getDegreeCurricularPlan()));
+
+        
         }
     }
 
