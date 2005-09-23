@@ -3,6 +3,10 @@
       "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
       "http://java.sun.com/dtd/web-app_2_3.dtd">
 <web-app>
+ 	<context-param>
+		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+		<param-value>client</param-value>
+	</context-param>
 	<filter>
 	    <filter-name>CloseTxFilter</filter-name>
 	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.CloseTransactionFilter</filter-class>
@@ -357,11 +361,6 @@
 	<session-config>
 			<session-timeout>120</session-timeout>
 	</session-config>   
-
-	<!-- <context-param>
-		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
-		<param-value>client</param-value>
-	</context-param>	-->
 
 	<error-page>
 	    <exception-type>java.lang.Exception</exception-type>
