@@ -462,7 +462,9 @@ table.style1 td.courses {
 	padding: 0 1em;
 	}
 
-
+table tr.highlight td.listClasses {
+background-color: #e9fee9;
+}
 
 /*****************************************************************
 	Assiduidade - layout verbete

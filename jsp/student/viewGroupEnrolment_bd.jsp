@@ -24,26 +24,21 @@ padding: 0;
 		</logic:equal>
 	</div>
 
-	<br />
-	<bean:write name="infoGrouping" property="name"/>
-	<br />
+	<p><strong>Agrupamento:</strong> <bean:write name="infoGrouping" property="name"/><p/>
+
+<%--
 	<logic:iterate id="infoExportGrouping" name="infoExportGroupings" length="1">
 		<bean:write name="infoExportGrouping" property="infoExecutionCourse.nome"/>
 	</logic:iterate>
 	<logic:iterate id="infoExportGrouping" name="infoExportGroupings" offset="1">
 		, <bean:write name="infoExportGrouping" property="infoExecutionCourse.nome"/>
 	</logic:iterate>
-	<br/>
-	<br />
+--%>
 
 
 	<html:form action="/groupEnrolment" method="get">
 
-	<br/>
-
 	<h2><span class="error"><html:errors/></span></h2>		 
-
-	<br/>
 
 	<bean:define id="groupNumber" name="groupNumber"/>
 

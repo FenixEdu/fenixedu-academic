@@ -4,17 +4,18 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
+<style>
+form { margin: 0; padding: 0; }
+</style>
 
 <logic:present name="infoSiteStudentGroup">
 
-<table width="100%" cellpadding="0" cellspacing="0">
-		<tr>
-			<td class="infoop">
-				<bean:message key="label.student.viewGroupStudentEnrolment.description" />
-			</td>
-		</tr>
-	</table>
-<br>
+
+	<div class="infoop3">
+		<bean:message key="label.student.viewGroupStudentEnrolment.description" />
+	</div>
+
+<br/>
 
 
 <html:form action="/groupStudentEnrolment" method="get">

@@ -26,8 +26,17 @@
 	
 	
 	<logic:notEmpty name="infoSiteShiftsAndGroups" property="infoSiteGroupsByShiftList">
-	<h2><bean:message key="title.ShiftsAndGroups"/></h2>
+	<h2><bean:message key="title.ShiftsAndGroups"/>: <span class="infoop4"><bean:write name="infoSiteShiftsAndGroups" property="infoGrouping.name"/></span></h2>
 	
+<%--
+	<strong>Disciplinas:</strong> 
+	<logic:iterate id="infoExportGrouping" name="infoExportGroupings" length="1">
+		<bean:write name="infoExportGrouping" property="infoExecutionCourse.nome"/>
+	</logic:iterate>
+	<logic:iterate id="infoExportGrouping" name="infoExportGroupings" offset="1">
+		, <bean:write name="infoExportGrouping" property="infoExecutionCourse.nome"/>
+	</logic:iterate>
+--%>
 	
 	<span class="error"><html:errors/></span>
 
@@ -35,22 +44,17 @@
 	<li><html:link page="<%="/viewExecutionCourseProjects.do?method=execute&executionCourseCode=" + request.getParameter("executionCourseCode")%>"><bean:message key="link.backToProjects"/></html:link> - <bean:message key="link.backToProjects.description"/></li>
 	<li><html:link page="<%="/viewAllStudentsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>"><bean:message key="link.viewAllStudentsAndGroups"/></html:link> - <bean:message key="link.viewAllStudentsAndGroups.description"/></li>
 	</ul>
+	
+	<br/>
+	
+<%-- ASD : nome do agrupamento --%>
+<%-- ASD : nome das disciplinas --%>
 
-	<br/>
-<!-- ASD : nome do agrupamento -->
-	<bean:write name="infoSiteShiftsAndGroups" property="infoGrouping.name"/>
-	<br/>
-<!-- ASD : nome das disciplinas -->
-	<br />
-	<logic:iterate id="infoExportGrouping" name="infoExportGroupings" length="1">
-		<bean:write name="infoExportGrouping" property="infoExecutionCourse.nome"/>
-	</logic:iterate>
-	<logic:iterate id="infoExportGrouping" name="infoExportGroupings" offset="1">
-		, <bean:write name="infoExportGrouping" property="infoExecutionCourse.nome"/>
-	</logic:iterate>
-	<br />
-	<br/>
-
+<%--
+	<p>
+	<strong>Agrupamento:</strong> <bean:write name="infoSiteShiftsAndGroups" property="infoGrouping.name"/>
+	</p>
+--%>
 	
   <table class="style1" cellspacing='1' cellpadding='1'>	
 	<tbody>		

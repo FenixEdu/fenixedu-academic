@@ -8,49 +8,31 @@
 <%@ page import="java.util.Map" %>
 
 <logic:present name="infoSiteStudentsAndGroups">
-	<h2><bean:message key="title.viewAllStudentsAndGroups"/></h2>
-
-	<logic:empty name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList">
-		<div class="infoop"><bean:message key="label.student.viewAllStudentsAndGroups.description" /></div>
-	</logic:empty>	
-	
-	<logic:notEmpty name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList">
-		<!--  <div class="infoop"><bean:message key="label.student.viewAllStudentsAndGroups.description" /></div> -->
-	</logic:notEmpty>		
 
 
 <span class="error"><html:errors/></span>
-
-	<br/>
-<!-- ASD : nome do agrupamento -->
-	<bean:write name="infoSiteStudentsAndGroups" property="infoGrouping.name"/>
-	<br/>
-	<br/>
-	<br />
-	<logic:iterate id="infoExportGrouping" name="infoExportGroupings" length="1">
-		<bean:write name="infoExportGrouping" property="infoExecutionCourse.nome"/>
-	</logic:iterate>
-	<logic:iterate id="infoExportGrouping" name="infoExportGroupings" offset="1">
-		, <bean:write name="infoExportGrouping" property="infoExecutionCourse.nome"/>
-	</logic:iterate>
-	<br/>
-
+<br/>
 
 	<logic:empty name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList">
-			<p>
-			<html:link page="<%="/viewShiftsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+		<h2><span class="infoop4"><bean:message key="message.infoSiteStudentsAndGroupsList.not.available" /></span></h2>
+		<ul>
+			<li><html:link page="<%="/viewShiftsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
 	   		<bean:message key="link.backToShiftsAndGroups"/></html:link> - <bean:message key="link.backToShiftsAndGroups.description"/>
-			</p>
-		<h2><bean:message key="message.infoSiteStudentsAndGroupsList.not.available" /></h2>
+	   		</li>
+		</ul>
 	</logic:empty>
 	
 	<logic:notEmpty name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList">
-			<p>
-			<html:link page="<%="/viewShiftsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
-    		<bean:message key="link.backToShiftsAndGroups"/></html:link> - <bean:message key="link.backToShiftsAndGroups.description"/>
-    		</p>
-
-
+		
+		<h2><bean:message key="title.viewAllStudentsAndGroups"/></h2>
+		
+		<ul>
+			<li><html:link page="<%="/viewShiftsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+	   		<bean:message key="link.backToShiftsAndGroups"/></html:link> - <bean:message key="link.backToShiftsAndGroups.description"/>
+	   		</li>
+		</ul>
+	
+	<p><strong>Agrupamento:</strong> <span class="infoop4"><bean:write name="infoSiteStudentsAndGroups" property="infoGrouping.name"/></span></p>
 
  	<bean:size id="count" name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList"/>
 	<bean:message key="label.student.NumberOfStudents" /><%= count %>
@@ -77,29 +59,18 @@
 		<bean:define id="infoStudentGroup" name="infoSiteStudentAndGroup" property="infoStudentGroup"/>
 		<bean:define id="username" name="UserView" property="utilizador" type="java.lang.String"/>
 		<logic:equal name="infoSiteStudentInformation" property="username" value="<%= username %>">
-			<tr>
+			<tr class="highlight">
 				<td class="listClasses">
-					<strong>
-						<bean:write name="infoStudentGroup" property="groupNumber"/>
-					</strong>
+					<bean:write name="infoStudentGroup" property="groupNumber"/>
 				</td>
-			
 				<td class="listClasses">
-					<strong>
-						<bean:write name="infoSiteStudentInformation" property="number"/>
-					</strong>
-				</td>	
-			
+					<bean:write name="infoSiteStudentInformation" property="number"/>
+				</td>
 				<td class="listClasses">
-					<strong>
-						<bean:write name="infoSiteStudentInformation" property="name"/>
-					</strong>
-				</td>		
-			
+					<bean:write name="infoSiteStudentInformation" property="name"/>
+				</td>
 				<td class="listClasses">
-					<strong>
-						<bean:write name="infoSiteStudentInformation" property="email"/>
-					</strong>
+					<bean:write name="infoSiteStudentInformation" property="email"/>
 				</td>
 			</tr>
 		</logic:equal>

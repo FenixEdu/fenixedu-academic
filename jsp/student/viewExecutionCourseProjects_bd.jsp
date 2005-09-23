@@ -14,8 +14,6 @@ td.listClasses p { margin: 6px 0; padding: 0; }
 
 <h2><bean:message key="title.ExecutionCourseProjects.short"/></h2>
 
-<!-- ASD -->
-<bean:write name="infoExecutionCourse" property="nome"/>
 	<span class="error"><html:errors/></span> 	
 			
 	<logic:empty name="infoGroupPropertiesList">

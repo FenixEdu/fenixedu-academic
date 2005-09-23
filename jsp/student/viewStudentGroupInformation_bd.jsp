@@ -5,10 +5,7 @@
 <%@ page import="java.util.TreeMap" %>
 <%@ page import="java.util.Map" %>
 
-
 <logic:present name="infoSiteStudentGroup">
-
-	<h2><bean:message key="title.StudentGroupInformation"/></h2>
 
 	<bean:define id="infoStudentGroup" name="infoSiteStudentGroup" property="infoStudentGroup"/>
 	<bean:define id="studentGroupCode" name="infoStudentGroup" property="idInternal"/>
@@ -16,43 +13,35 @@
 	<bean:define id="infoGrouping" name="infoStudentGroup" property="infoGrouping"/>
 	<bean:define id="groupPropertiesCode" name="infoGrouping" property="idInternal"/>
 
+	<h2><bean:message key="title.StudentGroupInformation"/> <bean:write name="infoStudentGroup" property="groupNumber"/></h2>
 
-	<br/>
-	<bean:write name="infoGrouping" property="name"/>
-	<br/>
-	<br />
-	<logic:iterate id="infoExportGrouping" name="infoExportGroupings" length="1">
-		<bean:write name="infoExportGrouping" property="infoExecutionCourse.nome"/>
-	</logic:iterate>
-	<logic:iterate id="infoExportGrouping" name="infoExportGroupings" offset="1">
-		, <bean:write name="infoExportGrouping" property="infoExecutionCourse.nome"/>
-	</logic:iterate>
-	<br/>
-	<br/>
-	<bean:write name="infoStudentGroup" property="groupNumber"/>
-	<br/>
-	<br/>
+	<p><strong><bean:message key="label.projectTable.project"/>:</strong> <bean:write name="infoGrouping" property="name"/></p>
 
+		<p>
+		<html:link page="<%="/viewShiftsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+   		<bean:message key="link.backToShiftsAndGroups"/></html:link> - <bean:message key="link.backToShiftsAndGroups.description"/>
+		</p>
+		
 <logic:empty name="infoSiteStudentGroup" property="infoSiteStudentInformationList">
-		<div class="infoop">
-			<bean:message key="label.student.emptyStudentGroupInformation.description" />
-		</div>
+
+	<div class="infoop">
+		<ul>
+			<li><bean:message key="label.student.StudentGroupInformation.description"/></li>
+		</ul>
+	</div>
 
 		<br />
 			
-		<span class="error"><html:errors/></span> 	
+		<span class="error"><html:errors/></span>
 	
-		<html:link page="<%="/viewShiftsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode") + "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
-	    <bean:message key="link.backToShiftsAndGroups"/></html:link><br/>
-		<br/>
 		<bean:define id="nrOfElements" name="infoSiteStudentGroup" property="nrOfElements"/>
 		<b><bean:message key="label.nrOfElements"/> </b><bean:write name="nrOfElements"/>
-		<br/>	
 		<br/>
-		<h2><bean:message key="message.infoSiteStudentGroupList.not.available" /></h2>
+		<h2 style="color: #a00;"><bean:message key="message.infoSiteStudentGroupList.not.available" /></h2>
 		
-				 			
+	<span class="infoop3">	
 		<b><bean:message key="label.groupOption"/></b>&nbsp
+		
 		<logic:lessEqual name="ShiftType" value="2">
 		<bean:define id="shiftCode" name="infoStudentGroup" property="infoShift.idInternal"/>
 		<html:link page="<%="/groupStudentEnrolment.do?method=prepareEnrolment&amp;executionCourseCode=" + request.getParameter("executionCourseCode") +"&amp;groupPropertiesCode=" + groupPropertiesCode.toString() +"&amp;shiftCode=" +shiftCode.toString()%>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
@@ -65,16 +54,17 @@
 	    	<bean:message key="link.enrolment"/>
 	    </html:link>
 		</logic:greaterEqual>
+	</span>
 </logic:empty>
 
 
 <logic:notEmpty name="infoSiteStudentGroup" property="infoSiteStudentInformationList">
 
-<!--
+<%--
 	<div class="infoop">
 		<bean:message key="label.student.viewStudentGroupInformation.description" />
 	</div>
--->
+--%>
 
 	<span class="error"><html:errors/></span> 	
 
@@ -83,14 +73,6 @@
 		<li><bean:message key="label.student.StudentGroupInformation.description"/></li>
 	</ul>
 </div>
-
-	<p>
-	<html:link page="<%="/viewShiftsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode") + "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
-   	<bean:message key="link.backToShiftsAndGroups"/></html:link> - <bean:message key="link.backToShiftsAndGroups.description"/>
-	</p>
-	
-</logic:notEmpty>
-
 
 	<bean:define id="nrOfElements" name="infoSiteStudentGroup" property="nrOfElements"/>
 	<p><bean:message key="label.nrOfElements"/> <bean:write name="nrOfElements"/></p>
@@ -150,9 +132,6 @@
 
 	<br/>
 	<br/>
-	
-</logic:notEmpty>
-
 
 <table class="style1" width="70%" cellpadding="0" border="0">
 	<tbody>   
@@ -169,19 +148,14 @@
 	<logic:iterate id="infoSiteStudentInformation" name="infoSiteStudentGroup" property="infoSiteStudentInformationList">			
  		<bean:define id="username" name="UserView" property="utilizador" type="java.lang.String"/>
 		<logic:equal name="infoSiteStudentInformation" property="username" value="<%= username %>">
-			<tr>
+			<tr class="highlight">
 				<td class="listClasses">
-					<strong>
-						<bean:write name="infoSiteStudentInformation" property="number"/>
-					</strong>
+					<bean:write name="infoSiteStudentInformation" property="number"/>
 				</td>
 				<td class="listClasses">
-					<strong>
-						<bean:write name="infoSiteStudentInformation" property="name"/>
-					</strong>
+					<bean:write name="infoSiteStudentInformation" property="name"/>
 				</td>		
 				<td class="listClasses">
-					<strong>
 					<logic:present name="infoSiteStudentInformation" property="email">
 						<bean:define id="mail" name="infoSiteStudentInformation" property="email"/>
 						<html:link href="<%= "mailto:"+ mail %>"><bean:write name="infoSiteStudentInformation" property="email"/></html:link>
@@ -189,7 +163,6 @@
 					<logic:notPresent name="infoSiteStudentInformation" property="email">
 						&nbsp;
 					</logic:notPresent>
-					</strong>
 				</td>
 			</tr>
 		</logic:equal>
@@ -215,9 +188,9 @@
 	</tbody>
 </table>
 
-
 <br/>
 
+</logic:notEmpty>
 
 </logic:present>
 
