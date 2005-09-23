@@ -4,7 +4,7 @@
   <tiles:put name="serviceName" value="Operador" />
   <tiles:put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
   <tiles:put name="navGeral" value="/manager/commons/commonNavGeralManager.jsp" />
-  <tiles:put name="body-context" value=""/>  
+  <tiles:put name="body-context" value="/commons/blank.jsp"/>  
   <tiles:put name="body" value="/manager/password/generateNewStudentsPassword_bd.jsp" />
   <tiles:put name="footer" value="/copyright.jsp" />
 </tiles:insert>

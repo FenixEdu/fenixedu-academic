@@ -26,7 +26,6 @@
 					</html:link>
 					<br/>
 					<br/>
-					</html:link>
 				</li>
 				<li>
 					<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=acess&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
@@ -34,7 +33,6 @@
 					</html:link>
 					<br/>
 					<br/>
-					</html:link>
 				</li>
 				<li>
 					<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=professionalStatus&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
@@ -42,7 +40,6 @@
 					</html:link>
 					<br/>
 					<br/>
-					</html:link>
 				</li>				
 				<li>
 					<html:link page="<%= "/degreeSiteManagement.do?method=viewDescriptionCurricularPlan&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
@@ -50,7 +47,6 @@
 					</html:link>
 					<br/>
 					<br/>
-					</html:link>
 				</li>																	
 			</ul>
 		</li>
@@ -59,7 +55,6 @@
 			    <bean:message key="link.coordinator.degreeSite.historic" /></html:link>
 			    <br/>
 				<br/>
-			</html:link>
 		</li>
 		<li>
 			<%--<html:link href="<%= request.getContextPath()+"/publico/showDegreeSite.do?method=showDescription" target="_blank">--%>
@@ -67,7 +62,6 @@
 			    <bean:message key="link.coordinator.degreeSite.viewSite" /></html:link>
 			    <br/>
 				<br/>
-			</html:link>
 		</li>		
 	</ul>
 	</p>

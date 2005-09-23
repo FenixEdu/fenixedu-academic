@@ -47,6 +47,7 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.action.DynaActionFormClass;
 import org.apache.struts.config.FormBeanConfig;
+import org.apache.struts.config.ModuleConfig;
 
 /**
  * @author Luis Cruz
@@ -71,7 +72,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
-
+        
         Integer degreeCurricularPlanID = null;
         if (request.getParameter("degreeCurricularPlanID") != null) {
             degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
@@ -161,10 +162,11 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                     finalDegreeWorkScheduleingForm.set("attributedByTeacher", attributedByTeacher);
                     finalDegreeWorkScheduleingForm.set("attributions", attributions);
                 }
-
-                FormBeanConfig fbc = new FormBeanConfig();
-                fbc.setModuleConfig(mapping.getModuleConfig());
-                fbc.setName("finalDegreeWorkCandidacyPeriod");
+                
+                DynaActionFormClass cl;
+                ModuleConfig moduleConfig = mapping.getModuleConfig();
+                
+                FormBeanConfig fbc = moduleConfig.findFormBeanConfig("finalDegreeWorkCandidacyPeriod");
                 DynaActionFormClass dafc = DynaActionFormClass.createDynaActionFormClass(fbc);
                 DynaActionForm finalDegreeWorkCandidacyPeriodForm;
                 try {
@@ -187,9 +189,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                 request.setAttribute("finalDegreeWorkCandidacyPeriod",
                         finalDegreeWorkCandidacyPeriodForm);
 
-                FormBeanConfig fbc2 = new FormBeanConfig();
-                fbc2.setModuleConfig(mapping.getModuleConfig());
-                fbc2.setName("finalDegreeWorkCandidacyRequirements");
+                FormBeanConfig fbc2 = moduleConfig.findFormBeanConfig("finalDegreeWorkCandidacyRequirements");
                 DynaActionFormClass dafc2 = DynaActionFormClass.createDynaActionFormClass(fbc2);
                 DynaActionForm finalDegreeWorkCandidacyRequirementsForm;
                 try {

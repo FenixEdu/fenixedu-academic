@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.struts.Globals;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -435,7 +436,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 
     private String getLocaleLanguageFromRequest(HttpServletRequest request) {
 
-        Locale locale = (Locale) request.getSession(false).getAttribute(Action.LOCALE_KEY);
+        Locale locale = (Locale) request.getSession(false).getAttribute(Globals.LOCALE_KEY);
         return locale.getLanguage();
 
     }

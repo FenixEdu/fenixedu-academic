@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.cache.Response
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.cache.ResponseContentEntry;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.struts.Globals;
 import org.apache.struts.action.Action;
 
 import com.opensymphony.oscache.web.filter.CacheHttpServletResponseWrapper;
@@ -122,10 +123,10 @@ public class FenixCacheFilter implements Filter,CommitListener {
         if (httpSession == null) {
             httpSession = request.getSession();
         }
-        Locale locale = (Locale) httpSession.getAttribute(Action.LOCALE_KEY);
+        Locale locale = (Locale) httpSession.getAttribute(Globals.LOCALE_KEY);
         if (locale == null) {
             locale = Locale.getDefault();
-            httpSession.setAttribute(Action.LOCALE_KEY, locale);
+            httpSession.setAttribute(Globals.LOCALE_KEY, locale);
         }
         String language = locale.getLanguage();
         id.append(language);

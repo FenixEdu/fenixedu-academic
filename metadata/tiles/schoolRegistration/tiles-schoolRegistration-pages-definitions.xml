@@ -3,46 +3,41 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="definition.schoolRegistration.personalInfo" extends="definition.schoolRegistration.one-column">
-		<put name="navGeral" value="" />
+		<put name="navGeral" value="/commons/blank.jsp" />
 		<put name="body" value="/student/schoolRegistration/completePersonalInfo_bd.jsp" />
 	</definition>
-	
-	<definition name="definition.schoolRegistration.personalDataInquiry" extends="definition.schoolRegistration.one-column">
-		<put name="navGeral" value="" />
-		<put name="body" value="/student/schoolRegistration/personalDataAuthorizationInquiry.jsp" />
+
+	<definition name="definition.schoolRegistration.inquiry" extends="definition.schoolRegistration.one-column">
+		<put name="navGeral" value="/commons/blank.jsp" />
+		<put name="body" value="/student/schoolRegistration/inquiry_bd.jsp" />
 	</definition>
 	
 	<definition name="definition.schoolRegistration.changePassword" extends="definition.schoolRegistration.one-column">
-		<put name="navGeral" value="" />
+		<put name="navGeral" value="/commons/blank.jsp" />
 		<put name="body" value="/student/schoolRegistration/changePassword_bd.jsp" />
 	</definition>
 	
 	<definition name="definition.schoolRegistration.showSchoolRegistrationInstructions" extends="definition.schoolRegistration.one-column">
-		<put name="navGeral" value="" />
+		<put name="navGeral" value="/commons/blank.jsp" />
 		<put name="body" value="/student/schoolRegistration/showSchoolRegistrationInstructions_bd.jsp" />
 	</definition>
 	
 	<definition name="definition.schoolRegistration.showSchoolRegistrationInfo" extends="definition.schoolRegistration.one-column">
-		<put name="navGeral" value="" />
+		<put name="navGeral" value="/commons/blank.jsp" />
 		<put name="body" value="/student/schoolRegistration/showSchoolRegistrationInfo_bd.jsp" />
 	</definition>
 
-	<definition name="definition.schoolRegistration.dislocatedInquiry" extends="definition.schoolRegistration.one-column">
-		<put name="navGeral" value="" />
-		<put name="body" value="/student/schoolRegistration/dislocatedStudentInquiry.jsp" />
-	</definition>
-	
 	<definition name="definition.schoolRegistration.residenceCandidacy" extends="definition.schoolRegistration.one-column">
-		<put name="navGeral" value="" />
+		<put name="navGeral" value="/commons/blank.jsp" />
 		<put name="body" value="/student/schoolRegistration/residenceCandidacy_bd.jsp" />
 	</definition>
 	
 	<definition name="definition.schoolRegistration.declarations" extends="definition.schoolRegistration.one-column">
-		<put name="navGeral" value="" />
+		<put name="navGeral" value="/commons/blank.jsp" />
 		<put name="body" value="/student/schoolRegistration/declarations_bd.jsp" />
 	</definition>	
 	
-	<definition name="definition.schoolRegistration.schedule" path="/student/schoolRegistration/classTimeTable.jsp">				
+	<definition name="definition.schoolRegistration.schedule" path="/student/classTimeTable.jsp">				
 	</definition>		
 	
 	<definition name="definition.schoolRegistration.printDeclaration" 

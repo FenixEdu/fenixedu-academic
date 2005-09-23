@@ -6,7 +6,7 @@
 
      <!DOCTYPE tiles-definitions PUBLIC
        "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
-       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+       "http://struts.apache.org/dtds/tiles-config_1_1.dtd">
 
      $Id$
 -->
@@ -31,7 +31,7 @@
 -->
 <!ENTITY % ClassName "CDATA">
 
-<!-- A "RequestPath" is an application-relative URI path, beginning with a
+<!-- A "RequestPath" is an module-relative URI path, beginning with a
      slash, that identifies a mapped resource (such as a JSP page or a servlet)
      within this web application.
 -->
@@ -75,27 +75,9 @@
 -->
 <!ELEMENT tiles-definitions (definition+)>
 
-<!-- The "definition" element describes definition that can be inserted in a jsp
+<!-- The "definition" element describes a definition that can be inserted in a jsp
      page. This definition is identified by its logical name. A definition allows
      to define all the attributes that can be set in <insert> tag from a jsp page.
-
-     name            The unique identifier for this definition.
-
-     path            The context-relative path to the resource used as tiles to
-                     insert. This tiles will be inserted and a tiles context
-                     containing appropriate attributes will be available.
-
-     page            Same as path.
-     template        Same as path. For compatibility with the template taglib.
-
-     extends         Name of a definition that is used as ancestor of this definition.
-                     All attributes from the ancestor are available to the new
-                     definition. Any attribute inherited from the ancestor can
-                     be overloaded by providing a new value.
-
-     role            security role name that is allowed access to this definition
-                     object. The definition is inserted only if the role name is
-                     allowed.
 
      controllerClass The fully qualified Java class name of the controller
                      subclass to call immediately before the tiles is inserted.
@@ -106,45 +88,64 @@
                      called immediately before the tiles is inserted.
                      Only one of controllerClass or controllerUrl should be
                      specified.
+
+     extends         Name of a definition that is used as ancestor of this definition.
+                     All attributes from the ancestor are available to the new
+                     definition. Any attribute inherited from the ancestor can
+                     be overloaded by providing a new value.
+
+     name            The unique identifier for this definition.
+
+     page            Same as path.
+
+     path            The context-relative path to the resource used as tiles to
+                     insert. This tiles will be inserted and a tiles context
+                     containing appropriate attributes will be available.
+
+     role            Security role name that is allowed access to this definition
+                     object. The definition is inserted only if the role name is
+                     allowed.
+
+     template        Same as path. For compatibility with the template tag library.
 -->
 <!ELEMENT definition (icon?, display-name?, description?, put*, putList*)>
 <!ATTLIST definition       id               ID               #IMPLIED>
+<!ATTLIST definition       controllerClass  %ClassName;      #IMPLIED>
+<!ATTLIST definition       controllerUrl    %RequestPath;    #IMPLIED>
+<!ATTLIST definition       extends          %DefinitionName; #IMPLIED>
 <!ATTLIST definition       name             %DefinitionName; #REQUIRED>
 <!ATTLIST definition       page             %RequestPath;    #IMPLIED>
 <!ATTLIST definition       path             %RequestPath;    #IMPLIED>
-<!ATTLIST definition       extends          %DefinitionName; #IMPLIED>
 <!ATTLIST definition       role             CDATA            #IMPLIED>
 <!ATTLIST definition       template         %RequestPath;    #IMPLIED>
-<!ATTLIST definition       controllerClass  %ClassName;      #IMPLIED>
-<!ATTLIST definition       controllerUrl    %RequestPath;    #IMPLIED>
 
 
 <!-- The "put" element describes an attribute of a definition. It allows to
      specify the tiles attribute name and its value. The tiles value can be
      specified as an xml attribute, or in the body of the <put> tag.
 
-     name            The unique identifier for this tiles attribute.
+     content         Same as value. For compatibility with the template tag library.
 
-     value           The value associated to this tiles attribute. The value should
-                     be specified with this tag attribute, or in the body of the tag.
+     direct          Same as type="string". For compatibility with the template
+                     tag library.
+
+     name            The unique identifier for this put.
 
      type            The type of the value. Can be: string, page, template or definition.
                      By default, no type is associated to a value. If a type is
                      associated, it will be used as a hint to process the value
                      when the attribute will be used in the inserted tiles.
 
-     content         Same as value. For compatibility with the template taglib.
-
-     direct          Same as type="string". For compatibility with the template
-                     taglib.
+     value           The value associated to this tiles attribute. The value should
+                     be specified with this tag attribute, or in the body of the tag.
 -->
 <!ELEMENT put (#PCDATA)>
 <!ATTLIST put              id               ID              #IMPLIED>
-<!ATTLIST put              name             CDATA           #REQUIRED>
-<!ATTLIST put              value            CDATA           #IMPLIED>
-<!ATTLIST put              type             %ContentType;   #IMPLIED>
 <!ATTLIST put              content          CDATA           #IMPLIED>
 <!ATTLIST put              direct           %Boolean;       #IMPLIED>
+<!ATTLIST put              name             CDATA           #REQUIRED>
+<!ATTLIST put              type             %ContentType;   #IMPLIED>
+<!ATTLIST put              value            CDATA           #IMPLIED>
 
 
 <!-- The "putList" element describes a list attribute of a definition. It allows to
@@ -152,7 +153,7 @@
      the config file, the list elements are specified by nested <add>, <item> or
      <putList>.
 
-     name            The unique identifier for this tiles attribute.
+     name            The unique identifier for this put list.
 -->
 <!ELEMENT putList ( (add* | item* | bean* | putList*)+) >
 <!ATTLIST putList          id               ID              #IMPLIED>
@@ -163,25 +164,25 @@
 <!-- The "add" element describes an element of a list. It is similar to the
      <put> element.
 
-     value           The value associated to this tiles attribute. The value should
-                     be specified with this tag attribute, or in the body of the tag.
+     content         Same as value. For compatibility with the template tag library.
+
+     direct          Same as type="string". For compatibility with the template
+                     tag library.
 
      type            The type of the value. Can be: string, page, template or definition.
                      By default, no type is associated to a value. If a type is
                      associated, it will be used as a hint to process the value
                      when the attribute will be used in the inserted tiles.
 
-     content         Same as value. For compatibility with the template taglib.
-
-     direct          Same as type="string". For compatibility with the template
-                     taglib.
+     value           The value associated to this tiles attribute. The value should
+                     be specified with this tag attribute, or in the body of the tag.
 -->
 <!ELEMENT add (#PCDATA)>
 <!ATTLIST add              id               ID              #IMPLIED>
-<!ATTLIST add              value            CDATA           #IMPLIED>
-<!ATTLIST add              type             %ContentType;   #IMPLIED>
 <!ATTLIST add              content          CDATA           #IMPLIED>
 <!ATTLIST add              direct           %Boolean;       #IMPLIED>
+<!ATTLIST add              type             %ContentType;   #IMPLIED>
+<!ATTLIST add              value            CDATA           #IMPLIED>
 
 
 <!-- The "bean" element describes an element of a list. It create a bean of the
@@ -212,32 +213,33 @@
 
 
 <!-- The "item" element describes an element of a list. It create a bean added as
-     element to the list. Each bean can contains different properties: value, link,
-     icon, tooltip. This properties are to be interpreted by the jsp page using
+     element to the list. Each bean can contain different properties: value, link,
+     icon, tooltip. These properties are to be interpreted by the jsp page using
      them.
      By default the bean is of type
      "org.apache.struts.tiles.beans.SimpleMenuItem". This bean is useful to
-     create list of beans used as menu items.
+     create a list of beans used as menu items.
 
-     value           The bean 'value' property.
-
-     link            The bean 'link' property.
+     classtype       The fully qualified classtype for this bean.
+                     If specified, the classtype must be a subclass of the interface
+                     "org.apache.struts.tiles.beans.MenuItem".
 
      icon            The bean 'icon' property.
 
+     link            The bean 'link' property.
+
      tooltip         The bean 'tooltip' property.
 
-     classtype       The fully qualified classname for this bean.
-                     If specified, the classname must be a subclass of the interface
-                     "org.apache.struts.tiles.beans.MenuItem".
+     value           The bean 'value' property.
 -->
 <!ELEMENT item (#PCDATA)>
 <!ATTLIST item             id               ID              #IMPLIED>
-<!ATTLIST item             value            CDATA           #REQUIRED>
-<!ATTLIST item             link             CDATA           #REQUIRED>
 <!ATTLIST item             classtype        %ClassName;     #IMPLIED>
 <!ATTLIST item             icon             CDATA           #IMPLIED>
+<!ATTLIST item             link             CDATA           #REQUIRED>
 <!ATTLIST item             tooltip          CDATA           #IMPLIED>
+<!ATTLIST item             value            CDATA           #REQUIRED>
+
 
 <!-- ========== Info Elements ====================================== -->
 
@@ -270,3 +272,10 @@
 <!ELEMENT large-icon     (%Location;)>
 <!ATTLIST large-icon     id             ID              #IMPLIED>
 
+
+<!-- The "small-icon" element specifies the location, relative to the Struts
+     configuration file, of a resource containing a small (16x16 pixel)
+     icon image.
+-->
+<!ELEMENT small-icon     (%Location;)>
+<!ATTLIST small-icon     id             ID              #IMPLIED>

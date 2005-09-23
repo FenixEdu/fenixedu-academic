@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts.Globals;
-import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.RequestProcessor;
@@ -74,17 +73,9 @@ public class FenixRequestProcessor extends RequestProcessor {
     }
 
     public static void setLocal(HttpServletRequest request, HttpSession httpSession) {
-        Locale locale = (Locale) httpSession.getAttribute(Action.LOCALE_KEY);
-        if (locale == null) {
-            httpSession.setAttribute(Action.LOCALE_KEY, Locale.getDefault());
-        }
-        locale = (Locale) httpSession.getAttribute(Globals.LOCALE_KEY);
+        Locale locale = (Locale) httpSession.getAttribute(Globals.LOCALE_KEY);
         if (locale == null) {
             httpSession.setAttribute(Globals.LOCALE_KEY, Locale.getDefault());
-        }
-        locale = (Locale) request.getAttribute(Action.LOCALE_KEY);
-        if (locale == null) {
-            request.setAttribute(Action.LOCALE_KEY, Locale.getDefault());
         }
         locale = (Locale) request.getAttribute(Globals.LOCALE_KEY);
         if (locale == null) {

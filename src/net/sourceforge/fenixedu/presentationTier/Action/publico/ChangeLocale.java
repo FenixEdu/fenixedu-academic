@@ -20,7 +20,6 @@ public class ChangeLocale extends FenixAction {
         final String newLanguage = request.getParameter("newLanguage");
         final String newCountry = request.getParameter("newCountry");
 
-        request.getSession(false).setAttribute(Action.LOCALE_KEY, new Locale(newLanguage, newCountry));
         request.getSession(false).setAttribute(Globals.LOCALE_KEY, new Locale(newLanguage, newCountry));
 
         final String windowLocation = request.getParameter("windowLocation");

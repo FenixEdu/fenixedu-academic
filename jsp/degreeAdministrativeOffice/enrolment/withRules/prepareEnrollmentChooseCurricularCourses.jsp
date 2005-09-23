@@ -196,7 +196,7 @@ input { font-size: 11px; }
 		<logic:iterate id="enrollmentElem" name="infoStudentEnrolmentContext" property="studentCurrentSemesterInfoEnrollments" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment">
 			<tr>
 				<td class="listClasses courses"><bean:write name="enrollmentElem" property="infoCurricularCourse.name"/></td>
-				<td  class="listClasses"><bean:message name="enrollmentElem" property="enrollmentTypeResourceKey" bundle="DEFAULT"/></td>				
+				<td  class="listClasses"><bean:message name="enrollmentElem" property="enrollmentTypeResourceKey" /></td>				
 				<td class="listClasses"><bean:write name="enrollmentElem" property="infoCurricularCourse.enrollmentWeigth"/></td>
 				<td class="listClasses"><bean:write name="enrollmentElem" property="accumulatedWeight"/></td>
 				<td class="listClasses">
@@ -243,9 +243,9 @@ input { font-size: 11px; }
 				<td class="listClasses courses"><bean:write name="curricularCourse" property="infoCurricularCourse.name"/></td>
 				<td class="listClasses">
 					<% if ( ((InfoCurricularCourse2Enroll) curricularCourse).isOptionalCurricularCourse() ) {%>
-						<bean:message key="option.curricularCourse.optional" bundle="DEFAULT"/>
+						<bean:message key="option.curricularCourse.optional" />
 					<% } else { %>
-						<bean:message name="curricularCourse" property="infoCurricularCourse.type.keyName" bundle="DEFAULT"/>
+						<bean:message name="curricularCourse" property="infoCurricularCourse.type.keyName" />
 					<% } %>
 				</td>
 				<td class="listClasses"><bean:write name="curricularCourse" property="infoCurricularCourse.enrollmentWeigth"/></td>

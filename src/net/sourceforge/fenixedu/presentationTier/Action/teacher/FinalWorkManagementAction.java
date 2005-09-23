@@ -55,6 +55,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.action.DynaActionFormClass;
 import org.apache.struts.config.FormBeanConfig;
+import org.apache.struts.config.ModuleConfig;
 
 /**
  * @author Nuno Correia
@@ -293,9 +294,9 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 							.toString();
 				}
 			}
-			final FormBeanConfig fbc2 = new FormBeanConfig();
-			fbc2.setModuleConfig(mapping.getModuleConfig());
-			fbc2.setName("finalWorkAttributionForm");
+            
+            ModuleConfig moduleConfig = mapping.getModuleConfig();
+			final FormBeanConfig fbc2 = moduleConfig.findFormBeanConfig("finalWorkAttributionForm");
 			final DynaActionFormClass dafc2 = DynaActionFormClass
 					.createDynaActionFormClass(fbc2);
 			final DynaActionForm finalWorkAttributionForm = (DynaActionForm) dafc2

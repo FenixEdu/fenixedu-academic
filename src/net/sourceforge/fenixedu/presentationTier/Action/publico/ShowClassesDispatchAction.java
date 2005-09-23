@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.PeriodState;
 
+import org.apache.struts.Globals;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -156,7 +157,7 @@ public class ShowClassesDispatchAction extends FenixContextDispatchAction {
     }
 
     private String getLocaleLanguageFromRequest(HttpServletRequest request) {
-        Locale locale = (Locale) request.getSession(false).getAttribute(Action.LOCALE_KEY);
+        Locale locale = (Locale) request.getSession(false).getAttribute(Globals.LOCALE_KEY);
         return  locale.getLanguage();
 
     }

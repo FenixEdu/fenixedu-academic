@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.struts.Globals;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -197,7 +198,7 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
     }
     private String getLocaleLanguageFromRequest(HttpServletRequest request) {
 
-        Locale locale = (Locale) request.getSession(false).getAttribute(Action.LOCALE_KEY);
+        Locale locale = (Locale) request.getSession(false).getAttribute(Globals.LOCALE_KEY);
         return  locale.getLanguage();
 
     }

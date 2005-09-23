@@ -44,10 +44,10 @@
 				<br />
 				<div class="wrapper">
 					<html:submit styleClass="button" property="ok">
-						<bean:message key="button.submit"/>
+						<bean:message key="button.submit" />
 					</html:submit>
 					<html:reset styleClass="button">
-						<bean:message key="button.clean"/>
+						<bean:message key="button.clean" />
 					</html:reset>
 				</div>
 			</html:form>

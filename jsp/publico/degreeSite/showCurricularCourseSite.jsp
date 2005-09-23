@@ -134,8 +134,6 @@
 </logic:present>
 
 
-</logic:present>
-
 <logic:notPresent name="infoCurriculum" >
 	<p><span class="error"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.error.impossibleCurricularCourseInfo" /></span></p>
 </logic:notPresent>

@@ -11,7 +11,7 @@
 	<html:hidden property="page" value="1"/>
 	<table>
 		<tr>
-			<td><bean:message key="label.choose.student" bundle="DEFAULT"/>&nbsp;</td>
+			<td><bean:message key="label.choose.student" />&nbsp;</td>
 			<td>
 				<input type="text" name="studentNumber" size="5" maxlength="5"/>
 			</td>

@@ -77,12 +77,12 @@
 	</definition>
 	<definition name="df.page.showFinalDegreeWorkList" extends="definition.public.mainPageIST">
 		<put name="main_navigation" value="/publico/finalDegreeWork/mainNavigation.jsp" />
-		<put name="profile_navigation" value="" />
+		<put name="profile_navigation" value="/commons/blank.jsp" />
 		<put name="body" value="/publico/finalDegreeWork/showFinalDegreeWorkList.jsp"/>
 	</definition>
 	<definition name="df.page.showFinalDegreeWorkProposal" extends="definition.public.mainPageIST">
 		<put name="main_navigation" value="/publico/finalDegreeWork/mainNavigation.jsp" />
-		<put name="profile_navigation" value="" />
+		<put name="profile_navigation" value="/commons/blank.jsp" />
 		<put name="body" value="/publico/finalDegreeWork/showFinalDegreeWorkProposal.jsp"/>
 	</definition>
 	<definition name="viewExamsMap" extends="definition.public.mainPageIST">
@@ -111,12 +111,12 @@
 	</definition>
 	<definition name="df.page.support-faq" extends="definition.public.mainPageIST">
 		<put name="main_navigation" value="/publico/support/mainNavigation.jsp" />
-		<put name="profile_navigation" value="" />
+		<put name="profile_navigation" value="/commons/blank.jsp" />
 		<put name="body" value="/publico/support/viewFAQ.jsp"/>
 	</definition>
 	<definition name="df.page.support-glossary" extends="definition.public.mainPageIST">
 		<put name="main_navigation" value="/publico/support/mainNavigation.jsp" />
-		<put name="profile_navigation" value="" />
+		<put name="profile_navigation" value="/commons/blank.jsp" />
 		<put name="body" value="/publico/support/viewGlossary.jsp"/>
 	</definition>
 	<definition name="consultRooms" extends="definition.public.mainPageIST">

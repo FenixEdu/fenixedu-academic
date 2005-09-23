@@ -3,55 +3,55 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="df.layout.simple" page="/fenixLayout.jsp" >
-		 <put name="title" value="" />	
-		 <put name="menu" value=""/>		 
-		 <put name="body" value=""/>
-		 <put name="header" value=""/>		 
+		 <put name="title" value="/commons/blank.jsp" />	
+		 <put name="menu" value="/commons/blank.jsp"/>		 
+		 <put name="body" value="/commons/blank.jsp"/>
+		 <put name="header" value="/commons/blank.jsp"/>		 
 		 <put name="footer" value="/copyright.jsp" />
 	</definition>
 	<definition name="df.layout.one-column" page="/fenixLayout_1col.jsp" >
-		 <put name="title" value="" />	
-		 <put name="serviceName" value="" />
-		 <put name="header" value="" />
+		 <put name="title" value="/commons/blank.jsp" />	
+		 <put name="serviceName" value="/commons/blank.jsp" />
+		 <put name="header" value="/commons/blank.jsp" />
          <put name="navGeral" value="/generalNavigationBar.jsp" />
-		 <put name="body" value=""/>		 
+		 <put name="body" value="/commons/blank.jsp"/>		 
 		 <put name="footer" value="/copyright.jsp" />
 	</definition>
 	<definition name="df.layout.two-column" page="/fenixLayout_2col.jsp" >
-		<put name="title" value="" />
-		<put name="serviceName" value="" />
+		<put name="title" value="/commons/blank.jsp" type="string"/>
+		<put name="serviceName" value="/commons/blank.jsp" type="string"/>
 		<put name="navGeral" value="/generalNavigationBar.jsp" />
-		<put name="navLocal" value="" />
-		<put name="body-context" value=""/>
-		<put name="body" value="" />
+		<put name="navLocal" value="/commons/blank.jsp" />
+		<put name="body-context" value="/commons/blank.jsp"/>
+		<put name="body" value="/commons/blank.jsp" />
 		<put name="footer" value="/copyright.jsp" />	
     </definition>
 	<definition name="df.layout.two-column.extra-menu" page="/fenixLayout_2col_extraMenu.jsp" >
-		<put name="title" value="" />
-		<put name="serviceName" value="" />
+		<put name="title" value="/commons/blank.jsp" />
+		<put name="serviceName" value="/commons/blank.jsp" />
 		<put name="navGeral" value="/generalNavigationBar.jsp" />
-		<put name="navLocal" value="" />
-		<put name="navLocalExtra" value="" />
-		<put name="body-context" value=""/>
-		<put name="body" value="" />
+		<put name="navLocal" value="/commons/blank.jsp" />
+		<put name="navLocalExtra" value="/commons/blank.jsp" />
+		<put name="body-context" value="/commons/blank.jsp"/>
+		<put name="body" value="/commons/blank.jsp" />
 		<put name="footer" value="/copyright.jsp" />	
     </definition>    
 	<definition name="df.layout.two-column-photo" page="/fenixLayout_2col_photo.jsp" >
-		<put name="title" value="" />
-		<put name="serviceName" value="" />
+		<put name="title" value="/commons/blank.jsp" />
+		<put name="serviceName" value="/commons/blank.jsp" />
 		<put name="navGeral" value="/generalNavigationBar.jsp" />
-		<put name="photos" value="" />
-		<put name="body-context" value="" />		
-		<put name="body" value="" />
+		<put name="photos" value="/commons/blank.jsp" />
+		<put name="body-context" value="/commons/blank.jsp" />		
+		<put name="body" value="/commons/blank.jsp" />
 		<put name="footer" value="/copyright.jsp" />
   	</definition>
 	<definition name="df.layout.two-column.posGrad" page="/fenixLayout_posGrad.jsp" >
-		<put name="title" value="" />
-		<put name="serviceName" value="" />
+		<put name="title" value="/commons/blank.jsp" />
+		<put name="serviceName" value="/commons/blank.jsp" />
 		<put name="navGeral" value="/generalNavigationBar.jsp" />
-		<put name="navLocal" value="" />
-		<put name="body-context" value=""/>
-		<put name="body" value="" />
+		<put name="navLocal" value="/commons/blank.jsp" />
+		<put name="body-context" value="/commons/blank.jsp"/>
+		<put name="body" value="/commons/blank.jsp" />
 		<put name="footer" value="/copyright.jsp" />	
     </definition>
 </tiles-definitions>

@@ -60,14 +60,10 @@ public class I18NFilter implements Filter {
             if (httpSession == null) {
                 httpSession = request.getSession(true);
             }
-            httpSession.removeAttribute(Action.LOCALE_KEY);
             httpSession.removeAttribute(Globals.LOCALE_KEY);
-            httpSession.setAttribute(Action.LOCALE_KEY, locale);
             httpSession.setAttribute(Globals.LOCALE_KEY, locale);
 
-            request.removeAttribute(Action.LOCALE_KEY);
             request.removeAttribute(Globals.LOCALE_KEY);
-            request.setAttribute(Action.LOCALE_KEY, locale);
             request.setAttribute(Globals.LOCALE_KEY, locale);
         }
 

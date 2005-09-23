@@ -7,7 +7,7 @@
 		<put name="serviceName" value="Gestão de Assiduidade"/>
 		<put name="navLocal" value="/managementAssiduousness/assiduousnessMenu.jsp"/>
 		<put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp"/>
-		<put name="body-context" value=""/>
-		<put name="body" value=""/>
+		<put name="body-context" value="/commons/blank.jsp"/>
+		<put name="body" value="/commons/blank.jsp"/>
 	</definition>
 </tiles-definitions>

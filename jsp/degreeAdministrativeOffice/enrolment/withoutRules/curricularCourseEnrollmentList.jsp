@@ -63,7 +63,7 @@
 						<td class="listClasses" >
 							<bean:write name="infoEnrollment" property="infoCurricularCourse.name"/>
 							<% if ( !((InfoEnrolment) infoEnrollment).getEnrollmentTypeResourceKey().equals("option.curricularCourse.normal") ) {%>
-							(<bean:message name="infoEnrollment" property="enrollmentTypeResourceKey" bundle="DEFAULT"/>)
+							(<bean:message name="infoEnrollment" property="enrollmentTypeResourceKey" />)
 							<% } %>
 						</td>
 						<td class="listClasses">

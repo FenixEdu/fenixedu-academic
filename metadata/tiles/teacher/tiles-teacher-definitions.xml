@@ -21,7 +21,7 @@
 	  <put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
 	  <put name="navLocal" value="/teacher/onlineTests/testsNavbar.jsp" />
 	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
-	  <put name="body" value=" " />
+	  <put name="body" value="/commons/blank.jsp" />
 	  <put name="footer" value="/copyright.jsp" />	  
 	</definition>	
 	<definition name="copy.site.execution.course.page" page="/teacherLayout_2col.jsp">
@@ -30,7 +30,7 @@
 	  <put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
 	  <put name="navLocal" value="/teacher/navbar.jsp"/>
 	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
-	  <put name="body" value=" " />
+	  <put name="body" value="/commons/blank.jsp" />
 	  <put name="footer" value="/copyright.jsp" />	  
 	</definition>	
 	<definition name="definition.teacher.summaryPage" page="/teacherLayout_2col.jsp">
@@ -40,7 +40,7 @@
 	  <put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
 	  <put name="navLocal" value="/teacher/navbar.jsp" type="page"/>
 	  <put name="footer" value="/copyright.jsp" />
-	  <put name="body" value=" " />
+	  <put name="body" value="/commons/blank.jsp" />
 	</definition>
 	
 	<definition name="df.teacher.execution-course-management" extends="definition.teacher.two-column">
@@ -54,15 +54,15 @@
 	    <put name="navLocal" value="/teacher/navbar.jsp"/>	
 	</definition>
 	<definition name="teacher-professor-ships" page="/teacher/myProfessorships.jsp" controllerClass="net.sourceforge.fenixedu.presentationTier.tiles.controller.MyProfessorships">
-		<put name="title" value=""/>
-	    <put name="link" value=""/>
+		<put name="title" value="/commons/blank.jsp"/>
+	    <put name="link" value="/commons/blank.jsp"/>
    	    <put name="professorshipList" />
 	</definition>
 	<definition name="teacher-information" extends="df.page.teacher-index">
     	<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
 	</definition>
  	<definition name="course-information" extends="definition.teacher.two-column">
-		<put name="body-context" value=""></put>
+		<put name="body-context" value="/commons/blank.jsp"></put>
         <!-- VER	/gesdis/courseInformationContext.jsp-->
         <put name="navLocal" value="/teacher/navbar.jsp" type="page"/>
     </definition>
@@ -71,20 +71,20 @@
 		<put name="title" value="Docência" />
   		<put name="serviceName" value="Portal do Docente" />
  	   	<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>   
- 	   	<put name="navLocalExtra" value="" /> 	   
+ 	   	<put name="navLocalExtra" value="/commons/blank.jsp" /> 	   
  	   	<put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
-	    <put name="body-context" value="" />  
-    	<put name="body" value="" />
+	    <put name="body-context" value="/commons/blank.jsp" />  
+    	<put name="body" value="/commons/blank.jsp" />
 	</definition>
 	
 	<definition name="definition.teacher.two-column.extra-menu.tutor" extends="definition.teacher.two-column.extra-menu">	  
-		<put name="body-context" value="" />  
+		<put name="body-context" value="/commons/blank.jsp" />  
     	<put name="navLocalExtra" value="/teacher/tutor/tutorMenu.jsp" />
 	</definition>
 
 	<definition name="definition.curriculum.historic" extends="definition.teacher.two-column">
 		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
-		<put name="body" value=""></put>
+		<put name="body" value="/commons/blank.jsp"></put>
 	</definition>    
 
 	<!-- =================== View Old Inquiries Teacher's Results ============== -->
@@ -94,10 +94,10 @@
 	  <put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
 	  <put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
 	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
-	  <put name="body" value="" />
+	  <put name="body" value="/commons/blank.jsp" />
 	  <put name="footer" value="/teacher/commons/commonFooterTests.jsp" />	  
-	  <put name="title" value=""/>
-	  <put name="link" value=""/>
+	  <put name="title" value="/commons/blank.jsp"/>
+	  <put name="link" value="/commons/blank.jsp"/>
 	</definition>	
 
 </tiles-definitions>

@@ -5,7 +5,7 @@
   <tiles:put name="institutionName" value="Instituto Superior Técnico"/>
   <tiles:put name="navLocal" value="/projectsManagement/navBar.jsp"/>
   <tiles:put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp"/>
-  <tiles:put name="body-context" value=""/>  
+  <tiles:put name="body-context" value="/commons/blank.jsp"/>  
   <tiles:put name="body" value="/projectsManagement/firstPage.jsp"/>
   <tiles:put name="footer" value="/copyright.jsp"/>
 </tiles:insert>

@@ -14,8 +14,8 @@
 	
 	<definition name="teacher-professor-ships" page="/teacher/myProfessorships.jsp" 
 				controllerClass="net.sourceforge.fenixedu.presentationTier.tiles.controller.MyProfessorships">
-		<put name="title" value=""/>
-	    <put name="link" value=""/>
+		<put name="title" value="/commons/blank.jsp"/>
+	    <put name="link" value="/commons/blank.jsp"/>
    	    <put name="professorshipList" />
 	</definition>
 	
@@ -25,11 +25,11 @@
 	</definition>
 
 	<definition name="teacher-search-form-layout" page="/credits/commons/searchTeacherLayout.jsp">
-			<put name="searchInfo" value=""></put>
+			<put name="searchInfo" value="/commons/blank.jsp"></put>
 	</definition>
 
 	<definition name="teacherContextTile" page="/credits/commons/teacherContextTile.jsp">
-			<put name="infoTeacher" value=""></put>
+			<put name="infoTeacher" value="/commons/blank.jsp"></put>
 	</definition>
 	
 </tiles-definitions>

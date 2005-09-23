@@ -12,21 +12,18 @@
 			<bean:message key="link.students.tutor" /></html:link> 
 			<br/>
 			<br/>
-		</html:link>
 	</li>
 	<li>
 		<html:link page="<%= "/viewStudentCurriculum.do?method=prepareView"%>">
 		    <bean:message key="link.student.curriculum" /></html:link>
 		    <br/>
 			<br/>
-		</html:link>
 	</li>
 	<li>
 		<html:link page="<%= "/curricularCoursesEnrollment.do?method=prepareEnrollmentChooseStudent"%>">
 		    <bean:message key="link.student.enrollment" /></html:link>
 		    <br/>
 			<br/>
-		</html:link>
 	</li>		
 </ul>
 </p>

@@ -146,7 +146,7 @@ font-weight: bold;
 				<td class="listClasses" style="text-align:left">
 					<bean:write name="curriculumElem" property="infoCurricularCourse.name"/>
 					<% if ( !((InfoEnrolment) curriculumElem).getEnrollmentTypeResourceKey().equals("option.curricularCourse.normal") ) {%>
-						(<bean:message name="curriculumElem" property="enrollmentTypeResourceKey" bundle="DEFAULT"/>)
+						(<bean:message name="curriculumElem" property="enrollmentTypeResourceKey" />)
 					<% } %>
 				</td>
 			  <td class="listClasses">

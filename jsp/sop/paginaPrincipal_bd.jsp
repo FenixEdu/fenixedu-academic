@@ -56,4 +56,4 @@ e alterar aulas).</p>
     </td>
   </tr>
 </table>
-<p><bean:message key="message.info.sop" bundle="CURRICULUM_HISTORIC_RESOURCES"/></html:link></p>
+<p><bean:message key="message.info.sop" bundle="CURRICULUM_HISTORIC_RESOURCES"/></p>

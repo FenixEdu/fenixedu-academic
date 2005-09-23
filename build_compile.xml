@@ -88,6 +88,12 @@
 
 			<!-- Replace tokens in configuration files with local config -->
 			<antcall target="replace-property-values"/>
+			
+			<copy todir="${env.CATALINA_HOME}/webapps/${app.name}"> 
+				<fileset dir="${build.home}">
+					<include name="**/*.*"/>
+				</fileset>
+			</copy>
 		</sequential>
 
 		<echo file="${build.home.webinf.classes}/checkIsAlive.properties" append="false">

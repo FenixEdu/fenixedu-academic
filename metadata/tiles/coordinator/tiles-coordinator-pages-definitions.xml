@@ -155,9 +155,6 @@
 	<definition name="df.page.showFinalDegreeWorkProposal" extends="definition.coordinator.two-column">
 		<put name="body" value="/coordinator/finalDegreeWork/showFinalDegreeWorkProposal_bd.jsp" />
 	</definition>
-	<definition name="df.page.showFinalDegreeChooseExecutionDegree" extends="definition.coordinator.two-column">
-		<put name="body" value="/coordinator/finalDegreeWork/showFinalDegreeChooseExecutionDegree_bd.jsp" />
-	</definition>
 	<definition name="chooseStudentsGratuityList" extends="definition.coordinator.two-column">
 		<put name="body" value="/coordinator/gratuity/chooseStudentsGratuityList.jsp"/>
 	</definition>

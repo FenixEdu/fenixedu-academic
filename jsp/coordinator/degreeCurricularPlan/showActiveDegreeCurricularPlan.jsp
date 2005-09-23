@@ -40,6 +40,5 @@
 					</td>
 				</tr>
 			</logic:iterate>
-		</logic:iterate>
 	</table>
 </logic:present>
