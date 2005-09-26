@@ -246,16 +246,6 @@ gratuity.situation.creator.task.hour=-1
 #
 #
 #------------------------------------------------------------------------------
-# Validation/Verification Configuration
-#------------------------------------------------------------------------------
-#
-#   verify_serializable: flag that enables/disables serialization checking of
-#                        service results
-#
-verify_serializable=true
-#
-#
-#------------------------------------------------------------------------------
 # FAQ Configuration
 #------------------------------------------------------------------------------
 #

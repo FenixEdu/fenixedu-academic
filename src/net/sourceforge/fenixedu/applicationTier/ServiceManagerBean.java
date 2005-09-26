@@ -50,13 +50,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
 
     private static FastHashMap mapUsersToWatch;
 
-    // just for the sake of verifying serialization of objects
-    private static Properties serProps = null;
-
-    private static Boolean verifySerializable = null;
-
     static {
-
         serviceLoggingIsOn = false;
         mapServicesToWatch = new FastHashMap();
         mapServicesToWatch.setFast(true);
@@ -64,37 +58,6 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
         userLoggingIsOn = false;
         mapUsersToWatch = new FastHashMap();
         mapUsersToWatch.setFast(true);
-
-    }
-
-    public ServiceManagerBean() {
-        if (verifySerializable == null) {
-            verifySerializable = Boolean.FALSE;
-            try {
-                // load the properties file from the classpath root
-                InputStream inputStream = getClass().getResourceAsStream(
-                        "/serialization_verifier.properties");
-
-                if (inputStream != null) {
-                    serProps = new Properties();
-                    serProps.load(inputStream);
-                    String propSerVerify = serProps.getProperty("verify_serializable");
-                    if (propSerVerify != null) {
-                        propSerVerify = propSerVerify.trim();
-                    }
-                    if ("true".equalsIgnoreCase(propSerVerify) || "1".equalsIgnoreCase(propSerVerify)
-                            || "on".equalsIgnoreCase(propSerVerify)
-                            || "yes".equalsIgnoreCase(propSerVerify)) {
-                        verifySerializable = Boolean.TRUE;
-                        logger.info("Serialization verification is turned on.");
-                    } else {
-                        logger.info("Serialization verification is turned off.");
-                    }
-                }
-            } catch (java.io.IOException ex) {
-                logger.error("Couldn't load serialization_verifier.properties file!", ex);
-            }
-        }
     }
 
     /**
@@ -150,16 +113,14 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
             if (serviceLoggingIsOn || (userLoggingIsOn && id != null)) {
                 serviceEndTime = Calendar.getInstance();
             }
-            if (serviceLoggingIsOn) {
+            if (serviceLoggingIsOn && serviceStartTime != null && serviceEndTime != null) {
                 registerServiceExecutionTime(service, method, args, serviceStartTime, serviceEndTime);
             }
-            if (userLoggingIsOn && id != null) {
+            if (userLoggingIsOn && id != null && serviceStartTime != null && serviceEndTime != null) {
                 registerUserExecutionOfService(id, service, method, args, serviceStartTime,
                         serviceEndTime);
             }
-            if (verifySerializable.booleanValue()) {
-                verifyResultIsSerializable(service, method, serviceResult);
-            }
+
             return serviceResult;
         } catch (Exception e) {
             if (e instanceof FenixServiceException || e instanceof DomainException) {
@@ -174,44 +135,6 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
             t.printStackTrace();
             logger.error(t);
             throw new EJBException(t.getMessage());
-        }
-    }
-
-    private void verifyResultIsSerializable(Object service, String method, Object serviceResult) {
-        try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(baos);
-            try {
-                oos.writeObject(serviceResult);
-                oos.flush();
-            } catch (Exception e) {
-                StringBuffer stringBuffer = new StringBuffer(90);
-                stringBuffer.append("Problem serializing service result for service: ");
-                stringBuffer.append(service);
-                stringBuffer.append('.');
-                stringBuffer.append(method);
-                stringBuffer.append("().");
-                if (serviceResult != null) {
-                    stringBuffer.append(serviceResult.getClass().getName());
-                    stringBuffer.append(" is not serializable.");
-                }
-                logger.fatal(stringBuffer.toString(), e);
-            } finally {
-                if (oos != null)
-                    try {
-                        oos.close();
-                    } catch (Exception ignored) {
-                        // ignore exception
-                    }
-                if (baos != null)
-                    try {
-                        baos.close();
-                    } catch (Exception ignored) {
-                        // ignore exception
-                    }
-            }
-        } catch (IOException e1) {
-            logger.error("IOException while verifying service result serialization.");
         }
     }
 

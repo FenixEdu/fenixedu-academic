@@ -225,13 +225,6 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 
 			<replace dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
-				<include name="serialization_verifier.properties"/>
-				<replacefilter token="@verify_serializable@" 
-			    			   property="verify_serializable"/>
-			</replace>
-
-			<replace dir="${build.home.webinf.classes}"
-					 propertyFile="build.properties">
 				<include name="logAnalyser.properties"/>
 				<include name="log4j.xml"/>
 				<replacefilter token="@verify_serializable@" 
