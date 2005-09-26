@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.student.schoolRegistration.InfoResidenceCandidacy;
-import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ICountry;
 import net.sourceforge.fenixedu.domain.IEnrolment;
@@ -30,10 +29,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentRole;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
