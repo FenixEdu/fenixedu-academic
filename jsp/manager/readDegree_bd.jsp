@@ -15,8 +15,7 @@
 	</td>
 	<td>
 		<h2><bean:write name="infoDegree" property="nome"/></h2>
-	</td>
-	</logic:present>		
+	</td>		
 </tr>
 </table>
 
