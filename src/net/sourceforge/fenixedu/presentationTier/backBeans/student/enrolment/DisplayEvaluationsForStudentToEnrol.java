@@ -54,11 +54,6 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
         return unenroledWrittenTests;
     }
 
-    protected String getRequestParameter(String parameterName) {
-        return (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
-                .get(parameterName);
-    }
-
     public String enrolStudent() throws FenixFilterException, FenixServiceException {
         final Integer evaluationID = Integer.valueOf(getRequestParameter("evaluationID"));
         // Use another service that uses student ID ?!?!??!
