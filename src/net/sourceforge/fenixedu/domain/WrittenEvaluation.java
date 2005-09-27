@@ -379,4 +379,17 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
         return null;
     }
+
+    public boolean isInEnrolmentPeriod() {
+        final Date now = Calendar.getInstance().getTime();
+        if (this.getEnrollmentBeginDayDate() == null || this.getEnrollmentBeginTimeDate() == null
+                || this.getEnrollmentEndDayDate() == null || this.getEnrollmentEndTimeDate() == null) {
+            return false;
+        }
+        final Date enrolmentBeginDate = createDate(this.getEnrollmentBeginDayDate(), this
+                .getEnrollmentBeginTimeDate());
+        final Date enrolmentEndDate = createDate(this.getEnrollmentEndDayDate(), this
+                .getEnrollmentEndTimeDate());
+        return enrolmentBeginDate.before(now) && enrolmentEndDate.after(now);
+    }
 }

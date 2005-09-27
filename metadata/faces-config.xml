@@ -64,6 +64,14 @@
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.executionCourse.CreateCourseReportsForExecutionPeriod</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>	
+
+	<!-- BEGIN: STUDENT Managed Beans -->
+	<managed-bean>
+		<managed-bean-name>displayEvaluationsToEnrol</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.student.enrolment.DisplayEvaluationsForStudentToEnrol</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<!-- END: STUDENT Managed Beans -->
 	
 	<!-- NAVIGATION RULES -->
 	
@@ -106,5 +114,15 @@
 			<to-view-id>/manager/degree/insertExecutionDegreesSuccess.jsp</to-view-id>
 		</navigation-case>			
 	</navigation-rule>
+
+	<!-- BEGIN: STUDENT Navigation Rules -->
+	<navigation-rule>
+		<from-view-id>/student/enrollment/evaluationsEnrolmentManager.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/student/enrollment/evaluationsEnrolmentManager.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	<!-- END: STUDENT Navigation Rules -->
 		
 </faces-config>

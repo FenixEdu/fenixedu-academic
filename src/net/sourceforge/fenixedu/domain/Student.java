@@ -1,14 +1,12 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.StudentState;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 
 /**
  * @author dcs-rjao
@@ -69,4 +67,55 @@ public class Student extends Student_Base {
         return false;
     }
 
+    public List<IExam> getEnroledExams() {
+        final List<IExam> result = new ArrayList<IExam>();
+        for (final IWrittenEvaluationEnrolment writtenEvaluationEnrolment : this.getWrittenEvaluationEnrolments()) {
+            if (writtenEvaluationEnrolment.getWrittenEvaluation() instanceof IExam) {
+                result.add((IExam)writtenEvaluationEnrolment.getWrittenEvaluation());
+            }
+        }
+        return result;
+    }
+    
+    public List<IExam> getUnenroledExams() {        
+        final List<IExam> result = new ArrayList<IExam>();
+        final List<IExam> enroledExams = this.getEnroledExams();        
+        for (final IAttends attend : this.getAssociatedAttends()) {
+            for (final IEvaluation evaluation : attend.getDisciplinaExecucao().getAssociatedEvaluations()) {
+                if (evaluation instanceof IExam && !enroledExams.contains(evaluation)) {
+                    final IExam exam = (IExam) evaluation;
+                    if (exam.isInEnrolmentPeriod()) {
+                        result.add(exam);
+                    }
+                }
+            }            
+        }
+        return result;
+    }
+    
+    public List<IWrittenTest> getEnroledWrittenTests() {
+        final List<IWrittenTest> result = new ArrayList<IWrittenTest>();
+        for (final IWrittenEvaluationEnrolment writtenEvaluationEnrolment : this.getWrittenEvaluationEnrolments()) {
+            if (writtenEvaluationEnrolment.getWrittenEvaluation() instanceof IWrittenTest) {
+                result.add((IWrittenTest)writtenEvaluationEnrolment.getWrittenEvaluation());
+            }
+        }
+        return result;
+    }
+    
+    public List<IWrittenTest> getUnenroledWrittenTests() {        
+        final List<IWrittenTest> result = new ArrayList<IWrittenTest>();
+        final List<IWrittenTest> enroledWrittenTests = this.getEnroledWrittenTests();        
+        for (final IAttends attend : this.getAssociatedAttends()) {
+            for (final IEvaluation evaluation : attend.getDisciplinaExecucao().getAssociatedEvaluations()) {
+                if (evaluation instanceof IWrittenTest && !enroledWrittenTests.contains(evaluation)) {
+                    final IWrittenTest writtenTest = (IWrittenTest) evaluation;
+                    if (writtenTest.isInEnrolmentPeriod()) {
+                        result.add(writtenTest);
+                    }
+                }
+            }            
+        }
+        return result;
+    }
 }

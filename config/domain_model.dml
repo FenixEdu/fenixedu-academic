@@ -941,6 +941,8 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 		
 		public void distributeStudentsByRooms(java.util.List<IStudent> studentsToDistribute, 
                                               java.util.List<IRoom> selectedRooms);
+                                              
+		public boolean isInEnrolmentPeriod();
 		"
 	}
 
@@ -2498,7 +2500,16 @@ class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.d
 
 	interface "
     public IStudentCurricularPlan getActiveStudentCurricularPlan();
+    
     public boolean attends(IExecutionCourse executionCourse);
+    
+    public java.util.List<IExam> getEnroledExams();
+    
+    public java.util.List<IExam> getUnenroledExams();
+    
+    public java.util.List<IWrittenTest> getEnroledWrittenTests();
+    
+    public java.util.List<IWrittenTest> getUnenroledWrittenTests();
 	"
 }
 

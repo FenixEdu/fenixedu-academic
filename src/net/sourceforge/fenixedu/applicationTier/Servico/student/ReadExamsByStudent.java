@@ -126,10 +126,6 @@ public class ReadExamsByStudent implements IService {
 
     }
 
-    /**
-     * @param examEnrollment
-     * @return
-     */
     private boolean isInDate(IExam exam) {
         if (exam.getEnrollmentBeginDay() == null || exam.getEnrollmentEndDay() == null
                 || exam.getEnrollmentBeginTime() == null || exam.getEnrollmentEndTime() == null) {
