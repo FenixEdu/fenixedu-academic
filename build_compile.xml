@@ -614,24 +614,49 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 	<target name="jsp-precompile" depends="compile">
 		<mkdir dir="${build.home.jsp_gen_code}"/>
 		<mkdir dir="${build.home.jsp_gen_code.classes}"/>
-		<jspc srcdir="${build.home}" destdir="${build.home.jsp_gen_code}"
-				package="net.sourceforge.fenixedu.jsp" compiler="jasper41" verbose="0"  uriroot="${build.home}">
+		<taskdef classname="org.apache.jasper.JspC" name="jasper2" > 
+	      <classpath id="jspc.classpath"> 
+	        <pathelement location="${jenv.JAVA_HOME}/../lib/tools.jar"/> 
+	        <fileset dir="${env.CATALINA_HOME}/bin"> 
+	          <include name="*.jar"/> 
+	        </fileset> 
+	        <fileset dir="${env.CATALINA_HOME}/server/lib"> 
+	          <include name="*.jar"/> 
+	        </fileset> 
+	        <fileset dir="${env.CATALINA_HOME}/common/lib"> 
+	          <include name="*.jar"/> 
+	        </fileset> 
+	      </classpath> 
+	    </taskdef> 
+
+	    <jasper2 
+	             validateXml="false" 
+	             uriroot="${build.home}" 	            
+	        	 webXmlFragment="${build.home.webinf}/generated_web.xml"
+	             outputDir="${build.home.jsp_gen_code}" /> 
+		
+		<!--<jspc srcdir="${build.home}" destdir="${build.home.jsp_gen_code}"
+				package="net.sourceforge.fenixedu.jsp" compiler="jasper2" verbose="0"  uriroot="${build.home}">
 			<classpath>
 				<fileset dir="${env.CATALINA_HOME}/common/lib">
 					<include name="*.jar"/>
 				</fileset>
 			</classpath>
 			<include name="**/*.jsp"/>
-		</jspc>
+			;${env.CATALINA_HOME}/server/lib
+		</jspc>-->
+		
 		<javac destdir="${build.home.webinf.classes}"
-               extdirs="${lib};${build.home.webinf.classes};${env.CATALINA_HOME}/common/lib"
+               extdirs="${lib};${build.home.webinf.classes};${env.CATALINA_HOME}/common/lib;"
                debug="${compile.debug}"
                optimize="${compile.optimize}"
                deprecation="${compile.deprecation}"
+			   classpath="struts.jar"
                encoding="${encoding}"
 			   nowarn="true">
 			<src path="${build.home.jsp_gen_code}"/>
 		</javac>
+		
 	</target>
 
 	<target name="run">
