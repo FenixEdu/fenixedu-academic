@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="org.apache.struts.action.Action" %>
+<%@ page import="org.apache.struts.Globals" %>
 <%@ page import="java.util.List" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.domain.curriculum.EnrollmentState" %>

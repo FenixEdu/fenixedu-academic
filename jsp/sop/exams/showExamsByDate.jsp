@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ page import="org.apache.struts.action.Action" %>
+<%@ page import="org.apache.struts.Globals" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoViewExamByDayAndShift" %>

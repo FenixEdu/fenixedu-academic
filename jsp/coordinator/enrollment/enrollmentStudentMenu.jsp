@@ -21,14 +21,12 @@
 			    <bean:message key="link.student.curriculum" /></html:link>
 			    <br/>
 				<br/>
-			</html:link>
 		</li>
 		<li>
 			<html:link page="<%= "/curricularCoursesEnrollment.do?method=prepareEnrollmentChooseStudent&amp;executionDegreeId=" + infoExecutionDegreeID.toString() + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 			    <bean:message key="link.student.enrollment" /></html:link>
 			    <br/>
 				<br/>
-			</html:link>
 		</li>		
 	</ul>
 	</p>

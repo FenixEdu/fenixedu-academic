@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="org.apache.struts.action.Action" %>
+<%@ page import="org.apache.struts.Globals" %>
 <%@ page import="java.util.List" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
@@ -17,7 +17,7 @@
     <bean:define id="contributorList" name="<%= SessionConstants.CONTRIBUTOR_LIST %>" scope="session" />
     <bean:define id="title" name="<%= SessionConstants.CONTRIBUTOR_ACTION %>" scope="session" />
         
-    <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
+    <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
 	<bean:define id="link">
 		<bean:write name="path"/>.do?method=chooseContributor<%= "&" %>page=0<%= "&" %>contributorPosition=
 	</bean:define>

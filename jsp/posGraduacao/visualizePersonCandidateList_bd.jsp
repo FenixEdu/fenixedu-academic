@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="org.apache.struts.action.Action" %>
+<%@ page import="org.apache.struts.Globals" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.util.State" %>
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
@@ -16,7 +16,7 @@
 <br />
 
 
-<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
+<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
 <bean:define id="link">
 	<bean:write name="path"/>.do?method=visualize<%= "&" %>candidateID=
 </bean:define>

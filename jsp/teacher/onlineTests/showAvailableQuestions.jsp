@@ -91,11 +91,12 @@ function invertSelect(){
 						<td><html:submit styleClass="inputbutton">
 							<bean:message key="button.insert" />
 						</html:submit>
+					</td>
+					</tr>
+				</table>
+			</logic:greaterThan>
 		</html:form>
-		</td>
-		</tr>
-		</table>
-		</logic:greaterThan>
+
 		<br />
 		<br />
 		<table>
@@ -300,7 +301,7 @@ function invertSelect(){
 			<tr>
 				<td><html:submit styleClass="inputbutton">
 					<bean:message key="button.insert" />
-				</html:submit> </html:form></td>
+				</html:submit> </td>
 			</tr>
 		</table>
 		

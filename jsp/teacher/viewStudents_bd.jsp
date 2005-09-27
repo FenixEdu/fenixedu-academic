@@ -345,8 +345,7 @@
 				<td class="listClasses">
 					<logic:present name="attendacy" property="aluno.infoPerson.email">
 						<bean:define id="mail" name="attendacy" property="aluno.infoPerson.email"/>
-							<html:link href="<%= "mailto:"+ mail %>"><bean:write name="attendacy" property="aluno.infoPerson.email"/></html:link>
-						</bean:define>
+						<html:link href="<%= "mailto:"+ mail %>"><bean:write name="mail"/></html:link>
 					</logic:present>
 					<logic:notPresent  name="attendacy" property="aluno.infoPerson.email">
 						&nbsp;

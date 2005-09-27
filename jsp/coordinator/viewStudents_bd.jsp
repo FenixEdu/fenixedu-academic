@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="java.util.TreeMap" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGroupProperties" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGrouping" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGroupProjectStudents" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.Calendar" %>
@@ -201,7 +201,7 @@
 		<tr>
 		   <logic:present name="projects">
 			<logic:notEmpty name="projects">
-				<logic:iterate name="projects" id="project" type="net.sourceforge.fenixedu.dataTransferObject.InfoGroupProperties">
+				<logic:iterate name="projects" id="project" type="net.sourceforge.fenixedu.dataTransferObject.InfoGrouping">
 					<td class="listClasses-header">
 <%--					<bean:message key="label.projectGroup"/>&nbsp; --%>
 					<bean:write name="project" property="name"/>
@@ -278,7 +278,7 @@
 				<%
 				for (Iterator projectsIterator= projects.iterator(); projectsIterator.hasNext();)
 				{
-					InfoGroupProperties element= (InfoGroupProperties) projectsIterator.next();
+					InfoGrouping element= (InfoGrouping) projectsIterator.next();
 					int projectIdInternal = element.getIdInternal().intValue();
 					int groupNumber =-1;
 					int shiftCode = -1;
@@ -291,7 +291,7 @@
 					{
 					
 						InfoGroupProjectStudents groupInfo= (InfoGroupProjectStudents) groupsIterator.next();
-						if (projectIdInternal == groupInfo.getStudentGroup().getInfoAttendsSet().getInfoGroupProperties().getIdInternal().intValue() &&
+						if (projectIdInternal == groupInfo.getStudentGroup().getInfoGrouping().getIdInternal().intValue() &&
 							groupInfo.isStudentMemberOfThisGroup(studentNumber))
 						{
 							groupNumber = groupInfo.getStudentGroup().getGroupNumber().intValue();
@@ -332,8 +332,7 @@
 					&nbsp;
 					<logic:notEmpty name="attendacy" property="aluno.infoPerson.email">
 						<bean:define id="mail" name="attendacy" property="aluno.infoPerson.email"/>
-							<html:link href="<%= "mailto:"+ mail %>"><bean:write name="attendacy" property="aluno.infoPerson.email"/></html:link>
-						</bean:define>
+						<html:link href="<%= "mailto:"+ mail %>"><bean:write name="mail"/></html:link>
 					</logic:notEmpty>
 				</td>
 				<logic:greaterThan value="0" name="theoreticalHours" >

@@ -105,7 +105,6 @@
 			<td class="report-line-total-last"><report:sumColumn id="summaryLines" column="11" /></td>
 		</tr>
 	</table>
-	</logic:notEmpty>
 	<logic:empty name="infoSummaryReport" property="lines">
 		<span class="error"><bean:message key="message.noUserProjects" /></span>
 	</logic:empty>

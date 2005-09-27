@@ -37,7 +37,6 @@
 		<td class="listClasses-header">
 			<bean:message key="label.mark" />
 		</td>
-		</logic:present>
 	</tr>    		
 		
 	<logic:present name="marksListComponent" property="infoAttends">  								

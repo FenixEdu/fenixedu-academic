@@ -185,8 +185,6 @@
 <td class="report-line-total"><report:sumColumn id="expensesLines" column="13" /></td>
 <td class="report-line-total-last"></td>
 </tr>
-</logic:equal>
-</logic:present>
 </table>
 <br />
 <bean:message key="message.listReport" />

@@ -120,7 +120,6 @@
 			      	<bean:define id="categoryName" name="personalInfo" property="infoTeacher.infoCategory.longName"/>
 			      	<td class="greytxt"><bean:write name="categoryCode"/> - <bean:write name="categoryName"/></td>
 		      </tr>
-		        </logic:present>
           </logic:present>
           
           <logic:equal name="show" value="true">

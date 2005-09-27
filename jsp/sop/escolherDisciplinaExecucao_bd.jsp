@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ page import="org.apache.struts.action.Action" %>
+<%@ page import="org.apache.struts.Globals" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -15,7 +15,7 @@
         <br/>
         <h2><bean:message key="title.choose.discipline"/></h2>
         <span class="error"><html:errors /></span>
-        <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
+        <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
         <html:form action="<%= path %>">        
         	<html:hidden property="page" value="1"/>
     	<table border="0" cellspacing="0" cellpadding="0">

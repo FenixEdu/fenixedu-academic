@@ -60,7 +60,6 @@
 				<html:select property="currentState" >
 	          	 	<html:options collection="values" property="value" labelProperty="label"/>
 	    	 	</html:select>   
-			</logic:present>
 		</td>						
 	</tr>	
 	<tr>

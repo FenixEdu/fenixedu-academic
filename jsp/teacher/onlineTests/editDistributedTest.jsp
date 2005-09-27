@@ -79,7 +79,7 @@ function getIndex(input){
 // -->
 </script>
 
-<logic:present name="infoDistributedTest" />
+<logic:present name="infoDistributedTest" >
 <bean:define id="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
 
 <html:form action="/distributedTestEdition">

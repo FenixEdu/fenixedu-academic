@@ -6,7 +6,7 @@
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 <%@ page import="java.util.Locale" %>
 <%@ page import="javax.servlet.http.HttpServletRequest" %>
-<%@ page import="org.apache.struts.action.Action" %>
+<%@ page import="org.apache.struts.Globals" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.mapping.MappingUtils" %>
 
 <logic:notPresent name="infoDegreeInfo">

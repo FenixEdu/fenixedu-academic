@@ -44,7 +44,7 @@
 				</bean:define>
 				
 				
-				<td align="center"><bean:write name="reimbursementGuide" property="number"/></html:link></td>
+				<td align="center"><bean:write name="reimbursementGuide" property="number"/></td>
 				
 				<bean:define id="creationDate" name="reimbursementGuide" property="creationDate" />
 				<td align="center"><%= Data.format2DayMonthYear(((Calendar) creationDate).getTime(), "-") %></td> 

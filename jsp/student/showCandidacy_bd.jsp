@@ -51,7 +51,6 @@
 					</logic:iterate>
 				</table>
 				<html:link page="/listAllSeminaries.do"><bean:message key="label.seminaries.showCandidacy.Back"/></html:link>
-			</logic:present>
 		</logic:present>
 	</logic:present>
 </logic:present>

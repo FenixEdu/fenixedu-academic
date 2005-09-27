@@ -38,16 +38,17 @@
 			<tr class="listClassesWhite">
 				<td nowrap><bean:message key="label.code.cost.center" />:&nbsp;</td>
 				<td  align="left"><bean:write name="infoExtraWorkRequests" property="infoCostCenterExtraWork.code" />
-					<logic:notEmpty name="infoExtraWorkRequests" property="infoCostCenterExtraWork.departament" /><br /><bean:write name="infoExtraWorkRequests" property="infoCostCenterExtraWork.departament" /></logic:notEmpty>
-					<logic:notEmpty name="infoExtraWorkRequests" property="infoCostCenterExtraWork.section1" /><br /><bean:write name="infoExtraWorkRequests" property="infoCostCenterExtraWork.section1" /></logic:notEmpty>
-					<logic:notEmpty name="infoExtraWorkRequests" property="infoCostCenterExtraWork.section2" /><br /><bean:write name="infoExtraWorkRequests" property="infoCostCenterExtraWork.section2" /></logic:notEmpty>
+					<logic:notEmpty name="infoExtraWorkRequests" property="infoCostCenterExtraWork.departament" ><br /><bean:write name="infoExtraWorkRequests" property="infoCostCenterExtraWork.departament" /></logic:notEmpty>
+					<logic:notEmpty name="infoExtraWorkRequests" property="infoCostCenterExtraWork.section1" ><br /><bean:write name="infoExtraWorkRequests" property="infoCostCenterExtraWork.section1" /></logic:notEmpty>
+					<logic:notEmpty name="infoExtraWorkRequests" property="infoCostCenterExtraWork.section2" ><br /><bean:write name="infoExtraWorkRequests" property="infoCostCenterExtraWork.section2" /></logic:notEmpty>
+				</td>
 			</tr>
 			<tr class="listClasses">
 				<td nowrap><bean:message key="label.money"/>&nbsp;<bean:message key="label.code.cost.center" />:&nbsp;</td>
 				<td align="left"><bean:write name="infoExtraWorkRequests" property="infoCostCenterMoney.code" />
-					<logic:notEmpty name="infoExtraWorkRequests" property="infoCostCenterMoney.departament" /><br /><bean:write name="infoExtraWorkRequests" property="infoCostCenterMoney.departament" /></logic:notEmpty>
-					<logic:notEmpty name="infoExtraWorkRequests" property="infoCostCenterMoney.section1" /><br /><bean:write name="infoExtraWorkRequests" property="infoCostCenterMoney.section1" /></logic:notEmpty>
-					<logic:notEmpty name="infoExtraWorkRequests" property="infoCostCenterMoney.section2" /><br /><bean:write name="infoExtraWorkRequests" property="infoCostCenterMoney.section2" /></logic:notEmpty>
+					<logic:notEmpty name="infoExtraWorkRequests" property="infoCostCenterMoney.departament" ><br /><bean:write name="infoExtraWorkRequests" property="infoCostCenterMoney.departament" /></logic:notEmpty>
+					<logic:notEmpty name="infoExtraWorkRequests" property="infoCostCenterMoney.section1" ><br /><bean:write name="infoExtraWorkRequests" property="infoCostCenterMoney.section1" /></logic:notEmpty>
+					<logic:notEmpty name="infoExtraWorkRequests" property="infoCostCenterMoney.section2" ><br /><bean:write name="infoExtraWorkRequests" property="infoCostCenterMoney.section2" /></logic:notEmpty>
 				</td>
 			</tr>
 		</logic:iterate>

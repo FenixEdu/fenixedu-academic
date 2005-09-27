@@ -63,5 +63,4 @@
 			 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
 <html:submit property="operation" styleClass="inputbutton"><bean:message key="lable.chooseRoom"/></html:submit>
 <html:reset value="Limpar" styleClass="inputbutton"><bean:message key="label.clear"/></html:reset>
-	</html:form>
-</html:html>
+</html:form>

@@ -46,7 +46,7 @@
 	
 <b><bean:message key="label.grant.stat.grantowner.result"/>:</b><br/>
 
-<logic:present name="infoStatResultGrantOwner"></logic:present>
+<logic:present name="infoStatResultGrantOwner">
 <table>
 <tr>
 	<td colspan="2">

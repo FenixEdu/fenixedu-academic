@@ -67,5 +67,4 @@
 		<html:hidden property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 		
 		</html:form>
-	</logic:present>
 </logic:present>

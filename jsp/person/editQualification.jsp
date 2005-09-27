@@ -69,5 +69,4 @@
 </html:submit> 
 <html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
 </html:reset>  
-</logic:present>
 </html:form>

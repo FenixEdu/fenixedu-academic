@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="org.apache.struts.action.Action" %>
+<%@ page import="org.apache.struts.Globals" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <logic:present name="jspTitle">
 	<h2><bean:write name="jspTitle" /></h2>
@@ -16,7 +16,7 @@
 	</logic:present>
 	<bean:message key="title.masterDegree.administrativeOffice.chooseMasterDegree" />
 	<br /><br />
-	<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
+	<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
 	<table>
 	   <!-- MasterDegree -->
 		<logic:iterate id="masterDegreeElem" name="<%= SessionConstants.DEGREE_LIST %>" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree">

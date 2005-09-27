@@ -108,4 +108,3 @@
 	<br/>
 	<%--<bean:message key="label.teachersInformation.stats"/>: <%= stats %>%--%>
 </logic:present>
-</logic:present>

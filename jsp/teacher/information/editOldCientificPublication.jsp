@@ -44,4 +44,3 @@
 <html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
 </html:reset>  
 </html:form>
-</logic:present>

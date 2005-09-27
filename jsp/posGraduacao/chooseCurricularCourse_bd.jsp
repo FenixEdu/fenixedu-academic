@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="org.apache.struts.action.Action" %>
+<%@ page import="org.apache.struts.Globals" %>
 <logic:present name="jspTitle">
 	<h2><bean:write name="jspTitle" /></h2>
 	<br />
@@ -16,7 +16,7 @@
 	<br />
 	<bean:message key="title.masterDegree.administrativeOffice.chooseCurricularCourse" />
 	<br /><br />
-	<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
+	<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
 	<table>
 		<!-- CurricularCourse -->
 		<logic:iterate id="curricularCourseElem" name="curricularCourses"  type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse">

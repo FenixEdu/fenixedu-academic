@@ -144,6 +144,8 @@
 		</tr>
 			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester.abbr"/></td>
 			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.curricularCourse"/></td>
+			<td class="subheader">code</td>
+			<td class="subheader">Available</td>						
 			<% if (pageContext.findAttribute("indiceID").toString().equals("44")){%>
 				<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.anotation"/></td>
 			<%}%>
@@ -188,6 +190,8 @@
 						<tr>						
 							<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester.abbr"/></td>
 							<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.curricularCourse"/></td>
+							<td class="subheader">code</td>
+							<td class="subheader">Available</td>													
 							<% if (pageContext.findAttribute("indiceID").toString().equals("44")){%>
 								<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.anotation"/></td>
 							<%}%>
@@ -257,6 +261,8 @@
 					<tr>						
 						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester.abbr"/></td>
 						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.curricularCourse"/></td>
+						<td class="subheader">code</td>
+						<td class="subheader">Available</td>						
 						<% if (pageContext.findAttribute("indiceID").toString().equals("44")){%>
 							<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.anotation"/></td>
 						<%}%>
@@ -327,6 +333,8 @@
 					<tr>						
 						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester.abbr"/></td>
 						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.curricularCourse"/></td>
+						<td class="subheader">code</td>
+						<td class="subheader">Available</td>												
 						<% if (pageContext.findAttribute("indiceID").toString().equals("44")){%>
 							<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.anotation"/></td>
 						<%}%>
@@ -355,6 +363,8 @@
 							<bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.name" />
 						</html:link>
 					</td>
+					<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.code"/></td>
+					<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.enrollmentAllowed"/></td>
 					<% if (pageContext.findAttribute("indiceID").toString().equals("44")){%>
 						<logic:notEmpty name="curricularCourseScopeElem" property="anotation" >
 							<bean:define id="anotationID" value="0"/>
