@@ -176,6 +176,16 @@ class net.sourceforge.fenixedu.domain.Campus extends net.sourceforge.fenixedu.do
 }
 
 
+class net.sourceforge.fenixedu.domain.Contract extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyEmployee;
+	Integer keySalaryUnit;
+	Integer keyMailingUnit;
+	Integer keyWorkingUnit;
+	Integer keyCategory;
+	Date beginDate;
+	Date endDate;
+}
+
 class net.sourceforge.fenixedu.domain.CostCenter extends net.sourceforge.fenixedu.domain.DomainObject {
     String code;
     String section2;
@@ -736,14 +746,12 @@ class net.sourceforge.fenixedu.domain.Employee extends net.sourceforge.fenixedu.
 	Integer employeeNumber;
 	Date antiquity;
 	Integer keyPerson;
-	Integer keySalaryUnit;
-	Integer keyMailingUnit;
-	Integer keyWorkingUnit;
 	Integer workingHours;
 
     interface "
 	public IDepartment getDepartmentWorkingPlace();
 	public IDepartment getDepartmentMailingPlace();
+	public IContract getCurrentContract();
 	"
 }
 
@@ -5445,24 +5453,24 @@ relation AttendsStudentGroup {
     }
 }
 
-relation EmployeeSalaryUnit {
-    net.sourceforge.fenixedu.domain.Employee playsRole salaryEmployees{
+relation ContractSalaryUnit {
+    net.sourceforge.fenixedu.domain.Contract playsRole salaryContracts{
     	multiplicity *;
     }
 	
 	net.sourceforge.fenixedu.domain.Unit playsRole salaryUnit;
 }
 
-relation EmployeeMailingUnit {
-    net.sourceforge.fenixedu.domain.Employee playsRole mailingEmployees{
+relation ContractMailingUnit {
+    net.sourceforge.fenixedu.domain.Contract playsRole mailingContracts{
     	multiplicity *;
     }
 	
 	net.sourceforge.fenixedu.domain.Unit playsRole mailingUnit;
 }
 
-relation EmployeeWorkUnit {
-    net.sourceforge.fenixedu.domain.Employee playsRole workingEmployees{
+relation ContractWorkUnit {
+    net.sourceforge.fenixedu.domain.Contract playsRole workingContracts{
     	multiplicity *;
     }
 	
@@ -5479,4 +5487,18 @@ relation UnitParentUnit {
 relation DepartmentUnit {
     net.sourceforge.fenixedu.domain.Department playsRole department;    
 	net.sourceforge.fenixedu.domain.Unit playsRole unit;
+}
+
+relation ContractCategory {
+	net.sourceforge.fenixedu.domain.Contract playsRole contracts {
+		multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.teacher.Category playsRole category;    
+}
+
+relation EmployeeContract {
+    net.sourceforge.fenixedu.domain.Contract playsRole contracts {
+    	multiplicity *;
+    }
+	net.sourceforge.fenixedu.domain.Employee playsRole employee;
 }
