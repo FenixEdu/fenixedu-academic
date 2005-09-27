@@ -16,6 +16,7 @@ import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.IPerson;
@@ -70,17 +71,23 @@ public class Authenticate implements IService, Serializable {
 
     protected class UserView implements IUserView {
 
+    	final private Integer personOID;
+
         final private String utilizador;
 
         final private Collection roles;
 
         private String fullName;
 
-        private UserView(final String utilizador, final Collection roles) {
-            super();
-            this.utilizador = utilizador;
-            if (roles != null) {
-                final SortedSet rolesSet = new TreeSet(roles);
+        private UserView(final IPerson person, final Set allowedRoles) {
+            this.personOID = person.getIdInternal();
+        	this.utilizador = person.getUsername();
+            this.fullName = person.getNome();
+
+            final Collection infoRoles = getInfoRoles(person.getUsername(), person.getPersonRoles(),
+                    allowedRoles);
+            if (infoRoles != null) {
+                final SortedSet rolesSet = new TreeSet(infoRoles);
                 this.roles = Collections.unmodifiableSortedSet(rolesSet);
             } else {
                 this.roles = null;
@@ -110,6 +117,10 @@ public class Authenticate implements IService, Serializable {
         public void setFullName(final String string) {
             fullName = string;
         }
+
+		public Integer getPersonOID() {
+			return personOID;
+		}
     }
 
     public static final boolean isValidUserView(IUserView userView) {
@@ -129,19 +140,7 @@ public class Authenticate implements IService, Serializable {
         }
         
         final Set allowedRoles = getAllowedRolesByHostname(requestURL);
-        final UserView userView = getUserView(person, allowedRoles);
-
-        return userView;
-    }
-
-    protected UserView getUserView(final IPerson person, final Set allowedRoles) {
-        final Collection infoRoles = getInfoRoles(person.getUsername(), person.getPersonRoles(),
-                allowedRoles);
-
-        final UserView userView = new UserView(person.getUsername(), infoRoles);
-        userView.setFullName(person.getNome());
-
-        return userView;
+        return new UserView(person, allowedRoles);
     }
 
     protected Collection<InfoRole> getInfoRoles(final String username, final Collection personRoles,
