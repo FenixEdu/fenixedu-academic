@@ -10,6 +10,8 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
  */
 public interface IUserView extends Serializable {
 
+	public Integer getPersonOID();
+
     public String getUtilizador();
 
     public String getFullName();

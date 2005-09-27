@@ -128,7 +128,7 @@ public class ShowStudentGroupInfo extends Action {
                                                 .next();
                                         result += studentInfo.getNumber();
                                         Object[] args = {
-                                                new MockUserView(studentInfo.getUsername(), new ArrayList()),
+                                                new MockUserView(studentInfo.getUsername(), new ArrayList(), null),
                                                 DegreeType.DEGREE };
                                         InfoStudentCurricularPlan infoStudentCurricularPlan = null;
                                         try {

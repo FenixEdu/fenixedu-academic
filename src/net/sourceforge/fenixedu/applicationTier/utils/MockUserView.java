@@ -8,13 +8,16 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 public class MockUserView implements IUserView {
 
+	final private Integer personOID;
+
 	final private String username;
 
 	final private Collection roles;
 
-	public MockUserView(final String username, final Collection roles) {
+	public MockUserView(final String username, final Collection roles, final Integer personOID) {
 		this.username = username;
 		this.roles = roles;
+		this.personOID = personOID;
 	}
 
 	public String getUtilizador() {
@@ -38,6 +41,10 @@ public class MockUserView implements IUserView {
 	}
 
 	public void setCandidateView(ICandidateView candidateView) {
+	}
+
+	public Integer getPersonOID() {
+		return personOID;
 	}
 
 }

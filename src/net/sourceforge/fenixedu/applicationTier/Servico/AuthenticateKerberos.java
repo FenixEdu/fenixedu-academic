@@ -1,11 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico;
 
 import java.io.Serializable;
-import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -13,24 +12,31 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.kerberos.UpdateKerberos;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author Luis Cruz
- * 
- */
 public class AuthenticateKerberos extends Authenticate implements IService, Serializable {
 
     public IUserView run(final String username, final String password, final String application,
             final String requestURL) throws ExcepcaoPersistencia, ExcepcaoAutenticacao {
 
-        final ISuportePersistente persistenceSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-        final IPessoaPersistente persistentPerson = persistenceSupport.getIPessoaPersistente();
+    	final Authenticate authenticate = new Authenticate();
+    	final IUserView userView = authenticate.run(username, password, application, requestURL);
 
-        final IPerson person = persistentPerson.lerPessoaPorUsername(username);
-        if (person == null || !PasswordEncryptor.areEquals(person.getPassword(), password)) {
-            throw new ExcepcaoAutenticacao("bad.authentication");
-        }
-        
+    	if (userView != null) {
+    		updateKerberos(userView);
+    	}
+
+    	return userView;
+    }
+
+	private void updateKerberos(final IUserView userView) throws ExcepcaoPersistencia {
+    	final ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+    	final IPessoaPersistente persistentPerson = persistenceSupport.getIPessoaPersistente();
+
+    	final IPerson person = (IPerson) persistentPerson.readByOID(Person.class, userView.getPersonOID());
+
+    	if (person == null) {
+    		throw new Error("No person found for provided UserView. This should not be possible!");
+    	}
+
         if(person.getIstUsername() != null && !person.getIsPassInKerberos()) {
         	try {
 	        	UpdateKerberos.createUser(person.getIstUsername(), person.getPassword());
@@ -39,11 +45,6 @@ public class AuthenticateKerberos extends Authenticate implements IService, Seri
         		//for now, do nothing
         	}
         }
-        
-        final Set allowedRoles = getAllowedRolesByHostname(requestURL);
-        final UserView userView = getUserView(person, allowedRoles);
-
-        return userView;
-    }
+	}
 
 }
