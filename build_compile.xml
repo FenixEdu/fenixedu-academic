@@ -644,16 +644,35 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			</classpath>
 			<include name="**/*.jsp"/>
 			;${env.CATALINA_HOME}/server/lib
+			               extdirs="${lib};${build.home.webinf.classes};${env.CATALINA_HOME}/common/lib;"
 		</jspc>-->
 		
 		<javac destdir="${build.home.webinf.classes}"
-               extdirs="${lib};${build.home.webinf.classes};${env.CATALINA_HOME}/common/lib;"
+
                debug="${compile.debug}"
                optimize="${compile.optimize}"
                deprecation="${compile.deprecation}"
 			   classpath="struts.jar"
                encoding="${encoding}"
 			   nowarn="true">
+			<classpath>
+		        <pathelement path="${build.home.webinf.classes};"/>
+		        <fileset dir="${lib}">
+		          <include name="*.jar"/>
+		          <exclude name="servlet.jar"/>
+		        </fileset>
+		        <pathelement location="${env.CATALINA_HOME}/common/classes"/>
+		        <fileset dir="${env.CATALINA_HOME}/common/lib">
+		          <include name="*.jar"/>
+		        </fileset>
+		        <pathelement location="${env.CATALINA_HOME}/shared/classes"/>
+		        <fileset dir="${env.CATALINA_HOME}/shared/lib">
+		          <include name="*.jar"/>
+		        </fileset>
+		        <fileset dir="${env.CATALINA_HOME}/bin"> 
+		          <include name="*.jar"/> 
+		        </fileset> 
+	      </classpath>
 			<src path="${build.home.jsp_gen_code}"/>
 		</javac>
 		
