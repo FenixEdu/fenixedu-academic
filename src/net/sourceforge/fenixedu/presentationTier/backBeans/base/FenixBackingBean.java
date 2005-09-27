@@ -22,11 +22,5 @@ public class FenixBackingBean {
 
     public void setUserView(IUserView userView) {
         this.userView = userView;
-    }
-    
-    protected String getRequestParameter(String parameterName) {
-        return (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
-                .get(parameterName);
-    }
-
+    }    
 }
