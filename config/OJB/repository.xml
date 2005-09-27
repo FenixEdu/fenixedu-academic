@@ -62,6 +62,7 @@
 <!ENTITY managementAssiduousness SYSTEM "repository_managementAssiduousness.xml">
 <!ENTITY projectsManagement SYSTEM "repository_projectsManagement.xml">
 <!ENTITY unit SYSTEM "repository_unit.xml">
+<!ENTITY contract SYSTEM "repository_contract.xml">
 ]>
 
 
@@ -131,5 +132,6 @@
 	&managementAssiduousness;
 	&projectsManagement;
 	&unit;
+	&contract;
 	
 </descriptor-repository>

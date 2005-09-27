@@ -9,12 +9,15 @@ import net.sourceforge.fenixedu.domain.IEmployee;
 /**
  * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 public class InfoEmployee extends InfoObject {
     private InfoPerson person = null;
-    private Integer employeeNumber  = null;
+
+    private Integer employeeNumber = null;
+
     private InfoUnit workingUnit = null;
+
     private InfoUnit mailingUnit = null;
 
     public void setPerson(InfoPerson person) {
@@ -32,7 +35,7 @@ public class InfoEmployee extends InfoObject {
     public void setEmployeeNumber(Integer employeeNumber) {
         this.employeeNumber = employeeNumber;
     }
-        
+
     public String toString() {
         String result = "[" + this.getClass().getName() + ": \n";
         result += "idInternal = " + getIdInternal() + "; \n";
@@ -57,11 +60,15 @@ public class InfoEmployee extends InfoObject {
         super.copyFromDomain(employee);
         if (employee != null) {
             setEmployeeNumber(employee.getEmployeeNumber());
-            setWorkingUnit(InfoUnit.newInfoFromDomain(employee.getWorkingUnit()));
-            setMailingUnit(InfoUnit.newInfoFromDomain(employee.getMailingUnit()));
+            if (employee.getCurrentContract() != null) {
+                setWorkingUnit(InfoUnit
+                        .newInfoFromDomain(employee.getCurrentContract().getWorkingUnit()));
+                setMailingUnit(InfoUnit
+                        .newInfoFromDomain(employee.getCurrentContract().getMailingUnit()));
+            }
         }
     }
-    
+
     public static InfoEmployee newInfoFromDomain(IEmployee employee) {
         InfoEmployee infoEmployee = null;
         if (employee != null) {

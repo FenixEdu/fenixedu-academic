@@ -32,13 +32,15 @@ public class Department extends Department_Base {
         
         if(unit != null){               
                         
-            for(IEmployee employee : unit.getWorkingEmployees()){
+            for(IContract contract : unit.getWorkingContracts()){
+                IEmployee employee = contract.getEmployee();               
                 if(employee.getActive().booleanValue()){
                     employees.add(employee);
                 }
             }                                    
             for(IUnit subUnit : unit.getAssociatedUnits()){
-                for(IEmployee employee : subUnit.getWorkingEmployees()){
+                for(IContract contract : subUnit.getWorkingContracts()){
+                    IEmployee employee = contract.getEmployee();
                     if(employee.getActive().booleanValue()){
                         employees.add(employee);
                     }
@@ -61,3 +63,4 @@ public class Department extends Department_Base {
         return teachers;
     }
 }
+

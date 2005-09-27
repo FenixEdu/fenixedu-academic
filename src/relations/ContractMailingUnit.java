@@ -3,6 +3,6 @@ package relations;
 import net.sourceforge.fenixedu.stm.VBox;
 import net.sourceforge.fenixedu.stm.RelationList;
 import net.sourceforge.fenixedu.stm.OJBFunctionalSetWrapper;
-public class EmployeeSalaryUnit extends EmployeeSalaryUnit_Base {
+public class ContractMailingUnit extends ContractMailingUnit_Base {
     
 }

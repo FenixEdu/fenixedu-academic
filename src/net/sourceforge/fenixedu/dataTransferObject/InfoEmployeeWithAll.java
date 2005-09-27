@@ -12,7 +12,8 @@ public class InfoEmployeeWithAll extends InfoEmployee {
         super.copyFromDomain(employee);
         if (employee != null) {
             setPerson(InfoPerson.newInfoFromDomain(employee.getPerson()));
-            setWorkingUnit(InfoUnit.newInfoFromDomain(employee.getWorkingUnit()));
+            setWorkingUnit(InfoUnit.newInfoFromDomain(employee.getCurrentContract().getWorkingUnit()));
+            setMailingUnit(InfoUnit.newInfoFromDomain(employee.getCurrentContract().getMailingUnit()));
         }
     }
 

@@ -1,0 +1,79 @@
+<!-- Definitions for net.sourceforge.fenixedu.domain.Contract -->
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.Contract" 
+	table="CONTRACT">
+	
+	<field-descriptor id="1"
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+	/>
+	<field-descriptor id="2"
+	   name="beginDate"    
+	   column="BEGIN_DATE"  
+	   jdbc-type="DATE"
+    />
+	<field-descriptor id="3"	
+	   name="endDate"    
+	   column="END_DATE"  
+	   jdbc-type="DATE"
+    />
+	<field-descriptor id="4" 
+	   name="keySalaryUnit"    
+	   column="KEY_SALARY_UNIT"  
+	   jdbc-type="INTEGER"
+    />
+	<field-descriptor id="5" 
+	   name="keyMailingUnit"    
+	   column="KEY_MAILING_UNIT"  
+	   jdbc-type="INTEGER"
+    />
+	<field-descriptor id="6" 
+	   name="keyWorkingUnit"    
+	   column="KEY_WORKING_UNIT"  
+	   jdbc-type="INTEGER"
+    />
+	<field-descriptor id="7" 
+	   name="keyCategory"    
+	   column="KEY_CATEGORY"  
+	   jdbc-type="INTEGER"
+    />
+	<field-descriptor id="8" 
+	   name="keyEmployee"    
+	   column="KEY_EMPLOYEE"  
+	   jdbc-type="INTEGER"
+    />
+
+	<reference-descriptor auto-retrieve="false"
+    	name="salaryUnit"
+        class-ref="net.sourceforge.fenixedu.domain.Unit">
+	    <foreignkey field-ref="keySalaryUnit"/>
+	</reference-descriptor>
+
+	<reference-descriptor auto-retrieve="false"
+    	name="mailingUnit"
+        class-ref="net.sourceforge.fenixedu.domain.Unit">
+	    <foreignkey field-ref="keyMailingUnit"/>
+	</reference-descriptor>
+	
+	<reference-descriptor auto-retrieve="false"
+    	name="workingUnit"
+        class-ref="net.sourceforge.fenixedu.domain.Unit">
+	    <foreignkey field-ref="keyWorkingUnit"/>
+	</reference-descriptor>
+	
+	<reference-descriptor auto-retrieve="false"
+    	name="category"
+        class-ref="net.sourceforge.fenixedu.domain.teacher.Category">
+	    <foreignkey field-ref="keyCategory"/>
+	</reference-descriptor>
+
+	<reference-descriptor auto-retrieve="false"
+    	name="employee"
+        class-ref="net.sourceforge.fenixedu.domain.Employee">
+	    <foreignkey field-ref="keyEmployee"/>
+	</reference-descriptor>
+
+</class-descriptor>

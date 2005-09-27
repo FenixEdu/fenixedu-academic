@@ -174,13 +174,22 @@
       <field-descriptor name="longName" column="LONG_NAME" jdbc-type="VARCHAR"/>
 
       <field-descriptor name="shortName" column="SHORT_NAME" jdbc-type="VARCHAR"/>
-      <field-descriptor name="canBeExecutionCourseResponsible" column="CAN_BE_EXECUTION_COURSE_RESPONSIBLE" jdbc-type="BIT"/>      
-      <field-descriptor
+      
+	  <field-descriptor name="canBeExecutionCourseResponsible" column="CAN_BE_EXECUTION_COURSE_RESPONSIBLE" jdbc-type="BIT"/>      
+    
+	  <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
       	locking="false"
       />
+
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+		name="contracts"
+		element-class-ref="net.sourceforge.fenixedu.domain.Contract">
+		<inverse-foreignkey field-ref="keyCategory"/>
+  	</collection-descriptor>
+	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="associatedTeachingCareers"
 		element-class-ref="net.sourceforge.fenixedu.domain.teacher.TeachingCareer">

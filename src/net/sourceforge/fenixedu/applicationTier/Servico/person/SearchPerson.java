@@ -70,13 +70,8 @@ public class SearchPerson implements IService {
      		 department = (IDepartment)persistentDepartment.readByOID(Department.class,departmentId);
         }
 		if(department != null){		    
-	        List<ITeacher> teachers = department.getTeachers();
-            
-            
-            for(ITeacher teacher : teachers){
-                System.out.println("TEACHER: " + teacher.getPerson().getNome());
-            }
-            
+	        List<ITeacher> teachers = department.getTeachers();            
+                        
 	        persons = persistentPerson.PersonByDepartment(name,teachers,startIndex,numberOfElementsInSpan);
 	        totalPersons = persistentPerson.CountPersonByDepartment(name,teachers,startIndex,numberOfElementsInSpan);
 	    }else{

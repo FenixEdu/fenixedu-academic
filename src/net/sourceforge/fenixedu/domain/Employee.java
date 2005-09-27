@@ -3,6 +3,9 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Calendar;
+import java.util.List;
+
 /**
  * 
  * @author Tânia Pousão
@@ -19,38 +22,45 @@ public class Employee extends Employee_Base {
 
     public IDepartment getDepartmentWorkingPlace() {
 
-        IUnit unit = this.getWorkingUnit();
+        IContract contract = getCurrentContract();
 
-        if (unit != null) {
+        if (contract != null && contract.getWorkingUnit() != null) {
 
-            if (unit.getParentUnit() == null) {
-                return unit.getDepartment();
-
-            } else {
-                while (unit.getParentUnit() != null) {
-                    unit = unit.getParentUnit();
-                }
-                return unit.getDepartment();
-            }
+            IUnit unit = contract.getWorkingUnit();
+            return getUnitDepartment(unit);
         }
         return null;
     }
 
     public IDepartment getDepartmentMailingPlace() {
 
-        IUnit unit = this.getMailingUnit();
-        if (unit != null) {
-            
-            if (unit.getParentUnit() == null) {
-                return unit.getDepartment();
-            
-            } else {
-                while (unit.getParentUnit() != null) {
-                    unit = unit.getParentUnit();
-                }
-                return unit.getDepartment();
-            }
+        IContract contract = getCurrentContract();
+
+        if (contract != null && contract.getMailingUnit() != null) {
+
+            IUnit unit = contract.getMailingUnit();
+            return getUnitDepartment(unit);
         }
         return null;
+    }
+
+    public IContract getCurrentContract() {
+
+        List<IContract> contracts = this.getContracts();
+        for (IContract contract : contracts) {
+            if (contract.getEndDate() == null
+                    || contract.getEndDate().after(Calendar.getInstance().getTime()))
+                return contract;
+        }
+        return null;
+    }
+
+    private IDepartment getUnitDepartment(IUnit unit) {
+        if (unit.getParentUnit() != null) {
+            while (unit.getParentUnit() != null) {
+                unit = unit.getParentUnit();
+            }            
+        }
+        return unit.getDepartment();
     }
 }

@@ -40,44 +40,11 @@
   	column="ACTIVE" 
   	jdbc-type="BIT"
   />
-  <field-descriptor
-    name="keySalaryUnit"
-    column="KEY_SALARY_UNIT"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor
-    name="keyMailingUnit"
-    column="KEY_MAILING_UNIT"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor
-    name="keyWorkingUnit"
-    column="KEY_WORKING_UNIT"
-    jdbc-type="INTEGER"
-  />
 
   <reference-descriptor auto-retrieve="false"
          name="person"
          class-ref="net.sourceforge.fenixedu.domain.Person">
          <foreignkey field-ref="keyPerson"/>
-  </reference-descriptor>
-
-  <reference-descriptor auto-retrieve="false"
-         name="salaryUnit"
-         class-ref="net.sourceforge.fenixedu.domain.Unit">
-         <foreignkey field-ref="keySalaryUnit"/>
-  </reference-descriptor>
-
-  <reference-descriptor auto-retrieve="false"
-         name="mailingUnit"
-         class-ref="net.sourceforge.fenixedu.domain.Unit">
-         <foreignkey field-ref="keyMailingUnit"/>
-  </reference-descriptor>
-
-  <reference-descriptor auto-retrieve="false"
-         name="workingUnit"
-         class-ref="net.sourceforge.fenixedu.domain.Unit">
-         <foreignkey field-ref="keyWorkingUnit"/>
   </reference-descriptor>
 
   <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
@@ -142,6 +109,11 @@
 		element-class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
 		>
 		<inverse-foreignkey field-ref="employeeKey"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+		name="contracts"
+		element-class-ref="net.sourceforge.fenixedu.domain.Contract">
+		<inverse-foreignkey field-ref="keyEmployee"/>
 	</collection-descriptor>
 </class-descriptor>
 
