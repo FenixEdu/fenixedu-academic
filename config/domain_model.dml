@@ -1046,6 +1046,10 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
 	public java.util.List<IProfessorship> responsibleFors();
 
 	public IAttends getAttendsByStudent (final IStudent student);
+	
+	public java.util.List<IExam> getAssociatedExams();
+	
+	public java.util.List<IWrittenTest> getAssociatedWrittenTests();
     "
 }
 

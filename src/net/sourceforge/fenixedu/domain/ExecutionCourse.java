@@ -231,4 +231,29 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 			
 		});
 	}
+    
+    public List<IExam> getAssociatedExams() {
+        List<IExam> associatedExams = new ArrayList<IExam>();
+        
+        for (IEvaluation evaluation : this.getAssociatedEvaluations()) {
+            if (evaluation instanceof IExam) {
+                associatedExams.add((IExam) evaluation);
+            }
+        }
+        
+        return associatedExams;
+    }
+
+    public List<IWrittenTest> getAssociatedWrittenTests() {
+        List<IWrittenTest> associatedWrittenTests = new ArrayList<IWrittenTest>();
+        
+        for (IEvaluation evaluation : this.getAssociatedEvaluations()) {
+            if (evaluation instanceof IWrittenTest) {
+                associatedWrittenTests.add((IWrittenTest) evaluation);
+            }
+        }
+        
+        return associatedWrittenTests;
+    }
+    
 }
