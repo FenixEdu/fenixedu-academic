@@ -3,7 +3,8 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.student.enrolment;
 import java.util.Collections;
 import java.util.List;
 
-import javax.faces.context.FacesContext;
+import javax.faces.component.UIParameter;
+import javax.faces.event.ActionEvent;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -54,19 +55,18 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
         return unenroledWrittenTests;
     }
 
-    public String enrolStudent() throws FenixFilterException, FenixServiceException {
-        final Integer evaluationID = Integer.valueOf(getRequestParameter("evaluationID"));
-        // Use another service that uses student ID ?!?!??!
+    public void enrolStudent(ActionEvent actionEvent) throws FenixFilterException, FenixServiceException {
+        final UIParameter parameter = (UIParameter) actionEvent.getComponent().findComponent("evaluationID");
+        final Integer evaluationID = Integer.valueOf(parameter.getValue().toString());
         final Object args[] = { getUserView().getUtilizador(), evaluationID };
         ServiceUtils.executeService(getUserView(), "EnrolStudentInWrittenEvaluation", args);
-        return "success";
     }
     
-    public String unenrolStudent() throws FenixFilterException, FenixServiceException {
-        final Integer evaluationID = Integer.valueOf(getRequestParameter("evaluationID"));
+    public void unenrolStudent(ActionEvent actionEvent) throws FenixFilterException, FenixServiceException {
+        final UIParameter parameter = (UIParameter) actionEvent.getComponent().findComponent("evaluationID");
+        final Integer evaluationID = Integer.valueOf(parameter.getValue().toString());
         final Object args[] = { getUserView().getUtilizador(), evaluationID };
         ServiceUtils.executeService(getUserView(), "UnEnrollStudentInWrittenEvaluation", args);
-        return "success";
     }
 
     private IStudent getStudent() throws FenixFilterException, FenixServiceException {

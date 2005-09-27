@@ -34,9 +34,10 @@
 			</h:column>
 			<h:column>
 				<f:facet name="header"><h:outputText value="#{bundle['label.enroll']}" /></f:facet>
-				<h:commandLink action="#{displayEvaluationsToEnrol.enrolStudent}">
+				<h:commandLink action="success" 
+							   actionListener="#{displayEvaluationsToEnrol.enrolStudent}" >
 					<h:outputText value="#{bundle['label.enroll']}" />	
-					<f:param name="evaluationID" value="#{unenroledEvaluation.idInternal}" />
+					<f:param id="evaluationID" name="evaluationID" value="#{unenroledEvaluation.idInternal}" />
 				</h:commandLink>
 			</h:column>
 		</h:dataTable>
@@ -72,9 +73,10 @@
 				</h:outputFormat>
 			</h:column>
 			<h:column>
-				<h:commandLink action="#{displayEvaluationsToEnrol.unenrolStudent}">
+				<h:commandLink  action="success"
+								actionListener="#{displayEvaluationsToEnrol.unenrolStudent}">
 					<h:outputText value="#{bundle['label.unEnroll']}" />	
-					<f:param name="evaluationID" value="#{enroledEvaluation.idInternal}" />
+					<f:param id="evaluationID" name="evaluationID" value="#{enroledEvaluation.idInternal}" />
 				</h:commandLink>
 			</h:column>
 		</h:dataTable>
