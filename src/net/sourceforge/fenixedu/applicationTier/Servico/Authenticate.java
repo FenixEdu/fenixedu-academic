@@ -71,18 +71,12 @@ public class Authenticate implements IService, Serializable {
 
     protected class UserView implements IUserView {
 
-    	final private Integer personOID;
-
-        final private String utilizador;
+    	final private IPerson person;
 
         final private Collection roles;
 
-        private String fullName;
-
         private UserView(final IPerson person, final Set allowedRoles) {
-            this.personOID = person.getIdInternal();
-        	this.utilizador = person.getUsername();
-            this.fullName = person.getNome();
+            this.person = person;
 
             final Collection infoRoles = getInfoRoles(person.getUsername(), person.getPersonRoles(),
                     allowedRoles);
@@ -103,7 +97,7 @@ public class Authenticate implements IService, Serializable {
         }
 
         public String getUtilizador() {
-            return utilizador;
+            return person.getUsername();
         }
 
         public Collection getRoles() {
@@ -111,15 +105,11 @@ public class Authenticate implements IService, Serializable {
         }
 
         public String getFullName() {
-            return fullName;
+            return person.getNome();
         }
 
-        public void setFullName(final String string) {
-            fullName = string;
-        }
-
-		public Integer getPersonOID() {
-			return personOID;
+		public IPerson getPerson() {
+			return person;
 		}
     }
 

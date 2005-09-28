@@ -4,11 +4,7 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.kerberos.UpdateKerberos;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -28,10 +24,7 @@ public class AuthenticateKerberos extends Authenticate implements IService, Seri
     }
 
 	private void updateKerberos(final IUserView userView) throws ExcepcaoPersistencia {
-    	final ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-    	final IPessoaPersistente persistentPerson = persistenceSupport.getIPessoaPersistente();
-
-    	final IPerson person = (IPerson) persistentPerson.readByOID(Person.class, userView.getPersonOID());
+    	final IPerson person = userView.getPerson();
 
     	if (person == null) {
     		throw new Error("No person found for provided UserView. This should not be possible!");
