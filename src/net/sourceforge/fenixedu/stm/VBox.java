@@ -132,7 +132,7 @@ public class VBox<E> extends jvstm.VBox<E> implements VersionedSubject {
 	if (isLoading()) {
 	    persistentLoad(value);
 	} else {
-	    DomainObject.noteStore((DomainObject) obj, attr);
+	    Transaction.storeObject((DomainObject) obj, attr);
 	    put(value);
 	}
     }

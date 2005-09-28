@@ -54,24 +54,6 @@ public abstract class DomainObject extends DomainObject_Base {
         autoDetermineId = false;
     }
 
-    protected static void doLockWriteOn(Object obj) {
-        if (lockMode) {
-            try {
-                PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentObject().lockWrite(obj);
-            } catch (Exception e) {
-                throw new Error("Couldn't obtain lockwrite on object", e);
-            }
-        }
-    }
-
-    protected static void logAttrChange(DomainObject obj, String attrName) {
-	Transaction.logAttrChange(obj, attrName);
-    }
-
-    public static void noteStore(DomainObject obj, String attrName) {
-	Transaction.storeObject(obj, attrName);
-    }
-
 
     public DomainObject() {
         super();
