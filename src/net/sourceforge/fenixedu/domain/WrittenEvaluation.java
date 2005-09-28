@@ -291,7 +291,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
 
         IWrittenEvaluationEnrolment writtenEvaluationEnrolmentToDelete = this
-                .getWrittenEvaluationEnrolmentsFor(student);
+                .getWrittenEvaluationEnrolmentFor(student);
         if (writtenEvaluationEnrolmentToDelete == null) {
             throw new DomainException("error.studentNotEnroled");
         }
@@ -322,7 +322,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
                     && !studentsToDistribute.isEmpty(); numberOfStudentsInserted++) {
                 final IStudent student = getRandomStudentFromList(studentsToDistribute);
                 final IWrittenEvaluationEnrolment writtenEvaluationEnrolment = this
-                        .getWrittenEvaluationEnrolmentsFor(student);
+                        .getWrittenEvaluationEnrolmentFor(student);
                 if (writtenEvaluationEnrolment == null) {
                     new WrittenEvaluationEnrolment(this, student, room);
                 } else {
@@ -370,7 +370,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         return (IStudent) studentsToDistribute.remove(pos % studentsToDistribute.size());
     }
 
-    private IWrittenEvaluationEnrolment getWrittenEvaluationEnrolmentsFor(final IStudent student) {
+    public IWrittenEvaluationEnrolment getWrittenEvaluationEnrolmentFor(final IStudent student) {
         for (final IWrittenEvaluationEnrolment writtenEvaluationEnrolment : student
                 .getWrittenEvaluationEnrolments()) {
             if (writtenEvaluationEnrolment.getWrittenEvaluation() == this) {

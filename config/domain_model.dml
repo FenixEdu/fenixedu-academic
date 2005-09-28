@@ -944,6 +944,8 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 		public void distributeStudentsByRooms(java.util.List<IStudent> studentsToDistribute, 
                                               java.util.List<IRoom> selectedRooms);
                                               
+		public IWrittenEvaluationEnrolment getWrittenEvaluationEnrolmentFor(IStudent student);                                              
+                                              
 		public boolean isInEnrolmentPeriod();
 		"
 	}
