@@ -87,8 +87,7 @@ public final class ConsultarFuncionarioMostrarAction extends Action {
                 (Date) session.getAttribute(Constants.FIM_CONSULTA), servicoSeguroConsultarFuncionario
                         .getPessoa(), servicoSeguroConsultarFuncionario.getFuncionario(),
                 servicoSeguroConsultarFuncionario.getStatusAssiduidade(),
-                servicoSeguroConsultarFuncionario.getCentroCusto(), servicoSeguroConsultarFuncionario
-                        .getFuncNaoDocente(), servicoSeguroConsultarFuncionario.getRotacaoHorario(),
+                servicoSeguroConsultarFuncionario.getCentroCusto(), servicoSeguroConsultarFuncionario.getRotacaoHorario(),
                 servicoSeguroConsultarFuncionario.getListaRegimesRotacao());
 
         return (mapping.findForward("ConsultarFuncionarioMostrar"));

@@ -93,7 +93,12 @@
 		      <tr>
 		      	<td width="30%"><bean:message key="message.teachingReport.courseDepartment" /></td>
 	    			<bean:define id="departmentName" name="personalInfo" property="infoEmployee.workingUnit.department"/>
-			      	<td class="greytxt"><bean:write name="departmentName"/></td>		      	
+			      	<logic:notEqual name="departmentName" value="">
+			     	 	<td class="greytxt"><bean:write name="departmentName"/></td>		      	
+			      	</logic:notEqual>
+		      	 	<logic:equal name="departmentName" value="">
+			     	 	<td class="greytxt">--</td>		      	
+			      	</logic:equal>
 		      </tr>
 		      <tr>
 		      	<td width="30%"><bean:message key="label.person.sectionPlace" /></td>		      	

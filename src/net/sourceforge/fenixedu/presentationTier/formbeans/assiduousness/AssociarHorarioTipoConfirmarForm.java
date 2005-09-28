@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.domain.Administrative;
 import net.sourceforge.fenixedu.domain.Funcionario;
 import net.sourceforge.fenixedu.domain.Horario;
 import net.sourceforge.fenixedu.domain.HorarioTipo;
@@ -582,7 +581,7 @@ public class AssociarHorarioTipoConfirmarForm extends ActionForm {
     }
 
     public void setForm(Locale locale, Person pessoa, Funcionario funcionario,
-            Administrative funcNaoDocente, HorarioTipo horarioTipo, Horario horario, List listaRegime,
+            HorarioTipo horarioTipo, Horario horario, List listaRegime,
             boolean isExcepcaoHorario) {
 
         IStrategyHorarios horarioStrategy = SuporteStrategyHorarios.getInstance().callStrategy(

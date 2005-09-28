@@ -8,7 +8,6 @@ import java.util.ListIterator;
 import net.sourceforge.fenixedu.applicationTier.ServicoAutorizacao;
 import net.sourceforge.fenixedu.applicationTier.ServicoSeguro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteException;
-import net.sourceforge.fenixedu.domain.Administrative;
 import net.sourceforge.fenixedu.domain.CostCenter;
 import net.sourceforge.fenixedu.domain.Funcionario;
 import net.sourceforge.fenixedu.domain.Horario;
@@ -39,8 +38,6 @@ public class ServicoSeguroConsultarFuncionario extends ServicoSeguro {
     private CostCenter _centroCusto = null;
 
     private Person _pessoa = null;
-
-    private Administrative _funcNaoDocente = null;
 
     private List _rotacaoHorario = null;
 
@@ -86,14 +83,6 @@ public class ServicoSeguroConsultarFuncionario extends ServicoSeguro {
         if ((_pessoa = iPessoaPersistente.lerPessoa(_funcionario.getChavePessoa())) == null) {
             throw new NotExecuteException("error.pessoa.naoExiste");
         }
-
-        //		IFuncNaoDocentePersistente iFuncNaoDocentePersistente =
-        //			SuportePersistente.getInstance().iFuncNaoDocentePersistente();
-        //		if ((_funcNaoDocente =
-        //			iFuncNaoDocentePersistente.lerFuncNaoDocentePorFuncionario(_funcionario.getCodigoInterno()))
-        //			== null) {
-        //			throw new NotExecuteException("error.funcionario.naoExiste");
-        //		}
 
         IHorarioPersistente iHorarioPersistente = SuportePersistente.getInstance().iHorarioPersistente();
         // Leitura de uma horário seja ele rotativo ou não
@@ -161,10 +150,6 @@ public class ServicoSeguroConsultarFuncionario extends ServicoSeguro {
 
     public Person getPessoa() {
         return _pessoa;
-    }
-
-    public Administrative getFuncNaoDocente() {
-        return _funcNaoDocente;
     }
 
     public List getRotacaoHorario() {

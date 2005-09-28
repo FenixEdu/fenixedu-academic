@@ -67,13 +67,7 @@
 	auto_retrieve="true"
 	>
 	<inverse-foreignkey field-ref="keyEmployee"/>
-  </collection-descriptor>   
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="administratives"
-		element-class-ref="net.sourceforge.fenixedu.domain.Administrative"
-		>
-		<inverse-foreignkey field-ref="keyEmployee"/>
-	</collection-descriptor>
+  </collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="gratuitySituations"
 		element-class-ref="net.sourceforge.fenixedu.domain.GratuitySituation"
@@ -117,6 +111,7 @@
 	</collection-descriptor>
 </class-descriptor>
 
+<!--
 <class-descriptor class="net.sourceforge.fenixedu.domain.Administrative"
   table="ass_FUNC_NAO_DOCENTE"
 >
@@ -143,7 +138,7 @@
   	class-ref="net.sourceforge.fenixedu.domain.Employee">
   	<foreignkey field-ref="keyEmployee"/>
   </reference-descriptor>  
-</class-descriptor>
+</class-descriptor> -->
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.EmployeeHistoric"
   table="ass_FUNCIONARIO_HISTORICO"

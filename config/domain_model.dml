@@ -314,27 +314,27 @@ class net.sourceforge.fenixedu.domain.credits.CreditLine extends net.sourceforge
 }
 
 
-    class net.sourceforge.fenixedu.domain.credits.DatePeriodBaseCreditLine extends net.sourceforge.fenixedu.domain.credits.CreditLine {
-        Date start;
-        Date end;
-    }
+class net.sourceforge.fenixedu.domain.credits.DatePeriodBaseCreditLine extends net.sourceforge.fenixedu.domain.credits.CreditLine {
+    Date start;
+    Date end;
+}
     
-        class net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine extends net.sourceforge.fenixedu.domain.credits.DatePeriodBaseCreditLine {
-            Double credits;
-            String position;
-        }    
+class net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine extends net.sourceforge.fenixedu.domain.credits.DatePeriodBaseCreditLine {
+    Double credits;
+    String position;
+}    
     
         
-        class net.sourceforge.fenixedu.domain.credits.ServiceExemptionCreditLine extends net.sourceforge.fenixedu.domain.credits.DatePeriodBaseCreditLine {
-            ServiceExemptionType type;
-        }
+class net.sourceforge.fenixedu.domain.credits.ServiceExemptionCreditLine extends net.sourceforge.fenixedu.domain.credits.DatePeriodBaseCreditLine {
+    ServiceExemptionType type;
+}
 
         
-    class net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine extends net.sourceforge.fenixedu.domain.credits.CreditLine {
-        String reason;
-        Double credits;
-        Integer keyExecutionPeriod;
-    }
+class net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine extends net.sourceforge.fenixedu.domain.credits.CreditLine {
+    String reason;
+    Double credits;
+    Integer keyExecutionPeriod;
+}
 
 
 class net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -769,12 +769,6 @@ class net.sourceforge.fenixedu.domain.EmployeeHistoric extends net.sourceforge.f
     Integer keyEmployee;
     Date when;
 }
-
-
-class net.sourceforge.fenixedu.domain.Administrative extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyEmployee;
-}
-
 
 class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu.domain.DomainObject {
     String createdBy;
@@ -3557,15 +3551,6 @@ relation EmployeeHistoricWorkingPlaceCostCenter {
     }
     net.sourceforge.fenixedu.domain.CostCenter playsRole workingPlaceCostCenter;
 }
-
-
-relation AdministrativeEmployee {
-    net.sourceforge.fenixedu.domain.Administrative playsRole administratives {
-        multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.Employee playsRole employee;
-}
-
 
 relation EmployeePerson {
 	net.sourceforge.fenixedu.domain.Employee playsRole employee;

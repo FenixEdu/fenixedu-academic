@@ -5,7 +5,6 @@ import net.sourceforge.fenixedu.persistenceTierJDBC.Relacional.CartaoRelacional;
 import net.sourceforge.fenixedu.persistenceTierJDBC.Relacional.CentroCustoRelacional;
 import net.sourceforge.fenixedu.persistenceTierJDBC.Relacional.FeriadoRelacional;
 import net.sourceforge.fenixedu.persistenceTierJDBC.Relacional.FeriasRelacional;
-import net.sourceforge.fenixedu.persistenceTierJDBC.Relacional.FuncNaoDocenteRelacional;
 import net.sourceforge.fenixedu.persistenceTierJDBC.Relacional.FuncionarioRelacional;
 import net.sourceforge.fenixedu.persistenceTierJDBC.Relacional.HorarioRelacional;
 import net.sourceforge.fenixedu.persistenceTierJDBC.Relacional.HorarioTipoRelacional;
@@ -84,10 +83,6 @@ public class SuportePersistente {
 
     public IFuncionarioPersistente iFuncionarioPersistente() {
         return new FuncionarioRelacional();
-    }
-
-    public IFuncNaoDocentePersistente iFuncNaoDocentePersistente() {
-        return new FuncNaoDocenteRelacional();
     }
 
     public IRegimePersistente iRegimePersistente() {
