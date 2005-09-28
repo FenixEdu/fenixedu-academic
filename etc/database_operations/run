@@ -51,5 +51,7 @@ echo Changing Evaluation Table ... started
 mysql -u$2 -f $1 < alterTableEvaluation.sql
 echo Changing Evaluation Table ... completed
 echo Fixing Person_Role table ... started
-mysql -u$2 -f $1 < updatePersonRole.sql
+mysql -u$2 -f $1 < updatePersonRole.sql > tmp.sql
+mysql -u$2 -f $1 < tmp.sql
+rm -r tmp.sql
 echo Fixing Person_Role table ... completed
