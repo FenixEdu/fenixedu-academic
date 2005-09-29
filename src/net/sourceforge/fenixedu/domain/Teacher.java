@@ -9,10 +9,16 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits;
 import net.sourceforge.fenixedu.domain.credits.util.InfoCreditsBuilder;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupStudent;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
 import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.util.PublicationArea;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 
 public class Teacher extends Teacher_Base {
 
@@ -90,7 +96,7 @@ public class Teacher extends Teacher_Base {
     public IDepartment getWorkingDepartment() {
 
         IEmployee employee = this.getPerson().getEmployee();
-        if (employee != null) {            
+        if (employee != null) {
             return employee.getDepartmentWorkingPlace();
         }
         return null;
@@ -101,8 +107,65 @@ public class Teacher extends Teacher_Base {
         IEmployee employee = this.getPerson().getEmployee();
         if (employee != null) {
             return employee.getDepartmentMailingPlace();
-        }        
+        }
         return null;
+    }
+
+    public List<IProposal> getFinalDegreeWorksByExecutionYear(IExecutionYear executionYear) {
+        List<IProposal> proposalList = new ArrayList<IProposal>();
+        for (Iterator iter = getAssociatedProposalsByOrientator().iterator(); iter.hasNext();) {
+            IProposal proposal = (IProposal) iter.next();
+            if (proposal.getExecutionDegree().getExecutionYear().equals(executionYear)) {
+                // if it was attributed by the coordinator the proposal is
+                // efective
+                if (proposal.getGroupAttributed() != null) {
+                    proposalList.add(proposal);
+                }
+                // if not, we have to verify if the teacher has proposed it to
+                // any student(s) and if that(those) student(s) has(have) accepted it
+                else {
+                    IGroup attributedGroupByTeacher = proposal.getGroupAttributedByTeacher();
+                    if (attributedGroupByTeacher != null) {                        
+                        boolean result = false;
+                        for (Iterator iterator = attributedGroupByTeacher.getGroupStudents().iterator(); iterator
+                                .hasNext();) {
+                            IGroupStudent groupStudent = (IGroupStudent) iterator.next();
+                            IProposal studentProposal = groupStudent
+                                    .getFinalDegreeWorkProposalConfirmation();
+                            if (studentProposal != null && studentProposal.equals(proposal)) {
+                                result = true;
+                            } else {
+                                result = false;
+                            }
+                        }
+                        if (result) {
+                            proposalList.add(proposal);
+                        }
+                    }
+                }
+            }
+        }
+        return proposalList;
+    }
+
+    public List<IExecutionCourse> getLecturedExecutionCoursesByExecutionYear(IExecutionYear executionYear) {
+        List<IExecutionCourse> executionCourses = new ArrayList();
+        for (Iterator iter = executionYear.getExecutionPeriods().iterator(); iter.hasNext();) {
+            IExecutionPeriod executionPeriod = (IExecutionPeriod) iter.next();
+            executionCourses.addAll(getLecturedExecutionCoursesByExecutionPeriod(executionPeriod));
+        }
+        return executionCourses;
+    }
+
+    public List<IExecutionCourse> getLecturedExecutionCoursesByExecutionPeriod(
+            final IExecutionPeriod executionPeriod) {
+        return (List<IExecutionCourse>) CollectionUtils.collect(getProfessorships(), new Transformer() {
+
+            public Object transform(Object arg0) {
+                IProfessorship professorship = (IProfessorship) arg0;
+                return professorship.getExecutionCourse();
+            }
+        });
     }
 
     /***************************************************************************

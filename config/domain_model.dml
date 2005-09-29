@@ -2758,6 +2758,12 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	public IDepartment getMailingDepartment();
 	
 	public IDepartment getWorkingDepartment();
+	
+	public java.util.List<net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal> getFinalDegreeWorksByExecutionYear(IExecutionYear executionYear);
+	
+	public java.util.List<IExecutionCourse> getLecturedExecutionCoursesByExecutionYear(IExecutionYear executionYear);
+	
+	public java.util.List<IExecutionCourse> getLecturedExecutionCoursesByExecutionPeriod(final IExecutionPeriod executionPeriod);
 	"
 }
 
