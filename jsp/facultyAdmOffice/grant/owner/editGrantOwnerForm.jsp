@@ -109,7 +109,7 @@
 		<td align="left"><bean:message key="label.grant.owner.infoperson.sex"/>:&nbsp;</td>
 		<td>
 			Masculino:&nbsp;<html:radio property="sex" value="MALE"/>&nbsp;&nbsp;
-			Feminino:&nbsp;<html:radio property="sex" value="FEMALE"/>
+			Feminino:&nbsp;<html:radio property="sex" value="FEMALE"/><bean:message key="label.requiredfield"/>
 		</td>
 	</tr>
 	<tr>

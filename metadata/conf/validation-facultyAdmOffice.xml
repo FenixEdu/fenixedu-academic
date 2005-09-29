@@ -304,6 +304,9 @@
 			<field property="name" depends="required" page="1">
 				<arg0 key="label.grant.owner.infoperson.name" resource="true"/>
 			</field>
+			<field property="sex" depends="required" page="1">
+        		<arg0 key="label.grant.owner.infoperson.sex" resource="true"/>
+      		</field>
 			<field property="idDate" depends="required,mask, date" page="1">
 				<msg name="date" key="errors.invalid.date"/>
 				<msg name="mask" key="errors.invalid.date"/>
