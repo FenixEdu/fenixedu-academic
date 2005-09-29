@@ -65,7 +65,7 @@ public class EditGrantOwner implements IService {
     public Integer run(InfoGrantOwner infoGrantOwner) throws FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente sp = null;
         IPersistentGrantOwner pGrantOwner = null;
-        
+
         try {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         } catch (ExcepcaoPersistencia e) {
@@ -84,7 +84,7 @@ public class EditGrantOwner implements IService {
             //If the person country is undefined it is set to default "PORTUGUESA NATURAL DO CONTINENTE" 
             //In a not distance future this will not be needed since the coutry can never be null
             country = (ICountry) sp.getIPersistentCountry().readCountryByNationality("PORTUGUESA NATURAL DO CONTINENTE");
-        }
+        } 
         
         //create or edit person information
         if (infoGrantOwner.getPersonInfo().getIdInternal() == null) {
@@ -96,7 +96,7 @@ public class EditGrantOwner implements IService {
         }
 
         //verify if person is new
-        if (person.getUsername() != null)
+        if (person.getUsername() != null )
             grantOwner = checkIfGrantOwnerExists(infoGrantOwner.getGrantOwnerNumber(), pGrantOwner);
 
         //create or edit grantOwner information
@@ -105,14 +105,16 @@ public class EditGrantOwner implements IService {
             grantOwner = DomainFactory.makeGrantOwner();
 
             IPersistentRole persistentRole = sp.getIPersistentRole();
+            if (!person.hasRole(RoleType.PERSON)) {
+            	person.getPersonRoles().add(persistentRole.readByRoleType(RoleType.PERSON));
+            }
             person.getPersonRoles().add(persistentRole.readByRoleType(RoleType.GRANT_OWNER));
         }
         grantOwner = prepareGrantOwner(grantOwner, person, infoGrantOwner, pGrantOwner);
 
         //Generate the GrantOwner's Person Username
-        if (person.getUsername() == null)
+        if (person.getUsername() == null || person.getUsername().length() == 0)
             person.changeUsername(generateGrantOwnerPersonUsername(grantOwner.getNumber()), (List<IPerson>) sp.getIPessoaPersistente().readAll(Person.class));
-
         return grantOwner.getIdInternal();
     }
 }
