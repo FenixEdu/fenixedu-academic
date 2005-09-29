@@ -18,12 +18,14 @@ public class CloseTransactionFilter implements Filter {
 
     public void destroy() {
     }
-    
+      
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-	try {
-	    chain.doFilter(request, response);
-	} finally {
-	    Transaction.forceFinish();
-	}
+    Transaction.begin();
+    Transaction.currentFenixTransaction().setReadOnly();
+    try {
+        chain.doFilter(request, response);
+    } finally {
+        Transaction.forceFinish();
+    }
     }
 }
