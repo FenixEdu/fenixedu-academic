@@ -330,6 +330,11 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
         infoPerson.setUsername((String) editGrantOwnerForm.get("personUsername"));
         infoPerson.setPassword((String) editGrantOwnerForm.get("password"));
         infoPerson.setCodigoFiscal((String) editGrantOwnerForm.get("fiscalCode"));
+   
+        infoPerson.setAvailableEmail(Boolean.FALSE);
+        infoPerson.setAvailablePhoto(Boolean.FALSE);
+        infoPerson.setAvailableWebSite(Boolean.FALSE);
+       
         if ((editGrantOwnerForm.get("idType")).equals("") || ((String)editGrantOwnerForm.get("idType")).equals(null))
         {
             infoPerson.setTipoDocumentoIdentificacao(null);
@@ -340,7 +345,7 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
         infoPerson.setSexo(sexo);
         MaritalStatus estadoCivil;
         if (((String)editGrantOwnerForm.get("maritalStatus")).equals("") || ((String)editGrantOwnerForm.get("maritalStatus")).equals(null))
-            estadoCivil = null;
+            estadoCivil = MaritalStatus.SINGLE;
         else
             estadoCivil = MaritalStatus.valueOf((String) editGrantOwnerForm.get("maritalStatus"));
         infoPerson.setMaritalStatus(estadoCivil);
