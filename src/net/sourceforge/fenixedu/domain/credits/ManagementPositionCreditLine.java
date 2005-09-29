@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.domain.credits;
 
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.credits.event.CreditsEvent;
 
 /**

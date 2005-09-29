@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithInfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
