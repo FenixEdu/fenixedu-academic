@@ -23,6 +23,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteBibliography;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluationMarks;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluations;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteFirstPage;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteObjectives;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteProgram;
@@ -173,11 +175,24 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         return mapping.findForward("sucess");
     }
 
-    public ActionForward evaluation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward evaluations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
         setFromRequest(request);
-        ISiteComponent evaluationComponent = new InfoSiteEvaluation();
+        ISiteComponent evaluationComponent = new InfoSiteEvaluations();
         readSiteView(request, evaluationComponent, null, null, null);
+
+        return mapping.findForward("sucess");
+    }
+
+    public ActionForward viewMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+
+        final String evaluationOID = request.getParameter("evaluationOID");
+
+        setFromRequest(request);
+        final InfoSiteEvaluationMarks evaluationMarksComponent = new InfoSiteEvaluationMarks();
+        evaluationMarksComponent.setEvaluationID(Integer.valueOf(evaluationOID));
+        readSiteView(request, evaluationMarksComponent, null, null, null);
 
         return mapping.findForward("sucess");
     }

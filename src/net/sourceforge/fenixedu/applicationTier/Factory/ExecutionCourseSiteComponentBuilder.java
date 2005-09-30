@@ -43,6 +43,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAssociatedCurricularC
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteBibliography;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluationMarks;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluations;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteFirstPage;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSection;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShifts;
@@ -85,11 +87,9 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.slide.common.SlideException;
 
 /**
@@ -137,8 +137,10 @@ public class ExecutionCourseSiteComponentBuilder {
         } else if (component instanceof InfoSiteSection) {
             return getInfoSiteSection((InfoSiteSection) component, site,
                     (InfoSiteCommon) commonComponent, sectionIndex);
-        } else if (component instanceof InfoSiteEvaluation) {
-            return getInfoSiteEvaluation((InfoSiteEvaluation) component, site);
+        } else if (component instanceof InfoSiteEvaluations) {
+            return getInfoSiteEvaluations((InfoSiteEvaluations) component, site);
+        } else if (component instanceof InfoSiteEvaluationMarks) {
+            return getInfoSiteEvaluationMarks((InfoSiteEvaluationMarks) component, site);
         } else if (component instanceof InfoSiteSummaries) {
             return getInfoSiteSummaries((InfoSiteSummaries) component, site);
         }
@@ -419,17 +421,24 @@ public class ExecutionCourseSiteComponentBuilder {
         return allSummaries;
     }
 
-    private ISiteComponent getInfoSiteEvaluation(InfoSiteEvaluation component, ISite site) {
+    private ISiteComponent getInfoSiteEvaluations(InfoSiteEvaluations component, ISite site) {
         IExecutionCourse executionCourse = site.getExecutionCourse();
-        List evaluations = executionCourse.getAssociatedEvaluations();
-        List infoEvaluations = new ArrayList();
-        Iterator iter = evaluations.iterator();
-        while (iter.hasNext()) {
-            IEvaluation evaluation = (IEvaluation) iter.next();
-            infoEvaluations.add(InfoEvaluation.newInfoFromDomain(evaluation));
-        }
+        List<IEvaluation> evaluations = executionCourse.getAssociatedEvaluations();
+        component.setEvaluations(evaluations);
+        return component;
+    }
 
-        component.setInfoEvaluations(infoEvaluations);
+    private ISiteComponent getInfoSiteEvaluationMarks(InfoSiteEvaluationMarks component, ISite site) {
+        final Integer evaluationID = component.getEvaluationID();
+
+        final IExecutionCourse executionCourse = site.getExecutionCourse();
+        final List<IEvaluation> evaluations = executionCourse.getAssociatedEvaluations();
+        for (final IEvaluation evaluation : evaluations) {
+            if (evaluationID.equals(evaluation.getIdInternal())) {
+                component.setEvaluation(evaluation);
+                break;
+            }
+        }
         return component;
     }
 

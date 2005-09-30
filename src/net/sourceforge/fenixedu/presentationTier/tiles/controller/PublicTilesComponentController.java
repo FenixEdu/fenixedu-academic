@@ -11,7 +11,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAssociatedCurricularC
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteBibliography;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluationMarks;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluationMethods;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluations;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteFirstPage;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteObjectives;
@@ -78,8 +80,10 @@ public class PublicTilesComponentController extends ControllerSupport {
 
         } else if (component instanceof InfoSiteSection) {
             tileContext.putAttribute("body", "/publico/viewSection_bd.jsp");
-        } else if (component instanceof InfoSiteEvaluation) {
-            tileContext.putAttribute("body", "/publico/exam.jsp");
+        } else if (component instanceof InfoSiteEvaluations) {
+            tileContext.putAttribute("body", "/publico/evaluations.jsp");
+        } else if (component instanceof InfoSiteEvaluationMarks) {
+            tileContext.putAttribute("body", "/publico/evaluationMarks.jsp");
         } else if (component instanceof InfoSiteMarks) {
             tileContext.putAttribute("body", "/publico/viewPublishedMarks_bd.jsp");
         } else

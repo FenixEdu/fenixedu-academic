@@ -1,0 +1,137 @@
+<%@ page language="java" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
+
+<h2><bean:message key="title.evaluation" /></h2>
+
+<bean:define id="component" name="siteView" property="component"/>
+<bean:define id="evaluations" name="component" property="evaluations"/>
+
+<table class="tab_complex" width="70%" cellspacing="1" cellpadding="2">
+	<tr>
+		<th><bean:message key="label.online.test"/></th>
+		<th></th>
+	</tr>
+	<logic:iterate id="evaluation" name="evaluations">
+		<bean:define id="evaluationOID" name="evaluation" property="idInternal"/>
+		<tr>
+			<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.onlineTests.OnlineTest">
+				<td>
+					<bean:message key="label.online.test"/>: <bean:write name="evaluation" property="distributedTest.title"/>
+				</td>
+				<td>
+					<html:link page="<%= "/viewSite.do?method=viewMarks&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;evaluationOID=" + evaluationOID %>">
+						<bean:message key="label.publishedMarks"/>
+					</html:link>
+				</td>
+			</logic:equal>
+		</tr>
+	</logic:iterate>
+</table>
+
+<table class="tab_complex" width="70%" cellspacing="1" cellpadding="2">
+	<tr>
+		<th><bean:message key="label.testsAndExams"/></th>
+		<th><bean:message key="label.day"/></th>
+		<th><bean:message key="label.beginning"/></th>
+		<th><bean:message key="label.end"/></th>
+		<th><bean:message key="label.evaluation.enrolment.period"/></th>
+		<th><bean:message key="label.rooms"/></th>
+		<th></th>
+	</tr>	
+	<logic:iterate id="evaluation" name="component" property="sortedWrittenEvaluations">
+		<bean:define id="evaluationOID" name="evaluation" property="idInternal"/>
+		<tr>
+			<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.Exam">
+				<td>
+					<bean:message key="label.exam"/>: <bean:write name="evaluation" property="season"/>
+				</td>
+				<td>
+					<bean:write name="evaluation" property="dayDate"/>
+				</td>
+				<td>
+					<dt:format pattern="HH:mm"><bean:write name="evaluation" property="beginningDate.time"/></dt:format>
+				</td>
+				<td>
+					<dt:format pattern="HH:mm"><bean:write name="evaluation" property="endDate.time"/></dt:format>
+				</td>
+				<td>
+					<dt:format pattern="yyyy/MM/dd"><bean:write name="evaluation" property="enrollmentBeginDayDate.time"/></dt:format>
+					<dt:format pattern="HH:mm"><bean:write name="evaluation" property="enrollmentBeginTimeDate.time"/></dt:format>
+					-
+					<dt:format pattern="yyyy/MM/dd"><bean:write name="evaluation" property="enrollmentEndDayDate.time"/></dt:format>
+					<dt:format pattern="HH:mm"><bean:write name="evaluation" property="enrollmentEndTimeDate.time"/></dt:format>
+				</td>
+				<td>
+					<logic:iterate id="roomOccupation" name="evaluation" property="associatedRoomOccupation">
+						<bean:define id="room" name="roomOccupation" property="room"/>
+						<bean:write name="room" property="nome"/>
+					</logic:iterate>
+				</td>
+				<td>
+					<html:link page="<%= "/viewSite.do?method=viewMarks&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;evaluationOID=" + evaluationOID %>">
+						<bean:message key="label.publishedMarks"/>
+					</html:link>
+				</td>
+			</logic:equal>
+		</tr>
+		<tr>
+			<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.WrittenTest">
+				<td>
+					<bean:message key="label.written.test"/>: <bean:write name="evaluation" property="description"/>
+				</td>
+				<td>
+					<bean:write name="evaluation" property="dayDate"/>
+				</td>
+				<td>
+					<dt:format pattern="HH:mm"><bean:write name="evaluation" property="beginningDate.time"/></dt:format>
+				</td>
+				<td>
+					<dt:format pattern="HH:mm"><bean:write name="evaluation" property="endDate.time"/></dt:format>
+				</td>
+				<td>
+					<dt:format pattern="yyyy/MM/dd"><bean:write name="evaluation" property="enrollmentBeginDayDate.time"/></dt:format>
+					<dt:format pattern="HH:mm"><bean:write name="evaluation" property="enrollmentBeginTimeDate.time"/></dt:format>
+					-
+					<dt:format pattern="yyyy/MM/dd"><bean:write name="evaluation" property="enrollmentEndDayDate.time"/></dt:format>
+					<dt:format pattern="HH:mm"><bean:write name="evaluation" property="enrollmentEndTimeDate.time"/></dt:format>
+				</td>
+				<td>
+					<logic:iterate id="roomOccupation" name="evaluation" property="associatedRoomOccupation">
+						<bean:define id="room" name="roomOccupation" property="room"/>
+						<bean:write name="room" property="nome"/>
+					</logic:iterate>
+				</td>
+				<td>
+					<html:link page="<%= "/viewSite.do?method=viewMarks&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;evaluationOID=" + evaluationOID %>">
+						<bean:message key="label.publishedMarks"/>
+					</html:link>
+				</td>
+			</logic:equal>
+		</tr>
+	</logic:iterate>
+</table>
+
+<logic:iterate id="evaluation" name="evaluations">
+	<bean:define id="evaluationOID" name="evaluation" property="idInternal"/>
+	<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.FinalEvaluation">
+		<table class="tab_complex" width="70%" cellspacing="1" cellpadding="2">
+			<tr>
+				<th><bean:message key="label.evaluationType"/></th>
+				<th></th>
+			</tr>
+			<tr>
+				<td>
+					<bean:message key="label.final.evaluation"/>
+				</td>
+				<td>
+					<html:link page="<%= "/viewSite.do?method=viewMarks&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;evaluationOID=" + evaluationOID %>">
+						<bean:message key="label.publishedMarks"/>
+					</html:link>
+				</td>
+			</tr>
+		</table>
+	</logic:equal>
+</logic:iterate>
