@@ -17,9 +17,6 @@ import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.util.PublicationArea;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
-
 public class Teacher extends Teacher_Base {
 
     /***************************************************************************
@@ -122,10 +119,11 @@ public class Teacher extends Teacher_Base {
                     proposalList.add(proposal);
                 }
                 // if not, we have to verify if the teacher has proposed it to
-                // any student(s) and if that(those) student(s) has(have) accepted it
+                // any student(s) and if that(those) student(s) has(have)
+                // accepted it
                 else {
                     IGroup attributedGroupByTeacher = proposal.getGroupAttributedByTeacher();
-                    if (attributedGroupByTeacher != null) {                        
+                    if (attributedGroupByTeacher != null) {
                         boolean result = false;
                         for (Iterator iterator = attributedGroupByTeacher.getGroupStudents().iterator(); iterator
                                 .hasNext();) {
@@ -159,13 +157,15 @@ public class Teacher extends Teacher_Base {
 
     public List<IExecutionCourse> getLecturedExecutionCoursesByExecutionPeriod(
             final IExecutionPeriod executionPeriod) {
-        return (List<IExecutionCourse>) CollectionUtils.collect(getProfessorships(), new Transformer() {
-
-            public Object transform(Object arg0) {
-                IProfessorship professorship = (IProfessorship) arg0;
-                return professorship.getExecutionCourse();
+        List<IExecutionCourse> executionCourses = new ArrayList<IExecutionCourse>();
+        for (Iterator iter = getProfessorships().iterator(); iter.hasNext();) {
+            IProfessorship professorship = (IProfessorship) iter.next();
+            IExecutionCourse executionCourse = professorship.getExecutionCourse();
+            if(executionCourse.getExecutionPeriod().equals(executionPeriod)){
+                executionCourses.add(executionCourse);
             }
-        });
+        }
+        return executionCourses;
     }
 
     /***************************************************************************
