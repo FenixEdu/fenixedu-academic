@@ -70,8 +70,8 @@ public class ExamTest extends DomainTestBase {
         otherExam.addAssociatedCurricularCourseScope(newCurricularCourseScope);
 
         final IExam newExam = DomainFactory.makeExam(examDate, examStartTime.getTime(), examEndTime
-                .getTime(), season, executionCoursesToAssociate, curricularCourseScopesToAssociate,
-                rooms, period);
+                .getTime(), executionCoursesToAssociate, curricularCourseScopesToAssociate,
+                rooms, period, season);
         checkExamAttributes(newExam, examDate, examStartTime.getTime(), examEndTime.getTime(), season,
                 executionCoursesToAssociate, curricularCourseScopesToAssociate);
     }
@@ -158,7 +158,7 @@ public class ExamTest extends DomainTestBase {
         Calendar startTime = createHour(10, 0);
         Calendar endTime = createHour(13, 0);
 
-        exam = new Exam();
+        exam = new Exam(null, null, null, null, null, null, null, null);
         exam.setIdInternal(1);
         exam.setDayDate(createDate(2005, 9, 15));
         exam.setBeginningDate(startTime.getTime());
@@ -203,7 +203,7 @@ public class ExamTest extends DomainTestBase {
 
         executionCoursesToAssociate.add(executionCourseToAssociate);
 
-        otherExam = new Exam();
+        otherExam = new Exam(null, null, null, null, null, null, null, null);
         otherExam.setIdInternal(2);
         otherExam.setSeason(season);
         otherExam.addAssociatedExecutionCourses(executionCourseToAssociate);

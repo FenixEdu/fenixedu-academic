@@ -73,8 +73,7 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		IEmployee emp1 = new Employee();
 		studentCurricularPlanToDelete.setEmployee(emp1);
 		
-		IGratuitySituation gs1 = new GratuitySituation();
-		gs1.setStudentCurricularPlan(studentCurricularPlanToDelete);
+		IGratuitySituation gs1 = new GratuitySituation(null, studentCurricularPlanToDelete);
 		
 		IMasterDegreeThesis mdt1 = new MasterDegreeThesis();
 		studentCurricularPlanToDelete.setMasterDegreeThesis(mdt1);
