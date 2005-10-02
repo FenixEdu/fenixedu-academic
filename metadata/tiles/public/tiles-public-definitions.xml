@@ -6,7 +6,7 @@
 	<definition name="definition.publico.executionCourseSitePage" 
 		controllerClass="net.sourceforge.fenixedu.presentationTier.tiles.controller.PublicTilesComponentController" 
 		page="/publicGesDisLayout_2col.jsp" >
-		<put name="title" value="/commons/blank.jsp" />	
+		<put name="title" value=".Instituto Superior Técnico" />	
 	  	<put name="serviceName" value="Instituto Superior Técnico" />
 		<put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
 		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
@@ -21,9 +21,9 @@
 	<definition name="definition.publico.executionCourseSitePage1" 
 		controllerClass="net.sourceforge.fenixedu.presentationTier.tiles.controller.PublicTilesComponentController" 
 		page="/istLayout.jsp" >
-			<put name="title" value="/commons/blank.jsp" />	
+			<put name="title" value=".Instituto Superior Técnico" />	
             <put name="serviceName" value="Instituto Superior Técnico" /> 
-            <put name="executionCourseName" value="/commons/blank.jsp"  />
+            <put name="executionCourseName" value="/publico/executionCourseName.jsp"  />
             <put name="degrees" value="/publico/associatedDegrees.jsp" />		
             <put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
             <put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />	
