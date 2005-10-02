@@ -3086,24 +3086,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>EditOldPublication</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditOldPublication</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="EditOldPublicationTeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>DeleteOldPublication</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteOldPublication</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="OldPublicationTeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ReadOldPublication</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadOldPublication</implementationClass>
 		<description />

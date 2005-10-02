@@ -1813,8 +1813,6 @@
             name="oldPublicationForm" parameter="method" scope="request" validate="true" 
             input="/oldCientificPublication.do?page=0&amp;method=prepareEdit" 
             className="net.sourceforge.fenixedu.presentationTier.mapping.framework.CRUDMapping">
-            <set-property property="editService" value="EditOldPublication"/>
-            <set-property property="deleteService" value="DeleteOldPublication"/>
             <set-property property="readService" value="ReadOldPublication"/>
             <set-property property="oidProperty" value="idInternal"/>
             <set-property property="requestAttribute" value="infoOldPublication"/>
