@@ -1139,6 +1139,33 @@ class net.sourceforge.fenixedu.domain.ExternalPerson extends net.sourceforge.fen
 	"
 }
 
+class net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer employeeKey;
+    Integer costCenterKey;
+    Date day;
+    Date beginHour;
+    Date endHour;
+    Integer mealSubsidy;
+    Date diurnalFirstHour;
+    Date diurnalAfterSecondHour;
+    Date nocturnalFirstHour;
+    Date nocturnalAfterSecondHour;
+    Date restDay;
+    Boolean mealSubsidyAuthorized;
+    Boolean diurnalFirstHourAuthorized;
+    Boolean diurnalAfterSecondHourAuthorized;
+    Boolean nocturnalFirstHourAuthorized;
+    Boolean nocturnalAfterSecondHourAuthorized;
+    Boolean restDayAuthorized;
+    Boolean dayPerWeek;
+    Boolean holiday;
+    Boolean remuneration;
+    int who;
+    Date when;
+    Date totalExtraWork;
+    String observation;
+}
+
 class net.sourceforge.fenixedu.domain.support.FAQEntry extends net.sourceforge.fenixedu.domain.DomainObject {
 	String answer;
 	String question;
@@ -3879,6 +3906,26 @@ relation ExternalPersonWorkLocation {
 	net.sourceforge.fenixedu.domain.WorkLocation playsRole workLocation;
 }
 
+relation ExtraWorkCostCenter {
+	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork playsRole extraWork {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.CostCenter playsRole costCenter;
+}
+
+relation ExtraWorkEmployee {
+	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork playsRole extraWork {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Employee playsRole employee;
+}
+
+relation ExtraWorkWhoEmployee {
+	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork playsRole whoExtraWork {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Employee playsRole whoEmployee;
+}
 
 relation GaugingTestResultStudent {
     net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult playsRole associatedGaugingTestResult;
