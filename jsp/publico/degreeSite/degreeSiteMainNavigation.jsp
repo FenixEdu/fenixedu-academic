@@ -46,7 +46,7 @@
 	<%--
 	<li>
     	<html:link page="<%= "/showDegreeSite.do?method=viewDegreeEvaluation&amp;degreeID=" +  request.getAttribute("degreeID") %>" >
-			<bean:message key="link.view.degree.evaluation" bundle="INQUIRIES_RESOURCES"/>
+			<bean:message key="link.view.inquiries.results" bundle="INQUIRIES_RESOURCES"/>
         </html:link>
 	</li>
 	--%>
