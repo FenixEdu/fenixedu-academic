@@ -22,8 +22,17 @@
 		<tr>
 			<td>
 				<b>
-					<bean:write name="oldInquiriesCoursesRes" property="degree.tipoCurso"/>
-					&nbsp;em&nbsp;
+<bean:define id="degreeType"  name="oldInquiriesCoursesRes" property="degree.tipoCurso"/>
+
+   <logic:equal name="degreeType" value="DEGREE" >
+       <bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.degreeType" />
+    </logic:equal>
+    <logic:equal name="degreeType" value="MASTER_DEGREE" >
+		    <bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.masterDegreeType" />
+	</logic:equal>
+	<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.in" />
+
+
 					<bean:write name="oldInquiriesCoursesRes" property="degree.nome"/>
 				</b>
 			</td>
@@ -31,31 +40,6 @@
 	</table>
 
 	<br />
-
-	<table class="invisible">
-		<tr>
-			<td>
-				<bean:message key="label.inquiries.degree.courses.appreciation" bundle="INQUIRIES_RESOURCES"/>
-			</td>
-			<%
-			out.print(
-				"<td>" +
-					"CALCULAR O VALOR" +
-				"</td>");
-			%>
-		</tr>			
-		<tr>
-			<td>
-				<bean:message key="label.inquiries.degree.teachers.appreciation" bundle="INQUIRIES_RESOURCES"/>
-			</td>
-			<%
-			out.print(
-				"<td>" +
-					"CALCULAR O VALOR" +
-				"</td>");
-			%>
-		</tr>
-	</table>
 
 	<br/>
 
@@ -380,49 +364,51 @@
 		
 			
 <logic:present name="oldInquiryTeachersResList">
-	<logic:iterate id="oldInquiryTeachersRes" name="oldInquiryTeachersResList" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesTeachersRes"> 
-		<h2>
-			<bean:message key="title.teacher.inquiries.individual.results" bundle="INQUIRIES_RESOURCES"/>
-		</h2>
+	<br/><br/><br/>
+	<h2>
+		<bean:message key="title.teacher.inquiries.individual.results" bundle="INQUIRIES_RESOURCES"/>
+	</h2>
 
-		<table class="infoselected" width="100%">
-			<tr>
-				<td width="65%">
-					<b>
-						<bean:message key="message.teacherInformation.name" />
-					</b>
-					&nbsp;
-					<bean:write name="infoTeacher" property="infoPerson.nome" />
-				</td> 
-				<td width="35%">
-					<b>
-						<bean:message key="label.teachersInformation.number" />
-					</b>
-					&nbsp;
-					<bean:write name="infoTeacher" property="teacherNumber" />
-				</td>	
-			</tr>
-			<tr>
-				<td width="65%">
-					<b>
-						<bean:message key="message.teacherInformation.category" />
-					</b>
-					&nbsp;
-					<logic:notEmpty name="infoTeacher" property="infoCategory" >
-					<bean:write name="infoTeacher" property="infoCategory.shortName" />
-					</logic:notEmpty>
-				</td>
-				<td width="35%">
-					<b>
-						<bean:message key="message.teacherInformation.birthDate" />
-					</b>
-					&nbsp;
-					<bean:write name="infoTeacher" property="infoPerson.nascimento" />
-				</td>	
-			</tr>
-		</table>
+	<table class="infoselected" width="100%">
+		<tr>
+			<td width="65%">
+				<b>
+					<bean:message key="message.teacherInformation.name" />
+				</b>
+				&nbsp;
+				<bean:write name="infoTeacher" property="infoPerson.nome" />
+			</td> 
+			<td width="35%">
+				<b>
+					<bean:message key="label.teachersInformation.number" />
+				</b>
+				&nbsp;
+				<bean:write name="infoTeacher" property="teacherNumber" />
+			</td>	
+		</tr>
+		<tr>
+			<td width="65%">
+				<b>
+					<bean:message key="message.teacherInformation.category" />
+				</b>
+				&nbsp;
+				<logic:notEmpty name="infoTeacher" property="infoCategory" >
+				<bean:write name="infoTeacher" property="infoCategory.shortName" />
+				</logic:notEmpty>
+			</td>
+			<td width="35%">
+				<b>
+					<bean:message key="message.teacherInformation.birthDate" />
+				</b>
+				&nbsp;
+				<bean:write name="infoTeacher" property="infoPerson.nascimento" />
+			</td>	
+		</tr>
+	</table>
 
-		<br/>
+	<br/>
+
+<logic:iterate id="oldInquiryTeachersRes" name="oldInquiryTeachersResList" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesTeachersRes"> 
 
 		<h3>
 			<bean:write name="oldInquiryTeachersRes" property="classTypeLong" />

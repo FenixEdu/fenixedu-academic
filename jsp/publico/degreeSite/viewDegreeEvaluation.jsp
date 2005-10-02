@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/c.tld" prefix="c" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 <%@ page import="net.sourceforge.fenixedu.util.InquiriesUtil" %>
@@ -27,7 +28,12 @@
 		Avalia&ccedil;&atilde;o do Funcionamento das Disciplinas
 	</h1>
 	<h2>
-		<bean:write name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso" />
+		<c:if test="${degreeType == 'DEGREE'}">
+			Licenciatura
+		</c:if>
+		<c:if test="${degreeType == 'MASTER_DEGREE'}">
+			Mestrado
+		</c:if>
 		em
 		<bean:write name="infoDegreeCurricularPlan" property="infoDegree.nome" />
 	</h2>

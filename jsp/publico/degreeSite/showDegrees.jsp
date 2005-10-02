@@ -12,7 +12,6 @@
 	<logic:iterate id="infoDegree" name="degreesList"  length="1">		
 			<bean:define id="degreeType" name="infoDegree" property="tipoCurso" />	
 	</logic:iterate>
-
 				
 <bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
 <div class="breadcumbs"><a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a>  > Ensino</div>
@@ -30,7 +29,16 @@
 			  
 				<table width="100%"  border="0" cellspacing="0" summary="Esta tabela cont�m links para as licenciaturas, mestrados, doutoramentos e p�s-gradua��es existentes no IST">
 				  <tr>
-				    <td colspan="2" class="bottom_border"><h2><bean:write name="degreeType" />s<%-- plural --%></h2></td>
+				    <td colspan="2" class="bottom_border">
+						<h2>
+							<logic:equal name="degreeType" value="DEGREE" >
+								<bean:message key="title.degrees" />
+							</logic:equal>
+							<logic:equal name="degreeType" value="MASTER_DEGREE" >
+								<bean:message key="title.masterDegrees" />
+							</logic:equal>
+						</h2>
+					</td>
 				  </tr>
 				  <tr>
 				    <td width="50%" valign="top">
