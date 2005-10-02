@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c" %>
 <%@ page import="net.sourceforge.fenixedu.util.InquiriesUtil" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesEmailReminderReport" %>
+<%@ page import="net.sourceforge.fenixedu.util.NumberUtils" %>
 
 
 <link href="<%= request.getContextPath() %>/CSS/inquiries_style.css" rel="stylesheet" type="text/css" />
@@ -70,7 +71,9 @@
 					<td class="listClasses">
 						<bean:write name="report" property="numberUnansweredInquiries"/>
 						<%
-						out.print("(" + ((report.getNumberUnansweredInquiries().intValue()/report.getTotalNumberInquiries().doubleValue())*100) + "%)");
+						Double percent = new Double((report.getNumberUnansweredInquiries().intValue()/report.getTotalNumberInquiries().doubleValue())*100);
+
+						out.print("(" + InquiriesUtil.formatAnswer(NumberUtils.formatNumber(percent, 2)) + "%)");
 						%>
 					</td>
 				</tr>
@@ -96,7 +99,11 @@
 				<% out.print(totalNumberSentEmails); %>
 			</td>
 			<td class="listClasses-header">
-				<% out.print(totalNumberUnansweredInquiries + " (" + ((totalNumberUnansweredInquiries/globalTotalNumberInquiries)*100) + "%)"); %>
+				<% 
+				Double globalPercent = new Double((totalNumberUnansweredInquiries/globalTotalNumberInquiries)*100);
+				
+				out.print(totalNumberUnansweredInquiries + " (" + InquiriesUtil.formatAnswer(NumberUtils.formatNumber(globalPercent, 2)) + "%)");
+				%>
 			</td>
 		</table>
 		<%--/ul--%>
