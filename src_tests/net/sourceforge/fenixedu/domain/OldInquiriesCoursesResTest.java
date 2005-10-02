@@ -11,10 +11,10 @@ public class OldInquiriesCoursesResTest extends DomainTestBase {
 		oldICRToDelete = new OldInquiriesCoursesRes();
 
 		IExecutionPeriod executionPeriod = new ExecutionPeriod();
-		executionPeriod.addOldInquiriesCoursesRes(oldICRToDelete);
+		executionPeriod.addAssociatedOldInquiriesCoursesRes(oldICRToDelete);
 		
 		IDegree degree = new Degree();
-		degree.addOldInquiriesCoursesRes(oldICRToDelete);
+		degree.addAssociatedOldInquiriesCoursesRes(oldICRToDelete);
 	}
 		
 	public void testDelete() {

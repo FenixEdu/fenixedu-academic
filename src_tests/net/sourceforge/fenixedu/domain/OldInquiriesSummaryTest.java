@@ -11,10 +11,10 @@ public class OldInquiriesSummaryTest extends DomainTestBase {
 		oldOISToDelete = new OldInquiriesSummary();
 		
 		IExecutionPeriod executionPeriod = new ExecutionPeriod();
-		executionPeriod.addOldInquiriesSummary(oldOISToDelete);
+		executionPeriod.addAssociatedOldInquiriesSummaries(oldOISToDelete);
 		
 		IDegree degree = new Degree();
-		degree.addOldInquiriesSummary(oldOISToDelete);
+		degree.addAssociatedOldInquiriesSummaries(oldOISToDelete);
 	}
 		
 	public void testDelete() {

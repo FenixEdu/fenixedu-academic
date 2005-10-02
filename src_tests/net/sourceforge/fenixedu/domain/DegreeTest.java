@@ -83,9 +83,9 @@ public class DegreeTest extends DomainTestBase {
 		
 		IOldInquiriesCoursesRes oicr2 = new OldInquiriesCoursesRes();
 		oicr2.setExecutionPeriod(ep1);
-		degreeToDelete.addOldInquiriesCoursesRes(oicr1);
+		degreeToDelete.addAssociatedOldInquiriesCoursesRes(oicr1);
 		oldInquiriesCoursesResToDelete.add(oicr1);
-		degreeNotToDelete.addOldInquiriesCoursesRes(oicr2);
+		degreeNotToDelete.addAssociatedOldInquiriesCoursesRes(oicr2);
 		
 		IOldInquiriesTeachersRes oitr1 = new OldInquiriesTeachersRes();
 		oitr1.setExecutionPeriod(ep1);
@@ -94,18 +94,18 @@ public class DegreeTest extends DomainTestBase {
 		IOldInquiriesTeachersRes oitr2 = new OldInquiriesTeachersRes();
 		oitr2.setExecutionPeriod(ep1);
 		oitr2.setTeacher(teacher1);
-		degreeToDelete.addOldInquiriesTeachersRes(oitr1);
+		degreeToDelete.addAssociatedOldInquiriesTeachersRes(oitr1);
 		oldInquiriesTeachersResToDelete.add(oitr1);
-		degreeNotToDelete.addOldInquiriesTeachersRes(oitr2);
+		degreeNotToDelete.addAssociatedOldInquiriesTeachersRes(oitr2);
 		
 		IOldInquiriesSummary ois1 = new OldInquiriesSummary();
 		ois1.setExecutionPeriod(ep1);
 		
 		IOldInquiriesSummary ois2 = new OldInquiriesSummary();
 		ois2.setExecutionPeriod(ep1);
-		degreeToDelete.addOldInquiriesSummary(ois1);
+		degreeToDelete.addAssociatedOldInquiriesSummaries(ois1);
 		oldInquiriesSummaryToDelete.add(ois1);
-		degreeNotToDelete.addOldInquiriesSummary(ois2);
+		degreeNotToDelete.addAssociatedOldInquiriesSummaries(ois2);
 	}
 
 	private void setUpEdit() {
@@ -154,9 +154,9 @@ public class DegreeTest extends DomainTestBase {
 		}
 		
 		assertFalse("Failed to dereference Delegate", degreeToDelete.hasAnyDelegate());
-		assertFalse("Failed to dereference OldInquiriesCoursesRes", degreeToDelete.hasAnyOldInquiriesCoursesRes());
-		assertFalse("Failed to dereference OldInquiriesTeachersRes", degreeToDelete.hasAnyOldInquiriesTeachersRes());
-		assertFalse("Failed to dereference OldInquiriesSummary", degreeToDelete.hasAnyOldInquiriesSummary());
+		assertFalse("Failed to dereference OldInquiriesCoursesRes", degreeToDelete.hasAnyAssociatedOldInquiriesCoursesRes());
+		assertFalse("Failed to dereference OldInquiriesTeachersRes", degreeToDelete.hasAnyAssociatedOldInquiriesTeachersRes());
+		assertFalse("Failed to dereference OldInquiriesSummary", degreeToDelete.hasAnyAssociatedOldInquiriesSummaries());
 		assertFalse("Deleted Degree should not have DegreeCurricularPlans", degreeToDelete.hasAnyDegreeCurricularPlans());
 		
 		for (IDelegate delegate : delegatesToDelete) {
@@ -184,9 +184,9 @@ public class DegreeTest extends DomainTestBase {
 		}
 
 		assertTrue("Should not have dereferenced Delegates", degreeNotToDelete.hasAnyDelegate());
-		assertTrue("Should not have dereferenced OldInquiriesCoursesRes", degreeNotToDelete.hasAnyOldInquiriesCoursesRes());
-		assertTrue("Should not have dereferenced OldInquiriesTeachersRes", degreeNotToDelete.hasAnyOldInquiriesTeachersRes());
-		assertTrue("Should not have dereferenced OldInquiriesSummary", degreeNotToDelete.hasAnyOldInquiriesSummary());
+		assertTrue("Should not have dereferenced OldInquiriesCoursesRes", degreeNotToDelete.hasAnyAssociatedOldInquiriesCoursesRes());
+		assertTrue("Should not have dereferenced OldInquiriesTeachersRes", degreeNotToDelete.hasAnyAssociatedOldInquiriesTeachersRes());
+		assertTrue("Should not have dereferenced OldInquiriesSummary", degreeNotToDelete.hasAnyAssociatedOldInquiriesSummaries());
 		assertTrue("Should not have dereferenced DegreeCurricularPlans", degreeNotToDelete.hasAnyDegreeCurricularPlans());
 		assertTrue("Should not have dereferenced DegreeInfos", degreeNotToDelete.hasAnyDegreeInfos());
 		
@@ -195,16 +195,16 @@ public class DegreeTest extends DomainTestBase {
 			assertTrue("Should not have dereferenced Delegate from Student", delegate.hasStudent());
 		}
 		
-		for (IOldInquiriesCoursesRes oicr : degreeNotToDelete.getOldInquiriesCoursesRes()) {
+		for (IOldInquiriesCoursesRes oicr : degreeNotToDelete.getAssociatedOldInquiriesCoursesRes()) {
 			assertTrue ("Should not have dereferenced OldInquiriesCoursesRes from ExecutionPeriod", oicr.hasExecutionPeriod());
 		}
 		
-		for (IOldInquiriesTeachersRes oitr : degreeNotToDelete.getOldInquiriesTeachersRes()) {
+		for (IOldInquiriesTeachersRes oitr : degreeNotToDelete.getAssociatedOldInquiriesTeachersRes()) {
 			assertTrue ("Should not have dereferenced OldInquiriesTeachersRes from ExecutionPeriod", oitr.hasExecutionPeriod());
 			assertTrue ("Should not have dereferenced OldInquiriesTeachersRes from Teacher", oitr.hasTeacher());
 		}
 		
-		for (IOldInquiriesSummary ois : degreeNotToDelete.getOldInquiriesSummary()) {
+		for (IOldInquiriesSummary ois : degreeNotToDelete.getAssociatedOldInquiriesSummaries()) {
 			assertTrue ("Should not have dereferenced OldInquiriesSummary from ExecutionPeriod", ois.hasExecutionPeriod());
 		}
 	}

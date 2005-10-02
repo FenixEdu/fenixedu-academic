@@ -12,13 +12,13 @@ public class OldInquiriesTeachersResTest extends DomainTestBase {
 		oldITRToDelete = new OldInquiriesTeachersRes();
 		
 		IExecutionPeriod executionPeriod = new ExecutionPeriod();
-		executionPeriod.addOldInquiriesTeachersRes(oldITRToDelete);
+		executionPeriod.addAssociatedOldInquiriesTeachersRes(oldITRToDelete);
 		
 		IDegree degree = new Degree();
-		degree.addOldInquiriesTeachersRes(oldITRToDelete);
+		degree.addAssociatedOldInquiriesTeachersRes(oldITRToDelete);
 		
 		ITeacher teacher = new Teacher();
-		teacher.addOldInquiriesTeacherRes(oldITRToDelete);
+		teacher.addAssociatedOldInquiriesTeachersRes(oldITRToDelete);
 	}
 	
 	public void testDelete() {
