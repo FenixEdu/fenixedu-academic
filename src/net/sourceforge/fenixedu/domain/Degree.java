@@ -75,7 +75,7 @@ public class Degree extends Degree_Base {
 		
 		if (!hasAnyDegreeCurricularPlans()) {
 			
-			Iterator oicrIterator = getOldInquiriesCoursesResIterator();
+			Iterator oicrIterator = getAssociatedOldInquiriesCoursesResIterator();
 			while (oicrIterator.hasNext()) {
 				IOldInquiriesCoursesRes oicr = (IOldInquiriesCoursesRes) oicrIterator.next();
 				oicrIterator.remove();
@@ -83,7 +83,7 @@ public class Degree extends Degree_Base {
 				oicr.delete();
 			}
 		
-			Iterator oitrIterator = getOldInquiriesTeachersResIterator();
+			Iterator oitrIterator = getAssociatedOldInquiriesTeachersResIterator();
 			while (oitrIterator.hasNext()) {
 				IOldInquiriesTeachersRes oitr = (IOldInquiriesTeachersRes) oitrIterator.next();
 				oitrIterator.remove();
@@ -91,7 +91,7 @@ public class Degree extends Degree_Base {
 				oitr.delete();
 			}
 				
-			Iterator oisIterator = getOldInquiriesSummaryIterator();
+			Iterator oisIterator = getAssociatedOldInquiriesSummariesIterator();
 			while (oisIterator.hasNext()) {
 				IOldInquiriesSummary ois = (IOldInquiriesSummary) oisIterator.next();
 				oisIterator.remove();
