@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.framework;
 
+import java.lang.reflect.Proxy;
+
+import org.apache.ojb.broker.core.proxy.ProxyHelper;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -118,10 +122,11 @@ public abstract class EditDomainObjectService implements IService {
                 throw new ExistingServiceException("The object already exists");
             }
             IDomainObject domainObject = getObjectToLock(infoObject, objectFromDatabase);
+			if(domainObject instanceof Proxy) {
+				domainObject = (IDomainObject) ProxyHelper.getRealObject(domainObject);
+			}
 
             doBeforeLock(domainObject, infoObject, sp);
-
-            persistentObject.simpleLockWrite(domainObject);
 
             copyInformationFromInfoToDomain(sp, infoObject, domainObject);
 
