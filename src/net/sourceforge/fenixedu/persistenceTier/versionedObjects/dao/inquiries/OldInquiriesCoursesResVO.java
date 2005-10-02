@@ -26,7 +26,7 @@ public class OldInquiriesCoursesResVO extends VersionedObjectsBase implements IP
         
 		
 		IDegree degree = (IDegree) readByOID(Degree.class, degreeId);
-		List<IOldInquiriesCoursesRes> inquiriesCoursesRes = degree.getOldInquiriesCoursesRes();
+		List<IOldInquiriesCoursesRes> inquiriesCoursesRes = degree.getAssociatedOldInquiriesCoursesRes();
 		
 		for(IOldInquiriesCoursesRes ioicr : inquiriesCoursesRes) {
 			if(ioicr.getExecutionPeriod().getIdInternal().equals(executionPeriodId) &&

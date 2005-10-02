@@ -28,7 +28,7 @@ public class InquiriesRegistryVO extends VersionedObjectsBase implements
 
 		IStudent student = (IStudent) readByOID(Student.class, studentId);
 		
-		List<IInquiriesRegistry> res = student.getInquiriesRegistries();
+		List<IInquiriesRegistry> res = student.getAssociatedInquiriesRegistries();
 		
 		return res;
 		
@@ -39,7 +39,7 @@ public class InquiriesRegistryVO extends VersionedObjectsBase implements
 	throws ExcepcaoPersistencia {
 		IExecutionPeriod executionPeriod = (IExecutionPeriod) readByOID(ExecutionPeriod.class, executionPeriodId);
 		
-		List<IInquiriesRegistry> res = executionPeriod.getInquiriesRegistries();
+		List<IInquiriesRegistry> res = executionPeriod.getAssociatedInquiriesRegistries();
 		
 		return res;
 		

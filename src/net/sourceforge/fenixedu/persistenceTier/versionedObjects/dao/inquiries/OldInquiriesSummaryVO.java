@@ -29,7 +29,7 @@ public class OldInquiriesSummaryVO extends VersionedObjectsBase implements IPers
     
     public List readByDegreeIdAndExecutionPeriod(Integer degreeID, Integer executionPeriodID) throws ExcepcaoPersistencia {		
 		IDegree degree = (IDegree) readByOID(Degree.class, degreeID);
-		List<IOldInquiriesSummary> inquiriesSummaries = degree.getOldInquiriesSummary();
+		List<IOldInquiriesSummary> inquiriesSummaries = degree.getAssociatedOldInquiriesSummaries();
 		
 		List<IOldInquiriesSummary> res = new ArrayList<IOldInquiriesSummary>();
 		for(IOldInquiriesSummary iois : inquiriesSummaries) {
@@ -42,7 +42,7 @@ public class OldInquiriesSummaryVO extends VersionedObjectsBase implements IPers
 
     public List readByDegreeId(Integer degreeID) throws ExcepcaoPersistencia {
 		IDegree degree = (IDegree) readByOID(Degree.class, degreeID);
-		List<IOldInquiriesSummary> res = degree.getOldInquiriesSummary();
+		List<IOldInquiriesSummary> res = degree.getAssociatedOldInquiriesSummaries();
 		return res;
     }
 
