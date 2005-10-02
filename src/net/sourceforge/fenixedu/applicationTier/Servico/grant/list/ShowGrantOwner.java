@@ -64,8 +64,8 @@ public class ShowGrantOwner implements IService {
             Iterator contractsIter = grantContractsList.iterator();
             //set list of qualifications
             IPersistentQualification persistentQualification = sp.getIPersistentQualification();
-            List infoQualificationsList = persistentQualification.readQualificationsByPerson(grantOwner
-                    .getPerson());
+            List infoQualificationsList = persistentQualification.readQualificationsByPersonId(grantOwner
+                    .getPerson().getIdInternal());
             if (infoQualificationsList != null)
                 infoListGrantOwnerComplete.setInfoQualifications(infoQualificationsList);
             while (contractsIter.hasNext()) {

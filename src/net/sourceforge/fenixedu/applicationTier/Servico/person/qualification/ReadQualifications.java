@@ -63,7 +63,7 @@ public class ReadQualifications implements IServico {
 
             IPerson person = persistentPerson.lerPessoaPorUsername(user);
             InfoPerson infoPerson = InfoPersonWithInfoCountry.newInfoFromDomain(person);
-            List qualifications = persistentQualification.readQualificationsByPerson(person);
+            List qualifications = persistentQualification.readQualificationsByPersonId(person.getIdInternal());
 
             List infoQualifications = (List) CollectionUtils.collect(qualifications, new Transformer() {
                 public Object transform(Object o) {

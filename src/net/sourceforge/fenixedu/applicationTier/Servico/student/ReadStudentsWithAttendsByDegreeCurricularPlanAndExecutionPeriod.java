@@ -66,12 +66,6 @@ public class ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod
 				}
 				currentStudent.getAttends().add(infoAttends);
 				
-//				//TODO: DEBUG: TRAIDOR
-//				if(currentStudent.getInfoPerson().getUsername().equalsIgnoreCase("l45483")) {
-//					System.out.println("TRAIDOR -> Disciplina= '" + attends.getDisciplinaExecucao().getNome() + "'");
-//				}
-
-				
 			
 			}
 			
@@ -83,7 +77,7 @@ public class ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod
 
 	private void copyStudentInquiriesRegistries(InfoStudentWithAttendsAndInquiriesRegistries currentStudent, IStudent aluno) {
 		
-		List<IInquiriesRegistry> inquiriesRegistries = aluno.getInquiriesRegistries();
+		List<IInquiriesRegistry> inquiriesRegistries = aluno.getAssociatedInquiriesRegistries();
 		List<InfoInquiriesRegistry> infoRegistries = new ArrayList<InfoInquiriesRegistry>(inquiriesRegistries.size());
 		
 		for(IInquiriesRegistry reg : inquiriesRegistries) {
