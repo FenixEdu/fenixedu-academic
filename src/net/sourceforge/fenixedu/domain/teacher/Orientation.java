@@ -4,11 +4,38 @@
  */
 package net.sourceforge.fenixedu.domain.teacher;
 
+import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOrientation;
+import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
+ * @author João Fialho & Rita Ferreira
  * 
  */
 public class Orientation extends Orientation_Base {
+
+	public Orientation() {
+		super();
+	}
+	
+	public Orientation(ITeacher teacher, InfoOrientation infoOrientation) {
+		if(teacher == null)
+			throw new DomainException("The teacher should not be null!");
+		
+		setTeacher(teacher);
+		setBasicProperties(infoOrientation);
+	}
+
+	public void edit(InfoOrientation infoOrientation) {
+		setBasicProperties(infoOrientation);
+	}
+	
+	private void setBasicProperties(InfoOrientation infoOrientation) {
+        this.setDescription(infoOrientation.getDescription());
+        this.setNumberOfStudents(infoOrientation.getNumberOfStudents());
+        this.setOrientationType(infoOrientation.getOrientationType());
+	}
 
 }
