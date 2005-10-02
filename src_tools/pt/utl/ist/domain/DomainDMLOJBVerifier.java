@@ -12,6 +12,7 @@ import java.util.Vector;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.DomainObject_Base;
+import net.sourceforge.fenixedu.stm.RelationList;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -103,24 +104,36 @@ public class DomainDMLOJBVerifier {
         final Vector collectionDescriptors = classDescriptor.getCollectionDescriptors();
         for (final Iterator iterator = collectionDescriptors.iterator(); iterator.hasNext(); ) {
             final CollectionDescriptor collectionDescriptor = (CollectionDescriptor) iterator.next();
-            if (!hasGetterAndSetter(baseClass, collectionDescriptor.getAttributeName(), List.class)) {
+            if (!hasGetter(baseClass, collectionDescriptor.getAttributeName(), List.class)) {
                 unmappedCollectionReferenceAttributes.add(classDescriptor.getClassNameOfObject() + "." + collectionDescriptor.getAttributeName());
             }
         }
     }
 
     protected static boolean hasGetterAndSetter(final Class baseClass, final String attributeName, final Class attributeClass) throws SecurityException, NoSuchMethodException {
+    	return hasGetter(baseClass, attributeName, attributeClass) && hasSetter(baseClass, attributeName, attributeClass);
+    }
+
+    protected static boolean hasGetter(final Class baseClass, final String attributeName, final Class attributeClass) throws SecurityException, NoSuchMethodException {
         final String capitalizedAttributeName = StringUtils.capitalise(attributeName);
         final String getMethodName = "get" + capitalizedAttributeName;
-        final String setMethodName = "set" + capitalizedAttributeName;
 
         Method getter;
-        Method setter;
         try {
              getter = baseClass.getDeclaredMethod(getMethodName, (Class[]) null);
         } catch (Exception ex) {
             getter = null;
         }
+
+        return (getter != null) || (!baseClass.getName().equals(DomainObject_Base.class.getName()) && hasGetter(
+                        baseClass.getSuperclass(), attributeName, attributeClass));
+    }
+
+    protected static boolean hasSetter(final Class baseClass, final String attributeName, final Class attributeClass) throws SecurityException, NoSuchMethodException {
+        final String capitalizedAttributeName = StringUtils.capitalise(attributeName);
+        final String setMethodName = "set" + capitalizedAttributeName;
+
+        Method setter;
         try {
             setter = baseClass.getDeclaredMethod(setMethodName, new Class[] { attributeClass });
        } catch (Exception ex) {
@@ -135,8 +148,7 @@ public class DomainDMLOJBVerifier {
            }
        }
 
-        return (getter != null && setter != null)
-                || (!baseClass.getName().equals(DomainObject_Base.class.getName()) && hasGetterAndSetter(
+        return (setter != null) || (!baseClass.getName().equals(DomainObject_Base.class.getName()) && hasSetter(
                         baseClass.getSuperclass(), attributeName, attributeClass));
     }
 
