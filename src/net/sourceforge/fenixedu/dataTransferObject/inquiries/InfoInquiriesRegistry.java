@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 import java.lang.reflect.InvocationTargetException;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
@@ -25,13 +24,7 @@ public class InfoInquiriesRegistry extends InfoObject implements Comparable {
     
 	private Integer keyExecutionCourse;
 	private InfoExecutionCourse executionCourse;
-    
-	private Integer keyExecutionDegreeCourse;
-	private InfoExecutionDegree executionDegreeCourse;
-    
-	private Integer keyExecutionDegreeStudent;
-	private InfoExecutionDegree executionDegreeStudent;
-    
+        
 	private Integer keyStudent;
 	private InfoStudent student;
     
@@ -46,32 +39,6 @@ public class InfoInquiriesRegistry extends InfoObject implements Comparable {
      */
     public void setExecutionCourse(InfoExecutionCourse executionCourse) {
         this.executionCourse = executionCourse;
-    }
-    /**
-     * @return Returns the executionDegreeCourse.
-     */
-    public InfoExecutionDegree getExecutionDegreeCourse() {
-        return executionDegreeCourse;
-    }
-    /**
-     * @param executionDegreeCourse The executionDegreeCourse to set.
-     */
-    public void setExecutionDegreeCourse(
-            InfoExecutionDegree executionDegreeCourse) {
-        this.executionDegreeCourse = executionDegreeCourse;
-    }
-    /**
-     * @return Returns the executionDegreeStudent.
-     */
-    public InfoExecutionDegree getExecutionDegreeStudent() {
-        return executionDegreeStudent;
-    }
-    /**
-     * @param executionDegreeStudent The executionDegreeStudent to set.
-     */
-    public void setExecutionDegreeStudent(
-            InfoExecutionDegree executionDegreeStudent) {
-        this.executionDegreeStudent = executionDegreeStudent;
     }
     /**
      * @return Returns the executionPeriod.
@@ -96,30 +63,6 @@ public class InfoInquiriesRegistry extends InfoObject implements Comparable {
      */
     public void setKeyExecutionCourse(Integer keyExecutionCourse) {
         this.keyExecutionCourse = keyExecutionCourse;
-    }
-    /**
-     * @return Returns the keyExecutionDegreeCourse.
-     */
-    public Integer getKeyExecutionDegreeCourse() {
-        return keyExecutionDegreeCourse;
-    }
-    /**
-     * @param keyExecutionDegreeCourse The keyExecutionDegreeCourse to set.
-     */
-    public void setKeyExecutionDegreeCourse(Integer keyExecutionDegreeCourse) {
-        this.keyExecutionDegreeCourse = keyExecutionDegreeCourse;
-    }
-    /**
-     * @return Returns the keyExecutionDegreeStudent.
-     */
-    public Integer getKeyExecutionDegreeStudent() {
-        return keyExecutionDegreeStudent;
-    }
-    /**
-     * @param keyExecutionDegreeStudent The keyExecutionDegreeStudent to set.
-     */
-    public void setKeyExecutionDegreeStudent(Integer keyExecutionDegreeStudent) {
-        this.keyExecutionDegreeStudent = keyExecutionDegreeStudent;
     }
     /**
      * @return Returns the keyExecutionPeriod.
@@ -178,8 +121,6 @@ public class InfoInquiriesRegistry extends InfoObject implements Comparable {
         CopyUtils.copyPropertiesNullConvertion(this, inquiriesRegistry);
         this.setExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(inquiriesRegistry.getExecutionPeriod()));
         this.setExecutionCourse(InfoExecutionCourse.newInfoFromDomain(inquiriesRegistry.getExecutionCourse()));
-        this.setExecutionDegreeCourse(InfoExecutionDegree.newInfoFromDomain(inquiriesRegistry.getExecutionDegreeCourse()));
-        this.setExecutionDegreeStudent(InfoExecutionDegree.newInfoFromDomain(inquiriesRegistry.getExecutionDegreeStudent()));
         this.setStudent(InfoStudent.newInfoFromDomain(inquiriesRegistry.getStudent()));        
     }
         

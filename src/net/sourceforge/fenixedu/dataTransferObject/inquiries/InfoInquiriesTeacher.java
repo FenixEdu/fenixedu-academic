@@ -8,9 +8,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
@@ -27,18 +24,6 @@ public class InfoInquiriesTeacher extends InfoObject implements Comparable {
 
     private Integer keyInquiriesCourse;
 	private InfoInquiriesCourse inquiriesCourse;
-
-	private Integer keyExecutionPeriod;
-	private InfoExecutionPeriod executionPeriod;
-    
-	private Integer keyExecutionCourse;
-	private InfoExecutionCourse executionCourse;
-    
-	private Integer keyExecutionDegreeCourse;
-	private InfoExecutionDegree executionDegreeCourse;
-    
-	private Integer keyExecutionDegreeStudent;
-	private InfoExecutionDegree executionDegreeStudent;
     
 	private Integer keyTeacher;
 	private InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes teacherOrNonAffiliatedTeacher;
@@ -61,62 +46,6 @@ public class InfoInquiriesTeacher extends InfoObject implements Comparable {
      */
     public List<ShiftType> getClassTypes() {
         return classTypes;
-    }
-    /**
-     * @param classType The classType to set.
-     */
-//    public void setClassTypes(List<TipoAula> classTypes) {
-//        this.classTypes = classTypes;
-//    }
-    /**
-     * @return Returns the executionCourse.
-     */
-    public InfoExecutionCourse getExecutionCourse() {
-        return executionCourse;
-    }
-    /**
-     * @param executionCourse The executionCourse to set.
-     */
-    public void setExecutionCourse(InfoExecutionCourse executionCourse) {
-        this.executionCourse = executionCourse;
-    }
-    /**
-     * @return Returns the executionDegreeCourse.
-     */
-    public InfoExecutionDegree getExecutionDegreeCourse() {
-        return executionDegreeCourse;
-    }
-    /**
-     * @param executionDegreeCourse The executionDegreeCourse to set.
-     */
-    public void setExecutionDegreeCourse(
-            InfoExecutionDegree executionDegreeCourse) {
-        this.executionDegreeCourse = executionDegreeCourse;
-    }
-    /**
-     * @return Returns the executionDegreeStudent.
-     */
-    public InfoExecutionDegree getExecutionDegreeStudent() {
-        return executionDegreeStudent;
-    }
-    /**
-     * @param executionDegreeStudent The executionDegreeStudent to set.
-     */
-    public void setExecutionDegreeStudent(
-            InfoExecutionDegree executionDegreeStudent) {
-        this.executionDegreeStudent = executionDegreeStudent;
-    }
-    /**
-     * @return Returns the executionPeriod.
-     */
-    public InfoExecutionPeriod getExecutionPeriod() {
-        return executionPeriod;
-    }
-    /**
-     * @param executionPeriod The executionPeriod to set.
-     */
-    public void setExecutionPeriod(InfoExecutionPeriod executionPeriod) {
-        this.executionPeriod = executionPeriod;
     }
     /**
      * @return Returns the globalAppreciation.
@@ -144,54 +73,6 @@ public class InfoInquiriesTeacher extends InfoObject implements Comparable {
      */
     public void setInquiriesCourse(InfoInquiriesCourse inquiriesCourse) {
         this.inquiriesCourse = inquiriesCourse;
-    }
-    /**
-     * @return Returns the keyExecutionCourse.
-     */
-    public Integer getKeyExecutionCourse() {
-        return keyExecutionCourse;
-    }
-    /**
-     * @param keyExecutionCourse The keyExecutionCourse to set.
-     */
-    public void setKeyExecutionCourse(Integer keyExecutionCourse) {
-        this.keyExecutionCourse = keyExecutionCourse;
-    }
-    /**
-     * @return Returns the keyExecutionDegreeCourse.
-     */
-    public Integer getKeyExecutionDegreeCourse() {
-        return keyExecutionDegreeCourse;
-    }
-    /**
-     * @param keyExecutionDegreeCourse The keyExecutionDegreeCourse to set.
-     */
-    public void setKeyExecutionDegreeCourse(Integer keyExecutionDegreeCourse) {
-        this.keyExecutionDegreeCourse = keyExecutionDegreeCourse;
-    }
-    /**
-     * @return Returns the keyExecutionDegreeStudent.
-     */
-    public Integer getKeyExecutionDegreeStudent() {
-        return keyExecutionDegreeStudent;
-    }
-    /**
-     * @param keyExecutionDegreeStudent The keyExecutionDegreeStudent to set.
-     */
-    public void setKeyExecutionDegreeStudent(Integer keyExecutionDegreeStudent) {
-        this.keyExecutionDegreeStudent = keyExecutionDegreeStudent;
-    }
-    /**
-     * @return Returns the keyExecutionPeriod.
-     */
-    public Integer getKeyExecutionPeriod() {
-        return keyExecutionPeriod;
-    }
-    /**
-     * @param keyExecutionPeriod The keyExecutionPeriod to set.
-     */
-    public void setKeyExecutionPeriod(Integer keyExecutionPeriod) {
-        this.keyExecutionPeriod = keyExecutionPeriod;
     }
     /**
      * @return Returns the keyInquiriesCourse.
@@ -369,10 +250,6 @@ public class InfoInquiriesTeacher extends InfoObject implements Comparable {
             super.copyFromDomain(inquiriesTeacher);
 	        CopyUtils.copyPropertiesNullConvertion(this, inquiriesTeacher);
 	        this.setInquiriesCourse(InfoInquiriesCourse.newInfoFromDomain(inquiriesTeacher.getInquiriesCourse()));
-	        this.setExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(inquiriesTeacher.getExecutionPeriod()));
-	        this.setExecutionCourse(InfoExecutionCourse.newInfoFromDomain(inquiriesTeacher.getExecutionCourse()));
-	        this.setExecutionDegreeCourse(InfoExecutionDegree.newInfoFromDomain(inquiriesTeacher.getExecutionDegreeCourse()));
-	        this.setExecutionDegreeStudent(InfoExecutionDegree.newInfoFromDomain(inquiriesTeacher.getExecutionDegreeStudent()));
 			this.getClassTypes().add(inquiriesTeacher.getShiftType());
 			
 			InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes teacher =
@@ -391,14 +268,6 @@ public class InfoInquiriesTeacher extends InfoObject implements Comparable {
 	public String toString() {
         String result = "[INFOINQUIRIESTEACHER";
         result += ", id=" + getIdInternal();
-		if(executionPeriod != null)
-			result += ", executionPeriod=" + executionPeriod.toString();
-		if(executionCourse != null)
-			result += ", executionCourse=" + executionCourse.toString();
-		if(executionDegreeCourse != null)
-			result += ", executionDegreeCourse" + executionDegreeCourse.toString();
-		if(executionDegreeStudent != null)
-			result += ", executionDegreeStudent" + executionDegreeStudent.toString();
 		if(teacherOrNonAffiliatedTeacher != null)
 			result += ", teacherOrNonAffiliatedTeacher=" + teacherOrNonAffiliatedTeacher.toString();
 		result += ", classTypes=" + classTypes;
