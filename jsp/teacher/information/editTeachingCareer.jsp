@@ -40,7 +40,6 @@
 	<tr>
 		<td>
 			<html:select property="infoCategory#idInternal">
-				<option></option>
 				<html:options collection="categories" property="idInternal" labelProperty="shortName"/>
 			</html:select>
 		</td>
@@ -60,5 +59,5 @@
 </logic:present>
 </html:form>
 <logic:notPresent name="categories">
-	Não existem as categorias
+	Nï¿½&atilde;o existem as categorias
 </logic:notPresent>
