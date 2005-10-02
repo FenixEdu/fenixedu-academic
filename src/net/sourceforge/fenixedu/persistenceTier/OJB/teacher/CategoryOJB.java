@@ -6,7 +6,6 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.OJB.teacher;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.teacher.Category;
@@ -40,9 +39,8 @@ public class CategoryOJB extends PersistentObjectOJB implements IPersistentCateg
      */
     public List readAll() throws ExcepcaoPersistencia {
 
-        List categories = new ArrayList();
         Criteria criteria = new Criteria();
-        categories = queryList(Category.class, criteria);
+		List categories = queryList(Category.class, criteria);
 
         return categories;
     }
