@@ -180,12 +180,13 @@
          column="KEY_PUBLICATIONS_NUMBER"
          jdbc-type="INTEGER"/>
 
-	<reference-descriptor auto-retrieve="false"
-         name="publicationsNumber"
-         class-ref="net.sourceforge.fenixedu.domain.teacher.PublicationsNumber"
-         >
-         <foreignkey field-ref="keyPublicationsNumber"/>
-      </reference-descriptor>
+    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="associatedPublicationsNumbers"
+			element-class-ref="net.sourceforge.fenixedu.domain.teacher.PublicationsNumber"
+			
+			>
+		<inverse-foreignkey field-ref="keyTeacher"/>
+	</collection-descriptor>
 
     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="teacherPublications"
@@ -271,7 +272,7 @@
 		<inverse-foreignkey field-ref="keyResponsibleTeacher"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-		name="externalActivities" 
+		name="associatedExternalActivities" 
 		element-class-ref="net.sourceforge.fenixedu.domain.teacher.ExternalActivity"
 		
 		>
@@ -313,7 +314,7 @@
 		<inverse-foreignkey field-ref="keyTeacher"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-		name="oldPublication" 
+		name="associatedOldPublications" 
 		element-class-ref="net.sourceforge.fenixedu.domain.teacher.OldPublication"
 		
 		>
@@ -334,7 +335,7 @@
 		<inverse-foreignkey field-ref="keyCoorientator"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-		name="oldInquiriesTeacherRes" 
+		name="associatedOldInquiriesTeachersRes" 
 		element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes"
 		
 		>
@@ -355,7 +356,7 @@
 		<inverse-foreignkey field-ref="guiderKey"/>
 	</collection-descriptor>	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-		name="inquiriesTeacher" 
+		name="associatedInquiriesTeacher" 
 		element-class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher">
 		<inverse-foreignkey field-ref="keyTeacher"/>
 	</collection-descriptor>

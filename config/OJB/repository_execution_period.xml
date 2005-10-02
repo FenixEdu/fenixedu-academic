@@ -105,7 +105,7 @@
 		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="oldInquiriesTeachersRes"
+			name="associatedOldInquiriesTeachersRes"
 			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes"
 			
 			>
@@ -125,14 +125,14 @@
 		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="oldInquiriesSummary"
+			name="associatedOldInquiriesSummaries"
 			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary"
 			
 			>
 		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="oldInquiriesCoursesRes"
+			name="associatedOldInquiriesCoursesRes"
 			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes"
 			
 			>
@@ -146,24 +146,10 @@
 		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="inquiriesRegistries"
+			name="associatedInquiriesRegistries"
 			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry"
 			
 			>
 		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="inquiriesRoom"
-			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom"
-			
-			>
-		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
-	</collection-descriptor>			
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="inquiriesTeacher"
-			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher"
-			
-			>
-		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
-	</collection-descriptor>				
 </class-descriptor> 

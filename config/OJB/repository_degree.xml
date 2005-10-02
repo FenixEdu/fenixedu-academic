@@ -63,23 +63,24 @@
 	</collection-descriptor>
 	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="oldInquiriesSummary"
+			name="associatedOldInquiriesSummaries"
 			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary"
 			>
 		<inverse-foreignkey field-ref="keyDegree"/>
 	</collection-descriptor>
 	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="oldInquiriesTeachersRes"
+			name="associatedOldInquiriesTeachersRes"
 			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes"
 			>
 		<inverse-foreignkey field-ref="keyDegree"/>
 	</collection-descriptor>
 	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="oldInquiriesCoursesRes"
+			name="associatedOldInquiriesCoursesRes"
 			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes"
 			>
 		<inverse-foreignkey field-ref="keyDegree"/>
 	</collection-descriptor>
+		
 </class-descriptor>

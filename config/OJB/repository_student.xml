@@ -161,9 +161,8 @@
 		<inverse-foreignkey field-ref="studentIdInternal"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="inquiriesRegistries"
+			name="associatedInquiriesRegistries"
 			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry"
-			
 			>
 		<inverse-foreignkey field-ref="keyStudent"/>
 	</collection-descriptor>

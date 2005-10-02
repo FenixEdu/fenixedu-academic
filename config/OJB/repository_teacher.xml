@@ -240,6 +240,13 @@
 		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE" />
 		<fk-pointing-to-this-class column="KEY_NON_AFFILIATED_TEACHER" />
 	</collection-descriptor>
+
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="associatedInquiriesTeachers"
+			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher"
+			>
+		<inverse-foreignkey field-ref="keyNonAffiliatedTeacher"/>
+	</collection-descriptor>
 </class-descriptor>  
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.Institution -->

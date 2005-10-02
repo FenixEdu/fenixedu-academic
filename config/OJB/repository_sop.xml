@@ -112,13 +112,21 @@
 	  </collection-descriptor>
 
       <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-		name="inquiriesRoom" 
+		name="associatedInquiriesRooms" 
 		element-class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom"
 		
 		>
 		<inverse-foreignkey field-ref="keyRoom"/>
 	  </collection-descriptor>
 
+		<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+				name="associatedInquiriesRooms"
+				element-class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom"
+				>
+			<inverse-foreignkey field-ref="keyRoom"/>
+		</collection-descriptor>
+	
+	
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.SchoolClass -->
@@ -177,8 +185,15 @@
 			>
 		<fk-pointing-to-this-class column="KEY_CLASS"/>
 		<fk-pointing-to-element-class column="KEY_SHIFT"/>
-	</collection-descriptor> 
-		     
+	</collection-descriptor>
+	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="associatedInquiriesCourses"
+			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse"
+			>
+		<inverse-foreignkey field-ref="keySchoolClass"/>
+	</collection-descriptor>
+	
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.Shift -->

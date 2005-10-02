@@ -382,5 +382,11 @@
 			refresh="true" >
 		<inverse-foreignkey field-ref="keySenderPerson"/>
 	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="associatedQualifications"
+			element-class-ref="net.sourceforge.fenixedu.domain.Qualification"
+			refresh="true" >
+		<inverse-foreignkey field-ref="personKey"/>
+	</collection-descriptor>
 		
 </class-descriptor>
