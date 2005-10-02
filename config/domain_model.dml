@@ -1166,6 +1166,17 @@ class net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork extends 
     String observation;
 }
 
+class net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkCompensation extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer employeeKey;
+    Date beginDate;
+    Date endDate;
+    Boolean dayPerWeek;
+    Boolean holiday;
+    Boolean remuneration;
+    int who;
+    Date when;
+}
+
 class net.sourceforge.fenixedu.domain.support.FAQEntry extends net.sourceforge.fenixedu.domain.DomainObject {
 	String answer;
 	String question;
@@ -3922,6 +3933,20 @@ relation ExtraWorkEmployee {
 
 relation ExtraWorkWhoEmployee {
 	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork playsRole whoExtraWork {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Employee playsRole whoEmployee;
+}
+
+relation ExtraWorkCompensationEmployee {
+	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkCompensation playsRole extraWorkCompensation {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Employee playsRole employee;
+}
+
+relation ExtraWorkCompensationWhoEmployee {
+	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkCompensation playsRole whoExtraWorkCompensation {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Employee playsRole whoEmployee;
