@@ -1177,6 +1177,41 @@ class net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkCompensat
     Date when;
 }
 
+class net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkHistoric extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer employeeKey;
+    Integer year;
+    Integer serviceDismissalPerYear;
+    Integer holidaysNumberPerYear;
+    Date timeForServiceDismissal;
+    Date timeForHoliday;
+    Date hoursExtraWorkPerYear;
+    Date hoursExtraWorkPerDay;
+    int who;
+    Date when;
+}
+
+class net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer employeeKey;
+    Integer costCenterExtraWorkKey;
+    Integer costCenterMoneyKey;
+    Date beginDate;
+    Date endDate;
+    Boolean option1;
+    Boolean option2;
+    Boolean option3;
+    Boolean option4;
+    Boolean option5;
+    Boolean option6;
+    Boolean option7;
+    Boolean option8;
+    Boolean option9;
+    Boolean option10;
+    Boolean option11;
+    Boolean option12;
+    int who;
+    Date when;
+}
+
 class net.sourceforge.fenixedu.domain.support.FAQEntry extends net.sourceforge.fenixedu.domain.DomainObject {
 	String answer;
 	String question;
@@ -3947,6 +3982,48 @@ relation ExtraWorkCompensationEmployee {
 
 relation ExtraWorkCompensationWhoEmployee {
 	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkCompensation playsRole whoExtraWorkCompensation {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Employee playsRole whoEmployee;
+}
+
+relation ExtraWorkHistoricEmployee {
+	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkHistoric playsRole extraWorkHistoric {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Employee playsRole employee;
+}
+
+relation ExtraWorkHistoricWhoEmployee {
+	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkHistoric playsRole whoExtraWorkHistoric {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Employee playsRole whoEmployee;
+}
+
+relation ExtraWorkRequestsCostCenter {
+	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests playsRole extraWorkRequests {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.CostCenter playsRole costCenterExtraWork;
+}
+
+relation ExtraWorkRequestsMoneyCostCenter {
+	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests playsRole moneyExtraWorkRequests {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.CostCenter playsRole costCenterMoney;
+}
+
+relation ExtraWorkRequestsEmployee {
+	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests playsRole extraWorkRequests {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Employee playsRole employee;
+}
+
+relation ExtraWorkRequestsWhoEmployee {
+	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests playsRole whoExtraWorkRequests {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Employee playsRole whoEmployee;
