@@ -41,8 +41,8 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
 	
 	private String makeBodyHeader(String executionYear, Integer semester, Integer teacherType) {
 		
-		String sem = semester.intValue() == 0 ? "Ambos Semestres" : (semester.intValue() + "º Semestre");
-		String teacher = teacherType.intValue() == 0 ? "Todos os Docentes" : "Apenas Responsáveis";		
+		String sem = semester.intValue() == 0 ? "Ambos Semestres" : (semester.intValue() + "&ordm; Semestre");
+		String teacher = teacherType.intValue() == 0 ? "Todos os Docentes" : "Apenas Respons&aacute;veis";		
 		String header = "Ano Lectivo " + executionYear + " - " + sem + " - " + teacher;
 		
 		return header;
@@ -189,7 +189,7 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
             infoDegreeCurricularPlan.prepareEnglishPresentation(language);
             degree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
             
-            request.setAttribute("searchType", "Consulta Por Degree");
+            request.setAttribute("searchType", "Consulta Por Curso");
             request.setAttribute("searchTarget", degree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso() + " em " + 
             		degree.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
             request.setAttribute("searchDetails", searchDetails);
