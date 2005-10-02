@@ -93,13 +93,14 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
                 professorships.addAll(teacherProfessorships);
             }
 
-            List teacherResponsibleFors = new ArrayList();
+            List teacherResponsibleFors;
             List<IProfessorship> teacherResponsibleForsAux = null;
             
             if (executionYear == null) {
                 teacherResponsibleFors = teacher.responsibleFors();
             } else {
                 teacherResponsibleForsAux = teacher.responsibleFors();
+				teacherResponsibleFors = new ArrayList<IProfessorship>();
                 for(IProfessorship professorship : teacherResponsibleForsAux){
                     if(professorship.getExecutionCourse().getExecutionPeriod().getExecutionYear().equals(executionYear))
                         teacherResponsibleFors.add(professorship);
