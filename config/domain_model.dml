@@ -1753,6 +1753,15 @@ class net.sourceforge.fenixedu.domain.Seminaries.Modality extends net.sourceforg
     String name;
 }
 
+class net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer costCenterKey;
+    Integer year;
+    Double initialValue;
+    Double totalValue;
+    Double spentValue;
+    int who;
+    Date when;
+}
 
 class net.sourceforge.fenixedu.domain.NonAffiliatedTeacher extends net.sourceforge.fenixedu.domain.DomainObject {
     String name;
@@ -4605,6 +4614,20 @@ relation ModalityCourseEquivalency {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Seminaries.Modality playsRole modality;
+}
+
+relation MoneyCostCenterCostCenter {
+    net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter playsRole moneyCostCenters {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.CostCenter playsRole costCenter;
+}
+
+relation MoneyCostCenterWhoEmployee {
+    net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter playsRole moneyCostCenters {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Employee playsRole whoEmployee;
 }
 
 relation OldInquiriesCoursesResDegree {
