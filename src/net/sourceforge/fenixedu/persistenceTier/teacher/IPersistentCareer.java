@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.persistenceTier.teacher;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CareerType;
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
@@ -18,6 +17,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  */
 public interface IPersistentCareer extends IPersistentObject {
 
-    List readAllByTeacherAndCareerType(ITeacher teacher, CareerType careerType)
+    List readAllByTeacherIdAndCareerType(Integer teacherId, CareerType careerType)
             throws ExcepcaoPersistencia;
 }

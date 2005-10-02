@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.teacher;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CareerType;
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
@@ -24,26 +23,18 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class CareerOJB extends PersistentObjectOJB implements IPersistentCareer {
 
-    /**
-     *  
-     */
     public CareerOJB() {
         super();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.teacher.IPersistentCareer#readAllByTeacher(Dominio.ITeacher)
-     */
-    public List readAllByTeacherAndCareerType(ITeacher teacher, CareerType careerType)
+    public List readAllByTeacherIdAndCareerType(Integer teacherId, CareerType careerType)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
+        criteria.addEqualTo("keyTeacher", teacherId);
         if (careerType != null) {
             if (careerType.equals(CareerType.PROFESSIONAL)) {
                 criteria.addEqualTo("ojbConcreteClass", ProfessionalCareer.class.getName());
-            } else {
+            } else if (careerType.equals(CareerType.TEACHING)) {
                 criteria.addEqualTo("ojbConcreteClass", TeachingCareer.class.getName());
             }
         }

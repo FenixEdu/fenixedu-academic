@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.persistenceTier.teacher;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.util.OldPublicationType;
@@ -18,6 +17,6 @@ import net.sourceforge.fenixedu.util.OldPublicationType;
  */
 public interface IPersistentOldPublication extends IPersistentObject {
 
-    List readAllByTeacherAndOldPublicationType(ITeacher teacher, OldPublicationType oldPublicationType)
-            throws ExcepcaoPersistencia;
+	public List readAllByTeacherIdAndOldPublicationType(final Integer teacherId,
+            final OldPublicationType oldPublicationType) throws ExcepcaoPersistencia;
 }

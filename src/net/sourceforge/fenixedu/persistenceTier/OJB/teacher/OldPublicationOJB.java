@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.teacher;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.teacher.OldPublication;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
@@ -35,10 +34,10 @@ public class OldPublicationOJB extends PersistentObjectOJB implements IPersisten
      * @see ServidorPersistente.teacher.IPersistentOldPublication#readAllByTeacherAndOldPublicationType(Dominio.ITeacher,
      *      Util.OldPublicationType)
      */
-    public List readAllByTeacherAndOldPublicationType(ITeacher teacher,
-            OldPublicationType oldPublicationType) throws ExcepcaoPersistencia {
+    public List readAllByTeacherIdAndOldPublicationType(final Integer teacherId,
+            final OldPublicationType oldPublicationType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
+        criteria.addEqualTo("keyTeacher", teacherId);
         criteria.addEqualTo("oldPublicationType", new Integer(oldPublicationType.getValue()));
         return queryList(OldPublication.class, criteria);
     }

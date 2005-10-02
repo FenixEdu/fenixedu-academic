@@ -1,10 +1,5 @@
-/*
- * Created on 15/Nov/2003
- *
- */
 package net.sourceforge.fenixedu.persistenceTier.OJB.teacher;
 
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.teacher.IWeeklyOcupation;
 import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -13,28 +8,16 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentWeeklyOcupati
 
 import org.apache.ojb.broker.query.Criteria;
 
-/**
- * @author Leonor Almeida
- * @author Sergio Montelobo
- *  
- */
+
 public class WeeklyOcupationOJB extends PersistentObjectOJB implements IPersistentWeeklyOcupation {
 
-    /**
-     *  
-     */
     public WeeklyOcupationOJB() {
         super();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.teacher.IPersistentWeeklyOcupation#readByTeacher(Dominio.ITeacher)
-     */
-    public IWeeklyOcupation readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia {
+    public IWeeklyOcupation readByTeacherId(Integer teacherId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
+        criteria.addEqualTo("keyTeacher", teacherId);
         return (IWeeklyOcupation) queryObject(WeeklyOcupation.class, criteria);
     }
 

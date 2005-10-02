@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.OJB.teacher;
 
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.teacher.IPublicationsNumber;
 import net.sourceforge.fenixedu.domain.teacher.PublicationsNumber;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -34,10 +33,10 @@ public class PublicationsNumberOJB extends PersistentObjectOJB implements IPersi
      * @see ServidorPersistente.teacher.IPersistentPublicationsNumber#readByTeacherAndPublicationType(Dominio.ITeacher,
      *      Util.PublicationType)
      */
-    public IPublicationsNumber readByTeacherAndPublicationType(ITeacher teacher,
+    public IPublicationsNumber readByTeacherIdAndPublicationType(Integer teacherId,
             PublicationType publicationType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
+        criteria.addEqualTo("keyTeacher", teacherId);
         criteria.addEqualTo("publicationType", new Integer(publicationType.getValue()));
         return (IPublicationsNumber) queryObject(PublicationsNumber.class, criteria);
     }

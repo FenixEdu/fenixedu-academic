@@ -4,9 +4,6 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.OJB.teacher;
 
-import java.util.List;
-
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.teacher.IOrientation;
 import net.sourceforge.fenixedu.domain.teacher.Orientation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -35,23 +32,12 @@ public class OrientationOJB extends PersistentObjectOJB implements IPersistentOr
      * 
      * @see ServidorPersistente.teacher.IPersistentOrientation#readByTeacher(Dominio.ITeacher)
      */
-    public IOrientation readByTeacherAndOrientationType(ITeacher teacher, OrientationType orientationType)
+    public IOrientation readByTeacherIdAndOrientationType(Integer teacherId, OrientationType orientationType)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
+        criteria.addEqualTo("keyTeacher", teacherId);
         criteria.addEqualTo("orientationType", new Integer(orientationType.getValue()));
         return (IOrientation) queryObject(Orientation.class, criteria);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.teacher.IPersistentOrientation#readAllByTeacher(Util.OrientationType)
-     */
-    public List readAllByTeacher(ITeacher teacher) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
-        return queryList(Orientation.class, criteria);
     }
 
 }
