@@ -1,16 +1,15 @@
 /*
- * Created on 07/11/2003
+ * Created on 11/Ago/2005 - 11:04:49
+ * 
  */
 
 package net.sourceforge.fenixedu.applicationTier.Servico.person.qualification;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObjectService;
-import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ICountry;
-import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IQualification;
 import net.sourceforge.fenixedu.domain.Person;
@@ -19,56 +18,30 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
- * @author Barbosa
- * @author Pica
+ * @author João Fialho & Rita Ferreira
+ *
  */
+public class EditQualification implements IService {
 
-public class EditQualification extends EditDomainObjectService {
-
-    @Override
-    protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
-            IDomainObject domainObject) throws ExcepcaoPersistencia {
-        InfoQualification infoQualification = (InfoQualification) infoObject;
-        IQualification qualification = (IQualification) domainObject;
-
-        ICountry country = (ICountry) sp.getIPersistentCountry().readByOID(Country.class,
-                infoQualification.getInfoCountry().getIdInternal());
-
-        IPerson person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class,
-                infoQualification.getInfoPerson().getIdInternal());
-
-        qualification.setBranch(infoQualification.getBranch());
-        qualification.setCountry(country);
-        qualification.setDate(infoQualification.getDate());
-        qualification.setDegree(infoQualification.getDegree());
-        qualification.setDegreeRecognition(infoQualification.getDegreeRecognition());
-        qualification.setEquivalenceDate(infoQualification.getEquivalenceDate());
-        qualification.setEquivalenceSchool(infoQualification.getEquivalenceSchool());
-
-        // qualification.setLastModificationDate();
-        qualification.setMark(infoQualification.getMark());
-        qualification.setPerson(person);
-        qualification.setSchool(infoQualification.getSchool());
-        qualification.setSpecializationArea(infoQualification.getSpecializationArea());
-        qualification.setTitle(infoQualification.getTitle());
-    }
-
-    @Override
-    protected IDomainObject createNewDomainObject(InfoObject infoObject) {
-        return DomainFactory.makeQualification();
-    }
-
-    @Override
-    protected Class getDomainObjectClass() {
-        return Qualification.class;
-    }
-
-    @Override
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        return persistentSuport.getIPersistentQualification();
+    public void run(Integer qualificationId, InfoQualification infoQualification) throws FenixServiceException, ExcepcaoPersistencia {
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentObject po = sp.getIPersistentObject();
+		
+		IQualification qualification = (IQualification) po.readByOID(Qualification.class, qualificationId);
+		//If it doesn't exist in the database, a new one has to be created
+		ICountry country = (ICountry) po.readByOID(Country.class, infoQualification.getInfoCountry().getIdInternal());
+		if(qualification == null) {
+			IPerson person = (IPerson) po.readByOID(Person.class, infoQualification.getInfoPerson().getIdInternal());
+			qualification = DomainFactory.makeQualification(person, country, infoQualification);
+		
+		} else {
+			qualification.edit(infoQualification, country);
+		}
+		
+		
     }
 
 }

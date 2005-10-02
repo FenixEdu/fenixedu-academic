@@ -120,7 +120,7 @@ public class ReadTeacherInformation implements IService {
         IPersistentServiceProviderRegime persistentServiceProviderRegime = sp
                 .getIPersistentServiceProviderRegime();
         IServiceProviderRegime serviceProviderRegime = persistentServiceProviderRegime
-                .readByTeacher(teacher);
+                .readByTeacherId(teacher.getIdInternal());
         if (serviceProviderRegime == null) {
             InfoServiceProviderRegime infoServiceProviderRegime = new InfoServiceProviderRegime();
             infoServiceProviderRegime.setInfoTeacher(infoTeacher);
@@ -141,7 +141,7 @@ public class ReadTeacherInformation implements IService {
                         executionYear));
 
         IPersistentWeeklyOcupation persistentWeeklyOcupation = sp.getIPersistentWeeklyOcupation();
-        IWeeklyOcupation weeklyOcupation = persistentWeeklyOcupation.readByTeacher(teacher);
+        IWeeklyOcupation weeklyOcupation = persistentWeeklyOcupation.readByTeacherId(teacher.getIdInternal());
         if (weeklyOcupation == null) {
             InfoWeeklyOcupation infoWeeklyOcupation = new InfoWeeklyOcupation();
             infoWeeklyOcupation.setInfoTeacher(infoTeacher);
@@ -176,9 +176,9 @@ public class ReadTeacherInformation implements IService {
         infoSiteTeacherInformation.setInfoComunicationPublicationsNumber(getInfoPublicationsNumber(sp,
                 teacher, PublicationType.COMUNICATION));
 
-        infoSiteTeacherInformation.setInfoOldCientificPublications(getInfoOldPublications(sp, teacher,
+        infoSiteTeacherInformation.setInfoOldCientificPublications(getInfoOldPublications(sp, teacher.getIdInternal(),
                 OldPublicationType.CIENTIFIC));
-        infoSiteTeacherInformation.setInfoOldDidacticPublications(getInfoOldPublications(sp, teacher,
+        infoSiteTeacherInformation.setInfoOldDidacticPublications(getInfoOldPublications(sp, teacher.getIdInternal(),
                 OldPublicationType.DIDACTIC));
 
         infoSiteTeacherInformation.setInfoDidaticPublications(getInfoPublications(sp, teacher,
@@ -237,7 +237,7 @@ public class ReadTeacherInformation implements IService {
     private List getInfoExternalActivities(ISuportePersistente sp, ITeacher teacher)
             throws ExcepcaoPersistencia {
         IPersistentExternalActivity persistentExternalActivity = sp.getIPersistentExternalActivity();
-        List externalActivities = persistentExternalActivity.readAllByTeacher(teacher);
+        List externalActivities = persistentExternalActivity.readByTeacherId(teacher.getIdInternal());
 
         List infoExternalActivities = (List) CollectionUtils.collect(externalActivities,
                 new Transformer() {
@@ -292,7 +292,7 @@ public class ReadTeacherInformation implements IService {
     private List getInfoQualifications(ISuportePersistente sp, ITeacher teacher)
             throws ExcepcaoPersistencia {
         IPersistentQualification persistentQualification = sp.getIPersistentQualification();
-        List qualifications = persistentQualification.readQualificationsByPerson(teacher.getPerson());
+        List qualifications = persistentQualification.readQualificationsByPersonId(teacher.getPerson().getIdInternal());
         List infoQualifications = (List) CollectionUtils.collect(qualifications, new Transformer() {
             public Object transform(Object o) {
                 IQualification qualification = (IQualification) o;
@@ -305,7 +305,7 @@ public class ReadTeacherInformation implements IService {
     private List getInfoCareers(ISuportePersistente sp, ITeacher teacher, CareerType careerType)
             throws ExcepcaoPersistencia {
         IPersistentCareer persistentCareer = sp.getIPersistentCareer();
-        List careers = persistentCareer.readAllByTeacherAndCareerType(teacher, careerType);
+        List careers = persistentCareer.readAllByTeacherIdAndCareerType(teacher.getIdInternal(), careerType);
         List infoCareers = (List) CollectionUtils.collect(careers, new Transformer() {
             public Object transform(Object o) {
                 ICareer career = (ICareer) o;
@@ -315,11 +315,11 @@ public class ReadTeacherInformation implements IService {
         return infoCareers;
     }
 
-    private List getInfoOldPublications(ISuportePersistente sp, ITeacher teacher,
+    private List getInfoOldPublications(ISuportePersistente sp, Integer teacherId,
             OldPublicationType oldPublicationType) throws ExcepcaoPersistencia {
         IPersistentOldPublication persistentOldPublication = sp.getIPersistentOldPublication();
-        List oldCientificPublications = persistentOldPublication.readAllByTeacherAndOldPublicationType(
-                teacher, oldPublicationType);
+        List oldCientificPublications = persistentOldPublication.readAllByTeacherIdAndOldPublicationType(
+                teacherId, oldPublicationType);
 
         List infoOldPublications = (List) CollectionUtils.collect(oldCientificPublications,
                 new Transformer() {
@@ -334,7 +334,7 @@ public class ReadTeacherInformation implements IService {
     private InfoOrientation getInfoOrientation(ISuportePersistente sp, ITeacher teacher,
             OrientationType orientationType) throws ExcepcaoPersistencia {
         IPersistentOrientation persistentOrientation = sp.getIPersistentOrientation();
-        IOrientation orientation = persistentOrientation.readByTeacherAndOrientationType(teacher,
+        IOrientation orientation = persistentOrientation.readByTeacherIdAndOrientationType(teacher.getIdInternal(),
                 orientationType);
         InfoOrientation infoOrientation = null;
         if (orientation != null) {
@@ -353,7 +353,7 @@ public class ReadTeacherInformation implements IService {
         IPersistentPublicationsNumber persistentPublicationsNumber = sp
                 .getIPersistentPublicationsNumber();
         IPublicationsNumber publicationsNumber = persistentPublicationsNumber
-                .readByTeacherAndPublicationType(teacher, publicationType);
+                .readByTeacherIdAndPublicationType(teacher.getIdInternal(), publicationType);
         InfoPublicationsNumber infoPublicationsNumber = null;
         if (publicationsNumber != null) {
             infoPublicationsNumber = InfoPublicationsNumber.newInfoFromDomain(publicationsNumber);

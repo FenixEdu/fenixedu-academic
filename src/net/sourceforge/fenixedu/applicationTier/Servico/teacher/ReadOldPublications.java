@@ -40,7 +40,7 @@ public class ReadOldPublications implements IService {
 
         IPersistentOldPublication persistentOldPublication = persistentSuport
                 .getIPersistentOldPublication();
-        List publications = persistentOldPublication.readAllByTeacherAndOldPublicationType(teacher,
+        List publications = persistentOldPublication.readAllByTeacherIdAndOldPublicationType(teacher.getIdInternal(),
                 oldPublicationType);
 
         List result = (List) CollectionUtils.collect(publications, new Transformer() {

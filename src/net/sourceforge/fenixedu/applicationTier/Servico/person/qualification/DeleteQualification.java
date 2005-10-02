@@ -1,57 +1,31 @@
 /*
- * Created on 11/Nov/2003
+ * Created on 11/Ago/2005 - 19:07:51
+ * 
  */
 
 package net.sourceforge.fenixedu.applicationTier.Servico.person.qualification;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.framework.DeleteDomainObjectService;
+import net.sourceforge.fenixedu.domain.IQualification;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentQualification;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
- * @author Barbosa
- * @author Pica
+ * @author João Fialho & Rita Ferreira
+ *
  */
-
-public class DeleteQualification extends DeleteDomainObjectService {
-    private static DeleteQualification service = new DeleteQualification();
-
-    public static DeleteQualification getService() {
-        return service;
-    }
-
-    private DeleteQualification() {
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.DeleteDomainObjectService#getDomainObjectClass()
-     */
-    protected Class getDomainObjectClass() {
-        return Qualification.class;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.DeleteDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-     */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        return persistentSuport.getIPersistentQualification();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.IServico#getNome()
-     */
-    public String getNome() {
-        return "DeleteQualification";
-    }
+public class DeleteQualification implements IService {
+	
+	public void run(Integer qualificationId) throws ExcepcaoPersistencia {
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentQualification pq = sp.getIPersistentQualification();
+		
+		IQualification qualification = (IQualification) pq.readByOID(Qualification.class, qualificationId);
+		qualification.delete();
+		
+	}
 
 }

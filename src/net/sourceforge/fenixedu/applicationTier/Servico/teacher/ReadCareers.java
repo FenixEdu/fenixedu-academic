@@ -63,7 +63,7 @@ public class ReadCareers implements IServico {
             InfoTeacher infoTeacher = InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher);
 
             IPersistentCareer persistentCareer = persistentSuport.getIPersistentCareer();
-            List careers = persistentCareer.readAllByTeacherAndCareerType(teacher, careerType);
+            List careers = persistentCareer.readAllByTeacherIdAndCareerType(teacher.getIdInternal(), careerType);
 
             List result = (List) CollectionUtils.collect(careers, new Transformer() {
                 public Object transform(Object o) {

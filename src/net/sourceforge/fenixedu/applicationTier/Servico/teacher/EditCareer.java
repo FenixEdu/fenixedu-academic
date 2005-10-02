@@ -1,18 +1,16 @@
 /*
- * Created on 13/Nov/2003
- *  
+ * Created on 11/Ago/2005 - 17:00:02
+ * 
  */
+
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObjectService;
-import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoProfessionalCareer;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoTeachingCareer;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.ICategory;
 import net.sourceforge.fenixedu.domain.teacher.IProfessionalCareer;
@@ -21,75 +19,64 @@ import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCareer;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCategory;
+import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
- * @author Leonor Almeida
- * @author Sergio Montelobo
- *  
+ * @author João Fialho & Rita Ferreira
+ *
  */
-public class EditCareer extends EditDomainObjectService {
+public class EditCareer implements IService {
 
-    @Override
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-        IPersistentCareer persistentCareer = sp.getIPersistentCareer();
-        return persistentCareer;
+    public void run(Integer careerId, InfoCareer infoCareer) throws ExcepcaoPersistencia {
+				
+		if(infoCareer instanceof InfoTeachingCareer) {
+			editCareer(careerId, (InfoTeachingCareer) infoCareer);
+
+		} else if(infoCareer instanceof InfoProfessionalCareer) {
+			editCareer(careerId, (InfoProfessionalCareer) infoCareer);
+		}
+		
     }
 
-	@Override
-    protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) throws ExcepcaoPersistencia {
-        if (infoObject instanceof InfoProfessionalCareer) {
-        	IProfessionalCareer professionalCareer = (IProfessionalCareer) domainObject;
-        	InfoProfessionalCareer infoProfessionalCareer = (InfoProfessionalCareer)infoObject;
-        	
-        	professionalCareer.setBeginYear(infoProfessionalCareer.getBeginYear());
-        	professionalCareer.setEndYear(infoProfessionalCareer.getEndYear());
-        	professionalCareer.setEntity(infoProfessionalCareer.getEntity());
-        	professionalCareer.setFunction(infoProfessionalCareer.getFunction());
-        	professionalCareer.setLastModificationDate(infoProfessionalCareer.getLastModificationDate());
-        	professionalCareer.setOjbConcreteClass(ProfessionalCareer.class.getName());
-        	
-        	IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = (ITeacher) persistentTeacher.readByOID(Teacher.class, infoProfessionalCareer.getInfoTeacher().getIdInternal());
-            
-            professionalCareer.setTeacher(teacher);
-        }
-        else {
-            InfoTeachingCareer infoTeachingCareer = (InfoTeachingCareer) infoObject;
-            ITeachingCareer teachingCareer = (ITeachingCareer) domainObject;
-            teachingCareer.setBeginYear(infoTeachingCareer.getBeginYear());
-            IPersistentCategory persistentCategory = sp.getIPersistentCategory();
-            ICategory category = (ICategory)persistentCategory.readByOID(Category.class,infoTeachingCareer.getInfoCategory().getIdInternal());
-            
-            teachingCareer.setCategory(category);
-            teachingCareer.setCourseOrPosition(infoTeachingCareer.getCourseOrPosition());
-            teachingCareer.setEndYear(infoTeachingCareer.getEndYear());
-            teachingCareer.setLastModificationDate(infoTeachingCareer.getLastModificationDate());
-            teachingCareer.setOjbConcreteClass(TeachingCareer.class.getName());
-            
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = (ITeacher) persistentTeacher.readByOID(Teacher.class, infoTeachingCareer.getInfoTeacher().getIdInternal());
-            teachingCareer.setTeacher(teacher);
-        }
+	private void editCareer(Integer careerId, InfoTeachingCareer infoTeachingCareer) throws ExcepcaoPersistencia {
+		
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentObject po = sp.getIPersistentObject();
+		
+		ITeachingCareer teachingCareer = (ITeachingCareer) po.readByOID(TeachingCareer.class, careerId);
+		
+        ICategory category = (ICategory)po.readByOID(Category.class,infoTeachingCareer.getInfoCategory().getIdInternal());
+		//If it doesn't exist in the database, a new one has to be created
+		if(teachingCareer == null) {
+			ITeacher teacher = (ITeacher) po.readByOID(Teacher.class, infoTeachingCareer.getInfoTeacher().getIdInternal());
+			teachingCareer = DomainFactory.makeTeachingCareer(teacher, category, infoTeachingCareer);
+
+		} else {
+			teachingCareer.edit(infoTeachingCareer, category);
+			
+		}
+		
+		
 	}
 
-	@Override
-    protected IDomainObject createNewDomainObject(InfoObject infoObject) {
-        if (infoObject instanceof InfoProfessionalCareer) {
-            return DomainFactory.makeProfessionalCareer();
-        } else if (infoObject instanceof InfoTeachingCareer) {
-            return DomainFactory.makeTeachingCareer();
-        } else {
-            throw new Error("Unknown type of InfoCareer: " + infoObject.getClass().getName());
-        }
+	private void editCareer(Integer careerId, InfoProfessionalCareer infoProfessionalCareer) throws ExcepcaoPersistencia {
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentObject po = sp.getIPersistentObject();
+		
+		IProfessionalCareer professionalCareer = (IProfessionalCareer) po.readByOID(ProfessionalCareer.class, careerId);
+		
+		//If it doesn't exist in the database, a new one has to be created
+		if(professionalCareer == null) {
+			ITeacher teacher = (ITeacher) po.readByOID(Teacher.class, infoProfessionalCareer.getInfoTeacher().getIdInternal());
+			professionalCareer = DomainFactory.makeProfessionalCareer(teacher, infoProfessionalCareer);
+		} else {
+			professionalCareer.edit(infoProfessionalCareer);
+		}
+		
 	}
 
-	@Override
-    protected Class getDomainObjectClass() {
-		return Career.class ;
-	}
+	
 
 }

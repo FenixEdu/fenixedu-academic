@@ -39,7 +39,7 @@ public class ReadExternalActivities implements IService {
 
         IPersistentExternalActivity persistentExternalActivity = persistentSuport
                 .getIPersistentExternalActivity();
-        List externalActivities = persistentExternalActivity.readAllByTeacher(teacher);
+        List externalActivities = persistentExternalActivity.readByTeacherId(teacher.getIdInternal());
 
         List result = (List) CollectionUtils.collect(externalActivities, new Transformer() {
             public Object transform(Object o) {
