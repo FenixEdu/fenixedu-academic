@@ -429,13 +429,6 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
-        <name>EditOldPublicationTeacherAuthorization</name>
-        <expression>EditOldPublicationTeacherAuthorization</expression>
-        <description/>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>
-    <filterChain>
         <name>OldPublicationTeacherAuthorization</name>
         <expression>OldPublicationTeacherAuthorization</expression>
         <description/>

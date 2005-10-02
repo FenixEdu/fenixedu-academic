@@ -412,13 +412,6 @@
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
-        <name>EditOldPublicationTeacherAuthorization</name>
-        <implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Filtro.teacher.EditOldPublicationTeacherAuthorizationFilter</implementationClass>
-        <description/>
-        <isTransactional>false</isTransactional>
-    </filter>
-    <filter>
         <name>OldPublicationTeacherAuthorization</name>
         <implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Filtro.teacher.OldPublicationTeacherAuthorizationFilter</implementationClass>
