@@ -100,26 +100,6 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 				sendEmailReminder(request, student, currentExecutionPeriod, report, form, bundle);
 			}
 			
-			//FIXME: DEBUG
-//			int a = 0;
-//			for(InfoStudentWithAttendsAndInquiriesRegistries student : studentsList) {
-//				sendEmailReminder(request, student, currentExecutionPeriod, report, form, bundle);
-//				if(a++ > 3)
-//					break;
-//			}
-//			
-//			boolean resultado = EMail.emailAddressFormatIsValid("naotemarroba.pt");
-//			resultado = EMail.emailAddressFormatIsValid("nao.tem@ponto");
-//			resultado = EMail.emailAddressFormatIsValid("tem.ponto@no.fim.");
-//			resultado = EMail.emailAddressFormatIsValid("@so.tem.server");
-//			resultado = EMail.emailAddressFormatIsValid("so.tem.user@");
-//			resultado = EMail.emailAddressFormatIsValid("serverincorrecto@.pt");
-//			resultado = EMail.emailAddressFormatIsValid("tem espacos@e.nao.devia");
-//			resultado = EMail.emailAddressFormatIsValid("tem.dois@pontos..noserver");
-//			resultado = EMail.emailAddressFormatIsValid("");
-//			resultado = EMail.emailAddressFormatIsValid(null);
-			
-			//////////////////////////////////////////////
 
 			reportList.add(report);
 			
@@ -136,17 +116,11 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 
 		String emailAddress = student.getInfoPerson().getEmail();
 		
-		if(!EMail.emailAddressFormatIsValid(emailAddress)) {
-			return false;
-		} 
-        report.addStudentsWithEmail(1);
-		
 		
 		EMail email = null;
 
 		int numberUnansweredInquiries = 0;
 				
-		report.addNumberInquiries(student.getAttends().size());
 		String unevaluatedCoursesNames = "";
 		for(InfoFrequenta studentAttends : student.getAttends()) {
 			InfoExecutionCourse attendingCourse = studentAttends.getDisciplinaExecucao();
@@ -165,6 +139,14 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 			}
 		}
 
+		report.addNumberInquiries(student.getAttends().size());
+		report.addUnansweredInquiries(numberUnansweredInquiries);
+
+		if(!EMail.emailAddressFormatIsValid(emailAddress)) {
+			return false;
+		} 
+        report.addStudentsWithEmail(1);
+		
 		if(numberUnansweredInquiries == 0)
 			return false;
 
@@ -173,8 +155,6 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 		String body = bodyIntro + "\n" + unevaluatedCoursesNames + "\n" + bodyEnd;
 		
 		String subject = (String) form.get("bodyTextSubject");
-//		subject += " - " + currentExecutionPeriod.getSemester() + bundle.getString("label.inquiries.ord.semester");
-//		subject += ", " + currentExecutionPeriod.getInfoExecutionYear().getYear();
 		
 		String originMail = bundle.getString("message.inquiries.email.reminder.origin.mail");
 
@@ -182,18 +162,15 @@ public class SendEmailReminderAction extends FenixDispatchAction {
             email = new EMail("mail.adm", originMail);
 
 		} else {
-//            email = new EMail("localhost", originMail);
             email = new EMail("mail.rnl.ist.utl.pt", originMail);
 			subject += " (localhost)";
         }
 		
 
+
 		if(email.send(emailAddress, subject, body)) {
 			report.addSentEmails(1);
-			report.addNumberInquiries(student.getAttends().size());
-			report.addUnansweredInquiries(numberUnansweredInquiries);
 			return true;
-			
 		}
 		
 		
