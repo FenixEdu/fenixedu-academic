@@ -208,6 +208,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.TestQuestionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.TestScopeVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.TestVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.person.qualification.QualificationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.places.campus.CampusVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.projectsManagement.ProjectAccessVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.CandidacyVO;
@@ -216,6 +217,12 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.EquivalencyVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.ModalityVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.SeminaryVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.CareerVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.ExternalActivityVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.OldPublicationVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.OrientationVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.ServiceProviderRegimeVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.WeeklyOcupationVO;
 
 public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
@@ -248,7 +255,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentCareer getIPersistentCareer() {
-        return null;
+        return new CareerVO();
     }
 
     public IPessoaPersistente getIPessoaPersistente() {
@@ -334,7 +341,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentOrientation getIPersistentOrientation() {
-        return null;
+        return new OrientationVO();
     }
 
     public IPersistentGrantContractMovement getIPersistentGrantContractMovement() {
@@ -546,7 +553,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentServiceProviderRegime getIPersistentServiceProviderRegime() {
-        return null;
+        return new ServiceProviderRegimeVO();
     }
 
     public IPersistentGuide getIPersistentGuide() {
@@ -634,7 +641,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentQualification getIPersistentQualification() {
-        return null;
+        return new QualificationVO();
     }
 
     public IPersistentGratuitySituation getIPersistentGratuitySituation() {
@@ -646,7 +653,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentWeeklyOcupation getIPersistentWeeklyOcupation() {
-        return null;
+        return new WeeklyOcupationVO();
     }
 
     public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod() {
@@ -766,7 +773,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentExternalActivity getIPersistentExternalActivity() {
-        return null;
+        return new ExternalActivityVO();
     }
 
     public IPersistentReimbursementGuideEntry getIPersistentReimbursementGuideEntry() {
@@ -902,7 +909,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentOldPublication getIPersistentOldPublication() {
-        return null;
+        return new OldPublicationVO();
     }
 
     public IPersistentCandidateEnrolment getIPersistentCandidateEnrolment() {
