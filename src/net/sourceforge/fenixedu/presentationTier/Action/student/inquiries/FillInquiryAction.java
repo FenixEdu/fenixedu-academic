@@ -52,7 +52,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 /**
- * @author Joï¿½o Fialho & Rita Ferreira
+ * @author João Fialho & Rita Ferreira
  * 
  */
 public class FillInquiryAction extends FenixDispatchAction {
@@ -80,7 +80,16 @@ public class FillInquiryAction extends FenixDispatchAction {
         if (attendingCourseTeachers.size() == 0) {
 			request.setAttribute(InquiriesUtil.INQUIRY_MESSAGE_KEY, "message.inquiries.unavailable.course");
             return actionMapping.findForward("unavailableInquiry");
-		} 
+		}
+		
+		InfoExecutionCourse executionCourse = (InfoExecutionCourse) request.getAttribute(InquiriesUtil.ATTENDING_EXECUTION_COURSE);
+		if((executionCourse.getTheoPratHours() == 0) &&
+				(executionCourse.getTheoreticalHours() == 0) &&
+				(executionCourse.getPraticalHours() == 0) &&
+				(executionCourse.getLabHours() == 0)) {
+			request.setAttribute(InquiriesUtil.INQUIRY_MESSAGE_KEY, "message.inquiries.unavailable.course");
+            return actionMapping.findForward("unavailableInquiry");
+		}
 			
         request.setAttribute(InquiriesUtil.ANCHOR, "inquiry");
         return actionMapping.findForward("fillInquiry");
@@ -90,14 +99,6 @@ public class FillInquiryAction extends FenixDispatchAction {
             ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-		
-		//FIXME: This should be parametrizable
-		Boolean inquiriesAreOpen = Boolean.FALSE; //this should invoque a service to verify if there is an open inquiry
-		if(!inquiriesAreOpen) {
-			request.setAttribute(InquiriesUtil.INQUIRY_MESSAGE_KEY, "message.inquiries.no.open.inquiries");		
-			return actionMapping.findForward("inquiryIntroduction");
-		}
-			
 		
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -115,25 +116,33 @@ public class FillInquiryAction extends FenixDispatchAction {
 
 		InfoDegree studentDegree = infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getInfoDegree();
 
-		//FIXME: THIS SHOULD BE PARAMETRIZABLE THE SAME WAY AS THE EXECUTION PERIOD!!!!!
+		//FIXME: This should be parametrizable
+//		this should invoque a service to verify if there is an open inquiry for this degree
+//		Boolean inquiriesAreOpen = Boolean.FALSE;
+		Boolean inquiriesAreOpen = Boolean.TRUE;
+		if(!inquiriesAreOpen) {
+			request.setAttribute(InquiriesUtil.INQUIRY_MESSAGE_KEY, "message.inquiries.no.open.inquiries");		
+			return actionMapping.findForward("inquiryIntroduction");
+		}
+		//FIXME: THIS SHOULD DISAPEAR WHEN THE inquiriesAreOpen test is parametrizable!!!!!
         // Check if the student is allowed to answer the inquiries
         if (!(studentDegree.getIdInternal().equals(18) || studentDegree.getIdInternal().equals(14))) {
 			request.setAttribute(InquiriesUtil.INQUIRY_MESSAGE_KEY, "message.inquiries.unavailable.degree");		
 			return actionMapping.findForward("inquiryIntroduction");
         }
-
+		//////////////////////////////////////////////////////////////////////////////////////////
+		
         // Obtaining the current execution period
-        // FIXME: THIS SHOULD BE PARAMETRIZABLE
-		InfoExecutionPeriod currentExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(userView, "ReadCurrentExecutionPeriod", null);
+ 		InfoExecutionPeriod currentExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(userView, "ReadCurrentExecutionPeriod", null);
 
-		//FIXME: THIS SHOULD BE PARAMETRIZABLE ACCORDING TO THE EXECUTION PERIOD PARAMETRIZATION
-		//TODO: THIS IS ONLY READING THE ENROLLED COURSES, AND NOT ALL THE ATTENDING ONES
+		//THIS IS ONLY READING THE ENROLLED COURSES, AND NOT ALL THE ATTENDING ONES
 		Object[] argsStudentIdExecutionPeriodId = { infoStudent.getIdInternal(), currentExecutionPeriod.getIdInternal(), Boolean.TRUE, Boolean.TRUE };
 		List<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers> studentAttends =
 			(List<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers>) ServiceUtils.executeService(userView, "student.ReadAttendsByStudentIdAndExecutionPeriodId", argsStudentIdExecutionPeriodId);
 		//Order by execution course name
 		Collections.sort(studentAttends, new BeanComparator("disciplinaExecucao.nome"));
-
+		
+		//Removing attends with no specified class types
         Object[] argsStudent = { infoStudent };
 		List<InfoInquiriesRegistry> studentInquiriesResgistries =
 			(List<InfoInquiriesRegistry>) ServiceUtils.executeService(userView, "inquiries.ReadInquiriesRegistriesByStudent", argsStudent);
@@ -149,7 +158,6 @@ public class FillInquiryAction extends FenixDispatchAction {
         for (InfoInquiriesRegistry iir : studentInquiriesResgistries) {
             for (InfoFrequenta iattends : studentAttends) {
 				if(iir.getExecutionCourse().equals(iattends.getDisciplinaExecucao()) &&
-						iir.getExecutionDegreeStudent().equals(infoExecutionDegreeStudent) &&
 						iir.getExecutionPeriod().equals(currentExecutionPeriod)) {
                     evaluatedAttends.add(iattends);
                 }
@@ -276,7 +284,6 @@ public class FillInquiryAction extends FenixDispatchAction {
 				request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER_FORM_POSITION, teacherFormPosition);
 				request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER, newAttendingCourseTeacher);
 				request.setAttribute(InquiriesUtil.ANCHOR, InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER_FORM_ANCHOR);
-//				request.setAttribute(InquiriesUtil.ANCHOR, InquiriesUtil.ATTENDING_COURSE_TEACHER_FORM_ANCHOR);
             }
 
         }
@@ -432,7 +439,6 @@ public class FillInquiryAction extends FenixDispatchAction {
 			request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER_FORM_POSITION, selectedAttendingCourseTeacherFormPosition);
 			request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER, selectedAttendingCourseTeacher);
 			request.setAttribute(InquiriesUtil.ANCHOR, InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER_FORM_ANCHOR);
-//			request.setAttribute(InquiriesUtil.ANCHOR, InquiriesUtil.ATTENDING_COURSE_TEACHER_FORM_ANCHOR);
         }
 
 		request.setAttribute(InquiriesUtil.SELECTED_ATTENDING_COURSE_TEACHERS, selectedAttendingCourseTeachers);
@@ -853,7 +859,6 @@ public class FillInquiryAction extends FenixDispatchAction {
         inquiry.setExecutionPeriod(executionPeriod);
         inquiry.setExecutionCourse(executionCourse);
         inquiry.setExecutionDegreeStudent(executionDegreeStudent);
-        // inquiry.setExecutionDegreeCourse(inquiry.getInquiriesCourse().getExecutionDegreeCourse());
         inquiry.setInquiriesRoomsList(selectedAttendingCourseRooms);
         inquiry.setInquiriesTeachersList(selectedAttendingCourseTeachers);
 
@@ -919,12 +924,12 @@ public class FillInquiryAction extends FenixDispatchAction {
 		Integer studentExecutionDegreeId = (Integer) inquiryForm.get("studentExecutionDegreeId");
 		InfoExecutionDegree infoExecutionDegreeStudent;
 		if(studentExecutionDegreeId == null) {
-        // Obtaining the active student curricular plan
-        Object[] argsStudentNumberDegreeType = { infoStudent.getNumber(), infoStudent.getDegreeType() };
-			InfoStudentCurricularPlan infoStudentCurricularPlan =
-				(InfoStudentCurricularPlan) ServiceUtils.executeService(userView,
-						"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType", argsStudentNumberDegreeType);
-        // Obtaining the student execution degree
+	        // Obtaining the active student curricular plan
+	        Object[] argsStudentNumberDegreeType = { infoStudent.getNumber(), infoStudent.getDegreeType() };
+				InfoStudentCurricularPlan infoStudentCurricularPlan =
+					(InfoStudentCurricularPlan) ServiceUtils.executeService(userView,
+							"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType", argsStudentNumberDegreeType);
+	        // Obtaining the student execution degree
 			Object[] argsDegreeCPId = { infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getIdInternal() };
 			infoExecutionDegreeStudent = 
 				(InfoExecutionDegree) ServiceUtils.executeService(userView, "ReadActiveExecutionDegreebyDegreeCurricularPlanID", argsDegreeCPId);
@@ -942,27 +947,16 @@ public class FillInquiryAction extends FenixDispatchAction {
 		InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers attends =
 			(InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers)
 			ServiceUtils.executeService(userView, "student.ReadAttendsByOID", argsAttendsId);
-		//Obtaining the selected attending course
-//		Integer attendingExecutionCourseId = new Integer((String) InquiriesUtil.getFromRequest(InquiriesUtil.ATTENDING_EXECUTION_COURSE_ID, request));
-//		Object[] argsAttendingCourseId = { attendingExecutionCourseId };
-//		InfoExecutionCourse attendingExecutionCourse = 
-//			(InfoExecutionCourse) ServiceUtils.executeService(userView, "ReadExecutionCourseByOID", argsAttendingCourseId);
 
         // Obtaining all School Classes associated with the attending course
         Object[] argsAttendingCourse = { attends.getDisciplinaExecucao() };
 		List<InfoClass> attendingCourseSchoolClasses =
 			(List<InfoClass>) ServiceUtils.executeService(userView, "ReadClassesByExecutionCourse", argsAttendingCourse);
-		//TODO: this could be optimized
 		//sort by school class name
         InquiriesUtil.removeDuplicates(attendingCourseSchoolClasses);
 		Collections.sort(attendingCourseSchoolClasses, new BeanComparator("nome"));
 
         final InfoExecutionCourse finalCourse = attends.getDisciplinaExecucao();
-
-        // Obtaining the professorships related to this execution course
-//		List attendingCourseTeachers =
-//			(List) ServiceUtils.executeService(
-//					userView, "ReadTeachersByExecutionCourseProfessorship", argsAttendingExecutionCourse);
 
 		List attendingCourseTeachers = new ArrayList(attends.getTeachers().size() + attends.getNonAffiliatedTeachers().size());
 		attendingCourseTeachers.addAll(attends.getTeachers());
@@ -999,7 +993,6 @@ public class FillInquiryAction extends FenixDispatchAction {
         request.setAttribute(InquiriesUtil.CURRENT_EXECUTION_PERIOD, currentExecutionPeriod);
         request.setAttribute(InquiriesUtil.STUDENT_EXECUTION_DEGREE, infoExecutionDegreeStudent);
         request.setAttribute(InquiriesUtil.ATTENDING_EXECUTION_COURSE, attends.getDisciplinaExecucao());
-        // request.setAttribute(InquiriesUtil.STUDENT_ATTENDS, attends);
 		request.setAttribute(InquiriesUtil.ATTENDING_COURSE_SCHOOL_CLASSES, attendingCourseSchoolClasses);
         request.setAttribute(InquiriesUtil.ATTENDING_COURSE_TEACHERS, attendingCourseTeachers);
         request.setAttribute(InquiriesUtil.ATTENDING_COURSE_ROOMS, attendingCourseRooms);
@@ -1043,7 +1036,6 @@ public class FillInquiryAction extends FenixDispatchAction {
             if (!validCurrentTeacherForm) {
                 request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER_FORM_ERROR, true);
 				request.setAttribute(InquiriesUtil.ANCHOR, InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER_FORM_ANCHOR);
-//				request.setAttribute(InquiriesUtil.ANCHOR, InquiriesUtil.ATTENDING_COURSE_TEACHER_FORM_ANCHOR);
             }
         }
 
@@ -1144,7 +1136,6 @@ public class FillInquiryAction extends FenixDispatchAction {
 
     private void clearCurrentTeacherForm(DynaActionForm inquiryForm) {
         inquiryForm.set("currentAttendingCourseTeacherFormPosition", null);
-        // inquiryForm.set("currentAttendingCourseTeacherId", null);
         inquiryForm.set("currentAttendingCourseTeacherClassType", ArrayUtils.EMPTY_STRING_ARRAY);
         inquiryForm.set("currentAttendingCourseTeacherQuestion33", null);
         inquiryForm.set("currentAttendingCourseTeacherQuestion34", null);
@@ -1196,11 +1187,6 @@ public class FillInquiryAction extends FenixDispatchAction {
 			(Boolean[]) inquiryForm.get("selectedAttendingCourseTeachersClassTypeTP");
 		selectedAttendingCourseTeachersClassTypeTP[position] =
 			ArrayUtils.contains(currentAttendingCourseTeacherClassType, ShiftType.TEORICO_PRATICA.getName());
-		
-		
-			
-
-		
 		
         // Answers
 		Integer currentAttendingCourseTeacherQuestion33 =
@@ -1664,7 +1650,6 @@ public class FillInquiryAction extends FenixDispatchAction {
 
     private void updateCurrentTeacherForm(DynaActionForm inquiryForm, InfoInquiriesTeacher attendingCourseTeacher) {
 
-//		inquiryForm.set("currentAttendingCourseTeacherId", attendingCourseTeacher.getTeacher().getIdInternal());
 		inquiryForm.set("currentAttendingCourseTeacherQuestion33", attendingCourseTeacher.getStudentAssiduity());
 		inquiryForm.set("currentAttendingCourseTeacherQuestion34", attendingCourseTeacher.getTeacherAssiduity());
 		inquiryForm.set("currentAttendingCourseTeacherQuestion35", attendingCourseTeacher.getTeacherPunctuality());
