@@ -226,17 +226,29 @@ class net.sourceforge.fenixedu.domain.teacher.Career extends net.sourceforge.fen
     Integer endYear;
     Integer keyTeacher;
     Date lastModificationDate;
+    
+    interface "
+    public void delete();
+    "
 }
 
 
     class net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer extends net.sourceforge.fenixedu.domain.teacher.Career {
         String entity;
         String function;
+	    interface "
+	    public void delete();
+	    public void edit(net.sourceforge.fenixedu.dataTransferObject.teacher.InfoProfessionalCareer infoProfessionalCareer);
+	    "
     }
 
     class net.sourceforge.fenixedu.domain.teacher.TeachingCareer extends net.sourceforge.fenixedu.domain.teacher.Career {
         String courseOrPosition;
         Integer keyCategory;
+        
+        interface "
+        public void edit(net.sourceforge.fenixedu.dataTransferObject.teacher.InfoTeachingCareer infoTeachingCareer, net.sourceforge.fenixedu.domain.teacher.ICategory category);
+        "
     }
 
 
@@ -1109,6 +1121,13 @@ class net.sourceforge.fenixedu.domain.teacher.ExternalActivity extends net.sourc
     Integer keyTeacher;
     Date lastModificationDate;
     String activity;
+
+	interface "
+
+	public void delete();
+	public void edit(net.sourceforge.fenixedu.dataTransferObject.teacher.InfoExternalActivity infoExternalActivity);
+	
+	"
 }
 
 
@@ -1492,22 +1511,24 @@ class net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse extends net.sour
     Double evaluationMethodAdequation;
     Integer weeklySpentHours;
     Double globalAppreciation;
+    
+    interface "
+	public void createInquiriesRoom(net.sourceforge.fenixedu.domain.IRoom room, net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRoom infoInquiriesRoom);
+
+	public void createInquiriesTeacher(net.sourceforge.fenixedu.domain.INonAffiliatedTeacher nonAffiliatedTeacher, net.sourceforge.fenixedu.domain.ShiftType shiftType, net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher infoInquiriesTeacher);
+
+	public void createInquiriesTeacher(net.sourceforge.fenixedu.domain.ITeacher teacher, net.sourceforge.fenixedu.domain.ShiftType shiftType, net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher infoInquiriesTeacher);
+    "
 }
 
 class net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyExecutionPeriod;
 	Integer keyExecutionCourse;
-    Integer keyExecutionDegreeCourse;
-    Integer keyExecutionDegreeStudent;
     Integer keyStudent;
 }
 
 class net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyInquiriesCourse;
-    Integer keyExecutionPeriod;
-	Integer keyExecutionCourse;
-    Integer keyExecutionDegreeCourse;
-    Integer keyExecutionDegreeStudent;
     Integer keyRoom;
     Integer spaceAdequation;
     Integer environmentalConditions;
@@ -1516,10 +1537,6 @@ class net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom extends net.source
 
 class net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyInquiriesCourse;
-    Integer keyExecutionPeriod;
-    Integer keyExecutionCourse;
-    Integer keyExecutionDegreeCourse;
-    Integer keyExecutionDegreeStudent;
     Integer keyTeacher;
     Integer keyNonAffiliatedTeacher;
     Integer studentAssiduity;
@@ -1854,6 +1871,13 @@ class net.sourceforge.fenixedu.domain.teacher.OldPublication extends net.sourcef
 	Date lastModificationDate;
 	String publication;
     OldPublicationType oldPublicationType;
+
+	interface "
+
+	public void delete();
+	public void edit(net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOldPublication infoOldPublication, net.sourceforge.fenixedu.domain.ITeacher teacher);
+	
+	"
 }
 
 
@@ -1863,6 +1887,10 @@ class net.sourceforge.fenixedu.domain.teacher.Orientation extends net.sourceforg
     Integer numberOfStudents;
     Date lastModificationDate;
     OrientationType orientationType;
+
+    interface "
+    public void edit(net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOrientation infoOrientation);
+    "
 }
 
 
@@ -2107,6 +2135,11 @@ class net.sourceforge.fenixedu.domain.Qualification extends net.sourceforge.feni
     String degree;
     Integer countryKey;
     String school;
+    
+    interface "
+    public void delete();
+    public void edit(net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification infoQualification, ICountry country);
+    "
 }
 
 class net.sourceforge.fenixedu.domain.onlineTests.Question extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2410,6 +2443,10 @@ class net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime extends net.
     Integer keyTeacher;
     Date lastModificationDate;
     ProviderRegimeType providerRegimeType;
+    
+    interface "
+    public void edit(net.sourceforge.fenixedu.dataTransferObject.teacher.InfoServiceProviderRegime infoServiceProviderRegime);
+    "
 }
 
 
@@ -2737,7 +2774,7 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	Integer keyCategory;
 	Integer keyServiceProviderRegime;
 	Integer keyPublicationsNumber;
-	
+		
 	interface "
 	public net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits getExecutionPeriodCredits(IExecutionPeriod executionPeriod);
 	
@@ -2853,6 +2890,10 @@ class net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation extends net.source
     Integer management;
     Integer research;
     Integer support;
+    
+    interface "
+    public void edit(net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation infoWeeklyOcupation);
+    "
 }
 
 class net.sourceforge.fenixedu.domain.publication.PublicationType extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2935,6 +2976,10 @@ class net.sourceforge.fenixedu.domain.teacher.PublicationsNumber extends net.sou
 	Date lastModificationDate;
 	Integer international;
     PublicationType publicationType;
+    
+    interface "
+    public void edit(net.sourceforge.fenixedu.dataTransferObject.teacher.InfoPublicationsNumber infoPublicationsNumber);
+    "
 }
 
 class net.sourceforge.fenixedu.domain.publication.PublicationFormat extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3816,7 +3861,7 @@ relation ExecutionPeriodSchoolClass {
 
 
 relation ExternalActivityTeacher {
-    net.sourceforge.fenixedu.domain.teacher.ExternalActivity playsRole externalActivities {
+    net.sourceforge.fenixedu.domain.teacher.ExternalActivity playsRole associatedExternalActivities {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
@@ -4163,31 +4208,15 @@ relation InquiriesCourseSchoolClass {
 
 
 relation InquiriesRegistryExecutionCourse {
-	net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry playsRole inquiriesRegistries {
+	net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry playsRole associatedInquiriesRegistries {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
 }
 
 
-relation InquiriesRegistryExecutionDegreeCourse {
-	net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry playsRole inquiriesRegistriesCourse {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegreeCourse;
-}
-
-
-relation InquiriesRegistryExecutionDegreeStudent {
-	net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry playsRole inquiriesRegistriesStudent {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegreeStudent;
-}
-
-
 relation InquiriesRegistryExecutionPeriod {
-	net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry playsRole inquiriesRegistries {
+	net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry playsRole associatedInquiriesRegistries {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
@@ -4195,100 +4224,44 @@ relation InquiriesRegistryExecutionPeriod {
 
 
 relation InquiriesRegistryStudent {
-	net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry playsRole inquiriesRegistries {
+	net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry playsRole associatedInquiriesRegistries {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Student playsRole student;
 }
 
 
-relation InquiriesRoomExecutionCourse {
-    net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom playsRole inquiriesRoom {
-        multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
-}
-
-relation InquiriesRoomExecutionDegreeCourse {
-    net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom playsRole inquiriesRoomCourse {
-        multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegreeCourse;
-}
-
-relation InquiriesRoomExecutionDegreeStudent {
-    net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom playsRole inquiriesRoomStudent {
-        multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegreeStudent;
-}
-
-relation InquiriesRoomExecutionPeriod {
-    net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom playsRole inquiriesRoom {
-        multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
-}
-
 relation InquiriesRoomInquiriesCourse {
-    net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom playsRole inquiriesRoom {
+    net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom playsRole associatedInquiriesRooms {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse playsRole inquiriesCourse;
 }
 
 relation InquiriesRoomDomainRoom {
-    net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom playsRole inquiriesRoom {
+    net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom playsRole associatedInquiriesRooms {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Room playsRole room;
 }
 
 
-relation InquiriesTeacherExecutionCourse {
-    net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher playsRole inquiriesTeacher {
-        multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
-}
-
-relation InquiriesTeacherExecutionDegreeCourse {
-    net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher playsRole inquiriesTeacherCourse {
-        multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegreeCourse;
-}
-
-relation InquiriesTeacherExecutionDegreeStudent {
-    net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher playsRole inquiriesTeacherStudent {
-        multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegreeStudent;
-}
-
-relation InquiriesTeacherExecutionPeriod {
-    net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher playsRole inquiriesTeacher {
-        multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
-}
-
 relation InquiriesTeacherInquiriesCourse {
-    net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher playsRole inquiriesTeacher {
+    net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher playsRole associatedInquiriesTeachers {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse playsRole inquiriesCourse;
 }
 
 relation InquiriesTeacherNonAffiliatedTeacher {
-    net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher playsRole inquiriesTeacher {
+    net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher playsRole associatedInquiriesTeachers {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.NonAffiliatedTeacher playsRole nonAffiliatedTeacher;
 }
 
 relation InquiriesTeacherDomainTeacher {
-    net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher playsRole inquiriesTeacher {
+    net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher playsRole associatedInquiriesTeachers {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
@@ -4486,7 +4459,7 @@ relation ModalityCourseEquivalency {
 }
 
 relation OldInquiriesCoursesResDegree {
-	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes playsRole oldInquiriesCoursesRes {
+	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes playsRole associatedOldInquiriesCoursesRes {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Degree playsRole degree;
@@ -4494,7 +4467,7 @@ relation OldInquiriesCoursesResDegree {
 
 
 relation OldInquiriesCoursesResExecutionPeriod {
-	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes playsRole oldInquiriesCoursesRes {
+	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes playsRole associatedOldInquiriesCoursesRes {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
@@ -4502,7 +4475,7 @@ relation OldInquiriesCoursesResExecutionPeriod {
 
 
 relation OldInquiriesSummaryDegree {
-	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary playsRole oldInquiriesSummary {
+	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary playsRole associatedOldInquiriesSummaries {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Degree playsRole degree;
@@ -4510,7 +4483,7 @@ relation OldInquiriesSummaryDegree {
 
 
 relation OldInquiriesSummaryExecutionPeriod {
-	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary playsRole oldInquiriesSummary {
+	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary playsRole associatedOldInquiriesSummaries {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
@@ -4518,7 +4491,7 @@ relation OldInquiriesSummaryExecutionPeriod {
 
 
 relation OldInquiriesTeachersResDegree {
-	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes playsRole oldInquiriesTeachersRes {
+	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes playsRole associatedOldInquiriesTeachersRes {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Degree playsRole degree;
@@ -4526,7 +4499,7 @@ relation OldInquiriesTeachersResDegree {
 
 
 relation OldInquiriesTeachersResExecutionPeriod {
-	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes playsRole oldInquiriesTeachersRes {
+	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes playsRole associatedOldInquiriesTeachersRes {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod {
@@ -4536,7 +4509,7 @@ relation OldInquiriesTeachersResExecutionPeriod {
 
 
 relation OldInquiriesTeachersResTeacher {
-	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes playsRole oldInquiriesTeacherRes {
+	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes playsRole associatedOldInquiriesTeachersRes {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
@@ -4743,7 +4716,9 @@ relation QualificationCountry {
 
 
 relation QualificationPerson {
-    net.sourceforge.fenixedu.domain.Qualification playsRole qualification;
+    net.sourceforge.fenixedu.domain.Qualification playsRole associatedQualifications {
+    	multiplicity *;
+    }
     net.sourceforge.fenixedu.domain.Person playsRole person;
 }
 
@@ -5149,7 +5124,7 @@ relation TeachingCareerCategory {
 
 
 relation TeacherCategory {
-	net.sourceforge.fenixedu.domain.Teacher playsRole teacher {
+	net.sourceforge.fenixedu.domain.Teacher playsRole associatedTeacher {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.teacher.Category playsRole category;
@@ -5205,7 +5180,7 @@ relation TeacherManagementPositionCreditLine {
 
 
 relation TeacherOldPublication {
-	net.sourceforge.fenixedu.domain.teacher.OldPublication playsRole oldPublication {
+	net.sourceforge.fenixedu.domain.teacher.OldPublication playsRole associatedOldPublications {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
@@ -5296,9 +5271,7 @@ relation TutorTeacher {
 
 
 relation WeeklyOcupationTeacher {
-    net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation playsRole weeklyOcupations {
-        multiplicity *;
-    }
+    net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation playsRole weeklyOcupations;
     net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 }
 
@@ -5378,7 +5351,9 @@ relation PublicationTypePublicationSubtype {
 }
 
 relation PublicationsNumberTeacher {
-	net.sourceforge.fenixedu.domain.teacher.PublicationsNumber playsRole publicationsNumber;
+	net.sourceforge.fenixedu.domain.teacher.PublicationsNumber playsRole associatedPublicationsNumbers {
+		multiplicity *;
+	}
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 }
 
