@@ -90,6 +90,7 @@ public class InfoExternalActivity extends InfoObject implements ISiteComponent {
         if (externalActivity != null) {
             setActivity(externalActivity.getActivity());
             setLastModificationDate(externalActivity.getLastModificationDate());
+			setInfoTeacher(InfoTeacher.newInfoFromDomain(externalActivity.getTeacher()));
         }
     }
 

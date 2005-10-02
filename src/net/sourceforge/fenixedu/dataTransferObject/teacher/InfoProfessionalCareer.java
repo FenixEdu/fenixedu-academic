@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.teacher;
 
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.CareerType;
 import net.sourceforge.fenixedu.domain.teacher.IProfessionalCareer;
 
@@ -64,6 +65,7 @@ public class InfoProfessionalCareer extends InfoCareer {
         if (professionalCareer != null) {
             setEntity(professionalCareer.getEntity());
             setFunction(professionalCareer.getFunction());
+			setInfoTeacher(InfoTeacher.newInfoFromDomain(professionalCareer.getTeacher()));
         }
     }
 

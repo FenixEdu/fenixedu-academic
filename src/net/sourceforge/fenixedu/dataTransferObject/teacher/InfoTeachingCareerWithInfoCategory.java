@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.teacher;
 
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.teacher.ITeachingCareer;
 
 /**
@@ -21,6 +22,7 @@ public class InfoTeachingCareerWithInfoCategory extends InfoTeachingCareer {
         super.copyFromDomain(teachingCareer);
         if (teachingCareer != null) {
             setInfoCategory(InfoCategory.newInfoFromDomain(teachingCareer.getCategory()));
+			setInfoTeacher(InfoTeacher.newInfoFromDomain(teachingCareer.getTeacher()));
         }
     }
 

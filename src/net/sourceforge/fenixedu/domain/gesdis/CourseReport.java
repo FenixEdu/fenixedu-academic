@@ -17,7 +17,7 @@ import java.util.Calendar;
 public class CourseReport extends CourseReport_Base {
 
     public String toString() {
-        String result = "[Dominio.gesdis.CourseReport ";
+        String result = "[" + CourseReport.class.getName();
         result += ", report=" + getReport();
         result += ", executionCourse=" + getExecutionCourse();
         result += "]";
