@@ -23,7 +23,7 @@ public class InfoExecutionPeriodWithInfoExecutionYear extends InfoExecutionPerio
      * @param period
      * @return
      */
-    public static InfoExecutionPeriod newInfoFromDomain(IExecutionPeriod period) {
+    public static InfoExecutionPeriodWithInfoExecutionYear newInfoFromDomain(IExecutionPeriod period) {
         InfoExecutionPeriodWithInfoExecutionYear infoExecutionPeriod = null;
 
         if (period != null) {
