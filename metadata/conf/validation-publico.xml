@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!-- @validation.doctype@ -->
+<!DOCTYPE form-validation PUBLIC "-//Apache Software Foundation//DTD Struts Validation Configuration 1.1//EN" "@validation.doctype.url@">
 <form-validation>
   <formset>
 
     <!-- Validation for Index Form -->
     <form name="indexForm">
       <field property="roomName" depends="required">
-        <arg0 key="property.room" resource="true"/>
+        <arg0 key="property.room"/>
       </field>
     </form>
     
   <!-- Validation for chooseDegreeContextForm Form -->
     <form name="chooseDegreeContextForm">
       <field property="degreeID" depends="integer">
-        <arg0 key="DegreeID" resource="true"/>
+        <arg0 key="DegreeID"/>
       </field>
       <field property="executionDegreeID" depends="integer">
-        <arg0 key="ExecutionDegreeID" resource="true"/>
+        <arg0 key="ExecutionDegreeID"/>
       </field>
       <field property="index" depends="integer">
-        <arg0 key="Index" resource="true"/>
+        <arg0 key="Index"/>
       </field>
       <field property="page" depends="integer">
-        <arg0 key="Page" resource="true"/>
+        <arg0 key="Page"/>
       </field>
     </form>
     
@@ -144,7 +144,7 @@
      
       <field property="selectAllCurricularYears"
              depends="multiBoxWithSelectAllCheckBox" page="1">
-      	<arg0 key="ano curricular" resource="true"/>
+      	<arg0 key="ano curricular"/>
         <var>
         	<var-name>secondProperty</var-name>
             <var-value>selectedCurricularYears</var-value>

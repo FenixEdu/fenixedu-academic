@@ -38,7 +38,7 @@
 	<!-- Compilation options -->
 	<property name="compile.debug"       value="on"/>
   	<property name="compile.deprecation" value="off"/>
-  	<property name="compile.optimize"    value="off"/>
+  	<property name="compile.optimize"    value="on"/>
 
 
     <target name="clean-all"
@@ -87,13 +87,7 @@
 			</parallel>
 
 			<!-- Replace tokens in configuration files with local config -->
-			<antcall target="replace-property-values"/>
-			
-			<copy todir="${env.CATALINA_HOME}/webapps/${app.name}"> 
-				<fileset dir="${build.home}">
-					<include name="**/*.*"/>
-				</fileset>
-			</copy>
+			<antcall target="replace-property-values"/>			
 		</sequential>
 
 		<echo file="${build.home.webinf.classes}/checkIsAlive.properties" append="false">
@@ -375,7 +369,14 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				    token="@index.html.link@" 
 				    property="index.html.link"/>
 			</replace>
-		
+
+			<replace dir="${build.home.webinf}/conf" propertyFile="build.properties">
+				<include name="validation*.xml"/>
+				<replacefilter 
+				    token="@validation.doctype.url@" 
+				    property="struts.validation.doctype.url"/>
+			</replace>
+
 			<replace dir="${build.home}"
 					 propertyFile="build.properties">
 				<include name="publico/index.html"/>
@@ -406,7 +407,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				<include name="berserk.properties"/>
 			  	<replacefilter token="@application.filterBroker@"
 			  				   property="application.filterBroker"/>
-			</replace>		
+			</replace>
 		</parallel>
 	</target>
 
@@ -544,27 +545,39 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 		</copy>
 	</target>
 
-    <target name="install"
-    		depends="compile, includeJ2EEjar"
-            description="Deploys standalone application to web server">
-
-		<!-- Run this externally so it doesn't fail when
-			 the web-app is not yet installed. -->
-		<exec executable="ant.bat" failonerror="false" failifexecutionfails="false" os="Windows XP, Windows 2000, Windows 98, Windows NT, Windows 95">
-			<arg line="-f"/>
-			<arg line="build_tomcat.xml"/>			
-			<arg line="remove"/>			
-		</exec> 
-		<exec executable="ant" failonerror="false" os="Linux">
-			<arg line="-f"/>
-			<arg line="build_tomcat.xml"/>			
-			<arg line="remove"/>			
+    <target name="deploy-linux"
+            description="Deploys standalone application to local web server">
+    	<exec executable="rm" failonerror="false" os="Linux">
+			<arg line="-rf"/>
+			<arg line="${env.CATALINA_HOME}/webapps/${app.context}"/>
 		</exec>
+    	<exec executable="ln" failonerror="false" os="Linux">
+			<arg line="-s"/>
+			<arg line="${build.home}"/>
+			<arg line="${env.CATALINA_HOME}/webapps/${app.context}"/>
+		</exec>
+    </target>
 
-		<!-- Install web-app -->
+	<target name="deploy-win"
+            description="Deploys standalone application to local web server">
 		<ant antfile="build_tomcat.xml" target="install">
 			<property name="webapp" value="${build.home}"/>
 		</ant>
+    </target>
+
+    <target name="install"
+    		depends="compile, includeJ2EEjar"
+            description="Deploys standalone application to web server">
+		<exec executable="ant.bat" failonerror="false" failifexecutionfails="false" os="Windows XP, Windows 2000, Windows 98, Windows NT, Windows 95">
+			<arg line="-f"/>
+			<arg line="build_compile.xml"/>			
+			<arg line="deploy-win"/>			
+		</exec>
+		<exec executable="ant" failonerror="false" os="Linux">
+			<arg line="-f"/>
+			<arg line="build_compile.xml"/>			
+			<arg line="deploy-linux"/>			
+		</exec>
 	</target>
 
     <target name="jar"

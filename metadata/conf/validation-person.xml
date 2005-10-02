@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!-- @validation.doctype@ -->
+<!DOCTYPE form-validation PUBLIC "-//Apache Software Foundation//DTD Struts Validation Configuration 1.1//EN" "@validation.doctype.url@">
 <form-validation>
   <formset>
 
@@ -177,7 +177,7 @@
   	  <field property="tempDate" depends="required, mask, date" page="1">
 		<msg name="date" key="errors.invalid.date.year"/>
 		<msg name="mask" key="errors.invalid.date.year"/>
-		<arg0 key="label.qualification.year" resource="true"/>
+		<arg0 key="label.qualification.year"/>
 		<var>
 			<var-name>datePattern</var-name>
 			<var-value>yyyy</var-value>

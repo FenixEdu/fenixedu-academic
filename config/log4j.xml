@@ -62,6 +62,13 @@
 		<appender-ref ref="profileLog"/>
 	</logger>
 
+	<!-- Uncomment this logger to help locate errors im struts validation forms
+	<logger name="org.apache.struts.action.ActionServlet">
+		<level value="debug"/>
+		<appender-ref ref="ConsoleAppender"/>
+	</logger>
+	-->
+
 	<logger name="net.sourceforge.fenixedu.applicationTier.Servico.student.InsertStudentTestResponses">
 		<level value="debug"/>
 		<appender-ref ref="ConsoleAppender"/>

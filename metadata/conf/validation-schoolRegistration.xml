@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!-- @validation.doctype@ -->
+<!DOCTYPE form-validation PUBLIC "-//Apache Software Foundation//DTD Struts Validation Configuration 1.1//EN" "@validation.doctype.url@">
 <form-validation>
   <formset>
 
 		<form name="schoolRegistrationForm">
-			<!--<field property="instructionsAccepted" depends="required" page="1">
-        	<arg0 key="label.schoolRegistration.instructionsAcceptedError" />
-      	</field>-->
-    
+
     	<field property="oldPassword" depends="required" page="2">
         	<arg0 key="label.candidate.oldPasswordError" />
       	</field>
@@ -99,7 +96,6 @@
 			<arg1 name="intRange" key="${var:min}" resource="true"/>
 			<arg2 name="intRange" key="${var:max}" resource="true"/>
 			<arg3 key="error.schoolRegistration.yearOfExpirationDateOfDocumentId"/>
-			<arg4 key="error.schoolRegistration.yearOfEmissionDateOfDocumentId"/>
 			<msg name="mask" key="errors.invalid.yearOfExpirationDateOfDocumentId" />
 			<var>
 				<var-name>mask</var-name>
@@ -217,9 +213,6 @@
 		<field property="email" depends="email" page="3">
   	      <arg0 key="errors.invalid.email" />
      	</field>
-
-<!--		<field property="answersMap" depends="multiRadioSelect" page="4">
-		</field> -->
 
 		<field property="residenceCandidate" depends="required" page="5">
 			<arg0 key="label.schoolRegistration.residenceCandidate" />			

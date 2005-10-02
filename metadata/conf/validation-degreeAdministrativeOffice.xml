@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- @validation.doctype@ -->
+<!DOCTYPE form-validation PUBLIC "-//Apache Software Foundation//DTD Struts Validation Configuration 1.1//EN" "@validation.doctype.url@">
 
 <form-validation>
 	<formset>
@@ -86,10 +86,10 @@
 		<!-- ==================== View Curricular Course Historic ================== -->
 		<form name="executionYearDegreeCurricularPlanForm">
 			<field property="executionYearID" depends="required" page="1">
-				<arg0 key="message.error.curriculumHistoric.executionYear" bundle="CURRICULUM_HISTORIC_RESOURCES" resource="true"/>
+				<arg0 key="message.error.curriculumHistoric.executionYear" resource="true"/>
 			</field>
 			<field property="degreeCurricularPlanID" depends="required" page="2">
-				<arg0 key="message.error.curriculumHistoric.degreeCurricularPlan" bundle="CURRICULUM_HISTORIC_RESOURCES" resource="true"/>
+				<arg0 key="message.error.curriculumHistoric.degreeCurricularPlan" resource="true"/>
 			</field>
 		</form>
 	

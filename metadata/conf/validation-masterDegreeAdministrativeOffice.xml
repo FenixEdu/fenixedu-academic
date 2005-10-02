@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!-- @validation.doctype@ -->
+<!DOCTYPE form-validation PUBLIC "-//Apache Software Foundation//DTD Struts Validation Configuration 1.1//EN" "@validation.doctype.url@">
 
 <form-validation>
   <formset>
@@ -7,7 +7,7 @@
 			<field property="startDate" depends="required, mask, date" page="1">
 				<msg name="date" key="errors.invalid.date"/>
    				<msg name="mask" key="errors.invalid.date"/>
-				<arg0 key="message.testBeginDate" resource="true"/>
+				<arg0 key="message.testBeginDate"/>
 				<var>
          		  <var-name>datePattern</var-name>
          		  <var-value>dd/MM/yyyy</var-value>
@@ -22,25 +22,25 @@
 		<!-- ****************** Enrollment Without Rules **************************** -->
 		<form name="curricularCoursesEnrollmentWithoutRuleForm">
 			<field property="studentNumber" depends="required,integer" page="1">
-				<arg0 key="label.student.number" resource="true"/>
+				<arg0 key="label.student.number"/>
 			</field>
 			<field property="executionPeriod" depends="required" page="1">
-				<arg0 key="label.executionYear" resource="true"/>
+				<arg0 key="label.executionYear"/>
 			</field>
 			<field property="degreeType" depends="required" page="1">
-				<arg0 key="label.degree.type" resource="true"/>
+				<arg0 key="label.degree.type"/>
 			</field>	
 			<field property="executionDegree" depends="required" page="2">
-				<arg0 key="label.degree.name" resource="true"/>
+				<arg0 key="label.degree.name"/>
 			</field>		
 		</form>
 
 		<form name="getStudentByNumberAndDegreeTypeForThesisForm">
 			<field property="degreeType" depends="required" page="1">
-				<arg0 key="error.no.degree.type.selected" resource="true"/>
+				<arg0 key="error.no.degree.type.selected"/>
 			</field>
 			<field property="studentNumber" depends="required,integer" page="1">
-				<arg0 key="error.no.student.selected" resource="true"/>
+				<arg0 key="error.no.student.selected"/>
 			</field>
 		</form>
 
@@ -415,10 +415,10 @@
     	<!-- validation for the Choose Certificate Info Form -->
     <form name="choosePersonForm">  
       <field property="studentNumber" depends="integer" page="1">
-		<arg0 key="label.masterDegree.administrativeOffice.studentNumber" resource="true"/>
+		<arg0 key="label.masterDegree.administrativeOffice.studentNumber"/>
       </field>
       <field property="identificationDocumentNumber" depends="requiredif" page="1">
-		<arg0 key="label.identificationDocumentNumber" resource="true"/>
+		<arg0 key="label.identificationDocumentNumber"/>
 		<var>
 			<var-name>field[0]</var-name>
 			<var-value>studentNumber</var-value>
@@ -429,7 +429,7 @@
 		</var>
       </field>
       <field property="identificationDocumentType" depends="requiredif" page="1">
-		<arg0 key="label.identificationDocumentType" resource="true"/>
+		<arg0 key="label.identificationDocumentType"/>
 		<var>
 			<var-name>field[0]</var-name>
 			<var-value>identificationDocumentNumber</var-value>
@@ -461,7 +461,7 @@
       </field>
 
   	  <field property="givenCreditsRemarks" depends="requiredif" page="1">
-		<arg0 key="message.additionalCreditsJustification" resource="true"/>
+		<arg0 key="message.additionalCreditsJustification"/>
 		<var>
 			<var-name>field[0]</var-name>
 			<var-value>attributedCredits</var-value>
@@ -508,7 +508,7 @@
 			        <arg0 key="label.masterDegree.administrativeOffice.graduationType" />
 			 </field>
 			<field property="studentNumber" depends="required,integer" page="1">
-				<arg0 key="error.no.student.selected" resource="true"/>
+				<arg0 key="error.no.student.selected"/>
 			</field>
 	</form>
 
@@ -628,7 +628,7 @@
         <arg0 key="label.person.nationality" />
       </field>
 	  <field property="studentNumber" depends="required,integer" page="1">
-			<arg0 key="error.no.student.selected" resource="true"/>
+			<arg0 key="error.no.student.selected"/>
 	  </field>
     </form>
 
@@ -636,7 +636,7 @@
 
 	<form name="chooseGuideStateForm">
 		<field property="year" depends="integer" page="1">
-			<arg0 key="label.masterDegree.administrativeOffice.guideYear" resource="true"/>
+			<arg0 key="label.masterDegree.administrativeOffice.guideYear"/>
 		</field>
 	</form>
 	
@@ -658,7 +658,7 @@
 	<form name="changeMasterDegreeProofForm">
 		<field 	property="proofDateYear"
 	       		depends="validateDate" page="1">
-	       	<arg0 key="label.masterDegree.administrativeOffice.proofDate" resource="true" />
+	       	<arg0 key="label.masterDegree.administrativeOffice.proofDate" />
 	        <var>
 	        	<var-name>month</var-name>
 	        	<var-value>proofDateMonth</var-value>
@@ -670,7 +670,7 @@
         </field>
         <field 	property="thesisDeliveryDateYear"
 	       		depends="validateDate" page="1">
-	       	<arg0 key="label.masterDegree.administrativeOffice.thesisDeliveryDate" resource="true" />
+	       	<arg0 key="label.masterDegree.administrativeOffice.thesisDeliveryDate" />
 	        <var>
 	        	<var-name>month</var-name>
 	        	<var-value>thesisDeliveryDateMonth</var-value>
@@ -735,13 +735,13 @@
 	
 	<form name="exemptionGratuityForm">
 		<field property="valueExemptionGratuity" depends="required" page="1">
-	        <arg0 key="label.exemptionGratuity.value"  resource="true"/>
+	        <arg0 key="label.exemptionGratuity.value" />
 		</field>
 		<field property="justificationExemptionGratuity" depends="required" page="1">
-	        <arg0 key="label.exemptionGratuity.justification"  resource="true"/>
+	        <arg0 key="label.exemptionGratuity.justification" />
 		</field>
 		<field property="otherValueExemptionGratuity" depends="requiredif, integer" page="1">
-			<arg0 key="label.exemptionGratuity.value" resource="true"/>
+			<arg0 key="label.exemptionGratuity.value"/>
 			<var>
 				<var-name>field[0]</var-name>
 				<var-value>valueExemptionGratuity</var-value>
@@ -756,7 +756,7 @@
 			</var>
 		</field>
 		<field property="otherJustificationExemptionGratuity" depends="requiredif" page="1">
-			<arg0 key="label.exemptionGratuity.justification" resource="true" />
+			<arg0 key="label.exemptionGratuity.justification" />
 			<var>
 				<var-name>field[0]</var-name>
 				<var-value>justificationExemptionGratuity</var-value>

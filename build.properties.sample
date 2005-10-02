@@ -316,6 +316,16 @@ roleback.filename=/tmp/roleback.sql
 #
 #
 #------------------------------------------------------------------------------
+# Validation/Verification Configuration
+#------------------------------------------------------------------------------
+#
+#   verify_serializable: flag that enables/disables serialization checking of
+#                        service results
+#
+struts.validation.doctype.url=file:///home/marvin/workspace/fenix_head/metadata/dtds/validator_1_0.dtd
+#
+#
+#------------------------------------------------------------------------------
 # End of build.properties.sample file
 #------------------------------------------------------------------------------
 
