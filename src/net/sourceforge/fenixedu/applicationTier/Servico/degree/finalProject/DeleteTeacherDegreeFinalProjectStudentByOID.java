@@ -5,9 +5,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.degree.finalProject;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.DeleteDomainObjectService;
+import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author jpvl
@@ -30,4 +32,20 @@ public class DeleteTeacherDegreeFinalProjectStudentByOID extends DeleteDomainObj
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentTeacherDegreeFinalProjectStudent();
     }
+	
+    /* (non-Javadoc)
+	 * @see net.sourceforge.fenixedu.applicationTier.Servico.framework.DeleteDomainObjectService#deleteDomainObject(net.sourceforge.fenixedu.domain.IDomainObject)
+	 */
+	protected void deleteDomainObject(IDomainObject domainObject) {
+		try{
+	      ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+	      IPersistentObject persistentObject = getIPersistentObject(sp);
+	      persistentObject.deleteByOID(getDomainObjectClass(), domainObject.getIdInternal());
+			
+		} catch (Exception e) {
+			
+		}
+		
+	}
+
 }

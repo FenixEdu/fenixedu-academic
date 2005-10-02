@@ -30,7 +30,7 @@ public abstract class DeleteDomainObjectService implements IService {
                 throw new NonExistingServiceException("The object does not exist");
             }
             doBeforeDelete(domainObject, sp);
-            persistentObject.deleteByOID(getDomainObjectClass(), objectId);
+			deleteDomainObject(domainObject);
             doAfterDelete(domainObject, sp);
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException("Problems on database!", e);
@@ -76,4 +76,8 @@ public abstract class DeleteDomainObjectService implements IService {
      */
     protected abstract IPersistentObject getIPersistentObject(ISuportePersistente sp)
             throws ExcepcaoPersistencia;
+	
+	protected abstract void deleteDomainObject(IDomainObject domainObject);
+	
+	
 }

@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.grant.contract.IGrantSubsidy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractMovement;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantInsurance;
@@ -187,4 +188,20 @@ public class DeleteGrantContract extends DeleteDomainObjectService {
             }
         }
     }
+	
+    /* (non-Javadoc)
+	 * @see net.sourceforge.fenixedu.applicationTier.Servico.framework.DeleteDomainObjectService#deleteDomainObject(net.sourceforge.fenixedu.domain.IDomainObject)
+	 */
+	protected void deleteDomainObject(IDomainObject domainObject) {
+		try{
+	      ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+	      IPersistentObject persistentObject = getIPersistentObject(sp);
+	      persistentObject.deleteByOID(getDomainObjectClass(), domainObject.getIdInternal());
+			
+		} catch (Exception e) {
+			
+		}
+		
+	}
+
 }
