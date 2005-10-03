@@ -888,6 +888,10 @@ class net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence
 class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixedu.domain.DomainObject {
 	String ojbConcreteClass;
 	String publishmentMessage;
+	
+	interface "
+	public java.util.List<IExecutionCourse> getAttendingExecutionCoursesFor(IStudent student);
+	"
 }
 
 
