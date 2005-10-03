@@ -38,6 +38,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstan
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
+import sun.text.Normalizer;
 
 public class SearchPerson implements IService {
 
@@ -85,10 +86,11 @@ public class SearchPerson implements IService {
         }
 
         String[] nameWords = name.split(" ");
+        normalizeName(nameWords);
 
         if (roleBd == null) {
             persons = (List<IPerson>) persistentPerson.readAll(Person.class);
-        
+
         } else {
 
             if (roleBd.getRoleType().equals(RoleType.TEACHER)) {
@@ -124,7 +126,7 @@ public class SearchPerson implements IService {
                         persons.add(student.getPerson());
                     }
                 } else {
-                    
+
                     List<IStudent> students = (List<IStudent>) sp.getIPersistentStudent().readAll(
                             Student.class);
 
@@ -140,16 +142,16 @@ public class SearchPerson implements IService {
                 }
             }
 
-        }       
-        
+        }
+
         allValidPersons = getValidPersons(nameWords, persons);
         totalPersons = allValidPersons.size();
-        
-        if(totalPersons.intValue() > SessionConstants.LIMIT_FINDED_PERSONS_TOTAL){
+
+        if (totalPersons.intValue() > SessionConstants.LIMIT_FINDED_PERSONS_TOTAL) {
             throw new FenixServiceException("error.search.person");
         }
-       
-        Collections.sort(allValidPersons, new BeanComparator("nome"));        
+
+        Collections.sort(allValidPersons, new BeanComparator("nome"));
         objects = getIntervalPersons(startIndex, allValidPersons);
 
         List<InfoPerson> infoPersons = new ArrayList<InfoPerson>();
@@ -167,12 +169,23 @@ public class SearchPerson implements IService {
         return result;
     }
 
+    private void normalizeName(String[] nameWords) {
+        for (int i = 0; i < nameWords.length; i++) {
+            nameWords[i] = normalize(nameWords[i]);
+        }
+    }
+
+    private String normalize(String string) {
+        return Normalizer.normalize(string, Normalizer.DECOMP, Normalizer.DONE)
+                .replaceAll("[^\\p{ASCII}]", "").toLowerCase();
+    }
+
     private List<IPerson> getValidDegreeTypePersons(IDegree degree, List<IStudent> students,
             DegreeType degreeType) {
 
         List<IPerson> allValidPersons = new ArrayList<IPerson>();
 
-        for (IStudent student : students) {            
+        for (IStudent student : students) {
             if (student.getDegreeType().equals(degreeType)) {
                 if (degree != null) {
                     List<IStudentCurricularPlan> studentsCurrPlans = student.getStudentCurricularPlans();
@@ -187,7 +200,7 @@ public class SearchPerson implements IService {
                         }
                     }
                 } else {
-                    allValidPersons.add(student.getPerson());                   
+                    allValidPersons.add(student.getPerson());
                 }
             }
         }
@@ -222,11 +235,12 @@ public class SearchPerson implements IService {
         List<IPerson> persons_ = new ArrayList();
 
         for (IPerson person : persons) {
-            if (person.getNome() != null) {
-                String personName = person.getNome().toLowerCase();
+            String personName = person.getNome(); 
+            if (personName != null) {
+                personName = normalize(personName);
                 int count = 0;
                 for (int i = 0; i < nameWords.length; i++) {
-                    String name_ = nameWords[i].toLowerCase();
+                    String name_ = nameWords[i];
                     if (personName.indexOf(name_) != -1) {
                         count++;
                     }
