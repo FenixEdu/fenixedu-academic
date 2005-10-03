@@ -78,9 +78,7 @@ public class FindPersonAction extends FenixDispatchAction {
                     Object[] args = { degreeType };
                     List nonMasterDegree = (List) ServiceUtils.executeService(null,
                             "ReadAllDegreesByType", args);
-
-                    // nonMasterDegree.add(new LabelValueBean("[Escolha o
-                    // curso]", null));
+                    
                     request.setAttribute("nonMasterDegree", nonMasterDegree);
                     request.setAttribute("degreeType", true);
                 }
@@ -172,13 +170,17 @@ public class FindPersonAction extends FenixDispatchAction {
         try {
             personListFinded = (List) ServiceManagerServiceFactory.executeService(userView,
                     "SearchPerson", args);
-        } catch (FenixServiceException e) {
-            e.printStackTrace();
+       
+        } catch (FenixServiceException e) {           
+            errors.add("impossibleFindPerson", new ActionError(e.getMessage()));
+            saveErrors(request, errors);            
+            return mapping.getInputForward();
+        }
+               
+        if (personListFinded == null || personListFinded.size() < 3) {
             errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
         }
-        if (personListFinded == null || personListFinded.size() < 2) {
-            errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
-        }
+        
         List infoPerson = (List) personListFinded.get(1);
         if (infoPerson.isEmpty()) {
             findPersonForm.set("roleType", "");

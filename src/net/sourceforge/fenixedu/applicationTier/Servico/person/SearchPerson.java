@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
@@ -45,7 +46,7 @@ public class SearchPerson implements IService {
      * the number of elements returned by the main search, The second is a list
      * with the elemts returned by the limited search.
      */
-    public List run(HashMap searchParameters) throws ExcepcaoPersistencia {
+    public List run(HashMap searchParameters) throws ExcepcaoPersistencia, FenixServiceException {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
         IPersistentRole persistentRole = sp.getIPersistentRole();
@@ -65,7 +66,7 @@ public class SearchPerson implements IService {
         List<IPerson> persons = new ArrayList<IPerson>();
         List<IPerson> allValidPersons = new ArrayList<IPerson>();
         List<ITeacher> teachers = new ArrayList<ITeacher>();
-        List<Object> objects = new ArrayList();
+        List<Object> objects = new ArrayList<Object>();
         Integer totalPersons = null;
 
         if (roleType != null && roleType.length() > 0) {
@@ -139,12 +140,16 @@ public class SearchPerson implements IService {
                 }
             }
 
-        }
-
+        }       
+        
         allValidPersons = getValidPersons(nameWords, persons);
-        Collections.sort(allValidPersons, new BeanComparator("nome"));
         totalPersons = allValidPersons.size();
-
+        
+        if(totalPersons.intValue() > 100){
+            throw new FenixServiceException("error.search.person");
+        }
+       
+        Collections.sort(allValidPersons, new BeanComparator("nome"));        
         objects = getIntervalPersons(startIndex, allValidPersons);
 
         List<InfoPerson> infoPersons = new ArrayList<InfoPerson>();
@@ -153,11 +158,11 @@ public class SearchPerson implements IService {
             infoPersons.add(InfoPerson.newInfoFromDomain(person));
         }
 
-        List<Object> result = new ArrayList<Object>(3);
-        result.add(totalPersons);
-        result.add(infoPersons);
-        result.add(objects.get(1));
-        result.add(objects.get(2));
+        List<Object> result = new ArrayList<Object>(4);
+        result.add(0, totalPersons);
+        result.add(1, infoPersons);
+        result.add(2, objects.get(1));
+        result.add(3, objects.get(2));
 
         return result;
     }

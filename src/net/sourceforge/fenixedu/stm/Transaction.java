@@ -53,6 +53,12 @@ public abstract class Transaction extends jvstm.Transaction {
 	}
     }
 
+    public static void abort(){
+        jvstm.Transaction.abort();
+        Transaction.begin();
+        Transaction.currentFenixTransaction().setReadOnly();
+    }
+    
     public static FenixTransaction currentFenixTransaction() {
 	return (FenixTransaction)current();
     }
