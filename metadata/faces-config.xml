@@ -73,6 +73,26 @@
 	</managed-bean>
 	<!-- END: STUDENT Managed Beans -->
 	
+
+	<!-- BEGIN: TEACHER Managed Beans -->
+
+	<managed-bean>
+		<description>EvaluationManagementBackingBean</description>
+		<managed-bean-name>evaluationManagementBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<description>EvaluationManagementMenuBackingBean</description>
+		<managed-bean-name>evaluationManagementMenuBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementMenuBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<!-- END: TEACHER Managed Beans -->
+	
+	
 	<!-- NAVIGATION RULES -->
 	
 	<navigation-rule>
@@ -125,4 +145,26 @@
 	</navigation-rule>
 	<!-- END: STUDENT Navigation Rules -->
 		
+		
+	<!-- BEGIN: TEACHER Navigation Rules -->
+
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/examsIndex.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>enterEditExamEnrolmentPeriod</from-outcome>
+			<to-view-id>/teacher/evaluation/editExamEnrolmentPeriod.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/editExamEnrolmentPeriod.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/teacher/evaluation/examsIndex.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- END: TEACHER Navigation Rules -->
+
+
 </faces-config>

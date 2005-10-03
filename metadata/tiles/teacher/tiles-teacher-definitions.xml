@@ -43,6 +43,10 @@
 	  <put name="body" value="/commons/blank.jsp" />
 	</definition>
 	
+	<definition name="df.teacher.evaluation-management" extends="definition.teacher.two-column">
+	    <put name="navLocal" value="/teacher/evaluation/evaluationMenu.jsp"/>
+	</definition>
+	
 	<definition name="df.teacher.execution-course-management" extends="definition.teacher.two-column">
 	    <put name="navLocal" value="/teacher/commons/localNavBar.jsp"/>		
 		<put name="body-context" value="/teacher/executionCourseName.jsp"></put>
