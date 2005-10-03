@@ -15,7 +15,6 @@
 	<li><html:link page="/warningFirst.do" titleKey="link.title.student.enrollment"><bean:message key="link.student.enrollment"/></html:link></li>
 	<li><html:link page="/studentShiftEnrollmentManager.do?method=prepareStartViewWarning" titleKey="link.title.shift.enrolment"><bean:message key="link.shift.enrolment"/></html:link></li>
 	<li><html:link page="/viewEnroledExecutionCourses.do" titleKey="link.title.groupEnrolment"><bean:message key="link.groupEnrolment" /></html:link></li>
-	<li><html:link page="/examEnrollmentManager.do?method=viewExamsToEnroll" titleKey="link.title.exams.enrolment" ><bean:message key="link.exams.enrolment"/></html:link></li>	
 	<li><html:link page="/enrollment/evaluationsEnrolmentManager.faces" titleKey="link.title.evaluations.enrolment" ><bean:message key="link.evaluations.enrolment"/></html:link></li>
 	<li><html:link page="/listAllSeminaries.do" titleKey="link.title.seminaries.enrolment" ><bean:message key="link.seminaries.enrolment"/></html:link>	<a href="<bean:message key="link.seminaries.rules"/>" title="<bean:message key="link.title.seminaries.rules"/>" target="_blank"><bean:message key="label.seminairies.seeRules"/></a></li> 
 	<li class="navheader"><bean:message key="link.student.seniorTitle"/></li>

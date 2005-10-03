@@ -381,12 +381,6 @@
               validate="true">
         <forward name="sucess" path="/viewEnrollment.do"/>
       </action>
-      
-       <action type="net.sourceforge.fenixedu.presentationTier.Action.student.ExamEnrollmentManager"
-              path="/examEnrollmentManager"
-              parameter="method">
-        <forward name="sucess" path="/viewExams.jsp"/>
-      </action>
 
       <action type="net.sourceforge.fenixedu.presentationTier.Action.Seminaries.ListAllSeminaries"
               path="/listAllSeminaries"
