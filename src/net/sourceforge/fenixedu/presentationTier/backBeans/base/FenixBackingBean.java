@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.base;
 
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
@@ -22,5 +23,16 @@ public class FenixBackingBean {
 
     public void setUserView(IUserView userView) {
         this.userView = userView;
-    }    
+    }
+
+    protected String getRequestParameter(String parameterName) {
+        return (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
+                .get(parameterName);
+    }
+
+    public String getContextPath() {
+        return ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest())
+                .getContextPath();
+    }
+
 }
