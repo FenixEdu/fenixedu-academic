@@ -4,10 +4,8 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.component.UIParameter;
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -152,7 +150,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     public Integer getEnrolmentBeginMonth() throws FenixFilterException, FenixServiceException {
         if (this.enrolmentBeginMonth == null && this.getEvaluation().getEnrollmentBeginDay() != null) {
-            this.enrolmentBeginMonth = this.getEvaluation().getEnrollmentBeginDay().get(Calendar.MONTH);
+            this.enrolmentBeginMonth = this.getEvaluation().getEnrollmentBeginDay().get(Calendar.MONTH) + 1;
         }       
         return enrolmentBeginMonth;
     }
@@ -207,7 +205,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     public Integer getEnrolmentEndMonth() throws FenixFilterException, FenixServiceException {
         if (this.enrolmentEndMonth == null && this.getEvaluation().getEnrollmentEndDay() != null) {
-            this.enrolmentEndMonth = this.getEvaluation().getEnrollmentEndDay().get(Calendar.MONTH);
+            this.enrolmentEndMonth = this.getEvaluation().getEnrollmentEndDay().get(Calendar.MONTH) + 1;
         }       
         return enrolmentEndMonth;
     }
@@ -281,7 +279,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         Calendar enrolmentEndTime = getEnrolmentEnd();
 
         final Object[] args = { getExecutionCourseID(), getEvaluationID(), enrolmentBeginDay,
-                enrolmentBeginTime, enrolmentEndDay, enrolmentEndTime };
+                enrolmentEndDay, enrolmentBeginTime, enrolmentEndTime };
 
         try {
             ServiceUtils.executeService(getUserView(), "EditWrittenEvaluationEnrolmentPeriod", args);
