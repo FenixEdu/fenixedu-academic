@@ -117,7 +117,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.evaluationIdHidden = evaluationIdHidden;
     }
 
-    public Integer getEnrolmentBeginDay() {
+    public Integer getEnrolmentBeginDay() throws FenixFilterException, FenixServiceException {
         if (this.enrolmentBeginDay == null && this.getEvaluation().getEnrollmentBeginDay() != null) {
             this.enrolmentBeginDay = this.getEvaluation().getEnrollmentBeginDay().get(Calendar.DAY_OF_MONTH);
         }
@@ -128,7 +128,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.enrolmentBeginDay = enrolmentBeginDay;
     }
 
-    public Integer getEnrolmentBeginHour() {
+    public Integer getEnrolmentBeginHour() throws FenixFilterException, FenixServiceException {
         if (this.enrolmentBeginHour == null && this.getEvaluation().getEnrollmentBeginTime() != null) {
             this.enrolmentBeginHour = this.getEvaluation().getEnrollmentBeginTime().get(Calendar.HOUR_OF_DAY);
         }
@@ -139,7 +139,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.enrolmentBeginHour = enrolmentBeginHour;
     }
 
-    public Integer getEnrolmentBeginMinute() {
+    public Integer getEnrolmentBeginMinute() throws FenixFilterException, FenixServiceException {
         if (this.enrolmentBeginMinute == null && this.getEvaluation().getEnrollmentBeginTime() != null) {
             this.enrolmentBeginMinute = this.getEvaluation().getEnrollmentBeginTime().get(Calendar.MINUTE);
         }
@@ -150,7 +150,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.enrolmentBeginMinute = enrolmentBeginMinute;
     }
 
-    public Integer getEnrolmentBeginMonth() {
+    public Integer getEnrolmentBeginMonth() throws FenixFilterException, FenixServiceException {
         if (this.enrolmentBeginMonth == null && this.getEvaluation().getEnrollmentBeginDay() != null) {
             this.enrolmentBeginMonth = this.getEvaluation().getEnrollmentBeginDay().get(Calendar.MONTH);
         }       
@@ -161,7 +161,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.enrolmentBeginMonth = enrolmentBeginMonth;
     }
 
-    public Integer getEnrolmentBeginYear() {
+    public Integer getEnrolmentBeginYear() throws FenixFilterException, FenixServiceException {
         if (this.enrolmentBeginYear == null && this.getEvaluation().getEnrollmentBeginDay() != null) {
             this.enrolmentBeginYear = this.getEvaluation().getEnrollmentBeginDay().get(Calendar.YEAR);
         }       
@@ -172,7 +172,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.enrolmentBeginYear = enrolmentBeginYear;
     }
 
-    public Integer getEnrolmentEndDay() {
+    public Integer getEnrolmentEndDay() throws FenixFilterException, FenixServiceException {
         if (this.enrolmentEndDay == null && this.getEvaluation().getEnrollmentEndDay() != null) {
             this.enrolmentEndDay = this.getEvaluation().getEnrollmentEndDay().get(Calendar.DAY_OF_MONTH);
         }
@@ -183,7 +183,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.enrolmentEndDay = enrolmentEndDay;
     }
 
-    public Integer getEnrolmentEndHour() {
+    public Integer getEnrolmentEndHour() throws FenixFilterException, FenixServiceException {
         if (this.enrolmentEndHour == null && this.getEvaluation().getEnrollmentEndTime() != null) {
             this.enrolmentEndHour = this.getEvaluation().getEnrollmentEndTime().get(Calendar.HOUR_OF_DAY);
         }
@@ -194,7 +194,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.enrolmentEndHour = enrolmentEndHour;
     }
 
-    public Integer getEnrolmentEndMinute() {
+    public Integer getEnrolmentEndMinute() throws FenixFilterException, FenixServiceException {
         if (this.enrolmentEndMinute == null && this.getEvaluation().getEnrollmentEndTime() != null) {
             this.enrolmentEndMinute = this.getEvaluation().getEnrollmentEndTime().get(Calendar.MINUTE);
         }
@@ -205,7 +205,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.enrolmentEndMinute = enrolmentEndMinute;
     }
 
-    public Integer getEnrolmentEndMonth() {
+    public Integer getEnrolmentEndMonth() throws FenixFilterException, FenixServiceException {
         if (this.enrolmentEndMonth == null && this.getEvaluation().getEnrollmentEndDay() != null) {
             this.enrolmentEndMonth = this.getEvaluation().getEnrollmentEndDay().get(Calendar.MONTH);
         }       
@@ -216,7 +216,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.enrolmentEndMonth = enrolmentEndMonth;
     }
 
-    public Integer getEnrolmentEndYear() {
+    public Integer getEnrolmentEndYear() throws FenixFilterException, FenixServiceException {
         if (this.enrolmentEndYear == null && this.getEvaluation().getEnrollmentEndDay() != null) {
             this.enrolmentEndYear = this.getEvaluation().getEnrollmentEndDay().get(Calendar.YEAR);
         }       
@@ -256,7 +256,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return null;
     }
 
-    private Calendar getEnrolmentBegin() {
+    private Calendar getEnrolmentBegin() throws FenixFilterException, FenixServiceException {
         Calendar result = Calendar.getInstance();
 
         result.set(getEnrolmentBeginYear(), getEnrolmentBeginMonth() - 1, getEnrolmentBeginDay(),
@@ -265,7 +265,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return result;
     }
 
-    private Calendar getEnrolmentEnd() {
+    private Calendar getEnrolmentEnd() throws FenixFilterException, FenixServiceException {
         Calendar result = Calendar.getInstance();
 
         result.set(getEnrolmentEndYear(), getEnrolmentEndMonth() - 1, getEnrolmentEndDay(),
@@ -274,7 +274,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return result;
     }
 
-    public String editEvaluationEnrolmentPeriod() {
+    public String editEvaluationEnrolmentPeriod() throws FenixFilterException, FenixServiceException {
         Calendar enrolmentBeginDay = getEnrolmentBegin();
         Calendar enrolmentBeginTime = getEnrolmentBegin();
         Calendar enrolmentEndDay = getEnrolmentEnd();
