@@ -41,7 +41,7 @@
 						</h:panelGroup>
 						<h:panelGroup>
 							<h:outputText value="#{bundle['label.day']}: " styleClass="boldFontClass" />
-							<h:outputFormat value="{0, date, MM/dd/yy}<br/>" escape="false">
+							<h:outputFormat value="{0, date, dd/MM/yy}<br/>" escape="false">
 								<f:param value="#{unenroledEvaluation.dayDate}"/>
 							</h:outputFormat>
 							<h:outputText value="#{bundle['label.hour']}: " styleClass="boldFontClass" />
@@ -56,12 +56,12 @@
 						<h:panelGroup>
 							<h:outputText value="#{bundle['label.enrolmentPeriod']}<br/>" escape="false" styleClass="boldFontClass" />
 							<h:outputText value="#{bundle['label.enrolmentBegin']}: "/>
-							<h:outputFormat value="{0, date, MM/dd/yy} - {1, date, HH:mm} <br/>" escape="false">
+							<h:outputFormat value="{0, date, dd/MM/yy} - {1, date, HH:mm} <br/>" escape="false">
 								<f:param value="#{unenroledEvaluation.enrollmentBeginDayDate}"/>
 								<f:param value="#{unenroledEvaluation.enrollmentBeginTimeDate}"/>
 							</h:outputFormat>
 							<h:outputText value="#{bundle['label.enrolmentEnd']}: "/>
-							<h:outputFormat value="{0, date, MM/dd/yy} - {1, date, HH:mm} <br/>" escape="false">
+							<h:outputFormat value="{0, date, dd/MM/yy} - {1, date, HH:mm} <br/>" escape="false">
 								<f:param value="#{unenroledEvaluation.enrollmentEndDayDate}"/>
 								<f:param value="#{unenroledEvaluation.enrollmentEndTimeDate}"/>
 							</h:outputFormat>					
@@ -98,7 +98,7 @@
 						</h:panelGroup>
 						<h:panelGroup>
 							<h:outputText value="#{bundle['label.day']}: " styleClass="boldFontClass" />
-							<h:outputFormat value="{0, date, MM/dd/yy}<br/>" escape="false">
+							<h:outputFormat value="{0, date, dd/MM/yy}<br/>" escape="false">
 								<f:param value="#{enroledEvaluation.dayDate}"/>
 							</h:outputFormat>
 							<h:outputText value="#{bundle['label.hour']}: " styleClass="boldFontClass" />
@@ -113,12 +113,12 @@
 						<h:panelGroup>
 							<h:outputText value="#{bundle['label.enrolmentPeriod']}<br/>" escape="false" styleClass="boldFontClass" />
 							<h:outputText value="#{bundle['label.enrolmentBegin']}: "/>
-							<h:outputFormat value="{0, date, MM/dd/yy} - {1, date, HH:mm} <br/>" escape="false">
+							<h:outputFormat value="{0, date, dd/MM/yy} - {1, date, HH:mm} <br/>" escape="false">
 								<f:param value="#{enroledEvaluation.enrollmentBeginDayDate}"/>
 								<f:param value="#{enroledEvaluation.enrollmentBeginTimeDate}"/>
 							</h:outputFormat>
 							<h:outputText value="#{bundle['label.enrolmentEnd']}: "/>
-							<h:outputFormat value="{0, date, MM/dd/yy} - {1, date, HH:mm} <br/>" escape="false">
+							<h:outputFormat value="{0, date, dd/MM/yy} - {1, date, HH:mm} <br/>" escape="false">
 								<f:param value="#{enroledEvaluation.enrollmentEndDayDate}"/>
 								<f:param value="#{enroledEvaluation.enrollmentEndTimeDate}"/>
 							</h:outputFormat>					
@@ -157,7 +157,7 @@
 						<h:outputText value="#{unenroledEvaluation.description}" />
 						<h:panelGroup>
 							<h:outputText value="#{bundle['label.day']}: " styleClass="boldFontClass" />
-							<h:outputFormat value="{0, date, MM/dd/yy}<br/>" escape="false">
+							<h:outputFormat value="{0, date, dd/MM/yy}<br/>" escape="false">
 								<f:param value="#{unenroledEvaluation.dayDate}"/>
 							</h:outputFormat>
 							<h:outputText value="#{bundle['label.hour']}: " styleClass="boldFontClass" />
@@ -172,12 +172,12 @@
 						<h:panelGroup>
 							<h:outputText value="#{bundle['label.enrolmentPeriod']}<br/>" escape="false" styleClass="boldFontClass" />
 							<h:outputText value="#{bundle['label.enrolmentBegin']}: "/>
-							<h:outputFormat value="{0, date, MM/dd/yy} - {1, date, HH:mm} <br/>" escape="false">
+							<h:outputFormat value="{0, date, dd/MM/yy} - {1, date, HH:mm} <br/>" escape="false">
 								<f:param value="#{unenroledEvaluation.enrollmentBeginDayDate}"/>
 								<f:param value="#{unenroledEvaluation.enrollmentBeginTimeDate}"/>
 							</h:outputFormat>
 							<h:outputText value="#{bundle['label.enrolmentEnd']}: "/>
-							<h:outputFormat value="{0, date, MM/dd/yy} - {1, date, HH:mm} <br/>" escape="false">
+							<h:outputFormat value="{0, date, dd/MM/yy} - {1, date, HH:mm} <br/>" escape="false">
 								<f:param value="#{unenroledEvaluation.enrollmentEndDayDate}"/>
 								<f:param value="#{unenroledEvaluation.enrollmentEndTimeDate}"/>
 							</h:outputFormat>					
@@ -211,7 +211,7 @@
 						<h:outputText value="#{enroledEvaluation.description}" />
 						<h:panelGroup>
 							<h:outputText value="#{bundle['label.day']}: " styleClass="boldFontClass" />
-							<h:outputFormat value="{0, date, MM/dd/yy}<br/>" escape="false">
+							<h:outputFormat value="{0, date, dd/MM/yy}<br/>" escape="false">
 								<f:param value="#{enroledEvaluation.dayDate}"/>
 							</h:outputFormat>
 							<h:outputText value="#{bundle['label.hour']}: " styleClass="boldFontClass" />
@@ -226,12 +226,12 @@
 						<h:panelGroup>
 							<h:outputText value="#{bundle['label.enrolmentPeriod']}<br/>" escape="false" styleClass="boldFontClass" />
 							<h:outputText value="#{bundle['label.enrolmentBegin']}: "/>
-							<h:outputFormat value="{0, date, MM/dd/yy} - {1, date, HH:mm} <br/>" escape="false">
+							<h:outputFormat value="{0, date, dd/MM/yy} - {1, date, HH:mm} <br/>" escape="false">
 								<f:param value="#{enroledEvaluation.enrollmentBeginDayDate}"/>
 								<f:param value="#{enroledEvaluation.enrollmentBeginTimeDate}"/>
 							</h:outputFormat>
 							<h:outputText value="#{bundle['label.enrolmentEnd']}: "/>
-							<h:outputFormat value="{0, date, MM/dd/yy} - {1, date, HH:mm} <br/>" escape="false">
+							<h:outputFormat value="{0, date, dd/MM/yy} - {1, date, HH:mm} <br/>" escape="false">
 								<f:param value="#{enroledEvaluation.enrollmentEndDayDate}"/>
 								<f:param value="#{enroledEvaluation.enrollmentEndTimeDate}"/>
 							</h:outputFormat>					
