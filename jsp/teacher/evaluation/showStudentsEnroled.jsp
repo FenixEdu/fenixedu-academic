@@ -21,6 +21,7 @@
 		<h:inputHidden binding="#{evaluationManagementBackingBean.executionCourseIdHidden}" />
 		<h:inputHidden binding="#{evaluationManagementBackingBean.evaluationIdHidden}" />
 		
+		<h:outputText value="<h2>#{bundle['label.students.enrolled']}</h2>" escape="false" />
 		<h:panelGrid columns="1" styleClass="tableClass">
 			<h:panelGroup>
 				<h:outputText value="#{bundle['label.exam']}: " styleClass="boldFontClass"/>
@@ -43,9 +44,8 @@
 				<h:outputText value="#{evaluationManagementBackingBean.evaluation.writtenEvaluationEnrolmentsCount}" />
 			</h:panelGroup>						
 		</h:panelGrid>
-		
+		<h:outputText value="<br/>" escape="false" />		
 		<h:panelGrid rendered="#{!empty evaluationManagementBackingBean.evaluation.writtenEvaluationEnrolments}">
-			<h:outputText value="<br><h2>#{bundle['label.students.enrolled.exam']}</h2>" escape="false" />
 			<h:dataTable value="#{evaluationManagementBackingBean.evaluation.writtenEvaluationEnrolments}" var="writtenEvaluationEnrolment" headerClass="listClasses-header" columnClasses="listClasses">
 				<h:column>
 					<f:facet name="header"><h:outputText value="#{bundle['label.number']}"/></f:facet>
@@ -61,7 +61,7 @@
 				</h:column>
 			</h:dataTable>
 		</h:panelGrid>
-		<h:outputText value="<br>" escape="false" />
+		<h:outputText value="<br/>" escape="false" />
 		<h:commandButton styleClass="inputButton" action="back" value="#{bundle['link.goBack']}"></h:commandButton>
 	</h:form>
 </ft:tilesView>
