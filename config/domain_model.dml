@@ -213,7 +213,6 @@ class net.sourceforge.fenixedu.domain.CandidateEnrolment extends net.sourceforge
 class net.sourceforge.fenixedu.domain.CandidateSituation extends net.sourceforge.fenixedu.domain.DomainObject {
 	String remarks;
 	Integer candidateKey;
-	Integer situationKey;
 	Date date;
     State validation;
     SituationName situation;
@@ -387,7 +386,6 @@ class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.f
 	Double theoreticalHours;
 	Integer keyCompetenceCourse;
 	Integer keyStudentCourseReport;
-	Integer keyCourseHistoric;
 	Double labHours;
 	Double credits;
 	Integer enrollmentWeigth;
@@ -2620,7 +2618,6 @@ class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.d
 	Integer number;
 	DegreeType degreeType;
     StudentState state;
-    AgreementType agreementType;
     EntryPhase entryPhase;
     Boolean flunked;
     Boolean requestedChangeDegree;
