@@ -145,7 +145,7 @@ public class SearchPerson implements IService {
         allValidPersons = getValidPersons(nameWords, persons);
         totalPersons = allValidPersons.size();
         
-        if(totalPersons.intValue() > 100){
+        if(totalPersons.intValue() > SessionConstants.LIMIT_FINDED_PERSONS_TOTAL){
             throw new FenixServiceException("error.search.person");
         }
        
