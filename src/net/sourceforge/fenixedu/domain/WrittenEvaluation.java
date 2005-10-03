@@ -229,7 +229,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public void editEnrolmentPeriod(Date enrolmentBeginDay, Date enrolmentEndDay,
-            Date enrolmentBeginTime, Date enrolmentEndTime) {
+            Date enrolmentBeginTime, Date enrolmentEndTime) throws DomainException {
 
         checkEnrolmentDates(enrolmentBeginDay, enrolmentEndDay, enrolmentBeginTime, enrolmentEndTime);
 
@@ -240,7 +240,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     private void checkEnrolmentDates(final Date enrolmentBeginDay, final Date enrolmentEndDay,
-            final Date enrolmentBeginTime, final Date enrolmentEndTime) {
+            final Date enrolmentBeginTime, final Date enrolmentEndTime) throws DomainException {
 
         final Date enrolmentBeginDate = createDate(enrolmentBeginDay, enrolmentBeginTime);
         final Date enrolmentEndDate = createDate(enrolmentEndDay, enrolmentEndTime);
