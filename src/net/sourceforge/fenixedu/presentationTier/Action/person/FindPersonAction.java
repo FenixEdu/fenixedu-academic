@@ -31,67 +31,69 @@ import org.apache.struts.action.DynaActionForm;
 
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
 public class FindPersonAction extends FenixDispatchAction {
     public ActionForward prepareFindPerson(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-    		return mapping.findForward("findPerson");
+        return mapping.findForward("findPerson");
     }
+
     public ActionForward preparePerson(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-    	  
-    	 DynaActionForm findPersonForm = (DynaActionForm) actionForm;
-    	 
-    	 String roleType = null;
-    	 String degreeType = null;
-        
-         if (request.getParameter("roleType") != null
-                 && request.getParameter("roleType").length() > 0) {
-         	roleType =  (String) request.getParameter("roleType");
-         	
-         } else if (findPersonForm.get("roleType") != null) {
-         	roleType =(String) findPersonForm.get("roleType");
-         }
-         if (request.getParameter("degreeType") != null
-                 && request.getParameter("degreeType").length() > 0) {
-         	degreeType =  (String) request.getParameter("degreeType");
-         	
-         } else if (findPersonForm.get("degreeType") != null) {
-         	degreeType =(String) findPersonForm.get("degreeType");
-         }
-                 
-         if (roleType != null ){
-        	 if(roleType.equals(RoleType.EMPLOYEE.getName())||roleType.equals(RoleType.TEACHER.getName())){
-	         	if(roleType.equals(RoleType.TEACHER.getName())){
-        		 List departments = (List) ServiceUtils.executeService(null, "ReadAllDepartments", null);      	
-	         	 request.setAttribute("departments", departments);
-	         	}
-        		 request.removeAttribute("degreeType");
-        	 }
-        	 
-        	 if(roleType.equals(RoleType.STUDENT.getName())){	 
- 
- 			if (degreeType.length() != 0){
-        		 Object[] args = { degreeType };
-    			 List nonMasterDegree = (List) ServiceUtils.executeService(null, "ReadAllDegreesByType", args);
-    			
-    			// nonMasterDegree.add(new LabelValueBean("[Escolha o curso]", null));
-    			 request.setAttribute("nonMasterDegree",nonMasterDegree);
-    			 request.setAttribute("degreeType", true);
- 			}
 
-        		 findPersonForm.set("degreeType",degreeType);
-  	             request.setAttribute("degreeType",degreeType);
-         	 }
-        	
-        	 findPersonForm.set("roleType",roleType);
-             request.setAttribute("roleType", roleType);
-             
-         }
-         
-        
-       
+        DynaActionForm findPersonForm = (DynaActionForm) actionForm;
+
+        String roleType = null;
+        String degreeType = null;
+
+        if (request.getParameter("roleType") != null && request.getParameter("roleType").length() > 0) {
+            roleType = (String) request.getParameter("roleType");
+
+        } else if (findPersonForm.get("roleType") != null) {
+            roleType = (String) findPersonForm.get("roleType");
+        }
+        if (request.getParameter("degreeType") != null
+                && request.getParameter("degreeType").length() > 0) {
+            degreeType = (String) request.getParameter("degreeType");
+
+        } else if (findPersonForm.get("degreeType") != null) {
+            degreeType = (String) findPersonForm.get("degreeType");
+        }
+
+        if (roleType != null) {
+            if (roleType.equals(RoleType.EMPLOYEE.getName())
+                    || roleType.equals(RoleType.TEACHER.getName())) {
+                if (roleType.equals(RoleType.TEACHER.getName())) {
+                    List departments = (List) ServiceUtils.executeService(null, "ReadAllDepartments",
+                            null);
+                    request.setAttribute("departments", departments);
+                }
+                request.removeAttribute("degreeType");
+            }
+
+            if (roleType.equals(RoleType.STUDENT.getName())) {
+
+                if (degreeType.length() != 0) {
+                    Object[] args = { degreeType };
+                    List nonMasterDegree = (List) ServiceUtils.executeService(null,
+                            "ReadAllDegreesByType", args);
+
+                    // nonMasterDegree.add(new LabelValueBean("[Escolha o
+                    // curso]", null));
+                    request.setAttribute("nonMasterDegree", nonMasterDegree);
+                    request.setAttribute("degreeType", true);
+                }
+
+                findPersonForm.set("degreeType", degreeType);
+                request.setAttribute("degreeType", degreeType);
+            }
+
+            findPersonForm.set("roleType", roleType);
+            request.setAttribute("roleType", roleType);
+
+        }
+
         return mapping.findForward("findPerson");
     }
 
@@ -107,8 +109,8 @@ public class FindPersonAction extends FenixDispatchAction {
             name = request.getParameter("name");
         } else if (findPersonForm.get("name") != null) {
             name = (String) findPersonForm.get("name");
-        }                    
-        
+        }
+
         Integer startIndex = null;
         if (request.getParameter("startIndex") != null
                 && request.getParameter("startIndex").length() > 0) {
@@ -116,63 +118,53 @@ public class FindPersonAction extends FenixDispatchAction {
         } else if (findPersonForm.get("startIndex") != null) {
             startIndex = new Integer((String) findPersonForm.get("startIndex"));
         }
-        
+
         String roleType = null;
         Integer departmentId = null;
         Integer degreeId = null;
         String degreeType = null;
-       
-        if (request.getParameter("roleType") != null
-                && request.getParameter("roleType").length() > 0) {
-        	roleType =  (String) request.getParameter("roleType");
-        	
+
+        if (request.getParameter("roleType") != null && request.getParameter("roleType").length() > 0) {
+            roleType = (String) request.getParameter("roleType");
+
         } else if (findPersonForm.get("roleType") != null) {
-        	roleType =(String) findPersonForm.get("roleType");
+            roleType = (String) findPersonForm.get("roleType");
         }
         if (request.getParameter("degreeType") != null
                 && request.getParameter("degreeType").length() > 0) {
-        	degreeType =  (String) request.getParameter("degreeType");
-        	
+            degreeType = (String) request.getParameter("degreeType");
+
         } else if (findPersonForm.get("degreeType") != null) {
-        	degreeType =(String) findPersonForm.get("degreeType");
+            degreeType = (String) findPersonForm.get("degreeType");
         }
         if (request.getParameter("departmentId") != null
                 && request.getParameter("departmentId").length() > 0) {
-   		 departmentId =  Integer.valueOf(request.getParameter("departmentId"));
-        	
+            departmentId = Integer.valueOf(request.getParameter("departmentId"));
+
         } else if (findPersonForm.get("departmentId") != null) {
-       	 departmentId =(Integer) findPersonForm.get("departmentId");
+            departmentId = (Integer) findPersonForm.get("departmentId");
         }
 
-        if (request.getParameter("degreeId") != null 
-        		&& request.getParameter("degreeId").length() > 0) {
-        	degreeId =  Integer.valueOf(request.getParameter("degreeId"));
-        	
+        if (request.getParameter("degreeId") != null && request.getParameter("degreeId").length() > 0) {
+            degreeId = Integer.valueOf(request.getParameter("degreeId"));
+
         } else if (findPersonForm.get("degreeId") != null) {
-        	degreeId =(Integer) findPersonForm.get("degreeId");
+            degreeId = (Integer) findPersonForm.get("degreeId");
         }
-
-
-        
 
         HashMap parametersSearch = new HashMap();
-        parametersSearch.put(new String("name"), putSearchChar(name));
-        parametersSearch.put(new String("email"), putSearchChar(null));
-        parametersSearch.put(new String("username"), putSearchChar(null));
-        parametersSearch.put(new String("documentIdNumber"), putSearchChar(null));
+        parametersSearch.put(new String("name"), name);
         parametersSearch.put(new String("startIndex"), startIndex);
         parametersSearch.put(new String("numberOfElements"), new Integer(
                 SessionConstants.LIMIT_FINDED_PERSONS - 1));
-        parametersSearch.put(new String("roleType"),roleType);
-        if(degreeId != null){
-            parametersSearch.put(new String("degreeId"),new Integer (degreeId));
-       }
-        if(departmentId != null){
-            parametersSearch.put(new String("departmentId"),new Integer (departmentId));
-       }
-        parametersSearch.put(new String("degreeType"),degreeType);
-       
-        
+        parametersSearch.put(new String("roleType"), roleType);
+        if (degreeId != null) {
+            parametersSearch.put(new String("degreeId"), new Integer(degreeId));
+        }
+        if (departmentId != null) {
+            parametersSearch.put(new String("departmentId"), new Integer(departmentId));
+        }
+        parametersSearch.put(new String("degreeType"), degreeType);
 
         Object[] args = { parametersSearch };
 
@@ -188,30 +180,36 @@ public class FindPersonAction extends FenixDispatchAction {
             errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
         }
         List infoPerson = (List) personListFinded.get(1);
-        if (infoPerson.isEmpty()){
-        	findPersonForm.set("roleType","");
-        	findPersonForm.set("name","");
-          	errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
-          	saveErrors(request, errors);
-          	
-          }
+        if (infoPerson.isEmpty()) {
+            findPersonForm.set("roleType", "");
+            findPersonForm.set("name", "");
+            errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
+            saveErrors(request, errors);
+
+        }
         if (!errors.isEmpty()) {
             saveErrors(request, errors);
             return mapping.getInputForward();
         }
-      
+
         request.setAttribute("totalFindedPersons", personListFinded.get(0));
-        request.setAttribute("personListFinded", personListFinded.get(1));
+        request.setAttribute("personListFinded", infoPerson);
         request.setAttribute("name", name);
         request.setAttribute("roleType", roleType);
         request.setAttribute("degreeType", degreeType);
         request.setAttribute("degreeId", degreeId);
         request.setAttribute("departmentId", departmentId);
-        request.setAttribute("previousStartIndex", new Integer(startIndex.intValue()
-                - SessionConstants.LIMIT_FINDED_PERSONS));
-	    request.setAttribute("startIndex", new Integer(startIndex.intValue()
-	                + SessionConstants.LIMIT_FINDED_PERSONS));
+        
+        if ((Integer) personListFinded.get(2) - (Integer) personListFinded.get(3) != SessionConstants.LIMIT_FINDED_PERSONS) {
+            request.setAttribute("previousStartIndex",
+                    ((Integer) personListFinded.get(2) - SessionConstants.LIMIT_FINDED_PERSONS)
+                            - ((Integer) personListFinded.get(2) - (Integer) personListFinded.get(3)));
+        } else {
+            request.setAttribute("previousStartIndex",
+                    ((Integer) personListFinded.get(2) - ( 2 * SessionConstants.LIMIT_FINDED_PERSONS)));
+        }
        
+        request.setAttribute("startIndex", (Integer) personListFinded.get(2));
 
         if (isEmployeeOrTeacher(userView)) {
             request.setAttribute("show", Boolean.TRUE);
@@ -223,14 +221,6 @@ public class FindPersonAction extends FenixDispatchAction {
         request.setAttribute("viewPhoto", viewPhoto);
 
         return mapping.findForward("displayPerson");
-    }
-
-    private String putSearchChar(String searchElem) {
-        String newSearchElem = null;
-        if (searchElem != null) {
-            newSearchElem = "%".concat(searchElem.replace(' ', '%')).concat("%");
-        }
-        return newSearchElem;
     }
 
     private boolean isEmployeeOrTeacher(IUserView userView) {

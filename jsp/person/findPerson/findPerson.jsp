@@ -11,7 +11,7 @@
   
 <html:form action="/preparePerson" >
 	<html:hidden property="method" value="preparePerson" />
-	<html:hidden property="startIndex" value="1" />
+	<html:hidden property="startIndex" value="0" />
 
 	
 	<table>
@@ -50,7 +50,7 @@
 
 <html:form action="/findPerson" >
 <html:hidden property="method" value="findPerson" />
-<html:hidden property="startIndex" value="1" />
+<html:hidden property="startIndex" value="0" />
 <html:hidden property="page" value="1" />
 <bean:define id="roleType" name="findPersonForm" property="roleType" type="java.lang.String"/>
 <html:hidden property="roleType" value="<%= roleType %>"/>
