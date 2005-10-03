@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.faces.component.UIParameter;
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.event.ActionEvent;
 
@@ -13,6 +12,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
+import net.sourceforge.fenixedu.domain.IWrittenTest;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
@@ -264,6 +264,16 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         ServiceUtils.executeService(getUserView(), "EditWrittenEvaluationEnrolmentPeriod", args);
 
         return "success";
+    }
+
+    public String getEvaluationDescription() throws FenixFilterException, FenixServiceException {
+        final IWrittenEvaluation writtenEvaluation = getEvaluation();
+        if (writtenEvaluation instanceof IExam) {
+            return ((IExam) writtenEvaluation).getSeason().toString();
+        } else if (writtenEvaluation instanceof IWrittenTest) {
+            return ((IWrittenTest) writtenEvaluation).getDescription();
+        }
+        return "";
     }
 
 }
