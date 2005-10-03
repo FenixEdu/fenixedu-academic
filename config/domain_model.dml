@@ -4407,7 +4407,6 @@ relation InquiriesRoomDomainRoom {
     net.sourceforge.fenixedu.domain.Room playsRole room;
 }
 
-
 relation InquiriesTeacherInquiriesCourse {
     net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher playsRole associatedInquiriesTeachers {
         multiplicity *;
@@ -4423,7 +4422,7 @@ relation InquiriesTeacherNonAffiliatedTeacher {
 }
 
 relation InquiriesTeacherDomainTeacher {
-    net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher playsRole associatedInquiriesTeachers {
+    net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher playsRole associatedInquiriesTeacher {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
@@ -5300,7 +5299,7 @@ relation TeachingCareerCategory {
 
 
 relation TeacherCategory {
-	net.sourceforge.fenixedu.domain.Teacher playsRole associatedTeacher {
+	net.sourceforge.fenixedu.domain.Teacher playsRole teacher {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.teacher.Category playsRole category;
