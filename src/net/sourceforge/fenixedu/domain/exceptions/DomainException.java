@@ -6,6 +6,7 @@ public class DomainException extends RuntimeException {
     private final String[] args;
 
     public DomainException(final String key, final String ... args) {
+        super(key); // setting the message attribute
         this.key = key;
         this.args = args;
     }
