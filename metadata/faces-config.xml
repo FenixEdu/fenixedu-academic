@@ -175,7 +175,7 @@
 	<navigation-rule>
 		<from-view-id>/teacher/evaluation/editExamEnrolmentPeriod.jsp</from-view-id>
  		<navigation-case>
-			<from-outcome>success</from-outcome>
+			<from-outcome>backToExamsIndex</from-outcome>
 			<to-view-id>/teacher/evaluation/examsIndex.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>

@@ -5,6 +5,7 @@ import java.util.Calendar;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -14,7 +15,7 @@ public class EditWrittenEvaluationEnrolmentPeriod implements IService {
 
     public void run(Integer executionCourseID, Integer writtenEvaluationID, Calendar beginDate,
             Calendar endDate, Calendar beginTime, Calendar endTime) throws FenixServiceException,
-            ExcepcaoPersistencia {
+            ExcepcaoPersistencia, DomainException {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();

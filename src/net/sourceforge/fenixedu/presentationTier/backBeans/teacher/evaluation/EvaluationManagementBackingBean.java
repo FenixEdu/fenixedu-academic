@@ -3,7 +3,10 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIParameter;
 import javax.faces.component.html.HtmlInputHidden;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
@@ -26,8 +29,6 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     protected Integer evaluationID;
 
     private HtmlInputHidden evaluationIdHidden;
-
-    protected IWrittenEvaluation evaluation;
 
     protected Integer enrolmentBeginDay;
 
@@ -116,23 +117,11 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.evaluationIdHidden = evaluationIdHidden;
     }
 
-    public IWrittenEvaluation getEvaluation() throws FenixFilterException, FenixServiceException {
-        if (evaluation == null) {
-            if (evaluationID != null) {
-                final Object[] args = { WrittenEvaluation.class, getEvaluationID() };
-                evaluation = (IWrittenEvaluation) ServiceUtils.executeService(null, "ReadDomainObject",
-                        args);
-            }
-        }
-        return evaluation;
-    }
-
-    public void setEvaluation(IWrittenEvaluation evaluation) {
-        this.evaluation = evaluation;
-    }
-
     public Integer getEnrolmentBeginDay() {
-        return enrolmentBeginDay;
+        if (this.enrolmentBeginDay == null && this.getEvaluation().getEnrollmentBeginDay() != null) {
+            this.enrolmentBeginDay = this.getEvaluation().getEnrollmentBeginDay().get(Calendar.DAY_OF_MONTH);
+        }
+        return this.enrolmentBeginDay;
     }
 
     public void setEnrolmentBeginDay(Integer enrolmentBeginDay) {
@@ -140,7 +129,10 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public Integer getEnrolmentBeginHour() {
-        return enrolmentBeginHour;
+        if (this.enrolmentBeginHour == null && this.getEvaluation().getEnrollmentBeginTime() != null) {
+            this.enrolmentBeginHour = this.getEvaluation().getEnrollmentBeginTime().get(Calendar.HOUR_OF_DAY);
+        }
+        return this.enrolmentBeginHour;
     }
 
     public void setEnrolmentBeginHour(Integer enrolmentBeginHour) {
@@ -148,7 +140,10 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public Integer getEnrolmentBeginMinute() {
-        return enrolmentBeginMinute;
+        if (this.enrolmentBeginMinute == null && this.getEvaluation().getEnrollmentBeginTime() != null) {
+            this.enrolmentBeginMinute = this.getEvaluation().getEnrollmentBeginTime().get(Calendar.MINUTE);
+        }
+        return this.enrolmentBeginMinute;
     }
 
     public void setEnrolmentBeginMinute(Integer enrolmentBeginMinute) {
@@ -156,6 +151,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public Integer getEnrolmentBeginMonth() {
+        if (this.enrolmentBeginMonth == null && this.getEvaluation().getEnrollmentBeginDay() != null) {
+            this.enrolmentBeginMonth = this.getEvaluation().getEnrollmentBeginDay().get(Calendar.MONTH);
+        }       
         return enrolmentBeginMonth;
     }
 
@@ -164,6 +162,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public Integer getEnrolmentBeginYear() {
+        if (this.enrolmentBeginYear == null && this.getEvaluation().getEnrollmentBeginDay() != null) {
+            this.enrolmentBeginYear = this.getEvaluation().getEnrollmentBeginDay().get(Calendar.YEAR);
+        }       
         return enrolmentBeginYear;
     }
 
@@ -172,7 +173,10 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public Integer getEnrolmentEndDay() {
-        return enrolmentEndDay;
+        if (this.enrolmentEndDay == null && this.getEvaluation().getEnrollmentEndDay() != null) {
+            this.enrolmentEndDay = this.getEvaluation().getEnrollmentEndDay().get(Calendar.DAY_OF_MONTH);
+        }
+        return this.enrolmentEndDay;
     }
 
     public void setEnrolmentEndDay(Integer enrolmentEndDay) {
@@ -180,7 +184,10 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public Integer getEnrolmentEndHour() {
-        return enrolmentEndHour;
+        if (this.enrolmentEndHour == null && this.getEvaluation().getEnrollmentEndTime() != null) {
+            this.enrolmentEndHour = this.getEvaluation().getEnrollmentEndTime().get(Calendar.HOUR_OF_DAY);
+        }
+        return this.enrolmentEndHour;
     }
 
     public void setEnrolmentEndHour(Integer enrolmentEndHour) {
@@ -188,7 +195,10 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public Integer getEnrolmentEndMinute() {
-        return enrolmentEndMinute;
+        if (this.enrolmentEndMinute == null && this.getEvaluation().getEnrollmentEndTime() != null) {
+            this.enrolmentEndMinute = this.getEvaluation().getEnrollmentEndTime().get(Calendar.MINUTE);
+        }
+        return this.enrolmentEndMinute;
     }
 
     public void setEnrolmentEndMinute(Integer enrolmentEndMinute) {
@@ -196,6 +206,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public Integer getEnrolmentEndMonth() {
+        if (this.enrolmentEndMonth == null && this.getEvaluation().getEnrollmentEndDay() != null) {
+            this.enrolmentEndMonth = this.getEvaluation().getEnrollmentEndDay().get(Calendar.MONTH);
+        }       
         return enrolmentEndMonth;
     }
 
@@ -204,6 +217,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public Integer getEnrolmentEndYear() {
+        if (this.enrolmentEndYear == null && this.getEvaluation().getEnrollmentEndDay() != null) {
+            this.enrolmentEndYear = this.getEvaluation().getEnrollmentEndDay().get(Calendar.YEAR);
+        }       
         return enrolmentEndYear;
     }
 
@@ -231,8 +247,13 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return executionCourse.getAssociatedExams();
     }
 
-    public void gotoEditExamEnrolmentPeriod(ActionEvent event) {
-
+    public IWrittenEvaluation getEvaluation() throws FenixFilterException, FenixServiceException {
+        if (this.getEvaluationID() != null) {
+            final Object[] args = { WrittenEvaluation.class, this.getEvaluationID() };
+            
+            return (IWrittenEvaluation) ServiceUtils.executeService(null, "ReadDomainObject", args);
+        }
+        return null;
     }
 
     private Calendar getEnrolmentBegin() {
@@ -253,7 +274,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return result;
     }
 
-    public String editEvaluationEnrolmentPeriod() throws FenixFilterException, FenixServiceException {
+    public String editEvaluationEnrolmentPeriod() {
         Calendar enrolmentBeginDay = getEnrolmentBegin();
         Calendar enrolmentBeginTime = getEnrolmentBegin();
         Calendar enrolmentEndDay = getEnrolmentEnd();
@@ -261,9 +282,17 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
         final Object[] args = { getExecutionCourseID(), getEvaluationID(), enrolmentBeginDay,
                 enrolmentBeginTime, enrolmentEndDay, enrolmentEndTime };
-        ServiceUtils.executeService(getUserView(), "EditWrittenEvaluationEnrolmentPeriod", args);
 
-        return "success";
+        try {
+            ServiceUtils.executeService(getUserView(), "EditWrittenEvaluationEnrolmentPeriod", args);
+        } catch (Exception e) {
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+            
+            return "";
+        }
+
+        return "backToExamsIndex";
     }
 
     public String getEvaluationDescription() throws FenixFilterException, FenixServiceException {
