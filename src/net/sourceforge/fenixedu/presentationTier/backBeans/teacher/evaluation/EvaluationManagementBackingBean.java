@@ -12,6 +12,8 @@ import javax.faces.context.FacesContext;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
@@ -33,6 +35,20 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     private HtmlInputHidden evaluationIdHidden;
 
+    protected Integer day;
+
+    protected Integer month;
+
+    protected Integer year;
+
+    protected Integer beginHour;
+
+    protected Integer beginMinute;
+
+    protected Integer endHour;
+
+    protected Integer endMinute;
+    
     protected Integer enrolmentBeginDay;
 
     protected Integer enrolmentBeginMonth;
@@ -52,11 +68,13 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     protected Integer enrolmentEndHour;
 
     protected Integer enrolmentEndMinute;
+    
+    private String description;
 
     protected List<IWrittenEvaluationEnrolment> writtenEvaluationEnrolments;
 
     protected IWrittenEvaluation writtenEvaluation;
-
+    
     public Integer getExecutionCourseID() {
         if (this.executionCourseID == null) {
             if (this.executionCourseIdHidden != null) {
@@ -90,6 +108,70 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.executionCourseIdHidden = executionCourseIdHidden;
     }
 
+    public Integer getBeginHour() {
+        return beginHour;
+    }
+
+    public void setBeginHour(Integer beginHour) {
+        this.beginHour = beginHour;
+    }
+
+    public Integer getBeginMinute() {
+        return beginMinute;
+    }
+
+    public void setBeginMinute(Integer beginMinute) {
+        this.beginMinute = beginMinute;
+    }
+
+    public Integer getDay() {
+        return day;
+    }
+
+    public void setDay(Integer day) {
+        this.day = day;
+    }
+
+    public Integer getEndHour() {
+        return endHour;
+    }
+
+    public void setEndHour(Integer endHour) {
+        this.endHour = endHour;
+    }
+
+    public Integer getEndMinute() {
+        return endMinute;
+    }
+
+    public void setEndMinute(Integer endMinute) {
+        this.endMinute = endMinute;
+    }
+
+    public Integer getMonth() {
+        return month;
+    }
+
+    public void setMonth(Integer month) {
+        this.month = month;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
     public Integer getEvaluationID() {
         if (this.evaluationID == null) {
             if (this.evaluationIdHidden != null) {
@@ -238,24 +320,22 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.enrolmentEndYear = enrolmentEndYear;
     }
 
-    public List<IExam> getExamList() {
+    public List<IExam> getExamList() throws FenixFilterException, FenixServiceException {
         final Object[] args = { ExecutionCourse.class, this.getExecutionCourseID() };
-        IExecutionCourse executionCourse = null;
+        IExecutionCourse executionCourse = (IExecutionCourse) ServiceUtils.executeService(null, "ReadDomainObject", args);
 
-        try {
-            executionCourse = (IExecutionCourse) ServiceUtils.executeService(null, "ReadDomainObject",
-                    args);
-        } catch (FenixFilterException e) {
-            throw new RuntimeException(e);
-        } catch (FenixServiceException e) {
-            throw new RuntimeException(e);
-        }
+        List<IExam> examsList = executionCourse.getAssociatedExams(); 
+        Collections.sort(examsList, new BeanComparator("dayDate"));
+        return examsList;
+    }
 
-        if (executionCourse == null) {
-            throw new RuntimeException();
-        }
+    public List<IWrittenTest> getWrittenTestList() throws FenixFilterException, FenixServiceException {
+        final Object[] args = { ExecutionCourse.class, this.getExecutionCourseID() };
+        IExecutionCourse executionCourse = (IExecutionCourse) ServiceUtils.executeService(null, "ReadDomainObject", args);
 
-        return executionCourse.getAssociatedExams();
+        List<IWrittenTest> writtenTestList = executionCourse.getAssociatedWrittenTests(); 
+        Collections.sort(writtenTestList, new BeanComparator("dayDate"));
+        return writtenTestList;
     }
 
     public IWrittenEvaluation getEvaluation() throws FenixFilterException, FenixServiceException {
@@ -331,6 +411,54 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             Collections.sort(this.writtenEvaluationEnrolments, new BeanComparator("student.number"));
         }
         return this.writtenEvaluationEnrolments;
+    }
+
+    public Calendar getBegin() {
+        Calendar result = Calendar.getInstance();
+
+        result.set(getYear(), getMonth() - 1, getDay(),
+                getBeginHour(), getBeginMinute());
+
+        return result;
+    }
+    
+    public Calendar getEnd() {
+        Calendar result = Calendar.getInstance();
+
+        result.set(getYear(), getMonth() - 1, getDay(),
+                getEndHour(), getEndMinute());
+
+        return result;
+    }
+    
+    public String createWrittenTest() throws FenixFilterException, FenixServiceException {
+        List<String> executionCourseIDs = new ArrayList<String>();
+        executionCourseIDs.add(this.getExecutionCourseID().toString());
+
+        List<String> curricularCourseScopeIDs = new ArrayList<String>();
+        final Object[] argsToReadExecutionCourse = { ExecutionCourse.class, this.getExecutionCourseID() };
+        IExecutionCourse executionCourse = (IExecutionCourse) ServiceUtils.executeService(null, "ReadDomainObject", argsToReadExecutionCourse);
+        for (ICurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+            for (ICurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
+                if (curricularCourseScope.getCurricularSemester().getSemester().equals(
+                        executionCourse.getExecutionPeriod().getSemester())) {
+                    curricularCourseScopeIDs.add(curricularCourseScope.getIdInternal().toString());
+                }
+            }
+        }
+        
+        final Object[] args = { this.getBegin(), this.getBegin(), this.getEnd(), executionCourseIDs, curricularCourseScopeIDs, 
+                null,null, this.getDescription() };
+        try {
+            ServiceUtils.executeService(getUserView(), "CreateWrittenEvaluation", args);
+        } catch (Exception e) {
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+
+            return "";
+        }
+
+        return "backToWrittenTestIndex";
     }
 
 }
