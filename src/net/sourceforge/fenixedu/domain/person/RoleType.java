@@ -51,7 +51,7 @@ public enum RoleType {
 
     GRANT_OWNER_MANAGER,
 
-    DEPARTMENT_MEMBER,
+    DEPARTMENT_ADMINISTRATIVE_OFFICE,
 
     GEP,
 
@@ -63,7 +63,9 @@ public enum RoleType {
     
     PROJECTS_MANAGER,
     
-    INSTITUCIONAL_PROJECTS_MANAGER;
+    INSTITUCIONAL_PROJECTS_MANAGER,
+    
+    DEPARTMENT_MEMBER;
     
     public String getName() {
         return name();    

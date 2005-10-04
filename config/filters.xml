@@ -53,9 +53,9 @@
         <isTransactional>false</isTransactional>
     </filter>
 	<filter>
-        <name>DepartmentMemberAuthorization</name>
+        <name>DepartmentAdministrativeOfficeAuthorization</name>
         <implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
@@ -804,6 +804,13 @@
     <filter>
         <name>ChangeStudentInfoAuthorization</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.ChangeStudentInfoAuthorization</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
+   	<filter>
+        <name>DepartmentMemberAuthorization</name>
+        <implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>

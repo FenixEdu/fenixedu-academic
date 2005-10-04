@@ -5,10 +5,11 @@
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
 
 	<h:form>
+		<h:inputHidden value="#{createExecutionDegrees.chosenDegreeType}" />
 						
 		<h:outputText value="Escolha o(s) Plano(s) Curricular(es):" />:
 		<h:selectManyCheckbox value="#{createExecutionDegrees.choosenDegreeCurricularPlansIDs}" layout="pageDirection" >
-			<f:selectItems value="#{createExecutionDegrees.degreeCurricularPlans}" />
+			<f:selectItems binding="#{createExecutionDegrees.degreeCurricularPlansSelectItems}" />
 		</h:selectManyCheckbox>
 
 		<p/>

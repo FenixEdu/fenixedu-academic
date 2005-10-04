@@ -15,7 +15,11 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
 import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
+import net.sourceforge.fenixedu.domain.teacher.ITeacherPersonalExpectation;
 import net.sourceforge.fenixedu.util.PublicationArea;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 
 public class Teacher extends Teacher_Base {
 
@@ -108,6 +112,23 @@ public class Teacher extends Teacher_Base {
         return null;
     }
 
+    public ITeacherPersonalExpectation getTeacherPersonalExpectationByExecutionYear(
+            IExecutionYear executionYear) {
+        ITeacherPersonalExpectation result = null;
+
+        List<ITeacherPersonalExpectation> teacherPersonalExpectations = this
+                .getTeacherPersonalExpectations();
+
+        for (ITeacherPersonalExpectation teacherPersonalExpectation : teacherPersonalExpectations) {
+            if (teacherPersonalExpectation.getExecutionYear().equals(executionYear)) {
+                result = teacherPersonalExpectation;
+                break;
+            }
+        }
+
+        return result;
+    }
+
     public List<IProposal> getFinalDegreeWorksByExecutionYear(IExecutionYear executionYear) {
         List<IProposal> proposalList = new ArrayList<IProposal>();
         for (Iterator iter = getAssociatedProposalsByOrientator().iterator(); iter.hasNext();) {
@@ -155,7 +176,7 @@ public class Teacher extends Teacher_Base {
         return executionCourses;
     }
 
-    public List<IExecutionCourse> getLecturedExecutionCoursesByExecutionPeriod(
+     public List<IExecutionCourse> getLecturedExecutionCoursesByExecutionPeriod(
             final IExecutionPeriod executionPeriod) {
         List<IExecutionCourse> executionCourses = new ArrayList<IExecutionCourse>();
         for (Iterator iter = getProfessorships().iterator(); iter.hasNext();) {

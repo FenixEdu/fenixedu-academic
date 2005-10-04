@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- @validation.doctype@ -->
+<form-validation>
+    <formset>
+        <constant>
+			<constant-name>weekDayMask</constant-name>
+			<constant-value>^[23456sSdD]$</constant-value>
+        </constant>
+        <constant>
+			<constant-name>minHours</constant-name>
+			<constant-value>0</constant-value>
+        </constant>
+        <constant>
+			<constant-name>maxHours</constant-name>
+			<constant-value>24</constant-value>
+        </constant>
+        <constant>
+			<constant-name>minMinutes</constant-name>
+			<constant-value>0</constant-value>
+        </constant>
+        <constant>
+			<constant-name>maxMinutes</constant-name>
+			<constant-value>59</constant-value>
+        </constant>
+    </formset>
+</form-validation>
+

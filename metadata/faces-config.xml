@@ -4,6 +4,12 @@
   "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
 <faces-config>
 
+	<application>
+		<locale-config>
+			<default-locale>pt</default-locale>
+		</locale-config>
+	</application>
+
 	<!-- MANAGED BEANS -->
 
 	<managed-bean>
@@ -56,14 +62,29 @@
 	<managed-bean>
 		<managed-bean-name>createExecutionDegrees</managed-bean-name>
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.degree.CreateExecutionDegreesForExecutionYear</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
+		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>	
 
 	<managed-bean>
 		<managed-bean-name>createCourseReports</managed-bean-name>
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.executionCourse.CreateCourseReportsForExecutionPeriod</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>	
+	</managed-bean>
+	
+	<!-- Backbeans from department member subapplication -->
+	<managed-bean>
+		<managed-bean-name>viewDepartmentTeachers</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember.ViewDepartmentTeachers</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>teacherExpectationManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember.TeacherExpectationManagement</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<!-- End of Backbeans from department member subapplication -->
 
 	<!-- BEGIN: STUDENT Managed Beans -->
 	<managed-bean>
@@ -91,7 +112,6 @@
 	</managed-bean>
 
 	<!-- END: TEACHER Managed Beans -->
-	
 	
 	<!-- NAVIGATION RULES -->
 	
@@ -134,6 +154,163 @@
 			<to-view-id>/manager/degree/insertExecutionDegreesSuccess.jsp</to-view-id>
 		</navigation-case>			
 	</navigation-rule>
+	
+	<!-- Navigation rules from department member subapplication -->
+	
+	<!-- View Department Teachers Process -->
+	<navigation-rule>
+		<from-view-id>/departmentMember/viewDepartmentTeachers/chooseExecutionYear.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>listDepartmentTeachers</from-outcome>
+			<to-view-id>/departmentMember/viewDepartmentTeachers/listDepartmentTeachers.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/viewDepartmentTeachers/listDepartmentTeachers.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewDetails</from-outcome>
+			<to-view-id>/departmentMember/viewDepartmentTeachers/viewTeacherDetails.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/viewDepartmentTeachers/viewTeacherDetails.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/departmentMember/viewDepartmentTeachers/listDepartmentTeachers.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	<!-- End Process -->
+	
+	<!-- Manage Teacher Personal Expectations Process -->
+	<!-- Create Personal Expectation SubProcess -->
+	<navigation-rule>
+		<from-view-id>/departmentMember/expectationManagement/chooseExecutionYear.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>view</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/viewPersonalExpectation.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/expectationManagement/viewPersonalExpectation.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>create</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/insertEducationExpectationData.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/expectationManagement/insertEducationExpectationData.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>next</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/insertInvestigationExpectationData.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/expectationManagement/insertInvestigationExpectationData.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>previous</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/insertEducationExpectationData.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/expectationManagement/insertInvestigationExpectationData.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>next</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/insertUniversityServiceExpectationData.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/expectationManagement/insertUniversityServiceExpectationData.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>previous</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/insertInvestigationExpectationData.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/expectationManagement/insertUniversityServiceExpectationData.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>next</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/insertProfessionalActivityExpectationData.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/expectationManagement/insertProfessionalActivityExpectationData.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>previous</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/insertUniversityServiceExpectationData.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/expectationManagement/insertProfessionalActivityExpectationData.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/viewPersonalExpectation.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- End of Create Personal Expectation SubProcess -->
+	
+	<!-- Edit Personal Expectation SubProcess -->
+	<navigation-rule>
+		<from-view-id>/departmentMember/expectationManagement/viewPersonalExpectation.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editEducationExpectationData</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/editEducationExpectationData.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/expectationManagement/viewPersonalExpectation.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editInvestigationExpectationData</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/editInvestigationExpectationData.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/expectationManagement/viewPersonalExpectation.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editUniversityServiceExpectationData</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/editUniversityServiceExpectationData.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/expectationManagement/viewPersonalExpectation.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editProfessionalActivityExpectationData</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/editProfessionalActivityExpectationData.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/expectationManagement/editEducationExpectationData.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/viewPersonalExpectation.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/expectationManagement/editInvestigationExpectationData.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/viewPersonalExpectation.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/expectationManagement/editUniversityServiceExpectationData.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/viewPersonalExpectation.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/expectationManagement/editProfessionalActivityExpectationData.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/viewPersonalExpectation.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- End of Edit Personal Expectation SubProcess -->
+	
+	<!-- End Process -->
+	
+	<!-- End Navigation rules from department member subapplication -->
+
 
 	<!-- BEGIN: STUDENT Navigation Rules -->
 	<navigation-rule>
@@ -197,6 +374,17 @@
 	</navigation-rule>
 
 	<!-- END: TEACHER Navigation Rules -->
-
-
+	
+	<!-- Custom Components -->
+	<component>
+		<component-type>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UIHtmlEditor
+		</component-type>
+		<component-class>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UIHtmlEditor
+		</component-class>
+	</component>
+	
+	<!-- End Custom Components -->
+			
 </faces-config>

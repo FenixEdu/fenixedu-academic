@@ -1,6 +1,12 @@
+//DEPRECATED. Use initEditorWithContextPath(contextPath)
 function initEditor() {
 //Usage:initRTE(imagesPath, includesPath, cssFile, genXHTML)
 	initRTE("images/", "../javaScript/editor/", "", true);
+}
+
+function initEditorWithContextPath(contextPath) {
+//Usage:initRTE(imagesPath, includesPath, cssFile, genXHTML)
+	initRTE("images/", contextPath +"/javaScript/editor/", "", true);
 }
 
 function writeTextEditor(width, heigth, htmlText) {
@@ -10,6 +16,10 @@ function writeTextEditor(width, heigth, htmlText) {
 
 function writeMultipleTextEditor(string, width, heigth, htmlText){
 	writeRichText(string, htmlText, width, heigth, true, false);
+}
+
+function writeMultipleTextEditor(string, width, heigth, htmlText,designMode){
+	writeRichText(string, htmlText, width, heigth, designMode, false);
 }
 
 function isBrowserAllowed() {

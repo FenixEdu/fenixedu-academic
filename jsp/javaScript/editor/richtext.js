@@ -120,7 +120,7 @@ function writeRichText(rte, html, width, height, buttons, readOnly) {
 			document.writeln('<table class="rteBack" cellpadding="0" cellspacing="0" id="Buttons2_' + rte + '" width="' + tablewidth + '">');
 			document.writeln('	<tr>');
 			document.writeln('		<td><img id="bold" class="rteImage" src="' + imagesPath + 'bold.gif" width="25" height="24" alt="Bold" title="Negrito" onClick="rteCommand(\'' + rte + '\', \'bold\', \'\')"></td>');
-			document.writeln('		<td><img class="rteImage" src="' + imagesPath + 'italic.gif" width="25" height="24" alt="Italic" title="Itálico" onClick="rteCommand(\'' + rte + '\', \'italic\', \'\')"></td>');
+			document.writeln('		<td><img class="rteImage" src="' + imagesPath + 'italic.gif" width="25" height="24" alt="Italic" title="It?lico" onClick="rteCommand(\'' + rte + '\', \'italic\', \'\')"></td>');
 			document.writeln('		<td><img class="rteImage" src="' + imagesPath + 'underline.gif" width="25" height="24" alt="Underline" title="Sublinhado" onClick="rteCommand(\'' + rte + '\', \'underline\', \'\')"></td>');
 			document.writeln('		<td><img class="rteVertSep" src="' + imagesPath + 'blackdot.gif" width="1" height="20" border="0" alt=""></td>');
 			document.writeln('		<td><img class="rteImage" src="' + imagesPath + 'left_just.gif" width="25" height="24" alt="Align Left" title="Alinhar Esquerda" onClick="rteCommand(\'' + rte + '\', \'justifyleft\', \'\')"></td>');
@@ -156,7 +156,7 @@ function writeRichText(rte, html, width, height, buttons, readOnly) {
 			document.writeln('</table>');
 		}
 		document.writeln('<iframe id="' + rte + '" name="' + rte + '" width="' + width + 'px" height="' + height + 'px" src="' + includesPath + 'blank.htm"></iframe>');
-		//if (!readOnly) document.writeln('<br /><input type="checkbox" id="chkSrc' + rte + '" onclick="toggleHTMLSrc(\'' + rte + '\',' + buttons + ');" />&nbsp;<label for="chkSrc' + rte + '">Ver Código Fonte</label>');
+		//if (!readOnly) document.writeln('<br /><input type="checkbox" id="chkSrc' + rte + '" onclick="toggleHTMLSrc(\'' + rte + '\',' + buttons + ');" />&nbsp;<label for="chkSrc' + rte + '">Ver C?digo Fonte</label>');
 		document.writeln('<iframe width="154" height="104" id="cp' + rte + '" src="' + includesPath + 'palette.htm" marginwidth="0" marginheight="0" scrolling="no" style="visibility:hidden; position: absolute;"></iframe>');
 		document.writeln('<input type="hidden" id="hdn' + rte + '" name="' + rte + '" value="">');
 		document.writeln('</div>');
@@ -271,6 +271,14 @@ function setHiddenVal(rte) {
 	if (stripHTML(oHdnField.value.replace("&nbsp;", " ")) == "" &&
 		oHdnField.value.toLowerCase().search("<hr") == -1 &&
 		oHdnField.value.toLowerCase().search("<img") == -1) oHdnField.value = "";
+		
+	//update form hidden field if exists
+	var formHiddenField = document.forms[0]["htmlEditor_" + rte];
+	
+	if (formHiddenField != null)
+	{
+		formHiddenField.value = oHdnField.value;
+	}
 }
 
 function updateRTEs() {

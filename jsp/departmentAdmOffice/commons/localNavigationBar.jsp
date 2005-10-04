@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<logic:present role="DEPARTMENT_MEMBER">
+<logic:present role="DEPARTMENT_ADMINISTRATIVE_OFFICE">
 	<strong>&raquo; <bean:message key="link.group.view.title"/></strong>
 	<br />
 	<br />

@@ -24,7 +24,7 @@ public class Department extends Department_Base {
         result += "]";
         return result;
     }
-    
+   
     public List getWorkingEmployees(){
         
         IUnit unit = this.getUnit();
@@ -36,7 +36,7 @@ public class Department extends Department_Base {
                 IEmployee employee = contract.getEmployee();               
                 if(employee.getActive().booleanValue()){
                     employees.add(employee);
-                }
+}
             }                                    
             for(IUnit subUnit : unit.getAssociatedUnits()){
                 for(IContract contract : subUnit.getWorkingContracts()){
@@ -49,7 +49,6 @@ public class Department extends Department_Base {
         }           
         return employees;
     }
-    
     public List getTeachers(){
  
         List teachers = new ArrayList();

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.faces.component.UISelectItems;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
@@ -29,7 +31,7 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
 
     // private UISelectMany selectMany;
 
-    private List degreeCurricularPlans;
+    private UISelectItems degreeCurricularPlansSelectItems;
 
     private Integer choosenExecutionYearID;
 
@@ -103,27 +105,42 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
         return degreeTypes;
     }
 
-    public List getDegreeCurricularPlans() throws FenixFilterException, FenixServiceException {
-
-        DegreeType degreeType = (getChosenDegreeType() != null) ? DegreeType
-                .valueOf(getChosenDegreeType()) : null;
-        Object[] args = { degreeType };
-        List degreeCurricularPlans = (List) ServiceUtils.executeService(getUserView(),
-                "ReadActiveDegreeCurricularPlansByDegreeType", args);
-
-        List<SelectItem> result = new ArrayList<SelectItem>(degreeCurricularPlans.size());
-        for (InfoDegreeCurricularPlan degreeCurricularPlan : (List<InfoDegreeCurricularPlan>) degreeCurricularPlans) {
-            String label = degreeCurricularPlan.getInfoDegree().getNome() + " - "
-                    + degreeCurricularPlan.getName();
-            result.add(new SelectItem(degreeCurricularPlan.getIdInternal(), label));
-        }
-
-        return result;
+    public String getChosenDegreeType() {
+        return chosenDegreeType;
     }
 
-    public void setDegreeCurricularPlans(List degreeCurricularPlans) {
+    public void setChosenDegreeType(String chosenDegreeType) {
+        this.chosenDegreeType = chosenDegreeType;
+    }
 
-        this.degreeCurricularPlans = degreeCurricularPlans;
+    public UISelectItems getDegreeCurricularPlansSelectItems() throws FenixFilterException,
+            FenixServiceException {
+
+        if (this.degreeCurricularPlansSelectItems == null) {
+
+            DegreeType degreeType = (getChosenDegreeType() != null) ? DegreeType
+                    .valueOf(getChosenDegreeType()) : null;
+            Object[] args = { degreeType };
+            List degreeCurricularPlans = (List) ServiceUtils.executeService(getUserView(),
+                    "ReadActiveDegreeCurricularPlansByDegreeType", args);
+
+            List<SelectItem> items = new ArrayList<SelectItem>(degreeCurricularPlans.size());
+            for (InfoDegreeCurricularPlan degreeCurricularPlan : (List<InfoDegreeCurricularPlan>) degreeCurricularPlans) {
+                String label = degreeCurricularPlan.getInfoDegree().getNome() + " - "
+                        + degreeCurricularPlan.getName();
+                items.add(new SelectItem(degreeCurricularPlan.getIdInternal(), label));
+            }
+            
+            this.degreeCurricularPlansSelectItems = new UISelectItems();
+            this.degreeCurricularPlansSelectItems.setValue(items);
+        }
+        
+        return this.degreeCurricularPlansSelectItems;
+    }
+
+    public void setDegreeCurricularPlansSelectItems(UISelectItems degreeCurricularPlansSelectItems) {
+
+        this.degreeCurricularPlansSelectItems = degreeCurricularPlansSelectItems;
     }
 
     public List getExecutionYears() throws FenixFilterException, FenixServiceException {
@@ -208,14 +225,6 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
 
     public List getYears() {
         return Data.getExpirationYearsSelectItems();
-    }
-
-    public String getChosenDegreeType() {
-        return chosenDegreeType;
-    }
-
-    public void setChosenDegreeType(String chosenDegreeType) {
-        this.chosenDegreeType = chosenDegreeType;
     }
 
     public Integer[] getChoosenDegreeCurricularPlansIDs() {

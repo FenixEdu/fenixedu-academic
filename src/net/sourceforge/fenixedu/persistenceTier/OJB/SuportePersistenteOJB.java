@@ -91,6 +91,7 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.OldPublicationOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.OrientationOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.PublicationsNumberOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.ServiceProviderRegimeOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.TeacherPersonalExpectationOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.WeeklyOcupationOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.professorship.NonAffiliatedTeacherOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.professorship.ShiftProfessorshipOJB;
@@ -175,6 +176,7 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublicatio
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsNumber;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentServiceProviderRegime;
+import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentTeacherPersonalExpectation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentWeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
@@ -1240,5 +1242,9 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
             cod.setLazy(false);
             }
         }
+    }
+
+    public IPersistentTeacherPersonalExpectation getIPersistentTeacherPersonalExpectation() {
+        return new TeacherPersonalExpectationOJB();
     }
 }

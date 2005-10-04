@@ -2,7 +2,7 @@
  *
  * The Fenix Project Domain Model
  * 
- */ 
+ */
 
 
 /*
@@ -325,27 +325,27 @@ class net.sourceforge.fenixedu.domain.credits.CreditLine extends net.sourceforge
 }
 
 
-class net.sourceforge.fenixedu.domain.credits.DatePeriodBaseCreditLine extends net.sourceforge.fenixedu.domain.credits.CreditLine {
-    Date start;
-    Date end;
-}
+    class net.sourceforge.fenixedu.domain.credits.DatePeriodBaseCreditLine extends net.sourceforge.fenixedu.domain.credits.CreditLine {
+        Date start;
+        Date end;
+    }
     
-class net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine extends net.sourceforge.fenixedu.domain.credits.DatePeriodBaseCreditLine {
-    Double credits;
-    String position;
-}    
+        class net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine extends net.sourceforge.fenixedu.domain.credits.DatePeriodBaseCreditLine {
+            Double credits;
+            String position;
+        }    
     
         
-class net.sourceforge.fenixedu.domain.credits.ServiceExemptionCreditLine extends net.sourceforge.fenixedu.domain.credits.DatePeriodBaseCreditLine {
-    ServiceExemptionType type;
-}
+        class net.sourceforge.fenixedu.domain.credits.ServiceExemptionCreditLine extends net.sourceforge.fenixedu.domain.credits.DatePeriodBaseCreditLine {
+            ServiceExemptionType type;
+        }
 
         
-class net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine extends net.sourceforge.fenixedu.domain.credits.CreditLine {
-    String reason;
-    Double credits;
-    Integer keyExecutionPeriod;
-}
+    class net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine extends net.sourceforge.fenixedu.domain.credits.CreditLine {
+        String reason;
+        Double credits;
+        Integer keyExecutionPeriod;
+    }
 
 
 class net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1114,7 +1114,7 @@ class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.feni
     interface "
     
 	public java.util.Collection<IExecutionDegree> getExecutionDegreesByType(final net.sourceforge.fenixedu.domain.degree.DegreeType degreeType);
-	
+	public IExecutionYear getPreviousExecutionYear();
     "
 }
 
@@ -1473,7 +1473,7 @@ class net.sourceforge.fenixedu.domain.Grouping extends net.sourceforge.fenixedu.
     Date enrolmentEndDayDate;
 
     interface "
-    public java.util.Calendar getEnrolmentBeginDay();
+      public java.util.Calendar getEnrolmentBeginDay();
     
 	public void setEnrolmentBeginDay(java.util.Calendar enrolmentBeginDay);
 	
@@ -2058,7 +2058,7 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 	interface "
     public String getSlideName();
     
-    public String getSlideNameForCandidateDocuments();    
+    public String getSlideNameForCandidateDocuments();
     
     public void edit(net.sourceforge.fenixedu.dataTransferObject.InfoPerson personToEdit, net.sourceforge.fenixedu.domain.ICountry country);
     
@@ -2069,7 +2069,7 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
     public void changeUsername(String newUsername, java.util.List<IPerson> persons);
     
     public void edit(String name, String address, String phone, String mobile, String homepage, String email);
-    
+        
     public void update(net.sourceforge.fenixedu.dataTransferObject.InfoPerson personToEdit, net.sourceforge.fenixedu.domain.ICountry country);
     
     public void updateUsername();
@@ -2078,7 +2078,7 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
     
     public net.sourceforge.fenixedu.domain.IRole getPersonRole(net.sourceforge.fenixedu.domain.person.RoleType roleType);
     
-    public Boolean hasRole(net.sourceforge.fenixedu.domain.person.RoleType roleType);    
+    public Boolean hasRole(net.sourceforge.fenixedu.domain.person.RoleType roleType);
     
     public net.sourceforge.fenixedu.domain.IStudent getStudentByType(net.sourceforge.fenixedu.domain.degree.DegreeType degreeType);
 
@@ -2627,7 +2627,6 @@ class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.d
 
 	interface "
     public IStudentCurricularPlan getActiveStudentCurricularPlan();
-    
     public boolean attends(IExecutionCourse executionCourse);
     
     public java.util.List<IExam> getEnroledExams();
@@ -2856,7 +2855,7 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	Integer keyCategory;
 	Integer keyServiceProviderRegime;
 	Integer keyPublicationsNumber;
-		
+	
 	interface "
 	public net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits getExecutionPeriodCredits(IExecutionPeriod executionPeriod);
 	
@@ -2873,10 +2872,13 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	public void updateResponsabilitiesFor(Integer executionYearId, java.util.List<Integer> executionCourses) 
 		throws net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed, 
 		net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
+		
+   	public net.sourceforge.fenixedu.domain.teacher.ITeacherPersonalExpectation getTeacherPersonalExpectationByExecutionYear(IExecutionYear executionYear);
 	
 	public IDepartment getMailingDepartment();
 	
 	public IDepartment getWorkingDepartment();
+   	
 	
 	public java.util.List<net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal> getFinalDegreeWorksByExecutionYear(IExecutionYear executionYear);
 	
@@ -2963,6 +2965,7 @@ class net.sourceforge.fenixedu.domain.University extends net.sourceforge.fenixed
 	String code;
 	String name;
 }
+
 
 class net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyTeacher;
@@ -3170,7 +3173,48 @@ class net.sourceforge.fenixedu.domain.WorkLocation extends net.sourceforge.fenix
 	String name;
 }
 
-
+class net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation extends net.sourceforge.fenixedu.domain.DomainObject {
+	String educationMainFocus;
+	Integer graduations;
+	String graduationsDescription;
+	Integer cientificPosGraduations;
+	String cientificPosGraduationsDescription;
+	Integer professionalPosGraduations;
+	String professionalPosGraduationsDescription;
+	Integer seminaries;
+	String seminariesDescription;
+	String orientationsMainFocus;
+	String researchAndDevMainFocus;
+    Integer researchAndDevProjects;
+    Integer jornalArticlePublications;
+    Integer bookPublications;
+    Integer conferencePublications;
+    Integer technicalReportPublications;
+    Integer patentPublications;
+    Integer otherPublications;
+    String otherPublicationsDescription;
+    Integer phdOrientations;
+    Integer masterDegreeOrientations;
+    Integer finalDegreeWorkOrientations;
+    String universityServiceMainFocus;
+    String departmentOrgans;
+    String istOrgans;
+    String utlOrgans;
+    String professionalActivityMainFocus;
+    String cientificComunityService;
+    String societyService;
+    String consulting;
+    String companySocialOrgans;
+    String companyPositions;
+    String tutorComment;
+           
+    Integer keyTeacher;
+    Integer keyExecutionYear;
+    
+    interface "
+    public void edit(net.sourceforge.fenixedu.dataTransferObject.InfoTeacherPersonalExpectation infoTeacherPersonalExpectation);
+    "
+}
 
 
 /*
@@ -5590,6 +5634,20 @@ relation AttendsStudentGroup {
     net.sourceforge.fenixedu.domain.StudentGroup playsRole studentGroups {
     	multiplicity *;
     }
+}
+
+relation TeacherPersonalExpectationTeacher {
+	net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation playsRole teacherPersonalExpectations {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+relation TeacherPersonalExpectationExecutionYear {
+	net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation playsRole teacherPersonalExpectations {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 }
 
 relation ContractSalaryUnit {

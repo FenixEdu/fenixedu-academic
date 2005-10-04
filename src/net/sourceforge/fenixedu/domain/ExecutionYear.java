@@ -47,4 +47,20 @@ public class ExecutionYear extends ExecutionYear_Base {
 
     }
 
+    public IExecutionYear getPreviousExecutionYear() {
+        IExecutionYear previousExecutionYear = null;
+        IExecutionPeriod currentExecutionPeriod = this.getExecutionPeriods().get(0);
+
+        while (currentExecutionPeriod.getPreviousExecutionPeriod() != null) {
+            currentExecutionPeriod = currentExecutionPeriod.getPreviousExecutionPeriod();
+
+            if (!currentExecutionPeriod.getExecutionYear().equals(this)) {
+                previousExecutionYear = currentExecutionPeriod.getExecutionYear();
+                break;
+            }
+        }
+
+        return previousExecutionYear;
+    }
+
 }

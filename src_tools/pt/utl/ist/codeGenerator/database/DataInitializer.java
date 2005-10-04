@@ -55,7 +55,8 @@ public class DataInitializer {
         new Role(RoleType.OPERATOR, "/operator", "/index.do", "portal.operator");
         new Role(RoleType.WEBSITE_MANAGER, "/webSiteManager", "/index.do", "portal.webSiteManager");
         new Role(RoleType.GRANT_OWNER_MANAGER, "/facultyAdmOffice", "/index.do", "portal.facultyAdmOffice");
-        new Role(RoleType.DEPARTMENT_MEMBER, "/departmentAdmOffice", "/index.do", "portal.departmentAdmOffice");
+        new Role(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE, "/departmentAdmOffice", "/index.do", "portal.departmentAdmOffice");
+        new Role(RoleType.DEPARTMENT_MEMBER, "/departmentMember", "/index.do", "portal.departmentMember");
         new Role(RoleType.GEP, "/gep", "/index.do", "portal.gep");
         new Role(RoleType.DIRECTIVE_COUNCIL, "/directiveCouncil", "/index.do", "portal.directiveCouncil");
         new Role(RoleType.DEGREE_ADMINISTRATIVE_OFFICE, "/degreeAdministrativeOffice", "/index.do", "portal.degreeAdministrativeOffice");

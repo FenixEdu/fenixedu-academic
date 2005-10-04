@@ -3,7 +3,7 @@
       "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
       "http://java.sun.com/dtd/web-app_2_3.dtd">
 <web-app>
- 	<context-param>
+   	<context-param>
 		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
 		<param-value>client</param-value>
 	</context-param>
@@ -315,6 +315,10 @@
             <param-value>/WEB-INF/conf/struts-external.xml</param-value>
         </init-param>        
         <init-param>
+            <param-name>config/departmentMember</param-name>
+            <param-value>/WEB-INF/conf/struts-departmentMember.xml</param-value>
+        </init-param>
+        <init-param>
             <param-name>debug</param-name>
             <param-value>3</param-value>
         </init-param>
@@ -361,11 +365,12 @@
 	<session-config>
 			<session-timeout>120</session-timeout>
 	</session-config>   
-
-	<error-page>
+	
+<!-- 	<error-page>
 	    <exception-type>java.lang.Exception</exception-type>
 	    <location>/showErrorPage.do</location>
 	</error-page>
+-->
 
     <taglib>
         <taglib-uri>/WEB-INF/struts-html.tld</taglib-uri>

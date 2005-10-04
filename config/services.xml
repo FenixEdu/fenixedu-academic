@@ -8718,13 +8718,13 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.WriteDislocatedStudentAnswer</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>       
-    </service>
+    </service>     
     <service>
     	<name>ReadAllDistricts</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.general.ReadAllDistricts</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>       
-    </service>            
+    </service>       
     <service>
     	<name>CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod</implementationClass>
@@ -8741,6 +8741,42 @@
         <isTransactional>true</isTransactional>       
     </service>
     <service>
+    	<name>ReadDepartmentTeachersByDepartmentID</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.departmentMember.ReadDepartmentTeachersByDepartmentID</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="DepartmentMemberOrTeacherAuthorization"></chain>
+        </filterChains>     
+    </service>     
+    <service>
+    	<name>InsertTeacherPersonalExpectation</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.departmentMember.InsertTeacherPersonalExpectation</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="DepartmentMemberOrTeacherAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>ReadTeacherPersonalExpectationByTeacherIDAndExecutionYearID</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.departmentMember.ReadTeacherPersonalExpectationByTeacherIDAndExecutionYearID</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="DepartmentMemberOrTeacherAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>EditTeacherPersonalExpectation</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.departmentMember.EditTeacherPersonalExpectation</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="DepartmentMemberOrTeacherAuthorization"></chain>
+        </filterChains>     
+    </service>
+	<service>
     	<name>ReadExportGroupingsByGrouping</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.ReadExportGroupingsByGrouping</implementationClass>
         <description></description>
@@ -8756,4 +8792,22 @@
 			<chain name="StudentOrMasterDegreeAdministrativeOfficeAuthorization" />
 		</filterChains>
 	</service>
-</serviceDefinitions>    
+	<service>
+    	<name>ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.departmentMember.ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="DepartmentMemberOrTeacherAuthorization"></chain>
+        </filterChains>     
+    </service>
+   	<service>
+    	<name>ReadFinalDegreeWorksByTeacherIDAndExecutionYearID</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.departmentMember.ReadFinalDegreeWorksByTeacherIDAndExecutionYearID</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="DepartmentMemberOrTeacherAuthorization"></chain>
+        </filterChains>     
+    </service>
+</serviceDefinitions>

@@ -399,4 +399,11 @@
     	    <fk-pointing-to-this-class column="KEY_TEACHER"/>
         	<fk-pointing-to-element-class column="KEY_MASTER_DEGREE_PROOF_VERSION"/>
    </collection-descriptor> 
+   <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+		name="teacherPersonalExpectations" 
+		element-class-ref="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation"
+		
+		>
+		<inverse-foreignkey field-ref="keyTeacher"/>
+	</collection-descriptor>	
    </class-descriptor>
