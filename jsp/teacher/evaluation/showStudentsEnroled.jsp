@@ -45,8 +45,8 @@
 			</h:panelGroup>						
 		</h:panelGrid>
 		<h:outputText value="<br/>" escape="false" />		
-		<h:panelGrid rendered="#{!empty evaluationManagementBackingBean.evaluation.writtenEvaluationEnrolments}">
-			<h:dataTable value="#{evaluationManagementBackingBean.evaluation.writtenEvaluationEnrolments}" var="writtenEvaluationEnrolment" headerClass="listClasses-header" columnClasses="listClasses">
+		<h:panelGrid rendered="#{!empty evaluationManagementBackingBean.writtenEvaluationEnrolments}">
+			<h:dataTable value="#{evaluationManagementBackingBean.writtenEvaluationEnrolments}" var="writtenEvaluationEnrolment" headerClass="listClasses-header" columnClasses="listClasses">
 				<h:column>
 					<f:facet name="header"><h:outputText value="#{bundle['label.number']}"/></f:facet>
 					<h:outputText value="#{writtenEvaluationEnrolment.student.number}" />

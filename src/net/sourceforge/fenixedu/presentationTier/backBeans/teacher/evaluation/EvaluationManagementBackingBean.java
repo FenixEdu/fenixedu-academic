@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -13,10 +15,13 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
+import net.sourceforge.fenixedu.domain.IWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.IWrittenTest;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 public class EvaluationManagementBackingBean extends FenixBackingBean {
 
@@ -47,6 +52,10 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     protected Integer enrolmentEndHour;
 
     protected Integer enrolmentEndMinute;
+
+    protected List<IWrittenEvaluationEnrolment> writtenEvaluationEnrolments;
+
+    protected IWrittenEvaluation writtenEvaluation;
 
     public Integer getExecutionCourseID() {
         if (this.executionCourseID == null) {
@@ -117,7 +126,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     public Integer getEnrolmentBeginDay() throws FenixFilterException, FenixServiceException {
         if (this.enrolmentBeginDay == null && this.getEvaluation().getEnrollmentBeginDay() != null) {
-            this.enrolmentBeginDay = this.getEvaluation().getEnrollmentBeginDay().get(Calendar.DAY_OF_MONTH);
+            this.enrolmentBeginDay = this.getEvaluation().getEnrollmentBeginDay().get(
+                    Calendar.DAY_OF_MONTH);
         }
         return this.enrolmentBeginDay;
     }
@@ -128,7 +138,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     public Integer getEnrolmentBeginHour() throws FenixFilterException, FenixServiceException {
         if (this.enrolmentBeginHour == null && this.getEvaluation().getEnrollmentBeginTime() != null) {
-            this.enrolmentBeginHour = this.getEvaluation().getEnrollmentBeginTime().get(Calendar.HOUR_OF_DAY);
+            this.enrolmentBeginHour = this.getEvaluation().getEnrollmentBeginTime().get(
+                    Calendar.HOUR_OF_DAY);
         }
         return this.enrolmentBeginHour;
     }
@@ -139,7 +150,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     public Integer getEnrolmentBeginMinute() throws FenixFilterException, FenixServiceException {
         if (this.enrolmentBeginMinute == null && this.getEvaluation().getEnrollmentBeginTime() != null) {
-            this.enrolmentBeginMinute = this.getEvaluation().getEnrollmentBeginTime().get(Calendar.MINUTE);
+            this.enrolmentBeginMinute = this.getEvaluation().getEnrollmentBeginTime().get(
+                    Calendar.MINUTE);
         }
         return this.enrolmentBeginMinute;
     }
@@ -150,8 +162,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     public Integer getEnrolmentBeginMonth() throws FenixFilterException, FenixServiceException {
         if (this.enrolmentBeginMonth == null && this.getEvaluation().getEnrollmentBeginDay() != null) {
-            this.enrolmentBeginMonth = this.getEvaluation().getEnrollmentBeginDay().get(Calendar.MONTH) + 1;
-        }       
+            this.enrolmentBeginMonth = this.getEvaluation().getEnrollmentBeginDay().get(Calendar.MONTH) + 1;            
+        }
         return enrolmentBeginMonth;
     }
 
@@ -162,7 +174,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public Integer getEnrolmentBeginYear() throws FenixFilterException, FenixServiceException {
         if (this.enrolmentBeginYear == null && this.getEvaluation().getEnrollmentBeginDay() != null) {
             this.enrolmentBeginYear = this.getEvaluation().getEnrollmentBeginDay().get(Calendar.YEAR);
-        }       
+        }
         return enrolmentBeginYear;
     }
 
@@ -183,7 +195,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     public Integer getEnrolmentEndHour() throws FenixFilterException, FenixServiceException {
         if (this.enrolmentEndHour == null && this.getEvaluation().getEnrollmentEndTime() != null) {
-            this.enrolmentEndHour = this.getEvaluation().getEnrollmentEndTime().get(Calendar.HOUR_OF_DAY);
+            this.enrolmentEndHour = this.getEvaluation().getEnrollmentEndTime()
+                    .get(Calendar.HOUR_OF_DAY);
         }
         return this.enrolmentEndHour;
     }
@@ -206,7 +219,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public Integer getEnrolmentEndMonth() throws FenixFilterException, FenixServiceException {
         if (this.enrolmentEndMonth == null && this.getEvaluation().getEnrollmentEndDay() != null) {
             this.enrolmentEndMonth = this.getEvaluation().getEnrollmentEndDay().get(Calendar.MONTH) + 1;
-        }       
+        }
         return enrolmentEndMonth;
     }
 
@@ -217,7 +230,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public Integer getEnrolmentEndYear() throws FenixFilterException, FenixServiceException {
         if (this.enrolmentEndYear == null && this.getEvaluation().getEnrollmentEndDay() != null) {
             this.enrolmentEndYear = this.getEvaluation().getEnrollmentEndDay().get(Calendar.YEAR);
-        }       
+        }
         return enrolmentEndYear;
     }
 
@@ -246,12 +259,16 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public IWrittenEvaluation getEvaluation() throws FenixFilterException, FenixServiceException {
-        if (this.getEvaluationID() != null) {
-            final Object[] args = { WrittenEvaluation.class, this.getEvaluationID() };
-            
-            return (IWrittenEvaluation) ServiceUtils.executeService(null, "ReadDomainObject", args);
+        if (this.writtenEvaluation == null) {
+            if (this.getEvaluationID() != null) {
+                final Object[] args = { WrittenEvaluation.class, this.getEvaluationID() };
+                writtenEvaluation = (IWrittenEvaluation) ServiceUtils.executeService(null,
+                        "ReadDomainObject", args);
+            } else { // Should not happen
+                return null;
+            }
         }
-        return null;
+        return writtenEvaluation;
     }
 
     private Calendar getEnrolmentBegin() throws FenixFilterException, FenixServiceException {
@@ -285,8 +302,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             ServiceUtils.executeService(getUserView(), "EditWrittenEvaluationEnrolmentPeriod", args);
         } catch (Exception e) {
             FacesContext facesContext = FacesContext.getCurrentInstance();
-            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
-            
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(),
+                    null));
+
             return "";
         }
 
@@ -301,6 +319,18 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             return ((IWrittenTest) writtenEvaluation).getDescription();
         }
         return "";
+    }
+
+    public List<IWrittenEvaluationEnrolment> getWrittenEvaluationEnrolments()
+            throws FenixFilterException, FenixServiceException {
+        
+        if (this.writtenEvaluationEnrolments == null) {
+            this.writtenEvaluationEnrolments = new ArrayList(getEvaluation()
+                    .getWrittenEvaluationEnrolmentsCount());
+            this.writtenEvaluationEnrolments.addAll(getEvaluation().getWrittenEvaluationEnrolments());
+            Collections.sort(this.writtenEvaluationEnrolments, new BeanComparator("student.number"));
+        }
+        return this.writtenEvaluationEnrolments;
     }
 
 }
