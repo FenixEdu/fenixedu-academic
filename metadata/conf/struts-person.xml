@@ -261,7 +261,7 @@
 			parameter="method"
 			scope="request"
 			name="findPersonForm"
-			input="findPerson"
+			input="/findPerson.do?method=prepareFindPerson&amp;page=0"
 			>
 			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"
 					key="ServidorApresentacao.Action.exceptions.FenixActionException"
@@ -270,6 +270,7 @@
 			<forward name="findPerson" path="findPerson"/>
 			<forward name="displayPerson" path="displayPerson"/>
 		</action>
+		
 		<action path="/preparePerson"
 			type="net.sourceforge.fenixedu.presentationTier.Action.person.FindPersonAction"
 			parameter="method"
