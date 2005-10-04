@@ -32,7 +32,7 @@ margin-bottom: 0;
 					<h:outputText value="<b>#{bundle['label.exam']}:</b> " escape="false"/>
 					<h:outputText value="#{exam.season.season}, "/>
 					<h:outputText value="#{bundle['label.day']}" />
-					<h:outputFormat value="{0, date, MM/dd/yyyy}">
+					<h:outputFormat value="{0, date, dd/MM/yyyy}">
 						<f:param value="#{exam.dayDate}"/>
 					</h:outputFormat>
 					<h:outputText value=" #{bundle['label.at']}" />
