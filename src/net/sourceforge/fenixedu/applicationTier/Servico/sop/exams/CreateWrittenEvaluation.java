@@ -40,9 +40,12 @@ public class CreateWrittenEvaluation implements IService {
 		final List<ICurricularCourseScope> curricularCourseScopesToAssociate = readCurricularCourseScopes(
 				persistentSupport, curricularCourseScopeIDs);
 
-		final List<IRoom> roomsToAssociate = readRooms(persistentSupport, roomIDs);
-
-		final IPeriod period = readPeriod(persistentSupport, writtenEvaluationDate);
+		List<IRoom> roomsToAssociate = null;
+        IPeriod period = null; 
+        if (roomIDs != null) {
+            roomsToAssociate = readRooms(persistentSupport, roomIDs);
+            period = readPeriod(persistentSupport, writtenEvaluationDate);
+        }
 
 		// creating the new written evaluation, according to the service arguments
 		if (examSeason != null) {

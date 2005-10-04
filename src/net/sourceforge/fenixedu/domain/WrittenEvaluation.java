@@ -162,7 +162,9 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         this.getAssociatedExecutionCourses().addAll(executionCoursesToAssociate);
         this.getAssociatedCurricularCourseScope().addAll(curricularCourseScopesToAssociate);
 
-        associateRooms(rooms, period);
+        if (rooms != null) {
+            associateRooms(rooms, period);
+        }
     }
 
     private boolean checkValidHours(Date beginning, Date end) {
