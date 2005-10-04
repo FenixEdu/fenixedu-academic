@@ -14,11 +14,13 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.ICountry;
 import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.IPersonRole;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -107,6 +109,8 @@ public class InfoPerson extends InfoObject {
     private InfoTeacher infoTeacher;
 
     private List infoAdvisories;
+    
+    private List mainRoles;
 
     private Boolean availablePhoto;
 
@@ -951,8 +955,35 @@ public class InfoPerson extends InfoObject {
 
             setInfoPais(InfoCountry.newInfoFromDomain(person.getPais()));
 
+            setMainRoles(getImportantRoles(person, new ArrayList()));
         }
 
+    }
+
+    /**
+     * @param person
+     * @param mainRoles
+     */
+    private List getImportantRoles(IPerson person, List mainRoles) {        
+        if(person.getAssociatedPersonRolesCount() != 0){                        
+            for(IPersonRole personRole : person.getAssociatedPersonRoles()){                    
+                RoleType roleType = personRole.getRole().getRoleType();
+                
+                if(roleType.equals(RoleType.TEACHER)){                        
+                    mainRoles.add("Docente");
+                }
+                else if(roleType.equals(RoleType.STUDENT)){
+                    mainRoles.add("Aluno");
+                }
+                else if(roleType.equals(RoleType.GRANT_OWNER)){
+                    mainRoles.add("Bolseiro");
+                }
+                else if(roleType.equals(RoleType.EMPLOYEE)){
+                    mainRoles.add("Funcionário");
+                }                
+            }
+        }
+        return mainRoles;
     }
 
     public static InfoPerson newInfoFromDomain(IPerson person) {
@@ -1041,6 +1072,14 @@ public class InfoPerson extends InfoObject {
 
     public void setInfoTeacher(InfoTeacher infoTeacher) {
         this.infoTeacher = infoTeacher;
+    }
+
+    public List getMainRoles() {
+        return mainRoles;
+    }
+
+    public void setMainRoles(List mainRoles) {
+        this.mainRoles = mainRoles;
     }
 
 }

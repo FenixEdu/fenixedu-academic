@@ -174,7 +174,7 @@ public class FindPersonAction extends FenixDispatchAction {
         } catch (FenixServiceException e) {           
             errors.add("impossibleFindPerson", new ActionError(e.getMessage()));
             saveErrors(request, errors);            
-            return mapping.getInputForward();
+            return prepareFindPerson(mapping, actionForm, request, response);
         }
                
         if (personListFinded == null || personListFinded.size() < 3) {

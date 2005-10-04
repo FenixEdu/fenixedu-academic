@@ -236,7 +236,8 @@ public class SearchPerson implements IService {
 
         for (IPerson person : persons) {
             String personName = person.getNome(); 
-            if (personName != null) {
+            String userName = person.getUsername();
+            if (personName != null && userName.indexOf("INA") == -1) {
                 personName = normalize(personName);
                 int count = 0;
                 for (int i = 0; i < nameWords.length; i++) {

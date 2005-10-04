@@ -59,29 +59,26 @@
 		  <!-- Role -->
 		  
 	      	<td width="30%" colspan="2">
-	      		<logic:match name="personalInfo" property="username" location="start" value="D">
-	      			<b><bean:message key="teacher.docente"/></b>
-	      		</logic:match>
-	      		<logic:match name="personalInfo" property="username" location="start" value="F">
-	      			<b><bean:message key="employee"/></b>
-	      		</logic:match>
-	      		<logic:match name="personalInfo" property="username" location="start" value="L">
-	      			<b><bean:message key="student"/></b>
-	      		</logic:match>	     
-	      		<logic:match name="personalInfo" property="username" location="start" value="M">
-	      			<b><bean:message key="student"/></b>
-	      		</logic:match>
-	      		<logic:match name="personalInfo" property="username" location="start" value="B">
-	      			<b><bean:message key="grantOwner"/></b>
-	      		</logic:match> 	
-	      		<logic:match name="personalInfo" property="username" location="start" value="e">
-	      			<b><bean:message key="external"/></b>
-	      		</logic:match> 	
+	      		<bean:size id="mainRolesSize" name="personalInfo" property="mainRoles"></bean:size> 
+		      	<logic:iterate id="role" name="personalInfo" property="mainRoles" indexId="i">
+	
+			      	<b><bean:write name="role"/>
+	      			<logic:notEqual name="mainRolesSize" value="<%= String.valueOf(i.intValue() + 1) %>">
+		      			,&nbsp;
+		      		</logic:notEqual>	      				
+		      		</b>
+	      		</logic:iterate> 	
 	      		&nbsp;
 	      	</td>
 	      </tr>
-		  
-		  
+	      
+	      <logic:notEqual name="mainRolesSize" value="0">
+	      <tr>
+	      		<td>&nbsp;</td>
+	      		<td>&nbsp;</td>
+	      </tr>
+	      </logic:notEqual>
+		  		  
           <!-- Telefone de Trabalho -->                    
 	      <tr>
 	      	<td width="30%"><bean:message key="label.person.workPhone" /></td>

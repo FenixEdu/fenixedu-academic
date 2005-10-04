@@ -410,7 +410,7 @@ public abstract class SessionConstants {
 
     public static final int LIMIT_FINDED_PERSONS = 20;
     
-    public static final int LIMIT_FINDED_PERSONS_TOTAL = 100;
+    public static final int LIMIT_FINDED_PERSONS_TOTAL = 200;
 
     // -------------------------------------------------------------------------------
     //    SOP Constants - For Context
