@@ -162,13 +162,13 @@
 			<from-outcome>enterEditExamEnrolmentPeriod</from-outcome>
 			<to-view-id>/teacher/evaluation/editExamEnrolmentPeriod.jsp</to-view-id>
 		</navigation-case>
-	</navigation-rule>
-	
-	<navigation-rule>
-		<from-view-id>/teacher/evaluation/examsIndex.jsp</from-view-id>
  		<navigation-case>
 			<from-outcome>enterShowStudentsEnroled</from-outcome>
 			<to-view-id>/teacher/evaluation/showStudentsEnroled.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>enterDistributeStudentsByRooms</from-outcome>
+			<to-view-id>/teacher/evaluation/distributeStudentsByRooms.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	
@@ -188,14 +188,6 @@
 		</navigation-case>
 	</navigation-rule>
 	
-	<navigation-rule>
-		<from-view-id>/teacher/evaluation/examsIndex.jsp</from-view-id>
- 		<navigation-case>
-			<from-outcome>enterDistributeStudentsByRooms</from-outcome>
-			<to-view-id>/teacher/evaluation/distributeStudentsByRooms.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-
 	<navigation-rule>
 		<from-view-id>/teacher/evaluation/editExamEnrolmentPeriod.jsp</from-view-id>
  		<navigation-case>
