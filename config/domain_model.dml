@@ -2013,7 +2013,6 @@ class net.sourceforge.fenixedu.domain.Period extends net.sourceforge.fenixedu.do
 }
 
 class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyAuthor;
 	Integer keyEmployee;
 	Integer keyTeacher;
 	Integer keyExternalPerson;	

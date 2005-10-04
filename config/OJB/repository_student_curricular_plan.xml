@@ -193,10 +193,25 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
+		name="masterDegreeThesisKey"
+		column="KEY_MASTER_DEGREE_THESIS"
+		jdbc-type="INTEGER"	
+	/>	
+	<field-descriptor
 		name="degreeCurricularPlanKey"
 		column="KEY_DEGREE_CURRICULAR_PLAN"
 		jdbc-type="INTEGER"
 	/>
+	<field-descriptor
+		name="creditsInSecundaryArea"
+		column="CREDITS_IN_SECUNDARY_AREA"
+		jdbc-type="INTEGER"
+	/>	
+	<field-descriptor
+		name="creditsInSpecializationArea"
+		column="CREDITS_IN_SPECIALIZATION_AREA"
+		jdbc-type="INTEGER"
+	/>	
 	<field-descriptor
 		name="currentState"
 		column="CURRENT_STATE"
@@ -366,6 +381,21 @@
 		column="KEY_DEGREE_CURRICULAR_PLAN"
 		jdbc-type="INTEGER"
 	/>
+	<field-descriptor
+		name="masterDegreeThesisKey"
+		column="KEY_MASTER_DEGREE_THESIS"
+		jdbc-type="INTEGER"	
+	/>	
+	<field-descriptor
+		name="creditsInSecundaryArea"
+		column="CREDITS_IN_SECUNDARY_AREA"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="creditsInSpecializationArea"
+		column="CREDITS_IN_SPECIALIZATION_AREA"
+		jdbc-type="INTEGER"
+	/>	
 	<field-descriptor
 		name="currentState"
 		column="CURRENT_STATE"
