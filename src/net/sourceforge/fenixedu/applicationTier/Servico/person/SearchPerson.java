@@ -103,7 +103,9 @@ public class SearchPerson implements IService {
                 } else {
                     teachers = (List<ITeacher>) sp.getIPersistentTeacher().readAll(Teacher.class);
                     for (ITeacher teacher : teachers) {
-                        persons.add(teacher.getPerson());
+                        if (teacher.getPerson() != null) {
+                            persons.add(teacher.getPerson());
+                        }
                     }
                 }
             }
@@ -112,7 +114,9 @@ public class SearchPerson implements IService {
                 List<IEmployee> employees = (List<IEmployee>) sp.getIPersistentEmployee().readAll(
                         Employee.class);
                 for (IEmployee employee : employees) {
-                    persons.add(employee.getPerson());
+                    if (employee.getPerson().getTeacher() == null) {
+                        persons.add(employee.getPerson());
+                    }
                 }
             }
 
@@ -137,6 +141,7 @@ public class SearchPerson implements IService {
             else if (roleBd.getRoleType().equals(RoleType.GRANT_OWNER)) {
                 List<IGrantOwner> grantOwners = (List<IGrantOwner>) sp.getIPersistentGrantOwner()
                         .readAll(GrantOwner.class);
+                
                 for (IGrantOwner grantOwner : grantOwners) {
                     persons.add(grantOwner.getPerson());
                 }
@@ -176,8 +181,8 @@ public class SearchPerson implements IService {
     }
 
     private String normalize(String string) {
-        return Normalizer.normalize(string, Normalizer.DECOMP, Normalizer.DONE)
-                .replaceAll("[^\\p{ASCII}]", "").toLowerCase();
+        return Normalizer.normalize(string, Normalizer.DECOMP, Normalizer.DONE).replaceAll(
+                "[^\\p{ASCII}]", "").toLowerCase();
     }
 
     private List<IPerson> getValidDegreeTypePersons(IDegree degree, List<IStudent> students,
@@ -235,7 +240,7 @@ public class SearchPerson implements IService {
         List<IPerson> persons_ = new ArrayList();
 
         for (IPerson person : persons) {
-            String personName = person.getNome(); 
+            String personName = person.getNome();
             String userName = person.getUsername();
             if (personName != null && userName.indexOf("INA") == -1) {
                 personName = normalize(personName);

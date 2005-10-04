@@ -959,18 +959,19 @@ public class InfoPerson extends InfoObject {
         }
 
     }
-
-    /**
-     * @param person
-     * @param mainRoles
-     */
+    
     private List getImportantRoles(IPerson person, List mainRoles) {        
-        if(person.getAssociatedPersonRolesCount() != 0){                        
+        
+        if(person.getAssociatedPersonRolesCount() != 0){
+            
+            boolean teacher = false, employee = false;
+        
             for(IPersonRole personRole : person.getAssociatedPersonRoles()){                    
                 RoleType roleType = personRole.getRole().getRoleType();
                 
                 if(roleType.equals(RoleType.TEACHER)){                        
                     mainRoles.add("Docente");
+                    teacher = true;
                 }
                 else if(roleType.equals(RoleType.STUDENT)){
                     mainRoles.add("Aluno");
@@ -978,9 +979,13 @@ public class InfoPerson extends InfoObject {
                 else if(roleType.equals(RoleType.GRANT_OWNER)){
                     mainRoles.add("Bolseiro");
                 }
-                else if(roleType.equals(RoleType.EMPLOYEE)){
-                    mainRoles.add("Funcionário");
+                else if(!teacher && roleType.equals(RoleType.EMPLOYEE)){                
+                    employee = true;
                 }                
+            }
+            
+            if(employee && !teacher){
+                mainRoles.add("Funcionário");
             }
         }
         return mainRoles;
