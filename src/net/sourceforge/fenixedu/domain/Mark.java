@@ -1,12 +1,17 @@
 package net.sourceforge.fenixedu.domain;
 
-/**
- * @author dcs-rjao
- * 
- * 19/Mar/2003
- */
-
 public class Mark extends Mark_Base {
+
+    public Mark() {
+        super();
+    }
+
+    public Mark(final IAttends attends, final IEvaluation evaluation, final String mark) {
+        setAttend(attends);
+        setEvaluation(evaluation);
+        setMark(mark);
+        setPublishedMark(null);
+    }
 
     public String toString() {
         String result = "[" + this.getClass().getName() + ": ";

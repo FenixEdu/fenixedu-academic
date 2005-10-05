@@ -3,19 +3,25 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
+import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IMark;
 import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
 import net.sourceforge.fenixedu.domain.IWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.IWrittenTest;
@@ -24,6 +30,9 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUpload;
+import org.apache.commons.fileupload.FileUploadException;
 
 public class EvaluationManagementBackingBean extends FenixBackingBean {
 
@@ -48,7 +57,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     protected Integer endHour;
 
     protected Integer endMinute;
-    
+
     protected Integer enrolmentBeginDay;
 
     protected Integer enrolmentBeginMonth;
@@ -74,7 +83,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     protected List<IWrittenEvaluationEnrolment> writtenEvaluationEnrolments;
 
     protected IWrittenEvaluation writtenEvaluation;
-    
+
+    protected Map<Integer, String> marks = new HashMap<Integer, String>();
+
     public Integer getExecutionCourseID() {
         if (this.executionCourseID == null) {
             if (this.executionCourseIdHidden != null) {
@@ -391,6 +402,12 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return "backToExamsIndex";
     }
 
+    public String editMarks() throws FenixFilterException, FenixServiceException {
+        final Object[] args = { getEvaluationID(), this.marks };
+        ServiceUtils.executeService(getUserView(), "WriteMarks", args);
+        return "success";
+    }
+
     public String getEvaluationDescription() throws FenixFilterException, FenixServiceException {
         final IWrittenEvaluation writtenEvaluation = getEvaluation();
         if (writtenEvaluation instanceof IExam) {
@@ -459,6 +476,49 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         }
 
         return "backToWrittenTestIndex";
+    }
+
+    public IExecutionCourse getExecutionCourse() throws FenixFilterException, FenixServiceException {
+        final Object[] args = { ExecutionCourse.class, getExecutionCourseID() };
+        return (IExecutionCourse) ServiceUtils.executeService(null, "ReadDomainObject", args);
+    }
+
+    public Map<Integer, String> getMarks() throws FenixFilterException, FenixServiceException {
+        final IEvaluation evaluation = getEvaluation();
+        final IExecutionCourse executionCourse = getExecutionCourse();
+        if (executionCourse != null) {
+            for (final IAttends attends : executionCourse.getAttends()) {
+                for (final IMark mark : attends.getAssociatedMarks()) {
+                    if (mark.getEvaluation() == evaluation && !marks.containsKey(attends.getIdInternal())) {
+                        marks.put(attends.getIdInternal(), mark.getMark());
+                    }
+                }
+            }
+        }
+        return marks;
+    }
+
+    public void setMarks(Map<Integer, String> marks) {
+        this.marks = marks;
+    }
+
+    public String loadMarks() throws FenixFilterException, FenixServiceException, FileUploadException {
+        HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+
+        FileUpload fileUpload = new FileUpload();
+        List<FileItem> fileItems = fileUpload.parseRequest(httpServletRequest);
+
+        for (final FileItem fileItem :fileItems) {
+            System.out.println(fileItem.getName() + " " + fileItem.getFieldName() + " " + fileItem.getSize());
+        }
+
+        Object object = httpServletRequest.getAttribute("theFile");
+        System.out.println("object: " + object);
+
+        object = httpServletRequest.getParameter("theFile");
+        System.out.println("object: " + object);
+
+        return "success";
     }
 
 }

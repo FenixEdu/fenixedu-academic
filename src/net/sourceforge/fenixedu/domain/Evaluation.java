@@ -20,5 +20,5 @@ public class Evaluation extends Evaluation_Base {
             result.addAll(this.getAssociatedExecutionCourses());            
         }
         return result;
-    }    
+    }
 }
