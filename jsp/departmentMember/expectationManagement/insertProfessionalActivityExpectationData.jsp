@@ -7,11 +7,9 @@
 	<f:loadBundle basename="ServidorApresentacao/DepartmentMemberResources" var="bundle"/>
 	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="bundleEnumeration"/>
 	
-	<h:outputText value="<h2>" escape="false" />
-	<h:outputText value="#{bundle['label.personalExpectationsManagement.title']}" escape="false" />
+	<h:outputText value="#{bundle['label.personalExpectationsManagement.title']}" escape="false" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
 	<h:outputText value="&nbsp;-&nbsp;" escape="false" />
-	<h:outputText value="#{teacherExpectationManagement.selectedExecutionYearName}" escape="false" />
-	<h:outputText value="</h2>" escape="false" />
+	<h:outputText value="#{teacherExpectationManagement.selectedExecutionYearName}" escape="false" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
 	
 	
 	<h:form onsubmit="updateRTEs();">
@@ -52,35 +50,34 @@
 		<h:inputHidden id="universityServiceMainFocus" value="#{teacherExpectationManagement.universityServiceMainFocus}" />
 					
 		<!-- Professional Activity Expectations -->
-		<h:outputText value="#{bundle['label.personalExpectationsManagement.professionalActivity']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
-		<h:outputText value="<br/>" escape="false" />
-		<h:panelGrid columns="3">
+		<h:outputText value="<h2>#{bundle['label.personalExpectationsManagement.professionalActivity']}</h2>" escape="false" />
+		<h:panelGrid columns="1">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.cientificComunityService']}" />
-			<h:inputTextarea id="cientificComunityService" value="#{teacherExpectationManagement.cientificComunityService}" required="true">
+			<h:inputTextarea cols="40" id="cientificComunityService" value="#{teacherExpectationManagement.cientificComunityService}" required="true">
 				<f:validateLength minimum="0" maximum="250" />
 			</h:inputTextarea>
 			<h:message for="cientificComunityService" styleClass="error"/>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.societyService']}" />
-			<h:inputTextarea id="societyService" value="#{teacherExpectationManagement.societyService}" required="true" >
+			<h:inputTextarea cols="40" id="societyService" value="#{teacherExpectationManagement.societyService}" required="true" >
 				<f:validateLength minimum="0" maximum="250" />
 			</h:inputTextarea>
 			<h:message for="societyService" styleClass="error"/>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.consulting']}" />
-			<h:inputTextarea id="consulting" value="#{teacherExpectationManagement.consulting}" required="true" >
+			<h:inputTextarea cols="40" id="consulting" value="#{teacherExpectationManagement.consulting}" required="true" >
 				<f:validateLength minimum="0" maximum="250" />
 			</h:inputTextarea>
 			<h:message for="consulting" styleClass="error"/>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.companySocialOrgans']}" />
-			<h:inputTextarea id="companySocialOrgans" value="#{teacherExpectationManagement.companySocialOrgans}" required="true" >
+			<h:inputTextarea cols="40" id="companySocialOrgans" value="#{teacherExpectationManagement.companySocialOrgans}" required="true" >
 				<f:validateLength minimum="0" maximum="250" />
 			</h:inputTextarea>
 			<h:message for="companySocialOrgans" styleClass="error"/>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.companyPositions']}" />
-			<h:inputTextarea id="companyPositions" value="#{teacherExpectationManagement.companyPositions}" required="true" >
+			<h:inputTextarea cols="40" id="companyPositions" value="#{teacherExpectationManagement.companyPositions}" required="true" >
 				<f:validateLength minimum="0" maximum="250" />
 			</h:inputTextarea>
 			<h:message for="companyPositions" styleClass="error"/>
@@ -88,7 +85,7 @@
 		</h:panelGrid>
 		
 		<h:panelGrid columns="1">
-			<h:outputText value="#{bundle['label.personalExpectationsManagement.mainFocus']}" />
+			<h:outputText value="#{bundle['label.personalExpectationsManagement.mainFocus']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" escape="false" />
 			<fc:htmlEditor value="#{teacherExpectationManagement.professionalActivityMainFocus}" height="300" width="300" designMode="true"/>
 		</h:panelGrid>
 		

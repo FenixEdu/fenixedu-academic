@@ -7,12 +7,10 @@
 	<f:loadBundle basename="ServidorApresentacao/DepartmentMemberResources" var="bundle"/>
 	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="bundleEnumeration"/>
 	
-	<h:outputText value="<h2>" escape="false" />
-	<h:outputText value="#{bundle['label.personalExpectationsManagement.title']}" escape="false" />
+	<h:outputText value="#{bundle['label.personalExpectationsManagement.title']}" escape="false" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
 	<h:outputText value="&nbsp;-&nbsp;" escape="false" />
-	<h:outputText value="#{teacherExpectationManagement.selectedExecutionYearName}" escape="false" />
-	<h:outputText value="</h2>" escape="false" />
-	
+	<h:outputText value="#{teacherExpectationManagement.selectedExecutionYearName}" escape="false" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
+
 	
 	<h:form onsubmit="updateRTEs();">
 		<h:inputHidden binding="#{teacherExpectationManagement.selectedExecutionYearIdHidden}"  />
@@ -47,30 +45,29 @@
 		<h:inputHidden id="orientationsMainFocus" value="#{teacherExpectationManagement.orientationsMainFocus}" />
 		
 		<!-- University Service Expectations -->
-		<h:outputText value="#{bundle['label.personalExpectationsManagement.universityService']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
-		<h:outputText value="<br/>" escape="false" />
-		<h:panelGrid columns="3">
+		<h:outputText value="<h2>#{bundle['label.personalExpectationsManagement.universityService']}</h2>" escape="false" />
+		<h:panelGrid columns="1">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.departmentOrgans']}" />
-			<h:inputTextarea id="departmentOrgans" value="#{teacherExpectationManagement.departmentOrgans}" required="true">
+			<h:inputTextarea cols="40" id="departmentOrgans" value="#{teacherExpectationManagement.departmentOrgans}" required="true">
 				<f:validateLength minimum="0" maximum="250" />
 			</h:inputTextarea>
 			<h:message for="departmentOrgans" styleClass="error"/>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.istOrgans']}" />
-			<h:inputTextarea id="istOrgans" value="#{teacherExpectationManagement.istOrgans}" required="true">
+			<h:inputTextarea cols="40" id="istOrgans" value="#{teacherExpectationManagement.istOrgans}" required="true">
 				<f:validateLength minimum="0" maximum="250" />
 			</h:inputTextarea>
 			<h:message for="istOrgans" styleClass="error"/>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.utlOrgans']}" />
-			<h:inputTextarea id="utlOrgans" value="#{teacherExpectationManagement.utlOrgans}" required="true">
+			<h:inputTextarea cols="40" id="utlOrgans" value="#{teacherExpectationManagement.utlOrgans}" required="true">
 				<f:validateLength minimum="0" maximum="250" />
 			</h:inputTextarea>
 			<h:message for="utlOrgans" styleClass="error"/>
 		</h:panelGrid>
 					
 		<h:panelGrid columns="1">
-			<h:outputText value="#{bundle['label.personalExpectationsManagement.mainFocus']}" />
+			<h:outputText value="#{bundle['label.personalExpectationsManagement.mainFocus']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" escape="false" />
 			<fc:htmlEditor value="#{teacherExpectationManagement.universityServiceMainFocus}" height="300" width="300" designMode="true"/>
 		</h:panelGrid>
 		
