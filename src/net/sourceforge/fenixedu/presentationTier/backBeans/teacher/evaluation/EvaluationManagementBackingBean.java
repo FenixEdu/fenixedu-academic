@@ -123,7 +123,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         if (this.evaluationID == null) {
             if (this.evaluationIdHidden != null) {
                 this.evaluationID = Integer.valueOf(this.evaluationIdHidden.getValue().toString());
-            } else {
+            } else if (this.getRequestParameter("evaluationID") != "" && this.getRequestParameter("evaluationID") != null) {
                 this.evaluationID = Integer.valueOf(this.getRequestParameter("evaluationID"));
             }
         }
@@ -154,7 +154,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public Integer getDay() throws FenixFilterException, FenixServiceException {
-        if (this.getEvaluation() != null) {
+        if (this.day == null && this.getEvaluation() != null) {
             this.day = getEvaluation().getDay().get(Calendar.DAY_OF_MONTH);
         }
         return this.day;
@@ -165,7 +165,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public Integer getMonth() throws FenixFilterException, FenixServiceException {
-        if (this.getEvaluation() != null) {
+        if (this.month == null && this.getEvaluation() != null) {
             this.month = getEvaluation().getDay().get(Calendar.MONTH) + 1;
         }
         return this.month;
@@ -176,7 +176,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public Integer getYear() throws FenixFilterException, FenixServiceException {
-        if (this.getEvaluation() != null) {
+        if (this.year == null && this.getEvaluation() != null) {
             this.year = getEvaluation().getDay().get(Calendar.YEAR);
         }
         return this.year;
@@ -187,8 +187,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public Integer getBeginHour() throws FenixFilterException, FenixServiceException {
-        if (this.getEvaluation() != null) {
-            this.beginHour = getEvaluation().getBeginning().get(Calendar.HOUR);
+        if (this.beginHour == null && this.getEvaluation() != null) {
+            this.beginHour = getEvaluation().getBeginning().get(Calendar.HOUR_OF_DAY);
         }
         return this.beginHour;
     }
@@ -198,7 +198,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public Integer getBeginMinute() throws FenixFilterException, FenixServiceException {
-        if (this.getEvaluation() != null) {
+        if (this.beginMinute == null && this.getEvaluation() != null) {
             this.beginMinute = getEvaluation().getBeginning().get(Calendar.MINUTE);
         }
         return this.beginMinute;
@@ -209,8 +209,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public Integer getEndHour() throws FenixFilterException, FenixServiceException {
-        if (this.getEvaluation() != null) {
-            this.endHour = getEvaluation().getEnd().get(Calendar.HOUR);
+        if (this.endHour == null && this.getEvaluation() != null) {
+            this.endHour = getEvaluation().getEnd().get(Calendar.HOUR_OF_DAY);
         }
         return this.endHour;
     }
@@ -220,7 +220,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public Integer getEndMinute() throws FenixFilterException, FenixServiceException {
-        if (this.getEvaluation() != null) {
+        if (this.endMinute == null && this.getEvaluation() != null) {
             this.endMinute = getEvaluation().getEnd().get(Calendar.MINUTE);
         }
         return this.endMinute;
@@ -231,7 +231,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public String getDescription() throws FenixFilterException, FenixServiceException {
-        if (this.getEvaluation() != null) {
+        if (this.description == null && this.getEvaluation() != null) {
             this.description = this.getEvaluationDescription();
         }
         return this.description;
@@ -459,7 +459,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public Calendar getBegin() throws FenixFilterException, FenixServiceException {
         Calendar result = Calendar.getInstance();
 
-        result.set(getYear(), getMonth() - 1, getDay(), getBeginHour(), getBeginMinute());
+        result.set(this.getYear(), this.getMonth() - 1, this.getDay(), this.getBeginHour(), this
+                .getBeginMinute());
 
         return result;
     }
@@ -467,7 +468,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public Calendar getEnd() throws FenixFilterException, FenixServiceException {
         Calendar result = Calendar.getInstance();
 
-        result.set(getYear(), getMonth() - 1, getDay(), getEndHour(), getEndMinute());
+        result.set(this.getYear(), this.getMonth() - 1, this.getDay(), this.getEndHour(), this
+                .getEndMinute());
 
         return result;
     }
@@ -501,7 +503,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             return "";
         }
 
-        return "backToWrittenTestIndex";
+        return "backToWrittenTestsIndex";
     }
 
     public IExecutionCourse getExecutionCourse() throws FenixFilterException, FenixServiceException {
@@ -548,6 +550,38 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         System.out.println("object: " + object);
 
         return "success";
+    }
+
+    public String editWrittenTest() throws FenixFilterException, FenixServiceException {
+        List<String> executionCourseIDs = new ArrayList<String>();
+        executionCourseIDs.add(this.getExecutionCourseID().toString());
+
+        List<String> curricularCourseScopeIDs = new ArrayList<String>();
+        final Object[] argsToReadExecutionCourse = { ExecutionCourse.class, this.getExecutionCourseID() };
+        IExecutionCourse executionCourse = (IExecutionCourse) ServiceUtils.executeService(null,
+                "ReadDomainObject", argsToReadExecutionCourse);
+        for (ICurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+            for (ICurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
+                if (curricularCourseScope.getCurricularSemester().getSemester().equals(
+                        executionCourse.getExecutionPeriod().getSemester())) {
+                    curricularCourseScopeIDs.add(curricularCourseScope.getIdInternal().toString());
+                }
+            }
+        }
+
+        final Object[] args = { this.getBegin(), this.getBegin(), this.getEnd(), executionCourseIDs,
+                curricularCourseScopeIDs, null, this.evaluationID, null, this.getDescription() };
+        try {
+            ServiceUtils.executeService(getUserView(), "EditWrittenEvaluation", args);
+        } catch (Exception e) {
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(),
+                    null));
+
+            return "";
+        }
+
+        return "backToWrittenTestsIndex";
     }
 
 }
