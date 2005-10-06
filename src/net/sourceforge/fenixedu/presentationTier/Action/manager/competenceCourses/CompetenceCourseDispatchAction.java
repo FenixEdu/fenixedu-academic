@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.competenceCourses;
 
 import java.text.Collator;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -21,6 +22,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -28,6 +30,81 @@ import org.apache.struts.action.DynaActionForm;
 
 public class CompetenceCourseDispatchAction extends FenixDispatchAction {
 	
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException, FenixFilterException{
+		IUserView userView = SessionUtils.getUserView(request);
+		Object[] args = {};
+		List<InfoDepartment> infoDepartments;
+		try {
+            infoDepartments = (List<InfoDepartment>) ServiceUtils.executeService(userView,"ReadAllDepartments", args);
+        } catch (FenixServiceException fse) {
+        	throw new FenixActionException(fse.getMessage());
+        }
+        
+        request.setAttribute("departments", infoDepartments);
+        request.setAttribute("competenceCourses", new ArrayList());
+        return mapping.findForward("showCompetenceCourses");
+	} 
+	
+	public ActionForward showDepartmentCompetenceCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException, FenixFilterException{
+		
+		IUserView userView = SessionUtils.getUserView(request);
+		
+		DynaActionForm actionForm = (DynaActionForm) form;
+		String departmentString = (String) actionForm.get("departmentID");
+		Integer departmentID = (departmentString != null && StringUtils.isNumeric(departmentString)) ?
+				Integer.valueOf(departmentString) : null;
+		
+		Object[] args = {};
+		Object[] args2 = {departmentID};
+		List<InfoDepartment> infoDepartments;
+		List<InfoCompetenceCourse> infoCompetenceCourses;
+		
+		try {
+			infoCompetenceCourses = (List<InfoCompetenceCourse>) ServiceUtils.executeService(userView, "ReadCompetenceCoursesByDepartment", args2);
+            infoDepartments = (List<InfoDepartment>) ServiceUtils.executeService(userView,"ReadAllDepartments", args);
+        } catch (FenixServiceException fse) {
+        	throw new FenixActionException(fse.getMessage());
+        }
+        
+        request.setAttribute("departments", infoDepartments);
+        Collections.sort(infoCompetenceCourses, new BeanComparator("name", Collator.getInstance()));
+        request.setAttribute("competenceCourses", infoCompetenceCourses);
+        return mapping.findForward("showCompetenceCourses");
+	} 
+	
+	public ActionForward deleteCompetenceCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException, FenixFilterException{
+       	IUserView userView = SessionUtils.getUserView(request);
+       	DynaActionForm actionForm = (DynaActionForm) form;
+       	
+       	Integer[] competenceCoursesIDs = (Integer[]) actionForm.get("competenceCoursesIds");
+       	Object[] args = {competenceCoursesIDs};
+       	
+       	try {
+            ServiceUtils.executeService(userView, "DeleteCompetenceCourses", args);
+        } catch (FenixServiceException fenixServiceException) {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
+       	return mapping.findForward("readCompetenceCourses");
+    }
+	
+	public ActionForward chooseDepartment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException, FenixFilterException{
+		IUserView userView = SessionUtils.getUserView(request);
+		Object[] args = {};
+		List<InfoDepartment> infoDepartments;
+		try {
+            infoDepartments = (List<InfoDepartment>) ServiceUtils.executeService(userView,"ReadAllDepartments", args);
+        } catch (FenixServiceException fse) {
+        	throw new FenixActionException(fse.getMessage());
+        }
+        
+        request.setAttribute("departments", infoDepartments);
+        return mapping.findForward("chooseDepartment");
+	}
+		
     public ActionForward showAllCompetences(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException{
         
@@ -68,64 +145,9 @@ public class CompetenceCourseDispatchAction extends FenixDispatchAction {
         request.setAttribute("competenceCourse", competenceCourse);
         return mapping.findForward("showCompetenceCourse");
     }
-    
-    public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException{
-    	IUserView userView = SessionUtils.getUserView(request);
-    	
-    	Integer competenceCourseID = Integer.valueOf((String) request.getParameter("competenceCourse"));
-    	Object[] args = {competenceCourseID};
-    	Object[] args2 = {};
-    	InfoCompetenceCourse competenceCourse = null;
-    	List<InfoDepartment> infoDepartments = null;
-        try {
-            competenceCourse = (InfoCompetenceCourse) ServiceUtils.executeService(userView,"ReadCompetenceCourse", args);
-            infoDepartments = (List<InfoDepartment>) ServiceUtils.executeService(userView,"ReadAllDepartments", args2);
-        } catch (NotExistingServiceException notExistingServiceException) {
-            
-         
-        } catch (FenixServiceException fenixServiceException) {
-            throw new FenixActionException(fenixServiceException.getMessage());
-        }
-        
-        request.setAttribute("departments", infoDepartments);
-        request.setAttribute("competenceCourse", competenceCourse);
-        
-        DynaActionForm actionForm = (DynaActionForm) form;
-        actionForm.set("competenceCourseID", competenceCourse.getIdInternal());
-        actionForm.set("code", competenceCourse.getCode());
-        actionForm.set("name", competenceCourse.getName());
-        if(competenceCourse.getDepartments() != null) {
-        	actionForm.set("departmentID", competenceCourse.getDepartments().get(0).getIdInternal());
-        }
-        
-        return mapping.findForward("edit");
-    }    
+       
 
-    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-    		HttpServletResponse response) throws FenixActionException, FenixFilterException{
-    	IUserView userView = SessionUtils.getUserView(request);
-    	DynaActionForm actionForm = (DynaActionForm) form;
-    	Integer competenceCourseID = (Integer) actionForm.get("competenceCourseID");
-    	String code = (String) actionForm.get("code");
-    	String name = (String) actionForm.get("name");
-    	Integer departmentID = (Integer) actionForm.get("departmentID");
-    	Object[] args = {competenceCourseID, code, name, departmentID};
-    	InfoCompetenceCourse competenceCourse = null;
-        try {
-            competenceCourse = (InfoCompetenceCourse) ServiceUtils.executeService(userView,"CreateEditCompetenceCourse", args);
-            
-        } catch (InvalidArgumentsServiceException invalidArgumentsServiceException) {
 
-        } catch (NotExistingServiceException notExistingServiceException) {
-            
-        } catch (FenixServiceException fenixServiceException) {
-            throw new FenixActionException(fenixServiceException.getMessage());
-        }
-        
-        request.setAttribute("competenceCourse", competenceCourse);
-        return mapping.findForward("showCompetenceCourse");
-    }
     
     public ActionForward start(ActionMapping mapping, ActionForm form, HttpServletRequest request,
     		HttpServletResponse response) throws FenixActionException, FenixFilterException{

@@ -510,11 +510,19 @@
 		<form-bean name="competenceCourseForm"
 				type="org.apache.struts.validator.DynaValidatorForm"
 				dynamic="true">
-			<form-property name="competenceCourseID" type="java.lang.Integer"/>
+			<form-property name="competenceCoursesIds" type="java.lang.Integer[]"/>
+			<form-property name="method" type="java.lang.String"/>
+			<form-property name="departmentID" type="java.lang.String"/>
+		</form-bean>
+		<form-bean name="createEditCompetenceCourseForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+			<form-property name="departmentIDs" type="java.lang.Integer[]"/>
+			<form-property name="method" type="java.lang.String"/>
 			<form-property name="code" type="java.lang.String"/>
 			<form-property name="name" type="java.lang.String"/>
-			<form-property name="departmentID" type="java.lang.Integer"/>
-		</form-bean>		
+			<form-property name="competenceCourseID" type="java.lang.Integer"/>			
+		</form-bean>
 		<form-bean name="deleteCompetenceCoursesForm"
 				type="org.apache.struts.validator.DynaValidatorForm"
 				dynamic="true">
@@ -1702,10 +1710,21 @@
 		scope="request"
 		name="competenceCourseForm"
 	>
-		<forward name="showAllCompetenceCourses" path="df.page.showAllCompetenceCourses"/>         
+		<forward name="showCompetenceCourses" path="df.page.showAllCompetenceCourses"/>
+		<forward name="readCompetenceCourses" path="/competenceCourseManagement.do?method=showDepartmentCompetenceCourses"/>
+		<forward name="chooseDepartment" path="df.page.chooseDepartment"/>
 		<forward name="showCompetenceCourse" path="df.page.showCompetenceCourse"/>
-		<forward name="edit" path="df.page.editCompetenceCourse"/> 
+
+     </action>
+     
+     <action path="/createEditCompetenceCourse"
+			parameter="method"
+			name="createEditCompetenceCourseForm"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.competenceCourses.CreateEditCompetenceCourseDispatchAction"
+			scope="request">
 		<forward name="createCompetenceCourse" path="df.page.createCompetenceCourse"/>
+		<forward name="showCompetenceCourse" path="df.page.showCompetenceCourse"/>
+		<forward name="edit" path="df.page.editCompetenceCourse"/> 		
      </action>
      
 	 <action path="/deleteCompetenceCourses"

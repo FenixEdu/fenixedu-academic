@@ -17,7 +17,7 @@
 </table>
 
 <ul style="list-style-type: square;">
-	<li><html:link page="/competenceCourseManagement.do?method=prepareEdit" paramId="competenceCourse" paramName="competenceCourse" paramProperty="idInternal"><bean:message key="label.manager.edit.competenceCourse"/></html:link></li>
+	<li><html:link page="/createEditCompetenceCourse.do?method=prepareEdit" paramId="competenceCourse" paramName="competenceCourse" paramProperty="idInternal"><bean:message key="label.manager.edit.competenceCourse"/></html:link></li>
 	<li><html:link page="/curricularCoursesCompetenceCourse.do?method=readDegrees" paramId="competenceCourseID" paramName="competenceCourse" paramProperty="idInternal"><bean:message key="label.manager.associate.curricularCourses"/></html:link></li>
 </ul>
 
@@ -28,25 +28,15 @@
 
 <table width="70%" cellpadding="0" border="0">
 	<tr>
-		<td class="listClasses-header"><bean:message key="label.manager.degree.code" />
-		</td>
-		<td class="listClasses-header"><bean:message key="message.degreeName" />
-		</td>
-		<td class="listClasses-header"><bean:message key="label.manager.department" />
-		</td>
+		<h3><bean:message key="label.manager.competenceCourse.associated.departments"/></h3>
 	</tr>
-	<tr>
-		<td class="listClasses">
-			<bean:write name="competenceCourse" property="code"/>
-		</td>
-		<td class="listClasses">
-			<bean:write name="competenceCourse" property="name"/>
-		</td>
-		<td class="listClasses">
-			<logic:present name="competenceCourse" property="department">
-				<bean:write name="competenceCourse" property="department.name"/>
-			</logic:present>
-		</td>
+	<logic:iterate id="department" name="competenceCourse" property="departments">
+		<tr>
+			<td class="listClasses">
+				<bean:write name="department" property="name"/>
+			</td>
+		</tr>
+	</logic:iterate>
 </table>
 <br>
 	

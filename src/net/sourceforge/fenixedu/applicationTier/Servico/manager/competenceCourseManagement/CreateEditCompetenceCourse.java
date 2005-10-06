@@ -20,23 +20,20 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class CreateEditCompetenceCourse implements IService {
 
-	public InfoCompetenceCourse run(Integer competenceCourseID, String code, String name, Integer departmentID) throws Exception{
+	public InfoCompetenceCourse run(Integer competenceCourseID, String code, String name, Integer[] departmentIDs) throws Exception{
 		ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IDepartment department = null;
-		if(departmentID != null) {
+		List<IDepartment> departments = new ArrayList<IDepartment>();
+		for (Integer departmentID : departmentIDs) {
 			IPersistentDepartment persistentDepartment = suportePersistente.getIDepartamentoPersistente();
-			department = (IDepartment) persistentDepartment.readByOID(Department.class, departmentID);
+			IDepartment department = (IDepartment) persistentDepartment.readByOID(Department.class, departmentID);
 			if(department == null) {
 				throw new NonExistingServiceException("error.manager.noDepartment");
 			}
+			departments.add(department);
 		}
+
 		try {
 			ICompetenceCourse competenceCourse = null;
-			List<IDepartment> departments = null;
-			if(department != null) {
-				departments = new ArrayList<IDepartment>(1);
-				departments.add(department);
-			}
 			if(competenceCourseID == null) {
 				competenceCourse = new CompetenceCourse(code, name, departments);
 			} else {

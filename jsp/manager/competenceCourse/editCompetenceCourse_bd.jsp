@@ -1,5 +1,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
 <h2><bean:message key="label.manager.edit.competenceCourse" /></h2>
@@ -8,7 +9,7 @@
 
 <span class="error"><html:errors/></span>
 
-<html:form action="/competenceCourseManagement">  
+<html:form action="/createEditCompetenceCourse">  
 	<html:hidden property="method" value="edit"/>
 	<html:hidden property="competenceCourseID"/>	
 	<table>
@@ -33,10 +34,12 @@
 				<bean:message key="label.manager.department"/>
 			</td>
 			<td>
-				<html:select property="departmentID">
-					<html:option value="null">&nbsp;</html:option>
-					<html:options collection="departments" property="idInternal" labelProperty="name"/>
-    			</html:select>
+				<logic:iterate id="department" name="departments">
+					<html:multibox property="departmentIDs" >
+						<bean:write name="department" property="idInternal"/>
+					</html:multibox>
+					<bean:write name="department" property="name"/><br/>
+				</logic:iterate>
 			</td>
 		</tr>
 	</table>

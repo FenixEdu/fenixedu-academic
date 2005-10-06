@@ -7,10 +7,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 public class CompetenceCourse extends CompetenceCourse_Base {
     
     public CompetenceCourse(String code, String name, Collection<IDepartment> departments) {
-    	fillfields(code, name, departments);
+    	fillFields(code, name);
+        if(departments != null) {
+        	addDepartments(departments);
+        }
     }
     
-    private void fillfields(String code, String name, Collection<IDepartment> departments) {
+    private void fillFields(String code, String name) {
     	if(code == null || code.length() == 0) {
 			throw new DomainException("Invalid code argument");
 		}
@@ -20,13 +23,20 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 		
         setCode(code);
         setName(name);
-        if(departments != null) {
-        	addDepartments(departments);
-        }
 	}
     
     public void edit(String code, String name, Collection<IDepartment> departments) {
-    	fillfields(code, name, departments);
+    	fillFields(code, name);
+    	for (IDepartment department : getDepartments()) {
+			if(!departments.contains(department)) {
+				removeDepartments(department);
+			}
+		}
+    	for (IDepartment department : departments) {
+			if(!hasDepartments(department)) {
+				addDepartments(department);
+			}
+		}
     }
 
 	public void delete() {
