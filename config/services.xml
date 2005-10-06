@@ -8660,7 +8660,16 @@
         <filterChains>
             <chain name="ManagerAuthorization"/>
         </filterChains>        
-    </service>    
+    </service>
+    <service>
+    	<name>ReadCompetenceCoursesByDepartment</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCourseManagement.ReadCompetenceCoursesByDepartment</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>        
+    </service>
     <service>
     	<name>ReadAllCurricularCoursesByCompetenceCourse</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCourseManagement.ReadAllCurricularCoursesByCompetenceCourse</implementationClass>
