@@ -36,7 +36,7 @@
 </strong></p>
 
 <p><strong>&raquo; 
-	<html:link page="/competenceCourseManagement.do?method=showAllCompetences">
+	<html:link page="/competenceCourseManagement.do?method=prepare">
 		<bean:message key="label.manager.competence.course.management" />
 	</html:link>
 </strong></p>
