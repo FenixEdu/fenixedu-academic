@@ -6,10 +6,13 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.jsf.components.UIViewState;
 
 public class FenixBackingBean {
 
     protected IUserView userView;
+
+    private UIViewState viewState;
 
     public FenixBackingBean() {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext()
@@ -33,6 +36,18 @@ public class FenixBackingBean {
     public String getContextPath() {
         return ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest())
                 .getContextPath();
+    }
+
+    public UIViewState getViewState() {
+        if (this.viewState == null) {
+            this.viewState = new UIViewState();
+        }
+
+        return viewState;
+    }
+
+    public void setViewState(UIViewState viewState) {
+        this.viewState = viewState;
     }
 
 }

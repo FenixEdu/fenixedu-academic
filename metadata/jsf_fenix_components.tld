@@ -119,6 +119,51 @@
     </attribute>
 
   </tag>
+  
+  
+  
+   <tag>
+
+    <name>viewState</name>
+    <tag-class>net.sourceforge.fenixedu.presentationTier.jsf.components.UIViewStateTag</tag-class>
+    <tei-class>com.sun.faces.taglib.FacesTagExtraInfo</tei-class>
+    <body-content>empty</body-content>
+    <description>
+    </description>
+
+    <attribute>
+      <name>binding</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+        Value binding expression to a backing bean
+        property bound to the component instance for
+        the UIComponent created by this custom action.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>id</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+        Component identifier of the UISelectItem
+        component to be created.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>value</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+        Value binding expression pointing at a
+        SelectItem instance containing the
+        information for this option.
+      </description>
+    </attribute>
+   
+  </tag>
 
 
 </taglib>
