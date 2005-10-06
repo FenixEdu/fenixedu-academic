@@ -38,8 +38,9 @@ public class WrittenTest extends WrittenTest_Base {
             List<ICurricularCourseScope> curricularCourseScopesToAssociate, List<IRoom> rooms,
             IPeriod period, String description) {
 
-        //TODO: check some constrains if needed
-
+        this.getAssociatedExecutionCourses().clear();
+        this.getAssociatedCurricularCourseScope().clear();
+        
         setAttributesAndAssociateRooms(testDate, testStartTime, testEndTime,
                 executionCoursesToAssociate, curricularCourseScopesToAssociate, rooms, period);        
         this.setDescription(description);
