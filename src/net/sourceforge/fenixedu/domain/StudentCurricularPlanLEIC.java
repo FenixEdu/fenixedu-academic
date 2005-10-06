@@ -9,15 +9,15 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
-import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.tools.enrollment.AreaType;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 
 /**
  * @author Jo�o Mota
@@ -27,6 +27,22 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
 
     public StudentCurricularPlanLEIC() {
         setOjbConcreteClass(getClass().getName());
+    }
+
+    public Integer getCreditsInSecundaryArea() {
+        return this.creditsInSecundaryArea;
+    }
+
+    public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea) {
+        this.creditsInSecundaryArea = creditsInSecundaryArea;
+    }
+
+    public Integer getCreditsInSpecializationArea() {
+        return this.creditsInSpecializationArea;
+    }
+
+    public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea) {
+        this.creditsInSpecializationArea = creditsInSpecializationArea;
     }
 
     public boolean getCanChangeSpecializationArea() {

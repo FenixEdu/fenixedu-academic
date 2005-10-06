@@ -25,6 +25,22 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
         setOjbConcreteClass(getClass().getName());
     }
 
+    public Integer getCreditsInSecundaryArea() {
+        return this.creditsInSecundaryArea;
+    }
+
+    public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea) {
+        this.creditsInSecundaryArea = creditsInSecundaryArea;
+    }
+
+    public Integer getCreditsInSpecializationArea() {
+        return this.creditsInSpecializationArea;
+    }
+
+    public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea) {
+        this.creditsInSpecializationArea = creditsInSpecializationArea;
+    }
+    
     public List getAllEnrollments() {
         return super.getEnrolments();
     }

@@ -33,8 +33,10 @@ import org.apache.commons.collections.Transformer;
  */
 
 public class StudentCurricularPlan extends StudentCurricularPlan_Base {
-    protected Map acumulatedEnrollments; // For enrollment purposes only
-
+    protected Map acumulatedEnrollments;            // For enrollment purposes only
+    protected Integer creditsInSecundaryArea;       // For enrollment purposes only
+    protected Integer creditsInSpecializationArea;  // For enrollment purposes only
+  
     public StudentCurricularPlan() {
         this.setOjbConcreteClass(getClass().getName());
     }
@@ -54,18 +56,40 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return result;
     }
 
-    public IBranch getSecundaryBranch() {
-        return null;
+    public Integer getCreditsInSecundaryArea() {
+        // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should return a value  
+        return new Integer(0);
     }
 
-    public Integer getSecundaryBranchKey() {
+    public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea) {
+        // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should set a value
+    }
+
+    public Integer getCreditsInSpecializationArea() {
+        // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should return a value
+        return new Integer(0);
+    }
+
+    public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea) {
+        // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should set a value
+    }
+
+    public IBranch getSecundaryBranch() {
+        // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should return a value        
         return null;
     }
 
     public void setSecundaryBranch(IBranch secundaryBranch) {
+        // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should set a value
+    }
+    
+    public Integer getSecundaryBranchKey() {
+        // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should return a value
+        return null;
     }
 
     public void setSecundaryBranchKey(Integer secundaryBranchKey) {
+        // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should set a value
     }
 
     // -------------------------------------------------------------
@@ -434,42 +458,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             return false;
         }
         return true;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see Dominio.IStudentCurricularPlan#getCreditsInSecundaryArea()
-     */
-    public Integer getCreditsInSecundaryArea() {
-        return new Integer(0);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see Dominio.IStudentCurricularPlan#setCreditsInSecundaryArea(java.lang.Integer)
-     */
-    public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea) {
-        // do nothing
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see Dominio.IStudentCurricularPlan#getCreditsInSpecializationArea()
-     */
-    public Integer getCreditsInSpecializationArea() {
-        return new Integer(0);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see Dominio.IStudentCurricularPlan#setCreditsInSpecializationArea(java.lang.Integer)
-     */
-    public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea) {
-        // do nothing
     }
 
     public List getAprovedEnrolmentsInExecutionPeriod(final IExecutionPeriod executionPeriod) {

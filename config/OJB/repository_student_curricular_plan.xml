@@ -203,16 +203,6 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="creditsInSecundaryArea"
-		column="CREDITS_IN_SECUNDARY_AREA"
-		jdbc-type="INTEGER"
-	/>	
-	<field-descriptor
-		name="creditsInSpecializationArea"
-		column="CREDITS_IN_SPECIALIZATION_AREA"
-		jdbc-type="INTEGER"
-	/>	
-	<field-descriptor
 		name="currentState"
 		column="CURRENT_STATE"
 		jdbc-type="VARCHAR"
@@ -385,16 +375,6 @@
 		name="masterDegreeThesisKey"
 		column="KEY_MASTER_DEGREE_THESIS"
 		jdbc-type="INTEGER"	
-	/>	
-	<field-descriptor
-		name="creditsInSecundaryArea"
-		column="CREDITS_IN_SECUNDARY_AREA"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="creditsInSpecializationArea"
-		column="CREDITS_IN_SPECIALIZATION_AREA"
-		jdbc-type="INTEGER"
 	/>	
 	<field-descriptor
 		name="currentState"

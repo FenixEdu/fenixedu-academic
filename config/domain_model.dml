@@ -2738,19 +2738,18 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
 
 
     class net.sourceforge.fenixedu.domain.StudentCurricularPlanLEIC extends net.sourceforge.fenixedu.domain.StudentCurricularPlan {
-        Integer creditsInSecundaryArea;
-        Integer creditsInSpecializationArea;
-        Integer secundaryBranchKey;
+		Integer secundaryBranchKey;
     }
+
     
     class net.sourceforge.fenixedu.domain.StudentCurricularPlanLEEC extends net.sourceforge.fenixedu.domain.StudentCurricularPlan {
-        Integer creditsInSecundaryArea;
-        Integer creditsInSpecializationArea;
-        Integer secundaryBranchKey;
+		Integer secundaryBranchKey;
     }
+
     
     class net.sourceforge.fenixedu.domain.StudentCurricularPlanLEM extends net.sourceforge.fenixedu.domain.StudentCurricularPlan {
     }
+
     
 class net.sourceforge.fenixedu.domain.StudentGroup extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyShift;
