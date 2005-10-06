@@ -45,7 +45,7 @@ margin-bottom: 0;
 					</h:outputFormat>
 		
 					<h:outputText value="<br/><ul class=\"links\"><li>" escape="false"/>
-					<h:commandLink action="enterEditExamEnrolmentPeriod">
+					<h:commandLink action="enterEditEnrolmentPeriod">
 						<f:param name="evaluationID" value="#{writtenTest.idInternal}" />
 						<h:outputFormat value="#{bundle['link.evaluation.enrollment.period']}">
 							<f:param value="#{bundle['label.written.test']}" />

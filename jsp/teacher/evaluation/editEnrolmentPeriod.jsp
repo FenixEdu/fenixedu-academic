@@ -6,7 +6,7 @@
 	<f:loadBundle basename="ServidorApresentacao/ApplicationResources" var="bundle"/>
 
 	<h:outputFormat value="<h2>#{bundle['title.evaluation.enrollment.period']}</h2><br/>" escape="false">
-		<f:param value="#{bundle['label.exam']}" />
+		<f:param value="#{evaluationManagementBackingBean.evaluationType}" />
 	</h:outputFormat>
 
 	<h:form>
@@ -15,7 +15,7 @@
 	
 		<h:outputText styleClass="infoop" value="#{bundle['label.period.information']}" escape="false"/>
 	
-		<h:outputText value="<br/><br/><br/><b>#{bundle['label.exam']}:</b> #{evaluationManagementBackingBean.evaluation.season.season} - " escape="false"/>
+		<h:outputText value="<br/><br/><br/><b>#{evaluationManagementBackingBean.evaluationType}:</b> #{evaluationManagementBackingBean.evaluationDescription} - " escape="false"/>
 		<h:outputFormat value="{0, date, dd/MM/yyyy}">
 			<f:param value="#{evaluationManagementBackingBean.evaluation.dayDate}"/>
 		</h:outputFormat>
@@ -61,6 +61,6 @@
 		</h:panelGrid>
 		<h:outputText value="<br/>" escape="false"/>
 		<h:commandButton action="#{evaluationManagementBackingBean.editEvaluationEnrolmentPeriod}" styleClass="inputbutton" value="#{bundle['button.define']}"/>
-		<h:commandButton immediate="true" action="backToExamsIndex" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>				
+		<h:commandButton immediate="true" action="#{evaluationManagementBackingBean.redirectToCorrectIndex}" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>				
 	</h:form>
 </ft:tilesView>

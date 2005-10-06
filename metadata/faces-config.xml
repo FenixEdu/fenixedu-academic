@@ -332,8 +332,8 @@
 			<to-view-id>/teacher/evaluation/createWrittenTest.jsp</to-view-id>
 		</navigation-case>
  		<navigation-case>
-			<from-outcome>enterEditWrittenEvaluationEnrolmentPeriod</from-outcome>
-			<to-view-id>/teacher/evaluation/editWrittenEvaluationEnrolmentPeriod.jsp</to-view-id>
+			<from-outcome>enterEditEnrolmentPeriod</from-outcome>
+			<to-view-id>/teacher/evaluation/editEnrolmentPeriod.jsp</to-view-id>
 		</navigation-case>
  		<navigation-case>
 			<from-outcome>enterShowStudentsEnroled</from-outcome>
@@ -352,8 +352,8 @@
 	<navigation-rule>
 		<from-view-id>/teacher/evaluation/examsIndex.jsp</from-view-id>
  		<navigation-case>
-			<from-outcome>enterEditExamEnrolmentPeriod</from-outcome>
-			<to-view-id>/teacher/evaluation/editExamEnrolmentPeriod.jsp</to-view-id>
+			<from-outcome>enterEditEnrolmentPeriod</from-outcome>
+			<to-view-id>/teacher/evaluation/editEnrolmentPeriod.jsp</to-view-id>
 		</navigation-case>
  		<navigation-case>
 			<from-outcome>enterShowStudentsEnroled</from-outcome>
@@ -394,10 +394,14 @@
 	</navigation-rule>
 
 	<navigation-rule>
-		<from-view-id>/teacher/evaluation/editExamEnrolmentPeriod.jsp</from-view-id>
+		<from-view-id>/teacher/evaluation/editEnrolmentPeriod.jsp</from-view-id>
  		<navigation-case>
 			<from-outcome>backToExamsIndex</from-outcome>
 			<to-view-id>/teacher/evaluation/examsIndex.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>backToWrittenTestsIndex</from-outcome>
+			<to-view-id>/teacher/evaluation/writtenTestsIndex.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 

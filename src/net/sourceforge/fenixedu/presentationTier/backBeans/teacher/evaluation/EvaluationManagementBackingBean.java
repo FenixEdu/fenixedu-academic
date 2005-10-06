@@ -425,7 +425,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             return "";
         }
 
-        return "backToExamsIndex";
+        return this.redirectToCorrectIndex();
     }
 
     public String editMarks() throws FenixFilterException, FenixServiceException {
@@ -434,6 +434,16 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return "success";
     }
 
+    public String getEvaluationType() throws FenixFilterException, FenixServiceException {
+        final IWrittenEvaluation writtenEvaluation = getEvaluation();
+        if (writtenEvaluation instanceof IExam) {
+            return "Exame";
+        } else if (writtenEvaluation instanceof IWrittenTest) {
+            return "Teste";
+        }
+        return "";
+    }
+    
     public String getEvaluationDescription() throws FenixFilterException, FenixServiceException {
         final IWrittenEvaluation writtenEvaluation = getEvaluation();
         if (writtenEvaluation instanceof IExam) {
@@ -582,6 +592,17 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         }
 
         return "backToWrittenTestsIndex";
+    }
+
+
+    public String redirectToCorrectIndex() throws FenixFilterException, FenixServiceException {
+        final IWrittenEvaluation writtenEvaluation = getEvaluation();
+        if (writtenEvaluation instanceof IExam) {
+            return "backToExamsIndex";
+        } else if (writtenEvaluation instanceof IWrittenTest) {
+            return "backToWrittenTestsIndex";
+        }
+        return "";
     }
 
 }
