@@ -51,8 +51,13 @@ public class EditWrittenEvaluation implements IService {
                 persistentSupport, executionCourseIDs);
         final List<ICurricularCourseScope> curricularCourseScopeToAssociate = readCurricularCourseScopes(
                 persistentSupport, curricularCourseScopeIDs);
-        final List<IRoom> roomsToAssociate = readRooms(persistentSupport, roomIDs);
-        final IPeriod period = readPeriod(persistentSupport, writtenEvaluation, writtenEvaluationDate);
+
+        List<IRoom> roomsToAssociate = null; 
+        IPeriod period = null; 
+        if (roomIDs != null) {
+            roomsToAssociate = readRooms(persistentSupport, roomIDs);
+            period = readPeriod(persistentSupport, writtenEvaluation, writtenEvaluationDate); 
+        }
 
         if (examSeason != null) {
             ((IExam) writtenEvaluation).edit(writtenEvaluationDate.getTime(), writtenEvaluationStartTime
