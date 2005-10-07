@@ -141,7 +141,7 @@ public class SearchPerson implements IService {
             else if (roleBd.getRoleType().equals(RoleType.GRANT_OWNER)) {
                 List<IGrantOwner> grantOwners = (List<IGrantOwner>) sp.getIPersistentGrantOwner()
                         .readAll(GrantOwner.class);
-                
+
                 for (IGrantOwner grantOwner : grantOwners) {
                     persons.add(grantOwner.getPerson());
                 }
@@ -243,12 +243,16 @@ public class SearchPerson implements IService {
             String personName = person.getNome();
             String userName = person.getUsername();
             if (personName != null && userName.indexOf("INA") == -1) {
-                personName = normalize(personName);
+                String[] personNameWords = personName.split(" ");
+                normalizeName(personNameWords);
                 int count = 0;
                 for (int i = 0; i < nameWords.length; i++) {
                     String name_ = nameWords[i];
-                    if (personName.indexOf(name_) != -1) {
-                        count++;
+                    for (int j = 0; j < personNameWords.length; j++) {
+                        if (personNameWords[j].equals(name_)) {
+                            count++;
+                            break;
+                        }
                     }
                 }
                 if (count == nameWords.length) {
