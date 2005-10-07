@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -419,10 +418,11 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         try {
             ServiceUtils.executeService(getUserView(), "EditWrittenEvaluationEnrolmentPeriod", args);
         } catch (Exception e) {
-            FacesContext facesContext = FacesContext.getCurrentInstance();
-            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(),
-                    null));
-
+            String errorMessage = e.getMessage();
+            if (e instanceof NotAuthorizedFilterException) {
+                errorMessage = "message.error.notAuthorized";
+            }
+            this.setErrorMessage(errorMessage);
             return "";
         }
 
