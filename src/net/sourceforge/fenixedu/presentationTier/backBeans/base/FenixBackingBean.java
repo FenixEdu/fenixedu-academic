@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.presentationTier.jsf.components.UIViewState;
 public class FenixBackingBean {
 
     protected IUserView userView;
-
+    protected String errorMessage;
     private UIViewState viewState;
 
     public FenixBackingBean() {
@@ -30,6 +30,14 @@ public class FenixBackingBean {
         this.userView = userView;
     }
 
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+    
     protected String getRequestParameter(String parameterName) {
         return (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
                 .get(parameterName);
