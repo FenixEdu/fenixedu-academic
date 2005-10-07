@@ -392,6 +392,18 @@
 			<to-view-id>/teacher/evaluation/writtenTestsIndex.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/distributeStudentsByRooms.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>enterShowStudentsEnroled</from-outcome>
+			<to-view-id>/teacher/evaluation/showStudentsEnroled.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/teacher/evaluation/examsIndex.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 
 	<navigation-rule>
 		<from-view-id>/teacher/evaluation/editEnrolmentPeriod.jsp</from-view-id>

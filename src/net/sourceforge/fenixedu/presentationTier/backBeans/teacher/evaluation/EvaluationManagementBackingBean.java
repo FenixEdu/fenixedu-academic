@@ -5,16 +5,21 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
+import java.util.TreeMap;
+import java.util.Map.Entry;
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
 import javax.faces.component.html.HtmlInputHidden;
+import javax.faces.event.ValueChangeEvent;
+import javax.faces.model.SelectItem;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,19 +36,22 @@ import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IRoom;
+import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.IMark;
 import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
 import net.sourceforge.fenixedu.domain.IWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.IWrittenTest;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.myfaces.component.html.util.MultipartRequestWrapper;
-import org.apache.struts.action.ActionError;
 
 public class EvaluationManagementBackingBean extends FenixBackingBean {
 
@@ -94,6 +102,10 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     protected List<IWrittenEvaluationEnrolment> writtenEvaluationEnrolments;
 
     protected IWrittenEvaluation writtenEvaluation;
+
+    protected String distributeEnroledStudentsOption;
+    
+    private boolean resetPosition = false;
 
     protected Map<Integer, String> marks = new HashMap<Integer, String>();
 
@@ -370,6 +382,37 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.enrolmentEndYear = enrolmentEndYear;
     }
 
+    public String getDistributeEnroledStudentsOption() {
+        return (distributeEnroledStudentsOption == null) ? "true" : this.distributeEnroledStudentsOption;
+    }
+
+    public void setDistributeEnroledStudentsOption(String distributeEnroledStudentsOption) {
+        this.distributeEnroledStudentsOption = distributeEnroledStudentsOption;
+    }
+
+    public Integer getRoomToChangeID() throws FenixFilterException, FenixServiceException {
+        if (getViewState().getAttribute("roomToChangeID") == null) {
+            getViewState().setAttribute("roomToChangeID",
+                    getElementKeyFor(getEvaluationRoomsPositions(), 1));
+        }
+        return (Integer) getViewState().getAttribute("roomToChangeID");
+    }
+
+    public void setRoomToChangeID(Integer roomToChangeID) {
+        getViewState().setAttribute("roomToChangeID", roomToChangeID);
+    }
+
+    public Integer getNewRoomPosition() throws FenixFilterException, FenixServiceException {
+        if (getViewState().getAttribute("newRoomPosition") == null || this.resetPosition) {
+            getViewState().setAttribute("newRoomPosition", 0);
+        }
+        return (Integer) getViewState().getAttribute("newRoomPosition");
+    }
+
+    public void setNewRoomPosition(Integer newRoomPosition) {
+        getViewState().setAttribute("newRoomPosition", newRoomPosition);
+    }
+
     public List<IExam> getExamList() throws FenixFilterException, FenixServiceException {
         final Object[] args = { ExecutionCourse.class, this.getExecutionCourseID() };
         IExecutionCourse executionCourse = (IExecutionCourse) ServiceUtils.executeService(null,
@@ -433,6 +476,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         try {
             ServiceUtils.executeService(getUserView(), "EditWrittenEvaluationEnrolmentPeriod", args);
         } catch (Exception e) {
+            addErrorMessage(e.getMessage());
             String errorMessage = e.getMessage();
             if (e instanceof NotAuthorizedFilterException) {
                 errorMessage = "message.error.notAuthorized";
@@ -475,14 +519,13 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
         if (this.writtenEvaluationEnrolments == null) {
             this.writtenEvaluationEnrolments = new ArrayList(getEvaluation()
-                    .getWrittenEvaluationEnrolmentsCount());
-            this.writtenEvaluationEnrolments.addAll(getEvaluation().getWrittenEvaluationEnrolments());
+                    .getWrittenEvaluationEnrolments());
             Collections.sort(this.writtenEvaluationEnrolments, new BeanComparator("student.number"));
         }
         return this.writtenEvaluationEnrolments;
     }
-
-    public Calendar getBegin() throws FenixFilterException, FenixServiceException {
+    
+     public Calendar getBegin() throws FenixFilterException, FenixServiceException {
         Calendar result = Calendar.getInstance();
 
         result.set(this.getYear(), this.getMonth() - 1, this.getDay(), this.getBeginHour(), this
@@ -499,7 +542,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
         return result;
     }
-
+    
     public String createWrittenTest() throws FenixFilterException, FenixServiceException {
         List<String> executionCourseIDs = new ArrayList<String>();
         executionCourseIDs.add(this.getExecutionCourseID().toString());
@@ -700,6 +743,132 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             return "";
         }
         return "backToWrittenTestsIndex";
+    }    
+
+    public List<IRoom> getEvaluationRooms() throws FenixFilterException, FenixServiceException {
+        final IRoom[] result = new IRoom[getEvaluationRoomsPositions().size()];
+        for (final Entry<Integer, Integer> entry : getEvaluationRoomsPositions().entrySet()) {
+            final IRoom room = getRoom(entry.getKey());
+            result[entry.getValue() - 1] = room;
+        }
+        return Arrays.asList(result);
     }
 
+    private IRoom getRoom(final Integer roomID) throws FenixFilterException, FenixServiceException {
+        for (final IRoomOccupation roomOccupation : getEvaluation().getAssociatedRoomOccupation()) {
+            if (roomOccupation.getRoom().getIdInternal().equals(roomID)) {
+                return roomOccupation.getRoom();
+            }
+        }
+        return null;
+    }
+
+    public Map<Integer, Integer> getEvaluationRoomsPositions() throws FenixFilterException,
+            FenixServiceException {
+        if (getViewState().getAttribute("evaluationRooms") == null) {
+            final Map<Integer, Integer> evaluationRooms = initializeEvaluationRoomsPositions();
+            getViewState().setAttribute("evaluationRooms", evaluationRooms);
+        }
+        return (Map<Integer, Integer>) getViewState().getAttribute("evaluationRooms");
+    }
+
+    private Map<Integer, Integer> initializeEvaluationRoomsPositions() throws FenixFilterException, FenixServiceException {
+        final Map<Integer, Integer> evaluationRooms = new TreeMap();
+        final List<IRoomOccupation> roomOccupations = new ArrayList(getEvaluation()
+                .getAssociatedRoomOccupation());
+        Collections.sort(roomOccupations, new ReverseComparator(new BeanComparator("room.capacidadeExame")));
+        int count = 0;
+        for (final IRoomOccupation roomOccupation : roomOccupations) {
+            evaluationRooms.put(roomOccupation.getRoom().getIdInternal(), Integer.valueOf(++count));
+        }
+        return evaluationRooms;
+    }
+   
+    public void changeRoom(ValueChangeEvent valueChangeEvent) {
+        this.resetPosition = true;
+    }
+
+    public void changePosition(ValueChangeEvent valueChangeEvent) throws FenixFilterException,
+            FenixServiceException {
+        final Integer roomToChangeNewPosition = (Integer) valueChangeEvent.getNewValue();
+        if (roomToChangeNewPosition != 0) {
+            final Integer roomToChangeOldPosition = getEvaluationRoomsPositions().get(
+                    getRoomToChangeID());
+            final Integer elementKey = getElementKeyFor(getEvaluationRoomsPositions(),
+                    roomToChangeNewPosition);
+            getEvaluationRoomsPositions().put(elementKey, roomToChangeOldPosition);
+            getEvaluationRoomsPositions().put(getRoomToChangeID(), roomToChangeNewPosition);
+        }
+    }
+
+    private Integer getElementKeyFor(Map<Integer, Integer> evaluationRooms, Integer roomPosition) {
+        for (final Entry<Integer, Integer> entry : evaluationRooms.entrySet()) {
+            if (entry.getValue().equals(roomPosition)) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
+    public List<SelectItem> getNames() throws FenixFilterException, FenixServiceException {
+        final List<SelectItem> result = new ArrayList(getEvaluation().getAssociatedRoomOccupationCount());
+        for (final IRoomOccupation roomOccupation : getEvaluation().getAssociatedRoomOccupation()) {
+            result.add(new SelectItem(roomOccupation.getRoom().getIdInternal(), roomOccupation.getRoom()
+                    .getNome()));
+        }
+        return result;
+    }
+
+    public List<SelectItem> getPositions() throws FenixFilterException, FenixServiceException {
+        final List<SelectItem> result = new ArrayList(getEvaluationRoomsPositions().size());
+        result.add(new SelectItem(0, ""));
+        for (final Integer value : getEvaluationRoomsPositions().values()) {
+            result.add(new SelectItem(value, value.toString()));
+        }
+        Collections.sort(result, new BeanComparator("label"));
+        this.resetPosition = true;
+        return result;
+    }
+
+    public String distributeStudentsByRooms() throws FenixFilterException, FenixServiceException {
+        try {
+            final Boolean distributeOnlyEnroledStudents = Boolean.valueOf(this
+                    .getDistributeEnroledStudentsOption());
+            final Object[] args = { getExecutionCourseID(), getEvaluationID(),
+                    getRoomIDs(), Boolean.FALSE, distributeOnlyEnroledStudents };
+            ServiceUtils.executeService(getUserView(), "WrittenEvaluationRoomDistribution", args);
+            return "enterShowStudentsEnroled";
+        } catch (Exception e) {
+            setErrorMessage(e.getMessage());
+            return "";
+        }
+    }
+    
+    private List<Integer> getRoomIDs() throws FenixFilterException, FenixServiceException {
+        final List<IRoom> rooms = getEvaluationRooms(); 
+        final List<Integer> result = new ArrayList(rooms.size());
+        for (final IRoom room : rooms) {
+            result.add(room.getIdInternal());
+        }
+        return result;
+    }
+    
+    public String checkIfCanDistributeStudentsByRooms() throws FenixFilterException, FenixServiceException {
+        try {
+            final IWrittenEvaluation writtenEvaluation = getEvaluation();
+            writtenEvaluation.checkIfCanDistributeStudentsByRooms();
+            return "enterDistributeStudentsByRooms";
+        } catch (DomainException e) {
+            setErrorMessage(e.getMessage());
+            return "";            
+        }
+    }
+    
+    public int getNumberOfAttendingStudents() throws FenixFilterException, FenixServiceException {
+        int numberOfAttendingStudents = 0;
+        for (final IExecutionCourse executionCourse : getEvaluation().getAssociatedExecutionCourses()) {
+            numberOfAttendingStudents += executionCourse.getAttendsCount();
+        }
+        return numberOfAttendingStudents;
+    }
 }

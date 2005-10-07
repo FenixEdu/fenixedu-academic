@@ -55,7 +55,7 @@ margin-bottom: 0;
 					</h:commandLink>
 		
 					<h:outputText value="<b> | </b>" escape="false"/>
-					<h:commandLink action="enterDistributeStudentsByRooms">
+					<h:commandLink action="#{evaluationManagementBackingBean.checkIfCanDistributeStudentsByRooms}">
 						<f:param name="evaluationID" value="#{exam.idInternal}" />
 						<h:outputFormat value="#{bundle['link.students.distribution']}" />
 					</h:commandLink>
@@ -70,6 +70,8 @@ margin-bottom: 0;
 					<h:outputText value="<br/>" escape="false"/>
 				</h:column>
 			</h:dataTable>
+			<h:outputText styleClass="error" rendered="#{!empty evaluationManagementBackingBean.errorMessage}"
+				value="#{bundle[evaluationManagementBackingBean.errorMessage]}<br/>" escape="false" />
 		</h:panelGrid>
 	</h:form>
 
