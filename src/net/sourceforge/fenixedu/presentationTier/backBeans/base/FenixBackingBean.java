@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.base;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -37,7 +39,7 @@ public class FenixBackingBean {
         return ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest())
                 .getContextPath();
     }
-
+    
     public UIViewState getViewState() {
         if (this.viewState == null) {
             this.viewState = new UIViewState();
@@ -50,4 +52,20 @@ public class FenixBackingBean {
         this.viewState = viewState;
     }
 
+    private void addMessage(Severity facesMessage ,String message) {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        facesContext.addMessage(null, new FacesMessage(facesMessage, message, null));
+    }
+    
+    protected void addErrorMessage(String message) {
+        addMessage(FacesMessage.SEVERITY_ERROR, message);
+    }
+    
+    protected void addInfoMessage(String message) {
+        addMessage(FacesMessage.SEVERITY_INFO, message);
+    }
+    
+    protected void addWarnMessage(String message) {
+        addMessage(FacesMessage.SEVERITY_WARN, message);
+    }
 }
