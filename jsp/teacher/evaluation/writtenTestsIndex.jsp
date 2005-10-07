@@ -77,12 +77,6 @@ margin-bottom: 0;
 						<f:param name="evaluationID" value="#{writtenTest.idInternal}" />
 						<h:outputFormat value="#{bundle['link.edit.written.test']}" />
 					</h:commandLink>
-
-					<h:outputText value="<b> | </b>" escape="false"/>
-					<h:commandLink action="enterShowMarksListOptions">
-						<f:param name="evaluationID" value="#{writtenTest.idInternal}" />
-						<h:outputFormat value="#{bundle['link.delete.written.test']}" />
-					</h:commandLink>
 					<h:outputText value="</li></ul>" escape="false"/>
 					<h:outputText value="<br/>" escape="false"/>
 
