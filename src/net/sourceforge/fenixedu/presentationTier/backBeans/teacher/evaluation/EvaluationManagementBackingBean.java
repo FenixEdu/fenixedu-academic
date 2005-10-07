@@ -1,11 +1,18 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.StringTokenizer;
 
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.context.FacesContext;
@@ -14,6 +21,9 @@ import javax.servlet.http.HttpServletRequest;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoMark;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks;
+import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
@@ -31,8 +41,9 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUpload;
 import org.apache.commons.fileupload.FileUploadException;
+import org.apache.myfaces.component.html.util.MultipartRequestWrapper;
+import org.apache.struts.action.ActionError;
 
 public class EvaluationManagementBackingBean extends FenixBackingBean {
 
@@ -88,11 +99,14 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     public Integer getExecutionCourseID() {
         if (this.executionCourseID == null) {
-            if (this.executionCourseIdHidden != null) {
+            if (this.executionCourseIdHidden != null && this.executionCourseIdHidden.getValue() != null) {
                 this.executionCourseID = Integer.valueOf(this.executionCourseIdHidden.getValue()
                         .toString());
             } else {
-                this.executionCourseID = Integer.valueOf(this.getRequestParameter("executionCourseID"));
+                String executionCourseIDString = this.getRequestParameter("executionCourseID");
+                if (executionCourseIDString != null) {
+                    this.executionCourseID = Integer.valueOf(executionCourseIDString);
+                }
             }
         }
         return this.executionCourseID;
@@ -108,6 +122,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
             this.executionCourseIdHidden = new HtmlInputHidden();
             this.executionCourseIdHidden.setValue(executionCourseId);
+            this.executionCourseID = executionCourseId;
         }
         return this.executionCourseIdHidden;
     }
@@ -196,7 +211,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public void setBeginHour(Integer beginHour) {
         this.beginHour = beginHour;
     }
-
+    
     public Integer getBeginMinute() throws FenixFilterException, FenixServiceException {
         if (this.beginMinute == null && this.getEvaluation() != null) {
             this.beginMinute = getEvaluation().getBeginning().get(Calendar.MINUTE);
@@ -544,31 +559,88 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public String loadMarks() throws FenixFilterException, FenixServiceException, FileUploadException {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
-                .getExternalContext().getRequest();
+        System.out.println("In load service");
 
-        FileUpload fileUpload = new FileUpload();
-        List<FileItem> fileItems = fileUpload.parseRequest(httpServletRequest);
+        final HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        final MultipartRequestWrapper multipartRequestWrapper = (MultipartRequestWrapper) httpServletRequest.getAttribute("multipartRequestWrapper");
 
-        for (final FileItem fileItem : fileItems) {
-            System.out.println(fileItem.getName() + " " + fileItem.getFieldName() + " "
-                    + fileItem.getSize());
+        final FileItem fileItem = multipartRequestWrapper.getFileItem("theFile");
+        InputStream inputStream = null;
+        try {
+            inputStream = fileItem.getInputStream();
+            final HashMap marks = loadMarks(inputStream);
+
+            final Object[] args = { getExecutionCourseID(), getEvaluationID(), marks };
+            TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(getUserView(), "InsertEvaluationMarks", args);
+            processServiceErrors(siteView);
+        } catch (IOException e) {
+            addErrorMessage("error.ficheiro.impossivelLer");
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    // Nothing to do ...
+                }
+            }
         }
-
-        Object object = httpServletRequest.getAttribute("theFile");
-        System.out.println("object: " + object);
-
-        object = httpServletRequest.getParameter("theFile");
-        System.out.println("object: " + object);
 
         return "success";
     }
 
+    private HashMap loadMarks(final InputStream inputStream) throws IOException {
+        final HashMap marks = new HashMap();
+
+        final InputStreamReader input = new InputStreamReader(inputStream);
+        final BufferedReader reader = new BufferedReader(input);
+
+        // parsing uploaded file
+        int n = 0;
+
+        for (String lineReader = reader.readLine(); lineReader != null; lineReader = reader.readLine(), n++) {
+            if ((lineReader != null) && (lineReader.length() != 0)) {
+                try {
+                    final StringTokenizer stringTokenizer = new StringTokenizer(lineReader);
+                    final String studentNumber = stringTokenizer.nextToken().trim();
+                    final String mark = stringTokenizer.nextToken().trim();
+                    marks.put(studentNumber, mark);
+                } catch (NoSuchElementException e2) {
+                    addErrorMessage("error.file.badFormat");
+                    return null;
+                }
+            }
+        }
+
+        if (n == 0) {
+            addErrorMessage("error.file.badFormat");
+            return null;
+        }
+
+        return marks;
+    }
+
+    private void processServiceErrors(final TeacherAdministrationSiteView siteView) {
+        final InfoSiteMarks infoSiteMarks = (InfoSiteMarks) siteView.getComponent();
+        final List<String> studentsListErrors = infoSiteMarks.getStudentsListErrors();
+        if (studentsListErrors != null && studentsListErrors.size() > 0) {
+            for (final String studentNumber : studentsListErrors) {
+                addErrorMessage("errors.student.nonExisting " + studentNumber);
+            }
+        }
+
+        final List<InfoMark> marksListErrors = infoSiteMarks.getMarksListErrors();
+        if (marksListErrors != null && marksListErrors.size() > 0) {
+            for (final InfoMark infoMark : marksListErrors) {
+                addErrorMessage("errors.invalidMark " + infoMark.getMark() + infoMark.getInfoFrequenta().getAluno().getNumber().toString());
+            }
+        }
+    }
+
     public String editWrittenTest() throws FenixFilterException, FenixServiceException {
-        List<String> executionCourseIDs = new ArrayList<String>();
+        final List<String> executionCourseIDs = new ArrayList<String>();
         executionCourseIDs.add(this.getExecutionCourseID().toString());
 
-        List<String> curricularCourseScopeIDs = new ArrayList<String>();
+        final List<String> curricularCourseScopeIDs = new ArrayList<String>();
         final Object[] argsToReadExecutionCourse = { ExecutionCourse.class, this.getExecutionCourseID() };
         IExecutionCourse executionCourse = null;
         try {
@@ -629,5 +701,5 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         }
         return "backToWrittenTestsIndex";
     }
-    
+
 }

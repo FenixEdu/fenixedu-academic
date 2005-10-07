@@ -8,6 +8,22 @@
 		<param-value>client</param-value>
 	</context-param>
 	<filter>
+	    <filter-name>MultipartFilter</filter-name>
+	    <filter-class>org.apache.myfaces.component.html.util.MultipartFilter</filter-class>
+		<init-param>
+			<param-name>uploadMaxFileSize</param-name>
+			<param-value>10m</param-value>
+		</init-param>
+		<init-param>
+			<param-name>uploadThresholdSize</param-name>
+			<param-value>1m</param-value>
+		</init-param>
+		<init-param>
+			<param-name>uploadRepositoryPath</param-name>
+			<param-value>/tmp</param-value>
+		</init-param>
+	</filter>
+	<filter>
 	    <filter-name>CloseTxFilter</filter-name>
 	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.CloseTransactionFilter</filter-class>
 	</filter>
@@ -127,6 +143,10 @@
 			<param-value>/@app.context@/</param-value>
 		</init-param>
 	</filter>
+	<filter-mapping>
+		<filter-name>MultipartFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 	<filter-mapping>
 		<filter-name>CloseTxFilter</filter-name>
 		<url-pattern>/*</url-pattern>

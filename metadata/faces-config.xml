@@ -414,7 +414,15 @@
  		<navigation-case>
 			<from-outcome>enterLoadMarks</from-outcome>
 			<to-view-id>/teacher/evaluation/loadMarks.jsp</to-view-id>
-		</navigation-case>		
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/loadMarks.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/teacher/evaluation/editMarksList.jsp</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 
 	<!-- END: TEACHER Navigation Rules -->
