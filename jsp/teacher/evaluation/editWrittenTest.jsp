@@ -13,7 +13,8 @@
 		<h:inputHidden binding="#{evaluationManagementBackingBean.executionCourseIdHidden}" />
 		<h:inputHidden binding="#{evaluationManagementBackingBean.evaluationIdHidden}" />
 	
-		<h:messages showSummary="true" errorClass="error" />
+		<h:outputText styleClass="error" rendered="#{!empty evaluationManagementBackingBean.errorMessage}"
+			value="#{bundle[evaluationManagementBackingBean.errorMessage]}"/>
 
 		<h:panelGrid styleClass="infotable" columns="2" border="0">
 			<h:panelGroup>
@@ -54,6 +55,11 @@
 		</h:panelGrid>
 		<h:outputText value="<br/>" escape="false"/>
 		<h:commandButton action="#{evaluationManagementBackingBean.editWrittenTest}" styleClass="inputbutton" value="#{bundle['button.edit']}"/>
+		<h:commandButton 	immediate="true" styleClass="inputbutton"
+							value="#{bundle['link.delete.written.test']}" 
+							action="#{evaluationManagementBackingBean.deleteWrittenTest}" 
+							title="#{bundle['link.delete.written.test']}" 
+							onclick="return confirm('#{bundle['message.confirm.written.test']}')"/>
 		<h:commandButton immediate="true" action="backToWrittenTestsIndex" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>				
 	</h:form>
 </ft:tilesView>

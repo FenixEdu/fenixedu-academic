@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttends;
@@ -506,10 +507,11 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         try {
             ServiceUtils.executeService(getUserView(), "CreateWrittenEvaluation", args);
         } catch (Exception e) {
-            FacesContext facesContext = FacesContext.getCurrentInstance();
-            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(),
-                    null));
-
+            String errorMessage = e.getMessage();
+            if (e instanceof NotAuthorizedFilterException) {
+                errorMessage = "message.error.notAuthorized";
+            }
+            this.setErrorMessage(errorMessage);
             return "";
         }
 
@@ -568,8 +570,15 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
         List<String> curricularCourseScopeIDs = new ArrayList<String>();
         final Object[] argsToReadExecutionCourse = { ExecutionCourse.class, this.getExecutionCourseID() };
-        IExecutionCourse executionCourse = (IExecutionCourse) ServiceUtils.executeService(null,
-                "ReadDomainObject", argsToReadExecutionCourse);
+        IExecutionCourse executionCourse = null;
+        try {
+            executionCourse = (IExecutionCourse) ServiceUtils.executeService(null, "ReadDomainObject", argsToReadExecutionCourse);
+        } catch (Exception e) {
+            String errorMessage = e.getMessage();
+            this.setErrorMessage(errorMessage);
+            return "";
+        }
+
         for (ICurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
             for (ICurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
                 if (curricularCourseScope.getCurricularSemester().getSemester().equals(
@@ -584,10 +593,11 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         try {
             ServiceUtils.executeService(getUserView(), "EditWrittenEvaluation", args);
         } catch (Exception e) {
-            FacesContext facesContext = FacesContext.getCurrentInstance();
-            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(),
-                    null));
-
+            String errorMessage = e.getMessage();
+            if (e instanceof NotAuthorizedFilterException) {
+                errorMessage = "message.error.notAuthorized";
+            }
+            this.setErrorMessage(errorMessage);
             return "";
         }
 
@@ -605,4 +615,19 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return "";
     }
 
+    public String deleteWrittenTest() {
+        final Object args[] = { this.getEvaluationID() };
+        try {
+            ServiceUtils.executeService(getUserView(), "DeleteWrittenEvaluation", args);
+        } catch (Exception e) {
+            String errorMessage = e.getMessage();
+            if (e instanceof NotAuthorizedFilterException) {
+                errorMessage = "message.error.notAuthorized";
+            }
+            this.setErrorMessage(errorMessage);
+            return "";
+        }
+        return "backToWrittenTestsIndex";
+    }
+    
 }

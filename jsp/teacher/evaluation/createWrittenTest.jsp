@@ -12,7 +12,8 @@
 	<h:form>
 		<h:inputHidden binding="#{evaluationManagementBackingBean.executionCourseIdHidden}" />
 	
-		<h:messages showSummary="true" errorClass="error" />
+		<h:outputText styleClass="error" rendered="#{!empty evaluationManagementBackingBean.errorMessage}"
+			value="#{bundle[evaluationManagementBackingBean.errorMessage]}"/>
 
 		<h:panelGrid styleClass="infotable" columns="2" border="0">
 			<h:panelGroup>
