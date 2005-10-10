@@ -6425,7 +6425,7 @@
 		<description></description>
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="WrittenEvaluationManagementAuthorization" />
 		</filterChains>
 	</service>
 	<service>
@@ -6434,7 +6434,7 @@
 		<description></description>
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="WrittenEvaluationManagementAuthorization" />
 		</filterChains>
 	</service>
 	<service>
