@@ -30,7 +30,7 @@ margin-bottom: 0;
 			<h:dataTable value="#{evaluationManagementBackingBean.examList}" var="exam">
 				<h:column>
 					<h:outputText value="<b>#{bundle['label.exam']}:</b> " escape="false"/>
-					<h:outputText value="#{exam.season.season}, "/>
+					<h:outputText value="#{exam.season}, "/>
 					<h:outputText value="#{bundle['label.day']}" />
 					<h:outputFormat value="{0, date, dd/MM/yyyy}">
 						<f:param value="#{exam.dayDate}"/>
