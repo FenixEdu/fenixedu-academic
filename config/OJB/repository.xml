@@ -63,6 +63,8 @@
 <!ENTITY projectsManagement SYSTEM "repository_projectsManagement.xml">
 <!ENTITY unit SYSTEM "repository_unit.xml">
 <!ENTITY contract SYSTEM "repository_contract.xml">
+<!ENTITY function SYSTEM "repository_function.xml">
+<!ENTITY person_function SYSTEM "repository_person_function.xml">
 ]>
 
 
@@ -132,5 +134,7 @@
 	&projectsManagement;
 	&unit;
 	&contract;
+	&function;
+	&person_function;
 	
 </descriptor-repository>

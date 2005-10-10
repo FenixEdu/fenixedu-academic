@@ -1,6 +1,6 @@
-<!-- Definitions for net.sourceforge.fenixedu.domain.Unit -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.Unit -->
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.Unit" 
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" 
 	table="UNIT">
 	
 	<field-descriptor id="1"
@@ -30,6 +30,12 @@
 	   column="KEY_PARENT_UNIT"  
 	   jdbc-type="INTEGER"
     />
+	<field-descriptor id="6" 
+	   name="type"    
+	   column="TYPE"  
+	   jdbc-type="LONGVARCHAR"
+	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.UnitType2SqlUnitTypeConversion"
+    />
 
 	<reference-descriptor auto-retrieve="false"
     	name="department"
@@ -39,13 +45,13 @@
 
 	<reference-descriptor auto-retrieve="false"
     	name="parentUnit"
-        class-ref="net.sourceforge.fenixedu.domain.Unit">
+        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
 	    <foreignkey field-ref="keyParentUnit"/>
 	</reference-descriptor>
 	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
         name="associatedUnits"
-        element-class-ref="net.sourceforge.fenixedu.domain.Unit">
+        element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
 		<inverse-foreignkey field-ref="keyParentUnit"/>
     </collection-descriptor>
 
@@ -65,6 +71,12 @@
         name="workingContracts"
         element-class-ref="net.sourceforge.fenixedu.domain.Contract">
 		<inverse-foreignkey field-ref="keyWorkingUnit"/>
+    </collection-descriptor>
+
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+        name="functions"
+        element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Function">
+		<inverse-foreignkey field-ref="keyUnit"/>
     </collection-descriptor>
 
 </class-descriptor>

@@ -13,6 +13,8 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.organizationalStructure.IUnit;
+
 
 public class Department extends Department_Base {
 

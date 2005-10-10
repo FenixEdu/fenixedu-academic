@@ -37,7 +37,7 @@
 
 	<reference-descriptor auto-retrieve="false"
          name="unit"
-         class-ref="net.sourceforge.fenixedu.domain.Unit">
+         class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
          <foreignkey field-ref="keyUnit"/>
     </reference-descriptor>
 

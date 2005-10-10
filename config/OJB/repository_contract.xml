@@ -48,19 +48,19 @@
 
 	<reference-descriptor auto-retrieve="false"
     	name="salaryUnit"
-        class-ref="net.sourceforge.fenixedu.domain.Unit">
+        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
 	    <foreignkey field-ref="keySalaryUnit"/>
 	</reference-descriptor>
 
 	<reference-descriptor auto-retrieve="false"
     	name="mailingUnit"
-        class-ref="net.sourceforge.fenixedu.domain.Unit">
+        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
 	    <foreignkey field-ref="keyMailingUnit"/>
 	</reference-descriptor>
 	
 	<reference-descriptor auto-retrieve="false"
     	name="workingUnit"
-        class-ref="net.sourceforge.fenixedu.domain.Unit">
+        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
 	    <foreignkey field-ref="keyWorkingUnit"/>
 	</reference-descriptor>
 	

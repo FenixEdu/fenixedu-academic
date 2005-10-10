@@ -1,0 +1,59 @@
+<!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.Function -->
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.Function" 
+	table="FUNCTION">
+	
+	<field-descriptor id="1"
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+	/>
+	<field-descriptor id="2" 
+	   name="name"    
+	   column="NAME"  
+	   jdbc-type="VARCHAR"
+    />
+	<field-descriptor id="3" 
+	   name="keyUnit"    
+	   column="KEY_UNIT"  
+	   jdbc-type="INTEGER"
+    />
+	<field-descriptor id="4" 
+	   name="keyInherentParentFunction"    
+	   column="KEY_INHERENTE_PARENT_FUNCTION"  
+	   jdbc-type="INTEGER"
+    />
+	<field-descriptor id="5" 
+	   name="type"    
+	   column="TYPE"  
+	   jdbc-type="VARCHAR"
+	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.FunctionType2SqlFunctionTypeConversion"
+    />
+	
+	<reference-descriptor auto-retrieve="false"
+    	name="unit"
+        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
+	    <foreignkey field-ref="keyUnit"/>
+	</reference-descriptor>
+
+	<reference-descriptor auto-retrieve="false"
+    	name="parentInherentFunction"
+        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Function">
+	    <foreignkey field-ref="keyInherentParentFunction"/>
+	</reference-descriptor>
+
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+        name="inherentFunctions"
+        element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Function">
+		<inverse-foreignkey field-ref="keyInherentParentFunction"/>
+    </collection-descriptor>	
+
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+        name="person_functions"
+        element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Person_Function">
+		<inverse-foreignkey field-ref="keyFunction"/>
+    </collection-descriptor>	
+
+</class-descriptor>

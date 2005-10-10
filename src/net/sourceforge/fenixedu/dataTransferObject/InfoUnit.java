@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.IUnit;
 
 public class InfoUnit extends InfoObject {
 

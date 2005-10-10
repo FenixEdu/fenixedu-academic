@@ -1,0 +1,1 @@
+alter table UNIT add column TYPE varchar(80) default '';
