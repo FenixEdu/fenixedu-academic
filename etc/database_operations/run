@@ -32,9 +32,6 @@ mysql -u$2 -f $1 < CreateTableCompetenceCourseDepartment.sql
 echo Changing Competence Course ... completed
 mysql -u$2 -f $1 < AlterEnrolmentEvaluationType.sql
 echo Alter Enrolment Evaluation Type ... completed
-mysql -u$2 -f $1 < alterTableEmployeeAndDepartment.sql
-mysql -u$2 -f $1 < createUnitTable.sql
-echo Unit Table ... completed
 mysql -u$2 -f $1 < AlterEnrolmentEvaluationStateBefore81.sql > res
 mysql -u$2 -f $1 < res
 mysql -u$2 -f $1 < AlterEnrolmentEvaluationStateBefore80.sql > res
@@ -67,3 +64,13 @@ mysql -u$2 -f $1 < UpdatePersonRoleWithDepartmentMemberRole.sql > res
 mysql -u$2 -f $1 < res
 rm -r res
 echo Preparing Tables for Department Portal... completed
+
+echo Preparing Tables Unit and Function... started
+mysql -u$2 -f $1 < alterTableEmployeeAndDepartment.sql
+mysql -u$2 -f $1 < createUnitTable.sql
+mysql -u$2 -f $1 < createContractTable.sql
+mysql -u$2 -f $1 < alterTableUnit.sql
+mysql -u$2 -f $1 < createFunctionTable.sql
+mysql -u$2 -f $1 < createPersonFunctionTable.sql
+mysql -u$2 -f $1 < addUnitTypes.sql
+echo Preparing Tables Unit and Function... completed
