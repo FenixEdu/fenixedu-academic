@@ -5,6 +5,8 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
+import java.util.List;
+
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -56,6 +58,9 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
             executionCourseID = ((InfoExecutionCourse) arguments[0]).getIdInternal();
         } else if (arguments[0] instanceof Integer) {
             executionCourseID = (Integer) arguments[0];
+        } else if (arguments[3] instanceof List) {
+            // to use with CreateWrittenEvaluation and EditWrittenEvaluation
+            executionCourseID = Integer.valueOf((String) ((List)arguments[3]).get(0));
         } else {
             return false;
         }
