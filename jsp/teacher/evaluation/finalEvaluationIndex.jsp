@@ -23,14 +23,18 @@ margin-bottom: 0;
 		
 		<h:outputText value="<h2>#{bundle['label.finalEvaluation']}</h2>" escape="false" />
 	
-		<h:outputText value="<ul class=\"links\"><li>" escape="false"/>
+		<h:outputText value="<ul class=\"links\"><li><b>#{bundle['label.students.listMarks']}:</b> " escape="false"/>
 		<h:commandLink action="enterShowMarksListOptions">
 			<f:param name="evaluationID" value="#{evaluationManagementBackingBean.finalEvaluation.idInternal}" />
-			<h:outputFormat value="#{bundle['label.students.listMarks']}"/>
+			<h:outputFormat value="#{bundle['link.teacher.evaluation.grades']}"/>
 		</h:commandLink>
-		<h:outputText value="</li>" escape="false"/>
 		
-		<h:outputText value="<li>" escape="false"/>
+		<h:outputText value="<b> | </b>" escape="false"/>
+		<h:commandLink action="enterPublishMarks">
+			<h:outputFormat value="#{bundle['link.publishMarks']}" />
+		</h:commandLink>
+
+		<h:outputText value="<b> | </b>" escape="false"/>
 		<h:commandLink action="enterSubmitMarksList">
 			<h:outputFormat value="#{bundle['label.submit.listMarks']}" />
 		</h:commandLink>

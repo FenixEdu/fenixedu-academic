@@ -40,12 +40,10 @@ margin-bottom: 0;
 						<f:param value="#{exam.beginningDate}"/>
 					</h:outputFormat>
 		
-					<h:outputText value="<br/><ul class=\"links\"><li>" escape="false"/>
+					<h:outputText value="<br/><ul class=\"links\"><li><b>#{bundle['label.teacher.evaluation.enrolment.management']}:</b> " escape="false"/>
 					<h:commandLink action="enterEditEnrolmentPeriod">
 						<f:param name="evaluationID" value="#{exam.idInternal}" />
-						<h:outputFormat value="#{bundle['link.evaluation.enrollment.period']}">
-							<f:param value="#{bundle['label.exam']}" />
-						</h:outputFormat>
+						<h:outputFormat value="#{bundle['link.evaluation.enrollment.period']}"/>
 					</h:commandLink>
 			
 					<h:outputText value="<b> | </b>" escape="false"/>
@@ -61,11 +59,17 @@ margin-bottom: 0;
 					</h:commandLink>
 					<h:outputText value="</li>" escape="false"/>
 					
-					<h:outputText value="<li>" escape="false"/>
+					<h:outputText value="<li><b>#{bundle['label.students.listMarks']}:</b> " escape="false"/>
 					<h:commandLink action="enterShowMarksListOptions">
 						<f:param name="evaluationID" value="#{exam.idInternal}" />
-						<h:outputFormat value="#{bundle['label.students.listMarks']}" />
+						<h:outputFormat value="#{bundle['link.teacher.evaluation.grades']}" />
 					</h:commandLink>
+
+					<h:outputText value="<b> | </b>" escape="false"/>
+					<h:commandLink action="enterPublishMarks">
+						<h:outputFormat value="#{bundle['link.publishMarks']}" />
+					</h:commandLink>
+
 					<h:outputText value="</li><ul>" escape="false"/>
 					<h:outputText value="<br/>" escape="false"/>
 				</h:column>
