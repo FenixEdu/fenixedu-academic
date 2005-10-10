@@ -117,23 +117,20 @@ public class StudentTestsAction extends FenixDispatchAction {
         for (int i = 0; i < infoStudentTestQuestionList.size(); i++) {
             InfoStudentTestQuestion infoStudentTestQuestion = (InfoStudentTestQuestion) infoStudentTestQuestionList.get(i);
 
-            if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.STR)
+            if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.STR) {
                 request.setAttribute("question" + i, ((ResponseSTR) infoStudentTestQuestion.getResponse()).getResponse());
-            else if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.NUM)
+            } else if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.NUM) {
                 request.setAttribute("question" + i, ((ResponseNUM) infoStudentTestQuestion.getResponse()).getResponse());
-            else if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.LID
-                    && ((ResponseLID) infoStudentTestQuestion.getResponse()).getResponse() != null)
-                if (infoStudentTestQuestion.getQuestion().getQuestionType().getCardinalityType().getType().intValue() == CardinalityType.SINGLE)
-                    request.setAttribute("question" + i, ((ResponseLID) infoStudentTestQuestion.getResponse()).getResponse()[0]);
-                else
+            } else if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.LID
+                    && ((ResponseLID) infoStudentTestQuestion.getResponse()).getResponse() != null) {
+                if (infoStudentTestQuestion.getQuestion().getQuestionType().getCardinalityType().getType().intValue() == CardinalityType.SINGLE) {
+                    if (((ResponseLID) infoStudentTestQuestion.getResponse()).getResponse().length != 0) {
+                        request.setAttribute("question" + i, ((ResponseLID) infoStudentTestQuestion.getResponse()).getResponse()[0]);
+                    }
+                } else {
                     request.setAttribute("question" + i, ((ResponseLID) infoStudentTestQuestion.getResponse()).getResponse());
-            // else if
-            // (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue()
-            // == QuestionType.LID)
-            // request.setAttribute("question" + i, new String[]{new String()});
-            // else
-            // request.setAttribute("question" + i, new String());
-
+                }
+            }
         }
 
         request.setAttribute("studentTestForm", form);
@@ -318,10 +315,13 @@ public class StudentTestsAction extends FenixDispatchAction {
                 request.setAttribute("question" + i, ((ResponseNUM) infoStudentTestQuestion.getResponse()).getResponse());
             else if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.LID
                     && ((ResponseLID) infoStudentTestQuestion.getResponse()).getResponse() != null)
-                if (infoStudentTestQuestion.getQuestion().getQuestionType().getCardinalityType().getType().intValue() == CardinalityType.SINGLE)
-                    request.setAttribute("question" + i, ((ResponseLID) infoStudentTestQuestion.getResponse()).getResponse()[0]);
-                else
+                if (infoStudentTestQuestion.getQuestion().getQuestionType().getCardinalityType().getType().intValue() == CardinalityType.SINGLE) {
+                    if (((ResponseLID) infoStudentTestQuestion.getResponse()).getResponse().length != 0) {
+                        request.setAttribute("question" + i, ((ResponseLID) infoStudentTestQuestion.getResponse()).getResponse()[0]);
+                    }
+                } else {
                     request.setAttribute("question" + i, ((ResponseLID) infoStudentTestQuestion.getResponse()).getResponse());
+                }
 
             if (infoStudentTestQuestion.getTestQuestionMark() != null)
                 classification = new Double(classification.doubleValue() + infoStudentTestQuestion.getTestQuestionMark().doubleValue());

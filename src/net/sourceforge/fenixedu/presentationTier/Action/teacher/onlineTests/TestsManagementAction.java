@@ -948,10 +948,14 @@ public class TestsManagementAction extends FenixDispatchAction {
                 request.setAttribute("question" + i, ((ResponseNUM) infoStudentTestQuestion.getResponse()).getResponse());
             else if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.LID
                     && ((ResponseLID) infoStudentTestQuestion.getResponse()).getResponse() != null)
-                if (infoStudentTestQuestion.getQuestion().getQuestionType().getCardinalityType().getType().intValue() == CardinalityType.SINGLE)
-                    request.setAttribute("question" + i, ((ResponseLID) infoStudentTestQuestion.getResponse()).getResponse()[0]);
-                else
+
+                if (infoStudentTestQuestion.getQuestion().getQuestionType().getCardinalityType().getType().intValue() == CardinalityType.SINGLE) {
+                    if (((ResponseLID) infoStudentTestQuestion.getResponse()).getResponse().length != 0) {
+                        request.setAttribute("question" + i, ((ResponseLID) infoStudentTestQuestion.getResponse()).getResponse()[0]);
+                    }
+                } else {
                     request.setAttribute("question" + i, ((ResponseLID) infoStudentTestQuestion.getResponse()).getResponse());
+                }
             classification += infoStudentTestQuestion.getTestQuestionMark().doubleValue();
         }
 
