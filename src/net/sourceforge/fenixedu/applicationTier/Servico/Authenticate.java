@@ -16,12 +16,13 @@ import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IRole;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.framework.DomainObjectReference;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -71,12 +72,12 @@ public class Authenticate implements IService, Serializable {
 
     protected class UserView implements IUserView {
 
-    	final private IPerson person;
+    	final private DomainObjectReference<Person> personRef;
 
         final private Collection roles;
 
         private UserView(final IPerson person, final Set allowedRoles) {
-            this.person = person;
+            this.personRef = new DomainObjectReference<Person>((Person) person);
 
             final Collection infoRoles = getInfoRoles(person.getUsername(), person.getPersonRoles(),
                     allowedRoles);
@@ -96,8 +97,12 @@ public class Authenticate implements IService, Serializable {
             return roles.contains(infoRole);
         }
 
+		public IPerson getPerson() {
+			return personRef.get();
+		}
+
         public String getUtilizador() {
-            return person.getUsername();
+            return getPerson().getUsername();
         }
 
         public Collection getRoles() {
@@ -105,12 +110,8 @@ public class Authenticate implements IService, Serializable {
         }
 
         public String getFullName() {
-            return person.getNome();
+            return getPerson().getNome();
         }
-
-		public IPerson getPerson() {
-			return person;
-		}
     }
 
     public static final boolean isValidUserView(IUserView userView) {
