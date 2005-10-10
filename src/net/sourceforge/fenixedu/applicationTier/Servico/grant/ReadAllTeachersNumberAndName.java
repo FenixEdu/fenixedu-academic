@@ -42,7 +42,9 @@ public class ReadAllTeachersNumberAndName implements IService {
 
                 infoTeacher.setTeacherNumber(teacher.getTeacherNumber());
                 infoTeacher.setInfoPerson(infoPerson);
-                infoPerson.setNome(teacher.getPerson().getNome());
+                if (teacher.getPerson() != null){
+    				infoPerson.setNome(teacher.getPerson().getNome());
+                }
 
                 result.add(infoTeacher);
             }

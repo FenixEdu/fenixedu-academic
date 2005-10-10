@@ -67,7 +67,9 @@ public class Person extends Person_Base {
 
     public void edit(InfoPerson personToEdit, ICountry country) {
         setProperties(personToEdit);
-        setPais(country);
+        if(country != null){
+            setPais(country);
+        }        
     }    
     
     public void update(InfoPerson updatedPersonalData, ICountry country) {

@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidMetadataException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidXMLFilesException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.MetadataComparator;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoMetadata;
@@ -564,15 +566,20 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         if (xmlZipFile == null || xmlZipFile.getFileData() == null || xmlZipFile.getFileData().length == 0) {
             error(request, "FileNotExist", "error.nullXmlZipFile");
             return mapping.findForward("addExerciseVariation");
-        } else if (!(xmlZipFile.getContentType().equals("application/x-zip-compressed") || xmlZipFile.getContentType().equals("text/xml") || (xmlZipFile
-                .getContentType().equals("application/zip")))) {
+        } else if (!(xmlZipFile.getContentType().equals("application/x-zip-compressed") || xmlZipFile.getContentType().equals("text/xml")
+                || xmlZipFile.getContentType().equals("application/xml") || (xmlZipFile.getContentType().equals("application/zip")))) {
             error(request, "FileNotExist", "error.badXmlZipFile");
             return mapping.findForward("addExerciseVariation");
         }
 
         try {
             Object[] args = { executionCourseId, metadataId, xmlZipFile, getServlet().getServletContext().getRealPath("/") };
-            ServiceUtils.executeService(userView, "InsertExerciseVariation", args);
+
+            List badXmls = (List) ServiceUtils.executeService(userView, "InsertExerciseVariation", args);
+            request.setAttribute("badXmls", badXmls);
+        } catch (InvalidXMLFilesException e) {
+            error(request, "FileNotExist", "error.badXmlFiles");
+            return mapping.findForward("addExerciseVariation");
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -595,15 +602,16 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
         if (metadataFile != null)
-            if ((metadataFile.getFileData().length != 0) && !(metadataFile.getContentType().equals("text/xml"))) {
+            if ((metadataFile.getFileData().length != 0)
+                    && !(metadataFile.getContentType().equals("text/xml") || metadataFile.getContentType().equals("application/xml"))) {
                 error(request, "FileNotExist", "error.badMetadataFile");
                 return mapping.findForward("insertNewExercise");
             }
         if (xmlZipFile == null || xmlZipFile.getFileData() == null || xmlZipFile.getFileData().length == 0) {
             error(request, "FileNotExist", "error.nullXmlZipFile");
             return mapping.findForward("insertNewExercise");
-        } else if (!(xmlZipFile.getContentType().equals("application/x-zip-compressed") || xmlZipFile.getContentType().equals("text/xml") || (xmlZipFile
-                .getContentType().equals("application/zip")))) {
+        } else if (!(xmlZipFile.getContentType().equals("application/x-zip-compressed") || xmlZipFile.getContentType().equals("text/xml")
+                || xmlZipFile.getContentType().equals("application/xml") || (xmlZipFile.getContentType().equals("application/zip")))) {
             error(request, "FileNotExist", "error.badXmlZipFile");
             return mapping.findForward("insertNewExercise");
         }
@@ -612,6 +620,12 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         try {
             Object[] args = { executionCourseId, metadataFile, xmlZipFile, path };
             badXmls = (List) ServiceUtils.executeService(userView, "InsertExercise", args);
+        } catch (InvalidMetadataException e) {
+            error(request, "FileNotExist", "error.badMetadataFile");
+            return mapping.findForward("insertNewExercise");
+        } catch (InvalidXMLFilesException e) {
+            error(request, "FileNotExist", "error.badXmlFiles");
+            return mapping.findForward("insertNewExercise");
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

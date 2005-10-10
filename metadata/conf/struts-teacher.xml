@@ -796,6 +796,9 @@
 			<form-property name="coResponsableTeacherName" type="java.lang.String"/>
 			<form-property name="coResponsableTeacherNumber" type="java.lang.String"/>
 			<form-property name="alteredField" type="java.lang.String" />
+
+			<form-property name="selectedGroupProposal" type="java.lang.String"/>
+			<form-property name="selectedGroupProposals" type="java.lang.String[]"/>
 		</form-bean>
 
 		<form-bean name="finalWorkAttributionForm"
@@ -2146,7 +2149,7 @@
 	    	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.FinalWorkManagementAction"
 	    	parameter="method"
 	    	input="/finalWorkManagement.do?method=chooseDegree&amp;page=0"
-	    	name="finalWorkAttributionForm"
+	    	name="finalWorkInformationForm"
 	    	scope="request"
 	    	validate="true">
 			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.TeacherAttributeFinalDegreeWork$GroupAlreadyAttributed"

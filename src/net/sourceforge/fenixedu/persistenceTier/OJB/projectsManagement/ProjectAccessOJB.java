@@ -86,7 +86,7 @@ public class ProjectAccessOJB extends PersistentObjectOJB implements IPersistent
         criteria.addEqualTo("keyProjectCoordinator", coordinatorCode);
         if (!all)
             criteria.addLessOrEqualThan("begin", Calendar.getInstance().getTime());
-        criteria.addGreaterOrEqualThan("ende", Calendar.getInstance().getTime());
+        criteria.addGreaterOrEqualThan("end", Calendar.getInstance().getTime());
         List<IProjectAccess> allPersonProjects = queryList(ProjectAccess.class, criteria);
         List<Integer> result = new ArrayList<Integer>();
         for (IProjectAccess projectAccess : allPersonProjects)

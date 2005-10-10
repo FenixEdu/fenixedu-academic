@@ -1,9 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 import java.util.StringTokenizer;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoFinalResult;
@@ -18,8 +15,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.EvaluationType;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.NumberUtils;
-
-import org.apache.commons.beanutils.BeanComparator;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -77,39 +72,29 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
             throws ExcepcaoPersistencia {
         float marks = 0;
         int numberOfCourses = 0;
-        List enrolments = studentCurricularPlan.getEnrolments();
 
-        Iterator iterator = enrolments.iterator();
-        while (iterator.hasNext()) {
-            IEnrolment enrolment = (IEnrolment) iterator.next();
+        for (IEnrolment enrolment : studentCurricularPlan.getEnrolments()) {
+
             if ((enrolment.getEnrollmentState().equals(EnrollmentState.APROVED))
                     && (!enrolment.getCurricularCourse().getType().equals(
                             CurricularCourseType.P_TYPE_COURSE))) {
                 if (!(enrolment instanceof IEnrolmentInExtraCurricularCourse)) {
 
-                    List newEnrolmentList = newEnrolmentList(enrolment);
-                    Iterator evaluations = newEnrolmentList.iterator();
+                    IEnrolmentEvaluation evaluation = Collections.max(enrolment.getEvaluations());
 
-                    int enrolmentMark = 0;
-                    while (evaluations.hasNext()) {
-                        IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) evaluations
-                                .next();
+                    try {
+                        Integer enrolmentMark = Integer.valueOf(evaluation.getGrade());
 
-                        try {
-                            if (new Integer(enrolmentEvaluation.getGrade()).intValue() > enrolmentMark) {
-                                enrolmentMark = new Integer(enrolmentEvaluation.getGrade()).intValue();
-                            }
-                        } catch (NumberFormatException e) {
-                            // This mark will not count for the average
+                        if (enrolmentMark > 0) {
+                            marks += enrolmentMark;
+                            numberOfCourses++;
                         }
-                    }
-                    if (enrolmentMark > 0) {
-                        marks += enrolmentMark;
-                        numberOfCourses++;
+
+                    } catch (NumberFormatException e) {
+                        // This mark will not count for the average
                     }
                 }
             }
-
         }
 
         if (marks == 0) {
@@ -123,40 +108,30 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
             throws ExcepcaoPersistencia {
         float marks = 0;
         float numberOfWeigths = 0;
-        List enrolments = studentCurricularPlan.getEnrolments();
 
-        Iterator iterator = enrolments.iterator();
-        while (iterator.hasNext()) {
-            IEnrolment enrolment = (IEnrolment) iterator.next();
+        for (IEnrolment enrolment : studentCurricularPlan.getEnrolments()) {
+
             if ((enrolment.getEnrollmentState().equals(EnrollmentState.APROVED))
                     && (!enrolment.getCurricularCourse().getType().equals(
                             CurricularCourseType.P_TYPE_COURSE))) {
                 if (!(enrolment instanceof IEnrolmentInExtraCurricularCourse)) {
-                    List newEnrolmentList = newEnrolmentList(enrolment);
-                    Iterator evaluations = newEnrolmentList.iterator();
-                    int enrolmentMark = 0;
-                    float enrolmentWeight = 0;
-                    while (evaluations.hasNext()) {
-                        IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) evaluations
-                                .next();
-                        try {
-                            if (new Integer(enrolmentEvaluation.getGrade()).intValue() > enrolmentMark) {
-                                enrolmentMark = new Integer(enrolmentEvaluation.getGrade()).intValue();
-                                enrolmentWeight = enrolment.getCurricularCourse().getCredits()
-                                        .floatValue();
-                            }
-                        } catch (NumberFormatException e) {
-                            // This mark will not count for the average
-                        }
-                    }
-                    if (enrolmentMark > 0) {
-                        marks += (enrolmentMark * enrolmentWeight);
-                        numberOfWeigths += enrolmentWeight;
-                    }
 
+                    IEnrolmentEvaluation evaluation = Collections.max(enrolment.getEvaluations());
+
+                    try {
+                        int enrolmentMark = Integer.valueOf(evaluation.getGrade());
+                        double enrolmentWeight = enrolment.getCurricularCourse().getCredits();
+
+                        if (enrolmentMark > 0) {
+                            marks += (enrolmentMark * enrolmentWeight);
+                            numberOfWeigths += enrolmentWeight;
+                        }
+
+                    } catch (NumberFormatException e) {
+                        // This mark will not count for the average
+                    }
                 }
             }
-
         }
 
         if (marks == 0) {
@@ -171,23 +146,23 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 
         // Degrees that use the Mixed Average (Average between Simple and
         // Weighted average)
-        //		if
+        // if
         // ((this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MT02/04"))
         // ||
-        //			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MT03/05"))){
-        //			Double simpleAverage =
+        // (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MT03/05"))){
+        // Double simpleAverage =
         // this.calculateStudentRegularAverage(studentCurricularPlan);
-        //			Double weightedAverage =
+        // Double weightedAverage =
         // this.calculateStudentWeightedAverage(studentCurricularPlan);
         //			
-        //			infoFinalResult.setAverageSimple(String.valueOf(simpleAverage));
-        //			infoFinalResult.setAverageWeighted(String.valueOf(weightedAverage));
+        // infoFinalResult.setAverageSimple(String.valueOf(simpleAverage));
+        // infoFinalResult.setAverageWeighted(String.valueOf(weightedAverage));
         //			
-        //			infoFinalResult.setFinalAverage(String.valueOf(NumberUtils.formatNumber(new
+        // infoFinalResult.setFinalAverage(String.valueOf(NumberUtils.formatNumber(new
         // Double((simpleAverage.floatValue()+weightedAverage.floatValue())/2),
         // 0)));
-        //			return;
-        //		}
+        // return;
+        // }
 
         // Degrees that use the Best Average (Best between Simple and Weighted
         // average)
@@ -198,9 +173,10 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
                 || (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MT03/05"))) {
             Double simpleAverage = this.calculateStudentRegularAverage(studentCurricularPlan);
             Double weightedAverage = this.calculateStudentWeightedAverage(studentCurricularPlan);
-            infoFinalResult.setAverageSimple(String.valueOf(NumberUtils.formatNumber(simpleAverage,1).doubleValue()));
-            infoFinalResult.setAverageWeighted(String.valueOf(NumberUtils.formatNumber(weightedAverage,1).doubleValue()));
-
+            infoFinalResult.setAverageSimple(String.valueOf(NumberUtils.formatNumber(simpleAverage, 1)
+                    .doubleValue()));
+            infoFinalResult.setAverageWeighted(String.valueOf(NumberUtils.formatNumber(weightedAverage,
+                    1).doubleValue()));
 
             if (simpleAverage.floatValue() > weightedAverage.floatValue()) {
                 infoFinalResult.setFinalAverage(String.valueOf(NumberUtils
@@ -229,7 +205,8 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
                 || (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("ML02/04"))) {
 
             Double weightedAverage = this.calculateStudentWeightedAverage(studentCurricularPlan);
-            infoFinalResult.setAverageWeighted(String.valueOf(NumberUtils.formatNumber(weightedAverage, 1).doubleValue()));
+            infoFinalResult.setAverageWeighted(String.valueOf(NumberUtils.formatNumber(weightedAverage,
+                    1).doubleValue()));
             infoFinalResult.setFinalAverage(String.valueOf(NumberUtils.formatNumber(weightedAverage, 0)
                     .intValue()));
             return;
@@ -239,28 +216,12 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 
         Double simpleAverage = this.calculateStudentRegularAverage(studentCurricularPlan);
 
-        infoFinalResult.setAverageSimple(String.valueOf(NumberUtils.formatNumber(simpleAverage, 1).doubleValue()));
+        infoFinalResult.setAverageSimple(String.valueOf(NumberUtils.formatNumber(simpleAverage, 1)
+                .doubleValue()));
 
         infoFinalResult.setFinalAverage(String.valueOf(NumberUtils.formatNumber(simpleAverage, 0)
                 .intValue()));
 
-    }
-
-    public List newEnrolmentList(IEnrolment enrolmentList) {
-
-        List newEnrolmentList = new ArrayList();
-
-        List aux = enrolmentList.getEvaluations();
-
-        if (aux.size() > 1) {
-            BeanComparator dateComparator = new BeanComparator("when");
-            Collections.sort(aux, dateComparator);
-            Collections.reverse(aux);
-        }
-        IEnrolmentEvaluation latestEvaluation = (IEnrolmentEvaluation) aux.get(0);
-        newEnrolmentList.add(latestEvaluation);
-
-        return newEnrolmentList;
     }
 
 }

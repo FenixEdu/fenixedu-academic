@@ -4,6 +4,9 @@
 
 package net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.equivalences;
 
+import java.text.Collator;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,8 +22,10 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -34,6 +39,17 @@ import org.apache.struts.actions.DispatchAction;
 
 public class ManageNotNeedToEnrollDispathAction extends DispatchAction {
 
+    private static final ComparatorChain curricularCourseComparator = new ComparatorChain();
+    static {
+        curricularCourseComparator.addComparator(new BeanComparator("name", Collator.getInstance()));
+        curricularCourseComparator.addComparator(new BeanComparator("code", Collator.getInstance()));
+    }
+    private static final ComparatorChain enrolmentCurricularCourseComparator = new ComparatorChain();
+    static {
+        enrolmentCurricularCourseComparator.addComparator(new BeanComparator("infoCurricularCourse.name", Collator.getInstance()));
+        enrolmentCurricularCourseComparator.addComparator(new BeanComparator("infoCurricularCourse.code", Collator.getInstance()));
+    }
+    
     public ActionForward prepareNotNeedToEnroll(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -56,8 +72,9 @@ public class ManageNotNeedToEnrollDispathAction extends DispatchAction {
 
         Object args[] = { studentNumber, DegreeType.DEGREE };
 
-        InfoStudentCurricularPlanWithEquivalencesAndInfoDegreeCurricularPlan infoSCP = readStudentCurricularPlan(
-                userView, args);
+        InfoStudentCurricularPlanWithEquivalencesAndInfoDegreeCurricularPlan infoSCP = readStudentCurricularPlan(userView, args);
+        Collections.sort(infoSCP.getInfoNotNeedToEnrollCurricularCourses(), enrolmentCurricularCourseComparator);
+        Collections.sort(infoSCP.getInfoDegreeCurricularPlan().getCurricularCourses(), curricularCourseComparator);
 
         request.setAttribute("infoStudentCurricularPlan", infoSCP);
         notNeedToEnrollForm.set("studentNumber", studentNumber.toString());

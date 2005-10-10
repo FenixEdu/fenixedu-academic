@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide;
 
-import java.util.Iterator;
-
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.GraduationType;
@@ -11,7 +9,6 @@ import net.sourceforge.fenixedu.domain.IGuideEntry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.NumberUtils;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -26,7 +23,7 @@ public class CreateGuideEntry implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IGuide guide = (IGuide) sp.getIPersistentGuide().readByOID(Guide.class, guideID, true);
+        IGuide guide = (IGuide) sp.getIPersistentGuide().readByOID(Guide.class, guideID);
 
         IGuideEntry guideEntry = DomainFactory.makeGuideEntry();
 
@@ -36,16 +33,9 @@ public class CreateGuideEntry implements IService {
         guideEntry.setGuide(guide);
         guideEntry.setPrice(price);
         guideEntry.setQuantity(quantity);
-
+        
         // update guide's total value
-        double guideTotal = price.doubleValue() * quantity.doubleValue();
-        for (Iterator iter = guide.getGuideEntries().iterator(); iter.hasNext();) {
-            IGuideEntry tmpEntry = (IGuideEntry) iter.next();
-            guideTotal += tmpEntry.getPrice().doubleValue() * tmpEntry.getQuantity().doubleValue();
-        }
-        guide.setTotal(NumberUtils.formatNumber(new Double(guideTotal), 2));
-
-        guide.getGuideEntries().add(guideEntry);
+        guide.updateTotalValue();
     }
 
 }

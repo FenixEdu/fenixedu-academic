@@ -65,10 +65,18 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
         dynaForm.set("credits", oldInfoCurricularCourse.getCredits().toString());
         dynaForm.set("ectsCredits", (oldInfoCurricularCourse.getEctsCredits() == null) ? ""
                 : oldInfoCurricularCourse.getEctsCredits().toString());
-        dynaForm.set("theoreticalHours", oldInfoCurricularCourse.getTheoreticalHours().toString());
-        dynaForm.set("praticalHours", oldInfoCurricularCourse.getPraticalHours().toString());
-        dynaForm.set("theoPratHours", oldInfoCurricularCourse.getTheoPratHours().toString());
-        dynaForm.set("labHours", oldInfoCurricularCourse.getLabHours().toString());
+        if (oldInfoCurricularCourse.getTheoreticalHours() != null) { 
+            dynaForm.set("theoreticalHours", oldInfoCurricularCourse.getTheoreticalHours().toString());
+        }
+        if (oldInfoCurricularCourse.getPraticalHours() != null) {
+            dynaForm.set("praticalHours", oldInfoCurricularCourse.getPraticalHours().toString());
+        }
+        if (oldInfoCurricularCourse.getTheoPratHours() != null) {
+            dynaForm.set("theoPratHours", oldInfoCurricularCourse.getTheoPratHours().toString());
+        }
+        if (oldInfoCurricularCourse.getLabHours() != null) {
+            dynaForm.set("labHours", oldInfoCurricularCourse.getLabHours().toString());
+        }
         dynaForm.set("maxIncrementNac", oldInfoCurricularCourse
                 .getMaximumValueForAcumulatedEnrollments().toString());
         dynaForm.set("minIncrementNac", oldInfoCurricularCourse

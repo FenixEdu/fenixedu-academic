@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
@@ -19,7 +18,7 @@ public class InfoGrantInsurance extends InfoObject {
 
     // This is the value of a day of an insurance. It's static for all
     // contracts.
-    private static final double dayValueOfInsurance = 63.35;
+    private static final double dayValueOfInsurance = 63.45;
 
     private Date dateEndInsurance;
 
@@ -119,25 +118,19 @@ public class InfoGrantInsurance extends InfoObject {
      * multiply by the constant value 'dayValueOfInsurance'
      */
     public static Double calculateTotalValue(Date dateBegin, Date dateEnd) {
-
-        if (dateBegin != null && dateEnd != null && dateBegin.before(dateEnd)) {
-            Calendar c1 = Calendar.getInstance();
-            Calendar c2 = Calendar.getInstance();
-
-            Integer numberOfMonth = 0;
-            Integer numberOfYear = 0;
-            Integer value = 1;
-            c1.setTime(dateBegin);
-            c2.setTime(dateEnd);
-
-            numberOfYear = 12 * (c2.get(Calendar.YEAR) - c1.get(Calendar.YEAR));
-            numberOfMonth = (c2.get(Calendar.MONTH) - c1.get(Calendar.MONTH)) + 1;
-            value = numberOfYear + numberOfMonth;
+    	 
+    	 	 final long MILLIS_PER_DAY = 1000 * 60 * 60 * 24;
+    	 	 long days = 0;
+    	  
+    	 
+        if (dateBegin != null && dateEnd != null && (dateBegin.before(dateEnd) || dateBegin.equals(dateEnd)) ) {
+        	long deltaMillis = dateEnd.getTime() - dateBegin.getTime();
+    	    days = (deltaMillis / MILLIS_PER_DAY) + 1;
             return new Double(FormatDouble
-                    .round(((getDayValueOfInsurance().doubleValue()) / 12) * value));
+                    .round(((getDayValueOfInsurance().doubleValue()) / 365)* days ));
 
         }
-        return new Double(0);
+    	return new Double(0);
     }
 
     public void setTotalValue() {

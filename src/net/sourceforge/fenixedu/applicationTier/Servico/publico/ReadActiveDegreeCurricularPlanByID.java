@@ -103,10 +103,11 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
         comparatorChain.addComparator(new BeanComparator("infoCurricularSemester.semester"));
         comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name"));
 
-        Collections.sort(scopes, comparatorChain);
+        List scopesAux = new ArrayList(scopes);
+        Collections.sort(scopesAux, comparatorChain);
 
-        if (scopes != null && scopes.size() > 0) {
-            ListIterator iter = scopes.listIterator();
+        if (scopesAux != null && scopesAux.size() > 0) {
+            ListIterator iter = scopesAux.listIterator();
             InfoCurricularYear year = null;
             InfoCurricularCourse curricularCourse = null;
 

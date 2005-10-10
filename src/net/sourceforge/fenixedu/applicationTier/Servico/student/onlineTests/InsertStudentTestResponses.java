@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests;
 import java.beans.XMLEncoder;
 import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,7 +24,6 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourCompa
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentTestFeedback;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
-import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionWithInfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionWithInfoQuestionAndInfoDistributedTest;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IAttends;
@@ -109,6 +109,7 @@ public class InsertStudentTestResponses implements IService {
                 if (infoStudentTestQuestion.getResponse().isResponsed()) {
                     responseNumber++;
                     if (studentTestQuestion.getResponse() != null && distributedTest.getTestType().getType().intValue() == TestType.EVALUATION) {
+                        totalMark += infoStudentTestQuestion.getTestQuestionMark().doubleValue();
                         // não pode aceitar nova resposta
                     } else {
                         try {
@@ -175,7 +176,9 @@ public class InsertStudentTestResponses implements IService {
                     mark.setAttend(attend);
                     mark.setEvaluation(onlineTest);
                 }
-                mark.setMark(new java.text.DecimalFormat("#0.##").format(totalMark));
+                DecimalFormat df =new DecimalFormat("#0.##");
+                df.getDecimalFormatSymbols().setDecimalSeparator('.');
+                mark.setMark(df.format(Math.max(0, totalMark)));
             }
 
             IPersistentStudentTestLog persistentStudentTestLog = persistentSuport.getIPersistentStudentTestLog();

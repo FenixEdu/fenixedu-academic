@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -167,9 +168,10 @@ public class InsertGratuityData implements IService {
     }
 
     private void validateDatesOfPaymentPhases(List paymentPhasesList) throws FenixServiceException {
-        Collections.sort(paymentPhasesList, new BeanComparator("endDate"));
+        List paymentPhaseListAux = new ArrayList(paymentPhasesList);
+        Collections.sort(paymentPhaseListAux, new BeanComparator("endDate"));
 
-        ListIterator iterator = paymentPhasesList.listIterator();
+        ListIterator iterator = paymentPhaseListAux.listIterator();
         while (iterator.hasNext()) {
             InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) iterator.next();
 

@@ -1009,4 +1009,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         });
 
     }    
+    
+    public boolean isEnroledInSpecialSeason(IExecutionPeriod executionPeriod) {
+    	List<IEnrolment> enrolments = getAllStudentEnrollmentsInExecutionPeriod(executionPeriod);
+    	for (IEnrolment enrolment : enrolments) {
+			if(enrolment.hasSpecialSeason()) {
+				return true;
+}
+		}
+    	return false;
+    }
 }

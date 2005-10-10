@@ -59,14 +59,6 @@ public class ReadActiveExecutionDegreebyDegreeCurricularPlanID implements IServi
             throw new FenixServiceException("error.impossibleEditDegreeInfo");
         }
 
-        // sort them by begin date
-        Collections.sort(executionDegrees, new Comparator() {
-            public int compare(Object o1, Object o2) {
-                return ((IExecutionDegree) o1).getExecutionYear().getBeginDate().compareTo(
-                        ((IExecutionDegree) o1).getExecutionYear().getBeginDate());
-            }
-        });
-
         // decide which is the execution year which we want to edit
         final IExecutionDegree executionDegree = getActiveExecutionYear(executionDegrees);
         if (executionDegree != null) {

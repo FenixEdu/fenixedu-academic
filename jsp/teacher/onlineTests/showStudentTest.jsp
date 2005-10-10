@@ -34,8 +34,6 @@
 		
 		<logic:notEqual name="correctionType" value="studentCorrection">
 			<html:hidden property='<%="questionCode"+questionIndex%>' value="<%= questionCode.toString() %>"/>
-			<bean:define id="optionShuffle" name="testQuestion" property="optionShuffle"/>
-			<html:hidden property='<%="optionShuffle"+questionIndex%>' value="<%= optionShuffle.toString() %>"/>
 			<html:hidden property='<%="questionType"+questionIndex%>' value="<%= questionType.toString() %>"/>
 		</logic:notEqual>
 		
@@ -153,7 +151,6 @@
 					</logic:equal>
 					<bean:define id="indexOption" value="<%= (new Integer(Integer.parseInt(indexOption)+1)).toString() %>"/>
 					<bean:define id="button" value="true"/>
-					
 					<logic:notEqual name="pageType" value="doTest">
 						<logic:notEqual name="correction" property="availability" value="1">
 							<%if(((Integer)testType).intValue()!=3 && ((Integer)formula).intValue()==1){%> <%-- Not TestType.INQUIRY  and CorrectionFormula.FENIX--%>

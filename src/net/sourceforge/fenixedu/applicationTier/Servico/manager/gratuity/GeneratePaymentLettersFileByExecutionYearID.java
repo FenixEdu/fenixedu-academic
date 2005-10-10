@@ -470,6 +470,7 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
         BeanComparator paymentPhaseDateComparator = new BeanComparator("endDate");
         ComparatorChain chainComparator = new ComparatorChain();
         chainComparator.addComparator(paymentPhaseDateComparator, true);
+        paymentPhaseList = new ArrayList(paymentPhaseList);
         Collections.sort(paymentPhaseList, chainComparator);
 
         int paymentPhaseNumber = 1;

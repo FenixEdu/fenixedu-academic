@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -304,6 +305,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
         BeanComparator paymentPhaseDateComparator = new BeanComparator("endDate");
         ComparatorChain chainComparator = new ComparatorChain();
         chainComparator.addComparator(paymentPhaseDateComparator, true);
+        paymentPhaseList = new ArrayList(paymentPhaseList);
         Collections.sort(paymentPhaseList, chainComparator);
 
         int paymentPhaseNumber = 1;

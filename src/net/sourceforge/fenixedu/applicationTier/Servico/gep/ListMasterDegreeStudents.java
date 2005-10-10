@@ -94,7 +94,7 @@ public class ListMasterDegreeStudents implements IService {
                         .getDegreeCurricularPlan();
                 List<IExecutionDegree> executionDegrees = degreeCurricularPlan.getExecutionDegrees();
 
-                Collections.sort(executionDegrees, new Comparator() {
+                IExecutionDegree executionDegree = (IExecutionDegree) Collections.min(executionDegrees, new Comparator() {
 
                     public int compare(Object o1, Object o2) {
                         IExecutionDegree executionDegree1 = (IExecutionDegree) o1;
@@ -106,7 +106,7 @@ public class ListMasterDegreeStudents implements IService {
 
                 });
 
-                if (!executionDegrees.get(0).getExecutionYear().equals(executionYear)) {
+                if (!executionDegree.getExecutionYear().equals(executionYear)) {
                     firstTimeEnrolment = false;
                 }
             }

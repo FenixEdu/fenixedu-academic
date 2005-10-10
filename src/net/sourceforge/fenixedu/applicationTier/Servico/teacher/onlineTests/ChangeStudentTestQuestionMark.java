@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.beans.XMLEncoder;
 import java.io.ByteArrayOutputStream;
+import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -89,14 +90,11 @@ public class ChangeStudentTestQuestionMark implements IService {
                     }
 
                     if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.STR) {
-                        response = new ResponseSTR();
-                        ((ResponseSTR) response).setResponse("");
+                        response = new ResponseSTR("");
                     } else if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.NUM) {
-                        response = new ResponseNUM();
-                        ((ResponseNUM) response).setResponse("");
+                        response = new ResponseNUM("");
                     } else if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.LID) {
-                        response = new ResponseLID();
-                        ((ResponseLID) response).setResponse(new String[1]);
+                        response = new ResponseLID(new String[] { null });
                     }
                     response.setResponsed();
                     ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -110,7 +108,8 @@ public class ChangeStudentTestQuestionMark implements IService {
                             studentTestQuestion.getDistributedTest().getIdInternal());
                     IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport.getIPersistentExecutionCourse().readByOID(
                             ExecutionCourse.class, executionCourseId);
-                    IAttends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(studentTestQuestion.getStudent().getIdInternal(),executionCourse.getIdInternal());
+                    IAttends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(
+                            studentTestQuestion.getStudent().getIdInternal(), executionCourse.getIdInternal());
                     IMark mark = persistentSuport.getIPersistentMark().readBy(onlineTest, attend);
                     if (mark != null) {
                         mark.setMark(getNewStudentMark(persistentSuport, studentTestQuestion.getDistributedTest(), studentTestQuestion.getStudent()));
@@ -137,6 +136,8 @@ public class ChangeStudentTestQuestionMark implements IService {
         for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             totalMark += studentTestQuestion.getTestQuestionMark().doubleValue();
         }
-        return (new java.text.DecimalFormat("#0.##").format(totalMark));
+        DecimalFormat df = new DecimalFormat("#0.##");
+        df.getDecimalFormatSymbols().setDecimalSeparator('.');
+        return (df.format(Math.max(0, totalMark)));
     }
 }

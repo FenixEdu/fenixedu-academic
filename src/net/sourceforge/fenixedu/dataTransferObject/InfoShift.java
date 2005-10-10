@@ -12,8 +12,6 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IShift;
@@ -52,9 +50,6 @@ public class InfoShift extends InfoObject {
         setInfoLessons(new ArrayList());
     }
 
-    /**
-     * @param shiftIdInternal
-     */
     public InfoShift(Integer shiftIdInternal) {
         setIdInternal(shiftIdInternal);
     }
@@ -157,68 +152,34 @@ public class InfoShift extends InfoObject {
         return stringBuilder.toString();
     }
 
-    private String minutesFormatter(int minute) {
-        String result = "";
-        if (minute < 10) {
-            result += "0";
-        }
-        result += minute;
-
-        return result;
-    }
-
-    /**
-     * @return
-     */
     public Integer getAvailabilityFinal() {
         return availabilityFinal;
     }
 
-    /**
-     * @param integer
-     */
     public void setAvailabilityFinal(Integer integer) {
         availabilityFinal = integer;
     }
 
-    /**
-     * @return
-     */
     public List getInfoLessons() {
         return infoLessons;
     }
 
-    /**
-     * @param list
-     */
     public void setInfoLessons(List list) {
         infoLessons = list;
     }
 
-    /**
-     * @return
-     */
     public List getInfoClasses() {
         return infoClasses;
     }
 
-    /**
-     * @param list
-     */
     public void setInfoClasses(List list) {
         infoClasses = list;
     }
 
-    /**
-     * @param ocupation
-     */
     public void setOcupation(Integer ocupation) {
         this.ocupation = ocupation;
     }
 
-    /**
-     * @param percentage
-     */
     public void setPercentage(Double percentage) {
         this.percentage = percentage;
     }
@@ -228,8 +189,7 @@ public class InfoShift extends InfoObject {
         if (shift != null) {
             setNome(shift.getNome());
             setTipo(shift.getTipo());
-            setLotacao(shift.getLotacao());
-           
+            setLotacao(shift.getLotacao());           
         }
     }
 

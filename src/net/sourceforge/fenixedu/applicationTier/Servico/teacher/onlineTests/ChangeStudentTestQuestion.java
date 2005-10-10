@@ -4,6 +4,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
+import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -261,7 +262,10 @@ public class ChangeStudentTestQuestion implements IService {
         for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             totalMark += studentTestQuestion.getTestQuestionMark().doubleValue();
         }
-        return (new java.text.DecimalFormat("#0.##").format(totalMark));
+        DecimalFormat df =new DecimalFormat("#0.##");
+        df.getDecimalFormatSymbols().setDecimalSeparator('.');
+
+        return (df.format(Math.max(0, totalMark)));
     }
 
     private IAdvisory getAdvisory(IDistributedTest distributedTest, String path) {

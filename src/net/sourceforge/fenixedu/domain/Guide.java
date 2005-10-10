@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Iterator;
 
+import net.sourceforge.fenixedu.util.NumberUtils;
 import net.sourceforge.fenixedu.util.State;
 
 /**
@@ -39,6 +40,18 @@ public class Guide extends Guide_Base {
             }
         }
         return null;
+    }
+    
+    public void updateTotalValue(){
+        
+        double total = 0;
+
+        for (IGuideEntry guideEntry : getGuideEntries()) {
+            total += guideEntry.getPrice() * guideEntry.getQuantity();
+        }
+        
+        setTotal(NumberUtils.formatNumber(total, 2));
+        
     }
 
 }

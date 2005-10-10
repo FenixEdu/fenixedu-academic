@@ -13,37 +13,6 @@ read -s password
 mysql -u$2 -f $1 < alterTableResidenceCandidacies.sql
 
 # Fix Scripts
-echo Adding Teacher To Person Table ... started
-mysql -u$2 -f $1 < AlterTablePersonAddTeacher.sql
-mysql -u$2 -f $1 < updatePersonWithTeacher.sql > res
-mysql -u$2 -f $1 < res
-rm -r res
-echo Adding Teacher To Person Table ... completed
-echo Adding GrantOwner To Person Table ... started
-mysql -u$2 -f $1 < AlterTablePersonAddGrantOwner.sql
-mysql -u$2 -f $1 < updatePersonWithGrantOwner.sql > res
-mysql -u$2 -f $1 < res
-rm -r res
-echo Adding GrantOwner To Person Table ... completed
-mysql -u$2 -f $1 < alterTableExamStudentRoom.sql
-echo Changing Exam Student Room Table To Written Evaluation Enrolment Table ... completed
-mysql -u$2 -f $1 < alterTableCompetenceCourse.sql
-mysql -u$2 -f $1 < CreateTableCompetenceCourseDepartment.sql
-echo Changing Competence Course ... completed
-mysql -u$2 -f $1 < AlterEnrolmentEvaluationType.sql
-echo Alter Enrolment Evaluation Type ... completed
-mysql -u$2 -f $1 < AlterEnrolmentEvaluationStateBefore81.sql > res
-mysql -u$2 -f $1 < res
-mysql -u$2 -f $1 < AlterEnrolmentEvaluationStateBefore80.sql > res
-mysql -u$2 -f $1 < res
-echo Alter Enrolment Evaluation State ... completed
-rm -r res
-echo Altering Person's Nationality ... started
-mysql -u$2 -f $1 < alterTableCountry.sql
-mysql -u$2 -f $1 < updatePersonWithKeyCountry.sql > res
-mysql -u$2 -f $1 < res
-rm -r res
-echo Altering Person's Nationality ... completed
 echo Changing Evaluation Table ... started
 mysql -u$2 -f $1 < alterTableEvaluation.sql
 echo Changing Evaluation Table ... completed
@@ -66,8 +35,6 @@ rm -r res
 echo Preparing Tables for Department Portal... completed
 
 echo Preparing Tables Unit and Function... started
-mysql -u$2 -f $1 < alterTableEmployeeAndDepartment.sql
-mysql -u$2 -f $1 < createUnitTable.sql
 mysql -u$2 -f $1 < createContractTable.sql
 mysql -u$2 -f $1 < alterTableUnit.sql
 mysql -u$2 -f $1 < createFunctionTable.sql

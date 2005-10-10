@@ -46,28 +46,29 @@ public class FinalDegreeWorkOrientatorForCandidacy extends AccessControlFilter {
 
         final IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
         final ITeacher teacher = person.getTeacher();
-
-        final List<IProposal> orientatingProposals = teacher.getAssociatedProposalsByOrientator();
-        final List<IProposal> coorientatingProposals = teacher.getAssociatedProposalsByCoorientator();
-
-        final List<IProposal> proposals = new ArrayList(orientatingProposals.size()
-                + coorientatingProposals.size());
-        proposals.addAll(orientatingProposals);
-        proposals.addAll(coorientatingProposals);
-
-        for (final IProposal proposal : proposals) {
-            for (final IGroupProposal groupProposal : proposal.getGroupProposals()) {
-                final IGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
-                for (final IGroupStudent groupStudent : group.getGroupStudents()) {
-                    final IStudent student = groupStudent.getStudent();
-                    for (final IStudentCurricularPlan studentCurricularPlan : student
-                            .getStudentCurricularPlans()) {
-                        if (studentCurricularPlan.getIdInternal().equals(studentCurricularPlanId)) {
-                            return;
-                        }
-                    }
-                }
-            }
+        if(teacher != null) {
+	        final List<IProposal> orientatingProposals = teacher.getAssociatedProposalsByOrientator();
+	        final List<IProposal> coorientatingProposals = teacher.getAssociatedProposalsByCoorientator();
+	
+	        final List<IProposal> proposals = new ArrayList(orientatingProposals.size()
+	                + coorientatingProposals.size());
+	        proposals.addAll(orientatingProposals);
+	        proposals.addAll(coorientatingProposals);
+	
+	        for (final IProposal proposal : proposals) {
+	            for (final IGroupProposal groupProposal : proposal.getGroupProposals()) {
+	                final IGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
+	                for (final IGroupStudent groupStudent : group.getGroupStudents()) {
+	                    final IStudent student = groupStudent.getStudent();
+	                    for (final IStudentCurricularPlan studentCurricularPlan : student
+	                            .getStudentCurricularPlans()) {
+	                        if (studentCurricularPlan.getIdInternal().equals(studentCurricularPlanId)) {
+	                            return;
+	                        }
+	                    }
+	                }
+	            }
+	        }
         }
 
         throw new NotAuthorizedFilterException();

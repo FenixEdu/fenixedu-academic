@@ -327,6 +327,17 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
+   	<field-descriptor
+        name="keyOnlineTest"
+        column="KEY_ONLINE_TEST"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor auto-retrieve="false"
+		name="onlineTest"
+		class-ref="net.sourceforge.fenixedu.domain.onlineTests.OnlineTest"
+		>
+		<foreignkey field-ref="keyOnlineTest"/>
+	</reference-descriptor>      
 	<reference-descriptor auto-retrieve="false"
          name="testScope"
          class-ref="net.sourceforge.fenixedu.domain.onlineTests.TestScope"
@@ -351,14 +362,6 @@
 		auto-delete="true">
 		<inverse-foreignkey field-ref="keyDistributedTest"/>
 	</collection-descriptor>
-	<!-- 
-	<reference-descriptor auto-retrieve="false"
-		name="onlineTest"
-		element-ref="net.sourceforge.fenixedu.domain.onlineTests.OnlineTest"
-		>
-		<inverse-foreignkey field-ref="keyDistributedTest"/>
-	</reference-descriptor>
-	-->
 </class-descriptor>
 
 <!-- ******************************************* -->

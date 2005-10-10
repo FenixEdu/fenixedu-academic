@@ -35,12 +35,13 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadDistributedTestMarksToString implements IService {
 
-    public String run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException, ExcepcaoPersistencia {
+    public String run(Integer executionCourseId, Integer distributedTestId)
+            throws FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente persistentSuport;
 
         persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IDistributedTest distributedTest = (IDistributedTest) persistentSuport.getIPersistentDistributedTest().readByOID(DistributedTest.class,
-                distributedTestId);
+        IDistributedTest distributedTest = (IDistributedTest) persistentSuport
+                .getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
         if (distributedTest == null)
             throw new InvalidArgumentsServiceException();
 
@@ -52,12 +53,14 @@ public class ReadDistributedTestMarksToString implements IService {
             result.append("\t");
         }
         result.append("Nota");
-        List<IStudentTestQuestion> studentTestQuestionList = persistentSuport.getIPersistentStudentTestQuestion().readByDistributedTest(
-                distributedTest.getIdInternal());
+        List<IStudentTestQuestion> studentTestQuestionList = persistentSuport
+                .getIPersistentStudentTestQuestion().readByDistributedTest(
+                        distributedTest.getIdInternal());
         if (studentTestQuestionList == null || studentTestQuestionList.size() == 0)
             throw new FenixServiceException();
         int questionIndex = 0;
-        Double maximumMark = persistentSuport.getIPersistentStudentTestQuestion().getMaximumDistributedTestMark(distributedTest.getIdInternal());
+        Double maximumMark = persistentSuport.getIPersistentStudentTestQuestion()
+                .getMaximumDistributedTestMark(distributedTest.getIdInternal());
         if (maximumMark.doubleValue() > 0)
             result.append("\tNota (%)\n");
         else
@@ -74,7 +77,8 @@ public class ReadDistributedTestMarksToString implements IService {
             }
             result.append(df.format(studentTestQuestion.getTestQuestionMark()));
             result.append("\t");
-            finalMark = new Double(finalMark.doubleValue() + studentTestQuestion.getTestQuestionMark().doubleValue());
+            finalMark = new Double(finalMark.doubleValue()
+                    + studentTestQuestion.getTestQuestionMark().doubleValue());
             questionIndex++;
             if (questionIndex == distributedTest.getNumberOfQuestions().intValue()) {
                 if (finalMark.doubleValue() < 0)
@@ -84,7 +88,8 @@ public class ReadDistributedTestMarksToString implements IService {
                     result.append("\t");
                 }
                 if (maximumMark.doubleValue() > 0) {
-                    double finalMarkPercentage = finalMark.doubleValue() * java.lang.Math.pow(maximumMark.doubleValue(), -1);
+                    double finalMarkPercentage = finalMark.doubleValue()
+                            * java.lang.Math.pow(maximumMark.doubleValue(), -1);
                     if (finalMarkPercentage < 0) {
                         result.append("0%");
                     } else
@@ -98,16 +103,19 @@ public class ReadDistributedTestMarksToString implements IService {
         return result.toString();
     }
 
-    public String run(Integer executionCourseId, String[] distributedTestCodes) throws FenixServiceException, ExcepcaoPersistencia {
+    public String run(Integer executionCourseId, String[] distributedTestCodes)
+            throws FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente persistentSuport;
         StringBuffer result = new StringBuffer();
         result.append("Número\tNome\t");
         persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport.getIPersistentStudentTestQuestion();
-        IPersistentDistributedTest persistentDistributedTest = persistentSuport.getIPersistentDistributedTest();
+        IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport
+                .getIPersistentStudentTestQuestion();
+        IPersistentDistributedTest persistentDistributedTest = persistentSuport
+                .getIPersistentDistributedTest();
 
-        List<IStudent> studentsFromAttendsList = (List) CollectionUtils.collect(persistentSuport.getIFrequentaPersistente().readByExecutionCourse(
-                executionCourseId), new Transformer() {
+        List<IStudent> studentsFromAttendsList = (List) CollectionUtils.collect(persistentSuport
+                .getIFrequentaPersistente().readByExecutionCourse(executionCourseId), new Transformer() {
 
             public Object transform(Object input) {
                 return ((IAttends) input).getAluno();
@@ -115,16 +123,18 @@ public class ReadDistributedTestMarksToString implements IService {
         });
         List<Integer> distributedTestIdsList = new ArrayList<Integer>();
         CollectionUtils.addAll(distributedTestIdsList, distributedTestCodes);
-        List<IStudent> studentsFromTestsList = persistentStudentTestQuestion.readStudentsByDistributedTests(distributedTestIdsList);
+        List<IStudent> studentsFromTestsList = persistentStudentTestQuestion
+                .readStudentsByDistributedTests(distributedTestIdsList);
         List<IStudent> studentList = concatStudentsLists(studentsFromAttendsList, studentsFromTestsList);
         Double[] maxValues = new Double[distributedTestCodes.length];
 
         for (int i = 0; i < distributedTestCodes.length; i++) {
-            IDistributedTest distributedTest = (IDistributedTest) persistentDistributedTest.readByOID(DistributedTest.class, new Integer(
-                    distributedTestCodes[i]));
+            IDistributedTest distributedTest = (IDistributedTest) persistentDistributedTest.readByOID(
+                    DistributedTest.class, new Integer(distributedTestCodes[i]));
             if (distributedTest == null)
                 throw new InvalidArgumentsServiceException();
-            maxValues[i] = persistentStudentTestQuestion.getMaximumDistributedTestMark(new Integer(distributedTestCodes[i]));
+            maxValues[i] = persistentStudentTestQuestion.getMaximumDistributedTestMark(new Integer(
+                    distributedTestCodes[i]));
             result.append(distributedTest.getTitle());
             result.append("\t");
             if (maxValues[i].doubleValue() > 0)
@@ -144,7 +154,8 @@ public class ReadDistributedTestMarksToString implements IService {
                 DecimalFormat df = new DecimalFormat("#0.##");
                 DecimalFormat percentageFormat = new DecimalFormat("#%");
 
-                finalMark = persistentStudentTestQuestion.readStudentTestFinalMark(new Integer(distributedTestCodes[i]), student.getIdInternal());
+                finalMark = persistentStudentTestQuestion.readStudentTestFinalMark(new Integer(
+                        distributedTestCodes[i]), student.getIdInternal());
 
                 if (finalMark == null) {
                     result.append("NA\t");
@@ -158,7 +169,8 @@ public class ReadDistributedTestMarksToString implements IService {
                         result.append("\t");
                     }
                     if (maxValues[i].doubleValue() > 0) {
-                        double finalMarkPercentage = finalMark.doubleValue() * java.lang.Math.pow(maxValues[i].doubleValue(), -1);
+                        double finalMarkPercentage = finalMark.doubleValue()
+                                * java.lang.Math.pow(maxValues[i].doubleValue(), -1);
                         if (finalMarkPercentage < 0) {
                             result.append("0%\t");
                         } else {
@@ -173,11 +185,16 @@ public class ReadDistributedTestMarksToString implements IService {
     }
 
     private List<IStudent> concatStudentsLists(List<IStudent> list1, List<IStudent> list2) {
+
+        List<IStudent> sortedStudents = new ArrayList<IStudent>();
+        sortedStudents.addAll(list1);
+
         for (IStudent student : list2) {
-            if (!list1.contains(student))
-                list1.add(student);
+            if (!sortedStudents.contains(student))
+                sortedStudents.add(student);
         }
-        Collections.sort(list1, new BeanComparator("number"));
-        return list1;
+
+        Collections.sort(sortedStudents, new BeanComparator("number"));
+        return sortedStudents;
     }
 }

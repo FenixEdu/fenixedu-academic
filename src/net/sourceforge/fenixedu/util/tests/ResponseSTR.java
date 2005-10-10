@@ -2,27 +2,30 @@ package net.sourceforge.fenixedu.util.tests;
 
 public class ResponseSTR extends Response {
 
-    private String response = new String();
+    private String response;
 
     private Boolean isCorrect;
 
     public ResponseSTR() {
         super();
+        super.setResponsed();
     }
 
     public ResponseSTR(String op) {
         super();
         setResponse(op);
+        super.setResponsed();
     }
 
     public String getResponse() {
-        return response;
+        return response != null ? response : "";
     }
 
     public void setResponse(String op) {
         response = op;
-        if (op != null && op.length() != 0)
+        if (op != null) {
             super.setResponsed();
+        }
     }
 
     public Boolean getIsCorrect() {

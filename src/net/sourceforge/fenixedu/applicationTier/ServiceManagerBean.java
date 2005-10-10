@@ -13,15 +13,13 @@ import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.logging.ServiceExecutionLog;
 import net.sourceforge.fenixedu.applicationTier.logging.SystemInfo;
 import net.sourceforge.fenixedu.applicationTier.logging.UserExecutionLog;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.stm.VersionNotAvailableException;
 import net.sourceforge.fenixedu.stm.ServiceInfo;
-import net.sourceforge.fenixedu.stm.Transaction;
+import net.sourceforge.fenixedu.stm.VersionNotAvailableException;
 
 import org.apache.commons.collections.FastHashMap;
 import org.apache.log4j.Logger;

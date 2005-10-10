@@ -122,6 +122,8 @@
 			<html:form action="/finalDegreeWorkAttribution">
 				<html:hidden property="method" value="attributeFinalDegreeWork"/>
 				<html:hidden property="selectedGroupProposal"/>
+				<html:hidden property="executionYear"/>
+				<html:hidden property="degree"/>
 
 				<tr>
 					<td bgcolor="#a2aebc" align="center" rowspan="<%= total %>">

@@ -2702,9 +2702,6 @@
             net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher.ReadTeacherByUsername</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
 	</service>
 	<service>
 		<name>ReadTeacherExecutionCoursesSitesService</name>
@@ -4816,13 +4813,6 @@
 		<name>student.ReadActiveStudentCurricularPlanByNumberAndDegreeType</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.student.ReadActiveStudentCurricularPlanByNumberAndDegreeType</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
-		<name>RetrieveItemFile</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.fileManager.RetrieveItemFile</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
@@ -8830,4 +8820,10 @@
 			<chain name="TeacherAuthorization"/>
 		</filterChains>
 	</service>	
+    <service>
+    	<name>ReadItemSlideName</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.fileManager.ReadItemSlideName</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>       
+    </service>
 </serviceDefinitions>    

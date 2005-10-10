@@ -593,7 +593,7 @@
     </filterChain>
     <filterChain>
         <name>DegreeOrMasterDegreeAdmininstrativeOfficeChain</name>
-        <expression>MasterDegreeAdministrativeOfficeAuthorization</expression>
+        <expression>DegreeAdministrativeOfficeAuthorization || MasterDegreeAdministrativeOfficeAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter</filterClass>

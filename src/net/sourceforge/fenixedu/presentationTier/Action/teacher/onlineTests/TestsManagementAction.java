@@ -62,7 +62,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.util.LabelValueBean;
 import org.apache.util.Base64;
 
 /**
@@ -1213,7 +1212,8 @@ public class TestsManagementAction extends FenixDispatchAction {
         try {
             List<InfoSiteDistributedTestAdvisory> result = (List<InfoSiteDistributedTestAdvisory>) ServiceUtils.executeService(userView,
                     "ChangeStudentTestQuestionValue", new Object[] { objectCode, distributedTestCode, new Double(questionValueString), questionCode,
-                            studentCode, new TestQuestionStudentsChangesType(new Integer(studentTypeString)) });
+                            studentCode, new TestQuestionStudentsChangesType(new Integer(studentTypeString)),
+                            getServlet().getServletContext().getRealPath("/") });
             request.setAttribute("successfulChanged", result);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

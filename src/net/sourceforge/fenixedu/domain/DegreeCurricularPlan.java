@@ -299,5 +299,14 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
         return degreeCurricularPlanStrategy.checkMark(grade.toUpperCase());
     }
+    
+    public IEnrolmentPeriodInCurricularCoursesSpecialSeason getEnrolmentPeriodInCurricularCoursesSpecialSeasonByExecutionPeriod(IExecutionPeriod executionPeriod) {
+    	for (IEnrolmentPeriod enrolmentPeriod : getEnrolmentPeriods()) {
+			if((enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesSpecialSeason) && (enrolmentPeriod.getExecutionPeriod().equals(executionPeriod))) {
+				return (IEnrolmentPeriodInCurricularCoursesSpecialSeason) enrolmentPeriod;
+			}
+		}
+    	return null;
+    }
 
 }

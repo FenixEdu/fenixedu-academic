@@ -594,6 +594,8 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
 	public void delete();
 	
 	public boolean isGradeValid(String grade);
+	
+	public IEnrolmentPeriodInCurricularCoursesSpecialSeason getEnrolmentPeriodInCurricularCoursesSpecialSeasonByExecutionPeriod(IExecutionPeriod executionPeriod);
     "
 }
 
@@ -715,6 +717,7 @@ class net.sourceforge.fenixedu.domain.onlineTests.DistributedTest extends net.so
     Date endHourDate;
     CorrectionAvailability correctionAvailability;
     TestType testType;
+    Integer keyOnlineTest;
     
     interface "
     public abstract java.util.Calendar getBeginDate();
@@ -807,6 +810,7 @@ class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu
 	public Integer getAccumulatedWeight();
 	public void setAccumulatedWeight(Integer accumulatedWeight);
 	public java.util.List<IEnrolmentEvaluation> getAllFinalEnrolmentEvaluations();
+	public boolean hasSpecialSeason();
 	"
 }
 
@@ -875,6 +879,9 @@ class net.sourceforge.fenixedu.domain.EnrolmentPeriod extends net.sourceforge.fe
     class net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses extends net.sourceforge.fenixedu.domain.EnrolmentPeriod {
     }
 
+	class net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason extends net.sourceforge.fenixedu.domain.EnrolmentPeriod {
+	}	
+    	
 class net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer enrolmentEquivalenceKey;
     Integer equivalentEnrolmentKey;
@@ -1556,6 +1563,7 @@ class net.sourceforge.fenixedu.domain.Guide extends net.sourceforge.fenixedu.dom
 	
 	interface "
 	public IGuideSituation getActiveSituation();
+	public void updateTotalValue();	
 	"
 }
 
@@ -2748,6 +2756,8 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
     public java.util.List initAcumulatedEnrollments(java.util.List elements);
     
     public IGratuitySituation getGratuitySituationByGratuityValues(final IGratuityValues gratuityValues);
+    
+    public boolean isEnroledInSpecialSeason(IExecutionPeriod executionPeriod);
     "
 }
 
@@ -4745,9 +4755,7 @@ relation OldInquiriesTeachersResTeacher {
 }
 
 relation OnlineDistributedTest {
-    net.sourceforge.fenixedu.domain.onlineTests.OnlineTest playsRole onlineTest {
-        multiplicity 1;
-    }
+    net.sourceforge.fenixedu.domain.onlineTests.OnlineTest playsRole onlineTest;
     net.sourceforge.fenixedu.domain.onlineTests.DistributedTest playsRole distributedTest;
 }
 

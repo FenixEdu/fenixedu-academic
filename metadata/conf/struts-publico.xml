@@ -689,15 +689,6 @@
 		parameter="method" >	
 	</action>
 
-	<!-- DEEC Department application  -->
-	<action path="/getEncryptedPassword"
-			type="net.sourceforge.fenixedu.presentationTier.Action.publico.GetEncryptedPassword"			
-			scope="request"
-			validate="false"
-			>		
-	</action>
-	<!-- end of DEEC Department application  -->
-
       <action path="/support"
 		      input="/support.do?method=prepare&amp;page=0"
               type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageFAQDA"

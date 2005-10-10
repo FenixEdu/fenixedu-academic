@@ -55,7 +55,7 @@ public class ReimbursementGuide extends ReimbursementGuide_Base {
                 new Predicate() {
                     public boolean evaluate(Object obj) {
                         IReimbursementGuideSituation situation = (IReimbursementGuideSituation) obj;
-                        return situation.getState().getState().intValue() == State.ACTIVE;
+                        return situation.getState().equals(new State(State.ACTIVE));
                     }
                 });
     }

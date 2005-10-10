@@ -67,143 +67,143 @@ public class EditReimbursementGuide implements IService {
     /**
      * @throws FenixServiceException,
      *             InvalidGuideSituationServiceException
-     * @throws ExcepcaoPersistencia 
+     * @throws ExcepcaoPersistencia
      */
 
     public void run(Integer reimbursementGuideId, String situation, Date officialDate, String remarks,
             IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
 
-            ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IPersistentReimbursementGuide persistentReimbursementGuide = ps
-                    .getIPersistentReimbursementGuide();
+        IPersistentReimbursementGuide persistentReimbursementGuide = ps
+                .getIPersistentReimbursementGuide();
 
-            IPersistentReimbursementGuideEntry reimbursementGuideEntryDAO = ps
-                    .getIPersistentReimbursementGuideEntry();
-            IReimbursementGuide reimbursementGuide = (IReimbursementGuide) persistentReimbursementGuide
+        IPersistentReimbursementGuideEntry reimbursementGuideEntryDAO = ps
+                .getIPersistentReimbursementGuideEntry();
+        IReimbursementGuide reimbursementGuide = (IReimbursementGuide) persistentReimbursementGuide
                 .readByOID(ReimbursementGuide.class, reimbursementGuideId, true);
 
+        if (reimbursementGuide == null) {
+            throw new NonExistingServiceException();
+        }
+        IPersistentObject persistentObject = ps.getIPersistentObject();
 
-            if (reimbursementGuide == null) {
-                throw new NonExistingServiceException();
+        IReimbursementGuideSituation activeSituation = reimbursementGuide
+                .getActiveReimbursementGuideSituation();
+
+        if (!validateReimbursementGuideSituation(activeSituation, situation)) {
+            throw new InvalidGuideSituationServiceException();
+        }
+        IReimbursementGuideSituation newActiveSituation = DomainFactory
+                .makeReimbursementGuideSituation();
+
+        IPersistentEmployee persistentEmployee = ps.getIPersistentEmployee();
+        IPessoaPersistente persistentPerson = ps.getIPessoaPersistente();
+        IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+        IEmployee employee = persistentEmployee.readByPerson(person);
+
+        newActiveSituation.setEmployee(employee);
+        newActiveSituation.setModificationDate(Calendar.getInstance());
+
+        if (officialDate != null) {
+            Calendar officialDateCalendar = new GregorianCalendar();
+            officialDateCalendar.setTime(officialDate);
+            newActiveSituation.setOfficialDate(officialDateCalendar);
+        } else {
+            newActiveSituation.setOfficialDate(Calendar.getInstance());
+        }
+
+        ReimbursementGuideState newState = ReimbursementGuideState.valueOf(situation);
+        newActiveSituation.setReimbursementGuideState(newState);
+
+        newActiveSituation.setRemarks(remarks);
+
+        // REIMBURSEMENT TRANSACTIONS
+        if (newState.equals(ReimbursementGuideState.PAYED)) {
+            List reimbursementGuideEntries = reimbursementGuide.getReimbursementGuideEntries();
+            Iterator iterator = reimbursementGuideEntries.iterator();
+            IReimbursementGuideEntry reimbursementGuideEntry = null;
+            IReimbursementTransaction reimbursementTransaction = null;
+
+            IPersistentPersonAccount persistentPersonAccount = ps.getIPersistentPersonAccount();
+            IPersonAccount personAccount = persistentPersonAccount.readByPerson(reimbursementGuide
+                    .getGuide().getPerson().getIdInternal());
+
+            if (personAccount == null) {
+                personAccount = DomainFactory.makePersonAccount(reimbursementGuide.getGuide()
+                        .getPerson());
             }
-            IPersistentObject persistentObject = ps.getIPersistentObject();
 
-            IReimbursementGuideSituation activeSituation = reimbursementGuide
-                    .getActiveReimbursementGuideSituation();
+            IPersistentReimbursementTransaction persistentReimbursementTransaction = ps
+                    .getIPersistentReimbursementTransaction();
 
-            if (!validateReimbursementGuideSituation(activeSituation, situation)) {
-                throw new InvalidGuideSituationServiceException();
-            }
-            IReimbursementGuideSituation newActiveSituation = DomainFactory.makeReimbursementGuideSituation();
+            IPersistentGratuitySituation persistentGratuitySituation = ps
+                    .getIPersistentGratuitySituation();
 
-            IPersistentEmployee persistentEmployee = ps.getIPersistentEmployee();
-            IPessoaPersistente persistentPerson = ps.getIPessoaPersistente();
-            IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
-            IEmployee employee = persistentEmployee.readByPerson(person);
+            while (iterator.hasNext()) {
+                reimbursementGuideEntry = (IReimbursementGuideEntry) iterator.next();
 
-            newActiveSituation.setEmployee(employee);
-            newActiveSituation.setModificationDate(Calendar.getInstance());
+                if (checkReimbursementGuideEntriesSum(reimbursementGuideEntry, ps) == false) {
+                    throw new InvalidReimbursementValueServiceException(
+                            "error.exception.masterDegree.invalidReimbursementValue");
 
-            if (officialDate != null) {
-                Calendar officialDateCalendar = new GregorianCalendar();
-                officialDateCalendar.setTime(officialDate);
-                newActiveSituation.setOfficialDate(officialDateCalendar);
-            } else {
-                newActiveSituation.setOfficialDate(Calendar.getInstance());
-            }
+                }
+                if (reimbursementGuideEntry.getGuideEntry().getDocumentType().equals(
+                        DocumentType.GRATUITY)) {
 
-            ReimbursementGuideState newState = ReimbursementGuideState.valueOf(situation);
-            newActiveSituation.setReimbursementGuideState(newState);
+                    // // because of an OJB with cache bug we have to read
+                    // the guide entry again
+                    // reimbursementGuideEntry = (IReimbursementGuideEntry)
+                    // reimbursementGuideEntryDAO
+                    // .readByOID(ReimbursementGuideEntry.class,
+                    // reimbursementGuideEntry.getIdInternal());
 
-            newActiveSituation.setReimbursementGuide(reimbursementGuide);
-            newActiveSituation.setState(new State(State.ACTIVE));
-            newActiveSituation.setRemarks(remarks);
+                    reimbursementTransaction = DomainFactory.makeReimbursementTransaction(
+                            reimbursementGuideEntry.getValue(), new Timestamp(Calendar.getInstance()
+                                    .getTimeInMillis()), "", reimbursementGuideEntry.getGuideEntry()
+                                    .getGuide().getPaymentType(),
+                            TransactionType.GRATUITY_REIMBURSEMENT, Boolean.FALSE, person,
+                            personAccount, reimbursementGuideEntry);
 
-            // REIMBURSEMENT TRANSACTIONS
-            if (newState.equals(ReimbursementGuideState.PAYED)) {
-                List reimbursementGuideEntries = reimbursementGuide.getReimbursementGuideEntries();
-                Iterator iterator = reimbursementGuideEntries.iterator();
-                IReimbursementGuideEntry reimbursementGuideEntry = null;
-                IReimbursementTransaction reimbursementTransaction = null;
+                    IPerson studentPerson = reimbursementGuide.getGuide().getPerson();
+                    IStudent student = ps.getIPersistentStudent().readByPersonAndDegreeType(
+                            studentPerson.getIdInternal(), DegreeType.MASTER_DEGREE);
+                    IExecutionDegree executionDegree = reimbursementGuide.getGuide()
+                            .getExecutionDegree();
 
-                IPersistentPersonAccount persistentPersonAccount = ps.getIPersistentPersonAccount();
-                IPersonAccount personAccount = persistentPersonAccount.readByPerson(reimbursementGuide
-                        .getGuide().getPerson().getIdInternal());
+                    IGratuitySituation gratuitySituation = persistentGratuitySituation
+                            .readGratuitySituationByExecutionDegreeAndStudent(executionDegree
+                                    .getIdInternal(), student.getIdInternal());
 
-                if (personAccount == null) {
-                    personAccount = DomainFactory.makePersonAccount(reimbursementGuide.getGuide().getPerson());
+                    if (gratuitySituation == null) {
+                        throw new FenixServiceException(
+                                "Database is inconsistent. The gratuity situation is supposed to exist");
+                    }
+
+                    Double remainingValue = gratuitySituation.getRemainingValue();
+
+                    gratuitySituation.setRemainingValue(new Double(remainingValue.doubleValue()
+                            + reimbursementTransaction.getValue().doubleValue()));
+
                 }
 
-                IPersistentReimbursementTransaction persistentReimbursementTransaction = ps
-                        .getIPersistentReimbursementTransaction();
+                if (reimbursementGuideEntry.getGuideEntry().getDocumentType().equals(
+                        DocumentType.INSURANCE)) {
 
-                IPersistentGratuitySituation persistentGratuitySituation = ps
-                        .getIPersistentGratuitySituation();
+                    reimbursementTransaction = DomainFactory.makeReimbursementTransaction(
+                            reimbursementGuideEntry.getValue(), new Timestamp(Calendar.getInstance()
+                                    .getTimeInMillis()), "", reimbursementGuideEntry.getGuideEntry()
+                                    .getGuide().getPaymentType(),
+                            TransactionType.INSURANCE_REIMBURSEMENT, Boolean.FALSE, person,
+                            personAccount, reimbursementGuideEntry);
 
-                while (iterator.hasNext()) {
-                    reimbursementGuideEntry = (IReimbursementGuideEntry) iterator.next();
-
-                    if (checkReimbursementGuideEntriesSum(reimbursementGuideEntry, ps) == false) {
-                        throw new InvalidReimbursementValueServiceException(
-                                "error.exception.masterDegree.invalidReimbursementValue");
-
-                    }
-                    if (reimbursementGuideEntry.getGuideEntry().getDocumentType().equals(
-                            DocumentType.GRATUITY)) {
-
-                        // // because of an OJB with cache bug we have to read
-                        // the guide entry again
-                        // reimbursementGuideEntry = (IReimbursementGuideEntry)
-                        // reimbursementGuideEntryDAO
-                        // .readByOID(ReimbursementGuideEntry.class,
-                        // reimbursementGuideEntry.getIdInternal());
-
-                        reimbursementTransaction = DomainFactory.makeReimbursementTransaction(reimbursementGuideEntry
-                                .getValue(), new Timestamp(Calendar.getInstance().getTimeInMillis()),
-                                "", reimbursementGuideEntry.getGuideEntry().getGuide().getPaymentType(),
-                                TransactionType.GRATUITY_REIMBURSEMENT, Boolean.FALSE, person,
-                                personAccount, reimbursementGuideEntry);
-
-                        IPerson studentPerson = reimbursementGuide.getGuide().getPerson();
-                        IStudent student = ps.getIPersistentStudent().readByPersonAndDegreeType(
-                                studentPerson.getIdInternal(), DegreeType.MASTER_DEGREE);
-                        IExecutionDegree executionDegree = reimbursementGuide.getGuide()
-                                .getExecutionDegree();
-
-                        IGratuitySituation gratuitySituation = persistentGratuitySituation
-                                .readGratuitySituationByExecutionDegreeAndStudent(executionDegree
-                                        .getIdInternal(), student.getIdInternal());
-
-                        if (gratuitySituation == null) {
-                            throw new FenixServiceException(
-                                    "Database is inconsistent. The gratuity situation is supposed to exist");
-                        }
-
-                        Double remainingValue = gratuitySituation.getRemainingValue();
-
-                        gratuitySituation.setRemainingValue(new Double(remainingValue.doubleValue()
-                                + reimbursementTransaction.getValue().doubleValue()));
-
-                    }
-
-                    if (reimbursementGuideEntry.getGuideEntry().getDocumentType().equals(
-                            DocumentType.INSURANCE)) {
-
-                        reimbursementTransaction = DomainFactory.makeReimbursementTransaction(reimbursementGuideEntry
-                                .getValue(), new Timestamp(Calendar.getInstance().getTimeInMillis()),
-                                "", reimbursementGuideEntry.getGuideEntry().getGuide().getPaymentType(),
-                                TransactionType.INSURANCE_REIMBURSEMENT, Boolean.FALSE, person,
-                                personAccount, reimbursementGuideEntry);
-
-                    }
                 }
             }
+        }
 
-            activeSituation.setState(new State(State.INACTIVE_STRING));
-
-            reimbursementGuide.addReimbursementGuideSituations(newActiveSituation);
-
+        activeSituation.setState(new State(State.INACTIVE_STRING));
+        newActiveSituation.setReimbursementGuide(reimbursementGuide);
+        newActiveSituation.setState(new State(State.ACTIVE));
 
     }
 

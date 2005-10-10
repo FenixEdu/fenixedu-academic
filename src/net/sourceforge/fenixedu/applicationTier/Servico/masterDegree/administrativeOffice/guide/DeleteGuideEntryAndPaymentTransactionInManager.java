@@ -34,12 +34,10 @@ public class DeleteGuideEntryAndPaymentTransactionInManager implements IService 
             throw new InvalidChangeServiceException();
         }
 
-        IPaymentTransaction paymentTransaction = sp.getIPersistentPaymentTransaction()
-                .readByGuideEntryID(guideEntryID);
+        IPaymentTransaction paymentTransaction = guideEntry.getPaymentTransaction();
         IGuide guide = guideEntry.getGuide();
 
-        double guideEntryValue = guideEntry.getPrice().doubleValue()
-                * guideEntry.getQuantity().intValue();
+        double guideEntryValue = guideEntry.getPrice() * guideEntry.getQuantity();
 
         if (paymentTransaction != null) {
 
@@ -48,37 +46,38 @@ public class DeleteGuideEntryAndPaymentTransactionInManager implements IService 
                 IGratuityTransaction gratuityTransaction = (IGratuityTransaction) paymentTransaction;
                 IGratuitySituation gratuitySituation = gratuityTransaction.getGratuitySituation();
 
-                gratuitySituation.setRemainingValue(new Double(gratuitySituation.getRemainingValue()
-                        .doubleValue()
-                        + guideEntryValue));
+                gratuitySituation.setRemainingValue(gratuitySituation.getRemainingValue()
+                        + guideEntryValue);
 
-                sp.getIPersistentGratuitySituation().simpleLockWrite(gratuitySituation);
+                gratuityTransaction.removeGratuitySituation();
+
             }
 
-			sp.getIPersistentPersonAccount().simpleLockWrite(paymentTransaction.getPersonAccount());
-			paymentTransaction.getPersonAccount().getPaymentTransactions().remove(paymentTransaction);
+            paymentTransaction.removePersonAccount();
+            paymentTransaction.removeGuideEntry();
+            paymentTransaction.removeResponsiblePerson();
             sp.getIPersistentPaymentTransaction().deleteByOID(PaymentTransaction.class,
                     paymentTransaction.getIdInternal());
 
         }
 
-		if(guideEntry.getReimbursementGuideEntries()!=null){
-			for(IReimbursementGuideEntry reimbursementGuideEntry : guideEntry.getReimbursementGuideEntries()){
-				sp.getIPersistentReimbursementGuide().simpleLockWrite(reimbursementGuideEntry.getReimbursementGuide());
-				reimbursementGuideEntry.getReimbursementGuide().getReimbursementGuideEntries().remove(reimbursementGuideEntry);
-				sp.getIPersistentGuideEntry().deleteByOID(ReimbursementGuideEntry.class,reimbursementGuideEntry.getIdInternal());
-			}
-		}
-		
-		guideEntry.getGuide().getGuideEntries().remove(guideEntry);
-        sp.getIPersistentGuideEntry().deleteByOID(GuideEntry.class,guideEntry.getIdInternal());
-		
-		
+        if (guideEntry.getReimbursementGuideEntries() != null) {
+            for (IReimbursementGuideEntry reimbursementGuideEntry : guideEntry
+                    .getReimbursementGuideEntries()) {
+
+                reimbursementGuideEntry.removeGuideEntry();
+                reimbursementGuideEntry.removeReimbursementGuide();
+                reimbursementGuideEntry.removeReimbursementTransaction();
+                sp.getIPersistentGuideEntry().deleteByOID(ReimbursementGuideEntry.class,
+                        reimbursementGuideEntry.getIdInternal());
+            }
+        }
+
+        guideEntry.removeGuide();
+        sp.getIPersistentGuideEntry().deleteByOID(GuideEntry.class, guideEntry.getIdInternal());
 
         // update guide's total value
-        guide.setTotal(NumberUtils.formatNumber(new Double(guide.getTotal().doubleValue()
-                - guideEntryValue), 2));
-        sp.getIPersistentGuide().simpleLockWrite(guide);
+        guide.updateTotalValue();
 
     }
 

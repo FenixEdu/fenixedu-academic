@@ -4,6 +4,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
+import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -115,7 +116,9 @@ public class EditDistributedTest implements IService {
                     IMark mark = DomainFactory.makeMark();
                     mark.setAttend(attend);
                     mark.setEvaluation(onlineTest);
-                    mark.setMark(new java.text.DecimalFormat("#0.##").format(studentMark));
+                    DecimalFormat df =new DecimalFormat("#0.##");
+                    df.getDecimalFormatSymbols().setDecimalSeparator('.');
+                    mark.setMark(df.format(Math.max(0, studentMark)));
                 }
             }
         }

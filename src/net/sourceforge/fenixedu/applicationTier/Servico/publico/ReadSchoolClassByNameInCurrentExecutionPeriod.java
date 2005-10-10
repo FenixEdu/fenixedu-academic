@@ -44,7 +44,7 @@ public class ReadSchoolClassByNameInCurrentExecutionPeriod implements IService {
 
                         public boolean evaluate(Object arg0) {
                             ISchoolClass schoolClass = (ISchoolClass) arg0;
-                            return schoolClass.getNome().equals(schoolClassName);
+                            return schoolClass.getNome().equalsIgnoreCase(schoolClassName);
                         }
                     });
             if (schoolClass != null) {

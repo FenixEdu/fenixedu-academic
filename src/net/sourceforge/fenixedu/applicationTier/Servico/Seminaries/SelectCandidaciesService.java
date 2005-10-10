@@ -104,9 +104,7 @@ public class SelectCandidaciesService implements IService {
             List enrollmentEvaluations = enrollment.getEvaluations();
             IEnrolmentEvaluation enrollmentEvaluation = null;
             if (enrollmentEvaluations != null && !enrollmentEvaluations.isEmpty()) {
-                Collections.sort(enrollmentEvaluations);
-                Collections.reverse(enrollmentEvaluations);
-                enrollmentEvaluation = (IEnrolmentEvaluation) enrollmentEvaluations.get(0);
+                enrollmentEvaluation = (IEnrolmentEvaluation) Collections.max(enrollmentEvaluations);
             }
 
             String stringGrade;

@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.util.tests.QuestionOption;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
 import net.sourceforge.fenixedu.util.tests.RenderChoise;
 import net.sourceforge.fenixedu.util.tests.RenderFIB;
-import net.sourceforge.fenixedu.util.tests.Response;
 import net.sourceforge.fenixedu.util.tests.ResponseCondition;
 import net.sourceforge.fenixedu.util.tests.ResponseLID;
 import net.sourceforge.fenixedu.util.tests.ResponseNUM;
@@ -90,8 +89,10 @@ public class ParseQuestion extends DefaultHandler {
         } else if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.NUM
                 && infoStudentTestQuestion.getResponse() == null) {
             infoStudentTestQuestion.setResponse(new ResponseNUM());
+            infoStudentTestQuestion.getResponse().setResponsed(false);
         } else if (infoStudentTestQuestion.getResponse() == null) {
             infoStudentTestQuestion.setResponse(new ResponseSTR());
+            infoStudentTestQuestion.getResponse().setResponsed(false);
         }
 
         return infoStudentTestQuestion;

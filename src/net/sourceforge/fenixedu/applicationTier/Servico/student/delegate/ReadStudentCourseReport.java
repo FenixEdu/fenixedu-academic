@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteEvaluationStat
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoSiteStudentCourseReport;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoStudentCourseReport;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IEnrolment;
@@ -87,22 +86,8 @@ public class ReadStudentCourseReport implements IService {
             }
 
             InfoSiteStudentCourseReport infoSiteStudentCourseReport = new InfoSiteStudentCourseReport();
-            List executionPeriods = (List)persistentExecutionPeriod.readAll(ExecutionPeriod.class);
-
-            Collections.sort(executionPeriods, new Comparator() {
-
-                public int compare(Object o1, Object o2) {
-                    IExecutionPeriod executionPeriod1 = (IExecutionPeriod) o1;
-                    IExecutionPeriod executionPeriod2 = (IExecutionPeriod) o2;
-                    return executionPeriod2.getEndDate().compareTo(executionPeriod1.getEndDate());
-                }
-            });
-
-            IExecutionPeriod executionPeriod = null;
-            // read the second element of the list corresponding to the last
-            // executionPeriod
-            if ((executionPeriods != null) && (executionPeriods.size() >= 2))
-                executionPeriod = (IExecutionPeriod) executionPeriods.get(1);
+            IExecutionPeriod actualPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+            IExecutionPeriod executionPeriod = actualPeriod.getPreviousExecutionPeriod();
 
             List infoSiteEvaluationHistory = getInfoSiteEvaluationsHistory(
                     executionPeriod, curricularCourse, sp);

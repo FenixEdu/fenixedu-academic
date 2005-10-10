@@ -4,6 +4,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
+import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,9 +12,15 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.strategy.tests.IQuestionCorrectionStrategyFactory;
+import net.sourceforge.fenixedu.applicationTier.strategy.tests.QuestionCorrectionStrategyFactory;
+import net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys.IQuestionCorrectionStrategy;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest;
+import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteDistributedTestAdvisory;
+import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
+import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionWithInfoQuestionAndInfoDistributedTest;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttends;
@@ -28,8 +35,10 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
+import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
+import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -37,7 +46,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ChangeStudentTestQuestionValue implements IService {
     public List<InfoSiteDistributedTestAdvisory> run(Integer executionCourseId, Integer distributedTestId, Double newValue, Integer questionId,
-            Integer studentId, TestQuestionStudentsChangesType studentsType) throws FenixServiceException, ExcepcaoPersistencia {
+            Integer studentId, TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException, ExcepcaoPersistencia {
         List<InfoSiteDistributedTestAdvisory> infoSiteDistributedTestAdvisoryList = new ArrayList<InfoSiteDistributedTestAdvisory>();
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
@@ -65,24 +74,26 @@ public class ChangeStudentTestQuestionValue implements IService {
             if (!group.contains(studentTestQuestion.getStudent().getPerson())) {
                 group.add(InfoStudent.newInfoFromDomain(studentTestQuestion.getStudent()));
             }
-            studentTestQuestion.setTestQuestionMark(getNewQuestionMark(studentTestQuestion, newValue));
-            studentTestQuestion.setTestQuestionValue(newValue);
 
             if (studentTestQuestion.getResponse() != null
                     && studentTestQuestion.getDistributedTest().getTestType().equals(new TestType(TestType.EVALUATION))) {
+                studentTestQuestion.setTestQuestionMark(getNewQuestionMark(studentTestQuestion, newValue, path.replace('\\', '/')));
+
                 IOnlineTest onlineTest = (IOnlineTest) persistentSuport.getIPersistentOnlineTest().readByDistributedTest(
                         studentTestQuestion.getDistributedTest().getIdInternal());
                 IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport.getIPersistentExecutionCourse().readByOID(
                         ExecutionCourse.class, executionCourseId);
-                IAttends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(studentTestQuestion.getStudent().getIdInternal(),
-                        executionCourse.getIdInternal());
+                IAttends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(
+                        studentTestQuestion.getStudent().getIdInternal(), executionCourse.getIdInternal());
                 IMark mark = persistentSuport.getIPersistentMark().readBy(onlineTest, attend);
                 if (mark != null) {
                     mark.setMark(getNewStudentMark(persistentSuport, studentTestQuestion.getDistributedTest(), studentTestQuestion.getStudent()));
                 }
-                infoSiteDistributedTestAdvisory.setInfoStudentList(group);
-                infoSiteDistributedTestAdvisoryList.add(infoSiteDistributedTestAdvisory);
             }
+            studentTestQuestion.setTestQuestionValue(newValue);
+
+            infoSiteDistributedTestAdvisory.setInfoStudentList(group);
+            infoSiteDistributedTestAdvisoryList.add(infoSiteDistributedTestAdvisory);
             IStudentTestLog studentTestLog = DomainFactory.makeStudentTestLog();
             studentTestLog.setDistributedTest(studentTestQuestion.getDistributedTest());
             studentTestLog.setStudent(studentTestQuestion.getStudent());
@@ -100,14 +111,54 @@ public class ChangeStudentTestQuestionValue implements IService {
         for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             totalMark += studentTestQuestion.getTestQuestionMark().doubleValue();
         }
-        return (new java.text.DecimalFormat("#0.##").format(totalMark));
+        DecimalFormat df = new DecimalFormat("#0.##");
+        df.getDecimalFormatSymbols().setDecimalSeparator('.');
+        return (df.format(Math.max(0, totalMark)));
     }
 
-    private Double getNewQuestionMark(IStudentTestQuestion studentTestQuestion, Double newValue) throws ExcepcaoPersistencia {
+    private Double getNewQuestionMark(IStudentTestQuestion studentTestQuestion, Double newValue, String path) throws FenixServiceException {
         Double newMark = new Double(0);
-        if (studentTestQuestion.getResponse() != null) {
-            newMark = (newValue * studentTestQuestion.getTestQuestionMark()) * (java.lang.Math.pow(studentTestQuestion.getTestQuestionValue(), -1));
+        if (studentTestQuestion.getResponse() != null && !newValue.equals(Double.parseDouble("0"))) {
+            if (studentTestQuestion.getTestQuestionValue().equals(Double.parseDouble("0"))) {
+                InfoStudentTestQuestion infoStudentTestQuestion = InfoStudentTestQuestionWithInfoQuestionAndInfoDistributedTest
+                        .newInfoFromDomain(studentTestQuestion);
+                ParseQuestion parse = new ParseQuestion();
+                try {
+                    infoStudentTestQuestion = parse.parseStudentTestQuestion(infoStudentTestQuestion, path);
+                } catch (Exception e) {
+                    throw new FenixServiceException(e);
+                }
+                infoStudentTestQuestion.setTestQuestionValue(newValue);
+                infoStudentTestQuestion.setQuestion(correctQuestionValues(infoStudentTestQuestion.getQuestion(), newValue));
+                IQuestionCorrectionStrategyFactory questionCorrectionStrategyFactory = QuestionCorrectionStrategyFactory.getInstance();
+                IQuestionCorrectionStrategy questionCorrectionStrategy = questionCorrectionStrategyFactory
+                        .getQuestionCorrectionStrategy(infoStudentTestQuestion);
+                infoStudentTestQuestion = questionCorrectionStrategy.getMark(infoStudentTestQuestion);
+                return infoStudentTestQuestion.getTestQuestionMark();
+            } else if (!studentTestQuestion.getTestQuestionMark().equals(Double.parseDouble("0"))) {
+                newMark = (newValue * studentTestQuestion.getTestQuestionMark())
+                        * (java.lang.Math.pow(studentTestQuestion.getTestQuestionValue(), -1));
+            }
+
         }
         return newMark;
+    }
+
+    private InfoQuestion correctQuestionValues(InfoQuestion infoQuestion, Double questionValue) {
+        Double maxValue = new Double(0);
+        for (ResponseProcessing responseProcessing : (List<ResponseProcessing>) infoQuestion.getResponseProcessingInstructions()) {
+            if (responseProcessing.getAction().intValue() == ResponseProcessing.SET
+                    || responseProcessing.getAction().intValue() == ResponseProcessing.ADD)
+                if (maxValue.compareTo(responseProcessing.getResponseValue()) < 0)
+                    maxValue = responseProcessing.getResponseValue();
+        }
+        if (maxValue.compareTo(questionValue) != 0) {
+            double difValue = questionValue.doubleValue() * Math.pow(maxValue.doubleValue(), -1);
+            for (ResponseProcessing responseProcessing : (List<ResponseProcessing>) infoQuestion.getResponseProcessingInstructions()) {
+                responseProcessing.setResponseValue(new Double(responseProcessing.getResponseValue().doubleValue() * difValue));
+            }
+        }
+
+        return infoQuestion;
     }
 }

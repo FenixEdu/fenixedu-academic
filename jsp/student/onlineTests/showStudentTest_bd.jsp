@@ -88,22 +88,20 @@
 				<bean:write name="optionBody" property="value"/>
 				<br/>
 			<%}else if (((String)optionLabel).equals("response_label")){ %>
-				<bean:define id="checkDisable" value="true"/>
-				<logic:equal name="pageType" value="doTest">
-					<logic:notEmpty name="question" name="testQuestion" property="response">
-						<logic:notEmpty name="question" name="testQuestion" property="response.response">
-							<%if(((Integer)testType).intValue()!=1){%>
-								<bean:define id="checkDisable" value="false"/>
-							<%}%>
-						</logic:notEmpty>
-						<logic:empty name="question" name="testQuestion" property="response.response">
-							<bean:define id="checkDisable" value="false"/>
-						</logic:empty>
+				<bean:define id="checkDisable" value="false"/>
+				<%if(((Integer)testType).intValue()==1){%>
+					<logic:equal name="pageType" value="doTest">
+					<logic:notEmpty name="testQuestion" property="response">
+					<logic:equal name="testQuestion" property="response.responsed" value="true">
+						<bean:define id="checkDisable" value="true"/>	
+						</logic:equal>
 					</logic:notEmpty>
-					<logic:empty name="question" name="testQuestion" property="response">
-						<bean:define id="checkDisable" value="false"/>
-					</logic:empty>
-				</logic:equal>
+					</logic:equal>
+					<logic:notEqual name="pageType" value="doTest">
+						<bean:define id="checkDisable" value="true"/>
+					</logic:notEqual>
+				<%}%>
+				
 				<%if(((Integer)questionType).intValue()==1 ){ %> <%--QuestionType.LID--%>
 					<logic:equal name="indexOption" value="0">
 						<table><tr><td>
@@ -233,7 +231,6 @@
 						<%}%>
 					</logic:equal>
 					
-					
 				<%}else{%> <%--QuestionType.STR or QuestionType.NUM --%>
 					<bean:define id="questionValue" name='<%="question"+ optionOrder%>'/>
 					<logic:notEmpty name="question" property="questionType.render.maxchars">
@@ -314,7 +311,7 @@
 				</logic:equal>
 				</td></tr></table>
 			<%}else{%> <%--QuestionType.STR or QuestionType.NUM --%>
-				<logic:notEqual name="pageType" value="doTest">
+				<logic:equal name="pageType" value="correction">
 					<logic:notEqual name="correction" property="availability" value="1">
 						<logic:notEmpty name="testQuestion" property="response.response">
 							<logic:notEmpty name="testQuestion" property="response.isCorrect">
@@ -327,7 +324,7 @@
 							</logic:notEmpty>
 						</logic:notEmpty>
 					</logic:notEqual>
-				</logic:notEqual>
+				</logic:equal>
 				</td></tr><tr><td>
 			<%}%>
 		<%} else if((((Integer)testType).intValue()!=3) &&(((Integer)formula).intValue()!=1)){%> <%-- Not TestType.INQUIRY  and CorrectionFormula.IMS--%>

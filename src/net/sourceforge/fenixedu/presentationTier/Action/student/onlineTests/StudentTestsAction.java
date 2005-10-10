@@ -117,11 +117,9 @@ public class StudentTestsAction extends FenixDispatchAction {
         for (int i = 0; i < infoStudentTestQuestionList.size(); i++) {
             InfoStudentTestQuestion infoStudentTestQuestion = (InfoStudentTestQuestion) infoStudentTestQuestionList.get(i);
 
-            if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.STR
-                    && ((ResponseSTR) infoStudentTestQuestion.getResponse()).getResponse() != null)
+            if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.STR)
                 request.setAttribute("question" + i, ((ResponseSTR) infoStudentTestQuestion.getResponse()).getResponse());
-            else if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.NUM
-                    && ((ResponseNUM) infoStudentTestQuestion.getResponse()).getResponse() != null)
+            else if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.NUM)
                 request.setAttribute("question" + i, ((ResponseNUM) infoStudentTestQuestion.getResponse()).getResponse());
             else if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.LID
                     && ((ResponseLID) infoStudentTestQuestion.getResponse()).getResponse() != null)

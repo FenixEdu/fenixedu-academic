@@ -3,6 +3,7 @@
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.EnrolmentPeriod">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses" />
 	<field-descriptor
 			name="ojbConcreteClass"
@@ -68,6 +69,63 @@
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses"
+		table="ENROLMENT_PERIOD">
+	<field-descriptor
+			name="idInternal"
+			column="ID_INTERNAL"
+			jdbc-type="INTEGER"
+			primarykey="true"
+			autoincrement="true"
+	/>
+	<field-descriptor
+			name="ackOptLock"
+			column="ACK_OPT_LOCK"
+			jdbc-type="INTEGER"
+			locking="false"
+	/>
+	<field-descriptor
+			name="ojbConcreteClass"
+			column="CLASS_NAME"
+			jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+			name="keyDegreeCurricularPlan"
+			column="KEY_DEGREE_CURRICULAR_PLAN"
+			jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+			name="keyExecutionPeriod"
+			column="KEY_EXECUTION_PERIOD"
+			jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+			name="startDate"
+			column="START_DATE"
+			jdbc-type="DATE"
+			conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
+	/>
+	<field-descriptor
+			name="endDate"
+			column="END_DATE"
+			jdbc-type="DATE"
+			conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
+	/>
+
+	<reference-descriptor auto-retrieve="false"
+			name="degreeCurricularPlan"
+			class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
+			>
+		<foreignkey field-ref="keyDegreeCurricularPlan"/>
+	</reference-descriptor>
+	<reference-descriptor auto-retrieve="false"
+			name="executionPeriod"
+			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
+		<foreignkey field-ref="keyExecutionPeriod"/>
+	</reference-descriptor>
+</class-descriptor>
+
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason"
 		table="ENROLMENT_PERIOD">
 	<field-descriptor
 			name="idInternal"

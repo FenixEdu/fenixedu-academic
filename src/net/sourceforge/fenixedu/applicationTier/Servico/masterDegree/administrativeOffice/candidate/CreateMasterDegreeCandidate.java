@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.ICandidateSituation;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.Gender;
@@ -39,93 +40,102 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class CreateMasterDegreeCandidate implements IService {
 
-	public InfoMasterDegreeCandidate run(Specialization degreeType, Integer executionDegreeID,
-			String name, String identificationDocumentNumber, IDDocumentType identificationDocumentType)
-			throws Exception {
+    public InfoMasterDegreeCandidate run(Specialization degreeType, Integer executionDegreeID,
+            String name, String identificationDocumentNumber, IDDocumentType identificationDocumentType)
+            throws Exception {
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
-		IPersistentMasterDegreeCandidate masterDegreeCandidateDAO = sp
-				.getIPersistentMasterDegreeCandidate();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
+        IPersistentMasterDegreeCandidate masterDegreeCandidateDAO = sp
+                .getIPersistentMasterDegreeCandidate();
 
-		// Read the Execution of this degree in the current execution Year
-		IExecutionDegree executionDegree = (IExecutionDegree) executionDegreeDAO.readByOID(
-				ExecutionDegree.class, executionDegreeID);
+        // Read the Execution of this degree in the current execution Year
+        IExecutionDegree executionDegree = (IExecutionDegree) executionDegreeDAO.readByOID(
+                ExecutionDegree.class, executionDegreeID);
 
-		IMasterDegreeCandidate masterDegreeCandidateFromDB = masterDegreeCandidateDAO
-				.readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
-						identificationDocumentNumber, identificationDocumentType, executionDegreeID,
-						degreeType);
+        IMasterDegreeCandidate masterDegreeCandidateFromDB = masterDegreeCandidateDAO
+                .readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
+                        identificationDocumentNumber, identificationDocumentType, executionDegreeID,
+                        degreeType);
 
-		if (masterDegreeCandidateFromDB != null) {
-			throw new ExistingServiceException();
-		}
-
-		// Set the Candidate's Situation
-		ICandidateSituation candidateSituation = DomainFactory.makeCandidateSituation();
-		// First candidate situation
-		candidateSituation.setRemarks("Pré-Candidatura. Pagamento da candidatura por efectuar.");
-		candidateSituation.setSituation(new SituationName(SituationName.PRE_CANDIDATO));
-		candidateSituation.setValidation(new State(State.ACTIVE));
-		Calendar actualDate = Calendar.getInstance();
-		candidateSituation.setDate(actualDate.getTime());
-
-		// Create the Candidate
-		IMasterDegreeCandidate masterDegreeCandidate = DomainFactory.makeMasterDegreeCandidate();
-		masterDegreeCandidate.addSituations(candidateSituation);
-		candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
-		masterDegreeCandidate.setSpecialization(degreeType);
-		masterDegreeCandidate.setExecutionDegree(executionDegree);
-
-		// Generate the Candidate's number
-		Integer number = sp.getIPersistentMasterDegreeCandidate().generateCandidateNumber(
-				executionDegree.getExecutionYear().getYear(),
-				executionDegree.getDegreeCurricularPlan().getDegree().getSigla(), degreeType);
-		masterDegreeCandidate.setCandidateNumber(number);
-
-		// Check if the person Exists
-		IPerson person = sp.getIPessoaPersistente().lerPessoaPorNumDocIdETipoDocId(
-				identificationDocumentNumber, identificationDocumentType);
-
-        List<IPerson> persons = (List<IPerson>) sp.getIPessoaPersistente().readAll(Person.class);
-        
-		if (person == null) {
-			// Create the new Person
-			person = DomainFactory.makePerson(name, identificationDocumentNumber, identificationDocumentType, Gender.MALE);
-
-			// Generate Person Username
-			String username = MasterDegreeCandidate.generateUsernameForNewCandidate(masterDegreeCandidate, persons);
-			person.changeUsername(username, persons);
-
-			// Give the Person Role
-			person.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(RoleType.PERSON));
-		}else{
-            if(person.getUsername().startsWith("INA")){
-                // Generate Person Username
-                String username = MasterDegreeCandidate.generateUsernameForNewCandidate(masterDegreeCandidate, persons);
-                person.changeUsername(username, persons);
-            }
-            if(person.getUsername().startsWith("B")){
-                // Generate Person Username
-                person.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(RoleType.PERSON));
-                String username = MasterDegreeCandidate.generateUsernameForNewCandidate(masterDegreeCandidate, persons);
-                person.changeUsername(username, persons);
-        	}
+        if (masterDegreeCandidateFromDB != null) {
+            throw new ExistingServiceException();
         }
 
-		if (!person.getPersonRoles().contains(
-				sp.getIPersistentRole().readByRoleType(RoleType.MASTER_DEGREE_CANDIDATE))) {
-			person.getPersonRoles().add(
-					sp.getIPersistentRole().readByRoleType(RoleType.MASTER_DEGREE_CANDIDATE));
-		}
-		masterDegreeCandidate.setPerson(person);
+        // Set the Candidate's Situation
+        ICandidateSituation candidateSituation = DomainFactory.makeCandidateSituation();
+        // First candidate situation
+        candidateSituation.setRemarks("Pré-Candidatura. Pagamento da candidatura por efectuar.");
+        candidateSituation.setSituation(new SituationName(SituationName.PRE_CANDIDATO));
+        candidateSituation.setValidation(new State(State.ACTIVE));
+        Calendar actualDate = Calendar.getInstance();
+        candidateSituation.setDate(actualDate.getTime());
 
-		// Return the new Candidate
-		InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
-				.newInfoFromDomain(masterDegreeCandidate);
-		InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
-				.newInfoFromDomain(masterDegreeCandidate.getExecutionDegree());
-		infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
-		return infoMasterDegreeCandidate;
-	}
+        // Create the Candidate
+        IMasterDegreeCandidate masterDegreeCandidate = DomainFactory.makeMasterDegreeCandidate();
+        masterDegreeCandidate.addSituations(candidateSituation);
+        candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
+        masterDegreeCandidate.setSpecialization(degreeType);
+        masterDegreeCandidate.setExecutionDegree(executionDegree);
+
+        // Generate the Candidate's number
+        Integer number = sp.getIPersistentMasterDegreeCandidate().generateCandidateNumber(
+                executionDegree.getExecutionYear().getYear(),
+                executionDegree.getDegreeCurricularPlan().getDegree().getSigla(), degreeType);
+        masterDegreeCandidate.setCandidateNumber(number);
+
+        // Check if the person Exists
+        IPerson person = sp.getIPessoaPersistente().lerPessoaPorNumDocIdETipoDocId(
+                identificationDocumentNumber, identificationDocumentType);
+
+        List<IPerson> persons = (List<IPerson>) sp.getIPessoaPersistente().readAll(Person.class);
+
+        IRole personRole = sp.getIPersistentRole().readByRoleType(RoleType.PERSON);
+
+        if (person == null) {
+            // Create the new Person
+            person = DomainFactory.makePerson(name, identificationDocumentNumber,
+                    identificationDocumentType, Gender.MALE);
+
+            // Generate Person Username
+            String username = MasterDegreeCandidate.generateUsernameForNewCandidate(
+                    masterDegreeCandidate, persons);
+            person.changeUsername(username, persons);
+
+            // Give the Person Role
+            person.getPersonRoles().add(personRole);
+        } else {
+            if (person.getUsername().startsWith("INA")) {
+                // Generate Person Username
+                String username = MasterDegreeCandidate.generateUsernameForNewCandidate(
+                        masterDegreeCandidate, persons);
+                person.changeUsername(username, persons);
+            }
+            if (person.getUsername().startsWith("B")) {
+                // Generate Person Username
+                person.getPersonRoles().add(personRole);
+                String username = MasterDegreeCandidate.generateUsernameForNewCandidate(
+                        masterDegreeCandidate, persons);
+                person.changeUsername(username, persons);
+            }
+        }
+
+        if (!person.hasRole(RoleType.PERSON)) {
+            person.addPersonRoles(personRole);
+        }
+
+        if (!person.hasRole(RoleType.MASTER_DEGREE_CANDIDATE)) {
+            person.addPersonRoles(sp.getIPersistentRole().readByRoleType(
+                    RoleType.MASTER_DEGREE_CANDIDATE));
+        }
+        masterDegreeCandidate.setPerson(person);
+
+        // Return the new Candidate
+        InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
+                .newInfoFromDomain(masterDegreeCandidate);
+        InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
+                .newInfoFromDomain(masterDegreeCandidate.getExecutionDegree());
+        infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
+        return infoMasterDegreeCandidate;
+    }
 }

@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantCostCenter;
+import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPaymentEntity;
+import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantProject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -97,10 +99,14 @@ public class EditGrantCostCenterAction extends FenixDispatchAction {
      */
     private void setFormGrantCostCenter(DynaValidatorForm form, InfoGrantCostCenter infoGrantCostCenter)
             throws Exception {
-        BeanUtils.copyProperties(form, infoGrantCostCenter);
+    	form.set("idInternal",infoGrantCostCenter.getIdInternal());
+    	form.set("designation",infoGrantCostCenter.getDesignation());
+    	form.set("number",infoGrantCostCenter.getNumber());
         if (infoGrantCostCenter.getInfoResponsibleTeacher() != null)
             form.set("responsibleTeacherNumber", infoGrantCostCenter.getInfoResponsibleTeacher()
                     .getTeacherNumber().toString());
+        form.set("ojbConcreteClass",InfoGrantPaymentEntity.getGrantCostCenterOjbConcreteClass());
+
     }
 
     /*
@@ -108,16 +114,18 @@ public class EditGrantCostCenterAction extends FenixDispatchAction {
      */
     private InfoGrantCostCenter populateInfoFromForm(DynaValidatorForm editGrantCostCenterForm)
             throws Exception {
-        InfoGrantCostCenter infoGrantCostCenter = new InfoGrantCostCenter();
-        BeanUtils.copyProperties(infoGrantCostCenter, editGrantCostCenterForm);
-
-        infoGrantCostCenter.setOjbConcreteClass(GrantCostCenter.class.getName());
-
-        //Build the teacher Number
+    	InfoGrantCostCenter infoGrantCostCenter = new InfoGrantCostCenter();
+    	infoGrantCostCenter.setIdInternal((Integer)editGrantCostCenterForm.get("idInternal"));
+    	infoGrantCostCenter.setDesignation((String)editGrantCostCenterForm.get("designation"));
+    	infoGrantCostCenter.setNumber((String)editGrantCostCenterForm.get("number"));
+    	infoGrantCostCenter.setOjbConcreteClass(InfoGrantPaymentEntity.getGrantCostCenterOjbConcreteClass());
+      
+        //Copy the teacher Number
         InfoTeacher infoTeacher = new InfoTeacher();
         infoTeacher.setTeacherNumber(new Integer((String) editGrantCostCenterForm
                 .get("responsibleTeacherNumber")));
         infoGrantCostCenter.setInfoResponsibleTeacher(infoTeacher);
+
 
         return infoGrantCostCenter;
     }

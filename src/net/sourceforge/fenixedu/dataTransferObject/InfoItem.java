@@ -25,6 +25,8 @@ public class InfoItem extends InfoObject implements Comparable {
 
     private List links;
 
+    private String slidename;
+
     /**
      * Constructor
      */
@@ -199,4 +201,12 @@ public class InfoItem extends InfoObject implements Comparable {
         }
         return infoItem;
     }
+
+	public String getSlidename() {
+		return slidename;
+	}
+
+	public void setSlidename(String slidename) {
+		this.slidename = slidename;
+	}
 }

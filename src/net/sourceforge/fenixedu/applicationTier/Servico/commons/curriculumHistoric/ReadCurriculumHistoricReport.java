@@ -197,16 +197,7 @@ public class ReadCurriculumHistoricReport implements IService {
      * @return
      */
     private InfoEnrolmentEvaluation getLatestInfoEnrolmentEvaluation(List enrolmentEvaluations) {
-        
-        if(enrolmentEvaluations.isEmpty())
-            return null;
-        
-        // This sorts the list ascendingly so we need to reverse it to get
-        // the first object.
-        Collections.sort(enrolmentEvaluations);
-        Collections.reverse(enrolmentEvaluations);
-        
-        return InfoEnrolmentEvaluation.newInfoFromDomain((IEnrolmentEvaluation) enrolmentEvaluations.get(0));
+        return (enrolmentEvaluations.isEmpty()) ? null : InfoEnrolmentEvaluation.newInfoFromDomain((IEnrolmentEvaluation) Collections.max(enrolmentEvaluations));
     }
 
 }

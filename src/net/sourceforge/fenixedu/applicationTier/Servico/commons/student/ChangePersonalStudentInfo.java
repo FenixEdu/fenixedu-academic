@@ -47,6 +47,8 @@ public class ChangePersonalStudentInfo implements IService {
                             person.getPais().getNationality()))) {
                 country = sp.getIPersistentCountry().readCountryByNationality(
                         newInfoPerson.getInfoPais().getNationality());
+            }else{
+                country = person.getPais();
             }
         }
         else {

@@ -5,114 +5,85 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
-import java.lang.reflect.Proxy;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.GrantOrientationTeacherNotFoundException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.InvalidGrantPaymentEntityException;
-import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObjectService;
-import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantCostCenter;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantProject;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantCostCenter;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantPaymentEntity;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantProject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
-
-import org.apache.ojb.broker.core.proxy.ProxyHelper;
-
+import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Barbosa
  * @author Pica
  */
-public class EditGrantPaymentEntity extends EditDomainObjectService implements IService {
+public class EditGrantPaymentEntity implements IService {
 
-    @Override
-    protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
-            IDomainObject domainObject) throws ExcepcaoPersistencia, FenixServiceException {
-        IGrantPaymentEntity grantPaymentEntity = (IGrantPaymentEntity) domainObject;
-        if (grantPaymentEntity instanceof Proxy) {
-            grantPaymentEntity = (IGrantPaymentEntity) ProxyHelper.getRealObject(grantPaymentEntity);
-        }
-        if (grantPaymentEntity instanceof IGrantProject) {
-            InfoGrantProject infoGrantProject = (InfoGrantProject) infoObject;
 
-            IGrantProject grantProject = (IGrantProject) grantPaymentEntity;
-            grantProject.setNumber(infoGrantProject.getNumber());
-            grantProject.setDesignation(infoGrantProject.getDesignation());
-            if (infoGrantProject.getInfoResponsibleTeacher() != null) {
-                IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-                ITeacher teacher = persistentTeacher.readByNumber(infoGrantProject
-                        .getInfoResponsibleTeacher().getTeacherNumber());
-                if (teacher == null)
-                    throw new GrantOrientationTeacherNotFoundException();
-                grantProject.setResponsibleTeacher(teacher);
-            }
-            if (infoGrantProject.getInfoGrantCostCenter() != null) {
-                IPersistentGrantCostCenter persistentGrantCostCenter = sp
-                        .getIPersistentGrantCostCenter();
-                IGrantCostCenter grantCostCenter = persistentGrantCostCenter
-                        .readGrantCostCenterByNumber(infoGrantProject.getInfoGrantCostCenter()
-                                .getNumber());
-                if (grantCostCenter == null)
-                    throw new InvalidGrantPaymentEntityException();
-                grantProject.setGrantCostCenter(grantCostCenter);
-            }
 
-        } else if (grantPaymentEntity instanceof IGrantCostCenter) {
-            InfoGrantCostCenter infoGrantCostCenter = (InfoGrantCostCenter) infoObject;
-
-            IGrantCostCenter grantCostCenter = (IGrantCostCenter) grantPaymentEntity;
-            grantCostCenter.setNumber(infoGrantCostCenter.getNumber());
-            grantCostCenter.setDesignation(infoGrantCostCenter.getDesignation());
-
-            if (infoGrantCostCenter.getInfoResponsibleTeacher() != null) {
-                IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-                ITeacher teacher = persistentTeacher.readByNumber(infoGrantCostCenter
-                        .getInfoResponsibleTeacher().getTeacherNumber());
-                if (teacher == null)
-                    throw new GrantOrientationTeacherNotFoundException();
-                grantCostCenter.setResponsibleTeacher(teacher);
-            }
+    public void run(InfoGrantCostCenter infoObject) throws FenixServiceException,
+    				ExcepcaoPersistencia{
+       // super.run(new Integer(0), infoObject);
+    	ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentGrantPaymentEntity persistentGrantPaymentEntity= sp.getIPersistentGrantPaymentEntity();
+        IGrantCostCenter grantCostCenter = (IGrantCostCenter)persistentGrantPaymentEntity.readByOID(GrantPaymentEntity.class,infoObject.getIdInternal() );
+        if(grantCostCenter == null){
+        	grantCostCenter = DomainFactory.makeGrantCostCenter();
+        } 
+        grantCostCenter.setDesignation(infoObject.getDesignation());
+        grantCostCenter.setNumber(infoObject.getNumber());
+//      ResponsibleTeacher
+    	if (infoObject.getInfoResponsibleTeacher() != null) {
+            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+            ITeacher teacher = persistentTeacher.readByNumber(infoObject
+                    .getInfoResponsibleTeacher().getTeacherNumber());
+            if (teacher == null)
+                throw new GrantOrientationTeacherNotFoundException();
+            grantCostCenter.setResponsibleTeacher(teacher);
         }
     }
 
-    @Override
-    protected IDomainObject createNewDomainObject(InfoObject infoObject) {
-        if (infoObject.getClass().getName().equals(InfoGrantProject.class))
-            return DomainFactory.makeGrantProject();
-        if (infoObject.getClass().getName().equals(InfoGrantCostCenter.class))
-            return DomainFactory.makeGrantCostCenter();
+    public void run(InfoGrantProject infoObject) throws FenixServiceException,
+    				ExcepcaoPersistencia {
+    	ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentGrantPaymentEntity persistentGrantPaymentEntity= sp.getIPersistentGrantPaymentEntity();
+        IPersistentGrantCostCenter persistentGrantCostCenter= sp.getIPersistentGrantCostCenter();
+        IGrantProject grantProject = (IGrantProject)persistentGrantPaymentEntity.readByOID(GrantPaymentEntity.class,infoObject.getIdInternal() );
+        if(grantProject == null){
+        	grantProject = DomainFactory.makeGrantProject();
+        } 
+    	grantProject.setDesignation(infoObject.getDesignation());
+    	grantProject.setNumber(infoObject.getNumber());
+    	//Grant Cost Center
+    	if (infoObject.getInfoGrantCostCenter() != null ){
+	    	final IGrantCostCenter  grantCostCenter = (IGrantCostCenter) persistentGrantCostCenter.readByOID(GrantCostCenter.class,infoObject.getInfoGrantCostCenter().getIdInternal());
+	    	if(grantCostCenter == null)
+	    		throw new GrantOrientationTeacherNotFoundException();
+	    	grantProject.setGrantCostCenter(grantCostCenter);
+	    	
+    	}
+    	
+    	//ResponsibleTeacher
+    	if (infoObject.getInfoResponsibleTeacher() != null) {
+            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+            ITeacher teacher = persistentTeacher.readByNumber(infoObject
+                    .getInfoResponsibleTeacher().getTeacherNumber());
+            if (teacher == null)
+                throw new GrantOrientationTeacherNotFoundException();
+            grantProject.setResponsibleTeacher(teacher);
+        }
 
-        return null;
-    }
-
-    @Override
-    protected Class getDomainObjectClass() {
-        return GrantPaymentEntity.class;
-    }
-
-    public void run(InfoGrantCostCenter infoObject) throws FenixServiceException {
-        super.run(new Integer(0), infoObject);
-    }
-
-    public void run(InfoGrantProject infoObject) throws FenixServiceException {
-        super.run(new Integer(0), infoObject);
-    }
-
-    @Override
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-        return sp.getIPersistentGrantPaymentEntity();
-    }
-
+    	
+     }
+      
 }

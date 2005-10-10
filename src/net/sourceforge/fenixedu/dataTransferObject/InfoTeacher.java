@@ -159,6 +159,7 @@ public class InfoTeacher extends InfoObject implements ISmsDTO {
         if (teacher != null) {
             super.copyFromDomain(teacher);
             setTeacherNumber(teacher.getTeacherNumber());
+            if(teacher.getPerson() != null)
             setInfoPerson(InfoPerson.newInfoFromDomain(teacher.getPerson()));
             setInfoCategory(InfoCategory.newInfoFromDomain(teacher.getCategory()));
         }

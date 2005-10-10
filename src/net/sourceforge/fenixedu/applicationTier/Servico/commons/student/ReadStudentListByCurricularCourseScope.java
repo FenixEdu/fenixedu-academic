@@ -78,9 +78,6 @@ public class ReadStudentListByCurricularCourseScope implements IService {
         List result = new ArrayList();
         Integer numberAux = null;
 
-        BeanComparator numberComparator = new BeanComparator("studentCurricularPlan.student.number");
-        Collections.sort(studentCurricularPlans, numberComparator);
-
         Iterator iterator = studentCurricularPlans.iterator();
         while (iterator.hasNext()) {
             IEnrolment enrolment = (IEnrolment) iterator.next();

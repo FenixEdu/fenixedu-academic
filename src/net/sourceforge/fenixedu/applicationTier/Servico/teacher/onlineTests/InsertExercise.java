@@ -4,39 +4,27 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.StringReader;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidMetadataException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidXMLFilesException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.onlineTests.IMetadata;
 import net.sourceforge.fenixedu.domain.onlineTests.IQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentQuestion;
-import net.sourceforge.fenixedu.utilTests.ParseMetadata;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
@@ -53,26 +41,30 @@ public class InsertExercise implements IService {
 
     private static final double FILE_SIZE_LIMIT = Math.pow(2, 20);
 
-    public List<String> run(Integer executionCourseId, FormFile metadataFile, FormFile xmlZipFile,
-            String path) throws FenixServiceException, NotExecuteException, ExcepcaoPersistencia {
+    public List<String> run(Integer executionCourseId, FormFile metadataFile, FormFile xmlZipFile, String path) throws FenixServiceException,
+            ExcepcaoPersistencia {
         List<String> badXmls = new ArrayList<String>();
         int xmlNumber = 0;
         String replacedPath = path.replace('\\', '/');
 
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
-                .getIPersistentExecutionCourse();
-        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
-                ExecutionCourse.class, executionCourseId);
+        IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIPersistentExecutionCourse();
+        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
         IPersistentMetadata persistentMetadata = persistentSuport.getIPersistentMetadata();
-        IMetadata metadata = DomainFactory.makeMetadata(executionCourse, metadataFile, replacedPath);
+        IMetadata metadata = null;
+        try {
+            metadata = DomainFactory.makeMetadata(executionCourse, metadataFile, replacedPath);
+        } catch (DomainException e) {
+            throw new InvalidMetadataException();
+        }
 
         List<LabelValueBean> xmlFilesList = getXmlFilesList(xmlZipFile);
-        if (xmlFilesList == null)
-            throw new NotExecuteException("error.badMetadataFile");
+        if (xmlFilesList == null || xmlFilesList.size() == 0) {
+            throw new InvalidXMLFilesException();
+        }
 
         for (LabelValueBean labelValueBean : xmlFilesList) {
             String xmlFile = labelValueBean.getValue();
@@ -98,7 +90,7 @@ public class InsertExercise implements IService {
         }
 
         if (xmlNumber == 0) {
-            persistentMetadata.deleteByOID(Metadata.class, metadata.getIdInternal());
+            throw new InvalidXMLFilesException();
         }
 
         return badXmls;
@@ -109,21 +101,18 @@ public class InsertExercise implements IService {
         ZipInputStream zipFile = null;
 
         try {
-            if (xmlZipFile.getContentType().equals("text/xml")) {
+            if (xmlZipFile.getContentType().equals("text/xml") || xmlZipFile.getContentType().equals("application/xml")) {
                 if (xmlZipFile.getFileSize() <= FILE_SIZE_LIMIT) {
-                    xmlFilesList.add(new LabelValueBean(xmlZipFile.getFileName(), new String(xmlZipFile
-                            .getFileData(), "ISO-8859-1")));
+                    xmlFilesList.add(new LabelValueBean(xmlZipFile.getFileName(), new String(xmlZipFile.getFileData(), "ISO-8859-1")));
                     // changeDocumentType(new String(xmlZipFile.getFileData(),
                     // "ISO-8859-1"), false)));
                 }
             } else {
                 zipFile = new ZipInputStream(xmlZipFile.getInputStream());
-                for (ZipEntry entry = zipFile.getNextEntry(); entry != null; entry = zipFile
-                        .getNextEntry()) {
+                for (ZipEntry entry = zipFile.getNextEntry(); entry != null; entry = zipFile.getNextEntry()) {
                     final StringBuilder stringBuilder = new StringBuilder();
                     final byte[] b = new byte[1000];
-                    for (int readed = 0; (readed = zipFile.read(b)) > -1; stringBuilder
-                            .append(new String(b, 0, readed, "ISO-8859-1"))) {
+                    for (int readed = 0; (readed = zipFile.read(b)) > -1; stringBuilder.append(new String(b, 0, readed, "ISO-8859-1"))) {
                         // nothing to do :o)
                     }
                     if (stringBuilder.length() <= FILE_SIZE_LIMIT) {

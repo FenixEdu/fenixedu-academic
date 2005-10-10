@@ -413,4 +413,13 @@ public class Enrolment extends Enrolment_Base {
 				
 		});
 	}
+	
+	public boolean hasSpecialSeason() {
+		for (IEnrolmentEvaluation enrolmentEvaluation : getEvaluations()) {
+			if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.SPECIAL_SEASON)) {
+				return true;
+}
+		}
+		return false;
+	}
 }

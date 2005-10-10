@@ -21,8 +21,12 @@ public class ResponseLID extends Response {
 
     public void setResponse(String[] op) {
         response = op;
-        if (op != null && op.length != 0)
+        if (op != null) {
             super.setResponsed();
+            if (op.length == 1 && op[0] == null) {
+                response = new String[0];
+            }
+        }
     }
 
     public Boolean[] getIsCorrect() {

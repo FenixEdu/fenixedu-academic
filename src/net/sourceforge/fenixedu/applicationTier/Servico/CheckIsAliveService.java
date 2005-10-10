@@ -40,6 +40,7 @@ public class CheckIsAliveService implements IService {
                 CHECK_SLIDE = true;
             }
         } catch (IOException e) {
+        	e.printStackTrace();
         }
 
         logger.info("CheckIsAliveService - will check db: " + CHECK_DB);
@@ -54,8 +55,9 @@ public class CheckIsAliveService implements IService {
             if (CHECK_SLIDE) {
                 checkSlideDatabaseOps();
             }
-            return new Boolean(true);
+            return Boolean.TRUE;
         } catch (Throwable t) {
+        	t.printStackTrace();
             logger.fatal("Got unexepected exception in check alive service. ", t);
             throw new RuntimeException(t);
         }
@@ -69,7 +71,7 @@ public class CheckIsAliveService implements IService {
 
         final IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
 
-        if (executionYear.getIdInternal() == null) {
+        if (executionYear == null || executionYear.getIdInternal() == null) {
             logger.fatal("Got a null result checking fenix database.");
             throw new RuntimeException("Problems accesing fenix database! Got a null result.");
         }

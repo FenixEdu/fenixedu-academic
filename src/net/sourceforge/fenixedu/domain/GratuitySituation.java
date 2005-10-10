@@ -19,6 +19,9 @@ import net.sourceforge.fenixedu.domain.transactions.IGratuityTransaction;
  */
 public class GratuitySituation extends GratuitySituation_Base {
 
+	public GratuitySituation() {
+	}
+	
     public GratuitySituation(IGratuityValues gratuityValues, IStudentCurricularPlan studentCurricularPlan) {
 
         setGratuityValues(gratuityValues);

@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContract;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantCostCenter;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPaymentEntity;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantProject;
@@ -52,7 +53,7 @@ public class EditGrantProjectAction extends FenixDispatchAction {
 
                 //Populate the form
                 setFormGrantProject(grantProjectForm, infoGrantProject);
-            } catch (FenixServiceException e) {
+} catch (FenixServiceException e) {
                 return setError(request, mapping, "errors.grant.project.read", null, null);
             }
         }
@@ -65,10 +66,10 @@ public class EditGrantProjectAction extends FenixDispatchAction {
     public ActionForward doEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        InfoGrantProject infoGrantProject = null;
+        InfoGrantProject infoGrantProject = new InfoGrantProject();
         try {
             IUserView userView = SessionUtils.getUserView(request);
-
+   
             DynaValidatorForm editGrantProjectForm = (DynaValidatorForm) form;
             infoGrantProject = populateInfoFromForm(editGrantProjectForm);
 
@@ -106,7 +107,7 @@ public class EditGrantProjectAction extends FenixDispatchAction {
             //Edit-Create the project
             Object[] args = { infoGrantProject };
             ServiceUtils.executeService(userView, "EditGrantPaymentEntity", args);
-
+            
             return mapping.findForward("manage-grant-project");
         } catch (ExistingServiceException e) {
             return setError(request, mapping, "errors.grant.project.duplicateEntry", null,
@@ -121,12 +122,15 @@ public class EditGrantProjectAction extends FenixDispatchAction {
      */
     private void setFormGrantProject(DynaValidatorForm form, InfoGrantProject infoGrantProject)
             throws Exception {
-        BeanUtils.copyProperties(form, infoGrantProject);
+    	form.set("idInternal",infoGrantProject.getIdInternal());
+    	form.set("designation",infoGrantProject.getDesignation());
+    	form.set("number",infoGrantProject.getNumber());
         if (infoGrantProject.getInfoResponsibleTeacher() != null)
             form.set("responsibleTeacherNumber", infoGrantProject.getInfoResponsibleTeacher()
                     .getTeacherNumber().toString());
         if (infoGrantProject.getInfoGrantCostCenter() != null)
             form.set("grantCostCenterNumber", infoGrantProject.getInfoGrantCostCenter().getNumber());
+        form.set("ojbConcreteClass",InfoGrantPaymentEntity.getGrantProjectOjbConcreteClass());
     }
 
     /*
@@ -134,11 +138,12 @@ public class EditGrantProjectAction extends FenixDispatchAction {
      */
     private InfoGrantProject populateInfoFromForm(DynaValidatorForm editGrantProjectForm)
             throws Exception {
-        InfoGrantProject infoGrantProject = new InfoGrantProject();
-
-        BeanUtils.copyProperties(infoGrantProject, editGrantProjectForm);
+    	InfoGrantProject infoGrantProject = new InfoGrantProject();
+        infoGrantProject.setIdInternal((Integer)editGrantProjectForm.get("idInternal"));
+        infoGrantProject.setDesignation((String)editGrantProjectForm.get("designation"));
+        infoGrantProject.setNumber((String)editGrantProjectForm.get("number"));
         infoGrantProject.setOjbConcreteClass(InfoGrantPaymentEntity.getGrantProjectOjbConcreteClass());
-
+      
         //Copy the teacher Number
         InfoTeacher infoTeacher = new InfoTeacher();
         infoTeacher.setTeacherNumber(new Integer((String) editGrantProjectForm

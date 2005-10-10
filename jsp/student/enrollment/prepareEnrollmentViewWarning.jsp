@@ -10,7 +10,6 @@
 
 <div class="infoselected" style="text-align: left">
 <ul>
-	<li><span style="color:red"><b><bean:message key="error.cannot.reserve.first.year.shift" /></b></span></li>
 	<li><bean:message key="message.warning.student.enrolmentClasses" /> <html:link page="<%= "/warningFirst.do" %>"><bean:message key="message.warning.student.enrolmentClasses.Fenix" /></html:link>.</li>
 	<li><bean:message key="message.warning.student.enrolmentClasses.labs" /></li>
 	<li><bean:message key="message.warning.student.enrolmentClasses.notEnroll" /></li>

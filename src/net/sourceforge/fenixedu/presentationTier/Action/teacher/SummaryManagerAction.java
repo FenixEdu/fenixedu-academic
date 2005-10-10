@@ -35,8 +35,10 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -75,19 +77,17 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
         Collections.sort(((InfoSiteSummaries) ((ExecutionCourseSiteView) siteView).getComponent())
                 .getInfoSummaries(), Collections.reverseOrder());
 
+        final InfoSiteSummaries infoSiteSummaries = (InfoSiteSummaries) ((ExecutionCourseSiteView) siteView)
+                .getComponent();
+        for (final InfoShift infoShift : (List<InfoShift>) infoSiteSummaries.getInfoShifts()) {
+            Collections.sort(infoShift.getInfoLessons());
+        }
+        Collections.sort(infoSiteSummaries.getInfoShifts(), new BeanComparator("lessons"));
         request.setAttribute("siteView", siteView);
+
         return mapping.findForward("showSummaries");
     }
 
-    /**
-     * @param userView
-     * @param executionCourseId
-     * @param lessonType
-     * @param shiftId
-     * @param professorShipId
-     * @return
-     * @throws FenixServiceException
-     */
     protected SiteView getSiteView(IUserView userView, Integer executionCourseId, String lessonType,
             Integer shiftId, Integer professorShipId) throws FenixServiceException, FenixFilterException {
 
@@ -99,14 +99,6 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
         return siteView;
     }
 
-    /**
-     * @param request
-     * @param actionForm
-     * @param userView
-     * @param executionCourseId
-     * @return
-     * @throws FenixServiceException
-     */
     protected Integer getProfessorShipId(HttpServletRequest request, DynaActionForm actionForm,
             IUserView userView, Integer executionCourseId) throws FenixServiceException,
             FenixFilterException {

@@ -59,9 +59,7 @@ public class ReadDegreeInfoByExecutionDegree implements IService {
 
             //Last information about this degree
             if (degreeInfoList != null && degreeInfoList.size() > 0) {
-                Collections.sort(degreeInfoList, new BeanComparator("lastModificationDate"));
-                IDegreeInfo degreeInfo = (IDegreeInfo) degreeInfoList.get(degreeInfoList.size() - 1);
-
+                IDegreeInfo degreeInfo = (IDegreeInfo) Collections.max(degreeInfoList, new BeanComparator("lastModificationDate"));
                 infoDegreeInfo = InfoDegreeInfo.newInfoFromDomain(degreeInfo);
 
                 //return the degree info with the last modification date

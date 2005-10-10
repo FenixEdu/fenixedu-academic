@@ -16,6 +16,14 @@ public class Response extends FenixUtil {
         responsed = true;
     }
 
+    public void setResponsed(boolean isResponsed) {
+        responsed = isResponsed;
+    }
+
+    public boolean getResponsed() {
+        return responsed;
+    }
+
     public boolean isResponsed() {
         return responsed;
     }

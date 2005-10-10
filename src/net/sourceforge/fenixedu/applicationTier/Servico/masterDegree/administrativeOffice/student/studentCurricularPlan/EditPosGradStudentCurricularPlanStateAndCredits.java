@@ -124,8 +124,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
                             changeAnnulled2ActiveIfActivePlan(newState, persistentEnrolment,
                                     auxEnrolment);
 
-                            DeleteEnrollment deleteEnrolmentService = new DeleteEnrollment();
-                            deleteEnrolmentService.run(enrolment.getIdInternal());
+                            enrolment.delete();
                         } else {
                             changeAnnulled2ActiveIfActivePlan(newState, persistentEnrolment, enrolment);
                         }
@@ -170,7 +169,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
         auxEnrolment.setCreationDate(enrolment.getCreationDate());
         auxEnrolment.setAccumulatedWeight(enrolment.getAccumulatedWeight());
         auxEnrolment.setCurricularCourse(enrolment.getCurricularCourse());
-        auxEnrolment.setExecutionPeriod(enrolment.getExecutionPeriod());
+        auxEnrolment.setExecutionPeriod(enrolment.getExecutionPeriod());        
         auxEnrolment.setStudentCurricularPlan(enrolment.getStudentCurricularPlan());
         auxEnrolment.setCondition(enrolment.getCondition());
         auxEnrolment.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
