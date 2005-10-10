@@ -347,6 +347,10 @@
 			<from-outcome>enterEditWrittenTest</from-outcome>
 			<to-view-id>/teacher/evaluation/editWrittenTest.jsp</to-view-id>
 		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>enterShowMarksListOptions</from-outcome>
+			<to-view-id>/teacher/evaluation/editMarksList.jsp</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 
 	<navigation-rule>
@@ -420,7 +424,11 @@
 	<navigation-rule>
 		<from-view-id>/teacher/evaluation/editMarksList.jsp</from-view-id>
  		<navigation-case>
-			<from-outcome>success</from-outcome>
+			<from-outcome>WrittenTest</from-outcome>
+			<to-view-id>/teacher/evaluation/writtenTestsIndex.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>Exam</from-outcome>
 			<to-view-id>/teacher/evaluation/examsIndex.jsp</to-view-id>
 		</navigation-case>
  		<navigation-case>
@@ -433,6 +441,14 @@
 		<from-view-id>/teacher/evaluation/loadMarks.jsp</from-view-id>
  		<navigation-case>
 			<from-outcome>success</from-outcome>
+			<to-view-id>/teacher/evaluation/editMarksList.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/finalEvaluationIndex.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>enterShowMarksListOptions</from-outcome>
 			<to-view-id>/teacher/evaluation/editMarksList.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
