@@ -21,6 +21,8 @@
 	<f:loadBundle basename="ServidorApresentacao/StudentResources" var="bundle"/>
 	<h:form>	
 		<h:outputText value="<h2>#{bundle['link.exams.enrolment']}</h2>" escape="false" />
+		<h:outputText styleClass="error" rendered="#{!empty displayEvaluationsToEnrol.errorMessage}"
+				value="#{bundle[displayEvaluationsToEnrol.errorMessage]}<br/>" escape="false" />
 		<%-- UNENROLED EXAMS --%>
 		<h:outputText value="<h3>#{bundle['label.examsToEnroll']}</h3>" escape="false" />
 		<h:panelGrid rendered="#{empty displayEvaluationsToEnrol.unenroledExams}" >
@@ -67,7 +69,7 @@
 							</h:outputFormat>					
 						</h:panelGroup>
 						<h:panelGroup rendered="#{displayEvaluationsToEnrol.renderUnenrolLinks[unenroledEvaluation.idInternal]}">
-							<h:commandLink action="success" 
+							<h:commandLink action="" 
 								   		   actionListener="#{displayEvaluationsToEnrol.enrolStudent}" >
 								<h:outputText value="#{bundle['label.enroll']}" />	
 								<f:param id="evaluationID" name="evaluationID" value="#{unenroledEvaluation.idInternal}" />
@@ -128,7 +130,7 @@
 							<h:outputText value="#{displayEvaluationsToEnrol.enroledRooms[enroledEvaluation.idInternal]}" />
 						</h:panelGroup>
 						<h:panelGroup rendered="#{displayEvaluationsToEnrol.renderUnenrolLinks[enroledEvaluation.idInternal]}">
-							<h:commandLink action="success"
+							<h:commandLink action=""
 										   actionListener="#{displayEvaluationsToEnrol.unenrolStudent}">
 								<h:outputText value="#{bundle['label.unEnroll']}" />	
 								<f:param id="evaluationID" name="evaluationID" value="#{enroledEvaluation.idInternal}" />
@@ -183,7 +185,7 @@
 							</h:outputFormat>					
 						</h:panelGroup>
 						<h:panelGroup rendered="#{displayEvaluationsToEnrol.renderUnenrolLinks[unenroledEvaluation.idInternal]}">
-							<h:commandLink action="success" 
+							<h:commandLink action="" 
 								   		   actionListener="#{displayEvaluationsToEnrol.enrolStudent}" >
 								<h:outputText value="#{bundle['label.enroll']}" />	
 								<f:param id="evaluationID" name="evaluationID" value="#{unenroledEvaluation.idInternal}" />
@@ -241,7 +243,7 @@
 							<h:outputText value="#{displayEvaluationsToEnrol.enroledRooms[enroledEvaluation.idInternal]}" />
 						</h:panelGroup>
 						<h:panelGroup rendered="#{displayEvaluationsToEnrol.renderUnenrolLinks[enroledEvaluation.idInternal]}">
-							<h:commandLink action="success"
+							<h:commandLink action=""
 										   actionListener="#{displayEvaluationsToEnrol.unenrolStudent}">
 								<h:outputText value="#{bundle['label.unEnroll']}" />	
 								<f:param id="evaluationID" name="evaluationID" value="#{enroledEvaluation.idInternal}" />

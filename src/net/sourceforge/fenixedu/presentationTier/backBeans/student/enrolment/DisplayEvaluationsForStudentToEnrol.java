@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.IWrittenTest;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
@@ -24,13 +25,19 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
 
     private IStudent student = null;
+
     private List<IExam> unenroledExams = null;;
+
     private List<IExam> enroledExams = null;
+
     private List<IWrittenTest> enroledWrittenTests = null;
+
     private List<IWrittenTest> unenroledWrittenTests = null;
 
     private Map<Integer, Boolean> renderUnenrolLinks = new HashMap<Integer, Boolean>();
+
     private Map<Integer, String> enroledRooms = new HashMap<Integer, String>();
+
     private Map<Integer, List<IExecutionCourse>> attendingExecutionCourses = new HashMap<Integer, List<IExecutionCourse>>();
 
     private static final ComparatorChain comparator = new ComparatorChain();
@@ -48,12 +55,13 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
                 final IWrittenEvaluationEnrolment writtenEvaluationEnrolment = exam
                         .getWrittenEvaluationEnrolmentFor(getStudent());
                 renderUnenrolLinks.put(exam.getIdInternal(), exam.isInEnrolmentPeriod());
-                enroledRooms.put(exam.getIdInternal(),
-                                (writtenEvaluationEnrolment != null && 
-                                 writtenEvaluationEnrolment.getRoom() != null) 
-                                 ? writtenEvaluationEnrolment.getRoom().getNome() : " ");
-                attendingExecutionCourses.put(exam.getIdInternal(), 
-                        exam.getAttendingExecutionCoursesFor(getStudent()));
+                enroledRooms
+                        .put(exam.getIdInternal(),
+                                (writtenEvaluationEnrolment != null && writtenEvaluationEnrolment
+                                        .getRoom() != null) ? writtenEvaluationEnrolment.getRoom()
+                                        .getNome() : " ");
+                attendingExecutionCourses.put(exam.getIdInternal(), exam
+                        .getAttendingExecutionCoursesFor(getStudent()));
             }
         }
         return enroledExams;
@@ -64,9 +72,9 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
             unenroledExams = getStudent().getUnenroledExams();
             Collections.sort(unenroledExams, comparator);
             attendingExecutionCourses.clear();
-            for (final IExam exam : unenroledExams) {            
-                attendingExecutionCourses.put(exam.getIdInternal(), 
-                        exam.getAttendingExecutionCoursesFor(getStudent()));
+            for (final IExam exam : unenroledExams) {
+                attendingExecutionCourses.put(exam.getIdInternal(), exam
+                        .getAttendingExecutionCoursesFor(getStudent()));
             }
         }
         return unenroledExams;
@@ -82,12 +90,13 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
                 final IWrittenEvaluationEnrolment writtenEvaluationEnrolment = writtenTest
                         .getWrittenEvaluationEnrolmentFor(getStudent());
                 renderUnenrolLinks.put(writtenTest.getIdInternal(), writtenTest.isInEnrolmentPeriod());
-                enroledRooms.put(writtenTest.getIdInternal(),
-                                (writtenEvaluationEnrolment != null && 
-                                 writtenEvaluationEnrolment.getRoom() != null) 
-                                 ? writtenEvaluationEnrolment.getRoom().getNome() : " ");
-                attendingExecutionCourses.put(writtenTest.getIdInternal(), 
-                        writtenTest.getAttendingExecutionCoursesFor(getStudent()));
+                enroledRooms
+                        .put(writtenTest.getIdInternal(),
+                                (writtenEvaluationEnrolment != null && writtenEvaluationEnrolment
+                                        .getRoom() != null) ? writtenEvaluationEnrolment.getRoom()
+                                        .getNome() : " ");
+                attendingExecutionCourses.put(writtenTest.getIdInternal(), writtenTest
+                        .getAttendingExecutionCoursesFor(getStudent()));
             }
         }
         return enroledWrittenTests;
@@ -99,30 +108,38 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
             unenroledWrittenTests = getStudent().getUnenroledWrittenTests();
             Collections.sort(unenroledWrittenTests, comparator);
             attendingExecutionCourses.clear();
-            for (final IWrittenTest writtenTest : unenroledWrittenTests) {            
-                attendingExecutionCourses.put(writtenTest.getIdInternal(), 
-                        writtenTest.getAttendingExecutionCoursesFor(getStudent()));
+            for (final IWrittenTest writtenTest : unenroledWrittenTests) {
+                attendingExecutionCourses.put(writtenTest.getIdInternal(), writtenTest
+                        .getAttendingExecutionCoursesFor(getStudent()));
             }
-        }       
+        }
         return unenroledWrittenTests;
     }
 
     public void enrolStudent(ActionEvent actionEvent) throws FenixFilterException, FenixServiceException {
-        final UIParameter parameter = (UIParameter) actionEvent.getComponent().findComponent(
-                "evaluationID");
-        final Integer evaluationID = Integer.valueOf(parameter.getValue().toString());
-        final Object args[] = { getUserView().getUtilizador(), evaluationID };
-        ServiceUtils.executeService(getUserView(), "EnrolStudentInWrittenEvaluation", args);
+        try {
+            final UIParameter parameter = (UIParameter) actionEvent.getComponent().findComponent(
+                    "evaluationID");
+            final Integer evaluationID = Integer.valueOf(parameter.getValue().toString());
+            final Object args[] = { getUserView().getUtilizador(), evaluationID };
+            ServiceUtils.executeService(getUserView(), "EnrolStudentInWrittenEvaluation", args);            
+        } catch (DomainException e) {
+            setErrorMessage(e.getMessage());
+        }
         cleanBeanProperties();
     }
 
     public void unenrolStudent(ActionEvent actionEvent) throws FenixFilterException,
             FenixServiceException {
-        final UIParameter parameter = (UIParameter) actionEvent.getComponent().findComponent(
-                "evaluationID");
-        final Integer evaluationID = Integer.valueOf(parameter.getValue().toString());
-        final Object args[] = { getUserView().getUtilizador(), evaluationID };
-        ServiceUtils.executeService(getUserView(), "UnEnrollStudentInWrittenEvaluation", args);
+        try {
+            final UIParameter parameter = (UIParameter) actionEvent.getComponent().findComponent(
+                    "evaluationID");
+            final Integer evaluationID = Integer.valueOf(parameter.getValue().toString());
+            final Object args[] = { getUserView().getUtilizador(), evaluationID };
+            ServiceUtils.executeService(getUserView(), "UnEnrollStudentInWrittenEvaluation", args);            
+        } catch (DomainException e) {
+            setErrorMessage(e.getMessage());
+        }
         cleanBeanProperties();
     }
 
@@ -134,14 +151,15 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
         }
         return student;
     }
-    
+
     private void cleanBeanProperties() {
+        // This is used to force reading information again
         this.unenroledExams = null;
         this.enroledExams = null;
         this.enroledWrittenTests = null;
         this.unenroledWrittenTests = null;
     }
-    
+
     private void cleanMaps() {
         this.renderUnenrolLinks.clear();
         this.enroledRooms.clear();
@@ -168,7 +186,8 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
         return attendingExecutionCourses;
     }
 
-    public void setAttendingExecutionCourses(Map<Integer, List<IExecutionCourse>> attendingExecutionCourses) {
+    public void setAttendingExecutionCourses(
+            Map<Integer, List<IExecutionCourse>> attendingExecutionCourses) {
         this.attendingExecutionCourses = attendingExecutionCourses;
     }
 }

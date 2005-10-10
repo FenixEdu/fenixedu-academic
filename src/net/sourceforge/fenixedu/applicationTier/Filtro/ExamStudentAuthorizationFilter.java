@@ -7,11 +7,15 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
+import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
+import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.IAttends;
+import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -33,19 +37,13 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
         return RoleType.STUDENT;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *      pt.utl.ist.berserk.ServiceResponse)
-     */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
         try {
             if ((id == null) || (id.getRoles() == null)
                     || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
-                    || !attendsExamExecutionCourse(id, arguments)) {
+                    || !attendsEvaluationExecutionCourse(id, arguments)) {
                 throw new NotAuthorizedFilterException();
             }
         } catch (RuntimeException e) {
@@ -53,39 +51,37 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
         }
     }
 
-    private boolean attendsExamExecutionCourse(IUserView id, Object[] argumentos) {
-        if (argumentos == null) {
+    private boolean attendsEvaluationExecutionCourse(IUserView id, Object[] args) {
+        if (args == null) {
             return false;
         }
         try {
-            Integer examId;
-            if (argumentos[1] instanceof InfoExam) {
-                InfoExam infoExam = (InfoExam) argumentos[1];
-                examId = infoExam.getIdInternal();
+            Integer evaluationID;
+            if (args[1] instanceof Integer) {
+                evaluationID = (Integer) args[1];
+            } else if (args[1] instanceof InfoExam) {
+                evaluationID = ((InfoExam) args[1]).getIdInternal();
+            } else if (args[1] instanceof InfoWrittenTest) {
+                evaluationID = (Integer) args[1];
             } else {
-                examId = (Integer) argumentos[1];
+                return false;
             }
+            final ISuportePersistente persistentSupport = PersistenceSupportFactory
+                    .getDefaultPersistenceSupport();
+            final IEvaluation evaluation = (IEvaluation) persistentSupport.getIPersistentEvaluation()
+                    .readByOID(Evaluation.class, evaluationID);
 
-            String username = (String) argumentos[0];
-
-            final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            final IPersistentExam persistentExam = sp.getIPersistentExam();
-            final IExam exam = (IExam) persistentExam.readByOID(Exam.class, examId);
-            
-            for (IExecutionCourse executionCourse : exam.getAssociatedExecutionCourses()) {
-                for (final IAttends attends : executionCourse.getAttends()) {
-                    final IStudent student = attends.getAluno();
-                    if (student.getPerson().getUsername().equals(username)) {
+            final String studentUsername = (String) args[0];
+            for (final IExecutionCourse executionCourse : evaluation.getAssociatedExecutionCourses()) {
+                for (final IAttends attend : executionCourse.getAttends()) {
+                    if (attend.getAluno().getPerson().getUsername().equals(studentUsername)) {
                         return true;
                     }
                 }
-
             }
             return false;
-            
         } catch (Exception ex) {
             return false;
         }
     }
-
 }
