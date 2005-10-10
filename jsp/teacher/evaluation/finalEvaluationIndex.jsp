@@ -24,7 +24,8 @@ margin-bottom: 0;
 		<h:outputText value="<h2>#{bundle['label.finalEvaluation']}</h2>" escape="false" />
 	
 		<h:outputText value="<ul class=\"links\"><li>" escape="false"/>
-		<h:commandLink action="enterEditEnrolmentPeriod">
+		<h:commandLink action="enterShowMarksListOptions">
+			<f:param name="evaluationID" value="#{evaluationManagementBackingBean.finalEvaluation.idInternal}" />
 			<h:outputFormat value="#{bundle['label.students.listMarks']}"/>
 		</h:commandLink>
 		<h:outputText value="</li>" escape="false"/>

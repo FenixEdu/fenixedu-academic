@@ -11,16 +11,15 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
-import java.util.Map.Entry;
-import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
+import java.util.Map.Entry;
 
 import javax.faces.component.html.HtmlInputHidden;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
-import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
@@ -36,9 +35,10 @@ import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IFinalEvaluation;
+import net.sourceforge.fenixedu.domain.IMark;
 import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
-import net.sourceforge.fenixedu.domain.IMark;
 import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
 import net.sourceforge.fenixedu.domain.IWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.IWrittenTest;
@@ -491,7 +491,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public String editMarks() throws FenixFilterException, FenixServiceException {
         final Object[] args = { getEvaluationID(), this.marks };
         ServiceUtils.executeService(getUserView(), "WriteMarks", args);
-        return "success";
+        return getEvaluation().getClass().getSimpleName();
     }
 
     public String getEvaluationType() throws FenixFilterException, FenixServiceException {
@@ -871,4 +871,14 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         }
         return numberOfAttendingStudents;
     }
+
+    public IFinalEvaluation getFinalEvaluation() throws FenixFilterException, FenixServiceException {
+    	for (final IEvaluation evaluation : getExecutionCourse().getAssociatedEvaluations()) {
+    		if (evaluation instanceof IFinalEvaluation) {
+    			return (IFinalEvaluation) evaluation;
+    		}
+    	}
+    	return null;
+    }
+
 }
