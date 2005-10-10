@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IPerson;
@@ -17,4 +18,6 @@ public interface IPessoaPersistente extends IPersistentObject {
     public List<IPerson> readPersonsBySubName(String subName) throws ExcepcaoPersistencia;
     
     public List<IPerson> findPersonByName(String name, Integer startIndex, Integer numberOfElementsInSpan) throws ExcepcaoPersistencia;
+    
+    public Collection<IPerson> readByIdentificationDocumentNumber(String identificationDocumentNumber)  throws ExcepcaoPersistencia;
 }

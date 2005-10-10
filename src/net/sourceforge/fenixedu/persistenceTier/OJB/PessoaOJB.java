@@ -6,6 +6,7 @@
 
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IPerson;
@@ -31,7 +32,6 @@ public class PessoaOJB extends PersistentObjectOJB implements IPessoaPersistente
         return person;
     }
 
-
     public Integer countAllPersonByName(String name) {
         Criteria criteria = new Criteria();
         criteria.addLike("name", name);
@@ -51,7 +51,7 @@ public class PessoaOJB extends PersistentObjectOJB implements IPessoaPersistente
         criteria.addLike("name", subName);
         return queryList(Person.class, criteria);
     }
-    
+
     public List<IPerson> findPersonByName(String name, Integer startIndex, Integer numberOfElementsInSpan)
             throws ExcepcaoPersistencia {
 
@@ -63,5 +63,12 @@ public class PessoaOJB extends PersistentObjectOJB implements IPessoaPersistente
         }
         return queryList(Person.class, criteria);
 
+    }
+
+    public Collection<IPerson> readByIdentificationDocumentNumber(String identificationDocumentNumber)
+            throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("numeroDocumentoIdentificacao", identificationDocumentNumber);
+        return queryList(Person.class, criteria);
     }
 }
