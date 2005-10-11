@@ -26,7 +26,8 @@
 			<h:panelGroup>
 				<h:outputText value="#{bundle['label.exam']}: " styleClass="boldFontClass" rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.Exam'}"/>
 				<h:outputText value="#{bundle['label.written.test']}: " styleClass="boldFontClass" rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.WrittenTest'}"/>
-				<h:outputText value="#{evaluationManagementBackingBean.evaluationDescription}"/>
+				<h:outputText value="#{evaluationManagementBackingBean.evaluation.season}" rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.Exam'}"/>
+				<h:outputText value="#{evaluationManagementBackingBean.evaluation.description}" rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.WrittenTest'}"/>
 			</h:panelGroup>
 			<h:panelGroup>
 				<h:outputText value="#{bundle['label.day']}: " styleClass="boldFontClass"/>
