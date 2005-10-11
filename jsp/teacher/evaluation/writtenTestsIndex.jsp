@@ -27,6 +27,9 @@ margin-bottom: 0;
 			<h:outputFormat value="<br/>#{bundle['link.create.written.test']} <br/><br/><hr>" escape="false"/>
 		</h:commandLink>
 
+		<h:outputText styleClass="error" rendered="#{!empty evaluationManagementBackingBean.errorMessage}"
+			value="#{bundle[evaluationManagementBackingBean.errorMessage]}<br/>" escape="false" />
+
 		<h:panelGrid rendered="#{empty evaluationManagementBackingBean.writtenTestList}" >
 			<h:outputText value="#{bundle['message.writtenTests.not.scheduled']}" />
 		</h:panelGrid>
