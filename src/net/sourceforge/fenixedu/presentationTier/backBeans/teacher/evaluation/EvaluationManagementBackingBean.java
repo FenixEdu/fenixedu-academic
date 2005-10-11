@@ -910,13 +910,20 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 		this.sendSMS = sendSMS;
 	}
 
-    public void publishMarks() throws FenixFilterException, FenixServiceException {
+    public String publishMarks() throws FenixFilterException, FenixServiceException {
     	final MessageResources messages = MessageResources.getMessageResources("ServidorApresentacao/ApplicationResources");
-    	final String announcmentTitle = (getPublishMarksMessage() != null && getPublishMarksMessage().length() > 0) ? 
+    	final String announcementTitle = (getPublishMarksMessage() != null && getPublishMarksMessage().length() > 0) ? 
         		messages.getMessage("message.publishment") : null;
 
-        final Object[] args = { getExecutionCourse().getIdInternal(), getEvaluation().getIdInternal(), getPublishMarksMessage(), getSendSMS(), announcmentTitle };
-        ServiceUtils.executeService(getUserView(), "PublishMarks", args);
+        try {
+            final Object[] args = { this.getExecutionCourseID(), this.getEvaluationID(), this.getPublishMarksMessage(), this.getSendSMS(), announcementTitle };
+            ServiceUtils.executeService(getUserView(), "PublishMarks", args);
+        } catch (Exception e) {
+            this.setErrorMessage(e.getMessage());
+            return "";
+        }
+        
+        return this.getEvaluation().getClass().getSimpleName();
     }
 
 }
