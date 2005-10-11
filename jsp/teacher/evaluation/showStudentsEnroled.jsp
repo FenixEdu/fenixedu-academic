@@ -62,6 +62,6 @@
 			</h:dataTable>
 		</h:panelGrid>
 		<h:outputText value="<br/>" escape="false" />
-		<h:commandButton action="#{evaluationManagementBackingBean.redirectToCorrectIndex}" value="#{bundle['link.goBack']}" styleClass="inputButton"  />
+		<h:commandButton action="#{evaluationManagementBackingBean.evaluation.class.getSimpleName}" value="#{bundle['link.goBack']}" styleClass="inputButton"  />
 	</h:form>
 </ft:tilesView>

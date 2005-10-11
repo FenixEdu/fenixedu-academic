@@ -14,7 +14,7 @@
 	
 		<h:outputText styleClass="error" rendered="#{!empty evaluationManagementBackingBean.errorMessage}"
 			value="#{bundle[evaluationManagementBackingBean.errorMessage]}"/>
-		<h:messages showSummary="true" errorClass="error" />
+		<h:messages showSummary="true" errorClass="error" rendered="#{empty evaluationManagementBackingBean.errorMessage}"/>
 		
 		<h:panelGrid styleClass="infotable" columns="2" border="0">
 			<h:panelGroup>
@@ -67,6 +67,6 @@
 		</h:panelGrid>
 		<h:outputText value="<br/>" escape="false"/>
 		<h:commandButton action="#{evaluationManagementBackingBean.createWrittenTest}" styleClass="inputbutton" value="#{bundle['button.create']}"/>
-		<h:commandButton immediate="true" action="backToWrittenTestsIndex" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>				
+		<h:commandButton immediate="true" action="#{evaluationManagementBackingBean.evaluation.class.getSimpleName}" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>				
 	</h:form>
 </ft:tilesView>

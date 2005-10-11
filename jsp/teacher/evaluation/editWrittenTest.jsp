@@ -15,7 +15,7 @@
 	
 		<h:outputText styleClass="error" rendered="#{!empty evaluationManagementBackingBean.errorMessage}"
 			value="#{bundle[evaluationManagementBackingBean.errorMessage]}"/>
-		<h:messages showSummary="true" errorClass="error" />			
+		<h:messages showSummary="true" errorClass="error" rendered="#{empty evaluationManagementBackingBean.errorMessage}"/>
 
 		<h:panelGrid styleClass="infotable" columns="2" border="0">
 			<h:panelGroup>

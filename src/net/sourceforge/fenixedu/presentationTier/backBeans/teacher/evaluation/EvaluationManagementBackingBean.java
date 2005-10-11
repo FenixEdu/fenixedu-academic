@@ -489,7 +489,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             return "";
         }
 
-        return this.redirectToCorrectIndex();
+        return this.getEvaluation().getClass().getSimpleName();
     }
 
     public String editMarks() throws FenixFilterException, FenixServiceException {
@@ -529,7 +529,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return this.writtenEvaluationEnrolments;
     }
     
-     public Calendar getBegin() throws FenixFilterException, FenixServiceException {
+    public Calendar getBegin() throws FenixFilterException, FenixServiceException {
         Calendar result = Calendar.getInstance();
 
         result.set(this.getYear(), this.getMonth() - 1, this.getDay(), this.getBeginHour(), this
@@ -577,7 +577,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             return "";
         }
 
-        return "backToWrittenTestsIndex";
+        return this.getEvaluation().getClass().getSimpleName();
     }
 
     public IExecutionCourse getExecutionCourse() throws FenixFilterException, FenixServiceException {
@@ -719,21 +719,11 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             return "";
         }
 
-        return "backToWrittenTestsIndex";
+        return this.getEvaluation().getClass().getSimpleName();
     }
 
 
-    public String redirectToCorrectIndex() throws FenixFilterException, FenixServiceException {
-        final IEvaluation writtenEvaluation = getEvaluation();
-        if (writtenEvaluation instanceof IExam) {
-            return "backToExamsIndex";
-        } else if (writtenEvaluation instanceof IWrittenTest) {
-            return "backToWrittenTestsIndex";
-        }
-        return "";
-    }
-
-    public String deleteWrittenTest() {
+    public String deleteWrittenTest() throws FenixFilterException, FenixServiceException {
         final Object args[] = { this.getExecutionCourseID(), this.getEvaluationID() };
         try {
             ServiceUtils.executeService(getUserView(), "DeleteWrittenEvaluation", args);
@@ -745,7 +735,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             this.setErrorMessage(errorMessage);
             return "";
         }
-        return "backToWrittenTestsIndex";
+        return this.getEvaluation().getClass().getSimpleName();
     }    
 
     public List<IRoom> getEvaluationRooms() throws FenixFilterException, FenixServiceException {

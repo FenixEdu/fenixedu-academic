@@ -385,11 +385,11 @@
 	<navigation-rule>
 		<from-view-id>/teacher/evaluation/showStudentsEnroled.jsp</from-view-id>
  		<navigation-case>
-			<from-outcome>backToExamsIndex</from-outcome>
+			<from-outcome>Exam</from-outcome>
 			<to-view-id>/teacher/evaluation/examsIndex.jsp</to-view-id>
 		</navigation-case>
 		<navigation-case>
-			<from-outcome>backToWrittenTestsIndex</from-outcome>
+			<from-outcome>WrittenTest</from-outcome>
 			<to-view-id>/teacher/evaluation/writtenTestsIndex.jsp</to-view-id>
 		</navigation-case>
 		
@@ -398,7 +398,7 @@
 	<navigation-rule>
 		<from-view-id>/teacher/evaluation/createWrittenTest.jsp</from-view-id>
  		<navigation-case>
-			<from-outcome>backToWrittenTestsIndex</from-outcome>
+			<from-outcome>WrittenTest</from-outcome>
 			<to-view-id>/teacher/evaluation/writtenTestsIndex.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
@@ -406,7 +406,7 @@
 	<navigation-rule>
 		<from-view-id>/teacher/evaluation/editWrittenTest.jsp</from-view-id>
  		<navigation-case>
-			<from-outcome>backToWrittenTestsIndex</from-outcome>
+			<from-outcome>WrittenTest</from-outcome>
 			<to-view-id>/teacher/evaluation/writtenTestsIndex.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
@@ -426,11 +426,11 @@
 	<navigation-rule>
 		<from-view-id>/teacher/evaluation/editEnrolmentPeriod.jsp</from-view-id>
  		<navigation-case>
-			<from-outcome>backToExamsIndex</from-outcome>
+			<from-outcome>Exam</from-outcome>
 			<to-view-id>/teacher/evaluation/examsIndex.jsp</to-view-id>
 		</navigation-case>
  		<navigation-case>
-			<from-outcome>backToWrittenTestsIndex</from-outcome>
+			<from-outcome>WrittenTest</from-outcome>
 			<to-view-id>/teacher/evaluation/writtenTestsIndex.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
