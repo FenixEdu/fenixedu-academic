@@ -77,7 +77,7 @@
 
 		</h:panelGrid>
 		<h:commandButton styleClass="inputbutton" action="#{evaluationManagementBackingBean.editMarks}" value="#{bundle['button.save']}"/>
-		<h:commandButton immediate="true" action="#{evaluationManagementBackingBean.redirectToCorrectIndex}" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>				
+		<h:commandButton immediate="true" action="#{evaluationManagementBackingBean.evaluation.class.getSimpleName}" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>				
 	</h:form>
 
 </ft:tilesView>
