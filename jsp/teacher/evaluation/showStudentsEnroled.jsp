@@ -24,7 +24,8 @@
 		<h:outputText value="<h2>#{bundle['label.students.enrolled']}</h2>" escape="false" />
 		<h:panelGrid columns="1" styleClass="tableClass">
 			<h:panelGroup>
-				<h:outputText value="#{bundle['label.exam']}: " styleClass="boldFontClass"/>
+				<h:outputText value="#{bundle['label.exam']}: " styleClass="boldFontClass" rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.Exam'}"/>
+				<h:outputText value="#{bundle['label.written.test']}: " styleClass="boldFontClass" rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.WrittenTest'}"/>
 				<h:outputText value="#{evaluationManagementBackingBean.evaluationDescription}"/>
 			</h:panelGroup>
 			<h:panelGroup>
