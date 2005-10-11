@@ -54,7 +54,7 @@
 				</h:inputText>
 				<h:outputText value=" : "/>
 				<h:inputText required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.endMinute}">
-					<f:validateLongRange minimum="1" maximum="59" />
+					<f:validateLongRange minimum="0" maximum="59" />
 				</h:inputText>
 				<h:outputText value=" <i>#{bundle['label.hour.instructions']}</i>" escape="false"/>
 			</h:panelGroup>
