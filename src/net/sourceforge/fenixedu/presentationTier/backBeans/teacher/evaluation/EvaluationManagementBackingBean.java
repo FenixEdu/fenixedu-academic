@@ -620,8 +620,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             final Object[] args = { getExecutionCourseID(), getEvaluationID(), marks };
             TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(getUserView(), "InsertEvaluationMarks", args);
             processServiceErrors(siteView);
-        } catch (IOException e) {
-            addErrorMessage("error.ficheiro.impossivelLer");
+        } catch (Exception e) {
+            this.setErrorMessage(e.getMessage());
+            return "";
         } finally {
             if (inputStream != null) {
                 try {
@@ -651,16 +652,14 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
                     final String studentNumber = stringTokenizer.nextToken().trim();
                     final String mark = stringTokenizer.nextToken().trim();
                     marks.put(studentNumber, mark);
-                } catch (NoSuchElementException e2) {
-                    addErrorMessage("error.file.badFormat");
-                    return null;
+                } catch (NoSuchElementException e) {
+                    throw new IOException("error.file.badFormat");
                 }
             }
         }
 
         if (n == 0) {
-            addErrorMessage("error.file.badFormat");
-            return null;
+            throw new IOException("error.file.badFormat");        
         }
 
         return marks;
