@@ -371,6 +371,10 @@
 			<from-outcome>enterShowMarksListOptions</from-outcome>
 			<to-view-id>/teacher/evaluation/editMarksList.jsp</to-view-id>
 		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>enterPublishMarks</from-outcome>
+			<to-view-id>/teacher/evaluation/publishMarks.jsp</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 	
 	<navigation-rule>

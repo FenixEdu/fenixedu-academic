@@ -22,6 +22,7 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletRequest;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -45,6 +46,7 @@ import net.sourceforge.fenixedu.domain.IWrittenTest;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -52,6 +54,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.myfaces.component.html.util.MultipartRequestWrapper;
+import org.apache.struts.util.MessageResources;
 
 public class EvaluationManagementBackingBean extends FenixBackingBean {
 
@@ -106,6 +109,10 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     protected String distributeEnroledStudentsOption;
     
     private boolean resetPosition = false;
+
+    private String publishMarksMessage;
+
+    private Boolean sendSMS;
 
     protected Map<Integer, String> marks = new HashMap<Integer, String>();
 
@@ -889,5 +896,30 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         Collections.sort(executionCourseAttends, new BeanComparator("aluno.number"));
         return executionCourseAttends;
     }
-    
+
+	public String getPublishMarksMessage() {
+		return publishMarksMessage;
+	}
+
+	public void setPublishMarksMessage(String publishMarksMessage) {
+		this.publishMarksMessage = publishMarksMessage;
+	}
+
+	public Boolean getSendSMS() {
+		return sendSMS;
+	}
+
+	public void setSendSMS(Boolean sendSMS) {
+		this.sendSMS = sendSMS;
+	}
+
+    public void publishMarks() throws FenixFilterException, FenixServiceException {
+    	final MessageResources messages = MessageResources.getMessageResources("ServidorApresentacao/ApplicationResources");
+    	final String announcmentTitle = (getPublishMarksMessage() != null && getPublishMarksMessage().length() > 0) ? 
+        		messages.getMessage("message.publishment") : null;
+
+        final Object[] args = { getExecutionCourse().getIdInternal(), getEvaluation().getIdInternal(), getPublishMarksMessage(), getSendSMS(), announcmentTitle };
+        ServiceUtils.executeService(getUserView(), "PublishMarks", args);
+    }
+
 }
