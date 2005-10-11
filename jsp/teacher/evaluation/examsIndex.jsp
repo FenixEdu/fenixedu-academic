@@ -22,6 +22,9 @@ margin-bottom: 0;
 		<h:inputHidden binding="#{evaluationManagementBackingBean.executionCourseIdHidden}" />
 		
 		<h:outputText value="<h2>#{bundle['title.evaluation.Exam']}</h2>" escape="false" />
+
+		<h:outputText styleClass="error" rendered="#{!empty evaluationManagementBackingBean.errorMessage}"
+			value="#{bundle[evaluationManagementBackingBean.errorMessage]}<br/>" escape="false" />
 	
 		<h:panelGrid rendered="#{empty evaluationManagementBackingBean.examList}" >
 			<h:outputText value="#{bundle['message.exams.not.scheduled']}" />
@@ -75,8 +78,6 @@ margin-bottom: 0;
 					<h:outputText value="<br/>" escape="false"/>
 				</h:column>
 			</h:dataTable>
-			<h:outputText styleClass="error" rendered="#{!empty evaluationManagementBackingBean.errorMessage}"
-				value="#{bundle[evaluationManagementBackingBean.errorMessage]}<br/>" escape="false" />
 		</h:panelGrid>
 	</h:form>
 
