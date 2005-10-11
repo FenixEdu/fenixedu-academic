@@ -71,6 +71,7 @@ margin-bottom: 0;
 
 					<h:outputText value="<b> | </b>" escape="false"/>
 					<h:commandLink action="enterPublishMarks">
+						<f:param name="evaluationID" value="#{writtenTest.idInternal}" />
 						<h:outputFormat value="#{bundle['link.publishMarks']}" />
 					</h:commandLink>
 
