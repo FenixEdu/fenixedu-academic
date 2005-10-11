@@ -14,15 +14,20 @@
 	
 		<h:outputText styleClass="error" rendered="#{!empty evaluationManagementBackingBean.errorMessage}"
 			value="#{bundle[evaluationManagementBackingBean.errorMessage]}"/>
-
+		<h:messages showSummary="true" errorClass="error" />
+		
 		<h:panelGrid styleClass="infotable" columns="2" border="0">
 			<h:panelGroup>
 				<h:outputText value="#{bundle['label.date']}" escape="false"/>
 			</h:panelGroup>
 			<h:panelGroup>
-				<h:inputText required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.day}"/>
+				<h:inputText required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.day}">
+					<f:validateLongRange minimum="1" maximum="31" />
+				</h:inputText>
 				<h:outputText value=" / "/>
-				<h:inputText required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.month}"/>
+				<h:inputText required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.month}">
+					<f:validateLongRange minimum="1" maximum="12" />
+				</h:inputText>
 				<h:outputText value=" / "/>
 				<h:inputText required="true" maxlength="4" size="4" value="#{evaluationManagementBackingBean.year}"/>
 				<h:outputText value=" <i>#{bundle['label.date.instructions.small']}</i>" escape="false"/>
@@ -31,18 +36,26 @@
 				<h:outputText value="#{bundle['label.beginning']} " escape="false"/>
 			</h:panelGroup>
 			<h:panelGroup>
-				<h:inputText required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.beginHour}"/>
+				<h:inputText required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.beginHour}">
+					<f:validateLongRange minimum="0" maximum="23" />
+				</h:inputText>
 				<h:outputText value=" : "/>
-				<h:inputText required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.beginMinute}"/>
+				<h:inputText required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.beginMinute}">
+					<f:validateLongRange minimum="0" maximum="59" />
+				</h:inputText>
 				<h:outputText value=" <i>#{bundle['label.hour.instructions']}</i>" escape="false"/>
 			</h:panelGroup>
 			<h:panelGroup>
 				<h:outputText value="#{bundle['label.end']} " escape="false"/>
 			</h:panelGroup>
 			<h:panelGroup>
-				<h:inputText required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.endHour}"/>
+				<h:inputText required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.endHour}">
+					<f:validateLongRange minimum="0" maximum="23" />
+				</h:inputText>
 				<h:outputText value=" : "/>
-				<h:inputText required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.endMinute}"/>
+				<h:inputText required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.endMinute}">
+					<f:validateLongRange minimum="1" maximum="59" />
+				</h:inputText>
 				<h:outputText value=" <i>#{bundle['label.hour.instructions']}</i>" escape="false"/>
 			</h:panelGroup>
 			<h:panelGroup>
