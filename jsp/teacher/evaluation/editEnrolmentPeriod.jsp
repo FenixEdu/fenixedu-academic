@@ -5,18 +5,14 @@
 <ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
 	<f:loadBundle basename="ServidorApresentacao/ApplicationResources" var="bundle"/>
 
-	<h:outputFormat value="<h2>#{bundle['title.evaluation.enrollment.period']}</h2><br/>" escape="false">
-		<f:param value="#{evaluationManagementBackingBean.evaluationType}" />
-	</h:outputFormat>
-
+	<h:outputFormat value="<h2>#{bundle['title.evaluation.enrollment.period']}</h2><br/>" escape="false"/>
+	
 	<h:form>
 		<h:inputHidden binding="#{evaluationManagementBackingBean.executionCourseIdHidden}" />
 		<h:inputHidden binding="#{evaluationManagementBackingBean.evaluationIdHidden}" />
 	
-		<h:outputText styleClass="infoop" value="#{bundle['label.period.information']}" escape="false"/>
-	
-		<h:outputText value="<br/><br/><br/><b>#{bundle['label.exam']}:</b> " escape="false" rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.Exam'}"/>
-		<h:outputText value="<br/><br/><br/><b>#{bundle['label.written.test']}:</b> " escape="false" rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.WrittenTest'}"/>
+		<h:outputText value="<b>#{bundle['label.exam']}:</b> " escape="false" rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.Exam'}"/>
+		<h:outputText value="<b>#{bundle['label.written.test']}:</b> " escape="false" rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.WrittenTest'}"/>
 		<h:outputText value="#{evaluationManagementBackingBean.evaluation.season} - " rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.Exam'}"/>
 		<h:outputText value="#{evaluationManagementBackingBean.evaluation.description} - " rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.WrittenTest'}"/>
 
