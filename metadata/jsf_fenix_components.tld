@@ -123,7 +123,6 @@
   
   
    <tag>
-
     <name>viewState</name>
     <tag-class>net.sourceforge.fenixedu.presentationTier.jsf.components.UIViewStateTag</tag-class>
     <tei-class>com.sun.faces.taglib.FacesTagExtraInfo</tei-class>
@@ -161,9 +160,20 @@
         SelectItem instance containing the
         information for this option.
       </description>
-    </attribute>
-   
+    </attribute>   
   </tag>
+
+	<tag>
+		<name>regexValidator</name>
+		<tagclass>net.sourceforge.fenixedu.presentationTier.jsf.validators.RegexValidatorTag</tagclass>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>regex</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
+
 
 
 </taglib>

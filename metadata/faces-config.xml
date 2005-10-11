@@ -8,6 +8,7 @@
 		<locale-config>
 			<default-locale>pt</default-locale>
 		</locale-config>
+		<message-bundle>ServidorApresentacao.ApplicationResources</message-bundle>
 	</application>
 
 	<!-- MANAGED BEANS -->
@@ -489,7 +490,15 @@
 			net.sourceforge.fenixedu.presentationTier.jsf.components.UIViewState
 		</component-class>
 	</component>
-
+	
+	<validator>
+		<validator-id>regexValidator</validator-id>
+		<validator-class>net.sourceforge.fenixedu.presentationTier.jsf.validators.RegexValidator</validator-class>
+		<attribute>
+			<attribute-name>regex</attribute-name>
+			<attribute-class>java.lang.String</attribute-class>
+		</attribute>
+	</validator>
 	
 	<!-- End Custom Components -->
 			
