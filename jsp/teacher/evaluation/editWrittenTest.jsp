@@ -73,6 +73,6 @@
 							action="#{evaluationManagementBackingBean.deleteWrittenTest}" 
 							title="#{bundle['link.delete.written.test']}" 
 							onclick="return confirm('#{bundle['message.confirm.written.test']}')"/>
-		<h:commandButton immediate="true" action="backToWrittenTestsIndex" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>				
+		<h:commandButton immediate="true" action="#{evaluationManagementBackingBean.evaluation.class.getSimpleName}" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>				
 	</h:form>
 </ft:tilesView>

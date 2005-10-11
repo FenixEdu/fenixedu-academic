@@ -43,6 +43,7 @@ import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
 import net.sourceforge.fenixedu.domain.IWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.IWrittenTest;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
@@ -577,7 +578,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             return "";
         }
 
-        return this.getEvaluation().getClass().getSimpleName();
+        return WrittenTest.class.getSimpleName();
     }
 
     public IExecutionCourse getExecutionCourse() throws FenixFilterException, FenixServiceException {
@@ -735,7 +736,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             this.setErrorMessage(errorMessage);
             return "";
         }
-        return this.getEvaluation().getClass().getSimpleName();
+        return WrittenTest.class.getSimpleName();
     }    
 
     public List<IRoom> getEvaluationRooms() throws FenixFilterException, FenixServiceException {
