@@ -265,7 +265,12 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     public String getDescription() throws FenixFilterException, FenixServiceException {
         if (this.description == null && this.getEvaluation() != null) {
-            this.description = this.getEvaluationDescription();
+            final IEvaluation writtenEvaluation = getEvaluation();
+            if (writtenEvaluation instanceof IExam) {
+                this.description = ((IExam) writtenEvaluation).getSeason().toString();
+            } else if (writtenEvaluation instanceof IWrittenTest) {
+                this.description = ((IWrittenTest) writtenEvaluation).getDescription();
+            }
         }
         return this.description;
     }
@@ -497,26 +502,6 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         final Object[] args = { getEvaluationID(), this.marks };
         ServiceUtils.executeService(getUserView(), "WriteMarks", args);
         return getEvaluation().getClass().getSimpleName();
-    }
-
-    public String getEvaluationType() throws FenixFilterException, FenixServiceException {
-        final IEvaluation writtenEvaluation = getEvaluation();
-        if (writtenEvaluation instanceof IExam) {
-            return "Exame";
-        } else if (writtenEvaluation instanceof IWrittenTest) {
-            return "Teste";
-        }
-        return "";
-    }
-    
-    public String getEvaluationDescription() throws FenixFilterException, FenixServiceException {
-        final IEvaluation writtenEvaluation = getEvaluation();
-        if (writtenEvaluation instanceof IExam) {
-            return ((IExam) writtenEvaluation).getSeason().toString();
-        } else if (writtenEvaluation instanceof IWrittenTest) {
-            return ((IWrittenTest) writtenEvaluation).getDescription();
-        }
-        return "";
     }
 
     public List<IWrittenEvaluationEnrolment> getWrittenEvaluationEnrolments()

@@ -15,7 +15,11 @@
 	
 		<h:outputText styleClass="infoop" value="#{bundle['label.period.information']}" escape="false"/>
 	
-		<h:outputText value="<br/><br/><br/><b>#{evaluationManagementBackingBean.evaluationType}:</b> #{evaluationManagementBackingBean.evaluationDescription} - " escape="false"/>
+		<h:outputText value="<br/><br/><br/><b>#{bundle['label.exam']}:</b> " escape="false" rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.Exam'}"/>
+		<h:outputText value="<br/><br/><br/><b>#{bundle['label.written.test']}:</b> " escape="false" rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.WrittenTest'}"/>
+		<h:outputText value="#{evaluationManagementBackingBean.evaluation.season} - " rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.Exam'}"/>
+		<h:outputText value="#{evaluationManagementBackingBean.evaluation.description} - " rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.WrittenTest'}"/>
+
 		<h:outputFormat value="{0, date, dd/MM/yyyy}">
 			<f:param value="#{evaluationManagementBackingBean.evaluation.dayDate}"/>
 		</h:outputFormat>
