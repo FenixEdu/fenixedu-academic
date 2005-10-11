@@ -154,7 +154,7 @@ public class ShowExamsManagement extends FenixContextDispatchAction {
         ContextUtils.setExecutionPeriodContext(request);
 
         Integer examID = new Integer(request.getParameter(SessionConstants.EXAM_OID));
-        Object[] args = { examID };
+        Object[] args = { null, examID };
 
         try {
             ServiceUtils.executeService(userView, "DeleteWrittenEvaluation", args);

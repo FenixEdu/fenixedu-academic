@@ -22,7 +22,6 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -46,7 +45,6 @@ import net.sourceforge.fenixedu.domain.IWrittenTest;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -566,7 +564,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             }
         }
 
-        final Object[] args = { this.getBegin(), this.getBegin(), this.getEnd(), executionCourseIDs,
+        final Object[] args = { this.getExecutionCourseID(), this.getBegin(), this.getBegin(), this.getEnd(), executionCourseIDs,
                 curricularCourseScopeIDs, null, null, this.getDescription() };
         try {
             ServiceUtils.executeService(getUserView(), "CreateWrittenEvaluation", args);
@@ -709,7 +707,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             }
         }
 
-        final Object[] args = { this.getBegin(), this.getBegin(), this.getEnd(), executionCourseIDs,
+        final Object[] args = { this.getExecutionCourseID(), this.getBegin(), this.getBegin(), this.getEnd(), executionCourseIDs,
                 curricularCourseScopeIDs, null, this.evaluationID, null, this.getDescription() };
         try {
             ServiceUtils.executeService(getUserView(), "EditWrittenEvaluation", args);
@@ -737,7 +735,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public String deleteWrittenTest() {
-        final Object args[] = { this.getEvaluationID() };
+        final Object args[] = { this.getExecutionCourseID(), this.getEvaluationID() };
         try {
             ServiceUtils.executeService(getUserView(), "DeleteWrittenEvaluation", args);
         } catch (Exception e) {

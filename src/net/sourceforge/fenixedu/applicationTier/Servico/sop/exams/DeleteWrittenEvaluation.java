@@ -11,7 +11,12 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class DeleteWrittenEvaluation implements IService {
 
-    public void run(Integer writtenEvaluationOID) throws FenixServiceException, ExcepcaoPersistencia {
+    /**
+     * @param Integer executionCourseOID
+     *            used in filtering
+     *            (ExecutionCourseLecturingTeacherAuthorizationFilter)
+     */
+    public void run(Integer executionCourseOID, Integer writtenEvaluationOID) throws FenixServiceException, ExcepcaoPersistencia {
 
         final ISuportePersistente persistenceSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();

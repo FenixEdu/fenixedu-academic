@@ -145,7 +145,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
         List<String> roomIDs = Arrays.asList((String[]) createExamForm.get("rooms"));
         
         // Create an exam with season, examDateAndTime and executionCourse
-        Object argsCreateExam[] = { examDate, examStartTime, examEndTime, 
+        Object argsCreateExam[] = { null, examDate, examStartTime, examEndTime, 
                 executionCourseIDs, curricularCourseScopeIDs, roomIDs, season, null };
         try {
             ServiceUtils.executeService(userView, "CreateWrittenEvaluation", argsCreateExam);
@@ -568,7 +568,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
         List<String> scopeIDs = Arrays.asList((String[]) createExamForm.get("scopes"));
         List<String> roomIDs = Arrays.asList((String[]) createExamForm.get("rooms"));
 
-        Object argsEditExam[] = { examDate, examStartTime, examEndTime, executionCourseIDs, scopeIDs, roomIDs, infoExamID, season, null };
+        Object argsEditExam[] = { null, examDate, examStartTime, examEndTime, executionCourseIDs, scopeIDs, roomIDs, infoExamID, season, null };
         try {
             ServiceUtils.executeService(userView, "EditWrittenEvaluation", argsEditExam);
         } 

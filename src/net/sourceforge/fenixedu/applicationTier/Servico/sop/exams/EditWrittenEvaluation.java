@@ -31,7 +31,15 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class EditWrittenEvaluation implements IService {
 
-    public void run(Calendar writtenEvaluationDate, Calendar writtenEvaluationStartTime,
+    /**
+     * @param Integer executionCourseID
+     *            used in filtering
+     *            (ExecutionCourseLecturingTeacherAuthorizationFilter)
+     * @param List<String> executionCourseIDs
+     *            used in remaining operations, allowing more than one execution
+     *            course to be associated with the written evaluation
+     */
+    public void run(Integer executionCourseID, Calendar writtenEvaluationDate, Calendar writtenEvaluationStartTime,
             Calendar writtenEvaluationEndTime, List<String> executionCourseIDs,
             List<String> curricularCourseScopeIDs, List<String> roomIDs, Integer writtenEvaluationOID,
             Season examSeason, String writtenTestDescription) throws FenixServiceException,
