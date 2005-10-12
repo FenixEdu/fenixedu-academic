@@ -443,15 +443,8 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         RoomKey roomKey = null;
 
         if (roomName != null) {
-
             roomKey = new RoomKey(roomName);
 
-            /*
-             * Integer objectCode = null; String objectCodeString =
-             * request.getParameter("objectCode"); if (objectCodeString == null) {
-             * objectCodeString = (String) request.getAttribute("objectCode"); }
-             * objectCode = new Integer(objectCodeString);
-             */
             ISiteComponent bodyComponent = new InfoSiteRoomTimeTable();
             DynaActionForm indexForm = (DynaActionForm) form;
             Integer indexWeek = (Integer) indexForm.get("indexWeek");
@@ -500,7 +493,6 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
                         "RoomSiteComponentService", args);
 
                 request.setAttribute("siteView", siteView);
-                // request.setAttribute("objectCode", objectCode);
 
             } catch (NonExistingServiceException e) {
                 throw new NonExistingActionException(e);
