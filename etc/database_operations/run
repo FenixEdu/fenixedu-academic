@@ -40,4 +40,6 @@ mysql -u$2 -f $1 < alterTableUnit.sql
 mysql -u$2 -f $1 < createFunctionTable.sql
 mysql -u$2 -f $1 < createPersonFunctionTable.sql
 mysql -u$2 -f $1 < addUnitTypes.sql
+mysql -u$2 -f $1 < addUnitRealNames.sql
+mysql -u$2 -f $1 < addDepartmentRealNames.sql
 echo Preparing Tables Unit and Function... completed
