@@ -34,7 +34,7 @@
 	<html:hidden property="page" value="0"/>
 	<br />            
 	<h2><bean:message key="message.recommendedBibliography"/></h2>
-	<table cellspacing="0" cellpadding="0">
+	<table cellspacing="0" cellpadding="0" >
 	  	<tbody>
 			<logic:iterate id="bibliographicReference" name="bibliographicReferencesList">
 			<logic:notEqual name="bibliographicReference" property="optional" value="true">
@@ -60,8 +60,8 @@
 					<td>
 						<!--    <bean:message key="message.bibliographicReferenceYear"/> -->
 						<bean:write name="bibliographicReference" property="year" filter="false" />                            
-						  <br />
-						  <br />
+						<br />
+						<br />
 					</td>
 				</tr>
 				<tr>
@@ -111,7 +111,9 @@
 	            <tr>
 	               	<td>
 	               		<!--     <bean:message key="message.bibliographicReferenceYear" /> -->
-	                    <bean:write name="bibliographicReference" property="year" filter="false" />                            
+	                    <bean:write name="bibliographicReference" property="year" filter="false" />
+	                    <br />
+						<br />                         
 	               	</td>
 	            </tr>
 	            <tr>
@@ -127,6 +129,7 @@
 								<bean:message key="button.delete"/>                  		     
 							</html:link>
 						</div>
+						<br />
 	                </td>
 	            </tr>
 	        </logic:notEqual>
