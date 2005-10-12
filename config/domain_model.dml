@@ -677,6 +677,7 @@ class net.sourceforge.fenixedu.domain.student.Delegate extends net.sourceforge.f
 	
 class net.sourceforge.fenixedu.domain.Department extends net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
+	String realName;
 	String name;
 	Integer keyUnit;
 	
@@ -2985,6 +2986,7 @@ class net.sourceforge.fenixedu.domain.Seminaries.Theme extends net.sourceforge.f
 
 class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.sourceforge.fenixedu.domain.DomainObject {
 	String name;
+	String realName;
 	UnitType type;
 	Integer costCenterCode;
 	Integer keyParentUnit;

@@ -84,14 +84,11 @@ public class InfoUnit extends InfoObject {
     }
     
     private String getRealName(IUnit unit){
-//        if(unit.getRealName() == null || unit.getRealName().equals("")){
-//            return unit.getName(); 
-//        }
-//        else{
-//            return unit.getRealName();
-//        }
-        
-        return unit.getName();
+        if(unit.getRealName() == null || unit.getRealName().equals("")){
+            return unit.getName(); 
+        }
+        else{
+            return unit.getRealName();
+        }       
     }
-
 }

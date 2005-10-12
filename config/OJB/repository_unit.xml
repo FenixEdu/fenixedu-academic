@@ -33,8 +33,13 @@
 	<field-descriptor id="6" 
 	   name="type"    
 	   column="TYPE"  
-	   jdbc-type="LONGVARCHAR"
+	   jdbc-type="VARCHAR"
 	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.UnitType2SqlUnitTypeConversion"
+    />
+	<field-descriptor id="6" 
+	   name="realName"    
+	   column="REAL_NAME"  
+	   jdbc-type="VARCHAR"
     />
 
 	<reference-descriptor auto-retrieve="false"
