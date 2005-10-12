@@ -136,18 +136,18 @@
 		<br/>
 		<p class="infoop"><span class="emphasis-box">5</span>
 		<bean:message key="message.teacherInformation.ownPublications" /></p>
-		<logic:notEmpty name="infoSiteTeacherInformation" property="infoOldDidacticPublications">
+		<logic:notEmpty name="infoSiteTeacherInformation" property="infoDidaticPublications">
 			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
-				<logic:iterate id="infoOldPublication" name="infoSiteTeacherInformation" property="infoOldDidacticPublications">
+				<logic:iterate id="infoPublicationDidatic" name="infoSiteTeacherInformation" property="infoDidaticPublications">
 					<tr>
 						<td class="listClasses" style="text-align:left">
-							<bean:write name="infoOldPublication" property="publication" />
+							<bean:write name="infoPublicationDidatic" property="publicationString" />
 						</td>
 					</tr>
 				</logic:iterate>
 			</table>
 		</logic:notEmpty>
-		<logic:empty name="infoSiteTeacherInformation" property="infoOldDidacticPublications">
+		<logic:empty name="infoSiteTeacherInformation" property="infoDidaticPublications">
 			<br>&nbsp;</br>
 			<bean:message key="label.teachersInformation.notModified" />
 			<br>&nbsp;</br>
@@ -155,18 +155,18 @@
 		<br />
 		<p class="infoop"><span class="emphasis-box">6</span>
 		<bean:message key="message.teacherInformation.cientificPublications" /></p>
-		<logic:notEmpty name="infoSiteTeacherInformation" property="infoOldCientificPublications">
+		<logic:notEmpty name="infoSiteTeacherInformation" property="infoCientificPublications">
 			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
-				<logic:iterate id="infoOldPublication" name="infoSiteTeacherInformation" property="infoOldCientificPublications">
+				<logic:iterate id="infoPublicationCientific" name="infoSiteTeacherInformation" property="infoCientificPublications">
 					<tr>
 						<td class="listClasses" style="text-align:left">
-							<bean:write name="infoOldPublication" property="publication" />
+							<bean:write name="infoPublicationCientific" property="publicationString" />
 						</td>
 					</tr>
 				</logic:iterate>
 			</table>
 		</logic:notEmpty>
-		<logic:empty name="infoSiteTeacherInformation" property="infoOldCientificPublications">
+		<logic:empty name="infoSiteTeacherInformation" property="infoCientificPublications">
 			<br>&nbsp;</br>
 			<bean:message key="label.teachersInformation.notModified" />
 			<br>&nbsp;</br>
