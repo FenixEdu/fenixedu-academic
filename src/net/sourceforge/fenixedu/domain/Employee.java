@@ -27,9 +27,8 @@ public class Employee extends Employee_Base {
         IContract contract = getCurrentContract();
 
         if (contract != null && contract.getWorkingUnit() != null) {
-
-            IUnit unit = contract.getWorkingUnit();
-            return getUnitDepartment(unit);
+            
+            return getUnitDepartment(contract.getWorkingUnit());
         }
         return null;
     }
@@ -40,8 +39,7 @@ public class Employee extends Employee_Base {
 
         if (contract != null && contract.getMailingUnit() != null) {
 
-            IUnit unit = contract.getMailingUnit();
-            return getUnitDepartment(unit);
+            return getUnitDepartment(contract.getMailingUnit());
         }
         return null;
     }

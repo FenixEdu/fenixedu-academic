@@ -36,14 +36,14 @@ public class Department extends Department_Base {
                         
             for(IContract contract : unit.getWorkingContracts()){
                 IEmployee employee = contract.getEmployee();               
-                if(employee.getActive().booleanValue()){
+                if(employee.getActive().booleanValue() && contract.equals(employee.getCurrentContract())){
                     employees.add(employee);
 }
             }                                    
             for(IUnit subUnit : unit.getAssociatedUnits()){
                 for(IContract contract : subUnit.getWorkingContracts()){
                     IEmployee employee = contract.getEmployee();
-                    if(employee.getActive().booleanValue()){
+                    if(employee.getActive().booleanValue() && contract.equals(employee.getCurrentContract())){
                         employees.add(employee);
                     }
                 }
