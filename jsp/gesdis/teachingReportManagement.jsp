@@ -33,7 +33,12 @@
 			<td><strong><bean:message key="message.teachingReport.courseDepartment"/></strong></td>
 			<td>
 				<logic:iterate id="infoDepartment" name="siteCourseInformation" property="infoDepartments">
-					<bean:write name="infoDepartment" property="name" />
+					<logic:present name="infoDepartment" property="name" >
+						<bean:write name="infoDepartment" property="name" />
+					</logic:present>
+					<logic:present name="infoDepartment" property="name" >
+						<bean:write name="infoDepartment" property="name" />
+					</logic:present>
 					<br />
 				</logic:iterate>
 			</td>
