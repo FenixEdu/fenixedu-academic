@@ -39,7 +39,7 @@
 			<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.degree.DegreeType" bundle="ENUMERATION_RESOURCES"  />
 				<html:select property="degreeType" onchange="this.form.submit()">
 					<html:option key="dropDown.Default" value=""/>
-					<html:options collection="values" property="value" labelProperty="label"/>
+					<html:options collection="values" property="value" labelProperty="label"/>				
 				</html:select>
 		</td>
 		</tr>
@@ -70,7 +70,7 @@
 				<logic:iterate id="department" name="departments" > 
 			   	<bean:define id="departmentID" name="department" property="idInternal"/>
 					<html:option value="<%= departmentID.toString() %>"> <bean:write name="department" 
-						property="name"/> 
+						property="realName"/> 
 					</html:option>
 					
 			  </logic:iterate>

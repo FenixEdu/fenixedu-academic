@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.IDepartment;
  */
 public class InfoDepartment extends InfoObject {
     private String name;
-
+    private String realName;
     private String code;
 
     public InfoDepartment() {
@@ -69,6 +69,7 @@ public class InfoDepartment extends InfoObject {
         if (department != null) {
             setCode(department.getCode());
             setName(department.getName());
+            setRealName(department.getRealName());
         }
     }
 
@@ -79,5 +80,13 @@ public class InfoDepartment extends InfoObject {
             infoDepartment.copyFromDomain(department);
         }
         return infoDepartment;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 }

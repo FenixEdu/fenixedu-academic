@@ -19,6 +19,11 @@
 		jdbc-type="VARCHAR"
 	/>
 	<field-descriptor
+		name="realName"
+		column="REAL_NAME"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
 		name="code"
 		column="CODE"
 		jdbc-type="VARCHAR"
