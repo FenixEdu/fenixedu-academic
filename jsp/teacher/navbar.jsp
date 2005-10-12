@@ -29,8 +29,9 @@
 		<li><html:link page="/teachersManagerDA.do?method=viewTeachersByProfessorship" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.teachers"/></html:link></li>
 		<li><html:link page="/studentsByCurricularCourse.do?method=prepare" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.students"/></html:link></li>
 		<%-- <li><html:link page="/readCurricularCourseList.do?method=read" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.students"/></html:link></li> --%>
-		<li><html:link page="/viewEvaluation.do?method=viewEvaluation" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.evaluation"/></html:link></li>
+		<%-- <li><html:link page="/viewEvaluation.do?method=viewEvaluation" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.evaluation"/></html:link></li> --%>
 		<li><html:link page="/evaluation/evaluationIndex.faces" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.evaluation"/></html:link></li>
+		<li><html:link page="/testsManagement.do?method=testsFirstPage" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.testsManagement"/></html:link></li>
 		<li><html:link page="/viewExecutionCourseProjects.do?method=prepareViewExecutionCourseProjects" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.groupsManagement"/></html:link></li>
 		<br/>
 		<li><html:link page="/viewCourseInformation.do" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.courseInformationManagement"/></html:link></li>
