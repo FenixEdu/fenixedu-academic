@@ -482,21 +482,6 @@
             <set-property property="infoObjectClassName" 
                 value="net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudent" />
 
-            <exception 
-                type="net.sourceforge.fenixedu.applicationTier.Servico.degree.finalProject.EditTeacherDegreeFinalProjectStudentByOID$StudentNotFoundServiceException" 
-                key="message.student-not-found" 
-                path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>
-
-            <exception 
-                type="net.sourceforge.fenixedu.applicationTier.Servico.degree.finalProject.EditTeacherDegreeFinalProjectStudentByOID$ExecutionPeriodNotFoundServiceException" 
-                key="message.execution-period-not-found" 
-                path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>
-
-            <exception 
-                type="net.sourceforge.fenixedu.applicationTier.Servico.degree.finalProject.EditTeacherDegreeFinalProjectStudentByOID$StudentPercentageExceed" 
-                key="message.teacherDegreeFinalProjectStudent.percentageExceed" 
-                path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>
-
             <exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException" 
                 key="message.teacherDegreeFinalProjectStudent.student-already-setted" 
                 path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>

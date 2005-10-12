@@ -28,8 +28,10 @@
 	<html:hidden property="idInternal"/>
 	<html:hidden property="studentId"/>	
 	<html:hidden property="teacherId"/>	
-	<html:hidden property="executionPeriodId"/>		
-	<html:errors />
+	<html:hidden property="executionPeriodId"/>
+	
+	<span class="error"><html:errors /></span>
+	
 	<table>
 		<tr>
 			<td>
@@ -107,6 +109,5 @@
 					</td>
 				</tr>				
 			</logic:iterate>
-
 	</table>
 </logic:greaterThan>
