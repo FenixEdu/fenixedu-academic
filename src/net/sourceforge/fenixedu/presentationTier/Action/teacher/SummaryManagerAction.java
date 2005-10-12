@@ -38,7 +38,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -236,6 +235,13 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
 
         htmlEditorConfigurations(request, actionForm);
 
+        final InfoSiteSummaries infoSiteSummaries = (InfoSiteSummaries) ((ExecutionCourseSiteView) siteView)
+                .getComponent();
+        for (final InfoShift infoShift : (List<InfoShift>) infoSiteSummaries.getInfoShifts()) {
+            Collections.sort(infoShift.getInfoLessons());
+        }
+        Collections.sort(infoSiteSummaries.getInfoShifts(), new BeanComparator("lessons"));
+
         request.setAttribute("siteView", siteView);
         return mapping.findForward("insertSummary");
     }
@@ -368,18 +374,6 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
 
             InfoSummary infoSummaryToInsert = buildSummaryToInsert(request);
 
-            /*
-             * HtmlValidator htmlValidator = new HtmlValidator();
-             * htmlValidator.validateHTMLString(infoSummaryToInsert.getSummaryText());
-             * String errors = htmlValidator.getErrors();
-             * 
-             * if((errors != null) && (!errors.equals(""))){ ActionErrors
-             * actionErrors = new ActionErrors(); request.setAttribute("errors",
-             * errors); actionErrors.add("htmlErrors", new
-             * ActionError("html.validate.error")); saveErrors(request,
-             * actionErrors); return mapping.getInputForward(); }
-             */
-
             Object[] args = { executionCourseId, infoSummaryToInsert };
             ServiceUtils.executeService(userView, "InsertSummary", args);
 
@@ -408,9 +402,6 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
         }
     }
 
-    /**
-     * @param actionForm
-     */
     protected void resetActionForm(DynaActionForm actionForm, boolean teste) {
         if (teste) {
             actionForm.set("summaryText", "");
@@ -647,21 +638,6 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
 
             InfoSummary infoSummaryToEdit = buildSummaryToInsert(request);
             infoSummaryToEdit.setIdInternal(summaryId);
-
-            // HtmlValidator htmlValidator = new HtmlValidator();
-            // htmlValidator.validateHTMLString(infoSummaryToEdit.getSummaryText());
-            // String errors = htmlValidator.getErrors();
-            //          
-            // if((errors != null) && (!errors.equals(""))){
-            // ActionErrors actionErrors = new ActionErrors();
-            // request.setAttribute("errors", errors);
-            // actionErrors.add("htmlErrors", new
-            // ActionError("html.validate.error"));
-            // saveErrors(request, actionErrors);
-            // request.setAttribute("summaryTextFlag",
-            // infoSummaryToEdit.getSummaryText());
-            // return prepareEditSummary(mapping, form, request, response);
-            // }
 
             Object[] args = { executionCourseId, infoSummaryToEdit };
 
