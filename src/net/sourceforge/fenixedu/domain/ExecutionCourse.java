@@ -42,10 +42,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public List<IGrouping> getGroupings() {
-        List<IGrouping> result = new ArrayList();       
+        List<IGrouping> result = new ArrayList();
         for (final IExportGrouping exportGrouping : this.getExportGroupings()) {
-            if (exportGrouping.getProposalState().getState() == ProposalState.ACEITE || 
-                    exportGrouping.getProposalState().getState() == ProposalState.CRIADOR) {
+            if (exportGrouping.getProposalState().getState() == ProposalState.ACEITE
+                    || exportGrouping.getProposalState().getState() == ProposalState.CRIADOR) {
                 result.add(exportGrouping.getGrouping());
             }
         }
@@ -61,8 +61,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return null;
     }
 
-    public boolean existsGroupingExecutionCourse(
-            IExportGrouping groupPropertiesExecutionCourse) {
+    public boolean existsGroupingExecutionCourse(IExportGrouping groupPropertiesExecutionCourse) {
         return getExportGroupings().contains(groupPropertiesExecutionCourse);
     }
 
@@ -77,8 +76,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         Iterator iter = groupPropertiesExecutionCourseList.iterator();
         while (iter.hasNext() && !found) {
 
-            IExportGrouping groupPropertiesExecutionCourseAux = (IExportGrouping) iter
-                    .next();
+            IExportGrouping groupPropertiesExecutionCourseAux = (IExportGrouping) iter.next();
             if (groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 3) {
                 result = true;
                 found = true;
@@ -155,7 +153,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     private ISummary createSummary(String title, String summaryText, Integer studentsNumber,
             Boolean isExtraLesson) {
-        
+
         if (title == null || summaryText == null || isExtraLesson == null)
             throw new NullPointerException();
 
@@ -180,7 +178,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         summary.setProfessorship(professorship);
         summary.setTeacher(null);
         summary.setTeacherName(null);
-        
+
         return summary;
     }
 
@@ -189,12 +187,12 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
         if (teacher == null)
             throw new NullPointerException();
-        
+
         final ISummary summary = createSummary(title, summaryText, studentsNumber, isExtraLesson);
         summary.setTeacher(teacher);
         summary.setProfessorship(null);
         summary.setTeacherName(null);
-        
+
         return summary;
     }
 
@@ -203,15 +201,15 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
         if (teacherName == null)
             throw new NullPointerException();
-        
+
         final ISummary summary = createSummary(title, summaryText, studentsNumber, isExtraLesson);
         summary.setTeacherName(teacherName);
         summary.setTeacher(null);
-        summary.setProfessorship(null);    
-        
+        summary.setProfessorship(null);
+
         return summary;
     }
-    
+
     public List<IProfessorship> responsibleFors() {
         final List<IProfessorship> res = new ArrayList<IProfessorship>();
         for (final IProfessorship professorship : this.getProfessorships()) {
@@ -220,52 +218,52 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
         return res;
     }
-	
-	public IAttends getAttendsByStudent (final IStudent student) {
-		
-		return (IAttends)CollectionUtils.find(getAttends(),new Predicate() {
 
-			public boolean evaluate(Object o) {
-				IAttends attends = (IAttends) o;
-				return attends.getAluno().equals(student);
-			}
-			
-		});
-	}
-    
+    public IAttends getAttendsByStudent(final IStudent student) {
+
+        return (IAttends) CollectionUtils.find(getAttends(), new Predicate() {
+
+            public boolean evaluate(Object o) {
+                IAttends attends = (IAttends) o;
+                return attends.getAluno().equals(student);
+            }
+
+        });
+    }
+
     public List<IExam> getAssociatedExams() {
         List<IExam> associatedExams = new ArrayList<IExam>();
-        
+
         for (IEvaluation evaluation : this.getAssociatedEvaluations()) {
             if (evaluation instanceof IExam) {
                 associatedExams.add((IExam) evaluation);
             }
         }
-        
+
         return associatedExams;
     }
 
     public List<IWrittenTest> getAssociatedWrittenTests() {
         List<IWrittenTest> associatedWrittenTests = new ArrayList<IWrittenTest>();
-        
+
         for (IEvaluation evaluation : this.getAssociatedEvaluations()) {
             if (evaluation instanceof IWrittenTest) {
                 associatedWrittenTests.add((IWrittenTest) evaluation);
             }
         }
-        
+
         return associatedWrittenTests;
     }
 
     public List<IOnlineTest> getAssociatedOnlineTests() {
         List<IOnlineTest> associatedOnlineTests = new ArrayList<IOnlineTest>();
-        
+
         for (IEvaluation evaluation : this.getAssociatedEvaluations()) {
             if (evaluation instanceof IOnlineTest) {
                 associatedOnlineTests.add((IOnlineTest) evaluation);
             }
         }
-        
+
         return associatedOnlineTests;
     }
 
