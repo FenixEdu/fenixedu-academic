@@ -1076,6 +1076,8 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
 	public java.util.List<IExam> getAssociatedExams();
 	
 	public java.util.List<IWrittenTest> getAssociatedWrittenTests();
+	
+	public java.util.List<net.sourceforge.fenixedu.domain.onlineTests.IOnlineTest> getAssociatedOnlineTests();
     "
 }
 

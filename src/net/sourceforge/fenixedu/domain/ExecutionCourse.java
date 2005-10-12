@@ -8,6 +8,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
+import net.sourceforge.fenixedu.domain.onlineTests.IOnlineTest;
 import net.sourceforge.fenixedu.fileSuport.INode;
 import net.sourceforge.fenixedu.util.ProposalState;
 
@@ -255,5 +256,17 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         
         return associatedWrittenTests;
     }
-    
+
+    public List<IOnlineTest> getAssociatedOnlineTests() {
+        List<IOnlineTest> associatedOnlineTests = new ArrayList<IOnlineTest>();
+        
+        for (IEvaluation evaluation : this.getAssociatedEvaluations()) {
+            if (evaluation instanceof IOnlineTest) {
+                associatedOnlineTests.add((IOnlineTest) evaluation);
+            }
+        }
+        
+        return associatedOnlineTests;
+    }
+
 }
