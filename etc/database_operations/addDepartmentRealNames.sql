@@ -1,5 +1,7 @@
 alter table DEPARTMENT add column REAL_NAME varchar(100) default '';
 
+update DEPARTMENT set DEPARTMENT.NAME = 'SECCAO AUTONOMA DE ENGENHARIA NAVAL' where DEPARTMENT.NAME = 'SEC. AUTONOMA DE ENGENHARIA NAVAL';
+
 update DEPARTMENT set REAL_NAME = 'Departamento de Física (DF)' where DEPARTMENT.NAME = 'DEPARTAMENTO DE FISICA';
 update DEPARTMENT set REAL_NAME = 'Departamento de Engenharia Electrotécnica e de Computadores (DEEC)' where DEPARTMENT.NAME = 'DEP. ENG. ELECT. E COMPUTADORES';
 update DEPARTMENT set REAL_NAME = 'Departamento de Matemática (DM)' where DEPARTMENT.NAME = 'DEPARTAMENTO DE MATEMATICA';
