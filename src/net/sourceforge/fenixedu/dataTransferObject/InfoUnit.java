@@ -47,18 +47,30 @@ public class InfoUnit extends InfoObject {
         if (unit != null) {
             List superiorUnits = new ArrayList();
             setCostCenterCode(unit.getCostCenterCode().toString());
-            setName(unit.getName());
+            setName(getRealName(unit));
             IUnit unitBase = unit;
-            if (unit.getParentUnit() != null) {
-                while (unit.getParentUnit() != null) {
-                    superiorUnits.add(unit.getParentUnit().getName());
-                    unit = unit.getParentUnit();
-                }
-                String unitName = unitBase.getCostCenterCode().toString() + " - " + unitBase.getName(); 
-                superiorUnits.add(0, unitName);
-                Collections.reverse(superiorUnits);
-                setSuperiorUnitsNames(superiorUnits);
-            }
+            getParentUnitsNames(unit, superiorUnits, unitBase);
+        }
+    }
+
+  
+    private void getParentUnitsNames(IUnit unit, List superiorUnits, IUnit unitBase) {
+        String unitName = getRealName(unitBase);                
+        unitName = unitBase.getCostCenterCode().toString() + " - " + unitName; 
+        if (unit.getParentUnit() != null) {
+            while (unit.getParentUnit() != null) {                    
+                String uniName = getRealName(unit.getParentUnit());
+                superiorUnits.add(uniName);                    
+                unit = unit.getParentUnit();
+            } 
+          
+            superiorUnits.add(0, unitName);
+            Collections.reverse(superiorUnits);
+            setSuperiorUnitsNames(superiorUnits);
+        }
+        else{
+            superiorUnits.add(0, unitName);
+            setSuperiorUnitsNames(superiorUnits);
         }
     }
 
@@ -69,6 +81,17 @@ public class InfoUnit extends InfoObject {
             infoUnit.copyFromDomain(unit);
         }
         return infoUnit;
+    }
+    
+    private String getRealName(IUnit unit){
+//        if(unit.getRealName() == null || unit.getRealName().equals("")){
+//            return unit.getName(); 
+//        }
+//        else{
+//            return unit.getRealName();
+//        }
+        
+        return unit.getName();
     }
 
 }
