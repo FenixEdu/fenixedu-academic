@@ -36,9 +36,6 @@
 					<logic:present name="infoDepartment" property="name" >
 						<bean:write name="infoDepartment" property="name" />
 					</logic:present>
-					<logic:present name="infoDepartment" property="name" >
-						<bean:write name="infoDepartment" property="name" />
-					</logic:present>
 					<br />
 				</logic:iterate>
 			</td>
