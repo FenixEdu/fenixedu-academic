@@ -173,7 +173,9 @@ public class FindPersonAction extends FenixDispatchAction {
        
         } catch (FenixServiceException e) {           
             errors.add("impossibleFindPerson", new ActionError(e.getMessage()));
-            saveErrors(request, errors);            
+            saveErrors(request, errors);      
+            findPersonForm.set("roleType", "");
+            findPersonForm.set("name", "");
             return prepareFindPerson(mapping, actionForm, request, response);
         }
                
@@ -191,7 +193,7 @@ public class FindPersonAction extends FenixDispatchAction {
         }
         if (!errors.isEmpty()) {
             saveErrors(request, errors);
-            return mapping.getInputForward();
+            return prepareFindPerson(mapping, actionForm, request, response);
         }
 
         request.setAttribute("totalFindedPersons", personListFinded.get(0));

@@ -19,6 +19,7 @@ public enum FunctionType {
     DOCENTE,
     ALUNO,
     REPRESENTANTE,
+    UNKNOWN,
     VOGAL;
     
     public String getName() {

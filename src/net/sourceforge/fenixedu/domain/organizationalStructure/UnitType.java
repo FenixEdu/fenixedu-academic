@@ -22,6 +22,7 @@ public enum UnitType {
     DIRECCAO_EXECUTIVA,
     DIRECCAO_ADMINISTRATIVA,
     OUTROS,
+    UNKNOWN,
     DIRECCAO_TECNICA;
       
     public String getName() {
