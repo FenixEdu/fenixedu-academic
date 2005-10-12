@@ -45,6 +45,7 @@ import net.sourceforge.fenixedu.domain.IWrittenTest;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.onlineTests.IOnlineTest;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
@@ -434,6 +435,16 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return examsList;
     }
 
+    public List<IOnlineTest> getOnlineTestList() throws FenixFilterException, FenixServiceException {
+        final Object[] args = { ExecutionCourse.class, this.getExecutionCourseID() };
+        IExecutionCourse executionCourse = (IExecutionCourse) ServiceUtils.executeService(null,
+                "ReadDomainObject", args);
+
+        List<IOnlineTest> onlineTestList = new ArrayList(executionCourse.getAssociatedOnlineTests());
+        Collections.sort(onlineTestList, new BeanComparator("distributedTest.beginDateDate"));
+        return onlineTestList;
+    }
+    
     public List<IWrittenTest> getWrittenTestList() throws FenixFilterException, FenixServiceException {
         final Object[] args = { ExecutionCourse.class, this.getExecutionCourseID() };
         IExecutionCourse executionCourse = (IExecutionCourse) ServiceUtils.executeService(null,

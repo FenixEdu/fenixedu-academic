@@ -327,6 +327,18 @@
 	<!-- BEGIN: TEACHER Navigation Rules -->
 
 	<navigation-rule>
+		<from-view-id>/teacher/evaluation/onlineTestsIndex.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>enterShowMarksListOptions</from-outcome>
+			<to-view-id>/teacher/evaluation/editMarksList.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>enterPublishMarks</from-outcome>
+			<to-view-id>/teacher/evaluation/publishMarks.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
 		<from-view-id>/teacher/evaluation/writtenTestsIndex.jsp</from-view-id>
  		<navigation-case>
 			<from-outcome>enterCreateWrittenTest</from-outcome>
@@ -438,6 +450,10 @@
 	<navigation-rule>
 		<from-view-id>/teacher/evaluation/editMarksList.jsp</from-view-id>
  		<navigation-case>
+			<from-outcome>OnlineTest</from-outcome>
+			<to-view-id>/teacher/evaluation/onlineTestsIndex.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
 			<from-outcome>WrittenTest</from-outcome>
 			<to-view-id>/teacher/evaluation/writtenTestsIndex.jsp</to-view-id>
 		</navigation-case>
@@ -465,6 +481,10 @@
 
 	<navigation-rule>
 		<from-view-id>/teacher/evaluation/publishMarks.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>OnlineTest</from-outcome>
+			<to-view-id>/teacher/evaluation/onlineTestsIndex.jsp</to-view-id>
+		</navigation-case>
  		<navigation-case>
 			<from-outcome>WrittenTest</from-outcome>
 			<to-view-id>/teacher/evaluation/writtenTestsIndex.jsp</to-view-id>

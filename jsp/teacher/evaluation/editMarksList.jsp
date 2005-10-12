@@ -17,11 +17,35 @@
 			value="#{bundle[evaluationManagementBackingBean.errorMessage]}"/>
 
 		<h:panelGrid width="100%" columns="1" cellspacing="8" cellpadding="8">
-			<h:panelGroup>
-				<h:outputText value="<b>#{bundle['label.exam']}:</b> " escape="false" rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.Exam'}"/>
-				<h:outputText value="<b>#{bundle['label.written.test']}:</b> " escape="false" rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.WrittenTest'}"/>
-				<h:outputText value="#{evaluationManagementBackingBean.evaluation.season}, " rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.Exam'}"/>
-				<h:outputText value="#{evaluationManagementBackingBean.evaluation.description}, " rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.WrittenTest'}"/>
+			<h:panelGroup rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.onlineTests.OnlineTest'}">
+				<h:outputText value="<b>#{bundle['lable.test']}:</b> " escape="false"/>
+				<h:outputText value="#{evaluationManagementBackingBean.evaluation.distributedTest.title}, "/>
+				<h:outputText value="#{bundle['label.day']}" />
+				<h:outputFormat value="{0, date, dd/MM/yyyy}">
+					<f:param value="#{evaluationManagementBackingBean.evaluation.distributedTest.beginDateDate}"/>
+				</h:outputFormat>
+				<h:outputText value=" #{bundle['label.at']}" />
+				<h:outputFormat value="{0, date, HH:mm}">
+					<f:param value="#{evaluationManagementBackingBean.evaluation.distributedTest.beginHourDate}"/>
+				</h:outputFormat>
+			</h:panelGroup>
+
+			<h:panelGroup rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.WrittenTest'}">
+				<h:outputText value="<b>#{bundle['label.written.test']}:</b> " escape="false"/>
+				<h:outputText value="#{evaluationManagementBackingBean.evaluation.description}, "/>
+				<h:outputText value="#{bundle['label.day']}" />
+				<h:outputFormat value="{0, date, dd/MM/yyyy}">
+					<f:param value="#{evaluationManagementBackingBean.evaluation.dayDate}"/>
+				</h:outputFormat>
+				<h:outputText value=" #{bundle['label.at']}" />
+				<h:outputFormat value="{0, date, HH:mm}">
+					<f:param value="#{evaluationManagementBackingBean.evaluation.beginningDate}"/>
+				</h:outputFormat>
+			</h:panelGroup>
+
+			<h:panelGroup rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.Exam'}">
+				<h:outputText value="<b>#{bundle['label.exam']}:</b> " escape="false"/>
+				<h:outputText value="#{evaluationManagementBackingBean.evaluation.season}, "/>
 				<h:outputText value="#{bundle['label.day']}" />
 				<h:outputFormat value="{0, date, dd/MM/yyyy}">
 					<f:param value="#{evaluationManagementBackingBean.evaluation.dayDate}"/>
@@ -60,7 +84,7 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header"><h:outputText value="#{bundle['label.mark']}"/></f:facet>
-					<h:inputText size="2" maxlength="2" value="#{evaluationManagementBackingBean.marks[attends.idInternal]}"/>
+					<h:inputText size="3" maxlength="4" value="#{evaluationManagementBackingBean.marks[attends.idInternal]}"/>
 				</h:column>
 			</h:dataTable>
 
