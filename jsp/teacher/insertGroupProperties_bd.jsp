@@ -140,7 +140,7 @@
 		<html:cancel styleClass="inputbutton"><bean:message key="button.cancel"/>                    		         	
 		</html:cancel>
 	</td>
-		<html:hidden property="method" value="viewExecutionCourseProjects"/>
+		<html:hidden property="method" value="prepareViewExecutionCourseProjects"/>
 		<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 		</html:form>
 	
