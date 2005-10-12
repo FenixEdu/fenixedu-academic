@@ -1059,7 +1059,7 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
     
     public void createBibliographicReference(String title, String authors, String reference, String year, Boolean optional);
     
-    public void createCourseReport(String report);
+    public net.sourceforge.fenixedu.domain.gesdis.ICourseReport createCourseReport(String report);
     
     public ISummary createSummary(String title, String summaryText, Integer studentsNumber,
             Boolean isExtraLesson, IProfessorship professorship);

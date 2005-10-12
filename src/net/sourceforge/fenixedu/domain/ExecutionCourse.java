@@ -141,7 +141,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         bibliographicReference.setExecutionCourse(this);
     }
 
-    public void createCourseReport(String report) {
+    public ICourseReport createCourseReport(String report) {
         if (report == null)
             throw new NullPointerException();
 
@@ -149,6 +149,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         courseReport.setReport(report);
         courseReport.setLastModificationDate(Calendar.getInstance().getTime());
         courseReport.setExecutionCourse(this);
+        
+        return courseReport;
     }
 
     private ISummary createSummary(String title, String summaryText, Integer studentsNumber,
