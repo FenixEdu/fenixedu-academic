@@ -25,9 +25,6 @@ import org.apache.struts.action.ActionMapping;
  */
 public class ViewClassTimeTableWithClassNameAndDegreeInitialsAction extends FenixContextAction {
 
-    /**
-     * Constructor for ViewShiftTimeTableWithClassNameAndDegreeInitialsAction.
-     */
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         super.execute(mapping, form, request, response);
@@ -38,10 +35,6 @@ public class ViewClassTimeTableWithClassNameAndDegreeInitialsAction extends Feni
         if (degreeInitials == null && classIdString == null) {
             return mapping.getInputForward();
         }
-        /*
-         * Integer classId = null; if (classIdString != null) { classId = new
-         * Integer(classIdString); }
-         */
 
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
