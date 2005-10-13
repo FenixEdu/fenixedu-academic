@@ -6,29 +6,18 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.util.NumberUtils;
 
-/**
- * 
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- */
-
 public class InfoShiftGroupStatistics extends InfoObject {
 
-    private List shiftsInGroup;
+    private List<InfoShift> shiftsInGroup;
 
     public InfoShiftGroupStatistics() {
         this.shiftsInGroup = new ArrayList();
     }
 
-    /**
-     * @return
-     */
     public List getShiftsInGroup() {
         return shiftsInGroup;
     }
 
-    /**
-     * @return
-     */
     public Integer getTotalCapacity() {
         Integer totalCapacity = new Integer(0);
 
@@ -41,37 +30,26 @@ public class InfoShiftGroupStatistics extends InfoObject {
         return totalCapacity;
     }
 
-    /**
-     * @return
-     */
     public Double getTotalPercentage() {
-        Double totalPercentage = null;
         Integer totalCapacity = new Integer(0);
         Integer students = new Integer(0);
 
-        Iterator iterator = this.shiftsInGroup.iterator();
-        while (iterator.hasNext()) {
-            InfoShift infoShift = (InfoShift) iterator.next();
-            totalCapacity = new Integer(totalCapacity.intValue() + infoShift.getLotacao().intValue());
-            students = new Integer(students.intValue() + infoShift.getOcupation().intValue());
+        for (InfoShift infoShift : this.shiftsInGroup) {
+            students += infoShift.getOcupation();
+            totalCapacity += infoShift.getLotacao();
         }
 
-        totalPercentage = NumberUtils.formatNumber(new Double(students.floatValue() * 100
-                / totalCapacity.floatValue()), 1);
-
-        return totalPercentage;
+        if (students == 0) {
+            // No calculations necessary
+            return 0.0;
+        } 
+        return NumberUtils.formatNumber(new Double(students.floatValue() * 100 / totalCapacity.floatValue()), 1);
     }
 
-    /**
-     * @param shiftsInGroup
-     */
     public void setShiftsInGroup(List shiftsInGroup) {
         this.shiftsInGroup = shiftsInGroup;
     }
 
-    /**
-     * @return
-     */
     public Integer getTotalNumberOfStudents() {
         Integer totalNumberOfStudents = new Integer(0);
 
