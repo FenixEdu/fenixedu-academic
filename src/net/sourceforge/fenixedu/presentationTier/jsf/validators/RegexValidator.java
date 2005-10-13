@@ -13,8 +13,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
-
 public class RegexValidator implements Validator, StateHolder {
     private String regex;
 
