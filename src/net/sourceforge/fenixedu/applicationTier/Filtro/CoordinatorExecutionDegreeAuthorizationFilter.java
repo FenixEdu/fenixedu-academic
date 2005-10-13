@@ -9,9 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ICoordinator;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -28,9 +26,9 @@ import pt.utl.ist.berserk.ServiceResponse;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  *  
  */
-public class SearchExecutionCoursesAuthorizationFilter extends Filtro {
+public class CoordinatorExecutionDegreeAuthorizationFilter extends Filtro {
 
-    public SearchExecutionCoursesAuthorizationFilter() {
+    public CoordinatorExecutionDegreeAuthorizationFilter() {
     }
 
     /*
@@ -87,29 +85,23 @@ public class SearchExecutionCoursesAuthorizationFilter extends Filtro {
         roleTemp = new ArrayList();
         roleTemp.add(RoleType.COORDINATOR);
         if (CollectionUtils.containsAny(roles, roleTemp)) {
-
-            ITeacher teacher = null;
-            // Read The ExecutionDegree
             try {
-
-                InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) arguments[1];
-
-                if (infoExecutionDegree == null) {
-                    return false;
+                Integer executionDegreeID = null;
+                if (arguments[1] instanceof InfoExecutionDegree) {
+                    executionDegreeID = ((InfoExecutionDegree) arguments[1]).getIdInternal();
+                } else if (arguments[0] instanceof Integer) {
+                    executionDegreeID = (Integer) arguments[0];
                 }
 
-                IExecutionDegree executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree()
-                        .readByOID(ExecutionDegree.class, infoExecutionDegree.getIdInternal());
-
-                teacher = sp.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
-
-                //modified by Tânia Pousão
+                if (executionDegreeID == null) {
+                    return false;
+                }
+                ITeacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
                 ICoordinator coordinator = sp.getIPersistentCoordinator()
-                        .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(), executionDegree.getIdInternal());
+                        .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(), executionDegreeID);
                 if (coordinator != null) {
                     return true;
                 }
-
             } catch (Exception e) {
                 return false;
             }

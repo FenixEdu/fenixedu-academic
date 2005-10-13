@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -53,16 +54,18 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
         try {
             authorized = (Boolean) ServiceManagerServiceFactory.executeService(userView,
                     "UserCoordinatorByExecutionDegree", args);
+        } catch (NotAuthorizedFilterException e) {
+            errors.add("error", new ActionError("error.exception.notAuthorized"));
+            saveErrors(request, errors);
+            return mapping.findForward("notAuthorized");
         } catch (FenixServiceException e) {
-            e.printStackTrace();
-            errors.add("error", new ActionError("error.tutor.impossibleOperation"));
+            errors.add("error", new ActionError(e.getMessage()));
             saveErrors(request, errors);
             return mapping.findForward("notAuthorized");
         }
         if (authorized.booleanValue() == false) {
             errors.add("notAuthorized", new ActionError("error.tutor.notAuthorized.LEEC"));
             saveErrors(request, errors);
-
             return mapping.findForward("notAuthorized");
         }
 

@@ -484,7 +484,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="SearchExecutionCoursesAuthorization" />
+			<chain name="CoordinatorExecutionDegreeAuthorization" />
 		</filterChains>
 	</service>
 	<service>
@@ -5959,7 +5959,9 @@
 		<implementationClass>
             net.sourceforge.fenixedu.applicationTier.Servico.coordinator.UserCoordinatorByExecutionDegree</implementationClass>
 		<isTransactional>True</isTransactional>
-		<filterChains />
+		<filterChains>
+			<chain name="CoordinatorExecutionDegreeAuthorization" />
+		</filterChains>
 	</service>
 	<service>
 		<name>PrepareInfoShiftEnrollmentByStudentNumber</name>

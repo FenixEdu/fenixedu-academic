@@ -2,10 +2,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ICoordinator;
-import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -14,33 +12,21 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * @author Tânia Pousão Create on 04/Fev/2003
  */
 public class UserCoordinatorByExecutionDegree implements IService {
-    public UserCoordinatorByExecutionDegree() {
-
-    }
 
     public Boolean run(Integer executionDegreeCode, String teacherUserName, String degree2Compare)
-            throws FenixServiceException {
-        boolean result = false;
+            throws FenixServiceException, ExcepcaoPersistencia {
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
+        final ITeacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(
+                teacherUserName);
 
-        try {
-            ISuportePersistente sp;
-            IDegree degree = null;
-
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(teacherUserName);
-
-            IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
-            ICoordinator coordinator = persistentCoordinator
-                    .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(), executionDegreeCode);
-            degree = coordinator.getExecutionDegree().getDegreeCurricularPlan().getDegree();
-
-            result = degree.getSigla().equals(degree2Compare);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new FenixServiceException(e);
+        final ICoordinator coordinator = persistentSupport.getIPersistentCoordinator()
+                .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(),
+                        executionDegreeCode);
+        if (coordinator == null) {
+            throw new FenixServiceException("error.exception.notAuthorized");
         }
-
-        return new Boolean(result);
+        return Boolean.valueOf(coordinator.getExecutionDegree().getDegreeCurricularPlan().getDegree()
+                .getSigla().equals(degree2Compare));
     }
 }

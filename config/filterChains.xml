@@ -317,8 +317,8 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
-        <name>SearchExecutionCoursesAuthorization</name>
-        <expression>SearchExecutionCoursesAuthorization</expression>
+        <name>CoordinatorExecutionDegreeAuthorization</name>
+        <expression>CoordinatorExecutionDegreeAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>

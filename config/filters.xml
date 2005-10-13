@@ -293,9 +293,9 @@
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
-        <name>SearchExecutionCoursesAuthorization</name>
+        <name>CoordinatorExecutionDegreeAuthorization</name>
         <implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Filtro.SearchExecutionCoursesAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorExecutionDegreeAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
