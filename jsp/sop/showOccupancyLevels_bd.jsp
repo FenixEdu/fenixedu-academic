@@ -1,5 +1,4 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -7,110 +6,89 @@
 
 <bean:define id="infoExecutionCourse" name="infoExecutionCourseOccupancy" property="infoExecutionCourse" />
 <bean:define id="shiftsInGroups" name="infoExecutionCourseOccupancy" property="shiftsInGroups" />
-<table>
+<table class="infoop">
 	<tr>
-		<td>
-			<bean:message key="label.name" />
-		</td>
-		<td>
-			<bean:write name="infoExecutionCourse" property="nome" />
-		</td>
+		<td><strong><bean:message key="label.name" />:</strong></td>
+		<td><bean:write name="infoExecutionCourse" property="nome" /></td>
 	</tr>
 	<tr>
-		<td>
-			<bean:message key="label.students.inExecutionCourse" />
-		</td>
-		<td>
-			<bean:write name="infoExecutionCourse" property="numberOfAttendingStudents" />
-		</td>
+		<td><strong><bean:message key="label.students.inExecutionCourse" />:</strong></td>
+		<td><bean:write name="infoExecutionCourse" property="numberOfAttendingStudents" /></td>
 	</tr>
 </table>
-
 <br />
 <br />
-
-
-
-	<logic:iterate id="infoShiftGroupStatistics" name="shiftsInGroups">
-		<bean:define id="capacityCount" value="0"/>
-		<table>
-				<tr>
-					<td class="listClasses-header">
-						<bean:message key="label.name" />
-					</td>	
-		
-					<td class="listClasses-header">
-						<bean:message key="label.curricularCourseType" />
-					</td>	
-		
-					<td class="listClasses-header">
-						<bean:message key="listAlunos.OfTurno" />
-					</td>	
-		
-					<td class="listClasses-header">
-						<bean:message key="property.turno.capacity" />
-					</td>	
-		
-					<td class="listClasses-header">
-						<bean:message key="label.occupancy" />
-					</td>	
-				</tr>
-		
-		
-			
-			<logic:iterate id="shift" name="infoShiftGroupStatistics" property="shiftsInGroup" >
-				<tr>
-					<td class="listClasses">
-						<bean:write name="shift" property="nome" />
-					</td>
-		
-					<td class="listClasses">
-						<bean:write name="shift" property="tipo" />
-					</td>
-		
-					<td class="listClasses">
-						<bean:write name="shift" property="ocupation" />
-					</td>
-		
-					<td class="listClasses">
-						<bean:write name="shift" property="lotacao" />
-					</td>
-		
-					<td class="listClasses">
-						<bean:write name="shift" property="percentage" />
-					</td>
-				</tr>
-		
-			</logic:iterate> 
-			
+<logic:iterate id="infoShiftGroupStatistics" name="shiftsInGroups">
+	<bean:define id="capacityCount" value="0"/>
+	<table>
 			<tr>
 				<td class="listClasses-header">
-					<bean:message key="label.total" />
-				</td>
-				
+					<bean:message key="label.name" />
+				</td>	
+	
 				<td class="listClasses-header">
-					&nbsp
-				</td>
-			
+					<bean:message key="label.curricularCourseType" />
+				</td>	
+	
 				<td class="listClasses-header">
-					<bean:write name="infoShiftGroupStatistics" property="totalNumberOfStudents"  />
-
-				</td>
-			
+					<bean:message key="listAlunos.OfTurno" />
+				</td>	
+	
 				<td class="listClasses-header">
-					<bean:write name="infoShiftGroupStatistics" property="totalCapacity"  />
-				</td>
-			
+					<bean:message key="property.turno.capacity" />
+				</td>	
+	
 				<td class="listClasses-header">
-					<bean:write name="infoShiftGroupStatistics" property="totalPercentage"  />
-				</td>
-			
+					<bean:message key="label.occupancy" />
+				</td>	
 			</tr>
+		<logic:iterate id="shift" name="infoShiftGroupStatistics" property="shiftsInGroup" >
+			<tr>
+				<td class="listClasses">
+					<bean:write name="shift" property="nome" />
+				</td>
+	
+				<td class="listClasses">
+					<bean:write name="shift" property="tipo" />
+				</td>
+	
+				<td class="listClasses">
+					<bean:write name="shift" property="ocupation" />
+				</td>
+	
+				<td class="listClasses">
+					<bean:write name="shift" property="lotacao" />
+				</td>
+	
+				<td class="listClasses">
+					<bean:write name="shift" property="percentage" />
+				</td>
+			</tr>
+		</logic:iterate> 		
+		<tr>
+			<td class="listClasses-header">
+				<bean:message key="label.total" />
+			</td>
 			
-			
-			
-		</table>
-		<br />
-		<br />
-	</logic:iterate>
+			<td class="listClasses-header">
+				&nbsp
+			</td>
+		
+			<td class="listClasses-header">
+				<bean:write name="infoShiftGroupStatistics" property="totalNumberOfStudents"  />
+
+			</td>
+		
+			<td class="listClasses-header">
+				<bean:write name="infoShiftGroupStatistics" property="totalCapacity"  />
+			</td>
+		
+			<td class="listClasses-header">
+				<bean:write name="infoShiftGroupStatistics" property="totalPercentage"  />
+			</td>		
+		</tr>
+	</table>
+	<br />
+	<br />
+</logic:iterate>
 
