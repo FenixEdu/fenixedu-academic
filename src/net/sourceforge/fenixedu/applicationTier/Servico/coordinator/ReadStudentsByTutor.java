@@ -44,6 +44,9 @@ public class ReadStudentsByTutor implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
         ITeacher teacherDB = persistentTeacher.readByNumber(tutorNumber);
+        if (teacherDB == null) {
+            throw new FenixServiceException("error.noTutor");
+        }
         
         IDepartment department = teacherDB.getWorkingDepartment();
 
