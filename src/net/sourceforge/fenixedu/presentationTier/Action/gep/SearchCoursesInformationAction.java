@@ -267,12 +267,15 @@ public class SearchCoursesInformationAction extends SearchAction {
                     Object[] args = { infoTeacher };
                     IUserView userView = SessionUtils.getUserView(request);
                     
-                    try {
-                        InfoDepartment infoDepartment = (InfoDepartment) ServiceUtils.executeService(userView, "ReadDepartmentByTeacher", args);                        
-                        teacher.setDepartment(infoDepartment.getName());
-                    } catch (FenixServiceException fse) {
-                        teacher.setDepartment("Desconhecido");
+                    InfoDepartment infoDepartment = (InfoDepartment) ServiceUtils.executeService(userView, "ReadDepartmentByTeacher", args);
+                    String department = null;
+                    if (infoDepartment == null) {
+                        final MessageResources messages = MessageResources.getMessageResources("ServidorApresentacao/ApplicationResources");
+                        department = messages.getMessage("UNKNOWN");
+                    } else {
+                        department = infoDepartment.getName();
                     }
+                    teacher.setDepartment(department);
                     teachers.add(teacher);
                 }
                 infoCourse.setTeachers(teachers);
