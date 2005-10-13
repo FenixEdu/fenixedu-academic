@@ -212,10 +212,6 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction {
 
         arranjeShifts(infoExecutionCourseOccupancy);
 
-        //		Collections.sort(infoExecutionCourseOccupancy.getInfoShifts(), new
-        // ReverseComparator(new
-        // BeanComparator("percentage")));
-
         request.setAttribute("infoExecutionCourseOccupancy", infoExecutionCourseOccupancy);
         return mapping.findForward("showOccupancy");
 

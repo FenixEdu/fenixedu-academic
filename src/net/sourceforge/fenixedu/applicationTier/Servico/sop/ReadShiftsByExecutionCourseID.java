@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -40,11 +39,14 @@ public class ReadShiftsByExecutionCourseID implements IService {
 
             final InfoShift infoShift = InfoShiftWithInfoLessons.newInfoFromDomain(shift);
             infoShift.setOcupation(new Integer(shift.getStudentsCount()));
-            infoShift.setPercentage(NumberUtils.formatNumber(new Double(infoShift.getOcupation().floatValue()
+            infoShift.setPercentage(NumberUtils.formatNumber(new Double(infoShift.getOcupation()
+                    .floatValue()
                     * 100 / capacity.floatValue()), 1));
 
             infoExecutionCourseOccupancy.getInfoShifts().add(infoShift);
         }
+        infoExecutionCourseOccupancy.getInfoExecutionCourse().setNumberOfAttendingStudents(
+                executionCourse.getAttendsCount());
 
         return infoExecutionCourseOccupancy;
     }
