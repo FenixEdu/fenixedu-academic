@@ -579,7 +579,8 @@
 			  >
 			 <forward name="chooseExecutionYear" path="chooseExecutionYear" /> 
 	         <forward name="coordinationTeam" path="coordinationTeam" /> 
-	         <forward name="addCoordinator" path="addCoordinator" /> 	         
+	         <forward name="addCoordinator" path="addCoordinator" />
+	         <forward name="noAuthorization" path="df.page.notAuthorized" />
 		</action>		
 		<action path="/addCoordinator"
 			  input="/viewCoordinationTeam.do?method=prepareAddCoordinator"	

@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.ICoordinator;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -18,29 +17,25 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author João Mota 17/Set/2003
- *  
+ * 
  */
 public class ReadCoordinationResponsibility implements IService {
 
-    public Boolean run(Integer executionDegreeId, IUserView userView) throws FenixServiceException {
+    public Boolean run(Integer executionDegreeId, IUserView userView) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(userView.getUtilizador());
-            if (teacher == null) {
-                throw new InvalidArgumentsServiceException("invalid teacher!");
-            }
-            ICoordinator coordinator = persistentCoordinator
-                    .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(), executionDegreeId);
-            if (coordinator == null || !coordinator.getResponsible().booleanValue()) {
-                return new Boolean(false);
-            }
-            return new Boolean(true);
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
+        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        ITeacher teacher = persistentTeacher.readTeacherByUsername(userView.getUtilizador());
+        if (teacher == null) {
+            throw new FenixServiceException("error.teacher.not.found");
         }
-
+        ICoordinator coordinator = persistentCoordinator.readCoordinatorByTeacherIdAndExecutionDegreeId(
+                teacher.getIdInternal(), executionDegreeId);
+        if (coordinator == null || !coordinator.getResponsible().booleanValue()) {
+            return Boolean.FALSE;
+        }
+        return Boolean.TRUE;
     }
 }

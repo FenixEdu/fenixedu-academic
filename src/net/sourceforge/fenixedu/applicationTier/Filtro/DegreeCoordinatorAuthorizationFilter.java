@@ -26,21 +26,10 @@ public class DegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFil
     public DegreeCoordinatorAuthorizationFilter() {
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-     */
     protected RoleType getRoleType() {
         return RoleType.COORDINATOR;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *      pt.utl.ist.berserk.ServiceResponse)
-     */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] argumentos = getServiceCallArguments(request);
@@ -56,11 +45,6 @@ public class DegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFil
         }
     }
 
-    /**
-     * @param id
-     * @param argumentos
-     * @return
-     */
     private boolean isCoordinatorOfExecutionDegree(IUserView id, Object[] argumentos) {
 
         ISuportePersistente sp;

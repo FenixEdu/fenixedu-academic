@@ -102,9 +102,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-        Integer degreeCurricularPlanID = getAndSetIntegerToRequest("degreeCurricularPlanID", request);
-        //Integer infoExecutionDegreeCode = getAndSetIntegerToRequest("infoExecutionDegreeCode", request);
-        
+        Integer degreeCurricularPlanID = getAndSetIntegerToRequest("degreeCurricularPlanID", request);       
 
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
         ActionErrors errors = new ActionErrors();
@@ -198,7 +196,6 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
     }
 
     //	===================================== Curricular Course Management
-    // ============================
 
     public ActionForward viewActiveCurricularCourseInformation(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
@@ -434,8 +431,6 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
         if (!errors.isEmpty()) {
             return mapping.findForward("degreeCurricularPlanManagement");
         }
-
-        //	�������������������� USER CAN EDIT ���������������������
 
         request.setAttribute("canEdit", String.valueOf(canEdit.booleanValue()));
 

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -71,22 +72,29 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
         Integer executionDegreeID = new Integer(request.getParameter("infoExecutionDegreeId"));
         request.setAttribute("infoExecutionDegreeId", executionDegreeID);
 
+        ActionErrors actionErrors = new ActionErrors();
         Object[] args = { executionDegreeID };
         List coordinators = new ArrayList();
         try {
             coordinators = (List) ServiceUtils.executeService(userView, "ReadCoordinationTeam", args);
-
+        } catch (NotAuthorizedFilterException e) {
+            actionErrors.add("error", new ActionError("noAuthorization"));
+            saveErrors(request, actionErrors);
+            return mapping.findForward("noAuthorization");
         } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
+            actionErrors.add("error", new ActionError(e.getMessage()));
+            saveErrors(request, actionErrors);
+            return mapping.findForward("noAuthorization");
         }
-        Boolean result = new Boolean(false);
+        Boolean result = Boolean.FALSE;
         Object[] args1 = { executionDegreeID, userView };
         try {
             result = (Boolean) ServiceUtils.executeService(userView, "ReadCoordinationResponsibility",
                     args1);
-
         } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
+            actionErrors.add("error", new ActionError(e.getMessage()));
+            saveErrors(request, actionErrors);
+            return mapping.findForward("noAuthorization");
         }
 
         request.setAttribute("isResponsible", result);

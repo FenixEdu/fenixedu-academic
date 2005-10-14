@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCoordinator;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCoordinatorWithInfoPerson;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -25,35 +24,30 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * 
  * @author João Mota 17/Set/2003
- *  
+ * 
  */
 public class ReadCoordinationTeam implements IService {
 
-    public List run(Integer executionDegreeId) throws FenixServiceException {
+    public List run(Integer executionDegreeId) throws FenixServiceException, ExcepcaoPersistencia {
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
+        IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
-            IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-
-            IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
-                    ExecutionDegree.class, executionDegreeId);
-            if (executionDegree == null) {
-                throw new InvalidArgumentsServiceException("execution Degree unexisting");
-            }
-            List coordinators = persistentCoordinator.readCoordinatorsByExecutionDegree(executionDegree.getIdInternal());
-            Iterator iterator = coordinators.iterator();
-            List infoCoordinators = new ArrayList();
-            while (iterator.hasNext()) {
-                ICoordinator coordinator = (ICoordinator) iterator.next();
-                InfoCoordinator infoCoordinator = InfoCoordinatorWithInfoPerson.newInfoFromDomain(coordinator);
-                infoCoordinators.add(infoCoordinator);
-            }
-
-            return infoCoordinators;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+        IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+                ExecutionDegree.class, executionDegreeId);
+        if (executionDegree == null) {
+            throw new FenixServiceException("errors.invalid.execution.degree");
         }
-
+        List coordinators = persistentCoordinator.readCoordinatorsByExecutionDegree(executionDegree
+                .getIdInternal());
+        Iterator iterator = coordinators.iterator();
+        List infoCoordinators = new ArrayList();
+        while (iterator.hasNext()) {
+            ICoordinator coordinator = (ICoordinator) iterator.next();
+            InfoCoordinator infoCoordinator = InfoCoordinatorWithInfoPerson
+                    .newInfoFromDomain(coordinator);
+            infoCoordinators.add(infoCoordinator);
+        }
+        return infoCoordinators;
     }
 }
