@@ -127,8 +127,8 @@
 	<definition name="df.page.showStudentCurricularPlans" extends="definition.coordinator.two-column.extra-menu.student">
 		<put name="body" value="/student/curriculum/viewCurricularPlans_bd.jsp"/>
 	</definition>
-	<definition name="df.page.notAuthorized" extends="definition.coordinator.two-column.extra-menu.student" >
-		<put name="body" value="/student/notAuthorized_bd.jsp" />
+	<definition name="df.page.notAuthorized" extends="definition.coordinator.two-column" >
+		<put name="body" value="/coordinator/student/notAuthorized_bd.jsp" />
 	</definition>
 	<definition name="df.page.showStudentCurriculum" extends="definition.coordinator.two-column.extra-menu.student" >
 		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />

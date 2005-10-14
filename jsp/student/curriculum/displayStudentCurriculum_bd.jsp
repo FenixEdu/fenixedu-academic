@@ -13,7 +13,7 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.util.InfoStudentCurricularPlansWithSelectedEnrollments" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan" %>
 
-  <span class="error"><html:errors/></span>
+<span class="error"><html:errors/></span>
   
 <h2>Currículo do Aluno</h2>
 
@@ -134,7 +134,7 @@
 						  <td class="listClasses" style="text-align:left">
 						    <bean:write name="enrolment" property="infoCurricularCourse.name"/>
 							<% if ( !((InfoEnrolment) enrolment).getEnrollmentTypeResourceKey().equals("option.curricularCourse.normal") ) {%>
-								(<bean:message name="enrolment" property="enrollmentTypeResourceKey" bundle="DEFAULT"/>)
+								(<bean:message name="enrolment" property="enrollmentTypeResourceKey" />)
 							<% } %>
 						  </td>
 						  <td class="listClasses">

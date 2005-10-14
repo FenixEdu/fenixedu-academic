@@ -20,9 +20,9 @@
  	   	<put name="navLocal" value="/coordinator/coordinatorMainMenu.jsp" /> 	   
  	   	<put name="navLocalExtra" value="/commons/blank.jsp" /> 	   
  	   	<put name="navGeral" value="/coordinator/commonNavGeralCoordinator.jsp" />
-	     <put name="body-context" value="/coordinator/context.jsp" />  
-    	 <put name="body" value="/commons/blank.jsp" />
-	     <put name="footer" value="/copyright.jsp" />
+	    <put name="body-context" value="/coordinator/context.jsp" />  
+    	<put name="body" value="/commons/blank.jsp" />
+	    <put name="footer" value="/copyright.jsp" />
 	</definition>
 	
 	<definition name="definition.coordinator.two-column.extra-menu.student" extends="definition.coordinator.two-column.extra-menu">	  

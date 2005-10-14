@@ -45,7 +45,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 
 /**
  * @author Fernanda Quitério 27/Jan/2004
- *  
+ * 
  */
 public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDispatchAction {
 
@@ -54,7 +54,8 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
         getExecutionDegree(request);
         Integer degreeCurricularPlanID = null;
         DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
-        if(request.getParameter("degreeCurricularPlanID") != null && !request.getParameter("degreeCurricularPlanID").equals("")){
+        if (request.getParameter("degreeCurricularPlanID") != null
+                && !request.getParameter("degreeCurricularPlanID").equals("")) {
             degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
             enrollmentForm.set("degreeCurricularPlanID", degreeCurricularPlanID);
@@ -88,8 +89,16 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
         IUserView userView = SessionUtils.getUserView(request);
         ActionErrors errors = new ActionErrors();
         DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
+
+        if (enrollmentForm.get("studentNumber") == null
+                || ((String) enrollmentForm.get("studentNumber")).equals("")) {
+            errors.add("error", new ActionError("error.no.student.in.database", ""));
+            saveErrors(request, errors);
+            return mapping.getInputForward();
+        }
+
         Integer studentNumber = new Integer((String) enrollmentForm.get("studentNumber"));
-        
+
         Integer degreeCurricularPlanID = (Integer) enrollmentForm.get("degreeCurricularPlanID");
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
@@ -98,7 +107,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
         Object[] args = { executionDegreeId, null, studentNumber };
         try {
             if (!(userView.getRoles().contains(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)) || userView
-                    .getRoles().contains(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) )) {
+                    .getRoles().contains(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)))) {
                 infoStudentEnrolmentContext = (InfoStudentEnrollmentContext) ServiceManagerServiceFactory
                         .executeService(userView, "ShowAvailableCurricularCoursesNew", args);
             } else {
@@ -121,22 +130,27 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
                         "error.student.curricularPlan.nonExistent"));
             }
         } catch (OutOfCurricularCourseEnrolmentPeriod e) {
+            String startDate = "", endDate = "";
+            if (e.getStartDate() != null) {
+                startDate = Data.format2DayMonthYear(e.getStartDate());
+            }
+            if (e.getEndDate() != null) {
+                endDate = Data.format2DayMonthYear(e.getEndDate()); 
+            }
+            errors.add("enrolment", new ActionError(e.getMessageKey(), startDate, endDate));
+        } catch (EnrolmentRuleServiceException e) {
 
-            errors.add("enrolment", new ActionError(e.getMessageKey(), Data.format2DayMonthYear(e
-                    .getStartDate()), Data.format2DayMonthYear(e.getEndDate())));
-        }catch ( EnrolmentRuleServiceException e) {
-            
-            SecretaryEnrolmentStudentReason reason = SecretaryEnrolmentStudentReason.getEnum(e.getErrorType());            
-            errors.add("enrolmentRule", new ActionError(reason.getName()));           
-        }  
-        catch (FenixServiceException e) {
+            SecretaryEnrolmentStudentReason reason = SecretaryEnrolmentStudentReason.getEnum(e
+                    .getErrorType());
+            errors.add("enrolmentRule", new ActionError(reason.getName()));
+        } catch (FenixServiceException e) {
             if (e.getMessage().equals("degree")) {
-                errors.add("degree", new ActionError("error.student.degreeCurricularPlan.LEEC"));                
+                errors.add("degree", new ActionError("error.student.degreeCurricularPlan.LEEC"));
             } else if (e.getMessage().equals("enrolmentPeriod")) {
                 errors.add("enrolmentPeriod", new ActionError("error.student.enrolmentPeriod"));
-            } else if(errors.isEmpty()) {                
+            } else if (errors.isEmpty()) {
                 throw new FenixActionException(e);
-            }            
+            }
         }
         if (!errors.isEmpty()) {
             saveErrors(request, errors);
@@ -146,33 +160,31 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
         Collections.sort(infoStudentEnrolmentContext.getStudentCurrentSemesterInfoEnrollments(),
                 new BeanComparator("infoCurricularCourse.name"));
 
-        /*Integer[] enrolledInArray = buildArrayForForm(infoStudentEnrolmentContext
-                .getStudentCurrentSemesterInfoEnrollments());
-        enrollmentForm.set("enrolledCurricularCoursesBefore", enrolledInArray);
-        enrollmentForm.set("enrolledCurricularCoursesAfter", enrolledInArray);*/
-        
         List warnings = new ArrayList();
-        //check if AMII is available to enroll
-        boolean amIItoEnroll = CollectionUtils.exists(infoStudentEnrolmentContext.getCurricularCourses2Enroll(), new Predicate() {
+        // check if AMII is available to enroll
+        boolean amIItoEnroll = CollectionUtils.exists(infoStudentEnrolmentContext
+                .getCurricularCourses2Enroll(), new Predicate() {
 
-			public boolean evaluate(Object arg0) {
-				InfoCurricularCourse2EnrollWithInfoCurricularCourse curricularCourse2Enroll = (InfoCurricularCourse2EnrollWithInfoCurricularCourse) arg0;
-				if(curricularCourse2Enroll.getInfoCurricularCourse().getName().equals("Análise Matemática II"))
-					return true;
-				return false;
-			}
+            public boolean evaluate(Object arg0) {
+                InfoCurricularCourse2EnrollWithInfoCurricularCourse curricularCourse2Enroll = (InfoCurricularCourse2EnrollWithInfoCurricularCourse) arg0;
+                if (curricularCourse2Enroll.getInfoCurricularCourse().getName().equals(
+                        "Análise Matemática II"))
+                    return true;
+                return false;
+            }
         });
-        
-        if(amIItoEnroll)
-        	warnings.add("warning.amIItoEnroll");
-        
-        //check if students belongs to LERCI2003/2004
-        if(infoStudentEnrolmentContext.getInfoStudentCurricularPlan().getInfoDegreeCurricularPlan().getIdInternal().equals(90))
-        	warnings.add("warning.lerci");
-        
-        if(!warnings.isEmpty())
-        	request.setAttribute("warnings", warnings);
-        
+
+        if (amIItoEnroll)
+            warnings.add("warning.amIItoEnroll");
+
+        // check if students belongs to LERCI2003/2004
+        if (infoStudentEnrolmentContext.getInfoStudentCurricularPlan().getInfoDegreeCurricularPlan()
+                .getIdInternal().equals(90))
+            warnings.add("warning.lerci");
+
+        if (!warnings.isEmpty())
+            request.setAttribute("warnings", warnings);
+
         request.setAttribute("infoStudentEnrolmentContext", infoStudentEnrolmentContext);
 
         return mapping.findForward("prepareEnrollmentChooseCurricularCourses");
@@ -220,7 +232,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
         IUserView userView = SessionUtils.getUserView(request);
         ActionErrors errors = new ActionErrors();
         DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
-        
+
         Integer degreeCurricularPlanID = (Integer) enrollmentForm.get("degreeCurricularPlanID");
         if (degreeCurricularPlanID == null) {
             degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
@@ -298,7 +310,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
         Integer studentCurricularPlanId = Integer.valueOf(request
                 .getParameter("studentCurricularPlanId"));
         Integer studentNumber = Integer.valueOf((String) enrollmentForm.get("studentNumber"));
-        
+
         Integer degreeCurricularPlanID = (Integer) enrollmentForm.get("degreeCurricularPlanID");
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
@@ -343,12 +355,11 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
         ActionErrors errors = new ActionErrors();
         IUserView userView = SessionUtils.getUserView(request);
         DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
-        String curricularCourseToEnroll = (String) enrollmentForm
-                .get("curricularCourse");
+        String curricularCourseToEnroll = (String) enrollmentForm.get("curricularCourse");
 
         Integer studentCurricularPlanId = Integer.valueOf(request
                 .getParameter("studentCurricularPlanId"));
-        
+
         Integer degreeCurricularPlanID = (Integer) enrollmentForm.get("degreeCurricularPlanID");
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
@@ -356,11 +367,11 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 
         CurricularCourseEnrollmentType enrollmentType = CurricularCourseEnrollmentType
                 .valueOf(curricularCourseToEnroll.split("-")[1]);
-        
+
         String courseType = (String) enrollmentForm.get("courseType");
         Integer executionDegreeId = getExecutionDegree(request);
-        Object[] args = { executionDegreeId, studentCurricularPlanId, toEnroll, null,
-                enrollmentType, new Integer(courseType), userView };
+        Object[] args = { executionDegreeId, studentCurricularPlanId, toEnroll, null, enrollmentType,
+                new Integer(courseType), userView };
         try {
             ServiceManagerServiceFactory.executeService(userView, "WriteEnrollment", args);
         } catch (NotAuthorizedFilterException e) {
@@ -373,7 +384,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
-        
+
         return prepareEnrollmentChooseCurricularCourses(mapping, form, request, response);
     }
 
@@ -384,17 +395,16 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
         ActionErrors errors = new ActionErrors();
         IUserView userView = SessionUtils.getUserView(request);
         DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
-        
+
         Integer unenroll = Integer.valueOf((String) enrollmentForm.get("curricularCourse"));
         Integer degreeCurricularPlanID = (Integer) enrollmentForm.get("degreeCurricularPlanID");
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-
 
         Integer studentCurricularPlanId = Integer.valueOf(request
                 .getParameter("studentCurricularPlanId"));
 
         Integer executionDegreeId = getExecutionDegree(request);
-        Object[] args = { executionDegreeId, studentCurricularPlanId, unenroll};
+        Object[] args = { executionDegreeId, studentCurricularPlanId, unenroll };
         try {
             ServiceManagerServiceFactory.executeService(userView, "DeleteEnrolment", args);
         } catch (NotAuthorizedFilterException e) {
@@ -420,7 +430,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
         Integer studentNumber = new Integer((String) enrollmentForm.get("studentNumber"));
         Integer studentCurricularPlanId = Integer.valueOf(request
                 .getParameter("studentCurricularPlanId"));
-        
+
         Integer degreeCurricularPlanID = (Integer) enrollmentForm.get("degreeCurricularPlanID");
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
@@ -428,9 +438,10 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
         InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;
         Object[] args = { executionDegreeId, null, studentNumber };
         try {
-            if (!(userView.getRoles().contains(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)) || userView
-                    .getRoles().contains(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) || 
-                    userView.getRoles().contains(new InfoRole(RoleType.TEACHER)))) {
+            if (!(userView.getRoles().contains(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE))
+                    || userView.getRoles().contains(
+                            new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) || userView
+                    .getRoles().contains(new InfoRole(RoleType.TEACHER)))) {
                 infoStudentEnrolmentContext = (InfoStudentEnrollmentContext) ServiceManagerServiceFactory
                         .executeService(userView, "ShowAvailableCurricularCoursesNew", args);
             } else {

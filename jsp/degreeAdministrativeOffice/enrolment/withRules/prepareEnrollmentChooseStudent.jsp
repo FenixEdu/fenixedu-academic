@@ -4,8 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <h2><bean:message key="title.student.enrollment" /></h2>
 
-
-<span class="error"><html:errors/></span>
+<br/><span class="error"><html:errors/></span>
 <html:form action="/curricularCoursesEnrollment" focus="studentNumber">
 	<html:hidden property="method" value="start"/>
 	<html:hidden property="page" value="1"/>

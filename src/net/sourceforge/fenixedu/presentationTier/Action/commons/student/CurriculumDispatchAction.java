@@ -37,7 +37,7 @@ import org.apache.struts.util.LabelValueBean;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * @author David Santos
- * @author André Fernandes / João Brito 
+ * @author André Fernandes / João Brito
  */
 
 public class CurriculumDispatchAction extends DispatchAction {
@@ -46,13 +46,13 @@ public class CurriculumDispatchAction extends DispatchAction {
 
         HttpSession session = request.getSession();
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        
+
         Integer degreeCurricularPlanID = null;
-        if(request.getParameter("degreeCurricularPlanID") != null){
+        if (request.getParameter("degreeCurricularPlanID") != null) {
             degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
-        
+
         String studentNumber = getStudent(request);
         InfoPerson infoPerson = null;
 
@@ -74,7 +74,8 @@ public class CurriculumDispatchAction extends DispatchAction {
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
             }
-        } else if (studentNumber == null) // deixa de importar se o ID do plano curricular for especificado
+        } else if (studentNumber == null) // deixa de importar se o ID do
+                                            // plano curricular for especificado
         {
             username = userView.getUtilizador();
         }
@@ -82,13 +83,12 @@ public class CurriculumDispatchAction extends DispatchAction {
         try {
             executeService(username, request);
         } catch (Exception e) {
-            e.printStackTrace();
             return mapping.findForward("NotAuthorized");
         }
 
         request.setAttribute("studentPerson", infoPerson);
 
-        if(degreeCurricularPlanID != null && degreeCurricularPlanID.intValue() != 0){
+        if (degreeCurricularPlanID != null && degreeCurricularPlanID.intValue() != 0) {
             return mapping.findForward("ShowStudentCurriculumForCoordinator");
         }
         return mapping.findForward("ShowStudentCurriculum");
@@ -99,75 +99,77 @@ public class CurriculumDispatchAction extends DispatchAction {
         return getStudentCP(mapping, form, request, response);
     }
 
-    private void executeService(String username, HttpServletRequest request) throws Exception
-	{
-	    IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
-	    	    
-	    String criterioStr = (String)request.getAttribute("select");
-	    if (criterioStr == null)
-	        criterioStr = request.getParameter("select");
-		
-		String scpIDStr = request.getParameter("studentCPID");
+    private void executeService(String username, HttpServletRequest request) throws Exception {
+        IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
+
+        String criterioStr = (String) request.getAttribute("select");
+        if (criterioStr == null)
+            criterioStr = request.getParameter("select");
+
+        String scpIDStr = request.getParameter("studentCPID");
         if (scpIDStr == null)
             scpIDStr = (String) request.getAttribute("studentCPID");
-	    
-	    StudentCurricularPlanIDDomainType scpID = null;
-		EnrollmentStateSelectionType criterio = null;
-		
-		if (criterioStr != null)
-		    criterio = new EnrollmentStateSelectionType(criterioStr);
-		else
-		    criterio = EnrollmentStateSelectionType.ALL;
-		
-		if(scpIDStr != null)
-		    scpID = new StudentCurricularPlanIDDomainType(scpIDStr);
-		else
-		    scpID = StudentCurricularPlanIDDomainType.NEWEST;
-		
-		InfoStudentCurricularPlansWithSelectedEnrollments infoSCPs = null;
-		InfoStudentCurricularPlansWithSelectedEnrollments allInfoSCPs = null;
-		
-		try
-		{
-		    /* invoca o servico para obter os SCPs pedidos */
-		    Object args[] = { username, scpID, criterio};
-		    infoSCPs = (InfoStudentCurricularPlansWithSelectedEnrollments) ServiceManagerServiceFactory.executeService(userView, "ReadStudentCurricularPlansByPersonAndCriteria", args);
-		    
-		    /* invoca o servico para obter TODOS os SCPs com NENHUM enrollment*/
-		    Object args1[] = {username, StudentCurricularPlanIDDomainType.ALL, EnrollmentStateSelectionType.NONE};
-		    allInfoSCPs = (InfoStudentCurricularPlansWithSelectedEnrollments)ServiceManagerServiceFactory.executeService(userView,"ReadStudentCurricularPlansByPersonAndCriteria",args1);
-		}
-		catch (NonExistingServiceException e)
-		{
-		    throw new FenixActionException(e);
-		}
-		
-		// qualquer numero de aluno serve para identificar Person
-		//String studentNumberTmp = String.valueOf(((InfoStudentCurricularPlan)allInfoSCPs.getInfoStudentCurricularPlans().get(0)).getInfoStudent().getNumber());
-        String studentNumberTmp = String.valueOf(((InfoStudentCurricularPlan) infoSCPs.getInfoStudentCurricularPlans().get(0)).getInfoStudent().getNumber());
-		request.setAttribute("studentNumber",studentNumberTmp);
 
-		request.setAttribute("studentCPs", infoSCPs);
-		
-		List enrollmentOptions = EnrollmentStateSelectionType.getLabelValueBeanList();
-		request.setAttribute("enrollmentOptions",enrollmentOptions);
-		
-		List allSCPs = getLabelValueBeanList(allInfoSCPs);
-		request.setAttribute("allSCPs",allSCPs);
-	}
+        StudentCurricularPlanIDDomainType scpID = null;
+        EnrollmentStateSelectionType criterio = null;
+
+        if (criterioStr != null)
+            criterio = new EnrollmentStateSelectionType(criterioStr);
+        else
+            criterio = EnrollmentStateSelectionType.ALL;
+
+        if (scpIDStr != null)
+            scpID = new StudentCurricularPlanIDDomainType(scpIDStr);
+        else
+            scpID = StudentCurricularPlanIDDomainType.NEWEST;
+
+        InfoStudentCurricularPlansWithSelectedEnrollments infoSCPs = null;
+        InfoStudentCurricularPlansWithSelectedEnrollments allInfoSCPs = null;
+
+        try {
+            /* invoca o servico para obter os SCPs pedidos */
+            Object args[] = { username, scpID, criterio };
+            infoSCPs = (InfoStudentCurricularPlansWithSelectedEnrollments) ServiceManagerServiceFactory
+                    .executeService(userView, "ReadStudentCurricularPlansByPersonAndCriteria", args);
+
+            /* invoca o servico para obter TODOS os SCPs com NENHUM enrollment */
+            Object args1[] = { username, StudentCurricularPlanIDDomainType.ALL,
+                    EnrollmentStateSelectionType.NONE };
+            allInfoSCPs = (InfoStudentCurricularPlansWithSelectedEnrollments) ServiceManagerServiceFactory
+                    .executeService(userView, "ReadStudentCurricularPlansByPersonAndCriteria", args1);
+        } catch (NonExistingServiceException e) {
+            throw new FenixActionException(e);
+        }
+
+        // qualquer numero de aluno serve para identificar Person
+        // String studentNumberTmp =
+        // String.valueOf(((InfoStudentCurricularPlan)allInfoSCPs.getInfoStudentCurricularPlans().get(0)).getInfoStudent().getNumber());
+        String studentNumberTmp = String.valueOf(((InfoStudentCurricularPlan) infoSCPs
+                .getInfoStudentCurricularPlans().get(0)).getInfoStudent().getNumber());
+        request.setAttribute("studentNumber", studentNumberTmp);
+
+        request.setAttribute("studentCPs", infoSCPs);
+
+        List enrollmentOptions = EnrollmentStateSelectionType.getLabelValueBeanList();
+        request.setAttribute("enrollmentOptions", enrollmentOptions);
+
+        List allSCPs = getLabelValueBeanList(allInfoSCPs);
+        request.setAttribute("allSCPs", allSCPs);
+    }
 
     public ActionForward getCurriculumForCoordinator(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession();
 
-        //get and set the degreeCurricularPlanID from the request and onto the request
+        // get and set the degreeCurricularPlanID from the request and onto the
+        // request
         Integer degreeCurricularPlanID = null;
-        if(request.getParameter("degreeCurricularPlanID") != null){
+        if (request.getParameter("degreeCurricularPlanID") != null) {
             degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
-        
+
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         String studentCurricularPlanID = request.getParameter("studentCPID");

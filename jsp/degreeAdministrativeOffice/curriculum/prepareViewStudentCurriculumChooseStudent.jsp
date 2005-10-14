@@ -3,7 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<html:errors/>
+<br/><span class="error"><html:errors/></span>
+
 <h2><bean:message key="title.student.curriculum"/></h2>
 <html:form action="/viewCurriculum" focus="studentNumber">
 	<html:hidden property="method" value="getStudentCP"/>
