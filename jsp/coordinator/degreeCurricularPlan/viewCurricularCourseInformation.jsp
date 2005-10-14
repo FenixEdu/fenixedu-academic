@@ -320,19 +320,19 @@
 				<b><bean:message key="label.manager.executionCourses"/></b>
 				<logic:empty name="infoCurriculum" property="infoCurricularCourse.infoAssociatedExecutionCourses">
 					<br />
-					<i><bean:message key="label.manager.executionCourses.nonExisting"/></i>
+					<i><bean:message key="label.manager.executionCourses.nonExisting" bundle="MANAGER_RESOURCES" /></i>
 				</logic:empty>
 	
 				<logic:notEmpty name="infoCurriculum" property="infoCurricularCourse.infoAssociatedExecutionCourses">
 					<table width="100%" cellpadding="0" border="0">
 						<tr>
-							<td class="listClasses-header"><bean:message key="label.manager.executionCourse.name" />
+							<td class="listClasses-header"><bean:message key="label.manager.executionCourse.name" bundle="MANAGER_RESOURCES" />
 							</td>
-							<td class="listClasses-header"><bean:message key="label.manager.executionCourse.code" />
+							<td class="listClasses-header"><bean:message key="label.manager.executionCourse.code" bundle="MANAGER_RESOURCES" />
 							</td>
-							<td class="listClasses-header"><bean:message key="label.manager.executionCourse.executionPeriod" />
+							<td class="listClasses-header"><bean:message key="label.manager.executionCourse.executionPeriod" bundle="MANAGER_RESOURCES" />
 							</td>
-							<td class="listClasses-header"><bean:message key="label.manager.executionCourse.site" />
+							<td class="listClasses-header"><bean:message key="label.manager.executionCourse.site" bundle="MANAGER_RESOURCES" />
 							</td>
 						</tr>
 			
@@ -346,18 +346,18 @@
 								<td class="listClasses"><bean:write name="infoExecutionPeriod" property="name"/> - <bean:write name="infoExecutionPeriod" property="infoExecutionYear.year"/>
 								</td>
 								<td class="listClasses">
-									<bean:define id="hasSite" name="executionCourse" property="hasSite"/>				
+									<bean:define id="hasSite" name="executionCourse" property="hasSite"/>
 									<logic:equal name="hasSite" value="true">
-										<bean:message key="label.manager.yes"/>
+										<bean:message key="label.manager.yes" bundle="MANAGER_RESOURCES" />
 									</logic:equal>
 									<logic:notEqual name="hasSite" value="true">
-										<bean:message key="label.manager.no"/>
+										<bean:message key="label.manager.no" bundle="MANAGER_RESOURCES" />
 									</logic:notEqual>
 								</td>
 			 				</tr>
-			 			</logic:iterate>						
+			 			</logic:iterate>
 					</table>
-				</logic:notEmpty>	 	
+				</logic:notEmpty>
 			</td>
 		</tr>
 	</table>
