@@ -15,24 +15,24 @@
 	</logic:iterate>
 	<table>
 		<tr>
-			<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularYear"/></td>
-			<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularSemester"/></td>
+			<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularYear" bundle="MANAGER_RESOURCES" /></td>
+			<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularSemester" bundle="MANAGER_RESOURCES" /></td>
 			<td class="listClasses-header"><bean:message key="label.curricularCourse"/></td>
-			<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.branch"/></td>
-			<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.beginDate"/></td>
-			<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.endDate"/></td>
+			<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.branch" bundle="MANAGER_RESOURCES" /></td>
+			<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.beginDate" bundle="MANAGER_RESOURCES" /></td>
+			<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.endDate" bundle="MANAGER_RESOURCES" /></td>
 		</tr>
 		<bean:define id="equalScopesSize" value="0"/>
 		<logic:iterate id="curricularCourseScopeElem" name="allCurricularCourseScopes" type="InfoCurricularCourseScope">
 			<logic:equal name="equalScopesSize" value="0"> 
 				<logic:notEqual name="curricularCourseScopeElem" property="infoCurricularSemester.semester" value="<%= pageContext.findAttribute("currentSemester").toString()%>">
 					<tr>
-						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularYear"/></td>
-						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularSemester"/></td>
+						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularYear" bundle="MANAGER_RESOURCES" /></td>
+						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularSemester" bundle="MANAGER_RESOURCES" /></td>
 						<td class="listClasses-header"><bean:message key="label.curricularCourse"/></td>
-						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.branch"/></td>
-						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.beginDate"/></td>
-						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.endDate"/></td>
+						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.branch" bundle="MANAGER_RESOURCES" /></td>
+						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.beginDate" bundle="MANAGER_RESOURCES" /></td>
+						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.endDate" bundle="MANAGER_RESOURCES" /></td>
 					</tr>
 					<bean:define id="currentSemester" name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/>
 				</logic:notEqual>
@@ -129,7 +129,6 @@
 					<%= String.valueOf(Integer.valueOf(equalScopesSize).intValue() - 1) %>
 				</bean:define>
 			</logic:greaterThan>
-		</logic:iterate>
-		
+		</logic:iterate>		
 	</table>
 </logic:present>
