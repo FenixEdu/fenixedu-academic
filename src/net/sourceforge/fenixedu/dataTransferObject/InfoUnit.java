@@ -47,7 +47,7 @@ public class InfoUnit extends InfoObject {
         if (unit != null) {
             List superiorUnits = new ArrayList();
             setCostCenterCode(unit.getCostCenterCode().toString());
-            setName(getRealName(unit));
+            setName(unit.getName());
             IUnit unitBase = unit;
             getParentUnitsNames(unit, superiorUnits, unitBase);
         }
@@ -55,11 +55,11 @@ public class InfoUnit extends InfoObject {
 
   
     private void getParentUnitsNames(IUnit unit, List superiorUnits, IUnit unitBase) {
-        String unitName = getRealName(unitBase);                
+        String unitName = unitBase.getName();                
         unitName = unitBase.getCostCenterCode().toString() + " - " + unitName; 
         if (unit.getParentUnit() != null) {
             while (unit.getParentUnit() != null) {                    
-                String uniName = getRealName(unit.getParentUnit());
+                String uniName = unit.getParentUnit().getName();
                 superiorUnits.add(uniName);                    
                 unit = unit.getParentUnit();
             } 
@@ -81,14 +81,5 @@ public class InfoUnit extends InfoObject {
             infoUnit.copyFromDomain(unit);
         }
         return infoUnit;
-    }
-    
-    private String getRealName(IUnit unit){
-        if(unit.getRealName() == null || unit.getRealName().equals("")){
-            return unit.getName(); 
-        }
-        else{
-            return unit.getRealName();
-        }       
     }
 }
