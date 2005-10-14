@@ -261,8 +261,6 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
             return mapping.findForward("degreeCurricularPlanManagement");
         }
 
-        //	����������������� USER CAN EDIT ������������������������
-
         request.setAttribute("infoExecutionDegreeCode", infoExecutionDegreeCode);
         request.setAttribute("canEdit", String.valueOf(canEdit.booleanValue()));
 
