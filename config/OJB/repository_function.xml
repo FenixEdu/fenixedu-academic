@@ -22,7 +22,7 @@
     />
 	<field-descriptor id="4" 
 	   name="keyInherentParentFunction"    
-	   column="KEY_INHERENTE_PARENT_FUNCTION"  
+	   column="KEY_INHERENT_PARENT_FUNCTION"  
 	   jdbc-type="INTEGER"
     />
 	<field-descriptor id="5" 
