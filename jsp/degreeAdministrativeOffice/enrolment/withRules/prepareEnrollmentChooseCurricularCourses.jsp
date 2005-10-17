@@ -62,7 +62,7 @@ input { font-size: 11px; }
 	</logic:present>
 	
 	<div class="infoselected">
-	<p><b><bean:message key="label.student"/>:</b> <bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome" /> / 
+	<p><b><bean:message bundle="APPLICATION_RESOURCES" key="label.student"/>:</b> <bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome" /> / 
 	<bean:message key="label.student.number"/> <bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoStudent.number" /></p>
 	<p><b><bean:message key="label.student.enrollment.executionPeriod"/></b>: <bean:write name="infoStudentEnrolmentContext" property="infoExecutionPeriod.name" /> <bean:write name="infoStudentEnrolmentContext" property="infoExecutionPeriod.infoExecutionYear.year" /></p>
 	</div>
@@ -243,9 +243,9 @@ input { font-size: 11px; }
 				<td class="listClasses courses"><bean:write name="curricularCourse" property="infoCurricularCourse.name"/></td>
 				<td class="listClasses">
 					<% if ( ((InfoCurricularCourse2Enroll) curricularCourse).isOptionalCurricularCourse() ) {%>
-						<bean:message key="option.curricularCourse.optional" />
+						<bean:message bundle="APPLICATION_RESOURCES" key="option.curricularCourse.optional" />
 					<% } else { %>
-						<bean:message name="curricularCourse" property="infoCurricularCourse.type.keyName" />
+						<bean:message bundle="APPLICATION_RESOURCES" name="curricularCourse" property="infoCurricularCourse.type.keyName" />
 					<% } %>
 				</td>
 				<td class="listClasses"><bean:write name="curricularCourse" property="infoCurricularCourse.enrollmentWeigth"/></td>
