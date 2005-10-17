@@ -145,7 +145,7 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>MultipartFilter</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>*.faces</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>CloseTxFilter</filter-name>
