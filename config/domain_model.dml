@@ -1453,6 +1453,8 @@ class net.sourceforge.fenixedu.domain.GratuityValues extends net.sourceforge.fen
 
 class net.sourceforge.fenixedu.domain.organizationalStructure.Function extends net.sourceforge.fenixedu.domain.DomainObject {
 	String name;
+	Date beginDate;
+	Date endDate;
 	FunctionType type;
 	Integer keyUnit;
 	Integer keyInherentParentFunction;
@@ -2986,7 +2988,8 @@ class net.sourceforge.fenixedu.domain.Seminaries.Theme extends net.sourceforge.f
 
 class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.sourceforge.fenixedu.domain.DomainObject {
 	String name;
-	String realName;
+	Date beginDate;
+	Date endDate;
 	UnitType type;
 	Integer costCenterCode;
 	Integer keyParentUnit;

@@ -36,10 +36,15 @@
 	   jdbc-type="VARCHAR"
 	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.UnitType2SqlUnitTypeConversion"
     />
-	<field-descriptor id="6" 
-	   name="realName"    
-	   column="REAL_NAME"  
-	   jdbc-type="VARCHAR"
+	<field-descriptor id="7"
+	   name="beginDate"    
+	   column="BEGIN_DATE"  
+	   jdbc-type="DATE"
+    />
+	<field-descriptor id="8"	
+	   name="endDate"    
+	   column="END_DATE"  
+	   jdbc-type="DATE"
     />
 
 	<reference-descriptor auto-retrieve="false"

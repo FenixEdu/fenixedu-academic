@@ -31,6 +31,16 @@
 	   jdbc-type="VARCHAR"
 	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.FunctionType2SqlFunctionTypeConversion"
     />
+	<field-descriptor id="6"
+	   name="beginDate"    
+	   column="BEGIN_DATE"  
+	   jdbc-type="DATE"
+    />
+	<field-descriptor id="7"	
+	   name="endDate"    
+	   column="END_DATE"  
+	   jdbc-type="DATE"
+    />
 	
 	<reference-descriptor auto-retrieve="false"
     	name="unit"
