@@ -778,7 +778,7 @@
 	<action path="/finalDegreeWorkProposal"
 	    	type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.ManageFinalDegreeWorkDispatchAction"
 	    	parameter="method"
-	    	input="/finalDegreeWorkProposal.do?method=prepareFinalWorkInformation&amp;page=0"
+	    	input="/finalDegreeWorkProposal.do?method=createNewFinalDegreeWorkProposal&amp;page=0"
 	    	name="finalDegreeWorkProposal" 
 	    	scope="request" 
 	    	validate="true">
