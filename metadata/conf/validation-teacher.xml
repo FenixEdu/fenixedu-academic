@@ -3,6 +3,12 @@
 <form-validation>
   <formset>
     
+   <form name="studentCurricularPlanAndEnrollmentsSelectionForm">
+		<field property="studentCPID" depends="required">
+			<arg0 key="message.studentNumber" resource="true"/>
+		</field>
+   </form>
+
     <!-- validation for upload Form -->
    	<form name="fileForm">
    		<field property="theFile" depends="required" >
