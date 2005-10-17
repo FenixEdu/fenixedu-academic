@@ -313,6 +313,7 @@ public class ReadTeacherInformation implements IService {
                 return InfoCareer.newInfoFromDomain(career);
             }
         });
+        Collections.sort(infoCareers, new BeanComparator("beginYear"));
         return infoCareers;
     }
 
