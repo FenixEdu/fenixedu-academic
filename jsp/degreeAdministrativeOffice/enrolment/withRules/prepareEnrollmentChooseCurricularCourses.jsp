@@ -196,7 +196,7 @@ input { font-size: 11px; }
 		<logic:iterate id="enrollmentElem" name="infoStudentEnrolmentContext" property="studentCurrentSemesterInfoEnrollments" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment">
 			<tr>
 				<td class="listClasses courses"><bean:write name="enrollmentElem" property="infoCurricularCourse.name"/></td>
-				<td  class="listClasses"><bean:message name="enrollmentElem" property="enrollmentTypeResourceKey" /></td>				
+				<td  class="listClasses"><bean:message bundle="APPLICATION_RESOURCES" name="enrollmentElem" property="enrollmentTypeResourceKey" /></td>				
 				<td class="listClasses"><bean:write name="enrollmentElem" property="infoCurricularCourse.enrollmentWeigth"/></td>
 				<td class="listClasses"><bean:write name="enrollmentElem" property="accumulatedWeight"/></td>
 				<td class="listClasses">
@@ -273,6 +273,6 @@ input { font-size: 11px; }
 	
 	<br/>
 	<html:submit styleClass="inputbutton">
-		<bean:message key="label.finish"/>
+		<bean:message bundle="APPLICATION_RESOURCES" key="label.finish"/>
 	</html:submit>
 </html:form>
