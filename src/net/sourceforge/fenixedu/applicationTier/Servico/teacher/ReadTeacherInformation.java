@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -48,7 +49,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentQualification;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -65,6 +65,7 @@ import net.sourceforge.fenixedu.util.OrientationType;
 import net.sourceforge.fenixedu.util.PublicationArea;
 import net.sourceforge.fenixedu.util.PublicationType;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
@@ -291,14 +292,14 @@ public class ReadTeacherInformation implements IService {
 
     private List getInfoQualifications(ISuportePersistente sp, ITeacher teacher)
             throws ExcepcaoPersistencia {
-        IPersistentQualification persistentQualification = sp.getIPersistentQualification();
-        List qualifications = persistentQualification.readQualificationsByPersonId(teacher.getPerson().getIdInternal());
+        List<IQualification> qualifications = teacher.getPerson().getAssociatedQualifications();
         List infoQualifications = (List) CollectionUtils.collect(qualifications, new Transformer() {
             public Object transform(Object o) {
                 IQualification qualification = (IQualification) o;
                 return InfoQualification.newInfoFromDomain(qualification);
             }
         });
+        Collections.sort(infoQualifications, new BeanComparator("date"));
         return infoQualifications;
     }
 
