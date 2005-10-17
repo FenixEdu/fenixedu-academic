@@ -1,7 +1,3 @@
-/*
- * Created on Dec 5, 2003 by jpvl
- *
- */
 package net.sourceforge.fenixedu.presentationTier.Action.teacher.credits;
 
 import java.util.Collections;
@@ -21,19 +17,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-/**
- * @author jpvl
- */
 public class PrepareTeacherCreditsSheet extends Action {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping,
-     *      org.apache.struts.action.ActionForm,
-     *      javax.servlet.http.HttpServletRequest,
-     *      javax.servlet.http.HttpServletResponse)
-     */
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         IUserView userView = SessionUtils.getUserView(request);
@@ -47,8 +32,9 @@ public class PrepareTeacherCreditsSheet extends Action {
 
         request.setAttribute("infoCredits", infoCredits);
 
-        BeanComparator descriptionComparator = new BeanComparator("infoExecutionPeriod.description");
+        BeanComparator descriptionComparator = new BeanComparator("infoExecutionPeriod.beginDate");
         Collections.sort(infoCredits, descriptionComparator);
         return mapping.findForward("successfull-prepare");
     }
+
 }
