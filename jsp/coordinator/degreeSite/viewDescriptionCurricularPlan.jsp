@@ -30,7 +30,7 @@
 		</tr>
 		
 		<tr>
-			<td><strong><bean:message key="label.coordinator.degreeSite.description"/>&nbsp;<bean:message key="label.curricularPlan" />&nbsp;<bean:message key="label.inEnglish" /></strong></td>
+			<td><strong><bean:message key="label.coordinator.degreeSite.description"/>&nbsp;<bean:message key="label.curricularPlan" />&nbsp;-&nbsp;<bean:message key="label.curricularPlanEng" /></strong></td>
 		</tr>
 		<tr>
 			<td><html:textarea property="descriptionDegreeCurricularPlanEn" cols="80" rows="8"/></td>

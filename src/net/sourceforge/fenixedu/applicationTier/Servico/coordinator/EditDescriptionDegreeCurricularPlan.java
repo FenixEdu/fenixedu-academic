@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -19,66 +18,63 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class EditDescriptionDegreeCurricularPlan implements IService {
 
     public InfoDegreeCurricularPlan run(Integer infoExecutionDegreeId,
-            InfoDegreeCurricularPlan newInfoDegreeCP) throws FenixServiceException {
-        if (infoExecutionDegreeId == null || newInfoDegreeCP == null) {
+            InfoDegreeCurricularPlan infoDegreeCurricularPlan) throws FenixServiceException,
+            ExcepcaoPersistencia {
+
+        if (infoExecutionDegreeId == null || infoDegreeCurricularPlan == null) {
             throw new FenixServiceException("error.impossibleEditDegreeInfo");
         }
 
-        IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
-        IDegreeCurricularPlan degreeCP = null;
-        InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
-        try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            persistentDegreeCurricularPlan = persistentSuport.getIPersistentDegreeCurricularPlan();
+        final ISuportePersistente persistentSuport = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
+        final IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSuport
+                .getIPersistentDegreeCurricularPlan();
 
-            degreeCP = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOID(
-                    DegreeCurricularPlan.class, newInfoDegreeCP.getIdInternal(), true);
-            if (degreeCP == null) {
-                throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);
-            }
-
-            degreeCP.setDescription(newInfoDegreeCP.getDescription());
-            degreeCP.setDescriptionEn(newInfoDegreeCP.getDescriptionEn());
-
-            infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCP);
-        } catch (ExistingPersistentException ex) {
-            throw new ExistingServiceException(ex);
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
+        final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
+                .readByOID(DegreeCurricularPlan.class, infoDegreeCurricularPlan.getIdInternal());
+        if (degreeCurricularPlan == null) {
+            throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);
         }
 
-        return infoDegreeCurricularPlan;
+        degreeCurricularPlan.setDescription(infoDegreeCurricularPlan.getDescription());
+        degreeCurricularPlan.setDescriptionEn(infoDegreeCurricularPlan.getDescriptionEn());
+
+        InfoDegreeCurricularPlan resultInfoDegreeCurricularPlan = InfoDegreeCurricularPlan
+                .newInfoFromDomain(degreeCurricularPlan);
+        resultInfoDegreeCurricularPlan.setInfoDegree(new InfoDegree());
+        resultInfoDegreeCurricularPlan.getInfoDegree().setIdInternal(
+                degreeCurricularPlan.getDegree().getIdInternal());
+
+        return resultInfoDegreeCurricularPlan;
     }
 
-    public InfoDegreeCurricularPlan run(InfoDegreeCurricularPlan newInfoDegreeCP)
-            throws FenixServiceException {
-        if (newInfoDegreeCP == null) {
+    public InfoDegreeCurricularPlan run(InfoDegreeCurricularPlan infoDegreeCurricularPlan)
+            throws FenixServiceException, ExcepcaoPersistencia {
+
+        if (infoDegreeCurricularPlan == null) {
             throw new FenixServiceException("error.impossibleEditDegreeInfo");
         }
 
-        IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
-        IDegreeCurricularPlan degreeCP = null;
-        InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
-        try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            persistentDegreeCurricularPlan = persistentSuport.getIPersistentDegreeCurricularPlan();
+        final ISuportePersistente persistentSuport = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
+        final IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSuport
+                .getIPersistentDegreeCurricularPlan();
 
-            degreeCP = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOID(
-                    DegreeCurricularPlan.class, newInfoDegreeCP.getIdInternal(), true);
-            if (degreeCP == null) {
-                throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);
-            }
-
-            degreeCP.setDescription(newInfoDegreeCP.getDescription());
-            degreeCP.setDescriptionEn(newInfoDegreeCP.getDescriptionEn());
-
-            infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCP);
-        } catch (ExistingPersistentException ex) {
-            throw new ExistingServiceException(ex);
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
+        final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
+                .readByOID(DegreeCurricularPlan.class, infoDegreeCurricularPlan.getIdInternal());
+        if (degreeCurricularPlan == null) {
+            throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);
         }
 
-        return infoDegreeCurricularPlan;
+        degreeCurricularPlan.setDescription(infoDegreeCurricularPlan.getDescription());
+        degreeCurricularPlan.setDescriptionEn(infoDegreeCurricularPlan.getDescriptionEn());
+
+        InfoDegreeCurricularPlan resultInfoDegreeCurricularPlan = InfoDegreeCurricularPlan
+                .newInfoFromDomain(degreeCurricularPlan);
+        resultInfoDegreeCurricularPlan.setInfoDegree(new InfoDegree());
+        resultInfoDegreeCurricularPlan.getInfoDegree().setIdInternal(
+                degreeCurricularPlan.getDegree().getIdInternal());
+
+        return resultInfoDegreeCurricularPlan;
     }
 }

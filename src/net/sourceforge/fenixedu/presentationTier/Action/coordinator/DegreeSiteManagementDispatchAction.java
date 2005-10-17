@@ -179,8 +179,6 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
         infoDegreeInfo.setMarkAverage(convertString2Double((String) degreeInfoForm.get("markAverage")));
         infoDegreeInfo.setRecognitions((String) degreeInfoForm.get("recognitions"));
         infoDegreeInfo.setQualificationLevel((String) degreeInfoForm.get("qualificationLevel"));
-
-         System.out.println(">>>>> ------- <<<<<");
         
         // information in english
         infoDegreeInfo.setDescriptionEn((String) degreeInfoForm.get("descriptionEn"));
@@ -291,8 +289,6 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
             return (new ActionForward(mapping.getInput()));
         }
 
-        // request.setAttribute("infoDegreeCurricularPlan",
-        // infoDegreeCurricularPlan);
         request.setAttribute("infoDegreeID", infoDegreeCurricularPlan.getInfoDegree().getIdInternal());
         return mapping.findForward("editOK");
     }
