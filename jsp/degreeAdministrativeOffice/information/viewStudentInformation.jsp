@@ -64,7 +64,7 @@
             <td width="30%"><bean:message bundle="APPLICATION_RESOURCES" key="label.person.identificationDocumentType"  /></td>
             <td class="greytxt">
             	<bean:define id="idType" name="personalInfo" property="tipoDocumentoIdentificacao"/>
-            	<bean:message key='<%=idType.toString()%>' />
+            	<bean:message bundle="APPLICATION_RESOURCES" key='<%=idType.toString()%>' />
             </td>
           </tr>
           <!-- Local de Emissao do Documento de Identificacao -->
@@ -102,7 +102,7 @@
           <tr>
             <td width="30%"><bean:message bundle="APPLICATION_RESOURCES" key="label.person.maritalStatus"  /></td>
             <bean:define id="maritalStatus" name="personalInfo" property="maritalStatus"/>
-            <td class="greytxt"><bean:message key='<%= maritalStatus.toString() %>'  /></td>
+            <td class="greytxt"><bean:message bundle="APPLICATION_RESOURCES" key='<%= maritalStatus.toString() %>'  /></td>
           </tr>
 		</table>
 		<br />
