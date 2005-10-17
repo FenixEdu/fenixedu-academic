@@ -158,10 +158,14 @@ public class InsertStudentTestResponses implements IService {
                         }
                     }
                 } else {
-                    if (studentTestQuestion.getResponse() != null)
+                    if (studentTestQuestion.getResponse() != null) {
                         responseNumber++;
-                    else
+                        if (distributedTest.getTestType().getType().intValue() == TestType.EVALUATION) {
+                            totalMark += studentTestQuestion.getTestQuestionMark().doubleValue();
+                        }
+                    } else {
                         notResponseNumber++;
+                    }
 
                 }
             }
@@ -176,7 +180,7 @@ public class InsertStudentTestResponses implements IService {
                     mark.setAttend(attend);
                     mark.setEvaluation(onlineTest);
                 }
-                DecimalFormat df =new DecimalFormat("#0.##");
+                DecimalFormat df = new DecimalFormat("#0.##");
                 df.getDecimalFormatSymbols().setDecimalSeparator('.');
                 mark.setMark(df.format(Math.max(0, totalMark)));
             }

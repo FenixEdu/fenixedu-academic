@@ -21,11 +21,14 @@ function invertSelect(){
 // -->
 </script>
 <logic:present name="infoMetadataList">
+
 	<bean:define id="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
 	<span class="error"><html:errors /></span>
-
+	
 	<bean:size id="metadatasSize" name="infoMetadataList" />
+
 	<logic:notEqual name="metadatasSize" value="0">
+
 		<logic:present name="order">
 			<bean:define id="order" name="order" />
 		</logic:present>
@@ -35,14 +38,16 @@ function invertSelect(){
 		<logic:notPresent name="asc">
 			<bean:define id="asc" value="true" />
 		</logic:notPresent>
+
 		<table>
 			<tr>
 				<td class="infoop"><bean:message key="message.showAvailableQuestions.information" /></td>
 			</tr>
 		</table>
+			
 		<br />
 		<br />
-		
+			
 		<logic:greaterThan name="metadatasSize" value="10">
 			<table>
 				<tr>
@@ -95,7 +100,6 @@ function invertSelect(){
 					</tr>
 				</table>
 			</logic:greaterThan>
-		</html:form>
 
 		<br />
 		<br />
@@ -244,16 +248,27 @@ function invertSelect(){
 				</logic:notEqual></div>
 				</td>
 			</tr>
+			
 			<logic:iterate id="metadata" name="infoMetadataList" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoMetadata">
+			
 				<tr>
-					<bean:define id="metadataCode" name="metadata" property="idInternal" />
-					<td class="listClasses"><html:multibox property="metadataCode">
-						<bean:write name="metadataCode" />
-					</html:multibox></td>
+					<bean:define id="metadataId" name="metadata" property="idInternal" />
+						
+					<td class="listClasses">
+					
+					<html:multibox property="metadataCode">
+					
+					<bean:write name="metadataId" />
+					
+					</html:multibox>
+					
+					
+					</td>
+						
 					<logic:notEqual name="metadata" property="description" value="">
 						<td class="listClasses">
 						<div class="gen-button"><html:link
-							page="<%= "/questionsManagement.do?method=prepareInsertTestQuestion&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + pageContext.findAttribute("testCode") + "&amp;metadataCode=" + metadataCode+ "&amp;order="+ pageContext.findAttribute("order")+"&amp;asc="+pageContext.findAttribute("asc")%>">
+							page="<%= "/questionsManagement.do?method=prepareInsertTestQuestion&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + pageContext.findAttribute("testCode") + "&amp;metadataCode=" + metadataId+"&amp;order="+ pageContext.findAttribute("order")+"&amp;asc="+pageContext.findAttribute("asc")%>">
 							<bean:write name="metadata" property="description" />
 						</html:link></div>
 						</td>
@@ -261,11 +276,12 @@ function invertSelect(){
 					<logic:equal name="metadata" property="description" value="">
 						<td class="listClasses">
 						<div class="gen-button"><html:link
-							page="<%= "/questionsManagement.do?method=prepareInsertTestQuestion&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + pageContext.findAttribute("testCode") + "&amp;metadataCode=" + metadataCode+ "&amp;order="+ pageContext.findAttribute("order")+"&amp;asc="+pageContext.findAttribute("asc")%>">
+							page="<%= "/questionsManagement.do?method=prepareInsertTestQuestion&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + pageContext.findAttribute("testCode") + "&amp;metadataCode=" + metadataId+ "&amp;order="+ pageContext.findAttribute("order")+"&amp;asc="+pageContext.findAttribute("asc")%>">
 							<bean:message key="message.tests.notDefined" />
 						</html:link></div>
 						</td>
 					</logic:equal>
+				
 					<logic:notEqual name="metadata" property="mainSubject" value="">
 						<td class="listClasses"><bean:write name="metadata" property="mainSubject" /></td>
 					</logic:notEqual>
@@ -278,15 +294,19 @@ function invertSelect(){
 					<logic:equal name="metadata" property="difficulty" value="">
 						<td class="listClasses"><bean:message key="message.tests.notDefined" /></td>
 					</logic:equal>
+					
 					<logic:notEqual name="metadata" property="numberOfMembers" value="">
 						<td class="listClasses"><bean:write name="metadata" property="numberOfMembers" /></td>
 					</logic:notEqual>
 					<logic:equal name="metadata" property="numberOfMembers" value="">
 						<td class="listClasses"><bean:message key="message.tests.notDefined" /></td>
 					</logic:equal>
+					
 				</tr>
+				
 			</logic:iterate>
 		</table>
+			
 		<br />
 		<br />
 		<table>
@@ -304,7 +324,7 @@ function invertSelect(){
 				</html:submit> </td>
 			</tr>
 		</table>
-		
+	</html:form>
 	</logic:notEqual>
 	<logic:equal name="metadatasSize" value="0">
 		<span class="error"><bean:message key="message.tests.no.exercises" /></span>
