@@ -69,7 +69,7 @@
 	</logger>
 	-->
 
-	<logger name="net.sourceforge.fenixedu.applicationTier.Servico.student.InsertStudentTestResponses">
+	<logger name="net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.InsertStudentTestResponses">
 		<level value="debug"/>
 		<appender-ref ref="ConsoleAppender"/>
 	</logger>
