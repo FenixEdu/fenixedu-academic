@@ -165,7 +165,8 @@
 
 	<tag>
 		<name>regexValidator</name>
-		<tagclass>net.sourceforge.fenixedu.presentationTier.jsf.validators.RegexValidatorTag</tagclass>
+		<tag-class>net.sourceforge.fenixedu.presentationTier.jsf.validators.RegexValidatorTag</tag-class>
+		<tei-class>com.sun.faces.taglib.FacesTagExtraInfo</tei-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<name>regex</name>

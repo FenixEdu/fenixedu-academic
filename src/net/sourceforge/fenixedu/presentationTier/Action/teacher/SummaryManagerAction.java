@@ -583,6 +583,13 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
 
         htmlEditorConfigurations(request, summaryForm);
 
+        final InfoSiteSummary infoSiteSummary = (InfoSiteSummary) ((ExecutionCourseSiteView) siteView)
+                .getComponent();
+        for (final InfoShift infoShift : (List<InfoShift>) infoSiteSummary.getInfoShifts()) {
+            Collections.sort(infoShift.getInfoLessons());
+        }
+        Collections.sort(infoSiteSummary.getInfoShifts(), new BeanComparator("lessons"));
+
         request.setAttribute("siteView", siteView);
 
         return mapping.findForward("editSummary");

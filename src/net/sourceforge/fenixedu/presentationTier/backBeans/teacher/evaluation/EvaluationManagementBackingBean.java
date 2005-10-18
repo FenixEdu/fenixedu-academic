@@ -157,7 +157,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         if (this.evaluationID == null) {
             if (this.evaluationIdHidden != null) {
                 this.evaluationID = Integer.valueOf(this.evaluationIdHidden.getValue().toString());
-            } else if (this.getRequestParameter("evaluationID") != "" && this.getRequestParameter("evaluationID") != null) {
+            } else if (!this.getRequestParameter("evaluationID").equals("") && this.getRequestParameter("evaluationID") != null) {
                 this.evaluationID = Integer.valueOf(this.getRequestParameter("evaluationID"));
             }
         }
