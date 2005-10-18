@@ -38,8 +38,7 @@
 	<html:form action="/updateTeacherExecutionYearExecutionCourseResponsabilities">
 		<html:hidden property="idInternal" />	
 		<html:hidden property="teacherId" />
-		<html:hidden property="executionYearId" />
-
+		
 		<h2><bean:message key="label.teacher.professorships"/></h2>
 		<table width="100%"cellpadding="5" border="0">
 			<tr>
@@ -128,7 +127,7 @@
 						<logic:equal name="isDepartmentManager" value="true">					
 							<td class="listClasses">
 								<bean:define id="removeLink">
-									 /removeProfessorship.do?teacherNumber=<bean:write name="infoTeacher" property="teacherNumber"/>&amp;teacherId=<bean:write name="infoTeacher" property="idInternal"/>&amp;idInternal=<bean:write name="infoTeacher" property="idInternal"/>&amp;executionCourseId=<bean:write name="professorship" property="infoExecutionCourse.idInternal"/>
+									 /removeProfessorship.do?teacherNumber=<bean:write name="infoTeacher" property="teacherNumber"/>&amp;teacherId=<bean:write name="infoTeacher" property="idInternal"/>&amp;idInternal=<bean:write name="infoTeacher" property="idInternal"/>&amp;executionCourseId=<bean:write name="professorship" property="infoExecutionCourse.idInternal"/>&amp;executionYearId=<bean:write name="teacherExecutionCourseResponsabilities" property="executionYearId" />
 								</bean:define>
 								<html:link page='<%= removeLink.toString() %>'>
 									<bean:message key="link.remove" />
