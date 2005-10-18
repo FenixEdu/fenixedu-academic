@@ -67,6 +67,6 @@
 		</h:panelGrid>
 		<h:outputText value="<br/>" escape="false"/>
 		<h:commandButton action="#{evaluationManagementBackingBean.createWrittenTest}" styleClass="inputbutton" value="#{bundle['button.create']}"/>
-		<h:commandButton immediate="true" action="#{evaluationManagementBackingBean.evaluation.class.getSimpleName}" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>				
+		<h:commandButton immediate="true" action="WrittenTest" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>				
 	</h:form>
 </ft:tilesView>
