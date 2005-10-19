@@ -236,8 +236,16 @@ public class SearchPerson implements IService {
     }
 
     private List<IPerson> getValidPersons(String[] nameWords, List<IPerson> persons) {
-
+       
+        int whiteSpaces = 0;
         List<IPerson> persons_ = new ArrayList();
+
+        for (int i = 0; i < nameWords.length; i++) {
+            String string = nameWords[i];
+            if (string.trim().equals("")) {
+                whiteSpaces++;
+            }
+        }
 
         for (IPerson person : persons) {
             String personName = person.getNome();
@@ -249,13 +257,15 @@ public class SearchPerson implements IService {
                 for (int i = 0; i < nameWords.length; i++) {
                     String name_ = nameWords[i];
                     for (int j = 0; j < personNameWords.length; j++) {
-                        if (personNameWords[j].equals(name_)) {
+                        if (!personNameWords[j].trim().equals("")
+                                && !personNameWords[j].trim().equals("")
+                                && personNameWords[j].trim().equals(name_.trim())) {
                             count++;
                             break;
                         }
                     }
                 }
-                if (count == nameWords.length) {
+                if (count == (nameWords.length - whiteSpaces)) {
                     persons_.add(person);
                 }
             }
