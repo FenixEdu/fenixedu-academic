@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -46,6 +47,8 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
     private Map<Integer, String> lecturedMasterDegreeExecutionCourseDegreeNames;
 
     private List<IProposal> finalDegreeWorks;
+
+    private List<IMasterDegreeThesisDataVersion> guidedMasterDegreeThesisList;
 
     public HtmlInputHidden getSelectedExecutionYearIdHidden() {
         if (this.selectedExecutionYearIdHidden == null) {
@@ -109,7 +112,9 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
             result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
         }
 
-        setSelectedExecutionYearID(executionYears.get(executionYears.size() - 1).getIdInternal());
+        if (this.getSelectedExecutionYearID() == null) {
+            this.setSelectedExecutionYearID((Integer) result.get(result.size() - 1).getValue());
+        }
 
         return result;
 
@@ -204,6 +209,18 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
         }
 
         return this.finalDegreeWorks;
+    }
+
+    public List<IMasterDegreeThesisDataVersion> getGuidedMasterDegreeThesisList()
+            throws FenixFilterException, FenixServiceException {
+        if (this.guidedMasterDegreeThesisList == null) {
+            this.guidedMasterDegreeThesisList = (List<IMasterDegreeThesisDataVersion>) ServiceUtils
+                    .executeService(getUserView(),
+                            "ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID", new Object[] {
+                                    this.selectedTeacher.getIdInternal(), this.selectedExecutionYearID });
+        }
+
+        return this.guidedMasterDegreeThesisList;
     }
 
 }

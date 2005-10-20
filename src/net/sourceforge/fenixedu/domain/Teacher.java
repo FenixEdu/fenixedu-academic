@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.domain.teacher.ITeacherPersonalExpectation;
 import net.sourceforge.fenixedu.util.PublicationArea;
+import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -176,13 +177,13 @@ public class Teacher extends Teacher_Base {
         return executionCourses;
     }
 
-     public List<IExecutionCourse> getLecturedExecutionCoursesByExecutionPeriod(
+    public List<IExecutionCourse> getLecturedExecutionCoursesByExecutionPeriod(
             final IExecutionPeriod executionPeriod) {
         List<IExecutionCourse> executionCourses = new ArrayList<IExecutionCourse>();
         for (Iterator iter = getProfessorships().iterator(); iter.hasNext();) {
             IProfessorship professorship = (IProfessorship) iter.next();
             IExecutionCourse executionCourse = professorship.getExecutionCourse();
-            if(executionCourse.getExecutionPeriod().equals(executionPeriod)){
+            if (executionCourse.getExecutionPeriod().equals(executionPeriod)) {
                 executionCourses.add(executionCourse);
             }
         }
@@ -219,4 +220,31 @@ public class Teacher extends Teacher_Base {
         }
         return count;
     }
+
+    public List<IMasterDegreeThesisDataVersion> getGuidedMasterDegreeThesisByExecutionYear(
+            IExecutionYear executionYear) {
+        List<IMasterDegreeThesisDataVersion> guidedThesis = new ArrayList<IMasterDegreeThesisDataVersion>();
+
+        for (IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion : this
+                .getMasterDegreeThesisGuider()) {
+            
+            if (masterDegreeThesisDataVersion.getCurrentState().getState() == State.ACTIVE) {
+                
+                List<IExecutionDegree> executionDegrees = masterDegreeThesisDataVersion.getMasterDegreeThesis().getStudentCurricularPlan().getDegreeCurricularPlan().getExecutionDegrees();
+                
+                for (IExecutionDegree executionDegree : executionDegrees)
+                {
+                    if (executionDegree.getExecutionYear().equals(executionYear))
+                    {
+                        guidedThesis.add(masterDegreeThesisDataVersion);
+                    }
+                }
+                
+            }
+        }
+
+        return guidedThesis;
+
+    }
+
 }

@@ -85,6 +85,7 @@ valueType net.sourceforge.fenixedu.util.tests.TestType                  				    
 valueType net.sourceforge.fenixedu.domain.organizationalStructure.UnitType                  	as UnitType;
 valueType net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType                 	as FunctionType;
 
+
 /*
 *
 * Class definitions
@@ -242,7 +243,7 @@ class net.sourceforge.fenixedu.domain.teacher.Career extends net.sourceforge.fen
 	    "
     }
 
-  class net.sourceforge.fenixedu.domain.teacher.TeachingCareer extends net.sourceforge.fenixedu.domain.teacher.Career {
+    class net.sourceforge.fenixedu.domain.teacher.TeachingCareer extends net.sourceforge.fenixedu.domain.teacher.Career {
         String courseOrPosition;
         Integer keyCategory;
         
@@ -464,12 +465,12 @@ class net.sourceforge.fenixedu.domain.CurricularCourseGroup extends net.sourcefo
     "
 }
 
-class net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup extends net.sourceforge.fenixedu.domain.CurricularCourseGroup {
-    AreaType areaType;
-}
-
-class net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup extends net.sourceforge.fenixedu.domain.CurricularCourseGroup {
-}
+    class net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup extends net.sourceforge.fenixedu.domain.CurricularCourseGroup {
+        AreaType areaType;
+    }
+    
+    class net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup extends net.sourceforge.fenixedu.domain.CurricularCourseGroup {
+    }
 
 class net.sourceforge.fenixedu.domain.CurricularCourseScope extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer branchKey;
@@ -2884,7 +2885,7 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	Integer keyCategory;
 	Integer keyServiceProviderRegime;
 	Integer keyPublicationsNumber;
-		
+	
 	interface "
 	public net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits getExecutionPeriodCredits(IExecutionPeriod executionPeriod);
 	
@@ -2907,12 +2908,16 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	public IDepartment getMailingDepartment();
 	
 	public IDepartment getWorkingDepartment();
+   	
 	
 	public java.util.List<net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal> getFinalDegreeWorksByExecutionYear(IExecutionYear executionYear);
 	
 	public java.util.List<IExecutionCourse> getLecturedExecutionCoursesByExecutionYear(IExecutionYear executionYear);
 	
 	public java.util.List<IExecutionCourse> getLecturedExecutionCoursesByExecutionPeriod(final IExecutionPeriod executionPeriod);
+	
+	public java.util.List<IMasterDegreeThesisDataVersion> getGuidedMasterDegreeThesisByExecutionYear(IExecutionYear executionYear);
+	
 	"
 }
 
@@ -4497,7 +4502,7 @@ relation InquiriesTeacherNonAffiliatedTeacher {
 }
 
 relation InquiriesTeacherDomainTeacher {
-	net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher playsRole associatedInquiriesTeacher {
+    net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher playsRole associatedInquiriesTeacher {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
@@ -5733,7 +5738,6 @@ relation EmployeeContract {
     }
 	net.sourceforge.fenixedu.domain.Employee playsRole employee;
 }
-
 relation UnitFunction {
     net.sourceforge.fenixedu.domain.organizationalStructure.Function playsRole functions  {
     	multiplicity *;

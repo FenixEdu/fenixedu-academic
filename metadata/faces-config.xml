@@ -160,13 +160,6 @@
 	
 	<!-- View Department Teachers Process -->
 	<navigation-rule>
-		<from-view-id>/departmentMember/viewDepartmentTeachers/chooseExecutionYear.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>listDepartmentTeachers</from-outcome>
-			<to-view-id>/departmentMember/viewDepartmentTeachers/listDepartmentTeachers.jsp</to-view-id>
-		</navigation-case>			
-	</navigation-rule>
-	<navigation-rule>
 		<from-view-id>/departmentMember/viewDepartmentTeachers/listDepartmentTeachers.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>viewDetails</from-outcome>
@@ -208,22 +201,8 @@
 	<navigation-rule>
 		<from-view-id>/departmentMember/expectationManagement/insertInvestigationExpectationData.jsp</from-view-id>
 		<navigation-case>
-			<from-outcome>previous</from-outcome>
-			<to-view-id>/departmentMember/expectationManagement/insertEducationExpectationData.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<from-view-id>/departmentMember/expectationManagement/insertInvestigationExpectationData.jsp</from-view-id>
-		<navigation-case>
 			<from-outcome>next</from-outcome>
 			<to-view-id>/departmentMember/expectationManagement/insertUniversityServiceExpectationData.jsp</to-view-id>
-		</navigation-case>			
-	</navigation-rule>
-	<navigation-rule>
-		<from-view-id>/departmentMember/expectationManagement/insertUniversityServiceExpectationData.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>previous</from-outcome>
-			<to-view-id>/departmentMember/expectationManagement/insertInvestigationExpectationData.jsp</to-view-id>
 		</navigation-case>			
 	</navigation-rule>
 	<navigation-rule>
@@ -232,13 +211,6 @@
 			<from-outcome>next</from-outcome>
 			<to-view-id>/departmentMember/expectationManagement/insertProfessionalActivityExpectationData.jsp</to-view-id>
 		</navigation-case>			
-	</navigation-rule>
-	<navigation-rule>
-		<from-view-id>/departmentMember/expectationManagement/insertProfessionalActivityExpectationData.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>previous</from-outcome>
-			<to-view-id>/departmentMember/expectationManagement/insertUniversityServiceExpectationData.jsp</to-view-id>
-		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
 		<from-view-id>/departmentMember/expectationManagement/insertProfessionalActivityExpectationData.jsp</from-view-id>
@@ -256,23 +228,14 @@
 			<from-outcome>editEducationExpectationData</from-outcome>
 			<to-view-id>/departmentMember/expectationManagement/editEducationExpectationData.jsp</to-view-id>
 		</navigation-case>			
-	</navigation-rule>
-	<navigation-rule>
-		<from-view-id>/departmentMember/expectationManagement/viewPersonalExpectation.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>editInvestigationExpectationData</from-outcome>
 			<to-view-id>/departmentMember/expectationManagement/editInvestigationExpectationData.jsp</to-view-id>
 		</navigation-case>			
-	</navigation-rule>
-	<navigation-rule>
-		<from-view-id>/departmentMember/expectationManagement/viewPersonalExpectation.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>editUniversityServiceExpectationData</from-outcome>
 			<to-view-id>/departmentMember/expectationManagement/editUniversityServiceExpectationData.jsp</to-view-id>
 		</navigation-case>			
-	</navigation-rule>
-	<navigation-rule>
-		<from-view-id>/departmentMember/expectationManagement/viewPersonalExpectation.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>editProfessionalActivityExpectationData</from-outcome>
 			<to-view-id>/departmentMember/expectationManagement/editProfessionalActivityExpectationData.jsp</to-view-id>
@@ -534,7 +497,31 @@
 			net.sourceforge.fenixedu.presentationTier.jsf.components.UIViewState
 		</component-class>
 	</component>
-	
+	<component>
+		<component-type>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UICommandLink
+		</component-type>
+		<component-class>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UICommandLink
+		</component-class>
+	</component>
+	<component>
+		<component-type>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UICommandButton
+		</component-type>
+		<component-class>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UICommandButton
+		</component-class>
+	</component>
+	<component>
+		<component-type>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UISelectOne
+		</component-type>
+		<component-class>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UISelectOne
+		</component-class>
+	</component>
+		
 	<validator>
 		<validator-id>regexValidator</validator-id>
 		<validator-class>net.sourceforge.fenixedu.presentationTier.jsf.validators.RegexValidator</validator-class>

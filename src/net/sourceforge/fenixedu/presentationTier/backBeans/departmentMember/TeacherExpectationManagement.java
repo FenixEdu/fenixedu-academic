@@ -31,8 +31,6 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
  */
 public class TeacherExpectationManagement extends FenixBackingBean {
 
-    private Integer selectedExecutionYearID;
-
     private String selectedExecutionYearName;
 
     private Boolean needsToCreateExpectation;
@@ -122,15 +120,19 @@ public class TeacherExpectationManagement extends FenixBackingBean {
     public HtmlInputHidden getSelectedExecutionYearIdHidden() {
         if (this.selectedExecutionYearIdHidden == null) {
             this.selectedExecutionYearIdHidden = new HtmlInputHidden();
-            this.selectedExecutionYearIdHidden.setValue(this.selectedExecutionYearID);
+            // this.selectedExecutionYearIdHidden.setValue(this.selectedExecutionYearID);
+            this.selectedExecutionYearIdHidden.setValue(this.getSelectedExecutionYearID());
         }
         return selectedExecutionYearIdHidden;
     }
 
     public void setSelectedExecutionYearIdHidden(HtmlInputHidden selectedExecutionYearIdHidden) {
         if (selectedExecutionYearIdHidden != null) {
-            this.selectedExecutionYearID = Integer.valueOf(selectedExecutionYearIdHidden.getValue()
-                    .toString());
+            // this.selectedExecutionYearID =
+            // Integer.valueOf(selectedExecutionYearIdHidden.getValue()
+            // .toString());
+            this.setSelectedExecutionYearID(Integer.valueOf(selectedExecutionYearIdHidden.getValue()
+                    .toString()));
         }
 
         this.selectedExecutionYearIdHidden = selectedExecutionYearIdHidden;
@@ -352,14 +354,16 @@ public class TeacherExpectationManagement extends FenixBackingBean {
         this.researchAndDevProjects = researchAndDevProjects;
     }
 
-    public Integer getSelectedExecutionYearID() throws FenixFilterException, FenixServiceException {
+    public Integer getSelectedExecutionYearID() {
 
-        return selectedExecutionYearID;
+        return (Integer) this.getViewState().getAttribute("selectedExecutionYearID");
+
     }
 
     public void setSelectedExecutionYearID(Integer selectedExecutionYearID) {
 
-        this.selectedExecutionYearID = selectedExecutionYearID;
+        this.getViewState().setAttribute("selectedExecutionYearID", selectedExecutionYearID);
+
     }
 
     public String getSelectedExecutionYearName() throws FenixFilterException, FenixServiceException {
@@ -471,7 +475,7 @@ public class TeacherExpectationManagement extends FenixBackingBean {
         List<IExecutionCourse> lecturedExecutionCourses = (List<IExecutionCourse>) ServiceUtils
                 .executeService(getUserView(),
                         "ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType",
-                        new Object[] { infoTeacher.getIdInternal(), this.selectedExecutionYearID,
+                        new Object[] { infoTeacher.getIdInternal(), this.getSelectedExecutionYearID(),
                                 degreeType });
 
         return lecturedExecutionCourses;
@@ -525,8 +529,9 @@ public class TeacherExpectationManagement extends FenixBackingBean {
          * result.add(new SelectItem(executionYear.getIdInternal(),
          * executionYear.getYear())); }
          * 
+         * if (this.getSelectedExecutionYearID() == null) {
          * setSelectedExecutionYearID(executionYears.get(executionYears.size() -
-         * 1).getIdInternal());
+         * 1).getIdInternal()); }
          */
 
         // TODO: THIS SHOULD BE REMOVED WHEN WE WAVE PERSONAL EXPECTATION
@@ -543,6 +548,7 @@ public class TeacherExpectationManagement extends FenixBackingBean {
         result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
 
         setSelectedExecutionYearID(executionYear.getIdInternal());
+        loadPersonalExpectationData();
 
         return result;
     }
@@ -561,7 +567,7 @@ public class TeacherExpectationManagement extends FenixBackingBean {
 
         this.finalDegreeWorks = (List<IProposal>) ServiceUtils.executeService(getUserView(),
                 "ReadFinalDegreeWorksByTeacherIDAndExecutionYearID", new Object[] {
-                        infoTeacher.getIdInternal(), this.selectedExecutionYearID });
+                        infoTeacher.getIdInternal(), this.getSelectedExecutionYearID() });
     }
 
     public InfoTeacher getInfoTeacher() throws FenixFilterException, FenixServiceException {
@@ -580,7 +586,7 @@ public class TeacherExpectationManagement extends FenixBackingBean {
         InfoTeacherPersonalExpectation infoTeacherPersonalExpectation = buildInfoTeacherPersonalExpectation();
 
         Object[] args = { infoTeacherPersonalExpectation, infoTeacher.getIdInternal(),
-                this.selectedExecutionYearID };
+                this.getSelectedExecutionYearID() };
 
         ServiceUtils.executeService(getUserView(), "InsertTeacherPersonalExpectation", args);
 
@@ -608,7 +614,8 @@ public class TeacherExpectationManagement extends FenixBackingBean {
     public String viewPersonalExpecation() throws FenixFilterException, FenixServiceException {
 
         InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(
-                getUserView(), "ReadExecutionYearByID", new Object[] { this.selectedExecutionYearID });
+                getUserView(), "ReadExecutionYearByID",
+                new Object[] { this.getSelectedExecutionYearID() });
 
         this.selectedExecutionYearName = infoExecutionYear.getYear();
 
@@ -621,6 +628,8 @@ public class TeacherExpectationManagement extends FenixBackingBean {
         loadLecturedDegreeExecutionCourses();
         loadLecturedMasterDegreeExecutionCourses();
         loadPersonalExpectationData();
+        loadExecutionYearName();
+
     }
 
     private void loadLecturedMasterDegreeExecutionCourses() throws FenixFilterException,
@@ -635,9 +644,11 @@ public class TeacherExpectationManagement extends FenixBackingBean {
     }
 
     private void loadPersonalExpectationData() throws FenixFilterException, FenixServiceException {
+        clearFields();
+
         InfoTeacher infoTeacher = getInfoTeacher();
 
-        Object[] args = { infoTeacher.getIdInternal(), this.selectedExecutionYearID };
+        Object[] args = { infoTeacher.getIdInternal(), this.getSelectedExecutionYearID() };
 
         InfoTeacherPersonalExpectation infoTeacherPersonalExpectation = (InfoTeacherPersonalExpectation) ServiceUtils
                 .executeService(getUserView(),
@@ -649,6 +660,14 @@ public class TeacherExpectationManagement extends FenixBackingBean {
         } else {
             this.needsToCreateExpectation = true;
         }
+    }
+
+    private void loadExecutionYearName() throws FenixFilterException, FenixServiceException {
+        InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(
+                getUserView(), "ReadExecutionYearByID",
+                new Object[] { this.getSelectedExecutionYearID() });
+
+        this.selectedExecutionYearName = infoExecutionYear.getYear();
     }
 
     private void bindPersonalExpectationDataWithFields(
@@ -692,6 +711,43 @@ public class TeacherExpectationManagement extends FenixBackingBean {
                 .getTechnicalReportPublications();
         this.universityServiceMainFocus = infoTeacherPersonalExpectation.getUniversityServiceMainFocus();
         this.utlOrgans = infoTeacherPersonalExpectation.getUtlOrgans();
+
+    }
+
+    private void clearFields() {
+        this.teacherPersonalExpectationID = null;
+        this.bookPublications = null;
+        this.cientificComunityService = null;
+        this.cientificPosGraduations = null;
+        this.cientificPosGraduationsDescription = null;
+        this.companyPositions = null;
+        this.companySocialOrgans = null;
+        this.conferencePublications = null;
+        this.consulting = null;
+        this.departmentOrgans = null;
+        this.educationMainFocus = null;
+        this.finalDegreeWorkOrientations = null;
+        this.graduations = null;
+        this.graduationsDescription = null;
+        this.orientationsMainFocus = null;
+        this.researchAndDevMainFocus = null;
+        this.istOrgans = null;
+        this.jornalArticlePublications = null;
+        this.masterDegreeOrientations = null;
+        this.otherPublications = null;
+        this.otherPublicationsDescription = null;
+        this.patentPublications = null;
+        this.phdOrientations = null;
+        this.professionalActivityMainFocus = null;
+        this.professionalPosGraduations = null;
+        this.professionalPosGraduationsDescription = null;
+        this.researchAndDevProjects = null;
+        this.seminaries = null;
+        this.seminariesDescription = null;
+        this.societyService = null;
+        this.technicalReportPublications = null;
+        this.universityServiceMainFocus = null;
+        this.utlOrgans = null;
 
     }
 
@@ -739,6 +795,10 @@ public class TeacherExpectationManagement extends FenixBackingBean {
     }
 
     public String prepareCreatePersonalExpectation() throws FenixFilterException, FenixServiceException {
+
+        // In case we are switching execution years
+        clearFields();
+
         loadLecturedDegreeExecutionCourses();
         this.graduations = this.lecturedDegreeExecutionCourses.size();
 
@@ -747,6 +807,8 @@ public class TeacherExpectationManagement extends FenixBackingBean {
 
         loadFinalDegreeWorks();
         this.finalDegreeWorkOrientations = this.finalDegreeWorks.size();
+
+        loadExecutionYearName();
 
         return "create";
 

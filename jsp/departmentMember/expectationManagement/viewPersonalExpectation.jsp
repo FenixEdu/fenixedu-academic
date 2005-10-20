@@ -1,23 +1,29 @@
 <%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
+<%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
+<%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
 <ft:tilesView definition="departmentMember.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="ServidorApresentacao/DepartmentMemberResources" var="bundle"/>
 	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="bundleEnumeration"/>
 	
-	<h:outputText value="#{bundle['label.personalExpectationsManagement.title']}" escape="false" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
-	<h:outputText value="&nbsp;-&nbsp;" escape="false" />
-	<h:outputText value="#{teacherExpectationManagement.selectedExecutionYearName}" escape="false" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
+	<h:outputText value="<h2>#{bundle['label.personalExpectationsManagement.title']}</h2>" escape="false" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
 	
 
 	<h:form>
-		<h:inputHidden value="#{teacherExpectationManagement.selectedExecutionYearID}" />
 		<h:inputHidden value="#{teacherExpectationManagement.selectedExecutionYearName}" />
-		
+				
+		<h:panelGrid columns="2">
+			<h:outputText value="#{bundle['label.common.executionYear']}:" />
+			<fc:selectOneMenu id="dropDownListExecutionYearID" value="#{teacherExpectationManagement.selectedExecutionYearID}" onchange="this.form.submit();">
+				<f:selectItems value="#{teacherExpectationManagement.executionYears}" />
+			</fc:selectOneMenu>
+		</h:panelGrid>
+				
 		<h:panelGrid rendered="#{teacherExpectationManagement.needsToCreateExpectation}">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.noExpectationsDefined']}" />
-			<h:commandLink value="#{bundle['link.personalExpectationsManagement.definePersonalExpectation']}" action="#{teacherExpectationManagement.prepareCreatePersonalExpectation}" />
+			<fc:commandLink value="#{bundle['link.personalExpectationsManagement.definePersonalExpectation']}" action="#{teacherExpectationManagement.prepareCreatePersonalExpectation}" />
 		</h:panelGrid>
 		<h:panelGrid rendered="#{!teacherExpectationManagement.needsToCreateExpectation}">
 			<!-- Education Expectations -->
@@ -76,7 +82,7 @@
 			<h:outputText value="<br/>" escape="false" />
 			
 			<h:panelGrid columns="1">
-				<h:commandLink actionListener="#{teacherExpectationManagement.preparePersonalExpectationForEdit}" action="editEducationExpectationData" value="#{bundle['link.edit']}" />
+				<fc:commandLink actionListener="#{teacherExpectationManagement.preparePersonalExpectationForEdit}" action="editEducationExpectationData" value="#{bundle['link.edit']}" />
 			</h:panelGrid>
 			
 			<h:outputText value="<br/>" escape="false" />
@@ -151,7 +157,7 @@
 			<h:outputText value="<br/>" escape="false" />
 			
 			<h:panelGrid columns="1">
-				<h:commandLink actionListener="#{teacherExpectationManagement.preparePersonalExpectationForEdit}" action="editInvestigationExpectationData" value="#{bundle['link.edit']}" />
+				<fc:commandLink actionListener="#{teacherExpectationManagement.preparePersonalExpectationForEdit}" action="editInvestigationExpectationData" value="#{bundle['link.edit']}" />
 			</h:panelGrid>
 
 			
@@ -179,7 +185,7 @@
 			<h:outputText value="<br/>" escape="false" />
 			
 			<h:panelGrid columns="1">
-				<h:commandLink actionListener="#{teacherExpectationManagement.preparePersonalExpectationForEdit}" action="editUniversityServiceExpectationData" value="#{bundle['link.edit']}" />
+				<fc:commandLink actionListener="#{teacherExpectationManagement.preparePersonalExpectationForEdit}" action="editUniversityServiceExpectationData" value="#{bundle['link.edit']}" />
 			</h:panelGrid>
 			
 			<h:outputText value="<br/>" escape="false" />
@@ -212,7 +218,7 @@
 			<h:outputText value="<br/>" escape="false" />
 			
 			<h:panelGrid columns="1">
-				<h:commandLink actionListener="#{teacherExpectationManagement.preparePersonalExpectationForEdit}" action="editProfessionalActivityExpectationData" value="#{bundle['link.edit']}" />
+				<fc:commandLink actionListener="#{teacherExpectationManagement.preparePersonalExpectationForEdit}" action="editProfessionalActivityExpectationData" value="#{bundle['link.edit']}" />
 			</h:panelGrid>
 			
 		</h:panelGrid>			

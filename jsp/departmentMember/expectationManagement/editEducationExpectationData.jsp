@@ -7,11 +7,9 @@
 	<f:loadBundle basename="ServidorApresentacao/DepartmentMemberResources" var="bundle"/>
 	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="bundleEnumeration"/>
 	
-	<h:outputText value="<h2>" escape="false" />
-	<h:outputText value="#{bundle['label.personalExpectationsManagement.title']}" escape="false" />
+	<h:outputText value="#{bundle['label.personalExpectationsManagement.title']}" escape="false" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
 	<h:outputText value="&nbsp;-&nbsp;" escape="false" />
-	<h:outputText value="#{teacherExpectationManagement.selectedExecutionYearName}" escape="false" />
-	<h:outputText value="</h2>" escape="false" />
+	<h:outputText value="#{teacherExpectationManagement.selectedExecutionYearName}" escape="false" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
 	
 	
 	<h:form onsubmit="updateRTEs();">

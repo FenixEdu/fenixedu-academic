@@ -16,6 +16,10 @@ public class UIViewState extends UIComponentBase {
         return this.getAttributes().get(name);
     }
 
+    public void removeAttribute(String name) {
+        this.getAttributes().remove(name);
+    }
+
     @Override
     public String getFamily() {
         return null;

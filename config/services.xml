@@ -8821,11 +8821,20 @@
 		<filterChains>
 			<chain name="TeacherAuthorization"/>
 		</filterChains>
-	</service>	
+	</service>
     <service>
     	<name>ReadItemSlideName</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.fileManager.ReadItemSlideName</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>       
     </service>
+	<service>
+    	<name>ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.departmentMember.ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="DepartmentMemberOrTeacherAuthorization"></chain>
+        </filterChains>     
+    </service>	
 </serviceDefinitions>    

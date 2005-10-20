@@ -1,6 +1,7 @@
 <%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
+<%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 <ft:tilesView definition="departmentMember.masterPage"
 	attributeName="body-inline">
@@ -10,8 +11,10 @@
 		var="bundleEnumeration" />
 
 	<h:form>
+		<h:inputHidden binding="#{viewDepartmentTeachers.selectedExecutionYearIdHidden}" />
+		
 		<h:outputText value="<h2>#{bundle['label.teacher.details.title']}</h2>" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" escape="false" />
-
+		
 		<!-- Personal Information -->
 		<h:panelGrid columns="1" width="100%" cellpadding="0" cellspacing="0" columnClasses="infoop">
 			<h:panelGrid columns="3">
@@ -51,7 +54,7 @@
 		<h:outputText value="<br/>" escape="false" />
 		
 		<!-- Lectured Degree Courses -->
-		<h:outputText value="#{bundle['label.teacher.details.teachingInformation.degreeCourses']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
+		<h:outputText value="#{bundle['label.common.degree']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
 		<h:panelGrid border="0" cellpadding="0" cellspacing="0" rendered="#{!(empty viewDepartmentTeachers.lecturedDegreeExecutionCourses)}">
 			<h:dataTable value="#{viewDepartmentTeachers.lecturedDegreeExecutionCourses}" var="lecturedCourse" columnClasses="listClasses" headerClass="listClasses-header">			
 				<h:column>
@@ -93,7 +96,7 @@
 		<h:outputText value="<br/>" escape="false" />
 		
 		<!-- Lectured Master Degree Courses -->
-		<h:outputText value="#{bundle['label.teacher.details.teachingInformation.masterDegreeCourses']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
+		<h:outputText value="#{bundle['label.common.masterDegree']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
 		<h:panelGrid border="0" cellpadding="0" cellspacing="0" rendered="#{!(empty viewDepartmentTeachers.lecturedMasterDegreeExecutionCourses)}">
 			<h:dataTable value="#{viewDepartmentTeachers.lecturedMasterDegreeExecutionCourses}" var="lecturedCourse" columnClasses="listClasses" headerClass="listClasses-header">
 				<h:column>
@@ -144,6 +147,7 @@
 		</h:panelGrid>
 		<h:outputText value="<br/>" escape="false" />
 		
+		<!-- Final Degree Works -->
 		<h:outputText value="#{bundle['label.common.finalDegreeWorks']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
 		<h:panelGrid border="0" cellpadding="0" cellspacing="0" rendered="#{!(empty viewDepartmentTeachers.finalDegreeWorks)}">
 			<h:dataTable value="#{viewDepartmentTeachers.finalDegreeWorks}" var="finalDegreeWork" columnClasses="listClasses" headerClass="listClasses-header">
@@ -175,6 +179,30 @@
 		</h:panelGrid>
 		<h:panelGrid border="0" cellpadding="0" cellspacing="0" rendered="#{empty viewDepartmentTeachers.finalDegreeWorks}">
 			<h:outputText value="#{bundle['label.common.noFinalDegreeWorks']}" />
+		</h:panelGrid>
+		
+		<h:outputText value="<br/>" escape="false" />
+		
+		<!-- Master Degree Orientations -->
+		<h:outputText value="#{bundle['label.common.masterDegree']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
+		<h:panelGrid border="0" cellpadding="0" cellspacing="0" rendered="#{!(empty viewDepartmentTeachers.guidedMasterDegreeThesisList)}">
+			<h:dataTable value="#{viewDepartmentTeachers.guidedMasterDegreeThesisList}" var="masterDegreeThesisDataVersion" columnClasses="listClasses" headerClass="listClasses-header">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{bundle['label.teacher.details.orientationInformation.masterDegreeThesisTitle']}" />
+					</f:facet>
+					<h:outputText value="#{masterDegreeThesisDataVersion.dissertationTitle}" />
+				</h:column>
+					<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{bundle['label.teacher.details.orientationInformation.masterDegreeThesisStudentName']}" />
+					</f:facet>
+					<h:outputText value="#{masterDegreeThesisDataVersion.masterDegreeThesis.studentCurricularPlan.student.person.nome}" />
+				</h:column>
+			</h:dataTable>
+		</h:panelGrid>
+		<h:panelGrid border="0" cellpadding="0" cellspacing="0" rendered="#{empty viewDepartmentTeachers.guidedMasterDegreeThesisList}">
+			<h:outputText value="#{bundle['label.teacher.details.orientationInformation.noMasterDegreeThesis']}" />
 		</h:panelGrid>
 		
 	</h:form>
