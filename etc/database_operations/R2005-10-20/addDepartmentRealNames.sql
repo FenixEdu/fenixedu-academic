@@ -12,4 +12,4 @@ update DEPARTMENT set REAL_NAME = 'Departamento de Engenharia Civil e Arquitectu
 update DEPARTMENT set REAL_NAME = 'Departamento de Engenharia de Minas e Georrecursos (DEMG)' where DEPARTMENT.NAME = 'DEPARTAMENTO DE ENGENHARIA MINAS';
 update DEPARTMENT set REAL_NAME = 'Departamento de Engenharia Informática (DEI)' where DEPARTMENT.NAME = 'DEPARTAMENTO DE ENG. INFORMATICA';
 update DEPARTMENT set REAL_NAME = 'Departamento de Engenharia e Gestão (DEG)' where DEPARTMENT.NAME = 'DEPARTAMENTO DE ENGENHARIA E GESTAO';
-update DEPARTMENT set REAL_NAME = 'Secção Autónoma de Engenharia Naval (SAEN)' where DEPARTMENT.NAME = 'SEC. AUTONOMA DE ENGENHARIA NAVAL';
+update DEPARTMENT set REAL_NAME = 'Secção Autónoma de Engenharia Naval (SAEN)' where DEPARTMENT.NAME = 'SECCAO AUTONOMA DE ENGENHARIA NAVAL';
