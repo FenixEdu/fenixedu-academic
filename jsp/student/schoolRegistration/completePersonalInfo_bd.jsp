@@ -196,7 +196,7 @@ width: 20em;
           </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.fatherName" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
-            <td class="greytxt"><html:text size="50" maxlength="60" property="nameOfFather"/></td>
+            <td class="greytxt"><html:text size="50" maxlength="56" property="nameOfFather"/></td>
           </tr>
           <!-- Nome da Mae -->
           <tr>
@@ -225,7 +225,7 @@ width: 20em;
           </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.address" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
-            <td class="greytxt"><html:text size="50" maxlength="50" property="address"/></td>
+            <td class="greytxt"><html:text size="50" maxlength="40" property="address"/></td>
           </tr>
           <!-- Codigo Postal -->
           <tr>
