@@ -65,10 +65,10 @@ public class PersonManagementAction extends FenixDispatchAction {
         }
 
         HashMap parametersSearch = new HashMap();
-        parametersSearch.put(new String("name"), putSearchChar(name));
-        parametersSearch.put(new String("email"), putSearchChar(email));
-        parametersSearch.put(new String("username"), putSearchChar(username));
-        parametersSearch.put(new String("documentIdNumber"), putSearchChar(documentIdNumber));
+        parametersSearch.put(new String("name"), name);
+        parametersSearch.put(new String("email"), email);
+        parametersSearch.put(new String("username"), username);
+        parametersSearch.put(new String("documentIdNumber"), documentIdNumber);
 
         Object[] args = { parametersSearch };
 
@@ -91,14 +91,6 @@ public class PersonManagementAction extends FenixDispatchAction {
         request.setAttribute("personListFinded", personListFinded.get(1));
 
         return mapping.findForward("displayPerson");
-    }
-
-    private String putSearchChar(String searchElem) {
-        String newSearchElem = null;
-        if (searchElem != null) {
-            newSearchElem = "%".concat(searchElem.replace(' ', '%')).concat("%");
-        }
-        return newSearchElem;
     }
 
     public ActionForward findEmployee(ActionMapping mapping, ActionForm actionForm,

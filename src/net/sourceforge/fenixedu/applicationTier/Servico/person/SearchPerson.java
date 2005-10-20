@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
@@ -55,6 +56,9 @@ public class SearchPerson implements IService {
         IPersistentDepartment persistentDepartment = sp.getIDepartamentoPersistente();
 
         String name = (String) searchParameters.get(new String("name"));
+        String email = (String) searchParameters.get(new String("email"));
+        String username = (String) searchParameters.get(new String("username"));
+        String documentIdNumber = (String) searchParameters.get(new String("documentIdNumber"));
         Integer startIndex = (Integer) searchParameters.get(new String("startIndex"));
         String roleType = (String) searchParameters.get(new String("roleType"));
         String degreeType = (String) searchParameters.get(new String("degreeType"));
@@ -85,11 +89,23 @@ public class SearchPerson implements IService {
             department = (IDepartment) persistentDepartment.readByOID(Department.class, departmentId);
         }
 
-        String[] nameWords = name.split(" ");
-        normalizeName(nameWords);
+        String[] nameWords = null;
+        if(name != null && !name.trim().equals("")){
+            nameWords = name.split(" ");
+            normalizeName(nameWords);
+        }
 
         if (roleBd == null) {
-            persons = (List<IPerson>) persistentPerson.readAll(Person.class);
+            persons.addAll((List<IPerson>) persistentPerson.readAll(Person.class));
+
+            if (startIndex == null || startIndex.equals("")) {
+                allValidPersons = filterPersons(persons, username, email, name, documentIdNumber,
+                        nameWords);
+            } else {
+                allValidPersons = getValidPersons(nameWords, persons);
+            }
+
+            totalPersons = allValidPersons.size();
 
         } else {
 
@@ -147,31 +163,115 @@ public class SearchPerson implements IService {
                 }
             }
 
+            allValidPersons = getValidPersons(nameWords, persons);
+            totalPersons = allValidPersons.size();
         }
 
-        allValidPersons = getValidPersons(nameWords, persons);
-        totalPersons = allValidPersons.size();
-
-        if (totalPersons.intValue() > SessionConstants.LIMIT_FINDED_PERSONS_TOTAL) {
-            throw new FenixServiceException("error.search.person");
+        if (startIndex != null && !startIndex.equals("")) {
+            if (totalPersons.intValue() > SessionConstants.LIMIT_FINDED_PERSONS_TOTAL) {
+                throw new FenixServiceException("error.search.person");
+            }
         }
 
         Collections.sort(allValidPersons, new BeanComparator("nome"));
-        objects = getIntervalPersons(startIndex, allValidPersons);
-
         List<InfoPerson> infoPersons = new ArrayList<InfoPerson>();
 
-        for (IPerson person : (List<IPerson>) objects.get(0)) {
-            infoPersons.add(InfoPerson.newInfoFromDomain(person));
+        if (startIndex != null && !startIndex.equals("")) {
+            objects = getIntervalPersons(startIndex, allValidPersons);
+            for (IPerson person : (List<IPerson>) objects.get(0)) {
+                infoPersons.add(InfoPerson.newInfoFromDomain(person));
+            }
+        } else {
+            for (IPerson person : allValidPersons) {
+                infoPersons.add(InfoPerson.newInfoFromDomain(person));
+            }
         }
 
         List<Object> result = new ArrayList<Object>(4);
         result.add(0, totalPersons);
         result.add(1, infoPersons);
-        result.add(2, objects.get(1));
-        result.add(3, objects.get(2));
+        if (startIndex != null && !startIndex.equals("")) {
+            result.add(2, objects.get(1));
+            result.add(3, objects.get(2));
+        }
 
         return result;
+    }
+
+    private List<IPerson> filterPersons(List<IPerson> persons, String username, String email,
+            String name, String documentIdNumber, String[] nameWords) {
+
+        List<IPerson> filterPersons = new ArrayList<IPerson>();
+
+        List<IPerson> filterPersonsName = new ArrayList<IPerson>();
+        List<IPerson> filterPersonsEmail = new ArrayList<IPerson>();
+        List<IPerson> filterPersonsBI = new ArrayList<IPerson>();
+        List<IPerson> filterPersonsUsername = new ArrayList<IPerson>();
+
+        if (email != null && !email.trim().equals("")) {
+            email = normalize(email.trim());
+            for (IPerson person : persons) {
+                if (person.getEmail() != null) {
+                    String personEmail = normalize(person.getEmail().trim());
+                    if (personEmail.indexOf(email) != -1) {
+                        filterPersonsEmail.add(person);
+                    }
+                }
+            }
+            filterPersons.addAll(filterPersonsEmail);
+        }
+        if (username != null && !username.trim().equals("")) {
+            username = normalize(username.trim());
+            for (IPerson person : persons) {
+                if (person.getUsername() != null) {
+                    String personUserName = normalize(person.getUsername().trim());
+                    if (personUserName.indexOf(username) != -1) {
+                        filterPersonsUsername.add(person);
+                    }
+                }
+            }
+            if (filterPersons.isEmpty()) {
+                filterPersons.addAll(filterPersonsUsername);
+            } else if (!filterPersonsUsername.isEmpty()) {
+                filterPersons = (List<IPerson>) CollectionUtils.intersection(filterPersons,
+                        filterPersonsUsername);
+            }
+        }
+        if (name != null && !name.equals("")) {
+            filterPersonsName = getValidPersons(nameWords, persons);
+            if (filterPersons.isEmpty()) {
+                filterPersons.addAll(filterPersonsName);
+            } else if (!filterPersonsName.isEmpty()) {
+                filterPersons = (List<IPerson>) CollectionUtils.intersection(filterPersons,
+                        filterPersonsName);
+            }
+        }
+        if (documentIdNumber != null && !documentIdNumber.trim().equals("")) {
+            documentIdNumber = normalize(documentIdNumber.trim());
+            for (IPerson person : persons) {               
+                if (person.getNumeroDocumentoIdentificacao() != null && person.getNome() != null) {
+                    String personBI = normalize(person.getNumeroDocumentoIdentificacao().trim());
+                    if (personBI.trim().indexOf(documentIdNumber.trim()) != -1) {
+                        filterPersonsBI.add(person);
+                    }
+                }
+            }
+            if (filterPersons.isEmpty()) {
+                filterPersons.addAll(filterPersonsBI);
+            } else if (!filterPersonsBI.isEmpty()) {
+                filterPersons = (List<IPerson>) CollectionUtils.intersection(filterPersons,
+                        filterPersonsBI);
+            }
+        }
+        
+        List<IPerson> totalPersons = new ArrayList<IPerson>();
+        for (IPerson person : filterPersons) {
+            if(person.getUsername() != null && person.getUsername().indexOf("INA") != -1){
+                totalPersons.add(person);
+            }
+        }
+        
+        return totalPersons;
     }
 
     private void normalizeName(String[] nameWords) {
@@ -236,7 +336,7 @@ public class SearchPerson implements IService {
     }
 
     private List<IPerson> getValidPersons(String[] nameWords, List<IPerson> persons) {
-       
+
         int whiteSpaces = 0;
         List<IPerson> persons_ = new ArrayList();
 

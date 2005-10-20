@@ -50,10 +50,8 @@ public class FindPersonAction extends FenixDispatchAction {
         }
 
         HashMap parametersSearch = new HashMap();
-        parametersSearch.put(new String("name"), putSearchChar(null));
-        parametersSearch.put(new String("email"), putSearchChar(null));
-        parametersSearch.put(new String("username"), putSearchChar(username));
-        parametersSearch.put(new String("documentIdNumber"), putSearchChar(documentIdNumber));
+        parametersSearch.put(new String("username"), username);
+        parametersSearch.put(new String("documentIdNumber"), documentIdNumber);
 
         Object[] args = { parametersSearch };
 
@@ -76,13 +74,5 @@ public class FindPersonAction extends FenixDispatchAction {
         request.setAttribute("personListFinded", personListFinded.get(1));
 
         return mapping.findForward("confirmPasswordChange");
-    }
-
-    private String putSearchChar(String searchElem) {
-        String newSearchElem = null;
-        if (searchElem != null) {
-            newSearchElem = "%".concat(searchElem.replace(' ', '%')).concat("%");
-        }
-        return newSearchElem;
     }
 }
