@@ -266,7 +266,7 @@ public class SearchPerson implements IService {
         
         List<IPerson> totalPersons = new ArrayList<IPerson>();
         for (IPerson person : filterPersons) {
-            if(person.getUsername() != null && person.getUsername().indexOf("INA") != -1){
+            if(person.getUsername() != null && person.getUsername().indexOf("INA") == -1){
                 totalPersons.add(person);
             }
         }
