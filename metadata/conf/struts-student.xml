@@ -872,6 +872,7 @@
     
     <!-- ========== Message Resources Definitions ============================ -->
     <message-resources parameter="ServidorApresentacao.StudentResources" null="false"/>
+    <message-resources parameter="ServidorApresentacao.ApplicationResources" key="APPLICATION" null="false"/>
 	<message-resources parameter="ServidorApresentacao.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
     
     <!-- ========== Plug Ins Configuration ================================= -->

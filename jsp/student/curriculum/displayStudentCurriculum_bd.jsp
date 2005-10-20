@@ -15,7 +15,7 @@
 
 <span class="error"><html:errors/></span>
   
-<h2>Currículo do Aluno</h2>
+<h2><bean:message key="message.student.curriculum" bundle="STUDENT_RESOURCES" /></h2>
 
 	<bean:define id="infoStudentCPs" name="studentCPs" scope="request" type="net.sourceforge.fenixedu.dataTransferObject.util.InfoStudentCurricularPlansWithSelectedEnrollments" />
 	<bean:define id="selectedStudentCPs" name="infoStudentCPs" property="infoStudentCurricularPlans" />
@@ -134,7 +134,7 @@
 						  <td class="listClasses" style="text-align:left">
 						    <bean:write name="enrolment" property="infoCurricularCourse.name"/>
 							<% if ( !((InfoEnrolment) enrolment).getEnrollmentTypeResourceKey().equals("option.curricularCourse.normal") ) {%>
-								(<bean:message name="enrolment" property="enrollmentTypeResourceKey" />)
+								(<bean:message name="enrolment" bundle="APPLICATION" property="enrollmentTypeResourceKey" />)
 							<% } %>
 						  </td>
 						  <td class="listClasses">
