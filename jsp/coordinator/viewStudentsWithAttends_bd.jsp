@@ -130,6 +130,14 @@ function cleanSelect(checkboxes) {
 						<html:multibox property="enrollmentType" value="<%= AttendacyStateSelectionType.NOT_ENROLLED.toString() %>" onclick="cleanSelect(document.forms[0].enrollmentType)" />
 					</td>
 				</tr>
+				<tr>
+					<td>
+						<bean:message key="label.attends.specialSeason"/>
+					</td>
+					<td>
+						<html:multibox property="enrollmentType" value="<%= AttendacyStateSelectionType.SPECIAL_SEASON.toString() %>" onclick="cleanSelect(document.forms[0].enrollmentType)" />
+					</td>
+				</tr>
 			</table>				
 		</td>
 		<td>
@@ -367,6 +375,9 @@ function cleanSelect(checkboxes) {
 						<logic:equal name="enrollmentEvaluationType" value='<%= EnrolmentEvaluationType.IMPROVEMENT.toString() %>' >
 							<bean:message key="label.attends.enrollmentState.improvement"/>
 						</logic:equal>
+						<logic:equal name="enrollmentEvaluationType" value='<%= EnrolmentEvaluationType.SPECIAL_SEASON.toString() %>' >
+							<bean:message key="label.attends.enrollmentState.specialSeason"/>
+						</logic:equal>
 					</logic:present>
 					<logic:notPresent name="attendacy" property="infoEnrolment">
 						<bean:message key="label.attends.enrollmentState.notEnrolled"/>
@@ -415,7 +426,9 @@ function cleanSelect(checkboxes) {
 					
 					if (infoStudentGroup != null){
 						studentGroupId = infoStudentGroup.getIdInternal();
-						shiftId = infoStudentGroup.getInfoShift().getIdInternal();
+						if(infoStudentGroup.getInfoShift() != null){//temporary correction, verify if this makes sence in data
+							shiftId = infoStudentGroup.getInfoShift().getIdInternal();
+						}
 						groupNumber = infoStudentGroup.getGroupNumber();
 					}
 
