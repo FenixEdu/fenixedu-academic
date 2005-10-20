@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -11,40 +12,25 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteCareers;
 import net.sourceforge.fenixedu.domain.CareerType;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.teacher.ICareer;
+import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
+import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCareer;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadCareers implements IService {
 
     public SiteView run(CareerType careerType, String user) throws ExcepcaoPersistencia {
-        final ISuportePersistente persistentSuport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-        final IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
-        final ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
-
-        IPersistentCareer persistentCareer = persistentSuport.getIPersistentCareer();
-        List careers = persistentCareer.readAllByTeacherIdAndCareerType(teacher.getIdInternal(),
-                careerType);
-
-        List result = (List) CollectionUtils.collect(careers, new Transformer() {
-            public Object transform(Object o) {
-                ICareer career = (ICareer) o;
-                return InfoCareer.newInfoFromDomain(career);
-            }
-        });
-        Collections.sort(result, new BeanComparator("beginYear"));
-
+        
+        final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ITeacher teacher = persistentSuport.getIPersistentTeacher().readTeacherByUsername(user);
+        
         final InfoSiteCareers bodyComponent = new InfoSiteCareers();
-        bodyComponent.setInfoCareers(result);
+        bodyComponent.setInfoCareers(getInfoCareers(teacher, careerType));
         bodyComponent.setCareerType(careerType);
 
         final InfoTeacher infoTeacher = InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher);
@@ -54,4 +40,32 @@ public class ReadCareers implements IService {
         return siteView;
     }
 
+    private List getInfoCareers(ITeacher teacher, CareerType careerType)
+            throws ExcepcaoPersistencia {
+
+        final List<InfoCareer> oldestCareers = new ArrayList();
+        final List<InfoCareer> newestCareers = new ArrayList();
+
+        final List<ICareer> careers = teacher.getAssociatedCareers();
+        for (final ICareer career : careers) {
+            boolean addCareer = false;
+            if (careerType == null
+                    || (careerType.equals(CareerType.PROFESSIONAL) && career.getOjbConcreteClass()
+                            .equals(ProfessionalCareer.class.getName()))) {
+                addCareer = true;
+            } else if (careerType.equals(CareerType.TEACHING)
+                    && career.getOjbConcreteClass().equals(TeachingCareer.class.getName())) {
+                addCareer = true;
+            }
+            if (addCareer && career.getBeginYear() == null) {
+                oldestCareers.add(InfoCareer.newInfoFromDomain(career));
+            } else if (addCareer) {
+                newestCareers.add(InfoCareer.newInfoFromDomain(career));
+            }
+        }
+        Collections.sort(newestCareers, new BeanComparator("beginYear"));
+        oldestCareers.addAll(newestCareers);
+        
+        return oldestCareers;
+    }
 }

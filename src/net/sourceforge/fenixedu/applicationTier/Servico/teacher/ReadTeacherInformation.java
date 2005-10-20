@@ -45,6 +45,8 @@ import net.sourceforge.fenixedu.domain.teacher.IOrientation;
 import net.sourceforge.fenixedu.domain.teacher.IPublicationsNumber;
 import net.sourceforge.fenixedu.domain.teacher.IServiceProviderRegime;
 import net.sourceforge.fenixedu.domain.teacher.IWeeklyOcupation;
+import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
+import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -53,7 +55,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationTeacher;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCareer;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentExternalActivity;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublication;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
@@ -75,7 +76,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class ReadTeacherInformation implements IService {
 
@@ -113,9 +114,9 @@ public class ReadTeacherInformation implements IService {
 
         infoSiteTeacherInformation.setInfoQualifications(getInfoQualifications(sp, teacher));
 
-        infoSiteTeacherInformation.setInfoProfessionalCareers(getInfoCareers(sp, teacher,
+        infoSiteTeacherInformation.setInfoProfessionalCareers(getInfoCareers(teacher,
                 CareerType.PROFESSIONAL));
-        infoSiteTeacherInformation.setInfoTeachingCareers(getInfoCareers(sp, teacher,
+        infoSiteTeacherInformation.setInfoTeachingCareers(getInfoCareers(teacher,
                 CareerType.TEACHING));
 
         IPersistentServiceProviderRegime persistentServiceProviderRegime = sp
@@ -142,7 +143,8 @@ public class ReadTeacherInformation implements IService {
                         executionYear));
 
         IPersistentWeeklyOcupation persistentWeeklyOcupation = sp.getIPersistentWeeklyOcupation();
-        IWeeklyOcupation weeklyOcupation = persistentWeeklyOcupation.readByTeacherId(teacher.getIdInternal());
+        IWeeklyOcupation weeklyOcupation = persistentWeeklyOcupation.readByTeacherId(teacher
+                .getIdInternal());
         if (weeklyOcupation == null) {
             InfoWeeklyOcupation infoWeeklyOcupation = new InfoWeeklyOcupation();
             infoWeeklyOcupation.setInfoTeacher(infoTeacher);
@@ -177,10 +179,10 @@ public class ReadTeacherInformation implements IService {
         infoSiteTeacherInformation.setInfoComunicationPublicationsNumber(getInfoPublicationsNumber(sp,
                 teacher, PublicationType.COMUNICATION));
 
-        infoSiteTeacherInformation.setInfoOldCientificPublications(getInfoOldPublications(sp, teacher.getIdInternal(),
-                OldPublicationType.CIENTIFIC));
-        infoSiteTeacherInformation.setInfoOldDidacticPublications(getInfoOldPublications(sp, teacher.getIdInternal(),
-                OldPublicationType.DIDACTIC));
+        infoSiteTeacherInformation.setInfoOldCientificPublications(getInfoOldPublications(sp, teacher
+                .getIdInternal(), OldPublicationType.CIENTIFIC));
+        infoSiteTeacherInformation.setInfoOldDidacticPublications(getInfoOldPublications(sp, teacher
+                .getIdInternal(), OldPublicationType.DIDACTIC));
 
         infoSiteTeacherInformation.setInfoDidaticPublications(getInfoPublications(sp, teacher,
                 PublicationConstants.DIDATIC));
@@ -198,7 +200,7 @@ public class ReadTeacherInformation implements IService {
 
     private List getInfoResponsibleExecutionCourses(ISuportePersistente sp, ITeacher teacher,
             final IExecutionYear wantedExecutionYear) throws ExcepcaoPersistencia {
-        
+
         List responsiblesFor = teacher.responsibleFors();
 
         // filter only the execution courses of the wanted execution year
@@ -303,25 +305,40 @@ public class ReadTeacherInformation implements IService {
         return infoQualifications;
     }
 
-    private List getInfoCareers(ISuportePersistente sp, ITeacher teacher, CareerType careerType)
+    private List getInfoCareers(ITeacher teacher, CareerType careerType)
             throws ExcepcaoPersistencia {
-        IPersistentCareer persistentCareer = sp.getIPersistentCareer();
-        List careers = persistentCareer.readAllByTeacherIdAndCareerType(teacher.getIdInternal(), careerType);
-        List infoCareers = (List) CollectionUtils.collect(careers, new Transformer() {
-            public Object transform(Object o) {
-                ICareer career = (ICareer) o;
-                return InfoCareer.newInfoFromDomain(career);
+        
+        final List<InfoCareer> oldestCareers = new ArrayList();
+        final List<InfoCareer> newestCareers = new ArrayList();
+        
+        final List<ICareer> careers = teacher.getAssociatedCareers();
+        for (final ICareer career : careers) {
+            boolean addCareer = false;
+            if (careerType == null
+                    || (careerType.equals(CareerType.PROFESSIONAL) && career.getOjbConcreteClass()
+                            .equals(ProfessionalCareer.class.getName()))) {
+                addCareer = true;
+            } else if (careerType.equals(CareerType.TEACHING)
+                    && career.getOjbConcreteClass().equals(TeachingCareer.class.getName())) {
+                addCareer = true;
             }
-        });
-        Collections.sort(infoCareers, new BeanComparator("beginYear"));
-        return infoCareers;
+            if (addCareer && career.getBeginYear() == null) {
+                oldestCareers.add(InfoCareer.newInfoFromDomain(career));
+            } else if (addCareer) {
+                newestCareers.add(InfoCareer.newInfoFromDomain(career));
+            }
+        }
+        Collections.sort(newestCareers, new BeanComparator("beginYear"));
+        oldestCareers.addAll(newestCareers);
+        
+        return oldestCareers;
     }
 
     private List getInfoOldPublications(ISuportePersistente sp, Integer teacherId,
             OldPublicationType oldPublicationType) throws ExcepcaoPersistencia {
         IPersistentOldPublication persistentOldPublication = sp.getIPersistentOldPublication();
-        List oldCientificPublications = persistentOldPublication.readAllByTeacherIdAndOldPublicationType(
-                teacherId, oldPublicationType);
+        List oldCientificPublications = persistentOldPublication
+                .readAllByTeacherIdAndOldPublicationType(teacherId, oldPublicationType);
 
         List infoOldPublications = (List) CollectionUtils.collect(oldCientificPublications,
                 new Transformer() {
@@ -336,8 +353,8 @@ public class ReadTeacherInformation implements IService {
     private InfoOrientation getInfoOrientation(ISuportePersistente sp, ITeacher teacher,
             OrientationType orientationType) throws ExcepcaoPersistencia {
         IPersistentOrientation persistentOrientation = sp.getIPersistentOrientation();
-        IOrientation orientation = persistentOrientation.readByTeacherIdAndOrientationType(teacher.getIdInternal(),
-                orientationType);
+        IOrientation orientation = persistentOrientation.readByTeacherIdAndOrientationType(teacher
+                .getIdInternal(), orientationType);
         InfoOrientation infoOrientation = null;
         if (orientation != null) {
             infoOrientation = InfoOrientation.newInfoFromDomain(orientation);
@@ -368,7 +385,7 @@ public class ReadTeacherInformation implements IService {
         return infoPublicationsNumber;
     }
 
-    //	TJBF & PFON
+    // TJBF & PFON
 
     private List getInfoPublications(ISuportePersistente sp, ITeacher teacher, Integer typePublication)
             throws ExcepcaoPersistencia {
