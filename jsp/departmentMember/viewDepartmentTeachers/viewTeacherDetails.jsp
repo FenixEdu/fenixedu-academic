@@ -48,7 +48,7 @@
 			<h:panelGrid columns="3">
 				<h:outputText value="&nbsp;2&nbsp;" styleClass="emphasis-box" escape="false" />
 				<h:outputText value="&nbsp;" escape="false" />
-				<h:outputText value="<strong>#{bundle['label.teacher.details.teachingInformation']}</strong>" escape="false" />
+				<h:outputText value="<strong>#{bundle['label.teacher.details.lecturedCoursesInformation']}</strong>" escape="false" />
 			</h:panelGrid>
 		</h:panelGrid>
 		<h:outputText value="<br/>" escape="false" />

@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -11,6 +13,9 @@ import javax.faces.component.UIParameter;
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -86,6 +91,11 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
 
         List<InfoTeacher> result = (List<InfoTeacher>) ServiceUtils.executeService(getUserView(),
                 "ReadDepartmentTeachersByDepartmentID", new Object[] { infoDepartment.getIdInternal() });
+
+        ComparatorChain comparatorChain = new ComparatorChain();
+        comparatorChain.addComparator(new BeanComparator("teacherNumber"));
+
+        Collections.sort(result, comparatorChain);
 
         return result;
     }
