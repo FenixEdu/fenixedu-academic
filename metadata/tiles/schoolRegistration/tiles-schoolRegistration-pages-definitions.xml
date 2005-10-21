@@ -11,7 +11,17 @@
 		<put name="navGeral" value="/commons/blank.jsp" />
 		<put name="body" value="/student/schoolRegistration/inquiry_bd.jsp" />
 	</definition>
+
+	<definition name="definition.schoolRegistration.personalDataInquiry" extends="definition.schoolRegistration.one-column">
+		<put name="navGeral" value="/commons/blank.jsp" />
+		<put name="body" value="/student/schoolRegistration/personalDataAuthorizationInquiry.jsp" />
+	</definition>
 	
+	<definition name="definition.schoolRegistration.dislocatedInquiry" extends="definition.schoolRegistration.one-column">
+		<put name="navGeral" value="/commons/blank.jsp" />
+		<put name="body" value="/student/schoolRegistration/dislocatedStudentInquiry.jsp" />
+	</definition>	
+		
 	<definition name="definition.schoolRegistration.changePassword" extends="definition.schoolRegistration.one-column">
 		<put name="navGeral" value="/commons/blank.jsp" />
 		<put name="body" value="/student/schoolRegistration/changePassword_bd.jsp" />
