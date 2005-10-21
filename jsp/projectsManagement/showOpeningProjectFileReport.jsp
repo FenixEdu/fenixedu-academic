@@ -240,6 +240,7 @@
 								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="rubricBudget" property="code" /></td>
 								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="left"><bean:write name="rubricBudget" property="description" /></td>
 								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="right"><report:formatDoubleValue name="rubricBudget" property="value" /></td>
+								<bean:define id="thisValue" name="rubricBudget" property="value" />
 								<%total = total + ((Double) pageContext.findAttribute("thisValue")).doubleValue();
 
         %>
