@@ -286,7 +286,7 @@
 		      	name="changePersonalInfoForm"
 				scope="request"
 				validate="true"
-				input="/viewStudentInformation.do?method=prepareViewStudentInformationChooseStudent&amp;page=0">
+				input="/viewStudentInformation.do?method=prepareView&amp;page=0">
         	<forward name="Success" path="df.page.showStudentInformation"/>
         	<forward name="Insuccess" path="/viewStudentInformation.do?method=prepareView"/>
       	</action>
