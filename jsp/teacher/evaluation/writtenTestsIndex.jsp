@@ -46,6 +46,12 @@ margin-bottom: 0;
 					<h:outputFormat value="{0, date, HH:mm}">
 						<f:param value="#{writtenTest.beginningDate}"/>
 					</h:outputFormat>
+					<h:outputText value="<b> | </b>" escape="false"/>
+					<h:commandLink action="enterEditWrittenTest">
+						<f:param name="evaluationID" value="#{writtenTest.idInternal}" />
+						<h:outputFormat value="#{bundle['link.edit.written.test']}" />
+					</h:commandLink>
+
 		
 					<h:outputText value="<br/><ul class=\"links\"><li><b>#{bundle['label.teacher.evaluation.enrolment.management']}:</b> " escape="false"/>
 					<h:commandLink action="enterEditEnrolmentPeriod">
@@ -76,12 +82,6 @@ margin-bottom: 0;
 					<h:commandLink action="enterPublishMarks">
 						<f:param name="evaluationID" value="#{writtenTest.idInternal}" />
 						<h:outputFormat value="#{bundle['link.publishMarks']}" />
-					</h:commandLink>
-
-					<h:outputText value="<li>" escape="false"/>
-					<h:commandLink action="enterEditWrittenTest">
-						<f:param name="evaluationID" value="#{writtenTest.idInternal}" />
-						<h:outputFormat value="#{bundle['link.edit.written.test']}" />
 					</h:commandLink>
 					<h:outputText value="</li></ul>" escape="false"/>
 					<h:outputText value="<br/>" escape="false"/>
