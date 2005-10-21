@@ -134,7 +134,7 @@
 						  <td class="listClasses" style="text-align:left">
 						    <bean:write name="enrolment" property="infoCurricularCourse.name"/>
 							<% if ( !((InfoEnrolment) enrolment).getEnrollmentTypeResourceKey().equals("option.curricularCourse.normal") ) {%>
-								(<bean:message name="enrolment" bundle="APPLICATION" property="enrollmentTypeResourceKey" />)
+								(<bean:message name="enrolment" bundle="APPLICATION_RESOURCES" property="enrollmentTypeResourceKey" />)
 							<% } %>
 						  </td>
 						  <td class="listClasses">
