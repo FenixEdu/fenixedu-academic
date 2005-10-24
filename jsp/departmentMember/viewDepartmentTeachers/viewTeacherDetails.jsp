@@ -63,13 +63,7 @@
 					</f:facet>
 					<h:outputText value="#{lecturedCourse.nome}" />
 				</h:column>
-					<h:column>
-					<f:facet name="header">
-						<h:outputText value="#{bundle['label.common.courseAcronym']}" />
-					</f:facet>
-					<h:outputText value="#{lecturedCourse.sigla}" />
-				</h:column>
-					<h:column>
+				<h:column>
 					<f:facet name="header">
 						<h:outputText value="#{bundle['label.common.courseYear']}" />
 					</f:facet>
@@ -105,13 +99,7 @@
 					</f:facet>
 					<h:outputText value="#{lecturedCourse.nome}" />
 				</h:column>
-					<h:column>
-					<f:facet name="header">
-						<h:outputText value="#{bundle['label.common.courseAcronym']}" />
-					</f:facet>
-					<h:outputText value="#{lecturedCourse.sigla}" />
-				</h:column>
-					<h:column>
+				<h:column>
 					<f:facet name="header">
 						<h:outputText value="#{bundle['label.common.courseYear']}" />
 					</f:facet>
