@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.validator.Field;
 import org.apache.commons.validator.ValidatorAction;
 import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.Resources;
 
@@ -35,20 +36,20 @@ public class ValidateMultiRadioSelect {
      * @param request
      * @return
      */
-    public static boolean validate(Object bean, ValidatorAction va, Field field, ActionErrors errors,
+    public static boolean validate(Object bean, ValidatorAction va, Field field, ActionMessages errors,
             HttpServletRequest request, ServletContext application) {
 
         DynaActionForm form = (DynaActionForm) bean;
         HashMap hashMap = (HashMap) form.get(field.getProperty());
         if (hashMap.keySet().size() == 0) {
-            errors.add(field.getKey(), Resources.getActionError(request, va, field));
+            errors.add(field.getKey(), Resources.getActionMessage(request, va, field));
             return false;
         }
         Iterator iterator = hashMap.keySet().iterator();
         while (iterator.hasNext()) {
             String key = (String) iterator.next();
             if (hashMap.get(key).equals("")) {
-                errors.add(field.getKey(), Resources.getActionError(request, va, field));
+                errors.add(field.getKey(), Resources.getActionMessage(request, va, field));
                 return false;
             }
         }

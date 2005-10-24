@@ -48,7 +48,7 @@
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
-                       org.apache.struts.action.ActionErrors,
+                       oorg.apache.struts.action.ActionMessages,
                        javax.servlet.http.HttpServletRequest,
                        javax.servlet.ServletContext" 
 			msg="error.greaterThanOrEqual"/>
@@ -59,7 +59,7 @@
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
-                       org.apache.struts.action.ActionErrors,
+                       org.apache.struts.action.ActionMessages,
                        javax.servlet.http.HttpServletRequest,
                        javax.servlet.ServletContext" 
 			msg="error.greaterThan"/>
@@ -70,7 +70,7 @@
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
-                       org.apache.struts.action.ActionErrors,
+                       org.apache.struts.action.ActionMessages,
                        javax.servlet.http.HttpServletRequest,
                        javax.servlet.ServletContext" 
 			msg="error.equal"/>
@@ -81,7 +81,7 @@
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
-                       org.apache.struts.action.ActionErrors,
+                       org.apache.struts.action.ActionMessages,
                        javax.servlet.http.HttpServletRequest,
                        javax.servlet.ServletContext" 
 			msg="error.lessThan"/>
@@ -92,7 +92,7 @@
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
-                       org.apache.struts.action.ActionErrors,
+                       org.apache.struts.action.ActionMessages,
                        javax.servlet.http.HttpServletRequest,
                        javax.servlet.ServletContext" 
 			msg="error.lessThanOrEqual"/>
@@ -103,7 +103,7 @@
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
-                       org.apache.struts.action.ActionErrors,
+                       org.apache.struts.action.ActionMessages,
                        javax.servlet.http.HttpServletRequest,
                        javax.servlet.ServletContext" 
 			msg="errors.different.passwords"/>
@@ -114,7 +114,7 @@
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
-                       org.apache.struts.action.ActionErrors,
+                       org.apache.struts.action.ActionMessages,
                        javax.servlet.http.HttpServletRequest,
                        javax.servlet.ServletContext" 
 			msg="errors.invalid.date"/>
@@ -125,7 +125,7 @@
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
-                       org.apache.struts.action.ActionErrors,
+                       org.apache.struts.action.ActionMessages,
                        javax.servlet.http.HttpServletRequest,
                        javax.servlet.ServletContext" 
 			msg="errors.invalid.floatValue"/>
@@ -136,7 +136,7 @@
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
-                       org.apache.struts.action.ActionErrors,
+                       org.apache.struts.action.ActionMessages,
                        javax.servlet.http.HttpServletRequest,
                        javax.servlet.ServletContext" 
 			msg="errors.invalid.floatValue"/>
@@ -147,7 +147,7 @@
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
-                       org.apache.struts.action.ActionErrors,
+                       org.apache.struts.action.ActionMessages,
                        javax.servlet.http.HttpServletRequest,
                        javax.servlet.ServletContext" 
 			msg="errors.invalidThreeArgs.date"/>
@@ -158,7 +158,7 @@
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
-                       org.apache.struts.action.ActionErrors,
+                       org.apache.struts.action.ActionMessages,
                        javax.servlet.http.HttpServletRequest,
                        javax.servlet.ServletContext" 
 			msg="errors.required.checkbox" />
@@ -169,7 +169,7 @@
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
-                       org.apache.struts.action.ActionErrors,
+                       org.apache.struts.action.ActionMessages,
                        javax.servlet.http.HttpServletRequest,
                        javax.servlet.ServletContext" 
 			msg="" />
@@ -203,7 +203,7 @@ Example:
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
-                       org.apache.struts.action.ActionErrors,
+                       org.apache.struts.action.ActionMessages,
                        javax.servlet.http.HttpServletRequest,
                        javax.servlet.ServletContext" 
                 msg="errors.required.checkbox"
@@ -215,7 +215,7 @@ Example:
          methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
-                       org.apache.struts.action.ActionErrors,
+                       org.apache.struts.action.ActionMessages,
                        javax.servlet.http.HttpServletRequest,
                        javax.servlet.ServletContext"
                   msg="error.integerArray"/>
@@ -226,7 +226,7 @@ Example:
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
-                       org.apache.struts.action.ActionErrors,
+                       org.apache.struts.action.ActionMessages,
                        javax.servlet.http.HttpServletRequest,
                        javax.servlet.ServletContext" 
 			msg="errors.required.radioButtons" />

@@ -8,6 +8,7 @@ import org.apache.commons.validator.GenericValidator;
 import org.apache.commons.validator.ValidatorAction;
 import org.apache.commons.validator.ValidatorUtil;
 import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionMessages;
 import org.apache.struts.validator.Resources;
 
 /**
@@ -17,7 +18,7 @@ import org.apache.struts.validator.Resources;
 public class GreaterThen {
 
     public static boolean validateFloat(Object bean, ValidatorAction va, Field field,
-            ActionErrors errors, HttpServletRequest request, ServletContext application) {
+            ActionMessages errors, HttpServletRequest request, ServletContext application) {
 
         String inputString = ValidatorUtil.getValueAsString(bean, field.getProperty());
         String lowerValueString = field.getVarValue("value");
@@ -32,13 +33,13 @@ public class GreaterThen {
             input = new Double(inputString);
             lowerValue = new Double(lowerValueString);
         } catch (NumberFormatException e) {
-            errors.add(field.getKey(), Resources.getActionError(request, va, field));
+            errors.add(field.getKey(), Resources.getActionMessage(request, va, field));
             return false;
         }
 
         if (!GenericValidator.isBlankOrNull(inputString)) {
             if (input.floatValue() <= lowerValue.floatValue()) {
-                errors.add(field.getKey(), Resources.getActionError(request, va, field));
+                errors.add(field.getKey(), Resources.getActionMessage(request, va, field));
             }
             return false;
         }
@@ -47,7 +48,7 @@ public class GreaterThen {
     }
 
     public static boolean validateFloat0(Object bean, ValidatorAction va, Field field,
-            ActionErrors errors, HttpServletRequest request, ServletContext application) {
+            ActionMessages errors, HttpServletRequest request, ServletContext application) {
 
         String inputString = ValidatorUtil.getValueAsString(bean, field.getProperty());
         String lowerValueString = field.getVarValue("value");
@@ -62,13 +63,13 @@ public class GreaterThen {
             input = new Double(inputString);
             lowerValue = new Double(lowerValueString);
         } catch (NumberFormatException e) {
-            errors.add(field.getKey(), Resources.getActionError(request, va, field));
+            errors.add(field.getKey(), Resources.getActionMessage(request, va, field));
             return false;
         }
 
         if (!GenericValidator.isBlankOrNull(inputString)) {
             if (input.floatValue() < lowerValue.floatValue()) {
-                errors.add(field.getKey(), Resources.getActionError(request, va, field));
+                errors.add(field.getKey(), Resources.getActionMessage(request, va, field));
             }
             return false;
         }

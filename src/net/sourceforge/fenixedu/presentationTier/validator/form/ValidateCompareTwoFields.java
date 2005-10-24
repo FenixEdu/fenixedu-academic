@@ -13,8 +13,9 @@ import org.apache.commons.validator.Field;
 import org.apache.commons.validator.GenericValidator;
 import org.apache.commons.validator.ValidatorAction;
 import org.apache.commons.validator.ValidatorUtil;
-import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 import org.apache.struts.validator.Resources;
 
 /**
@@ -36,7 +37,7 @@ public class ValidateCompareTwoFields {
      * @param comparator
      * @return
      */
-    private static boolean validate(Object bean, ValidatorAction va, Field field, ActionErrors errors,
+    private static boolean validate(Object bean, ValidatorAction va, Field field, ActionMessages errors,
             HttpServletRequest request, Comparator comparator) {
         String greaterInputString = ValidatorUtil.getValueAsString(bean, field.getProperty());
         String secondProperty = field.getVarValue("secondProperty");
@@ -49,12 +50,12 @@ public class ValidateCompareTwoFields {
                 Double greaterInput = new Double(greaterInputString);
                 // if comparator result != VALUE then the condition is false
                 if (comparator.compare(lowerInput, greaterInput) != VALUE) {
-                    errors.add(field.getKey(), Resources.getActionError(request, va, field));
+                    errors.add(field.getKey(), Resources.getActionMessage(request, va, field));
                     return false;
                 }
                 return true;
             } catch (NumberFormatException e) {
-                errors.add(field.getKey(), new ActionError(va.getMsg()));
+                errors.add(field.getKey(), new ActionMessage(va.getMsg()));
                 return false;
             }
         }
@@ -73,7 +74,7 @@ public class ValidateCompareTwoFields {
      * @return
      */
     public static boolean validateGreaterThanOrEqual(Object bean, ValidatorAction va, Field field,
-            ActionErrors errors, HttpServletRequest request, ServletContext application) {
+            ActionMessages errors, HttpServletRequest request, ServletContext application) {
         return validate(bean, va, field, errors, request, new Comparator() {
             public int compare(Object o1, Object o2) {
                 Double d1 = (Double) o1;
@@ -99,7 +100,7 @@ public class ValidateCompareTwoFields {
      * @return
      */
     public static boolean validateGreaterThan(Object bean, ValidatorAction va, Field field,
-            ActionErrors errors, HttpServletRequest request, ServletContext application) {
+            ActionMessages errors, HttpServletRequest request, ServletContext application) {
         return validate(bean, va, field, errors, request, new Comparator() {
             public int compare(Object o1, Object o2) {
                 Double d1 = (Double) o1;
@@ -125,7 +126,7 @@ public class ValidateCompareTwoFields {
      * @return
      */
     public static boolean validateEqual(Object bean, ValidatorAction va, Field field,
-            ActionErrors errors, HttpServletRequest request, ServletContext application) {
+            ActionMessages errors, HttpServletRequest request, ServletContext application) {
         return validate(bean, va, field, errors, request, new Comparator() {
             public int compare(Object o1, Object o2) {
                 Double d1 = (Double) o1;
@@ -151,7 +152,7 @@ public class ValidateCompareTwoFields {
      * @return
      */
     public static boolean validateLessThan(Object bean, ValidatorAction va, Field field,
-            ActionErrors errors, HttpServletRequest request, ServletContext application) {
+            ActionMessages errors, HttpServletRequest request, ServletContext application) {
         return validate(bean, va, field, errors, request, new Comparator() {
             public int compare(Object o1, Object o2) {
                 Double d1 = (Double) o1;
@@ -177,7 +178,7 @@ public class ValidateCompareTwoFields {
      * @return
      */
     public static boolean validateLessThanOrEqual(Object bean, ValidatorAction va, Field field,
-            ActionErrors errors, HttpServletRequest request, ServletContext application) {
+            ActionMessages errors, HttpServletRequest request, ServletContext application) {
         return validate(bean, va, field, errors, request, new Comparator() {
             public int compare(Object o1, Object o2) {
                 Double d1 = (Double) o1;

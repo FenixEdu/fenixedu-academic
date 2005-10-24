@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.validator.Field;
 import org.apache.commons.validator.ValidatorAction;
 import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionMessages;
 
 /**
  * @author TJBF & PFON
@@ -26,7 +27,7 @@ public class ValidatePublicationForm implements Serializable {
     /**
      *  
      */
-    public static boolean validate(Object bean, ValidatorAction va, Field field, ActionErrors errors,
+    public static boolean validate(Object bean, ValidatorAction va, Field field, ActionMessages errors,
             HttpServletRequest request, ServletContext application) {
         return (errors.isEmpty());
     }

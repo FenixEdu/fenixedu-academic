@@ -11,8 +11,8 @@ import org.apache.commons.validator.Field;
 import org.apache.commons.validator.GenericValidator;
 import org.apache.commons.validator.ValidatorAction;
 import org.apache.commons.validator.ValidatorUtil;
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -20,7 +20,7 @@ import org.apache.struts.action.ActionErrors;
  */
 public class ValidateTwoFields {
 
-    public static boolean validate(Object bean, ValidatorAction va, Field field, ActionErrors errors,
+    public static boolean validate(Object bean, ValidatorAction va, Field field, ActionMessages errors,
             HttpServletRequest request, ServletContext application) {
 
         String value = ValidatorUtil.getValueAsString(bean, field.getProperty());
@@ -30,11 +30,11 @@ public class ValidateTwoFields {
         if (!GenericValidator.isBlankOrNull(value)) {
             try {
                 if (!value.equals(value2)) {
-                    errors.add(field.getKey(), new ActionError("errors.different.passwords"));
+                    errors.add(field.getKey(), new ActionMessage("errors.different.passwords"));
                     return false;
                 }
             } catch (Exception e) {
-                errors.add(field.getKey(), new ActionError("errors.different.passwords"));
+                errors.add(field.getKey(), new ActionMessage("errors.different.passwords"));
                 return false;
             }
         }

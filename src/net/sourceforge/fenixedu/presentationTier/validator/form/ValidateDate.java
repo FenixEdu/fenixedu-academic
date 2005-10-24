@@ -14,6 +14,7 @@ import org.apache.commons.validator.GenericValidator;
 import org.apache.commons.validator.ValidatorAction;
 import org.apache.commons.validator.ValidatorUtil;
 import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionMessages;
 import org.apache.struts.validator.Resources;
 
 /**
@@ -22,7 +23,7 @@ import org.apache.struts.validator.Resources;
  */
 public class ValidateDate {
 
-    public static boolean validate(Object bean, ValidatorAction va, Field field, ActionErrors errors,
+    public static boolean validate(Object bean, ValidatorAction va, Field field, ActionMessages errors,
             HttpServletRequest request, ServletContext application) {
 
         String valueString = ValidatorUtil.getValueAsString(bean, field.getProperty());
@@ -46,14 +47,14 @@ public class ValidateDate {
             month = new Integer(sProperty2);
             day = new Integer(sProperty3);
         } catch (NumberFormatException e) {
-            errors.add(field.getKey(), Resources.getActionError(request, va, field));
+            errors.add(field.getKey(), Resources.getActionMessage(request, va, field));
             return false;
         }
 
         if (!GenericValidator.isBlankOrNull(valueString)) {
             if (!Data.validDate(day, month, year) || year == null || month == null || day == null
                     || year.intValue() < 1 || month.intValue() < 0 || day.intValue() < 1)
-                errors.add(field.getKey(), Resources.getActionError(request, va, field));
+                errors.add(field.getKey(), Resources.getActionMessage(request, va, field));
 
             return false;
         }
@@ -63,7 +64,7 @@ public class ValidateDate {
 
     //	this validator is only valid when used in year field
     public static boolean threeArgsDate(Object bean, ValidatorAction va, Field field,
-            ActionErrors errors, HttpServletRequest request, ServletContext application) {
+            ActionMessages errors, HttpServletRequest request, ServletContext application) {
 
         String valueString1 = ValidatorUtil.getValueAsString(bean, field.getProperty());
 
@@ -86,13 +87,13 @@ public class ValidateDate {
             month = new Integer(sProperty2);
             day = new Integer(sProperty3);
         } catch (NumberFormatException e) {
-            errors.add(field.getKey(), Resources.getActionError(request, va, field));
+            errors.add(field.getKey(), Resources.getActionMessage(request, va, field));
             return false;
         }
         String date = new String(day.toString() + "/" + month.toString() + "/" + year);
         String datePattern = new String("dd/MM/yyyy");
         if (!GenericValidator.isDate(date, datePattern, false)) {
-            errors.add(field.getKey(), Resources.getActionError(request, va, field));
+            errors.add(field.getKey(), Resources.getActionMessage(request, va, field));
             return false;
 
         }
