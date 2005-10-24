@@ -35,6 +35,10 @@
 		<logic:notEqual name="correctionType" value="studentCorrection">
 			<html:hidden property='<%="questionCode"+questionIndex%>' value="<%= questionCode.toString() %>"/>
 			<html:hidden property='<%="questionType"+questionIndex%>' value="<%= questionType.toString() %>"/>
+			<%if(((Integer)questionType).intValue()==1 ){ %>
+				<bean:define id="optionShuffle" name="testQuestion" property="optionShuffle"/>
+				<html:hidden property='<%="optionShuffle"+questionIndex%>' value="<%= optionShuffle.toString() %>"/>
+			<% } %>
 		</logic:notEqual>
 		
 		<bean:define id="mark" name="testQuestion" property="testQuestionMark"/>

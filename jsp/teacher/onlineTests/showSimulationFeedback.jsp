@@ -60,9 +60,11 @@
 			<bean:define id="questionType" name="question" property="questionType.type"/>
 			<bean:define id="questionCode" name="question" property="idInternal"/>
 			<html:hidden property='<%="questionCode"+questionIndex%>' value="<%= questionCode.toString() %>"/>
-			<bean:define id="optionShuffle" name="testQuestion" property="optionShuffle"/>
-			<html:hidden property='<%="optionShuffle"+questionIndex%>' value="<%= optionShuffle.toString() %>"/>
 			<html:hidden property='<%="questionType"+questionIndex%>' value="<%= questionType.toString() %>"/>
+			<%if(((Integer)questionType).intValue()==1 ){ %>
+				<bean:define id="optionShuffle" name="testQuestion" property="optionShuffle"/>
+				<html:hidden property='<%="optionShuffle"+questionIndex%>' value="<%= optionShuffle.toString() %>"/>
+			<% } %>
 			
 			<logic:notEmpty name="question" name="testQuestion" property="response">
 				<bean:define id="questionValue" value='<%="question"+ questionIndex%>'/>
