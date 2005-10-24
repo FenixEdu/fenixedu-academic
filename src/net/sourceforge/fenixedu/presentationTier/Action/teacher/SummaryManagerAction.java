@@ -579,6 +579,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
                 Collections.sort(infoShift.getInfoLessons());
             }
             Collections.sort(infoSiteSummary.getInfoShifts(), new BeanComparator("lessons"));
+            Collections.sort(infoSiteSummary.getInfoSummary().getInfoShift().getInfoLessons());
             shiftChanged(request, siteView);
             choosenLesson(request, infoSiteSummary);
         } catch (Exception e) {
