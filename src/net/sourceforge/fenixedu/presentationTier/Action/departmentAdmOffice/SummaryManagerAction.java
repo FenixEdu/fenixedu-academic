@@ -223,6 +223,12 @@ public class SummaryManagerAction extends FenixDispatchAction {
         }
 
         try {
+            final InfoSiteSummaries infoSiteSummaries = (InfoSiteSummaries) ((ExecutionCourseSiteView) siteView)
+                    .getComponent();
+            for (final InfoShift infoShift : (List<InfoShift>) infoSiteSummaries.getInfoShifts()) {
+                Collections.sort(infoShift.getInfoLessons());
+            }
+            Collections.sort(infoSiteSummaries.getInfoShifts(), new BeanComparator("lessons"));
             choosenShift(request, ((InfoSiteSummaries) siteView.getComponent()).getInfoShifts());
             choosenLesson(request, (InfoSummary) request.getAttribute("summaryToInsert"));
         } catch (Exception e) {
@@ -234,15 +240,8 @@ public class SummaryManagerAction extends FenixDispatchAction {
             request.setAttribute("checked", "");
 
         htmlEditorConfigurations(request, formBean);
-
-        final InfoSiteSummaries infoSiteSummaries = (InfoSiteSummaries) ((ExecutionCourseSiteView) siteView)
-                .getComponent();
-        for (final InfoShift infoShift : (List<InfoShift>) infoSiteSummaries.getInfoShifts()) {
-            Collections.sort(infoShift.getInfoLessons());
-        }
-        Collections.sort(infoSiteSummaries.getInfoShifts(), new BeanComparator("lessons"));
-
         request.setAttribute("siteView", siteView);
+
         return mapping.findForward("insertSummary");
     }
 
@@ -536,21 +535,20 @@ public class SummaryManagerAction extends FenixDispatchAction {
         }
 
         try {
+            final InfoSiteSummary infoSiteSummary = (InfoSiteSummary) ((ExecutionCourseSiteView) siteView)
+                    .getComponent();
+            for (final InfoShift infoShift : (List<InfoShift>) infoSiteSummary.getInfoShifts()) {
+                Collections.sort(infoShift.getInfoLessons());
+            }
+            Collections.sort(infoSiteSummary.getInfoShifts(), new BeanComparator("lessons"));
             shiftChanged(request, siteView);
-            choosenLesson(request, (InfoSiteSummary) siteView.getComponent());
+            choosenLesson(request, infoSiteSummary);
         } catch (Exception e) {
             e.printStackTrace();
             return showSummaries(mapping, form, request, response);
         }
 
         htmlEditorConfigurations(request, summaryForm);
-
-        final InfoSiteSummary infoSiteSummary = (InfoSiteSummary) ((ExecutionCourseSiteView) siteView)
-        .getComponent();
-        for (final InfoShift infoShift : (List<InfoShift>) infoSiteSummary.getInfoShifts()) {
-            Collections.sort(infoShift.getInfoLessons());
-        }
-        Collections.sort(infoSiteSummary.getInfoShifts(), new BeanComparator("lessons"));
         request.setAttribute("siteView", siteView);
 
         return mapping.findForward("editSummary");
