@@ -8,8 +8,10 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.faces.component.html.HtmlInputHidden;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
@@ -116,6 +118,19 @@ public class TeacherExpectationManagement extends FenixBackingBean {
     private List<IProposal> finalDegreeWorks;
 
     private InfoTeacher infoTeacher;
+    
+    public TeacherExpectationManagement() {
+
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+
+        HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext()
+                .getResponse();
+
+        response.addHeader("Cache-Control", "no-store");
+        response.addHeader("Expires", "-1");
+        response.addHeader("Pragma", "no-cache");
+
+    }
 
     public HtmlInputHidden getSelectedExecutionYearIdHidden() {
         if (this.selectedExecutionYearIdHidden == null) {
