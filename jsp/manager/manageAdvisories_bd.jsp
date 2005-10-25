@@ -4,7 +4,9 @@
 <%@ page import="net.sourceforge.fenixedu.util.AdvisoryRecipients" %>
 <h2><bean:message key="title.manage.advisories"/></h2>
 <br />
-<span class="error">Nota: A validação deste form ainda não está a funcionar.</span>
+
+<span class="error"><html:errors/></span>
+
 <html:form action="/manageAdvisories">
 	<html:hidden property="method" value="createAdvisory"/>
 	<html:hidden property="page" value="1"/>

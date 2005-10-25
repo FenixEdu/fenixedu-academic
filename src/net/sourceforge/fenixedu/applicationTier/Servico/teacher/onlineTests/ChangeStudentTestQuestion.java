@@ -291,9 +291,7 @@ public class ChangeStudentTestQuestion implements IService {
             advisory.setSubject(MessageFormat.format(bundle.getString("message.distributedTest.changeTestSubject"), new Object[] { distributedTest
                     .getTitle() }));
             advisory.setMessage(MessageFormat.format(bundle.getString("message.distributedTest.messageChangeTest"), args));
-        }
-
-        advisory.setOnlyShowOnce(new Boolean(false));
+        }        
 
         // Create DistributedTestAdvisory
         IDistributedTestAdvisory distributedTestAdvisory = DomainFactory.makeDistributedTestAdvisory();

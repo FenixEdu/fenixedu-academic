@@ -151,8 +151,7 @@ public class DeleteProjectProposal implements IService {
                 + groupPropertiesExecutionCourse.getSenderPerson().getNome() + " da disciplina "
                 + groupPropertiesExecutionCourse.getSenderExecutionCourse().getNome() + "!");
 
-        advisory.setMessage(msg);
-        advisory.setOnlyShowOnce(new Boolean(true));
+        advisory.setMessage(msg);        
         return advisory;
     }
 

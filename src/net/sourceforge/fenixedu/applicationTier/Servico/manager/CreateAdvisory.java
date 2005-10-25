@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoAdvisory;
 import net.sourceforge.fenixedu.domain.DomainFactory;
@@ -15,7 +16,6 @@ import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentAdvisory;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -40,37 +40,35 @@ public class CreateAdvisory implements IService {
 
     public Boolean run(InfoAdvisory infoAdvisory, AdvisoryRecipients advisoryRecipients)
             throws ExcepcaoPersistencia {
+        
         final ISuportePersistente persistenceSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-        final IPersistentAdvisory persistentAdvisory = persistenceSupport.getIPersistentAdvisory();
+        
         final IPessoaPersistente persistentPerson = persistenceSupport.getIPessoaPersistente();
 
         final IAdvisory advisory = DomainFactory.makeAdvisory();
         advisory.setCreated(infoAdvisory.getCreated());
         advisory.setSubject(infoAdvisory.getSubject());
-        advisory.setOnlyShowOnce(infoAdvisory.getOnlyShowOnce());
         advisory.setExpires(infoAdvisory.getExpires());
         advisory.setMessage(infoAdvisory.getMessage());
         advisory.setSender(infoAdvisory.getSender());
 
-        final Collection people = persistentPerson.readAll(Person.class);
-        for (final Iterator iterator = people.iterator(); iterator.hasNext();) {
-            final IPerson person = (IPerson) iterator.next();
-
+        List<IPerson> people = (List<IPerson>) persistentPerson.readAll(Person.class);
+      
+        for (IPerson person : people) {
             if ((advisoryRecipients.equals(AdvisoryRecipients.STUDENTS) && hasRole(person,
                     RoleType.STUDENT))
                     || (advisoryRecipients.equals(AdvisoryRecipients.TEACHERS) && hasRole(person,
                             RoleType.TEACHER))
                     || (advisoryRecipients.equals(AdvisoryRecipients.EMPLOYEES) && hasRole(person,
                             RoleType.EMPLOYEE))) {
-                persistentPerson.simpleLockWrite(person);
-
+          
                 person.getAdvisories().add(advisory);
                 advisory.getPeople().add(person);
             }
         }
-
-        return new Boolean(true);
+        
+        return Boolean.TRUE;
     }
 
 }

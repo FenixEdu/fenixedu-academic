@@ -1297,7 +1297,7 @@
 	<!-- ========== ADVISORY MANIPULATION ========== -->
       <action path="/manageAdvisories"
       		  name="advisoryForm"
-		      input="/manageAdvisories.do?method=prepare"
+		      input="/manageAdvisories.do?method=prepare&amp;page=0"
               type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageAdvisoriesDA"
               parameter="method"
               validate="true"

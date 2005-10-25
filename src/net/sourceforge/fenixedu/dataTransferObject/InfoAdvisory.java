@@ -129,8 +129,7 @@ public class InfoAdvisory extends InfoObject {
         if (advisory != null) {
             setCreated(advisory.getCreated());
             setExpires(advisory.getExpires());
-            setMessage(advisory.getMessage());
-            setOnlyShowOnce(advisory.getOnlyShowOnce());
+            setMessage(advisory.getMessage());            
             setSender(advisory.getSender());
             setSubject(advisory.getSubject());
         }

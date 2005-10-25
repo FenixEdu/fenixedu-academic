@@ -110,7 +110,7 @@ public class AddStudentsToDistributedTest implements IService {
         advisory.setExpires(distributedTest.getEndDate().getTime());
         advisory.setSender(MessageFormat.format(bundle.getString("message.distributedTest.from"), new Object[] { ((IExecutionCourse) distributedTest
                 .getTestScope().getDomainObject()).getNome() }));
-        String msgBeginning;
+        
         advisory.setSubject(distributedTest.getTitle());
         final String beginHour = DateFormatUtils.format(distributedTest.getBeginHour().getTime(), "HH:mm");
         final String beginDate = DateFormatUtils.format(distributedTest.getBeginDate().getTime(), "dd/MM/yyyy");
@@ -123,7 +123,6 @@ public class AddStudentsToDistributedTest implements IService {
         } else {
             advisory.setMessage(MessageFormat.format(bundle.getString("message.distributedTest.distributeTestMessage"), args));
         }
-        advisory.setOnlyShowOnce(new Boolean(false));
         return advisory;
     }
 }

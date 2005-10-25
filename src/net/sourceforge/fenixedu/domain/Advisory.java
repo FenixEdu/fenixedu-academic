@@ -30,9 +30,6 @@ public class Advisory extends Advisory_Base {
 		stringBuilder.append("\n");
 		stringBuilder.append("expires = ");
 		stringBuilder.append(getExpires());
-		stringBuilder.append("\n");
-		stringBuilder.append("onlyShowOnce = ");
-		stringBuilder.append(getOnlyShowOnce());
 		stringBuilder.append("]\n");
 		
         return stringBuilder.toString();

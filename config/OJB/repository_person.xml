@@ -279,8 +279,7 @@
          element-class-ref="net.sourceforge.fenixedu.domain.Advisory"
          
          indirection-table = "PERSON_ADVISORY"
-         
-         
+                  
          auto-update="false"
          auto-delete="false"
 	>

@@ -21,8 +21,7 @@
       <field-descriptor id="3"
          name="created"
          column="CREATED"
-         jdbc-type="TIMESTAMP"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
+         jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"        
       />      
       <field-descriptor id="4"
          name="subject"
@@ -37,12 +36,7 @@
       <field-descriptor id="6"
          name="expires"
          column="EXPIRES"
-         jdbc-type="DATE"
-      />
-      <field-descriptor id="7"
-         name="onlyShowOnce"
-         column="ONLY_SHOW_ONCE"
-         jdbc-type="BIT"
+         jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
       />
       <field-descriptor
       	name="ackOptLock"
@@ -55,6 +49,9 @@
 			element-class-ref="net.sourceforge.fenixedu.domain.Person"
 			
 			indirection-table="PERSON_ADVISORY"
+			
+			auto-update="false"
+         	auto-delete="false"
 			
 			>
 		<fk-pointing-to-element-class column="KEY_PERSON" />

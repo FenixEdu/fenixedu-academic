@@ -168,7 +168,6 @@ public class RejectNewProjectProposal implements IService {
                 + executionCourse.getNome() + "!");
 
         advisory.setMessage(msg);
-        advisory.setOnlyShowOnce(new Boolean(true));
         return advisory;
     }
 }

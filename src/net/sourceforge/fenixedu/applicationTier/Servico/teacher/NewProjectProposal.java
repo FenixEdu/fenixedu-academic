@@ -221,7 +221,6 @@ public class NewProjectProposal implements IService {
                 + goalExecutionCourse.getNome() + ".");
 
         advisory.setMessage(msg);
-        advisory.setOnlyShowOnce(new Boolean(true));
         return advisory;
     }
 
@@ -245,8 +244,7 @@ public class NewProjectProposal implements IService {
                 + " fez uma proposta de co-avaliação para a disciplina " + goalExecutionCourse.getNome()
                 + " relativa ao agrupamento " + groupProperties.getName() + "!");
 
-        advisory.setMessage(msg);
-        advisory.setOnlyShowOnce(new Boolean(true));
+        advisory.setMessage(msg);        
         return advisory;
     }
 
@@ -271,7 +269,6 @@ public class NewProjectProposal implements IService {
                 + groupProperties.getName() + "!");
 
         advisory.setMessage(msg);
-        advisory.setOnlyShowOnce(new Boolean(true));
         return advisory;
     }
 

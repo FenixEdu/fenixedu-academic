@@ -134,8 +134,7 @@ public class EditDistributedTest implements IService {
         advisory.setCreated(Calendar.getInstance().getTime());
         advisory.setExpires(distributedTest.getEndDate().getTime());
         advisory.setSender(MessageFormat.format(bundle.getString("message.distributedTest.from"), new Object[] { ((IExecutionCourse) distributedTest
-                .getTestScope().getDomainObject()).getNome() }));
-        advisory.setOnlyShowOnce(new Boolean(false));
+                .getTestScope().getDomainObject()).getNome() }));        
         advisory.setSubject(MessageFormat.format(bundle.getString("message.distributedTest.subjectChangeDates"), new Object[] { distributedTest
                 .getTitle() }));
 

@@ -206,8 +206,7 @@ public class AcceptNewProjectProposal implements IService {
                         + "<br>A partir deste momento poder-se-� dirijir � �rea de gest�o de grupos da disciplina "
                         + personExecutionCourse.getNome() + " para gerir a nova co-avalia��o.");
 
-        advisory.setMessage(msg);
-        advisory.setOnlyShowOnce(new Boolean(true));
+        advisory.setMessage(msg);        
         return advisory;
     }
 

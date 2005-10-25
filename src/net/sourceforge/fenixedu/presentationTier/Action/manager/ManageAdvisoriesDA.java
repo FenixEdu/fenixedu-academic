@@ -5,6 +5,10 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +20,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.AdvisoryRecipients;
 
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -41,18 +47,37 @@ public class ManageAdvisoriesDA extends FenixDispatchAction {
         IUserView userView = SessionUtils.getUserView(request);
 
         DynaValidatorForm advisoryForm = (DynaValidatorForm) form;
-
+                    
         InfoAdvisory infoAdvisory = new InfoAdvisory();
         infoAdvisory.setSender((String) advisoryForm.get("sender"));
         infoAdvisory.setSubject((String) advisoryForm.get("subject"));
         infoAdvisory.setMessage((String) advisoryForm.get("message"));
-        infoAdvisory.setExpires(DateFormat.getDateInstance(DateFormat.DATE_FIELD).parse(
-                (String) advisoryForm.get("experationDate")));
+        
+        DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        Date expires = null;
+        try{
+            expires = format.parse((String) advisoryForm.get("experationDate"));
+        }
+        catch(ParseException e){
+            setErrorMessage(mapping, request, "message.manager.advisory.expirationDate");            
+        }
+        
+        infoAdvisory.setExpires(expires);
+        infoAdvisory.setCreated(Calendar.getInstance().getTime());
 
         Object[] args = { infoAdvisory, new AdvisoryRecipients((Integer) advisoryForm.get("recipients")) };
         ServiceUtils.executeService(userView, "CreateAdvisory", args);
 
-        return mapping.findForward("Manage");
+        return setErrorMessage(mapping, request, "label.success");
     }
 
+
+    private ActionForward setErrorMessage(ActionMapping mapping, HttpServletRequest request, String label) {
+        
+        ActionErrors actionMessages = new ActionErrors();
+        actionMessages.add("error", new ActionError(label));
+        saveErrors(request, actionMessages);
+       
+        return mapping.getInputForward();
+    }
 }

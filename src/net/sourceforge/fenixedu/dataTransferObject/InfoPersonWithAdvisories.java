@@ -4,13 +4,13 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IAdvisory;
 import net.sourceforge.fenixedu.domain.IPerson;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
 
 /**
  * @author João Mota
@@ -22,13 +22,14 @@ public class InfoPersonWithAdvisories extends InfoPerson {
         super.copyFromDomain(person);
         if (person != null && person.getAdvisories() != null) {
 
-            setInfoAdvisories((List) CollectionUtils.collect(person.getAdvisories(), new Transformer() {
-
-                public Object transform(Object arg0) {
-                    return InfoAdvisory.newInfoFromDomain((IAdvisory) arg0);
+            Date currentDate = Calendar.getInstance().getTime();
+            List<InfoAdvisory> list = new ArrayList<InfoAdvisory>();                       
+            for (IAdvisory advisory : person.getAdvisories()) {
+                if(advisory.getExpires().after(currentDate)){
+                    list.add(InfoAdvisory.newInfoFromDomain(advisory));
                 }
-            }));
-
+            }                       
+            setInfoAdvisories(list);
         }
     }
 
