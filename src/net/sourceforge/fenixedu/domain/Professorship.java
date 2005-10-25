@@ -23,28 +23,23 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         return this.getExecutionCourse().getExecutionPeriod().equals(executionPeriod);
     }
 
-    public static IProfessorship create(Boolean responsibleFor, IExecutionCourse executionCourse, ITeacher teacher, Double hours) throws MaxResponsibleForExceed, InvalidCategory{
-       
-        if(responsibleFor == null || executionCourse == null || teacher == null)
-            throw new NullPointerException();
-        
-        IProfessorship professorShip = new Professorship();
-               
-        if(hours == null)
-            professorShip.setHours(new Double(0.0));
-        else
-            professorShip.setHours(hours);
+    public static IProfessorship create(Boolean responsibleFor, IExecutionCourse executionCourse,
+            ITeacher teacher, Double hours) throws MaxResponsibleForExceed, InvalidCategory {
 
-        if (responsibleFor.booleanValue()) {            
-            ResponsibleForValidator.getInstance().validateResponsibleForList(teacher, executionCourse, professorShip);
-            professorShip.setResponsibleFor(true);
-        }
-        else
-            professorShip.setResponsibleFor(false);
+        if (responsibleFor == null || executionCourse == null || teacher == null)
+            throw new NullPointerException();
+
+        IProfessorship professorShip = new Professorship();
+        professorShip.setHours((hours == null) ? new Double(0.0) : hours);
         
+        if (responsibleFor.booleanValue()) {
+            ResponsibleForValidator.getInstance().validateResponsibleForList(teacher, executionCourse,
+                    professorShip);
+        }
+        professorShip.setResponsibleFor(responsibleFor);
         professorShip.setExecutionCourse(executionCourse);
         professorShip.setTeacher(teacher);
-        
+
         return professorShip;
     }
 
@@ -56,7 +51,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 
         this.setExecutionCourse(null);
         this.setTeacher(null);
-        
+
         super.deleteDomainObject();
     }
 }

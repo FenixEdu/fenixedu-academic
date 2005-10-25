@@ -19,9 +19,6 @@ import net.sourceforge.fenixedu.domain.teacher.ITeacherPersonalExpectation;
 import net.sourceforge.fenixedu.util.PublicationArea;
 import net.sourceforge.fenixedu.util.State;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
-
 public class Teacher extends Teacher_Base {
 
     /***************************************************************************
@@ -81,10 +78,8 @@ public class Teacher extends Teacher_Base {
         if (executionYearId == null || executionCourses == null)
             throw new NullPointerException();
 
-        List<IProfessorship> professorships = this.getProfessorships();
-
-        for (IProfessorship professorship : professorships) {
-            IExecutionCourse executionCourse = professorship.getExecutionCourse();
+        for (final IProfessorship professorship : this.getProfessorships()) {
+            final IExecutionCourse executionCourse = professorship.getExecutionCourse();
             ResponsibleForValidator.getInstance().validateResponsibleForList(this, executionCourse,
                     professorship);
             if (executionCourse.getExecutionPeriod().getExecutionYear().getIdInternal().equals(

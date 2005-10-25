@@ -38,6 +38,7 @@
 	<html:form action="/updateTeacherExecutionYearExecutionCourseResponsabilities">
 		<html:hidden property="idInternal" />	
 		<html:hidden property="teacherId" />
+		<html:hidden property="executionYearId" />
 		
 		<h2><bean:message key="label.teacher.professorships"/></h2>
 		<table width="100%"cellpadding="5" border="0">

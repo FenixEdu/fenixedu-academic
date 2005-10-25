@@ -42,37 +42,27 @@ public class CreateProfessorshipDispatchAction extends DispatchAction {
 
     public ActionForward createProfessorship(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        DynaActionForm teacherExecutionCourseForm = (DynaActionForm) form;
-        Integer teacherNumber = Integer
-                .valueOf((String) teacherExecutionCourseForm.get("teacherNumber"));
-
-        Boolean responsibleFor = (Boolean) teacherExecutionCourseForm.get("responsibleFor");
-
-        Integer executionCourseId = Integer.valueOf((String) teacherExecutionCourseForm
-                .get("executionCourseId"));
-
-        InfoProfessorship infoProfessorship = new InfoProfessorship();
-
-        InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse(executionCourseId);
-        InfoTeacher infoTeacher = new InfoTeacher();
+        
+        final DynaActionForm teacherExecutionCourseForm = (DynaActionForm) form;
+        final Integer teacherNumber = Integer.valueOf((String) teacherExecutionCourseForm.get("teacherNumber"));
+        final Boolean responsibleFor = (Boolean) teacherExecutionCourseForm.get("responsibleFor");
+        final Integer executionCourseId = Integer.valueOf((String) teacherExecutionCourseForm.get("executionCourseId"));
+        
+        final InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse(executionCourseId);
+        final InfoTeacher infoTeacher = new InfoTeacher();
         infoTeacher.setTeacherNumber(teacherNumber);
-
+        
+        final InfoProfessorship infoProfessorship = new InfoProfessorship();
         infoProfessorship.setInfoExecutionCourse(infoExecutionCourse);
         infoProfessorship.setInfoTeacher(infoTeacher);
-
-        Object arguments[] = { infoProfessorship, responsibleFor };
-
+        infoProfessorship.setResponsibleFor(responsibleFor);
+        
+        final Object arguments[] = { infoProfessorship };
         executeService("InsertProfessorshipByDepartment", request, arguments);
-
+        
         return mapping.findForward("final-step");
     }
 
-    /**
-     * @param string
-     * @param request
-     * @param arguments
-     * @return
-     */
     private Object executeService(String serviceName, HttpServletRequest request, Object[] arguments)
             throws FenixServiceException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
@@ -100,10 +90,6 @@ public class CreateProfessorshipDispatchAction extends DispatchAction {
         return executionDegrees;
     }
 
-    /**
-     * @param teacherExecutionCourseForm
-     * @param request
-     */
     private void prepareConstants(DynaActionForm teacherExecutionCourseForm, HttpServletRequest request)
             throws FenixServiceException, FenixFilterException {
         Integer teacherNumber = Integer
@@ -207,14 +193,6 @@ public class CreateProfessorshipDispatchAction extends DispatchAction {
         return mapping.findForward("third-step");
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping,
-     *      org.apache.struts.action.ActionForm,
-     *      javax.servlet.http.HttpServletRequest,
-     *      javax.servlet.http.HttpServletResponse)
-     */
     public ActionForward showExecutionDegrees(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         DynaValidatorForm teacherExecutionCourseForm = (DynaValidatorForm) form;

@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -22,22 +21,17 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class UpdateTeacherExecutionYearResponsabilities implements IService {
 
-    public Boolean run(Integer teacherId, Integer executionYearId,
+    public void run(Integer teacherId, Integer executionYearId,
             final List executionCourseResponsabilities) throws FenixServiceException,
             ExcepcaoPersistencia, DomainException {
 
-        ISuportePersistente suportePersistente = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-        IPersistentTeacher persistentTeacher = suportePersistente.getIPersistentTeacher();        
-        IPersistentExecutionCourse executionCourseDAO = suportePersistente
-                .getIPersistentExecutionCourse();
-
-        ITeacher teacher = (ITeacher) persistentTeacher.readByOID(Teacher.class, teacherId);
+        final ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentTeacher persistentTeacher = suportePersistente.getIPersistentTeacher();        
+    
+        final ITeacher teacher = (ITeacher) persistentTeacher.readByOID(Teacher.class, teacherId);
         if (teacher == null)
-            throw new FenixServiceException();
+            throw new FenixServiceException("message.teacher-not-found");
 
-        teacher.updateResponsabilitiesFor(executionYearId, executionCourseResponsabilities);
-                        
-        return Boolean.TRUE;        
+        teacher.updateResponsabilitiesFor(executionYearId, executionCourseResponsabilities);        
     }       
 }

@@ -32,13 +32,6 @@ import org.apache.struts.action.DynaActionForm;
  */
 public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractReadProfessorshipsAction {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorApresentacao.Action.department.AbstractReadProfessorshipsAction#getDetailedProfessorships(ServidorAplicacao.IUserView,
-     *      java.lang.Integer, org.apache.struts.action.DynaActionForm,
-     *      javax.servlet.http.HttpServletRequest)
-     */
     List getDetailedProfessorships(IUserView userView, Integer teacherId, DynaActionForm actionForm,
             HttpServletRequest request) throws FenixServiceException, FenixFilterException {
     	
@@ -48,24 +41,13 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
         return detailedInfoProfessorshipList;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorApresentacao.Action.department.AbstractReadProfessorshipsAction#readExtraInformation(javax.servlet.http.HttpServletRequest,
-     *      org.apache.struts.action.DynaActionForm)
-     */
     protected void extraPreparation(IUserView userView, InfoTeacher infoTeacher,
             HttpServletRequest request, DynaActionForm dynaForm) throws FenixServiceException, FenixFilterException {
 
         prepareConstants(userView, infoTeacher, request);
-
         prepareForm(dynaForm, request);
-
     }
 
-    /**
-     * @param dynaForm
-     */
     private void prepareForm(DynaActionForm dynaForm, HttpServletRequest request) {
         InfoExecutionYear infoExecutionYear = (InfoExecutionYear) request.getAttribute("executionYear");
         InfoTeacher infoTeacher = (InfoTeacher) request.getAttribute("infoTeacher");

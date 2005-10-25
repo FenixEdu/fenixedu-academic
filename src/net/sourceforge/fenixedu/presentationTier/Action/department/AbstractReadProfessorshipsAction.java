@@ -30,6 +30,7 @@ import org.apache.struts.action.DynaActionForm;
  * @author jpvl
  */
 public abstract class AbstractReadProfessorshipsAction extends Action {
+    
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         IUserView userView = SessionUtils.getUserView(request);
@@ -56,10 +57,6 @@ public abstract class AbstractReadProfessorshipsAction extends Action {
         return mapping.findForward("list-professorships");
     }
 
-    /**
-     * @param request
-     * @param dynaForm
-     */
     protected void extraPreparation(IUserView userView, InfoTeacher infoTeacher,
             HttpServletRequest request, DynaActionForm dynaForm) throws Exception {
     }

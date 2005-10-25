@@ -24,28 +24,24 @@ public class InsertProfessorShip implements IService {
     public InsertProfessorShip() {
     }
 
-    public void run(InfoProfessorship infoProfessorShip, Boolean responsibleFor)
+    public void run(InfoProfessorship infoProfessorShip)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-        IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         
-        Integer executionCourseId = infoProfessorShip.getInfoExecutionCourse().getIdInternal();        
-        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
-                ExecutionCourse.class, executionCourseId);
-
+        final IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+        final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                ExecutionCourse.class, infoProfessorShip.getInfoExecutionCourse().getIdInternal());
         if (executionCourse == null) {
             throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
         }
 
-        Integer teacherNumber = infoProfessorShip.getInfoTeacher().getTeacherNumber();        
-        ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);
-
+        final IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        final ITeacher teacher = persistentTeacher.readByNumber(infoProfessorShip.getInfoTeacher().getTeacherNumber());
         if (teacher == null) {
             throw new NonExistingServiceException("message.non.existing.teacher", null);
         }
 
-        Professorship.create(responsibleFor, executionCourse, teacher, infoProfessorShip.getHours());
+        Professorship.create(infoProfessorShip.getResponsibleFor(), executionCourse, teacher, infoProfessorShip.getHours());
     }
 }

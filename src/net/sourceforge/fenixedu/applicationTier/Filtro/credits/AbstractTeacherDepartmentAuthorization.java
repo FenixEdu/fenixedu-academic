@@ -32,12 +32,6 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public abstract class AbstractTeacherDepartmentAuthorization extends Filtro {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *      pt.utl.ist.berserk.ServiceResponse)
-     */
     public void execute(ServiceRequest serviceRequest, ServiceResponse serviceResponse) throws Exception {
         IUserView requester = (IUserView) serviceRequest.getRequester();
         if ((requester == null)
@@ -68,10 +62,6 @@ public abstract class AbstractTeacherDepartmentAuthorization extends Filtro {
 
     }
 
-    /**
-     * @param arguments
-     * @return
-     */
     protected abstract Integer getTeacherId(Object[] arguments, ISuportePersistente sp)
             throws FenixServiceException, ExcepcaoPersistencia;
 }
