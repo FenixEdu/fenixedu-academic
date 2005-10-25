@@ -43,7 +43,7 @@ public class UsernameUtils extends FenixUtil {
     }
     
     public static String updateIstUsername(IPerson person) {
-        if (person.getIstUsername() != null) {
+        if (person.getIstUsername() == null) {
             String ist = "ist";
             String istUsername = null;
             istUsername = person.getUsername();
