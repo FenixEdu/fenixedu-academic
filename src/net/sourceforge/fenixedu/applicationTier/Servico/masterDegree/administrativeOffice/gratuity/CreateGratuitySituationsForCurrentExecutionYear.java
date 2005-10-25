@@ -60,6 +60,14 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
 
                 IGratuitySituation gratuitySituation = studentCurricularPlan
                         .getGratuitySituationByGratuityValues(gratuityValues);
+                
+                if(year.equals("2002/2003") && gratuitySituation.getTransactionListCount() == 0){
+                    gratuitySituation.removeEmployee();
+                    gratuitySituation.removeGratuityValues();
+                    gratuitySituation.removeStudentCurricularPlan();
+                    this.gratuitySituationsToDelete.add(gratuitySituation);
+                    continue;
+                }
 
                 if (gratuitySituation == null) {
                     createGratuitySituation(gratuityValues, studentCurricularPlan);
