@@ -2,28 +2,20 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-<hr></hr>
-<h2><center><bean:message key="label.teacher.tutor.operations"/></center></h2>
-	
-<p>
+<br/>
+<hr/>
+<ul><li class="navheader"><bean:message key="label.teacher.tutor.operations"/></li></ul>
 <ul>
 	<li>
 		<html:link page="<%= "/viewStudentsByTutor.do?method=execute"%>">
 			<bean:message key="link.students.tutor" /></html:link> 
-			<br/>
-			<br/>
 	</li>
 	<li>
 		<html:link page="<%= "/viewStudentCurriculum.do?method=prepareView"%>">
 		    <bean:message key="link.student.curriculum" /></html:link>
-		    <br/>
-			<br/>
 	</li>
 	<li>
 		<html:link page="<%= "/curricularCoursesEnrollment.do?method=prepareEnrollmentChooseStudent"%>">
 		    <bean:message key="link.student.enrollment" /></html:link>
-		    <br/>
-			<br/>
 	</li>		
 </ul>
-</p>

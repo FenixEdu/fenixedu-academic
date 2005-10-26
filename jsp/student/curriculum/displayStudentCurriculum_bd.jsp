@@ -25,7 +25,7 @@
 	<html:form action="/viewCurriculum.do?method=getStudentCP">
 		<html:hidden property="degreeCurricularPlanID"/>
 		
-		<table width="100%">
+		<table width="100%" class="infoop">
 			<tr>
 				<td><bean:message key="label.studentCurricularPlan" bundle="STUDENT_RESOURCES" /></td>
 				<td><html:select property="studentCPID"	onchange='document.studentCurricularPlanAndEnrollmentsSelectionForm.submit();'> <html:options collection="allSCPs" property="value" labelProperty="label" /></html:select></td>

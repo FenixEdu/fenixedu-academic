@@ -4,7 +4,7 @@
   <formset>
     
    <form name="studentCurricularPlanAndEnrollmentsSelectionForm">
-		<field property="studentCPID" depends="required">
+		<field property="studentNumber" depends="required">
 			<arg0 key="message.studentNumber" resource="true"/>
 		</field>
    </form>

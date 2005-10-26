@@ -41,6 +41,7 @@ import org.apache.struts.util.LabelValueBean;
  */
 
 public class CurriculumDispatchAction extends DispatchAction {
+
     public ActionForward getStudentCP(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -58,8 +59,7 @@ public class CurriculumDispatchAction extends DispatchAction {
 
         String username = null;
 
-        if (studentNumber != null) // para um aluno em particular
-        {
+        if (studentNumber != null) { // para um aluno em particular
             try {
                 Object args[] = { Integer.valueOf(studentNumber) };
                 InfoStudent infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(
@@ -74,9 +74,8 @@ public class CurriculumDispatchAction extends DispatchAction {
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
             }
-        } else if (studentNumber == null) // deixa de importar se o ID do
-                                            // plano curricular for especificado
-        {
+        } else if (studentNumber == null) {
+            // deixa de importar se o ID do plano curricular for especificado
             username = userView.getUtilizador();
         }
 
