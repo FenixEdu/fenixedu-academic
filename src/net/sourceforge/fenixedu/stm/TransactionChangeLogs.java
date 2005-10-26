@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.stm;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.rmi.server.UID;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -218,6 +219,7 @@ public class TransactionChangeLogs {
 	}
     }
 
+    private static final String uidString = (new UID()).toString();
 
     private static class CleanThread extends Thread {
 	private static final long SECONDS_BETWEEN_UPDATES = 120;
@@ -230,7 +232,7 @@ public class TransactionChangeLogs {
         final String hostAddress = InetAddress.getLocalHost().getHostAddress();
         final String username = getUsername();
         final String appName = getAppName();
-		this.server = StringAppender.append(username, "@", hostAddress, ":", appName);
+		this.server = StringAppender.append(username, "@", hostAddress, ":", appName, ":", uidString);
 	    } catch (UnknownHostException uhe) {
 		throw new Error("Couldn't get this host address, which is needed to register in the database");
 	    }
