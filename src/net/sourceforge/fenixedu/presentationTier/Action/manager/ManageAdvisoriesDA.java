@@ -47,11 +47,16 @@ public class ManageAdvisoriesDA extends FenixDispatchAction {
         IUserView userView = SessionUtils.getUserView(request);
 
         DynaValidatorForm advisoryForm = (DynaValidatorForm) form;
-                    
+                       
         InfoAdvisory infoAdvisory = new InfoAdvisory();
         infoAdvisory.setSender((String) advisoryForm.get("sender"));
         infoAdvisory.setSubject((String) advisoryForm.get("subject"));
         infoAdvisory.setMessage((String) advisoryForm.get("message"));
+        
+        if(advisoryForm.get("recipients") == null){
+            setErrorMessage(mapping, request, "message.manager.advisory.recipients");
+            return mapping.getInputForward();
+        }
         
         DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm");
         Date expires = null;
@@ -59,25 +64,25 @@ public class ManageAdvisoriesDA extends FenixDispatchAction {
             expires = format.parse((String) advisoryForm.get("experationDate"));
         }
         catch(ParseException e){
-            setErrorMessage(mapping, request, "message.manager.advisory.expirationDate");            
+            setErrorMessage(mapping, request, "message.manager.advisory.expirationDate"); 
+            return mapping.getInputForward();
         }
         
         infoAdvisory.setExpires(expires);
         infoAdvisory.setCreated(Calendar.getInstance().getTime());
-
+        
         Object[] args = { infoAdvisory, new AdvisoryRecipients((Integer) advisoryForm.get("recipients")) };
         ServiceUtils.executeService(userView, "CreateAdvisory", args);
 
-        return setErrorMessage(mapping, request, "label.success");
+        setErrorMessage(mapping, request, "label.success");
+        return mapping.getInputForward();
     }
 
 
-    private ActionForward setErrorMessage(ActionMapping mapping, HttpServletRequest request, String label) {
+    private void setErrorMessage(ActionMapping mapping, HttpServletRequest request, String label) {
         
         ActionErrors actionMessages = new ActionErrors();
         actionMessages.add("error", new ActionError(label));
         saveErrors(request, actionMessages);
-       
-        return mapping.getInputForward();
     }
 }
