@@ -16,7 +16,7 @@
 		<table>
 			<tr align="center">
 				<td><strong><bean:message key="label.masterDegree.administrativeOffice.externalPersonName" /></strong></td>
-				<td><strong><bean:message key="label.masterDegree.administrativeOffice.externalPersonWorkLocation" /></strong></td>
+				<td><strong><bean:message key="label.masterDegree.administrativeOffice.externalPersonInstitution" /></strong></td>
 				<th align="left">&nbsp;</th>
 				<th align="left">&nbsp;</th>									
 			</tr>		
@@ -37,7 +37,7 @@
 				
 				<tr>					
 					<td align="left"><bean:write name="externalPerson" property="infoPerson.nome"/>&nbsp;</td>	
-					<td align="left"><bean:write name="externalPerson" property="infoWorkLocation.name"/>&nbsp;</td>	
+					<td align="left"><bean:write name="externalPerson" property="infoInstitution.name"/>&nbsp;</td>	
 					<td align="center">
 						<html:link page="<%= linkViewExternalPerson %>" ><bean:message key="link.masterDegree.administrativeOffice.viewDetails"/></html:link>&nbsp;
 					</td>

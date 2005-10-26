@@ -19,8 +19,8 @@ public class ExternalPersonTest extends DomainTestBase {
 	String documentIDNumber = "documentIDNumber";
 	IDDocumentType documentType = IDDocumentType.EXTERNAL;
 	
-	String workLocationName1 = "workLocationName1";
-	String workLocationName2 = "workLocationName2";
+	String institutionName1 = "institutionName1";
+	String institutionName2 = "institutionName2";
 	
 	String newName = "newnome";
 	String newAddress = "newaddress";
@@ -29,16 +29,16 @@ public class ExternalPersonTest extends DomainTestBase {
 	String newHomepage = "newhomepage";
 	String newEmail = "newemail";
 	
-	IWorkLocation workLocation1;
-	IWorkLocation workLocation2;
+	IInstitution institution1;
+	IInstitution institution2;
 	List<IExternalPerson> allExternalPersons;
 
     protected void setUp() throws Exception {
         super.setUp();
-        workLocation1 = new WorkLocation();
-        workLocation1.setName(workLocationName1);
-        workLocation2 = new WorkLocation();
-        workLocation2.setName(workLocationName2);
+        institution1 = new Institution();
+        institution1.setName(institutionName1);
+        institution2 = new Institution();
+        institution2.setName(institutionName2);
         
         allExternalPersons = new ArrayList<IExternalPerson>();
         IExternalPerson externalPerson = new ExternalPerson();
@@ -50,35 +50,35 @@ public class ExternalPersonTest extends DomainTestBase {
         person.setEnderecoWeb(newHomepage);
         person.setEmail(newEmail);
         externalPerson.setPerson(person);
-        externalPerson.setWorkLocation(workLocation2);
+        externalPerson.setinstitution(institution2);
         allExternalPersons.add(externalPerson);
         
     }
 
     public void testCreateExternalPerson() {
     	
-    	IExternalPerson externalPerson = new ExternalPerson(name, gender, address, phone, mobile, homepage, email, documentIDNumber, workLocation1);
+    	IExternalPerson externalPerson = new ExternalPerson(name, gender, address, phone, mobile, homepage, email, documentIDNumber, institution1);
     	
     	//The Person content is not tested here because a whole test in PersonTest is dedicated to this purpouse
     	assertNotNull(externalPerson.getPerson());
-    	assertNotNull(externalPerson.getWorkLocation());
+    	assertNotNull(externalPerson.getInstitution());
     }
     
  
     public void testEditExternalPerson() {
-    	IExternalPerson externalPerson = new ExternalPerson(name, gender, address, phone, mobile, homepage, email, documentIDNumber, workLocation1);
+    	IExternalPerson externalPerson = new ExternalPerson(name, gender, address, phone, mobile, homepage, email, documentIDNumber, institution1);
 
-    	externalPerson.edit("novoNome", "novoAddress", "novoPhone", "novoMobile", "novoHomepage", "novoEmail", workLocation2, allExternalPersons);
+    	externalPerson.edit("novoNome", "novoAddress", "novoPhone", "novoMobile", "novoHomepage", "novoEmail", institution2, allExternalPersons);
     	
-    	assertEquals(externalPerson.getWorkLocation(), workLocation2);
+    	assertEquals(externalPerson.getInstitution(), institution2);
     	        
     }
 
     public void testEditExternalPersonAlreadyExists() {
-    	IExternalPerson externalPerson = new ExternalPerson(name, gender, address, phone, mobile, homepage, email, documentIDNumber, workLocation1);
+    	IExternalPerson externalPerson = new ExternalPerson(name, gender, address, phone, mobile, homepage, email, documentIDNumber, institution1);
     	
     	try {
-    		externalPerson.edit(newName, newAddress, newPhone, newMobile, newHomepage, newEmail, workLocation2, allExternalPersons);
+    		externalPerson.edit(newName, newAddress, newPhone, newMobile, newHomepage, newEmail, institution2, allExternalPersons);
     		fail("The external person shouldn't have been sucessfully changed since an external person already exists with that data");
     	} catch (DomainException domainException) {
     		//This exception was intended and expected since we were trying to change an external person to one that already existed

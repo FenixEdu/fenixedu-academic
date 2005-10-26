@@ -37,14 +37,14 @@ public class ExternalPersonVO extends VersionedObjectsBase implements IPersisten
         return matchedExternalPersons;
     }
 
-    public IExternalPerson readByNameAndAddressAndWorkLocationID(String name, String address,
-            Integer workLocationID) {
+    public IExternalPerson readByNameAndAddressAndInstitutionID(String name, String address,
+            Integer institutionID) {
         
         final List<IExternalPerson> allExternalPersons = (List<IExternalPerson>)readAll(ExternalPerson.class);
         for (final IExternalPerson externalPerson : allExternalPersons) {
             if (externalPerson.getPerson().getNome().equals(name)
                     && externalPerson.getPerson().getMorada().equals(address)
-                    && externalPerson.getWorkLocation().getIdInternal().equals(workLocationID)){
+                    && externalPerson.getInstitution().getIdInternal().equals(institutionID)){
                 return externalPerson;
             }
         }
@@ -52,13 +52,13 @@ public class ExternalPersonVO extends VersionedObjectsBase implements IPersisten
         
     }
 
-    public List<IExternalPerson> readByWorkLocation(Integer workLocationID) {
+    public List<IExternalPerson> readByInstitution(Integer institutionID) {
         
         final List<IExternalPerson> matchedExternalPersons = new ArrayList<IExternalPerson>();
         final List<IExternalPerson> allExternalPersons = (List<IExternalPerson>)readAll(ExternalPerson.class);
         
         for (final IExternalPerson externalPerson : allExternalPersons) {
-            if (externalPerson.getWorkLocation().getIdInternal().equals(workLocationID)) {
+            if (externalPerson.getInstitution().getIdInternal().equals(institutionID)) {
                 matchedExternalPersons.add(externalPerson);
             }
         }

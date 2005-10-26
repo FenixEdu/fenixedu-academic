@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.IExternalPerson;
-import net.sourceforge.fenixedu.domain.IWorkLocation;
-import net.sourceforge.fenixedu.domain.WorkLocation;
+import net.sourceforge.fenixedu.domain.IInstitution;
+import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -15,7 +15,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class EditExternalPerson implements IService {
 
-    public void run(Integer externalPersonID, String name, String address, Integer workLocationID,
+    public void run(Integer externalPersonID, String name, String address, Integer institutionID,
             String phone, String mobile, String homepage, String email) throws FenixServiceException,
             ExcepcaoPersistencia {
 
@@ -31,10 +31,10 @@ public class EditExternalPerson implements IService {
         List<IExternalPerson> allExternalPersons = (List<IExternalPerson>) sp
                 .getIPersistentExternalPerson().readAll(ExternalPerson.class);
 
-        IWorkLocation storedWorkLocation = (IWorkLocation) sp.getIPersistentWorkLocation().readByOID(
-                WorkLocation.class, workLocationID);
+        IInstitution storedInstitution = (IInstitution) sp.getIPersistentInstitution().readByOID(
+                Institution.class, institutionID);
 
-        storedExternalPerson.edit(name, address, phone, mobile, homepage, email, storedWorkLocation,
+        storedExternalPerson.edit(name, address, phone, mobile, homepage, email, storedInstitution,
                 allExternalPersons);
     }
 }

@@ -99,20 +99,20 @@
 		<put name="body" value="/posGraduacao/externalPerson/showExternalPersons_error.jsp"/>
 	</definition>
 	
-	<definition name="df.page.insertWorkLocation" extends="definition.masterDegreeAdministrativeOffice.externalPerson">
-		<put name="body" value="/posGraduacao/externalPerson/insertWorkLocation.jsp"/>
+	<definition name="df.page.insertInstitution" extends="definition.masterDegreeAdministrativeOffice.externalPerson">
+		<put name="body" value="/posGraduacao/externalPerson/insertInstitution.jsp"/>
 	</definition>
 	
-	<definition name="df.page.insertWorkLocation_success" extends="definition.masterDegreeAdministrativeOffice.externalPerson">
-		<put name="body" value="/posGraduacao/externalPerson/insertWorkLocation_success.jsp"/>
+	<definition name="df.page.insertInstitution_success" extends="definition.masterDegreeAdministrativeOffice.externalPerson">
+		<put name="body" value="/posGraduacao/externalPerson/insertInstitution_success.jsp"/>
 	</definition>
 	
-	<definition name="df.page.editWorkLocation" extends="definition.masterDegreeAdministrativeOffice.externalPerson">
-		<put name="body" value="/posGraduacao/externalPerson/editWorkLocation.jsp"/>
+	<definition name="df.page.editInstitution" extends="definition.masterDegreeAdministrativeOffice.externalPerson">
+		<put name="body" value="/posGraduacao/externalPerson/editInstitution.jsp"/>
 	</definition>
 	
-	<definition name="df.page.editWorkLocation_success" extends="definition.masterDegreeAdministrativeOffice.externalPerson">
-		<put name="body" value="/posGraduacao/externalPerson/editWorkLocation_success.jsp"/>
+	<definition name="df.page.editInstitution_success" extends="definition.masterDegreeAdministrativeOffice.externalPerson">
+		<put name="body" value="/posGraduacao/externalPerson/editInstitution_success.jsp"/>
 	</definition>
 	
 	<!-- Gratuity Section -->

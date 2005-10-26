@@ -35,14 +35,14 @@ public class InsertNonAffiliatedTeacher implements IService {
                 institutionID);
 
         if (institution == null) {
-            throw new NotExistingServiceException(/* label e tal */);
+            throw new NotExistingServiceException("Non Existing Institution");
         }
 
         INonAffiliatedTeacher nonAffiliatedTeacher = persistentNonAffiliatedTeacher
                 .readByNameAndInstitution(nonAffiliatedTeacherName, institution);
 
         if (nonAffiliatedTeacher != null) {
-            throw new NotExistingServiceException(/* label e tal*/);
+            throw new NotExistingServiceException("teacher Already Exists");
         }
 
         nonAffiliatedTeacher = DomainFactory.makeNonAffiliatedTeacher();

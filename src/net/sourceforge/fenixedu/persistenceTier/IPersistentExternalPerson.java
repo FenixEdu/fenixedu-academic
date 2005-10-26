@@ -19,10 +19,10 @@ public interface IPersistentExternalPerson extends IPersistentObject {
 
     public List readByName(String name) throws ExcepcaoPersistencia;
 
-    public IExternalPerson readByNameAndAddressAndWorkLocationID(String name, String address,
-            Integer workLocationID) throws ExcepcaoPersistencia;
+    public IExternalPerson readByNameAndAddressAndInstitutionID(String name, String address,
+            Integer institutionID) throws ExcepcaoPersistencia;
 
-    public List readByWorkLocation(Integer workLocationID) throws ExcepcaoPersistencia;
+    public List readByInstitution(Integer institutionID) throws ExcepcaoPersistencia;
 
     public String readLastDocumentIdNumber() throws ExcepcaoPersistencia;
     

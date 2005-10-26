@@ -17,20 +17,20 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  *         (naat@mega.ist.utl.pt)
  *  
  */
-public class ReadExternalPersonsByWorkLocation implements IService {
+public class ReadExternalPersonsByInstitution implements IService {
 
     /**
      * The actor of this class.
      */
-    public ReadExternalPersonsByWorkLocation() {
+    public ReadExternalPersonsByInstitution() {
     }
 
-    public List run(Integer workLocationID) throws FenixServiceException {
+    public List run(Integer institutionID) throws FenixServiceException {
         List infoExternalPersons = new ArrayList();
 
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            List<IExternalPerson> externalPersons = sp.getIPersistentExternalPerson().readByWorkLocation(workLocationID);
+            List<IExternalPerson> externalPersons = sp.getIPersistentExternalPerson().readByInstitution(institutionID);
 
             for (IExternalPerson externalPerson : externalPersons) {
                 infoExternalPersons.add(InfoExternalPerson.newInfoFromDomain(externalPerson));

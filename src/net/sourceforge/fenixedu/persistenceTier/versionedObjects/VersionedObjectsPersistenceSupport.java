@@ -174,7 +174,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.Transaction
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TurmaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TurnoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.UniversityVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.WorkLocationVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.InstitutionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.WrittenEvaluationEnrolmentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.WrittenTestVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.credits.ManagementPositionCreditLineVO;
@@ -421,8 +421,8 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
         return new CurricularCourseGroupVO();
     }
 
-    public IPersistentWorkLocation getIPersistentWorkLocation() {
-        return new WorkLocationVO();
+    public IPersistentInstitution getIPersistentInstitution() {
+        return new InstitutionVO();
     }
 
     public IPersistentUniversity getIPersistentUniversity() {
@@ -963,10 +963,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentInquiriesTeacher getIPersistentInquiriesTeacher() {
         return new InquiriesTeacherVO();
-    }
-
-    public IPersistentInstitution getIPersistentInstitution() {
-        return null;
     }
 
     public IPersistentNonAffiliatedTeacher getIPersistentNonAffiliatedTeacher() {

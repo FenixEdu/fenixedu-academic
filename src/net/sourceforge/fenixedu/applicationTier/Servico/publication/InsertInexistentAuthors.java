@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.I
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoWorkLocation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthor;
 import net.sourceforge.fenixedu.domain.IExternalPerson;
 import net.sourceforge.fenixedu.domain.IPerson;
@@ -39,10 +39,10 @@ public class InsertInexistentAuthors implements IService {
                 InfoPerson infoPerson = new InfoPerson();
 //                infoPerson.setIdInternal(infoAuthor.getIdInternal());
                 infoPerson.setNome(infoAuthor.getAuthor());
-                InfoWorkLocation infoWorkLocation = new InfoWorkLocation();
-                infoWorkLocation.setName(infoAuthor.getOrganization());
+                InfoInstitution infoInstitution = new InfoInstitution();
+                infoInstitution.setName(infoAuthor.getOrganization());
                 infoExternalPerson.setInfoPerson(infoPerson);
-                infoExternalPerson.setInfoWorkLocation(infoWorkLocation);
+                infoExternalPerson.setInfoInstitution(infoInstitution);
                 infoExternalPersons.add(infoExternalPerson);
                 externalPersonsIndexes.add(index);
             }

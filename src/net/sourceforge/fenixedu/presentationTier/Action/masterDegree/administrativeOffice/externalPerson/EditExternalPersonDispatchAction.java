@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoWorkLocation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
@@ -66,7 +66,7 @@ public class EditExternalPersonDispatchAction extends DispatchAction {
 
         editExternalPersonForm.set("externalPersonID", externalPersonId);
         editExternalPersonForm.set("name", infoExternalPerson.getInfoPerson().getNome());
-        editExternalPersonForm.set("workLocationID", infoExternalPerson.getInfoWorkLocation()
+        editExternalPersonForm.set("institutionID", infoExternalPerson.getInfoInstitution()
                 .getIdInternal());
         editExternalPersonForm.set("address", infoExternalPerson.getInfoPerson().getMorada());
         editExternalPersonForm.set("phone", infoExternalPerson.getInfoPerson().getTelefone());
@@ -74,11 +74,11 @@ public class EditExternalPersonDispatchAction extends DispatchAction {
         editExternalPersonForm.set("homepage", infoExternalPerson.getInfoPerson().getEnderecoWeb());
         editExternalPersonForm.set("email", infoExternalPerson.getInfoPerson().getEmail());
 
-        List workLocations = getWorkLocations(request);
+        List institutions = getInstitutions(request);
 
-        if ((workLocations == null) || (workLocations.isEmpty())) {
-            actionErrors.add("label.masterDegree.administrativeOffice.nonExistingWorkLocations",
-                    new ActionError("label.masterDegree.administrativeOffice.nonExistingWorkLocations"));
+        if ((institutions == null) || (institutions.isEmpty())) {
+            actionErrors.add("label.masterDegree.administrativeOffice.nonExistingInstitutions",
+                    new ActionError("label.masterDegree.administrativeOffice.nonExistingInstitutions"));
 
             saveErrors(request, actionErrors);
             return mapping.findForward("error");
@@ -88,33 +88,33 @@ public class EditExternalPersonDispatchAction extends DispatchAction {
 
     }
 
-    private List getWorkLocations(HttpServletRequest request) throws FenixActionException, FenixFilterException {
+    private List getInstitutions(HttpServletRequest request) throws FenixActionException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
-        List workLocations = null;
+        List institutions = null;
 
         Object args[] = {};
         try {
-            workLocations = (ArrayList) ServiceUtils.executeService(userView, "ReadAllWorkLocations",
+            institutions = (ArrayList) ServiceUtils.executeService(userView, "ReadAllInstitutions",
                     args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
-        if (workLocations != null)
-            if (workLocations.isEmpty() == false) {
-                List workLocationsValueBeanList = new ArrayList();
-                Iterator it = workLocations.iterator();
-                InfoWorkLocation infoWorkLocation = null;
+        if (institutions != null)
+            if (institutions.isEmpty() == false) {
+                List institutionsValueBeanList = new ArrayList();
+                Iterator it = institutions.iterator();
+                InfoInstitution infoInstitution = null;
 
                 while (it.hasNext()) {
-                    infoWorkLocation = (InfoWorkLocation) it.next();
-                    workLocationsValueBeanList.add(new LabelValueBean(infoWorkLocation.getName(),
-                            infoWorkLocation.getIdInternal().toString()));
+                    infoInstitution = (InfoInstitution) it.next();
+                    institutionsValueBeanList.add(new LabelValueBean(infoInstitution.getName(),
+                            infoInstitution.getIdInternal().toString()));
                 }
 
-                request.setAttribute(SessionConstants.WORK_LOCATIONS_LIST, workLocationsValueBeanList);
+                request.setAttribute(SessionConstants.WORK_LOCATIONS_LIST, institutionsValueBeanList);
             }
-        return workLocations;
+        return institutions;
     }
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -125,23 +125,23 @@ public class EditExternalPersonDispatchAction extends DispatchAction {
 
         Integer externalPersonId = (Integer) editExternalPersonForm.get("externalPersonID");
         String name = (String) editExternalPersonForm.get("name");
-        Integer workLocationID = (Integer) editExternalPersonForm.get("workLocationID");
+        Integer institutionID = (Integer) editExternalPersonForm.get("institutionID");
         String address = (String) editExternalPersonForm.get("address");
         String phone = (String) editExternalPersonForm.get("phone");
         String mobile = (String) editExternalPersonForm.get("mobile");
         String homepage = (String) editExternalPersonForm.get("homepage");
         String email = (String) editExternalPersonForm.get("email");
 
-        Object args[] = { externalPersonId, name, address, workLocationID, phone, mobile, homepage,
+        Object args[] = { externalPersonId, name, address, institutionID, phone, mobile, homepage,
                 email };
 
         try {
             ServiceUtils.executeService(userView, "EditExternalPerson", args);
         } catch (ExistingServiceException e) {
-            getWorkLocations(request);
+            getInstitutions(request);
             throw new ExistingActionException(e.getMessage(), mapping.findForward("start"));
         } catch (FenixServiceException e) {
-            getWorkLocations(request);
+            getInstitutions(request);
             throw new FenixActionException(e.getMessage(), mapping.findForward("start"));
         }
 

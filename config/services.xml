@@ -2619,9 +2619,9 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>ReadExternalPersonsByWorkLocation</name>
+		<name>ReadExternalPersonsByInstitution</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.ReadExternalPersonsByWorkLocation</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.ReadExternalPersonsByInstitution</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
@@ -5253,25 +5253,25 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>ReadAllWorkLocations</name>
+		<name>ReadAllInstitutions</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.commons.workLocation.ReadAllWorkLocations</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.ReadAllInstitutions</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
 	</service>
 	<service>
-		<name>InsertWorkLocation</name>
+		<name>InsertInstitution</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.commons.workLocation.InsertWorkLocation</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.InsertInstitution</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
 	</service>
 	<service>
-		<name>EditWorkLocation</name>
+		<name>EditInstitution</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.commons.workLocation.EditWorkLocation</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.EditInstitution</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
@@ -8320,17 +8320,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>InsertInstitution</name>
-		<implementationClass>
-			net.sourceforge.fenixedu.applicationTier.Servico.manager.InsertInstitution
-		</implementationClass>
-		<description/>
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ManagerAuthorization"/>
-		</filterChains>
-	</service>	
-	<service>
 		<name>ReadInstitutions</name>
 		<implementationClass>
 			net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadInstitutions
@@ -8461,8 +8450,8 @@
         </filterChains>
     </service>  
     <service>
-    	<name>ReadWorkLocationByName</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.workLocation.ReadWorkLocationByName</implementationClass>
+    	<name>ReadInstitutionByName</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.ReadInstitutionByName</implementationClass>
         <description>Reads a work location given a name</description>
         <isTransactional>true</isTransactional>
         <filterChains>

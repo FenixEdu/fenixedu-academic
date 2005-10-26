@@ -16,21 +16,21 @@ public class ExternalPerson extends ExternalPerson_Base {
      **************************************************************************/
 
     public ExternalPerson(String name, Gender gender, String address, String phone, String mobile,
-            String homepage, String email, String documentIdNumber, IWorkLocation workLocation) {
+            String homepage, String email, String documentIdNumber, IInstitution institution) {
 
         String username = "e" + documentIdNumber;
 
         IPerson person = new Person(username, name, gender, address, phone, mobile, homepage, email,
                 documentIdNumber, IDDocumentType.EXTERNAL);
         setPerson(person);
-        setWorkLocation(workLocation);
+        setInstitution(institution);
     }
 
     public void edit(String name, String address, String phone, String mobile, String homepage,
-            String email, IWorkLocation workLocation, List<IExternalPerson> allExternalPersons) {
-        if (!externalPersonsAlreadyExists(name, address, workLocation, allExternalPersons)) {
+            String email, IInstitution institution, List<IExternalPerson> allExternalPersons) {
+        if (!externalPersonsAlreadyExists(name, address, institution, allExternalPersons)) {
             this.getPerson().edit(name, address, phone, mobile, homepage, email);
-            this.setWorkLocation(workLocation);
+            this.setInstitution(institution);
         } else {
             throw new DomainException("error.exception.externalPerson.existingExternalPerson");
         }
@@ -41,11 +41,11 @@ public class ExternalPerson extends ExternalPerson_Base {
      **************************************************************************/
 
     private boolean externalPersonsAlreadyExists(String name, String address,
-            IWorkLocation workLocation, List<IExternalPerson> allExternalPersons) {
+            IInstitution institution, List<IExternalPerson> allExternalPersons) {
         for (IExternalPerson externalPerson : allExternalPersons) {
             if (externalPerson.getPerson().getNome().equals(name)
                     && externalPerson.getPerson().getMorada().equals(address)
-                    && externalPerson.getWorkLocation().equals(workLocation)
+                    && externalPerson.getInstitution().equals(institution)
                     && !externalPerson.equals(this))
 
                 return true;

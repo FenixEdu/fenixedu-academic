@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.externalPerson.workLocation;
+package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.externalPerson.institution;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -10,12 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoWorkLocation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -25,14 +26,13 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
-
 /**
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author Nadir Tarmahomed (naat@mega.ist.utl.pt)
  *  
  */
 
-public class EditWorkLocationDispatchAction extends DispatchAction {
+public class EditInstitutionDispatchAction extends DispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -41,31 +41,31 @@ public class EditWorkLocationDispatchAction extends DispatchAction {
         Object args[] = {};
 
         try {
-            List infoWorkLocations = (List) ServiceUtils.executeService(userView,
-                    "ReadAllWorkLocations", args);
+            List infoInstitutions = (List) ServiceUtils.executeService(userView,
+                    "ReadAllInstitutions", args);
 
-            if (infoWorkLocations != null) {
-                if (infoWorkLocations.isEmpty() == false) {
-                    List infoWorkLocationsValueBeanList = new ArrayList();
-                    Iterator it = infoWorkLocations.iterator();
-                    InfoWorkLocation infoWorkLocation = null;
+            if (infoInstitutions != null) {
+                if (infoInstitutions.isEmpty() == false) {
+                    List infoInstitutionsValueBeanList = new ArrayList();
+                    Iterator it = infoInstitutions.iterator();
+                    InfoInstitution infoInstitution = null;
 
                     while (it.hasNext()) {
-                        infoWorkLocation = (InfoWorkLocation) it.next();
-                        infoWorkLocationsValueBeanList
-                                .add(new LabelValueBean(infoWorkLocation.getName(), infoWorkLocation
+                        infoInstitution = (InfoInstitution) it.next();
+                        infoInstitutionsValueBeanList
+                                .add(new LabelValueBean(infoInstitution.getName(), infoInstitution
                                         .getIdInternal().toString()));
                     }
 
                     request.setAttribute(SessionConstants.WORK_LOCATIONS_LIST,
-                            infoWorkLocationsValueBeanList);
+                            infoInstitutionsValueBeanList);
                 }
             }
 
-            if ((infoWorkLocations == null) || (infoWorkLocations.isEmpty())) {
-                actionErrors.add("label.masterDegree.administrativeOffice.nonExistingWorkLocations",
+            if ((infoInstitutions == null) || (infoInstitutions.isEmpty())) {
+                actionErrors.add("label.masterDegree.administrativeOffice.nonExistingInstitutions",
                         new ActionError(
-                                "label.masterDegree.administrativeOffice.nonExistingWorkLocations"));
+                                "label.masterDegree.administrativeOffice.nonExistingInstitutions"));
 
                 saveErrors(request, actionErrors);
                 return mapping.findForward("error");
@@ -81,15 +81,15 @@ public class EditWorkLocationDispatchAction extends DispatchAction {
             HttpServletResponse response) throws Exception {
         IUserView userView = SessionUtils.getUserView(request);
 
-        DynaActionForm editWorkLocationForm = (DynaActionForm) form;
+        DynaActionForm editInstitutionForm = (DynaActionForm) form;
 
-        Integer oldWorkLocationId = (Integer) editWorkLocationForm.get("workLocationId");
-        String newWorkLocationName = (String) editWorkLocationForm.get("name");
+        Integer oldInstitutionId = (Integer) editInstitutionForm.get("institutionId");
+        String newInstitutionName = (String) editInstitutionForm.get("name");
 
-        Object args[] = { oldWorkLocationId, newWorkLocationName };
+        Object args[] = { oldInstitutionId, newInstitutionName };
 
         try {
-            ServiceUtils.executeService(userView, "EditWorkLocation", args);
+            ServiceUtils.executeService(userView, "EditInstitution", args);
         } catch (ExistingServiceException e) {
             throw new ExistingActionException(e.getMessage(), mapping
                     .findForward("errorLocationAlreadyExists"));

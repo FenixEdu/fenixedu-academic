@@ -148,12 +148,12 @@
 			<bean:define id="externalJuriesList" name="<%= SessionConstants.EXTERNAL_JURIES_LIST %>" type="java.util.List"/>
 			<tr>
 				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonName"/></th>
-				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonWorkLocation"/></th>				
+				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonInstitution"/></th>				
 			</tr>					
 			<logic:iterate id="externalJury" name="externalJuriesList">
 				<tr>
 					<td align="left" ><bean:write name="externalJury" property="infoPerson.nome"/></td>
-					<td align="left"><bean:write name="externalJury" property="infoWorkLocation.name"/></td>					
+					<td align="left"><bean:write name="externalJury" property="infoInstitution.name"/></td>					
 				</tr>				
 			</logic:iterate>
 			<tr> 

@@ -828,10 +828,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new WebSiteItemOJB();
     }
 
-    public IPersistentWorkLocation getIPersistentWorkLocation() {
-        return new WorkLocationOJB();
-    }
-
     public void beginTransaction() {
 	this.iniciarTransaccao();
     }

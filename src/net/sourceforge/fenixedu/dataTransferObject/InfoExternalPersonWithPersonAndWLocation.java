@@ -11,7 +11,7 @@ public class InfoExternalPersonWithPersonAndWLocation extends InfoExternalPerson
     public void copyFromDomain(IExternalPerson externalPerson) {
         super.copyFromDomain(externalPerson);
         if (externalPerson != null) {
-            setInfoWorkLocation(InfoWorkLocation.newInfoFromDomain(externalPerson.getWorkLocation()));
+            setInfoInstitution(InfoInstitution.newInfoFromDomain(externalPerson.getInstitution()));
         }
     }
 

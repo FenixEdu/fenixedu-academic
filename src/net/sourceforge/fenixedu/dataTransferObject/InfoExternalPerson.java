@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.IExternalPerson;
 public class InfoExternalPerson extends InfoObject {
     private InfoPerson infoPerson;
 
-    private InfoWorkLocation infoWorkLocation;
+    private InfoInstitution infoInstitution;
 
     /**
      * @return Returns the infoPerson.
@@ -32,18 +32,18 @@ public class InfoExternalPerson extends InfoObject {
     }
 
     /**
-     * @return Returns the infoWorkLocation.
+     * @return Returns the infoInstitution.
      */
-    public InfoWorkLocation getInfoWorkLocation() {
-        return infoWorkLocation;
+    public InfoInstitution getInfoInstitution() {
+        return infoInstitution;
     }
 
     /**
-     * @param infoWorkLocation
-     *            The infoWorkLocation to set.
+     * @param infoInstitution
+     *            The infoInstitution to set.
      */
-    public void setInfoWorkLocation(InfoWorkLocation infoWorkLocation) {
-        this.infoWorkLocation = infoWorkLocation;
+    public void setInfoInstitution(InfoInstitution infoInstitution) {
+        this.infoInstitution = infoInstitution;
     }
 
     public boolean equals(Object obj) {
@@ -69,7 +69,7 @@ public class InfoExternalPerson extends InfoObject {
         super.copyFromDomain(externalPerson);
         
         setInfoPerson(InfoPerson.newInfoFromDomain(externalPerson.getPerson()));
-        setInfoWorkLocation(InfoWorkLocation.newInfoFromDomain(externalPerson.getWorkLocation()));
+        setInfoInstitution(InfoInstitution.newInfoFromDomain(externalPerson.getInstitution()));
         
     }
 }

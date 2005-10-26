@@ -110,7 +110,7 @@
 			<tr>
 				<td>&nbsp;</td>	
 				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonName"/></th>
-				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonWorkLocation"/></th>
+				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonInstitution"/></th>
 				<td>&nbsp;</td>									
 			</tr>			
 			<logic:iterate id="externalGuider" name="externalGuidersList">
@@ -118,7 +118,7 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td align="left"><bean:write name="externalGuider" property="infoPerson.nome"/></td>
-					<td align="left"><bean:write name="externalGuider" property="infoWorkLocation.name"/></td>
+					<td align="left"><bean:write name="externalGuider" property="infoInstitution.name"/></td>
 					<td align="center">
 						<html:multibox property="removedExternalGuidersIDs">
 							<bean:write name="externalGuider" property="idInternal"/>
@@ -181,14 +181,14 @@
 			<tr>
 				<td>&nbsp;</td>	
 				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonName"/></th>
-				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonWorkLocation"/></th>
+				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonInstitution"/></th>
 				<td>&nbsp;</td>									
 			</tr>				
 			<logic:iterate id="externalGuider" name="externalGuidersSearchResultsList">
 				<tr>
 					<td>&nbsp;</td>
 					<td align="left"><bean:write name="externalGuider" property="infoPerson.nome"/></td>
-					<td align="left"><bean:write name="externalGuider" property="infoWorkLocation.name"/></td>						
+					<td align="left"><bean:write name="externalGuider" property="infoInstitution.name"/></td>						
 					<td>
 						<html:radio idName="externalGuider" property="externalGuidersIDs" value="idInternal"/>	
 					</td>
@@ -265,7 +265,7 @@
 			<tr>
 				<td>&nbsp;</td>	
 				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonName"/></th>
-				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonWorkLocation"/></th>
+				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonInstitution"/></th>
 				<td>&nbsp;</td>									
 			</tr>			
 			<logic:iterate id="externalAssistentGuider" name="externalAssistentsGuidersList">
@@ -273,7 +273,7 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td align="left"><bean:write name="externalAssistentGuider" property="infoPerson.nome"/></td>
-					<td align="left"><bean:write name="externalAssistentGuider" property="infoWorkLocation.name"/></td>
+					<td align="left"><bean:write name="externalAssistentGuider" property="infoInstitution.name"/></td>
 					<td align="center">
 						<html:multibox property="removedExternalAssistentGuidersIDs">
 							<bean:write name="externalAssistentGuider" property="idInternal"/>
@@ -336,14 +336,14 @@
 			<tr>
 				<td>&nbsp;</td>	
 				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonName"/></th>
-				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonWorkLocation"/></th>
+				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonInstitution"/></th>
 				<td>&nbsp;</td>									
 			</tr>				
 			<logic:iterate id="externalAssistentGuider" name="externalAssistentsGuidersSearchResultsList">
 				<tr>
 					<td>&nbsp;</td>
 					<td align="left"><bean:write name="externalAssistentGuider" property="infoPerson.nome"/></td>
-					<td align="left"><bean:write name="externalAssistentGuider" property="infoWorkLocation.name"/></td>						
+					<td align="left"><bean:write name="externalAssistentGuider" property="infoInstitution.name"/></td>						
 					<td>
 						<html:radio idName="externalAssistentGuider" property="externalAssistentGuidersIDs" value="idInternal"/>	
 					</td>

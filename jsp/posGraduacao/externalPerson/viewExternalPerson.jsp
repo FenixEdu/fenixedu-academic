@@ -32,10 +32,10 @@
 		</tr>		
 		<tr>
 			<th align="left">
-				<bean:message key="label.masterDegree.administrativeOffice.externalPersonWorkLocation"/>:&nbsp;
+				<bean:message key="label.masterDegree.administrativeOffice.externalPersonInstitution"/>:&nbsp;
 			</th>
 			<td align="left">
-				<bean:write name="externalPerson" property="infoWorkLocation.name"/>
+				<bean:write name="externalPerson" property="infoInstitution.name"/>
 			</td>
 		</tr>
 		<tr>

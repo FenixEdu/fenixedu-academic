@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoWorkLocation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -43,11 +43,11 @@ public class InsertExternalPersonDispatchAction extends DispatchAction {
             HttpServletResponse response) throws Exception {
 
         ActionErrors actionErrors = new ActionErrors();
-        List workLocations = getWorkLocations(request);
+        List institutions = getInstitutions(request);
 
-        if ((workLocations == null) || (workLocations.isEmpty())) {
-            actionErrors.add("label.masterDegree.administrativeOffice.nonExistingWorkLocations",
-                    new ActionError("label.masterDegree.administrativeOffice.nonExistingWorkLocations"));
+        if ((institutions == null) || (institutions.isEmpty())) {
+            actionErrors.add("label.masterDegree.administrativeOffice.nonExistingInstitutions",
+                    new ActionError("label.masterDegree.administrativeOffice.nonExistingInstitutions"));
 
             saveErrors(request, actionErrors);
             return mapping.findForward("error");
@@ -59,35 +59,35 @@ public class InsertExternalPersonDispatchAction extends DispatchAction {
 
     }
 
-    private List getWorkLocations(HttpServletRequest request) throws FenixActionException,
+    private List getInstitutions(HttpServletRequest request) throws FenixActionException,
             FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
-        List workLocations = null;
+        List institutions = null;
 
         Object args[] = {};
         try {
-            workLocations = (ArrayList) ServiceUtils.executeService(userView, "ReadAllWorkLocations",
+            institutions = (ArrayList) ServiceUtils.executeService(userView, "ReadAllInstitutions",
                     args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
-        if (workLocations != null)
-            if (workLocations.isEmpty() == false) {
-                List workLocationsValueBeanList = new ArrayList();
-                Iterator it = workLocations.iterator();
-                InfoWorkLocation infoWorkLocation = null;
+        if (institutions != null)
+            if (institutions.isEmpty() == false) {
+                List institutionsValueBeanList = new ArrayList();
+                Iterator it = institutions.iterator();
+                InfoInstitution infoInstitutions = null;
 
-                workLocationsValueBeanList.add(new LabelValueBean("", ""));
+                institutionsValueBeanList.add(new LabelValueBean("", ""));
                 while (it.hasNext()) {
-                    infoWorkLocation = (InfoWorkLocation) it.next();
-                    workLocationsValueBeanList.add(new LabelValueBean(infoWorkLocation.getName(),
-                            infoWorkLocation.getIdInternal().toString()));
+                    infoInstitutions = (InfoInstitution) it.next();
+                    institutionsValueBeanList.add(new LabelValueBean(infoInstitutions.getName(),
+                            infoInstitutions.getIdInternal().toString()));
                 }
 
-                request.setAttribute(SessionConstants.WORK_LOCATIONS_LIST, workLocationsValueBeanList);
+                request.setAttribute(SessionConstants.WORK_LOCATIONS_LIST, institutionsValueBeanList);
             }
-        return workLocations;
+        return institutions;
     }
 
     public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -98,39 +98,39 @@ public class InsertExternalPersonDispatchAction extends DispatchAction {
 
         String name = (String) insertExternalPersonForm.get("name");
         String sex = (String) insertExternalPersonForm.get("sex");
-        Integer workLocationID = (Integer) insertExternalPersonForm.get("workLocationID");
+        Integer institutionID = (Integer) insertExternalPersonForm.get("institutionID");
         String address = (String) insertExternalPersonForm.get("address");
         String phone = (String) insertExternalPersonForm.get("phone");
         String mobile = (String) insertExternalPersonForm.get("mobile");
         String homepage = (String) insertExternalPersonForm.get("homepage");
         String email = (String) insertExternalPersonForm.get("email");
 
-        if (workLocationID == 0) {
+        if (institutionID == 0) {
             request.setAttribute(SessionConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
                     .getAttribute(Globals.LOCALE_KEY)));
-            getWorkLocations(request);
+            getInstitutions(request);
 
             ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("label.masterDegree.administrativeOffice.workLocationRequired",
-                    new ActionError("label.masterDegree.administrativeOffice.workLocationRequired"));
+            actionErrors.add("label.masterDegree.administrativeOffice.institutionRequired",
+                    new ActionError("label.masterDegree.administrativeOffice.institutionRequired"));
 
             saveErrors(request, actionErrors);
             return mapping.findForward("start");
         }
 
-        Object args[] = { name, sex, address, workLocationID, phone, mobile, homepage, email };
+        Object args[] = { name, sex, address, institutionID, phone, mobile, homepage, email };
 
         try {
             ServiceUtils.executeService(userView, "InsertExternalPerson", args);
         } catch (ExistingServiceException e) {
             request.setAttribute(SessionConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
                     .getAttribute(Globals.LOCALE_KEY)));
-            getWorkLocations(request);
+            getInstitutions(request);
             throw new ExistingActionException(e.getMessage(), mapping.findForward("start"));
         } catch (FenixServiceException e) {
             request.setAttribute(SessionConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
                     .getAttribute(Globals.LOCALE_KEY)));
-            getWorkLocations(request);
+            getInstitutions(request);
             throw new FenixActionException(e.getMessage(), mapping.findForward("start"));
         }
 

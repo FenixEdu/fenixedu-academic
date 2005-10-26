@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoWorkLocation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
@@ -42,31 +42,31 @@ public class VisualizeExternalPersonsDispatchAction extends FenixDispatchAction 
         Object args[] = {};
 
         try {
-            List infoWorkLocations = (List) ServiceUtils.executeService(userView,
-                    "ReadAllWorkLocations", args);
+            List infoInstitutions = (List) ServiceUtils.executeService(userView,
+                    "ReadAllInstitutions", args);
 
-            if (infoWorkLocations != null) {
-                if (infoWorkLocations.isEmpty() == false) {
-                    List infoWorkLocationsValueBeanList = new ArrayList();
-                    Iterator it = infoWorkLocations.iterator();
-                    InfoWorkLocation infoWorkLocation = null;
+            if (infoInstitutions != null) {
+                if (infoInstitutions.isEmpty() == false) {
+                    List infoInstitutionsValueBeanList = new ArrayList();
+                    Iterator it = infoInstitutions.iterator();
+                    InfoInstitution infoInstitution = null;
 
                     while (it.hasNext()) {
-                        infoWorkLocation = (InfoWorkLocation) it.next();
-                        infoWorkLocationsValueBeanList
-                                .add(new LabelValueBean(infoWorkLocation.getName(), infoWorkLocation
+                        infoInstitution = (InfoInstitution) it.next();
+                        infoInstitutionsValueBeanList
+                                .add(new LabelValueBean(infoInstitution.getName(), infoInstitution
                                         .getIdInternal().toString()));
                     }
 
                     request.setAttribute(SessionConstants.WORK_LOCATIONS_LIST,
-                            infoWorkLocationsValueBeanList);
+                            infoInstitutionsValueBeanList);
                 }
             }
 
-            if ((infoWorkLocations == null) || (infoWorkLocations.isEmpty())) {
-                actionErrors.add("label.masterDegree.administrativeOffice.nonExistingWorkLocations",
+            if ((infoInstitutions == null) || (infoInstitutions.isEmpty())) {
+                actionErrors.add("label.masterDegree.administrativeOffice.nonExistingInstitutions",
                         new ActionError(
-                                "label.masterDegree.administrativeOffice.nonExistingWorkLocations"));
+                                "label.masterDegree.administrativeOffice.nonExistingInstitutions"));
 
                 saveErrors(request, actionErrors);
                 return mapping.findForward("error");
@@ -84,17 +84,17 @@ public class VisualizeExternalPersonsDispatchAction extends FenixDispatchAction 
         IUserView userView = SessionUtils.getUserView(request);
 
         DynaActionForm visualizeExternalPersonsForm = (DynaActionForm) form;
-        Integer workLocationId = (Integer) visualizeExternalPersonsForm.get("workLocationId");
+        Integer institutionId = (Integer) visualizeExternalPersonsForm.get("institutionId");
 
         List infoExternalPersons = null;
 
         ActionErrors actionErrors = new ActionErrors();
-        Object args[] = { workLocationId };
+        Object args[] = { institutionId };
 
         try {
 
             infoExternalPersons = (List) ServiceUtils.executeService(userView,
-                    "ReadExternalPersonsByWorkLocation", args);
+                    "ReadExternalPersonsByInstitution", args);
 
             if ((infoExternalPersons == null) || (infoExternalPersons.isEmpty())) {
                 actionErrors.add("label.masterDegree.administrativeOffice.nonExistingExternalPersons",

@@ -583,7 +583,7 @@
                  dynamic="true">
 	  		<form-property name="name" type="java.lang.String"/>
 	  		<form-property name="sex" type="java.lang.String" />
-	  		<form-property name="workLocationID" type="java.lang.Integer"/>
+	  		<form-property name="institutionID" type="java.lang.Integer"/>
 	  		<form-property name="address" type="java.lang.String"/>
 	  		<form-property name="phone" type="java.lang.String"/>
 	  		<form-property name="mobile" type="java.lang.String"/>
@@ -598,7 +598,7 @@
                  dynamic="true">
 			<form-property name="externalPersonID" type="java.lang.Integer"/>
 	  		<form-property name="name" type="java.lang.String"/>
-	  		<form-property name="workLocationID" type="java.lang.Integer"/>
+	  		<form-property name="institutionID" type="java.lang.Integer"/>
 	  		<form-property name="address" type="java.lang.String"/>
 	  		<form-property name="phone" type="java.lang.String"/>
 	  		<form-property name="mobile" type="java.lang.String"/>
@@ -620,11 +620,11 @@
 	  			 type="org.apache.struts.validator.DynaValidatorForm"
 	  			 dynamic="true">
 	  		<form-property name="page" type="java.lang.Integer" />
-	  		<form-property name="workLocationId" type="java.lang.Integer" />
+	  		<form-property name="institutionId" type="java.lang.Integer" />
 	  </form-bean> 
 
 	  <!-- Bean to Insert Work Location  -->
-	  <form-bean name="insertWorkLocationForm"
+	  <form-bean name="insertInstitutionForm"
 	  			 type="org.apache.struts.validator.DynaValidatorForm"
 	  			 dynamic="true">
 	  		<form-property name="page" type="java.lang.Integer" />
@@ -632,11 +632,11 @@
 	  </form-bean>
 	  
 	  <!-- Bean to Edit Work Location  -->
-	  <form-bean name="editWorkLocationForm"
+	  <form-bean name="editInstitutionForm"
 	  			 type="org.apache.struts.validator.DynaValidatorForm"
 	  			 dynamic="true">
 	  		<form-property name="page" type="java.lang.Integer" />
-	  		<form-property name="workLocationId" type="java.lang.Integer" />
+	  		<form-property name="institutionId" type="java.lang.Integer" />
 	  		<form-property name="name" type="java.lang.String" />
 	  </form-bean> 
 
@@ -2194,37 +2194,37 @@
 			<forward name="start" path="df.page.viewExternalPerson"/>
 	</action>
 		
-	<!-- insert work location -->
-	<action		name="insertWorkLocationForm"
-				type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.externalPerson.workLocation.InsertWorkLocationDispatchAction"
-				path="/insertWorkLocation"
+	<!-- insert institution -->
+	<action		name="insertInstitutionForm"
+				type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.externalPerson.institution.InsertInstitutionDispatchAction"
+				path="/insertInstitution"
 				parameter="method"
 				scope="request"
-				input="df.page.insertWorkLocation"
+				input="df.page.insertInstitution"
 				validate="true">
 		<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 					key="ServidorApresentacao.Action.exceptions.ExistingActionException"
 					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-		<forward name="error" path="df.page.insertWorkLocation" />
-		<forward name="success" path="df.page.insertWorkLocation_success" />
-		<forward name="start" path="df.page.insertWorkLocation" />
+		<forward name="error" path="df.page.insertInstitution" />
+		<forward name="success" path="df.page.insertInstitution_success" />
+		<forward name="start" path="df.page.insertInstitution" />
     </action>
     
-    <!-- edit work location -->
-    <action		name="editWorkLocationForm"
-				type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.externalPerson.workLocation.EditWorkLocationDispatchAction"
-				path="/editWorkLocation"
+    <!-- edit institution -->
+    <action		name="editInstitutionForm"
+				type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.externalPerson.institution.EditInstitutionDispatchAction"
+				path="/editInstitution"
 				parameter="method"
 				scope="request"
-				input="/editWorkLocation.do?page=0&amp;method=prepare"
+				input="/editInstitution.do?page=0&amp;method=prepare"
 				validate="true">
 		<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 					key="ServidorApresentacao.Action.exceptions.ExistingActionException"
 					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-		<forward name="error" path="df.page.editWorkLocation" />
-		<forward name="success" path="df.page.editWorkLocation_success" />
-		<forward name="start" path="df.page.editWorkLocation" />
-		<forward name="errorLocationAlreadyExists" path="/editWorkLocation.do?page=0&amp;method=prepare" />  
+		<forward name="error" path="df.page.editInstitution" />
+		<forward name="success" path="df.page.editInstitution_success" />
+		<forward name="start" path="df.page.editInstitution" />
+		<forward name="errorLocationAlreadyExists" path="/editInstitution.do?page=0&amp;method=prepare" />  
 	</action>	
 	
 	<action type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide.reimbursementGuide.ReimbursementGuideDispatchAction"

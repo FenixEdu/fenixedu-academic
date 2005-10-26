@@ -690,8 +690,8 @@
 			<field property="name" depends="required" page="1">
 				<arg0 key="label.masterDegree.administrativeOffice.name" />
 			</field>
-			<field property="workLocationID" depends="required, integer, floatGreater" page="1">
-				<arg0 key="label.masterDegree.administrativeOffice.externalPersonWorkLocation" />		        
+			<field property="institutionID" depends="required, integer, floatGreater" page="1">
+				<arg0 key="label.masterDegree.administrativeOffice.externalPersonInstitution" />		        
 		       	<var>
 					<var-name>value</var-name>
 					<var-value>0</var-value>
@@ -712,15 +712,15 @@
 			</field>
 	</form>
 	
-	<form name="insertWorkLocationForm">
+	<form name="insertInstitutionForm">
 		<field property="name" depends="required" page="1">
-			<arg0 key="label.masterDegree.administrativeOffice.workLocationName" />
+			<arg0 key="label.masterDegree.administrativeOffice.institutionName" />
 		</field>
 	</form>
 	
-	<form name="editWorkLocationForm">
+	<form name="editInstitutionForm">
 		<field property="name" depends="required" page="1">
-			<arg0 key="label.masterDegree.administrativeOffice.workLocationName" />
+			<arg0 key="label.masterDegree.administrativeOffice.institutionName" />
 		</field>
 	</form>
 	

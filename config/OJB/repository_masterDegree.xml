@@ -1082,8 +1082,8 @@
         />     
 
         <field-descriptor 
-           name="keyWorkLocation"    
-           column="KEY_WORK_LOCATION"  
+           name="keyInstitution"    
+           column="KEY_INSTITUTION"  
            jdbc-type="INTEGER"
         />          
       <field-descriptor
@@ -1101,10 +1101,10 @@
 		</reference-descriptor>
 		
 		<reference-descriptor auto-retrieve="false"
-        	name="workLocation"
-	        class-ref="net.sourceforge.fenixedu.domain.WorkLocation"
+        	name="institution"
+	        class-ref="net.sourceforge.fenixedu.domain.Institution"
       	>
-    	    <foreignkey field-ref="keyWorkLocation"/>
+    	    <foreignkey field-ref="keyInstitution"/>
 		</reference-descriptor>			  
 	  
 	   <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
@@ -1344,50 +1344,6 @@
 	 
 
 <!-- End of Definitions for class REIMBURSEMENT_GUIDE_ENTRY -->
-
-
-
-
-<!-- Definitions for class net.sourceforge.fenixedu.domain.WorkLocation -->
-	
- <class-descriptor class="net.sourceforge.fenixedu.domain.WorkLocation"
-              table="WORK_LOCATION"
-      >
-      
-      <field-descriptor 
-           name="idInternal"    
-           column="ID_INTERNAL"  
-           jdbc-type="INTEGER"
-           primarykey="true"
-           autoincrement="true"
-        />  
-        
-        <field-descriptor 
-           name="name"    
-           column="NAME"  
-           jdbc-type="VARCHAR"
-        />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-      
-  	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="externalPersons"
-		element-class-ref="net.sourceforge.fenixedu.domain.ExternalPerson"
-		
-		
-		auto-update="false"
-		auto-delete="false"
-		>
-		<inverse-foreignkey field-ref="keyWorkLocation"/>
-	 </collection-descriptor>
-               
- </class-descriptor>  
-   
-<!-- End of definitions for class net.sourceforge.fenixedu.domain.WorkLocation -->
 
 <!-- Definitions for class GratuityValues -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.GratuityValues"

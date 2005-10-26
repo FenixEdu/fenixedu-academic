@@ -1,25 +1,54 @@
 /*
- * Created on May 3, 2005
- *
+ * Created on Oct 14, 2003
+ *  
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.IInstitution;
 
 /**
- * @author Ricardo Rodrigues
- * 
+ * @author Shezad Anavarali (sana@mega.ist.utl.pt)
+ * @author Nadir Tarmahomed (naat@mega.ist.utl.pt)
+ *  
  */
-
 public class InfoInstitution extends InfoObject {
-
-    protected String name;
+    private String name;
 
     public InfoInstitution() {
     }
-
+	
+	
     public InfoInstitution(String name) {
         setName(name);
+    }
+	
+    /**
+     * @return Returns the name.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name
+     *            The name to set.
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @param institution
+     * @return
+     */
+    public static InfoInstitution newInfoFromDomain(IInstitution institution) {
+        InfoInstitution infoInstitution = null;
+        if (institution != null) {
+            infoInstitution = new InfoInstitution();
+            infoInstitution.copyFromDomain(institution);
+        }
+
+        return infoInstitution;
     }
 
     public void copyFromDomain(IInstitution institution) {
@@ -27,21 +56,6 @@ public class InfoInstitution extends InfoObject {
         if (institution != null) {
             setName(institution.getName());
         }
-    }
-
-    public void copyToDomain(InfoInstitution infoInstitution, IInstitution institution) {
-        if (infoInstitution != null && institution != null) {
-            super.copyToDomain(infoInstitution, institution);
-            institution.setName(infoInstitution.getName());
-        }
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
 }

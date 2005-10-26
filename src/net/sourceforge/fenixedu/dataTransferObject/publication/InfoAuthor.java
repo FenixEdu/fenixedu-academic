@@ -30,7 +30,7 @@ public class InfoAuthor extends InfoObject {
             setIdInternal(author.getIdInternal());
             setKeyPerson(author.getIdInternal());
             setOrganization((author.getExternalPerson() != null) ? (author.getExternalPerson()
-                    .getWorkLocation().getName() + "     (Pessoa externa)") : "");
+                    .getInstitution().getName() + "     (Pessoa externa)") : "");
         }
     }
 

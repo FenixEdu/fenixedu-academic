@@ -4,8 +4,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IExternalPerson;
-import net.sourceforge.fenixedu.domain.IWorkLocation;
-import net.sourceforge.fenixedu.domain.WorkLocation;
+import net.sourceforge.fenixedu.domain.IInstitution;
+import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -14,20 +14,20 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class InsertExternalPerson implements IService {
 
-    public IExternalPerson run(String name, String sex, String address, Integer workLocationID,
+    public IExternalPerson run(String name, String sex, String address, Integer institutionID,
             String phone, String mobile, String homepage, String email) throws FenixServiceException,
             ExcepcaoPersistencia {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IExternalPerson storedExternalPerson = sp.getIPersistentExternalPerson()
-                .readByNameAndAddressAndWorkLocationID(name, address, workLocationID);
+                .readByNameAndAddressAndInstitutionID(name, address, institutionID);
 
         if (storedExternalPerson != null)
             throw new ExistingServiceException(
                     "error.exception.commons.externalPerson.existingExternalPerson");
 
-        IWorkLocation storedWorkLocation = (IWorkLocation) sp.getIPersistentWorkLocation().readByOID(
-                WorkLocation.class, workLocationID);
+        IInstitution institutionLocation = (IInstitution) sp.getIPersistentInstitution().readByOID(
+                Institution.class, institutionID);
 
         // generate new identification number
         String lastDocumentIdNumber = sp.getIPersistentExternalPerson().readLastDocumentIdNumber();
@@ -35,7 +35,7 @@ public class InsertExternalPerson implements IService {
         String documentIdNumber = String.valueOf(nextID);
 
         return DomainFactory.makeExternalPerson(name, Gender.valueOf(sex), address, phone, mobile,
-                homepage, email, documentIdNumber, storedWorkLocation);
+                homepage, email, documentIdNumber, institutionLocation);
     }
 
 }

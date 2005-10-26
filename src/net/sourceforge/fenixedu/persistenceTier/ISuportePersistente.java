@@ -358,7 +358,7 @@ public interface ISuportePersistente {
      */
     public IPersistentCampus getIPersistentCampus();
 
-    public IPersistentWorkLocation getIPersistentWorkLocation();
+    public IPersistentInstitution getIPersistentInstitution();
 
     //Nuno Correia & Ricardo Rodrigues
     public IPersistentCurricularCourseGroup getIPersistentCurricularCourseGroup();
@@ -475,8 +475,6 @@ public interface ISuportePersistente {
     public IPersistentBuilding getIPersistentBuilding();
     
     public IPersistentOldInquiriesCoursesRes getIPersistentOldInquiriesCoursesRes();
-        
-    public IPersistentInstitution getIPersistentInstitution();
     
     public IPersistentNonAffiliatedTeacher getIPersistentNonAffiliatedTeacher();
     

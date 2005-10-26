@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.workLocation.InsertWorkLocation;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.InsertInstitution;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IExternalPerson;
-import net.sourceforge.fenixedu.domain.IWorkLocation;
+import net.sourceforge.fenixedu.domain.IInstitution;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -23,7 +23,7 @@ public class InsertExternalPersons implements IService {
         List<IExternalPerson> externalPersons = new ArrayList<IExternalPerson>();
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        List<IWorkLocation> workLocations = sp.getIPersistentWorkLocation().readAll();
+        List<IInstitution> institutions = (List<IInstitution>)sp.getIPersistentInstitution().readAll();
 
         // generate new identification number
         String lastDocumentIdNumber = sp.getIPersistentExternalPerson().readLastDocumentIdNumber();
@@ -31,21 +31,21 @@ public class InsertExternalPersons implements IService {
 
         for (InfoExternalPerson infoExternalPerson : infoExternalPersons) {
 
-            IWorkLocation currentWorkLocation = null;
+            IInstitution currentInstitution = null;
 
             // retrieving existing work location
-            for (IWorkLocation workLocation : workLocations) {
-                if (workLocation.getName().equals(infoExternalPerson.getInfoWorkLocation().getName())) {
-                    currentWorkLocation = workLocation;
+            for (IInstitution institution : institutions) {
+                if (institution.getName().equals(infoExternalPerson.getInfoInstitution().getName())) {
+                    currentInstitution = institution;
                     break;
                 }
             }
 
             // creating a new one if it doesn't already exist
-            if (currentWorkLocation == null) {
-                InsertWorkLocation iwl = new InsertWorkLocation();
-                currentWorkLocation = iwl.run(infoExternalPerson.getInfoWorkLocation().getName());
-                workLocations.add(currentWorkLocation);
+            if (currentInstitution == null) {
+                InsertInstitution iwl = new InsertInstitution();
+                currentInstitution = iwl.run(infoExternalPerson.getInfoInstitution().getName());
+                institutions.add(currentInstitution);
             }
 
             String name = infoExternalPerson.getInfoPerson().getNome();
@@ -53,7 +53,7 @@ public class InsertExternalPersons implements IService {
 
             // creating a new ExternalPerson
             IExternalPerson externalPerson = DomainFactory.makeExternalPerson(name, Gender.MALE, "", "",
-                    "", "", "", documentIDNumber, currentWorkLocation);
+                    "", "", "", documentIDNumber, currentInstitution);
 
             externalPersons.add(externalPerson);
         }

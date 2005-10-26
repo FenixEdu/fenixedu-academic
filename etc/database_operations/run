@@ -1,0 +1,22 @@
+#!/bin/sh
+# -----------------------------------------------------------------------------
+#
+#   Runs sql scripts to update database from previous release.
+#
+# -----------------------------------------------------------------------------
+#
+
+echo Using database: $1
+echo Enter password for $2:
+read -s password
+
+# Alter Advisory Table
+echo Migrating Work Location to Institution ...
+mysql -u$2 -f $1 < updateInstitutionsForeignKeys.sql
+echo Updated Institution Keys
+mysql -u$2 -f $1 < updateInstitutionsForeignKeys2.sql > tmp
+echo Updated Institution Rows
+mysql -u$2 -f $1 < tmp
+rm -r tmp
+mysql -u$2 -f $1 < updateInstitutionsForeignKeys3.sql
+echo Work Location Migrated.

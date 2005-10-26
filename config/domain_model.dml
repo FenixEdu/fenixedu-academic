@@ -1145,10 +1145,11 @@ class net.sourceforge.fenixedu.domain.teacher.ExternalActivity extends net.sourc
 
 
 class net.sourceforge.fenixedu.domain.ExternalPerson extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyInstitution;
 	Integer keyWorkLocation;
 	Integer keyPerson;
 	interface "
-	public void edit (String name, String address, String phone, String mobile, String homepage, String email, IWorkLocation workLocation, java.util.List<IExternalPerson> allExternalPersons);
+	public void edit (String name, String address, String phone, String mobile, String homepage, String email, IInstitution institution, java.util.List<IExternalPerson> allExternalPersons);
 	"
 }
 
@@ -3207,11 +3208,6 @@ class net.sourceforge.fenixedu.domain.transactions.Transaction extends net.sourc
     	Integer keyReimbursementGuideEntry;
     }
 
-    
-class net.sourceforge.fenixedu.domain.WorkLocation extends net.sourceforge.fenixedu.domain.DomainObject {
-	String name;
-}
-
 class net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation extends net.sourceforge.fenixedu.domain.DomainObject {
 	String educationMainFocus;
 	Integer graduations;
@@ -4037,11 +4033,11 @@ relation ExternalPersonPerson {
 	net.sourceforge.fenixedu.domain.Person playsRole person;
 }
 
-relation ExternalPersonWorkLocation {
+relation ExternalPersonInstitution {
 	net.sourceforge.fenixedu.domain.ExternalPerson playsRole externalPersons {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.WorkLocation playsRole workLocation;
+	net.sourceforge.fenixedu.domain.Institution playsRole institution;
 }
 
 relation ExtraWorkCostCenter {

@@ -39,10 +39,10 @@
 
 		<tr>
 			<td align="left">
-				<bean:message key="label.masterDegree.administrativeOffice.externalPersonWorkLocation"/>:&nbsp;		
+				<bean:message key="label.masterDegree.administrativeOffice.externalPersonInstitution"/>:&nbsp;		
 			</td>
 			<td align="left">
-				<html:select property="workLocationID">
+				<html:select property="institutionID">
 			    	<html:options collection="<%= SessionConstants.WORK_LOCATIONS_LIST %>" property="value" labelProperty="label" />
 			   </html:select> 
 			</td>	

@@ -44,7 +44,7 @@ public class InfoMasterDegreeThesisDataVersionWithGuiders extends InfoMasterDegr
 
         for (InfoExternalPerson guider : (List<InfoExternalPerson>) this.getInfoExternalGuiders()) {
             this.allGuiders.add(new GuiderDTO(GuiderType.EXTERNAL_GUIDER, guider.getInfoPerson()
-                    .getNome(), null, guider.getInfoWorkLocation().getName()));
+                    .getNome(), null, guider.getInfoInstitution().getName()));
         }
 
         for (InfoTeacher assistentGuider : (List<InfoTeacher>) this.getInfoAssistentGuiders()) {
@@ -55,7 +55,7 @@ public class InfoMasterDegreeThesisDataVersionWithGuiders extends InfoMasterDegr
         for (InfoExternalPerson assistentGuider : (List<InfoExternalPerson>) this
                 .getInfoExternalAssistentGuiders()) {
             this.allGuiders.add(new GuiderDTO(GuiderType.EXTERNAL_ASSISTENT, assistentGuider
-                    .getInfoPerson().getNome(), null, assistentGuider.getInfoWorkLocation().getName()));
+                    .getInfoPerson().getNome(), null, assistentGuider.getInfoInstitution().getName()));
         }
 
         return this.allGuiders;

@@ -24,7 +24,7 @@ public class ReadAuthorsByName implements IService {
             infoAuthor.setInfoPessoa(infoPerson);
             infoAuthor.setKeyPerson(infoPerson.getIdInternal());
             if (infoPerson.getInfoExternalPerson() != null) {
-                infoAuthor.setOrganization(infoPerson.getInfoExternalPerson().getInfoWorkLocation().getName());
+                infoAuthor.setOrganization(infoPerson.getInfoExternalPerson().getInfoInstitution().getName());
             }
             
             infoAuthors.add(infoAuthor);

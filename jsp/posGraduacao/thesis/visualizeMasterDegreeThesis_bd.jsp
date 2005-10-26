@@ -95,7 +95,7 @@
 		<tr>
 			<td>&nbsp;</td>
 			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonName"/></th>
-			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonWorkLocation"/></th>
+			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonInstitution"/></th>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>						
 		</tr>
@@ -103,7 +103,7 @@
 			<tr>
 				<td>&nbsp;</td>
 				<td align="left"><bean:write name="externalGuider" property="infoPerson.nome"/></td>
-				<td align="left"><bean:write name="externalGuider" property="infoWorkLocation.name"/></td>
+				<td align="left"><bean:write name="externalGuider" property="infoInstitution.name"/></td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>					
 			</tr>				
@@ -153,14 +153,14 @@
 		<tr>
 			<td>&nbsp;</td>	
 			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonName"/></th>
-			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonWorkLocation"/></th>
+			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonInstitution"/></th>
 			<td>&nbsp;</td>									
 		</tr>			
 		<logic:iterate id="externalAssistentGuider" name="externalAssistentsGuidersList">
 			<tr>
 				<td>&nbsp;</td>
 				<td align="left"><bean:write name="externalAssistentGuider" property="infoPerson.nome"/></td>
-				<td align="left"><bean:write name="externalAssistentGuider" property="infoWorkLocation.name"/></td>
+				<td align="left"><bean:write name="externalAssistentGuider" property="infoInstitution.name"/></td>
 				<td>&nbsp;</td>						
 			</tr>				
 		</logic:iterate>

@@ -51,25 +51,25 @@ public class ExternalPersonOJB extends PersistentObjectOJB implements IPersisten
 
     }
 
-    public IExternalPerson readByNameAndAddressAndWorkLocationID(String name, String address,
-            Integer workLocationID) throws ExcepcaoPersistencia {
+    public IExternalPerson readByNameAndAddressAndInstitutionID(String name, String address,
+            Integer institutionID) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         IExternalPerson externalPerson = null;
 
         criteria.addEqualTo("person.nome", name);
         criteria.addEqualTo("person.address", address);
-        criteria.addEqualTo("workLocation.idInternal", workLocationID);
+        criteria.addEqualTo("institution.idInternal", institutionID);
         externalPerson = (IExternalPerson) queryObject(ExternalPerson.class, criteria);
 
         return externalPerson;
     }
 
-    public List readByWorkLocation(Integer workLocationID) throws ExcepcaoPersistencia {
+    public List readByInstitution(Integer institutionID) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         List externalPersons = new ArrayList();
 
-        if (workLocationID != null)
-            criteria.addEqualTo("workLocation.idInternal", workLocationID);
+        if (institutionID != null)
+            criteria.addEqualTo("institution.idInternal", institutionID);
 
         externalPersons = queryList(ExternalPerson.class, criteria);
 

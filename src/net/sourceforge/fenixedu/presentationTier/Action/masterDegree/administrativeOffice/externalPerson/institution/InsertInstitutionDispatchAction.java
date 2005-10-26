@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.externalPerson.workLocation;
+package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.externalPerson.institution;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +23,7 @@ import org.apache.struts.actions.DispatchAction;
  *  
  */
 
-public class InsertWorkLocationDispatchAction extends DispatchAction {
+public class InsertInstitutionDispatchAction extends DispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -34,14 +34,14 @@ public class InsertWorkLocationDispatchAction extends DispatchAction {
             HttpServletResponse response) throws Exception {
         IUserView userView = SessionUtils.getUserView(request);
 
-        DynaActionForm insertWorkLocationForm = (DynaActionForm) form;
+        DynaActionForm insertInstitutionForm = (DynaActionForm) form;
 
-        String workLocationName = (String) insertWorkLocationForm.get("name");
+        String institutionName = (String) insertInstitutionForm.get("name");
 
-        Object args[] = { workLocationName };
+        Object args[] = { institutionName };
 
         try {
-            ServiceUtils.executeService(userView, "InsertWorkLocation", args);
+            ServiceUtils.executeService(userView, "InsertInstitution", args);
         } catch (ExistingServiceException e) {
             throw new ExistingActionException(e.getMessage(), mapping.findForward("error"));
         } catch (FenixServiceException e) {

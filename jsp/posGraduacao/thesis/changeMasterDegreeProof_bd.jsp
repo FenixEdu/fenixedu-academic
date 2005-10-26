@@ -198,7 +198,7 @@
 			<tr>
 				<td>&nbsp;</td>	
 				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonName"/></th>
-				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonWorkLocation"/></th>
+				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonInstitution"/></th>
 				<td>&nbsp;</td>									
 			</tr>			
 			<logic:iterate id="externalJury" name="externalJuriesList">
@@ -206,7 +206,7 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td align="left"><bean:write name="externalJury" property="infoPerson.nome"/></td>
-					<td align="left"><bean:write name="externalJury" property="infoWorkLocation.name"/></td>
+					<td align="left"><bean:write name="externalJury" property="infoInstitution.name"/></td>
 					<td align="center">
 						<html:multibox property="removedExternalJuriesIDs">
 							<bean:write name="externalJury" property="idInternal"/>
@@ -269,14 +269,14 @@
 			<tr>
 				<td>&nbsp;</td>	
 				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonName"/></th>
-				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonWorkLocation"/></th>
+				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonInstitution"/></th>
 				<td>&nbsp;</td>									
 			</tr>				
 			<logic:iterate id="externalJury" name="externalJuriesSearchResultsList">
 				<tr>
 					<td>&nbsp;</td>
 					<td align="left"><bean:write name="externalJury" property="infoPerson.nome"/></td>
-					<td align="left"><bean:write name="externalJury" property="infoWorkLocation.name"/></td>						
+					<td align="left"><bean:write name="externalJury" property="infoInstitution.name"/></td>						
 					<td>
 						<html:radio idName="externalJury" property="externalJuriesIDs" value="idInternal"/>	
 					</td>

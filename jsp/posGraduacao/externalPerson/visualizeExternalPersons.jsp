@@ -15,8 +15,8 @@
 		<table>
 			<tr>
 				<td>
-					<bean:message key="label.masterDegree.administrativeOffice.externalPersonWorkLocation"/>:&nbsp;					
-					<html:select property="workLocationId">
+					<bean:message key="label.masterDegree.administrativeOffice.externalPersonInstitution"/>:&nbsp;					
+					<html:select property="institutionId">
 			    		<html:options collection="<%= SessionConstants.WORK_LOCATIONS_LIST %>" property="value" labelProperty="label" />
 			   		</html:select> 
 				</td>

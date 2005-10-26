@@ -1,11 +1,12 @@
 /*
- * Created on Apr 28, 2005
- *
+ * Created on Oct 13, 2003
+ *  
  */
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.IInstitution;
 import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentInstitution;
@@ -13,24 +14,20 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentInstitution;
 import org.apache.ojb.broker.query.Criteria;
 
 /**
- * @author Ricardo Rodrigues
- *
+ * @author - Shezad Anavarali (sana@mega.ist.utl.pt)
+ * @author - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
+public class InstitutionOJB extends PersistentObjectOJB implements IPersistentInstitution {
 
-public class InstitutionOJB extends PersistentObjectOJB implements IPersistentInstitution{
-
-    public InstitutionOJB() {
-    }
-    
-    public List readByName(String name) throws ExcepcaoPersistencia{
+    public IInstitution readByName(String name) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addLike("name", name);
-        return queryList(Institution.class, criteria);
+        criteria.addEqualTo("name", name);
+
+        return (IInstitution) queryObject(Institution.class, criteria);
     }
-    
+
     public List readAll() throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        return queryList(Institution.class, criteria);
+        return queryList(Institution.class, new Criteria());
     }
 
 }
