@@ -51,8 +51,9 @@ public class InsertProfessorShipByNumberDA extends FenixDispatchAction {
         InfoProfessorship infoProfessorShip = new InfoProfessorship();
         infoProfessorShip.setInfoExecutionCourse(infoExecutionCourse);
         infoProfessorShip.setInfoTeacher(infoTeacher);
+        infoProfessorShip.setResponsibleFor(Boolean.FALSE);
 
-        Object args[] = { infoProfessorShip, Boolean.FALSE };
+        Object args[] = { infoProfessorShip };
 
         try {
             ServiceUtils.executeService(userView, "InsertProfessorShip", args);
