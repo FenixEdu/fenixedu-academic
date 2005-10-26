@@ -90,7 +90,7 @@ public class SearchPerson implements IService {
         }
 
         String[] nameWords = null;
-        if(name != null && !name.trim().equals("")){
+        if (name != null && !name.trim().equals("")) {
             nameWords = name.split(" ");
             normalizeName(nameWords);
         }
@@ -218,6 +218,9 @@ public class SearchPerson implements IService {
                     }
                 }
             }
+            if (filterPersonsEmail.isEmpty()) {
+                return filterPersonsEmail;
+            }
             filterPersons.addAll(filterPersonsEmail);
         }
         if (username != null && !username.trim().equals("")) {
@@ -230,25 +233,36 @@ public class SearchPerson implements IService {
                     }
                 }
             }
-            if (filterPersons.isEmpty()) {
+            if (filterPersonsUsername.isEmpty()) {
+                return filterPersonsUsername;
+            } else if (filterPersons.isEmpty()) {
                 filterPersons.addAll(filterPersonsUsername);
-            } else if (!filterPersonsUsername.isEmpty()) {
+            } else {
                 filterPersons = (List<IPerson>) CollectionUtils.intersection(filterPersons,
                         filterPersonsUsername);
+                if(filterPersons.isEmpty()){
+                    return filterPersons; 
+                }
             }
         }
         if (name != null && !name.equals("")) {
             filterPersonsName = getValidPersons(nameWords, persons);
-            if (filterPersons.isEmpty()) {
+            
+            if (filterPersonsName.isEmpty()) {
+                return filterPersonsName;
+            } else if (filterPersons.isEmpty()) {
                 filterPersons.addAll(filterPersonsName);
-            } else if (!filterPersonsName.isEmpty()) {
+            } else {
                 filterPersons = (List<IPerson>) CollectionUtils.intersection(filterPersons,
                         filterPersonsName);
+                if(filterPersons.isEmpty()){
+                    return filterPersons; 
+                }
             }
         }
         if (documentIdNumber != null && !documentIdNumber.trim().equals("")) {
             documentIdNumber = normalize(documentIdNumber.trim());
-            for (IPerson person : persons) {               
+            for (IPerson person : persons) {
                 if (person.getNumeroDocumentoIdentificacao() != null && person.getNome() != null) {
                     String personBI = normalize(person.getNumeroDocumentoIdentificacao().trim());
                     if (personBI.trim().indexOf(documentIdNumber.trim()) != -1) {
@@ -256,21 +270,32 @@ public class SearchPerson implements IService {
                     }
                 }
             }
-            if (filterPersons.isEmpty()) {
+            if(filterPersonsBI.isEmpty()){
+                return filterPersonsBI;
+            }
+            else if (filterPersons.isEmpty()) {
                 filterPersons.addAll(filterPersonsBI);
-            } else if (!filterPersonsBI.isEmpty()) {
+            } else {
                 filterPersons = (List<IPerson>) CollectionUtils.intersection(filterPersons,
                         filterPersonsBI);
+                if(filterPersons.isEmpty()){
+                    return filterPersons; 
+                }
             }
         }
-        
+
+        List<IPerson> totalPersons = removeINAPersons(filterPersons);
+
+        return totalPersons;
+    }
+
+    private List<IPerson> removeINAPersons(List<IPerson> filterPersons) {
         List<IPerson> totalPersons = new ArrayList<IPerson>();
         for (IPerson person : filterPersons) {
-            if(person.getUsername() != null && person.getUsername().indexOf("INA") == -1){
+            if (person.getUsername() != null && person.getUsername().indexOf("INA") == -1) {
                 totalPersons.add(person);
             }
         }
-        
         return totalPersons;
     }
 
