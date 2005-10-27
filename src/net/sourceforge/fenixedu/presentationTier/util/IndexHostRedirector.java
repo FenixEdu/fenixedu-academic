@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Map.Entry;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.fenixedu._development.PropertiesManager;
 
 public class IndexHostRedirector {
@@ -23,6 +25,7 @@ public class IndexHostRedirector {
                 final String hostnameKey = (String) entry.getKey();
                 final String redirectPage = (String) entry.getValue();
                 final String hostname = hostnameKey.substring(16);
+                System.out.println("Adding host redirect: " + hostname + " ---> " + redirectPage);
                 redirectPageMap.put(hostname, redirectPage);
             }
         } catch (IOException e) {
@@ -31,8 +34,14 @@ public class IndexHostRedirector {
         }
     }
 
-    public static String getRedirectPage(final String host) {
-        return redirectPageMap.get(host);
+    public static String getRedirectPage(final String requestURL) {
+        for (final Entry<String, String> entry : redirectPageMap.entrySet()) {
+            final String hostname = entry.getKey();
+            if (StringUtils.substringAfter(requestURL, "://").startsWith(hostname)) {
+                return entry.getValue();
+            }
+        }
+        return "publico/index.html";
     }
 
 }
