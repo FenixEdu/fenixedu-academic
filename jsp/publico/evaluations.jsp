@@ -52,10 +52,14 @@
 					<dt:format pattern="dd/MM/yyyy"><bean:write name="evaluation" property="dayDate.time"/></dt:format>
 				</td>
 				<td>
-					<dt:format pattern="HH:mm"><bean:write name="evaluation" property="beginningDate.time"/></dt:format>
+					<logic:present name="evaluation" property="beginningDate">
+						<dt:format pattern="HH:mm"><bean:write name="evaluation" property="beginningDate.time"/></dt:format>
+					</logic:present>
 				</td>
 				<td>
-					<dt:format pattern="HH:mm"><bean:write name="evaluation" property="endDate.time"/></dt:format>
+					<logic:present name="evaluation" property="endDate">
+						<dt:format pattern="HH:mm"><bean:write name="evaluation" property="endDate.time"/></dt:format>
+					</logic:present>
 				</td>
 				<td>
 					<logic:present name="evaluation" property="enrollmentBeginDayDate">
@@ -88,10 +92,14 @@
 					<dt:format pattern="dd/MM/yyyy"><bean:write name="evaluation" property="dayDate.time"/></dt:format>
 				</td>
 				<td>
-					<dt:format pattern="HH:mm"><bean:write name="evaluation" property="beginningDate.time"/></dt:format>
+					<logic:present name="evaluation" property="beginningDate">
+						<dt:format pattern="HH:mm"><bean:write name="evaluation" property="beginningDate.time"/></dt:format>
+					</logic:present>
 				</td>
 				<td>
-					<dt:format pattern="HH:mm"><bean:write name="evaluation" property="endDate.time"/></dt:format>
+					<logic:present name="evaluation" property="endDate">
+						<dt:format pattern="HH:mm"><bean:write name="evaluation" property="endDate.time"/></dt:format>
+					</logic:present>
 				</td>
 				<td>
 					<logic:present name="evaluation" property="enrollmentBeginDayDate">
