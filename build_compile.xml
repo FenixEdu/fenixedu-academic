@@ -176,13 +176,6 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			    			   property="slide.config"/>
 			</replace>
 
-			<replace dir="${build.home.webinf}/conf"
-					 propertyFile="build.properties">
-				<include name="struts-default.xml"/>
-				<replacefilter token="@application@" 
-			    			   property="application"/>
-			</replace>
-
 			<replace dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="IstFtpServerConfig.properties"/>
@@ -362,14 +355,6 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				    property="manager.filter.pattern"/>
 			</replace>
 
-			<replace dir="${build.home}"
-					 propertyFile="build.properties">
-				<include name="index.html"/>
-				<replacefilter 
-				    token="@index.html.link@" 
-				    property="index.html.link"/>
-			</replace>
-
 			<replace dir="${build.home.webinf}/conf" propertyFile="build.properties">
 				<include name="validation*.xml"/>
 				<replacefilter 
@@ -409,6 +394,53 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			  				   property="application.filterBroker"/>
 			</replace>
 		</parallel>
+	</target>
+
+    <target name="write-index-redirect-hostnames-configuration-file">
+    	<delete file=".indexRedirectHostnames.properties.xml"/>
+    	<delete file="${build.home.webinf.classes}/.indexRedirectHostnames.properties"/>
+    	<property name="ant.regexp.regexpimpl" value="org.apache.tools.ant.util.regexp.Jdk14RegexpRegexp"/>
+		<concat destfile=".indexRedirectHostnames.properties.xml">
+			${filter.hostnames}
+			<filterchain>
+				<tokenfilter>
+					<ignoreblank/>
+					<trim/>
+					<stringtokenizer delims="," delimsaretokens="true" includeDelims="false"/>
+					<replaceregex pattern="(.*)" replace="\1${line.seperator}"/>
+				</tokenfilter>
+				<tokenfilter>
+				    <replacestring from="," to=""/>
+					<trim/>
+					<ignoreblank/>
+				</tokenfilter>
+				<prefixlines prefix="@index.html.link."/>
+				<prefixlines prefix="file='${build.home.webinf.classes}/.indexRedirectHostnames.properties'>"/>
+				<prefixlines prefix="append='true' "/>
+				<prefixlines prefix="${character.lessthan}echo "/>
+				<tokenfilter>
+					<stringtokenizer delims="${line.seperator}" delimsaretokens="false" includeDelims="false"/>
+					<replaceregex pattern="(.*)"
+						flags="s"
+						replace="\1@${allowed-roles.newline.instruction}${character.lessthan}/echo>"/>
+				</tokenfilter>
+				<tokenfilter>
+					<stringtokenizer delims="${line.seperator}" delimsaretokens="false" includeDelims="false"/>
+					<replaceregex pattern="@(.*)@"
+						flags="s"
+						replace="\1=${character.dollar}{\1}"/>
+				</tokenfilter>
+				<tokenfilter>
+					<stringtokenizer delims="@@@@@@" delimsaretokens="false" includeDelims="false"/>
+					<replaceregex pattern="(.*)"
+						flags="s"
+						replace="${allowed-roles.build.file.constructor.header}\1${allowed-roles.build.file.constructor.tail}"/>
+				</tokenfilter>
+				<escapeunicode/>
+			</filterchain>
+		</concat>
+		<ant antfile=".indexRedirectHostnames.properties.xml"/>
+    	<delete file=".indexRedirectHostnames.properties.xml"/>
 	</target>
 
     <target name="write-filter-hostnames-configuration-file">
@@ -508,7 +540,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 
     <target name="compile"
     		description="Compile application"
-    		depends="compile-domain,i18nDefault, write-filter-hostnames-configuration-file, generate">
+    		depends="compile-domain,i18nDefault, write-filter-hostnames-configuration-file, write-index-redirect-hostnames-configuration-file, generate">
 		<javac destdir="${build.home.webinf.classes}"
                extdirs="${lib};${env.JBOSS_HOME}/client"
                debug="${compile.debug}"

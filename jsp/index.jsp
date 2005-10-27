@@ -1,5 +1,5 @@
 <html>
-	<META http-equiv="refresh" content="0;URL=index.jsp">
+	<META http-equiv="refresh" content="0;URL=<%= net.sourceforge.fenixedu.presentationTier.util.IndexHostRedirector.getRedirectPage(request.getRemoteHost().toString()) %>">
 <body>
 <!-- <center>
         A aplicação encontra-se em manutenção, tentaremos ser o mais breves pos

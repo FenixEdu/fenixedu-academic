@@ -83,7 +83,6 @@
 				input="/loginPage.jsp"
 				scope="request" 
             	className="net.sourceforge.fenixedu.presentationTier.mapping.ActionMappingForAuthentication">
-            <set-property property="application" value="@application@"/>
             <forward name="sucess" path="/home.do"/>
         </action>
         <action path="/logoff"
