@@ -10,8 +10,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class UpdateKerberos {
 	
-	public static String changeKerberosPass(String user, String pass) throws ExcepcaoPersistencia{
-		String returnCode = null;
+	public static void changeKerberosPass(String user, String pass) throws ExcepcaoPersistencia, KerberosException{
 		String script = PropertiesManager.getProperty("changePassScript");
 		StringBuilder cmd = new StringBuilder();
 		cmd.append(script);
@@ -27,19 +26,19 @@ public class UpdateKerberos {
 	        if (scriptThread.isAlive()) {
 	            throw new ExcepcaoPersistencia("Timeout");
 	        } else {
-	             if(scriptThread.getExitCode() == -1)
+	             if(scriptThread.getExitCode() == -1) {
 	            	 throw new ExcepcaoPersistencia(scriptThread.getReturnCode());
-	             else if(scriptThread.getExitCode() > 0)
-	            	 returnCode = scriptThread.getReturnCode();
+	             }
+	             if(scriptThread.getExitCode() == 1) {
+	            	 throw new KerberosException(scriptThread.getExitCode(), scriptThread.getReturnCode());
+	             }
 	        }
-	        return returnCode;
 	    } catch (InterruptedException e) {
 	        throw new ExcepcaoPersistencia(e.getMessage());
 	    }
 	}
 	
-	public static String createUser(String user, String pass) throws ExcepcaoPersistencia{
-		String returnCode = null;
+	public static void createUser(String user, String pass) throws ExcepcaoPersistencia, KerberosException{
 		String script = PropertiesManager.getProperty("createUserScript");
 		StringBuilder cmd = new StringBuilder();
 		cmd.append(script);
@@ -55,12 +54,13 @@ public class UpdateKerberos {
 	        if (scriptThread.isAlive()) {
 	            throw new ExcepcaoPersistencia("Timeout");
 	        } else {
-	             if(scriptThread.getExitCode() == -1)
+	             if(scriptThread.getExitCode() == -1) {
 	            	 throw new ExcepcaoPersistencia(scriptThread.getReturnCode());
-	             else if(scriptThread.getExitCode() > 0)
-	            	 returnCode = scriptThread.getReturnCode();
+	             }
+	             if(scriptThread.getExitCode() == 1) {
+	            	 throw new KerberosException(scriptThread.getExitCode(), scriptThread.getReturnCode());
+	             }
 	        }
-	        return returnCode;
 	    } catch (InterruptedException e) {
 	        throw new ExcepcaoPersistencia(e.getMessage());
 	    }
