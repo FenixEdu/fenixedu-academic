@@ -45,20 +45,19 @@ public class UsernameUtils extends FenixUtil {
     public static String updateIstUsername(IPerson person) {
         if (person.getIstUsername() == null) {
             String ist = "ist";
-            String istUsername = null;
-            istUsername = person.getUsername();
-            istUsername = istUsername.toUpperCase().trim();
+            String istUsername = null; 
+            String username = person.getUsername().toUpperCase().trim();
             
-            if(istUsername.startsWith("D")) {
-                istUsername = ist + sumNumber(istUsername.substring(1), 10000);
-            }else if(istUsername.startsWith("F")) {
-                istUsername = ist + sumNumber(istUsername.substring(1), 20000);
-            }else if(istUsername.startsWith("B")) {
-                istUsername = ist + sumNumber(istUsername.substring(1), 30000);
-            }else if(istUsername.startsWith("M")) {
-                istUsername = ist + sumNumber(istUsername.substring(1), 40000);
-            }else if(istUsername.startsWith("L")) {
-                istUsername = ist + sumNumber(istUsername.substring(1), 100000);
+            if(username.startsWith("D")) {
+                istUsername = ist + sumNumber(username.substring(1), 10000);
+            }else if(username.startsWith("F")) {
+                istUsername = ist + sumNumber(username.substring(1), 20000);
+            }else if(username.startsWith("B")) {
+                istUsername = ist + sumNumber(username.substring(1), 30000);
+            }else if(username.startsWith("M")) {
+                istUsername = ist + sumNumber(username.substring(1), 40000);
+            }else if(username.startsWith("L")) {
+                istUsername = ist + sumNumber(username.substring(1), 100000);
             }
             
             return istUsername;
