@@ -8,6 +8,13 @@
 		<filterChains />
 	</service>
 	<service>
+		<name>ReadAllDomainObject</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadAllDomainObject</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains />
+	</service>
+	<service>
 		<name>CheckIsAliveService</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.CheckIsAliveService</implementationClass>
 		<description />
@@ -8826,10 +8833,28 @@
         	<chain name="DepartmentMemberOrTeacherAuthorization"></chain>
         </filterChains>     
     </service>
-    <service>
+	<service>
     	<name>GenerateNewPassword</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.GenerateNewPasswordService</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>       
     </service>	
+    <service>
+    	<name>AssociateNewFunctionToPerson</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.AssociateNewFunctionToPerson</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="DepartmentAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>  
+    <service>
+    	<name>EditFunction</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.EditFunction</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="DepartmentAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>    	
 </serviceDefinitions>    

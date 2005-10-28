@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -8,6 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.IFunction;
+import net.sourceforge.fenixedu.domain.organizationalStructure.IPerson_Function;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
@@ -459,4 +463,26 @@ public class Person extends Person_Base {
         }
     }
     
+    public List<IPerson_Function> getActiveFunctions(){
+         List<IPerson_Function> activeFunctions = new ArrayList<IPerson_Function>();
+         
+         Date currentDate = Calendar.getInstance().getTime();
+                  
+         for (IPerson_Function personFunction : this.getPerson_functions()) {             
+            if(personFunction.getEndDate() != null && personFunction.getEndDate().after(currentDate)){
+                activeFunctions.add(personFunction);
+            }
+        }        
+        return activeFunctions;
+    }
+    
+    public boolean containsActiveFunction(IFunction function){
+        
+        for (IPerson_Function person_Function : this.getActiveFunctions()) {
+            if(person_Function.getFunction().equals(function)){
+                return true;
+            }
+        }        
+        return false;       
+    }
 }

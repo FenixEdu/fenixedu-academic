@@ -2039,6 +2039,10 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Person_Function ex
 	Integer keyFunction;
 	Date beginDate;
 	Date endDate;	
+	
+	interface"
+	public void edit(net.sourceforge.fenixedu.domain.organizationalStructure.IFunction function, java.util.Date beginDate, java.util.Date endDate, Integer credits);	
+	"
 }
 
 class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2095,7 +2099,7 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
     
     public void editPersonalContactInformation(net.sourceforge.fenixedu.dataTransferObject.InfoPerson personToEdit);
     
-    public void changeUsername(String newUsername, java.util.List<IPerson> persons);
+	public void changeUsername(String newUsername, java.util.List<IPerson> persons);
     
     public void edit(String name, String address, String phone, String mobile, String homepage, String email);
         
@@ -2116,6 +2120,10 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 	public void indicatePrivledges(java.util.List<IRole> roles);
 	
 	public String getNacionalidade();
+	
+	public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IPerson_Function> getActiveFunctions();
+	
+	public boolean containsActiveFunction(net.sourceforge.fenixedu.domain.organizationalStructure.IFunction function);
     "
 }
 
@@ -2999,6 +3007,10 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.s
 	Integer costCenterCode;
 	Integer keyParentUnit;
 	Integer keyDepartment;	
+	
+	interface "
+	public IUnit getTopUnit();
+	"
 }
 
 class net.sourceforge.fenixedu.domain.University extends net.sourceforge.fenixedu.domain.DomainObject {
