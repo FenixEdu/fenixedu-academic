@@ -234,7 +234,7 @@ public class Person extends Person_Base {
 
         // Generate person's Password
         if (getPassword() == null)
-            setPassword(PasswordEncryptor.encryptPassword(GeneratePassword.generatePassword()));
+            setPassword(PasswordEncryptor.encryptPassword(GeneratePassword.getInstance().generatePassword(this)));
 
         setAvailableEmail(infoPerson.getAvailableEmail());
         setAvailablePhoto(infoPerson.getAvailablePhoto());
@@ -289,7 +289,7 @@ public class Person extends Person_Base {
                 .getAvailableWebSite()));
         setWorkPhone(valueToUpdate(getWorkPhone(), infoPerson.getWorkPhone()));
 
-        setPassword(valueToUpdate(getPassword(), PasswordEncryptor.encryptPassword(GeneratePassword.generatePassword())));
+        setPassword(valueToUpdate(getPassword(), PasswordEncryptor.encryptPassword(GeneratePassword.getInstance().generatePassword(this))));
         
     }
 
