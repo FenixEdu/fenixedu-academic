@@ -1575,6 +1575,7 @@ class net.sourceforge.fenixedu.domain.Guide extends net.sourceforge.fenixedu.dom
 
 class net.sourceforge.fenixedu.domain.GuideEntry extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyGuide;
+	Integer keyPaymentTransaction;
 	Double price;
 	String description;
 	Integer quantity;
@@ -2099,7 +2100,7 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
     
     public void editPersonalContactInformation(net.sourceforge.fenixedu.dataTransferObject.InfoPerson personToEdit);
     
-	public void changeUsername(String newUsername, java.util.List<IPerson> persons);
+    public void changeUsername(String newUsername, java.util.List<IPerson> persons);
     
     public void edit(String name, String address, String phone, String mobile, String homepage, String email);
         
@@ -3201,6 +3202,7 @@ class net.sourceforge.fenixedu.domain.transactions.Transaction extends net.sourc
 }
 
     class net.sourceforge.fenixedu.domain.transactions.PaymentTransaction extends net.sourceforge.fenixedu.domain.transactions.Transaction {
+    	String ojbConcreteClass;
     	Integer keyGuideEntry;
     }
 
