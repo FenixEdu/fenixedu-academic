@@ -529,17 +529,17 @@ public class ListCandidatesDispatchAction extends DispatchAction {
                 throw new FenixActionException();
             }
 
-            infoMasterDegreeCandidate.getInfoPerson().setPassword(
-                    RandomStringGenerator.getRandomStringGenerator(8));
+            String password = null;
 
             // Write the Person
             try {
-                Object args[] = { infoMasterDegreeCandidate.getInfoPerson().getIdInternal(),
-                        infoMasterDegreeCandidate.getInfoPerson().getPassword() };
-                ServiceManagerServiceFactory.executeService(userView, "ChangePersonPassword", args);
+                Object args[] = { infoMasterDegreeCandidate.getInfoPerson().getIdInternal() };
+                password = (String) ServiceManagerServiceFactory.executeService(userView, "GenerateNewPassword", args);
             } catch (FenixServiceException e) {
                 throw new FenixActionException();
             }
+            
+            infoMasterDegreeCandidate.getInfoPerson().setPassword(password);
 
             session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
             session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.TRUE);
@@ -743,7 +743,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
                             : ApplicationDocumentType.CURRICULUM_VITAE) };
             file = (FileSuportObject) ServiceUtils.executeService(userView,
                     "RetrieveApplicationDocument", args);
-
+            
         } catch (FileAlreadyExistsServiceException e1) {
         } catch (FileNameTooLongServiceException e1) {
         } catch (FenixServiceException e1) {

@@ -68,14 +68,14 @@ public class GenerateNewPasswordDispatchAction extends DispatchAction {
 
         Integer personID = new Integer(request.getParameter("personID"));
 
-        String password = RandomStringGenerator.getRandomStringGenerator(8);
+        String password = null;
 
         // Change the Password
         try {
-            Object args[] = { personID, password };
-            ServiceManagerServiceFactory.executeService(userView, "ChangePersonPassword", args);
+            Object args[] = { personID };
+            password = (String) ServiceManagerServiceFactory.executeService(userView, "GenerateNewPassword", args);
         } catch (FenixServiceException e) {
-            throw new FenixActionException();
+            throw new FenixActionException(e);
         }
 
         request.setAttribute("password", password);
