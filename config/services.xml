@@ -8825,5 +8825,11 @@
         <filterChains>
         	<chain name="DepartmentMemberOrTeacherAuthorization"></chain>
         </filterChains>     
+    </service>
+    <service>
+    	<name>GenerateNewPassword</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.GenerateNewPasswordService</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>       
     </service>	
 </serviceDefinitions>    
