@@ -83,7 +83,11 @@
 				input="/loginPage.jsp"
 				scope="request" 
             	className="net.sourceforge.fenixedu.presentationTier.mapping.ActionMappingForAuthentication">
+            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException" 
+                key="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException" 
+                handler="net.sourceforge.fenixedu.presentationTier.config.LoginInvalidPasswordExceptionHandler" />
             <forward name="sucess" path="/home.do"/>
+            <forward name="changePass" path="/person/changePasswordForward.do"/>
         </action>
         <action path="/logoff"
 				type="net.sourceforge.fenixedu.presentationTier.Action.commons.LogOffAction">
