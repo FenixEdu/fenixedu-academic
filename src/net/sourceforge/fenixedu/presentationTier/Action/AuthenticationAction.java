@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -34,8 +35,9 @@ import org.apache.struts.action.DynaActionForm;
 public class AuthenticationAction extends FenixAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws Exception {
         IUserView userView = null;
+        ActionForward forwardToReturn;
         try {
             DynaActionForm authenticationForm = (DynaActionForm) form;
             ActionMappingForAuthentication authenticationMapping = (ActionMappingForAuthentication) mapping;
@@ -53,11 +55,8 @@ public class AuthenticationAction extends FenixAction {
             actionErrors.add("invalidAuthentication", new ActionError("errors.invalidAuthentication"));
             saveErrors(request, actionErrors);
             return mapping.getInputForward();
-
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
         }
-
+        
         if (userView.getRoles().isEmpty()) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("errors.noAuthorization", new ActionError("errors.noAuthorization"));
@@ -81,7 +80,7 @@ public class AuthenticationAction extends FenixAction {
         Collection userRoles = userView.getRoles();
 
         int numberOfSubApplications = getNumberOfSubApplications(userRoles);
-        ActionForward forwardToReturn = mapping.findForward("sucess");
+        forwardToReturn = mapping.findForward("sucess");
 
         Iterator iterator = userRoles.iterator();
         InfoRole firstInfoRole = null;
