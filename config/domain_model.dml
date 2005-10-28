@@ -980,6 +980,8 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 			public void edit(java.util.Date examDay, java.util.Date examStartTime, java.util.Date examEndTime,
 							 java.util.List<IExecutionCourse> executionCourses, java.util.List<ICurricularCourseScope> curricularCourseScopes, 
 							 java.util.List<IRoom> rooms, IPeriod period, net.sourceforge.fenixedu.util.Season season);
+    		public boolean isExamsMapPublished();
+	        public boolean getIsExamsMapPublished();
 			"	
 		}
 

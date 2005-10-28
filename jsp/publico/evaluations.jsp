@@ -43,8 +43,9 @@
 	</tr>	
 	<logic:iterate id="evaluation" name="component" property="sortedWrittenEvaluations">
 		<bean:define id="evaluationOID" name="evaluation" property="idInternal"/>
-		<tr>
-			<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.Exam">
+		<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.Exam">
+		<logic:equal name="evaluation" property="isExamsMapPublished" value="true">
+			<tr>
 				<td>
 					<bean:message key="label.exam"/>: <bean:write name="evaluation" property="season"/>
 				</td>
@@ -81,10 +82,11 @@
 						<bean:message key="label.publishedMarks"/>
 					</html:link>
 				</td>
-			</logic:equal>
-		</tr>
-		<tr>
-			<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.WrittenTest">
+			</tr>
+		</logic:equal>
+		</logic:equal>
+		<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.WrittenTest">
+			<tr>
 				<td>
 					<bean:message key="label.written.test"/>: <bean:write name="evaluation" property="description"/>
 				</td>
@@ -121,8 +123,8 @@
 						<bean:message key="label.publishedMarks"/>
 					</html:link>
 				</td>
-			</logic:equal>
-		</tr>
+			</tr>
+		</logic:equal>
 	</logic:iterate>
 </table>
 

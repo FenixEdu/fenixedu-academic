@@ -69,4 +69,24 @@ public class Exam extends Exam_Base {
                 curricularCourseScopesToAssociate, rooms, period);        
         this.setSeason(season);
     }
+
+    public boolean isExamsMapPublished() {
+        for (final IExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
+            for (final ICurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+                final IDegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+                for (final IExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
+                    if (executionCourse.getExecutionPeriod().getExecutionYear() == executionDegree.getExecutionYear()
+                            && !executionDegree.getTemporaryExamMap().booleanValue()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean getIsExamsMapPublished() {
+        return isExamsMapPublished();
+    }
+
 }

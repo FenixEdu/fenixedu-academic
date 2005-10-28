@@ -29,23 +29,44 @@ Pode alterar em baixo o período de execu&ccedil&atilde;o seleccionado.</p>
 				 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
 
 	<bean:message key="publish.exams.map" />
+	<br/>
+	<html:submit styleClass="inputbutton">
+		<bean:message key="label.change.published.state"/>
+	</html:submit>
+	<br />
 
 	<logic:present name="executionDegrees">
-		<logic:notEmpty name="executionDegrees">
-			<logic:iterate id="executionDegree" name="executionDegrees" length="1">
-				<logic:equal name="executionDegree" property="temporaryExamMap" value="true">
-					<html:checkbox property="switchPublishedState" value="on" onchange="this.form.submit();"/>
-				</logic:equal>
-				<logic:notEqual name="executionDegree" property="temporaryExamMap" value="true">
-					<html:checkbox property="switchPublishedState" value="off" onchange="this.form.submit();"/>
-				</logic:notEqual>
+		<table>
+			<tr>
+				<th>
+					<bean:message key="label.manager.degree.tipoCurso"/>
+				</th>
+				<th>
+					<bean:message key="label.degree"/>
+				</th>
+				<th>
+					<bean:message key="label.exams.map.temp.state"/>
+				</th>
+			</tr>			
+			<logic:iterate id="executionDegree" name="executionDegrees">
+				<tr>
+					<td>
+						<bean:message name="executionDegree" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
+					</td>
+					<td>
+						<bean:write name="executionDegree" property="degreeCurricularPlan.degree.nome"/>
+					</td>
+					<td>
+						<logic:equal name="executionDegree" property="temporaryExamMap" value="true">
+							<bean:message key="label.change.published.state.temp"/>
+						</logic:equal>
+						<logic:equal name="executionDegree" property="temporaryExamMap" value="false">
+							<bean:message key="label.change.published.state.published"/>
+						</logic:equal>
+					</td>
+				</tr>
 			</logic:iterate>
-		</logic:notEmpty>
-		<logic:empty name="executionDegrees">
-			<html:checkbox property="switchPublishedState" value="off" onchange="this.form.submit();"/>
-		</logic:empty>
+		</table>
 	</logic:present>
-
-	<bean:write name="executionPeriodOID"/>
 
 </html:form>

@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.sop;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,12 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -31,6 +38,15 @@ import org.apache.struts.util.LabelValueBean;
  * @author Luis Cruz & Sara Ribeiro
  */
 public class ExecutionPeriodDA extends FenixContextDispatchAction {
+
+    private static final Comparator<IExecutionDegree> executionDegreeComparator = new Comparator<IExecutionDegree>() {
+        public int compare(IExecutionDegree executionDegree1, IExecutionDegree executionDegree2) {
+            final IDegree degree1 = executionDegree1.getDegreeCurricularPlan().getDegree();
+            final IDegree degree2 = executionDegree2.getDegreeCurricularPlan().getDegree();
+
+            int degreeTypeComparison = degree1.getTipoCurso().compareTo(degree2.getTipoCurso());
+            return (degreeTypeComparison != 0) ? degreeTypeComparison : degree1.getNome().compareTo(degree2.getNome());
+        }};
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -70,6 +86,13 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
         request.setAttribute(SessionConstants.LIST_INFOEXECUTIONPERIOD, executionPeriods);
 
         request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
+
+        final Object[] args = { ExecutionPeriod.class, selectedExecutionPeriod.getIdInternal() };
+        final IExecutionPeriod executionPeriod = (IExecutionPeriod) ServiceUtils.executeService(userView, "ReadDomainObject", args);
+        final List<IExecutionDegree> executionDegrees = new ArrayList<IExecutionDegree>(executionPeriod.getExecutionYear().getExecutionDegrees());
+        Collections.sort(executionDegrees, executionDegreeComparator);
+        request.setAttribute("executionPeriodDomainObject", executionPeriod);
+        request.setAttribute("executionDegrees", executionDegrees);
 
         return mapping.findForward("showForm");
     }
