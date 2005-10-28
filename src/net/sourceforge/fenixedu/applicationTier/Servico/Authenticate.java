@@ -16,6 +16,7 @@ import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.IPerson;
@@ -118,7 +119,7 @@ public class Authenticate implements IService, Serializable {
     }
 
     public IUserView run(final String username, final String password, final String application,
-            final String requestURL) throws ExcepcaoPersistencia, ExcepcaoAutenticacao {
+            final String requestURL) throws ExcepcaoPersistencia, ExcepcaoAutenticacao, InvalidPasswordServiceException {
 
         final ISuportePersistente persistenceSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();

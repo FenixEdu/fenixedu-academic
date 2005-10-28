@@ -3,15 +3,17 @@ package net.sourceforge.fenixedu.applicationTier.Servico;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.util.kerberos.KerberosException;
 import net.sourceforge.fenixedu.util.kerberos.UpdateKerberos;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class AuthenticateKerberos extends Authenticate implements IService, Serializable {
 
     public IUserView run(final String username, final String password, final String application,
-            final String requestURL) throws ExcepcaoPersistencia, ExcepcaoAutenticacao {
+            final String requestURL) throws ExcepcaoPersistencia, ExcepcaoAutenticacao, InvalidPasswordServiceException {
 
     	final Authenticate authenticate = new Authenticate();
     	final IUserView userView = authenticate.run(username, password, application, requestURL);
@@ -23,7 +25,7 @@ public class AuthenticateKerberos extends Authenticate implements IService, Seri
     	return userView;
     }
 
-	private void updateKerberos(final IUserView userView) throws ExcepcaoPersistencia {
+	private void updateKerberos(final IUserView userView) throws ExcepcaoPersistencia, InvalidPasswordServiceException {
     	final IPerson person = userView.getPerson();
 
     	if (person == null) {
@@ -32,12 +34,13 @@ public class AuthenticateKerberos extends Authenticate implements IService, Seri
 
         if(person.getIstUsername() != null && !person.getIsPassInKerberos()) {
         	try {
-	        	UpdateKerberos.createUser(person.getIstUsername(), person.getPassword());
-	        	person.setIsPassInKerberos(true);
-        	} catch(Exception e) {
-        		//for now, do nothing
-        	}
+        		 UpdateKerberos.createUser(person.getIstUsername(), person.getPassword());
+        		 person.setIsPassInKerberos(true);
+        	} catch(ExcepcaoPersistencia e) {
+        		return;
+        	} catch (KerberosException ke) {
+        		throw new InvalidPasswordServiceException(ke.getReturnCode(), userView);
+			}
         }
 	}
-
 }
