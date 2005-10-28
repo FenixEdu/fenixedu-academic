@@ -81,12 +81,13 @@ public class InfoMasterDegreeThesisDataVersionWithGuiders extends InfoMasterDegr
      * @return
      */
     private List copyExternalPersons(List externalPersons) {
-        return (List) CollectionUtils.collect(externalPersons, new Transformer() {
-            public Object transform(Object arg0) {
-                IExternalPerson externalPerson = (IExternalPerson) arg0;
-                return InfoExternalPersonWithPersonAndWLocation.newInfoFromDomain(externalPerson);
-            }
-        });
+        
+        List<InfoExternalPerson> infoExternalPersons = new ArrayList<InfoExternalPerson>(externalPersons.size());
+        for (IExternalPerson externalPerson : (List<IExternalPerson>)externalPersons) {
+            infoExternalPersons.add(InfoExternalPersonWithPersonAndWLocation.newInfoFromDomain(externalPerson));            
+        }
+        return infoExternalPersons;
+        
     }
 
     /**
