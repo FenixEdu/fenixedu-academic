@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
+import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudent;
@@ -44,7 +45,7 @@ public class GenerateNewStudentsPasswordsService implements IService {
             boolean isFirstTimeStudent = person.hasRole(RoleType.FIRST_TIME_STUDENT);
                         
             if (isFirstTimeStudent) {
-                String password = RandomStringGenerator.getRandomStringGenerator(8);
+                String password = GeneratePassword.getInstance().generatePassword(person);
 
                 InfoPerson infoPerson = InfoPerson.newInfoFromDomain(person);
                 infoPerson.setPassword(password);
