@@ -38,6 +38,7 @@ public class InsuranceTransaction extends InsuranceTransaction_Base {
 			IPerson responsiblePerson, IPersonAccount personAccount,
 			IGuideEntry guideEntry, IExecutionYear executionYear,
 			IStudent student) {
+        setOjbConcreteClass(getClass().getName());
 		setValue(value);
 		setTransactionDate(transactionDate);
 		setRemarks(remarks);

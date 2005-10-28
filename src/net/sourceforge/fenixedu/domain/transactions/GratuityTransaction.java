@@ -34,6 +34,7 @@ public class GratuityTransaction extends GratuityTransaction_Base {
 			TransactionType transactionType, Boolean wasInternalBalance,
 			IPerson responsiblePerson, IPersonAccount personAccount,
 			IGuideEntry guideEntry, IGratuitySituation gratuitySituation) {
+        setOjbConcreteClass(getClass().getName());
 		setValue(value);
 		setTransactionDate(transactionDate);
 		setRemarks(remarks);

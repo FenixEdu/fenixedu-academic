@@ -5,8 +5,14 @@
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction" table="INSURANCE_TRANSACTION">
-	
+<class-descriptor class="net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction" table="PAYMENT_TRANSACTION">
+
+	<field-descriptor
+		name="ojbConcreteClass"
+		column="CLASS_NAME"
+		jdbc-type="VARCHAR"
+	/>
+		
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"

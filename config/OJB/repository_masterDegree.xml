@@ -454,15 +454,25 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
+      <field-descriptor 
+	     name="keyPaymentTransaction"
+	     column="KEY_PAYMENT_TRANSACTION"
+	     jdbc-type="INTEGER"
+	  />
 	  
 	   <reference-descriptor auto-retrieve="false"
          	name="guide"
          	class-ref="net.sourceforge.fenixedu.domain.Guide"
-         	
-			
       	  >
           <foreignkey field-ref="keyGuide"/>
       </reference-descriptor>
+
+	   <reference-descriptor auto-retrieve="false"
+         	name="paymentTransaction"
+         	class-ref="net.sourceforge.fenixedu.domain.transactions.PaymentTransaction"
+      	  >
+          <foreignkey field-ref="keyPaymentTransaction"/>
+      </reference-descriptor>      
 	  
 	 <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="reimbursementGuideEntries"

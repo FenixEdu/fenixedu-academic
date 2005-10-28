@@ -33,6 +33,7 @@ public abstract class PaymentTransaction extends PaymentTransaction_Base {
 			TransactionType transactionType, Boolean wasInternalBalance,
 			IPerson responsiblePerson, IPersonAccount personAccount,
 			IGuideEntry guideEntry) {
+        setOjbConcreteClass(getClass().getName());
 		setGuideEntry(guideEntry);
 		setValue(value);
 		setTransactionDate(transactionDate);

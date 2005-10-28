@@ -5,7 +5,13 @@
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.transactions.SmsTransaction -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.transactions.SmsTransaction" table="SMS_TRANSACTION">
+<class-descriptor class="net.sourceforge.fenixedu.domain.transactions.SmsTransaction" table="PAYMENT_TRANSACTION">
+		
+	<field-descriptor
+		name="ojbConcreteClass"
+		column="CLASS_NAME"
+		jdbc-type="VARCHAR"
+	/>
 	
 	<field-descriptor
 		name="idInternal"
