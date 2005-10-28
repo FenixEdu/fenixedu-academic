@@ -4,11 +4,15 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class InvalidPasswordServiceException extends FenixServiceException {
+	
+	private IUserView userView;
 
     /**
      *  
@@ -42,4 +46,18 @@ public class InvalidPasswordServiceException extends FenixServiceException {
         super(message, cause);
 
     }
+    
+    public InvalidPasswordServiceException(String s, IUserView userView) {
+        super(s);
+        setUserView(userView);
+    }
+    
+    private void setUserView(IUserView userView) {
+    	this.userView = userView;
+    }
+    
+    public IUserView getUserView() {
+    	return this.userView;
+    }
+
 }
