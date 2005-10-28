@@ -13,11 +13,12 @@
 
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.util.State;
+
+import org.apache.commons.lang.StringUtils;
 
 public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
 
@@ -29,27 +30,17 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
     public static String generateUsernameForNewCandidate(
             IMasterDegreeCandidate newMasterDegreeCandidate, List<IPerson> persons) {
 
-        // FIXME : temporary solution: in the future create username by name
-        int start = 0;
-        int end = 3;
-        char buf[] = new char[end - start];
-        newMasterDegreeCandidate.getSpecialization().toString().getChars(start, end, buf, 0);
-
-        // Generate Username
-        String username = newMasterDegreeCandidate.getCandidateNumber()
-                + String.valueOf(buf)
-                + newMasterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan().getDegree()
-                        .getSigla();
-
-        // Verify if the Username already Exists
-        String generatedUsername = new String(username);
-        int i = 1;
-
-        while (Person.checkIfUsernameExists(generatedUsername, persons)) {
-            generatedUsername = new String(username + i++);
-        }
-
-        return generatedUsername;
+    	Integer max = 0;
+    	
+    	for (IPerson person : persons) {
+			if(person.getUsername().startsWith("C")) {
+				Integer candidateNumber = Integer.valueOf(person.getUsername().substring(1));
+				if(candidateNumber > max) {
+					max = candidateNumber;
+				}
+			}
+		}
+    	return "C" + StringUtils.leftPad(String.valueOf(++max), 5, "0");
     }
 
     /***************************************************************************
