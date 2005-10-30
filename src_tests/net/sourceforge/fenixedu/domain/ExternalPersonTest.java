@@ -50,7 +50,7 @@ public class ExternalPersonTest extends DomainTestBase {
         person.setEnderecoWeb(newHomepage);
         person.setEmail(newEmail);
         externalPerson.setPerson(person);
-        externalPerson.setinstitution(institution2);
+        externalPerson.setInstitution(institution2);
         allExternalPersons.add(externalPerson);
         
     }
