@@ -109,19 +109,6 @@
 	<logic:notEqual name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="<%= DegreeType.MASTER_DEGREE.toString() %>">
 		<br /><br />
 		<ul>
-			<li>
-				<html:link page="<%= "/executionCoursesInformation.do?method=prepareChoiceForCoordinator&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
-				<bean:message key="link.coordinator.executionCoursesInformation"/></html:link>
-				<br/>
-				<br/>
-			</li>
-			<li>
-				<html:link page="<%= "/teachersInformation.do?executionDegreeId=" + executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">				
-					<bean:message key="link.coordinator.teachersInformation"/>
-				</html:link>
-				<br/>
-				<br/>
-			</li>
 			
 			<li>
 				<html:link page="<%= "/tutorManagement.do?method=prepareChooseTutor&executionDegreeId=" + executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">				
@@ -171,6 +158,21 @@
 	<%-- Start of Common Options --%>
 	<br /><br />
 	<ul>
+		<li>
+			<html:link page="<%= "/executionCoursesInformation.do?method=prepareChoiceForCoordinator&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
+				<bean:message key="link.coordinator.executionCoursesInformation"/>
+			</html:link>
+			<br/><br/>
+		</li>
+		
+		<li>
+			<html:link page="<%= "/teachersInformation.do?executionDegreeId=" + executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">				
+				<bean:message key="link.coordinator.teachersInformation"/>
+			</html:link>
+			<br/><br/>
+		</li>
+		<br /><br />
+					
 		<li>
 			<html:link page="<%="/degreeCurricularPlanManagement.do?method=showActiveCurricularCourses&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 				<bean:message key="link.coordinator.degreeCurricularPlan.management"/>
