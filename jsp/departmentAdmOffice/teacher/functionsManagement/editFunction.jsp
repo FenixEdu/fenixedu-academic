@@ -71,7 +71,10 @@
 		</h:panelGrid>				
 		
 		<h:outputText value="<br/>" escape="false" />	
-		<h:commandButton action="#{functionsManagementBackingBean.editFunction}" value="#{bundle['link.edit']}" styleClass="inputbutton"/>				
+		<h:panelGrid columns="2">
+			<h:commandButton action="#{functionsManagementBackingBean.editFunction}" value="#{bundle['link.edit']}" styleClass="inputbutton"/>				
+			<h:commandButton action="alterFunction" immediate="true" value="#{bundle['alter.function.button']}" styleClass="inputbutton"/>								
+		</h:panelGrid>	
 
 	</h:form>
 

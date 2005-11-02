@@ -57,7 +57,11 @@
 	</h:panelGrid>
 		
 	<h:outputText value="<br/>" escape="false" />
-	<h:commandButton action="#{functionsManagementBackingBean.associateNewFunction}" value="#{bundle['label.confirme']}" styleClass="inputbutton"/>			
+	<h:panelGrid columns="3">
+		<h:commandButton action="#{functionsManagementBackingBean.associateNewFunction}" value="#{bundle['label.confirme']}" styleClass="inputbutton"/>			
+		<h:commandButton action="alterUnit" immediate="true" value="#{bundle['alter.unit.button']}" styleClass="inputbutton"/>						
+		<h:commandButton action="alterFunction" immediate="true" value="#{bundle['alter.function.button']}" styleClass="inputbutton"/>								
+	</h:panelGrid>
 	
 	</h:form>
 

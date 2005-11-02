@@ -86,6 +86,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     private Integer personFunctionID;
 
     public IPerson_Function personFunction;
+    
+        
 
     public FunctionsManagementBackingBean() {
         getParametersFromLinks();
@@ -325,7 +327,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         buffer.append("<li>").append("<a href=\"").append(getContextPath()).append(
                 "/departmentAdmOffice/teacher/functionsManagement/chooseFunction.faces?personID=")
                 .append(personID).append("&unitID=").append(parentUnit.getIdInternal()).append("&link=")
-                .append(this.link).append("\">").append(parentUnit.getName()).append("</a>").append(
+                .append(this.getLink()).append("\">").append(parentUnit.getName()).append("</a>").append(
                         "</li>").append("<ul>");
 
         for (IUnit subUnit : parentUnit.getAssociatedUnits()) {
@@ -637,7 +639,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     public String getLink() {
         if (link == null && this.linkHidden != null && this.linkHidden.getValue() != null
                 && !this.linkHidden.getValue().equals("")) {
-            this.link = this.linkHidden.getValue().toString();
+            this.link = this.linkHidden.getValue().toString();            
         } else if (link == null) {
             this.link = "chooseUnit";
         }
@@ -702,5 +704,9 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
             this.personFunctionID = Integer.valueOf(this.personFunctionIDHidden.getValue().toString());
         }
         this.personFunctionIDHidden = personFunctionIDHidden;
+    }
+    
+    public Integer getLinkValue(){        
+        return (this.getLink().equals("chooseUnit")) ? 1 : 0;
     }
 }
