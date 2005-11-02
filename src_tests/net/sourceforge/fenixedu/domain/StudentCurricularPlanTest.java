@@ -55,7 +55,7 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		studentCurricularPlanToDelete = new StudentCurricularPlan();
 		studentCurricularPlanLEICToDelete = new StudentCurricularPlanLEIC();
 		studentCurricularPlanLEECToDelete = new StudentCurricularPlanLEEC();
-		
+
 		IBranch br1 = new Branch();
 		studentCurricularPlanToDelete.setBranch(br1);
 		studentCurricularPlanLEICToDelete.setSecundaryBranch(br1);
@@ -72,8 +72,6 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		
 		IEmployee emp1 = new Employee();
 		studentCurricularPlanToDelete.setEmployee(emp1);
-		
-		IGratuitySituation gs1 = new GratuitySituation(null, studentCurricularPlanToDelete);
 		
 		IMasterDegreeThesis mdt1 = new MasterDegreeThesis();
 		studentCurricularPlanToDelete.setMasterDegreeThesis(mdt1);

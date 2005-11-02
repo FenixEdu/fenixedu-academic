@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -227,6 +228,8 @@ public class PersonTest extends DomainTestBase {
 		infoPerson3.setTipoDocumentoIdentificacao(documentType);
 		infoPerson3.setWorkPhone(workPhone + 1);
 
+        grantOwner = new GrantOwner();
+        grantOwner.setNumber(grantOwnerNumber);
 	}
 
 	public void testCreatePerson1() {
@@ -488,6 +491,11 @@ public class PersonTest extends DomainTestBase {
 		IPerson person = new Person(username, nome, Gender.MALE, address,
 				telefone, telemovel, enderecoWeb, email,
 				numDocumentoIdentificacao, IDDocumentType.EXTERNAL);
+        ITeacher teacher = new Teacher();
+        teacher.setTeacherNumber(Integer.valueOf(1));
+        teacher.setPerson(person);
+        ICoordinator coordinator = new Coordinator();
+        coordinator.setTeacher(teacher);
 		person.getPersonRoles().add(personRole);
 		person.getPersonRoles().add(teacherRole);
 		person.getPersonRoles().add(coordinatorRole);
@@ -510,7 +518,7 @@ public class PersonTest extends DomainTestBase {
 
 		assertEquals(person.getUsername(), username);
 		person.getPersonRoles().add(personRole);
-		assertEquals(person.getUsername(), "T12345");
+		assertEquals(person.getUsername(), "P12345");
 		person.getPersonRoles().add(grantOwnerRole);
 		assertEquals(person.getUsername(), "B"+grantOwnerNumber);
 		person.getPersonRoles().add(studentRole);
@@ -533,7 +541,7 @@ public class PersonTest extends DomainTestBase {
 
 		assertEquals(person.getUsername(), username);
 		person.getPersonRoles().add(personRole);
-		assertEquals(person.getUsername(), "T12345");
+		assertEquals(person.getUsername(), "P" + username.substring(1));
 		person.getPersonRoles().add(grantOwnerRole);
         assertEquals(person.getUsername(), "B"+grantOwnerNumber);
 		person.getPersonRoles().add(studentRole);
@@ -560,13 +568,13 @@ public class PersonTest extends DomainTestBase {
 		person.getPersonRoles().add(teacherRole);
 
 		person.getPersonRoles().remove(teacherRole);
-		assertEquals(person.getUsername(), "F12345");
+		assertEquals(person.getUsername(), "L33333");
 		person.getPersonRoles().remove(employeeRole);
-		assertEquals(person.getUsername(), "L12345");
+		assertEquals(person.getUsername(), "L33333");
 		person.getPersonRoles().remove(studentRole);
-		assertEquals(person.getUsername(), "B12345");
+		assertEquals(person.getUsername(), "B22222");
 		person.getPersonRoles().remove(grantOwnerRole);
-		assertEquals(person.getUsername(), "T12345");
+		assertEquals(person.getUsername(), "P22222");
 	}
 
 	public void testUsernameUpdate4() {

@@ -48,7 +48,7 @@ public class ExamTest extends DomainTestBase {
             fail("Expected DomainException: There is already an 'Exam' to that season and curricular course scope.");
         } catch (DomainException e) {
             checkExamAssociationsSize(executionCoursesToAssociate.size(), 1,
-                    curricularCourseScopesToAssociate.size(), 1, 1);
+                    curricularCourseScopesToAssociate.size(), 1, 1, 2);
         }
 
         try {
@@ -57,7 +57,7 @@ public class ExamTest extends DomainTestBase {
             fail("Expected DomainException: The exam start time is after the exam end time.");
         } catch (DomainException e) {
             checkExamAssociationsSize(executionCoursesToAssociate.size(), 1,
-                    curricularCourseScopesToAssociate.size(), 1, 1);
+                    curricularCourseScopesToAssociate.size(), 1, 1, 2);
         }
 
         // Remove otherExam from CurricularCourseScope which has already an exam
@@ -131,8 +131,8 @@ public class ExamTest extends DomainTestBase {
             assertEquals("Invalid ExamStudentRooms Count!", exam.getWrittenEvaluationEnrolmentsCount(), 0);
             assertEquals("Invalid ExecutionCourses Count!", exam.getAssociatedExecutionCoursesCount(), 0);
             assertEquals("Invalid CurricularCoursesScope Count!", exam
-                    .getAssociatedCurricularCourseScope(), 0);
-            assertEquals("Invalid RoomOccupations Count!", exam.getAssociatedRoomOccupation(), 0);
+                    .getAssociatedCurricularCourseScope().size(), 0);
+            assertEquals("Invalid RoomOccupations Count!", exam.getAssociatedRoomOccupation().size(), 0);
 
         } catch (DomainException e) {
             fail("Unexpected DomainException: 'Exam' should have been deleted.");
@@ -158,17 +158,25 @@ public class ExamTest extends DomainTestBase {
         Calendar startTime = createHour(10, 0);
         Calendar endTime = createHour(13, 0);
 
-        exam = new Exam(null, null, null, null, null, null, null, null);
+        final List<IExecutionCourse> executionCourses = new ArrayList<IExecutionCourse>();
+        executionCourses.add(executionCourse1);
+        executionCourses.add(executionCourse2);
+
+        final List<ICurricularCourseScope> curricularCourseScopes = new ArrayList<ICurricularCourseScope>();
+        curricularCourseScopes.add(curricularCourseScope);
+
+        exam = new Exam(createDate(2005, 9, 15), startTime.getTime(), endTime.getTime(),
+                executionCourses, curricularCourseScopes, null, null, season);
         exam.setIdInternal(1);
-        exam.setDayDate(createDate(2005, 9, 15));
-        exam.setBeginningDate(startTime.getTime());
-        exam.setEndDate(endTime.getTime());
-        exam.setSeason(season);
+//        exam.setDayDate(createDate(2005, 9, 15));
+//        exam.setBeginningDate(startTime.getTime());
+//        exam.setEndDate(endTime.getTime());
+//        exam.setSeason(season);
 
-        exam.addAssociatedExecutionCourses(executionCourse1);
-        exam.addAssociatedExecutionCourses(executionCourse2);
+//        exam.addAssociatedExecutionCourses(executionCourse1);
+//        exam.addAssociatedExecutionCourses(executionCourse2);
 
-        exam.addAssociatedCurricularCourseScope(curricularCourseScope);
+//        exam.addAssociatedCurricularCourseScope(curricularCourseScope);
 
         period = new Period(startTime.getTime(), endTime.getTime());
 
@@ -203,11 +211,12 @@ public class ExamTest extends DomainTestBase {
 
         executionCoursesToAssociate.add(executionCourseToAssociate);
 
-        otherExam = new Exam(null, null, null, null, null, null, null, null);
+        otherExam = new Exam(createDate(2005, 9, 15), startTime.getTime(), endTime.getTime(),
+                executionCoursesToAssociate, curricularCourseScopes, null, null, season);
         otherExam.setIdInternal(2);
-        otherExam.setSeason(season);
-        otherExam.addAssociatedExecutionCourses(executionCourseToAssociate);
-        otherExam.addAssociatedCurricularCourseScope(curricularCourseScope);
+//        otherExam.setSeason(season);
+//        otherExam.addAssociatedExecutionCourses(executionCourseToAssociate);
+//        otherExam.addAssociatedCurricularCourseScope(curricularCourseScope);
 
         curricularCourseScopesToAssociate = new ArrayList<ICurricularCourseScope>(1);
         curricularCourseScopesToAssociate.add(curricularCourseScope);
@@ -246,18 +255,20 @@ public class ExamTest extends DomainTestBase {
     private void checkExamAssociationsSize(final int executionCoursesToAssociateSize,
             final int expectedExecutionCoursesToAssociateSize,
             final int curricularCourseScopesToAssociateSize,
-            final int expectedCurricularCourseScopesToAssociateSize, final int evaluationsSize) {
+            final int expectedCurricularCourseScopesToAssociateSize,
+            final int executionCourseEvaluationsSize,
+            final int curricularCourseScopeEvaluationsSize) {
         assertEquals("Unexpected ExecutionCourse size!", executionCoursesToAssociateSize,
                 expectedExecutionCoursesToAssociateSize);
         final IExecutionCourse executionCourse = executionCoursesToAssociate.get(0);
         assertEquals("Unexpected ExecutionCourse Evaluations size!", executionCourse
-                .getAssociatedEvaluationsCount(), evaluationsSize);
+                .getAssociatedEvaluationsCount(), executionCourseEvaluationsSize);
 
         assertEquals("Unexpected CurricularCourseScope size!", curricularCourseScopesToAssociateSize,
                 expectedCurricularCourseScopesToAssociateSize);
         final ICurricularCourseScope curricularCourseScope = curricularCourseScopesToAssociate.get(0);
         assertEquals("Unexpected CurricularCourseScope Evaluations size!", curricularCourseScope
-                .getAssociatedWrittenEvaluationsCount(), evaluationsSize);
+                .getAssociatedWrittenEvaluationsCount(), curricularCourseScopeEvaluationsSize);
     }
 
     private Date createDate(int year, int month, int day) {

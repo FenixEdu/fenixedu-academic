@@ -89,10 +89,9 @@ public class GroupingTest extends DomainTestBase {
 
         try {
             grouping.createStudentGroup(null, 2, students);
-            fail("Expected DomainExpected");
+            assertEquals("Size UnExpected", 2, grouping.getStudentGroupsCount());
         } catch (DomainException e) {
-            assertEquals("Size UnExpected", 1, grouping.getStudentGroupsCount());
-            assertEquals("StudentGroup UnExpected", studentGroup, grouping.getStudentGroups().get(0));
+            fail("UnExpected DomainExpected");
         }
 
         students.clear();
@@ -102,11 +101,10 @@ public class GroupingTest extends DomainTestBase {
         students.add(student7);
 
         try {
-            grouping.createStudentGroup(null, 2, students);
+            grouping.createStudentGroup(null, 3, students);
             fail("Expected DomainExpected");
         } catch (DomainException e) {
-            assertEquals("Size UnExpected", 1, grouping.getStudentGroupsCount());
-            assertEquals("StudentGroup UnExpected", studentGroup, grouping.getStudentGroups().get(0));
+            assertEquals("Size UnExpected", 2, grouping.getStudentGroupsCount());
         }
 
         students.clear();
@@ -114,24 +112,24 @@ public class GroupingTest extends DomainTestBase {
         students.add(student4);
 
         try {
-            grouping.createStudentGroup(null, 2, students);
+            grouping.createStudentGroup(null, 3, students);
+            fail("Expected DomainExpected");
         } catch (DomainException e) {
-            fail("UnExpected DomainExpected");
+            assertEquals("Size UnExpected", 2, grouping.getStudentGroupsCount());
         }
 
         assertEquals("Size UnExpected", 2, grouping.getStudentGroupsCount());
         assertEquals("Size UnExpected", 1, grouping.getStudentGroupsWithoutShift().size());
         assertEquals("Size UnExpected", 1, grouping.getStudentGroupsWithShift().size());
 
-        assertEquals("GroupNumber UnExpected", 1, grouping.getStudentGroups().get(1).getGroupNumber()
-                .intValue());
-        assertEquals("GroupNumber UnExpected", 2, grouping.getStudentGroups().get(0).getGroupNumber()
-                .intValue());
+        int firstGroupNumber = grouping.getStudentGroups().get(0).getGroupNumber().intValue();
+        int secondGroupNumber = grouping.getStudentGroups().get(1).getGroupNumber().intValue();
+        assertTrue("GroupNumber UnExpected", firstGroupNumber == 1 || firstGroupNumber == 2);
+        assertTrue("GroupNumber UnExpected", secondGroupNumber == 1 || secondGroupNumber == 2);
+        assertTrue("GroupNumber UnExpected", firstGroupNumber != secondGroupNumber);
 
         assertEquals("Attend UnExpected", attend3, grouping.getStudentGroups().get(0).getAttends()
                 .get(0));
-        assertEquals("Attend UnExpected", attend4, grouping.getStudentGroups().get(0).getAttends()
-                .get(1));
 
         assertEquals("Attend UnExpected", attend, grouping.getStudentGroups().get(1).getAttends().get(0));
         assertEquals("Attend UnExpected", attend2, grouping.getStudentGroups().get(1).getAttends()
@@ -143,11 +141,11 @@ public class GroupingTest extends DomainTestBase {
 
         try {
             grouping.createStudentGroup(null, 3, students);
-            fail("Expected DomainExpected");
-        } catch (DomainException e) {
-            assertEquals("Size UnExpected", 2, grouping.getStudentGroupsCount());
-            assertEquals("Size UnExpected", 1, grouping.getStudentGroupsWithoutShift().size());
+            assertEquals("Size UnExpected", 3, grouping.getStudentGroupsCount());
+            assertEquals("Size UnExpected", 2, grouping.getStudentGroupsWithoutShift().size());
             assertEquals("Size UnExpected", 1, grouping.getStudentGroupsWithShift().size());
+        } catch (DomainException e) {
+            fail("UnExpected DomainExpected");
         }
 
         students.clear();
@@ -158,8 +156,8 @@ public class GroupingTest extends DomainTestBase {
             grouping.createStudentGroup(shift2, 3, students);
             fail("Expected DomainExpected");
         } catch (DomainException e) {
-            assertEquals("Size UnExpected", 2, grouping.getStudentGroupsCount());
-            assertEquals("Size UnExpected", 1, grouping.getStudentGroupsWithoutShift().size());
+            assertEquals("Size UnExpected", 3, grouping.getStudentGroupsCount());
+            assertEquals("Size UnExpected", 2, grouping.getStudentGroupsWithoutShift().size());
             assertEquals("Size UnExpected", 1, grouping.getStudentGroupsWithShift().size());
         }
 
@@ -168,13 +166,13 @@ public class GroupingTest extends DomainTestBase {
 
         try {
             grouping.createStudentGroup(shift2, 3, students);
-        } catch (DomainException e) {
             fail("UnExpected DomainExpected");
+        } catch (DomainException e) {
         }
 
         assertEquals("Size UnExpected", 2, grouping.getStudentGroupsCount());
-        assertEquals("Size UnExpected", 1, grouping.getStudentGroupsWithoutShift().size());
-        assertEquals("Size UnExpected", 1, grouping.getStudentGroupsWithShift().size());
+        assertEquals("Size UnExpected", 2, grouping.getStudentGroupsWithoutShift().size());
+        assertEquals("Size UnExpected", 0, grouping.getStudentGroupsWithShift().size());
     }
 
     public void testCreate() {

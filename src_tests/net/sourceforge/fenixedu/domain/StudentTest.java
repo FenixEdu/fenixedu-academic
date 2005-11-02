@@ -60,7 +60,7 @@ public class StudentTest extends DomainTestBase {
 		assertEquals("Returned StudentCurricularPlan is not ACTIVE", activeSCP.getCurrentState(),StudentCurricularPlanState.ACTIVE);
 		
 		IStudentCurricularPlan someSCP = studentWithoutActiveStudentCurricularPlan.getActiveStudentCurricularPlan();
-		assertNotNull("Should have returned a StudentCurricularPlan", someSCP);
+		assertNull("Should not have returned a StudentCurricularPlan", someSCP);
 	}
 
 	private void setUpGetActiveStudentCurricularPlan() {
@@ -78,4 +78,5 @@ public class StudentTest extends DomainTestBase {
 		
 		studentWithoutActiveStudentCurricularPlan.addStudentCurricularPlans(someSCP);
 	}
+
 }

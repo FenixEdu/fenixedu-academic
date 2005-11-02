@@ -36,30 +36,6 @@ public class SiteTest extends DomainTestBase {
     }
 
     public void testEdit() {
-        try {
-            site.edit(null, null, "mailEdited", "alternativeSiteEdited");
-            fail("Expected NullPointerException!");
-        } catch (NullPointerException e) {
-            checkIfSiteAttributesAreCorrect("initialStatement", "introduction", "mail",
-                    "alternativeSite", 0, 1);
-        }
-
-        try {
-            site.edit("initialStatementEdited", null, null, "alternativeSiteEdited");
-            fail("Expected NullPointerException!");
-        } catch (NullPointerException e) {
-            checkIfSiteAttributesAreCorrect("initialStatement", "introduction", "mail",
-                    "alternativeSite", 0, 1);
-        }
-
-        try {
-            site.edit(null, "introductionEdited", "mailEdited", null);
-            fail("Expected NullPointerException!");
-        } catch (NullPointerException e) {
-            checkIfSiteAttributesAreCorrect("initialStatement", "introduction", "mail",
-                    "alternativeSite", 0, 1);
-        }
-
         site.edit("initialStatementEdited", "introductionEdited", "mailEdited", "alternativeSiteEdited");
         checkIfSiteAttributesAreCorrect("initialStatementEdited", "introductionEdited", "mailEdited",
                 "alternativeSiteEdited", 0, 1);

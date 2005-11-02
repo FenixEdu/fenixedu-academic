@@ -68,10 +68,18 @@ public class AttendsTest extends DomainTestBase {
 		
 		try {
 			attendToDelete.delete();
+            fail("Should not have been deleted.");
 		}
 		catch (DomainException e) {
-			fail("Should have been deleted.");
 		}		
+
+        try {
+            attendToDelete.setEnrolment(null);
+            attendToDelete.delete();
+        }
+        catch (DomainException e) {
+            fail("Should have been deleted.");
+        }       
 
 		try {
 			attendNotToDelete1.delete();
