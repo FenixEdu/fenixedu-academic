@@ -12,7 +12,13 @@ public class DomainTestBase extends TestCase {
 
     protected void setUp() throws Exception {
         super.setUp();
-	Transaction.begin();
+        try {
+        	Transaction.abort();
+        	Transaction.commit();
+        }catch (Exception e) {
+			
+		}
+        Transaction.begin();
         DomainObject.turnOffLockMode();
     }
 
