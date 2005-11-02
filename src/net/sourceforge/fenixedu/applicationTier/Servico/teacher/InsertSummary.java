@@ -25,7 +25,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * @author João Mota
  * @author Susana Fernandes modified by Tânia Pousão 5/Abr/2004 21/Jul/2003
  *         fenix-head ServidorAplicacao.Servico.teacher
- *         
+ * 
  * @author jdnf and mrsp 21/Jul/2005
  * 
  */
@@ -66,12 +66,17 @@ public class InsertSummary implements IService {
 
         final ITeacher teacher = SummaryUtils.getTeacher(persistentSupport, infoSummary);
         if (teacher != null) {
-            final ISummary summary = executionCourse.createSummary(infoSummary.getTitle(), infoSummary
-                    .getSummaryText(), infoSummary.getStudentsNumber(), infoSummary.getIsExtraLesson(),
-                    teacher);
-            shift.transferSummary(summary, infoSummary.getSummaryDate().getTime(), infoSummary
-                    .getSummaryHour().getTime(), room);
-            return true;
+            if (!teacherBelongsToExecutionCourse(teacher, executionCourse)) {
+                final ISummary summary = executionCourse.createSummary(infoSummary.getTitle(),
+                        infoSummary.getSummaryText(), infoSummary.getStudentsNumber(), infoSummary
+                                .getIsExtraLesson(), teacher);
+                shift.transferSummary(summary, infoSummary.getSummaryDate().getTime(), infoSummary
+                        .getSummaryHour().getTime(), room);
+                return true;
+            }
+            else{
+                throw new FenixServiceException("error.summary.teacher.invalid");
+            }
         }
 
         String teacherName = infoSummary.getTeacherName();
@@ -85,5 +90,15 @@ public class InsertSummary implements IService {
         }
 
         throw new FenixServiceException("error.summary.no.teacher");
+    }
+    
+    
+    private boolean teacherBelongsToExecutionCourse(ITeacher teacher, IExecutionCourse executionCourse){
+        for (IProfessorship professorship : executionCourse.getProfessorships()) {
+            if(teacher.getProfessorships().contains(professorship)){
+                return true;
+            }
+        }                
+        return false;
     }
 }
