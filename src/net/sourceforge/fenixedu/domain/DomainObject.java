@@ -86,30 +86,11 @@ public abstract class DomainObject extends DomainObject_Base {
     }
 
     public final int hashCode() {
-	return super.hashCode();
-
-//         if (getIdInternal() != null) {
-//             return getIdInternal().intValue();
-//         }
-
-//         throw new RuntimeException("Domain object idInternal not set!");
+        return super.hashCode();
     }
 
     public final boolean equals(Object obj) {
-	return super.equals(obj);
-
-//         if (obj != null && obj instanceof IDomainObject) {
-//             IDomainObject domainObject = (IDomainObject) obj;
-//             if (domainObject instanceof Proxy) {
-//                 domainObject = (IDomainObject) ProxyHelper.getRealObject(domainObject);
-//             }
-
-//             if (this.getClass() == domainObject.getClass() && getIdInternal() != null
-//                     && getIdInternal().equals(domainObject.getIdInternal())) {
-//                 return true;
-//             }
-//         }
-//         return false;
+        return super.equals(obj);
     }
 
     protected final void deleteDomainObject() {
