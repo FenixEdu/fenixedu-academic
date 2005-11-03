@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,7 +37,7 @@ import org.apache.struts.action.DynaActionForm;
 public class FindPersonAction extends FenixDispatchAction {
     public ActionForward prepareFindPerson(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return mapping.findForward("findPerson");
+         return mapping.findForward("findPerson");
     }
 
     public ActionForward preparePerson(ActionMapping mapping, ActionForm actionForm,
@@ -61,7 +62,8 @@ public class FindPersonAction extends FenixDispatchAction {
             degreeType = (String) findPersonForm.get("degreeType");
         }
 
-        if (roleType != null) {
+
+        if (roleType != null && roleType.length() != 0){
             if (roleType.equals(RoleType.EMPLOYEE.getName())
                     || roleType.equals(RoleType.TEACHER.getName())) {
                 if (roleType.equals(RoleType.TEACHER.getName())) {
@@ -73,7 +75,7 @@ public class FindPersonAction extends FenixDispatchAction {
             }
 
             if (roleType.equals(RoleType.STUDENT.getName())) {
-
+            	
                 if (degreeType.length() != 0) {
                     Object[] args = { degreeType };
                     List nonMasterDegree = (List) ServiceUtils.executeService(null,
@@ -81,8 +83,8 @@ public class FindPersonAction extends FenixDispatchAction {
                     
                     request.setAttribute("nonMasterDegree", nonMasterDegree);
                     request.setAttribute("degreeType", true);
+                    
                 }
-
                 findPersonForm.set("degreeType", degreeType);
                 request.setAttribute("degreeType", degreeType);
             }
@@ -91,7 +93,11 @@ public class FindPersonAction extends FenixDispatchAction {
             request.setAttribute("roleType", roleType);
 
         }
-
+        String name = (String) findPersonForm.get("name");
+        if (name != null && name.length() > 0){
+        	
+        }
+        findPersonForm.set("name",findPersonForm.get("name"));
         return mapping.findForward("findPerson");
     }
 
@@ -121,6 +127,7 @@ public class FindPersonAction extends FenixDispatchAction {
         Integer departmentId = null;
         Integer degreeId = null;
         String degreeType = null;
+        Integer indexPage = null;
 
         if (request.getParameter("roleType") != null && request.getParameter("roleType").length() > 0) {
             roleType = (String) request.getParameter("roleType");
@@ -128,12 +135,26 @@ public class FindPersonAction extends FenixDispatchAction {
         } else if (findPersonForm.get("roleType") != null) {
             roleType = (String) findPersonForm.get("roleType");
         }
+
         if (request.getParameter("degreeType") != null
                 && request.getParameter("degreeType").length() > 0) {
             degreeType = (String) request.getParameter("degreeType");
-
+            
         } else if (findPersonForm.get("degreeType") != null) {
             degreeType = (String) findPersonForm.get("degreeType");
+        }
+        if(degreeType.length() == 0 && roleType.length() == 0){
+        	degreeType = null;
+        }else if (roleType.equals(RoleType.STUDENT.getName())) {
+        	if (degreeType.length() != 0) {
+                Object[] args1 = { degreeType };
+                List nonMasterDegree = (List) ServiceUtils.executeService(null,
+                        "ReadAllDegreesByType", args1);
+                
+                request.setAttribute("nonMasterDegree", nonMasterDegree);
+                request.setAttribute("degreeType", degreeType);
+                
+            }
         }
         if (request.getParameter("departmentId") != null
                 && request.getParameter("departmentId").length() > 0) {
@@ -142,12 +163,26 @@ public class FindPersonAction extends FenixDispatchAction {
         } else if (findPersonForm.get("departmentId") != null) {
             departmentId = (Integer) findPersonForm.get("departmentId");
         }
+        if(departmentId == 0)
+	        if (roleType.equals(RoleType.TEACHER.getName())) {{
+	            List departments = (List) ServiceUtils.executeService(null, "ReadAllDepartments",
+	                    null);
+	            request.setAttribute("departments", departments);
+	        }
+        }
+
 
         if (request.getParameter("degreeId") != null && request.getParameter("degreeId").length() > 0) {
             degreeId = Integer.valueOf(request.getParameter("degreeId"));
 
         } else if (findPersonForm.get("degreeId") != null) {
             degreeId = (Integer) findPersonForm.get("degreeId");
+        }
+        if (request.getParameter("pagesIndex") != null && request.getParameter("pagesIndex").length() > 0) {
+        	indexPage = Integer.valueOf(request.getParameter("pagesIndex"));
+
+        } else if (findPersonForm.get("pagesIndex") != null) {
+        	indexPage = (Integer) findPersonForm.get("pagesIndex");
         }
 
         HashMap parametersSearch = new HashMap();
@@ -175,7 +210,7 @@ public class FindPersonAction extends FenixDispatchAction {
             errors.add("impossibleFindPerson", new ActionError(e.getMessage()));
             saveErrors(request, errors);      
             findPersonForm.set("roleType", "");
-            findPersonForm.set("name", "");
+//            findPersonForm.set("name", "");
             return prepareFindPerson(mapping, actionForm, request, response);
         }
                
@@ -186,7 +221,7 @@ public class FindPersonAction extends FenixDispatchAction {
         List infoPerson = (List) personListFinded.get(1);
         if (infoPerson.isEmpty()) {
             findPersonForm.set("roleType", "");
-            findPersonForm.set("name", "");
+//            findPersonForm.set("name", "");
             errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
             saveErrors(request, errors);
 
@@ -195,15 +230,20 @@ public class FindPersonAction extends FenixDispatchAction {
             saveErrors(request, errors);
             return prepareFindPerson(mapping, actionForm, request, response);
         }
-
+        Integer totalPerson = (Integer)personListFinded.get(0);
+        List pagesList = getPageList(totalPerson);
+        
         request.setAttribute("totalFindedPersons", personListFinded.get(0));
         request.setAttribute("personListFinded", infoPerson);
         request.setAttribute("name", name);
         request.setAttribute("roleType", roleType);
-        request.setAttribute("degreeType", degreeType);
+        
         request.setAttribute("degreeId", degreeId);
         request.setAttribute("departmentId", departmentId);
-        
+        request.setAttribute("pages" , pagesList);
+        request.setAttribute("pagesIndex",indexPage);
+        findPersonForm.set("name",name);
+
         if ((Integer) personListFinded.get(2) - (Integer) personListFinded.get(3) != SessionConstants.LIMIT_FINDED_PERSONS) {
             request.setAttribute("previousStartIndex",
                     ((Integer) personListFinded.get(2) - SessionConstants.LIMIT_FINDED_PERSONS)
@@ -223,10 +263,10 @@ public class FindPersonAction extends FenixDispatchAction {
 
         Boolean viewPhoto = getCheckBoxValue((String) findPersonForm.get("viewPhoto"));
         request.setAttribute("viewPhoto", viewPhoto);
-
-        return mapping.findForward("displayPerson");
+        return mapping.findForward("findPerson");
+       
     }
-
+ 
     private boolean isEmployeeOrTeacher(IUserView userView) {
         List employeeAndTeacherRoles = (List) CollectionUtils.select(userView.getRoles(),
                 new Predicate() {
@@ -249,5 +289,62 @@ public class FindPersonAction extends FenixDispatchAction {
         }
         return new Boolean(false);
 
+    }
+    
+    private List getPageList (Integer totalPerson){
+    	List pagesList = new ArrayList();
+        if(totalPerson <= 25){
+        	pagesList.add(0);
+        }
+        if (totalPerson > 25 && totalPerson <= 50){
+        	pagesList.add(0);
+        	pagesList.add(25); 
+        }
+        if (totalPerson > 50 && totalPerson <= 75){
+        	pagesList.add(0);
+        	pagesList.add(25);   
+        	pagesList.add(50);
+        }
+        if (totalPerson > 75 && totalPerson <= 100){
+        	pagesList.add(0);
+        	pagesList.add(25);
+        	pagesList.add(50); 
+        	pagesList.add(75);
+        }
+        if (totalPerson > 100 && totalPerson <= 125){
+        	pagesList.add(0);
+        	pagesList.add(25);  
+        	pagesList.add(50);  
+        	pagesList.add(75); 
+        	pagesList.add(100);
+        }
+        if (totalPerson > 125 && totalPerson <= 150){
+        	pagesList.add(0);
+        	pagesList.add(25);    
+        	pagesList.add(50);  
+        	pagesList.add(75);  
+        	pagesList.add(100); 
+        	pagesList.add(125);
+        }
+        if (totalPerson > 150 && totalPerson <= 175){
+        	pagesList.add(0);
+        	pagesList.add(25);
+        	pagesList.add(50);  
+        	pagesList.add(75);  
+        	pagesList.add(100);  
+        	pagesList.add(125);  
+        	pagesList.add(150);
+        }
+        if (totalPerson > 175 && totalPerson <= 200){
+        	pagesList.add(0);
+        	pagesList.add(25);
+        	pagesList.add(50);  
+        	pagesList.add(75);  
+        	pagesList.add(100);  
+        	pagesList.add(125);  
+        	pagesList.add(150);
+        	pagesList.add(175);
+        }
+        return pagesList;
     }
 }
