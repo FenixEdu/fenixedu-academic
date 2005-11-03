@@ -36,7 +36,7 @@
 				value="#{bundle[functionsManagementBackingBean.errorMessage]}"/>
 	
 		<h:panelGrid rendered="#{functionsManagementBackingBean.numberOfFunctions > 0}">	
-			<h:outputText value="<br/><br/>" escape="false" />
+			<h:outputText value="<br/>" escape="false" />
 			<h:panelGrid columns="2" styleClass="infoop">			
 				<h:outputText value="<b>#{bundle['label.search.function']}:</b>" escape="false"/>			
 				<fc:selectOneMenu value="#{functionsManagementBackingBean.functionID}">

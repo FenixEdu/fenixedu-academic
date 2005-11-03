@@ -24,20 +24,20 @@ public class EditFunction implements IService {
         ISuportePersistente suportePersistente = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
 
-        IPerson_Function person_Function = (IPerson_Function) suportePersistente.getIPersistentObject().readByOID(
-                Person_Function.class, personFunctionID);
+        IPerson_Function person_Function = (IPerson_Function) suportePersistente.getIPersistentObject()
+                .readByOID(Person_Function.class, personFunctionID);
 
-        if(person_Function == null){
+        if (person_Function == null) {
             throw new FenixServiceException("error.no.personFunction");
         }
-        
-        IFunction function = (IFunction) suportePersistente.getIPersistentObject().readByOID(Function.class, functionID);
-        
-        if(function == null){
+
+        IFunction function = (IFunction) suportePersistente.getIPersistentObject().readByOID(
+                Function.class, functionID);
+
+        if (function == null) {
             throw new FenixServiceException("erro.noFunction");
         }
-        
+
         person_Function.edit(function, beginDate, endDate, credits);
     }
-
 }

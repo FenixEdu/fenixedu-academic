@@ -527,10 +527,6 @@
 	
 	<navigation-rule>
 		<from-view-id>/departmentAdmOffice/teacher/functionsManagement/editFunction.jsp</from-view-id>
- 		<navigation-case>
-			<from-outcome>editFunction</from-outcome>
-			<to-view-id>/departmentAdmOffice/teacher/functionsManagement/personSearchForFunctionsManagement.jsp</to-view-id>
-		</navigation-case>
 		<navigation-case>
 			<from-outcome>alterFunction</from-outcome>
 			<to-view-id>/departmentAdmOffice/teacher/functionsManagement/listPersonFunctions.jsp</to-view-id>

@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.backBeans.departmentAdmOffice;
 
+import java.nio.Buffer;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.faces.component.html.HtmlInputHidden;
+import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
@@ -113,7 +115,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         if (getRequestParameter("personFunctionID") != null) {
             this.personFunctionID = Integer.valueOf(getRequestParameter("personFunctionID").toString());
         }
-        if (getRequestParameter("functionID") != null) {
+        if (getRequestParameter("functionID") != null && !getRequestParameter("functionID").equals("")) {
             this.functionID = Integer.valueOf(getRequestParameter("functionID").toString());
         }
     }
@@ -156,6 +158,16 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         }
         return "";
     }
+    
+    public void closeFunction(ActionEvent actionEvent) throws FenixFilterException, FenixServiceException{
+        try{
+            final Object[] argsToRead = { this.getPersonFunctionID(), null, null, null, null};
+            ServiceUtils.executeService(getUserView(), "EditFunction", argsToRead);
+        }
+        catch(FenixServiceException exception){
+            setErrorMessage(exception.getMessage());
+        }
+    }
 
     public String editFunction() throws FenixFilterException, FenixServiceException {
 
@@ -176,7 +188,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                         beginDate_, endDate_, credits };
                 ServiceUtils.executeService(getUserView(), "EditFunction", argsToRead);
                 setErrorMessage("message.success");
-                return "editFunction";
+                return "alterFunction";
 
             } catch (ParseException e) {
                 setErrorMessage("error.date1.format");
@@ -312,6 +324,30 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         this.numberOfFunctions = list.size();
 
         return list;
+    }
+    
+    public String getAllUnits() throws FenixFilterException, FenixServiceException{
+        StringBuffer buffer = new StringBuffer();   
+        
+        final Object[] argsToRead = { Unit.class };
+
+        List<IUnit> allUnits = new ArrayList<IUnit>();
+        allUnits.addAll((List<IUnit>) ServiceUtils.executeService(null, "ReadAllDomainObject",
+                argsToRead));        
+        
+        for (IUnit unit : allUnits) {
+            if(unit.getParentUnit() == null){
+                getUnitTree(buffer, unit);
+            }
+        }                     
+        
+        return buffer.toString();
+    }
+    
+    public void getUnitTree(StringBuffer buffer, IUnit parentUnit){
+        buffer.append("<ul>");
+        getUnitsList(parentUnit, 0, buffer);
+        buffer.append("</ul>");
     }
 
     public String getUnits() {

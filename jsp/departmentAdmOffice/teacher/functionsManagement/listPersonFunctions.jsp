@@ -46,10 +46,10 @@
 				</f:facet>				
 				<h:commandLink action="prepareEditFunction">
 					<h:outputText value="(#{bundle['link.functions.management.edit']})"/>					
-					<f:param name="personFunctionID" id="personFunctionID" value="#{person_function.idInternal}"/>
+					<f:param name="personFunctionID" id="personFunctionID1" value="#{person_function.idInternal}"/>
 					<f:param name="functionID" id="functionID" value="#{person_function.function.idInternal}"/>
 				</h:commandLink>				
-			</h:column>					
+			</h:column>			
 		</h:dataTable>
 	
 		<h:panelGroup rendered="#{empty functionsManagementBackingBean.person.activeFunctions}">
