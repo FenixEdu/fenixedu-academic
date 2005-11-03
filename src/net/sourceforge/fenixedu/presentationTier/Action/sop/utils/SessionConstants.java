@@ -408,7 +408,7 @@ public abstract class SessionConstants {
 
     public static final String LIST_SMS_DELIVERY_REPORTS = "LIST_SMS_DELIVERY_REPORTS";
 
-    public static final int LIMIT_FINDED_PERSONS = 20;
+    public static final int LIMIT_FINDED_PERSONS = 25;
     
     public static final int LIMIT_FINDED_PERSONS_TOTAL = 200;
 
