@@ -80,6 +80,8 @@ public class InsertExercise implements IService {
                 question.setXmlFileName(xmlFileName);
                 question.setVisibility(new Boolean("true"));
                 xmlNumber++;
+            } catch (DomainException domainException) {
+                throw domainException;
             } catch (SAXParseException e) {
                 badXmls.add(xmlFileName);
             } catch (ParseQuestionException e) {
