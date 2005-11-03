@@ -2,7 +2,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.util.AdvisoryRecipients" %>
-<h2><bean:message key="title.manage.advisories"/></h2>
+
+<h2><bean:message key="link.new.advisory"/></h2>
 <br />
 
 <span class="error"><html:errors/></span>
@@ -33,7 +34,7 @@
 				<bean:message key="property.advisory.expirationDate"/>
 			</td>
 			<td>
-				<html:text property="experationDate" size="25"/> (yyyy/MM/dd hh:mm)
+				<html:text property="experationDate" size="25"/> (dd/mm/aaaa hh:mm)
 			</td>
 		</tr>
 		<tr>

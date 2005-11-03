@@ -117,8 +117,8 @@
 </strong></p>
 
 <p><strong>&raquo; 
-	<html:link page="/manageAdvisories.do?method=prepare">
-		Gestão da Avisos
+	<html:link page="/advisoriesManagement/listCurrentAdvisories.faces">
+		Gestão de Avisos
 	</html:link>
 </strong></p>
 

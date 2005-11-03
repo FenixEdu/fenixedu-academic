@@ -124,6 +124,16 @@
 	</managed-bean>
 
 	<!-- END: FunctionsManagement Managed Beans -->
+	<!-- BEGIN: AdvisoriesManagement Managed Beans -->
+	
+	<managed-bean>
+		<description>AdvisoriesManagementBackingBean</description>
+		<managed-bean-name>advisoriesManagementBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.advisoriesManagement.AdvisoriesManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<!-- END: AdvisoriesManagement Managed Beans -->
 	
 	<!-- NAVIGATION RULES -->
 	
@@ -543,6 +553,25 @@
 		</navigation-case>
 	</navigation-rule> 		
 
+	<!-- END: FUNCTIONS_MANAGEMENT Navigation Rules -->
+	
+	<!-- BEGIN: FUNCTIONS_MANAGEMENT Navigation Rules -->
+	
+	<navigation-rule>
+		<from-view-id>/manager/advisoriesManagement/listCurrentAdvisories.jsp</from-view-id> 
+		<navigation-case>
+			<from-outcome>prepareEditAdvisory</from-outcome>
+			<to-view-id>/manager/advisoriesManagement/editAdvisory.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/manager/advisoriesManagement/editAdvisory.jsp</from-view-id> 
+		<navigation-case>
+			<from-outcome>editAdvisory</from-outcome>
+			<to-view-id>/manager/advisoriesManagement/listCurrentAdvisories.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
 	<!-- END: FUNCTIONS_MANAGEMENT Navigation Rules -->
 	
 	<!-- END: TEACHER Navigation Rules -->

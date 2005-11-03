@@ -270,11 +270,11 @@
         <arg0 key="message.manager.advisory.expirationDate" resource="true" />
      	<var>
            <var-name>datePattern</var-name>
-           <var-value>yyyy/MM/dd HH:mm</var-value>
+           <var-value>dd/MM/yyyy HH:mm</var-value>
         </var>
         <var>
            <var-name>mask</var-name>
-           <var-value>^(....)/(.||..)/(.||..) (.||..):(.||..)$</var-value>
+           <var-value>^(.||..)/(.||..)/(....) (.||..):(.||..)$</var-value>
         </var>
       </field>
     </form>

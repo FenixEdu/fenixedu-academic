@@ -58,7 +58,7 @@ public class ManageAdvisoriesDA extends FenixDispatchAction {
             return mapping.getInputForward();
         }
         
-        DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Date expires = null;
         try{
             expires = format.parse((String) advisoryForm.get("experationDate"));
@@ -75,7 +75,7 @@ public class ManageAdvisoriesDA extends FenixDispatchAction {
         ServiceUtils.executeService(userView, "CreateAdvisory", args);
 
         setErrorMessage(mapping, request, "label.success");
-        return mapping.getInputForward();
+        return mapping.findForward("success");
     }
 
 

@@ -2,7 +2,7 @@
  * Created on 2003/09/06
  * 
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.manager;
+package net.sourceforge.fenixedu.applicationTier.Servico.manager.advisoriesManagement;
 
 import java.util.Collection;
 import java.util.Iterator;

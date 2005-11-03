@@ -1304,6 +1304,7 @@
               scope="request"
               >
           <forward name="Manage" path="df.page.manage-advisories"/>
+          <forward name="success" path="/advisoriesManagement/listCurrentAdvisories.faces"/>
       </action>
 
 	<!-- ========== ROLE MANIPULATION ========== -->

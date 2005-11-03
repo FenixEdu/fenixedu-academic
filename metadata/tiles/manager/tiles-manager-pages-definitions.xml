@@ -156,7 +156,7 @@
 	</definition>
 	<!-- ========== ADVISORY MANIPULATION ========== -->
 	<definition name="df.page.manage-advisories" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/manageAdvisories_bd.jsp" />
+		<put name="body" value="/manager/advisoriesManagement/manageAdvisories_bd.jsp" />
 	</definition>	
 	<!-- ========== SERVICE MONITORING MANIPULATION ========== -->
 	<definition name="df.page.monitor-services" extends="definition.manager.masterPage" >
