@@ -216,23 +216,6 @@ public class EditGrantContractRegime extends EditDomainObjectService {
                 throw new FenixServiceException(persistentException.getMessage());
             }
 
-            try {
-                // Change the data from the insurance
-                IPersistentGrantInsurance persistentGrantInsurance = sp.getIPersistentGrantInsurance();
-
-                IGrantInsurance grantInsurance = persistentGrantInsurance
-                        .readGrantInsuranceByGrantContract(grantContractRegime.getGrantContract()
-                                .getIdInternal());
-                if (grantInsurance != null) {
-
-                    persistentGrantInsurance.simpleLockWrite(grantInsurance);
-                    grantInsurance.setDateEndInsurance(infoGrantContractRegime.getDateEndContract());
-                    grantInsurance.setTotalValue(InfoGrantInsurance.calculateTotalValue(grantInsurance
-                            .getDateBeginInsurance(), grantInsurance.getDateEndInsurance()));
-                }
-            } catch (ExcepcaoPersistencia e) {
-                throw new FenixServiceException();
-            }
         }
 
     }
