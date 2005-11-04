@@ -71,14 +71,14 @@ public class Person extends Person_Base {
 
     public void edit(InfoPerson personToEdit, ICountry country) {
         setProperties(personToEdit);
-        if(country != null){
+        if (country != null) {
             setPais(country);
-        }        
-    }    
-    
+        }
+    }
+
     public void update(InfoPerson updatedPersonalData, ICountry country) {
         updateProperties(updatedPersonalData);
-        setPais((ICountry) valueToUpdate(getPais(),country));
+        setPais((ICountry) valueToUpdate(getPais(), country));
     }
 
     public void editPersonalContactInformation(InfoPerson personToEdit) {
@@ -155,46 +155,45 @@ public class Person extends Person_Base {
         setPassword(PasswordEncryptor.encryptPassword(newPassword));
     }
 
-    public void updateUsername(){
-    	this.setUsername(UsernameUtils.updateUsername(this));
+    public void updateUsername() {
+        this.setUsername(UsernameUtils.updateUsername(this));
     }
-    
-    public void updateIstUsername(){
+
+    public void updateIstUsername() {
         this.setIstUsername(UsernameUtils.updateIstUsername(this));
     }
-    
-	public IRole getPersonRole(RoleType roleType){
-		
-		for (IRole role : this.getPersonRoles()) {
-			if(role.getRoleType().equals(roleType)){
-				return role;
-			}
-		}
-		return null;
-	}    
-    
-	public Boolean hasRole(final RoleType roleType){
-		for (final IRole role : this.getPersonRoles()) {
-			if (role.getRoleType() == roleType) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
+
+    public IRole getPersonRole(RoleType roleType) {
+
+        for (IRole role : this.getPersonRoles()) {
+            if (role.getRoleType().equals(roleType)) {
+                return role;
+            }
+        }
+        return null;
+    }
+
+    public Boolean hasRole(final RoleType roleType) {
+        for (final IRole role : this.getPersonRoles()) {
+            if (role.getRoleType() == roleType) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public IStudent getStudentByType(DegreeType degreeType) {
         for (IStudent student : this.getStudents()) {
-            if (student.getDegreeType().equals(degreeType)){
+            if (student.getDegreeType().equals(degreeType)) {
                 return student;
             }
         }
         return null;
     }
-    
-    public String getNacionalidade(){
+
+    public String getNacionalidade() {
         return this.getPais().getNationality();
     }
-    
 
     /***************************************************************************
      * PRIVATE METHODS *
@@ -238,7 +237,8 @@ public class Person extends Person_Base {
 
         // Generate person's Password
         if (getPassword() == null)
-            setPassword(PasswordEncryptor.encryptPassword(GeneratePassword.getInstance().generatePassword(this)));
+            setPassword(PasswordEncryptor.encryptPassword(GeneratePassword.getInstance()
+                    .generatePassword(this)));
 
         setAvailableEmail(infoPerson.getAvailableEmail());
         setAvailablePhoto(infoPerson.getAvailablePhoto());
@@ -293,8 +293,9 @@ public class Person extends Person_Base {
                 .getAvailableWebSite()));
         setWorkPhone(valueToUpdate(getWorkPhone(), infoPerson.getWorkPhone()));
 
-        setPassword(valueToUpdate(getPassword(), PasswordEncryptor.encryptPassword(GeneratePassword.getInstance().generatePassword(this))));
-        
+        setPassword(valueToUpdate(getPassword(), PasswordEncryptor.encryptPassword(GeneratePassword
+                .getInstance().generatePassword(this))));
+
     }
 
     private String valueToUpdate(String actualValue, String newValue) {
@@ -440,8 +441,8 @@ public class Person extends Person_Base {
     public String getSlideNameForCandidateDocuments() {
         return "/candidateDocuments/person/P" + getIdInternal();
     }
-    
-        public void removeRoleByType(final RoleType roleType) {
+
+    public void removeRoleByType(final RoleType roleType) {
         final IRole role = getPersonRole(roleType);
         if (role != null) {
             removePersonRoles(role);
@@ -462,27 +463,48 @@ public class Person extends Person_Base {
             }
         }
     }
-    
-    public List<IPerson_Function> getActiveFunctions(){
-         List<IPerson_Function> activeFunctions = new ArrayList<IPerson_Function>();
-         
-         Date currentDate = Calendar.getInstance().getTime();
-                  
-         for (IPerson_Function personFunction : this.getPerson_functions()) {             
-            if(personFunction.getEndDate() != null && personFunction.getEndDate().after(currentDate)){
+
+    public List<IPerson_Function> getActiveFunctions() {
+
+        List<IPerson_Function> activeFunctions = new ArrayList<IPerson_Function>();
+                
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        
+        for (IPerson_Function personFunction : this.getPerson_functions()) {
+            if (personFunction.getEndDate() != null
+                    && (personFunction.getEndDate().after(calendar.getTime()) || personFunction.getEndDate()
+                            .equals(calendar.getTime()))) {
                 activeFunctions.add(personFunction);
             }
-        }        
+        }
         return activeFunctions;
     }
-    
-    public boolean containsActiveFunction(IFunction function){
+
+    public List<IPerson_Function> getInactiveFunctions() {
+
+        List<IPerson_Function> inactiveFunctions = new ArrayList<IPerson_Function>();
         
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+
+        for (IPerson_Function personFunction : this.getPerson_functions()) {
+            if (personFunction.getEndDate() != null && personFunction.getEndDate().before(calendar.getTime())) {
+                inactiveFunctions.add(personFunction);
+            }
+        }
+        return inactiveFunctions;
+    }
+
+    public boolean containsActiveFunction(IFunction function) {
+
         for (IPerson_Function person_Function : this.getActiveFunctions()) {
-            if(person_Function.getFunction().equals(function)){
+            if (person_Function.getFunction().equals(function)) {
                 return true;
             }
-        }        
-        return false;       
+        }
+        return false;
     }
 }

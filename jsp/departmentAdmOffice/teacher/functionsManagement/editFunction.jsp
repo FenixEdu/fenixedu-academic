@@ -72,8 +72,8 @@
 		
 		<h:outputText value="<br/>" escape="false" />	
 		<h:panelGrid columns="2">
-			<h:commandButton action="#{functionsManagementBackingBean.editFunction}" value="#{bundle['link.edit']}" styleClass="inputbutton"/>				
-			<h:commandButton action="alterFunction" immediate="true" value="#{bundle['alter.function.button']}" styleClass="inputbutton"/>								
+			<h:commandButton action="#{functionsManagementBackingBean.editFunction}" value="#{bundle['label.next']}" styleClass="inputbutton"/>				
+			<h:commandButton action="alterFunction" immediate="true" value="#{bundle['button.choose.new.person']}" styleClass="inputbutton"/>								
 		</h:panelGrid>	
 
 	</h:form>

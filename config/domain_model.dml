@@ -2126,6 +2126,8 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 	
 	public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IPerson_Function> getActiveFunctions();
 	
+	public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IPerson_Function> getInactiveFunctions();
+	
 	public boolean containsActiveFunction(net.sourceforge.fenixedu.domain.organizationalStructure.IFunction function);
     "
 }

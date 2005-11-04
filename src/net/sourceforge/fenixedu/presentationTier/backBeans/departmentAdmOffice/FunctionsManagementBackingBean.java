@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.backBeans.departmentAdmOffice;
 
-import java.nio.Buffer;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,7 +14,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.faces.component.html.HtmlInputHidden;
-import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
@@ -112,7 +110,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         if (getRequestParameter("link") != null) {
             this.link = getRequestParameter("link").toString();
         }
-        if (getRequestParameter("personFunctionID") != null) {
+        if (getRequestParameter("personFunctionID") != null && !getRequestParameter("personFunctionID").equals("")) {
             this.personFunctionID = Integer.valueOf(getRequestParameter("personFunctionID").toString());
         }
         if (getRequestParameter("functionID") != null && !getRequestParameter("functionID").equals("")) {
@@ -159,16 +157,6 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         return "";
     }
     
-    public void closeFunction(ActionEvent actionEvent) throws FenixFilterException, FenixServiceException{
-        try{
-            final Object[] argsToRead = { this.getPersonFunctionID(), null, null, null, null};
-            ServiceUtils.executeService(getUserView(), "EditFunction", argsToRead);
-        }
-        catch(FenixServiceException exception){
-            setErrorMessage(exception.getMessage());
-        }
-    }
-
     public String editFunction() throws FenixFilterException, FenixServiceException {
 
         if (this.getPerson().containsActiveFunction(this.getFunction())
@@ -199,7 +187,21 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
         return "";
     }
+    
+    public List<IPerson_Function> getActiveFunctions() throws FenixFilterException, FenixServiceException{
+        IPerson person = this.getPerson();
+        List<IPerson_Function> activeFunctions = person.getActiveFunctions();
+        Collections.sort(activeFunctions, new BeanComparator("endDate"));
+        return activeFunctions;
+    }
 
+    public List<IPerson_Function> getInactiveFunctions() throws FenixFilterException, FenixServiceException{
+        IPerson person = this.getPerson();
+        List<IPerson_Function> inactiveFunctions = person.getInactiveFunctions();
+        Collections.sort(inactiveFunctions, new BeanComparator("endDate"));
+        return inactiveFunctions;
+    }
+    
     public String verifyFunction() throws FenixFilterException, FenixServiceException {
 
         if (this.getPerson().containsActiveFunction(this.getFunction())) {

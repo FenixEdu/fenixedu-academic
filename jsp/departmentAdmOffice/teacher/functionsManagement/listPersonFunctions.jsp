@@ -24,10 +24,10 @@
 			<h:outputText value="#{functionsManagementBackingBean.person.nome}" escape="false"/>		
 		</h:panelGroup>
 		
-		<h:outputText value="<br/><br/><br/>" escape="false" />
+		<h:outputText value="<br/><br/><br/><h3>#{bundle['label.active.functions']}<h3/>" escape="false" />
 	
-		<h:dataTable value="#{functionsManagementBackingBean.person.activeFunctions}" var="person_function"
-			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty functionsManagementBackingBean.person.activeFunctions}">
+		<h:dataTable value="#{functionsManagementBackingBean.activeFunctions}" var="person_function"
+			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty functionsManagementBackingBean.activeFunctions}">
 			<h:column>
 				<f:facet name="header">
 					<h:outputText value="#{bundle['label.function']}" />
@@ -40,6 +40,28 @@
 				</f:facet>				
 				<h:outputText value="#{person_function.function.unit.name}"/>
 			</h:column>	
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{bundle['label.beginDate']}" />
+				</f:facet>				
+				<h:outputFormat value="{0, date, dd/MM/yyyy}">
+					<f:param value="#{person_function.beginDate}"/>
+				</h:outputFormat>
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{bundle['label.endDate']}" />
+				</f:facet>				
+				<h:outputFormat value="{0, date, dd/MM/yyyy}">
+					<f:param value="#{person_function.endDate}"/>
+				</h:outputFormat>
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{bundle['link.group.creditsManagement']}" />
+				</f:facet>				
+				<h:outputText value="#{person_function.credits}" />
+			</h:column>
 			<h:column> 			
 				<f:facet name="header">
 					<h:outputText value="#{bundle['label.action']}" />
@@ -51,12 +73,66 @@
 				</h:commandLink>				
 			</h:column>			
 		</h:dataTable>
+
+		<h:outputText value="#{bundle['error.noActiveFunctions.in.person']}<br/>" styleClass="error" 
+				rendered="#{empty functionsManagementBackingBean.activeFunctions}" escape="false"/>			
 	
-		<h:panelGroup rendered="#{empty functionsManagementBackingBean.person.activeFunctions}">
-			<h:outputText value="#{bundle['error.noFunctions.in.person']}" styleClass="error"/>
-			<h:outputText value="<br/><br/>" escape="false"/>
-			<h:commandButton value="#{bundle['button.choose.new.person']}" action="chooseNewPerson" styleClass="inputbutton"/>
-		</h:panelGroup>
+		<h:outputText value="<br/><h3>#{bundle['label.inactive.functions']}</h3>" escape="false" />
+	
+		<h:dataTable value="#{functionsManagementBackingBean.inactiveFunctions}" var="person_function"
+			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty functionsManagementBackingBean.inactiveFunctions}">
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{bundle['label.function']}" />
+				</f:facet>				
+				<h:outputText value="<strong>#{person_function.function.name}</strong>" escape="false"/>				
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{bundle['label.search.unit']}" />
+				</f:facet>				
+				<h:outputText value="#{person_function.function.unit.name}"/>
+			</h:column>	
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{bundle['label.beginDate']}" />
+				</f:facet>				
+				<h:outputFormat value="{0, date, dd/MM/yyyy}">
+					<f:param value="#{person_function.beginDate}"/>
+				</h:outputFormat>
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{bundle['label.endDate']}" />
+				</f:facet>				
+				<h:outputFormat value="{0, date, dd/MM/yyyy}">
+					<f:param value="#{person_function.endDate}"/>
+				</h:outputFormat>
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{bundle['link.group.creditsManagement']}" />
+				</f:facet>				
+				<h:outputText value="#{person_function.credits}" />
+			</h:column>
+			<h:column> 			
+				<f:facet name="header">
+					<h:outputText value="#{bundle['label.action']}" />
+				</f:facet>				
+				<h:commandLink action="prepareEditFunction">
+					<h:outputText value="(#{bundle['link.functions.management.edit']})"/>					
+					<f:param name="personFunctionID" id="personFunctionID1" value="#{person_function.idInternal}"/>
+					<f:param name="functionID" id="functionID" value="#{person_function.function.idInternal}"/>
+				</h:commandLink>				
+			</h:column>			
+		</h:dataTable>
+		
+		<h:outputText value="#{bundle['error.noInactiveFunctions.in.person']}<br/>" styleClass="error" 
+				rendered="#{empty functionsManagementBackingBean.inactiveFunctions}" escape="false"/>			
+			
+		<h:outputText value="<br/><br/>" escape="false"/>				
+		<h:commandButton value="#{bundle['button.choose.new.person']}" action="chooseNewPerson" styleClass="inputbutton"/>
+					
 	</h:form>
 
 </ft:tilesView>
