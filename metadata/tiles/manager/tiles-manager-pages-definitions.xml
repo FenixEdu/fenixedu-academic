@@ -137,6 +137,7 @@
 		<put name="body" value="/manager/readExecutionCoursesByExecutionPeriod_bd.jsp" />
 		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>
+	
 
 	<!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
 	<definition name="df.page.manage-execution-periods" extends="definition.manager.masterPage" >
@@ -303,7 +304,7 @@
 		<put name="body" value="/manager/personManagement/displayEmployee.jsp" />
 		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
 	</definition>
-	
+		
 	<!-- ========== FIND PERSON MANAGEMENT ========== -->
 	<definition name="firstPageGenerateFiles" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/generateFiles/welcomeScreen.jsp" />
@@ -446,4 +447,9 @@
 	<definition name="pass-test-kerberos-sucess" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/changePasswordSucess_bd.jsp" />
 	</definition>
+	
+	<!-- ========== Functions Management ========== -->	
+	<definition name="df.page.functionsManagement" extends="definition.manager.masterPage" >
+		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
+	</definition>	
 </tiles-definitions>

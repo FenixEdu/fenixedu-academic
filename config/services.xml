@@ -8854,7 +8854,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="DepartmentAdministrativeOfficeAuthorization"></chain>
+        	<chain name="DepartmentAdministrativeOfficeAndManagerAuthorizationChain"></chain>
         </filterChains>     
     </service>  
     <service>
@@ -8863,7 +8863,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="DepartmentAdministrativeOfficeAuthorization"></chain>
+        	<chain name="DepartmentAdministrativeOfficeAndManagerAuthorizationChain"></chain>
         </filterChains>     
     </service>    	
 </serviceDefinitions>    

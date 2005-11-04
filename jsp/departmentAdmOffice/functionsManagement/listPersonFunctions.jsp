@@ -11,7 +11,7 @@
 	
 		<h:inputHidden binding="#{functionsManagementBackingBean.linkHidden}"/>
 		<h:inputHidden binding="#{functionsManagementBackingBean.personIDHidden}"/>
-	
+       		
 		<h:outputText value="#{bundle['label.site.orientation6']}" escape="false"/>	
 		<h:outputText value="<br/><br/>" escape="false" />
 			

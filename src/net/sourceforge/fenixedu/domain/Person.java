@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IFunction;
-import net.sourceforge.fenixedu.domain.organizationalStructure.IPerson_Function;
+import net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
@@ -464,15 +464,15 @@ public class Person extends Person_Base {
         }
     }
 
-    public List<IPerson_Function> getActiveFunctions() {
+    public List<IPersonFunction> getActiveFunctions() {
 
-        List<IPerson_Function> activeFunctions = new ArrayList<IPerson_Function>();
+        List<IPersonFunction> activeFunctions = new ArrayList<IPersonFunction>();
                 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         
-        for (IPerson_Function personFunction : this.getPerson_functions()) {
+        for (IPersonFunction personFunction : this.getPersonFunctions()) {
             if (personFunction.getEndDate() != null
                     && (personFunction.getEndDate().after(calendar.getTime()) || personFunction.getEndDate()
                             .equals(calendar.getTime()))) {
@@ -482,15 +482,15 @@ public class Person extends Person_Base {
         return activeFunctions;
     }
 
-    public List<IPerson_Function> getInactiveFunctions() {
+    public List<IPersonFunction> getInactiveFunctions() {
 
-        List<IPerson_Function> inactiveFunctions = new ArrayList<IPerson_Function>();
+        List<IPersonFunction> inactiveFunctions = new ArrayList<IPersonFunction>();
         
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 23);
         calendar.set(Calendar.MINUTE, 59);
 
-        for (IPerson_Function personFunction : this.getPerson_functions()) {
+        for (IPersonFunction personFunction : this.getPersonFunctions()) {
             if (personFunction.getEndDate() != null && personFunction.getEndDate().before(calendar.getTime())) {
                 inactiveFunctions.add(personFunction);
             }
@@ -500,7 +500,7 @@ public class Person extends Person_Base {
 
     public boolean containsActiveFunction(IFunction function) {
 
-        for (IPerson_Function person_Function : this.getActiveFunctions()) {
+        for (IPersonFunction person_Function : this.getActiveFunctions()) {
             if (person_Function.getFunction().equals(function)) {
                 return true;
             }

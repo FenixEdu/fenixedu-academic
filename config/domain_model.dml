@@ -2036,7 +2036,7 @@ class net.sourceforge.fenixedu.domain.Period extends net.sourceforge.fenixedu.do
 	"
 }
 
-class net.sourceforge.fenixedu.domain.organizationalStructure.Person_Function extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer credits;
 	Integer keyPerson;
 	Integer keyFunction;
@@ -2124,9 +2124,9 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 	
 	public String getNacionalidade();
 	
-	public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IPerson_Function> getActiveFunctions();
+	public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction> getActiveFunctions();
 	
-	public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IPerson_Function> getInactiveFunctions();
+	public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction> getInactiveFunctions();
 	
 	public boolean containsActiveFunction(net.sourceforge.fenixedu.domain.organizationalStructure.IFunction function);
     "
@@ -5766,14 +5766,14 @@ relation FunctionParentInherentFuntion {
 }
 
 relation PersonPersonFuntion {
-	net.sourceforge.fenixedu.domain.organizationalStructure.Person_Function playsRole person_functions  {
+	net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction playsRole personFunctions  {
     	multiplicity *;
     }
 	net.sourceforge.fenixedu.domain.Person playsRole person;
 }
 
 relation FuntionPersonFunction {
-	net.sourceforge.fenixedu.domain.organizationalStructure.Person_Function playsRole person_functions  {
+	net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction playsRole personFunctions  {
     	multiplicity *;
     }
 	net.sourceforge.fenixedu.domain.organizationalStructure.Function playsRole function;

@@ -61,8 +61,8 @@
     </collection-descriptor>	
 
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-        name="person_functions"
-        element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Person_Function">
+        name="personFunctions"
+        element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction">
 		<inverse-foreignkey field-ref="keyFunction"/>
     </collection-descriptor>	
 

@@ -908,9 +908,9 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
-     <filterChain>
-        <name>DepartmentAdministrativeOfficeAuthorization</name>
-        <expression>DepartmentAdministrativeOfficeAuthorization</expression>
+    <filterChain>
+        <name>DepartmentAdministrativeOfficeAndManagerAuthorizationChain</name>
+        <expression>DepartmentAdministrativeOfficeAuthorization || ManagerAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>

@@ -1,6 +1,6 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.Person_Function -->
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.Person_Function" 
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction" 
 	table="PERSON_FUNCTION">
 	
 	<field-descriptor id="1"

@@ -25,9 +25,9 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IFunction;
-import net.sourceforge.fenixedu.domain.organizationalStructure.IPerson_Function;
+import net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Person_Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
@@ -85,9 +85,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     private Integer personFunctionID;
 
-    public IPerson_Function personFunction;
-    
-        
+    public IPersonFunction personFunction;
 
     public FunctionsManagementBackingBean() {
         getParametersFromLinks();
@@ -110,7 +108,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         if (getRequestParameter("link") != null) {
             this.link = getRequestParameter("link").toString();
         }
-        if (getRequestParameter("personFunctionID") != null && !getRequestParameter("personFunctionID").equals("")) {
+        if (getRequestParameter("personFunctionID") != null
+                && !getRequestParameter("personFunctionID").equals("")) {
             this.personFunctionID = Integer.valueOf(getRequestParameter("personFunctionID").toString());
         }
         if (getRequestParameter("functionID") != null && !getRequestParameter("functionID").equals("")) {
@@ -156,7 +155,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         }
         return "";
     }
-    
+
     public String editFunction() throws FenixFilterException, FenixServiceException {
 
         if (this.getPerson().containsActiveFunction(this.getFunction())
@@ -187,21 +186,47 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
         return "";
     }
-    
-    public List<IPerson_Function> getActiveFunctions() throws FenixFilterException, FenixServiceException{
+
+    public List<IPersonFunction> getActiveFunctions() throws FenixFilterException,
+            FenixServiceException {
+
         IPerson person = this.getPerson();
-        List<IPerson_Function> activeFunctions = person.getActiveFunctions();
-        Collections.sort(activeFunctions, new BeanComparator("endDate"));
-        return activeFunctions;
+        List<IPersonFunction> activeFunctions = person.getActiveFunctions();
+        List<IPersonFunction> activeFunctions_ = new ArrayList<IPersonFunction>();
+
+        addValidFunctions(activeFunctions, activeFunctions_);
+
+        Collections.sort(activeFunctions_, new BeanComparator("endDate"));
+        return activeFunctions_;
     }
 
-    public List<IPerson_Function> getInactiveFunctions() throws FenixFilterException, FenixServiceException{
+    public List<IPersonFunction> getInactiveFunctions() throws FenixFilterException,
+            FenixServiceException {
+
         IPerson person = this.getPerson();
-        List<IPerson_Function> inactiveFunctions = person.getInactiveFunctions();
-        Collections.sort(inactiveFunctions, new BeanComparator("endDate"));
-        return inactiveFunctions;
+        List<IPersonFunction> inactiveFunctions = person.getInactiveFunctions();
+        List<IPersonFunction> inactiveFunctions_ = new ArrayList<IPersonFunction>();
+
+        addValidFunctions(inactiveFunctions, inactiveFunctions_);
+
+        Collections.sort(inactiveFunctions_, new BeanComparator("endDate"));
+        return inactiveFunctions_;
     }
-    
+
+    private void addValidFunctions(List<IPersonFunction> functions, List<IPersonFunction> functions_) {
+        for (IPersonFunction person_function : functions) {
+            if (person_function.getFunction().getUnit().getParentUnit() == null) {
+                if (person_function.getFunction().getUnit().equals(this.getEmployeeDepartmentUnit())) {
+                    functions_.add(person_function);
+                }
+            } else if (person_function.getFunction().getUnit().getTopUnit().equals(
+                    this.getEmployeeDepartmentUnit())) {
+                functions_.add(person_function);
+            }
+
+        }
+    }
+
     public String verifyFunction() throws FenixFilterException, FenixServiceException {
 
         if (this.getPerson().containsActiveFunction(this.getFunction())) {
@@ -230,12 +255,9 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
         if (allPersonsList.isEmpty()) {
             setErrorMessage("error.search.person");
-
         } else {
-
             int begin = (this.getPage() - 1) * SessionConstants.LIMIT_FINDED_PERSONS;
             int end = begin + SessionConstants.LIMIT_FINDED_PERSONS;
-
             for (int i = begin; i < end; i++) {
                 if (i <= (allPersonsList.size() - 1)) {
                     getPersonsList().add(allPersonsList.get(i));
@@ -244,7 +266,6 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 }
             }
         }
-
         return "";
     }
 
@@ -283,7 +304,6 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 whiteSpaces++;
             }
         }
-
         for (IPerson person : persons) {
             String personName = person.getNome();
             String userName = person.getUsername();
@@ -320,39 +340,13 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
             selectItem.setLabel(function.getName());
             list.add(selectItem);
         }
-
         Collections.sort(list, new BeanComparator("label"));
-
         this.numberOfFunctions = list.size();
 
         return list;
     }
-    
-    public String getAllUnits() throws FenixFilterException, FenixServiceException{
-        StringBuffer buffer = new StringBuffer();   
-        
-        final Object[] argsToRead = { Unit.class };
 
-        List<IUnit> allUnits = new ArrayList<IUnit>();
-        allUnits.addAll((List<IUnit>) ServiceUtils.executeService(null, "ReadAllDomainObject",
-                argsToRead));        
-        
-        for (IUnit unit : allUnits) {
-            if(unit.getParentUnit() == null){
-                getUnitTree(buffer, unit);
-            }
-        }                     
-        
-        return buffer.toString();
-    }
-    
-    public void getUnitTree(StringBuffer buffer, IUnit parentUnit){
-        buffer.append("<ul>");
-        getUnitsList(parentUnit, 0, buffer);
-        buffer.append("</ul>");
-    }
-
-    public String getUnits() {
+    public String getUnits() throws FenixFilterException, FenixServiceException {
         StringBuffer buffer = new StringBuffer();
         buffer.append("<ul>");
         getUnitsList(this.getEmployeeDepartmentUnit(), 0, buffer);
@@ -363,10 +357,10 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     private void getUnitsList(IUnit parentUnit, int index, StringBuffer buffer) {
 
         buffer.append("<li>").append("<a href=\"").append(getContextPath()).append(
-                "/departmentAdmOffice/teacher/functionsManagement/chooseFunction.faces?personID=")
-                .append(personID).append("&unitID=").append(parentUnit.getIdInternal()).append("&link=")
-                .append(this.getLink()).append("\">").append(parentUnit.getName()).append("</a>").append(
-                        "</li>").append("<ul>");
+                "/departmentAdmOffice/functionsManagement/chooseFunction.faces?personID=").append(
+                personID).append("&unitID=").append(parentUnit.getIdInternal()).append("&link=").append(
+                this.getLink()).append("\">").append(parentUnit.getName()).append("</a>")
+                .append("</li>").append("<ul>");
 
         for (IUnit subUnit : parentUnit.getAssociatedUnits()) {
             getUnitsList(subUnit, index + 1, buffer);
@@ -677,7 +671,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     public String getLink() {
         if (link == null && this.linkHidden != null && this.linkHidden.getValue() != null
                 && !this.linkHidden.getValue().equals("")) {
-            this.link = this.linkHidden.getValue().toString();            
+            this.link = this.linkHidden.getValue().toString();
         } else if (link == null) {
             this.link = "chooseUnit";
         }
@@ -716,16 +710,16 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         this.personFunctionID = personFunctionID;
     }
 
-    public IPerson_Function getPersonFunction() throws FenixFilterException, FenixServiceException {
+    public IPersonFunction getPersonFunction() throws FenixFilterException, FenixServiceException {
         if (this.personFunction == null) {
-            final Object[] argsToRead = { Person_Function.class, this.getPersonFunctionID() };
-            this.personFunction = (IPerson_Function) ServiceUtils.executeService(null,
+            final Object[] argsToRead = { PersonFunction.class, this.getPersonFunctionID() };
+            this.personFunction = (IPersonFunction) ServiceUtils.executeService(null,
                     "ReadDomainObject", argsToRead);
         }
         return personFunction;
     }
 
-    public void setPersonFunction(IPerson_Function person_Function) {
+    public void setPersonFunction(IPersonFunction person_Function) {
         this.personFunction = person_Function;
     }
 
@@ -743,8 +737,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         }
         this.personFunctionIDHidden = personFunctionIDHidden;
     }
-    
-    public Integer getLinkValue(){        
+
+    public Integer getLinkValue() {
         return (this.getLink().equals("chooseUnit")) ? 1 : 0;
     }
 }

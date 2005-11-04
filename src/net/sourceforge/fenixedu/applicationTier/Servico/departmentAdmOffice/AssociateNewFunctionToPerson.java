@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IFunction;
-import net.sourceforge.fenixedu.domain.organizationalStructure.IPerson_Function;
+import net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -38,7 +38,7 @@ public class AssociateNewFunctionToPerson implements IService {
             throw new FenixServiceException("error.noFunction");
         }
         
-        IPerson_Function personFunction = DomainFactory.makePerson_Function();
+        IPersonFunction personFunction = DomainFactory.makePersonFunction();
         
         personFunction.setPerson(person);
         personFunction.setFunction(function);

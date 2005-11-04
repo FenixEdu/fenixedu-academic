@@ -122,6 +122,12 @@
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.departmentAdmOffice.FunctionsManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<description>ManagerFunctionsManagementBackingBean</description>
+		<managed-bean-name>managerFunctionsManagementBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.personManagement.ManagerFunctionsManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 
 	<!-- END: FunctionsManagement Managed Beans -->
 	<!-- BEGIN: AdvisoriesManagement Managed Beans -->
@@ -502,56 +508,106 @@
 	<!-- BEGIN: FUNCTIONS_MANAGEMENT Navigation Rules -->
 	
 	<navigation-rule>
-		<from-view-id>/departmentAdmOffice/teacher/functionsManagement/chooseFunction.jsp</from-view-id>
+		<from-view-id>/departmentAdmOffice/functionsManagement/chooseFunction.jsp</from-view-id>
  		<navigation-case>
 			<from-outcome>confirmation</from-outcome>
-			<to-view-id>/departmentAdmOffice/teacher/functionsManagement/confirmation.jsp</to-view-id>
+			<to-view-id>/departmentAdmOffice/functionsManagement/confirmation.jsp</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>alterUnit</from-outcome>
-			<to-view-id>/departmentAdmOffice/teacher/functionsManagement/chooseUnit.jsp</to-view-id>
+			<to-view-id>/departmentAdmOffice/functionsManagement/chooseUnit.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 		
 	<navigation-rule>
-		<from-view-id>/departmentAdmOffice/teacher/functionsManagement/listPersonFunctions.jsp</from-view-id>
+		<from-view-id>/departmentAdmOffice/functionsManagement/listPersonFunctions.jsp</from-view-id>
  		<navigation-case>
 			<from-outcome>prepareEditFunction</from-outcome>
-			<to-view-id>/departmentAdmOffice/teacher/functionsManagement/editFunction.jsp</to-view-id>
+			<to-view-id>/departmentAdmOffice/functionsManagement/editFunction.jsp</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>chooseNewPerson</from-outcome>
-			<to-view-id>/departmentAdmOffice/teacher/functionsManagement/personSearchForFunctionsManagement.jsp</to-view-id>
+			<to-view-id>/departmentAdmOffice/functionsManagement/personSearchForFunctionsManagement.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule> 	
 	
 	<navigation-rule>
-		<from-view-id>/departmentAdmOffice/teacher/functionsManagement/editFunction.jsp</from-view-id>
+		<from-view-id>/departmentAdmOffice/functionsManagement/editFunction.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>alterFunction</from-outcome>
-			<to-view-id>/departmentAdmOffice/teacher/functionsManagement/listPersonFunctions.jsp</to-view-id>
+			<to-view-id>/departmentAdmOffice/functionsManagement/listPersonFunctions.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule> 	
 	
 	<navigation-rule>
-		<from-view-id>/departmentAdmOffice/teacher/functionsManagement/confirmation.jsp</from-view-id>
+		<from-view-id>/departmentAdmOffice/functionsManagement/confirmation.jsp</from-view-id>
  		<navigation-case>
 			<from-outcome>alterUnit</from-outcome>
-			<to-view-id>/departmentAdmOffice/teacher/functionsManagement/chooseUnit.jsp</to-view-id>
+			<to-view-id>/departmentAdmOffice/functionsManagement/chooseUnit.jsp</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>alterFunction</from-outcome>
-			<to-view-id>/departmentAdmOffice/teacher/functionsManagement/chooseFunction.jsp</to-view-id>
+			<to-view-id>/departmentAdmOffice/functionsManagement/chooseFunction.jsp</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>success</from-outcome>
-			<to-view-id>/departmentAdmOffice/teacher/functionsManagement/personSearchForFunctionsManagement.jsp</to-view-id>
+			<to-view-id>/departmentAdmOffice/functionsManagement/personSearchForFunctionsManagement.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule> 		
 
+	<!-- MANAGER  -->
+	
+	<navigation-rule>
+		<from-view-id>/manager/functionsManagement/chooseFunction.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>confirmation</from-outcome>
+			<to-view-id>/manager/functionsManagement/confirmation.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>alterUnit</from-outcome>
+			<to-view-id>/manager/functionsManagement/chooseUnit.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+		
+	<navigation-rule>
+		<from-view-id>/manager/functionsManagement/listPersonFunctions.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>prepareEditFunction</from-outcome>
+			<to-view-id>/manager/functionsManagement/editFunction.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>chooseNewPerson</from-outcome>
+			<to-view-id>/manager/functionsManagement/personSearchForFunctionsManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 	
+	
+	<navigation-rule>
+		<from-view-id>/manager/functionsManagement/editFunction.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>alterFunction</from-outcome>
+			<to-view-id>/manager/functionsManagement/listPersonFunctions.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 	
+	
+	<navigation-rule>
+		<from-view-id>/manager/functionsManagement/confirmation.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>alterUnit</from-outcome>
+			<to-view-id>/manager/functionsManagement/chooseUnit.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>alterFunction</from-outcome>
+			<to-view-id>/manager/functionsManagement/chooseFunction.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/manager/functionsManagement/personSearchForFunctionsManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 		
+	
 	<!-- END: FUNCTIONS_MANAGEMENT Navigation Rules -->
 	
-	<!-- BEGIN: FUNCTIONS_MANAGEMENT Navigation Rules -->
+	<!-- BEGIN: ADVISORIES_MANAGEMENT Navigation Rules -->
 	
 	<navigation-rule>
 		<from-view-id>/manager/advisoriesManagement/listCurrentAdvisories.jsp</from-view-id> 
@@ -568,7 +624,7 @@
 		</navigation-case>
 	</navigation-rule>
 	
-	<!-- END: FUNCTIONS_MANAGEMENT Navigation Rules -->
+	<!-- END: ADVISORIES_MANAGEMENT Navigation Rules -->
 	
 	<!-- END: TEACHER Navigation Rules -->
 	<!-- Custom Components -->
