@@ -19,10 +19,10 @@
 			<h:outputText value="#{bundle['link.new.advisory']}" />
 		</h:outputLink>
 	
-		<h:outputText value="<br/><br/><h2>#{bundle['label.advisories.list']}</h2>" escape="false" />
+		<h:outputText value="<br/><br/><h3>#{bundle['label.advisories.list']}</h3>" escape="false" />
 		 
 		<h:dataTable value="#{advisoriesManagementBackingBean.allAdvisories}" var="advisory"
-			headerClass="listClasses-header" columnClasses="listClasses">
+			headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty advisoriesManagementBackingBean.allAdvisories}">
 		
 			<h:column>
 				<f:facet name="header">
@@ -65,6 +65,9 @@
 				</h:commandLink>
 			</h:column>			
 		</h:dataTable>	
+		
+		<h:outputText value="<br/>#{bundle['label.no.activeAdvisories']}" styleClass="error" 
+			rendered="#{empty advisoriesManagementBackingBean.allAdvisories}" escape="false"/>
 				
 	</h:form>
 </ft:tilesView>
