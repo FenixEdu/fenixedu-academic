@@ -468,9 +468,7 @@ public class Person extends Person_Base {
 
         List<IPersonFunction> activeFunctions = new ArrayList<IPersonFunction>();
                 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
+        Calendar calendar = prepareCalendar();
         
         for (IPersonFunction personFunction : this.getPersonFunctions()) {
             if (personFunction.getEndDate() != null
@@ -486,10 +484,8 @@ public class Person extends Person_Base {
 
         List<IPersonFunction> inactiveFunctions = new ArrayList<IPersonFunction>();
         
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 23);
-        calendar.set(Calendar.MINUTE, 59);
-
+        Calendar calendar = prepareCalendar();
+        
         for (IPersonFunction personFunction : this.getPersonFunctions()) {
             if (personFunction.getEndDate() != null && personFunction.getEndDate().before(calendar.getTime())) {
                 inactiveFunctions.add(personFunction);
@@ -498,6 +494,15 @@ public class Person extends Person_Base {
         return inactiveFunctions;
     }
 
+    private Calendar prepareCalendar() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar;
+    }
+    
     public boolean containsActiveFunction(IFunction function) {
 
         for (IPersonFunction person_Function : this.getActiveFunctions()) {

@@ -186,6 +186,15 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
         return "";
     }
+    
+//    public List<IPersonFunction> getInherentFunctions() throws FenixFilterException,
+//        FenixServiceException {
+//        
+//        IPerson person = this.getPerson();
+//        List<IPersonFunction> activeFunctions = person.getActiveFunctions();
+//        List<IPersonFunction> inherentFunctions_ = new ArrayList<IPersonFunction>();
+//        
+//    }
 
     public List<IPersonFunction> getActiveFunctions() throws FenixFilterException,
             FenixServiceException {
