@@ -1,4 +1,0 @@
-select concat('insert into INSTITUTION(ID_INTERNAL,NAME,ACK_OPT_LOCK) values 
-(',WORK_LOCATION.ID_INTERNAL,',"',WORK_LOCATION.NAME,'",1);'
-)
-as "" from WORK_LOCATION;
