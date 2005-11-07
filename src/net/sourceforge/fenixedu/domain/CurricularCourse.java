@@ -47,6 +47,20 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         return activeScopesInExecutionPeriod;
     }
+    
+    public List<ICurricularCourseScope> getActiveScopesInExecutionPeriodAndSemester(
+            final IExecutionPeriod executionPeriod) {
+        List<ICurricularCourseScope> activeScopesInExecutionPeriod = new ArrayList<ICurricularCourseScope>();
+        for (Iterator iter = getScopes().iterator(); iter.hasNext();) {
+            ICurricularCourseScope scope = (ICurricularCourseScope) iter.next();
+            if ((scope.getCurricularSemester().getSemester().equals(executionPeriod.getSemester())) && (scope.getBeginDate().getTime().getTime() <= executionPeriod.getBeginDate().getTime())
+                    && ((scope.getEndDate() == null) || (scope.getEndDate().getTime().getTime() >= executionPeriod
+                            .getEndDate().getTime()))) {
+                activeScopesInExecutionPeriod.add(scope);
+            }
+        }
+        return activeScopesInExecutionPeriod;
+    }
 
     // -------------------------------------------------------------
     // BEGIN: Only for enrollment purposes
