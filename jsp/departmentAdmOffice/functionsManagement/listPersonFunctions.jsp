@@ -9,11 +9,7 @@
 	
 	<h:form>
 	
-		<h:inputHidden binding="#{functionsManagementBackingBean.linkHidden}"/>
 		<h:inputHidden binding="#{functionsManagementBackingBean.personIDHidden}"/>
-       		
-		<h:outputText value="#{bundle['label.site.orientation6']}" escape="false"/>	
-		<h:outputText value="<br/><br/>" escape="false" />
 			
 		<h:outputText value="<H2>#{bundle['label.search.function']}</H2>" escape="false"/>	
 
@@ -24,7 +20,11 @@
 			<h:outputText value="#{functionsManagementBackingBean.person.nome}" escape="false"/>		
 		</h:panelGroup>
 		
-		<h:outputText value="<br/><br/><br/><h3>#{bundle['label.active.functions']}<h3/>" escape="false" />
+		<h:outputText value="<br/><br/><br/>" escape="false" />	
+		
+		<h:commandLink value="#{bundle['label.associate']}" action="associateNewFunction" />
+				
+		<h:outputText value="<br/><br/><h3>#{bundle['label.active.functions']}<h3/>" escape="false" />
 	
 		<h:dataTable value="#{functionsManagementBackingBean.activeFunctions}" var="person_function"
 			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty functionsManagementBackingBean.activeFunctions}">
@@ -39,7 +39,7 @@
 					<h:outputText value="#{bundle['label.search.unit']}" />
 				</f:facet>				
 				<h:outputText value="#{person_function.function.unit.name}"/>
-			</h:column>
+			</h:column>	
 			<h:column>
 				<f:facet name="header">
 					<h:outputText value="#{bundle['label.belongs.to']}" />
@@ -98,13 +98,13 @@
 					<h:outputText value="#{bundle['label.search.unit']}" />
 				</f:facet>				
 				<h:outputText value="#{person_function.function.unit.name}"/>
-			</h:column>
+			</h:column>	
 			<h:column>
 				<f:facet name="header">
 					<h:outputText value="#{bundle['label.belongs.to']}" />
 				</f:facet>				
 				<h:outputText value="#{person_function.function.unit.topUnit.name}"/>
-			</h:column>	
+			</h:column>			
 			<h:column>
 				<f:facet name="header">
 					<h:outputText value="#{bundle['label.beginDate']}" />
@@ -126,22 +126,12 @@
 					<h:outputText value="#{bundle['link.group.creditsManagement']}" />
 				</f:facet>				
 				<h:outputText value="#{person_function.credits}" />
-			</h:column>
-			<h:column> 			
-				<f:facet name="header">
-					<h:outputText value="#{bundle['label.action']}" />
-				</f:facet>				
-				<h:commandLink action="prepareEditFunction">
-					<h:outputText value="(#{bundle['link.functions.management.edit']})"/>					
-					<f:param name="personFunctionID" id="personFunctionID1" value="#{person_function.idInternal}"/>
-					<f:param name="functionID" id="functionID" value="#{person_function.function.idInternal}"/>
-				</h:commandLink>				
-			</h:column>			
+			</h:column>	
 		</h:dataTable>
 		
 		<h:outputText value="#{bundle['error.noInactiveFunctions.in.person']}<br/>" styleClass="error" 
-				rendered="#{empty functionsManagementBackingBean.inactiveFunctions}" escape="false"/>		
-				
+				rendered="#{empty functionsManagementBackingBean.inactiveFunctions}" escape="false"/>			
+		
 		<h:outputText value="<br/><h3>#{bundle['label.inherent.functions']}</h3>" escape="false" 
 			rendered="#{!empty functionsManagementBackingBean.inherentFunctions}"/>
 	
@@ -158,15 +148,17 @@
 					<h:outputText value="#{bundle['label.search.unit']}" />
 				</f:facet>				
 				<h:outputText value="#{function.unit.name}"/>
-			</h:column>					
+			</h:column>
 			<h:column>
 				<f:facet name="header">
 					<h:outputText value="#{bundle['label.belongs.to']}" />
 				</f:facet>				
-				<h:outputText value="#{function.unit.topUnit.name}"/>
-			</h:column>				
+				<h:outputText value="#{function.unit.topUnit.name}" 
+					rendered="#{function.unit.topUnit != null}"/>
+			</h:column>
+			
 		</h:dataTable>
-				
+			
 		<h:outputText value="<br/><br/>" escape="false"/>				
 		<h:commandButton value="#{bundle['button.choose.new.person']}" action="chooseNewPerson" styleClass="inputbutton"/>
 					

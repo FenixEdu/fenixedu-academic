@@ -9,22 +9,8 @@
 	<f:loadBundle basename="ServidorApresentacao/DepartmentAdmOfficeResources" var="bundle"/>
 	
 	<h:form>
-		
-		<h:inputHidden binding="#{managerFunctionsManagementBackingBean.linkHidden}"/>
-		 
-		<h:outputText value="#{bundle['label.site.orientation1']}" escape="false" 
-			rendered="#{managerFunctionsManagementBackingBean.linkValue == 1}"/>
 			
-		<h:outputText value="#{bundle['label.site.orientation5']}" escape="false" 
-			rendered="#{managerFunctionsManagementBackingBean.linkValue == 0}"/>		
-			
-		<h:outputText value="<br/><br/>" escape="false" />
-			
-		<h:outputText value="<H2>#{bundle['label.search.person']}</H2>" escape="false" 
-			rendered="#{managerFunctionsManagementBackingBean.linkValue == 1}"/>
-			
-		<h:outputText value="<H2>#{bundle['label.search.person1']}</H2>" escape="false" 
-			rendered="#{managerFunctionsManagementBackingBean.linkValue == 0 }"/>	
+		<h:outputText value="<H2>#{bundle['label.search.person']}</H2>" escape="false" />	
 		
 		<h:panelGrid columns="3" styleClass="infoop">
 			<h:outputText value="#{bundle['label.find.person']}" escape="false"/>
@@ -97,7 +83,7 @@
 		<c:if test="${managerFunctionsManagementBackingBean.personsNumber > 0}">
 			<c:out value="<ul>" escapeXml="false"/>	
 			<c:forEach items="${managerFunctionsManagementBackingBean.personsList}" var="person">
-				<c:url var="url" value="/manager/functionsManagement/${managerFunctionsManagementBackingBean.link}.faces?personID=${person.idInternal}&link=${managerFunctionsManagementBackingBean.link}" />
+				<c:url var="url" value="/manager/functionsManagement/listPersonFunctions.faces?personID=${person.idInternal}" />
 				<c:out value="<li>" escapeXml="false"/>
 				<a href=" <c:out value="${url}"/> ">
 					<c:out value="${person.nome}" />

@@ -520,6 +520,14 @@
 	</navigation-rule>
 		
 	<navigation-rule>
+		<from-view-id>/departmentAdmOffice/functionsManagement/chooseUnit.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>backToList</from-outcome>
+			<to-view-id>/departmentAdmOffice/functionsManagement/listPersonFunctions.jsp</to-view-id>
+		</navigation-case>	
+	</navigation-rule>
+		
+	<navigation-rule>
 		<from-view-id>/departmentAdmOffice/functionsManagement/listPersonFunctions.jsp</from-view-id>
  		<navigation-case>
 			<from-outcome>prepareEditFunction</from-outcome>
@@ -528,6 +536,10 @@
 		<navigation-case>
 			<from-outcome>chooseNewPerson</from-outcome>
 			<to-view-id>/departmentAdmOffice/functionsManagement/personSearchForFunctionsManagement.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>associateNewFunction</from-outcome>
+			<to-view-id>/departmentAdmOffice/functionsManagement/chooseUnit.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule> 	
 	
@@ -570,6 +582,14 @@
 	</navigation-rule>
 		
 	<navigation-rule>
+		<from-view-id>/manager/functionsManagement/chooseUnit.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>backToList</from-outcome>
+			<to-view-id>/manager/functionsManagement/listPersonFunctions.jsp</to-view-id>
+		</navigation-case>	
+	</navigation-rule>
+		
+	<navigation-rule>
 		<from-view-id>/manager/functionsManagement/listPersonFunctions.jsp</from-view-id>
  		<navigation-case>
 			<from-outcome>prepareEditFunction</from-outcome>
@@ -578,6 +598,10 @@
 		<navigation-case>
 			<from-outcome>chooseNewPerson</from-outcome>
 			<to-view-id>/manager/functionsManagement/personSearchForFunctionsManagement.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>associateNewFunction</from-outcome>
+			<to-view-id>/manager/functionsManagement/chooseUnit.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule> 	
 	

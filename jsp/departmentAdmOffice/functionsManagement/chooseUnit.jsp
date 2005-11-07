@@ -9,11 +9,8 @@
 	
 	<h:form>
 	
-   	    <h:inputHidden binding="#{functionsManagementBackingBean.linkHidden}"/>
-	
-		<h:outputText value="#{bundle['label.site.orientation2']}" escape="false"/>	
-		<h:outputText value="<br/><br/>" escape="false" />
-			
+		<h:inputHidden binding="#{functionsManagementBackingBean.personIDHidden}"/>
+				
 		<h:outputText value="<H2>#{bundle['label.chooseUnit']}</H2>" escape="false"/>		
 
 		<h:outputText value="<br/>" escape="false" />
@@ -26,7 +23,9 @@
 		
 		<h:outputText value="<p><strong>#{bundle['label.units']}</strong>:</p>" escape="false"/>		
 					
-		<h:outputText value="#{functionsManagementBackingBean.units}" escape="false"/>
+		<h:outputText value="#{functionsManagementBackingBean.units}<br/>" escape="false"/>
+		
+		<h:commandButton styleClass="inputbutton" value="#{bundle['button.choose.new.person']}" action="backToList"/>
 						    				
 	</h:form>
 

@@ -12,10 +12,6 @@
 	
 		<h:inputHidden binding="#{managerFunctionsManagementBackingBean.unitIDHidden}"/>
 		<h:inputHidden binding="#{managerFunctionsManagementBackingBean.personIDHidden}"/>
-    	<h:inputHidden binding="#{managerFunctionsManagementBackingBean.linkHidden}"/>
-		
-		<h:outputText value="#{bundle['label.site.orientation3']}" escape="false"/>	
-		<h:outputText value="<br/><br/>" escape="false" />
 	
 		<h:outputText value="<H2>#{bundle['label.search.function']}</H2>" escape="false"/>		
 		<h:outputText value="<br/>" escape="false" />
@@ -73,7 +69,7 @@
 			<h:outputText value="<br/>" escape="false" />	
 
 			<h:panelGroup>
-				<h:commandButton action="#{managerFunctionsManagementBackingBean.verifyFunction}" value="#{bundle['label.associate']}" styleClass="inputbutton"/>							
+				<h:commandButton action="#{managerFunctionsManagementBackingBean.verifyFunction}" value="#{bundle['label.associate1']}" styleClass="inputbutton"/>							
 				<h:commandButton action="alterUnit" immediate="true" value="#{bundle['button.choose.new.person']}" styleClass="inputbutton"/>						
 			</h:panelGroup>
 		</h:panelGrid>	

@@ -11,12 +11,8 @@
 	<h:form>
 	
 		<h:inputHidden binding="#{managerFunctionsManagementBackingBean.personIDHidden}"/>
-    	<h:inputHidden binding="#{managerFunctionsManagementBackingBean.linkHidden}"/>
     	<h:inputHidden binding="#{managerFunctionsManagementBackingBean.personFunctionIDHidden}"/>
 		
-		<h:outputText value="#{bundle['label.site.orientation7']}" escape="false"/>	
-		<h:outputText value="<br/><br/>" escape="false" />
-	
 		<h:outputText value="<H2>#{bundle['label.edit.function']}</H2>" escape="false"/>		
 		<h:outputText value="<br/>" escape="false" />
 		

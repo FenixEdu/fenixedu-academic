@@ -9,11 +9,7 @@
 	
 	<h:form>
 	
-		<h:inputHidden binding="#{managerFunctionsManagementBackingBean.linkHidden}"/>
 		<h:inputHidden binding="#{managerFunctionsManagementBackingBean.personIDHidden}"/>
-	
-		<h:outputText value="#{bundle['label.site.orientation6']}" escape="false"/>	
-		<h:outputText value="<br/><br/>" escape="false" />
 			
 		<h:outputText value="<H2>#{bundle['label.search.function']}</H2>" escape="false"/>	
 
@@ -24,7 +20,11 @@
 			<h:outputText value="#{managerFunctionsManagementBackingBean.person.nome}" escape="false"/>		
 		</h:panelGroup>
 		
-		<h:outputText value="<br/><br/><br/><h3>#{bundle['label.active.functions']}<h3/>" escape="false" />
+		<h:outputText value="<br/><br/><br/>" escape="false" />	
+		
+		<h:commandLink value="#{bundle['label.associate']}" action="associateNewFunction" />
+				
+		<h:outputText value="<br/><br/><h3>#{bundle['label.active.functions']}<h3/>" escape="false" />
 	
 		<h:dataTable value="#{managerFunctionsManagementBackingBean.activeFunctions}" var="person_function"
 			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty managerFunctionsManagementBackingBean.activeFunctions}">

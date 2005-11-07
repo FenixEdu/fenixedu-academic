@@ -16,10 +16,6 @@
 	<h:inputHidden binding="#{functionsManagementBackingBean.beginDateHidden}"/>
 	<h:inputHidden binding="#{functionsManagementBackingBean.endDateHidden}"/>
 	<h:inputHidden binding="#{functionsManagementBackingBean.functionIDHidden}"/>
-    <h:inputHidden binding="#{functionsManagementBackingBean.linkHidden}"/>
-
-	<h:outputText value="#{bundle['label.site.orientation4']}" escape="false"/>	
-	<h:outputText value="<br/><br/>" escape="false" />
 
 	<h:outputText value="<h2>#{bundle['label.confirmation']}</h2>" escape="false"/>	
 	<h:outputText value="<br/>" escape="false" />

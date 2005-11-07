@@ -9,22 +9,8 @@
 	<f:loadBundle basename="ServidorApresentacao/DepartmentAdmOfficeResources" var="bundle"/>
 	
 	<h:form>
-		
-		<h:inputHidden binding="#{functionsManagementBackingBean.linkHidden}"/>
-		 
-		<h:outputText value="#{bundle['label.site.orientation1']}" escape="false" 
-			rendered="#{functionsManagementBackingBean.linkValue == 1}"/>
 			
-		<h:outputText value="#{bundle['label.site.orientation5']}" escape="false" 
-			rendered="#{functionsManagementBackingBean.linkValue == 0}"/>		
-			
-		<h:outputText value="<br/><br/>" escape="false" />
-			
-		<h:outputText value="<H2>#{bundle['label.search.person']}</H2>" escape="false" 
-			rendered="#{functionsManagementBackingBean.linkValue == 1}"/>
-			
-		<h:outputText value="<H2>#{bundle['label.search.person1']}</H2>" escape="false" 
-			rendered="#{functionsManagementBackingBean.linkValue == 0 }"/>	
+		<h:outputText value="<H2>#{bundle['label.search.person']}</H2>" escape="false" />	
 		
 		<h:panelGrid columns="3" styleClass="infoop">
 			<h:outputText value="#{bundle['label.find.person']}" escape="false"/>
@@ -46,7 +32,7 @@
 			<c:if test="${functionsManagementBackingBean.numberOfPages != 1}">
 				<c:out value="${bundle['label.page']}"/>
 				<c:forEach begin="1" end="${functionsManagementBackingBean.numberOfPages}" var="pageIndex">
-					<c:url var="url" value="/departmentAdmOffice/functionsManagement/personSearchForFunctionsManagement.faces?name=${functionsManagementBackingBean.personName}&page=${pageIndex}&link=${functionsManagementBackingBean.link}" />
+					<c:url var="url" value="/manager/functionsManagement/personSearchForFunctionsManagement.faces?name=${functionsManagementBackingBean.personName}&page=${pageIndex}&link=${functionsManagementBackingBean.link}" />
 					<c:choose>
 						<c:when test="${pageIndex == functionsManagementBackingBean.numberOfPages}">						
 							<c:choose>
@@ -97,7 +83,7 @@
 		<c:if test="${functionsManagementBackingBean.personsNumber > 0}">
 			<c:out value="<ul>" escapeXml="false"/>	
 			<c:forEach items="${functionsManagementBackingBean.personsList}" var="person">
-				<c:url var="url" value="/departmentAdmOffice/functionsManagement/${functionsManagementBackingBean.link}.faces?personID=${person.idInternal}&link=${functionsManagementBackingBean.link}" />
+				<c:url var="url" value="/departmentAdmOffice/functionsManagement/listPersonFunctions.faces?personID=${person.idInternal}" />
 				<c:out value="<li>" escapeXml="false"/>
 				<a href=" <c:out value="${url}"/> ">
 					<c:out value="${person.nome}" />

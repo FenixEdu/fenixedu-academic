@@ -88,9 +88,8 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
 
         buffer.append("<li>").append("<a href=\"").append(getContextPath()).append(
                 "/manager/functionsManagement/chooseFunction.faces?personID=").append(personID).append(
-                "&unitID=").append(parentUnit.getIdInternal()).append("&link=").append(this.getLink())
-                .append("\">").append(parentUnit.getName()).append("</a>").append("</li>")
-                .append("<ul>");
+                "&unitID=").append(parentUnit.getIdInternal()).append("\">")
+                .append(parentUnit.getName()).append("</a>").append("</li>").append("<ul>");
 
         for (IUnit subUnit : parentUnit.getAssociatedUnits()) {
             getUnitsList(subUnit, index + 1, buffer);
@@ -126,7 +125,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
         if (this.inherentFunctions == null) {
             this.inherentFunctions = new ArrayList<IFunction>();
             for (IPersonFunction personFunction : this.getActiveFunctions()) {
-                this.inherentFunctions.addAll(personFunction.getFunction().getInherentFunctions());            
+                this.inherentFunctions.addAll(personFunction.getFunction().getInherentFunctions());
             }
         }
         return inherentFunctions;
