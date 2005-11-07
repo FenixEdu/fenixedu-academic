@@ -63,9 +63,7 @@ public class ReadExamsByDate implements IService {
         for (final IRoomOccupation roomOccupation : exam.getAssociatedRoomOccupation()) {
             totalExamCapacity += roomOccupation.getRoom().getCapacidadeExame().intValue();
         }
-        int result = numberStudentesAttendingCourse.intValue() - totalExamCapacity;
-        
-        return (result > 0) ? result : 0;
+        return Integer.valueOf(numberStudentesAttendingCourse.intValue() - totalExamCapacity);
     }
 
     private List<InfoDegree> readInfoDegrees(final IExam exam,
