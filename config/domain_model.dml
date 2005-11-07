@@ -416,6 +416,8 @@ class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.f
 
     public java.util.List<ICurricularCourseScope> getActiveScopesInExecutionPeriod(final IExecutionPeriod executionPeriod);
     
+    public java.util.List<ICurricularCourseScope> getActiveScopesInExecutionPeriodAndSemester(final IExecutionPeriod executionPeriod);
+    
      public ICurriculum insertCurriculum(String program, String programEn, String operacionalObjectives, 
     	String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn);
 	 
