@@ -50,7 +50,7 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod im
 
             for (ICurricularCourse curricularCourse : curricularCourses) {
 
-                if (curricularCourse.getActiveScopesInExecutionPeriod(executionPeriod).isEmpty()) {
+                if (curricularCourse.getActiveScopesInExecutionPeriodAndSemester(executionPeriod).isEmpty()) {
                     continue;
                 }
 
