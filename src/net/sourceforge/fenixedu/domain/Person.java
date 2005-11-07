@@ -493,6 +493,15 @@ public class Person extends Person_Base {
         }
         return inactiveFunctions;
     }
+    
+    public List<IFunction> getInherentFunctions(){
+       
+        List<IFunction> inherentFunctions = new ArrayList<IFunction>();
+        for (IPersonFunction personFunction : this.getActiveFunctions()) {
+            inherentFunctions.addAll(personFunction.getFunction().getInherentFunctions());
+        }
+        return inherentFunctions;
+    }
 
     private Calendar prepareCalendar() {
         Calendar calendar = Calendar.getInstance();

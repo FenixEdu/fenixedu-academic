@@ -17,6 +17,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.organizationalStructure.IFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -98,21 +99,36 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
         buffer.append("</ul>");
     }
 
-    public List<IPersonFunction> getActiveFunctions() throws FenixFilterException,
-            FenixServiceException {
+    public List<IPersonFunction> getActiveFunctions() throws FenixFilterException, FenixServiceException {
 
-        IPerson person = this.getPerson();
-        List<IPersonFunction> activeFunctions = person.getActiveFunctions();
-        Collections.sort(activeFunctions, new BeanComparator("endDate"));
+        if (this.activeFunctions == null) {
+            IPerson person = this.getPerson();
+            List<IPersonFunction> activeFunctions = person.getActiveFunctions();
+            Collections.sort(activeFunctions, new BeanComparator("endDate"));
+            this.activeFunctions = activeFunctions;
+        }
         return activeFunctions;
     }
 
     public List<IPersonFunction> getInactiveFunctions() throws FenixFilterException,
             FenixServiceException {
 
-        IPerson person = this.getPerson();
-        List<IPersonFunction> inactiveFunctions = person.getInactiveFunctions();      
-        Collections.sort(inactiveFunctions, new BeanComparator("endDate"));
+        if (this.inactiveFunctions == null) {
+            IPerson person = this.getPerson();
+            List<IPersonFunction> inactiveFunctions = person.getInactiveFunctions();
+            Collections.sort(inactiveFunctions, new BeanComparator("endDate"));
+            this.inactiveFunctions = inactiveFunctions;
+        }
         return inactiveFunctions;
+    }
+
+    public List<IFunction> getInherentFunctions() throws FenixFilterException, FenixServiceException {
+        if (this.inherentFunctions == null) {
+            this.inherentFunctions = new ArrayList<IFunction>();
+            for (IPersonFunction personFunction : this.getActiveFunctions()) {
+                this.inherentFunctions.addAll(personFunction.getFunction().getInherentFunctions());            
+            }
+        }
+        return inherentFunctions;
     }
 }

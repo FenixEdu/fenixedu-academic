@@ -39,6 +39,12 @@
 					<h:outputText value="#{bundle['label.search.unit']}" />
 				</f:facet>				
 				<h:outputText value="#{person_function.function.unit.name}"/>
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{bundle['label.belongs.to']}" />
+				</f:facet>				
+				<h:outputText value="#{person_function.function.unit.topUnit.name}"/>
 			</h:column>	
 			<h:column>
 				<f:facet name="header">
@@ -92,6 +98,12 @@
 					<h:outputText value="#{bundle['label.search.unit']}" />
 				</f:facet>				
 				<h:outputText value="#{person_function.function.unit.name}"/>
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{bundle['label.belongs.to']}" />
+				</f:facet>				
+				<h:outputText value="#{person_function.function.unit.topUnit.name}"/>
 			</h:column>	
 			<h:column>
 				<f:facet name="header">
@@ -128,8 +140,33 @@
 		</h:dataTable>
 		
 		<h:outputText value="#{bundle['error.noInactiveFunctions.in.person']}<br/>" styleClass="error" 
-				rendered="#{empty functionsManagementBackingBean.inactiveFunctions}" escape="false"/>			
-			
+				rendered="#{empty functionsManagementBackingBean.inactiveFunctions}" escape="false"/>		
+				
+		<h:outputText value="<br/><h3>#{bundle['label.inherent.functions']}</h3>" escape="false" 
+			rendered="#{!empty functionsManagementBackingBean.inherentFunctions}"/>
+	
+		<h:dataTable value="#{functionsManagementBackingBean.inherentFunctions}" var="function"
+			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty functionsManagementBackingBean.inherentFunctions}">
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{bundle['label.inherentFunction']}" />
+				</f:facet>				
+				<h:outputText value="<strong>#{function.name}</strong>" escape="false"/>				
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{bundle['label.search.unit']}" />
+				</f:facet>				
+				<h:outputText value="#{function.unit.name}"/>
+			</h:column>					
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{bundle['label.belongs.to']}" />
+				</f:facet>				
+				<h:outputText value="#{function.unit.topUnit.name}"/>
+			</h:column>				
+		</h:dataTable>
+				
 		<h:outputText value="<br/><br/>" escape="false"/>				
 		<h:commandButton value="#{bundle['button.choose.new.person']}" action="chooseNewPerson" styleClass="inputbutton"/>
 					

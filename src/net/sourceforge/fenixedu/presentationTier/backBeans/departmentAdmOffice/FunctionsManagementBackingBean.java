@@ -44,6 +44,12 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     public List<IPerson> personsList;
 
     public List<IPerson> allPersonsList;
+    
+    public List<IFunction> inherentFunctions;
+    
+    public List<IPersonFunction> activeFunctions;
+    
+    public List<IPersonFunction> inactiveFunctions;
 
     public Integer page;
 
@@ -187,48 +193,44 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         return "";
     }
     
-//    public List<IPersonFunction> getInherentFunctions() throws FenixFilterException,
-//        FenixServiceException {
-//        
-//        IPerson person = this.getPerson();
-//        List<IPersonFunction> activeFunctions = person.getActiveFunctions();
-//        List<IPersonFunction> inherentFunctions_ = new ArrayList<IPersonFunction>();
-//        
-//    }
-
     public List<IPersonFunction> getActiveFunctions() throws FenixFilterException,
             FenixServiceException {
-
-        IPerson person = this.getPerson();
-        List<IPersonFunction> activeFunctions = person.getActiveFunctions();
-        List<IPersonFunction> activeFunctions_ = new ArrayList<IPersonFunction>();
-
-        addValidFunctions(activeFunctions, activeFunctions_);
-
-        Collections.sort(activeFunctions_, new BeanComparator("endDate"));
-        return activeFunctions_;
+        
+        if(this.activeFunctions == null){
+            IPerson person = this.getPerson();
+            List<IPersonFunction> activeFunctions = person.getActiveFunctions();
+            this.activeFunctions = new ArrayList<IPersonFunction>();
+    
+            addValidFunctions(activeFunctions, this.activeFunctions);
+    
+            Collections.sort(this.activeFunctions, new BeanComparator("endDate"));
+        }
+        return this.activeFunctions;
     }
 
     public List<IPersonFunction> getInactiveFunctions() throws FenixFilterException,
             FenixServiceException {
 
-        IPerson person = this.getPerson();
-        List<IPersonFunction> inactiveFunctions = person.getInactiveFunctions();
-        List<IPersonFunction> inactiveFunctions_ = new ArrayList<IPersonFunction>();
-
-        addValidFunctions(inactiveFunctions, inactiveFunctions_);
-
-        Collections.sort(inactiveFunctions_, new BeanComparator("endDate"));
-        return inactiveFunctions_;
+        if(this.inactiveFunctions == null){
+            IPerson person = this.getPerson();
+            List<IPersonFunction> inactiveFunctions = person.getInactiveFunctions();
+            this.inactiveFunctions = new ArrayList<IPersonFunction>();
+        
+            addValidFunctions(inactiveFunctions,  this.inactiveFunctions);
+        
+            Collections.sort( this.inactiveFunctions, new BeanComparator("endDate"));
+        }
+        return this.inactiveFunctions;
     }
 
     private void addValidFunctions(List<IPersonFunction> functions, List<IPersonFunction> functions_) {
         for (IPersonFunction person_function : functions) {
-            if (person_function.getFunction().getUnit().getParentUnit() == null) {
-                if (person_function.getFunction().getUnit().equals(this.getEmployeeDepartmentUnit())) {
+            IUnit unit = person_function.getFunction().getUnit(); 
+            if (unit.getParentUnit() == null) {
+                if (unit.equals(this.getEmployeeDepartmentUnit())) {
                     functions_.add(person_function);
                 }
-            } else if (person_function.getFunction().getUnit().getTopUnit().equals(
+            } else if (unit.getTopUnit().equals(
                     this.getEmployeeDepartmentUnit())) {
                 functions_.add(person_function);
             }
@@ -749,5 +751,27 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public Integer getLinkValue() {
         return (this.getLink().equals("chooseUnit")) ? 1 : 0;
+    }
+
+    public List<IFunction> getInherentFunctions() throws FenixFilterException, FenixServiceException {
+        if(this.inherentFunctions == null){
+            this.inherentFunctions = new ArrayList<IFunction>();
+            for (IPersonFunction personFunction : this.getActiveFunctions()) {
+                this.inherentFunctions.addAll(personFunction.getFunction().getInherentFunctions());
+            }                      
+        }
+        return inherentFunctions;
+    }
+
+    public void setInherentFunctions(List<IFunction> inherentFunctions) {
+        this.inherentFunctions = inherentFunctions;
+    }
+
+    public void setActiveFunctions(List<IPersonFunction> activeFunctions) {
+        this.activeFunctions = activeFunctions;
+    }
+
+    public void setInactiveFunctions(List<IPersonFunction> inactiveFunctions) {
+        this.inactiveFunctions = inactiveFunctions;
     }
 }
