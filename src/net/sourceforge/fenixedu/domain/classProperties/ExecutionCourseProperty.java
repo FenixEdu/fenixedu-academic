@@ -12,5 +12,10 @@ public class ExecutionCourseProperty extends ExecutionCourseProperty_Base {
         return "name:[" + super.getName() + "]value:[" + super.getValue() + "]executionCourse:["
                 + this.getExecutionCourse().toString() + "]";
     }
+    
+    public void delete() {
+    	setExecutionCourse(null);
+    	super.deleteDomainObject();
+    }
 
 }
