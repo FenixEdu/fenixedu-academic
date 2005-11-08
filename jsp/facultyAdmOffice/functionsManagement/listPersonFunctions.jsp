@@ -3,13 +3,13 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
-<ft:tilesView definition="departmentAdmOffice.masterPage" attributeName="body-inline">
+<ft:tilesView definition="facultyAdmOffice.masterPage" attributeName="body-inline">
 
 	<f:loadBundle basename="ServidorApresentacao/DepartmentAdmOfficeResources" var="bundle"/>
 	
 	<h:form>
 	
-		<h:inputHidden binding="#{functionsManagementBackingBean.personIDHidden}"/>
+		<h:inputHidden binding="#{managerFunctionsManagementBackingBean.personIDHidden}"/>
 			
 		<h:outputText value="<H2>#{bundle['label.search.function']}</H2>" escape="false"/>	
 
@@ -17,7 +17,7 @@
 
 		<h:panelGroup styleClass="infoop">
 			<h:outputText value="<b>#{bundle['label.name']}</b>: " escape="false"/>		
-			<h:outputText value="#{functionsManagementBackingBean.person.nome}" escape="false"/>		
+			<h:outputText value="#{managerFunctionsManagementBackingBean.person.nome}" escape="false"/>		
 		</h:panelGroup>
 		
 		<h:outputText value="<br/><br/><br/>" escape="false" />	
@@ -26,8 +26,8 @@
 				
 		<h:outputText value="<br/><br/><h3>#{bundle['label.active.functions']}<h3/>" escape="false" />
 	
-		<h:dataTable value="#{functionsManagementBackingBean.activeFunctions}" var="person_function"
-			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty functionsManagementBackingBean.activeFunctions}">
+		<h:dataTable value="#{managerFunctionsManagementBackingBean.activeFunctions}" var="person_function"
+			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty managerFunctionsManagementBackingBean.activeFunctions}">
 			<h:column>
 				<f:facet name="header">
 					<h:outputText value="#{bundle['label.function']}" />
@@ -81,13 +81,13 @@
 		</h:dataTable>
 
 		<h:outputText value="#{bundle['error.noActiveFunctions.in.person']}<br/>" styleClass="error" 
-				rendered="#{empty functionsManagementBackingBean.activeFunctions}" escape="false"/>
+				rendered="#{empty managerFunctionsManagementBackingBean.activeFunctions}" escape="false"/>	
 				
 		<h:outputText value="<br/><h3>#{bundle['label.inherent.functions']}</h3>" escape="false" 
-			rendered="#{!empty functionsManagementBackingBean.inherentFunctions}"/>
+			rendered="#{!empty managerFunctionsManagementBackingBean.inherentFunctions}"/>
 	
-		<h:dataTable value="#{functionsManagementBackingBean.inherentFunctions}" var="function"
-			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty functionsManagementBackingBean.inherentFunctions}">
+		<h:dataTable value="#{managerFunctionsManagementBackingBean.inherentFunctions}" var="function"
+			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty managerFunctionsManagementBackingBean.inherentFunctions}">
 			<h:column>
 				<f:facet name="header">
 					<h:outputText value="#{bundle['label.inherentFunction']}" />
@@ -108,12 +108,12 @@
 					rendered="#{function.unit.topUnit != null}"/>
 			</h:column>
 			
-		</h:dataTable>					
+		</h:dataTable>				
 	
 		<h:outputText value="<br/><h3>#{bundle['label.inactive.functions']}</h3>" escape="false" />
 	
-		<h:dataTable value="#{functionsManagementBackingBean.inactiveFunctions}" var="person_function"
-			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty functionsManagementBackingBean.inactiveFunctions}">
+		<h:dataTable value="#{managerFunctionsManagementBackingBean.inactiveFunctions}" var="person_function"
+			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty managerFunctionsManagementBackingBean.inactiveFunctions}">
 			<h:column>
 				<f:facet name="header">
 					<h:outputText value="#{bundle['label.function']}" />
@@ -153,11 +153,21 @@
 					<h:outputText value="#{bundle['link.group.creditsManagement']}" />
 				</f:facet>				
 				<h:outputText value="#{person_function.credits}" />
-			</h:column>	
+			</h:column>
+			<h:column> 			
+				<f:facet name="header">
+					<h:outputText value="#{bundle['label.action']}" />
+				</f:facet>				
+				<h:commandLink action="prepareEditFunction">
+					<h:outputText value="(#{bundle['link.functions.management.edit']})"/>					
+					<f:param name="personFunctionID" id="personFunctionID1" value="#{person_function.idInternal}"/>
+					<f:param name="functionID" id="functionID" value="#{person_function.function.idInternal}"/>
+				</h:commandLink>				
+			</h:column>		
 		</h:dataTable>
 		
 		<h:outputText value="#{bundle['error.noInactiveFunctions.in.person']}<br/>" styleClass="error" 
-				rendered="#{empty functionsManagementBackingBean.inactiveFunctions}" escape="false"/>							
+				rendered="#{empty managerFunctionsManagementBackingBean.inactiveFunctions}" escape="false"/>							
 			
 		<h:outputText value="<br/><br/>" escape="false"/>				
 		<h:commandButton value="#{bundle['button.choose.new.person']}" action="chooseNewPerson" styleClass="inputbutton"/>

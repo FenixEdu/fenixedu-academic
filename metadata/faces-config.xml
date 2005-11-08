@@ -128,6 +128,12 @@
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.personManagement.ManagerFunctionsManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<description>FacultyFunctionsManagementBackingBean</description>
+		<managed-bean-name>facultyFunctionsManagementBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.personManagement.FacultyAdmOfficeFunctionsManagement</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 
 	<!-- END: FunctionsManagement Managed Beans -->
 	<!-- BEGIN: AdvisoriesManagement Managed Beans -->
@@ -629,6 +635,68 @@
 		</navigation-case>
 	</navigation-rule> 		
 	
+	<!-- FacultyAdmOffice -->
+	
+	<navigation-rule>
+		<from-view-id>/facultyAdmOffice/functionsManagement/chooseFunction.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>confirmation</from-outcome>
+			<to-view-id>/facultyAdmOffice/functionsManagement/confirmation.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>alterUnit</from-outcome>
+			<to-view-id>/facultyAdmOffice/functionsManagement/chooseUnit.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+		
+	<navigation-rule>
+		<from-view-id>/facultyAdmOffice/functionsManagement/chooseUnit.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>backToList</from-outcome>
+			<to-view-id>/facultyAdmOffice/functionsManagement/listPersonFunctions.jsp</to-view-id>
+		</navigation-case>	
+	</navigation-rule>
+		
+	<navigation-rule>
+		<from-view-id>/facultyAdmOffice/functionsManagement/listPersonFunctions.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>prepareEditFunction</from-outcome>
+			<to-view-id>/facultyAdmOffice/functionsManagement/editFunction.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>chooseNewPerson</from-outcome>
+			<to-view-id>/facultyAdmOffice/functionsManagement/personSearchForFunctionsManagement.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>associateNewFunction</from-outcome>
+			<to-view-id>/facultyAdmOffice/functionsManagement/chooseUnit.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 	
+	
+	<navigation-rule>
+		<from-view-id>/facultyAdmOffice/functionsManagement/editFunction.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>alterFunction</from-outcome>
+			<to-view-id>/facultyAdmOffice/functionsManagement/listPersonFunctions.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 	
+	
+	<navigation-rule>
+		<from-view-id>/facultyAdmOffice/functionsManagement/confirmation.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>alterUnit</from-outcome>
+			<to-view-id>/facultyAdmOffice/functionsManagement/chooseUnit.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>alterFunction</from-outcome>
+			<to-view-id>/facultyAdmOffice/functionsManagement/chooseFunction.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/facultyAdmOffice/functionsManagement/personSearchForFunctionsManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 		
+		
 	<!-- END: FUNCTIONS_MANAGEMENT Navigation Rules -->
 	
 	<!-- BEGIN: ADVISORIES_MANAGEMENT Navigation Rules -->

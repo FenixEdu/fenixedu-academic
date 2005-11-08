@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
-<ft:tilesView definition="departmentAdmOffice.masterPage" attributeName="body-inline">
+<ft:tilesView definition="facultyAdmOffice.masterPage" attributeName="body-inline">
 	
 	<f:loadBundle basename="ServidorApresentacao/DepartmentAdmOfficeResources" var="bundle"/>
 	
@@ -14,29 +14,29 @@
 		
 		<h:panelGrid columns="3" styleClass="infoop">
 			<h:outputText value="#{bundle['label.find.person']}" escape="false"/>
-			<h:inputText id="name" required="true" size="30" value="#{functionsManagementBackingBean.personName}"/>
-			<h:commandButton action="#{functionsManagementBackingBean.searchPerson}" styleClass="inputbutton" value="#{bundle['button.searchPerson']}"/>
+			<h:inputText id="name" required="true" size="30" value="#{managerFunctionsManagementBackingBean.personName}"/>
+			<h:commandButton action="#{managerFunctionsManagementBackingBean.searchPerson}" styleClass="inputbutton" value="#{bundle['button.searchPerson']}"/>
 		</h:panelGrid>
 		
 		<h:message for="name" styleClass="error"/>
 		
-		<h:outputText styleClass="error" rendered="#{!empty functionsManagementBackingBean.errorMessage}"
-				value="#{bundle[functionsManagementBackingBean.errorMessage]}"/>
+		<h:outputText styleClass="error" rendered="#{!empty managerFunctionsManagementBackingBean.errorMessage}"
+				value="#{bundle[managerFunctionsManagementBackingBean.errorMessage]}"/>
 				
-		<h:outputText value="<br/><br/><b>#{functionsManagementBackingBean.personsNumber}</b> #{bundle['label.number.of.persons.finded']}" 
+		<h:outputText value="<br/><br/><b>#{managerFunctionsManagementBackingBean.personsNumber}</b> #{bundle['label.number.of.persons.finded']}" 
 			escape="false"/>			
 				
 		<h:outputText value="<br/><br/>" escape="false" />							
 		
-		<c:if test="${functionsManagementBackingBean.personsNumber > 0}">
-			<c:if test="${functionsManagementBackingBean.numberOfPages != 1}">
+		<c:if test="${managerFunctionsManagementBackingBean.personsNumber > 0}">
+			<c:if test="${managerFunctionsManagementBackingBean.numberOfPages != 1}">
 				<c:out value="${bundle['label.page']}"/>
-				<c:forEach begin="1" end="${functionsManagementBackingBean.numberOfPages}" var="pageIndex">
-					<c:url var="url" value="/manager/functionsManagement/personSearchForFunctionsManagement.faces?name=${functionsManagementBackingBean.personName}&page=${pageIndex}" />
+				<c:forEach begin="1" end="${managerFunctionsManagementBackingBean.numberOfPages}" var="pageIndex">
+					<c:url var="url" value="/manager/functionsManagement/personSearchForFunctionsManagement.faces?name=${managerFunctionsManagementBackingBean.personName}&page=${pageIndex}" />
 					<c:choose>
-						<c:when test="${pageIndex == functionsManagementBackingBean.numberOfPages}">						
+						<c:when test="${pageIndex == managerFunctionsManagementBackingBean.numberOfPages}">						
 							<c:choose>
-								<c:when test="${functionsManagementBackingBean.page == pageIndex}">
+								<c:when test="${managerFunctionsManagementBackingBean.page == pageIndex}">
 									<c:out value="${pageIndex}"/>		
 								</c:when>
 								<c:otherwise>
@@ -48,7 +48,7 @@
 					    </c:when>
 					    <c:otherwise>					    
 							<c:choose>
-								<c:when test="${functionsManagementBackingBean.page == pageIndex}">
+								<c:when test="${managerFunctionsManagementBackingBean.page == pageIndex}">
 									<c:out value="${pageIndex},"/>		
 								</c:when>
 								<c:otherwise>
@@ -65,12 +65,12 @@
 		</c:if>
 		
 		<%-- 
-		<h:panelGroup rendered="#{!empty functionsManagementBackingBean.personsList}">
+		<h:panelGroup rendered="#{!empty managerFunctionsManagementBackingBean.personsList}">
 			<h:outputText value="<ul>" escape="false" />
-			<h:dataTable value="#{functionsManagementBackingBean.personsList}" var="person">		
+			<h:dataTable value="#{managerFunctionsManagementBackingBean.personsList}" var="person">		
 				<h:column>
 					<h:outputText value="<li>" escape="false" />				
-						<h:outputLink value="#{functionsManagementBackingBean.contextPath}/departmentAdmOffice/teacher/functionsManagement/unitChoose.faces?personID=#{person.idInternal}">
+						<h:outputLink value="#{managerFunctionsManagementBackingBean.contextPath}/departmentAdmOffice/teacher/functionsManagement/unitChoose.faces?personID=#{person.idInternal}">
 							<h:outputText value="#{person.nome}"/>
 						</h:outputLink>		
 					<h:outputText value="</li>" escape="false"/>
@@ -80,10 +80,10 @@
 		</h:panelGroup>		
 		--%>
 		
-		<c:if test="${functionsManagementBackingBean.personsNumber > 0}">
+		<c:if test="${managerFunctionsManagementBackingBean.personsNumber > 0}">
 			<c:out value="<ul>" escapeXml="false"/>	
-			<c:forEach items="${functionsManagementBackingBean.personsList}" var="person">
-				<c:url var="url" value="/departmentAdmOffice/functionsManagement/listPersonFunctions.faces?personID=${person.idInternal}" />
+			<c:forEach items="${managerFunctionsManagementBackingBean.personsList}" var="person">
+				<c:url var="url" value="/facultyAdmOffice/functionsManagement/listPersonFunctions.faces?personID=${person.idInternal}" />
 				<c:out value="<li>" escapeXml="false"/>
 				<a href=" <c:out value="${url}"/> ">
 					<c:out value="${person.nome}" />

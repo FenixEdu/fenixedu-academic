@@ -157,9 +157,11 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public String editFunction() throws FenixFilterException, FenixServiceException {
 
-        if (this.getPerson().containsActiveFunction(this.getFunction())
-                && !this.getFunction().equals(this.getPersonFunction().getFunction())) {
+        if (this.getPerson().getInactiveFunctions().contains(this.getPersonFunction())
+                && this.getPerson().containsActiveFunction(this.getFunction())) {
+            
             setErrorMessage("error.duplicate.function");
+
         } else {
 
             DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
