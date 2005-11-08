@@ -1083,6 +1083,8 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
 	public java.util.List<IWrittenTest> getAssociatedWrittenTests();
 	
 	public java.util.List<net.sourceforge.fenixedu.domain.onlineTests.IOnlineTest> getAssociatedOnlineTests();
+	
+	public void delete();
     "
 }
 
@@ -1300,6 +1302,9 @@ class net.sourceforge.fenixedu.domain.classProperties.GeneralClassProperty exten
 
     class net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty extends net.sourceforge.fenixedu.domain.classProperties.GeneralClassProperty {
         Integer keyExecutionCourse;
+        interface "
+            public void delete();
+        "
     }
 
 
@@ -2635,6 +2640,8 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 	public net.sourceforge.fenixedu.domain.IAnnouncement getLastAnnouncement();
 
 	public java.util.Set<net.sourceforge.fenixedu.domain.IAnnouncement> getSortedAnnouncements();
+	
+	public void delete();
 	"
 }
 
