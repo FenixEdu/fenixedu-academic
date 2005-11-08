@@ -118,4 +118,22 @@ public class Site extends Site_Base {
 	    return last;
 	}
     }
+    
+    private boolean canBeDeleted() {
+    	if (hasAnyAssociatedAnnouncements()) {
+            return false;
+        }
+        if (hasAnyAssociatedSections()) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public void delete() {
+    	if(canBeDeleted()) {
+    		setExecutionCourse(null);
+    		super.deleteDomainObject();
+    	}
+    }
 }

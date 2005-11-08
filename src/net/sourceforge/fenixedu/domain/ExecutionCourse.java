@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
 import net.sourceforge.fenixedu.domain.onlineTests.IOnlineTest;
@@ -267,6 +268,80 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
 
         return associatedOnlineTests;
+    }
+    
+    //Delete Methods
+    
+    public void delete() {
+    	if(canBeDeleted()) {
+	        setExecutionPeriod(null);
+	        
+	        if(getSite() != null) {
+	        	getSite().delete();
+	        }
+	        	
+	        for (;!getProfessorships().isEmpty(); getProfessorships().get(0).delete());
+	        
+	        getAssociatedCurricularCourses().clear();
+	        
+	        for (;!getExecutionCourseProperties().isEmpty(); getExecutionCourseProperties().get(0).delete());
+	        
+	        getNonAffiliatedTeachers().clear();
+	        
+	        super.deleteDomainObject();
+    	} 
+    	else 
+    		throw new DomainException("error.execution.course.cant.delete");
+    }
+    
+    private boolean canBeDeleted() {
+        if (hasAnyAssociatedSummaries()) {
+            return false;
+        }
+        if (!getGroupings().isEmpty()) {
+            return false;
+        }
+        if (hasAnyAssociatedBibliographicReferences()) {
+            return false;
+        }
+        if (hasAnyAssociatedEvaluations()) {
+            return false;
+        }
+        if (hasAnyAttends()) {
+            return false;
+        }
+        if (hasEvaluationMethod()) {
+            return false;
+        }
+        if (hasAnyAssociatedShifts()) {
+            return false;
+        }
+        if (hasCourseReport()) {
+            return false;
+        }
+        final ISite site = getSite();
+        if (site != null) {
+            if (site.hasAnyAssociatedAnnouncements()) {
+                return false;
+            }
+            if (site.hasAnyAssociatedSections()) {
+                return false;
+            }
+        }
+        
+        for (final IProfessorship professorship : getProfessorships()) {
+            if (professorship.hasAnyAssociatedShiftProfessorship()) {
+                return false;
+            }
+            if (professorship.hasAnyAssociatedSummaries()) {
+                return false;
+            }
+            if (professorship.hasAnySupportLessons()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 }
