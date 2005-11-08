@@ -127,7 +127,7 @@ class net.sourceforge.fenixedu.domain.Attends extends net.sourceforge.fenixedu.d
 	
 	interface "
 	
-	public void delete() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+	public void delete();
 	"	
 }
 
@@ -159,7 +159,7 @@ class net.sourceforge.fenixedu.domain.Branch extends net.sourceforge.fenixedu.do
     
     interface "
     public java.util.List getAreaCurricularCourseGroups(net.sourceforge.fenixedu.tools.enrollment.AreaType areaType);
-	public void delete() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+	public void delete();
 	public Boolean canBeDeleted();
 	public Boolean representsCommonBranch();
 	public void edit(String name, String nameEn, String code);
@@ -459,7 +459,7 @@ class net.sourceforge.fenixedu.domain.CurricularCourseGroup extends net.sourcefo
     public net.sourceforge.fenixedu.tools.enrollment.AreaType getAreaType();
     public void setAreaType(net.sourceforge.fenixedu.tools.enrollment.AreaType areaType);
 	
-	public void delete() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+	public void delete();
 	
 	public void edit(String name, IBranch branch, Integer minimumValue, Integer maximumValue);
 	public void edit(String name, IBranch branch, Integer minimumValue, Integer maximumValue, net.sourceforge.fenixedu.tools.enrollment.AreaType areaType);
@@ -498,7 +498,7 @@ class net.sourceforge.fenixedu.domain.CurricularCourseScope extends net.sourcefo
 	
 	public void end(java.util.Calendar endDate);
 	
-	public void delete() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+	public void delete();
 	
 	public Boolean canBeDeleted();
     "
@@ -542,7 +542,7 @@ class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.do
 	interface "
 
 	public void edit(String name, String nameEn, String sigla, net.sourceforge.fenixedu.domain.degree.DegreeType degreeType);
-	public void delete() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+	public void delete();
 	"
 }
 
@@ -802,8 +802,8 @@ class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu
 	public void delete();
 	public void initializeAsNew(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod, net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition enrolmentCondition, String createdBy);
 	public void initializeAsNewWithoutEnrolmentEvaluation (IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod, net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition enrolmentCondition, String createdBy);
-	public void unEnroll() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
-	public void unEnrollImprovement(IExecutionPeriod executionPeriod) throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+	public void unEnroll();
+	public void unEnrollImprovement(IExecutionPeriod executionPeriod);
 	public IEnrolmentEvaluation getImprovementEvaluation();
 	public IEnrolmentEvaluation getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade (final net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType evaluationType, final String grade);
 	
@@ -854,8 +854,8 @@ class net.sourceforge.fenixedu.domain.EnrolmentEvaluation extends net.sourceforg
 	public void delete();
 	public void alterStudentEnrolmentEvaluationForMasterDegree(String grade, IEmployee employee, IPerson responsibleFor,
 			net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType evaluationType, java.util.Date evaluationAvailableDate, 
-			java.util.Date examDate, String observation) throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
-	public void insertStudentFinalEvaluationForMasterDegree(String grade, IPerson responsibleFor, java.util.Date examDate) throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+			java.util.Date examDate, String observation);
+	public void insertStudentFinalEvaluationForMasterDegree(String grade, IPerson responsibleFor, java.util.Date examDate);
     "
 }
 
@@ -2563,8 +2563,7 @@ class net.sourceforge.fenixedu.domain.Section extends net.sourceforge.fenixedu.d
 	
 	interface "
 		
-		public void insertItem(String itemName, String itemInformation, Boolean itemUrgency, Integer insertItemOrder)
-			throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+		public void insertItem(String itemName, String itemInformation, Boolean itemUrgency, Integer insertItemOrder);
 		
 		public void edit(String newSectionName, Integer newOrder);
 		
@@ -2769,19 +2768,18 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
     
     public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea);
 	
-	public void changeState(net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState studentCurricularPlanState) throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+	public void changeState(net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState studentCurricularPlanState);
 	
-	public void delete() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+	public void delete();
 	
 	public IEnrolment getEnrolmentByCurricularCourseAndExecutionPeriod(final ICurricularCourse curricularCourse, final IExecutionPeriod executionPeriod);
 	
-	public void setStudentAreasWithoutRestrictions(IBranch specializationArea, IBranch secundaryArea) throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+	public void setStudentAreasWithoutRestrictions(IBranch specializationArea, IBranch secundaryArea);
 	
 	public void setStudentAreas(IBranch specializationArea, IBranch secundaryArea) throws 
 				net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedBranchChangeException, 
 				net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException, 
-				net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException, 
-				net.sourceforge.fenixedu.domain.exceptions.DomainException;
+				net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
     
     public java.util.List initAcumulatedEnrollments(java.util.List elements);
     
@@ -2913,9 +2911,9 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	interface "
 	public net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits getExecutionPeriodCredits(IExecutionPeriod executionPeriod);
 	
-	public void addToTeacherInformationSheet(net.sourceforge.fenixedu.domain.publication.IPublication publication, net.sourceforge.fenixedu.util.PublicationArea publicationArea) throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+	public void addToTeacherInformationSheet(net.sourceforge.fenixedu.domain.publication.IPublication publication, net.sourceforge.fenixedu.util.PublicationArea publicationArea);
 	
-	public void removeFromTeacherInformationSheet(net.sourceforge.fenixedu.domain.publication.IPublication publication) throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+	public void removeFromTeacherInformationSheet(net.sourceforge.fenixedu.domain.publication.IPublication publication);
 	
 	public Boolean canAddPublicationToTeacherInformationSheet(net.sourceforge.fenixedu.util.PublicationArea area);
 
