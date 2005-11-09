@@ -41,7 +41,7 @@ public class PersonRole extends PersonRole_Base {
      * role; to update the username.
      * 
      */
-    public static void remove(IPerson person, IRole removedRole) {        
+    public static void remove(IPerson person, IRole removedRole) {   
         if (removedRole != null && person.hasRole(removedRole.getRoleType())) {
             // Remove the role in case
             PersonRole_Base.remove(person, removedRole);

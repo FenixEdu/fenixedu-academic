@@ -100,8 +100,10 @@ public class UsernameUtils extends FenixUtil {
             if (person.getGrantOwner() != null) {
                 return "B" + person.getGrantOwner().getNumber();
             }
+        } else if (roleType.equals(RoleType.PROJECTS_MANAGER) || roleType.equals(RoleType.INSTITUCIONAL_PROJECTS_MANAGER)) {
+            return "G" + person.getNumeroDocumentoIdentificacao();
         } else if (roleType.equals(RoleType.PERSON)) {
-            return "P" + person.getUsername().substring(1);
+            return "P" + person.getNumeroDocumentoIdentificacao();
         }
 
         return oldUsername;

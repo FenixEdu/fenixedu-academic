@@ -78,6 +78,8 @@ public enum RoleType {
         rolesImportance.add(RoleType.EMPLOYEE);
         rolesImportance.add(RoleType.STUDENT);
         rolesImportance.add(RoleType.GRANT_OWNER);
+        rolesImportance.add(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
+        rolesImportance.add(RoleType.PROJECTS_MANAGER);
         rolesImportance.add(RoleType.PERSON);
         return rolesImportance;
     }
