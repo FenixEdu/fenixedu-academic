@@ -57,10 +57,12 @@ public class ReportsDispatchAction extends FenixDispatchAction {
                 int pagesNumber = (int) Math.ceil((double) lines / numberOfSpanElements);
                 int startSpan = span.intValue() * numberOfSpanElements;
                 int length = numberOfSpanElements;
-                if (span.intValue() == (pagesNumber - 1))
-                    length = lines % numberOfSpanElements;
-                else
+                if (span.intValue() == (pagesNumber - 1)) {
+                    if (lines % numberOfSpanElements != 0)
+                        length = lines % numberOfSpanElements;
+                } else {
                     lastSpan = new Boolean(false);
+                }
 
                 request.setAttribute("span", span);
                 request.setAttribute("startSpan", new Integer(startSpan));
