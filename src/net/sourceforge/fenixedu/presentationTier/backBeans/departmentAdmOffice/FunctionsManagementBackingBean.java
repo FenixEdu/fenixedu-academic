@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.IDepartment;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IFunction;
@@ -29,6 +30,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
@@ -255,7 +257,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
             allPersonsList = new ArrayList<IPerson>();
         }
 
-        allPersonsList.addAll(getAllPersons());
+        allPersonsList = getAllPersons();
 
         if (allPersonsList.isEmpty()) {
             setErrorMessage("error.search.person");
@@ -275,11 +277,11 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     private List<IPerson> getAllPersons() throws FenixServiceException, FenixFilterException {
 
-        final Object[] argsToRead = { Person.class };
+        final Object[] argsToRead = { RoleType.PERSON };
 
         List<IPerson> allPersons = new ArrayList<IPerson>();
-        allPersons.addAll((List<IPerson>) ServiceUtils.executeService(null, "ReadAllDomainObject",
-                argsToRead));
+        IRole role = (IRole) ServiceUtils.executeService(null, "ReadRoleByRoleType", argsToRead);
+        allPersons.addAll((List<IPerson>) role.getAssociatedPersons());
 
         String[] nameWords = personName.split(" ");
         normalizeName(nameWords);
@@ -297,41 +299,49 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         return this.personsList;
     }
 
-    private List<IPerson> getValidPersons(String[] nameWords, List<IPerson> persons) {
+    private List<IPerson> getValidPersons(String[] nameWords, List<IPerson> allPersons) {
 
+        List<IPerson> persons = new ArrayList();
+
+        int whiteSpaces = getWhiteSpaces(nameWords);
+        for (IPerson person : allPersons) {
+            if (verifyNameEquality(nameWords, whiteSpaces, person)) {
+                persons.add(person);
+            }
+        }
+        return persons;
+    }
+
+    private int getWhiteSpaces(String[] nameWords) {
         int whiteSpaces = 0;
-        List<IPerson> persons_ = new ArrayList<IPerson>();
-
         for (int i = 0; i < nameWords.length; i++) {
-            String string = nameWords[i];
-            if (string.trim().equals("")) {
+            if (nameWords[i].trim().equals("")) {
                 whiteSpaces++;
             }
         }
-        for (IPerson person : persons) {
-            String personName = person.getNome();
-            String userName = person.getUsername();
-            if (personName != null && userName.indexOf("INA") == -1) {
-                String[] personNameWords = personName.split(" ");
-                normalizeName(personNameWords);
-                int count = 0;
-                for (int i = 0; i < nameWords.length; i++) {
-                    String name_ = nameWords[i];
-                    for (int j = 0; j < personNameWords.length; j++) {
-                        if (!personNameWords[j].trim().equals("")
-                                && !personNameWords[j].trim().equals("")
-                                && personNameWords[j].trim().equals(name_.trim())) {
-                            count++;
-                            break;
-                        }
+        return whiteSpaces;
+    }
+
+    private boolean verifyNameEquality(String[] nameWords, int whiteSpaces, IPerson person) {
+        String personName = person.getNome();
+        if (personName != null) {
+            String[] personNameWords = personName.split(" ");
+            normalizeName(personNameWords);
+            int count = 0;
+            for (int i = 0; i < nameWords.length; i++) {
+                for (int j = 0; j < personNameWords.length; j++) {
+                    if (!personNameWords[j].trim().equals("") && !nameWords[i].trim().equals("")
+                            && personNameWords[j].trim().equals(nameWords[i].trim())) {
+                        count++;
+                        break;
                     }
                 }
-                if (count == (nameWords.length - whiteSpaces)) {
-                    persons_.add(person);
-                }
+            }
+            if (count == (nameWords.length - whiteSpaces)) {
+                return true;
             }
         }
-        return persons_;
+        return false;
     }
 
     public List<SelectItem> getValidFunctions() throws FenixFilterException, FenixServiceException {
