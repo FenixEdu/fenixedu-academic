@@ -184,7 +184,7 @@ public class Person extends Person_Base {
 
     public IStudent getStudentByType(DegreeType degreeType) {
         for (IStudent student : this.getStudents()) {
-            if (student.getDegreeType().equals(degreeType)) {
+            if (student.getDegreeType() == degreeType) {
                 return student;
             }
         }
