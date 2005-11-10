@@ -1,13 +1,18 @@
 package net.sourceforge.fenixedu.presentationTier.jsf.components;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
+import javax.faces.component.UIParameter;
 import javax.faces.component.html.HtmlCommandLink;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.JsfRenderUtils;
 
@@ -18,17 +23,23 @@ public class UICommandLink extends HtmlCommandLink {
     }
 
     @Override
+    public boolean getRendersChildren() {
+        return true;
+    }
+
+    @Override
     public void encodeBegin(FacesContext context) throws IOException {
 
+        JsfRenderUtils.addEventHandlingHiddenFieldsIfNotExists(context, this);
+        List<UIParameter> uiParameters = getParametersWithNameAttribute();
+        JsfRenderUtils.addHiddenFieldsForParametersIfNotExists(context, this, uiParameters);
         ResponseWriter writer = context.getResponseWriter();
-
-        JsfRenderUtils.addEventSenderHiddenFieldIfNotExists(context, this);
 
         writer.startElement("a", this);
         writer.writeAttribute("type", (this.getType() != null) ? this.getType() : "", null);
         writer.writeAttribute("title", (this.getTitle() != null) ? this.getTitle() : "", null);
         writer.writeAttribute("target", (this.getTarget() != null) ? this.getTarget() : "", null);
-        writer.writeAttribute("onclick", getOnClickEvent(context), null);
+        writer.writeAttribute("onclick", getOnClickEvent(context, uiParameters), null);
         writer.writeAttribute("href", "#", null);
         writer.writeAttribute("id", getClientId(context), null);
         writer.writeAttribute("name", getClientId(context), null);
@@ -39,14 +50,15 @@ public class UICommandLink extends HtmlCommandLink {
 
     }
 
-    private String getOnClickEvent(FacesContext context) {
+    private String getOnClickEvent(FacesContext context, List<UIParameter> uiParameters) {
         StringBuilder onClickEvent = new StringBuilder();
 
         if (this.getOnclick() != null) {
             onClickEvent.append(this.getOnclick()).append(";");
         }
 
-        onClickEvent.append(JsfRenderUtils.getSubmitJavaScript(context, this));
+        onClickEvent.append(JsfRenderUtils
+                .getSubmitJavaScriptWithParameters(context, this, uiParameters));
 
         return onClickEvent.toString();
     }
@@ -71,7 +83,26 @@ public class UICommandLink extends HtmlCommandLink {
         if (eventSenderId != null && eventSenderId.equals(this.getClientId(context))) {
             this.queueEvent(new ActionEvent(this));
         }
+    }
 
+    private List<UIParameter> getParametersWithNameAttribute() {
+        List<UIParameter> result = new ArrayList<UIParameter>();
+
+        List children = this.getChildren();
+
+        for (int i = 0; i < children.size(); i++) {
+            UIComponent child = (UIComponent) children.get(i);
+
+            if (child instanceof UIParameter) {
+                UIParameter parameter = (UIParameter) child;
+
+                if (parameter.getName() != null) {
+                    result.add(parameter);
+                }
+            }
+        }
+
+        return result;
     }
 
 }

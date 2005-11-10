@@ -15,7 +15,7 @@ public class UISelectOne extends javax.faces.component.UISelectOne {
     @Override
     public void encodeBegin(FacesContext context) throws IOException {
 
-        JsfRenderUtils.addEventSenderHiddenFieldIfNotExists(context, this);
+        JsfRenderUtils.addEventHandlingHiddenFieldsIfNotExists(context, this);
 
         String clearEventSenderFieldJavaScript = JsfRenderUtils.getClearEventSenderFieldJavaScript(
                 context, this);

@@ -1,0 +1,233 @@
+package net.sourceforge.fenixedu.presentationTier.jsf.components;
+
+import java.util.Iterator;
+import java.util.Map;
+
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIData;
+import javax.faces.context.FacesContext;
+import javax.faces.el.ValueBinding;
+
+public class UIDataRepeater extends UIData {
+    
+    private static final String COMPONENT_FAMILY = "DataRepeater";
+
+    private String rowIndexVar;
+
+    private String rowCountVar;
+
+    public UIDataRepeater() {
+        super();
+    }
+    
+    @Override
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
+    
+
+    public String getClientId(FacesContext context) {
+        String clientId = super.getClientId(context);
+
+        int rowIndex = getRowIndex();
+
+        if (rowIndex == -1) {
+            return clientId;
+        } else {
+            return clientId + "_" + rowIndex;
+        }
+
+    }
+
+    public void processDecodes(FacesContext context) {
+        int first = getFirst();
+        int rows = getRows();
+        int last;
+
+        if (rows == 0) {
+            last = getRowCount();
+        } else {
+            last = first + rows;
+        }
+
+        for (int rowIndex = first; rowIndex < last; rowIndex++) {
+            setRowIndex(rowIndex);
+            if (isRowAvailable()) {
+                for (Iterator it = getChildren().iterator(); it.hasNext();) {
+                    UIComponent child = (UIComponent) it.next();
+                    // For some reason its necessary to touch Id property, otherwise
+                    // the child control will not call getClientId on parent (NamingContainer)
+                    child.setId(child.getId());
+                    if (!child.isRendered()) {
+                        continue;
+                    }
+                    child.processDecodes(context);
+                }
+            }
+        }
+
+        setRowIndex(-1);
+
+        super.processDecodes(context);
+    }
+
+    public void processUpdates(FacesContext context) {
+        int first = getFirst();
+        int rows = getRows();
+        int last;
+        if (rows == 0) {
+            last = getRowCount();
+        } else {
+            last = first + rows;
+        }
+        for (int rowIndex = first; rowIndex < last; rowIndex++) {
+            setRowIndex(rowIndex);
+            if (isRowAvailable()) {
+                for (Iterator it = getChildren().iterator(); it.hasNext();) {
+                    UIComponent child = (UIComponent) it.next();
+                    if (!child.isRendered()) {
+                        continue;
+                    }
+                    child.processUpdates(context);
+                }
+            }
+        }
+
+        setRowIndex(-1);
+
+        super.processUpdates(context);
+    }
+
+    public void processValidators(FacesContext context) {
+        int first = getFirst();
+        int rows = getRows();
+        int last;
+        if (rows == 0) {
+            last = getRowCount();
+        } else {
+            last = first + rows;
+        }
+        for (int rowIndex = first; rowIndex < last; rowIndex++) {
+            setRowIndex(rowIndex);
+            if (isRowAvailable()) {
+                for (Iterator it = getChildren().iterator(); it.hasNext();) {
+                    UIComponent child = (UIComponent) it.next();
+                    if (!child.isRendered()) {
+                        continue;
+                    }
+                    child.processValidators(context);
+                }
+            }
+        }
+
+        setRowIndex(-1);
+
+        super.processValidators(context);
+    }
+
+    public void setRowIndex(int rowIndex) {
+        super.setRowIndex(rowIndex);
+        String rowIndexVar = getRowIndexVar();
+        String rowCountVar = getRowCountVar();
+        if (rowIndexVar != null || rowCountVar != null) {
+            Map requestMap = FacesContext.getCurrentInstance().getExternalContext().getRequestMap();
+            if (rowIndex >= 0) {
+                // regular row index, update request scope variables
+                if (rowIndexVar != null) {
+                    requestMap.put(getRowIndexVar(), new Integer(rowIndex));
+                }
+                if (rowCountVar != null) {
+                    requestMap.put(getRowCountVar(), new Integer(getRowCount()));
+                }
+            } else {
+                // rowIndex == -1 means end of loop --> remove request scope
+                // variables
+                if (rowIndexVar != null) {
+                    requestMap.remove(getRowIndexVar());
+                }
+                if (rowCountVar != null) {
+                    requestMap.remove(getRowCountVar());
+                }
+            }
+        }
+    }
+
+    public void setRowIndexVar(String rowIndexVar) {
+        this.rowIndexVar = rowIndexVar;
+    }
+
+    public String getRowIndexVar() {
+        if (this.rowIndexVar != null)
+            return this.rowIndexVar;
+        ValueBinding vb = getValueBinding("rowIndexVar");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
+
+    public void setRowCountVar(String rowCountVar) {
+        this.rowCountVar = rowCountVar;
+    }
+
+    public String getRowCountVar() {
+        if (this.rowCountVar != null)
+            return this.rowCountVar;
+        ValueBinding vb = getValueBinding("rowCountVar");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
+
+    /*
+    @Override
+    public boolean getRendersChildren() {
+        return true;
+    }
+
+    @Override
+    public void encodeBegin(FacesContext context) throws IOException {
+    }
+
+    @Override
+    public void encodeEnd(FacesContext context) throws IOException {
+    }
+
+    @Override
+    public void encodeChildren(FacesContext context) throws IOException {
+
+        int first = this.getFirst();
+        int rows = this.getRows();
+        int rowCount = this.getRowCount();
+
+        if (rows <= 0) {
+            rows = rowCount - first;
+        }
+
+        int last = first + rows;
+
+        if (last > rowCount)
+            last = rowCount;
+
+        for (int i = first; i < last; i++) {
+            this.setRowIndex(i);
+            if (this.isRowAvailable()) {
+                if (this.getChildCount() > 0) {
+                    for (Iterator it = this.getChildren().iterator(); it.hasNext();) {
+                        UIComponent child = (UIComponent) it.next();
+                        child.setId(child.getId());
+
+                        if (!child.isRendered()) {
+                            continue;
+                        }
+
+                        child.encodeBegin(context);
+
+                        if (child.getRendersChildren()) {
+                            child.encodeChildren(context);
+                        }
+
+                        child.encodeEnd(context);
+                    }
+                }
+
+            }
+        }
+    }
+*/
+}

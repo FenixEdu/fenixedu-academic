@@ -1,9 +1,13 @@
 package net.sourceforge.fenixedu.presentationTier.jsf.components;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
+import javax.faces.component.UIParameter;
 import javax.faces.component.html.HtmlCommandButton;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -22,15 +26,20 @@ public class UICommandButton extends HtmlCommandButton {
     public UICommandButton() {
         super();
     }
+    
+    @Override
+    public boolean getRendersChildren() {
+        return true;
+    }
 
     @Override
     public void encodeBegin(FacesContext context) throws IOException {
 
         ResponseWriter writer = context.getResponseWriter();
 
-        JsfRenderUtils.addEventSenderHiddenFieldIfNotExists(context, this);
-
-        String onClickEvent = getOnClickEvent(context);
+        JsfRenderUtils.addEventHandlingHiddenFieldsIfNotExists(context, this);
+        List<UIParameter> uiParameters = getParametersWithNameAttribute();
+        JsfRenderUtils.addHiddenFieldsForParametersIfNotExists(context, this, uiParameters);
 
         writer.startElement("input", this);
         writer.writeAttribute("type", (this.getType() == null) ? INPUT_SUBMIT_TYPE : this.getType(),
@@ -41,7 +50,7 @@ public class UICommandButton extends HtmlCommandButton {
         writer.writeAttribute("class", (this.getStyleClass() != null) ? this.getStyleClass() : "", null);
         writer.writeAttribute("alt", (this.getAlt() != null) ? this.getAlt() : "", null);
         writer.writeAttribute("value", (this.getValue() != null) ? this.getValue() : "", null);
-        writer.writeAttribute("onclick", onClickEvent, null);
+        writer.writeAttribute("onclick", getOnClickEvent(context, uiParameters), null);
 
         if (this.getType() != null && this.getType().equalsIgnoreCase(INPUT_IMAGE_TYPE)) {
             writer.writeAttribute("src", (this.getImage() != null) ? this.getImage() : "", null);
@@ -49,14 +58,15 @@ public class UICommandButton extends HtmlCommandButton {
 
     }
 
-    private String getOnClickEvent(FacesContext context) {
+    private String getOnClickEvent(FacesContext context, List<UIParameter> uiParameters) {
         StringBuilder onClickEvent = new StringBuilder();
 
         if (this.getOnclick() != null) {
             onClickEvent.append(this.getOnclick()).append(";");
         }
 
-        onClickEvent.append(JsfRenderUtils.getSubmitJavaScript(context, this));
+        onClickEvent.append(JsfRenderUtils
+                .getSubmitJavaScriptWithParameters(context, this, uiParameters));
 
         return onClickEvent.toString();
     }
@@ -87,6 +97,26 @@ public class UICommandButton extends HtmlCommandButton {
             this.queueEvent(new ActionEvent(this));
         }
 
+    }
+
+    private List<UIParameter> getParametersWithNameAttribute() {
+        List<UIParameter> result = new ArrayList<UIParameter>();
+
+        List children = this.getChildren();
+
+        for (int i = 0; i < children.size(); i++) {
+            UIComponent child = (UIComponent) children.get(i);
+
+            if (child instanceof UIParameter) {
+                UIParameter parameter = (UIParameter) child;
+
+                if (parameter.getName() != null) {
+                    result.add(parameter);
+                }
+            }
+        }
+
+        return result;
     }
 
 }

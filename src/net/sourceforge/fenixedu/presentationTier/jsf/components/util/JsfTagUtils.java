@@ -98,6 +98,11 @@ public class JsfTagUtils {
     }
 
     private static class ActionMethodBinding extends MethodBinding implements Serializable {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -3737332393091493840L;
+
         private String result;
 
         public ActionMethodBinding(String result) {
@@ -116,5 +121,5 @@ public class JsfTagUtils {
             return String.class;
         }
     }
-
+    
 }
