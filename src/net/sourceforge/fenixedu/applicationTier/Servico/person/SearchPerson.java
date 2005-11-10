@@ -6,32 +6,24 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
-import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRole;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
@@ -50,7 +42,6 @@ public class SearchPerson implements IService {
      */
     public List run(HashMap searchParameters) throws ExcepcaoPersistencia, FenixServiceException {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
         IPersistentRole persistentRole = sp.getIPersistentRole();
         ICursoPersistente persistentDegree = sp.getICursoPersistente();
         IPersistentDepartment persistentDepartment = sp.getIDepartamentoPersistente();
@@ -96,11 +87,12 @@ public class SearchPerson implements IService {
         }
 
         if (roleBd == null) {
-            persons.addAll((List<IPerson>) persistentPerson.readAll(Person.class));
+
+            IRole role = persistentRole.readByRoleType(RoleType.PERSON);
+            persons = role.getAssociatedPersons();
 
             if (startIndex == null || startIndex.equals("")) {
-                allValidPersons = filterPersons(persons, username, email, name, documentIdNumber,
-                        nameWords);
+                allValidPersons = filterPersons(persons, username, email, documentIdNumber, nameWords);
             } else {
                 allValidPersons = getValidPersons(nameWords, persons);
             }
@@ -117,50 +109,34 @@ public class SearchPerson implements IService {
                         persons.add(teacher.getPerson());
                     }
                 } else {
-                    teachers = (List<ITeacher>) sp.getIPersistentTeacher().readAll(Teacher.class);
-                    for (ITeacher teacher : teachers) {
-                        if (teacher.getPerson() != null) {
-                            persons.add(teacher.getPerson());
-                        }
-                    }
+                    IRole role = persistentRole.readByRoleType(RoleType.TEACHER);
+                    persons = role.getAssociatedPersons();
                 }
             }
 
             else if (roleBd.getRoleType().equals(RoleType.EMPLOYEE)) {
-                List<IEmployee> employees = (List<IEmployee>) sp.getIPersistentEmployee().readAll(
-                        Employee.class);
-                for (IEmployee employee : employees) {
-                    if (employee.getPerson().getTeacher() == null) {
-                        persons.add(employee.getPerson());
+                IRole role = persistentRole.readByRoleType(RoleType.EMPLOYEE);
+                List<IPerson> personsAux = role.getAssociatedPersons();
+                for (IPerson person : personsAux) {
+                    if (person.getTeacher() == null) {
+                        persons.add(person);
                     }
                 }
             }
 
             else if (roleBd.getRoleType().equals(RoleType.STUDENT)) {
 
-                if (degreetype == null) {
+                IRole role = persistentRole.readByRoleType(RoleType.STUDENT);
+                persons = role.getAssociatedPersons();
 
-                    List<IStudent> students = (List<IStudent>) sp.getIPersistentStudent().readAll(
-                            Student.class);
-                    for (IStudent student : students) {
-                        persons.add(student.getPerson());
-                    }
-                } else {
-
-                    List<IStudent> students = (List<IStudent>) sp.getIPersistentStudent().readAll(
-                            Student.class);
-
-                    persons = getValidDegreeTypePersons(degree, students, degreetype);
+                if (degreetype != null) {
+                    persons = getValidDegreeTypePersons(degree, persons, degreetype);
                 }
             }
 
             else if (roleBd.getRoleType().equals(RoleType.GRANT_OWNER)) {
-                List<IGrantOwner> grantOwners = (List<IGrantOwner>) sp.getIPersistentGrantOwner()
-                        .readAll(GrantOwner.class);
-
-                for (IGrantOwner grantOwner : grantOwners) {
-                    persons.add(grantOwner.getPerson());
-                }
+                IRole role = persistentRole.readByRoleType(RoleType.GRANT_OWNER);
+                persons = role.getAssociatedPersons();
             }
 
             allValidPersons = getValidPersons(nameWords, persons);
@@ -199,104 +175,65 @@ public class SearchPerson implements IService {
     }
 
     private List<IPerson> filterPersons(List<IPerson> persons, String username, String email,
-            String name, String documentIdNumber, String[] nameWords) {
+            String documentIdNumber, String[] nameWords) {
 
-        List<IPerson> filterPersons = new ArrayList<IPerson>();
+        List<IPerson> validPersons = new ArrayList<IPerson>();
 
-        List<IPerson> filterPersonsName = new ArrayList<IPerson>();
-        List<IPerson> filterPersonsEmail = new ArrayList<IPerson>();
-        List<IPerson> filterPersonsBI = new ArrayList<IPerson>();
-        List<IPerson> filterPersonsUsername = new ArrayList<IPerson>();
+        for (IPerson person : persons) {
 
-        if (email != null && !email.trim().equals("")) {
-            email = normalize(email.trim());
-            for (IPerson person : persons) {
+            boolean found = true, entry = false;
+
+            if (found && email != null && !email.trim().equals("")) {
                 if (person.getEmail() != null) {
+                    email = normalize(email.trim());
                     String personEmail = normalize(person.getEmail().trim());
-                    if (personEmail.indexOf(email) != -1) {
-                        filterPersonsEmail.add(person);
+                    if (personEmail.indexOf(email) == -1) {
+                        found = false;
                     }
+                } else {
+                    found = false;
                 }
+                entry = true;
             }
-            if (filterPersonsEmail.isEmpty()) {
-                return filterPersonsEmail;
-            }
-            filterPersons.addAll(filterPersonsEmail);
-        }
-        if (username != null && !username.trim().equals("")) {
-            username = normalize(username.trim());
-            for (IPerson person : persons) {
+            if (found && username != null && !username.trim().equals("")) {
                 if (person.getUsername() != null) {
+                    username = normalize(username.trim());
                     String personUserName = normalize(person.getUsername().trim());
-                    if (personUserName.indexOf(username) != -1) {
-                        filterPersonsUsername.add(person);
+                    if (personUserName.indexOf(username) == -1) {
+                        found = false;
                     }
+                } else {
+                    found = false;
                 }
+                entry = true;
             }
-            if (filterPersonsUsername.isEmpty()) {
-                return filterPersonsUsername;
-            } else if (filterPersons.isEmpty()) {
-                filterPersons.addAll(filterPersonsUsername);
-            } else {
-                filterPersons = (List<IPerson>) CollectionUtils.intersection(filterPersons,
-                        filterPersonsUsername);
-                if(filterPersons.isEmpty()){
-                    return filterPersons; 
-                }
-            }
-        }
-        if (name != null && !name.equals("")) {
-            filterPersonsName = getValidPersons(nameWords, persons);
-            
-            if (filterPersonsName.isEmpty()) {
-                return filterPersonsName;
-            } else if (filterPersons.isEmpty()) {
-                filterPersons.addAll(filterPersonsName);
-            } else {
-                filterPersons = (List<IPerson>) CollectionUtils.intersection(filterPersons,
-                        filterPersonsName);
-                if(filterPersons.isEmpty()){
-                    return filterPersons; 
-                }
-            }
-        }
-        if (documentIdNumber != null && !documentIdNumber.trim().equals("")) {
-            documentIdNumber = normalize(documentIdNumber.trim());
-            for (IPerson person : persons) {
-                if (person.getNumeroDocumentoIdentificacao() != null && person.getNome() != null) {
+            if (found && documentIdNumber != null && !documentIdNumber.trim().equals("")) {
+                if (person.getNumeroDocumentoIdentificacao() != null) {
+                    documentIdNumber = normalize(documentIdNumber.trim());
                     String personBI = normalize(person.getNumeroDocumentoIdentificacao().trim());
-                    if (personBI.trim().indexOf(documentIdNumber.trim()) != -1) {
-                        filterPersonsBI.add(person);
+                    if (personBI.indexOf(documentIdNumber) == -1) {
+                        found = false;
                     }
+                } else {
+                    found = false;
                 }
+                entry = true;
             }
-            if(filterPersonsBI.isEmpty()){
-                return filterPersonsBI;
-            }
-            else if (filterPersons.isEmpty()) {
-                filterPersons.addAll(filterPersonsBI);
-            } else {
-                filterPersons = (List<IPerson>) CollectionUtils.intersection(filterPersons,
-                        filterPersonsBI);
-                if(filterPersons.isEmpty()){
-                    return filterPersons; 
+            if (found && nameWords != null && nameWords.length > 0) {
+                if (person.getNome() != null) {
+                    int whiteSpaces = getWhiteSpaces(nameWords);
+                    found = verifyNameEquality(nameWords, whiteSpaces, person);
+                } else {
+                    found = false;
                 }
+                entry = true;
+            }
+
+            if (found && entry) {
+                validPersons.add(person);
             }
         }
-
-        List<IPerson> totalPersons = removeINAPersons(filterPersons);
-
-        return totalPersons;
-    }
-
-    private List<IPerson> removeINAPersons(List<IPerson> filterPersons) {
-        List<IPerson> totalPersons = new ArrayList<IPerson>();
-        for (IPerson person : filterPersons) {
-            if (person.getUsername() != null && person.getUsername().indexOf("INA") == -1) {
-                totalPersons.add(person);
-            }
-        }
-        return totalPersons;
+        return validPersons;
     }
 
     private void normalizeName(String[] nameWords) {
@@ -310,31 +247,29 @@ public class SearchPerson implements IService {
                 "[^\\p{ASCII}]", "").toLowerCase();
     }
 
-    private List<IPerson> getValidDegreeTypePersons(IDegree degree, List<IStudent> students,
+    private List<IPerson> getValidDegreeTypePersons(IDegree degree, List<IPerson> persons,
             DegreeType degreeType) {
 
-        List<IPerson> allValidPersons = new ArrayList<IPerson>();
+        List<IPerson> validPersons = new ArrayList<IPerson>();
 
-        for (IStudent student : students) {
-            if (student.getDegreeType().equals(degreeType)) {
-                if (degree != null) {
-                    List<IStudentCurricularPlan> studentsCurrPlans = student.getStudentCurricularPlans();
-                    for (IStudentCurricularPlan studentCurricularPlan : studentsCurrPlans) {
-                        if (studentCurricularPlan.getCurrentState().equals(
-                                StudentCurricularPlanState.ACTIVE)
-                                && studentCurricularPlan.getDegreeCurricularPlan().getDegree().equals(
-                                        degree)) {
-
-                            allValidPersons.add(student.getPerson());
-                            break;
-                        }
+        if (degree != null) {
+            for (IDegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlans()) {
+                for (IStudentCurricularPlan studentCurricularPlan : degreeCurricularPlan
+                        .getStudentCurricularPlans()) {
+                    if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.ACTIVE) {
+                        validPersons.add(studentCurricularPlan.getStudent().getPerson());
                     }
-                } else {
-                    allValidPersons.add(student.getPerson());
+                }
+            }
+        } else {
+            for (IPerson person : persons) {
+                IStudent student = person.getStudentByType(degreeType);
+                if(student != null){
+                    validPersons.add(person);
                 }
             }
         }
-        return allValidPersons;
+        return validPersons;
     }
 
     private List<Object> getIntervalPersons(Integer startIndex, List<IPerson> persons) {
@@ -360,41 +295,48 @@ public class SearchPerson implements IService {
         return objects;
     }
 
-    private List<IPerson> getValidPersons(String[] nameWords, List<IPerson> persons) {
+    private List<IPerson> getValidPersons(String[] nameWords, List<IPerson> allPersons) {
 
+        List<IPerson> persons = new ArrayList();
+
+        int whiteSpaces = getWhiteSpaces(nameWords);
+        for (IPerson person : allPersons) {
+            if (verifyNameEquality(nameWords, whiteSpaces, person)) {
+                persons.add(person);
+            }
+        }
+        return persons;
+    }
+
+    private int getWhiteSpaces(String[] nameWords) {
         int whiteSpaces = 0;
-        List<IPerson> persons_ = new ArrayList();
-
         for (int i = 0; i < nameWords.length; i++) {
-            String string = nameWords[i];
-            if (string.trim().equals("")) {
+            if (nameWords[i].trim().equals("")) {
                 whiteSpaces++;
             }
         }
+        return whiteSpaces;
+    }
 
-        for (IPerson person : persons) {
-            String personName = person.getNome();
-            String userName = person.getUsername();
-            if (personName != null && userName.indexOf("INA") == -1) {
-                String[] personNameWords = personName.split(" ");
-                normalizeName(personNameWords);
-                int count = 0;
-                for (int i = 0; i < nameWords.length; i++) {
-                    String name_ = nameWords[i];
-                    for (int j = 0; j < personNameWords.length; j++) {
-                        if (!personNameWords[j].trim().equals("")
-                                && !personNameWords[j].trim().equals("")
-                                && personNameWords[j].trim().equals(name_.trim())) {
-                            count++;
-                            break;
-                        }
+    private boolean verifyNameEquality(String[] nameWords, int whiteSpaces, IPerson person) {
+        String personName = person.getNome();
+        if (personName != null) {
+            String[] personNameWords = personName.split(" ");
+            normalizeName(personNameWords);
+            int count = 0;
+            for (int i = 0; i < nameWords.length; i++) {
+                for (int j = 0; j < personNameWords.length; j++) {
+                    if (!personNameWords[j].trim().equals("") && !nameWords[i].trim().equals("")
+                            && personNameWords[j].trim().equals(nameWords[i].trim())) {
+                        count++;
+                        break;
                     }
                 }
-                if (count == (nameWords.length - whiteSpaces)) {
-                    persons_.add(person);
-                }
+            }
+            if (count == (nameWords.length - whiteSpaces)) {
+                return true;
             }
         }
-        return persons_;
+        return false;
     }
 }
