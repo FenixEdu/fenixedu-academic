@@ -1301,6 +1301,104 @@
   </tag>
   
 
-
-
+  <tag>
+    <name>dataRepeater</name>
+    <tag-class>net.sourceforge.fenixedu.presentationTier.jsf.components.UIDataRepeaterTag</tag-class>
+    <tei-class>com.sun.faces.taglib.FacesTagExtraInfo</tei-class>
+    <body-content>JSP</body-content>
+    <description>
+    </description>
+    <attribute>
+      <name>first</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+      
+          Zero-relative row number of the first row to be displayed.  If this
+          property is set to zero, rendering will begin with the first row of
+          the underlying data.
+      </description>
+    </attribute>
+    <attribute>
+      <name>id</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+      
+          The component identifier for this component.  This value must be
+          unique within the closest parent component that is a naming
+          container.
+      </description>
+    </attribute>
+    <attribute>
+      <name>rendered</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+      
+          Flag indicating whether or not this component should be rendered
+          (during Render Response Phase), or processed on any subsequent
+          form submit.
+      </description>
+    </attribute>
+    <attribute>
+      <name>rows</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+      
+          The number of rows to display, starting with the one identified by the
+          "first" property.  If this value is set to zero, all available rows in
+          the underlying data model will be displayed.
+      </description>
+    </attribute>
+    <attribute>
+      <name>value</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+      
+          The current value of this component.
+      </description>
+    </attribute>
+    <attribute>
+      <name>var</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+      
+          Name of a request-scope attribute under which the model data for the
+          row selected by the current value of the "rowIndex" property (i.e.
+          also the current value of the "rowData" property) will be exposed.
+      </description>
+    </attribute>
+    <attribute>
+      <name>bgcolor</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+      
+          Name or code of the background color for this table.
+      </description>
+    </attribute>
+    <attribute>
+      <name>border</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+      
+          Width (in pixels) of the border to be drawn
+          around this table.
+      </description>
+    </attribute>
+    <attribute>
+      <name>binding</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+         The value binding expression linking this component to a property in a backing bean
+      </description>
+    </attribute>
+  </tag>
+  
 </taglib>
