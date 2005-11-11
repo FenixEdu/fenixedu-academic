@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoServiceExemptionCreditLine;
-import net.sourceforge.fenixedu.domain.credits.ServiceExemptionType;
+import net.sourceforge.fenixedu.domain.teacher.ServiceExemptionType;
 import net.sourceforge.fenixedu.presentationTier.Action.framework.CRUDActionByOID;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;

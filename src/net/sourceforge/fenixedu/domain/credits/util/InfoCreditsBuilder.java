@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.credits.IDatePeriodBaseCreditLine;
 import net.sourceforge.fenixedu.domain.credits.IOtherTypeCreditLine;
 import net.sourceforge.fenixedu.domain.degree.finalProject.ITeacherDegreeFinalProjectStudent;
+import net.sourceforge.fenixedu.domain.teacher.ITeacherServiceExemption;
 import net.sourceforge.fenixedu.domain.teacher.workTime.ITeacherInstitutionWorkTime;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -44,8 +45,8 @@ public abstract class InfoCreditsBuilder {
         exists = CollectionUtils.exists(list, new Predicate() {
 
             public boolean evaluate(Object input) {
-                IDatePeriodBaseCreditLine creditLine = (IDatePeriodBaseCreditLine) input;
-                return creditLine.belongsToExecutionPeriod(executionPeriod);
+                ITeacherServiceExemption serviceExemption = (ITeacherServiceExemption) input;
+                return serviceExemption.belongsToPeriod(executionPeriod.getBeginDate(), executionPeriod.getEndDate());
             }
         });
         infoCredits.setContainsServiceExemptionsSituations(new Boolean(exists));

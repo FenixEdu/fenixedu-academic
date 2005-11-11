@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.SeminaryOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.ThemeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.credits.ManagementPositionCreditLineOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.credits.OtherTypeCreditLineOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.credits.ServiceExemptionCreditLineOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.degree.finalProject.TeacherDegreeFinalProjectStudentOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.GaugingTestResultOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
@@ -113,7 +112,6 @@ import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryTh
 import net.sourceforge.fenixedu.persistenceTier.cache.FenixCache;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPositionCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentOtherTypeCreditLine;
-import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentServiceExemptionCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseReport;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentStudentCourseReport;
@@ -966,10 +964,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 
     public IPersistentOtherTypeCreditLine getIPersistentOtherTypeCreditLine() {
         return new OtherTypeCreditLineOJB();
-    }
-
-    public IPersistentServiceExemptionCreditLine getIPersistentServiceExemptionCreditLine() {
-        return new ServiceExemptionCreditLineOJB();
     }
 
     /*

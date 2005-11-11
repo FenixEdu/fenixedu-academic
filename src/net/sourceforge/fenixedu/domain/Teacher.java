@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import net.sourceforge.fenixedu.domain.publication.IPublication;
 import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.domain.teacher.ITeacherPersonalExpectation;
+import net.sourceforge.fenixedu.domain.teacher.ITeacherServiceExemption;
 import net.sourceforge.fenixedu.util.PublicationArea;
 import net.sourceforge.fenixedu.util.State;
 
@@ -185,6 +187,20 @@ public class Teacher extends Teacher_Base {
         return executionCourses;
     }
 
+    public List<ITeacherServiceExemption> getServiceExemptionSituations(Date beginDate, Date endDate) {
+
+        List<ITeacherServiceExemption> serviceExemptions = new ArrayList<ITeacherServiceExemption>();
+        for (ITeacherServiceExemption serviceExemption : this.getServiceExemptionSituations()) {
+            if ((serviceExemption.getStart().after(beginDate) && (serviceExemption.getEnd() == null || serviceExemption
+                    .getEnd().before(endDate)))
+                    || (serviceExemption.getStart().before(beginDate)
+                    && (serviceExemption.getEnd() == null || serviceExemption.getEnd().after(endDate)))) {
+                serviceExemptions.add(serviceExemption);
+            }
+        }
+        return serviceExemptions;
+    }
+
     /***************************************************************************
      * OTHER METHODS *
      **************************************************************************/
@@ -222,19 +238,19 @@ public class Teacher extends Teacher_Base {
 
         for (IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion : this
                 .getMasterDegreeThesisGuider()) {
-            
+
             if (masterDegreeThesisDataVersion.getCurrentState().getState() == State.ACTIVE) {
-                
-                List<IExecutionDegree> executionDegrees = masterDegreeThesisDataVersion.getMasterDegreeThesis().getStudentCurricularPlan().getDegreeCurricularPlan().getExecutionDegrees();
-                
-                for (IExecutionDegree executionDegree : executionDegrees)
-                {
-                    if (executionDegree.getExecutionYear().equals(executionYear))
-                    {
+
+                List<IExecutionDegree> executionDegrees = masterDegreeThesisDataVersion
+                        .getMasterDegreeThesis().getStudentCurricularPlan().getDegreeCurricularPlan()
+                        .getExecutionDegrees();
+
+                for (IExecutionDegree executionDegree : executionDegrees) {
+                    if (executionDegree.getExecutionYear().equals(executionYear)) {
                         guidedThesis.add(masterDegreeThesisDataVersion);
                     }
                 }
-                
+
             }
         }
 

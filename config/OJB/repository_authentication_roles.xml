@@ -237,7 +237,7 @@
     </collection-descriptor>  	 	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="serviceExemptionSituations"
-         element-class-ref="net.sourceforge.fenixedu.domain.credits.ServiceExemptionCreditLine"
+         element-class-ref="net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption"
          
          
          >

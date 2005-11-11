@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.domain.credits.ServiceExemptionType;
+import net.sourceforge.fenixedu.domain.teacher.ServiceExemptionType;
 
 import org.apache.commons.beanutils.ConversionException;
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;

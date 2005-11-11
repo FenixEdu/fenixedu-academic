@@ -64,7 +64,7 @@ valueType net.sourceforge.fenixedu.domain.person.RoleType                       
 valueType net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState                      as ReimbursementGuideState;
 valueType net.sourceforge.fenixedu.util.Season                                                  as Season;
 valueType net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason                         as SecretaryEnrolmentStudentReason; 
-valueType net.sourceforge.fenixedu.domain.credits.ServiceExemptionType                          as ServiceExemptionType;
+valueType net.sourceforge.fenixedu.domain.teacher.ServiceExemptionType                          as ServiceExemptionType;
 valueType net.sourceforge.fenixedu.domain.ShiftType                                             as ShiftType; 
 valueType net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus                            as SibsPaymentStatus; 
 valueType net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType                              as SibsPaymentType;
@@ -335,12 +335,6 @@ class net.sourceforge.fenixedu.domain.credits.CreditLine extends net.sourceforge
             Double credits;
             String position;
         }    
-    
-        
-        class net.sourceforge.fenixedu.domain.credits.ServiceExemptionCreditLine extends net.sourceforge.fenixedu.domain.credits.DatePeriodBaseCreditLine {
-            ServiceExemptionType type;
-        }
-
         
     class net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine extends net.sourceforge.fenixedu.domain.credits.CreditLine {
         String reason;
@@ -2940,9 +2934,24 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	
 	public java.util.List<IMasterDegreeThesisDataVersion> getGuidedMasterDegreeThesisByExecutionYear(IExecutionYear executionYear);
 	
+	public java.util.List<net.sourceforge.fenixedu.domain.teacher.ITeacherServiceExemption> getServiceExemptionSituations(java.util.Date beginDate, java.util.Date endDate);	
 	"
 }
 
+
+class net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyTeacher;
+	ServiceExemptionType type;
+	String institution;
+	Date start;
+	Date end;
+	
+	interface "
+	public void delete();
+	public void edit(ServiceExemptionType type, java.util.Date beginDate, java.util.Date endDate);
+	public boolean belongsToPeriod(java.util.Date beginDate, java.util.Date endDate);
+	"
+}
 
 class net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyTeacher;
@@ -5477,14 +5486,12 @@ relation TeacherProfessorship {
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 }
 
-
-relation TeacherServiceExemptionCreditLine {
+relation TeacherTeacherServiceExemption {
     net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
-    net.sourceforge.fenixedu.domain.credits.ServiceExemptionCreditLine playsRole serviceExemptionSituations {
+    net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption playsRole serviceExemptionSituations {
         multiplicity *;
     }
 }
-
 
 relation TeacherSummary {
 	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {

@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryMo
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryTheme;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPositionCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentOtherTypeCreditLine;
-import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentServiceExemptionCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseHistoric;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseReport;
@@ -131,6 +130,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuityVal
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GroupingVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GuideSituationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GuideVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.InstitutionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.InsuranceTransactionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.InsuranceValueVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ItemVO;
@@ -174,12 +174,10 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.Transaction
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TurmaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TurnoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.UniversityVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.InstitutionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.WrittenEvaluationEnrolmentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.WrittenTestVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.credits.ManagementPositionCreditLineVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.credits.OtherTypeCreditLineVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.credits.ServiceExemptionCreditLineVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.degree.finalProject.TeacherDegreeFinalProjectStudentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantContractMovementVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantContractRegimeVO;
@@ -223,8 +221,8 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.Ext
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.OldPublicationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.OrientationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.ServiceProviderRegimeVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.WeeklyOcupationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.TeacherPersonalExpectationVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.WeeklyOcupationVO;
 public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     private static final VersionedObjectsPersistenceSupport instance = new VersionedObjectsPersistenceSupport();
@@ -295,10 +293,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentExam getIPersistentExam() {
         return new ExamVO();
-    }
-
-    public IPersistentServiceExemptionCreditLine getIPersistentServiceExemptionCreditLine() {
-        return new ServiceExemptionCreditLineVO();
     }
 
     public IPersistentReimbursementTransaction getIPersistentReimbursementTransaction() {

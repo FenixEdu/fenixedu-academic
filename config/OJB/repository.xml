@@ -64,7 +64,8 @@
 <!ENTITY unit SYSTEM "repository_unit.xml">
 <!ENTITY contract SYSTEM "repository_contract.xml">
 <!ENTITY function SYSTEM "repository_function.xml">
-<!ENTITY person_function SYSTEM "repository_person_function.xml">
+<!ENTITY personFunction SYSTEM "repository_person_function.xml">
+<!ENTITY teacherServiceExemption SYSTEM "repository_teacher_service_exemption.xml">
 ]>
 
 
@@ -135,6 +136,7 @@
 	&unit;
 	&contract;
 	&function;
-	&person_function;
+	&personFunction;
+	&teacherServiceExemption;
 	
 </descriptor-repository>

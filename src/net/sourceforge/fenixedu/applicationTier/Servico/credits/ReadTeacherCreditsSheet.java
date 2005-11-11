@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits;
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoManagementPositionCreditLine;
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoOtherTypeCreditLine;
-import net.sourceforge.fenixedu.dataTransferObject.credits.InfoServiceExemptionCreditLine;
 import net.sourceforge.fenixedu.dataTransferObject.credits.TeacherCreditsSheetDTO;
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftProfessorship;
@@ -33,7 +32,6 @@ import net.sourceforge.fenixedu.domain.ISupportLesson;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.credits.IManagementPositionCreditLine;
 import net.sourceforge.fenixedu.domain.credits.IOtherTypeCreditLine;
-import net.sourceforge.fenixedu.domain.credits.IServiceExemptionCreditLine;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.domain.teacher.workTime.ITeacherInstitutionWorkTime;
@@ -44,7 +42,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPositionCreditLine;
-import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentServiceExemptionCreditLine;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -240,7 +237,8 @@ public class ReadTeacherCreditsSheet implements IService {
 
         List infoManagementPositions = readManagementPositions(teacher, executionPeriod, sp);
 
-        List infoServiceExemptions = readServiceExcemptions(teacher, executionPeriod, sp);
+        List infoServiceExemptions = teacher.getServiceExemptionSituations(executionPeriod
+                .getBeginDate(), executionPeriod.getEndDate());
 
         InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
         InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear
@@ -273,28 +271,6 @@ public class ReadTeacherCreditsSheet implements IService {
         teacherCreditsSheetDTO.setInfoServiceExemptions(infoServiceExemptions);
 
         return teacherCreditsSheetDTO;
-    }
-
-    private List readServiceExcemptions(ITeacher teacher, IExecutionPeriod executionPeriod,
-            ISuportePersistente sp) throws ExcepcaoPersistencia {
-        IPersistentServiceExemptionCreditLine serviceExemptionCreditLineDAO = sp
-                .getIPersistentServiceExemptionCreditLine();
-
-        List serviceExemptions = serviceExemptionCreditLineDAO.readByTeacherAndExecutionPeriod(teacher
-                .getIdInternal(), executionPeriod.getBeginDate(), executionPeriod.getEndDate());
-
-        List infoServiceExemptions = (List) CollectionUtils.collect(serviceExemptions,
-                new Transformer() {
-
-                    public Object transform(Object input) {
-                        IServiceExemptionCreditLine serviceExemptionCreditLine = (IServiceExemptionCreditLine) input;
-                        InfoServiceExemptionCreditLine infoServiceExemptionCreditLine = InfoServiceExemptionCreditLine
-                                .newInfoFromDomain(serviceExemptionCreditLine);
-                        return infoServiceExemptionCreditLine;
-                    }
-                });
-
-        return infoServiceExemptions;
     }
 
     private List readManagementPositions(ITeacher teacher, IExecutionPeriod executionPeriod,
@@ -332,8 +308,8 @@ public class ReadTeacherCreditsSheet implements IService {
                 infoOtherCreditLines.add(infoOtherTypeCreditLine);
             }
         }
-        
-        Collections.sort(infoOtherCreditLines, new BeanComparator("infoExecutionPeriod.beginDate"));        
+
+        Collections.sort(infoOtherCreditLines, new BeanComparator("infoExecutionPeriod.beginDate"));
         return infoOtherCreditLines;
     }
 
