@@ -35,11 +35,6 @@ import sun.text.Normalizer;
 
 public class SearchPerson implements IService {
 
-    /*
-     * This service return a list with 2 elements. The first is a Integer with
-     * the number of elements returned by the main search, The second is a list
-     * with the elemts returned by the limited search.
-     */
     public List run(HashMap searchParameters) throws ExcepcaoPersistencia, FenixServiceException {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentRole persistentRole = sp.getIPersistentRole();
@@ -109,14 +104,12 @@ public class SearchPerson implements IService {
                         persons.add(teacher.getPerson());
                     }
                 } else {
-                    IRole role = persistentRole.readByRoleType(RoleType.TEACHER);
-                    persons = role.getAssociatedPersons();
+                    persons = roleBd.getAssociatedPersons();
                 }
             }
 
             else if (roleBd.getRoleType().equals(RoleType.EMPLOYEE)) {
-                IRole role = persistentRole.readByRoleType(RoleType.EMPLOYEE);
-                List<IPerson> personsAux = role.getAssociatedPersons();
+                List<IPerson> personsAux = roleBd.getAssociatedPersons();
                 for (IPerson person : personsAux) {
                     if (person.getTeacher() == null) {
                         persons.add(person);
@@ -125,9 +118,7 @@ public class SearchPerson implements IService {
             }
 
             else if (roleBd.getRoleType().equals(RoleType.STUDENT)) {
-
-                IRole role = persistentRole.readByRoleType(RoleType.STUDENT);
-                persons = role.getAssociatedPersons();
+                persons = roleBd.getAssociatedPersons();
 
                 if (degreetype != null) {
                     persons = getValidDegreeTypePersons(degree, persons, degreetype);
@@ -135,8 +126,7 @@ public class SearchPerson implements IService {
             }
 
             else if (roleBd.getRoleType().equals(RoleType.GRANT_OWNER)) {
-                IRole role = persistentRole.readByRoleType(RoleType.GRANT_OWNER);
-                persons = role.getAssociatedPersons();
+                persons = roleBd.getAssociatedPersons();
             }
 
             allValidPersons = getValidPersons(nameWords, persons);
@@ -174,12 +164,12 @@ public class SearchPerson implements IService {
         return result;
     }
 
-    private List<IPerson> filterPersons(List<IPerson> persons, String username, String email,
+    private List<IPerson> filterPersons(List<IPerson> allPersons, String username, String email,
             String documentIdNumber, String[] nameWords) {
 
         List<IPerson> validPersons = new ArrayList<IPerson>();
 
-        for (IPerson person : persons) {
+        for (IPerson person : allPersons) {
 
             boolean found = true, entry = false;
 
@@ -264,7 +254,7 @@ public class SearchPerson implements IService {
         } else {
             for (IPerson person : persons) {
                 IStudent student = person.getStudentByType(degreeType);
-                if(student != null){
+                if (student != null) {
                     validPersons.add(person);
                 }
             }
@@ -272,24 +262,24 @@ public class SearchPerson implements IService {
         return validPersons;
     }
 
-    private List<Object> getIntervalPersons(Integer startIndex, List<IPerson> persons) {
+    private List<Object> getIntervalPersons(Integer startIndex, List<IPerson> allPersons) {
 
         List<Object> objects = new ArrayList<Object>(3);
-        List<IPerson> persons_ = new ArrayList<IPerson>();
+        List<IPerson> persons = new ArrayList<IPerson>();
         Integer startIndexBefore = startIndex;
         int index = 0;
 
         for (int i = startIndex; index < SessionConstants.LIMIT_FINDED_PERSONS; i++) {
             try {
-                IPerson person = persons.get(i);
-                persons_.add(person);
+                IPerson person = allPersons.get(i);
+                persons.add(person);
                 startIndex++;
                 index++;
             } catch (IndexOutOfBoundsException boundsException) {
                 break;
             }
         }
-        objects.add(0, persons_);
+        objects.add(0, persons);
         objects.add(1, startIndex);
         objects.add(2, startIndexBefore);
         return objects;
@@ -320,15 +310,20 @@ public class SearchPerson implements IService {
 
     private boolean verifyNameEquality(String[] nameWords, int whiteSpaces, IPerson person) {
         String personName = person.getNome();
-        if (personName != null) {
+        if (personName != null) {            
             String[] personNameWords = personName.split(" ");
             normalizeName(personNameWords);
-            int count = 0;
+            int count = 0, j;
             for (int i = 0; i < nameWords.length; i++) {
-                for (int j = 0; j < personNameWords.length; j++) {
-                    if (!personNameWords[j].trim().equals("") && !nameWords[i].trim().equals("")
-                            && personNameWords[j].trim().equals(nameWords[i].trim())) {
-                        count++;
+                if (!nameWords[i].trim().equals("")) {
+                    for (j = 0; j < personNameWords.length; j++) {
+                        if (!personNameWords[j].trim().equals("")
+                                && personNameWords[j].trim().equals(nameWords[i].trim())) {
+                            count++;
+                            break;
+                        }
+                    }
+                    if ((j == personNameWords.length)) {
                         break;
                     }
                 }
