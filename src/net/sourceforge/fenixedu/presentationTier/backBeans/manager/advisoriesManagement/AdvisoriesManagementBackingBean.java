@@ -4,13 +4,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.backBeans.manager.advisoriesManagement;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Advisory;
-import net.sourceforge.fenixedu.domain.IAdvisory;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,6 +14,18 @@ import java.util.List;
 
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.event.ActionEvent;
+
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.Advisory;
+import net.sourceforge.fenixedu.domain.IAdvisory;
+import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.IRole;
+import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+
+import org.apache.commons.collections.CollectionUtils;
 
 public class AdvisoriesManagementBackingBean extends FenixBackingBean {
 
@@ -128,6 +133,45 @@ public class AdvisoriesManagementBackingBean extends FenixBackingBean {
         return advisory;
     }
 
+    public RoleType getPeopleOfAdvisory() throws FenixFilterException, FenixServiceException {
+
+        List<RoleType> list = new ArrayList<RoleType>();
+        List<RoleType> resultList = new ArrayList<RoleType>();
+
+        IAdvisory advisory = this.getAdvisory();
+        for (IPerson person : advisory.getPeople()) {
+
+            IRole rolePerson = person.getPersonRole(RoleType.TEACHER);
+            IRole roleEmployee = person.getPersonRole(RoleType.EMPLOYEE);
+            IRole roleStudent = person.getPersonRole(RoleType.STUDENT);
+
+            if (rolePerson != null) {
+                list.add(RoleType.TEACHER);
+            }
+
+            if (roleEmployee != null) {
+                list.add(RoleType.EMPLOYEE);
+            }
+
+            if (roleStudent != null) {
+                list.add(RoleType.STUDENT);
+            }
+
+            if (!resultList.isEmpty()) {
+                resultList = (List<RoleType>) CollectionUtils.intersection(resultList, list);
+            }
+            else{
+                resultList.addAll(list);
+            }
+
+            if (resultList.size() == 1) {
+                return list.get(0);
+            }
+            list.clear();
+        }
+        return null;
+    }
+
     public void setAdvisory(IAdvisory advisory) {
         this.advisory = advisory;
     }
@@ -177,13 +221,16 @@ public class AdvisoriesManagementBackingBean extends FenixBackingBean {
     }
 
     private String processDate(Date date) throws FenixFilterException, FenixServiceException {
+                
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
+        
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH) + 1;
         int year = calendar.get(Calendar.YEAR);
         int hours = calendar.get(Calendar.HOUR_OF_DAY);
         int minutes = calendar.get(Calendar.MINUTE);
+        
         return (day + "/" + month + "/" + year + " " + hours + ":" + minutes);
     }
 

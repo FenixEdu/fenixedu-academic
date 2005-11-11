@@ -53,8 +53,10 @@ public class CreateAdvisory implements IService {
         advisory.setMessage(infoAdvisory.getMessage());
         advisory.setSender(infoAdvisory.getSender());
 
-        List<IPerson> people = (List<IPerson>) persistentPerson.readAll(Person.class);
-      
+        //List<IPerson> people = (List<IPerson>) persistentPerson.readAll(Person.class);
+        IRole role = persistenceSupport.getIPersistentRole().readByRoleType(RoleType.PERSON);
+        List<IPerson> people = role.getAssociatedPersons();
+              
         for (IPerson person : people) {
             if ((advisoryRecipients.equals(AdvisoryRecipients.STUDENTS) && hasRole(person,
                     RoleType.STUDENT))

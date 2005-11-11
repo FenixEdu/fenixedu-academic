@@ -7,6 +7,7 @@
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
 
 	<f:loadBundle basename="ServidorApresentacao/ManagerResources" var="bundle"/>
+	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="bundleEnumeration"/>
 	
 	<h:form>
 	
@@ -44,6 +45,10 @@
 			</h:panelGroup>
 		 
 		 </h:panelGrid>	
+		 
+		 <h:outputText value="<br/>#{bundle['property.advisory.recipients']}" escape="false"/>
+		 <h:outputText value="<b>#{bundleEnumeration[advisoriesManagementBackingBean.peopleOfAdvisory.name]}</b><br/>" 
+		 	rendered="#{advisoriesManagementBackingBean.peopleOfAdvisory != null}" escape="false"/>
 	
 	  	 <h:outputText value="<br/>" escape="false"/>
 		 <h:commandButton styleClass="inputbutton" action="#{advisoriesManagementBackingBean.editAdvisory}" value="#{bundle['label.manager.save.modifications']}" />
