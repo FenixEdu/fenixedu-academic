@@ -2,20 +2,17 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 
-import javax.faces.component.UIParameter;
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
-
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -29,6 +26,9 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 /**
  * 
@@ -51,9 +51,36 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
 
     private Map<Integer, String> lecturedMasterDegreeExecutionCourseDegreeNames;
 
-    private List<IProposal> finalDegreeWorks;
-
     private List<IMasterDegreeThesisDataVersion> guidedMasterDegreeThesisList;
+
+    private List<SelectItem> executionYearItems;
+    
+    //private List<IProposal> finalDegreeWorks;
+
+    private ResourceBundle bundle;
+
+    private static final String BUNDLE_NAME = "ServidorApresentacao/DepartmentMemberResources";
+
+    private static final String ALL_EXECUTION_YEARS_KEY = "label.common.allExecutionYears";
+
+    public ResourceBundle getBundle() {
+
+        if (this.bundle == null) {
+            this.bundle = getResourceBundle(BUNDLE_NAME);
+        }
+
+        return this.bundle;
+    }
+
+    public Integer getSelectedTeacherID() {
+
+        return (Integer) this.getViewState().getAttribute("selectedTeacherID");
+
+    }
+
+    public void setSelectedTeacherID(Integer selectedTeacherID) {
+        this.getViewState().setAttribute("selectedTeacherID", selectedTeacherID);
+    }
 
     public HtmlInputHidden getSelectedExecutionYearIdHidden() {
         if (this.selectedExecutionYearIdHidden == null) {
@@ -73,7 +100,13 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
         this.selectedExecutionYearIdHidden = selectedExecutionYearIdHidden;
     }
 
-    public Integer getSelectedExecutionYearID() {
+    public Integer getSelectedExecutionYearID() throws FenixFilterException, FenixServiceException {
+
+        if (this.selectedExecutionYearID == null && this.getExecutionYears().size() != 0) {
+            this.selectedExecutionYearID = (Integer) this.getExecutionYears().get(
+                    this.getExecutionYears().size() - 1).getValue();
+
+        }
         return selectedExecutionYearID;
     }
 
@@ -102,38 +135,52 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
 
     public void selectTeacher(ActionEvent event) throws NumberFormatException, FenixFilterException,
             FenixServiceException {
-        UIParameter parameter = (UIParameter) event.getComponent().findComponent("teacherId");
 
-        this.selectedTeacher = (InfoTeacher) ServiceUtils.executeService(getUserView(),
-                "ReadTeacherByOID", new Object[] { Integer.valueOf(parameter.getValue().toString()) });
+        Integer teacherID = Integer.valueOf(getRequestParameter("teacherID"));
+
+        setSelectedTeacherID(teacherID);
     }
 
     public InfoTeacher getSelectedTeacher() throws FenixFilterException, FenixServiceException {
+
+        if (this.selectedTeacher == null) {
+            this.selectedTeacher = (InfoTeacher) ServiceUtils.executeService(getUserView(),
+                    "ReadTeacherByOID", new Object[] { getSelectedTeacherID() });
+        }
+
         return this.selectedTeacher;
     }
 
     public List<SelectItem> getExecutionYears() throws FenixFilterException, FenixServiceException {
 
-        List<InfoExecutionYear> executionYears = (List<InfoExecutionYear>) ServiceUtils.executeService(
-                getUserView(), "ReadNotClosedExecutionYears", null);
+        if (this.executionYearItems == null) {
 
-        List<SelectItem> result = new ArrayList<SelectItem>(executionYears.size());
-        for (InfoExecutionYear executionYear : executionYears) {
-            result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
+            List<InfoExecutionYear> executionYears = (List<InfoExecutionYear>) ServiceUtils
+                    .executeService(getUserView(), "ReadNotClosedExecutionYears", null);
+
+            List<SelectItem> result = new ArrayList<SelectItem>(executionYears.size());
+            for (InfoExecutionYear executionYear : executionYears) {
+                result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
+            }
+
+            result.add(0, new SelectItem(0, getBundle().getString(ALL_EXECUTION_YEARS_KEY)));
+
+            /*
+             * if (this.getSelectedExecutionYearID() == null) {
+             * this.setSelectedExecutionYearID((Integer)
+             * result.get(result.size() - 1).getValue()); }
+             */
+            this.executionYearItems = result;
         }
 
-        if (this.getSelectedExecutionYearID() == null) {
-            this.setSelectedExecutionYearID((Integer) result.get(result.size() - 1).getValue());
-        }
-
-        return result;
+        return this.executionYearItems;
 
     }
 
     public List<IExecutionCourse> getLecturedDegreeExecutionCourses() throws FenixFilterException,
             FenixServiceException {
 
-        if (this.lecturedDegreeExecutionCourses == null) {
+        if (this.lecturedDegreeExecutionCourses == null && this.getSelectedExecutionYearID() != null) {
             this.lecturedDegreeExecutionCourses = readLecturedExecutionCourses(DegreeType.DEGREE);
             this.lecturedDegreeExecutionCourseDegreeNames = computeExecutionCoursesDegreeAcronyms(this.lecturedDegreeExecutionCourses);
 
@@ -145,7 +192,8 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
     public List<IExecutionCourse> getLecturedMasterDegreeExecutionCourses() throws FenixFilterException,
             FenixServiceException {
 
-        if (this.lecturedMasterDegreeExecutionCourses == null) {
+        if (this.lecturedMasterDegreeExecutionCourses == null
+                && this.getSelectedExecutionYearID() != null) {
             this.lecturedMasterDegreeExecutionCourses = readLecturedExecutionCourses(DegreeType.MASTER_DEGREE);
             this.lecturedMasterDegreeExecutionCourseDegreeNames = computeExecutionCoursesDegreeAcronyms(this.lecturedMasterDegreeExecutionCourses);
 
@@ -165,13 +213,26 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
     private List<IExecutionCourse> readLecturedExecutionCourses(DegreeType degreeType)
             throws FenixFilterException, FenixServiceException {
 
+        Integer executionYearID = getSelectedExecutionYearID();
+
+        if (executionYearID == 0) {
+            executionYearID = null;
+        }
+
         List<IExecutionCourse> lecturedExecutionCourses = (List<IExecutionCourse>) ServiceUtils
                 .executeService(getUserView(),
                         "ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType",
-                        new Object[] { this.selectedTeacher.getIdInternal(),
-                                this.selectedExecutionYearID, degreeType });
+                        new Object[] { getSelectedTeacherID(), executionYearID, degreeType });
 
-        return lecturedExecutionCourses;
+        List<IExecutionCourse> result = new ArrayList<IExecutionCourse>();
+
+        result.addAll(lecturedExecutionCourses);
+
+        BeanComparator comparator = new BeanComparator("executionPeriod.executionYear.year");
+        Collections.sort(result, comparator);
+        Collections.reverse(result);
+
+        return result;
     }
 
     private Map<Integer, String> computeExecutionCoursesDegreeAcronyms(
@@ -212,25 +273,44 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
 
     public List<IProposal> getFinalDegreeWorks() throws FenixFilterException, FenixServiceException {
 
-        if (this.finalDegreeWorks == null) {
-            this.finalDegreeWorks = (List<IProposal>) ServiceUtils.executeService(getUserView(),
-                    "ReadFinalDegreeWorksByTeacherIDAndExecutionYearID", new Object[] {
-                            this.selectedTeacher.getIdInternal(), this.selectedExecutionYearID });
-        }
+        /*
+         * if (this.finalDegreeWorks == null &&
+         * this.getSelectedExecutionYearID() != null) { this.finalDegreeWorks =
+         * (List<IProposal>) ServiceUtils.executeService(getUserView(),
+         * "ReadFinalDegreeWorksByTeacherIDAndExecutionYearID", new Object[] {
+         * this.getSelectedTeacherID(), getSelectedExecutionYearID() }); }
+         * 
+         * return this.finalDegreeWorks;
+         */
 
-        return this.finalDegreeWorks;
+        // TODO: waiting for ricardo code
+        return new ArrayList<IProposal>();
     }
 
     public List<IMasterDegreeThesisDataVersion> getGuidedMasterDegreeThesisList()
             throws FenixFilterException, FenixServiceException {
-        if (this.guidedMasterDegreeThesisList == null) {
+        if (this.guidedMasterDegreeThesisList == null && this.getSelectedExecutionYearID() != null) {
+            Integer executionYearID = this.getSelectedExecutionYearID();
+
+            if (executionYearID == 0) {
+                executionYearID = null;
+            }
+
             this.guidedMasterDegreeThesisList = (List<IMasterDegreeThesisDataVersion>) ServiceUtils
                     .executeService(getUserView(),
                             "ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID", new Object[] {
-                                    this.selectedTeacher.getIdInternal(), this.selectedExecutionYearID });
+                                    getSelectedTeacherID(), executionYearID });
         }
 
         return this.guidedMasterDegreeThesisList;
+    }
+
+    public void onSelectedExecutionYearChanged(ValueChangeEvent valueChangeEvent) {
+        setSelectedExecutionYearID((Integer) valueChangeEvent.getNewValue());
+        this.lecturedDegreeExecutionCourses = null;
+        this.lecturedMasterDegreeExecutionCourses = null;
+        //this.finalDegreeWorks = null;
+        this.guidedMasterDegreeThesisList = null;
     }
 
 }
