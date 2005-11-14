@@ -1,24 +1,23 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.semesterInitialization;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
+import net.sourceforge.fenixedu.domain.BibliographicReference;
+import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.IBibliographicReference;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.IEvaluationMethod;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IPeriod;
 import net.sourceforge.fenixedu.domain.IRoom;
@@ -29,19 +28,15 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.util.StringAppender;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Logger;
@@ -51,62 +46,13 @@ public class InitializeExecutionPeriod {
 
     private static final Logger logger = Logger.getLogger(InitializeExecutionPeriod.class);
 
-    private static final Set DEGREE_TYPES_TO_CREATE = new HashSet(1);
+    private static final Set<DegreeType> DEGREE_TYPES_TO_CREATE = new HashSet<DegreeType>(1);
 
     static {
         logger.addAppender(new ConsoleAppender(new PatternLayout("%m%n")));
         logger.setAdditivity(false);
 
         DEGREE_TYPES_TO_CREATE.add(DegreeType.DEGREE);
-    }
-
-    final ISuportePersistente persistentSupport;
-
-    final IPersistentObject persistentObject;
-
-    final IPersistentExecutionPeriod persistentExecutionPeriod;
-
-    final IPersistentExecutionCourse persistentExecutionCourse;
-
-    final ITurnoPersistente persistentShift;
-
-    final IAulaPersistente persistentLesson;
-
-    final ITurmaPersistente persistentSchoolClass;
-
-    final Set<String> curricularCourseCodes;
-
-    final Map<String, ISchoolClass> schoolClassMap = new HashMap<String, ISchoolClass>();
-
-    final Map<Class, Collection> objectsToPersist = new HashMap();
-
-    int schoolClassCounter = 0;
-
-    int processedschoolClass = 0;
-
-    int executionCourseCounter = 0;
-
-    int processedExecutionCourses = 0;
-
-    int shiftCounter = 0;
-
-    int processedShifts = 0;
-
-    int lessonCounter = 0;
-
-    int roomOccupationCounter = 0;
-
-    private InitializeExecutionPeriod(final ISuportePersistente persistentSupport,
-            final Set<String> curricularCourseCodes) {
-        super();
-        this.persistentSupport = persistentSupport;
-        this.persistentObject = persistentSupport.getIPersistentObject();
-        this.persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-        this.persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
-        this.persistentShift = persistentSupport.getITurnoPersistente();
-        this.persistentLesson = persistentSupport.getIAulaPersistente();
-        this.persistentSchoolClass = persistentSupport.getITurmaPersistente();
-        this.curricularCourseCodes = curricularCourseCodes;
     }
 
     public static void main(String[] args) {
@@ -127,11 +73,10 @@ public class InitializeExecutionPeriod {
 
         ISuportePersistente persistentSupport = null;
         try {
+        	SuportePersistenteOJB.fixDescriptors();
             persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentSupport.iniciarTransaccao();
-            final InitializeExecutionPeriod instance = new InitializeExecutionPeriod(persistentSupport,
-                    curricularCourseCodes);
-            instance.initializeNextExecutionPeriod(semester, executionYear);
+            initializeNextExecutionPeriod(semester, executionYear, curricularCourseCodes);
             persistentSupport.confirmarTransaccao();
         } catch (Exception e) {
             try {
@@ -169,178 +114,96 @@ public class InitializeExecutionPeriod {
         }
     }
 
-    private void persist(final IDomainObject domainObject) throws ExcepcaoPersistencia {
-        //persistentObject.simpleLockWrite(domainObject);
-        final Collection domainObjects;
-        if (!objectsToPersist.containsKey(domainObject.getClass())) {
-            domainObjects = new ArrayList();
-            objectsToPersist.put(domainObject.getClass(), domainObjects);
-        } else {
-            domainObjects = objectsToPersist.get(domainObject.getClass());
-        }
-        domainObjects.add(domainObject);
-    }
-
-    private void initializeNextExecutionPeriod(final Integer semester, String executionYear)
+    private static void initializeNextExecutionPeriod(final Integer semester, final String executionYear, final Set<String> curricularCourseCodes)
             throws ExcepcaoPersistencia {
-        final IExecutionPeriod executionPeriod = persistentExecutionPeriod
-                .readBySemesterAndExecutionYear(semester, executionYear);
-        final IExecutionPeriod newExecutionPeriod = executionPeriod.getNextExecutionPeriod()
-                .getNextExecutionPeriod();
+    	final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+    	final IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
+
+        final IExecutionPeriod executionPeriod = persistentExecutionPeriod.readBySemesterAndExecutionYear(semester, executionYear);
+        final IExecutionPeriod newExecutionPeriod = executionPeriod.getNextExecutionPeriod().getNextExecutionPeriod();
 
         logger.info(StringAppender.append("Initializing period [semester ", newExecutionPeriod
                 .getSemester().toString(), ", ", newExecutionPeriod.getExecutionYear().getYear(),
                 "] from period [semester ", executionPeriod.getSemester().toString(), ", ",
                 executionPeriod.getExecutionYear().getYear(), "]."));
 
-        createSchoolClasses(newExecutionPeriod, executionPeriod);
-
-        createExecutionCourses(newExecutionPeriod, executionPeriod);
-
-        persistSchoolClasses();
-
-        storeDomainObjects();
-
-        report();
+        final Map<IExecutionDegree, IExecutionDegree> executionDegreeMap = constructExecutionDegreeCorrespondenceMap(executionPeriod, newExecutionPeriod);
+        final Map<ISchoolClass, ISchoolClass> schoolClassMap = createSchoolClasses(executionDegreeMap, newExecutionPeriod);
+        createExecutionCourses(curricularCourseCodes, schoolClassMap, executionPeriod, newExecutionPeriod);
     }
 
-    private void storeDomainObjects() throws ExcepcaoPersistencia {
-        persistentSupport.confirmarTransaccao();
-        persistentSupport.iniciarTransaccao();
-        final Collection<ISchoolClass> schoolClasses = objectsToPersist.get(SchoolClass.class);
-        System.out.println("writing " + schoolClasses.size() + " schoolClasses");
-        for (final ISchoolClass schoolClass : schoolClasses) {
-            persistentObject.simpleLockWrite(schoolClass);
-            schoolClass.getAssociatedShifts().clear();
-        }
-
-        persistentSupport.confirmarTransaccao();
-        persistentSupport.iniciarTransaccao();
-        final Collection<IExecutionCourse> executionCourses = objectsToPersist.get(ExecutionCourse.class);
-        System.out.println("writing " + executionCourses.size() + " executionCourses");
-        for (final IExecutionCourse executionCourse : executionCourses) {
-            persistentObject.simpleLockWrite(executionCourse);
-            executionCourse.getAssociatedShifts().clear();
-        }
-
-        persistentSupport.confirmarTransaccao();
-        persistentSupport.iniciarTransaccao();
-        final Collection<IShift> shifts = objectsToPersist.get(Shift.class);
-        System.out.println("writing " + shifts.size() + " shifts");
-        for (final IShift shift : shifts) {
-            persistentObject.simpleLockWrite(shift);
-            shift.getAssociatedLessons().clear();
-        }
-
-        persistentSupport.confirmarTransaccao();
-        persistentSupport.iniciarTransaccao();
-        final Collection<ILesson> lessons = objectsToPersist.get(Lesson.class);
-        System.out.println("writing " + lessons.size() + " lessons");
-        for (final ILesson lesson : lessons) {
-            persistentObject.simpleLockWrite(lesson);
-        }
-        final Collection<IRoomOccupation> roomOccupations = objectsToPersist.get(RoomOccupation.class);
-        System.out.println("writing " + roomOccupations.size() + " roomOccupations");
-        for (final IRoomOccupation roomOccupation : roomOccupations) {
-            persistentObject.simpleLockWrite(roomOccupation);
-        }
-    }
-
-    private void createSchoolClasses(final IExecutionPeriod newExecutionPeriod,
-            final IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
-        final List<ISchoolClass> schoolClasses = executionPeriod.getSchoolClasses();
-        Collections.sort(schoolClasses, new BeanComparator("nome"));
-        for (final ISchoolClass schoolClass : schoolClasses) {
-            final IExecutionDegree executionDegree = schoolClass.getExecutionDegree();
-            final IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-            final IDegree degree = degreeCurricularPlan.getDegree();
-
-            if (DEGREE_TYPES_TO_CREATE.contains(degree.getTipoCurso())) {
-                final IExecutionDegree newExecutionDegree = findExecutionDegree(degreeCurricularPlan,
-                        newExecutionPeriod.getExecutionYear());
-
-                if (newExecutionDegree != null) {
-                    schoolClassCounter++;
-                    processedschoolClass++;
-
-                    final ISchoolClass newSchoolClass = new SchoolClass();
-                    newSchoolClass.setAnoCurricular(schoolClass.getAnoCurricular());
-                    newSchoolClass.setExecutionDegree(newExecutionDegree);
-                    newExecutionDegree.getSchoolClasses().add(newSchoolClass);
-                    newSchoolClass.setExecutionPeriod(newExecutionPeriod);
-                    newExecutionPeriod.getSchoolClasses().add(newSchoolClass);
-                    newSchoolClass.setNome(schoolClass.getNome());
-                    //newSchoolClass.setSchoolClassShifts(new ArrayList());
-
-
-                    schoolClassMap.put(newSchoolClass.getNome(), newSchoolClass);
+    private static void createExecutionCourses(final Set<String> curricularCourseCodes, final Map<ISchoolClass, ISchoolClass> schoolClassMap,
+    		final IExecutionPeriod executionPeriod, final IExecutionPeriod newExecutionPeriod) {
+    	for (final IExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCourses()) {
+    		if (keepAggregate(curricularCourseCodes, executionCourse.getAssociatedCurricularCourses())) {
+                final IExecutionCourse newExecutionCourse = createExecutionCourse(newExecutionPeriod, executionCourse);
+                final List<ICurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
+                for (final ICurricularCourse curricularCourse : curricularCourses) {
+                    addCurricularCourse(newExecutionCourse, curricularCourse);
                 }
-            }
-        }
-    }
-
-    private IExecutionDegree findExecutionDegree(final IDegreeCurricularPlan degreeCurricularPlan,
-            final IExecutionYear executionYear) {
-        for (final IExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
-            if (executionYear.getIdInternal().equals(executionDegree.getExecutionYear().getIdInternal())) {
-                return executionDegree;
-            }
-        }
-        logger.error(StringAppender.append("No execution degree found for: ", degreeCurricularPlan
-                .getName(), " ", executionYear.getYear()));
-        return null;
-    }
-
-    private void persistSchoolClasses() throws ExcepcaoPersistencia {
-        for (final ISchoolClass schoolClass : schoolClassMap.values()) {
-            schoolClassCounter++;
-            persist(schoolClass);
-        }
-    }
-
-    private void createExecutionCourses(final IExecutionPeriod newExecutionPeriod,
-            final IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
-        final List<IExecutionCourse> executionCourses = executionPeriod.getAssociatedExecutionCourses();
-        for (final IExecutionCourse executionCourse : executionCourses) {
-            processedExecutionCourses++;
-            createExecutionCourse(newExecutionPeriod, executionPeriod, executionCourse);
-        }
-    }
-
-    private void createExecutionCourse(final IExecutionPeriod newExecutionPeriod,
-            final IExecutionPeriod executionPeriod, final IExecutionCourse executionCourse)
-            throws ExcepcaoPersistencia {
-        if (keepAggregate(executionCourse.getAssociatedCurricularCourses())) {
-            final IExecutionCourse newExecutionCourse = createExecutionCourse(newExecutionPeriod,
-                    executionCourse);
-            final List<ICurricularCourse> curricularCourses = executionCourse
-                    .getAssociatedCurricularCourses();
-            for (final ICurricularCourse curricularCourse : curricularCourses) {
-                addCurricularCourse(newExecutionCourse, curricularCourse);
-            }
-            if (!newExecutionCourse.getAssociatedCurricularCourses().isEmpty()) {
-                executionCourseCounter++;
-                persist(newExecutionCourse);
-                createSchedule(newExecutionCourse, executionCourse);
-            }
-        } else {
-            final List<ICurricularCourse> curricularCourses = executionCourse
-                    .getAssociatedCurricularCourses();
-            int i = 0;
-            for (final ICurricularCourse curricularCourse : curricularCourses) {
-                final IExecutionCourse newExecutionCourse = createExecutionCourse(newExecutionPeriod,
-                        executionCourse);
-                newExecutionCourse.setSigla(executionCourse.getSigla() + "_" + i++);
-                addCurricularCourse(newExecutionCourse, curricularCourse);
                 if (!newExecutionCourse.getAssociatedCurricularCourses().isEmpty()) {
-                    executionCourseCounter++;
-                    persist(newExecutionCourse);
+                    createSchedule(schoolClassMap, newExecutionCourse, executionCourse);
                 }
-            }
-        }
+            } else {
+                final List<ICurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
+                int i = 0;
+                for (final ICurricularCourse curricularCourse : curricularCourses) {
+                    final IExecutionCourse newExecutionCourse = createExecutionCourse(newExecutionPeriod, executionCourse);
+                    newExecutionCourse.setSigla(executionCourse.getSigla() + "_" + i++);
+                    addCurricularCourse(newExecutionCourse, curricularCourse);
+                }
+    		}
+    	}
+	}
+
+	private static Map<ISchoolClass, ISchoolClass> createSchoolClasses(final Map<IExecutionDegree, IExecutionDegree> executionDegreeMap,
+    		final IExecutionPeriod newEecutionPeriod) {
+    	final Map<ISchoolClass, ISchoolClass> schoolClassMap = new HashMap<ISchoolClass, ISchoolClass>();
+    	for (final Entry<IExecutionDegree, IExecutionDegree> entry : executionDegreeMap.entrySet()) {
+    		final IExecutionDegree executionDegree = entry.getKey();
+    		final IDegree degree = executionDegree.getDegreeCurricularPlan().getDegree();
+    		if (DEGREE_TYPES_TO_CREATE.contains(degree.getTipoCurso())) {
+    			for (final ISchoolClass schoolClass : executionDegree.getSchoolClasses()) {
+    				if (schoolClass.getExecutionPeriod().getSemester().equals(newEecutionPeriod.getSemester())) {
+    					final ISchoolClass newSchoolClass = new SchoolClass();
+    					newSchoolClass.setAnoCurricular(schoolClass.getAnoCurricular());
+    					newSchoolClass.setExecutionDegree(entry.getValue());
+    					newSchoolClass.setExecutionPeriod(newEecutionPeriod);
+    					newSchoolClass.setNome(schoolClass.getNome());
+
+    					schoolClassMap.put(schoolClass, newSchoolClass);
+    				}
+    			}
+    		}
+    	}
+    	return schoolClassMap;
     }
 
-    private boolean keepAggregate(final List<ICurricularCourse> curricularCourses) {
+	private static Map<IExecutionDegree, IExecutionDegree> constructExecutionDegreeCorrespondenceMap(
+    		final IExecutionPeriod executionPeriod, final IExecutionPeriod newExecutionPeriod) {
+    	final Map<IExecutionDegree, IExecutionDegree> executionDegreeMap = new HashMap<IExecutionDegree, IExecutionDegree>();
+    	for (final IExecutionDegree executionDegree : executionPeriod.getExecutionYear().getExecutionDegrees()) {
+    		final IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+    		final IExecutionDegree correspondingExecutionDegree = findExecutionDegree(
+    				newExecutionPeriod.getExecutionYear().getExecutionDegrees(), degreeCurricularPlan);
+    		if (correspondingExecutionDegree != null) {
+    			executionDegreeMap.put(executionDegree, correspondingExecutionDegree);
+    		}
+    	}
+		return executionDegreeMap;
+	}
+
+	private static IExecutionDegree findExecutionDegree(
+			final List<IExecutionDegree> executionDegrees, final IDegreeCurricularPlan degreeCurricularPlan) {
+		for (final IExecutionDegree executionDegree : executionDegrees) {
+			if (executionDegree.getDegreeCurricularPlan() == degreeCurricularPlan) {
+				return executionDegree;
+			}
+		}
+		return null;
+	}
+
+    private static boolean keepAggregate(final Set<String> curricularCourseCodes, final List<ICurricularCourse> curricularCourses) {
         for (final ICurricularCourse curricularCourse : curricularCourses) {
             if (curricularCourseCodes.contains(curricularCourse.getCode())) {
                 return false;
@@ -349,153 +212,129 @@ public class InitializeExecutionPeriod {
         return true;
     }
 
-    private IExecutionCourse createExecutionCourse(final IExecutionPeriod newExecutionPeriod,
+    private static IExecutionCourse createExecutionCourse(final IExecutionPeriod newExecutionPeriod,
             final IExecutionCourse executionCourse) {
         final IExecutionCourse newExecutionCourse = new ExecutionCourse();
 
-        newExecutionCourse.getAssociatedBibliographicReferences().addAll(executionCourse
-                .getAssociatedBibliographicReferences());
+        for (final IBibliographicReference bibliographicReference : executionCourse.getAssociatedBibliographicReferences()) {
+        	final IBibliographicReference newBibliographicReference = new BibliographicReference();
+        	newBibliographicReference.setAuthors(bibliographicReference.getAuthors());
+        	newBibliographicReference.setExecutionCourse(newExecutionCourse);
+        	newBibliographicReference.setOptional(bibliographicReference.getOptional());
+        	newBibliographicReference.setReference(bibliographicReference.getReference());
+        	newBibliographicReference.setTitle(bibliographicReference.getTitle());
+        	newBibliographicReference.setYear(bibliographicReference.getYear());
+        }
+
         newExecutionCourse.setComment(new String());
         newExecutionCourse.setCourseReport(null);
-        newExecutionCourse.setEvaluationMethod(null);
+
+        final IEvaluationMethod evaluationMethod = executionCourse.getEvaluationMethod();
+        if (evaluationMethod != null) {
+        	final IEvaluationMethod newEvaluationMethod = new EvaluationMethod();
+        	newEvaluationMethod.setEvaluationElements(evaluationMethod.getEvaluationElements());
+        	newEvaluationMethod.setEvaluationElementsEn(evaluationMethod.getEvaluationElementsEn());
+        	newEvaluationMethod.setExecutionCourse(newExecutionCourse);
+        }
+
         newExecutionCourse.setExecutionPeriod(newExecutionPeriod);
-        newExecutionPeriod.getAssociatedExecutionCourses().add(newExecutionCourse);
         newExecutionCourse.setLabHours(executionCourse.getLabHours());
         newExecutionCourse.setNome(executionCourse.getNome());
         newExecutionCourse.setPraticalHours(executionCourse.getPraticalHours());
         newExecutionCourse.setSigla(executionCourse.getSigla());
-        newExecutionCourse.setSite(executionCourse.getSite());
+        newExecutionCourse.setSite(new Site());
         newExecutionCourse.setTheoPratHours(executionCourse.getTheoPratHours());
         newExecutionCourse.setTheoreticalHours(executionCourse.getTheoreticalHours());
 
         return newExecutionCourse;
     }
 
-    private void addCurricularCourse(final IExecutionCourse executionCourse,
-            final ICurricularCourse curricularCourse) {
-        if (DEGREE_TYPES_TO_CREATE.contains(curricularCourse.getDegreeCurricularPlan().getDegree()
-                .getTipoCurso())
-                && hasOpenScope(executionCourse.getExecutionPeriod(), curricularCourse)) {
-            executionCourse.getAssociatedCurricularCourses().add(curricularCourse);
-            curricularCourse.getAssociatedExecutionCourses().add(executionCourse);
+    private static void addCurricularCourse(final IExecutionCourse executionCourse, final ICurricularCourse curricularCourse) {
+    	final IExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+    	final IDegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+    	final IDegree degree = degreeCurricularPlan.getDegree();
+        if (DEGREE_TYPES_TO_CREATE.contains(degree.getTipoCurso())
+        		&& curricularCourse.getActiveScopesInExecutionPeriod(executionPeriod) != null) {
+        	curricularCourse.getAssociatedExecutionCourses().add(executionCourse);
         }
     }
 
-    private boolean hasOpenScope(final IExecutionPeriod executionPeriod,
-            final ICurricularCourse curricularCourse) {
-
-        if (curricularCourse.getCode().equals("B41")) {
-            System.out.println("DAM");
-        }
-
-        for (final ICurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
-            if (curricularCourseScope.getCurricularSemester().getSemester().equals(
-                    executionPeriod.getSemester())
-                    && (executionPeriod.getEndDate().getTime() > curricularCourseScope.getBeginDate()
-                            .getTimeInMillis())
-                    && (curricularCourseScope.getEndDate() == null || executionPeriod.getBeginDate()
-                            .getTime() < curricularCourseScope.getEndDate().getTimeInMillis())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void createSchedule(final IExecutionCourse newExecutionCourse,
-            final IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
+    private static void createSchedule(final Map<ISchoolClass, ISchoolClass> schoolClassMap, 
+    		final IExecutionCourse newExecutionCourse, final IExecutionCourse executionCourse) {
         for (final IShift shift : executionCourse.getAssociatedShifts()) {
-            createShift(shift, newExecutionCourse);
+            createShift(schoolClassMap, shift, newExecutionCourse);
         }
     }
 
-    private void createShift(final IShift shift, final IExecutionCourse executionCourse)
-            throws ExcepcaoPersistencia {
+    private static void createShift(final Map<ISchoolClass, ISchoolClass> schoolClassMap, 
+    		final IShift shift, final IExecutionCourse executionCourse) {
         final IShift newShift = new Shift();
+
         newShift.setAvailabilityFinal(shift.getLotacao());
         newShift.setDisciplinaExecucao(executionCourse);
         newShift.setLotacao(shift.getLotacao());
         newShift.setNome(shift.getNome());
-//        newShift.setOcupation(Integer.valueOf(0));
-//        newShift.setPercentage(Double.valueOf(0));
-        // newShift.setSchoolClassShifts(new ArrayList());
         newShift.setTipo(shift.getTipo());
 
-        processedShifts++;
-
         for (final ISchoolClass schoolClass : shift.getAssociatedClasses()) {
-            final ISchoolClass newSchoolClass = schoolClassMap.get(schoolClass.getNome());
-            addSchoolClass(newShift, newSchoolClass);
+            final ISchoolClass newSchoolClass = schoolClassMap.get(schoolClass);
+            addSchoolClass(newShift, newSchoolClass, schoolClass);
         }
 
         if (!newShift.getAssociatedClasses().isEmpty()) {
-            shiftCounter++;
-
             for (final ILesson lesson : shift.getAssociatedLessons()) {
                 createLesson(lesson, newShift);
             }
-
-            executionCourse.getAssociatedShifts().add(newShift);
-            persist(newShift);
-        }
-
-    }
-
-    private void addSchoolClass(final IShift shift, final ISchoolClass schoolClass) {
-        if (schoolClass != null) {
-            schoolClass.getAssociatedShifts().add(shift);
-            shift.getAssociatedClasses().add(schoolClass);
         }
     }
 
-    private void createLesson(final ILesson lesson, final IShift newShift) throws ExcepcaoPersistencia {
+    private static void addSchoolClass(final IShift shift, final ISchoolClass newSchoolClass, final ISchoolClass schoolClass) {
+        if (newSchoolClass != null) {
+            newSchoolClass.getAssociatedShifts().add(shift);
+        } else {
+        	final IExecutionDegree executionDegree = schoolClass.getExecutionDegree();
+        	final IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+        	logger.warn("No new class found for: " + schoolClass.getNome() + " year: " + schoolClass.getAnoCurricular()
+        			+ " degree: " + degreeCurricularPlan.getName());
+        }
+    }
+
+    private static void createLesson(final ILesson lesson, final IShift newShift) {
+    	final IExecutionCourse executionCourse = newShift.getDisciplinaExecucao();
+    	final IExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+    	final IRoom room = lesson.getSala();
+
         final ILesson newLesson = new Lesson();
-        newLesson.setDiaSemana(lesson.getDiaSemana());
-        final IExecutionPeriod executionPeriod = newShift.getDisciplinaExecucao().getExecutionPeriod();
+        newLesson.setDiaSemana(lesson.getDiaSemana());;
         newLesson.setExecutionPeriod(executionPeriod);
-        executionPeriod.getLessons().add(newLesson);
         newLesson.setFim(lesson.getFim());
         newLesson.setInicio(lesson.getInicio());
-        final IRoom room = lesson.getSala();
         newLesson.setSala(room);
-        room.getAssociatedLessons().add(newLesson);
         newLesson.setShift(newShift);
-        newShift.getAssociatedLessons().add(newLesson);
         newLesson.setTipo(lesson.getTipo());
+
         createRoomOccupation(lesson.getRoomOccupation(), newLesson);
-
-        lessonCounter++;
-
-        persist(newLesson);
     }
 
-    private IRoomOccupation createRoomOccupation(final IRoomOccupation roomOccupation,
-            final ILesson lesson) throws ExcepcaoPersistencia {
+    private static IRoomOccupation createRoomOccupation(final IRoomOccupation roomOccupation, final ILesson lesson) {
+    	final IRoom room = roomOccupation.getRoom();
+    	final IPeriod period = getPeriod(lesson);
+
         final IRoomOccupation newRoomOccupation = new RoomOccupation();
         newRoomOccupation.setDayOfWeek(roomOccupation.getDayOfWeek());
         newRoomOccupation.setEndTime(roomOccupation.getEndTime());
         newRoomOccupation.setFrequency(roomOccupation.getFrequency());
         newRoomOccupation.setLesson(lesson);
-        lesson.setRoomOccupation(newRoomOccupation);
-
-        final IPeriod period = getPeriod(lesson);
         newRoomOccupation.setPeriod(period);
-        period.getRoomOccupations().add(newRoomOccupation);
-
-        final IRoom room = roomOccupation.getRoom();
         newRoomOccupation.setRoom(room);
-        room.getRoomOccupations().add(newRoomOccupation);
         newRoomOccupation.setStartTime(roomOccupation.getStartTime());
         newRoomOccupation.setWeekOfQuinzenalStart(roomOccupation.getWeekOfQuinzenalStart());
         newRoomOccupation.setWrittenEvaluation(null);
 
-        roomOccupationCounter++;
-
-        persist(newRoomOccupation);
-
         return newRoomOccupation;
     }
 
-    private IPeriod getPeriod(final ILesson lesson) {
+    private static IPeriod getPeriod(final ILesson lesson) {
         final ISchoolClass schoolClass = lesson.getShift().getAssociatedClasses().get(0);
         final IExecutionDegree executionDegree = schoolClass.getExecutionDegree();
 
@@ -506,31 +345,6 @@ public class InitializeExecutionPeriod {
             return executionDegree.getPeriodLessonsSecondSemester();
         }
         return null;
-    }
-
-    private void report() {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        stringBuilder.append("Processed:");
-        stringBuilder.append("\n\tSchoolClasses: ");
-        stringBuilder.append(processedschoolClass);
-        stringBuilder.append("\n\tExecutionCourses: ");
-        stringBuilder.append(processedExecutionCourses);
-        stringBuilder.append("\n\tShifts: ");
-        stringBuilder.append(processedShifts);
-        stringBuilder.append("\n\nCreated:");
-        stringBuilder.append("\n\tSchoolClasses: ");
-        stringBuilder.append(schoolClassCounter);
-        stringBuilder.append("\n\tExecutionCourses: ");
-        stringBuilder.append(executionCourseCounter);
-        stringBuilder.append("\n\tShifts: ");
-        stringBuilder.append(shiftCounter);
-        stringBuilder.append("\n\tLessons: ");
-        stringBuilder.append(lessonCounter);
-        stringBuilder.append("\n\tRoomOccupations: ");
-        stringBuilder.append(roomOccupationCounter);
-
-        logger.info(stringBuilder.toString());
     }
 
 }
