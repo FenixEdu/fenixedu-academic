@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -10,10 +11,10 @@ import java.util.Set;
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
@@ -21,10 +22,16 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherPersonalExpectation;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.ITeacherExpectationDefinitionPeriod;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 /**
  * 
@@ -32,8 +39,6 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
  * 
  */
 public class TeacherExpectationManagement extends FenixBackingBean {
-
-    private String selectedExecutionYearName;
 
     private Boolean needsToCreateExpectation;
 
@@ -118,7 +123,9 @@ public class TeacherExpectationManagement extends FenixBackingBean {
     private List<IProposal> finalDegreeWorks;
 
     private InfoTeacher infoTeacher;
-    
+
+    private Boolean expectationDefinitionPeriodOpen;
+
     public TeacherExpectationManagement() {
 
         FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -382,12 +389,20 @@ public class TeacherExpectationManagement extends FenixBackingBean {
     }
 
     public String getSelectedExecutionYearName() throws FenixFilterException, FenixServiceException {
+        String selectedExecutionYearName = (String) this.getViewState().getAttribute(
+                "selectedExecutionYearName");
+
+        if (selectedExecutionYearName == null) {
+            loadExecutionYearName();
+            selectedExecutionYearName = (String) this.getViewState().getAttribute(
+                    "selectedExecutionYearName");
+        }
 
         return selectedExecutionYearName;
     }
 
     public void setSelectedExecutionYearName(String selectedExecutionYearName) {
-        this.selectedExecutionYearName = selectedExecutionYearName;
+        this.getViewState().setAttribute("selectedExecutionYearName", selectedExecutionYearName);
     }
 
     public Integer getSeminaries() {
@@ -452,6 +467,34 @@ public class TeacherExpectationManagement extends FenixBackingBean {
 
     public void setUtlOrgans(String utlOrgans) {
         this.utlOrgans = utlOrgans;
+    }
+
+    public Boolean getExpectationDefinitionPeriodOpen() throws FenixFilterException,
+            FenixServiceException {
+
+        if (this.expectationDefinitionPeriodOpen == null) {
+            ITeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = getTeacherExpectationDefinitionPeriod(getSelectedExecutionYearID());
+            this.expectationDefinitionPeriodOpen = teacherExpectationDefinitionPeriod.isPeriodOpen();
+        }
+
+        return expectationDefinitionPeriodOpen;
+    }
+
+    private ITeacherExpectationDefinitionPeriod getTeacherExpectationDefinitionPeriod(
+            Integer executionYearID) throws FenixFilterException, FenixServiceException {
+        Integer departmentID = this.getUserView().getPerson().getEmployee().getDepartmentWorkingPlace()
+                .getIdInternal();
+
+        ITeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = (ITeacherExpectationDefinitionPeriod) ServiceUtils
+                .executeService(getUserView(),
+                        "ReadTeacherExpectationDefinitionPeriodByDepartmentIDAndExecutionYearID",
+                        new Object[] { departmentID, executionYearID });
+
+        return teacherExpectationDefinitionPeriod;
+    }
+
+    public void setExpectationDefinitionPeriodOpen(Boolean expectationDefinitionPeriodOpen) {
+        this.expectationDefinitionPeriodOpen = expectationDefinitionPeriodOpen;
     }
 
     public List<IExecutionCourse> getLecturedDegreeExecutionCourses() throws FenixFilterException,
@@ -532,40 +575,37 @@ public class TeacherExpectationManagement extends FenixBackingBean {
 
     }
 
-    public List getExecutionYears() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getExecutionYears() throws FenixFilterException, FenixServiceException {
 
-        /*
-         * List<InfoExecutionYear> executionYears = (List<InfoExecutionYear>)
-         * ServiceUtils.executeService( getUserView(),
-         * "ReadNotClosedExecutionYears", null);
-         * 
-         * List<SelectItem> result = new ArrayList<SelectItem>(executionYears.size());
-         * for (InfoExecutionYear executionYear : executionYears) {
-         * result.add(new SelectItem(executionYear.getIdInternal(),
-         * executionYear.getYear())); }
-         * 
-         * if (this.getSelectedExecutionYearID() == null) {
-         * setSelectedExecutionYearID(executionYears.get(executionYears.size() -
-         * 1).getIdInternal()); }
-         */
+        List<ITeacherExpectationDefinitionPeriod> expectationDefinitionPeriodsForDepartment = getUserView()
+                .getPerson().getEmployee().getDepartmentWorkingPlace()
+                .getTeacherExpectationDefinitionPeriods();
 
-        // TODO: THIS SHOULD BE REMOVED WHEN WE WAVE PERSONAL EXPECTATION
-        // DEFINITION PERIODS
-        // ONLY EXECUTION YEARS WITH EXPECTATION DEFINITION PERIODS SHOULD BE
-        // VISIBLE
-        String executionYearName = PropertiesManager
-                .getProperty("teacherPersonalExpecationDefaultExecutionYear");
+        List<IExecutionYear> executionYears = new ArrayList<IExecutionYear>();
 
-        InfoExecutionYear executionYear = (InfoExecutionYear) ServiceUtils.executeService(getUserView(),
-                "ReadExecutionYear", new Object[] { executionYearName });
+        for (ITeacherExpectationDefinitionPeriod expectationDefinitionPeriod : expectationDefinitionPeriodsForDepartment) {
+            executionYears.add(expectationDefinitionPeriod.getExecutionYear());
+        }
+
+        ComparatorChain comparatorChain = new ComparatorChain();
+        comparatorChain.addComparator(new BeanComparator("year"));
+
+        Collections.sort(executionYears, comparatorChain);
 
         List<SelectItem> result = new ArrayList<SelectItem>();
-        result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
 
-        setSelectedExecutionYearID(executionYear.getIdInternal());
+        for (IExecutionYear executionYear : executionYears) {
+            result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
+        }
+
+        if (this.getSelectedExecutionYearID() == null && result.size() != 0) {
+            setSelectedExecutionYearID((Integer) result.get(result.size() - 1).getValue());
+        }
+
         loadPersonalExpectationData();
 
         return result;
+
     }
 
     public List<IProposal> getFinalDegreeWorks() throws FenixFilterException, FenixServiceException {
@@ -600,16 +640,27 @@ public class TeacherExpectationManagement extends FenixBackingBean {
 
         InfoTeacherPersonalExpectation infoTeacherPersonalExpectation = buildInfoTeacherPersonalExpectation();
 
-        Object[] args = { infoTeacherPersonalExpectation, infoTeacher.getIdInternal(),
-                this.getSelectedExecutionYearID() };
+        String mapping = "";
 
-        ServiceUtils.executeService(getUserView(), "InsertTeacherPersonalExpectation", args);
+        try {
 
-        this.needsToCreateExpectation = false;
+            Object[] args = { infoTeacherPersonalExpectation, infoTeacher.getIdInternal(),
+                    this.getSelectedExecutionYearID() };
 
-        loadPersonalExpectationData();
+            ServiceUtils.executeService(getUserView(), "InsertTeacherPersonalExpectation", args);
 
-        return "success";
+            this.needsToCreateExpectation = false;
+
+            loadPersonalExpectationData();
+
+            mapping = "success";
+
+        } catch (DomainException ex) {
+            setErrorMessage(ex.getKey());
+        }
+
+        return mapping;
+
     }
 
     public String editPersonalExpectation() throws FenixFilterException, FenixServiceException {
@@ -617,24 +668,29 @@ public class TeacherExpectationManagement extends FenixBackingBean {
         InfoTeacherPersonalExpectation infoTeacherPersonalExpectation = buildInfoTeacherPersonalExpectation();
         Object[] args = { infoTeacherPersonalExpectation };
 
-        ServiceUtils.executeService(getUserView(), "EditTeacherPersonalExpectation", args);
+        String mapping = "";
 
-        this.needsToCreateExpectation = false;
+        try {
 
-        loadPersonalExpectationData();
+            ServiceUtils.executeService(getUserView(), "EditTeacherPersonalExpectation", args);
 
-        return "success";
+            this.needsToCreateExpectation = false;
+
+            loadPersonalExpectationData();
+            mapping = "success";
+
+        } catch (DomainException ex) {
+            setErrorMessage(ex.getKey());
+        }
+
+        return mapping;
     }
 
     public String viewPersonalExpecation() throws FenixFilterException, FenixServiceException {
 
-        InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(
-                getUserView(), "ReadExecutionYearByID",
-                new Object[] { this.getSelectedExecutionYearID() });
-
-        this.selectedExecutionYearName = infoExecutionYear.getYear();
-
         loadPersonalExpectationData();
+        loadExecutionYearName();
+
         return "view";
     }
 
@@ -682,7 +738,7 @@ public class TeacherExpectationManagement extends FenixBackingBean {
                 getUserView(), "ReadExecutionYearByID",
                 new Object[] { this.getSelectedExecutionYearID() });
 
-        this.selectedExecutionYearName = infoExecutionYear.getYear();
+        setSelectedExecutionYearName(infoExecutionYear.getYear());
     }
 
     private void bindPersonalExpectationDataWithFields(
@@ -829,4 +885,12 @@ public class TeacherExpectationManagement extends FenixBackingBean {
 
     }
 
+    public void onExecutionYearChanged(ValueChangeEvent valueChangeEvent) throws FenixFilterException,
+            FenixServiceException {
+
+        Integer newExecutionYearID = (Integer) valueChangeEvent.getNewValue();
+        ITeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = getTeacherExpectationDefinitionPeriod(newExecutionYearID);
+
+        this.setExpectationDefinitionPeriodOpen(teacherExpectationDefinitionPeriod.isPeriodOpen());
+    }   
 }
