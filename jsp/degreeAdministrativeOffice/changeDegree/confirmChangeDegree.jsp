@@ -48,6 +48,7 @@
 			</td>
 			<td class="listClasses">
 				<bean:write name="activeInfoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.nome"/>
+				<bean:write name="activeInfoStudentCurricularPlan" property="infoDegreeCurricularPlan.name"/>
 			</td>
 		</tr>
 	</table>

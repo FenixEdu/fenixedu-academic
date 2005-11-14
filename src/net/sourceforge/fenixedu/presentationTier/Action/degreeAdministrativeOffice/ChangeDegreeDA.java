@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -125,8 +127,10 @@ public class ChangeDegreeDA extends FenixDispatchAction {
             for (final InfoExecutionDegree infoExecutionDegree : infoExecutionDegrees) {
                 if (!infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal().equals(
                         activeInfoStudentCurricularPlan.getIdInternal())) {
-                    LabelValueBean labelValueBean = new LabelValueBean(infoExecutionDegree
-                            .getInfoDegreeCurricularPlan().getInfoDegree().getNome(),
+                    final InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
+                    final InfoDegree infoDegree = infoDegreeCurricularPlan.getInfoDegree();
+                    LabelValueBean labelValueBean = new LabelValueBean(
+                            infoDegree.getNome() + " " + infoDegreeCurricularPlan.getName(),
                             infoExecutionDegree.getIdInternal().toString());
                     availableExecutionDegrees.add(labelValueBean);
                 }
