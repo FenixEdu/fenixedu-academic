@@ -67,7 +67,7 @@ public class PersonRole extends PersonRole_Base {
         case MASTER_DEGREE_ADMINISTRATIVE_OFFICE:
         case TREASURY:
         case CREDITS_MANAGER:
-        case DEPARTMENT_MEMBER:
+        case DEPARTMENT_ADMINISTRATIVE_OFFICE:
             return person.hasRole(RoleType.EMPLOYEE);
         case DELEGATE:
             return person.hasRole(RoleType.STUDENT);
