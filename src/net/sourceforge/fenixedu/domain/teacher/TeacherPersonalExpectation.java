@@ -1,8 +1,11 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherPersonalExpectation;
+import net.sourceforge.fenixedu.domain.IDepartment;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ITeacherExpectationDefinitionPeriod;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class TeacherPersonalExpectation extends TeacherPersonalExpectation_Base {
 
@@ -11,13 +14,23 @@ public class TeacherPersonalExpectation extends TeacherPersonalExpectation_Base 
     }
 
     public TeacherPersonalExpectation(InfoTeacherPersonalExpectation infoTeacherPersonalExpectation,
-            ITeacher teacher, IExecutionYear executionYear) {
+            IExecutionYear executionYear) {
         setProperties(infoTeacherPersonalExpectation);
-        setTeacher(teacher);
         setExecutionYear(executionYear);
     }
 
     public void edit(InfoTeacherPersonalExpectation infoTeacherPersonalExpectation) {
+
+        IExecutionYear executionYear = this.getExecutionYear();
+        ITeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = this.getTeacher()
+                .getWorkingDepartment().readTeacherExpectationDefinitionPeriodByExecutionYear(
+                        executionYear);
+
+        if (teacherExpectationDefinitionPeriod.isPeriodOpen() == false) {
+            throw new DomainException(
+                    "error.exception.personalExpectation.definitionPeriodForExecutionYearAlreadyExpired");
+        }
+
         setProperties(infoTeacherPersonalExpectation);
     }
 
@@ -26,9 +39,11 @@ public class TeacherPersonalExpectation extends TeacherPersonalExpectation_Base 
         setGraduations(infoTeacherPersonalExpectation.getGraduations());
         setGraduationsDescription(infoTeacherPersonalExpectation.getGraduationsDescription());
         setCientificPosGraduations(infoTeacherPersonalExpectation.getCientificPosGraduations());
-        setCientificPosGraduationsDescription(infoTeacherPersonalExpectation.getCientificPosGraduationsDescription());
+        setCientificPosGraduationsDescription(infoTeacherPersonalExpectation
+                .getCientificPosGraduationsDescription());
         setProfessionalPosGraduations(infoTeacherPersonalExpectation.getProfessionalPosGraduations());
-        setProfessionalPosGraduationsDescription(infoTeacherPersonalExpectation.getProfessionalPosGraduationsDescription());
+        setProfessionalPosGraduationsDescription(infoTeacherPersonalExpectation
+                .getProfessionalPosGraduationsDescription());
         setSeminaries(infoTeacherPersonalExpectation.getSeminaries());
         setSeminariesDescription(infoTeacherPersonalExpectation.getSeminariesDescription());
         setResearchAndDevProjects(infoTeacherPersonalExpectation.getResearchAndDevProjects());

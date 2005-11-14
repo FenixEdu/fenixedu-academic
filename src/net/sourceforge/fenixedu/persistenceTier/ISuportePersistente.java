@@ -78,6 +78,7 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublicatio
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsNumber;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentServiceProviderRegime;
+import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentTeacherExpectationDefinitionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentTeacherPersonalExpectation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentWeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentNonAffiliatedTeacher;
@@ -487,4 +488,6 @@ public interface ISuportePersistente {
     public IPersistentDistrict getIPersistentDistrict();
     
     public IPersistentTeacherPersonalExpectation getIPersistentTeacherPersonalExpectation();
+    
+    public IPersistentTeacherExpectationDefinitionPeriod getIPersistentTeacherExpectationDefinitionPeriod();
 }

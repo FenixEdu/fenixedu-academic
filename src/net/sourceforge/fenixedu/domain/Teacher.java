@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits;
 import net.sourceforge.fenixedu.domain.credits.util.InfoCreditsBuilder;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
@@ -18,6 +19,7 @@ import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.domain.teacher.ITeacherPersonalExpectation;
 import net.sourceforge.fenixedu.domain.teacher.ITeacherServiceExemption;
+import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.util.PublicationArea;
 import net.sourceforge.fenixedu.util.State;
 
@@ -186,7 +188,7 @@ public class Teacher extends Teacher_Base {
         }
         return executionCourses;
     }
-
+    
     public List<ITeacherServiceExemption> getServiceExemptionSituations(Date beginDate, Date endDate) {
 
         List<ITeacherServiceExemption> serviceExemptions = new ArrayList<ITeacherServiceExemption>();
@@ -199,6 +201,16 @@ public class Teacher extends Teacher_Base {
             }
         }
         return serviceExemptions;
+    }
+
+    public List<IExecutionCourse> getAllLecturedExecutionCourses() {
+        List<IExecutionCourse> executionCourses = new ArrayList<IExecutionCourse>();
+
+        for (IProfessorship professorship : this.getProfessorships()) {
+            executionCourses.add(professorship.getExecutionCourse());
+        }
+
+        return executionCourses;
     }
 
     /***************************************************************************
@@ -255,6 +267,50 @@ public class Teacher extends Teacher_Base {
         }
 
         return guidedThesis;
+    }
+
+    public List<IMasterDegreeThesisDataVersion> getAllGuidedMasterDegreeThesis() {
+        List<IMasterDegreeThesisDataVersion> guidedThesis = new ArrayList<IMasterDegreeThesisDataVersion>();
+
+        for (IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion : this
+                .getMasterDegreeThesisGuider()) {
+            if (masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)) {
+                guidedThesis.add(masterDegreeThesisDataVersion);
+            }
+        }
+
+        return guidedThesis;
+    }
+
+    public void createTeacherPersonalExpectation(
+            net.sourceforge.fenixedu.dataTransferObject.InfoTeacherPersonalExpectation infoTeacherPersonalExpectation,
+            IExecutionYear executionYear) {
+
+        checkIfCanCreatePersonalExpectation(executionYear);
+
+        ITeacherPersonalExpectation teacherPersonalExpectation = new TeacherPersonalExpectation(
+                infoTeacherPersonalExpectation, executionYear);
+
+        addTeacherPersonalExpectations(teacherPersonalExpectation);
+
+    }
+
+    private void checkIfCanCreatePersonalExpectation(IExecutionYear executionYear) {
+        ITeacherPersonalExpectation storedTeacherPersonalExpectation = getTeacherPersonalExpectationByExecutionYear(executionYear);
+
+        if (storedTeacherPersonalExpectation != null) {
+            throw new DomainException(
+                    "error.exception.personalExpectation.expectationAlreadyExistsForExecutionYear");
+        }
+
+        ITeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = this
+                .getWorkingDepartment().readTeacherExpectationDefinitionPeriodByExecutionYear(
+                        executionYear);
+
+        if (teacherExpectationDefinitionPeriod.isPeriodOpen() == false) {
+            throw new DomainException(
+                    "error.exception.personalExpectation.definitionPeriodForExecutionYearAlreadyExpired");
+        }
 
     }
 

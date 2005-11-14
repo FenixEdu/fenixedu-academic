@@ -74,6 +74,7 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublicatio
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsNumber;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentServiceProviderRegime;
+import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentTeacherExpectationDefinitionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentTeacherPersonalExpectation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentWeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentNonAffiliatedTeacher;
@@ -169,6 +170,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentPers
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SummaryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SupportLessonVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TeacherExpectationDefinitionPeriodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TeacherVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TransactionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TurmaVO;
@@ -990,6 +992,10 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     
     public IPersistentTeacherPersonalExpectation getIPersistentTeacherPersonalExpectation() {
         return new TeacherPersonalExpectationVO();
+    }
+    
+    public IPersistentTeacherExpectationDefinitionPeriod getIPersistentTeacherExpectationDefinitionPeriod() {
+        return new TeacherExpectationDefinitionPeriodVO();
     }
     
     
