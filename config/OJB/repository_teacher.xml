@@ -483,6 +483,6 @@
 			>
 		<inverse-foreignkey field-ref="keyInstitution"/>
 	</collection-descriptor>
-</class-descriptor>  
-				  		
+</class-descriptor>
+
 <!-- Mapping of User defined classses ends here -->

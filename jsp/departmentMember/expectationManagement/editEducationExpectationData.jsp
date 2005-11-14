@@ -22,8 +22,8 @@
 		
 		<!-- Graduations -->
 		<h:outputText value="#{bundle['label.common.lecturedDegreeCourses']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
-		<h:panelGrid border="0" cellpadding="0" cellspacing="0" rendered="#{!(empty teacherExpectationManagement.lecturedDegreeExecutionCourses)}">
-			<h:dataTable value="#{teacherExpectationManagement.lecturedDegreeExecutionCourses}" var="lecturedCourse" columnClasses="listClasses" headerClass="listClasses-header">			
+		<h:panelGroup rendered="#{!(empty teacherExpectationManagement.lecturedDegreeExecutionCourses)}">
+			<h:dataTable value="#{teacherExpectationManagement.lecturedDegreeExecutionCourses}" var="lecturedCourse" columnClasses="listClasses" headerClass="listClasses-header" style="width: 70%;">
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="#{bundle['label.common.courseName']}" />
@@ -55,19 +55,20 @@
 					<h:outputText value="#{teacherExpectationManagement.lecturedDegreeExecutionCourseDegreeNames[lecturedCourse.idInternal]}" />
 				</h:column>
 			</h:dataTable>
-		</h:panelGrid>
-		<h:panelGrid border="0" cellpadding="0" cellspacing="0" rendered="#{empty teacherExpectationManagement.lecturedDegreeExecutionCourses}">
+		</h:panelGroup>
+		<h:panelGroup rendered="#{empty teacherExpectationManagement.lecturedDegreeExecutionCourses}">
 			<h:outputText value="#{bundle['label.common.noLecturedCourses']}"></h:outputText>
-		</h:panelGrid>
+		</h:panelGroup>
 		<h:outputText value="<br/>" escape="false" />
-		<h:panelGrid columns="4" cellpadding="0" cellspacing="0" >
+		<h:panelGrid columns="4" cellpadding="0" cellspacing="0" columnClasses="leftColumn,,rightColumn,errorColumn" style="background-color: #eee; padding: 0.5em; ">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.numberOfGraduations']}" />
 			<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false" />
 			<h:inputText id="graduations" value="#{teacherExpectationManagement.graduations}" required="true" maxlength="3" size="3" />
 			<h:message for="graduations" styleClass="error"/>
+			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.description']}" />
 			<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false" />			
-			<h:inputTextarea cols="40" id="graduationsDescription" value="#{teacherExpectationManagement.graduationsDescription}" />
+			<h:inputTextarea cols="45" rows="3" id="graduationsDescription" value="#{teacherExpectationManagement.graduationsDescription}" />
 			<h:message for="graduationsDescription" styleClass="error"/>
 		</h:panelGrid>
 		
@@ -75,8 +76,8 @@
 		
 		<!-- Cientific Pos-Graduations -->
 		<h:outputText value="#{bundle['label.common.lecturedMasterDegreeCourses']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
-		<h:panelGrid border="0" cellpadding="0" cellspacing="0" rendered="#{!(empty teacherExpectationManagement.lecturedMasterDegreeExecutionCourses)}">
-			<h:dataTable value="#{teacherExpectationManagement.lecturedMasterDegreeExecutionCourses}" var="lecturedCourse" columnClasses="listClasses" headerClass="listClasses-header">
+		<h:panelGroup rendered="#{!(empty teacherExpectationManagement.lecturedMasterDegreeExecutionCourses)}">
+			<h:dataTable value="#{teacherExpectationManagement.lecturedMasterDegreeExecutionCourses}" var="lecturedCourse" columnClasses="listClasses" headerClass="listClasses-header" style="width: 70%;">
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="#{bundle['label.common.courseName']}" />
@@ -108,21 +109,21 @@
 					<h:outputText value="#{teacherExpectationManagement.lecturedMasterDegreeExecutionCourseDegreeNames[lecturedCourse.idInternal]}" />
 				</h:column>
 			</h:dataTable>
-		</h:panelGrid>
+		</h:panelGroup>
 		<h:panelGrid border="0" cellpadding="0" cellspacing="0" rendered="#{empty teacherExpectationManagement.lecturedMasterDegreeExecutionCourses}">
 			<h:outputText value="#{bundle['label.common.noLecturedCourses']}"></h:outputText>
 		</h:panelGrid>
 		
 		<h:outputText value="<br/>" escape="false" />
 		
-		<h:panelGrid columns="4" cellpadding="0" cellspacing="0" >
+		<h:panelGrid columns="4" cellpadding="0" cellspacing="0" columnClasses="leftColumn,,rightColumn,errorColumn" style="background-color: #eee; padding: 0.5em; ">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.numberOfCientificPosGraduations']}" />
 			<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false"/>
 			<h:inputText id="cientificPosGraduations" value="#{teacherExpectationManagement.cientificPosGraduations}" required="true" maxlength="3" size="3" />
 			<h:message for="cientificPosGraduations" styleClass="error"/>
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.description']}" />
 			<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false"/>
-			<h:inputTextarea cols="40" id="cientificPosGraduationsDescription" value="#{teacherExpectationManagement.cientificPosGraduationsDescription}" />
+			<h:inputTextarea cols="45" rows="3" id="cientificPosGraduationsDescription" value="#{teacherExpectationManagement.cientificPosGraduationsDescription}" />
 			<h:message for="cientificPosGraduationsDescription" styleClass="error"/>
 		</h:panelGrid>
 		
@@ -130,14 +131,14 @@
 		
 		<!-- Professional Pos-Graduations -->
 		<h:outputText value="<p>#{bundle['label.personalExpectationsManagement.professionalPosGraduations']}</p>" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" escape="false" />
-		<h:panelGrid columns="4" cellpadding="0" cellspacing="0" >
+		<h:panelGrid columns="4" cellpadding="0" cellspacing="0" columnClasses="leftColumn,,rightColumn,errorColumn" style="background-color: #eee; padding: 0.5em; ">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.numberOfProfessionalPosGraduations']}" />
 			<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false"/>
 			<h:inputText id="professionalPosGraduations" value="#{teacherExpectationManagement.professionalPosGraduations}" required="true" maxlength="3" size="3" />
 			<h:message for="professionalPosGraduations" styleClass="error"/>
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.description']}" />
 			<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false"/>
-			<h:inputTextarea cols="40" id="professionalPosGraduationsDescription" value="#{teacherExpectationManagement.professionalPosGraduationsDescription}" />
+			<h:inputTextarea cols="45" rows="3" id="professionalPosGraduationsDescription" value="#{teacherExpectationManagement.professionalPosGraduationsDescription}" />
 			<h:message for="professionalPosGraduationsDescription" styleClass="error"/>
 		</h:panelGrid>
 		
@@ -145,14 +146,14 @@
 		
 		<!-- Seminaries -->
 		<h:outputText value="<p>#{bundle['label.personalExpectationsManagement.seminaries']}</p>" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" escape="false" />
-		<h:panelGrid columns="4" cellpadding="0" cellspacing="0" >
+		<h:panelGrid columns="4" cellpadding="0" cellspacing="0" columnClasses="leftColumn,,rightColumn,errorColumn" style="background-color: #eee; padding: 0.5em; ">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.numberOfSeminaries']}" />
 			<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false"/>
 			<h:inputText id="seminaries" value="#{teacherExpectationManagement.seminaries}" required="true" maxlength="3" size="3" />
 			<h:message for="seminaries" styleClass="error"/>
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.description']}" />
 			<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false"/>
-			<h:inputTextarea cols="40" id="seminariesDescription" value="#{teacherExpectationManagement.seminariesDescription}" />
+			<h:inputTextarea cols="45" rows="3" id="seminariesDescription" value="#{teacherExpectationManagement.seminariesDescription}" />
 			<h:message for="seminariesDescription" styleClass="error"/>
 		</h:panelGrid>
 		
@@ -198,7 +199,9 @@
 						
 		<h:outputText value="<br/>" escape="false" />
 		<h:outputText value="<br/>" escape="false" />
-		<h:commandButton action="#{teacherExpectationManagement.editPersonalExpectation}" value="#{bundle['button.update']}" styleClass="inputbutton" />
-		
+		<fc:commandButton action="#{teacherExpectationManagement.editPersonalExpectation}" value="#{bundle['button.update']}" styleClass="inputbutton">
+			<f:param value="1" name="xpto" />
+		</fc:commandButton>
+			
 	</h:form>
 </ft:tilesView>

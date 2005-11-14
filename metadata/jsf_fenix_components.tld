@@ -1399,6 +1399,20 @@
          The value binding expression linking this component to a property in a backing bean
       </description>
     </attribute>
+    <attribute>
+      <name>rowIndexVar</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+      </description>
+    </attribute>
+    <attribute>
+      <name>rowCountVar</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+      </description>
+    </attribute>
   </tag>
   
 </taglib>

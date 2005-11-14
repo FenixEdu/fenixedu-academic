@@ -30,7 +30,7 @@
 		<!-- Investigation Expectations -->
 		<!-- Research And Dev -->
 		<h:outputText value="<h2>#{bundle['label.personalExpectationsManagement.investigation']}</h2>" escape="false" />
-		<h:panelGrid columns="4">
+		<h:panelGrid columns="4" cellpadding="0" cellspacing="0" columnClasses="leftColumn,,rightColumn,errorColumn" style="background-color: #eee; padding: 0.5em; ">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.researchAndDevProjects']}" />
 			<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false" />
 			<h:inputText id="researchAndDevProjects" value="#{teacherExpectationManagement.researchAndDevProjects}" required="true" maxlength="3" size="3" />
@@ -68,7 +68,7 @@
 		</h:panelGrid>
 		<h:panelGrid columns="1">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.otherPublicationsDescription']}" />
-			<h:inputTextarea cols="40" id="otherPublicationsDescription" value="#{teacherExpectationManagement.otherPublicationsDescription}" />
+			<h:inputTextarea cols="45" rows="3" id="otherPublicationsDescription" value="#{teacherExpectationManagement.otherPublicationsDescription}" />
 			<h:message for="otherPublicationsDescription" styleClass="error"/>
 		</h:panelGrid>
 			
@@ -80,7 +80,7 @@
 		<h:outputText value="<br/>" escape="false" />
 								
 		<h:outputText value="<p>#{bundle['label.personalExpectationsManagement.orientation']}</p>" style="font: bold 13px Verdana, Arial, Helvetica, sans-serif;" escape="false" />
-		<h:panelGrid columns="4">
+		<h:panelGrid columns="4" cellpadding="0" cellspacing="0" columnClasses="leftColumn,,rightColumn,errorColumn" style="background-color: #eee; padding: 0.5em; ">
 				<h:outputText value="#{bundle['label.personalExpectationsManagement.phdOrientations']}" />
 				<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false" />
 				<h:inputText id="phdOrientations" value="#{teacherExpectationManagement.phdOrientations}" required="true" maxlength="3" size="3" />
@@ -98,7 +98,7 @@
 		<!-- Orientation -->
 		<h:outputText value="#{bundle['label.common.finalDegreeWorks']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
 		<h:panelGrid border="0" cellpadding="0" cellspacing="0" rendered="#{!(empty teacherExpectationManagement.finalDegreeWorks)}">
-			<h:dataTable value="#{teacherExpectationManagement.finalDegreeWorks}" var="finalDegreeWork" columnClasses="listClasses" headerClass="listClasses-header">
+			<h:dataTable value="#{teacherExpectationManagement.finalDegreeWorks}" var="finalDegreeWork" columnClasses="listClasses" headerClass="listClasses-header" style="width: 70%;">
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="#{bundle['label.common.finalDegreeWorkTitle']}" />
@@ -131,10 +131,12 @@
 		
 		<h:outputText value="<br/>" escape="false" />
 		
-		<h:outputText value="#{bundle['label.personalExpectationsManagement.finalDegreeWorkOrientations']}" />
-		<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false" />
-		<h:inputText id="finalDegreeWorkOrientations" value="#{teacherExpectationManagement.finalDegreeWorkOrientations}" required="true" maxlength="3" size="3" />
-		<h:message for="finalDegreeWorkOrientations" styleClass="error"/>
+		<h:panelGrid columns="4" cellpadding="0" cellspacing="0" columnClasses="leftColumn,,rightColumn,errorColumn" style="background-color: #eee; padding: 0.5em; ">
+			<h:outputText value="#{bundle['label.personalExpectationsManagement.finalDegreeWorkOrientations']}" />
+			<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false" />
+			<h:inputText id="finalDegreeWorkOrientations" value="#{teacherExpectationManagement.finalDegreeWorkOrientations}" required="true" maxlength="3" size="3" />
+			<h:message for="finalDegreeWorkOrientations" styleClass="error"/>
+		</h:panelGrid>
 		
 		
 		<h:panelGrid columns="1">
@@ -144,7 +146,7 @@
 
 									
 		<h:outputText value="<br/><br/>" escape="false" />
-		<h:commandButton action="next" value="#{bundle['button.next']}" styleClass="inputbutton" />
+		<fc:commandButton action="next" value="#{bundle['button.next']}" styleClass="inputbutton" />
 		
 	</h:form>
 </ft:tilesView>

@@ -48,19 +48,19 @@
 		<h:outputText value="<h2>#{bundle['label.personalExpectationsManagement.universityService']}</h2>" escape="false" />
 		<h:panelGrid columns="1">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.departmentOrgans']}" />
-			<h:inputTextarea cols="40" id="departmentOrgans" value="#{teacherExpectationManagement.departmentOrgans}" required="true">
+			<h:inputTextarea cols="45" rows="3" id="departmentOrgans" value="#{teacherExpectationManagement.departmentOrgans}" required="true">
 				<f:validateLength minimum="0" maximum="250" />
 			</h:inputTextarea>
 			<h:message for="departmentOrgans" styleClass="error"/>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.istOrgans']}" />
-			<h:inputTextarea cols="40" id="istOrgans" value="#{teacherExpectationManagement.istOrgans}" required="true">
+			<h:inputTextarea cols="45" rows="3" id="istOrgans" value="#{teacherExpectationManagement.istOrgans}" required="true">
 				<f:validateLength minimum="0" maximum="250" />
 			</h:inputTextarea>
 			<h:message for="istOrgans" styleClass="error"/>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.utlOrgans']}" />
-			<h:inputTextarea cols="40" id="utlOrgans" value="#{teacherExpectationManagement.utlOrgans}" required="true">
+			<h:inputTextarea cols="45" rows="3" id="utlOrgans" value="#{teacherExpectationManagement.utlOrgans}" required="true">
 				<f:validateLength minimum="0" maximum="250" />
 			</h:inputTextarea>
 			<h:message for="utlOrgans" styleClass="error"/>
@@ -81,7 +81,7 @@
 						
 		<h:outputText value="<br/>" escape="false" />
 		<h:outputText value="<br/>" escape="false" />
-		<h:commandButton action="#{teacherExpectationManagement.editPersonalExpectation}" value="#{bundle['button.update']}" styleClass="inputbutton" />
+		<fc:commandButton action="#{teacherExpectationManagement.editPersonalExpectation}" value="#{bundle['button.update']}" styleClass="inputbutton" />
 		
 	</h:form>
 </ft:tilesView>

@@ -54,31 +54,31 @@
 		<h:outputText value="<h2>#{bundle['label.personalExpectationsManagement.professionalActivity']}</h2>" escape="false" />
 		<h:panelGrid columns="1">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.cientificComunityService']}" />
-			<h:inputTextarea cols="40" id="cientificComunityService" value="#{teacherExpectationManagement.cientificComunityService}" required="true">
+			<h:inputTextarea cols="45" rows="3" id="cientificComunityService" value="#{teacherExpectationManagement.cientificComunityService}" required="true">
 				<f:validateLength minimum="0" maximum="250" />
 			</h:inputTextarea>
 			<h:message for="cientificComunityService" styleClass="error"/>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.societyService']}" />
-			<h:inputTextarea cols="40" id="societyService" value="#{teacherExpectationManagement.societyService}" required="true" >
+			<h:inputTextarea cols="45" rows="3" id="societyService" value="#{teacherExpectationManagement.societyService}" required="true" >
 				<f:validateLength minimum="0" maximum="250" />
 			</h:inputTextarea>
 			<h:message for="societyService" styleClass="error"/>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.consulting']}" />
-			<h:inputTextarea cols="40" id="consulting" value="#{teacherExpectationManagement.consulting}" required="true" >
+			<h:inputTextarea cols="45" rows="3" id="consulting" value="#{teacherExpectationManagement.consulting}" required="true" >
 				<f:validateLength minimum="0" maximum="250" />
 			</h:inputTextarea>
 			<h:message for="consulting" styleClass="error"/>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.companySocialOrgans']}" />
-			<h:inputTextarea cols="40" id="companySocialOrgans" value="#{teacherExpectationManagement.companySocialOrgans}" required="true" >
+			<h:inputTextarea cols="45" rows="3" id="companySocialOrgans" value="#{teacherExpectationManagement.companySocialOrgans}" required="true" >
 				<f:validateLength minimum="0" maximum="250" />
 			</h:inputTextarea>
 			<h:message for="companySocialOrgans" styleClass="error"/>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.companyPositions']}" />
-			<h:inputTextarea cols="40" id="companyPositions" value="#{teacherExpectationManagement.companyPositions}" required="true" >
+			<h:inputTextarea cols="45" rows="3" id="companyPositions" value="#{teacherExpectationManagement.companyPositions}" required="true" >
 				<f:validateLength minimum="0" maximum="250" />
 			</h:inputTextarea>
 			<h:message for="companyPositions" styleClass="error"/>
@@ -92,7 +92,7 @@
 		
 		<h:outputText value="<br/>" escape="false" />
 		<h:outputText value="<br/>" escape="false" />
-		<h:commandButton action="#{teacherExpectationManagement.editPersonalExpectation}" value="#{bundle['button.update']}" styleClass="inputbutton" />
+		<fc:commandButton action="#{teacherExpectationManagement.editPersonalExpectation}" value="#{bundle['button.update']}" styleClass="inputbutton" />
 		
 	</h:form>
 </ft:tilesView>

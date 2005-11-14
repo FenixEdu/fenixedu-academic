@@ -2,6 +2,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
+<!-- Import new CSS for this section: #navlateral  -->
+<style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style>
+
 <bean:parameter id="executionPeriodId" name="executionPeriodId" value="-1"/>
 <logic:equal name="executionPeriodId" value="-1">
 	<logic:present name="infoExecutionPeriod">
@@ -17,8 +20,7 @@
 <logic:present role="DEPARTMENT_ADMINISTRATIVE_OFFICE">
 	<logic:present role="DEPARTMENT_CREDITS_MANAGER">
 		<strong>&raquo; <html:link action="/creditsManagementIndex"><bean:message key="link.group.creditsManagement"/></html:link></strong>
-		<br />
-		<br />
+		<br/>
 		
 		<ul>
 			<li>

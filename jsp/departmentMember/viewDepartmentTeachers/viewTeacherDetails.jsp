@@ -11,9 +11,18 @@
 		var="bundleEnumeration" />
 
 	<h:form>
-		<h:inputHidden binding="#{viewDepartmentTeachers.selectedExecutionYearIdHidden}" />
-		
+		<fc:viewState binding="#{viewDepartmentTeachers.viewState}"/>
+				
 		<h:outputText value="<h2>#{bundle['label.teacher.details.title']}</h2>" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" escape="false" />
+		
+		<h:panelGrid columns="2">
+			<h:outputText value="#{bundle['label.common.executionYear']}:" />
+			<fc:selectOneMenu id="dropDownListExecutionYearID" value="#{viewDepartmentTeachers.selectedExecutionYearID}" valueChangeListener="#{viewDepartmentTeachers.onSelectedExecutionYearChanged}" onchange="this.form.submit();">
+				<f:selectItems value="#{viewDepartmentTeachers.executionYears}" />
+			</fc:selectOneMenu>
+		</h:panelGrid>
+		
+		<h:outputText value="<br/>" escape="false" />
 		
 		<!-- Personal Information -->
 		<h:panelGrid columns="1" width="100%" cellpadding="0" cellspacing="0" columnClasses="infoop">
@@ -134,43 +143,7 @@
 			</h:panelGrid>
 		</h:panelGrid>
 		<h:outputText value="<br/>" escape="false" />
-		
-		<!-- Final Degree Works -->
-		<h:outputText value="#{bundle['label.common.finalDegreeWorks']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
-		<h:panelGrid border="0" cellpadding="0" cellspacing="0" rendered="#{!(empty viewDepartmentTeachers.finalDegreeWorks)}">
-			<h:dataTable value="#{viewDepartmentTeachers.finalDegreeWorks}" var="finalDegreeWork" columnClasses="listClasses" headerClass="listClasses-header">
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="#{bundle['label.common.finalDegreeWorkTitle']}" />
-					</f:facet>
-					<h:outputText value="#{finalDegreeWork.title}" />
-				</h:column>
-					<h:column>
-					<f:facet name="header">
-						<h:outputText value="#{bundle['label.common.finalDegreeWorkOrientationPercentage']}" />
-					</f:facet>
-					<h:outputText value="#{finalDegreeWork.orientatorsCreditsPercentage}" />
-				</h:column>
-					<h:column>
-					<f:facet name="header">
-						<h:outputText value="#{bundle['label.common.finalDegreeWorkYear']}" />
-					</f:facet>
-					<h:outputText value="#{finalDegreeWork.executionDegree.executionYear.year}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="#{bundle['label.common.finalDegreeWorkDegree']}" />
-					</f:facet>
-					<h:outputText value="#{finalDegreeWork.executionDegree.degreeCurricularPlan.degree.sigla}" />
-				</h:column>
-			</h:dataTable>
-		</h:panelGrid>
-		<h:panelGrid border="0" cellpadding="0" cellspacing="0" rendered="#{empty viewDepartmentTeachers.finalDegreeWorks}">
-			<h:outputText value="#{bundle['label.common.noFinalDegreeWorks']}" />
-		</h:panelGrid>
-		
-		<h:outputText value="<br/>" escape="false" />
-		
+			
 		<!-- Master Degree Orientations -->
 		<h:outputText value="#{bundle['label.common.masterDegree']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
 		<h:panelGrid border="0" cellpadding="0" cellspacing="0" rendered="#{!(empty viewDepartmentTeachers.guidedMasterDegreeThesisList)}">

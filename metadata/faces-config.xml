@@ -10,6 +10,10 @@
 		</locale-config>
 		<message-bundle>ServidorApresentacao.ApplicationResources</message-bundle>
 	</application>
+	
+ 	<!-- <lifecycle>
+      <phase-listener>net.sourceforge.fenixedu.presentationTier.jsf.phaseListeners.PhaseTracker</phase-listener>
+    </lifecycle>-->
 
 	<!-- MANAGED BEANS -->
 
@@ -114,6 +118,18 @@
 
 	<!-- END: TEACHER Managed Beans -->
 	
+	
+	<!-- BEGIN: Backbeans from department administrative office subapplication -->
+	
+	<managed-bean>
+		<description>TeacherExpectationDefinitionPeriodManagement</description>
+		<managed-bean-name>teacherExpectationDefinitionPeriodManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.departmentAdministrativeOffice.TeacherExpectationDefinitionPeriodManagement</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<!-- END: Backbeans from department administrative office subapplication -->
+
 	<!-- BEGIN: FunctionsManagement Managed Beans -->
 
 	<managed-bean>
@@ -136,6 +152,7 @@
 	</managed-bean>
 
 	<!-- END: FunctionsManagement Managed Beans -->
+
 	<!-- BEGIN: AdvisoriesManagement Managed Beans -->
 	
 	<managed-bean>
@@ -510,7 +527,7 @@
 			<to-view-id>/teacher/evaluation/submitMarksList.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<!-- BEGIN: FUNCTIONS_MANAGEMENT Navigation Rules -->
 	
 	<navigation-rule>
@@ -719,6 +736,45 @@
 	<!-- END: ADVISORIES_MANAGEMENT Navigation Rules -->
 	
 	<!-- END: TEACHER Navigation Rules -->
+	
+	<!-- START: Navigation rules from department administrative subapplication -->
+	
+	<navigation-rule>
+		<from-view-id>/departmentAdmOffice/teacher/teacherExpectationDefinitionPeriod/viewTeacherExpectationDefinitionPeriod.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>create</from-outcome>
+			<to-view-id>/departmentAdmOffice/teacher/teacherExpectationDefinitionPeriod/createTeacherExpectationDefinitionPeriod.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>edit</from-outcome>
+			<to-view-id>/departmentAdmOffice/teacher/teacherExpectationDefinitionPeriod/editTeacherExpectationDefinitionPeriod.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentAdmOffice/teacher/teacherExpectationDefinitionPeriod/createTeacherExpectationDefinitionPeriod.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/departmentAdmOffice/teacher/teacherExpectationDefinitionPeriod/viewTeacherExpectationDefinitionPeriod.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/departmentAdmOffice/teacher/teacherExpectationDefinitionPeriod/viewTeacherExpectationDefinitionPeriod.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentAdmOffice/teacher/teacherExpectationDefinitionPeriod/editTeacherExpectationDefinitionPeriod.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/departmentAdmOffice/teacher/teacherExpectationDefinitionPeriod/viewTeacherExpectationDefinitionPeriod.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/departmentAdmOffice/teacher/teacherExpectationDefinitionPeriod/viewTeacherExpectationDefinitionPeriod.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- END: Navigation rules from department administrative subapplication -->
+	
 	<!-- Custom Components -->
 	<component>
 		<component-type>
@@ -760,7 +816,15 @@
 			net.sourceforge.fenixedu.presentationTier.jsf.components.UISelectOne
 		</component-class>
 	</component>
-		
+	<component>
+		<component-type>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UIDataRepeater
+		</component-type>
+		<component-class>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UIDataRepeater
+		</component-class>
+	</component>
+	
 	<validator>
 		<validator-id>regexValidator</validator-id>
 		<validator-class>net.sourceforge.fenixedu.presentationTier.jsf.validators.RegexValidator</validator-class>
@@ -769,6 +833,14 @@
 			<attribute-class>java.lang.String</attribute-class>
 		</attribute>
 	</validator>
+	
+	<render-kit>
+		<renderer>
+			<component-family>DataRepeater</component-family>
+			<renderer-type>net.sourceforge.fenixedu.presentationTier.jsf.components.UIDataRepeaterRenderer</renderer-type>
+			<renderer-class>net.sourceforge.fenixedu.presentationTier.jsf.components.UIDataRepeaterRenderer</renderer-class>
+		</renderer>
+	</render-kit>
 	
 	<!-- End Custom Components -->
 			

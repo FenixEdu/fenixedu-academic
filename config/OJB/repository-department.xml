@@ -67,6 +67,12 @@
     	<fk-pointing-to-element-class column="KEY_COMPETENCE_COURSE"/>
 	</collection-descriptor>
 	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+        name="teacherExpectationDefinitionPeriods"
+        element-class-ref="net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod">
+		<inverse-foreignkey field-ref="keyDepartment"/>
+    </collection-descriptor>
+	
 </class-descriptor>   
 
 <!-- *************************************************************************************************************** -->
@@ -112,4 +118,51 @@
          >
 		<inverse-foreignkey field-ref="keyCompetenceCourse"/>
 	</collection-descriptor>
+</class-descriptor>
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod" table="TEACHER_EXPECTATION_DEFINITION_PERIOD">
+	<field-descriptor 
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="startDate"
+		column="START_DATE"
+		jdbc-type="DATE"
+	/>
+	<field-descriptor
+		name="endDate"
+		column="END_DATE"
+		jdbc-type="DATE"
+	/>
+	<field-descriptor
+		name="keyExecutionYear"
+		column="KEY_EXECUTION_YEAR"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyDepartment"
+		column="KEY_DEPARTMENT"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="false"
+    />
+    <reference-descriptor auto-retrieve="false"
+         name="department"
+         class-ref="net.sourceforge.fenixedu.domain.Department">
+         <foreignkey field-ref="keyDepartment"/>
+    </reference-descriptor>
+    	<reference-descriptor auto-retrieve="false"
+         name="executionYear"
+         class-ref="net.sourceforge.fenixedu.domain.ExecutionYear">
+         <foreignkey field-ref="keyExecutionYear"/>
+    </reference-descriptor>
 </class-descriptor>

@@ -466,6 +466,22 @@ table tr.highlight td.listClasses {
 background-color: #e9fee9;
 }
 
+
+table tr td.leftColumn {
+text-align: right;
+width: 14em;
+vertical-align: top;
+}
+
+table tr td.rightColumn {
+text-align: left;
+/*width: 40%;*/
+}
+
+table tr td.errorColumn {
+/*width: 40%;*/
+}
+
 /*****************************************************************
 	Assiduidade - layout verbete
 ******************************************************************/

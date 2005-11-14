@@ -335,7 +335,7 @@ class net.sourceforge.fenixedu.domain.credits.CreditLine extends net.sourceforge
             Double credits;
             String position;
         }    
-        
+    
     class net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine extends net.sourceforge.fenixedu.domain.credits.CreditLine {
         String reason;
         Double credits;
@@ -680,6 +680,9 @@ class net.sourceforge.fenixedu.domain.Department extends net.sourceforge.fenixed
 	interface"
 	public java.util.List getWorkingEmployees();
 	public java.util.List getTeachers();
+	
+ 	public void createTeacherExpectationDefinitionPeriod(net.sourceforge.fenixedu.domain.IExecutionYear executionYear, java.util.Date startDate, java.util.Date endDate);
+ 	public ITeacherExpectationDefinitionPeriod readTeacherExpectationDefinitionPeriodByExecutionYear(IExecutionYear executionYear);
 	"
 }
 
@@ -2932,9 +2935,16 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	
 	public java.util.List<IExecutionCourse> getLecturedExecutionCoursesByExecutionPeriod(final IExecutionPeriod executionPeriod);
 	
+	public java.util.List<IExecutionCourse> getAllLecturedExecutionCourses();
+	
 	public java.util.List<IMasterDegreeThesisDataVersion> getGuidedMasterDegreeThesisByExecutionYear(IExecutionYear executionYear);
 	
-	public java.util.List<net.sourceforge.fenixedu.domain.teacher.ITeacherServiceExemption> getServiceExemptionSituations(java.util.Date beginDate, java.util.Date endDate);	
+	public java.util.List<net.sourceforge.fenixedu.domain.teacher.ITeacherServiceExemption> getServiceExemptionSituations(java.util.Date beginDate, java.util.Date endDate);
+	public java.util.List<IMasterDegreeThesisDataVersion> getAllGuidedMasterDegreeThesis();
+	
+	public void createTeacherPersonalExpectation(
+             net.sourceforge.fenixedu.dataTransferObject.InfoTeacherPersonalExpectation infoTeacherPersonalExpectation, IExecutionYear executionYear);
+	
 	"
 }
 
@@ -3286,6 +3296,19 @@ class net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation extends
     public void edit(net.sourceforge.fenixedu.dataTransferObject.InfoTeacherPersonalExpectation infoTeacherPersonalExpectation);
     "
 }
+
+class net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod extends net.sourceforge.fenixedu.domain.DomainObject {         
+    Date startDate;
+    Date endDate;
+    Integer keyDepartment;
+    Integer keyExecutionYear;
+    
+    interface "
+    public void edit(java.util.Date startDate,java.util.Date endDate);
+    public Boolean  isPeriodOpen();
+    "
+}
+
 
 
 /*
@@ -5493,6 +5516,7 @@ relation TeacherTeacherServiceExemption {
     }
 }
 
+
 relation TeacherSummary {
 	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {
 		multiplicity *;
@@ -5793,4 +5817,18 @@ relation FuntionPersonFunction {
     	multiplicity *;
     }
 	net.sourceforge.fenixedu.domain.organizationalStructure.Function playsRole function;
+}
+
+relation TeacherExpectationDefinitionPeriodExecutionYear {
+	net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod playsRole teacherExpectationDefinitionPeriods  {
+    	multiplicity *;
+    }
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
+}
+
+relation TeacherExpectationDefinitionPeriodDepartment {
+	net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod playsRole teacherExpectationDefinitionPeriods  {
+    	multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Department playsRole department;
 }
