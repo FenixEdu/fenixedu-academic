@@ -9,7 +9,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 
 public class UIDataRepeater extends UIData {
-    
+
     private static final String COMPONENT_FAMILY = "DataRepeater";
 
     private String rowIndexVar;
@@ -19,12 +19,11 @@ public class UIDataRepeater extends UIData {
     public UIDataRepeater() {
         super();
     }
-    
+
     @Override
     public String getFamily() {
         return COMPONENT_FAMILY;
     }
-    
 
     public String getClientId(FacesContext context) {
         String clientId = super.getClientId(context);
@@ -55,8 +54,9 @@ public class UIDataRepeater extends UIData {
             if (isRowAvailable()) {
                 for (Iterator it = getChildren().iterator(); it.hasNext();) {
                     UIComponent child = (UIComponent) it.next();
-                    // For some reason its necessary to touch Id property, otherwise
-                    // the child control will not call getClientId on parent (NamingContainer)
+                    // For some reason its necessary to touch Id property,
+                    // otherwise the child control will not call getClientId on
+                    // parent (NamingContainer)
                     child.setId(child.getId());
                     if (!child.isRendered()) {
                         continue;
@@ -85,6 +85,11 @@ public class UIDataRepeater extends UIData {
             if (isRowAvailable()) {
                 for (Iterator it = getChildren().iterator(); it.hasNext();) {
                     UIComponent child = (UIComponent) it.next();
+                    // For some reason its necessary to touch Id property,
+                    // otherwise the child control will not call getClientId on
+                    // parent (NamingContainer)
+                    child.setId(child.getId());
+                    
                     if (!child.isRendered()) {
                         continue;
                     }
@@ -112,6 +117,10 @@ public class UIDataRepeater extends UIData {
             if (isRowAvailable()) {
                 for (Iterator it = getChildren().iterator(); it.hasNext();) {
                     UIComponent child = (UIComponent) it.next();
+                    // For some reason its necessary to touch Id property,
+                    // otherwise the child control will not call getClientId on
+                    // parent (NamingContainer)
+                    child.setId(child.getId());
                     if (!child.isRendered()) {
                         continue;
                     }
@@ -175,59 +184,36 @@ public class UIDataRepeater extends UIData {
     }
 
     /*
-    @Override
-    public boolean getRendersChildren() {
-        return true;
-    }
-
-    @Override
-    public void encodeBegin(FacesContext context) throws IOException {
-    }
-
-    @Override
-    public void encodeEnd(FacesContext context) throws IOException {
-    }
-
-    @Override
-    public void encodeChildren(FacesContext context) throws IOException {
-
-        int first = this.getFirst();
-        int rows = this.getRows();
-        int rowCount = this.getRowCount();
-
-        if (rows <= 0) {
-            rows = rowCount - first;
-        }
-
-        int last = first + rows;
-
-        if (last > rowCount)
-            last = rowCount;
-
-        for (int i = first; i < last; i++) {
-            this.setRowIndex(i);
-            if (this.isRowAvailable()) {
-                if (this.getChildCount() > 0) {
-                    for (Iterator it = this.getChildren().iterator(); it.hasNext();) {
-                        UIComponent child = (UIComponent) it.next();
-                        child.setId(child.getId());
-
-                        if (!child.isRendered()) {
-                            continue;
-                        }
-
-                        child.encodeBegin(context);
-
-                        if (child.getRendersChildren()) {
-                            child.encodeChildren(context);
-                        }
-
-                        child.encodeEnd(context);
-                    }
-                }
-
-            }
-        }
-    }
-*/
+     * @Override public boolean getRendersChildren() { return true; }
+     * 
+     * @Override public void encodeBegin(FacesContext context) throws
+     * IOException { }
+     * 
+     * @Override public void encodeEnd(FacesContext context) throws IOException { }
+     * 
+     * @Override public void encodeChildren(FacesContext context) throws
+     * IOException {
+     * 
+     * int first = this.getFirst(); int rows = this.getRows(); int rowCount =
+     * this.getRowCount();
+     * 
+     * if (rows <= 0) { rows = rowCount - first; }
+     * 
+     * int last = first + rows;
+     * 
+     * if (last > rowCount) last = rowCount;
+     * 
+     * for (int i = first; i < last; i++) { this.setRowIndex(i); if
+     * (this.isRowAvailable()) { if (this.getChildCount() > 0) { for (Iterator
+     * it = this.getChildren().iterator(); it.hasNext();) { UIComponent child =
+     * (UIComponent) it.next(); child.setId(child.getId());
+     * 
+     * if (!child.isRendered()) { continue; }
+     * 
+     * child.encodeBegin(context);
+     * 
+     * if (child.getRendersChildren()) { child.encodeChildren(context); }
+     * 
+     * child.encodeEnd(context); } } } } }
+     */
 }
