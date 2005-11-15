@@ -42,6 +42,11 @@
 			<bean:message key="link.inquiries.email.reminder" bundle="INQUIRIES_RESOURCES"/>
 		</html:link>				
 	</li>
+	<li>
+		<html:link page="/teachingStaff.do?method=selectExecutionYear&executionYearID=44">		
+			<bean:message key="link.inquiries.teachingStaff" bundle="INQUIRIES_RESOURCES"/>
+		</html:link>				
+	</li>	
 </ul>
 <%--
 Devido �s inscri��es, as funcionalidades do portal GEP est�o temporariamente desactivadas para n�o causar sobrecarga no servidor.
