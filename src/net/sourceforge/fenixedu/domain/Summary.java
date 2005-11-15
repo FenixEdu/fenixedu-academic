@@ -48,6 +48,7 @@ public class Summary extends Summary_Base {
         setSummaryDate(summaryDate);
         setSummaryHour(summaryHour);
         setRoom(room);
+        setSummaryType(shift.getTipo());
     }
 
     public void edit(String title, String summaryText, Integer studentsNumber, Boolean isExtraLesson,
