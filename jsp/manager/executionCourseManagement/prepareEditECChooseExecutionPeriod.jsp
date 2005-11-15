@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<h2><bean:message key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
 <span class="error"><html:errors/></span>
 <logic:present name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>">
 	<html:form action="/editExecutionCourseChooseExPeriod">  
@@ -12,12 +12,12 @@
 		<table>
 			<tr>
 				<td>
-					<bean:message key="label.manager.executionCourseManagement.executionPeriod"/>
+					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.executionPeriod"/>
 				</td>
 				<td>
 					<html:select property="executionPeriod">
 						<html:option value="" key="label.manager.executionCourseManagement.select">
-							<bean:message key="label.manager.executionCourseManagement.select"/>
+							<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.select"/>
 						</html:option>
 						<html:optionsCollection name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>"/>
 					</html:select>
@@ -25,11 +25,11 @@
 			</tr>
 		</table>
 		<br />
-		<html:submit styleClass="inputbutton"><bean:message key="button.manager.executionCourseManagement.continue"/></html:submit>
+		<html:submit styleClass="inputbutton"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="button.manager.executionCourseManagement.continue"/></html:submit>
 	</html:form>
 </logic:present>
 <logic:notPresent name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>">
 	<span class="error">
-		<html:errors /><bean:message key="error.manager.executionCourseManagement.noExecutionPeriods"/>
+		<html:errors /><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="error.manager.executionCourseManagement.noExecutionPeriods"/>
 	</span>
 </logic:notPresent>

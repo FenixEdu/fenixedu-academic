@@ -1,6 +1,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<h2><bean:message key="label.manager.findPerson" /></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.findPerson" /></h2>
 <br />
 <span class="error"><html:errors/></span>
 
@@ -10,7 +10,7 @@
 <table>
 	<tr>
 		<td colspan="2" class="infoop">
-			<bean:message key="info.manager.findPerson"/>
+			<bean:message bundle="MANAGER_RESOURCES" key="info.manager.findPerson"/>
 		</td>		
 	</tr>
 	<tr>
@@ -20,7 +20,7 @@
 	</tr>
 	<tr>
 		<td>
-			<bean:message key="property.login.username" />
+			<bean:message bundle="MANAGER_RESOURCES" key="property.login.username" />
 		</td>
 		<td>
 			<html:text property="username" size="25"/>
@@ -28,7 +28,7 @@
 	</tr>
 	<tr>
 		<td>
-			<bean:message key="label.nameWord" />
+			<bean:message bundle="MANAGER_RESOURCES" key="label.nameWord" />
 		</td>
 		<td>
 			<html:text property="name" size="50"/>
@@ -36,7 +36,7 @@
 	</tr>
 	<tr>
 		<td>
-			<bean:message key="label.identificationDocumentNumber" />:
+			<bean:message bundle="MANAGER_RESOURCES" key="label.identificationDocumentNumber" />:
 		</td>
 		<td>
 			<html:text property="documentIdNumber" size="25"/>
@@ -45,7 +45,7 @@
 	
 	<tr>
 		<td>
-			<bean:message key="label.emailWord" />
+			<bean:message bundle="MANAGER_RESOURCES" key="label.emailWord" />
 		</td>
 		<td>
 			<html:text property="email" size="25"/>
@@ -59,9 +59,9 @@
 </table>
 
 <html:submit styleClass="inputbutton">
-	<bean:message key="button.search"/>
+	<bean:message bundle="MANAGER_RESOURCES" key="button.search"/>
 </html:submit>
 <html:reset  styleClass="inputbutton">
-	<bean:message key="label.clear"/>
+	<bean:message bundle="MANAGER_RESOURCES" key="label.clear"/>
 </html:reset>	
 </html:form>

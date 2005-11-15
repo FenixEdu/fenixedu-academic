@@ -5,21 +5,21 @@
 </center>
 
 <p><strong>&raquo; 
-	<html:link page="/teachersManagement.do?method=mainPage">
-		<bean:message key="label.manager.mainPage" />
+	<html:link module="/manager" module="/manager" page="/teachersManagement.do?method=mainPage">
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.mainPage" />
 	</html:link>
 </strong></p>
 
-<h2><bean:message key="label.generateFiles"/></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.generateFiles"/></h2>
 
 <p><strong>&raquo;
-	<html:link page="/generateFiles.do?method=prepareChooseForGenerateFiles&amp;file=sibs">
-		<bean:message key="label.generateFiles.SIBS" />
+	<html:link module="/manager" module="/manager" page="/generateFiles.do?method=prepareChooseForGenerateFiles&amp;file=sibs">
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.generateFiles.SIBS" />
 	</html:link>
 </strong></p>
 
 <p><strong>&raquo; 
-	<html:link page="/generateFiles.do?method=prepareChooseForGenerateFiles&amp;file=letters">
-		<bean:message key="label.generateFiles.letters" />
+	<html:link module="/manager" module="/manager" page="/generateFiles.do?method=prepareChooseForGenerateFiles&amp;file=letters">
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.generateFiles.letters" />
 	</html:link>
 </strong></p>

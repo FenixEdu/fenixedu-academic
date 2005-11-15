@@ -6,7 +6,7 @@
 <table>
 	<tr>
 			<td>
-				<h3><bean:message key="label.manager.execution.course.name"/></h3>
+				<h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.execution.course.name"/></h3>
 			</td>
 			<td>
 				
@@ -15,23 +15,23 @@
 			</td>	
 	</tr>
 	<tr>
-		<h3><bean:message key="label.manager.teachers.modification"/></h3>
+		<h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.teachers.modification"/></h3>
 	</tr>
 </table>
 
 <ul style="list-style-type: square;">
-	<li><html:link page="<%="/insertProfessorShipByNumber.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId") + "&amp;executionCourseId=" + request.getParameter("executionCourseId")%>" paramId="executionCourseName" paramName="executionCourseName">
-			<bean:message key="label.manager.insert.professorShip.by.number"/>
+	<li><html:link module="/manager" page="<%="/insertProfessorShipByNumber.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId") + "&amp;executionCourseId=" + request.getParameter("executionCourseId")%>" paramId="executionCourseName" paramName="executionCourseName">
+			<bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.professorShip.by.number"/>
 		</html:link>
 	</li>
-	<li><html:link page="<%="/insertProfessorShipNonAffiliatedTeacher.do?method=prepare&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId") + "&amp;executionCourseId=" + request.getParameter("executionCourseId")%>" paramId="executionCourseName" paramName="executionCourseName">
-			<bean:message key="label.manager.insert.professorShip.notAffiliated.to.ist"/>
+	<li><html:link module="/manager" page="<%="/insertProfessorShipNonAffiliatedTeacher.do?method=prepare&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId") + "&amp;executionCourseId=" + request.getParameter("executionCourseId")%>" paramId="executionCourseName" paramName="executionCourseName">
+			<bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.professorShip.notAffiliated.to.ist"/>
 		</html:link>
 	</li>
 </ul>
 	
 <logic:notPresent name="infoTeachersList">
-	<i><bean:message key="label.manager.teachers.nonExisting"/></i>
+	<i><bean:message bundle="MANAGER_RESOURCES" key="label.manager.teachers.nonExisting"/></i>
 </logic:notPresent>
 	
 <logic:present name="infoTeachersList" scope="request">
@@ -42,13 +42,13 @@
 		<html:hidden property="executionCourseId" value="<%= request.getParameter("executionCourseId") %>"/>
 		<table width="80%" cellpadding="0" border="0">
 			<tr>
-				<td class="listClasses-header"><bean:message key="label.manager.teacher.name" />
+				<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.teacher.name" />
 				</td>
-				<td class="listClasses-header"><bean:message key="label.manager.teacher.number" />
+				<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.teacher.number" />
 				</td>
-				<td class="listClasses-header"><bean:message key="label.manager.teaches" />
+				<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.teaches" />
 				</td>
-				<td class="listClasses-header"><bean:message key="label.manager.responsible" />
+				<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.responsible" />
 				</td>	
 			</tr>
 			<logic:iterate id="infoTeacher" name="infoTeachersList">
@@ -89,6 +89,6 @@
 	 		</logic:present>		 							
 		</table>
 		<br>
-		<html:submit><bean:message key="label.manager.save.modifications"/></html:submit>
+		<html:submit><bean:message bundle="MANAGER_RESOURCES" key="label.manager.save.modifications"/></html:submit>
 	</html:form> 	
 </logic:present>

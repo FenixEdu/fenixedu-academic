@@ -6,96 +6,101 @@
 <br />
 <strong>Gestão de CMS</strong>
 <p><strong>&raquo; 
-	<html:link module="/cms" action="/userGroupsManagement.do?method=prepare" titleKey="person.userGroupsManagement.label.title">
-		<bean:message key="person.userGroupsManagement.label" />
-	</html:link>e 
+	<html:link module="/manager" module="/cms" action="/userGroupsManagement.do?method=prepare" titleKey="person.userGroupsManagement.label.title">
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="link.userGroupsManagement" />
+	</html:link>
+	</strong></p>
+<p><strong>&raquo;
+	<html:link module="/manager" module="/cms" action="/cmsConfigurationManagement.do?method=prepare" titleKey="person.userGroupsManagement.label.title">
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="link.cmsConfiguration" />
+	</html:link>	
 </strong></p>
 <br />
 <strong>Gestão de Execuções</strong>
 <p><strong>&raquo; 
-		<html:link page="/readDegrees.do">
-			<bean:message key="label.manager.readDegrees" />
+		<html:link module="/manager" module="/manager" page="/readDegrees.do">
+			<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.readDegrees" />
 		</html:link>
 </strong></p>
 <p><strong>&raquo; 
-	  	<html:link page="/curricularPlans/chooseCurricularPlan.faces">
+	  	<html:link module="/manager" module="/manager" page="/curricularPlans/chooseCurricularPlan.faces">
 	  		Consulta de Currículo
 	  	</html:link>  
 </strong></p>
 
 <p><strong>&raquo; 
-	  	<html:link page="/degree/chooseDegreeType.faces">
+	  	<html:link module="/manager" module="/manager" page="/degree/chooseDegreeType.faces">
 	  		Criação de Cursos de Execução
 	  	</html:link>  
 </strong></p>
 
 <p><strong>&raquo; 
-	<html:link page="/manageExecutionPeriods.do?method=prepare">
+	<html:link module="/manager" module="/manager" page="/manageExecutionPeriods.do?method=prepare">
 		Gestão de Periodos Execução
 	</html:link>
 </strong></p>
 
 <p><strong>&raquo; 
-	<html:link page="/executionCourseManagement.do?method=firstPage">
-		<bean:message key="label.manager.executionCourseManagement" />
+	<html:link module="/manager" module="/manager" page="/executionCourseManagement.do?method=firstPage">
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement" />
 	</html:link>
 </strong></p>
 
 <p><strong>&raquo; 
-	<html:link page="/competenceCourseManagement.do?method=prepare">
-		<bean:message key="label.manager.competence.course.management" />
+	<html:link module="/manager" module="/manager" page="/competenceCourseManagement.do?method=prepare">
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.competence.course.management" />
 	</html:link>
 </strong></p>
 
 <p><strong>&raquo; 
-	<html:link page="/manageEnrolementPeriods.do?method=prepare">
-		<bean:message key="title.manage.enrolement.period" />
+	<html:link module="/manager" module="/manager" page="/manageEnrolementPeriods.do?method=prepare">
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="title.manage.enrolement.period" />
 	</html:link>
 </strong></p>
 
 <br />
 <strong>Gestão de Pessoal</strong>
 <p><strong>&raquo; 
-	<html:link page="/teachersManagement.do?method=firstPage">
-		<bean:message key="link.manager.teachersManagement" />
+	<html:link module="/manager" module="/manager" page="/teachersManagement.do?method=firstPage">
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="link.manager.teachersManagement" />
 	</html:link>
 </strong></p>
 
 <p><strong>&raquo; 
-	<html:link page="/studentsManagement.do?method=show">
-		<bean:message key="link.manager.studentsManagement" />
+	<html:link module="/manager" module="/manager" page="/studentsManagement.do?method=show">
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="link.manager.studentsManagement" />
 	</html:link>
 </strong></p>
 
 <p><strong>&raquo;
-	<html:link page="/personManagement.do?method=firstPage">
-		<bean:message key="label.manager.personManagement" />
+	<html:link module="/manager" module="/manager" page="/personManagement.do?method=firstPage">
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.personManagement" />
 	</html:link>
 </strong></p>
 
 <br />
 
-<strong><bean:message key="label.manageFiles"/></strong>
+<strong><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manageFiles"/></strong>
 <p><strong>&raquo;
-	<html:link page="/generateFiles.do?method=firstPage">
-		<bean:message key="label.generateFiles"/>
+	<html:link module="/manager" module="/manager" page="/generateFiles.do?method=firstPage">
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.generateFiles"/>
 	</html:link>
 </strong></p>
 <p><strong>&raquo;
-	<html:link page="/uploadFiles.do?method=firstPage">
-		<bean:message key="label.uploadFiles"/>
+	<html:link module="/manager" module="/manager" page="/uploadFiles.do?method=firstPage">
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.uploadFiles"/>
 	</html:link>
 </strong></p>
 <br />
 
-<strong><bean:message key="label.manageFinance"/></strong>
+<strong><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manageFinance"/></strong>
 <p><strong>&raquo;
-	<html:link page="/guideManagement.do?method=firstPage">
-		<bean:message key="label.guidesManagement"/>
+	<html:link module="/manager" module="/manager" page="/guideManagement.do?method=firstPage">
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.guidesManagement"/>
 	</html:link>	
 </strong></p>
 <p><strong>&raquo;
-	<html:link page="/gratuity/updateGratuitySituations.faces">
+	<html:link module="/manager" module="/manager" page="/gratuity/updateGratuitySituations.faces">
 		Actualizar Situações de Propina
 	</html:link>
 </strong></p>
@@ -103,12 +108,12 @@
 <br />
 <strong>Gestão de Suport</strong>
 <p><strong>&raquo;
-	<html:link page="/manageGlossary.do?method=prepare">
+	<html:link module="/manager" module="/manager" page="/manageGlossary.do?method=prepare">
 		Gestão de Glossário
 	</html:link>
 </strong></p>
 <p><strong>&raquo;
-	<html:link page="/manageFAQs.do?method=prepare">
+	<html:link module="/manager" module="/manager" page="/manageFAQs.do?method=prepare">
 		Gestão de FAQ's
 	</html:link>
 </strong></p>
@@ -117,51 +122,51 @@
 <strong>Gestão do Sistema</strong>
 <p><strong>&raquo; 
 
-	<html:link page="/manageCache.do?method=prepare">
+	<html:link module="/manager" page="/manageCache.do?method=prepare">
 		Gestão da Cache
 	</html:link>
 </strong></p>
 
 <p><strong>&raquo; 
-	<html:link page="/advisoriesManagement/listCurrentAdvisories.faces">
+	<html:link module="/manager" module="/manager" page="/advisoriesManagement/listCurrentAdvisories.faces">
 		Gestão de Avisos
 	</html:link>
 </strong></p>
 
 <p><strong>&raquo; 
-	<html:link page="/monitorServices.do?method=monitor">
+	<html:link module="/manager" module="/manager" page="/monitorServices.do?method=monitor">
 		Monitorização de Serviços
 	</html:link>
 </strong></p>
 
 <p><strong>&raquo; 
-	<html:link page="/monitorRequestLogs.do?method=listFiles">
-		<bean:message key="manager.monitor.requests.title"/>
+	<html:link module="/manager" module="/manager" page="/monitorRequestLogs.do?method=listFiles">
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="manager.monitor.requests.title"/>
 	</html:link>
 </strong></p>
 
 <p><strong>&raquo; 
-	<html:link page="/monitorUsers.do?method=monitor">
+	<html:link module="/manager" module="/manager" page="/monitorUsers.do?method=monitor">
 		Monitorização de Utilizadores
 	</html:link>
 </strong></p>
 
 <p><strong>&raquo; 
-	<html:link page="/monitorSystem.do?method=monitor">
+	<html:link module="/manager" module="/manager" page="/monitorSystem.do?method=monitor">
 		Informações do Sistema
 	</html:link>
 </strong></p>
 
 <p><strong>&raquo; 
-	<html:link page="/somePage.faces">
+	<html:link module="/manager" module="/manager" page="/somePage.faces">
 		Java Server Faces Example
 	</html:link>
 <p><strong>&raquo; 
-	<html:link page="/someStrutsPage.do?method=showFirstPage">
+	<html:link module="/manager" page="/someStrutsPage.do?method=showFirstPage">
 		Struts Example
 	</html:link>
 <p><strong>&raquo; 
-	<html:link page="/changePasswordForward.do">
+	<html:link module="/manager" module="/manager" page="/changePasswordForward.do">
 		Kerberos Test
 	</html:link>
 	

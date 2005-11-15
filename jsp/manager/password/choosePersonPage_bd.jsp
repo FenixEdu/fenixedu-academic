@@ -12,7 +12,7 @@
 	<html:hidden property="page" value="1" />
 
 
-	<h3><bean:message key="label.operator.choosePerson" /></h3>
+	<h3><bean:message bundle="MANAGER_RESOURCES" key="label.operator.choosePerson" /></h3>
 	<br>
 
 	<table>

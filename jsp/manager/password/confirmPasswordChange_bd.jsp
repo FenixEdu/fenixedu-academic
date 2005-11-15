@@ -20,7 +20,7 @@
 	<table>
 		<tr>
 			<td>
-				<bean:message key="label.name" />
+				<bean:message bundle="MANAGER_RESOURCES" key="label.name" />
 			</td>
 			<td>
 				<bean:write name="infoPerson" property="nome" />
@@ -28,7 +28,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="label.identificationDocumentNumber" />
+				<bean:message bundle="MANAGER_RESOURCES" key="label.identificationDocumentNumber" />
 			</td>
 			<td>
 				<bean:write name="infoPerson" property="numeroDocumentoIdentificacao" />
@@ -36,11 +36,11 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="label.identificationDocumentType" />
+				<bean:message bundle="MANAGER_RESOURCES" key="label.identificationDocumentType" />
 			</td>
 			<td>
 				<bean:define id="idType" name="infoPerson" property="tipoDocumentoIdentificacao"/>
-				<bean:message bundle="ENUMERATION_RESOURCES" key='<%=idType.toString()%>'/>
+				<bean:message bundle="MANAGER_RESOURCES" bundle="ENUMERATION_RESOURCES" key='<%=idType.toString()%>'/>
 			</td>
 		</tr>
 	</table>
@@ -50,12 +50,12 @@
 	
 	<bean:define id="personID" name="infoPerson" property="idInternal" />
 	<bean:define id="username" name="infoPerson" property="username" />
-	<html:link page="<%= "/generateNewPassword.do?method=generatePassword&page=0&personID="
+	<html:link module="/manager" page="<%= "/generateNewPassword.do?method=generatePassword&page=0&personID="
 					+ pageContext.findAttribute("personID")
 					+ "&username="
 					+ pageContext.findAttribute("username")
 			%>"  target="_blank">
-			<bean:message key="link.operator.changePassword" />
+			<bean:message bundle="MANAGER_RESOURCES" key="link.operator.changePassword" />
 		</html:link>
 	</h2>
 	

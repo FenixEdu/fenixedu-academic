@@ -5,7 +5,7 @@
 <logic:present name="name" scope="request">
 	<table>
 		<td>
-			<h2><bean:message key="label.manager.curricularCourse.administrating"/></h2>
+			<h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourse.administrating"/></h2>
 		</td>
 		<td>
 			<h2><b><bean:define id="curricularCourseName" value="<%= request.getParameter("name") %>"/>
@@ -16,7 +16,7 @@
 <logic:present name="executionPeriodNameAndYear" scope="request">
 <table>
 	<td>
-		<h3><bean:message key="label.manager.executionPeriod"/></h3>
+		<h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionPeriod"/></h3>
 	</td>
 	<td>
 		<h2><bean:write name="executionPeriodNameAndYear"/></h2>
@@ -25,7 +25,7 @@
 </logic:present>
 <%--
 <logic:notPresent name="name" scope="request">
-	<html:link page="<%= "/insertExecutionCourse.do?method=prepareInsert&executionPeriodId=" + request.getParameter("executionPeriodId") %>"><bean:message key="label.manager.insert.execution.course"/></html:link>
+	<html:link module="/manager" page="<%= "/insertExecutionCourse.do?method=prepareInsert&executionPeriodId=" + request.getParameter("executionPeriodId") %>"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.execution.course"/></html:link>
 	<br>
 	<br>
 </logic:notPresent>--%>
@@ -42,20 +42,20 @@
 			<html:hidden property="curricularCourseId" value="<%= request.getParameter("curricularCourseId") %>"/>
 			<html:hidden property="executionPeriodId" value="<%= request.getParameter("executionPeriodId") %>"/>
 	
-			<b><bean:message key="list.title.execution.course.toAssociate"/><b>
+			<b><bean:message bundle="MANAGER_RESOURCES" key="list.title.execution.course.toAssociate"/><b>
 			<br>
 			</br>
 			<table>
 				<tr>
 					<td class="listClasses-header">	
 					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.executionCourse.name" />
+					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourse.name" />
 					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.executionCourse.code" />
+					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourse.code" />
 					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.executionCourse.executionPeriod" />
+					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourse.executionPeriod" />
 					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.executionCourse.site" />
+					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourse.site" />
 					</td>
 				</tr>
 				<logic:iterate id="infoExecutionCourse" name="infoExecutionCoursesList">
@@ -74,41 +74,41 @@
 						 <bean:define id="hasSite" name="infoExecutionCourse" property="hasSite"/>
 					
 						<logic:equal name="hasSite" value="true">
-						<bean:message key="label.manager.yes"/>
+						<bean:message bundle="MANAGER_RESOURCES" key="label.manager.yes"/>
 						</logic:equal>
 						<logic:notEqual name="hasSite" value="true">
-						<bean:message key="label.manager.no"/>
+						<bean:message bundle="MANAGER_RESOURCES" key="label.manager.no"/>
 						</logic:notEqual>
 						</td>
 					</tr>
 				</logic:iterate>	
 			</table>
 			<html:submit >
-				<bean:message key="label.manager.associate.execution.course"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="label.manager.associate.execution.course"/>
 			</html:submit>
 		</html:form>
 	</logic:present>
 	
 	<logic:notPresent name="name" scope="request">
-		<b><bean:message key="list.title.execution.courses"/></b>
+		<b><bean:message bundle="MANAGER_RESOURCES" key="list.title.execution.courses"/></b>
 		<br>
 		</br>
 		<html:form action="/deleteExecutionCourses" method="get">
 			<html:hidden property="executionPeriodId" value="<%= request.getParameter("executionPeriodId") %>"/>
 			<bean:define id="onclick">
-				return confirm('<bean:message key="message.confirm.delete.execution.courses"/>')
+				return confirm('<bean:message bundle="MANAGER_RESOURCES" key="message.confirm.delete.execution.courses"/>')
 		    </bean:define>
 			<table>
 				<tr>
 					<td class="listClasses-header">	
 					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.executionCourse.name" />
+					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourse.name" />
 					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.executionCourse.code" />
+					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourse.code" />
 					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.executionCourse.executionPeriod" />
+					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourse.executionPeriod" />
 					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.executionCourse.site" />
+					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourse.site" />
 					</td>
 				</tr>
 				<logic:iterate id="infoExecutionCourse" name="infoExecutionCoursesList">		
@@ -127,17 +127,17 @@
 				 	<td class="listClasses">
 				 		<bean:define id="hasSite" name="infoExecutionCourse" property="hasSite"/>
 						<logic:equal name="hasSite" value="true">
-							<bean:message key="label.manager.yes"/>
+							<bean:message bundle="MANAGER_RESOURCES" key="label.manager.yes"/>
 						</logic:equal>
 						<logic:notEqual name="hasSite" value="true">
-							<bean:message key="label.manager.no"/>
+							<bean:message bundle="MANAGER_RESOURCES" key="label.manager.no"/>
 						</logic:notEqual>
 					</td>
 				</tr>
 				</logic:iterate>	
 			</table>
 			<html:submit onclick='<%=onclick.toString() %>'>
-   				<bean:message key="label.delete"/>
+   				<bean:message bundle="MANAGER_RESOURCES" key="label.delete"/>
   			</html:submit>
 		</html:form>
 	</logic:notPresent>
@@ -145,6 +145,6 @@
 
 <logic:empty name="infoExecutionCoursesList" scope="request">
 	<span class="error">
-		<html:errors /><bean:message key="errors.execution.courses.none"/>
+		<html:errors /><bean:message bundle="MANAGER_RESOURCES" key="errors.execution.courses.none"/>
 	</span>
 </logic:empty>

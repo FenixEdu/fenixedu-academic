@@ -13,31 +13,31 @@
 
 
 
-<h3><bean:message key="label.manager.precedences.management"/>&nbsp;-&nbsp;<bean:message key="label.manager.insert.simple.precedence"/></h3>
+<h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.precedences.management"/>&nbsp;-&nbsp;<bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.simple.precedence"/></h3>
 
 <ul style="list-style-type: square;">
-	<li><html:link page='<%="/makeSimplePrecedence.do?method=chooseRestriction&amp;page=0&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;className=" + RestrictionByNumberOfDoneCurricularCourses.class.getName() %>'>
-		<bean:message key="label.manager.insert.restriction.restrictionByNumberOfDoneCurricularCourses"/>
+	<li><html:link module="/manager" page='<%="/makeSimplePrecedence.do?method=chooseRestriction&amp;page=0&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;className=" + RestrictionByNumberOfDoneCurricularCourses.class.getName() %>'>
+		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.restriction.restrictionByNumberOfDoneCurricularCourses"/>
 	</html:link></li>
-	<li><html:link page='<%="/makeSimplePrecedence.do?method=chooseRestriction&amp;page=0&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;className=" + RestrictionDoneCurricularCourse.class.getName() %>'>
-		<bean:message key="label.manager.insert.restriction.restrictionDoneCurricularCourse"/>
+	<li><html:link module="/manager" page='<%="/makeSimplePrecedence.do?method=chooseRestriction&amp;page=0&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;className=" + RestrictionDoneCurricularCourse.class.getName() %>'>
+		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.restriction.restrictionDoneCurricularCourse"/>
 	</html:link></li>
-	<li><html:link page='<%="/makeSimplePrecedence.do?method=chooseRestriction&amp;page=0&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;className=" + RestrictionNotDoneCurricularCourse.class.getName() %>'>
-		<bean:message key="label.manager.insert.restriction.restrictionNotDoneCurricularCourse"/>
+	<li><html:link module="/manager" page='<%="/makeSimplePrecedence.do?method=chooseRestriction&amp;page=0&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;className=" + RestrictionNotDoneCurricularCourse.class.getName() %>'>
+		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.restriction.restrictionNotDoneCurricularCourse"/>
 	</html:link></li>
-	<li><html:link page='<%="/makeSimplePrecedence.do?method=chooseRestriction&amp;page=0&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;className=" + RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse.class.getName() %>'>
-		<bean:message key="label.manager.insert.restriction.restrictionDoneOrHasEverBeenEnrolledInCurricularCourse"/>
+	<li><html:link module="/manager" page='<%="/makeSimplePrecedence.do?method=chooseRestriction&amp;page=0&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;className=" + RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse.class.getName() %>'>
+		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.restriction.restrictionDoneOrHasEverBeenEnrolledInCurricularCourse"/>
 	</html:link></li>
-	<li><html:link page='<%="/makeSimplePrecedence.do?method=chooseRestriction&amp;page=0&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;className=" + RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse.class.getName() %>'>
-		<bean:message key="label.manager.insert.restriction.restrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse"/>
+	<li><html:link module="/manager" page='<%="/makeSimplePrecedence.do?method=chooseRestriction&amp;page=0&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;className=" + RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse.class.getName() %>'>
+		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.restriction.restrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse"/>
 	</html:link></li>
-	<li><html:link page='<%="/makeSimplePrecedence.do?method=chooseRestriction&amp;page=0&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;className=" + RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse.class.getName() %>'>
-		<bean:message key="label.manager.insert.restriction.restrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse"/>
+	<li><html:link module="/manager" page='<%="/makeSimplePrecedence.do?method=chooseRestriction&amp;page=0&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;className=" + RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse.class.getName() %>'>
+		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.restriction.restrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse"/>
 	</html:link></li>
-	<li><html:link page='<%="/makeSimplePrecedence.do?method=chooseRestriction&amp;page=0&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;className=" + RestrictionNotEnrolledInCurricularCourse.class.getName() %>'>
-		<bean:message key="label.manager.insert.restriction.restrictionNotEnrolledCurricularCourse"/>
+	<li><html:link module="/manager" page='<%="/makeSimplePrecedence.do?method=chooseRestriction&amp;page=0&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;className=" + RestrictionNotEnrolledInCurricularCourse.class.getName() %>'>
+		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.restriction.restrictionNotEnrolledCurricularCourse"/>
 	</html:link></li>
-	<li><html:link page='<%="/makeSimplePrecedence.do?method=chooseRestriction&amp;page=0&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;className=" + RestrictionPeriodToApply.class.getName() %>'>
-		<bean:message key="label.manager.insert.restriction.restrictionPeriodToApply"/>
+	<li><html:link module="/manager" page='<%="/makeSimplePrecedence.do?method=chooseRestriction&amp;page=0&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;className=" + RestrictionPeriodToApply.class.getName() %>'>
+		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.restriction.restrictionPeriodToApply"/>
 	</html:link></li>
 </ul>

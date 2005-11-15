@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<h2><bean:message key="title.manage.execution.periods"/></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" key="title.manage.execution.periods"/></h2>
 <br />
 
 <strong>Nota:</strong> As operações disponíveis nesta página envolvem a manipulação
@@ -56,19 +56,19 @@ de uma elevada quantidade de dados pelo que demoram alguns minutos a processar.
 					<html:hidden property="method" value="createExecutionPeriod"/>
 					<html:hidden property="page" value="1"/>
 					<html:submit property="operation" styleClass="inputbutton">
-						<bean:message key="label.create"/>
+						<bean:message bundle="MANAGER_RESOURCES" key="label.create"/>
 					</html:submit>
 				</td>
 				<td>
 					<html:reset value="Limpar" styleClass="inputbutton">
-						<bean:message key="label.clear"/>
+						<bean:message bundle="MANAGER_RESOURCES" key="label.clear"/>
 					</html:reset>
 				</td>
 			</tr>
 		</table>
 	</html:form>
  --%>
-	<bean:message key="list.title.execution.periods"/>
+	<bean:message bundle="MANAGER_RESOURCES" key="list.title.execution.periods"/>
 	<br />
 	<table>
 		<tr>
@@ -101,36 +101,36 @@ de uma elevada quantidade de dados pelo que demoram alguns minutos a processar.
 				<td class="listClasses">
 				
 				<logic:equal name="infoExecutionPeriod" property="state.stateCode" value="NO">
-					<html:link page="<%= "/manageExecutionPeriods.do?method=alterExecutionPeriodState"
+					<html:link module="/manager" page="<%= "/manageExecutionPeriods.do?method=alterExecutionPeriodState"
 								+ "&amp;year="
 								+ year
 								+ "&amp;semester="
 								+ semester
 								+ "&amp;periodState="
 								+ "O" %>" >
-						<bean:message key="link.open.execution.period"/>
+						<bean:message bundle="MANAGER_RESOURCES" key="link.open.execution.period"/>
 					</html:link>
 				</logic:equal>
 
 				<logic:equal name="infoExecutionPeriod" property="state.stateCode" value="O">
-					<html:link page="<%= "/manageExecutionPeriods.do?method=alterExecutionPeriodState"
+					<html:link module="/manager" page="<%= "/manageExecutionPeriods.do?method=alterExecutionPeriodState"
 								+ "&amp;year="
 								+ year
 								+ "&amp;semester="
 								+ semester
 								+ "&amp;periodState="
 								+ "C" %>" >
-						<bean:message key="link.current.execution.period"/>
+						<bean:message bundle="MANAGER_RESOURCES" key="link.current.execution.period"/>
 					</html:link>
 					<br />
-					<html:link page="<%= "/manageExecutionPeriods.do?method=alterExecutionPeriodState"
+					<html:link module="/manager" page="<%= "/manageExecutionPeriods.do?method=alterExecutionPeriodState"
 								+ "&amp;year="
 								+ year
 								+ "&amp;semester="
 								+ semester
 								+ "&amp;periodState="
 								+ "CL" %>" >
-						<bean:message key="link.close.execution.period"/>
+						<bean:message bundle="MANAGER_RESOURCES" key="link.close.execution.period"/>
 					</html:link>
 
 				</logic:equal>
@@ -139,14 +139,14 @@ de uma elevada quantidade de dados pelo que demoram alguns minutos a processar.
 				</logic:equal>
 
 				<logic:equal name="infoExecutionPeriod" property="state.stateCode" value="CL">
-					<html:link page="<%= "/manageExecutionPeriods.do?method=alterExecutionPeriodState"
+					<html:link module="/manager" page="<%= "/manageExecutionPeriods.do?method=alterExecutionPeriodState"
 								+ "&amp;year="
 								+ year
 								+ "&amp;semester="
 								+ semester
 								+ "&amp;periodState="
 								+ "O" %>" >
-						<bean:message key="link.open.execution.period"/>
+						<bean:message bundle="MANAGER_RESOURCES" key="link.open.execution.period"/>
 					</html:link>
 				</logic:equal>
 
@@ -158,6 +158,6 @@ de uma elevada quantidade de dados pelo que demoram alguns minutos a processar.
 
 <logic:notPresent name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>" scope="request">
 	<span class="error">
-		<html:errors /><bean:message key="errors.execution.period.none"/>
+		<html:errors /><bean:message bundle="MANAGER_RESOURCES" key="errors.execution.period.none"/>
 	</span>
 </logic:notPresent>

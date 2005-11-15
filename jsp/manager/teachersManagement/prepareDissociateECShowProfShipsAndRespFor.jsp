@@ -3,18 +3,18 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
-<h2><bean:message key="link.manager.teachersManagement.removeECAssociation" /></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" key="link.manager.teachersManagement.removeECAssociation" /></h2>
 <span class="error"><html:errors /></span>
 <html:form action="/dissociateProfShipsAndRespFor">
 	<html:hidden property="method" value="dissociateProfShipsAndRespFor"/>
 	<html:hidden property="teacherNumber"/> 
 	<html:hidden property="page" value="0"/>
 	<p class="infoop">
-		<bean:message key="message.manager.teachersManagement.choosePSorRF"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="message.manager.teachersManagement.choosePSorRF"/>
 	</p>
 	<logic:present name="infoTeacher">
 		<b>
-			<bean:message key="label.manager.teachersManagement.teacher"/>&nbsp;
+			<bean:message bundle="MANAGER_RESOURCES" key="label.manager.teachersManagement.teacher"/>&nbsp;
 			<bean:write name="infoTeacher" property="teacherNumber"/>&nbsp;-&nbsp;
 			<bean:write name="infoTeacher" property="infoPerson.nome"/>
 		</b>
@@ -24,8 +24,8 @@
 			<html:hidden property="professorshipsListSize" value="<%=professorshipsListSize.toString()%>"/>
 			<logic:greaterThan name="professorshipsListSize" value="0">
 				<tr>
-					<td class="listClasses-header"><bean:message key="label.manager.teachersManagement.dissociate"/></td>
-					<td class="listClasses-header"><bean:message key="label.manager.teachersManagement.professorShips"/></td>
+					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.teachersManagement.dissociate"/></td>
+					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.teachersManagement.professorShips"/></td>
 				</tr>
 				<logic:iterate id="professorship" name="infoTeacher" property="professorShipsExecutionCourses">			
 					<tr>
@@ -41,7 +41,7 @@
 			<logic:equal name="professorshipsListSize" value="0">
 				<tr>
 					<td colspan="2">
-						<i><bean:message key="message.manager.teachersManagement.noProfessorships"/></i>
+						<i><bean:message bundle="MANAGER_RESOURCES" key="message.manager.teachersManagement.noProfessorships"/></i>
 					</td>
 				</tr>
 			</logic:equal>
@@ -52,8 +52,8 @@
 			<html:hidden property="responsibleForListSize" value="<%=responsibleForListSize.toString()%>"/>			
 			<logic:greaterThan name="responsibleForListSize" value="0">
 				<tr>
-					<td class="listClasses-header"><bean:message key="label.manager.teachersManagement.dissociate"/></td>
-					<td class="listClasses-header"><bean:message key="label.manager.teachersManagement.responsibleFor"/></td>
+					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.teachersManagement.dissociate"/></td>
+					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.teachersManagement.responsibleFor"/></td>
 				</tr>
 				<logic:iterate id="responsibleFor" name="infoTeacher" property="responsibleForExecutionCourses">			
 					<tr>
@@ -69,14 +69,14 @@
 			<logic:equal name="responsibleForListSize" value="0">
 				<tr>
 					<td colspan="2">
-						<i><bean:message key="message.manager.teachersManagement.noResponsibleFor"/></i>
+						<i><bean:message bundle="MANAGER_RESOURCES" key="message.manager.teachersManagement.noResponsibleFor"/></i>
 					</td>
 				</tr>			
 			</logic:equal>
 		</table>
 	</logic:present>
 	<p>
-		<html:submit styleClass="inputbutton"><bean:message key="button.manager.teachersManagement.dissociate"/>                    		         	
+		<html:submit styleClass="inputbutton"><bean:message bundle="MANAGER_RESOURCES" key="button.manager.teachersManagement.dissociate"/>                    		         	
 		</html:submit> 
 	</p>
 </html:form>

@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>			
-<h2><bean:message key="label.manager.competence.course.management"/></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.competence.course.management"/></h2>
 
 <br>
 <br>
@@ -17,11 +17,11 @@
 			<tr>
 				<td class="listClasses-header">
 				</td>
-				<td class="listClasses-header"><bean:message key="label.manager.degree.code" />
+				<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.degree.code" />
 				</td>
-				<td class="listClasses-header"><bean:message key="label.manager.degree.name" />
+				<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.degree.name" />
 				</td>
-				<td class="listClasses-header"><bean:message key="label.manager.degreeCurricularPlan" />
+				<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.degreeCurricularPlan" />
 				</td>
 			</tr>
 				
@@ -51,7 +51,7 @@
 		<br>
 		<br>	
 		<html:submit>
-		   <bean:message key="label.manager.associate.curricularCourses"/>
+		   <bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.associate.curricularCourses"/>
 		</html:submit>
 	</html:form>
 </logic:notEmpty>

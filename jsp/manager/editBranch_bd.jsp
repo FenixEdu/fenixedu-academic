@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<h2><bean:message key="label.manager.edit.branch" /></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.edit.branch" /></h2>
 
 <span class="error"><html:errors/></span>
 
@@ -15,7 +15,7 @@
 	<table>
 		<tr>
 			<td>
-				<bean:message key="label.name"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="label.name"/>
 			</td>
 			<td>
 				<html:text size="60" property="name" />
@@ -23,7 +23,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="label.nameEn"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="label.nameEn"/>
 			</td>
 			<td>
 				<html:text size="60" property="nameEn" />
@@ -31,7 +31,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="label.manager.code"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="label.manager.code"/>
 			</td>
 			<td>
 				<html:text size="10" property="code" />
@@ -42,9 +42,9 @@
 	<br>
 
 	<html:submit styleClass="inputbutton">
-		<bean:message key="button.save"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="button.save"/>
 	</html:submit>
 	<html:reset  styleClass="inputbutton">
-		<bean:message key="label.clear"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="label.clear"/>
 	</html:reset>			
 </html:form>

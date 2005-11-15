@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<h2><bean:message key="label.manager.insert.executionCourse" /></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.executionCourse" /></h2>
 
 <br>
 
@@ -16,7 +16,7 @@
 	<table>
 		<tr>
 			<td>
-				<bean:message key="message.manager.execution.course.name"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.execution.course.name"/>
 			</td>
 			<td>
 				<html:text size="5" property="name" />
@@ -24,7 +24,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.execution.course.code"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.execution.course.code"/>
 			</td>
 			<td>
 				<html:text size="5" property="code" />
@@ -32,7 +32,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.theoreticalHours"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.theoreticalHours"/>
 			</td>
 			<td>
 				<html:text size="5" property="theoreticalHours" />
@@ -41,7 +41,7 @@
 		
 		<tr>
 			<td>
-				<bean:message key="message.manager.praticalHours"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.praticalHours"/>
 			</td>
 			<td>
 				<html:text size="5" property="praticalHours" />
@@ -49,7 +49,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.theoPratHours"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.theoPratHours"/>
 			</td>
 			<td>
 				<html:text size="5" property="theoPratHours" />
@@ -57,7 +57,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.labHours"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.labHours"/>
 			</td>
 			<td>
 				<html:text size="5" property="labHours" />
@@ -65,7 +65,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.execution.course.comment"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.execution.course.comment"/>
 			</td>
 			<td>
 				<html:textarea property="comment"
@@ -81,9 +81,9 @@
 	
 	
 	<html:submit styleClass="inputbutton">
-		<bean:message key="button.save"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="button.save"/>
 	</html:submit>
 	<html:reset  styleClass="inputbutton">
-		<bean:message key="label.clear"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="label.clear"/>
 	</html:reset>
 </html:form>

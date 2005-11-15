@@ -5,16 +5,16 @@
 </center>
 
 <p><strong>&raquo; 
-	<html:link page="/teachersManagement.do?method=mainPage">
-		<bean:message key="label.manager.mainPage" />
+	<html:link module="/manager" page="/teachersManagement.do?method=mainPage">
+		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.mainPage" />
 	</html:link>
 </strong></p>
 
-<h2><bean:message key="label.manageFiles"/></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" key="label.manageFiles"/></h2>
 
 <p><strong>&raquo;
-	<html:link page="/uploadFiles.do?method=prepareChooseForUploadFiles&amp;file=sibs">
-		<bean:message key="label.uploadFiles.SIBS" />
+	<html:link module="/manager" page="/uploadFiles.do?method=prepareChooseForUploadFiles&amp;file=sibs">
+		<bean:message bundle="MANAGER_RESOURCES" key="label.uploadFiles.SIBS" />
 	</html:link>
 </strong></p>
 

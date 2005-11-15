@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
-<h2><bean:message key="message.edit.DegreeCP" /></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" key="message.edit.DegreeCP" /></h2>
 <br>
 
 <span class="error"><html:errors/></span>
@@ -14,7 +14,7 @@
 	
 <tr>
 	<td>
-		<bean:message key="message.manager.degree.curricular.plan.name"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="message.manager.degree.curricular.plan.name"/>
 	</td>
 	<td>
 		<html:text size="60" property="name" />
@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>
-		<bean:message key="message.manager.degree.curricular.plan.state"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="message.manager.degree.curricular.plan.state"/>
 	</td>
 	<td>
 		<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState" bundle="ENUMERATION_RESOURCES" excludedFields="PAST"/>  
@@ -34,7 +34,7 @@
 			
 <tr>
 	<td>
-		<bean:message key="message.manager.degree.curricular.plan.initialDate"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="message.manager.degree.curricular.plan.initialDate"/>
 	</td>
 	<td>
 		<html:text size="12" property="initialDate" />
@@ -43,7 +43,7 @@
 	
 <tr>
 	<td>
-		<bean:message key="message.manager.degree.curricular.plan.endDate"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="message.manager.degree.curricular.plan.endDate"/>
 	</td>
 	<td>
 		<html:text size="12" property="endDate" />
@@ -52,7 +52,7 @@
 	
 <tr>
 	<td>
-		<bean:message key="message.manager.degree.curricular.plan.degreeDuration"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="message.manager.degree.curricular.plan.degreeDuration"/>
 	</td>
 	<td>
 		<html:text size="7" property="degreeDuration" />
@@ -61,7 +61,7 @@
 	
 <tr>
 	<td>
-		<bean:message key="message.manager.degree.curricular.plan.minimalYearForOptionalCourses"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="message.manager.degree.curricular.plan.minimalYearForOptionalCourses"/>
 	</td>
 	<td>
 		<html:text size="7" property="minimalYearForOptionalCourses" />
@@ -70,7 +70,7 @@
 	
 <tr>
 	<td>
-		<bean:message key="message.manager.degree.curricular.plan.neededCredits"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="message.manager.degree.curricular.plan.neededCredits"/>
 	</td>
 	<td>
 		<html:text size="7" property="neededCredits" />
@@ -79,7 +79,7 @@
 	
 <tr>
 	<td>
-		<bean:message key="message.manager.degree.curricular.plan.markType"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="message.manager.degree.curricular.plan.markType"/>
 	</td>
 	<td>
 		<html:select property="markType">
@@ -92,7 +92,7 @@
 	
 <tr>
 	<td>
-		<bean:message key="message.manager.degree.curricular.plan.numerusClausus"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="message.manager.degree.curricular.plan.numerusClausus"/>
 	</td>
 	<td>
 		<html:text size="7" property="numerusClausus" />
@@ -100,7 +100,7 @@
 </tr>	
 <tr>
 	<td>
-		<bean:message key="message.manager.degree.curricular.plan.anotation"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="message.manager.degree.curricular.plan.anotation"/>
 	</td>
 	<td>
 	<html:textarea property="anotation"
@@ -117,9 +117,9 @@
 
 <br />
 <html:submit styleClass="inputbutton">
-<bean:message key="button.save"/>
+<bean:message bundle="MANAGER_RESOURCES" key="button.save"/>
 </html:submit>
 <html:reset  styleClass="inputbutton">
-<bean:message key="label.clear"/>
+<bean:message bundle="MANAGER_RESOURCES" key="label.clear"/>
 </html:reset>				
 </html:form>

@@ -2,12 +2,12 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<h2><bean:message key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
 <span class="error"><html:errors/></span>
 <bean:write name="executionPeriodName"/>
 <p>
-	<html:link action="/createSites" paramId="executionPeriodID" paramName="executionPeriodId">
-		<bean:message key="link.create.sites.for.execution.period"/>
+	<html:link module="/manager" module="/manager" action="/createSites" paramId="executionPeriodID" paramName="executionPeriodId">
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="link.create.sites.for.execution.period"/>
 	</html:link>
 </p>
 <html:form action="/editExecutionCourseChooseExDegree">
@@ -16,12 +16,12 @@
 	<html:hidden property="page" value="2" />
 	
 	<p class="infoop">
-		<bean:message key="message.manager.executionCourseManagement.chooseLinked"/>
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.chooseLinked"/>
 	</p>
 	<table>
 		<tr>
 			<td style="text-align:right">
-				<bean:message key="label.manager.degree"/>
+				<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.degree"/>
 				:
 			</td>
 			<td>
@@ -33,7 +33,7 @@
 		</tr>
 		<tr>
 			<td style="text-align:right">
-				<bean:message key="label.manager.executionCourseManagement.curricularYear"/>
+				<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.curricularYear"/>
 				:
 			</td>
 			<td>
@@ -44,14 +44,14 @@
 		</tr>
 	</table>
 	<p class="infoop">
-		<bean:message key="message.manager.executionCourseManagement.chooseNotLinked" />
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.chooseNotLinked" />
 	</p>
 	<p>
 		<html:checkbox property="executionCoursesNotLinked" value="true"/>
-		<bean:message key="label.manager.executionCourseManagement.executionCoursesNotLinked" />
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.executionCoursesNotLinked" />
 	</p>
 	<br />
 	<html:submit styleClass="inputbutton">
-		<bean:message key="button.manager.executionCourseManagement.continue"/>
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="button.manager.executionCourseManagement.continue"/>
 	</html:submit>
 </html:form>

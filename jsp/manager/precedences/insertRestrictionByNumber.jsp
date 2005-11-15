@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<h3><bean:message key="label.manager.precedences.management"/>&nbsp;-&nbsp;<bean:message key="label.manager.insert.simple.precedence"/>&nbsp;-&nbsp;<bean:message key="label.manager.insert.restriction.restrictionByNumberOfDoneCurricularCourses"/></h3>
+<h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.precedences.management"/>&nbsp;-&nbsp;<bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.simple.precedence"/>&nbsp;-&nbsp;<bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.restriction.restrictionByNumberOfDoneCurricularCourses"/></h3>
 
 <span class="error"><html:errors/></span>
 <br />
@@ -18,11 +18,11 @@
 	<html:hidden property="degreeId" value="<%= request.getAttribute("degreeId").toString() %>" />
 	<html:hidden property="degreeCurricularPlanId" value="<%= request.getAttribute("degreeCurricularPlanId").toString() %>" />
 			
-	<b><bean:message key="label.manager.numberOfDoneCurricularCourses" />:</b>&nbsp;<html:text property="number" />	
+	<b><bean:message bundle="MANAGER_RESOURCES" key="label.manager.numberOfDoneCurricularCourses" />:</b>&nbsp;<html:text property="number" />	
 	<p />
 	<table>
 		<tr>
-			<th colspan="2" align="center"><bean:message key="label.manager.curricularCourseToAddPrecedence" /></th>
+			<th colspan="2" align="center"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourseToAddPrecedence" /></th>
 		</tr>
 		<tr>
 			<td colspan="4">&nbsp;</td>
@@ -36,6 +36,6 @@
 	</table>	
 	<p />
 	<html:submit styleClass="inputbutton">
-		<bean:message key="button.continue"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="button.continue"/>
 	</html:submit>
 </html:form>

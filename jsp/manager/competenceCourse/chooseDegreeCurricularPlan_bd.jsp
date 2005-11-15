@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
-<h2><bean:message key="label.manager.create.competence.course" /></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.create.competence.course" /></h2>
 
 <br>
 
@@ -23,9 +23,9 @@
 	<br>
 	
 	<html:submit styleClass="inputbutton">
-		<bean:message key="button.choose"/>
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="button.choose"/>
 	</html:submit>
 	<html:reset  styleClass="inputbutton">
-		<bean:message key="label.clear"/>
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.clear"/>
 	</html:reset>
 </html:form>	

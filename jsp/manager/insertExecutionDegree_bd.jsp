@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<h2><bean:message key="label.manager.insert.executionDegree" /></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.executionDegree" /></h2>
 
 <br>
 
@@ -18,7 +18,7 @@
 	<table>
 		<tr>
 			<td>
-				<bean:message key="label.manager.executionDegree.executionYear"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.executionYear"/>
 			</td>
 			<td>
 				<html:select property="executionYearId">
@@ -28,7 +28,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="label.manager.executionDegree.campus"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.campus"/>
 			</td>
 			<td>
 				<html:select property="campusId">
@@ -39,7 +39,7 @@
 		
 		<tr>
 			<td>
-				<bean:message key="label.manager.executionDegree.temporaryExamMap"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.temporaryExamMap"/>
 			</td>
 			<td>
 				<html:checkbox property="tempExamMap" value="true"/>
@@ -89,14 +89,14 @@
 		<tr>
 			<td colspan=4>
 				<html:submit styleClass="inputbutton" onclick="this.form.method.value='addLine';this.form.page.value=1;this.form.periodToEdit.value='lessonsFirst';">
-					<bean:message key="button.add"/>
+					<bean:message bundle="MANAGER_RESOURCES" key="button.add"/>
 				</html:submit>
 				<bean:define id="size">
 					<%= ((String[])((org.apache.struts.validator.DynaValidatorForm) pageContext.findAttribute("executionDegreeForm")).get("lessonsFirstStartDay")).length %>
 				</bean:define>
 				<logic:notEqual name="size" value="1">
 					<html:submit styleClass="inputbutton" onclick="this.form.method.value='removeLine';this.form.page.value=1;this.form.periodToEdit.value='lessonsFirst';">
-						<bean:message key="button.remove"/>
+						<bean:message bundle="MANAGER_RESOURCES" key="button.remove"/>
 					</html:submit>
 				</logic:notEqual>
 			</td>
@@ -140,14 +140,14 @@
 		<tr>
 			<td colspan=4>
 				<html:submit styleClass="inputbutton" onclick="this.form.method.value='addLine';this.form.periodToEdit.value='examsFirst';this.form.page.value=1;">
-					<bean:message key="button.add"/>
+					<bean:message bundle="MANAGER_RESOURCES" key="button.add"/>
 				</html:submit>
 				<bean:define id="size">
 					<%= ((String[])((org.apache.struts.validator.DynaValidatorForm) pageContext.findAttribute("executionDegreeForm")).get("examsFirstStartDay")).length %>
 				</bean:define>
 				<logic:notEqual name="size" value="1">
 					<html:submit styleClass="inputbutton" onclick="this.form.method.value='removeLine';this.form.page.value=1;this.form.periodToEdit.value='examsFirst';">
-						<bean:message key="button.remove"/>
+						<bean:message bundle="MANAGER_RESOURCES" key="button.remove"/>
 					</html:submit>
 				</logic:notEqual>
 			</td>
@@ -192,14 +192,14 @@
 		<tr>
 			<td colspan=4>
 				<html:submit styleClass="inputbutton" onclick="this.form.method.value='addLine';this.form.page.value=1;this.form.periodToEdit.value='lessonsSecond';">
-					<bean:message key="button.add"/>
+					<bean:message bundle="MANAGER_RESOURCES" key="button.add"/>
 				</html:submit>
 				<bean:define id="size">
 					<%= ((String[])((org.apache.struts.validator.DynaValidatorForm) pageContext.findAttribute("executionDegreeForm")).get("lessonsSecondStartDay")).length %>
 				</bean:define>
 				<logic:notEqual name="size" value="1">
 					<html:submit styleClass="inputbutton" onclick="this.form.method.value='removeLine';this.form.page.value=1;this.form.periodToEdit.value='lessonsSecond';">
-						<bean:message key="button.remove"/>
+						<bean:message bundle="MANAGER_RESOURCES" key="button.remove"/>
 					</html:submit>
 				</logic:notEqual>
 			</td>
@@ -243,14 +243,14 @@
 		<tr>
 			<td colspan=4>
 				<html:submit styleClass="inputbutton" onclick="this.form.method.value='addLine';this.form.page.value=1;this.form.periodToEdit.value='examsSecond';">
-					<bean:message key="button.add"/>
+					<bean:message bundle="MANAGER_RESOURCES" key="button.add"/>
 				</html:submit>
 				<bean:define id="size">
 					<%= ((String[])((org.apache.struts.validator.DynaValidatorForm) pageContext.findAttribute("executionDegreeForm")).get("examsSecondStartDay")).length %>
 				</bean:define>
 				<logic:notEqual name="size" value="1">
 					<html:submit styleClass="inputbutton" onclick="this.form.method.value='removeLine';this.form.page.value=1;this.form.periodToEdit.value='examsSecond';">
-						<bean:message key="button.remove"/>
+						<bean:message bundle="MANAGER_RESOURCES" key="button.remove"/>
 					</html:submit>
 				</logic:notEqual>
 			</td>
@@ -260,10 +260,10 @@
 </table>
 <br/>
 	<html:submit styleClass="inputbutton" onclick="this.form.method.value='insert';this.form.page.value=2;">
-		<bean:message key="button.save"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="button.save"/>
 	</html:submit>
 	<html:reset  styleClass="inputbutton">
-		<bean:message key="label.clear"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="label.clear"/>
 	</html:reset>
 </html:form>
 <br/>

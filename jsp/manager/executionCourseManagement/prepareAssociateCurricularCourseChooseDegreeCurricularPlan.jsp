@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<h2><bean:message key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
 
 <span class="error"><html:errors/></span>
 
@@ -23,14 +23,14 @@
 	<html:hidden property="curYear"/>				
 	<html:hidden property="executionCoursesNotLinked"/>
 	
-	<b><bean:message key="link.manager.executionCourseManagement.associate"/></b>
+	<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="link.manager.executionCourseManagement.associate"/></b>
 	<p class="infoop">
-		<bean:message key="message.manager.executionCourseManagement.chooseDegree"/>
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.chooseDegree"/>
 	</p>
 	<table>
 		<tr>
 			<td style="text-align:right">
-				<bean:message key="property.context.degree"/>:
+				<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="property.context.degree"/>:
 			</td>
 			<td>
 				<html:select property="degreeCurricularPlan" size="1">
@@ -42,6 +42,6 @@
 	</table>
 	<br />
 	<html:submit styleClass="inputbutton">
-		<bean:message key="button.manager.executionCourseManagement.continue"/>
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="button.manager.executionCourseManagement.continue"/>
 	</html:submit>
 </html:form>

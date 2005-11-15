@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<h2><bean:message key="message.editDegree" /></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" key="message.editDegree" /></h2>
 <br>
 
 <span class="error"><html:errors/></span>
@@ -14,7 +14,7 @@
 	
 <tr>
 	<td>
-		<bean:message key="message.degreeName"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="message.degreeName"/>
 	</td>
 	<td>
 		<html:text size="60" property="name" />
@@ -23,7 +23,7 @@
 </tr>
 <tr>
 	<td>
-		<bean:message key="message.degreeNameEn"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="message.degreeNameEn"/>
 	</td>
 	<td>
 		<html:text size="60" property="nameEn" />
@@ -31,7 +31,7 @@
 </tr>
 <tr>
 	<td>
-		<bean:message key="message.degreeCode"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="message.degreeCode"/>
 	</td>
 	<td>
 		<html:text size="13" property="code"  />
@@ -40,7 +40,7 @@
 				
 <tr>
 	<td>
-		<bean:message key="message.manager.degreeType"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="message.manager.degreeType"/>
 	</td>
 	<td>
 		
@@ -60,10 +60,10 @@
 
 <br>
 <html:submit styleClass="inputbutton">
-<bean:message key="button.save"/>
+<bean:message bundle="MANAGER_RESOURCES" key="button.save"/>
 </html:submit>
 <html:reset  styleClass="inputbutton">
-<bean:message key="label.clear"/>
+<bean:message bundle="MANAGER_RESOURCES" key="label.clear"/>
 </html:reset>			
 
 

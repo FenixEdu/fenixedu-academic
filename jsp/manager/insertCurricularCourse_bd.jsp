@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
-<h2><bean:message key="label.manager.insert.curricularCourse" /></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.curricularCourse" /></h2>
 
 <br>
 
@@ -16,7 +16,7 @@
 	<table>
 		<tr>
 			<td>
-				<bean:message key="message.manager.degree.curricular.plan.name"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.degree.curricular.plan.name"/>
 			</td>
 			<td>
 				<html:text size="60" property="name" />
@@ -24,7 +24,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.degree.curricular.plan.nameEn"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.degree.curricular.plan.nameEn"/>
 			</td>
 			<td>
 				<html:text size="60" property="nameEn" />
@@ -32,7 +32,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="label.manager.curricularCourse.code"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourse.code"/>
 			</td>
 			<td>
 				<html:text size="12" property="code" />
@@ -40,7 +40,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.curricular.course.acronym"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.acronym"/>
 			</td>
 			<td>
 				<html:text size="12" property="acronym" />
@@ -48,7 +48,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.type"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.type"/>
 			</td>
 			<td>
 				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType" bundle="ENUMERATION_RESOURCES"/>
@@ -59,7 +59,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.mandatory"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.mandatory"/>
 			</td>
 			<td>
 				<html:checkbox property="mandatory" value ="true"/>
@@ -67,7 +67,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.basic"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.basic"/>
 			</td>
 			<td>
 				<html:checkbox property="basic" value ="true"/>
@@ -75,7 +75,7 @@
 		</tr>		
 		<tr>
 			<td>
-				<bean:message key="message.manager.theoreticalHours"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.theoreticalHours"/>
 			</td>
 			<td>
 				<html:text size="5" property="theoreticalHours" />
@@ -83,7 +83,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.praticalHours"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.praticalHours"/>
 			</td>
 			<td>
 				<html:text size="5" property="praticalHours" />
@@ -91,7 +91,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.theoPratHours"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.theoPratHours"/>
 			</td>
 			<td>
 				<html:text size="5" property="theoPratHours" />
@@ -99,7 +99,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.labHours"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.labHours"/>
 			</td>
 			<td>
 				<html:text size="5" property="labHours" />
@@ -107,7 +107,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.curricular.course.maxIncrementNac"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.maxIncrementNac"/>
 			</td>
 			<td>
 				<html:text size="5" property="maxIncrementNac" />
@@ -115,7 +115,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.curricular.course.minIncrementNac"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.minIncrementNac"/>
 			</td>
 			<td>
 				<html:text size="5" property="minIncrementNac" />
@@ -123,7 +123,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.curricular.course.credits" />
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.credits" />
 			</td>
 			<td>
 				<html:text size="5" property="credits" />
@@ -131,7 +131,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.curricular.course.ectsCredits"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.ectsCredits"/>
 			</td>
 			<td>
 				<html:text size="5" property="ectsCredits" />
@@ -139,7 +139,7 @@
 		</tr>			
 		<tr>
 			<td>
-				<bean:message key="message.manager.curricular.course.weight"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.weight"/>
 			</td>
 			<td>
 				<html:text size="5" property="weight" />
@@ -148,7 +148,7 @@
 
 		<tr>
 			<td>
-				<bean:message key="message.manager.curricular.course.enrollmentWeigth"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.enrollmentWeigth"/>
 			</td>
 			<td>
 				<html:text size="5" property="enrollmentWeigth"/>
@@ -156,7 +156,7 @@
 		</tr>			
 		<tr>
 			<td>
-				<bean:message key="message.manager.curricular.course.mandatoryEnrollment"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.mandatoryEnrollment"/>
 			</td>
 			<td>
 				<html:checkbox property="mandatoryEnrollment" value ="true"/>
@@ -164,7 +164,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.curricular.course.enrollmentAllowed"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.enrollmentAllowed"/>
 			</td>
 			<td>
 				<html:checkbox property="enrollmentAllowed" value ="true"/>
@@ -175,9 +175,9 @@
 	<br>
 	
 	<html:submit styleClass="inputbutton">
-		<bean:message key="button.save"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="button.save"/>
 	</html:submit>
 	<html:reset  styleClass="inputbutton">
-		<bean:message key="label.clear"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="label.clear"/>
 	</html:reset>
 </html:form>

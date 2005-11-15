@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<h2><bean:message key="message.editCurriculum.english" /></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" key="message.editCurriculum.english" /></h2>
 
 <table>
 	<tr>
@@ -11,7 +11,7 @@
 			<img alt="" src="<%= request.getContextPath() %>/images/portugal-flag.gif" width="30" height="20"/>
 		</td>
 		<td>
-			<html:link page="<%="/editCurriculum.do?method=prepareEdit&amp;degreeId=" + request.getParameter("degreeId").toString() + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId").toString() + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId").toString() %>"><bean:message key="label.manager.edit.curriculum.portuguese"/></html:link>
+			<html:link module="/manager" page="<%="/editCurriculum.do?method=prepareEdit&amp;degreeId=" + request.getParameter("degreeId").toString() + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId").toString() + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId").toString() %>"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.edit.curriculum.portuguese"/></html:link>
 		</td>
 	</tr>
 </table>
@@ -26,37 +26,37 @@
 	
 	<table>
 		<tr>
-			<b><bean:message key="message.generalObjectivesEn"/></b>
+			<b><bean:message bundle="MANAGER_RESOURCES" key="message.generalObjectivesEn"/></b>
 		</tr>
 		<tr>
 			<html:textarea property="generalObjectivesEn" rows="8" cols="60"/>
 		</tr>
 		<br>
 		<tr>
-			<b><bean:message key="message.operacionalObjectivesEn"/></b>
+			<b><bean:message bundle="MANAGER_RESOURCES" key="message.operacionalObjectivesEn"/></b>
 		</tr>
 		<tr>
 			<html:textarea property="operacionalObjectivesEn" rows="8" cols="60"/>
 		</tr>
 		<br>
 		<tr>
-			<b><bean:message key="message.programEn"/></b>
+			<b><bean:message bundle="MANAGER_RESOURCES" key="message.programEn"/></b>
 		</tr>
 		<tr>
 			<html:textarea property="programEn" rows="8" cols="60"/>
 		</tr>
 <%--		<br>
 		<tr>
-			<b><bean:message key="message.evaluationElementsEn"/></b>
+			<b><bean:message bundle="MANAGER_RESOURCES" key="message.evaluationElementsEn"/></b>
 		</tr>
 		<tr>
 			<html:textarea property="evaluationElementsEn" rows="3" cols="60"/>
 		</tr>	--%>
 	</table>
 	<html:submit styleClass="inputbutton">
-		<bean:message key="button.save.english"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="button.save.english"/>
 	</html:submit>
 	<html:reset  styleClass="inputbutton">
-		<bean:message key="label.clear.english"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="label.clear.english"/>
 	</html:reset>			
 </html:form>

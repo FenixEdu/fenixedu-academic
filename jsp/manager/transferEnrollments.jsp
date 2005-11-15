@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
-<h2><bean:message key="link.manager.studentsManagement"/> - <bean:message key="link.manager.studentsManagement.subtitle.transferEnrollments"/></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" key="link.manager.studentsManagement"/> - <bean:message bundle="MANAGER_RESOURCES" key="link.manager.studentsManagement.subtitle.transferEnrollments"/></h2>
 <br />
 
 <jsp:include page="studentCurricularPlanHeader.jsp"/>
@@ -38,7 +38,7 @@
 			<table>
 				<tr>
 					<td colspan="2" rowspan="3" class="listClasses-header">
-						<bean:message key="label.studentCurricularPlan"/>
+						<bean:message bundle="MANAGER_RESOURCES" key="label.studentCurricularPlan"/>
 					</td>
 					<td colspan="4" class="listClasses">
 						<bean:define id="studentCurricularPlanStateString" type="java.lang.String" name="infoStudentCurricularPlan" property="currentState.name"/>
@@ -83,22 +83,22 @@
 				</tr>
 					<tr>
 						<td class="listClasses-header">
-							<bean:message key="label.executionYear"/>
+							<bean:message bundle="MANAGER_RESOURCES" key="label.executionYear"/>
 						</td>
 						<td class="listClasses-header">
-							<bean:message key="label.manager.semester"/>
+							<bean:message bundle="MANAGER_RESOURCES" key="label.manager.semester"/>
 						</td>
 						<td class="listClasses-header">
-							<bean:message key="label.manager.degree"/>
+							<bean:message bundle="MANAGER_RESOURCES" key="label.manager.degree"/>
 						</td>
 						<td class="listClasses-header">
-							<bean:message key="label.course.code"/>
+							<bean:message bundle="MANAGER_RESOURCES" key="label.course.code"/>
 						</td>
 						<td class="listClasses-header">
-							<bean:message key="label.course.name"/>
+							<bean:message bundle="MANAGER_RESOURCES" key="label.course.name"/>
 						</td>
 						<td class="listClasses-header">
-							<bean:message key="label.grade"/>
+							<bean:message bundle="MANAGER_RESOURCES" key="label.grade"/>
 						</td>
 					</tr>
 
@@ -158,7 +158,7 @@
 			<table>
 				<tr>
 					<td rowspan="3" class="listClasses-header">
-						<bean:message key="label.studentCurricularPlan"/>
+						<bean:message bundle="MANAGER_RESOURCES" key="label.studentCurricularPlan"/>
 					</td>
 					<td class="listClasses">
 						<bean:define id="studentCurricularPlanStateString" type="java.lang.String" name="infoStudentCurricularPlan" property="currentState.name"/>

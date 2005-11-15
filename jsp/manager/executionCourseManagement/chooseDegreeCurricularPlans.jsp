@@ -8,7 +8,7 @@
 	<table>
 		<tr>
 			<th colspan="2">
-				<bean:message key="label.manager.executionCourseManagement.executionPeriod" />: 
+				<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.executionPeriod" />: 
 				<html:select property="executionPeriodID" size="1">
 					<html:options collection="executionPeriods" property="idInternal" labelProperty="description"/>
 				</html:select>
@@ -19,7 +19,7 @@
 		
 		<tr>
 			<th colspan="2">
-				<bean:message key="label.manager.degreeCurricularPlans" />: 
+				<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.degreeCurricularPlans" />: 
 			</th>
 		</tr>
 		<logic:iterate id="degreeCurricularPlan" name="degreeCurricularPlans" >
@@ -41,7 +41,7 @@
 		<tr>
 			<td>
 				<html:submit>
-					<bean:message key="label.create"/>
+					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.create"/>
 				</html:submit>
 			</td>
 		</tr>

@@ -52,33 +52,33 @@
             <td width="60%">&nbsp;</td>
           </tr>
           <tr>
-            <td> <bean:message key="label.masterDegree.administrativeOffice.requesterName"/> </td>
+            <td> <bean:message bundle="MANAGER_RESOURCES" key="label.masterDegree.administrativeOffice.requesterName"/> </td>
             <td> <bean:write name="infoPerson" property="nome"/> </td>
           </tr>
           <tr>
-            <td> <bean:message key="label.candidate.identificationDocumentNumber"/> </td>
+            <td> <bean:message bundle="MANAGER_RESOURCES" key="label.candidate.identificationDocumentNumber"/> </td>
             <td> <bean:write name="infoPerson" property="numeroDocumentoIdentificacao"/> </td>
           </tr>
           <tr>
-            <td> <bean:message key="label.candidate.identificationDocumentType"/> </td>
+            <td> <bean:message bundle="MANAGER_RESOURCES" key="label.candidate.identificationDocumentType"/> </td>
             <td>
             	<bean:define id="idType" name="infoPerson" property="tipoDocumentoIdentificacao"/> 
-            	<bean:message bundle="ENUMERATION_RESOURCES" key='<%=idType.toString()%>'/> 
+            	<bean:message bundle="MANAGER_RESOURCES" bundle="ENUMERATION_RESOURCES" key='<%=idType.toString()%>'/> 
             </td>
           </tr>
           <tr>
-            <td> <bean:message key="label.candidate.username"/> </td>
+            <td> <bean:message bundle="MANAGER_RESOURCES" key="label.candidate.username"/> </td>
             <td> <bean:write name="infoPerson" property="username"/> </td>
           </tr>
           
 	      <tr>
-	        <td> <bean:message key="label.candidate.password"/> </td>
+	        <td> <bean:message bundle="MANAGER_RESOURCES" key="label.candidate.password"/> </td>
 	        <td> <font face="Verdana"><bean:write name="password" /> </font></td>
 	      </tr>
           
           <tr>
-            <td> <bean:message key="label.candidate.accessAddress"/> </td>
-            <td> <bean:message key="label.candidate.url"/> </td>
+            <td> <bean:message bundle="MANAGER_RESOURCES" key="label.candidate.accessAddress"/> </td>
+            <td> <bean:message bundle="MANAGER_RESOURCES" key="label.candidate.url"/> </td>
           </tr>
 
           <tr>

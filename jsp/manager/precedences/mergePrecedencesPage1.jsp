@@ -4,14 +4,14 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.precedences.InfoRestriction" %>
 
-<h3><bean:message key="label.manager.precedences.management"/></h3>
+<h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.precedences.management"/></h3>
 
 <span class="error"><html:errors/></span>
 
 <logic:present name="precedences" scope="request">
 <logic:notEmpty name="precedences" scope="request">
 
-<h4><bean:message key="label.manager.precedences.conjunction.selectFirstPrecedence"/></h4>
+<h4><bean:message bundle="MANAGER_RESOURCES" key="label.manager.precedences.conjunction.selectFirstPrecedence"/></h4>
 
 <html:form action="/makePrecedenceConjunction.do">
 
@@ -27,9 +27,9 @@
 		<table border="0">
 			<tr>
 				<td class="listClasses-header" colspan="2">
-					<bean:message key="message.manager.this.course"/>
+					<bean:message bundle="MANAGER_RESOURCES" key="message.manager.this.course"/>
 						<bean:write name="infoCurricularCourse" property="name"/>
-					<bean:message key="message.manager.has.precedence"/>
+					<bean:message bundle="MANAGER_RESOURCES" key="message.manager.has.precedence"/>
 				</td>
 			</tr>
 			<bean:size id="infoPrecedencesSize" name="infoPrecedences"/>
@@ -41,9 +41,9 @@
 							<logic:iterate id="restriction" name="precedence" property="infoRestrictions" indexId="restrictionsLength">
 								<tr>
 									<td class="listClasses">
-										<bean:message name="restriction" property="restrictionKindResourceKey" arg0="<%= ((InfoRestriction) restriction).getArg() %>"/>
+										<bean:message bundle="MANAGER_RESOURCES" name="restriction" property="restrictionKindResourceKey" arg0="<%= ((InfoRestriction) restriction).getArg() %>"/>
 										<% if ((restrictionsLength.intValue() + 1 ) < infoRestrictionsSize.intValue()) { %>
-											<bean:message key="message.manager.and"/>
+											<bean:message bundle="MANAGER_RESOURCES" key="message.manager.and"/>
 										<% } %>
 									</td>
 								</tr>
@@ -57,7 +57,7 @@
 				</tr>
 				<% if ((precedencesLength.intValue() + 1 ) < infoPrecedencesSize.intValue()) { %>
 					<tr>
-						<td class="listClasses-header" colspan="2"><bean:message key="message.manager.or"/></td>
+						<td class="listClasses-header" colspan="2"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.or"/></td>
 					</tr>
 				<% } %>
 			</logic:iterate>

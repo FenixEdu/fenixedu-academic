@@ -5,69 +5,69 @@
 </center>
 
 <p><strong>&raquo; 
-		<html:link page="/readDegrees.do">
-			<bean:message key="label.manager.readDegrees" />
+		<html:link module="/manager" page="/readDegrees.do">
+			<bean:message bundle="MANAGER_RESOURCES" key="label.manager.readDegrees" />
 		</html:link>
 </strong></p>
 
 <p><strong>&nbsp; &raquo;
-		<html:link page="<%= "/readDegree.do?degreeId=" + request.getAttribute("degreeId")%>">
-			<bean:message key="label.manager.backReadDegree" />
+		<html:link module="/manager" page="<%= "/readDegree.do?degreeId=" + request.getAttribute("degreeId")%>">
+			<bean:message bundle="MANAGER_RESOURCES" key="label.manager.backReadDegree" />
 		</html:link>
 </strong></p>
 
 <p><strong>&nbsp; &nbsp; &raquo;
-		<html:link page="<%= "/readDegreeCurricularPlan.do?degreeId=" + request.getAttribute("degreeId") + "&degreeCurricularPlanId=" + request.getAttribute("degreeCurricularPlanId")%>">
-		<bean:message key="label.manager.backReadDegreeCurricularPlan" />
+		<html:link module="/manager" page="<%= "/readDegreeCurricularPlan.do?degreeId=" + request.getAttribute("degreeId") + "&degreeCurricularPlanId=" + request.getAttribute("degreeCurricularPlanId")%>">
+		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.backReadDegreeCurricularPlan" />
 		</html:link>
 </strong></p>
 
 <p><strong>&raquo; 
-	<html:link page="/manageExecutionPeriods.do?method=prepare">
+	<html:link module="/manager" page="/manageExecutionPeriods.do?method=prepare">
 		Gest&atilde;o de Periodos Execução
 	</html:link>
 </strong></p>
 
 <p><strong>&raquo; 
-	<html:link page="/executionCourseManagement.do?method=firstPage">
-		<bean:message key="label.manager.executionCourseManagement" />
+	<html:link module="/manager" page="/executionCourseManagement.do?method=firstPage">
+		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement" />
 	</html:link>
 </strong></p>
 
 <p><strong>&raquo; 
-	<html:link page="/teachersManagement.do?method=firstPage">
-		<bean:message key="link.manager.teachersManagement" />
+	<html:link module="/manager" page="/teachersManagement.do?method=firstPage">
+		<bean:message bundle="MANAGER_RESOURCES" key="link.manager.teachersManagement" />
 	</html:link>
 </strong></p>
 
 <%--
 <p><strong>&raquo; 
-	<html:link page="/readExecutionPeriods.do">
-		<bean:message key="label.manager.insert.executionCourse" />
+	<html:link module="/manager" page="/readExecutionPeriods.do">
+		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.executionCourse" />
 	</html:link>
 </strong></p>
 
 <p><strong>&raquo; 
-	<html:link page="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod">
+	<html:link module="/manager" page="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod">
 		Juntar Disciplinas Execução
 	</html:link>
 </strong></p>
 --%>
 
 <p><strong>&raquo;
-	<html:link page="/findPerson.do?method=prepareFindPerson&page=0">
-		<bean:message key="label.manager.personManagement" />
+	<html:link module="/manager" page="/findPerson.do?method=prepareFindPerson&page=0">
+		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.personManagement" />
 	</html:link>
 </strong></p>
 
 <p><strong>&raquo; 
-	<html:link page="/manageCache.do?method=prepare">
+	<html:link module="/manager" page="/manageCache.do?method=prepare">
 		Gest&atilde;o da Cache
 	</html:link>
 </strong></p>
 
 <p><strong>&raquo; 
-	<html:link page="/manageAdvisories.do?method=prepare">
+	<html:link module="/manager" page="/manageAdvisories.do?method=prepare">
 		Gest&atilde;o da Avisos
 	</html:link>
 </strong></p>

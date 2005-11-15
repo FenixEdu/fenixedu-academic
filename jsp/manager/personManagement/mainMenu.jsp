@@ -5,33 +5,33 @@
 </center>
 
 <p><strong>&raquo; 
-	<html:link page="/teachersManagement.do?method=mainPage">
-		<bean:message key="label.manager.mainPage" />
+	<html:link module="/manager" page="/teachersManagement.do?method=mainPage">
+		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.mainPage" />
 	</html:link>
 </strong></p>
 
-<h2><bean:message key="label.manager.personManagement"/></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.personManagement"/></h2>
 
 <p><strong>&raquo; 
-	<html:link page="/findPerson.do?method=prepareFindPerson">
-		<bean:message key="label.manager.findPerson" />
+	<html:link module="/manager" page="/findPerson.do?method=prepareFindPerson">
+		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.findPerson" />
 	</html:link>
 </strong></p>
 
 <p><strong>&raquo;
-	<html:link page="/manageRoles.do?method=prepare">
+	<html:link module="/manager" page="/manageRoles.do?method=prepare">
 		Gest&atilde;o de Privilégios
 	</html:link>
 </strong></p>
 
 <p><strong>&raquo;
-	<html:link page="/generateNewPassword.do?method=prepare&page=0">
-		<bean:message key="link.operator.newPassword" />
+	<html:link module="/manager" page="/generateNewPassword.do?method=prepare&page=0">
+		<bean:message bundle="MANAGER_RESOURCES" key="link.operator.newPassword" />
 	</html:link>
 </strong></p>
 
 <p><strong>&raquo;
-	<html:link page="/generateNewStudentsPasswords.do?method=prepareGeneratePasswords&page=0">
-		<bean:message key="link.newPasswordForStudentRegistration" />
+	<html:link module="/manager" page="/generateNewStudentsPasswords.do?method=prepareGeneratePasswords&page=0">
+		<bean:message bundle="MANAGER_RESOURCES" key="link.newPasswordForStudentRegistration" />
 	</html:link>
 </strong></p>

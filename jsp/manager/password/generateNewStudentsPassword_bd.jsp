@@ -10,12 +10,12 @@
 <html:form action="/generateNewStudentsPasswords.do?method=generatePasswords" target="_blank">
 	<html:hidden property="page" value="1" />
 
-	<h3><bean:message key="label.newPasswordForStudentRegistration" /></h3>
+	<h3><bean:message bundle="MANAGER_RESOURCES" key="label.newPasswordForStudentRegistration" /></h3>
 
 	<table>
 		<tr>
 			<td colspan="2" class="infoop">
-				<bean:message key="label.studentRange"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="label.studentRange"/>
 			</td>		
 		</tr>	
 		<tr>
@@ -23,7 +23,7 @@
 		</tr>
 		<tr>
 			<td>
-				<b><bean:message key="label.fromNumber" /></b>
+				<b><bean:message bundle="MANAGER_RESOURCES" key="label.fromNumber" /></b>
 			</td>
 			<td>
 				<html:text property="fromNumber" />
@@ -31,7 +31,7 @@
 		</tr>
 		<tr>
 			<td>
-				<b><bean:message key="label.toNumber" /></b>
+				<b><bean:message bundle="MANAGER_RESOURCES" key="label.toNumber" /></b>
 			</td>
 			<td>
 				<html:text property="toNumber" />

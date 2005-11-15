@@ -9,7 +9,7 @@
 	<tr>
 		<logic:present name="infoDegreeCurricularPlan">
 			<td>
-				<h3><bean:message key="label.manager.degreeCurricularPlan.administrating"/></h3>
+				<h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.degreeCurricularPlan.administrating"/></h3>
 			</td>
 			<td>
 				<h2><b><bean:write name="infoDegreeCurricularPlan" property="name"/></b></h2>
@@ -19,20 +19,20 @@
 </table>
 <bean:define id="degreeCurricularPlanId" name="infoDegreeCurricularPlan" property="idInternal"/>
 <ul style="list-style-type: square;">
-	<li><html:link page="<%="/editDegreeCurricularPlan.do?method=prepareEdit&degreeId="  + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message key="label.manager.edit.degreeCurricularPlan"/></html:link></li>
-	<li><html:link page="<%="/insertCurricularCourse.do?method=prepareInsert&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message key="label.manager.insert.curricularCourse"/></html:link></li>
-	<li><html:link page="<%="/insertExecutionDegree.do?method=prepareInsert&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message key="label.manager.insert.executionDegree"/></html:link></li>
-	<li><html:link page="<%="/manageBranches.do?method=showBranches&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message key="label.manager.branches.management"/></html:link></li>
-	<li><html:link page="<%="/managePrecedences.do?method=showMenu&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message key="label.manager.precedences.management"/></html:link></li>
-	<li><html:link page="<%="/manageCurricularCourseGroups.do?method=viewCurricularCourseGroups&degreeId=" + request.getParameter("degreeId")%>" paramId="degreeCurricularPlanId" paramName="degreeCurricularPlanId"><bean:message key="label.manager.curricularCourseGroups.management"/></html:link></li>
+	<li><html:link module="/manager" page="<%="/editDegreeCurricularPlan.do?method=prepareEdit&degreeId="  + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.edit.degreeCurricularPlan"/></html:link></li>
+	<li><html:link module="/manager" page="<%="/insertCurricularCourse.do?method=prepareInsert&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.curricularCourse"/></html:link></li>
+	<li><html:link module="/manager" page="<%="/insertExecutionDegree.do?method=prepareInsert&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.executionDegree"/></html:link></li>
+	<li><html:link module="/manager" page="<%="/manageBranches.do?method=showBranches&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.branches.management"/></html:link></li>
+	<li><html:link module="/manager" page="<%="/managePrecedences.do?method=showMenu&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.precedences.management"/></html:link></li>
+	<li><html:link module="/manager" page="<%="/manageCurricularCourseGroups.do?method=viewCurricularCourseGroups&degreeId=" + request.getParameter("degreeId")%>" paramId="degreeCurricularPlanId" paramName="degreeCurricularPlanId"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourseGroups.management"/></html:link></li>
 </ul>
 
 <span class="error"><html:errors/></span>
 
-<h3><bean:message key="label.manager.curricularCourses"/></h3>
+<h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourses"/></h3>
 
 <logic:empty name="curricularCoursesList">
-<i><bean:message key="label.manager.curricularCourses.nonExisting"/></i>
+<i><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourses.nonExisting"/></i>
 </logic:empty>
 
 <logic:present name="curricularCoursesList" scope="request">
@@ -41,7 +41,7 @@
 	<html:form action="/deleteCurricularCourses" method="get">
 	
 	 <bean:define id="onclick">
-			return confirm('<bean:message key="message.confirm.delete.curricular.courses"/>')
+			return confirm('<bean:message bundle="MANAGER_RESOURCES" key="message.confirm.delete.curricular.courses"/>')
 	 </bean:define>
 	
 		<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
@@ -50,11 +50,11 @@
 				<tr>
 					<td class="listClasses-header">
 					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.curricularCourse.name" />
+					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourse.name" />
 					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.curricularCourse.code" />
+					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourse.code" />
 					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.curricularCourse.acronym" />
+					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourse.acronym" />
 					</td>
 				</tr>
 				<logic:iterate id="curricularCourse" name="curricularCoursesList">
@@ -64,11 +64,11 @@
 							<bean:write name="curricularCourse" property="idInternal"/>
 						</html:multibox>
 					</td>				
-					<td class="listClasses"><p align="left"><html:link page="<%= "/readCurricularCourse.do?degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>" paramId="curricularCourseId" paramName="curricularCourse" paramProperty="idInternal"><bean:write name="curricularCourse" property="name"/></html:link></p>
+					<td class="listClasses"><p align="left"><html:link module="/manager" page="<%= "/readCurricularCourse.do?degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>" paramId="curricularCourseId" paramName="curricularCourse" paramProperty="idInternal"><bean:write name="curricularCourse" property="name"/></html:link></p>
 					</td>
-					<td class="listClasses"><html:link page="<%= "/readCurricularCourse.do?degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>" paramId="curricularCourseId" paramName="curricularCourse" paramProperty="idInternal"><bean:write name="curricularCourse" property="code"/></html:link>
+					<td class="listClasses"><html:link module="/manager" page="<%= "/readCurricularCourse.do?degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>" paramId="curricularCourseId" paramName="curricularCourse" paramProperty="idInternal"><bean:write name="curricularCourse" property="code"/></html:link>
 					</td>
-					<td class="listClasses"><html:link page="<%= "/readCurricularCourse.do?degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>" paramId="curricularCourseId" paramName="curricularCourse" paramProperty="idInternal"><bean:write name="curricularCourse" property="acronym"/></html:link>
+					<td class="listClasses"><html:link module="/manager" page="<%= "/readCurricularCourse.do?degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>" paramId="curricularCourseId" paramName="curricularCourse" paramProperty="idInternal"><bean:write name="curricularCourse" property="acronym"/></html:link>
 					</td>
 	 			</tr>
 	 			</logic:iterate>			
@@ -76,7 +76,7 @@
 			
 <br>
 
-		<html:submit onclick='<%=onclick.toString() %>'><bean:message key="label.manager.delete.selected.curricularCourses"/></html:submit>
+		<html:submit onclick='<%=onclick.toString() %>'><bean:message bundle="MANAGER_RESOURCES" key="label.manager.delete.selected.curricularCourses"/></html:submit>
 	</html:form> 
 </logic:notEmpty>	 	
 </logic:present>
@@ -84,10 +84,10 @@
 <br>
 
 <br>
-<h3><bean:message key="label.manager.executionDegrees"/></h3>
+<h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegrees"/></h3>
 
 <logic:empty name="executionDegreesList">
-<i><bean:message key="label.manager.executionDegrees.nonExisting"/></i>
+<i><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegrees.nonExisting"/></i>
 </logic:empty>
 
 <logic:present name="executionDegreesList" scope="request">
@@ -96,7 +96,7 @@
 	<html:form action="/deleteExecutionDegrees" method="get">
 	
 	<bean:define id="onclick">
-			return confirm('<bean:message key="message.confirm.delete.execution.degrees"/>')
+			return confirm('<bean:message bundle="MANAGER_RESOURCES" key="message.confirm.delete.execution.degrees"/>')
 		  </bean:define>
 		  
 		<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
@@ -105,11 +105,11 @@
 				<tr>
 					<td class="listClasses-header">
 					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.executionDegree.executionYear" />
+					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.executionYear" />
 					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.executionDegree.coordinator" />
+					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.coordinator" />
 					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.executionDegree.temporaryExamMap" />
+					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.temporaryExamMap" />
 					</td>
 					<td class="listClasses-header">Aulas 1º Semestre
 					</td>
@@ -239,8 +239,8 @@
 						</logic:notPresent>
 					</td>
 					<td class="listClasses">
-						<html:link page="<%= "/editExecutionDegree.do?method=prepareEdit&degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>" paramId="executionDegreeId" paramName="executionDegree" paramProperty="idInternal"><bean:message key="label.edit"/></html:link>
-						/<html:link page="<%= "/manageCoordinators.do?method=view&amp;executionDegreeId=" + pageContext.getAttribute("executionDegreeId")%>" ><bean:message key="label.manager.edit.executionDegree.coordinators"/></html:link>
+						<html:link module="/manager" page="<%= "/editExecutionDegree.do?method=prepareEdit&degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>" paramId="executionDegreeId" paramName="executionDegree" paramProperty="idInternal"><bean:message bundle="MANAGER_RESOURCES" key="label.edit"/></html:link>
+						/<html:link module="/manager" page="<%= "/manageCoordinators.do?method=view&amp;executionDegreeId=" + pageContext.getAttribute("executionDegreeId")%>" ><bean:message bundle="MANAGER_RESOURCES" key="label.manager.edit.executionDegree.coordinators"/></html:link>
 					</td>
 	 			</tr>
 	 			</logic:iterate>						
@@ -248,7 +248,7 @@
 			
 <br>	
 
-		<html:submit onclick='<%=onclick.toString() %>'><bean:message key="label.manager.delete.selected.executionDegrees"/></html:submit>
+		<html:submit onclick='<%=onclick.toString() %>'><bean:message bundle="MANAGER_RESOURCES" key="label.manager.delete.selected.executionDegrees"/></html:submit>
 	</html:form> 
 </logic:notEmpty>	 	
 </logic:present>

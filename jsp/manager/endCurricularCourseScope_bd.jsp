@@ -7,7 +7,7 @@
 	<tr>
 		<logic:present name="infoCurricularCourseScope">
 			<td>
-				<h3><bean:message key="label.manager.curricularCourse.administrating"/></h3>
+				<h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourse.administrating"/></h3>
 			</td>
 			<td>
 				<bean:define id="curricularCourse" name="infoCurricularCourseScope" property="infoCurricularCourse" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse"/>
@@ -16,7 +16,7 @@
 		</logic:present>		
 	</tr>
 </table>			
-<h2><bean:message key="label.manager.end.curricularCourseScope" /></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.end.curricularCourseScope" /></h2>
 <br />
 <span class="error"><html:errors/></span>
 <table>
@@ -30,7 +30,7 @@
 	<html:hidden property="beginDate"/>
 	<table>	
 		<tr>
-			<td><bean:message key="message.manager.curricular.course.scope.beginDate"/></td>
+			<td><bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.scope.beginDate"/></td>
 			<td>
 				<bean:write name="curricularCourseScopeForm" property="beginDate"/>
 		<%--		 
@@ -42,16 +42,16 @@
 			</td>
 		</tr>
 		<tr>
-			<td><bean:message key="message.manager.curricular.course.scope.endDate"/></td>
+			<td><bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.scope.endDate"/></td>
 			<td><html:text size="10" maxlength="10" property="endDate" /></td>
 		</tr>
 	</table>
 	<br />
 	<br />
 	<html:submit styleClass="inputbutton">
-		<bean:message key="button.save"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="button.save"/>
 	</html:submit>
 	<html:reset  styleClass="inputbutton">
-		<bean:message key="label.clear"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="label.clear"/>
 	</html:reset>				
 </html:form>

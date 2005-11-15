@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
-<h2><bean:message key="link.manager.studentsManagement"/> - <bean:message key="link.manager.studentsManagement.subtitle.createStudentCurricularPlan"/></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" key="link.manager.studentsManagement"/> - <bean:message bundle="MANAGER_RESOURCES" key="link.manager.studentsManagement.subtitle.createStudentCurricularPlan"/></h2>
 <br />
 
 <jsp:include page="studentCurricularPlanHeader.jsp"/>

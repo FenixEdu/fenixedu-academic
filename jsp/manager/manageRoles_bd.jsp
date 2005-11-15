@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<h2><bean:message key="title.manage.roles"/></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" key="title.manage.roles"/></h2>
 <br />
 <span class="error"><html:errors/></span>
 
@@ -13,14 +13,14 @@
 	<table>
 		<tr>
 			<td>
-			 	<bean:message key="property.login.username"/>
+			 	<bean:message bundle="MANAGER_RESOURCES" key="property.login.username"/>
 			</td>
 			<td>
 				<html:text property="username" size="25"/>
 			</td>
 			<td>
 				<html:submit styleClass="inputbutton">
-					<bean:message key="label.select"/>
+					<bean:message bundle="MANAGER_RESOURCES" key="label.select"/>
 				</html:submit>
 			</td>
 		</tr>
@@ -44,7 +44,7 @@
 			<td class="listClasses-header">
 			</td>
 			<td class="listClasses-header">
-				<bean:message key="label.roleType"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="label.roleType"/>
 			</td>
 		</tr>
 		<logic:iterate id="role" name="<%= SessionConstants.ROLES %>" scope="request">
@@ -56,17 +56,17 @@
 				</td>
 				<td class="listClasses">
 					<bean:define id="roleName" name="role" property="roleType"/>
-					<bean:message key="<%= pageContext.findAttribute("roleName").toString() %>"/>
+					<bean:message bundle="MANAGER_RESOURCES" key="<%= pageContext.findAttribute("roleName").toString() %>"/>
 				</td>
 			</tr>
 		</logic:iterate>
 	</table>
 	<br />
 	<html:submit styleClass="inputbutton" onclick="this.form.method.value='setPersonRoles';this.form.page.value=2;">
-		<bean:message key="label.setRoles"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="label.setRoles"/>
 	</html:submit>
 	<html:reset styleClass="inputbutton">
-		<bean:message key="label.clear"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="label.clear"/>
 	</html:reset>
 </logic:present>
 

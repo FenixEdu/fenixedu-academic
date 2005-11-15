@@ -13,9 +13,9 @@
 </script>	
 
 		
-<h2><bean:message key="label.manager.competence.course.management"/></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.competence.course.management"/></h2>
 <ul style="list-style-type: square;">
-<li><html:link page="/createEditCompetenceCourse.do?method=prepareCreate"><bean:message key="label.manager.insert.competence.course"/></html:link></li>
+<li><html:link module="/manager" module="/manager" page="/createEditCompetenceCourse.do?method=prepareCreate"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.insert.competence.course"/></html:link></li>
 </ul>
 <br>
 <br>
@@ -26,7 +26,7 @@
 	<table>
 		<tr>
 			<td>
-				<bean:message key="label.manager.department"/>
+				<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.department"/>
 			</td>
 			<td>
 				<html:select property="departmentID" onchange="this.form.method.value='showDepartmentCompetenceCourses';this.form.submit();">
@@ -43,9 +43,9 @@
 				<tr>
 					<td class="listClasses-header">
 					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.code" />
+					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.code" />
 					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.competence.course" />
+					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.competence.course" />
 					</td>
 				</tr>
 					
@@ -58,9 +58,9 @@
 							<bean:write name="competenceCourse" property="idInternal"/>
 						</html:multibox>
 						</td>	
-						<td class="listClasses"><html:link page="/competenceCourseManagement.do?method=showCompetenceCourse" paramId="competenceCourseID" paramName="competenceCourse" paramProperty="idInternal"><bean:write name="competenceCourse" property="code"/></html:link>
+						<td class="listClasses"><html:link module="/manager" module="/manager" page="/competenceCourseManagement.do?method=showCompetenceCourse" paramId="competenceCourseID" paramName="competenceCourse" paramProperty="idInternal"><bean:write name="competenceCourse" property="code"/></html:link>
 						</td>			
-						<td class="listClasses"><p align="left"><html:link page="/competenceCourseManagement.do?method=showCompetenceCourse" paramId="competenceCourseID" paramName="competenceCourse" paramProperty="idInternal"><bean:write name="competenceCourse" property="name"/></html:link></p>
+						<td class="listClasses"><p align="left"><html:link module="/manager" module="/manager" page="/competenceCourseManagement.do?method=showCompetenceCourse" paramId="competenceCourseID" paramName="competenceCourse" paramProperty="idInternal"><bean:write name="competenceCourse" property="name"/></html:link></p>
 						</td>
 				 	</tr>
 				 		
@@ -70,7 +70,7 @@
 			<br>
 			<br>	
 			<html:submit>
-			   <bean:message key="label.manager.delete.selected.competences"/>
+			   <bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.delete.selected.competences"/>
 			</html:submit>
 	
 	</logic:notEmpty>

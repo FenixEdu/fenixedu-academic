@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <logic:equal name="className" value="RestrictionPeriodToApply">
-	<h3><bean:message key="label.manager.precedences.management"/>&nbsp;-&nbsp;<bean:message key="label.manager.insert.simple.precedence"/>&nbsp;-&nbsp;<bean:message key="label.manager.insert.restriction.restrictionPeriodToApply"/></h3>
+	<h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.precedences.management"/>&nbsp;-&nbsp;<bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.simple.precedence"/>&nbsp;-&nbsp;<bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.restriction.restrictionPeriodToApply"/></h3>
 </logic:equal>
 
 <span class="error"><html:errors/></span>
@@ -21,7 +21,7 @@
 	<html:hidden property="degreeId" value="<%= request.getAttribute("degreeId").toString() %>" />
 	<html:hidden property="degreeCurricularPlanId" value="<%= request.getAttribute("degreeCurricularPlanId").toString() %>" />
 			
-	<b><bean:message key="label.manager.periodToApplyRestriction" />:</b>&nbsp;
+	<b><bean:message bundle="MANAGER_RESOURCES" key="label.manager.periodToApplyRestriction" />:</b>&nbsp;
 	<html:select property="number" >
 		<logic:iterate id="periodToApply" name="periodToApplyList">
 			<bean:define id="keyPeriod" name="periodToApply" property="name"/>
@@ -35,7 +35,7 @@
 	<p />
 	<table>
 		<tr>
-			<th colspan="2"><bean:message key="label.manager.curricularCourseToAddPrecedence" /></th>
+			<th colspan="2"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourseToAddPrecedence" /></th>
 		</tr>
 		<tr>
 			<td colspan="4">&nbsp;</td>
@@ -49,6 +49,6 @@
 	</table>	
 	<p />
 	<html:submit styleClass="inputbutton">
-		<bean:message key="button.continue"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="button.continue"/>
 	</html:submit>
 </html:form>

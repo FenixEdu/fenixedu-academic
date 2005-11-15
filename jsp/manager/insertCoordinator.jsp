@@ -5,7 +5,7 @@
 <p><span class="error"><html:errors/></span></p>
 
 <logic:notPresent name="infoExecutionDegree" >
-	<bean:message key="error.invalidExecutionDegree" />
+	<bean:message bundle="MANAGER_RESOURCES" key="error.invalidExecutionDegree" />
 </logic:notPresent>
 
 <logic:present name="infoExecutionDegree" >
@@ -15,11 +15,11 @@
 
 	<table>
 		<tr>
-			<h3><bean:message key="label.manager.associate.teachers.in.charge"/></h3>
+			<h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.associate.teachers.in.charge"/></h3>
 		</tr>
 		<tr>
 				<td>
-					<h3><bean:message key="label.degree"/></h3>
+					<h3><bean:message bundle="MANAGER_RESOURCES" key="label.degree"/></h3>
 				</td>
 				<td>				
 					<h2><b><bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.sigla"/>-<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/>(<bean:write name="infoExecutionDegree" property="infoExecutionYear.year"/>)</b></h2>
@@ -38,7 +38,7 @@
 		<table>
 			<tr>
 				<td>
-					<bean:message key="message.insert.coordinator.number"/>
+					<bean:message bundle="MANAGER_RESOURCES" key="message.insert.coordinator.number"/>
 				</td>
 				<td>
 					<html:text size="5" property="number" />
@@ -49,10 +49,10 @@
 		<br>
 	
 		<html:submit styleClass="inputbutton">
-			<bean:message key="button.save"/>
+			<bean:message bundle="MANAGER_RESOURCES" key="button.save"/>
 		</html:submit>
 		<html:reset  styleClass="inputbutton">
-			<bean:message key="label.clear"/>
+			<bean:message bundle="MANAGER_RESOURCES" key="label.clear"/>
 		</html:reset>			
 	</html:form>
 </logic:present>

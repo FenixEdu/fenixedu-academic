@@ -13,10 +13,10 @@
 	<table>
 		<tr>
 			<td class="listClasses-header">
-				<bean:message key="property.student.number"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="property.student.number"/>
 			</td>
 			<td class="listClasses-header">
-				<bean:message key="property.student.degreeType"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="property.student.degreeType"/>
 			</td>
 		</tr>
 		<tr>

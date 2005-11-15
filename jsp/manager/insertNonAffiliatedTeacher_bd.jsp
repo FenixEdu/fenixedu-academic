@@ -6,7 +6,7 @@
 <table>
 	<tr>
 			<td>
-				<h3><bean:message key="label.manager.execution.course.name"/></h3>
+				<h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.execution.course.name"/></h3>
 			</td>
 			<td>
 			<bean:parameter id="executionCourseName" name="executionCourseName"/>
@@ -14,7 +14,7 @@
 			</td>	
 	</tr>
 	<tr>
-      		<h2><bean:message key="message.insert.professorShip.nonAffiliatedTeacher" /></h2>
+      		<h2><bean:message bundle="MANAGER_RESOURCES" key="message.insert.professorShip.nonAffiliatedTeacher" /></h2>
 	</tr>
 </table>
 <span class="error"><html:errors/></span>
@@ -31,7 +31,7 @@
 	<table>
 		<tr>
 			<td>
-				<bean:message key="message.search.nonAffiliatedTeacher.name"/>:
+				<bean:message bundle="MANAGER_RESOURCES" key="message.search.nonAffiliatedTeacher.name"/>:
 			</td>
 			<td>
 				<html:text size="50" property="nonAffiliatedTeacherName" />
@@ -42,7 +42,7 @@
 	<br>
 
 	<html:submit styleClass="inputbutton" onclick="this.form.method.value='search'">
-		<bean:message key="button.search"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="button.search"/>
 	</html:submit>			
 
 	<br/>
@@ -55,19 +55,19 @@
 				<td><bean:write name="nonAffiliatedTeacher" property="name"/></td>
 				<td><bean:write name="nonAffiliatedTeacher" property="infoInstitution.name"/></td>
 				<bean:define id="nonAffiliatedTeacherID" name="nonAffiliatedTeacher" property="idInternal"/>
-				<td><td><html:link page="<%="/insertProfessorShipNonAffiliatedTeacher.do?method=insertProfessorship&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId") + "&amp;executionCourseId=" + request.getParameter("executionCourseId") + "&amp;nonAffiliatedTeacherID=" + nonAffiliatedTeacherID %>" paramId="executionCourseName" paramName="executionCourseName">Associar à disciplina</html:link></td>
+				<td><td><html:link module="/manager" page="<%="/insertProfessorShipNonAffiliatedTeacher.do?method=insertProfessorship&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId") + "&amp;executionCourseId=" + request.getParameter("executionCourseId") + "&amp;nonAffiliatedTeacherID=" + nonAffiliatedTeacherID %>" paramId="executionCourseName" paramName="executionCourseName">Associar à disciplina</html:link></td>
 			</tr>
 		</logic:iterate>
 	</table>
 	</logic:notEmpty>
 	
 	<br/>
-	<h3><bean:message key="label.manager.insert.new.nonAffiliated.teacher"/></h3>
+	<h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.new.nonAffiliated.teacher"/></h3>
 
 	<table cellpadding="5">
 		<tr>
 			<td>
-				<bean:message key="message.insert.nonAffiliatedTeacher.name"/>:
+				<bean:message bundle="MANAGER_RESOURCES" key="message.insert.nonAffiliatedTeacher.name"/>:
 			</td>
 			<td>
 				<html:text size="50" property="nonAffiliatedTeacherNameToInsert" />
@@ -85,7 +85,7 @@
 		</tr>
 		<logic:notPresent parameter="insertInstitution">
 			<tr>
-				<td><html:link page="<%="/insertProfessorShipNonAffiliatedTeacher.do?method=prepare&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId") + "&amp;executionCourseId=" + request.getParameter("executionCourseId") + "&amp;insertInstitution=true"%>" paramId="executionCourseName" paramName="executionCourseName">Inserir nova instituição</html:link></td>
+				<td><html:link module="/manager" page="<%="/insertProfessorShipNonAffiliatedTeacher.do?method=prepare&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId") + "&amp;executionCourseId=" + request.getParameter("executionCourseId") + "&amp;insertInstitution=true"%>" paramId="executionCourseName" paramName="executionCourseName">Inserir nova instituição</html:link></td>
 			</tr>
 		</logic:notPresent>
 		<logic:present parameter="insertInstitution"> 

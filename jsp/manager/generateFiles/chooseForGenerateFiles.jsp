@@ -2,18 +2,18 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<h2><bean:message key="label.generateFiles"/></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.generateFiles"/></h2>
 <span class="error"><html:errors/></span>
 
 <bean:define id="fileToGenerate" name="file"/>
 <p>
 <b>
-	<bean:message key="label.generateFiles.generating" />
+	<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.generateFiles.generating" />
 	<logic:equal name="fileToGenerate" value="sibs">
-		<bean:message key="label.generateFiles.SIBS" />
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.generateFiles.SIBS" />
 	</logic:equal>
 	<logic:equal name="fileToGenerate" value="letters">
-		<bean:message key="label.generateFiles.letters" />
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.generateFiles.letters" />
 	</logic:equal>
 </b>
 <p>
@@ -25,12 +25,12 @@
 	<table>
 		<tr>
 			<td>
-				<bean:message key="label.executionYear"/>
+				<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.executionYear"/>
 			</td>
 			<td>
 				<html:select property="executionYear">
 					<html:option value="" key="label.manager.executionCourseManagement.select">
-						<bean:message key="label.manager.executionCourseManagement.select"/>
+						<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.select"/>
 					</html:option>
 					<html:optionsCollection name="executionYears"/>
 				</html:select>
@@ -39,6 +39,6 @@
 	</table>
 	<p />
 	<html:submit styleClass="inputbutton">
-		<bean:message key="button.generateFiles.generate"/>
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="button.generateFiles.generate"/>
 	</html:submit>
 </html:form>

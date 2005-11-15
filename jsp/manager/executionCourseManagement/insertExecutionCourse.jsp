@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<h2><bean:message key="label.manager.executionCourseManagement.insert.executionCourse"/></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.insert.executionCourse"/></h2>
 <span class="error"><html:errors/></span>
 <logic:present name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>">
 	<html:form action="/insertExecutionCourse" focus="name">  
@@ -12,12 +12,12 @@
 		<table>
 			<tr>
 				<td>
-					<bean:message key="label.manager.executionCourseManagement.executionPeriod"/>
+					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.executionPeriod"/>
 				</td>
 				<td>
 					<html:select property="executionPeriodId">
 						<html:option value="" key="label.manager.executionCourseManagement.select">
-							<bean:message key="label.manager.executionCourseManagement.select"/>
+							<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.select"/>
 						</html:option>
 						<html:optionsCollection name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>"/>
 					</html:select>
@@ -25,7 +25,7 @@
 			</tr>
 			<tr>
 				<td>
-					<bean:message key="message.manager.execution.course.name"/>
+					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.execution.course.name"/>
 				</td>
 				<td>
 					<html:text size="30" property="name" />
@@ -33,7 +33,7 @@
 			</tr>
 			<tr>
 				<td>
-					<bean:message key="message.manager.execution.course.code"/>
+					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.execution.course.code"/>
 				</td>
 				<td>
 					<html:text size="5" property="code" />
@@ -41,7 +41,7 @@
 			</tr>
 			<tr>
 				<td>
-					<bean:message key="message.manager.theoreticalHours"/>
+					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.theoreticalHours"/>
 				</td>
 				<td>
 					<html:text size="5" property="theoreticalHours" />
@@ -49,7 +49,7 @@
 			</tr>
 			<tr>
 				<td>
-					<bean:message key="message.manager.praticalHours"/>
+					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.praticalHours"/>
 				</td>
 				<td>
 					<html:text size="5" property="praticalHours" />
@@ -57,7 +57,7 @@
 			</tr>
 			<tr>
 				<td>
-					<bean:message key="message.manager.theoPratHours"/>
+					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.theoPratHours"/>
 				</td>
 				<td>
 					<html:text size="5" property="theoPratHours" />
@@ -65,7 +65,7 @@
 			</tr>
 			<tr>
 				<td>
-					<bean:message key="message.manager.labHours"/>
+					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.labHours"/>
 				</td>
 				<td>
 					<html:text size="5" property="labHours" />
@@ -73,7 +73,7 @@
 			</tr>
 			<tr>
 				<td>
-					<bean:message key="message.manager.execution.course.comment"/>
+					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.execution.course.comment"/>
 				</td>
 				<td>
 					<html:textarea property="comment" rows="3" cols="45"/>
@@ -81,12 +81,12 @@
 			</tr>
 		</table>
 		<br />
-		<html:submit styleClass="inputbutton"><bean:message key="button.save"/></html:submit>
-		<html:reset  styleClass="inputbutton"><bean:message key="label.clear"/></html:reset>
+		<html:submit styleClass="inputbutton"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="button.save"/></html:submit>
+		<html:reset  styleClass="inputbutton"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.clear"/></html:reset>
 	</html:form>
 </logic:present>
 <logic:notPresent name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>">
 	<span class="error">
-		<html:errors /><bean:message key="errors.execution.period.none"/>
+		<html:errors /><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="errors.execution.period.none"/>
 	</span>
 </logic:notPresent>

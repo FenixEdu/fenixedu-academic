@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<h2><bean:message key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
 
 <span class="error"><html:errors/></span>
 
@@ -12,7 +12,7 @@
 </logic:notEmpty>
 > <bean:write name="executionCourseName"/>
 
-<p><b><bean:message key="link.manager.executionCourseManagement.associate"/></b></p>
+<p><b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="link.manager.executionCourseManagement.associate"/></b></p>
 
 <logic:present name="infoCurricularCourses">
 	<html:form action="/editExecutionCourseManageCurricularCourses">
@@ -33,9 +33,9 @@
 				<tr>
 					<td class="listClasses-header">&nbsp;
 					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.executionCourseManagement.curricularCourse" />
+					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.curricularCourse" />
 					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.executionCourseManagement.code" />
+					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.code" />
 					</td>
 				</tr>
 				<bean:size id="curricularCoursesListSize" name="infoCurricularCourses"/>
@@ -57,7 +57,7 @@
 		</table>
 		<br />
 		<html:submit styleClass="inputbutton">
-			<bean:message key="button.manager.executionCourseManagement.continue"/>
+			<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="button.manager.executionCourseManagement.continue"/>
 		</html:submit>
 	</html:form>
 </logic:present>

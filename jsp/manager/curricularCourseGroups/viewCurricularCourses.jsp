@@ -9,11 +9,11 @@
 	<html:hidden property="groupId" value="<%= groupId.toString() %>"/>
 <%--	
 	<bean:define id="degreeCurricularPlanId" name="degreeCurricularPlanId"/>
-	<html:link page='<%= "/manageCurricularCourseGroups.do?method=viewCurricularCourseGroups&degreeCurricularPlanId=" + degreeCurricularPlanId.toString() %>'>Voltar Atr�s</html:link>
+	<html:link module="/manager" module="/manager" page='<%= "/manageCurricularCourseGroups.do?method=viewCurricularCourseGroups&degreeCurricularPlanId=" + degreeCurricularPlanId.toString() %>'>Voltar Atr�s</html:link>
 --%>
 <br/>
 <br/>
-<bean:message key="message.curricularCourseGroup.courses"/>
+<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.curricularCourseGroup.courses"/>
 <table>
 <tr> 
 <td class="listClasses-header">&nbsp</td><td class="listClasses-header">Disciplina</td>
@@ -33,7 +33,7 @@
 <br/>
 <br/>
 	<html:submit styleClass="inputbutton">
-		<bean:message key="button.save"/>
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="button.save"/>
 	</html:submit>
 </html:form>
 
@@ -41,7 +41,7 @@
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="method" value="addCourses" />
 		<html:hidden property="groupId" value="<%= groupId.toString() %>"/>
-	<bean:message key="message.curricularCourseGroup.coursesToAdd"/>
+	<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.curricularCourseGroup.coursesToAdd"/>
 <table>
 <tr> 
 <td>&nbsp</td><td class="listClasses-header">Disciplina</td>
@@ -60,6 +60,6 @@
 <br/>
 <br/>
 	<html:submit styleClass="inputbutton">
-		<bean:message key="button.save"/>
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="button.save"/>
 	</html:submit>
 </html:form>

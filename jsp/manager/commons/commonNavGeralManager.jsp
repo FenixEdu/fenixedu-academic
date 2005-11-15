@@ -16,12 +16,12 @@
 			<%= request.getContextPath() %>/dotIstPortal.do?prefix=<bean:write name="role" property="portalSubApplication"/>&amp;page=<bean:write name="role" property="page"/>
 		</bean:define>
 	<li><logic:equal name="role" property="portalSubApplication" value="/manager">
-	    	<html:link href='<%= link %>' styleClass="active">
-	    	<bean:message name="bundleKeyPageName" bundle="PORTAL_RESOURCES"/></html:link></li>
+	    	<html:link module="/manager" href='<%= link %>' styleClass="active">
+	    	<bean:message bundle="MANAGER_RESOURCES" name="bundleKeyPageName" bundle="PORTAL_RESOURCES"/></html:link></li>
 		</logic:equal>
 		<logic:notEqual name="role" property="portalSubApplication" value="/manager">
-	    	<html:link href='<%= link %>'>
-			<bean:message name="bundleKeyPageName" bundle="PORTAL_RESOURCES"/></html:link></li>
+	    	<html:link module="/manager" href='<%= link %>'>
+			<bean:message bundle="MANAGER_RESOURCES" name="bundleKeyPageName" bundle="PORTAL_RESOURCES"/></html:link></li>
 		</logic:notEqual>
 </logic:iterate>
 </ul>

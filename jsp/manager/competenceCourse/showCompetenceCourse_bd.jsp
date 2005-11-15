@@ -7,7 +7,7 @@
 	<tr>
 		<logic:present name="competenceCourse">
 			<td>
-				<h3><bean:message key="label.manager.competenceCourse.administrating"/></h3>
+				<h3><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.competenceCourse.administrating"/></h3>
 			</td>
 			<td>
 				<h2><b><bean:write name="competenceCourse" property="name"/> - <bean:write name="competenceCourse" property="code"/></b></h2>
@@ -17,8 +17,8 @@
 </table>
 
 <ul style="list-style-type: square;">
-	<li><html:link page="/createEditCompetenceCourse.do?method=prepareEdit" paramId="competenceCourse" paramName="competenceCourse" paramProperty="idInternal"><bean:message key="label.manager.edit.competenceCourse"/></html:link></li>
-	<li><html:link page="/curricularCoursesCompetenceCourse.do?method=readDegrees" paramId="competenceCourseID" paramName="competenceCourse" paramProperty="idInternal"><bean:message key="label.manager.associate.curricularCourses"/></html:link></li>
+	<li><html:link module="/manager" module="/manager" page="/createEditCompetenceCourse.do?method=prepareEdit" paramId="competenceCourse" paramName="competenceCourse" paramProperty="idInternal"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.edit.competenceCourse"/></html:link></li>
+	<li><html:link module="/manager" module="/manager" page="/curricularCoursesCompetenceCourse.do?method=readDegrees" paramId="competenceCourseID" paramName="competenceCourse" paramProperty="idInternal"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.associate.curricularCourses"/></html:link></li>
 </ul>
 
 <br>
@@ -28,7 +28,7 @@
 
 <table width="70%" cellpadding="0" border="0">
 	<tr>
-		<h3><bean:message key="label.manager.competenceCourse.associated.departments"/></h3>
+		<h3><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.competenceCourse.associated.departments"/></h3>
 	</tr>
 	<logic:iterate id="department" name="competenceCourse" property="departments">
 		<tr>
@@ -40,10 +40,10 @@
 </table>
 <br>
 	
-<h3><bean:message key="label.manager.curricularCourses"/></h3>
+<h3><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.curricularCourses"/></h3>
 
 <logic:empty name="competenceCourse" property="associatedCurricularCourses">
-	<i><bean:message key="label.manager.competenceCourse.nonExisting.curricularCourses"/></i>
+	<i><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.competenceCourse.nonExisting.curricularCourses"/></i>
 </logic:empty>
 	
 <logic:notEmpty name="competenceCourse" property="associatedCurricularCourses">
@@ -55,11 +55,11 @@
 			<tr>
 				<td class="listClasses-header">
 				</td>
-				<td class="listClasses-header"><bean:message key="label.manager.curricularCourse.code" />
+				<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.curricularCourse.code" />
 				</td>
-				<td class="listClasses-header"><bean:message key="message.manager.degree.curricular.plan.name" />
+				<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.degree.curricular.plan.name" />
 				</td>
-				<td class="listClasses-header"><bean:message key="label.manager.degreeCurricularPlan" />
+				<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.degreeCurricularPlan" />
 				</td>
 			</tr>
 			
@@ -82,7 +82,7 @@
 		<br>
 		<br>	
 		<html:submit>
-		   <bean:message key="label.manager.delete.selected.competences"/>
+		   <bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.delete.selected.competences"/>
 		</html:submit>
 	</html:form>
 </logic:notEmpty>

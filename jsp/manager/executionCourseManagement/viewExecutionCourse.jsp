@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
-<h2><bean:message key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
 
 <span class="error"><html:errors/></span>
 
@@ -25,7 +25,7 @@
 	<table>			
 		<tr>
 			<td>
-				<b><bean:message key="message.manager.execution.course.name"/></b>
+				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.execution.course.name"/></b>
 			</td>
 			<td>
 				<bean:write name="<%=SessionConstants.EXECUTION_COURSE%>" property="nome" />
@@ -33,7 +33,7 @@
 		</tr>
 		<tr>
 			<td>
-				<b><bean:message key="message.manager.execution.course.code"/></b>
+				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.execution.course.code"/></b>
 			</td>
 			<td>
 				<bean:write name="<%=SessionConstants.EXECUTION_COURSE%>" property="sigla" />
@@ -41,7 +41,7 @@
 		</tr>
 		<tr>
 			<td>
-				<b><bean:message key="message.manager.theoreticalHours"/></b>
+				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.theoreticalHours"/></b>
 			</td>
 			<td>
 				<bean:write name="<%=SessionConstants.EXECUTION_COURSE%>" property="theoreticalHours" />
@@ -49,7 +49,7 @@
 		</tr>
 		<tr>
 			<td>
-				<b><bean:message key="message.manager.praticalHours"/></b>
+				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.praticalHours"/></b>
 			</td>
 			<td>
 				<bean:write name="<%=SessionConstants.EXECUTION_COURSE%>" property="praticalHours" />
@@ -57,7 +57,7 @@
 		</tr>
 		<tr>
 			<td>
-				<b><bean:message key="message.manager.theoPratHours"/></b>
+				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.theoPratHours"/></b>
 			</td>
 			<td>
 				<bean:write name="<%=SessionConstants.EXECUTION_COURSE%>" property="theoPratHours" />
@@ -65,7 +65,7 @@
 		</tr>
 		<tr>
 			<td>
-				<b><bean:message key="message.manager.labHours"/></b>
+				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.labHours"/></b>
 			</td>
 			<td>
 				<bean:write name="<%=SessionConstants.EXECUTION_COURSE%>" property="labHours" />
@@ -73,7 +73,7 @@
 		</tr>
 		<tr>
 			<td>
-				<b><bean:message key="message.manager.execution.course.comment"/></b>
+				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.execution.course.comment"/></b>
 			</td>
 			<td>
 				<bean:write name="<%=SessionConstants.EXECUTION_COURSE%>" property="comment" />
@@ -82,29 +82,29 @@
 	</table>
 
 	<br />
-	<h2><bean:message key="label.manager.curricularCourses"/></h2>
+	<h2><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.curricularCourses"/></h2>
 	<ul>
 		<li>
-			<html:link page="<%="/editExecutionCourseManageCurricularCourses.do?method=prepareAssociateCurricularCourseChooseDegreeCurricularPlan&amp;executionCourseId=" + pageContext.findAttribute("executionCourseId") + "&amp;executionDegree=" + pageContext.findAttribute("executionDegree") + "&amp;curYear=" + pageContext.findAttribute("curYear")  + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriod")  + "&amp;executionCoursesNotLinked=" + pageContext.findAttribute("executionCoursesNotLinked") + "&amp;executionCourseName=" + executionCourseName.toString()%>">
-				<bean:message key="link.manager.executionCourseManagement.associate"/>
+			<html:link module="/manager" module="/manager" page="<%="/editExecutionCourseManageCurricularCourses.do?method=prepareAssociateCurricularCourseChooseDegreeCurricularPlan&amp;executionCourseId=" + pageContext.findAttribute("executionCourseId") + "&amp;executionDegree=" + pageContext.findAttribute("executionDegree") + "&amp;curYear=" + pageContext.findAttribute("curYear")  + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriod")  + "&amp;executionCoursesNotLinked=" + pageContext.findAttribute("executionCoursesNotLinked") + "&amp;executionCourseName=" + executionCourseName.toString()%>">
+				<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="link.manager.executionCourseManagement.associate"/>
 			</html:link>
 		</li>
 	</ul>
 	<table>
 		<tr>	
 			<td>	
-				<b><bean:message key="label.manager.executionCourseManagement.curricularCoursesList" /></b>
+				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.curricularCoursesList" /></b>
 				<logic:present name="<%=SessionConstants.EXECUTION_COURSE%>" property="associatedInfoCurricularCourses">
 					<logic:notEmpty name="<%=SessionConstants.EXECUTION_COURSE%>" property="associatedInfoCurricularCourses">
 						<bean:define id="curricularCourses" name="<%=SessionConstants.EXECUTION_COURSE%>" property="associatedInfoCurricularCourses"/>
 								
 							<table width="100%" cellpadding="0" border="0">
 								<tr>
-									<td class="listClasses-header"><bean:message key="label.manager.executionCourseManagement.curricularCourse" />
+									<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.curricularCourse" />
 									</td>
-									<td class="listClasses-header"><bean:message key="label.manager.executionCourseManagement.code" />
+									<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.code" />
 									</td>
-									<td class="listClasses-header"><bean:message key="label.manager.executionCourseManagement.underGraduate" />
+									<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.underGraduate" />
 									</td>
 									<td class="listClasses-header">&nbsp;
 									</td>
@@ -121,8 +121,8 @@
 										</td>
 										<td class="listClasses">
 											&nbsp;
-											<html:link page="<%="/editExecutionCourseManageCurricularCourses.do?method=dissociateCurricularCourse&amp;curricularCourseId=" + pageContext.findAttribute("curricularCourseId") + "&amp;executionCourseId=" + pageContext.findAttribute("executionCourseId") + "&amp;executionDegree=" + pageContext.findAttribute("executionDegree") + "&amp;curYear=" + pageContext.findAttribute("curYear") + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriod") + "&amp;executionCoursesNotLinked=" + pageContext.findAttribute("executionCoursesNotLinked")%>">
-												<bean:message key="button.manager.teachersManagement.dissociate"/>
+											<html:link module="/manager" module="/manager" page="<%="/editExecutionCourseManageCurricularCourses.do?method=dissociateCurricularCourse&amp;curricularCourseId=" + pageContext.findAttribute("curricularCourseId") + "&amp;executionCourseId=" + pageContext.findAttribute("executionCourseId") + "&amp;executionDegree=" + pageContext.findAttribute("executionDegree") + "&amp;curYear=" + pageContext.findAttribute("curYear") + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriod") + "&amp;executionCoursesNotLinked=" + pageContext.findAttribute("executionCoursesNotLinked")%>">
+												<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="button.manager.teachersManagement.dissociate"/>
 											</html:link>&nbsp;
 										</td>
 					 				</tr>
@@ -130,11 +130,11 @@
 							</table>
 					</logic:notEmpty>						
 					<logic:empty name="<%=SessionConstants.EXECUTION_COURSE%>" property="associatedInfoCurricularCourses">
-						<p><i><bean:message key="message.manager.executionCourseManagement.noCurricularCourses" arg0="<%=executionCourseName.toString()%>" /></i></p>
+						<p><i><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.noCurricularCourses" arg0="<%=executionCourseName.toString()%>" /></i></p>
 					</logic:empty>
 				</logic:present>
 				<logic:notPresent name="<%=SessionConstants.EXECUTION_COURSE%>" property="associatedInfoCurricularCourses">
-					<p><i><bean:message key="message.manager.executionCourseManagement.noCurricularCourses" arg0="<%=executionCourseName.toString()%>" /></i></p>
+					<p><i><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.noCurricularCourses" arg0="<%=executionCourseName.toString()%>" /></i></p>
 				</logic:notPresent>	
 			</td>
 		</tr>

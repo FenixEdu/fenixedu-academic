@@ -11,20 +11,20 @@
 	<html:hidden property="degreeCurricularPlanId" value="<%= dcpId.toString() %>"/>
 <table>
 <tr>	
-<td><bean:message key="label.name"/></td><td><html:text property="name"/></td>
+<td><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.name"/></td><td><html:text property="name"/></td>
 </tr>
 <tr>	
-<td><bean:message key="label.branch"/></td>
+<td><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.branch"/></td>
 <td>	<html:select property="branchId">
 		<html:options collection="branches" property="idInternal" labelProperty="name"/>
 	</html:select>
 </td>	
 </tr>
 <tr>
-<td><bean:message key="label.minimumCourses"/></td><td>	<html:text property="minimumValue"/></td>
+<td><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.minimumCourses"/></td><td>	<html:text property="minimumValue"/></td>
 </tr>
 <tr>	
-<td><bean:message key="label.maximumCourses"/></td><td><html:text property="maximumValue"/></td>
+<td><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.maximumCourses"/></td><td><html:text property="maximumValue"/></td>
 </tr>
 	
 </table>	
@@ -32,9 +32,9 @@
 <br/>
 <br/>
 	<html:submit styleClass="inputbutton">
-		<bean:message key="button.save"/>
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="button.save"/>
 	</html:submit>
 	<html:reset  styleClass="inputbutton">
-		<bean:message key="label.clear"/>
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.clear"/>
 	</html:reset>			
 </html:form>

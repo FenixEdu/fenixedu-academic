@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
-<h2><bean:message key="label.editGuide" /></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" key="label.editGuide" /></h2>
 
 <html:form action="/guideManagement">
 	<html:hidden property="method" value="editGuide" />
@@ -89,7 +89,7 @@
 		<tr>				
 				<td>
 					<bean:define id="documentType"><bean:write name="guideEntry" property="documentType"/></bean:define>
-					<bean:message name="documentType" bundle="ENUMERATION_RESOURCES" />
+					<bean:message bundle="MANAGER_RESOURCES" name="documentType" bundle="ENUMERATION_RESOURCES" />
 				</td><td>
 				<bean:write name="guideEntry" property="description" /> </td> <td>
 					<bean:write name="guideEntry" property="quantity" />  </td><td>

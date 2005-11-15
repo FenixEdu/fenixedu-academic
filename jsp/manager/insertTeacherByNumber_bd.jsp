@@ -5,7 +5,7 @@
 <table>
 	<tr>
 			<td>
-				<h3><bean:message key="label.manager.execution.course.name"/></h3>
+				<h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.execution.course.name"/></h3>
 			</td>
 			<td>
 			<bean:parameter id="executionCourseName" name="executionCourseName"/>
@@ -13,7 +13,7 @@
 			</td>	
 	</tr>
 	<tr>
-      		<h3><bean:message key="message.insert.professorShip" /></h3>
+      		<h3><bean:message bundle="MANAGER_RESOURCES" key="message.insert.professorShip" /></h3>
 	</tr>
 </table>
 <span class="error"><html:errors/></span>
@@ -29,7 +29,7 @@
 	<table>
 		<tr>
 			<td>
-				<bean:message key="message.insert.teacher.number"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.insert.teacher.number"/>
 			</td>
 			<td>
 				<html:text size="5" property="number" />
@@ -40,9 +40,9 @@
 	<br>
 
 	<html:submit styleClass="inputbutton">
-		<bean:message key="button.save"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="button.save"/>
 	</html:submit>
 	<html:reset  styleClass="inputbutton">
-		<bean:message key="label.clear"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="label.clear"/>
 	</html:reset>			
 </html:form>
