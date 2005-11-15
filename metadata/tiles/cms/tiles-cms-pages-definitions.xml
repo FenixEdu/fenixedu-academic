@@ -1,0 +1,63 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+    <definition name="index" extends="cms.masterPage">
+        <put name="body" value="/cms/index.jsp"></put>
+    </definition>
+    
+    	<!-- ================= by gedl 21-9-2005 =========== -->
+	<definition name="showPersonUserGroups" extends="cms.masterPage" >
+		<put name="body" value="/cms/groupManagement/showPersonUserGroups.jsp" />
+	</definition>
+	<!-- =============================================== -->	
+	<!-- ================= by gedl 23-9-2005 =========== -->
+	<definition name="showInitialUserGroupOptions" extends="cms.masterPage" >
+		<put name="body" value="/cms/groupManagement/showInitialUserGroupOptions.jsp" />
+	</definition>	
+		<!-- =============================================== -->	
+	
+		<!-- ================= by gedl 26-9-2005 =========== -->
+	<definition name="showStudentsInExecutionCourse" extends="cms.masterPage" >
+		<put name="body" value="/cms/groupManagement/showStudentsInExecutionCourse.jsp" />
+	</definition>	
+	<definition name="showExecutionCourseUserGroupOptions" extends="cms.masterPage" >
+		<put name="body" value="/cms/groupManagement/showExecutionCourseUserGroupOptions.jsp" />
+	</definition>		
+	<!-- =============================================== -->	
+	
+	<!-- ================= by gedl 29-9-2005 =========== -->
+	<definition name="addGroup" extends="cms.masterPage" >
+		<put name="body" value="/cms/groupManagement/addUserGroup.jsp" />
+	</definition>	
+	<definition name="showTeachersInExecutionCourse" extends="cms.masterPage" >
+		<put name="body" value="/cms/groupManagement/showTeachersInExecutionCourse.jsp" />
+	</definition>		
+	<!-- =============================================== -->	
+
+	<!-- ================= by gedl 3-10-2005 =========== -->
+	<definition name="showCurrentGroupsToOperate" extends="cms.masterPage" >
+		<put name="body" value="/cms/groupManagement/showCurrentGroupsToOperate.jsp" />
+	</definition>
+	<!-- =============================================== -->		
+		<!-- ================= by gedl 11-10-2005 =========== -->
+	<definition name="showPersonsInGroup" extends="cms.masterPage" >
+		<put name="body" value="/cms/groupManagement/showPersonsInGroup.jsp" />
+	</definition>
+	<!-- =============================================== -->	
+	<!-- ================= by gedl 18-10-2005 =========== -->
+	<definition name="showPrepareCreateMailingList" extends="cms.masterPage" >
+		<put name="body" value="/cms/messaging/showPrepareCreateMailingList.jsp" />
+	</definition>
+	<!-- =============================================== -->	
+	<!-- ================= by gedl 28-10-2005 =========== -->
+	<definition name="showMailingList" extends="cms.masterPage" >
+		<put name="body" value="/cms/messaging/showMailingList.jsp" />
+	</definition>
+	<!-- =============================================== -->
+	<!-- ================= by gedl 3-11-2005 =========== -->
+	<definition name="showThread" extends="cms.masterPage" >
+		<put name="body" value="/cms/messaging/showThread.jsp" />
+	</definition>
+	<!-- =============================================== -->								    
+</tiles-definitions>

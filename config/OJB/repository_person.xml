@@ -225,6 +225,11 @@
         column="IST_USERNAME"
         jdbc-type="VARCHAR"
     />  
+    <field-descriptor
+        name="keyCms"
+        column="KEY_CMS"
+        jdbc-type="INTEGER"
+    />      
     <reference-descriptor auto-retrieve="false"
     	name="grantOwner"
         class-ref="net.sourceforge.fenixedu.domain.grant.owner.GrantOwner">
@@ -374,6 +379,13 @@
 			refresh="true" >
 		<inverse-foreignkey field-ref="keySenderPerson"/>
 	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="contents"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
+			refresh="true" >
+		<inverse-foreignkey field-ref="keyPerson"/>
+	</collection-descriptor>
+				
 	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedQualifications"
 			element-class-ref="net.sourceforge.fenixedu.domain.Qualification"
@@ -385,4 +397,9 @@
         element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction">
 		<inverse-foreignkey field-ref="keyPerson"/>
     </collection-descriptor>	
+     <reference-descriptor auto-retrieve="false"
+    	name="cms"
+        class-ref="net.sourceforge.fenixedu.domain.cms.Cms">
+	    <foreignkey field-ref="keyCms"/>
+	</reference-descriptor>
 </class-descriptor>

@@ -22,6 +22,8 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.EquivalencyOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.ModalityOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.SeminaryOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.ThemeOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentCMSOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentMailAddressAliasOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.credits.ManagementPositionCreditLineOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.credits.OtherTypeCreditLineOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.degree.finalProject.TeacherDegreeFinalProjectStudentOJB;
@@ -110,6 +112,7 @@ import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCu
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryModality;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryTheme;
 import net.sourceforge.fenixedu.persistenceTier.cache.FenixCache;
+import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPositionCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentOtherTypeCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
@@ -186,6 +189,7 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentPaymentT
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentSmsTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransaction;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.IPersistentMailAddressAlias;
 import net.sourceforge.fenixedu.stm.OJBFunctionalSetWrapper;
 import net.sourceforge.fenixedu.stm.Transaction;
 
@@ -1238,8 +1242,17 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
     public IPersistentTeacherPersonalExpectation getIPersistentTeacherPersonalExpectation() {
         return new TeacherPersonalExpectationOJB();
     }
-    
-    public IPersistentTeacherExpectationDefinitionPeriod getIPersistentTeacherExpectationDefinitionPeriod() {
+
+	public IPersistentCMS getIPersistentCms()
+	{
+		return new PersistentCMSOJB();
+	}
+	
+	public IPersistentMailAddressAlias getIPersistentMailAdressAlias()
+	{
+		return new PersistentMailAddressAliasOJB();
+	}
+	    public IPersistentTeacherExpectationDefinitionPeriod getIPersistentTeacherExpectationDefinitionPeriod() {
         return new TeacherExpectationDefinitionPeriodOJB();
     }
 }

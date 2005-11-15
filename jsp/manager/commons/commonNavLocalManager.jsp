@@ -3,7 +3,13 @@
 <center>
 	<img alt=""  src="<%= request.getContextPath() %>/images/logo-fenix.gif" width="100" height="100"/>
 </center>
-
+<br />
+<strong>Gestão de CMS</strong>
+<p><strong>&raquo; 
+	<html:link module="/cms" action="/userGroupsManagement.do?method=prepare" titleKey="person.userGroupsManagement.label.title">
+		<bean:message key="person.userGroupsManagement.label" />
+	</html:link>e 
+</strong></p>
 <br />
 <strong>Gestão de Execuções</strong>
 <p><strong>&raquo; 

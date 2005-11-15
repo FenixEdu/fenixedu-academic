@@ -1,4 +1,7 @@
+
+
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
+
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,200 +24,258 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
 
-public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente {
+public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
+{
 
-    public IPerson lerPessoaPorUsername(final String username) throws ExcepcaoPersistencia {
-        for (final IPerson person : (List<IPerson>) readAll(Person.class)) {
-            if (person.getUsername().equalsIgnoreCase(username)) {
-                return person;
-            }
-        }
-        return null;
-    }
+	public IPerson lerPessoaPorUsername(final String username) throws ExcepcaoPersistencia
+	{
+		for (final IPerson person : (List<IPerson>) readAll(Person.class))
+		{
+			if (person.getUsername().equalsIgnoreCase(username))
+			{
+				return person;
+			}
+		}
+		return null;
+	}
 
-    public List findPersonByName(String name) throws ExcepcaoPersistencia {
+	public List findPersonByName(String name) throws ExcepcaoPersistencia
+	{
 
-        final String nameToMatch = name.replaceAll("%", ".*");
-        final List persons = new ArrayList();
+		final String nameToMatch = name.replaceAll("%", ".*");
+		final List persons = new ArrayList();
 
-        for (final IPerson person : (List<IPerson>) readAll(Person.class)) {
-            if (person.getNome().toLowerCase().matches(nameToMatch.toLowerCase())) {
-                persons.add(person);
-            }
-        }
-        return persons;
+		for (final IPerson person : (List<IPerson>) readAll(Person.class))
+		{
+			if (person.getNome().toLowerCase().matches(nameToMatch.toLowerCase()))
+			{
+				persons.add(person);
+			}
+		}
+		return persons;
 
-    }
+	}
 
-    public List findPersonByName(String name, Integer startIndex, Integer numberOfElementsInSpan)
-            throws ExcepcaoPersistencia {
+	public List findPersonByName(String name, Integer startIndex, Integer numberOfElementsInSpan)
+			throws ExcepcaoPersistencia
+	{
 
-        final ArrayList persons = new ArrayList(findPersonByName(name));
+		final ArrayList persons = new ArrayList(findPersonByName(name));
 
-        return persons.subList(startIndex, startIndex + numberOfElementsInSpan);
+		return persons.subList(startIndex, startIndex + numberOfElementsInSpan);
 
-    }
+	}
 
-    public Integer countAllPersonByName(String name) throws ExcepcaoPersistencia {
+	public Integer countAllPersonByName(String name) throws ExcepcaoPersistencia
+	{
 
-        return new Integer(findPersonByName(name).size());
+		return new Integer(findPersonByName(name).size());
 
-    }
+	}
 
-    public IPerson lerPessoaPorNumDocIdETipoDocId(final String numeroDocumentoIdentificacao,
-            final IDDocumentType tipoDocumentoIdentificacao) throws ExcepcaoPersistencia {
+	public IPerson lerPessoaPorNumDocIdETipoDocId(final String numeroDocumentoIdentificacao,
+			final IDDocumentType tipoDocumentoIdentificacao) throws ExcepcaoPersistencia
+	{
 
-        for (final IPerson person : (List<IPerson>) readAll(Person.class)) {
-            if (person.getNumeroDocumentoIdentificacao().equals(numeroDocumentoIdentificacao)
-                    && person.getIdDocumentType().equals(tipoDocumentoIdentificacao)) {
-                return person;
-            }
-        }
-        return null;
+		for (final IPerson person : (List<IPerson>) readAll(Person.class))
+		{
+			if (person.getNumeroDocumentoIdentificacao().equals(numeroDocumentoIdentificacao)
+					&& person.getIdDocumentType().equals(tipoDocumentoIdentificacao))
+			{
+				return person;
+			}
+		}
+		return null;
 
-    }
+	}
 
-    /*
-     * This method return a list with elements returned by the limited search.
-     */
-    public List<IPerson> readActivePersonByNameAndEmailAndUsernameAndDocumentId(final String name,
-            final String email, final String username, final String documentIdNumber,
-            final Integer startIndex, final Integer numberOfElementsInSpan,IRole role,IDegree degree,DegreeType degreeType,IDepartment department) throws ExcepcaoPersistencia {
+	/*
+	 * This method return a list with elements returned by the limited search.
+	 */
+	public List<IPerson> readActivePersonByNameAndEmailAndUsernameAndDocumentId(final String name,
+			final String email, final String username, final String documentIdNumber,
+			final Integer startIndex, final Integer numberOfElementsInSpan, IRole role, IDegree degree,
+			DegreeType degreeType, IDepartment department) throws ExcepcaoPersistencia
+	{
 
-        final List<IPerson> persons = new ArrayList<IPerson>();
+		final List<IPerson> persons = new ArrayList<IPerson>();
 
-        final String nameToMatch = name.replaceAll("%", ".*");
-        final String emailToMatch = email.replaceAll("%", ".*");
-        final String usernameToMatch = email.replaceAll("%", ".*");
-        final String documentIdNumberToMatch = documentIdNumber.replaceAll("%", ".*");
-       
+		final String nameToMatch = name.replaceAll("%", ".*");
+		final String emailToMatch = email.replaceAll("%", ".*");
+		final String usernameToMatch = email.replaceAll("%", ".*");
+		final String documentIdNumberToMatch = documentIdNumber.replaceAll("%", ".*");
 
-        final List<IPerson> allPersons = (List<IPerson>) readAll(Person.class);
+		final List<IPerson> allPersons = (List<IPerson>) readAll(Person.class);
 
-        List<IPerson> filteredPersons = new ArrayList<IPerson>();
+		List<IPerson> filteredPersons = new ArrayList<IPerson>();
 
-        for (final IPerson person : (List<IPerson>) readAll(Person.class)) {
-            if (name != null && name.length() > 0 && !person.getNome().matches(nameToMatch)) {
-                continue;
-            }
-            if (email != null && email.length() > 0 && !person.getEmail().matches(emailToMatch)) {
-                continue;
-            }
-            if (username != null && username.length() > 0) {
-                if (!person.getUsername().matches(usernameToMatch)) {
-                    continue;
-                }
-                if (person.getUsername().matches("INA.*")) {
-                    continue;
-                }
-            }
-            if (documentIdNumber != null && documentIdNumber.length() > 0
-                    && !person.getNumeroDocumentoIdentificacao().matches(documentIdNumberToMatch)) {
-                continue;
-            }
-            if (role != null
-            		&& !person.getPersonRoles().contains(role)){
-            			continue;
-            }
-            
-            filteredPersons.add(person);
-        }
+		for (final IPerson person : (List<IPerson>) readAll(Person.class))
+		{
+			if (name != null && name.length() > 0 && !person.getNome().matches(nameToMatch))
+			{
+				continue;
+			}
+			if (email != null && email.length() > 0 && !person.getEmail().matches(emailToMatch))
+			{
+				continue;
+			}
+			if (username != null && username.length() > 0)
+			{
+				if (!person.getUsername().matches(usernameToMatch))
+				{
+					continue;
+				}
+				if (person.getUsername().matches("INA.*"))
+				{
+					continue;
+				}
+			}
+			if (documentIdNumber != null && documentIdNumber.length() > 0
+					&& !person.getNumeroDocumentoIdentificacao().matches(documentIdNumberToMatch))
+			{
+				continue;
+			}
+			if (role != null && !person.getPersonRoles().contains(role))
+			{
+				continue;
+			}
 
-        List<IPerson> result = new ArrayList<IPerson>();
-        if (startIndex == null && numberOfElementsInSpan == null) {
-            Collections.sort(filteredPersons, new BeanComparator("nome"));
-            result = filteredPersons;
-        } else if (startIndex != null && numberOfElementsInSpan != null) {
-            result = (filteredPersons.subList(startIndex, startIndex + numberOfElementsInSpan));
-        }
+			filteredPersons.add(person);
+		}
 
-        return result;
-    }
+		List<IPerson> result = new ArrayList<IPerson>();
+		if (startIndex == null && numberOfElementsInSpan == null)
+		{
+			Collections.sort(filteredPersons, new BeanComparator("nome"));
+			result = filteredPersons;
+		}
+		else if (startIndex != null && numberOfElementsInSpan != null)
+		{
+			result = (filteredPersons.subList(startIndex, startIndex + numberOfElementsInSpan));
+		}
 
-    public Integer countActivePersonByNameAndEmailAndUsernameAndDocumentId(final String name,
-            final String email, final String username, final String documentIdNumber,
-            final Integer startIndex,IRole role,IDegree degree,DegreeType degreeType,IDepartment department) throws ExcepcaoPersistencia {
+		return result;
+	}
 
-        final String nameToMatch = name.replaceAll("%", ".*");
-        final String emailToMatch = email.replaceAll("%", ".*");
-        final String usernameToMatch = email.replaceAll("%", ".*");
-        final String documentIdNumberToMatch = documentIdNumber.replaceAll("%", ".*");
+	public Integer countActivePersonByNameAndEmailAndUsernameAndDocumentId(final String name,
+			final String email, final String username, final String documentIdNumber,
+			final Integer startIndex, IRole role, IDegree degree, DegreeType degreeType,
+			IDepartment department) throws ExcepcaoPersistencia
+	{
 
-        final List<IPerson> allPersons = (List<IPerson>) readAll(Person.class);
+		final String nameToMatch = name.replaceAll("%", ".*");
+		final String emailToMatch = email.replaceAll("%", ".*");
+		final String usernameToMatch = email.replaceAll("%", ".*");
+		final String documentIdNumberToMatch = documentIdNumber.replaceAll("%", ".*");
 
-        int count = 0;
-        for (final IPerson person : (List<IPerson>) readAll(Person.class)) {
-            if (name != null && name.length() > 0 && !person.getNome().matches(nameToMatch)) {
-                continue;
-            }
-            if (email != null && email.length() > 0 && !person.getEmail().matches(emailToMatch)) {
-                continue;
-            }
-            if (username != null && username.length() > 0) {
-                if (!person.getUsername().matches(usernameToMatch)) {
-                    continue;
-                }
-                if (person.getUsername().matches("INA.*")) {
-                    continue;
-                }
-            }
-            if (role != null && !person.getPersonRoles().contains(role)){
-            			continue;
-            }
-            if (documentIdNumber != null && documentIdNumber.length() > 0
-                    && !person.getNumeroDocumentoIdentificacao().matches(documentIdNumberToMatch)) {
-                continue;
-            }
-            count++;
-        }
-        return new Integer(count);
-    }
+		final List<IPerson> allPersons = (List<IPerson>) readAll(Person.class);
 
-    public List<IPerson> readPersonsBySubName(String subName) throws ExcepcaoPersistencia {
+		int count = 0;
+		for (final IPerson person : (List<IPerson>) readAll(Person.class))
+		{
+			if (name != null && name.length() > 0 && !person.getNome().matches(nameToMatch))
+			{
+				continue;
+			}
+			if (email != null && email.length() > 0 && !person.getEmail().matches(emailToMatch))
+			{
+				continue;
+			}
+			if (username != null && username.length() > 0)
+			{
+				if (!person.getUsername().matches(usernameToMatch))
+				{
+					continue;
+				}
+				if (person.getUsername().matches("INA.*"))
+				{
+					continue;
+				}
+			}
+			if (role != null && !person.getPersonRoles().contains(role))
+			{
+				continue;
+			}
+			if (documentIdNumber != null && documentIdNumber.length() > 0
+					&& !person.getNumeroDocumentoIdentificacao().matches(documentIdNumberToMatch))
+			{
+				continue;
+			}
+			count++;
+		}
+		return new Integer(count);
+	}
 
-        final List<IPerson> persons = (List<IPerson>) readAll(Person.class);
+	public List<IPerson> readPersonsBySubName(String subName) throws ExcepcaoPersistencia
+	{
 
-        final String stringToMatch = subName.replace("%", ".*").replace(" ", ".*");
+		final List<IPerson> persons = (List<IPerson>) readAll(Person.class);
 
-        return (List<IPerson>) CollectionUtils.select(persons, new Predicate() {
+		final String stringToMatch = subName.replace("%", ".*").replace(" ", ".*");
 
-            public boolean evaluate(Object object) {
-                IPerson person = (IPerson) object;
-                if (person.getNome().toLowerCase().matches(stringToMatch.toLowerCase())) {
-                    return true;
-                }
-                return false;
-            }
+		return (List<IPerson>) CollectionUtils.select(persons, new Predicate()
+		{
 
-        });
-    }
+			public boolean evaluate(Object object)
+			{
+				IPerson person = (IPerson) object;
+				if (person.getNome().toLowerCase().matches(stringToMatch.toLowerCase()))
+				{
+					return true;
+				}
+				return false;
+			}
 
-    public Collection<IPerson> readByIdentificationDocumentNumber(
-            final String identificationDocumentNumber) throws ExcepcaoPersistencia {
+		});
+	}
 
-        Collection<IPerson> persons = readAll(Person.class);
+	public Collection<IPerson> readByIdentificationDocumentNumber(
+			final String identificationDocumentNumber) throws ExcepcaoPersistencia
+	{
 
-        return CollectionUtils.select(persons, new Predicate() {
+		Collection<IPerson> persons = readAll(Person.class);
 
-            public boolean evaluate(Object arg0) {
-                IPerson person = (IPerson) arg0;
-                return person.getNumeroDocumentoIdentificacao().equalsIgnoreCase(
-                        identificationDocumentNumber);
-            }
+		return CollectionUtils.select(persons, new Predicate()
+		{
 
-        });
+			public boolean evaluate(Object arg0)
+			{
+				IPerson person = (IPerson) arg0;
+				return person.getNumeroDocumentoIdentificacao().equalsIgnoreCase(identificationDocumentNumber);
+			}
 
-    }
-public Integer CountPersonByDepartment(String name,List<ITeacher> teacher,Integer startIndex,Integer numberOfElementsInSpan) throws ExcepcaoPersistencia {
-	 return new Integer(0);
-}
-    
-    public List<IPerson> PersonByDepartment(String name,List<ITeacher> teacher,Integer startIndex,Integer numberOfElementsInSpan) throws ExcepcaoPersistencia {
-    	return null;
-    }
-    
-    
-    
-  
+		});
+
+	}
+
+	public Integer CountPersonByDepartment(String name, List<ITeacher> teacher, Integer startIndex,
+			Integer numberOfElementsInSpan) throws ExcepcaoPersistencia
+	{
+		return new Integer(0);
+	}
+
+	public List<IPerson> PersonByDepartment(String name, List<ITeacher> teacher, Integer startIndex,
+			Integer numberOfElementsInSpan) throws ExcepcaoPersistencia
+	{
+		return null;
+	}
+
+	public boolean emailOwnedByFenixPerson(Collection<String> emails)
+	{
+		boolean result = false;
+		Collection<IPerson> persons = readAll(Person.class);
+		for (String email : emails)
+		{
+			for (IPerson person : persons)
+			{
+				if (email.equalsIgnoreCase(person.getEmail()))
+				{
+					result = true;
+					break;
+				}
+			}
+		}
+		return result;
+	}
 
 }

@@ -41,7 +41,8 @@ public class FenixRequestProcessor extends RequestProcessor {
                 && (uri.indexOf("/manager/manageCache.do") == -1)
                 && (uri.indexOf("/siteMap.do") == -1)
                 && (uri.indexOf("/changeLocaleTo.do") == -1)
-                && (uri.indexOf("/isAlive.do") == -1)) {
+                && (uri.indexOf("/isAlive.do") == -1) 
+        		&& uri.indexOf("/ciapl/cms/recieveEmail.do")==-1) {        
             if (request.getRemoteUser() == null) {
                 ActionErrors errors = new ActionErrors();
 

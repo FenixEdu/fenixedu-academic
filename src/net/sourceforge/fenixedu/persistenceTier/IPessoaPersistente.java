@@ -20,4 +20,6 @@ public interface IPessoaPersistente extends IPersistentObject {
     public List<IPerson> findPersonByName(String name, Integer startIndex, Integer numberOfElementsInSpan) throws ExcepcaoPersistencia;
     
     public Collection<IPerson> readByIdentificationDocumentNumber(String identificationDocumentNumber)  throws ExcepcaoPersistencia;
+    
+    public boolean emailOwnedByFenixPerson(Collection<String> emails) throws ExcepcaoPersistencia;;
 }

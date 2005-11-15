@@ -3,11 +3,14 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.domain.cms.IUserGroup;
+import net.sourceforge.fenixedu.domain.cms.predicates.ContentAssignableClassPredicate;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IFunction;
@@ -17,6 +20,8 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.util.UsernameUtils;
+
+import org.apache.commons.collections.iterators.FilterIterator;
 
 public class Person extends Person_Base {
 
@@ -71,14 +76,14 @@ public class Person extends Person_Base {
 
     public void edit(InfoPerson personToEdit, ICountry country) {
         setProperties(personToEdit);
-        if (country != null) {
+        if(country != null){
             setPais(country);
-        }
-    }
-
+        }        
+    }    
+    
     public void update(InfoPerson updatedPersonalData, ICountry country) {
         updateProperties(updatedPersonalData);
-        setPais((ICountry) valueToUpdate(getPais(), country));
+        setPais((ICountry) valueToUpdate(getPais(),country));
     }
 
     public void editPersonalContactInformation(InfoPerson personToEdit) {
@@ -155,45 +160,46 @@ public class Person extends Person_Base {
         setPassword(PasswordEncryptor.encryptPassword(newPassword));
     }
 
-    public void updateUsername() {
-        this.setUsername(UsernameUtils.updateUsername(this));
+    public void updateUsername(){
+    	this.setUsername(UsernameUtils.updateUsername(this));
     }
-
-    public void updateIstUsername() {
+    
+    public void updateIstUsername(){
         this.setIstUsername(UsernameUtils.updateIstUsername(this));
     }
-
-    public IRole getPersonRole(RoleType roleType) {
-
-        for (IRole role : this.getPersonRoles()) {
-            if (role.getRoleType().equals(roleType)) {
-                return role;
-            }
-        }
-        return null;
-    }
-
-    public Boolean hasRole(final RoleType roleType) {
-        for (final IRole role : this.getPersonRoles()) {
-            if (role.getRoleType() == roleType) {
-                return true;
-            }
-        }
-        return false;
-    }
-
+    
+	public IRole getPersonRole(RoleType roleType){
+		
+		for (IRole role : this.getPersonRoles()) {
+			if(role.getRoleType().equals(roleType)){
+				return role;
+			}
+		}
+		return null;
+	}    
+    
+	public Boolean hasRole(final RoleType roleType){
+		for (final IRole role : this.getPersonRoles()) {
+			if (role.getRoleType() == roleType) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
     public IStudent getStudentByType(DegreeType degreeType) {
         for (IStudent student : this.getStudents()) {
-            if (student.getDegreeType() == degreeType) {
+            if (student.getDegreeType().equals(degreeType)){
                 return student;
             }
         }
         return null;
     }
-
-    public String getNacionalidade() {
+    
+    public String getNacionalidade(){
         return this.getPais().getNationality();
     }
+    
 
     /***************************************************************************
      * PRIVATE METHODS *
@@ -441,8 +447,8 @@ public class Person extends Person_Base {
     public String getSlideNameForCandidateDocuments() {
         return "/candidateDocuments/person/P" + getIdInternal();
     }
-
-    public void removeRoleByType(final RoleType roleType) {
+    
+        public void removeRoleByType(final RoleType roleType) {
         final IRole role = getPersonRole(roleType);
         if (role != null) {
             removePersonRoles(role);
@@ -463,7 +469,25 @@ public class Person extends Person_Base {
             }
         }
     }
+        
+    public Iterator<IUserGroup> getUserGroupsIterator()
+    {
+    	return new FilterIterator(this.getContentsIterator(),new ContentAssignableClassPredicate(IUserGroup.class));
+    }
 
+	public int getUserGroupsCount()
+	{
+		int groupsCount = 0;
+		Iterator<IUserGroup> iterator = this.getUserGroupsIterator();
+		while (iterator.hasNext())
+		{
+			iterator.next();
+			groupsCount++;
+		}
+		return groupsCount;
+	}
+	
+	
     public List<IPersonFunction> getActiveFunctions() {
 
         List<IPersonFunction> activeFunctions = new ArrayList<IPersonFunction>();

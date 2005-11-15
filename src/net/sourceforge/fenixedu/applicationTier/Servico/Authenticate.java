@@ -133,6 +133,7 @@ public class Authenticate implements IService, Serializable {
         final Set allowedRoles = getAllowedRolesByHostname(requestURL);
         return new UserView(person, allowedRoles);
     }
+   
 
     protected Collection<InfoRole> getInfoRoles(final String username, final Collection personRoles,
             final Set allowedRoles) {

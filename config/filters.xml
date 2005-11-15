@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
+
 <filterDefinitions>
     <filter>
         <name>AA</name>
@@ -814,4 +815,93 @@
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
+   	<filter>
+        <name>DepartmentMemberAuthorization</name>
+        <implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
+<!--############# CMS ####################-->
+<!-- =========by gedl 25-10-2005============  -->
+<filter>
+    <name>ReadAllMailingListsFilter</name>
+    <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.ReadAllMailingLists</implementationClass>
+    <description/>
+    <isTransactional>true</isTransactional>
+</filter>
+
+<filter>
+	<name>WriteMailingListFilter</name>
+	<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.WriteMailingList</implementationClass>
+	<description/>
+	<isTransactional>true</isTransactional>
+</filter>
+    
+<filter>
+	<name>ProcessReceivedMailFilter</name>
+	<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.ProcessReceivedMail</implementationClass>
+	<description/>
+	<isTransactional>true</isTransactional>
+</filter>
+
+<filter>
+	<name>WriteExecutionCourseUserGroupFilter</name>
+	<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.cms.groupManagement.WriteExecutionCourseUserGroup</implementationClass>
+	<description/>
+	<isTransactional>true</isTransactional>
+</filter>
+    
+<filter>
+	<name>DeleteUserGroupFilter</name>
+	<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.cms.groupManagement.DeleteUserGroup</implementationClass>
+	<description/>
+	<isTransactional>true</isTransactional>
+</filter>
+   
+<filter>
+	<name>WriteGroupAggregatorFilter</name>
+	<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.cms.groupManagement.WriteGroupAggregator</implementationClass>
+	<description/>
+	<isTransactional>true</isTransactional>
+</filter>
+<!-- ======================================  -->
+<!-- =========by gedl 9-11-2005============  -->
+<filter>
+	<name>ReadMailMessageByIdFilter</name>
+	<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.ReadMailMessageById</implementationClass>
+	<description/>
+	<isTransactional>true</isTransactional>
+</filter>
+<!-- ======================================  -->
+
+<!-- =========by gedl 14-11-2005============  -->
+<filter>
+	<name>OwnerCanAssociateMailingListToGroupsFilter</name>
+	<implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.cms.accessControl.OwnerCanAssociateMailingListToGroups</implementationClass>
+	<description/>
+	<isTransactional>true</isTransactional>
+</filter>
+
+<filter>
+	<name>SenderIsInFenixBD</name>
+	<implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.cms.accessControl.SenderIsInFenixBD</implementationClass>
+	<description/>
+	<isTransactional>true</isTransactional>
+</filter>
+
+<filter>
+	<name>AcceptableMessageSize</name>
+	<implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.cms.accessControl.AcceptableMessageSize</implementationClass>
+	<description/>
+	<isTransactional>true</isTransactional>
+</filter>
+<filter>
+	<name>RequesterIsGroupOwner</name>
+	<implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.cms.accessControl.RequesterIsGroupOwner</implementationClass>
+	<description/>
+	<isTransactional>true</isTransactional>
+</filter>
+<!-- ======================================  -->
+<!--######################################-->
 </filterDefinitions>

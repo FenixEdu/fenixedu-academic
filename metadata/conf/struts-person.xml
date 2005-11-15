@@ -30,39 +30,6 @@
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
             <form-property name="page" type="java.lang.Integer" />
-
-        	<!--<form-property name="identificationDocumentType" type="java.lang.String" />
-        	<form-property name="identificationDocumentNumber" type="java.lang.String" />
-        	<form-property name="identificationDocumentIssuePlace" type="java.lang.String" />		
-        	<form-property name="name" type="java.lang.String" />
-        	<form-property name="sex" type="java.lang.String" />
-        	<form-property name="maritalStatus" type="java.lang.String" />
-        	<form-property name="nationality" type="java.lang.String" />
-        	<form-property name="fatherName" type="java.lang.String" />
-        	<form-property name="motherName" type="java.lang.String" />
-        	<form-property name="birthPlaceParish" type="java.lang.String" />
-        	<form-property name="birthPlaceMunicipality" type="java.lang.String" />
-        	<form-property name="birthPlaceDistrict" type="java.lang.String" />
-        	<form-property name="address" type="java.lang.String" />
-        	<form-property name="place" type="java.lang.String" />
-        	<form-property name="postCode" type="java.lang.String" />
-        	<form-property name="addressParish" type="java.lang.String" />
-        	<form-property name="addressMunicipality" type="java.lang.String" />
-        	<form-property name="addressDistrict" type="java.lang.String" />
-        	<form-property name="telephone" type="java.lang.String" />
-        	<form-property name="contributorNumber" type="java.lang.String" />
-        	<form-property name="occupation" type="java.lang.String" />
-        	<form-property name="birthDay" type="java.lang.String" /> 
-            <form-property name="birthMonth" type="java.lang.String" /> 
-        	<form-property name="birthYear" type="java.lang.String" /> 
-        	<form-property name="idIssueDateDay" type="java.lang.String" /> 
-            <form-property name="idIssueDateMonth" type="java.lang.String" /> 
-        	<form-property name="idIssueDateYear" type="java.lang.String" /> 
-        	<form-property name="idExpirationDateDay" type="java.lang.String" /> 
-            <form-property name="idExpirationDateMonth" type="java.lang.String" /> 
-        	<form-property name="idExpirationDateYear" type="java.lang.String" /> 
-        	<form-property name="username" type="java.lang.String" /> 
-        	<form-property name="areaOfAreaCode" type="java.lang.String" /> -->
         	
         	<form-property name="mobilePhone" type="java.lang.String" />
         	<form-property name="workPhone" type="java.lang.String" />
@@ -116,9 +83,9 @@
 			<form-property name="departmentId" type="java.lang.Integer" />
 			<form-property name="degreeType" type="java.lang.String"/>
 			<form-property name="degreeId" type="java.lang.Integer"/>
-	  </form-bean> 
+	  </form-bean> 	         
     </form-beans>
-    
+
     <!-- ========== Global Exception Definitions ============================== -->
 	<global-exceptions>
         <exception
@@ -286,7 +253,8 @@
 		<action path="/viewPhoto"
 			type="net.sourceforge.fenixedu.presentationTier.Action.person.ViewPhotoAction"
 			>
-		</action>
+		</action>		
+								
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

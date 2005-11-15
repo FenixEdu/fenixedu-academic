@@ -29,6 +29,7 @@ public class InfoExecutionPeriodWithInfoExecutionYear extends InfoExecutionPerio
         if (period != null) {
             infoExecutionPeriod = new InfoExecutionPeriodWithInfoExecutionYear();
             infoExecutionPeriod.copyFromDomain(period);
+            infoExecutionPeriod.setQualifiedName(period.getName() + " " + period.getExecutionYear().getYear());
         }
         return infoExecutionPeriod;
     }

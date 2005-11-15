@@ -41,6 +41,9 @@ public class InfoExecutionDegree extends InfoObject {
     private InfoPeriod infoPeriodLessonsSecondSemester;
 
     private InfoPeriod infoPeriodExamsSecondSemester;
+    
+    // added by gedl 26 Sept 2005
+    private String qualifiedName;
 
     public InfoExecutionDegree() {
     }
@@ -271,5 +274,15 @@ public class InfoExecutionDegree extends InfoObject {
         super.copyToDomain(infoExecutionDegree, executionDegree);
         executionDegree.setTemporaryExamMap(infoExecutionDegree.getTemporaryExamMap());
     }
+
+	public String getQualifiedName()
+	{
+		return qualifiedName;
+	}
+
+	public void setQualifiedName(String qualifiedName)
+	{
+		this.qualifiedName = qualifiedName;
+	}
 
 }

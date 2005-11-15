@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCa
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryModality;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryTheme;
+import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPositionCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentOtherTypeCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
@@ -90,6 +91,7 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentPaymentT
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentSmsTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransaction;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.IPersistentMailAddressAlias;
 
 /**
  * @author ars
@@ -489,5 +491,9 @@ public interface ISuportePersistente {
     
     public IPersistentTeacherPersonalExpectation getIPersistentTeacherPersonalExpectation();
     
-    public IPersistentTeacherExpectationDefinitionPeriod getIPersistentTeacherExpectationDefinitionPeriod();
+    public IPersistentCMS getIPersistentCms();
+    
+    public IPersistentMailAddressAlias getIPersistentMailAdressAlias();
+    
+        public IPersistentTeacherExpectationDefinitionPeriod getIPersistentTeacherExpectationDefinitionPeriod();
 }

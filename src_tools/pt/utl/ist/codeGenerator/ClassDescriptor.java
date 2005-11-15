@@ -142,9 +142,8 @@ public class ClassDescriptor {
     protected void addMethod(final Method method, final MethodBodyClosure methodBodyClosure) {
         methodDescriptors.add(new MethodDescriptor(method, methodBodyClosure));
     }
-
     public void addImport(final Class clazz) {
-        if (clazz != null && !clazz.isPrimitive() && !clazz.getPackage().getName().equals("java.lang")) {
+        if (clazz != null && !clazz.isPrimitive() &&!clazz.getPackage().getName().equals("java.lang")) {
             imports.add(clazz.getName());
         }
     }

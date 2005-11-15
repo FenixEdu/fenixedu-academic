@@ -274,6 +274,129 @@ class net.sourceforge.fenixedu.domain.teacher.Category extends net.sourceforge.f
 	String shortName;
 }
 
+class net.sourceforge.fenixedu.domain.cms.Cms extends net.sourceforge.fenixedu.domain.DomainObject
+{
+	Integer keyConfiguration;
+	String name;
+}
+
+class net.sourceforge.fenixedu.domain.cms.Content extends net.sourceforge.fenixedu.domain.DomainObject{
+String name;
+String description;
+Integer keyCms;
+Date creationDate;
+/*Integer idInternal;*/
+Integer keyPerson;
+}
+    class net.sourceforge.fenixedu.domain.cms.Bin extends net.sourceforge.fenixedu.domain.cms.Content {
+       }
+       class net.sourceforge.fenixedu.domain.cms.messaging.MailingList extends net.sourceforge.fenixedu.domain.cms.Bin {
+       String address;
+       Integer keyQueue;
+       Boolean closed;
+       Boolean membersOnly;
+       Boolean replyToList;
+       
+       interface "
+		public java.util.Iterator<IMailConversation> getMailConversationsIterator();
+		public java.util.Iterator<IMailMessage> getMailMessagesIterator();		
+		public java.util.Iterator<IMailConversation> getConversationsOnSubjectIterator(String subject);
+		public IMailConversation getMostRecentMailConversationOnSubject(String subject);
+		public int getMailConversationsCount();
+		public int getMailMessagesCount();
+		public int getSize() throws javax.mail.MessagingException;
+       "
+       }
+       class net.sourceforge.fenixedu.domain.cms.messaging.MailConversation extends net.sourceforge.fenixedu.domain.cms.Bin {
+       String subject;
+       interface "
+       	public boolean isAboutSubject(String string);
+	   	public IMailMessage getLastReply();
+	   	public IMailMessage getFirstMessage();
+	   	public java.util.Iterator<IMailMessage> getMailMessagesIterator();
+		public int getMailMessagesCount();	   	
+		public int getSize() throws javax.mail.MessagingException;
+       "
+       }
+    class net.sourceforge.fenixedu.domain.cms.messaging.MailMessage extends net.sourceforge.fenixedu.domain.cms.Content {
+       String body;
+       interface "
+		public String getSubject() throws javax.mail.MessagingException;
+		public java.util.Date getReceivedDate() throws javax.mail.MessagingException;		
+		public java.util.Iterator<IMailConversation> getMailConversationsIterator();
+		public java.util.Collection<javax.mail.internet.InternetAddress> getFrom() throws javax.mail.MessagingException;
+		public java.lang.String getFirstPlainTextContent() throws javax.mail.MessagingException;
+		public java.util.Collection<java.lang.String> getAllPlainTextContents() throws javax.mail.MessagingException;
+		public java.util.Collection<java.lang.String> getAllAttachmentsNames() throws javax.mail.MessagingException;
+		public int getSize() throws javax.mail.MessagingException;
+		public int getMailConversationsCount();	 
+		public javax.mail.Part getAttachment(String attachmentName) throws javax.mail.MessagingException;
+       "
+    }
+    class net.sourceforge.fenixedu.domain.cms.UserGroup extends net.sourceforge.fenixedu.domain.cms.Content{
+  	Integer keyMailingList;    
+    interface "
+    public abstract java.util.Iterator<net.sourceforge.fenixedu.domain.IPerson> getElementsIterator();    
+    public abstract int getElementsCount();
+    "
+    }
+	   class net.sourceforge.fenixedu.domain.cms.NodeGroup extends net.sourceforge.fenixedu.domain.cms.UserGroup{	
+     	}
+	    	class net.sourceforge.fenixedu.domain.cms.GroupDifference extends net.sourceforge.fenixedu.domain.cms.NodeGroup{
+		    }			
+    		class net.sourceforge.fenixedu.domain.cms.GroupUnion extends net.sourceforge.fenixedu.domain.cms.NodeGroup{
+	    	}
+		    class net.sourceforge.fenixedu.domain.cms.GroupIntersection extends net.sourceforge.fenixedu.domain.cms.NodeGroup{
+    		}
+       class net.sourceforge.fenixedu.domain.cms.LeafGroup extends net.sourceforge.fenixedu.domain.cms.UserGroup{    
+       }
+    	    class net.sourceforge.fenixedu.domain.cms.ExecutionCourseUserGroup extends net.sourceforge.fenixedu.domain.cms.LeafGroup {
+    	    Integer keyExecutionCourse;
+    	    }
+    	    class net.sourceforge.fenixedu.domain.cms.ExecutionCourseStudentsGroup extends net.sourceforge.fenixedu.domain.cms.ExecutionCourseUserGroup{    	
+    	    }    	
+		    class net.sourceforge.fenixedu.domain.cms.ExecutionCourseTeachersGroup extends net.sourceforge.fenixedu.domain.cms.ExecutionCourseUserGroup{
+    	    }    	
+    	    class net.sourceforge.fenixedu.domain.cms.PersonGroup extends net.sourceforge.fenixedu.domain.cms.LeafGroup{
+    	    }
+
+class net.sourceforge.fenixedu.domain.cms.infrastructure.MailQueue extends net.sourceforge.fenixedu.domain.DomainObject
+{
+    	   Integer keyMailingList;
+}
+
+class net.sourceforge.fenixedu.domain.cms.infrastructure.CmsConfiguration extends net.sourceforge.fenixedu.domain.DomainObject
+{
+	Integer keyCms;
+	Boolean replyToMailingList;
+	String smtpServerAddress;
+	Boolean filterNonTextualAttachments;
+	Integer sendMailInterval; /* in seconds*/
+	String mailingListsHost;
+	String conversationReplyMarkers;
+	Integer maxAttachmentSize; /* in bytes */
+	Integer maxMessageSize; /* in bytes */
+	Integer sendMailTimeout; /* in bytes */
+   
+    interface "    
+ 	public String getSmtpServerAddressToUse();
+	public Boolean getReplyToMailingListToUse();
+	public boolean getFilterNonTextualAttachmentsToUse();
+	public Integer getSendMailIntervalToUse(); 	
+	public String getMailingListsHostToUse();
+	public String[] getConversationReplyMarkersToUse();	
+	public Integer getMaxAttachmentSizeToUse();
+	public Integer getMaxMessageSizeToUse();
+	public Integer getSendMailTimeoutToUse();
+    "	
+}
+
+class net.sourceforge.fenixedu.domain.cms.infrastructure.MailAddressAlias extends net.sourceforge.fenixedu.domain.DomainObject
+{
+	String address;
+}
+
+
 class net.sourceforge.fenixedu.domain.Contributor extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer contributorNumber;
 	String contributorAddress;
@@ -2053,6 +2176,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction ext
 }
 
 class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyCms;
 	Integer keyEmployee;
 	Integer keyTeacher;
 	Integer keyExternalPerson;	
@@ -2127,7 +2251,11 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 	public void indicatePrivledges(java.util.List<IRole> roles);
 	
 	public String getNacionalidade();
-	
+		
+	public java.util.Iterator<net.sourceforge.fenixedu.domain.cms.IUserGroup> getUserGroupsIterator();
+	public int getUserGroupsCount();
+
+
 	public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction> getActiveFunctions();
 	
 	public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction> getInactiveFunctions();
@@ -3368,6 +3496,29 @@ relation BuildingRoom {
 	net.sourceforge.fenixedu.domain.Building playsRole building;
 }
 
+relation CmsConfiguration
+{
+	net.sourceforge.fenixedu.domain.cms.Cms playsRole cms;
+	net.sourceforge.fenixedu.domain.cms.infrastructure.CmsConfiguration playsRole configuration;
+}
+
+relation CmsContents
+{
+	net.sourceforge.fenixedu.domain.cms.Cms playsRole cms;
+	net.sourceforge.fenixedu.domain.cms.Content playsRole contents
+	{
+		multiplicity *;
+	}
+}
+
+relation CmsUsers
+{
+	net.sourceforge.fenixedu.domain.cms.Cms playsRole cms;
+	net.sourceforge.fenixedu.domain.Person playsRole users
+	{
+		multiplicity *;
+	}
+}
 
 relation CandidacyCaseStudyChoice {
     net.sourceforge.fenixedu.domain.Seminaries.Candidacy playsRole candidacy;
@@ -3441,6 +3592,15 @@ relation CoordinatorTeacher {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+relation ContentHierarchy {
+	net.sourceforge.fenixedu.domain.cms.Content playsRole children{
+	multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.cms.Bin playsRole parents{
+	multiplicity *;
+	}
 }
 
 relation CourseEquivalencyTheme {
@@ -4368,11 +4528,37 @@ relation GratuityValuesExecutionDegree {
 	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
 }
 
+relation GroupComposition {
+	net.sourceforge.fenixedu.domain.cms.UserGroup playsRole parts
+	{
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.cms.NodeGroup playsRole aggregators
+	{
+	   multiplicity *;
+	}
+ }
+ 
+ relation GroupMailingList {
+   net.sourceforge.fenixedu.domain.cms.messaging.MailingList playsRole mailingList;
+   net.sourceforge.fenixedu.domain.cms.UserGroup playsRole groups
+   {
+      multiplicity *;
+   }
+ }
+   
+relation ExecutionCourseUserGroupHook {
+ 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+ 	net.sourceforge.fenixedu.domain.cms.ExecutionCourseUserGroup playsRole hookedGroups
+ 	{
+ 		multiplicity *;
+ 	}
+}
+
 relation GroupProposal {
 	net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal playsRole proposalAttributed;
 	net.sourceforge.fenixedu.domain.finalDegreeWork.Group playsRole groupAttributed;
 }
-
 
 relation GroupProposalProposal {
 	net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal playsRole finalDegreeWorkProposal;
@@ -4607,6 +4793,34 @@ relation LessonShift {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Shift playsRole shift;
+}
+
+relation MailingListAlias {
+	net.sourceforge.fenixedu.domain.cms.messaging.MailingList playsRole mailingLists
+	{
+		multiplicity *;
+	}
+    net.sourceforge.fenixedu.domain.cms.infrastructure.MailAddressAlias playsRole aliases 	
+    {
+    	multiplicity *;
+    }
+}
+
+relation MailingListQueue {
+	net.sourceforge.fenixedu.domain.cms.messaging.MailingList playsRole mailingList;
+    net.sourceforge.fenixedu.domain.cms.infrastructure.MailQueue playsRole queue;
+}
+
+relation MailingListQueueOutgoingMails {
+	net.sourceforge.fenixedu.domain.cms.infrastructure.MailQueue playsRole queue
+	{
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.cms.messaging.MailMessage playsRole messages
+	{
+		multiplicity *;
+	}
+
 }
 
 relation MarkAttends {
@@ -5742,6 +5956,14 @@ relation TeacherPersonalExpectationExecutionYear {
 	}
 	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 }
+
+ relation ContentOwnership {
+ 	net.sourceforge.fenixedu.domain.Person playsRole owner;
+ 	net.sourceforge.fenixedu.domain.cms.Content playsRole contents
+ 	{
+ 		multiplicity *;
+ 	}
+ }
 
 relation ContractSalaryUnit {
     net.sourceforge.fenixedu.domain.Contract playsRole salaryContracts{

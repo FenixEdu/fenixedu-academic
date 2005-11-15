@@ -19,6 +19,13 @@
 	        	scope="request"
 				validate="true">
 		</action>
+		
+		<action type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.Authentication"
+	            path="/authenticate"
+	        	scope="request"
+				validate="true">
+		</action>
+		
 	</action-mappings>
   
   <!-- ========== Controller Configuration ================================ -->

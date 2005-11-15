@@ -30,6 +30,4 @@
 	<definition name="displayPerson" extends="definition.person.masterPage" >
 		<put name="body" value="/person/findPerson/displayPerson.jsp" />
 	</definition>
-	
-	
 </tiles-definitions>

@@ -67,7 +67,7 @@ public class EnumTagLib extends BodyTagSupport {
     }
 
     public void setIncludedFields(String includedFields) {
-        this.includedFields = includedFields;
+        this.includedFields = includedFields; 
     }
 
     public Collection<LabelValueBean> getLabelValues() {

@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.util.PeriodState;
 public class InfoExecutionPeriod extends InfoObject implements Serializable {
 
     private String name;
+    
+    private String qualifiedName;
 
     private InfoExecutionYear infoExecutionYear;
 
@@ -223,7 +225,9 @@ public class InfoExecutionPeriod extends InfoObject implements Serializable {
         if (period != null) {
             infoExecutionPeriod = new InfoExecutionPeriod();
             infoExecutionPeriod.copyFromDomain(period);
+            infoExecutionPeriod.setQualifiedName(period.getName() + " " + period.getExecutionYear().getYear());
         }
+        
         return infoExecutionPeriod;
     }
 
@@ -235,5 +239,15 @@ public class InfoExecutionPeriod extends InfoObject implements Serializable {
         executionPeriod.setSemester(infoExecutionPeriod.getSemester());
         executionPeriod.setState(executionPeriod.getState());
     }
+
+	public String getQualifiedName()
+	{
+		return qualifiedName;
+	}
+
+	public void setQualifiedName(String qualifiedName)
+	{
+		this.qualifiedName = qualifiedName;
+	}
 
 }

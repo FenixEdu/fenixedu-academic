@@ -62,13 +62,15 @@
 <!ENTITY managementAssiduousness SYSTEM "repository_managementAssiduousness.xml">
 <!ENTITY projectsManagement SYSTEM "repository_projectsManagement.xml">
 <!ENTITY unit SYSTEM "repository_unit.xml">
+<!ENTITY cms SYSTEM "cms/repository_cms.xml">
+<!ENTITY cmsBasic SYSTEM "cms/repository_cms_basic.xml">
+<!ENTITY cmsGroups SYSTEM "cms/repository_cms_groups.xml">
+<!ENTITY cmsMessaging SYSTEM "cms/repository_cms_messaging.xml">
 <!ENTITY contract SYSTEM "repository_contract.xml">
 <!ENTITY function SYSTEM "repository_function.xml">
 <!ENTITY personFunction SYSTEM "repository_person_function.xml">
 <!ENTITY teacherServiceExemption SYSTEM "repository_teacher_service_exemption.xml">
 ]>
-
-
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
 
     <!-- include all used database connections -->
@@ -134,9 +136,9 @@
 	&managementAssiduousness;
 	&projectsManagement;
 	&unit;
+	&cms;
 	&contract;
 	&function;
-	&personFunction;
-	&teacherServiceExemption;
-	
+	&person_function;
+&teacherServiceExemption;
 </descriptor-repository>
