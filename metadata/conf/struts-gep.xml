@@ -31,15 +31,24 @@
       <form-bean name="sendEmailReminderForm" 
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
-				 
         	<form-property type="java.lang.String" name="method" />
         	<form-property type="java.lang.Integer" name="page" />
 			<form-property type="java.lang.Integer[]" name="degreeCurricularPlanIds"/>
 			<form-property type="java.lang.String" name="bodyTextSubject" />
 			<form-property type="java.lang.String" name="bodyTextIntro" />
 			<form-property type="java.lang.String" name="bodyTextEnd" />
-			
-			
+		</form-bean>	
+
+		<form-bean name="teachingStaffForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="executionYearID" type="java.lang.Integer"/>
+			<form-property name="degreeCurricularPlanID" type="java.lang.Integer"/>
+			<form-property name="executionCourseID" type="java.lang.Integer"/>
+			<form-property name="nonAffiliatedTeacherName" type="java.lang.String"/>
+			<form-property name="nonAffiliatedTeacherID" type="java.lang.Integer"/>
+			<form-property name="nonAffiliatedTeacherInstitutionID" type="java.lang.Integer"/>
+			<form-property name="nonAffiliatedTeacherInstitutionName" type="java.lang.String"/>			
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+			<form-property name="method" type="java.lang.String"/>
 		</form-bean>	
 		
     </form-beans>
@@ -195,6 +204,20 @@
 			<forward name="chooseDegreeCurricularPlans" path="choose-degree-curricular-plans"/>
 			<forward name="showReport" path="show-report"/>
 		</action>
+
+		<action path="/teachingStaff"
+			type="net.sourceforge.fenixedu.presentationTier.Action.gep.TeachingStaffDispatchAction"
+			name = "teachingStaffForm"
+			scope="request"
+			input="/teachingStaff.do?method=prepare"
+			parameter="method"
+			>
+			<forward name="chooseExecutionYearAndDegreeCurricularPlan" path="teachingStaff.chooseExecutionYearAndDegreeCurricularPlan"/>
+			<forward name="chooseExecutionCourse" path="teachingStaff.chooseExecutionCourse"/>
+			<forward name="viewTeachingStaff" path="teachingStaff.viewTeachingStaff"/>			
+		</action>
+		
+		
 
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
