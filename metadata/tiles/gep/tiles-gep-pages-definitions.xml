@@ -62,6 +62,15 @@
 		extends="definition.gep.two-column">
 		<put name="body" value="/gep/inquiries/showReport.jsp"></put>
 	</definition>	
-	
 
+	<definition name="teachingStaff.chooseExecutionYearAndDegreeCurricularPlan" extends="definition.gep.two-column">
+		<put name="body" value="/gep/teachingStaff/chooseExecutionYearAndDegreeCurricularPlan.jsp"></put>
+	</definition>
+	<definition name="teachingStaff.chooseExecutionCourse" extends="definition.gep.two-column">
+		<put name="body" value="/gep/teachingStaff/chooseExecutionCourse.jsp"></put>
+	</definition>	
+	<definition name="teachingStaff.viewTeachingStaff" extends="definition.gep.two-column">
+		<put name="body" value="/gep/teachingStaff/viewTeachingStaff.jsp"></put>
+	</definition>	
+	
 </tiles-definitions>
