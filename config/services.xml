@@ -8332,7 +8332,7 @@
 		<description/>
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="ManagerAuthorization"/>
+			<chain name="ManagerOrGEPAuthorization"/>
 		</filterChains>
 	</service>	
 	<service>
@@ -8755,8 +8755,6 @@
         <description></description>
         <isTransactional>true</isTransactional>       
     </service>
-    
-    <!-- =========by gedl 21-9-2005============  -->
 	<service>
 		<name>ReadDomainPersonByUsername</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ReadDomainPersonByUsername</implementationClass>
@@ -8764,10 +8762,7 @@
 		<isTransactional>true</isTransactional>
 		<filterChains />
 	</service>    
-    <!-- ======================================  -->
-    
-    <!-- =========by gedl 26-9-2005============  -->
-    	<service>
+    <service>
 		<name>ReadDomainExecutionCourseByID</name>
 		<implementationClass>
 			net.sourceforge.fenixedu.applicationTier.Servico.ReadDomainExecutionCourseByID
@@ -8775,8 +8770,6 @@
 		<description/>
 		<isTransactional>true</isTransactional>
 	</service>
-    <!-- ======================================  -->
-          
 	<service>
 		<name>ReadStudentByUsernameForEvaluationEnrolment</name>
 		<implementationClass>
@@ -8815,14 +8808,14 @@
 		<filterChains>
 			<chain name="TeacherAuthorization"/>
 		</filterChains>
-	</service>	
+	</service>
     <service>
     	<name>ReadItemSlideName</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.fileManager.ReadItemSlideName</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>       
     </service>
-<service>
+	<service>
     	<name>ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID</implementationClass>
         <description></description>
@@ -8831,7 +8824,7 @@
         	<chain name="DepartmentMemberOrTeacherAuthorization"></chain>
         </filterChains>     
     </service>
-    <service>
+	<service>
     	<name>GenerateNewPassword</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.GenerateNewPasswordService</implementationClass>
         <description></description>
@@ -8862,7 +8855,19 @@
         <isTransactional>true</isTransactional>  
         <filterChains>
         	<chain name="DepartmentAdministrativeOfficeAuthorization"></chain>
-        </filterChains>
+        </filterChains>     
+    </service>   
+	<service>
+    	<name>ReadOpenExecutionYears</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadOpenExecutionYears</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>       
+    </service>	     	
+    <service>
+    	<name>ReadActiveCurricularCourseScopesByDegreeCurricularPlanIDAndExecutionYearID</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadActiveCurricularCourseScopesByDegreeCurricularPlanIDAndExecutionYearID</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>       
     </service>
     <service>
     	<name>EditTeacherExpectationDefinitionPeriod</name>
@@ -8888,8 +8893,7 @@
         <description></description>
         <isTransactional>true</isTransactional>    
     </service>   
-<!--############# CMS ####################-->    
-    <!-- =========by gedl 18-10-2005============  -->
+	<!--############# CMS ####################-->  
     <service>
 		<name>WriteMailingList</name>
 		<implementationClass>
@@ -8902,9 +8906,6 @@
 			<chain name="WriteMailingListPreFilterChain" />
 		</filterChains>
 	</service>
-    <!-- ======================================  -->         
-    
-    <!-- =========by gedl 19-10-2005============  -->
     <service>
 		<name>ProcessReceivedMail</name>
 		<implementationClass>
@@ -8917,8 +8918,6 @@
 			<chain name="ProcessReceivedMailPreFilterChain" />
 		</filterChains>		
 	</service>
-    <!-- ======================================  -->    
-     <!-- =========by gedl 21-10-2005============  -->
     <service>
 		<name>ReadAllMailingLists</name>
 		<implementationClass>
@@ -8930,9 +8929,6 @@
 			<chain name="ReadAllMailingListsPostFilterChain" />
 		</filterChains>				
 	</service>
-    <!-- ======================================  -->  
-    
-       <!-- =========by gedl 27-9-2005============  -->
     	<service>
 		<name>WriteExecutionCourseUserGroup</name>
 		<implementationClass>
@@ -8944,10 +8940,7 @@
 			<chain name="WriteExecutionCourseUserGroupPostFilterChain" />
 		</filterChains>				
 	</service>
-    <!-- ======================================  -->    
-    
-     <!-- =========by gedl 29-9-2005============  -->
-    	<service>
+   	<service>
 		<name>DeleteUserGroup</name>
 		<implementationClass>
 			net.sourceforge.fenixedu.applicationTier.Servico.cms.groupManagement.DeleteUserGroup
@@ -8959,9 +8952,6 @@
 			<chain name="DeleteUserGroupPreFilterChain" />
 		</filterChains>				
 	</service>
-    <!-- ======================================  --> 
-    
-    <!-- =========by gedl 3-10-2005============  -->
     <service>
 		<name>WriteGroupAggregator</name>
 		<implementationClass>
@@ -8973,8 +8963,6 @@
 			<chain name="WriteGroupAggregatorPostFilterChain" />
 		</filterChains>				
 	</service>
-    <!-- ======================================  -->  
-	 <!-- =========by gedl 9-11-2005============  -->
     <service>
 		<name>ReadMailMessageById</name>
 		<implementationClass>
@@ -8986,7 +8974,5 @@
 			<chain name="ReadMailMessageByIdPostFilterChain" />
 		</filterChains>				
 	</service>
-    <!-- ======================================  -->      
-    <!-- ======================================  -->
-<!--######################################-->    
-</serviceDefinitions>
+	<!--######################################-->  
+</serviceDefinitions>    

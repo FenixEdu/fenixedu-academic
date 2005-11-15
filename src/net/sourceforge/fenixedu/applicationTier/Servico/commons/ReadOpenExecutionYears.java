@@ -6,15 +6,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
-
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -23,24 +17,12 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadOpenExecutionYears implements IService {
 
-    public List run() throws FenixServiceException {
-        try {
-            IPersistentExecutionYear persistentExecutionYear = PersistenceSupportFactory.getDefaultPersistenceSupport()
-                    .getIPersistentExecutionYear();
-            List openExecutionYears = persistentExecutionYear.readOpenExecutionYears();
+    public List run() throws FenixServiceException, ExcepcaoPersistencia {
+        
+        IPersistentExecutionYear persistentExecutionYear = PersistenceSupportFactory
+                .getDefaultPersistenceSupport().getIPersistentExecutionYear();
+        
+        return persistentExecutionYear.readOpenExecutionYears();
 
-            List infoOpenExecutionYears = (List) CollectionUtils.collect(openExecutionYears,
-                    new Transformer() {
-                        public Object transform(Object obj) {
-                            IExecutionYear executionYear = (IExecutionYear) obj;
-                            InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
-                            infoExecutionYear.copyFromDomain(executionYear);
-                            return infoExecutionYear;
-                        }
-                    });
-            return infoOpenExecutionYears;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
     }
 }

@@ -23,7 +23,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class InsertNonAffiliatedTeacher implements IService {
 
-    public void run(String nonAffiliatedTeacherName, Integer institutionID) throws ExcepcaoPersistencia,
+    public INonAffiliatedTeacher run(String nonAffiliatedTeacherName, Integer institutionID) throws ExcepcaoPersistencia,
             NotExistingServiceException {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -48,6 +48,8 @@ public class InsertNonAffiliatedTeacher implements IService {
         nonAffiliatedTeacher = DomainFactory.makeNonAffiliatedTeacher();
         nonAffiliatedTeacher.setName(nonAffiliatedTeacherName);
         nonAffiliatedTeacher.setInstitution(institution);
+        
+        return nonAffiliatedTeacher;
     }
 
 }

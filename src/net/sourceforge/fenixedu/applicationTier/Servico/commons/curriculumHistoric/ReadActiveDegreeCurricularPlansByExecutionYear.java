@@ -25,11 +25,11 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadActiveDegreeCurricularPlansByExecutionYear implements IService {
 
-    public List run(Integer execution_year_Id) throws FenixServiceException {
+    public List run(Integer executionYearID) throws FenixServiceException {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-            List executionDegrees = persistentExecutionDegree.readByExecutionYearOID(execution_year_Id);
+            List executionDegrees = persistentExecutionDegree.readByExecutionYearOID(executionYearID);
 
             if (executionDegrees == null) {
                 throw new FenixServiceException("nullDegree");
