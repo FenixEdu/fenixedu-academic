@@ -48,6 +48,15 @@ public class FenixBackingBean {
                 .get(parameterName);
     }
 
+    protected Object getRequestAttribute(String attributeName) {
+        return FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get(attributeName);
+    }
+
+    protected void setRequestAttribute(String attributeName, Object attributeValue) {
+        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put(attributeName,
+                attributeValue);
+    }
+
     public String getContextPath() {
         return ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest())
                 .getContextPath();
