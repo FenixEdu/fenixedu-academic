@@ -254,7 +254,7 @@ public class InitializeExecutionPeriod {
     	final IDegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
     	final IDegree degree = degreeCurricularPlan.getDegree();
         if (DEGREE_TYPES_TO_CREATE.contains(degree.getTipoCurso())
-        		&& curricularCourse.getActiveScopesInExecutionPeriod(executionPeriod) != null) {
+        		&& !curricularCourse.getActiveScopesInExecutionPeriod(executionPeriod).isEmpty()) {
         	curricularCourse.getAssociatedExecutionCourses().add(executionCourse);
         }
     }
