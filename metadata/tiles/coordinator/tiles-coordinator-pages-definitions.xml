@@ -175,5 +175,10 @@
 		extends="definition.coordinator.two-column">
 		<put name="body" value="/coordinator/inquiries/showOldInquiriesTeacherRes.jsp"></put>
 	</definition>
+	
+	<!--  ================================= EVALUATIONS ========================= -->
+	
+	<definition name="df.coordinator.evaluation-management" extends="definition.coordinator.two-column">
+	</definition>
 
 </tiles-definitions>

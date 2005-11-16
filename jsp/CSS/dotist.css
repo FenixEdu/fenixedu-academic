@@ -362,6 +362,13 @@ select.degrees {
 	border: 1px solid #ccc;
 	}
 
+.infocell {
+	background: #EBECED;
+	padding: 6px;
+	border: 1px solid #ccc;
+}
+
+
 .bottomborder {
 	border-bottom: 1px solid #ccc;
 	}  

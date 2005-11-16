@@ -54,6 +54,10 @@
 		<put name="body" value="/sop/exams/selectDegreeAndYear.jsp" />
 		<put name="context" value="/commons/context.jsp" />
 	</definition>
+	<definition name="df.page.selectDegreeAndYearForWrittenEvaluationsSearch" extends="definition.sop.examsPage" >
+		<put name="body" value="/sop/writtenEvaluations/selectDegreeAndYear.jsp" />
+		<put name="context" value="/commons/context.jsp" />
+	</definition>
 	<definition name="df.page.examSearchByDate" extends="definition.sop.examsPage" >
 		<put name="body" value="/sop/exams/examSearchByDate.jsp" />
 		<put name="context" value="/commons/context.jsp" />
@@ -66,8 +70,16 @@
 		<put name="body" value="/sop/exams/degreeYearExamsMap.jsp" />
 		<put name="context" value="/commons/context.jsp" />
 	</definition>
+	<definition name="df.page.degreeYearWrittenEvaluationsMap" extends="definition.sop.examsPage" >
+		<put name="body" value="/sop/writtenEvaluations/degreeYearWrittenEvaluationsMap.jsp" />
+		<put name="context" value="/commons/context.jsp" />
+	</definition>
 	<definition name="df.page.showExamsByDate" extends="definition.sop.examsPage" >
 		<put name="body" value="/sop/exams/showExamsByDate.jsp" />
+		<put name="context" value="/commons/context.jsp" />
+	</definition>
+	<definition name="df.page.showWrittenEvaluationsByDate" extends="definition.sop.examsPage" >
+		<put name="body" value="/sop/writtenEvaluations/showWrittenEvaluationsByDate.jsp" />
 		<put name="context" value="/commons/context.jsp" />
 	</definition>
 	<!-- ==================== View Curricular Course Historic ================== -->

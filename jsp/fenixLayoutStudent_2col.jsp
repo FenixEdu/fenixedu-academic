@@ -32,6 +32,7 @@
      <td id="bodycontent" width="100%" align="left" valign="top">
      	<tiles:insert attribute="body-context" ignore="true"/>     
      	<tiles:insert attribute="body" ignore="true"/>
+     	<tiles:getAsString name="body-inline" ignore="true"/>
 	</td>
   </tr>
 </table>

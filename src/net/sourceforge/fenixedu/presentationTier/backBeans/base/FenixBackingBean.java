@@ -10,8 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.UIViewState;
+
+import org.apache.struts.Globals;
 
 public class FenixBackingBean {
 
@@ -22,9 +28,13 @@ public class FenixBackingBean {
     private UIViewState viewState;
 
     public FenixBackingBean() {
-        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext()
-                .getSession(false);
+        final FacesContext facesContext = FacesContext.getCurrentInstance();
+
+        final HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
         userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+        final Locale locale = (Locale) session.getAttribute(Globals.LOCALE_KEY);
+        facesContext.getViewRoot().setLocale(locale);
     }
 
     public IUserView getUserView() {
@@ -41,6 +51,11 @@ public class FenixBackingBean {
 
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+    }
+
+
+    protected HttpServletRequest getRequest() {
+        return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
     }
 
     protected String getRequestParameter(String parameterName) {
@@ -99,4 +114,17 @@ public class FenixBackingBean {
     protected void addWarnMessage(String message) {
         addMessage(FacesMessage.SEVERITY_WARN, message);
     }
+
+    public Object readAllDomainObjects(final Class clazz) throws FenixFilterException,
+            FenixServiceException {
+        return ServiceUtils
+                .executeService(getUserView(), "ReadAllDomainObjects", new Object[] { clazz });
+    }
+
+    public IDomainObject readDomainObject(final Class clazz, final Integer idInternal)
+            throws FenixFilterException, FenixServiceException {
+        return (IDomainObject) ServiceUtils.executeService(getUserView(), "ReadDomainObject",
+                new Object[] { clazz, idInternal });
+    }
+
 }

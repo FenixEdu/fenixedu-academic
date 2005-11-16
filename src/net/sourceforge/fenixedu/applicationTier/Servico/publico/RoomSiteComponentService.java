@@ -7,77 +7,28 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
-import net.sourceforge.fenixedu.applicationTier.Factory.RoomSiteComponentBuilder;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
-import net.sourceforge.fenixedu.dataTransferObject.SiteView;
-import net.sourceforge.fenixedu.domain.IRoom;
+import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author João Mota
  * @author Fernanda Quitério
  * 
- *  
+ * 
  */
-public class RoomSiteComponentService implements IServico {
+public class RoomSiteComponentService implements IService {
 
-    private static RoomSiteComponentService _servico = new RoomSiteComponentService();
-
-    /**
-     * The actor of this class.
-     */
-
-    private RoomSiteComponentService() {
-
+    public static Object run(ISiteComponent bodyComponent, RoomKey roomKey, Calendar day) throws ExcepcaoPersistencia {
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+        final IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+        return RoomSiteComponentServiceByExecutionPeriodID.runService(bodyComponent, roomKey, day, executionPeriod);
     }
 
-    /**
-     * Returns Service Name
-     */
-    public String getNome() {
-        return "RoomSiteComponentService";
-    }
-
-    /**
-     * Returns the _servico.
-     * 
-     * @return ReadRoom
-     */
-    public static RoomSiteComponentService getService() {
-        return _servico;
-    }
-
-    public Object run(ISiteComponent bodyComponent, RoomKey roomKey, Calendar day)
-            throws FenixServiceException {
-        SiteView siteView = null;
-
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            ISalaPersistente persistentRoom = sp.getISalaPersistente();
-            //			IPersistentExecutionPeriod persistentExecutionPeriod =
-            // sp.getIPersistentExecutionPeriod();
-
-            IRoom room = persistentRoom.readByName(roomKey.getNomeSala());
-            //            IExecutionPeriod executionPeriod = (IExecutionPeriod)
-            // persistentExecutionPeriod
-            //                    .readByOID(ExecutionPeriod.class, infoExecutionPeriodCode);
-            //            if (executionPeriod == null) {
-            //                throw new NonExistingServiceException();
-            //            }
-            RoomSiteComponentBuilder componentBuilder = RoomSiteComponentBuilder.getInstance();
-            bodyComponent = componentBuilder.getComponent(bodyComponent, day, room);
-
-            siteView = new SiteView(bodyComponent);
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-
-        return siteView;
-    }
 }

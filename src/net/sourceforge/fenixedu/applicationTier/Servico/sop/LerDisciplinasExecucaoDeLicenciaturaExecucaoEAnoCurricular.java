@@ -40,7 +40,7 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular implemen
             listDCDE = executionCourseDAO
                     .readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(infoExecutionPeriod.getIdInternal(),
                             infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal(),
-                            curricularYearFromDB.getIdInternal(), "");
+                            curricularYearFromDB.getIdInternal(), "", infoExecutionPeriod.getSemester());
 
             Iterator iterator = listDCDE.iterator();
             listInfoDE = new ArrayList();

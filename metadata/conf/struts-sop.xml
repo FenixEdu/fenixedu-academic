@@ -434,7 +434,7 @@
         <form-property name="roomsId" type="java.lang.String[]"/>
         <form-property name="page" type="java.lang.Integer"/>
       </form-bean>
-      
+
       <form-bean name="examSearchByDegreeAndYearForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
@@ -443,7 +443,16 @@
         <form-property name="selectAllCurricularYears" type="java.lang.Boolean"/>
         <form-property name="page" type="java.lang.Integer"/> 
       </form-bean>
-      
+
+      <form-bean name="searchWrittenEvaluationsByDegreeAndYearForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="page" type="java.lang.Integer"/>
+        <form-property name="selectAllCurricularYears" type="java.lang.Boolean"/>
+        <form-property name="selectedCurricularYears" type="java.lang.String[]" size="0"/>
+        <form-property name="executionDegreeID" type="java.lang.String"/>
+      </form-bean>
+
       <form-bean name="examSearchByDateForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
@@ -1574,6 +1583,18 @@
     	<forward name="show" path="df.page.selectDegreeAndYear"/>
     	<forward name="showExamsMap" path="df.page.degreeYearExamsMap"/>
    	</action>  
+
+	<action path="/searchWrittenEvaluationsByDegreeAndYear"
+			input="/searchWrittenEvaluationsByDegreeAndYear.do?method=prepare&amp;page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.exams.WrittenEvaluationsSearchByDegreeAndYear"
+            name="searchWrittenEvaluationsByDegreeAndYearForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+    	<forward name="showForm" path="df.page.selectDegreeAndYearForWrittenEvaluationsSearch"/>
+    	<forward name="showMap" path="df.page.degreeYearWrittenEvaluationsMap"/>
+   	</action>  
    	  
 	<action path="/ExamSearchByDate"
 			input="/ExamSearchByDate.do?method=prepare&amp;page=0"
@@ -1585,6 +1606,17 @@
             >
     	<forward name="choose" path="df.page.examSearchByDate"/>
     	<forward name="show" path="df.page.showExamsByDate"/>
+   	</action>    
+
+	<action path="/searchWrittenEvaluationsByDate"
+			input="/searchWrittenEvaluationsByDate.do?method=prepare&amp;page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.writtenEvaluations.SearchWrittenEvaluationsByDate"
+            name="examSearchByDateForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+    	<forward name="show" path="df.page.showWrittenEvaluationsByDate"/>
    	</action>    
  
 	<!-- ==================== View Curricular Course Historic ================== -->

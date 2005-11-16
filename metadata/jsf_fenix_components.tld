@@ -1299,8 +1299,74 @@
       </description>
     </attribute>
   </tag>
-  
+	<tag>
+		<name>fenixCalendar</name>
+		<tag-class>net.sourceforge.fenixedu.presentationTier.jsf.components.FenixCalendarTag</tag-class>
+		<description>Fenix Generic Calendar</description>
 
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>rendered</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>begin</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>Begin date of the Evaluation Calendar. Type: java.util.Calendar</description>
+		</attribute>
+		<attribute>
+			<name>end</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>End date of the Evaluation Calendar. Type: java.util.Calendar</description>
+		</attribute>
+		<attribute>
+			<name>createLink</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>Full link to set on every date of the calendar, forwarding to the create object interface. Type: String</description>
+		</attribute>
+		<attribute>
+			<name>editLinkPage</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>Page link to set on a edit link of a certain object in the a given date of the calendar. Type: String</description>
+		</attribute>
+		<attribute>
+			<name>editLinkParameters</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>List of CalendarLinks of objects to print on specific dates of the calendar. Type: List</description>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>breadCrumbs</name>
+		<tag-class>net.sourceforge.fenixedu.presentationTier.jsf.components.BreadCrumbsTag</tag-class>
+		<description>Public page bread crumbs</description>
+
+		<attribute>
+			<name>rendered</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>degree</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>trailingCrumb</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
   <tag>
     <name>dataRepeater</name>
     <tag-class>net.sourceforge.fenixedu.presentationTier.jsf.components.UIDataRepeaterTag</tag-class>

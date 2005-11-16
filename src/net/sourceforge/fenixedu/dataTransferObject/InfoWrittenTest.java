@@ -4,7 +4,10 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.util.Calendar;
+
 import net.sourceforge.fenixedu.domain.IWrittenTest;
+import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 /**
@@ -38,6 +41,11 @@ public class InfoWrittenTest extends InfoWrittenEvaluation {
             infoWrittenTest.copyFromDomain(writtenTest);
         }
         return infoWrittenTest;
+    }
+
+    public DiaSemana getDiaSemana() {
+        Calendar day = this.getDay();
+        return new DiaSemana(day.get(Calendar.DAY_OF_WEEK));
     }
 
 }

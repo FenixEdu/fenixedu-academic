@@ -15,6 +15,7 @@
                 dynamic="true">
         <form-property name="roomName" type="java.lang.String"/>
         <form-property name="indexWeek" type="java.lang.Integer"/>
+        <form-property name="selectedExecutionPeriodID" type="java.lang.String"/>
       </form-bean>
 	
       <form-bean name="pagedIndexForm"

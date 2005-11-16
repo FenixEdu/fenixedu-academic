@@ -8,6 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Factory;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -23,6 +24,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteRoomTimeTable;
+import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
@@ -32,6 +34,8 @@ import net.sourceforge.fenixedu.domain.IPeriod;
 import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
+import net.sourceforge.fenixedu.domain.IWrittenTest;
 import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
@@ -60,10 +64,10 @@ public class RoomSiteComponentBuilder {
         return instance;
     }
 
-    public ISiteComponent getComponent(ISiteComponent component, Calendar day, IRoom room)  {
+    public ISiteComponent getComponent(ISiteComponent component, Calendar day, IRoom room, IExecutionPeriod executionPeriod)  {
 
         if (component instanceof InfoSiteRoomTimeTable) {
-            return getInfoSiteRoomTimeTable((InfoSiteRoomTimeTable) component, day, room);
+            return getInfoSiteRoomTimeTable((InfoSiteRoomTimeTable) component, day, room, executionPeriod);
         }
 
         return null;
@@ -73,7 +77,7 @@ public class RoomSiteComponentBuilder {
     // TODO (rspl): alterar as aulas a ler e o dia da semana
     // FIXME duplicated code: this method is (almost?) identical to ReadLessonsAndExamsInWeekAndRoom.run
     private ISiteComponent getInfoSiteRoomTimeTable(InfoSiteRoomTimeTable component, Calendar day,
-            IRoom room) {
+            IRoom room, IExecutionPeriod executionPeriod) {
 
         List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();
         try {
@@ -81,8 +85,6 @@ public class RoomSiteComponentBuilder {
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
             IAulaPersistente lessonDAO = sp.getIAulaPersistente();
             IPersistentExam examDAO = sp.getIPersistentExam();
-
-            IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
 
             Calendar startDay = Calendar.getInstance();
             startDay.setTimeInMillis(day.getTimeInMillis());
@@ -151,15 +153,22 @@ public class RoomSiteComponentBuilder {
                 }
             }
 
-            //adicionar os exames
-            List examList = examDAO.readByRoomAndWeek(room.getNome(), day);
-            Iterator iteratorExams = examList.iterator();
-
-            while (iteratorExams.hasNext()) {
-                IExam elem = (IExam) iteratorExams.next();
-                InfoExam infoExam = InfoExam.newInfoFromDomain(elem);
-
-                infoShowOccupations.add(infoExam);
+            final Date startDate = startDay.getTime();
+            final Date endDate = endDay.getTime();
+            for (final IRoomOccupation roomOccupation : room.getRoomOccupations()) {
+            	final IWrittenEvaluation writtenEvaluation = roomOccupation.getWrittenEvaluation();
+            	if (writtenEvaluation != null) {
+            		final Date evaluationDate = writtenEvaluation.getDayDate();
+            		if (!evaluationDate.before(startDate) && !evaluationDate.after(endDate)) {
+            			if (writtenEvaluation instanceof IExam) {
+            				final IExam exam = (IExam) writtenEvaluation;
+                            infoShowOccupations.add(InfoExam.newInfoFromDomain(exam));
+            			} else if (writtenEvaluation instanceof IWrittenTest) {
+            				final IWrittenTest writtenTest = (IWrittenTest) writtenEvaluation;
+            				infoShowOccupations.add(InfoWrittenTest.newInfoFromDomain(writtenTest));
+            			}
+            		}
+            	}
             }
         } catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace();

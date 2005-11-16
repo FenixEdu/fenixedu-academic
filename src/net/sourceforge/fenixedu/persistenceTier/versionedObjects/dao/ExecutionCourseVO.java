@@ -118,11 +118,11 @@ public class ExecutionCourseVO extends VersionedObjectsBase implements IPersiste
 
     public List readByExecutionPeriod(Integer executionPeriodID, DegreeType curso)
             throws ExcepcaoPersistencia {
-        
+
         IExecutionPeriod executionPeriod = (IExecutionPeriod) readByOID(ExecutionPeriod.class,
                 executionPeriodID);
         List executionCourses = new ArrayList();
-        
+
         if (executionPeriod != null) {
             List<IExecutionCourse> executionCourses1 = executionPeriod.getAssociatedExecutionCourses();
             for (IExecutionCourse course : executionCourses1) {
@@ -138,7 +138,7 @@ public class ExecutionCourseVO extends VersionedObjectsBase implements IPersiste
         }
         return executionCourses;
     }
-    
+
     public List readByExecutionPeriod(Integer executionPeriodID) throws ExcepcaoPersistencia {
 
         IExecutionPeriod executionPeriod = (IExecutionPeriod) readByOID(ExecutionPeriod.class,
@@ -147,13 +147,13 @@ public class ExecutionCourseVO extends VersionedObjectsBase implements IPersiste
         if (executionPeriod != null) {
             return executionPeriod.getAssociatedExecutionCourses();
         }
-        
+
         return null;
     }
 
     public List readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(
             Integer executionPeriodID, Integer degreeCurricularPlanID, Integer curricularYearID,
-            String executionCourseName) throws ExcepcaoPersistencia {
+            String executionCourseName, Integer semester) throws ExcepcaoPersistencia {
 
         final IExecutionPeriod executionPeriod = (IExecutionPeriod) readByOID(ExecutionPeriod.class,
                 executionPeriodID);
@@ -174,8 +174,7 @@ public class ExecutionCourseVO extends VersionedObjectsBase implements IPersiste
                 addExecutionCourse = false;
             }
 
-            if (curricularYearID != null
-                    && !hasCurricularCourseYear(curricularCourses, curricularYearID)) {
+            if (!hasCurricularCourseSemesterAndYear(curricularCourses, semester, curricularYearID)) {
                 addExecutionCourse = false;
             }
 
@@ -186,23 +185,22 @@ public class ExecutionCourseVO extends VersionedObjectsBase implements IPersiste
         return result;
     }
 
-    private boolean hasCurricularCourseYear(List<ICurricularCourse> curricularCourses,
-            Integer curricularYearID) {
+private boolean hasCurricularCourseSemesterAndYear(List<ICurricularCourse> curricularCourses,
+            Integer semester, Integer curricularYearID) {
         for (final ICurricularCourse curricularCourse : curricularCourses) {
             final List<ICurricularCourseScope> curricularCourseScopes = curricularCourse.getScopes();
             for (final ICurricularCourseScope curricularCourseScope : curricularCourseScopes) {
                 final ICurricularSemester curricularSemester = curricularCourseScope
                         .getCurricularSemester();
                 final ICurricularYear curricularYear = curricularSemester.getCurricularYear();
-                if (curricularYear.getIdInternal().equals(curricularYearID)) {
+                if (curricularSemester.getSemester().equals(semester)
+                        && (curricularYearID == null || curricularYear.getIdInternal().equals(curricularYearID))) {
                     return true;
                 }
             }
         }
         return false;
-    }
-
-    private boolean hasDegreeCurricularPlan(List<ICurricularCourse> curricularCourses,
+    }    private boolean hasDegreeCurricularPlan(List<ICurricularCourse> curricularCourses,
             Integer degreeCurricularPlanID) {
         for (final ICurricularCourse curricularCourse : curricularCourses) {
             final IDegreeCurricularPlan degreeCurricularPlan = curricularCourse
@@ -245,7 +243,8 @@ public class ExecutionCourseVO extends VersionedObjectsBase implements IPersiste
             List<IExecutionCourse> executionCoursesAux = curricularCourse
                     .getAssociatedExecutionCourses();
             for (IExecutionCourse executionCourse : executionCoursesAux) {
-                if (executionCourse.getExecutionPeriod().getExecutionYear().getIdInternal().equals(executionYearID))
+                if (executionCourse.getExecutionPeriod().getExecutionYear().getIdInternal().equals(
+                        executionYearID))
                     executionCourses.add(executionCourse);
             }
         }
@@ -304,9 +303,9 @@ public class ExecutionCourseVO extends VersionedObjectsBase implements IPersiste
     }
 
     public List readByCurricularYearAndAllExecutionPeriodAndExecutionDegree(Integer curricularYear,
-            Integer executionPeriodID, String degreeCurricularPlanName,
-            String degreeSigla) throws ExcepcaoPersistencia {
-        
+            Integer executionPeriodID, String degreeCurricularPlanName, String degreeSigla)
+            throws ExcepcaoPersistencia {
+
         IExecutionPeriod executionPeriod = (IExecutionPeriod) readByOID(ExecutionPeriod.class,
                 executionPeriodID);
 

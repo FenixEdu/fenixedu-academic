@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRenderer;
 
@@ -30,7 +31,7 @@ public class SopClassRoomTimeTableLessonContentRenderer implements LessonSlotCon
             strBuffer.append(infoExecutionCourse.getIdInternal());
             strBuffer.append("'>").append(infoExecutionCourse.getSigla())
                     .append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")").append("</a>");
-        } else {
+        } else if (showOccupation instanceof InfoExam) {
             InfoExam infoExam = (InfoExam) showOccupation;
             for (int iterEC = 0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++) {
                 InfoExecutionCourse infoEC = (InfoExecutionCourse) infoExam
@@ -44,6 +45,17 @@ public class SopClassRoomTimeTableLessonContentRenderer implements LessonSlotCon
             strBuffer.append(" - ");
             strBuffer.append(infoExam.getSeason().getSeason());
             strBuffer.append("ª época");
+        } else if (showOccupation instanceof InfoWrittenTest) {
+            InfoWrittenTest infoWrittenTest = (InfoWrittenTest) showOccupation;
+            for (int iterEC = 0; iterEC < infoWrittenTest.getAssociatedExecutionCourse().size(); iterEC++) {
+                InfoExecutionCourse infoEC = (InfoExecutionCourse) infoWrittenTest.getAssociatedExecutionCourse().get(iterEC);
+                if (iterEC != 0) {
+                    strBuffer.append(", ");
+                }
+                strBuffer.append(infoEC.getSigla());
+            }
+            strBuffer.append(" - ");
+            strBuffer.append(infoWrittenTest.getDescription());
         }
 
         return strBuffer;

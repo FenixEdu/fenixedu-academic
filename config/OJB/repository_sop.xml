@@ -497,7 +497,7 @@
       </reference-descriptor> 
 </class-descriptor>
 	
-<!-- Definitions for net.sourceforge.fenixedu.domain.FinalEvaluation -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.FinalEvaluation -->
    <class-descriptor class="net.sourceforge.fenixedu.domain.FinalEvaluation"
    	  table="EVALUATION"
    >
@@ -539,6 +539,69 @@
 		<inverse-foreignkey field-ref="keyEvaluation"/>
 	</collection-descriptor>
 	</class-descriptor>
+	
+<!-- Definitions for net.sourceforge.fenixedu.domain.Project -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.Project"
+   	  table="EVALUATION">
+   	  
+      <field-descriptor
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor
+         name="ojbConcreteClass"
+         column="CLASS_NAME"
+         jdbc-type="VARCHAR"
+      />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="false"
+      />
+      <field-descriptor
+        name="publishmentMessage"
+        column="PUBLISHMENT_MESSAGE"
+        jdbc-type="VARCHAR"
+      />
+      <field-descriptor
+        name="name"
+        column="NAME"
+        jdbc-type="VARCHAR"
+      />
+      <field-descriptor
+         name="begin"
+         column="PROJECT_BEGIN"
+         jdbc-type="DATE"
+      />
+      <field-descriptor
+         name="end"
+         column="PROJECT_END"
+         jdbc-type="DATE"
+      />
+      <field-descriptor
+         name="description"
+         column="DESCRIPTION"
+        jdbc-type="VARCHAR"
+      />
+	  <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="associatedExecutionCourses"
+			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
+			indirection-table="EXAM_EXECUTION_COURSE"
+			>
+		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
+		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
+	  </collection-descriptor>	  
+	  <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="marks"
+			element-class-ref="net.sourceforge.fenixedu.domain.Mark"
+			>
+		<inverse-foreignkey field-ref="keyEvaluation"/>
+	</collection-descriptor>
+</class-descriptor>
 
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.Mark -->
@@ -768,6 +831,7 @@
     <extent-class class-ref="net.sourceforge.fenixedu.domain.WrittenTest" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.WrittenEvaluation" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.FinalEvaluation" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.Project" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.onlineTests.OnlineTest" />
       <field-descriptor
          name="idInternal"

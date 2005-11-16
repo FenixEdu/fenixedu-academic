@@ -1020,6 +1020,8 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 	
 	interface "
 	public java.util.List<IExecutionCourse> getAttendingExecutionCoursesFor(IStudent student);
+	
+	public void delete();    
 	"
 }
 
@@ -1032,6 +1034,17 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 	
 	class net.sourceforge.fenixedu.domain.onlineTests.OnlineTest extends net.sourceforge.fenixedu.domain.Evaluation {
     	Integer keyDistributedTest;
+	}
+	
+	class net.sourceforge.fenixedu.domain.Project extends net.sourceforge.fenixedu.domain.Evaluation {
+	    String name;
+	    Date begin;
+        Date end;
+        String description;     
+        
+        interface "
+        public void edit(String name, java.util.Date begin, java.util.Date end, String description);
+        "           
 	}
 
 
@@ -1073,7 +1086,7 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 	    
 	    public void setEnrollmentEndTime(java.util.Calendar calendar);
 
-		public java.util.List getAssociatedRooms();
+		public java.util.List<IRoom> getAssociatedRooms();
 		
 		public void delete();
 
@@ -1092,6 +1105,8 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 		public IWrittenEvaluationEnrolment getWrittenEvaluationEnrolmentFor(IStudent student);                                              
                                               
 		public boolean isInEnrolmentPeriod();
+		
+		public boolean getIsInEnrolmentPeriod();
 		"
 	}
 
@@ -1139,7 +1154,9 @@ class net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment extends net.sou
 	Integer keyWrittenEvaluation;
 	
 	interface "
-	public void delete();	
+	public void delete();
+	
+	public boolean isForExecutionPeriod(IExecutionPeriod executionPeriod);
 	"
 }
 
@@ -1205,6 +1222,8 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
 	public java.util.List<net.sourceforge.fenixedu.domain.onlineTests.IOnlineTest> getAssociatedOnlineTests();
 	
 	public void delete();
+
+	public java.util.List<IProject> getAssociatedProjects();
 	
 	public boolean teacherLecturesExecutionCourse(ITeacher teacher); 
     "
@@ -2811,13 +2830,14 @@ class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.d
     public IStudentCurricularPlan getActiveStudentCurricularPlan();
     public boolean attends(IExecutionCourse executionCourse);
     
-    public java.util.List<IExam> getEnroledExams();
-    
-    public java.util.List<IExam> getUnenroledExams();
-    
-    public java.util.List<IWrittenTest> getEnroledWrittenTests();
-    
-    public java.util.List<IWrittenTest> getUnenroledWrittenTests();
+    public java.util.List<IWrittenEvaluation> getWrittenEvaluations(IExecutionPeriod executionPeriod);
+    public java.util.List<IExam> getEnroledExams(IExecutionPeriod executionPeriod);
+    public java.util.List<IExam> getUnenroledExams(IExecutionPeriod executionPeriod);    
+    public java.util.List<IWrittenTest> getEnroledWrittenTests(IExecutionPeriod executionPeriod);
+    public java.util.List<IWrittenTest> getUnenroledWrittenTests(IExecutionPeriod executionPeriod);
+    public java.util.List<IProject> getProjects(IExecutionPeriod executionPeriod);
+    public boolean isEnroledIn(IEvaluation evaluation);
+    public IRoom getRoomFor(IWrittenEvaluation writtenEvaluation);
 	"
 }
 

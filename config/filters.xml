@@ -904,4 +904,11 @@
 </filter>
 <!-- ======================================  -->
 <!--######################################-->
+    <filter>
+        <name>CoordinatorDegreeCurricularPlanAuthorizationFilter</name>
+        <implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Filtro.coordinator.DegreeCurricularPlanAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
 </filterDefinitions>

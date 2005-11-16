@@ -41,11 +41,11 @@ e alterar aulas).</p>
     <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="<%= request.getContextPath() %>/images/info.gif" width="15"> 
     </td>
     <td class="infoop">
-		<html:link page="/mainExamsNew.do?method=prepare"><strong>Gest&atilde;o de Exames </strong></html:link>
+		<html:link page="/mainExamsNew.do?method=prepare"><strong><bean:message key="link.writtenEvaluationManagement"/></strong></html:link>
     </td>
   </tr>
 </table>
-<p>Este m&oacute;dulo visa uma gest&atilde;o eficiente da calendariza&ccedil;&atilde;o dos <strong>exames</strong>.</p>
+<p><bean:message key="introduction.writtenEvaluation.management"/></p>
 <br />
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>

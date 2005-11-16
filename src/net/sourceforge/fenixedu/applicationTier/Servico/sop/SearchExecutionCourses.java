@@ -67,7 +67,7 @@ public class SearchExecutionCourses implements IService {
                 .readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(
                         executionPeriod.getIdInternal(),
                         executionDegree.getDegreeCurricularPlan().getIdInternal(), curricularYearID,
-                        executionCourseName);
+                        executionCourseName, executionPeriod.getSemester());
 
         result = (List) CollectionUtils.collect(executionCourses, new Transformer() {
 

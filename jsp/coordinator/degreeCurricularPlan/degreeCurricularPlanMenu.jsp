@@ -13,15 +13,11 @@
 		<html:link page="<%= "/degreeCurricularPlanManagement.do?method=showActiveCurricularCourses&amp;degreeCurricularPlanID=" + degreeCurricularPlanID%>">
 		    <bean:message key="link.coordinator.degreeCurricular.viewActive" />
 		</html:link>
-		    <br/>
-			<br/>
 	</li>
 	<li>
 		<html:link page="<%= "/degreeCurricularPlanManagement.do?method=showCurricularCoursesHistory&amp;degreeCurricularPlanID=" + degreeCurricularPlanID%>">
 		    <bean:message key="link.coordinator.degreeCurricular.viewHistory" />
 		</html:link>
-		    <br/>
-			<br/>
 	</li>
 </ul>
 </p>

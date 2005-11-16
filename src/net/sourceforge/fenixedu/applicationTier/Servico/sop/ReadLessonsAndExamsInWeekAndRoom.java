@@ -11,6 +11,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  */
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
+import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
@@ -31,13 +33,18 @@ import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IPeriod;
+import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
+import net.sourceforge.fenixedu.domain.IWrittenTest;
+import net.sourceforge.fenixedu.domain.Room;
 import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
+import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.CalendarUtil;
@@ -53,6 +60,7 @@ public class ReadLessonsAndExamsInWeekAndRoom implements IService {
         IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
         IAulaPersistente lessonDAO = sp.getIAulaPersistente();
         IPersistentExam examDAO = sp.getIPersistentExam();
+        ISalaPersistente persistentRoom = sp.getISalaPersistente();
 
         IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
 
@@ -123,16 +131,25 @@ public class ReadLessonsAndExamsInWeekAndRoom implements IService {
             }
         }
 
-        //adicionar os exames
-        List examList = examDAO.readByRoomAndWeek(infoRoom.getNome(), day);
-        Iterator iteratorExams = examList.iterator();
-
-        while (iteratorExams.hasNext()) {
-            IExam elem = (IExam) iteratorExams.next();
-            InfoExam infoExam = InfoExam.newInfoFromDomain(elem);
-
-            infoShowOccupations.add(infoExam);
+        final IRoom room = (IRoom) persistentRoom.readByOID(Room.class, infoRoom.getIdInternal());
+        final Date startDate = startDay.getTime();
+        final Date endDate = endDay.getTime();
+        for (final IRoomOccupation roomOccupation : room.getRoomOccupations()) {
+            final IWrittenEvaluation writtenEvaluation = roomOccupation.getWrittenEvaluation();
+            if (writtenEvaluation != null) {
+                final Date evaluationDate = writtenEvaluation.getDayDate();
+                if (!evaluationDate.before(startDate) && !evaluationDate.after(endDate)) {
+                    if (writtenEvaluation instanceof IExam) {
+                        final IExam exam = (IExam) writtenEvaluation;
+                        infoShowOccupations.add(InfoExam.newInfoFromDomain(exam));
+                    } else if (writtenEvaluation instanceof IWrittenTest) {
+                        final IWrittenTest writtenTest = (IWrittenTest) writtenEvaluation;
+                        infoShowOccupations.add(InfoWrittenTest.newInfoFromDomain(writtenTest));
+                    }
+                }
+            }
         }
+
         return infoShowOccupations;
     }
 

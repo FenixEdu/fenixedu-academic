@@ -24,6 +24,7 @@
 		<put name="navLocal" value="/commons/blank.jsp" />
 		<put name="body-context" value="/commons/blank.jsp"/>
 		<put name="body" value="/commons/blank.jsp" />
+		<put name="body-inline" value="" />
 		<put name="footer" value="/copyright.jsp" />	
     </definition>
 	<definition name="df.layout.two-column.extra-menu" page="/fenixLayout_2col_extraMenu.jsp" >

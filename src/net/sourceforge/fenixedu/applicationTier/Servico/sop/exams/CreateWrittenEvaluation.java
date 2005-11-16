@@ -27,12 +27,13 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class CreateWrittenEvaluation implements IService {
 
     /**
-     * @param Integer executionCourseID
-     *            used in filtering
+     * @param Integer
+     *            executionCourseID used in filtering
      *            (ExecutionCourseLecturingTeacherAuthorizationFilter)
-     * @param List<String> executionCourseIDs
-     *            used in remaining operations, allowing more than one execution
-     *            course to be associated with the written evaluation
+     * @param List
+     *            <String> executionCourseIDs used in remaining operations,
+     *            allowing more than one execution course to be associated with
+     *            the written evaluation
      */
     public void run(Integer executionCourseID, Calendar writtenEvaluationDate,
             Calendar writtenEvaluationStartTime, Calendar writtenEvaluationEndTime,
@@ -76,7 +77,7 @@ public class CreateWrittenEvaluation implements IService {
             final List<String> executionCourseIDs) throws ExcepcaoPersistencia, FenixServiceException {
 
         if (executionCourseIDs.isEmpty()) {
-            throw new FenixServiceException("error.InvalidExecutionCourse");
+            throw new FenixServiceException("error.invalidExecutionCourse");
         }
         final List<IExecutionCourse> result = new ArrayList<IExecutionCourse>();
         final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
@@ -85,7 +86,7 @@ public class CreateWrittenEvaluation implements IService {
             final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
                     .readByOID(ExecutionCourse.class, Integer.valueOf(executionCourseID));
             if (executionCourse == null) {
-                throw new FenixServiceException("error.InvalidExecutionCourse");
+                throw new FenixServiceException("error.invalidExecutionCourse");
             }
             result.add(executionCourse);
         }
@@ -97,7 +98,7 @@ public class CreateWrittenEvaluation implements IService {
             throws FenixServiceException, ExcepcaoPersistencia {
 
         if (curricularCourseScopeIDs.isEmpty()) {
-            throw new FenixServiceException("error.InvalidCurricularCourseScope");
+            throw new FenixServiceException("error.invalidCurricularCourseScope");
         }
         final List<ICurricularCourseScope> result = new ArrayList<ICurricularCourseScope>();
         final IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport
@@ -106,7 +107,7 @@ public class CreateWrittenEvaluation implements IService {
             final ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope
                     .readByOID(CurricularCourseScope.class, Integer.valueOf(curricularCourseScopeID));
             if (curricularCourseScope == null) {
-                throw new FenixServiceException("error.InvalidCurricularCourseScope");
+                throw new FenixServiceException("error.invalidCurricularCourseScope");
             }
             result.add(curricularCourseScope);
         }

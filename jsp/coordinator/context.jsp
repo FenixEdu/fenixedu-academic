@@ -4,26 +4,19 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-	<tr>
-		<td align="center" class="infoselected">
-				<logic:present name="<%= SessionConstants.MASTER_DEGREE %>"  >
-					<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session"/>
-					<p>
-						<strong><bean:message key="label.masterDegree.coordinator.selectedDegree"/></strong> 
-						<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.nome" />
-						<br />
-						<strong><bean:message key="label.masterDegree.coordinator.curricularPlan"/></strong>
-						<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.name" />
-					</p>
-					<logic:equal name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="<%= DegreeType.MASTER_DEGREE.toString() %>">
-						<bean:define id="candidates" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT %>" scope="session"/>
-					<p>	
-						<strong><bean:message key="label.masterDegree.coordinator.candidates"/></strong>
-						<bean:write name="candidates" />
-					</p>
-					</logic:equal>
-				</logic:present>
-		</td>
-	</tr>
-</table>
+
+
+<logic:present name="<%= SessionConstants.MASTER_DEGREE %>"  >
+	<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session"/>
+		<p><em class="infoop4">
+		<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.nome" /> - 
+		<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.name" />
+		</em></p>
+
+	<logic:equal name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="<%= DegreeType.MASTER_DEGREE.toString() %>">
+		<bean:define id="candidates" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT %>" scope="session"/>
+		<strong><bean:message key="label.masterDegree.coordinator.candidates"/></strong>
+		<bean:write name="candidates" />
+
+	</logic:equal>
+</logic:present>

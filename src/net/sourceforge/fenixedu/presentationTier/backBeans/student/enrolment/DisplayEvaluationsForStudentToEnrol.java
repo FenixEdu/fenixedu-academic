@@ -1,193 +1,292 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.student.enrolment;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
-import javax.faces.component.UIParameter;
-import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
+import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.IWrittenTest;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.collections.comparators.ReverseComparator;
 
 public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
 
-    private IStudent student = null;
-
-    private List<IExam> unenroledExams = null;;
-
-    private List<IExam> enroledExams = null;
-
-    private List<IWrittenTest> enroledWrittenTests = null;
-
-    private List<IWrittenTest> unenroledWrittenTests = null;
-
-    private Map<Integer, Boolean> renderUnenrolLinks = new HashMap<Integer, Boolean>();
-
-    private Map<Integer, String> enroledRooms = new HashMap<Integer, String>();
-
-    private Map<Integer, List<IExecutionCourse>> attendingExecutionCourses = new HashMap<Integer, List<IExecutionCourse>>();
-
-    private static final ComparatorChain comparator = new ComparatorChain();
+    private final ResourceBundle messages = getResourceBundle("ServidorApresentacao/StudentResources");
+    private static final ComparatorChain comparatorChain = new ComparatorChain();
     static {
-        comparator.addComparator(new BeanComparator("dayDate"));
-        comparator.addComparator(new BeanComparator("beginningDate"));
+        comparatorChain.addComparator(new ReverseComparator(new BeanComparator("isInEnrolmentPeriod")));
+        comparatorChain.addComparator(new BeanComparator("dayDate"));
     }
 
-    public List<IExam> getEnroledExams() throws FenixFilterException, FenixServiceException {
-        if (enroledExams == null) {
-            enroledExams = getStudent().getEnroledExams();
-            Collections.sort(enroledExams, comparator);
-            cleanMaps();
-            for (final IExam exam : enroledExams) {
-                final IWrittenEvaluationEnrolment writtenEvaluationEnrolment = exam
-                        .getWrittenEvaluationEnrolmentFor(getStudent());
-                renderUnenrolLinks.put(exam.getIdInternal(), exam.isInEnrolmentPeriod());
-                enroledRooms
-                        .put(exam.getIdInternal(),
-                                (writtenEvaluationEnrolment != null && writtenEvaluationEnrolment
-                                        .getRoom() != null) ? writtenEvaluationEnrolment.getRoom()
-                                        .getNome() : " ");
-                attendingExecutionCourses.put(exam.getIdInternal(), exam
-                        .getAttendingExecutionCoursesFor(getStudent()));
+    protected static final Integer ALL = Integer.valueOf(0);
+    protected static final Integer EXAMS = Integer.valueOf(1);
+    protected static final Integer WRITTENTESTS = Integer.valueOf(2);
+
+    private Integer executionPeriodID;
+    protected Integer evaluationType;
+    private IExecutionPeriod executionPeriod;
+    private List<SelectItem> executionPeriodsLabels;
+    private List<SelectItem> evaluationTypes;
+    private IStudent student;
+    private List<IEvaluation> notEnroledEvaluations;
+    private List<IEvaluation> enroledEvaluations;
+    private List<IEvaluation> evaluationsWithoutEnrolmentPeriod;
+    private Map<Integer, List<IExecutionCourse>> executionCourses;
+
+    public List<SelectItem> getExecutionPeriodsLabels() {
+        if (this.executionPeriodsLabels == null) {
+            this.executionPeriodsLabels = new ArrayList();
+
+            final List<InfoExecutionPeriod> infoExecutionPeriods = getExecutionPeriods();
+            final ComparatorChain comparatorChain = new ComparatorChain();
+            comparatorChain.addComparator(new ReverseComparator(new BeanComparator(
+                    "infoExecutionYear.year")));
+            comparatorChain.addComparator(new ReverseComparator(new BeanComparator("semester")));
+            Collections.sort(infoExecutionPeriods, comparatorChain);
+            for (final InfoExecutionPeriod infoExecutionPeriod : infoExecutionPeriods) {
+                final SelectItem selectItem = new SelectItem();
+                selectItem.setValue(infoExecutionPeriod.getIdInternal());
+                selectItem.setLabel(infoExecutionPeriod.getName() + " - "
+                        + infoExecutionPeriod.getInfoExecutionYear().getYear());
+                this.executionPeriodsLabels.add(selectItem);
             }
         }
-        return enroledExams;
+        return this.executionPeriodsLabels;
     }
 
-    public List<IExam> getUnenroledExams() throws FenixFilterException, FenixServiceException {
-        if (unenroledExams == null) {
-            unenroledExams = getStudent().getUnenroledExams();
-            Collections.sort(unenroledExams, comparator);
-            attendingExecutionCourses.clear();
-            for (final IExam exam : unenroledExams) {
-                attendingExecutionCourses.put(exam.getIdInternal(), exam
-                        .getAttendingExecutionCoursesFor(getStudent()));
+    public List<SelectItem> getEvaluationTypes() {
+        if (this.evaluationTypes == null) {
+            this.evaluationTypes = new ArrayList(4);
+            final String allEvaluations = messages.getString("link.all");
+            evaluationTypes.add(new SelectItem(ALL, allEvaluations));
+            final String exams = messages.getString("link.exams.enrolment");
+            evaluationTypes.add(new SelectItem(EXAMS, exams));
+            final String writtenTests = messages.getString("link.writtenTests.enrolment");
+            evaluationTypes.add(new SelectItem(WRITTENTESTS, writtenTests));
+        }
+        return this.evaluationTypes;
+    }
+
+    public List<IEvaluation> getNotEnroledEvaluations() {
+        if (this.notEnroledEvaluations == null) {
+            this.notEnroledEvaluations = new ArrayList();
+
+            processNotEnroledEvaluations();
+        }
+        return this.notEnroledEvaluations;
+    }
+
+    public void setNotEnroledEvaluations(List<IEvaluation> notEnroledEvaluations) {
+        this.notEnroledEvaluations = notEnroledEvaluations;
+    }
+
+    public List<IEvaluation> getEnroledEvaluations() {
+        if (this.enroledEvaluations == null) {
+            this.enroledEvaluations = new ArrayList();
+            processEnroledEvaluations();
+        }
+        return this.enroledEvaluations;
+    }
+
+    public void setEnroledEvaluations(List<IEvaluation> enroledEvaluations) {
+        this.enroledEvaluations = enroledEvaluations;
+    }
+
+    public List<IEvaluation> getEvaluationsWithoutEnrolmentPeriod() {
+        if (this.evaluationsWithoutEnrolmentPeriod == null) {
+            this.evaluationsWithoutEnrolmentPeriod = new ArrayList();
+        }
+        return this.evaluationsWithoutEnrolmentPeriod;
+    }
+
+    public void setEvaluationsWithoutEnrolmentPeriod(List<IEvaluation> evaluationsWithoutEnrolmentPeriod) {
+        this.evaluationsWithoutEnrolmentPeriod = evaluationsWithoutEnrolmentPeriod;
+    }
+
+    private void processEnroledEvaluations() {
+        if (getEvaluationType().equals(ALL) || getEvaluationType().equals(EXAMS)) {
+            for (final IExam exam : getStudent().getEnroledExams(getExecutionPeriod())) {
+                try {
+                    exam.isInEnrolmentPeriod();
+                    this.enroledEvaluations.add(exam);
+                } catch (final DomainException e) {
+                    getEvaluationsWithoutEnrolmentPeriod().add(exam);
+                } finally {
+                    getExecutionCourses().put(exam.getIdInternal(),
+                            exam.getAttendingExecutionCoursesFor(getStudent()));
+                }
             }
         }
-        return unenroledExams;
-    }
-
-    public List<IWrittenTest> getEnroledWrittenTests() throws FenixFilterException,
-            FenixServiceException {
-        if (enroledWrittenTests == null) {
-            enroledWrittenTests = getStudent().getEnroledWrittenTests();
-            Collections.sort(enroledWrittenTests, comparator);
-            cleanMaps();
-            for (final IWrittenTest writtenTest : enroledWrittenTests) {
-                final IWrittenEvaluationEnrolment writtenEvaluationEnrolment = writtenTest
-                        .getWrittenEvaluationEnrolmentFor(getStudent());
-                renderUnenrolLinks.put(writtenTest.getIdInternal(), writtenTest.isInEnrolmentPeriod());
-                enroledRooms
-                        .put(writtenTest.getIdInternal(),
-                                (writtenEvaluationEnrolment != null && writtenEvaluationEnrolment
-                                        .getRoom() != null) ? writtenEvaluationEnrolment.getRoom()
-                                        .getNome() : " ");
-                attendingExecutionCourses.put(writtenTest.getIdInternal(), writtenTest
-                        .getAttendingExecutionCoursesFor(getStudent()));
+        if (getEvaluationType().equals(ALL) || getEvaluationType().equals(WRITTENTESTS)) {
+            for (final IWrittenTest writtenTest : getStudent().getEnroledWrittenTests(
+                    getExecutionPeriod())) {
+                try {
+                    writtenTest.isInEnrolmentPeriod();
+                    this.enroledEvaluations.add(writtenTest);
+                } catch (final DomainException e) {
+                    getEvaluationsWithoutEnrolmentPeriod().add(writtenTest);
+                } finally {
+                    getExecutionCourses().put(writtenTest.getIdInternal(),
+                            writtenTest.getAttendingExecutionCoursesFor(getStudent()));
+                }
             }
         }
-        return enroledWrittenTests;
+        Collections.sort(this.enroledEvaluations, comparatorChain);
     }
 
-    public List<IWrittenTest> getUnenroledWrittenTests() throws FenixFilterException,
-            FenixServiceException {
-        if (unenroledWrittenTests == null) {
-            unenroledWrittenTests = getStudent().getUnenroledWrittenTests();
-            Collections.sort(unenroledWrittenTests, comparator);
-            attendingExecutionCourses.clear();
-            for (final IWrittenTest writtenTest : unenroledWrittenTests) {
-                attendingExecutionCourses.put(writtenTest.getIdInternal(), writtenTest
-                        .getAttendingExecutionCoursesFor(getStudent()));
+    private void processNotEnroledEvaluations() {
+        if (getEvaluationType().equals(ALL) || getEvaluationType().equals(EXAMS)) {
+            for (final IExam exam : getStudent().getUnenroledExams(getExecutionPeriod())) {
+                try {
+                    exam.isInEnrolmentPeriod();
+                    this.notEnroledEvaluations.add(exam);
+                } catch (final DomainException e) {
+                    getEvaluationsWithoutEnrolmentPeriod().add(exam);
+                } finally {
+                    getExecutionCourses().put(exam.getIdInternal(),
+                            exam.getAttendingExecutionCoursesFor(getStudent()));
+                }
             }
         }
-        return unenroledWrittenTests;
+        if (getEvaluationType().equals(ALL) || getEvaluationType().equals(WRITTENTESTS)) {
+            for (final IWrittenTest writtenTest : getStudent().getUnenroledWrittenTests(
+                    getExecutionPeriod())) {
+                try {
+                    writtenTest.isInEnrolmentPeriod();
+                    this.notEnroledEvaluations.add(writtenTest);
+                } catch (final DomainException e) {
+                    getEvaluationsWithoutEnrolmentPeriod().add(writtenTest);
+                } finally {
+                    getExecutionCourses().put(writtenTest.getIdInternal(),
+                            writtenTest.getAttendingExecutionCoursesFor(getStudent()));
+                }
+            }
+        }
+        Collections.sort(this.notEnroledEvaluations, comparatorChain);
     }
 
-    public void enrolStudent(ActionEvent actionEvent) throws FenixFilterException, FenixServiceException {
+    public void changeExecutionPeriod(ValueChangeEvent event) {
+        clearAttributes();
+    }
+
+    public void changeEvaluationType(ValueChangeEvent event) {
+        clearAttributes();
+    }
+
+    protected void clearAttributes() {
+        setNotEnroledEvaluations(null);
+        setEnroledEvaluations(null);
+        setEvaluationsWithoutEnrolmentPeriod(null);
+        setExecutionCourses(null);
+    }
+
+    private List<InfoExecutionPeriod> getExecutionPeriods() {
         try {
-            final UIParameter parameter = (UIParameter) actionEvent.getComponent().findComponent(
-                    "evaluationID");
-            final Integer evaluationID = Integer.valueOf(parameter.getValue().toString());
-            final Object args[] = { getUserView().getUtilizador(), evaluationID };
-            ServiceUtils.executeService(getUserView(), "EnrolStudentInWrittenEvaluation", args);            
-        } catch (DomainException e) {
-            setErrorMessage(e.getMessage());
+            final Object args[] = {};
+            return (List<InfoExecutionPeriod>) ServiceManagerServiceFactory.executeService(
+                    getUserView(), "ReadNotClosedExecutionPeriods", args);
+        } catch (FenixFilterException e) {
+        } catch (FenixServiceException e) {
         }
-        cleanBeanProperties();
+        return new ArrayList();
     }
 
-    public void unenrolStudent(ActionEvent actionEvent) throws FenixFilterException,
-            FenixServiceException {
+    private InfoExecutionPeriod getCurrentExecutionPeriod() {
         try {
-            final UIParameter parameter = (UIParameter) actionEvent.getComponent().findComponent(
-                    "evaluationID");
-            final Integer evaluationID = Integer.valueOf(parameter.getValue().toString());
-            final Object args[] = { getUserView().getUtilizador(), evaluationID };
-            ServiceUtils.executeService(getUserView(), "UnEnrollStudentInWrittenEvaluation", args);            
-        } catch (DomainException e) {
-            setErrorMessage(e.getMessage());
+            final Object args[] = {};
+            return (InfoExecutionPeriod) ServiceManagerServiceFactory.executeService(getUserView(),
+                    "ReadCurrentExecutionPeriod", args);
+        } catch (FenixFilterException e) {
+        } catch (FenixServiceException e) {
         }
-        cleanBeanProperties();
+        return null;
     }
 
-    private IStudent getStudent() throws FenixFilterException, FenixServiceException {
-        if (student == null) {
-            final Object args[] = { getUserView().getUtilizador() };
-            student = (IStudent) ServiceUtils.executeService(getUserView(),
-                    "ReadStudentByUsernameForEvaluationEnrolment", args);
+    protected IExecutionPeriod getExecutionPeriod() {
+        if (this.executionPeriod == null && this.getExecutionPeriodID() != null) {
+            try {
+                return (IExecutionPeriod) readDomainObject(ExecutionPeriod.class, this
+                        .getExecutionPeriodID());
+            } catch (FenixFilterException e) {
+            } catch (FenixServiceException e) {
+            }
         }
-        return student;
+        return this.executionPeriod;
     }
 
-    private void cleanBeanProperties() {
-        // This is used to force reading information again
-        this.unenroledExams = null;
-        this.enroledExams = null;
-        this.enroledWrittenTests = null;
-        this.unenroledWrittenTests = null;
+    protected IStudent getStudent() {
+        if (this.student == null) {
+            try {
+                final Object args[] = { getUserView().getUtilizador() };
+                this.student = (IStudent) ServiceUtils.executeService(getUserView(),
+                        "ReadStudentByUsernameForEvaluationEnrolment", args);
+            } catch (FenixFilterException e) {
+            } catch (FenixServiceException e) {
+            }
+        }
+        return this.student;
     }
 
-    private void cleanMaps() {
-        this.renderUnenrolLinks.clear();
-        this.enroledRooms.clear();
-        this.attendingExecutionCourses.clear();
+    public Integer getExecutionPeriodID() {
+        if (this.executionPeriodID == null) {
+            this.executionPeriodID = getCurrentExecutionPeriod().getIdInternal();
+        }
+        return executionPeriodID;
     }
 
-    public Map<Integer, Boolean> getRenderUnenrolLinks() {
-        return renderUnenrolLinks;
+    public void setExecutionPeriodID(Integer executionPeriodID) {
+        this.executionPeriodID = executionPeriodID;
     }
 
-    public void setRenderUnenrolLinks(Map<Integer, Boolean> renderUnenrolLinks) {
-        this.renderUnenrolLinks = renderUnenrolLinks;
+    public Integer getEvaluationType() {
+        if (this.evaluationType == null) {
+            this.evaluationType = ALL;
+        }
+        return this.evaluationType;
     }
 
-    public Map<Integer, String> getEnroledRooms() {
-        return enroledRooms;
+    public String getEvaluationTypeString() {
+        final Integer type = getEvaluationType();
+        if (type != null && type.equals(EXAMS)) {
+            return "net.sourceforge.fenixedu.domain.Exam";
+        } else if (type != null && type.equals(WRITTENTESTS)) {
+            return "net.sourceforge.fenixedu.domain.WrittenTest";
+        }
+        return "";
     }
 
-    public void setEnroledRooms(Map<Integer, String> enroledRooms) {
-        this.enroledRooms = enroledRooms;
+    public void setEvaluationType(Integer evaluationType) {
+        this.evaluationType = evaluationType;
     }
 
-    public Map<Integer, List<IExecutionCourse>> getAttendingExecutionCourses() {
-        return attendingExecutionCourses;
+    public Map<Integer, List<IExecutionCourse>> getExecutionCourses() {
+        if (this.executionCourses == null) {
+            this.executionCourses = new HashMap<Integer, List<IExecutionCourse>>();
+        }
+        return this.executionCourses;
     }
 
-    public void setAttendingExecutionCourses(
-            Map<Integer, List<IExecutionCourse>> attendingExecutionCourses) {
-        this.attendingExecutionCourses = attendingExecutionCourses;
+    public void setExecutionCourses(Map<Integer, List<IExecutionCourse>> executionCourses) {
+        this.executionCourses = executionCourses;
     }
 }

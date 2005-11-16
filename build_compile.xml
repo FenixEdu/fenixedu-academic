@@ -281,6 +281,9 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				<include name="configuration.properties"/>
 				<replacefilter token="@app.name@"
 		    			   property="app.name"/>
+				<replacefilter 
+				    token="@app.context@"
+				    property="app.context"/>
 				<replacefilter token="@roleback.filename@"
 		    			   property="roleback.filename"/>
 				<replacefilter token="@default.persistenceSupport@"

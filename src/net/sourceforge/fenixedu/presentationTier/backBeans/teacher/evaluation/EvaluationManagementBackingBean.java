@@ -22,6 +22,7 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletRequest;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -47,7 +48,10 @@ import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.onlineTests.IOnlineTest;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
+import net.sourceforge.fenixedu.util.Season;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -65,6 +69,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     protected Integer evaluationID;
 
     private HtmlInputHidden evaluationIdHidden;
+
+    protected String evaluationTypeClassname;
 
     protected Integer day;
 
@@ -100,7 +106,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     protected Integer enrolmentEndMinute;
 
-    private String description;
+    protected String description;
+
+    private String season;
 
     protected List<IWrittenEvaluationEnrolment> writtenEvaluationEnrolments;
 
@@ -113,6 +121,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     private String publishMarksMessage;
 
     private Boolean sendSMS;
+
+    private String originPage;
 
     protected Map<Integer, String> marks = new HashMap<Integer, String>();
 
@@ -155,7 +165,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     public Integer getEvaluationID() {
         if (this.evaluationID == null) {
-            if (this.evaluationIdHidden != null) {
+            if (this.evaluationIdHidden != null && this.evaluationIdHidden.getValue() != null && !this.evaluationIdHidden.getValue().equals("")) {
                 this.evaluationID = Integer.valueOf(this.evaluationIdHidden.getValue().toString());
             } else if (this.getRequestParameter("evaluationID") != null && !this.getRequestParameter("evaluationID").equals("")) {
                 this.evaluationID = Integer.valueOf(this.getRequestParameter("evaluationID"));
@@ -180,7 +190,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public void setEvaluationIdHidden(HtmlInputHidden evaluationIdHidden) {
-        if (evaluationIdHidden != null) {
+        if (evaluationIdHidden != null && evaluationIdHidden.getValue() != null && !evaluationIdHidden.getValue().toString().equals("")) {
             this.evaluationID = Integer.valueOf(evaluationIdHidden.getValue().toString());
         }
 
@@ -190,6 +200,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public Integer getDay() throws FenixFilterException, FenixServiceException {
         if (this.day == null && this.getEvaluation() != null) {
             this.day = ((IWrittenEvaluation) getEvaluation()).getDay().get(Calendar.DAY_OF_MONTH);
+        } else if (this.getRequestParameter("day") != null && !this.getRequestParameter("day").equals("")) {
+            this.day = Integer.valueOf(this.getRequestParameter("day"));
         }
         return this.day;
     }
@@ -201,6 +213,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public Integer getMonth() throws FenixFilterException, FenixServiceException {
         if (this.month == null && this.getEvaluation() != null) {
             this.month = ((IWrittenEvaluation) getEvaluation()).getDay().get(Calendar.MONTH) + 1;
+        } else if (this.getRequestParameter("month") != null && !this.getRequestParameter("month").equals("")) {
+            this.month = Integer.valueOf(this.getRequestParameter("month"));
         }
         return this.month;
     }
@@ -212,6 +226,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public Integer getYear() throws FenixFilterException, FenixServiceException {
         if (this.year == null && this.getEvaluation() != null) {
             this.year = ((IWrittenEvaluation) getEvaluation()).getDay().get(Calendar.YEAR);
+        } else if (this.getRequestParameter("year") != null && !this.getRequestParameter("year").equals("")) {
+            this.year = Integer.valueOf(this.getRequestParameter("year"));
         }
         return this.year;
     }
@@ -243,7 +259,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public Integer getEndHour() throws FenixFilterException, FenixServiceException {
-        if (this.endHour == null && this.getEvaluation() != null) {
+        if (this.endHour == null && this.getEvaluation() != null && ((IWrittenEvaluation) getEvaluation()).getEnd() != null) {
             this.endHour = ((IWrittenEvaluation) getEvaluation()).getEnd().get(Calendar.HOUR_OF_DAY);
         }
         return this.endHour;
@@ -254,7 +270,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public Integer getEndMinute() throws FenixFilterException, FenixServiceException {
-        if (this.endMinute == null && this.getEvaluation() != null) {
+        if (this.endMinute == null && this.getEvaluation() != null && ((IWrittenEvaluation) getEvaluation()).getEnd() != null) {
             this.endMinute = ((IWrittenEvaluation) getEvaluation()).getEnd().get(Calendar.MINUTE);
         }
         return this.endMinute;
@@ -267,17 +283,18 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public String getDescription() throws FenixFilterException, FenixServiceException {
         if (this.description == null && this.getEvaluation() != null) {
             final IEvaluation writtenEvaluation = getEvaluation();
-            if (writtenEvaluation instanceof IExam) {
-                this.description = ((IExam) writtenEvaluation).getSeason().toString();
-            } else if (writtenEvaluation instanceof IWrittenTest) {
+            if (writtenEvaluation instanceof IWrittenTest) {
                 this.description = ((IWrittenTest) writtenEvaluation).getDescription();
             }
+        } else if (this.getViewState().getAttribute("description") != null && !this.getViewState().getAttribute("description").equals("")) {
+            this.description = (String) this.getViewState().getAttribute("description");
         }
         return this.description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+        this.getViewState().setAttribute("description", description);
     }
 
     public Integer getEnrolmentBeginDay() throws FenixFilterException, FenixServiceException {
@@ -561,8 +578,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             }
         }
 
+        final Season season = (getSeason() != null) ? new Season(getSeason()) : null;
         final Object[] args = { this.getExecutionCourseID(), this.getBegin(), this.getBegin(), this.getEnd(), executionCourseIDs,
-                curricularCourseScopeIDs, null, null, this.getDescription() };
+                curricularCourseScopeIDs, null, season, this.getDescription() };
         try {
             ServiceUtils.executeService(getUserView(), "CreateWrittenEvaluation", args);
         } catch (Exception e) {
@@ -679,7 +697,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         }
     }
 
-    public String editWrittenTest() throws FenixFilterException, FenixServiceException {
+    public String editWrittenTest() throws Exception {
         final List<String> executionCourseIDs = new ArrayList<String>();
         executionCourseIDs.add(this.getExecutionCourseID().toString());
 
@@ -703,8 +721,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             }
         }
 
+        final Season season = (getSeason() != null) ? new Season(getSeason()) : null;
         final Object[] args = { this.getExecutionCourseID(), this.getBegin(), this.getBegin(), this.getEnd(), executionCourseIDs,
-                curricularCourseScopeIDs, null, this.evaluationID, null, this.getDescription() };
+                curricularCourseScopeIDs, null, this.evaluationID, season, this.getDescription() };
         try {
             ServiceUtils.executeService(getUserView(), "EditWrittenEvaluation", args);
         } catch (Exception e) {
@@ -716,9 +735,30 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             return "";
         }
 
-        return this.getEvaluation().getClass().getSimpleName();
+        final String originPage = getOriginPage();
+        if (originPage != null) {
+            
+            FacesContext.getCurrentInstance().getExternalContext()
+                    .redirect(getApplicationContext()
+                            + "/sop/searchWrittenEvaluationsByDate.do?method=returnToSearchPage&amp;page=0&date="
+                            + DateFormatUtil.format("yyyy/MM/dd", this.getBegin().getTime())
+//                    + "&begin="
+//                    + timeFormat.format(this.getBegin().getTime())
+//                    + "&end="
+//                    + timeFormat.format(this.getEnd().getTime())
+                            + "&" + SessionConstants.EXECUTION_PERIOD_OID + "="
+                            + executionCourse.getExecutionPeriod().getIdInternal()
+                    );
+            return originPage;
+        } else {
+            return this.getEvaluation().getClass().getSimpleName();
+        }
     }
 
+    private String getApplicationContext() {
+        final String appContext = PropertiesManager.getProperty("app.context");
+        return (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
+    }
 
     public String deleteWrittenTest() throws FenixFilterException, FenixServiceException {
         final Object args[] = { this.getExecutionCourseID(), this.getEvaluationID() };
@@ -911,6 +951,58 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         }
         
         return this.getEvaluation().getClass().getSimpleName();
+    }
+
+    public String getEvaluationTypeClassname() throws FenixFilterException, FenixServiceException {
+        String evaluationTypeClassname = (String) this.getViewState().getAttribute("evaluationTypeClassname");
+        if (evaluationTypeClassname == null) {
+            evaluationTypeClassname = this.getRequestParameter("evaluationTypeClassname");
+            if (evaluationTypeClassname != null) {
+                setEvaluationTypeClassname(evaluationTypeClassname);
+            }
+        }
+        if (evaluationTypeClassname == null) {
+            final IEvaluation evaluation = getEvaluation();
+            if (evaluation != null) {
+                evaluationTypeClassname = evaluation.getClass().getName();
+                setEvaluationTypeClassname(evaluationTypeClassname);
+            }
+        }
+        return evaluationTypeClassname;
+    }
+
+    public void setEvaluationTypeClassname(String evaluationTypeClassname) {
+        this.getViewState().setAttribute("evaluationTypeClassname", evaluationTypeClassname);
+    }
+
+    public String getSeason() throws FenixFilterException, FenixServiceException {
+        if (season == null) {
+            final IEvaluation evaluation = getEvaluation();
+            if (evaluation != null && evaluation instanceof IExam) {
+                final IExam exam = (IExam) evaluation;
+                season = exam.getSeason().toString();
+            }
+        } 
+        if(this.getViewState().getAttribute("season") != null && !this.getViewState().getAttribute("season").equals("")) {
+            this.season = (String) this.getViewState().getAttribute("season");
+        }
+        return season;
+    }
+
+    public void setSeason(String season) {
+        this.season = season;
+        this.getViewState().setAttribute("season", season);
+    }
+
+    public String getOriginPage() {
+        if (originPage == null) {
+            originPage = getRequestParameter("originPage");
+        }
+        return originPage;
+    }
+
+    public void setOriginPage(String originPage) {
+        this.originPage = originPage;
     }
 
 }

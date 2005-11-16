@@ -222,7 +222,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         super.deleteDomainObject();
     }
 
-    public List getAssociatedRooms() {
+    public List<IRoom> getAssociatedRooms() {
         final List<IRoom> result = new ArrayList<IRoom>();
         for (final IRoomOccupation roomOccupation : this.getAssociatedRoomOccupation()) {
             result.add(roomOccupation.getRoom());
@@ -386,7 +386,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         final Date now = Calendar.getInstance().getTime();
         if (this.getEnrollmentBeginDayDate() == null || this.getEnrollmentBeginTimeDate() == null
                 || this.getEnrollmentEndDayDate() == null || this.getEnrollmentEndTimeDate() == null) {
-            return false;
+            throw new DomainException("error.enrolmentPeriodNotDefined");
         }
         final Date enrolmentBeginDate = createDate(this.getEnrollmentBeginDayDate(), this
                 .getEnrollmentBeginTimeDate());
@@ -394,4 +394,33 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
                 .getEnrollmentEndTimeDate());
         return enrolmentBeginDate.before(now) && enrolmentEndDate.after(now);
     }
+    
+    public boolean getIsInEnrolmentPeriod() {
+        try { // Used for sorting purpose
+            return isInEnrolmentPeriod();
+        } catch (final DomainException e) {
+            return false;
+        }
+    }
+
+    public Integer getCountStudentsEnroledAttendingExecutionCourses() {
+    	int i = 0;
+    	for (final IExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
+    		for (final IAttends attends : executionCourse.getAttends()) {
+    			if (attends.getEnrolment() != null) {
+    				i++;
+    			}
+    		}
+    	}
+    	return i;
+    }
+
+    public Integer getCountNumberReservedSeats() {
+    	int i = 0;
+    	for (final IRoomOccupation roomOccupation : getAssociatedRoomOccupation()) {
+    		i += roomOccupation.getRoom().getCapacidadeExame().intValue();
+    	}
+    	return i;
+    }
+
 }

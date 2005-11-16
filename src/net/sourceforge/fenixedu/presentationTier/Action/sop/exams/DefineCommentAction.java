@@ -86,7 +86,7 @@ public class DefineCommentAction extends
         infoExecutionCourse.setSigla(executionCourseCode);
         infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 
-        Object argsDefineComment[] = { infoExecutionCourse, comment };
+        Object argsDefineComment[] = { infoExecutionCourse.getSigla(), infoExecutionCourse.getInfoExecutionPeriod().getIdInternal(), comment };
         try {
             ServiceUtils.executeService(userView, "DefineExamComment", argsDefineComment);
         } catch (FenixServiceException e) {

@@ -39,6 +39,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSummaries;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTimetable;
 import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -448,12 +450,35 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
             ISiteComponent bodyComponent = new InfoSiteRoomTimeTable();
             DynaActionForm indexForm = (DynaActionForm) form;
             Integer indexWeek = (Integer) indexForm.get("indexWeek");
+            //Integer executionPeriodID = (Integer) indexForm.get("selectedExecutionPeriodID");
+            String executionPeriodIDString = request.getParameter("selectedExecutionPeriodID");
+            if (executionPeriodIDString == null) {
+            	executionPeriodIDString = (String) request.getAttribute("selectedExecutionPeriodID");
+            }
+            Integer executionPeriodID = (executionPeriodIDString != null) ? Integer.valueOf(executionPeriodIDString) : null;
+            if (executionPeriodID == null) {
+            	try {
+            		//executionPeriodID = (Integer) indexForm.get("selectedExecutionPeriodID");
+            		executionPeriodID = Integer.valueOf((String) indexForm.get("selectedExecutionPeriodID"));
+            	} catch (IllegalArgumentException ex) {
+            	}
+            }
             Calendar today = Calendar.getInstance();
             ArrayList weeks = new ArrayList();
+
+            InfoExecutionPeriod executionPeriod;
+            if (executionPeriodID == null) {
+                executionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(userView, "ReadCurrentExecutionPeriod", new Object[] {});
+                try {
+                	indexForm.set("selectedExecutionPeriodID", executionPeriod.getIdInternal().toString());
+                } catch (IllegalArgumentException ex) {
+                }
+            } else {
+                executionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(userView, "ReadExecutionPeriodByOID", new Object[] { executionPeriodID });
+            }
+
             try {
                 // weeks
-                InfoExecutionPeriod executionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(
-                        userView, "ReadCurrentExecutionPeriod", new Object[] {});
                 Calendar begin = Calendar.getInstance();
                 begin.setTime(executionPeriod.getBeginDate());
                 Calendar end = Calendar.getInstance();
@@ -479,6 +504,17 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
                     i++;
                 }
 
+                final List<IExecutionPeriod> executionPeriods = (List<IExecutionPeriod>)
+                    ServiceUtils.executeService(userView, "ReadAllDomainObjects", new Object[] {
+                        ExecutionPeriod.class
+                });
+                final List<LabelValueBean> executionPeriodLabelValueBeans = new ArrayList<LabelValueBean>();
+                for (final IExecutionPeriod ep : executionPeriods) {
+                    executionPeriodLabelValueBeans.add(new LabelValueBean(
+                    		ep.getName() + " " + ep.getExecutionYear().getYear(), ep.getIdInternal().toString()));
+                }
+                request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodLabelValueBeans);
+
                 request.setAttribute(SessionConstants.LABELLIST_WEEKS, weeksLabelValueList);
             } catch (FenixServiceException e) {
                 throw new FenixActionException();
@@ -486,11 +522,11 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
             if (indexWeek != null) {
                 today = (Calendar) weeks.get(indexWeek.intValue());
             }
-            Object[] args = { bodyComponent, roomKey, today };
+            Object[] args = { bodyComponent, roomKey, today, executionPeriodID };
 
             try {
                 SiteView siteView = (SiteView) ServiceUtils.executeService(null,
-                        "RoomSiteComponentService", args);
+                        "RoomSiteComponentServiceByExecutionPeriodID", args);
 
                 request.setAttribute("siteView", siteView);
 

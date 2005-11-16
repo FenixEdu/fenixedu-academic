@@ -112,7 +112,7 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
 
     public List readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(
             Integer executionPeriodID, Integer degreeCurricularPlanID,
-            Integer curricularYearID, String executionCourseName) throws ExcepcaoPersistencia {
+            Integer curricularYearID, String executionCourseName, Integer semester) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         
@@ -132,6 +132,9 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
                             "associatedCurricularCourses.scopes.curricularCourse.degreeCurricularPlan.idInternal",
                             degreeCurricularPlanID);
         }
+        
+        criteria.addEqualTo(
+                "associatedCurricularCourses.scopes.curricularSemester.semester", semester);
         
         criteria.addEqualTo("executionPeriod.idInternal", executionPeriodID);
 

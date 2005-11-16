@@ -353,4 +353,15 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return false;
     } 
 
+    public List<IProject> getAssociatedProjects() {
+        final List<IProject> result = new ArrayList<IProject>();
+        
+        for (IEvaluation evaluation : this.getAssociatedEvaluations()) {
+            if (evaluation instanceof IProject) {
+                result.add((IProject) evaluation);
+            }
+        }
+        return result;
+    }
+
 }

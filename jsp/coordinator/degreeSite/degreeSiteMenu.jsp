@@ -24,44 +24,31 @@
 					<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=description&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 					    <bean:message key="label.description" />&nbsp;<bean:message key="label.degree" />
 					</html:link>
-					<br/>
-					<br/>
 				</li>
 				<li>
 					<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=acess&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 					    <bean:message key="label.accessRequirements" />
 					</html:link>
-					<br/>
-					<br/>
 				</li>
 				<li>
 					<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=professionalStatus&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 					    <bean:message key="label.professionalStatus" />
 					</html:link>
-					<br/>
-					<br/>
 				</li>				
 				<li>
 					<html:link page="<%= "/degreeSiteManagement.do?method=viewDescriptionCurricularPlan&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 					    <bean:message key="label.description" />&nbsp;<bean:message key="label.curricularPlan" /> 
 					</html:link>
-					<br/>
-					<br/>
 				</li>																	
 			</ul>
 		</li>
 		<li>
 			<html:link page="<%= "/degreeSiteManagement.do?method=viewHistoric&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 			    <bean:message key="link.coordinator.degreeSite.historic" /></html:link>
-			    <br/>
-				<br/>
 		</li>
 		<li>
-			<%--<html:link href="<%= request.getContextPath()+"/publico/showDegreeSite.do?method=showDescription" target="_blank">--%>
 			<html:link href="<%= request.getContextPath()+"/publico/showDegreeSite.do?method=showDescription&amp;degreeID=" + infoDegreeID.toString() %>" target="_blank">
 			    <bean:message key="link.coordinator.degreeSite.viewSite" /></html:link>
-			    <br/>
-				<br/>
 		</li>		
 	</ul>
 	</p>

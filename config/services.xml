@@ -15,6 +15,13 @@
 		<filterChains />
 	</service>
 	<service>
+		<name>ReadAllDomainObjects</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadAllDomainObjects</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains />
+	</service>
+	<service>
 		<name>CheckIsAliveService</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.CheckIsAliveService</implementationClass>
 		<description />
@@ -494,6 +501,16 @@
 			<chain name="CoordinatorExecutionDegreeAuthorization" />
 		</filterChains>
 	</service>
+	<service>
+		<name>ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="CoordinatorDegreeCurricularPlanAuthorization" />
+		</filterChains>
+	</service>
+
 	<service>
 		<name>ReadNonMasterExecutionDegreesByExecutionYear</name>
 		<implementationClass> 
@@ -2789,6 +2806,14 @@
 		<name>RoomSiteComponentService</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.publico.RoomSiteComponentService</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains />
+	</service>
+	<service>
+		<name>RoomSiteComponentServiceByExecutionPeriodID</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.publico.RoomSiteComponentServiceByExecutionPeriodID</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
@@ -6403,6 +6428,35 @@
 			<chain name="WrittenEvaluationManagementAuthorization" />
 		</filterChains>
 	</service>
+	<service>
+		<name>CreateProject</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateProject</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ExecutionCourseLecturingTeacherOrDegreeCoordinatorAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>EditProject</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditProject</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ExecutionCourseLecturingTeacherOrDegreeCoordinatorAuthorization" />
+		</filterChains>
+	</service>
+	
+	<service>
+		<name>DeleteEvaluation</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteEvaluation</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ExecutionCourseLecturingTeacherOrDegreeCoordinatorAuthorization" />
+		</filterChains>
+	</service>
+	
 	<service>
 		<name>EditWrittenEvaluation</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.EditWrittenEvaluation</implementationClass>

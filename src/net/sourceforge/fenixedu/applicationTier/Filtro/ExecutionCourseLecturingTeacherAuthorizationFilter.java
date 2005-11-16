@@ -5,8 +5,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;

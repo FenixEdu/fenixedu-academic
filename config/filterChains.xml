@@ -116,7 +116,7 @@
     </filterChain>
     <filterChain>
         <name>WrittenEvaluationManagementAuthorization</name>
-        <expression>TimeTableManagerAuthorization || ExecutionCourseLecturingTeacherAuthorization</expression>
+        <expression>TimeTableManagerAuthorization || ExecutionCourseLecturingTeacherAuthorization || ExecutionCourseCoordinatorAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
@@ -1018,6 +1018,13 @@
 <!-- ======================================  --> 
 
 <!--######################################-->
+    <filterChain>
+        <name>CoordinatorDegreeCurricularPlanAuthorization</name>
+        <expression>CoordinatorDegreeCurricularPlanAuthorizationFilter</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
 </filterChainsDefinitions>
 
 

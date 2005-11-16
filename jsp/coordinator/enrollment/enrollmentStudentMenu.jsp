@@ -19,14 +19,10 @@
 		<li>
 			<html:link page="<%= "/viewStudentCurriculum.do?method=prepareView&amp;executionDegreeId=" + infoExecutionDegreeID.toString() + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 			    <bean:message key="link.student.curriculum" /></html:link>
-			    <br/>
-				<br/>
 		</li>
 		<li>
 			<html:link page="<%= "/curricularCoursesEnrollment.do?method=prepareEnrollmentChooseStudent&amp;executionDegreeId=" + infoExecutionDegreeID.toString() + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 			    <bean:message key="link.student.enrollment" /></html:link>
-			    <br/>
-				<br/>
 		</li>		
 	</ul>
 	</p>

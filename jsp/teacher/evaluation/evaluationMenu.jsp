@@ -16,6 +16,12 @@
 	<h:outputText value="</li>" escape="false"/>
 
 	<h:outputText value="<li>" escape="false"/>
+	<h:outputLink value="#{evaluationManagementMenuBackingBean.contextPath}/teacher/evaluation/projectsIndex.faces?executionCourseID=#{evaluationManagementMenuBackingBean.executionCourseID}">
+		<h:outputText value="#{bundle['link.projects']}"/>		
+	</h:outputLink>
+	<h:outputText value="</li>" escape="false"/>
+	
+	<h:outputText value="<li>" escape="false"/>
 	<h:outputLink value="#{evaluationManagementMenuBackingBean.contextPath}/teacher/evaluation/writtenTestsIndex.faces?executionCourseID=#{evaluationManagementMenuBackingBean.executionCourseID}">
 		<h:outputText value="#{bundle['link.writtenTests']}"/>
 	</h:outputLink>
@@ -26,7 +32,7 @@
 		<h:outputText value="#{bundle['link.exams']}"/>		
 	</h:outputLink>
 	<h:outputText value="</li>" escape="false"/>
-
+	
 	<h:outputText value="<li>" escape="false"/>
 	<h:outputLink value="#{evaluationManagementMenuBackingBean.contextPath}/teacher/evaluation/finalEvaluationIndex.faces?executionCourseID=#{evaluationManagementMenuBackingBean.executionCourseID}">
 		<h:outputText value="#{bundle['link.finalEvaluation']}"/>		

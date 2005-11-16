@@ -21,4 +21,9 @@ public class Evaluation extends Evaluation_Base {
         }
         return result;
     }
+    
+    public void delete() {        
+        this.getAssociatedExecutionCourses().clear();        
+        super.deleteDomainObject();
+    }
 }
