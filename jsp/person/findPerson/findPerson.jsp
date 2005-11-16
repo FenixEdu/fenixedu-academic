@@ -4,61 +4,68 @@
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
+<style>
+table.search {
+background-color: #f5f5f5;
+border-collapse: collapse;
+}
+table.search tr td {
+border: 1px solid #fff;
+padding: 0.3em;
+}
+.leftcolumn {
+text-align: right;
+}
+div.pp {
+border: 1px solid #ccc;
+padding-bottom: 0em;
+margin: 0.5em 0;
+float: left;
+}
+table.ppid {
+padding: 0.5em;
+width: 100%;
+background-color: #eee;
+}
+div.pp img {
+float: right;
+margin: 4px;
+border: 1px solid #ccc;
+background-color: #eee;
+padding: 2px;
+}
+table.ppdetails {
+background-color: #fff;
+border-collapse: collapse;
+margin: 0.5em 1em;
+/*width: 100%;*/
+}
+table.pphigh {
+background-color: #ffa;
+}
+table.ppdetails tr td {
+padding: 0.25em;
+}
+table.ppdetails td.ppleft {
+text-align: right;
+width: 11em;
+/*background-color: #f5f5f5;*/
+}
+table.ppdetails tr.highlight {
+/*background-color: #ffffea;*/
+/*border-bottom: 1px solid #eea;*/
+}
+table.ppdetails td.highlight {
+background-color: #ffffea;
+/*border-bottom: 1px solid #eea;*/
+}
+table.ppdetails td.ppright {
+}
+</style>
 
 
-<h2><bean:message key="label.manager.findPerson" /></h2>
-<br />
-<span class="error"><html:errors/></span>
-  
-<html:form action="/preparePerson" >
-	<html:hidden property="method" value="preparePerson" />
-	<html:hidden property="startIndex" value="0" />
-	<html:hidden property="pagesIndex" value="1"/>
-	<html:hidden property="countPage" value="1"/>
-	<html:hidden property="name" name="findPersonForm"/>
-	<html:hidden property="departmentId" name="findPersonForm"/>
-	<html:hidden property="degreeId" name="findPersonForm"/>
-	<html:hidden property="viewPhoto" name="findPersonForm"/>
-	
-	
 
-	
-	<table>
-		<tr>
-			<td>
-				<bean:message key="label.type"/>:
-			</td>
-			<td>	
-			   	<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.RoleType" bundle="ENUMERATION_RESOURCES" includedFields="STUDENT,TEACHER,GRANT_OWNER,EMPLOYEE" />
-				
-				<html:select property="roleType" onchange="this.form.submit()">
-					<html:option key="dropDown.Default" value=""/>
-					<html:options collection="values" property="value" labelProperty="label"/>
-				<html:hidden property="roleType" name="findPersonForm"/>
-				</html:select>
-				
-			</td>
-		</tr>
-		<logic:present name="degreeType">
-			<tr>
-			<td>
-				<bean:message key="label.degree"/>:
-			</td>
-			<td>
-				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.degree.DegreeType" bundle="ENUMERATION_RESOURCES"  />
-					<html:select property="degreeType" onchange="this.form.submit()">
-						<html:option key="dropDown.Default" value=""/>
-						<html:options collection="values" property="value" labelProperty="label"/>				
-					</html:select>
-			</td>
-			</tr>
-		</logic:present>
-		
- </table>
-</html:form>
-
-<SCRIPT LANGUAGE="JavaScript">
-
+<script language="JavaScript">
 function check(e)
 {
 if (e.style.display == "none")
@@ -70,6 +77,63 @@ else
 }
 </script>
 
+
+
+
+<h2><bean:message key="label.manager.findPerson"/></h2>
+<span class="error"><html:errors/></span>
+
+<!-- <table><tr><td colspan="2" class="infoop"><bean:message key="info.person.findPerson"/></td></tr></table> -->
+
+
+<html:form action="/preparePerson" >
+	<html:hidden property="method" value="preparePerson" />
+	<html:hidden property="startIndex" value="0" />
+	<html:hidden property="pagesIndex" value="1"/>
+	<html:hidden property="countPage" value="1"/>
+	<html:hidden property="departmentId" name="findPersonForm"/>
+	<html:hidden property="degreeId" name="findPersonForm"/>
+	<html:hidden property="viewPhoto" name="findPersonForm"/>
+	
+	
+	<table class="search">
+		<tr>
+			<td class="leftcolumn"><bean:message key="label.nameWord" /></td>
+			<td>
+				<html:text name="findPersonForm" property="name" size="50"/>
+				<html:hidden property="name" name="findPersonForm"/>
+			</td>		
+		</tr>
+	
+		<tr>
+			<td class="leftcolumn"><bean:message key="label.type"/>:</td>
+			<td><e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.RoleType" bundle="ENUMERATION_RESOURCES" includedFields="STUDENT,TEACHER,GRANT_OWNER,EMPLOYEE" />
+				<html:select property="roleType" onchange="this.form.submit()">
+				<html:option key="dropDown.Default" value=""/>
+				<html:options collection="values" property="value" labelProperty="label"/>
+				<html:hidden property="roleType" name="findPersonForm"/>
+				
+				</html:select>
+			</td>
+		</tr>
+	
+		<logic:present name="degreeType">
+			<tr>
+			<td class="leftcolumn"><bean:message key="label.degree"/>:</td>
+			<td>
+				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.degree.DegreeType" bundle="ENUMERATION_RESOURCES"  />
+				<html:select property="degreeType" onchange="this.form.submit()">
+				<html:option key="dropDown.Default" value=""/>
+				<html:options collection="values" property="value" labelProperty="label"/>				
+				<html:hidden property="degreeType" name="findPersonForm"/>
+				</html:select>
+			</td>
+			</tr>
+		</logic:present>
+ 
+</html:form>
+
+
 <html:form action="/findPerson" >
 <html:hidden property="method" value="findPerson" />
 <html:hidden property="startIndex" value="0" />
@@ -79,17 +143,13 @@ else
 <bean:define id="degreeType" name="findPersonForm" property="degreeType" type="java.lang.String"/>
 <html:hidden property="degreeType" value="<%= degreeType %>"/>
 <html:hidden property="pagesIndex" value="1"/>
+<bean:define id="name" name="findPersonForm" property="name" type="java.lang.String"/>
+<html:hidden property="name" value="<%= name %>"/>
 
-
-
-
-
-
-<table>
 
 <logic:present name="departments">
 		<tr>
-		<td>
+		<td class="leftcolumn">
 			<bean:message key="label.teacher.finalWork.department"/>:
 		</td>
 		<td>
@@ -108,7 +168,7 @@ else
 </logic:present>
 <logic:present name="nonMasterDegree">
 		<tr>
-		<td>
+		<td class="leftcolumn">
 			<bean:message key="link.degree.nonMaster"/>:
 		</td>
 		<td>
@@ -132,18 +192,10 @@ else
 <logic:notPresent name="departments">
 <html:hidden property="departmentId" value=""/>
 </logic:notPresent>
-	<tr>
-		<td colspan="2" class="infoop">
-			<bean:message key="info.person.findPerson"/>
-		</td>		
-	</tr>
-	
-	
-	
 		
 	<tr>
-		<td>
-			<bean:message key="label.viewPhoto" />
+		<td class="leftcolumn">
+			<bean:message key="label.viewPhoto" />:
 		</td>
 		<td>
 			<html:checkbox  property="viewPhoto" />
@@ -151,16 +203,14 @@ else
 	</tr>
 	
 	
-	<tr>
-		<td>
-			<bean:message key="label.nameWord" />
-		</td>
-		<td>
-			<html:text name="findPersonForm" property="name" size="50"/>
-		</td>		
-	</tr>
-	
 </table>
+
+
+
+
+
+
+
 
 <html:submit styleClass="inputbutton">
 	<bean:message key="button.search"/>

@@ -71,7 +71,7 @@ public class FindPersonAction extends FenixDispatchAction {
                             null);
                     request.setAttribute("departments", departments);
                 }
-                request.removeAttribute("degreeType");
+                //request.removeAttribute("degreeType");
             }
 
             if (roleType.equals(RoleType.STUDENT.getName())) {
@@ -93,11 +93,16 @@ public class FindPersonAction extends FenixDispatchAction {
             request.setAttribute("roleType", roleType);
 
         }
-        String name = (String) findPersonForm.get("name");
-        if (name != null && name.length() > 0){
-        	
+        String name = null;
+        if (request.getParameter("name") != null && request.getParameter("name").length() > 0) {
+            name = request.getParameter("name");
+        } else if (findPersonForm.get("name") != null) {
+            name = (String) findPersonForm.get("name");
         }
-        findPersonForm.set("name",findPersonForm.get("name"));
+        if (name != null && name.length() > 0){
+        	findPersonForm.set("name",name);
+        }
+       
         return mapping.findForward("findPerson");
     }
 
@@ -144,7 +149,7 @@ public class FindPersonAction extends FenixDispatchAction {
             degreeType = (String) findPersonForm.get("degreeType");
         }
         if(degreeType.length() == 0 && roleType.length() == 0){
-        	degreeType = null;
+        	degreeType=null;
         }else if (roleType.equals(RoleType.STUDENT.getName())) {
         	if (degreeType.length() != 0) {
                 Object[] args1 = { degreeType };
@@ -154,6 +159,8 @@ public class FindPersonAction extends FenixDispatchAction {
                 request.setAttribute("nonMasterDegree", nonMasterDegree);
                 request.setAttribute("degreeType", degreeType);
                 
+            }else{
+            	request.setAttribute("degreeType",true);
             }
         }
         if (request.getParameter("departmentId") != null
@@ -163,13 +170,13 @@ public class FindPersonAction extends FenixDispatchAction {
         } else if (findPersonForm.get("departmentId") != null) {
             departmentId = (Integer) findPersonForm.get("departmentId");
         }
-        if(departmentId == 0)
-	        if (roleType.equals(RoleType.TEACHER.getName())) {{
-	            List departments = (List) ServiceUtils.executeService(null, "ReadAllDepartments",
-	                    null);
-	            request.setAttribute("departments", departments);
-	        }
-        }
+          
+	    if (roleType.equals(RoleType.TEACHER.getName())) {
+            List departments = (List) ServiceUtils.executeService(null, "ReadAllDepartments",
+                    null);
+            request.setAttribute("departments", departments);
+	    }
+        
 
 
         if (request.getParameter("degreeId") != null && request.getParameter("degreeId").length() > 0) {
