@@ -63,7 +63,7 @@ public class InsertSummary implements IService {
 
         final ITeacher teacher = SummaryUtils.getTeacher(persistentSupport, infoSummary);
         if (teacher != null) {
-            if (!teacherBelongsToExecutionCourse(teacher, executionCourse)) {
+            if (!executionCourse.teacherLecturesExecutionCourse(teacher)) {
                 final ISummary summary = executionCourse.createSummary(infoSummary.getTitle(),
                         infoSummary.getSummaryText(), infoSummary.getStudentsNumber(), infoSummary
                                 .getIsExtraLesson(), teacher);
@@ -87,14 +87,5 @@ public class InsertSummary implements IService {
         }
 
         throw new FenixServiceException("error.summary.no.teacher");
-    }
-    
-    private boolean teacherBelongsToExecutionCourse(ITeacher teacher, IExecutionCourse executionCourse){
-        for (IProfessorship professorship : executionCourse.getProfessorships()) {
-            if(teacher.getProfessorships().contains(professorship)){
-                return true;
-            }
-        }                
-        return false;
     }
 }

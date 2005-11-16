@@ -7,6 +7,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.utils.summary.SummaryUtils;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSummary;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IShift;
@@ -39,6 +41,10 @@ public class EditSummary implements IService {
 
         final ISummary summary = (ISummary) persistentSummary.readByOID(Summary.class, infoSummary
                 .getIdInternal());
+        
+        final IExecutionCourse executionCourse = (IExecutionCourse) persistentSupport.getIPersistentObject().readByOID(
+                ExecutionCourse.class, executionCourseId);
+        
         final IShift shift = SummaryUtils.getShift(persistentSupport, summary, infoSummary);
         final IRoom room = SummaryUtils.getRoom(persistentSupport, summary, shift, infoSummary);
 
@@ -54,9 +60,14 @@ public class EditSummary implements IService {
 
         final ITeacher teacher = SummaryUtils.getTeacher(persistentSupport, infoSummary);
         if (teacher != null) {
-            summary.edit(infoSummary.getTitle(), infoSummary.getSummaryText(), infoSummary
-                    .getStudentsNumber(), infoSummary.getIsExtraLesson(), teacher);
-            return;
+            if (!executionCourse.teacherLecturesExecutionCourse(teacher)) {
+                summary.edit(infoSummary.getTitle(), infoSummary.getSummaryText(), infoSummary
+                        .getStudentsNumber(), infoSummary.getIsExtraLesson(), teacher);
+                return;
+            }
+            else{
+                throw new FenixServiceException("error.summary.teacher.invalid");
+            }
         }
 
         String teacherName = infoSummary.getTeacherName();
@@ -65,7 +76,7 @@ public class EditSummary implements IService {
                     .getStudentsNumber(), infoSummary.getIsExtraLesson(), teacherName);
             return;
         }
-        
+       
         throw new FenixServiceException("error.summary.no.teacher");
     }
 }

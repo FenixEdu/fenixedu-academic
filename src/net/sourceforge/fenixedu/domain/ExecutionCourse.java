@@ -343,5 +343,14 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
         return true;
     }
+    
+    public boolean teacherLecturesExecutionCourse(ITeacher teacher){
+        for (IProfessorship professorship : this.getProfessorships()) {
+            if(teacher.getProfessorships().contains(professorship)){
+                return true;
+            }
+        }                
+        return false;
+    } 
 
 }

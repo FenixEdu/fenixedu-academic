@@ -1205,6 +1205,8 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
 	public java.util.List<net.sourceforge.fenixedu.domain.onlineTests.IOnlineTest> getAssociatedOnlineTests();
 	
 	public void delete();
+	
+	public boolean teacherLecturesExecutionCourse(ITeacher teacher); 
     "
 }
 
