@@ -84,7 +84,7 @@ valueType net.sourceforge.fenixedu.util.tests.CorrectionAvailability            
 valueType net.sourceforge.fenixedu.util.tests.TestType                  				        as TestType;
 valueType net.sourceforge.fenixedu.domain.organizationalStructure.UnitType                  	as UnitType;
 valueType net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType                 	as FunctionType;
-
+valueType net.sourceforge.fenixedu.domain.QualificationType										as QualificationType;
 
 /*
 *
@@ -2380,22 +2380,25 @@ class net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess extends n
 }
 
 
-class net.sourceforge.fenixedu.domain.Qualification extends net.sourceforge.fenixedu.domain.DomainObject {
-    Date lastModificationDate;
+class net.sourceforge.fenixedu.domain.Qualification extends net.sourceforge.fenixedu.domain.DomainObject {    
+	Date lastModificationDate;
     String degreeRecognition;
     String equivalenceSchool;
     String mark;
-    String title;
+	String title;
     String specializationArea;
     Date date;
     Integer personKey;
-    String branch;
+	String branch;
     Date equivalenceDate;
     String degree;
-    Integer countryKey;
-    String school;
-    
-    interface "
+	Integer countryKey;    
+	String school;
+	
+    String year;	
+    QualificationType type;
+	
+	interface "
     public void delete();
     public void edit(net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification infoQualification, ICountry country);
     "
@@ -5227,20 +5230,18 @@ relation ProposalBranch {
 	}
 }
 
+relation QualificationPerson {
+    net.sourceforge.fenixedu.domain.Qualification playsRole associatedQualifications {
+    	multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Person playsRole person;
+}
 
 relation QualificationCountry {
     net.sourceforge.fenixedu.domain.Qualification playsRole associatedQualifications {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Country playsRole country;
-}
-
-
-relation QualificationPerson {
-    net.sourceforge.fenixedu.domain.Qualification playsRole associatedQualifications {
-    	multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.Person playsRole person;
 }
 
 relation QuestionsFromMetadata {

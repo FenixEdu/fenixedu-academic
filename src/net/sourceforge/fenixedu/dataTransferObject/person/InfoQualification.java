@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.IQualification;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.domain.QualificationType;
 
 /**
  * @author Barbosa
@@ -42,6 +42,12 @@ public class InfoQualification extends InfoObject implements ISiteComponent {
     private String equivalenceSchool;
 
     private InfoCountry infoCountry;
+    
+    private String year;
+    
+    private QualificationType type;
+    
+
 
     public InfoQualification() {
     }
@@ -243,15 +249,12 @@ public class InfoQualification extends InfoObject implements ISiteComponent {
         this.specializationArea = specializationArea;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
-     */
+
     public void copyFromDomain(IQualification qualification) {
         super.copyFromDomain(qualification);
         if (qualification != null) {
             setTitle(qualification.getTitle());
+            setType(qualification.getType());
             setDate(qualification.getDate());
             setMark(qualification.getMark());
             setSchool(qualification.getSchool());
@@ -260,7 +263,16 @@ public class InfoQualification extends InfoObject implements ISiteComponent {
             setDegree(qualification.getDegree());
             setDegreeRecognition(qualification.getDegreeRecognition());
             setEquivalenceDate(qualification.getEquivalenceDate());
-            setEquivalenceSchool(qualification.getEquivalenceSchool());
+            setEquivalenceSchool(qualification.getEquivalenceSchool());            
+            if(qualification.getYear() != null){
+                String[] strings = qualification.getYear().split("/");
+                if(strings.length == 2){
+                    setYear(strings[1]);
+                }
+                else if(strings.length == 1){
+                    setYear(strings[0]);
+                }
+            }
         }
     }
 
@@ -272,21 +284,21 @@ public class InfoQualification extends InfoObject implements ISiteComponent {
         }
         return infoQualification;
     }
+    
 
-    public void copyToDomain(InfoQualification infoQualification, IQualification qualification)
-            throws ExcepcaoPersistencia {
-        super.copyToDomain(infoQualification, qualification);
-
-        qualification.setTitle(infoQualification.getTitle());
-        qualification.setDate(infoQualification.getDate());
-        qualification.setMark(infoQualification.getMark());
-        qualification.setSchool(infoQualification.getSchool());
-        qualification.setSpecializationArea(infoQualification.getSpecializationArea());
-        qualification.setBranch(infoQualification.getBranch());
-        qualification.setDegree(infoQualification.getDegree());
-        qualification.setDegreeRecognition(infoQualification.getDegreeRecognition());
-        qualification.setEquivalenceDate(infoQualification.getEquivalenceDate());
-        qualification.setEquivalenceSchool(infoQualification.getEquivalenceSchool());
+    public QualificationType getType() {
+        return type;
     }
 
+    public void setType(QualificationType type) {
+        this.type = type;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
 }

@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -301,7 +302,9 @@ public class ReadTeacherInformation implements IService {
                 return InfoQualification.newInfoFromDomain(qualification);
             }
         });
-        Collections.sort(infoQualifications, new BeanComparator("date"));
+                
+        Collections.sort(infoQualifications, new BeanComparator("year"));
+        
         return infoQualifications;
     }
 

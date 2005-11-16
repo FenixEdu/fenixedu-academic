@@ -51,12 +51,7 @@
 		</table>
 		<br />
 		<p class="infoop"><span class="emphasis-box">1</span>
-		<bean:message key="message.teacherInformation.qualifications" /></p>
-		<div class="gen-button">
-			<html:link href="<%= request.getContextPath() + "/person/readQualifications.do" %>">
-				<bean:message key="label.teacherInformation.manage" />
-			</html:link>
-		</div>
+		<bean:message key="message.teacherInformation.qualifications" /></p>		
 		<logic:notEmpty name="infoSiteTeacherInformation" property="infoQualifications">
 			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
 				<tr>
@@ -68,18 +63,31 @@
 				</tr>
 				<logic:iterate id="infoQualification" name="infoSiteTeacherInformation" property="infoQualifications">
 					<tr>
-						<td class="listClasses">
-							<logic:present name="infoQualification" property="date">
-		 							<dt:format pattern="yyyy">
-										<bean:write name="infoQualification" property="date.time" />	
-									</dt:format>
-							</logic:present>
-							<logic:notPresent name="infoQualification" property="date">-</logic:notPresent>
-						</td>
+						<td class="listClasses">				
+							<logic:notEmpty name="infoQualification" property="year">
+								<bean:write name="infoQualification" property="year" />							
+							</logic:notEmpty>			 								
+							<logic:empty name="infoQualification" property="year">
+								<dt:format pattern="yyyy">
+									<bean:write name="infoQualification" property="date.time" />							
+								</dt:format>
+							</logic:empty>
+						</td>												
 						<td class="listClasses"><bean:write name="infoQualification" property="school" /></td>
 						<td class="listClasses"><bean:write name="infoQualification" property="degree" /></td>
-						<td class="listClasses"><bean:write name="infoQualification" property="title" /></td>
-						<td class="listClasses">&nbsp;<bean:write name="infoQualification" property="mark" /></td>
+						<logic:notEmpty name="infoQualification" property="type">												
+							<bean:define id="qualificationType" name="infoQualification" property="type.name" />
+							<td class="listClasses"><bean:message name="qualificationType" bundle="ENUMERATION_RESOURCES"/></td>
+						</logic:notEmpty>
+						<logic:empty name="infoQualification" property="type">																			
+							<td class="listClasses"><bean:write name="infoQualification" property="title"/></td>
+						</logic:empty>	
+						<logic:present name="infoQualification" property="mark">												
+							<td class="listClasses">&nbsp;<bean:write name="infoQualification" property="mark" /></td>																
+						</logic:present>
+						<logic:notPresent name="infoQualification" property="mark">												
+							<td class="listClasses">--</td>																
+						</logic:notPresent>
 					</tr>
 				</logic:iterate>
 			</table>
