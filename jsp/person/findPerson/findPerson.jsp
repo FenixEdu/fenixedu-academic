@@ -95,16 +95,8 @@ else
 	<html:hidden property="degreeId" name="findPersonForm"/>
 	<html:hidden property="viewPhoto" name="findPersonForm"/>
 	
-	
 	<table class="search">
-		<tr>
-			<td class="leftcolumn"><bean:message key="label.nameWord" /></td>
-			<td>
-				<html:text name="findPersonForm" property="name" size="50"/>
-				<html:hidden property="name" name="findPersonForm"/>
-			</td>		
-		</tr>
-	
+			
 		<tr>
 			<td class="leftcolumn"><bean:message key="label.type"/>:</td>
 			<td><e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.RoleType" bundle="ENUMERATION_RESOURCES" includedFields="STUDENT,TEACHER,GRANT_OWNER,EMPLOYEE" />
@@ -143,9 +135,6 @@ else
 <bean:define id="degreeType" name="findPersonForm" property="degreeType" type="java.lang.String"/>
 <html:hidden property="degreeType" value="<%= degreeType %>"/>
 <html:hidden property="pagesIndex" value="1"/>
-<bean:define id="name" name="findPersonForm" property="name" type="java.lang.String"/>
-<html:hidden property="name" value="<%= name %>"/>
-
 
 <logic:present name="departments">
 		<tr>
@@ -194,6 +183,13 @@ else
 </logic:notPresent>
 		
 	<tr>
+		<td class="leftcolumn"><bean:message key="label.nameWord" /></td>
+		<td>
+			<html:text name="findPersonForm" property="name" size="50"/>
+			<html:hidden property="name" name="findPersonForm"/>
+		</td>		
+	</tr>
+	<tr>
 		<td class="leftcolumn">
 			<bean:message key="label.viewPhoto" />:
 		</td>
@@ -201,16 +197,8 @@ else
 			<html:checkbox  property="viewPhoto" />
 		</td>
 	</tr>
-	
-	
+		
 </table>
-
-
-
-
-
-
-
 
 <html:submit styleClass="inputbutton">
 	<bean:message key="button.search"/>
