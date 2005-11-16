@@ -216,9 +216,7 @@ public class FindPersonAction extends FenixDispatchAction {
         } catch (FenixServiceException e) {           
             errors.add("impossibleFindPerson", new ActionError(e.getMessage()));
             saveErrors(request, errors);      
-            findPersonForm.set("roleType", "");
-//            findPersonForm.set("name", "");
-            return prepareFindPerson(mapping, actionForm, request, response);
+            return preparePerson(mapping, actionForm, request, response);
         }
                
         if (personListFinded == null || personListFinded.size() < 3) {
@@ -227,15 +225,13 @@ public class FindPersonAction extends FenixDispatchAction {
         
         List infoPerson = (List) personListFinded.get(1);
         if (infoPerson.isEmpty()) {
-            findPersonForm.set("roleType", "");
-//            findPersonForm.set("name", "");
             errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
             saveErrors(request, errors);
 
         }
         if (!errors.isEmpty()) {
             saveErrors(request, errors);
-            return prepareFindPerson(mapping, actionForm, request, response);
+            return preparePerson(mapping, actionForm, request, response);
         }
         Integer totalPerson = (Integer)personListFinded.get(0);
         List pagesList = getPageList(totalPerson);
