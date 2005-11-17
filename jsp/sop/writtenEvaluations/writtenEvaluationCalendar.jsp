@@ -157,10 +157,10 @@ table.executionCoursesWithoutWrittenEvaluations td {
 						<c:forEach items="${SOPEvaluationManagementBackingBean.executionCoursesWithWrittenEvaluations}" var="executionCourse">
 						<tr class="space"><td></td></tr>
 						<tr>
-							<td class="header" style="font-weight: bold">
+							<td colspan="2" class="header" style="font-weight: bold">
 								<c:out value="${executionCourse.sigla} - ${executionCourse.nome}"/>
 							</td>
-							<td colspan="6" class="header">
+							<td colspan="5" class="header">
 								<c:url var="commentURL" value="commentExecutionCourse.faces">
 									<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
 									<c:param name="executionPeriodID" value="${SOPEvaluationManagementBackingBean.executionPeriodID}"/>
