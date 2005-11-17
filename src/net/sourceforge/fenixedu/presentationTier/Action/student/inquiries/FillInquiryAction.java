@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiry;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoRoomWithInfoInquiriesRoom;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -116,22 +117,11 @@ public class FillInquiryAction extends FenixDispatchAction {
 
 		InfoDegree studentDegree = infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getInfoDegree();
 
-		//FIXME: This should be parametrizable
-//		this should invoque a service to verify if there is an open inquiry for this degree
-//		Boolean inquiriesAreOpen = Boolean.FALSE;
-		Boolean inquiriesAreOpen = Boolean.TRUE;
-		if(!inquiriesAreOpen) {
-			request.setAttribute(InquiriesUtil.INQUIRY_MESSAGE_KEY, "message.inquiries.no.open.inquiries");		
-			return actionMapping.findForward("inquiryIntroduction");
-		}
-		//FIXME: THIS SHOULD DISAPEAR WHEN THE inquiriesAreOpen test is parametrizable!!!!!
-        // Check if the student is allowed to answer the inquiries
-        if (!(studentDegree.getIdInternal().equals(18) || studentDegree.getIdInternal().equals(14))) {
-			request.setAttribute(InquiriesUtil.INQUIRY_MESSAGE_KEY, "message.inquiries.unavailable.degree");		
-			return actionMapping.findForward("inquiryIntroduction");
+        if (infoStudent.getDegreeType() != DegreeType.DEGREE) {
+            request.setAttribute(InquiriesUtil.INQUIRY_MESSAGE_KEY, "message.inquiries.not.open.for.non.degrees");     
+            return actionMapping.findForward("inquiryIntroduction");            
         }
-		//////////////////////////////////////////////////////////////////////////////////////////
-		
+
         // Obtaining the current execution period
  		InfoExecutionPeriod currentExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(userView, "ReadCurrentExecutionPeriod", null);
 
