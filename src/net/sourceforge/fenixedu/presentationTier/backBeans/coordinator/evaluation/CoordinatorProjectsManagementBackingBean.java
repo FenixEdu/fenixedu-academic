@@ -95,8 +95,12 @@ public class CoordinatorProjectsManagementBackingBean extends CoordinatorProject
     }
 
     public String getBeginDate() {
-        if (this.beginDate == null && this.getEvaluation() != null) {
-            this.beginDate = DateFormatUtil.format("dd/MM/yyyy", ((IProject) this.getEvaluation()).getBegin());
+        if (this.beginDate == null) {
+            if (this.getEvaluation() != null) {
+                this.beginDate = DateFormatUtil.format("dd/MM/yyyy", ((IProject) this.getEvaluation()).getBegin());
+            } else if(getDay() != null & getMonth() != null & getYear() != null) {
+                this.beginDate = getDay() + "/" + getMonth() + "/" + getYear();                
+            }
         }
         return this.beginDate;
     }

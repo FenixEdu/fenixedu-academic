@@ -20,6 +20,8 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
@@ -50,6 +52,16 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
     private Integer evaluationID;
     private HtmlInputHidden evaluationIdHidden;
     protected IEvaluation evaluation;
+    
+    private Integer day;
+    private Integer month;
+    private Integer year;    
+    private HtmlInputHidden dayHidden;
+    private HtmlInputHidden monthHidden;
+    private HtmlInputHidden yearHidden;
+    
+    private String evaluationType;
+    private HtmlInputHidden evaluationTypeHidden; 
 
     public HtmlInputHidden getDegreeCurricularPlanIdHidden() {
         if (this.degreeCurricularPlanIdHidden == null) {
@@ -156,7 +168,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
         return new ArrayList();
     }
 
-    protected IExecutionPeriod getExecutionPeriod() {
+    public IExecutionPeriod getExecutionPeriod() {
         if (executionPeriod == null) {
             try {
                 final Object args[] = { ExecutionPeriod.class, getExecutionPeriodID() };
@@ -178,6 +190,28 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
         return null;
     }
     
+    public List<SelectItem> getExecutionCoursesLabels() {
+        final List<SelectItem> result = new ArrayList();
+        for (final IExecutionCourse executionCourse : getExecutionCourses()) {
+            result.add(new SelectItem(executionCourse.getIdInternal(), executionCourse.getNome()));
+        }
+        Collections.sort(result, new BeanComparator("label"));
+        return result;
+    }
+    
+    public IEvaluation getEvaluation() {
+        try {
+            if (this.evaluation == null && this.getEvaluationID() != null) {
+                final Object[] args = { WrittenEvaluation.class, this.getEvaluationID() };
+                this.evaluation = (IEvaluation) ServiceUtils.executeService(null, "ReadDomainObject",
+                        args);
+            }
+            return this.evaluation;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
     /**
      * It's necessary to put these attibutes in request for the next back bean
      */
@@ -186,17 +220,14 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
         setRequestAttribute("executionPeriodID", getExecutionPeriodID());
         setRequestAttribute("curricularYearID", getCurricularYearID());
     }
-
-    public Calendar getExecutionPeriodBeginDate() {
-        final Calendar date = Calendar.getInstance();
-        date.setTime(this.getExecutionPeriod().getBeginDate());
-        return date;
-    }
-
-    public Calendar getExecutionPeriodEndDate() {
-        final Calendar date = Calendar.getInstance();
-        date.setTime(this.getExecutionPeriod().getEndDate());
-        return date;
+    
+    public String selectExecutionCourse() {
+        setRequestCommonAttributes();
+        setRequestAttribute("executionCourseID", getExecutionCourseID());        
+        setRequestAttribute("day", getDay());
+        setRequestAttribute("month", getMonth());
+        setRequestAttribute("year", getYear());       
+        return getEvaluationType();
     }
 
     public String searchExecutionCourses() {
@@ -353,5 +384,127 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
             setEvaluationID(Integer.valueOf(evaluationIdHidden.getValue().toString()));
         }
         this.evaluationIdHidden = evaluationIdHidden;
+    }
+    
+    public Integer getDay() {
+        if (this.day == null) {
+            if (this.getEvaluation() != null) {
+                setDay(((IWrittenEvaluation) this.getEvaluation()).getDay().get(Calendar.DAY_OF_MONTH));
+            } else if (this.getRequestParameter("day") != null) {
+                setDay(Integer.valueOf(this.getRequestParameter("day")));
+            } else if (this.getDayHidden().getValue() != null) {
+                setDay(Integer.valueOf(this.getDayHidden().getValue().toString()));
+            } else if (this.getRequestAttribute("day") != null) {
+                setDay(Integer.valueOf(this.getRequestAttribute("day").toString()));
+            }
+        }
+        return this.day;
+    }
+
+    public void setDay(Integer day) {
+        this.day = day;
+    }
+
+    public Integer getMonth() {
+        if (this.month == null) {
+            if (this.getEvaluation() != null) {
+                setMonth(((IWrittenEvaluation) this.getEvaluation()).getDay().get(Calendar.MONTH) + 1);
+            } else if (this.getRequestParameter("month") != null) {
+                setMonth(Integer.valueOf(this.getRequestParameter("month")));
+            } else if (this.getMonthHidden().getValue() != null) {
+                setMonth(Integer.valueOf(this.getMonthHidden().getValue().toString()));
+            } else if (this.getRequestAttribute("month") != null) {
+                setMonth(Integer.valueOf(this.getRequestAttribute("month").toString()));
+            }
+        }
+        return this.month;
+    }
+
+    public void setMonth(Integer month) {
+        this.month = month;
+    }
+
+    public Integer getYear() {
+        if (this.year == null) {
+            if (this.getEvaluation() != null) {
+                setYear(((IWrittenEvaluation) this.getEvaluation()).getDay().get(Calendar.YEAR));
+            } else if (this.getRequestParameter("year") != null) {
+                setYear(Integer.valueOf(this.getRequestParameter("year")));
+            } else if (this.getYearHidden().getValue() != null) {
+                setYear(Integer.valueOf(this.getYearHidden().getValue().toString()));
+            } else if (this.getRequestAttribute("year") != null) {
+                setYear(Integer.valueOf(this.getRequestAttribute("year").toString()));
+            }
+        }
+        return this.year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public HtmlInputHidden getDayHidden() {
+        if (this.dayHidden == null) {
+            this.dayHidden = new HtmlInputHidden();
+            this.dayHidden.setValue(this.getDay());
+        }
+        return this.dayHidden;
+    }
+
+    public void setDayHidden(HtmlInputHidden dayHidden) {
+        this.dayHidden = dayHidden;
+    }
+
+    public HtmlInputHidden getMonthHidden() {
+        if (this.monthHidden == null) {
+            this.monthHidden = new HtmlInputHidden();
+            this.monthHidden.setValue(this.getMonth());
+        }
+        return this.monthHidden;
+    }
+
+    public void setMonthHidden(HtmlInputHidden monthHidden) {
+        this.monthHidden = monthHidden;
+    }
+
+    public HtmlInputHidden getYearHidden() {
+        if (this.yearHidden == null) {
+            this.yearHidden = new HtmlInputHidden();
+            this.yearHidden.setValue(this.getYear());
+        }
+        return this.yearHidden;
+    }
+
+    public void setYearHidden(HtmlInputHidden yearHidden) {
+        this.yearHidden = yearHidden;
+    }
+
+    public String getEvaluationType() {
+        if (this.evaluationType == null) {
+            if (this.getRequestParameter("evaluationType") != null
+                    && !this.getRequestParameter("evaluationType").equals("")) {
+                this.evaluationType = this.getRequestParameter("evaluationType");
+            }
+        }
+        return this.evaluationType;
+    }
+    
+    public void setEvaluationType(String evaluationType) {
+        this.evaluationType = evaluationType;
+    }
+
+    public HtmlInputHidden getEvaluationTypeHidden() {
+        if (this.evaluationTypeHidden == null) {
+            this.evaluationTypeHidden = new HtmlInputHidden();
+            this.evaluationTypeHidden.setValue(getEvaluationType());
+        }
+        return this.evaluationTypeHidden;
+    }
+
+    public void setEvaluationTypeHidden(HtmlInputHidden evaluationTypeHidden) {
+        if (evaluationTypeHidden != null) {
+            setEvaluationType(evaluationTypeHidden.getValue().toString());
+        }
+        this.evaluationTypeHidden = evaluationTypeHidden;
     }
 }

@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 <%@ taglib uri="/WEB-INF/fmt.tld" prefix="fmt"%>
+<%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 <ft:tilesView definition="df.coordinator.evaluation-management" attributeName="body-inline">
 <style>
 .boldFontClass { 
@@ -89,8 +90,15 @@ table.executionCoursesWithoutWrittenEvaluations td {
 		<h:outputText value="<ul><li>#{bundle['label.coordinator.instruction1']}</li>" escape="false" />
 		<h:outputText value="<li>#{bundle['label.coordinator.instruction2']}</li>" escape="false" />
 		<h:outputText value="</ul>" escape="false" />
-		<h:outputText value="<br/>" escape="false" /> 		
- 		<%-- CALENDAR HERE --%> 		
+		<h:outputText value="<br/>" escape="false" />
+		<style>@import url(<%= request.getContextPath() %>/CSS/dotist_calendars.css);</style>	
+ 		<fc:fenixCalendar 
+ 		   begin="#{coordinatorProjectsInformationBackingBean.executionPeriod.beginDate}"
+		   end="#{coordinatorProjectsInformationBackingBean.executionPeriod.endDate}"
+		   createLink="showExecutionCourses.faces?evaluationType=Project&degreeCurricularPlanID=#{coordinatorProjectsInformationBackingBean.degreeCurricularPlanID}&executionPeriodID=#{coordinatorProjectsInformationBackingBean.executionPeriodID}&curricularYearID=#{coordinatorProjectsInformationBackingBean.curricularYearID}"
+		   editLinkPage="editProject.faces"
+		   editLinkParameters="#{coordinatorProjectsInformationBackingBean.projectsCalendarLink}"
+ 		/>
  		<h:outputText value="<br/><i>#{bundle['label.coordinator.definedProjects']}</i><br/>" escape="false" styleClass="boldFontClass"/>
 		<h:panelGroup rendered="#{empty coordinatorProjectsInformationBackingBean.executionCoursesWithProjects}">
 			<h:outputText value="(#{bundle['label.coordinator.noExecutionCoursesWithProjects']})<br/>" escape="false" />

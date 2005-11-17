@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.jsf.components.util;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
 
 public class CalendarLink {
@@ -13,6 +13,12 @@ public class CalendarLink {
 
     public void setObjectOccurrence(Calendar objectOccurrence) {
         this.objectOccurrence = objectOccurrence;
+    }
+    
+    public void setObjectOccurrence(Date objectOccurrence) {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTime(objectOccurrence);
+        this.objectOccurrence = calendar;
     }
 
     public Calendar getObjectOccurrence() {

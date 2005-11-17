@@ -6,20 +6,23 @@
 	<f:loadBundle basename="ServidorApresentacao/ApplicationResources" var="bundle"/>
 	
 	<h:form>
-		<h:inputHidden binding="#{coordinatorWrittenTestsManagementBackingBean.degreeCurricularPlanIdHidden}"/>
-		<h:inputHidden binding="#{coordinatorWrittenTestsManagementBackingBean.executionPeriodIdHidden}"/>
-		<h:inputHidden binding="#{coordinatorWrittenTestsManagementBackingBean.curricularYearIdHidden}"/>
+		<h:inputHidden binding="#{coordinatorEvaluationManagementBackingBean.degreeCurricularPlanIdHidden}"/>
+		<h:inputHidden binding="#{coordinatorEvaluationManagementBackingBean.executionPeriodIdHidden}"/>
+		<h:inputHidden binding="#{coordinatorEvaluationManagementBackingBean.curricularYearIdHidden}"/>
 		
-		<h:inputHidden binding="#{coordinatorWrittenTestsManagementBackingBean.dayHidden}"/>
-		<h:inputHidden binding="#{coordinatorWrittenTestsManagementBackingBean.monthHidden}"/>
-		<h:inputHidden binding="#{coordinatorWrittenTestsManagementBackingBean.yearHidden}"/>
+		<h:inputHidden binding="#{coordinatorEvaluationManagementBackingBean.dayHidden}"/>
+		<h:inputHidden binding="#{coordinatorEvaluationManagementBackingBean.monthHidden}"/>
+		<h:inputHidden binding="#{coordinatorEvaluationManagementBackingBean.yearHidden}"/>
+		
+		<h:inputHidden binding="#{coordinatorEvaluationManagementBackingBean.evaluationTypeHidden}" />
 		
 		<h:outputText value="<h2>#{bundle['title.choose.discipline']}</h2><br/>" escape="false" />
-		<h:selectOneMenu value="#{coordinatorWrittenTestsManagementBackingBean.executionCourseID}" >
-			<f:selectItems value="#{coordinatorWrittenTestsManagementBackingBean.executionCoursesLabels}" />
+		<h:selectOneMenu value="#{coordinatorEvaluationManagementBackingBean.executionCourseID}" >
+			<f:selectItems value="#{coordinatorEvaluationManagementBackingBean.executionCoursesLabels}" />
 		</h:selectOneMenu>
-		<h:outputText value="<br/><br/>" escape="false" />
-		<h:commandButton action="#{coordinatorWrittenTestsManagementBackingBean.selectExecutionCourse}" value="#{bundle['label.choose']}" styleClass="inputbutton"/>
+		<h:outputText value="<br/><br/>" escape="false" />		
+		<h:commandButton action="#{coordinatorEvaluationManagementBackingBean.selectExecutionCourse}"
+		  value="#{bundle['label.choose']}" styleClass="inputbutton"/>
 		
 	</h:form>
 </ft:tilesView>

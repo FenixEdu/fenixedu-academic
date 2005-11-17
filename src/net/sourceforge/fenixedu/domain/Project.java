@@ -6,6 +6,8 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Date;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
 public class Project extends Project_Base {
 
     private Project() {
@@ -17,6 +19,9 @@ public class Project extends Project_Base {
         if (name == null || begin == null || end == null || executionCourse == null) {
             throw new NullPointerException();
         }
+        if (begin.after(end)) {
+            throw new DomainException("error.evaluation.begin.sooner.end");
+        }
         this.setName(name);
         this.setBegin(begin);
         this.setEnd(end);
@@ -27,6 +32,9 @@ public class Project extends Project_Base {
     public void edit(String name, Date begin, Date end, String description) {
         if (name == null || begin == null || end == null) {
             throw new NullPointerException();
+        }
+        if (begin.after(end)) {
+            throw new DomainException("error.evaluation.begin.sooner.end");
         }
         setName(name);
         setBegin(begin);

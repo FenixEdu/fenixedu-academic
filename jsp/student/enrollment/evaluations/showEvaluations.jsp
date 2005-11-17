@@ -2,21 +2,70 @@
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
+<ft:tilesView definition="definition.student.masterPage" attributeName="body-inline">
 <style>
-.boldFont { 
-	font-weight: bold
+div.evalcontainer {
+padding: 1em 0;
 }
-.alignright {
+table.evallist {
+margin-bottom: 1em;
+text-align: center;
+border-collapse: collapse;
+}
+table.evallist tr {
+}
+table.evallist th {
+padding: 0.25em 0.5em;
+border: 1px solid #ccc;
+background-color: #eaeaea;
+font-weight: normal;
+}
+table.evallist td {
+border-top: 1px solid #ddd;
+border-bottom: 1px solid #ddd;
+border-left: 1px solid #ddd;
+border-right: 1px solid #ddd;
+padding: 0.25em 0.5em;
+}
+table.evallist td.evallist_empty {
+background-color: #fff;
+border: none;
+padding: 0.75em;
+}
+.left {
+text-align: left;
+}
+table.evallist td.title {
+padding: 0.5em;
+font-weight: bold;
+text-align: left;
+background-color: #f5f5f5;
+}
+
+table.search {
+background-color: #f5f5f5;
+border-collapse: collapse;
+}
+table.search tr td {
+border: 1px solid #fff;
+padding: 0.3em;
+}
+.leftcolumn {
 text-align: right;
 }
-.space {
-	padding: 1em;
+tr.el_highlight {
+background-color: #fcfcee;
+}
+tr.el_highlight span.green {
+color: #272;
+}
+td.el_courses {
+text-align: left;
 }
 </style>
-<ft:tilesView definition="definition.student.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="ServidorApresentacao/StudentResources" var="bundle"/>		
 	<h:outputText value="<h2>#{bundle['label.evaluations.enrolment']}</h2>" escape="false" />
-	<h:outputText value="#{bundle['label.do.enrolment']}: " styleClass="boldFont" />
+	<h:outputText value="<p><em>#{bundle['label.do.enrolment']}:</em> " escape="false" />
 	<h:outputLink value="#{displayEvaluationsToEnrol.contextPath}/student/enrollment/evaluations/showWrittenEvaluations.faces?evaluationType=1">
 		<h:outputText value="#{bundle['label.page']} #{bundle['link.exams.enrolment']}" />
 	</h:outputLink>
@@ -24,9 +73,10 @@ text-align: right;
 	<h:outputLink value="#{displayEvaluationsToEnrol.contextPath}/student/enrollment/evaluations/showWrittenEvaluations.faces?evaluationType=2">
 		<h:outputText value="#{bundle['label.page']} #{bundle['link.writtenTests.enrolment']}"/>
 	</h:outputLink>	
-	<h:outputText value="<h3>#{bundle['label.evaluations.list']}:</h3>" escape="false" />
+	<h:outputText value="</p>" escape="false" />
 	<h:form>
-		<h:panelGrid columns="2" columnClasses="alignright,," styleClass="infoop">
+		<h:outputText value="<div class='evalcontainer'>" escape="false" />
+		<h:panelGrid columns="2" columnClasses="alignright,," styleClass="search">
 			<h:outputText value="#{bundle['label.student.enrollment.executionPeriod']}: " styleClass="boldFontClass" />
 			<fc:selectOneMenu value="#{displayEvaluationsToEnrol.executionPeriodID}" onchange="this.form.submit();" 
 			   valueChangeListener="#{displayEvaluationsToEnrol.changeExecutionPeriod}">
@@ -38,9 +88,10 @@ text-align: right;
 				<f:selectItems value="#{displayEvaluationsToEnrol.evaluationTypes}" />
 			</fc:selectOneMenu>
 		</h:panelGrid>
+		<h:outputText value="</div>" escape="false" />
 		<h:outputText value="<br/>" escape="false"/>		
 		<%-- Evaluations Table --%>
-		<h:outputText value="<table border='1'>" escape="false"/>
+		<h:outputText value="<table class='evallist'>" escape="false"/>
 		<h:outputText value="<tr><th>#{bundle['label.type']}</th>" escape="false" />
 		<h:outputText value="<th>#{bundle['label.executionCourse']}</th>" escape="false" />		
 		<h:outputText value="<th>#{bundle['label.identification']}</th>" escape="false" />
@@ -48,18 +99,20 @@ text-align: right;
 		<h:outputText value="<th>#{bundle['label.enrolmentPeriod']}</th>" escape="false" />
 		<h:outputText value="<th>#{bundle['label.enrolmentPage']}</th></tr>" escape="false" />				
 		<%-- Not Enroled Evaluations --%>
-		<h:outputText value="<tr class='space'><td></td></tr>" escape="false"/>
-		<h:outputText value="<tr class='space'><td></td></tr>" escape="false"/>
-		<h:outputText value="<tr><td colspan='6' style='font-weight: bold'>#{bundle['label.notEnroledEvaluations']}: </td></tr>" escape="false"/>
+		<h:outputText value="<tr><td colspan='6' class='evallist_empty'></td></tr>" escape="false"/>
+
+		<h:outputText value="<tr><td colspan='6' class='title'>#{bundle['label.notEnroledEvaluations']}: </td></tr>" escape="false"/>
 		<h:panelGroup rendered="#{empty displayEvaluationsToEnrol.notEnroledEvaluations}">
-			<h:outputText value="<tr><td colspan='6'>(#{bundle['message.no.evaluations.to.enroll']})</td></tr>" escape="false" />
+			<h:outputText value="<tr><td colspan='6' class='eval_error'>(#{bundle['message.no.evaluations.to.enroll']})</td></tr>" escape="false" />
 		</h:panelGroup>
 		<h:panelGroup rendered="#{!empty displayEvaluationsToEnrol.notEnroledEvaluations}">
 			<fc:dataRepeater value="#{displayEvaluationsToEnrol.notEnroledEvaluations}" var="evaluation">
-				<h:outputText value="<tr><td>#{bundle['label.evaluation.shortname.exam']}</td>" escape="false" rendered="#{evaluation.class.simpleName == 'Exam'}"/>
-				<h:outputText value="<tr><td>#{bundle['label.evaluation.shortname.test']}</td>" escape="false" rendered="#{evaluation.class.simpleName == 'WrittenTest'}"/>			
+				<h:outputText value="<tr class='el_highlight'>" escape="false" rendered="#{evaluation.isInEnrolmentPeriod}" />
+				<h:outputText value="<tr>" escape="false" rendered="#{!evaluation.isInEnrolmentPeriod}"/>
+				<h:outputText value="<td>#{bundle['label.evaluation.shortname.exam']}</td>" escape="false" rendered="#{evaluation.class.simpleName == 'Exam'}"/>
+				<h:outputText value="<td>#{bundle['label.evaluation.shortname.test']}</td>" escape="false" rendered="#{evaluation.class.simpleName == 'WrittenTest'}"/>			
 				
-				<h:outputText value="<td>" escape="false" />
+				<h:outputText value="<td class='el_courses'>" escape="false" />
 	 			<fc:dataRepeater value="#{displayEvaluationsToEnrol.executionCourses[evaluation.idInternal]}" var="executionCourse">
 					<h:outputText value="#{executionCourse.nome}" escape="false" />
 				</fc:dataRepeater>
@@ -82,15 +135,15 @@ text-align: right;
 				<h:outputText value="</td>" escape="false" />
 				
 				<h:panelGroup rendered="#{evaluation.isInEnrolmentPeriod}">
-					<h:outputText value="<td>#{bundle['label.opened']}</td>" escape="false" />
+					<h:outputText value="<td><span class='green'>#{bundle['label.opened']}</span></td>" escape="false" />
 					<h:outputText value="<td>" escape="false" />
 					<h:outputLink value="#{displayEvaluationsToEnrol.contextPath}/student/enrollment/evaluations/showWrittenEvaluations.faces?evaluationType=1"
 					   rendered="#{evaluation.class.simpleName == 'Exam'}">
-						<f:verbatim>>></f:verbatim>
+						<h:outputText value="#{bundle['label.enrolment']}" escape="false" />
 					</h:outputLink>
 					<h:outputLink value="#{displayEvaluationsToEnrol.contextPath}/student/enrollment/evaluations/showWrittenEvaluations.faces?evaluationType=2"
 					   rendered="#{evaluation.class.simpleName == 'WrittenTest'}">
-						<f:verbatim>>></f:verbatim>
+						<h:outputText value="#{bundle['label.enrolment']}" escape="false" />
 					</h:outputLink>
 					<h:outputText value="</td></tr>" escape="false" />					
 				</h:panelGroup>
@@ -101,18 +154,19 @@ text-align: right;
 			</fc:dataRepeater>
 		</h:panelGroup>				
 		<%-- Enroled Evaluations --%>
-		<h:outputText value="<tr class='space'><td></td></tr>" escape="false"/>
-		<h:outputText value="<tr class='space'><td></td></tr>" escape="false"/>
-		<h:outputText value="<tr><td colspan='5' style='font-weight: bold'>#{bundle['label.enroledEvaluations']}: </td></tr>" escape="false"/>
+		<h:outputText value="<tr><td colspan='6' class='evallist_empty'></td></tr>" escape="false"/>
+		<h:outputText value="<tr><td colspan='6' class='title'>#{bundle['label.enroledEvaluations']}: </td></tr>" escape="false"/>
 		<h:panelGroup rendered="#{empty displayEvaluationsToEnrol.enroledEvaluations}">
-			<h:outputText value="<tr><td colspan='6'>(#{bundle['message.no.enroled.evaluations']})</td></tr>" escape="false" />
+			<h:outputText value="<tr><td colspan='6' class='eval_error'>(#{bundle['message.no.enroled.evaluations']})</td></tr>" escape="false" />
 		</h:panelGroup>
 		<h:panelGroup rendered="#{!empty displayEvaluationsToEnrol.enroledEvaluations}">
 			<fc:dataRepeater value="#{displayEvaluationsToEnrol.enroledEvaluations}" var="evaluation">
-				<h:outputText value="<tr><td>#{bundle['label.evaluation.shortname.exam']}</td>" escape="false" rendered="#{evaluation.class.simpleName == 'Exam'}"/>
-				<h:outputText value="<tr><td>#{bundle['label.evaluation.shortname.test']}</td>" escape="false" rendered="#{evaluation.class.simpleName == 'WrittenTest'}"/>			
+				<h:outputText value="<tr class='el_highlight'>" escape="false" rendered="#{evaluation.isInEnrolmentPeriod}" />
+				<h:outputText value="<tr>" escape="false" rendered="#{!evaluation.isInEnrolmentPeriod}"/>			
+				<h:outputText value="<td>#{bundle['label.evaluation.shortname.exam']}</td>" escape="false" rendered="#{evaluation.class.simpleName == 'Exam'}"/>
+				<h:outputText value="<td>#{bundle['label.evaluation.shortname.test']}</td>" escape="false" rendered="#{evaluation.class.simpleName == 'WrittenTest'}"/>			
 				
-				<h:outputText value="<td>" escape="false" />
+				<h:outputText value="<td class='el_courses'>" escape="false" />
 	 			<fc:dataRepeater value="#{displayEvaluationsToEnrol.executionCourses[evaluation.idInternal]}" var="executionCourse">
 					<h:outputText value="#{executionCourse.nome}" escape="false" />
 				</fc:dataRepeater>
@@ -135,15 +189,15 @@ text-align: right;
 				<h:outputText value="</td>" escape="false" />
 				
 				<h:panelGroup rendered="#{evaluation.isInEnrolmentPeriod}">
-					<h:outputText value="<td>#{bundle['label.opened']}</td>" escape="false" />
+					<h:outputText value="<td><span class='green'>#{bundle['label.opened']}</span></td>" escape="false" />
 					<h:outputText value="<td>" escape="false" />
 					<h:outputLink value="#{displayEvaluationsToEnrol.contextPath}/student/enrollment/evaluations/showWrittenEvaluations.faces?evaluationType=1"
 					   rendered="#{evaluation.class.simpleName == 'Exam'}">
-						<f:verbatim>>></f:verbatim>
+						<h:outputText value="#{bundle['label.enrolment']}" escape="false" />
 					</h:outputLink>
 					<h:outputLink value="#{displayEvaluationsToEnrol.contextPath}/student/enrollment/evaluations/showWrittenEvaluations.faces?evaluationType=2"
 					   rendered="#{evaluation.class.simpleName == 'WrittenTest'}">
-						<f:verbatim>>></f:verbatim>
+						<h:outputText value="#{bundle['label.enrolment']}" escape="false" />
 					</h:outputLink>		
 					<h:outputText value="</td></tr>" escape="false" />					
 				</h:panelGroup>
@@ -154,18 +208,17 @@ text-align: right;
 			</fc:dataRepeater>
 		</h:panelGroup>		
 		<%-- Evaluations Without Enrolment Period --%>
-		<h:outputText value="<tr class='space'><td></td></tr>" escape="false"/>
-		<h:outputText value="<tr class='space'><td></td></tr>" escape="false"/>
-		<h:outputText value="<tr><td colspan='5' style='font-weight: bold'>#{bundle['label.evaluationsWithoutEnrolmentPeriod']}:* </td></tr>" escape="false"/>
+		<h:outputText value="<tr><td colspan='6' class='evallist_empty'></td></tr>" escape="false"/>
+		<h:outputText value="<tr><td colspan='6' class='title'>#{bundle['label.evaluationsWithoutEnrolmentPeriod']}:* </td></tr>" escape="false"/>
 		<h:panelGroup rendered="#{empty displayEvaluationsToEnrol.evaluationsWithoutEnrolmentPeriod}">
-			<h:outputText value="<tr><td colspan='6'>(#{bundle['message.no.evaluations.without.enrolment.period']})</td></tr>" escape="false" />
+			<h:outputText value="<tr><td colspan='6' class='eval_error'>(#{bundle['message.no.evaluations.without.enrolment.period']})</td></tr>" escape="false" />
 		</h:panelGroup>
 		<h:panelGroup rendered="#{!empty displayEvaluationsToEnrol.evaluationsWithoutEnrolmentPeriod}">
 			<fc:dataRepeater value="#{displayEvaluationsToEnrol.evaluationsWithoutEnrolmentPeriod}" var="evaluation">
 				<h:outputText value="<tr><td>#{bundle['label.evaluation.shortname.exam']}</td>" escape="false" rendered="#{evaluation.class.simpleName == 'Exam'}"/>
 				<h:outputText value="<tr><td>#{bundle['label.evaluation.shortname.test']}</td>" escape="false" rendered="#{evaluation.class.simpleName == 'WrittenTest'}"/>			
 				
-				<h:outputText value="<td>" escape="false" />
+				<h:outputText value="<td class='el_courses'>" escape="false" />
 	 			<fc:dataRepeater value="#{displayEvaluationsToEnrol.executionCourses[evaluation.idInternal]}" var="executionCourse">
 					<h:outputText value="#{executionCourse.nome}" escape="false" />
 				</fc:dataRepeater>
@@ -193,7 +246,7 @@ text-align: right;
 		</h:panelGroup>		
 		<h:outputText value="</table>" escape="false"/>
 		<h:outputText value="* #{bundle['label.evaluationNote']}<br/><br/>" escape="false"/>	
-		<h:outputText value="#{bundle['label.do.enrolment']}: " styleClass="boldFont" />
+		<h:outputText value="<p><em>#{bundle['label.do.enrolment']}:</em> " escape="false" />
 		<h:outputLink value="#{displayEvaluationsToEnrol.contextPath}/student/enrollment/evaluations/showWrittenEvaluations.faces?evaluationType=1">
 			<h:outputText value="#{bundle['label.page']} #{bundle['link.exams.enrolment']}" />
 		</h:outputLink>
@@ -201,5 +254,6 @@ text-align: right;
 		<h:outputLink value="#{displayEvaluationsToEnrol.contextPath}/student/enrollment/evaluations/showWrittenEvaluations.faces?evaluationType=2">
 			<h:outputText value="#{bundle['label.page']} #{bundle['link.writtenTests.enrolment']}"/>
 		</h:outputLink>
+		<h:outputText value="</p>" escape="false"/>
 	</h:form>
 </ft:tilesView>

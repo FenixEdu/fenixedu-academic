@@ -190,26 +190,29 @@
 
 	<!-- BEGIN: COORDINATOR Managed Beans -->
 	<managed-bean>
+		<description>coordinatorEvaluationManagementBackingBean</description>
+		<managed-bean-name>coordinatorEvaluationManagementBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.evaluation.CoordinatorEvaluationManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
 		<description>CoordinatorWrittenTestsInformationBackingBean</description>
 		<managed-bean-name>coordinatorWrittenTestsInformationBackingBean</managed-bean-name>
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.evaluation.CoordinatorWrittenTestsInformationBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	
+	</managed-bean>	
 	<managed-bean>
 		<description>CoordinatorWrittenTestsManagementBackingBean</description>
 		<managed-bean-name>coordinatorWrittenTestsManagementBackingBean</managed-bean-name>
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.evaluation.CoordinatorWrittenTestsManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>	
-	
+	</managed-bean>		
 	<managed-bean>
 		<description>CoordinatorProjectsInformationBackingBean</description>
 		<managed-bean-name>coordinatorProjectsInformationBackingBean</managed-bean-name>
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.evaluation.CoordinatorProjectsInformationBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	
+	</managed-bean>	
 	<managed-bean>
 		<description>CoordinatorProjectsManagementBackingBean</description>
 		<managed-bean-name>coordinatorProjectsManagementBackingBean</managed-bean-name>
@@ -1005,8 +1008,12 @@
 	<navigation-rule>
 		<from-view-id>/coordinator/evaluation/showExecutionCourses.jsp</from-view-id>
 		<navigation-case>
-			<from-outcome>selectExecutionCourse</from-outcome>
+			<from-outcome>WrittenTest</from-outcome>
 			<to-view-id>/coordinator/evaluation/createWrittenTest.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>Project</from-outcome>
+			<to-view-id>/coordinator/evaluation/createProject.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	

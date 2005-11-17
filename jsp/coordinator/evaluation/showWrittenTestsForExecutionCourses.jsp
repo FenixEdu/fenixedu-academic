@@ -94,9 +94,9 @@ table.executionCoursesWithoutWrittenEvaluations td {
 		<h:outputText value="<br/>" escape="false" />				
 		<style>@import url(<%= request.getContextPath() %>/CSS/dotist_calendars.css);</style>		
 		<fc:fenixCalendar 
-			begin="#{coordinatorWrittenTestsInformationBackingBean.executionPeriodBeginDate}"
-			end="#{coordinatorWrittenTestsInformationBackingBean.executionPeriodEndDate}"
-			createLink="showExecutionCourses.faces?degreeCurricularPlanID=#{coordinatorWrittenTestsInformationBackingBean.degreeCurricularPlanID}&executionPeriodID=#{coordinatorWrittenTestsInformationBackingBean.executionPeriodID}&curricularYearID=#{coordinatorWrittenTestsInformationBackingBean.curricularYearID}"
+			begin="#{coordinatorWrittenTestsInformationBackingBean.executionPeriod.beginDate}"
+			end="#{coordinatorWrittenTestsInformationBackingBean.executionPeriod.endDate}"
+			createLink="showExecutionCourses.faces?evaluationType=WrittenTest&degreeCurricularPlanID=#{coordinatorWrittenTestsInformationBackingBean.degreeCurricularPlanID}&executionPeriodID=#{coordinatorWrittenTestsInformationBackingBean.executionPeriodID}&curricularYearID=#{coordinatorWrittenTestsInformationBackingBean.curricularYearID}"
 			editLinkPage="editWrittenTest.faces"
 			editLinkParameters="#{coordinatorWrittenTestsInformationBackingBean.writtenTestsCalendarLink}"
 		/>
