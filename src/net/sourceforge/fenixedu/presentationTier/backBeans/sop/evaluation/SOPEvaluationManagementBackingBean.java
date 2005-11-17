@@ -593,11 +593,11 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
             int totalCapacity = 0;
             final StringBuffer buffer = new StringBuffer(20);
             for (final IRoom room : writtenTest.getAssociatedRooms()) {
-                buffer.append(room.getNome()).append(";");
+                buffer.append(room.getNome()).append("; ");
                 totalCapacity += room.getCapacidadeExame();
             }
             if (buffer.length() > 0) {
-                buffer.deleteCharAt(buffer.length() - 1);
+                buffer.delete(buffer.length() - 2, buffer.length() - 1);
             }            
             writtenEvaluationsRooms.put(writtenTest.getIdInternal(), buffer.toString());
             writtenEvaluationsFreeSpace.put(writtenTest.getIdInternal(), Integer.valueOf(totalCapacity
