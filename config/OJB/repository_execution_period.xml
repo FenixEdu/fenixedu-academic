@@ -42,6 +42,16 @@
           column="END_DATE"
           jdbc-type="DATE"
           conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"/>
+        <field-descriptor
+          name="inquiryResponseBegin"
+          column="INQUIRY_RESPONSE_BEGIN"
+          jdbc-type="DATE"
+          conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"/>
+        <field-descriptor
+          name="inquiryResponseEnd"
+          column="INQUIRY_RESPONSE_END"
+          jdbc-type="DATE"
+          conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"/>
        <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"

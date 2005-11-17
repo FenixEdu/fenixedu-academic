@@ -136,6 +136,13 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
+        <name>GEPAuthorization</name>
+        <expression>GEPAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    <filterChain>
         <name>StudentListByDegreeAuthorization</name>
         <expression>StudentListByDegreeAuthorization || GEPAuthorization</expression>
         <description/>

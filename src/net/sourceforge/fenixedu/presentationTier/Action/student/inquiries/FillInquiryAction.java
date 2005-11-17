@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.student.inquiries;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -41,6 +42,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.InquiriesUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -124,6 +126,16 @@ public class FillInquiryAction extends FenixDispatchAction {
 
         // Obtaining the current execution period
  		InfoExecutionPeriod currentExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(userView, "ReadCurrentExecutionPeriod", null);
+        final Date inquiryResponseBegin = currentExecutionPeriod.getInquiryResponseBegin();
+        final Date inquiryResponseEnd = currentExecutionPeriod.getInquiryResponseEnd();
+        if (inquiryResponseBegin == null || inquiryResponseEnd == null) {
+            request.setAttribute(InquiriesUtil.INQUIRY_MESSAGE_KEY, "message.inquiries.period.not.defined");     
+            return actionMapping.findForward("inquiryIntroduction");            
+        }
+        if (!insidePeriod(inquiryResponseBegin, inquiryResponseEnd)) {
+            request.setAttribute(InquiriesUtil.INQUIRY_MESSAGE_KEY, "message.inquiries.not.inside.period");     
+            return actionMapping.findForward("inquiryIntroduction");            
+        }
 
 		//THIS IS ONLY READING THE ENROLLED COURSES, AND NOT ALL THE ATTENDING ONES
 		Object[] argsStudentIdExecutionPeriodId = { infoStudent.getIdInternal(), currentExecutionPeriod.getIdInternal(), Boolean.TRUE, Boolean.TRUE };
@@ -161,6 +173,13 @@ public class FillInquiryAction extends FenixDispatchAction {
 
         return actionMapping.findForward("inquiryIntroduction");
 
+    }
+
+    private boolean insidePeriod(final Date inquiryResponseBegin, final Date inquiryResponseEnd) {
+        final String now = DateFormatUtil.format("yyyy/MM/dd", new Date());
+        final String begin = DateFormatUtil.format("yyyy/MM/dd", inquiryResponseBegin);
+        final String end = DateFormatUtil.format("yyyy/MM/dd", inquiryResponseEnd);
+        return begin.compareTo(now) < 0 && now.compareTo(end) < 0;
     }
 
     public ActionForward editInquiry(ActionMapping actionMapping,

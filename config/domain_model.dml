@@ -1259,6 +1259,8 @@ class net.sourceforge.fenixedu.domain.ExecutionPeriod extends net.sourceforge.fe
 	String name;
 	Integer semester;
     PeriodState state;
+    Date inquiryResponseBegin;
+    Date inquiryResponseEnd;
 }
 
 

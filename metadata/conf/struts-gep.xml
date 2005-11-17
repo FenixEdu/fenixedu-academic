@@ -50,7 +50,15 @@
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 			<form-property name="method" type="java.lang.String"/>
 		</form-bean>	
-		
+
+		<form-bean name="defineResponsePeriodsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="method" type="java.lang.String"/>
+			<form-property name="executionPeriodID" type="java.lang.String"/>
+			<form-property name="inquiryResponseBegin" type="java.lang.String"/>
+			<form-property name="inquiryResponseEnd" type="java.lang.String"/>
+		</form-bean>
+
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -217,7 +225,15 @@
 			<forward name="viewTeachingStaff" path="teachingStaff.viewTeachingStaff"/>			
 		</action>
 		
-		
+		<action path="/defineResponsePeriods"
+			type="net.sourceforge.fenixedu.presentationTier.Action.gep.inquiries.DefineResponsePeriodsDA"
+			name = "defineResponsePeriodsForm"
+			scope="request"
+			input="/defineResponsePeriods.do?method=prepare&amp;page=0"
+			parameter="method"
+			>
+			<forward name="showForm" path="define.response.periods"/>
+		</action>		
 
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->

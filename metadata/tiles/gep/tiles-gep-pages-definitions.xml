@@ -57,20 +57,22 @@
 		extends="definition.gep.two-column">
 		<put name="body" value="/gep/inquiries/chooseDegreeCurricularPlans.jsp"></put>
 	</definition>
-	
 	<definition name="show-report"
 		extends="definition.gep.two-column">
 		<put name="body" value="/gep/inquiries/showReport.jsp"></put>
-	</definition>	
+	</definition>
+	<definition name="define.response.periods" extends="definition.gep.two-column">
+		<put name="body" value="/gep/inquiries/defineResponsePeriods.jsp"></put>
+	</definition>
 
 	<definition name="teachingStaff.chooseExecutionYearAndDegreeCurricularPlan" extends="definition.gep.two-column">
 		<put name="body" value="/gep/teachingStaff/chooseExecutionYearAndDegreeCurricularPlan.jsp"></put>
 	</definition>
 	<definition name="teachingStaff.chooseExecutionCourse" extends="definition.gep.two-column">
 		<put name="body" value="/gep/teachingStaff/chooseExecutionCourse.jsp"></put>
-	</definition>	
+	</definition>
 	<definition name="teachingStaff.viewTeachingStaff" extends="definition.gep.two-column">
 		<put name="body" value="/gep/teachingStaff/viewTeachingStaff.jsp"></put>
-	</definition>	
-	
+	</definition>
+
 </tiles-definitions>

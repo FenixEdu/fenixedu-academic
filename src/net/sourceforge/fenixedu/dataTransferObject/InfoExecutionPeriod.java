@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.stm.VBox;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 /**
@@ -24,6 +25,10 @@ public class InfoExecutionPeriod extends InfoObject implements Serializable {
     private Date beginDate;
 
     private Date endDate;
+
+    private Date inquiryResponseBegin;
+
+    private Date inquiryResponseEnd;
 
     private InfoExecutionPeriod previousInfoExecutionPeriod;
 
@@ -213,6 +218,8 @@ public class InfoExecutionPeriod extends InfoObject implements Serializable {
             setEndDate(period.getEndDate());
             setSemester(period.getSemester());
             setInfoExecutionYear(InfoExecutionYear.newInfoFromDomain(period.getExecutionYear()));
+            setInquiryResponseBegin(period.getInquiryResponseBegin());
+            setInquiryResponseEnd(period.getInquiryResponseEnd());
         }
     }
 
@@ -249,5 +256,21 @@ public class InfoExecutionPeriod extends InfoObject implements Serializable {
 	{
 		this.qualifiedName = qualifiedName;
 	}
+
+    public Date getInquiryResponseBegin() {
+        return inquiryResponseBegin;
+    }
+
+    public void setInquiryResponseBegin(Date inquiryResponseBegin) {
+        this.inquiryResponseBegin = inquiryResponseBegin;
+    }
+
+    public Date getInquiryResponseEnd() {
+        return inquiryResponseEnd;
+    }
+
+    public void setInquiryResponseEnd(Date inquiryResponseEnd) {
+        this.inquiryResponseEnd = inquiryResponseEnd;
+    }
 
 }

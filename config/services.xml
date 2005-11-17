@@ -9029,4 +9029,15 @@
 		</filterChains>				
 	</service>
 	<!--######################################-->  
+    <service>
+		<name>DefineInquiryResponsePeriod</name>
+		<implementationClass>
+			net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.DefineInquiryResponsePeriod
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="GEPAuthorization" />
+		</filterChains>				
+	</service>
 </serviceDefinitions>    

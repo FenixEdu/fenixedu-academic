@@ -37,6 +37,13 @@
 	<li class="navheader">
 		<bean:message key="label.inquiries" bundle="INQUIRIES_RESOURCES"/>
 	</li>
+<%--
+	<li>
+		<html:link page="/defineResponsePeriods.do?method=prepare">		
+			<bean:message key="link.inquiries.define.response.period" bundle="INQUIRIES_RESOURCES"/>
+		</html:link>				
+	</li>
+--%>
 	<li>
 		<html:link page="/sendEmailReminder.do?method=prepare">		
 			<bean:message key="link.inquiries.email.reminder" bundle="INQUIRIES_RESOURCES"/>
