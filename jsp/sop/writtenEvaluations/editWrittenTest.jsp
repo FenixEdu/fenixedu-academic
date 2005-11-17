@@ -103,9 +103,11 @@
 		<h:panelGrid columns="1">
 			<h:commandLink action="associateRoomToWrittenEvaluation">
 				<h:outputText value="#{bundleSOP['property.exam.associateRooms']}" escape="false"/>
+				<f:param name="executionPeriodOID" value="#{SOPEvaluationManagementBackingBean.executionPeriodOID}" />
 			</h:commandLink>
 			<h:commandLink action="associateExecutionCourseToWrittenEvaluation">
 				<h:outputText value="#{bundleSOP['property.exam.associate']}" escape="false"/>
+				<f:param name="executionPeriodOID" value="#{SOPEvaluationManagementBackingBean.executionPeriodOID}" />
 			</h:commandLink>
 		</h:panelGrid>
 

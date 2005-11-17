@@ -133,7 +133,7 @@ table.executionCoursesWithoutWrittenEvaluations td {
 		 	<fc:fenixCalendar 
 		 		begin="#{SOPEvaluationManagementBackingBean.writtenEvaluationsCalendarBegin}" 
 		 		end="#{SOPEvaluationManagementBackingBean.writtenEvaluationsCalendarEnd}"
-		 		createLink="showExecutionCourses.faces?executionPeriodID=#{SOPEvaluationManagementBackingBean.executionPeriodID}&executionDegreeID=#{SOPEvaluationManagementBackingBean.executionDegreeID}&curricularYearID=#{SOPEvaluationManagementBackingBean.curricularYearID}"
+		 		createLink="showExecutionCourses.faces?executionPeriodID=#{SOPEvaluationManagementBackingBean.executionPeriodID}&executionDegreeID=#{SOPEvaluationManagementBackingBean.executionDegreeID}&curricularYearID=#{SOPEvaluationManagementBackingBean.curricularYearID}&executionPeriodOID=#{SOPEvaluationManagementBackingBean.executionPeriodOID}"
 		 		editLinkPage="editWrittenTest.faces"
 		 		editLinkParameters="#{SOPEvaluationManagementBackingBean.writtenTestsCalendarLink}"
 		 	/>

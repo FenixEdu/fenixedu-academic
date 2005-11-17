@@ -383,7 +383,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
         ComparatorChain chainComparator = new ComparatorChain();
         chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);
-        chainComparator.addComparator(new BeanComparator("semester"));
+        chainComparator.addComparator(new BeanComparator("semester"), true);
         Collections.sort(infoExecutionPeriods, chainComparator);
 
         List<SelectItem> executionPeriodItems = new ArrayList<SelectItem>(infoExecutionPeriods.size());
@@ -533,6 +533,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         linkParameters.put("executionDegreeID", this.executionDegreeID.toString());
         linkParameters.put("curricularYearID", this.getCurricularYearID().toString());
         linkParameters.put("evaluationTypeClassname", writtenEvaluation.getClass().getName());
+        linkParameters.put("executionPeriodOID", this.getExecutionPeriodOID().toString());
         return linkParameters;
     }
 
