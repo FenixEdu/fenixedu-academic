@@ -4,37 +4,38 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.List;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
  *         <br/> Created on 18:43:06,3/Nov/2005
  * @version $Id$
  */
-public class OrderedIterator implements Iterator {
+public class OrderedIterator<T> implements Iterator {
 
-    private Iterator iterator;
-    private ArrayList backingList;
+    private Iterator<T> iterator;
 
-    public OrderedIterator(Iterator iterator, Comparator comparator) {
-        super();
-        this.backingList = new ArrayList();
+    private List<T> buildBackingList(Iterator<T> iterator)
+    {
+    	List<T> backingList = new ArrayList<T>();
         while(iterator.hasNext())
         {
-        	this.backingList.add(iterator.next());
+        	backingList.add(iterator.next());
         }
-        Collections.sort(this.backingList,comparator);
+        
+        return backingList;
+    }
+    public OrderedIterator(Iterator<T> iterator, Comparator<T> comparator) {
+        super();
+        List<T> backingList = this.buildBackingList(iterator);
+        Collections.sort(backingList,comparator);
         this.iterator = backingList.iterator();
     }
     
-    public OrderedIterator(Iterator iterator) {
+    public OrderedIterator(Iterator<T> iterator) {
         super();
-        this.backingList = new ArrayList();
-        while(iterator.hasNext())
-        {
-        	this.backingList.add(iterator.next());
-        }
-        Collections.sort(this.backingList);
+        List backingList = this.buildBackingList(iterator);
+        Collections.sort(backingList);
         this.iterator = backingList.iterator();
     }
 
@@ -43,7 +44,7 @@ public class OrderedIterator implements Iterator {
         return this.iterator.hasNext();
     }
 
-    public Object next() {
+    public T next() {
         return this.iterator.next();
     }
 
