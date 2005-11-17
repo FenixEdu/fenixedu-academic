@@ -49,7 +49,7 @@ margin-bottom: 0;
 					<h:outputText value="<b> | </b>" escape="false"/>
 					<h:commandLink action="enterEditWrittenTest">
 						<f:param name="evaluationID" value="#{writtenTest.idInternal}" />
-						<h:outputFormat value="#{bundle['link.edit.written.test']}" />
+						<h:outputFormat value="#{bundle['link.edit']}" />
 					</h:commandLink>
 
 		
