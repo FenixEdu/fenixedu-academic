@@ -32,7 +32,7 @@ vertical-align: top;
 				</h:panelGroup>
 				<h:panelGroup>
 					<h:outputText value="* " style="color: red"/>				
-					<h:outputText value="#{bundle['label.beginDate']}: " />
+					<h:outputText value="#{bundle['label.publish.date']}: " />
 				</h:panelGroup>
 				<h:panelGroup>
 					<h:inputText id="beginDate" required="true" maxlength="10" size="10" value="#{projectManagementBackingBean.beginProjectDate}" />
@@ -44,7 +44,7 @@ vertical-align: top;
 				</h:panelGroup>
 				<h:panelGroup>
 					<h:outputText value="* " style="color: red"/>					
-					<h:outputText value="#{bundle['label.endDate']}: " />
+					<h:outputText value="#{bundle['label.delivery.date']}: " />
 				</h:panelGroup>
 				<h:panelGroup>
 					<h:inputText id="endDate" required="true" maxlength="10" size="10" value="#{projectManagementBackingBean.endProjectDate}" />

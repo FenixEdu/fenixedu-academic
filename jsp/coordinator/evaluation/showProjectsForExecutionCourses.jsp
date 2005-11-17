@@ -100,8 +100,8 @@ table.executionCoursesWithoutWrittenEvaluations td {
 				<table class="style2u">
 				<tr>			
 					<th><c:out value="${bundle['label.coordinator.identification']}" escapeXml="false"/></th>
-					<th><c:out value="${bundle['label.beginDate']}" escapeXml="false"/></th>
-					<th><c:out value="${bundle['label.endDate']}" escapeXml="false"/></th>
+					<th><c:out value="${bundle['label.publish.date']}" escapeXml="false"/></th>
+					<th><c:out value="${bundle['label.delivery.date']}" escapeXml="false"/></th>
 					<th><c:out value="${bundle['label.description']}" escapeXml="false"/></th>
 					<th style="width: 9em;"></th>				
 				</tr>			

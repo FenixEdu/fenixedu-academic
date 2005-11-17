@@ -27,31 +27,29 @@
 					<h:outputText value="<strong>#{bundle['label.project']}:</strong> " escape="false" />
 					<h:outputText value="#{project.name}, " />
 					
-					<h:outputText value="#{bundle['label.beginning']}: " />
+					<h:outputText value="#{bundle['label.publish.date']}: " />
 					<h:outputFormat value="{0, date, dd/MM/yyyy}">
 						<f:param value="#{project.begin}" />
 					</h:outputFormat>
-					
-					<h:outputText value=", #{bundle['label.end']}: " />
+					<h:outputText value=", #{bundle['label.delivery.date']}: " />
 					<h:outputFormat value="{0, date, dd/MM/yyyy}">
 						<f:param value="#{project.end}" />
 					</h:outputFormat>
-					
-					<h:outputText value="<br/>" escape="false"/>
-					<h:outputText value="#{bundle['label.description']}: " style="font-weight: bold" />
-					<h:outputText value="#{project.description}" />
-					
-					<h:outputText value="<br/>" escape="false"/>
+					<h:outputText value="<b> | </b>" escape="false"/>
 					<h:commandLink action="enterEditProject">
 						<f:param id="projectIDToEdit" name="projectID" value="#{project.idInternal}" />
 						<h:outputFormat value="#{bundle['link.edit']}"/>
 					</h:commandLink>
-			
 					<h:outputText value="<b> | </b>" escape="false"/>
 					<h:commandLink action="#{projectManagementBackingBean.deleteProject}">
 						<f:param id="projectIDToDelete" name="projectID" value="#{project.idInternal}" />
 						<h:outputFormat value="#{bundle['link.delete']}" />
 					</h:commandLink>
+					
+					<h:outputText value="<br/>" escape="false"/>
+					<h:outputText value="#{bundle['label.description']}: " style="font-weight: bold" />
+					<h:outputText value="#{project.description}" />
+					
 					<h:outputText value="<br/><br/>" escape="false"/>
 				</h:column>			
 			</h:dataTable>
