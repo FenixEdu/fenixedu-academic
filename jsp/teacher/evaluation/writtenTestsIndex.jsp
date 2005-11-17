@@ -65,11 +65,11 @@ margin-bottom: 0;
 						<h:outputFormat value="#{bundle['link.students.enrolled.inExam']}" />
 					</h:commandLink>
 		
-					<%--<h:outputText value="<b> | </b>" escape="false"/>
+					<h:outputText value="<b> | </b>" escape="false"/>
 					<h:commandLink action="enterDistributeStudentsByRooms">
 						<f:param name="evaluationID" value="#{writtenTest.idInternal}" />
 						<h:outputFormat value="#{bundle['link.students.distribution']}" />
-					</h:commandLink>--%>
+					</h:commandLink>
 					<h:outputText value="</li>" escape="false"/>
 
 					<h:outputText value="<li><b>#{bundle['label.students.listMarks']}:</b> " escape="false"/>

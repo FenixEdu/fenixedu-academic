@@ -543,10 +543,10 @@
 			<from-outcome>enterShowStudentsEnroled</from-outcome>
 			<to-view-id>/teacher/evaluation/showStudentsEnroled.jsp</to-view-id>
 		</navigation-case>
-<!-- 		<navigation-case>
+ 		<navigation-case>
 			<from-outcome>enterDistributeStudentsByRooms</from-outcome>
 			<to-view-id>/teacher/evaluation/distributeStudentsByRooms.jsp</to-view-id>
-		</navigation-case> --> 
+		</navigation-case>
  		<navigation-case>
 			<from-outcome>enterEditWrittenTest</from-outcome>
 			<to-view-id>/teacher/evaluation/editWrittenTest.jsp</to-view-id>
