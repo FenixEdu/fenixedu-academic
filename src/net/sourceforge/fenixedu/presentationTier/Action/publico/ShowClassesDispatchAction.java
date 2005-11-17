@@ -4,25 +4,35 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
-import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.collections.Table;
 import net.sourceforge.fenixedu.dataTransferObject.ClassView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.PeriodState;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -35,115 +45,74 @@ public class ShowClassesDispatchAction extends FenixContextDispatchAction {
 
     public ActionForward listClasses(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        Integer degreeOID = new Integer(request.getParameter("degreeOID"));
+        final Integer degreeOID = new Integer(request.getParameter("degreeOID"));
         request.setAttribute("degreeID", degreeOID);
 
-        InfoExecutionPeriod nextInfoExecutionPeriod = getNextExecutionPeriod(request);
+        final String language = getLocaleLanguageFromRequest(request);
+        getInfoDegreeCurricularPlan(request, degreeOID, language);
 
-        List classViewsForCurrentAndPreviousPeriods = null;
-        List classViewsForCurrentAndNextPeriods = null;
-        if (nextInfoExecutionPeriod == null || nextInfoExecutionPeriod.getState().equals(PeriodState.NOT_OPEN)) {
-            classViewsForCurrentAndPreviousPeriods = getClassViewsForCurrentAndPreviousPeriods(request,
-                    degreeOID);
-        } else {
-            classViewsForCurrentAndNextPeriods = getClassViewsForCurrentAndNextPeriods(request,
-                    degreeOID);
-        }
-        String language = getLocaleLanguageFromRequest(request);
-        getInfoDegreeCurricularPlan(request, degreeOID,language);
+        final IUserView userView = SessionUtils.getUserView(request);
+        final Integer executionPeriodID = ((InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD)).getIdInternal();
+        final Object[] args1 = { ExecutionPeriod.class, executionPeriodID };
+        final IExecutionPeriod executionPeriod = (IExecutionPeriod) ServiceUtils.executeService(userView, "ReadDomainObject", args1);
 
-        InfoExecutionPeriod previouseInfoExecutionPeriod = getPreviouseExecutionPeriod(request);
+        final Object[] args2 = { Degree.class, degreeOID };
+        final IDegree degree = (IDegree) ServiceUtils.executeService(userView, "ReadDomainObject", args2);
 
-        //organizeClassViews(request, classViewsForCurrentAndPreviousPeriods, previouseInfoExecutionPeriod);
-
-        if (nextInfoExecutionPeriod == null || nextInfoExecutionPeriod.getState().equals(PeriodState.NOT_OPEN)) {
-            organizeClassViewsNext(request, classViewsForCurrentAndPreviousPeriods, previouseInfoExecutionPeriod);
-        } else {
-            organizeClassViewsNext(request, classViewsForCurrentAndNextPeriods, nextInfoExecutionPeriod);
+        if (executionPeriod != null) {
+        	final IExecutionPeriod nextExecutionPeriod = executionPeriod.getNextExecutionPeriod();
+        	final IExecutionPeriod otherExecutionPeriodToShow =
+        		(nextExecutionPeriod != null && nextExecutionPeriod .getState() != PeriodState.NOT_OPEN) ?
+        				nextExecutionPeriod : executionPeriod.getPreviousExecutionPeriod();
+        	organizeClassViewsNext(request, degree, executionPeriod, otherExecutionPeriodToShow);
+        	request.setAttribute("nextInfoExecutionPeriod", InfoExecutionPeriod.newInfoFromDomain(otherExecutionPeriodToShow));
         }
 
         return mapping.findForward("show-classes-list");
     }
 
-    /**
-     * @param request
-     * @return
-     * @throws FenixServiceException
-     */
-    private InfoExecutionPeriod getNextExecutionPeriod(HttpServletRequest request)
-            throws FenixServiceException, FenixFilterException {
-        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-                .getAttribute(SessionConstants.EXECUTION_PERIOD);
-
-        Object[] args = { infoExecutionPeriod.getIdInternal() };
-
-        InfoExecutionPeriod previousInfoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils
-                .executeService(null, "ReadNextExecutionPeriod", args);
-
-        request.setAttribute("nextInfoExecutionPeriod", previousInfoExecutionPeriod);
-
-        return previousInfoExecutionPeriod;
+    private void organizeClassViewsNext(final HttpServletRequest request, final IDegree degree,
+    		final IExecutionPeriod executionPeriod, final IExecutionPeriod otherExecutionPeriodToShow) {
+        request.setAttribute("classViewsTableCurrent", organizeClassViews(degree, executionPeriod));
+        request.setAttribute("classViewsTableNext", organizeClassViews(degree, otherExecutionPeriodToShow));
     }
 
-    /**
-     * @param request
-     * @param classViews
-     * @param previousExecutionPeriod
-     */
-    private void organizeClassViewsNext(HttpServletRequest request, List classViews,
-            InfoExecutionPeriod previousExecutionPeriod) {
+    private Table organizeClassViews(final IDegree degree, final IExecutionPeriod executionPeriod) {
+        final Table classViewsTable = new Table(5);
 
-        Table classViewsTableCurrent = new Table(5);
-        Table classViewsTablePrevious = new Table(5);
+        final SortedSet<ISchoolClass> schoolClasses = new TreeSet<ISchoolClass>(new BeanComparator("nome"));
+        for (final ISchoolClass schoolClass : executionPeriod.getSchoolClasses()) {
+        	final IExecutionDegree executionDegree = schoolClass.getExecutionDegree();
+        	final IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
-        for (Iterator iterator = classViews.iterator(); iterator.hasNext();) {
-            ClassView classView = (ClassView) iterator.next();
-
-            if (previousExecutionPeriod != null && classView.getExecutionPeriodOID().equals(previousExecutionPeriod.getIdInternal())) {
-                classViewsTablePrevious.appendToColumn(classView.getCurricularYear().intValue() - 1,
-                        classView);
-            } else {
-                classViewsTableCurrent.appendToColumn(classView.getCurricularYear().intValue() - 1,
-                        classView);
-            }
+        	if (degreeCurricularPlan.getDegree() == degree) {
+        		schoolClasses.add(schoolClass);
+        	}
         }
 
-        request.setAttribute("classViewsTableCurrent", classViewsTableCurrent);
-        request.setAttribute("classViewsTableNext", classViewsTablePrevious);
+        for (final ISchoolClass schoolClass : schoolClasses) {
+        	classViewsTable.appendToColumn(schoolClass.getAnoCurricular().intValue() - 1, newClassView(schoolClass));
+        }
 
+        return classViewsTable;
     }
 
-    private InfoExecutionPeriod getPreviouseExecutionPeriod(HttpServletRequest request)
-            throws FenixServiceException, FenixFilterException {
-        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-                .getAttribute(SessionConstants.EXECUTION_PERIOD);
+    private ClassView newClassView(final ISchoolClass schoolClass) {
+    	final IExecutionDegree executionDegree = schoolClass.getExecutionDegree();
+    	final IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+    	final IDegree degree = degreeCurricularPlan.getDegree();
 
-        Object[] args = { infoExecutionPeriod.getIdInternal() };
-
-        InfoExecutionPeriod previousInfoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils
-                .executeService(null, "ReadPreviousExecutionPeriod", args);
-
-        request.setAttribute("previousInfoExecutionPeriod", previousInfoExecutionPeriod);
-
-        return previousInfoExecutionPeriod;
-    }
-
-    private List getClassViewsForCurrentAndPreviousPeriods(HttpServletRequest request, Integer degreeOID)
-            throws FenixServiceException, FenixFilterException {
-        Object[] args = { degreeOID };
-
-        return (List) ServiceManagerServiceFactory.executeService(null,
-                "ReadClassesForCurrentAndPreviousPeriodByDegree", args);
-    }
-
-    private List getClassViewsForCurrentAndNextPeriods(HttpServletRequest request, Integer degreeOID)
-            throws FenixServiceException, FenixFilterException {
-        Object[] args = { degreeOID };
-
-        return (List) ServiceManagerServiceFactory.executeService(null,
-                "ReadClassesForCurrentAndNextPeriodByDegree", args);
-    }
+    	final ClassView classView = new ClassView();
+    	classView.setClassName(schoolClass.getNome());
+    	classView.setClassOID(schoolClass.getIdInternal());
+    	classView.setCurricularYear(schoolClass.getAnoCurricular());
+    	classView.setDegreeCurricularPlanID(degreeCurricularPlan.getIdInternal());
+    	classView.setDegreeInitials(degree.getSigla());
+    	classView.setExecutionPeriodOID(schoolClass.getExecutionPeriod().getIdInternal());
+    	classView.setNameDegreeCurricularPlan(degreeCurricularPlan.getName());
+    	classView.setSemester(schoolClass.getExecutionPeriod().getSemester());
+    	return classView;
+	}
 
     private void getInfoDegreeCurricularPlan(HttpServletRequest request, Integer degreeOID,String language)
             throws FenixServiceException, FenixFilterException {
