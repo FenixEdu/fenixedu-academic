@@ -167,6 +167,7 @@ table.executionCoursesWithoutWrittenEvaluations td {
 									<c:param name="executionPeriodID" value="${SOPEvaluationManagementBackingBean.executionPeriodID}"/>
 									<c:param name="executionCourseID" value="${executionCourse.idInternal}"/>
 									<c:param name="curricularYearID" value="${SOPEvaluationManagementBackingBean.curricularYearID}"/>
+									<c:param name="executionPeriodOID" value="${SOPEvaluationManagementBackingBean.executionPeriodOID}"/>
 								</c:url>
 								<a href='<c:out value="${commentURL}"/>' style="text-decoration:none">
 									<c:if test="${executionCourse.comment != null && executionCourse.comment != ''}">
@@ -238,6 +239,7 @@ table.executionCoursesWithoutWrittenEvaluations td {
 										<c:param name="executionPeriodID" value="${SOPEvaluationManagementBackingBean.executionPeriodID}"/>
 										<c:param name="executionCourseID" value="${executionCourse.idInternal}"/>
 										<c:param name="curricularYearID" value="${SOPEvaluationManagementBackingBean.curricularYearID}"/>
+										<c:param name="executionPeriodOID" value="${SOPEvaluationManagementBackingBean.executionPeriodOID}"/>
 									</c:url>
 									<a href='<c:out value="${editEvaluationURL}"/>'>
 										<c:out value="${bundle['label.edit']}"/>
@@ -250,6 +252,7 @@ table.executionCoursesWithoutWrittenEvaluations td {
 										<c:param name="executionPeriodID" value="${SOPEvaluationManagementBackingBean.executionPeriodID}"/>
 										<c:param name="executionCourseID" value="${executionCourse.idInternal}"/>
 										<c:param name="curricularYearID" value="${SOPEvaluationManagementBackingBean.curricularYearID}"/>
+										<c:param name="executionPeriodOID" value="${SOPEvaluationManagementBackingBean.executionPeriodOID}"/>
 									</c:url>
 									<a href='<c:out value="${deleteEvaluationURL}"/>' onclick="return confirm('#{bundle['message.confirm.written.test']}')">
 										<c:out value="${bundle['label.remove']}"/>
@@ -282,6 +285,7 @@ table.executionCoursesWithoutWrittenEvaluations td {
 										<c:param name="executionPeriodID" value="${SOPEvaluationManagementBackingBean.executionPeriodID}"/>
 										<c:param name="executionCourseID" value="${executionCourse.idInternal}"/>
 										<c:param name="curricularYearID" value="${SOPEvaluationManagementBackingBean.curricularYearID}"/>
+										<c:param name="executionPeriodOID" value="${SOPEvaluationManagementBackingBean.executionPeriodOID}"/>
 									</c:url>
 									<a href='<c:out value="${commentURL}"/>' style="text-decoration:none">
 										<c:if test="${executionCourse.comment != null && executionCourse.comment != ''}">
