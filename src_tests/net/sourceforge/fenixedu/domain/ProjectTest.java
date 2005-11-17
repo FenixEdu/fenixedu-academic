@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.domain;
 import java.text.ParseException;
 import java.util.Date;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 public class ProjectTest extends DomainTestBase {
@@ -32,15 +33,17 @@ public class ProjectTest extends DomainTestBase {
         IProject newProject = null;
         Date newBegin = null;
         Date newEnd = null;
+        Date wrongEnd = null;
         try {
             newBegin = DateFormatUtil.parse("dd/MM/yyyy HH:mm", "1/9/2005 10:00");
             newEnd = DateFormatUtil.parse("dd/MM/yyyy HH:mm", "29/1/2006 14:0");
+            wrongEnd = DateFormatUtil.parse("dd/MM/yyyy HH:mm", "1/8/2006 14:0");
         } catch (ParseException e1) {
             fail("Unexpected error creating project dates!");
         }
 
         try {
-            newProject = DomainFactory.makeProject(null, null, newEnd, null, this.executionCourse);
+            DomainFactory.makeProject(null, null, newEnd, null, this.executionCourse);
             fail("Expected NullPointerException!");
         } catch (final NullPointerException e) {
             assertEquals("Unexpected Associated Evaluations Count!", executionCourse
@@ -48,8 +51,7 @@ public class ProjectTest extends DomainTestBase {
         }
 
         try {
-            newProject = DomainFactory
-                    .makeProject("projectName", null, null, null, this.executionCourse);
+            DomainFactory.makeProject("projectName", null, null, null, this.executionCourse);
             fail("Expected NullPointerException!");
         } catch (final NullPointerException e) {
             assertEquals("Unexpected Associated Evaluations Count!", executionCourse
@@ -57,10 +59,17 @@ public class ProjectTest extends DomainTestBase {
         }
 
         try {
-            newProject = DomainFactory.makeProject("projectName", null, newEnd, null,
-                    this.executionCourse);
+            DomainFactory.makeProject("projectName", null, newEnd, null, this.executionCourse);
             fail("Expected NullPointerException!");
         } catch (final NullPointerException e) {
+            assertEquals("Unexpected Associated Evaluations Count!", executionCourse
+                    .getAssociatedEvaluationsCount(), 1);
+        }
+        
+        try {
+            DomainFactory.makeProject("projectName", newBegin, wrongEnd, null, this.executionCourse);
+            fail("Expected DomainException: BeginDate is After EndDate!");
+        } catch (final DomainException e) {
             assertEquals("Unexpected Associated Evaluations Count!", executionCourse
                     .getAssociatedEvaluationsCount(), 1);
         }
@@ -73,9 +82,11 @@ public class ProjectTest extends DomainTestBase {
     public void testEdit() {
         Date editBegin = null;
         Date editEnd = null;
+        Date wrongEnd = null;
         try {
-            begin = DateFormatUtil.parse("dd/MM/yyyy HH:mm", "1/9/2005 10:00");
-            end = DateFormatUtil.parse("dd/MM/yyyy HH:mm", "29/1/2006 14:0");
+            editBegin = DateFormatUtil.parse("dd/MM/yyyy HH:mm", "1/9/2005 10:00");
+            editEnd = DateFormatUtil.parse("dd/MM/yyyy HH:mm", "29/1/2006 14:0");
+            wrongEnd = DateFormatUtil.parse("dd/MM/yyyy HH:mm", "1/8/2006 14:0");
         } catch (ParseException e1) {
             fail("Unexpected error creating project dates!");
         }
@@ -100,6 +111,14 @@ public class ProjectTest extends DomainTestBase {
             project.edit(null, editBegin, editEnd, "descriptionEdited");
             fail("Expected NullPointerException!");
         } catch (final NullPointerException e) {
+            checkIfProjectAttributesAreCorrect(this.project, "name", this.begin, this.end, "description",
+                    this.executionCourse);
+        }
+        
+        try {
+            project.edit("nameEdited", editBegin, wrongEnd, "descriptionEdited");
+            fail("Expected DomainException: BeginDate is After EndDate!");
+        } catch (final DomainException e) {
             checkIfProjectAttributesAreCorrect(this.project, "name", this.begin, this.end, "description",
                     this.executionCourse);
         }
