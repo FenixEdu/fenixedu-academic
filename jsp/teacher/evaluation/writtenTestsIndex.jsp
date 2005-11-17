@@ -66,7 +66,7 @@ margin-bottom: 0;
 					</h:commandLink>
 		
 					<h:outputText value="<b> | </b>" escape="false"/>
-					<h:commandLink action="enterDistributeStudentsByRooms">
+					<h:commandLink action="#{evaluationManagementBackingBean.checkIfCanDistributeStudentsByRooms}">
 						<f:param name="evaluationID" value="#{writtenTest.idInternal}" />
 						<h:outputFormat value="#{bundle['link.students.distribution']}" />
 					</h:commandLink>
