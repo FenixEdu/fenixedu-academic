@@ -26,6 +26,7 @@
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.beginMinuteHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.endHourHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.endMinuteHidden}"/>
+		<h:outputText escape="false" value="<input id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'"/>
 	
 		<h:panelGrid styleClass="infotable">
 			<h:outputText value="#{bundleSOP['property.aula.disciplina']}: <b>#{SOPEvaluationManagementBackingBean.executionCourse.nome}</b>" escape="false"/>

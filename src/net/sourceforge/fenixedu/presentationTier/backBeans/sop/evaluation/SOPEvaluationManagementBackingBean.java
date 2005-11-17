@@ -93,6 +93,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     
     private String comment;
     private String associatedRooms;
+    private Integer executionPeriodOID;
     
     // BEGIN executionPeriod
     public Integer getExecutionPeriodID() {
@@ -381,7 +382,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                 .executeService(getUserView(), "ReadNotClosedExecutionPeriods", null);
 
         ComparatorChain chainComparator = new ComparatorChain();
-        chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
+        chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);
         chainComparator.addComparator(new BeanComparator("semester"));
         Collections.sort(infoExecutionPeriods, chainComparator);
 
@@ -1171,4 +1172,21 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return result;
     }
 
+    public Integer getExecutionPeriodOID() {
+        return (executionPeriodOID == null) ? executionPeriodOID = getAndHoldParameter("executionPeriodOID")
+                : executionPeriodOID;
+    }
+
+    private Integer getAndHoldParameter(final String parameterName) {
+        final String parameterString = getRequestParameter(parameterName);
+        final Integer parameterValue;
+        if (parameterString != null && parameterString.length() > 0) {
+            parameterValue = Integer.valueOf(parameterString);
+            setRequestAttribute(parameterName, parameterValue);
+        } else {
+            parameterValue = null;
+        }
+        return parameterValue;
+    }
+    
 }

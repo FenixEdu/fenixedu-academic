@@ -13,7 +13,10 @@
 	</li>
 --%>
 	<li>
-		<html:link page="/writtenEvaluations/writtenEvaluationCalendar.faces">
+		<html:link page="<%= "/writtenEvaluations/writtenEvaluationCalendar.faces?"
+  							+ SessionConstants.EXECUTION_PERIOD_OID
+  							+ "="
+  							+ pageContext.findAttribute("executionPeriodOID") %>">
 			<bean:message key="link.writtenEvaluation.map"/>
 		</html:link>
 	</li>
