@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.evaluati
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.component.html.HtmlInputHidden;
@@ -15,10 +16,13 @@ import javax.faces.model.SelectItem;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
@@ -32,36 +36,30 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 
 public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean {
 
-    private Integer degreeCurricularPlanID;    
+    private Integer degreeCurricularPlanID;
     private HtmlInputHidden degreeCurricularPlanIdHidden;
-
     private Integer executionPeriodID;
-    private Integer curricularYearID;   
-    
+    private Integer curricularYearID;
     private HtmlInputHidden executionPeriodIdHidden;
     private HtmlInputHidden curricularYearIdHidden;
-    private IExecutionPeriod executionPeriod;    
-
+    private IExecutionPeriod executionPeriod;
     private Integer executionCourseID;
     private HtmlInputHidden executionCourseIdHidden;
-
     private List<IExecutionCourse> executionCourses;
     private List<SelectItem> executionPeriodsLabels;
-    private List<SelectItem> curricularYearsLabels; 
-
+    private List<SelectItem> curricularYearsLabels;
     private Integer evaluationID;
     private HtmlInputHidden evaluationIdHidden;
     protected IEvaluation evaluation;
-    
     private Integer day;
     private Integer month;
-    private Integer year;    
+    private Integer year;
     private HtmlInputHidden dayHidden;
     private HtmlInputHidden monthHidden;
     private HtmlInputHidden yearHidden;
-    
     private String evaluationType;
-    private HtmlInputHidden evaluationTypeHidden; 
+    private HtmlInputHidden evaluationTypeHidden;
+    private IExecutionDegree executionDegree;
 
     public HtmlInputHidden getDegreeCurricularPlanIdHidden() {
         if (this.degreeCurricularPlanIdHidden == null) {
@@ -103,11 +101,11 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
     public List<SelectItem> getExecutionPeriodsLabels() {
         if (this.executionPeriodsLabels == null) {
             this.executionPeriodsLabels = new ArrayList();
-            
+
             final List<InfoExecutionPeriod> infoExecutionPeriods = getExecutionPeriods();
             final ComparatorChain comparatorChain = new ComparatorChain();
-            comparatorChain
-                    .addComparator(new ReverseComparator(new BeanComparator("infoExecutionYear.year")));
+            comparatorChain.addComparator(new ReverseComparator(new BeanComparator(
+                    "infoExecutionYear.year")));
             comparatorChain.addComparator(new ReverseComparator(new BeanComparator("semester")));
             Collections.sort(infoExecutionPeriods, comparatorChain);
             for (final InfoExecutionPeriod infoExecutionPeriod : infoExecutionPeriods) {
@@ -138,11 +136,11 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
             this.curricularYearsLabels.add(new SelectItem(0, "Todos"));
             for (int i = 1; i <= 5; i++) {
                 this.curricularYearsLabels.add(new SelectItem(i, i + " º"));
-            }    
-        }        
+            }
+        }
         return this.curricularYearsLabels;
     }
-    
+
     public IExecutionCourse getExecutionCourse() throws FenixFilterException, FenixServiceException {
 
         final Object[] argsToReadExecutionCourse = { ExecutionCourse.class, this.getExecutionCourseID() };
@@ -189,7 +187,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
         }
         return null;
     }
-    
+
     public List<SelectItem> getExecutionCoursesLabels() {
         final List<SelectItem> result = new ArrayList();
         for (final IExecutionCourse executionCourse : getExecutionCourses()) {
@@ -198,7 +196,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
         Collections.sort(result, new BeanComparator("label"));
         return result;
     }
-    
+
     public IEvaluation getEvaluation() {
         try {
             if (this.evaluation == null && this.getEvaluationID() != null) {
@@ -211,7 +209,58 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
             return null;
         }
     }
-    
+
+    public Date getBeginDate() {
+        Date beginDate = getExecutionPeriod().getBeginDate();
+        final IExecutionDegree executionDegree = getExecutionDegree();
+        if (executionDegree != null) {
+            if (getExecutionPeriod().getSemester().intValue() == 1
+                    && executionDegree.getPeriodLessonsFirstSemester().getStart() != null) {
+                beginDate = executionDegree.getPeriodLessonsFirstSemester().getStart();
+            } else if (getExecutionPeriod().getSemester().intValue() == 2
+                    && executionDegree.getPeriodLessonsSecondSemester().getStart() != null) {
+                beginDate = executionDegree.getPeriodLessonsSecondSemester().getStart();
+            }
+        }
+        return beginDate;
+    }
+
+    public Date getEndDate() {
+        Date endDate = getExecutionPeriod().getEndDate();
+        final IExecutionDegree executionDegree = getExecutionDegree();
+        if (executionDegree != null) {
+            if (getExecutionPeriod().getSemester().intValue() == 1
+                    && executionDegree.getPeriodExamsFirstSemester().getEnd() != null) {
+                endDate = executionDegree.getPeriodExamsFirstSemester().getEnd();
+            } else if (getExecutionPeriod().getSemester().intValue() == 2
+                    && executionDegree.getPeriodExamsSecondSemester().getEnd() != null) {
+                endDate = executionDegree.getPeriodExamsSecondSemester().getEnd();
+            }
+        }
+        return endDate;
+    }
+
+    private IExecutionDegree getExecutionDegree() {
+        if (this.executionDegree == null) {
+            for (final IExecutionDegree executionDegree : getDegreeCurricularPlan()
+                    .getExecutionDegrees()) {
+                if (executionDegree.getExecutionYear() == getExecutionPeriod().getExecutionYear()) {
+                    return (this.executionDegree = executionDegree);
+                }
+            }
+        }
+        return this.executionDegree;
+    }
+
+    private IDegreeCurricularPlan getDegreeCurricularPlan() {
+        try {
+            return (IDegreeCurricularPlan) this.readDomainObject(DegreeCurricularPlan.class,
+                    getDegreeCurricularPlanID());
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     /**
      * It's necessary to put these attibutes in request for the next back bean
      */
@@ -220,13 +269,13 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
         setRequestAttribute("executionPeriodID", getExecutionPeriodID());
         setRequestAttribute("curricularYearID", getCurricularYearID());
     }
-    
+
     public String selectExecutionCourse() {
         setRequestCommonAttributes();
-        setRequestAttribute("executionCourseID", getExecutionCourseID());        
+        setRequestAttribute("executionCourseID", getExecutionCourseID());
         setRequestAttribute("day", getDay());
         setRequestAttribute("month", getMonth());
-        setRequestAttribute("year", getYear());       
+        setRequestAttribute("year", getYear());
         return getEvaluationType();
     }
 
@@ -238,7 +287,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
     protected void clearAttributes() {
         this.executionCourses = null;
     }
-    
+
     public Integer getExecutionCourseID() {
         if (this.executionCourseID == null) {
             if (this.getExecutionCourseIdHidden().getValue() != null) {
@@ -355,7 +404,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
         }
         this.curricularYearIdHidden = curricularYearIdHidden;
     }
-    
+
     public Integer getEvaluationID() {
         if (this.evaluationID == null) {
             if (this.getRequestParameter("evaluationID") != null) {
@@ -385,7 +434,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
         }
         this.evaluationIdHidden = evaluationIdHidden;
     }
-    
+
     public Integer getDay() {
         if (this.day == null) {
             if (this.getEvaluation() != null) {
@@ -488,7 +537,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
         }
         return this.evaluationType;
     }
-    
+
     public void setEvaluationType(String evaluationType) {
         this.evaluationType = evaluationType;
     }
