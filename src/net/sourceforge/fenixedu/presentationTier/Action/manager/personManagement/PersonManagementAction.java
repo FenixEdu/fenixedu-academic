@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonResults;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -25,7 +29,7 @@ import org.apache.struts.action.DynaActionForm;
 
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
 public class PersonManagementAction extends FenixDispatchAction {
     public ActionForward firstPage(ActionMapping mapping, ActionForm actionForm,
@@ -64,23 +68,27 @@ public class PersonManagementAction extends FenixDispatchAction {
             documentIdNumber = (String) findPersonForm.get("documentIdNumber");
         }
 
-        HashMap parametersSearch = new HashMap();
-        parametersSearch.put(new String("name"), name);
-        parametersSearch.put(new String("email"), email);
-        parametersSearch.put(new String("username"), username);
-        parametersSearch.put(new String("documentIdNumber"), documentIdNumber);
+        SearchParameters searchParameters = new SearchPerson.SearchParameters(name, email, username,
+                documentIdNumber, null, null, null, null);
 
-        Object[] args = { parametersSearch };
+        SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
-        List personListFinded = null;
+        Object[] args = { searchParameters, predicate };
+
+        SearchPerson.SearchPersonResults result = null;
+        List<InfoPerson> searchPersons = null;
         try {
-            personListFinded = (List) ServiceManagerServiceFactory.executeService(userView,
+            result = (SearchPersonResults) ServiceManagerServiceFactory.executeService(userView,
                     "SearchPerson", args);
+
+            searchPersons = searchParameters.getIntervalPersons(0, result.getValidPersons().size(),
+                    result.getValidPersons());
+
         } catch (FenixServiceException e) {
             e.printStackTrace();
             errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
         }
-        if (personListFinded == null || personListFinded.size() < 2) {
+        if (result == null) {
             errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
         }
         if (!errors.isEmpty()) {
@@ -88,7 +96,7 @@ public class PersonManagementAction extends FenixDispatchAction {
             return mapping.getInputForward();
         }
 
-        request.setAttribute("personListFinded", personListFinded.get(1));
+        request.setAttribute("personListFinded", searchPersons);
 
         return mapping.findForward("displayPerson");
     }

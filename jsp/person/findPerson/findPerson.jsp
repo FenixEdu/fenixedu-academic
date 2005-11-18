@@ -88,8 +88,6 @@ else
 
 <html:form action="/preparePerson" >
 	<html:hidden property="method" value="preparePerson" />
-	<html:hidden property="startIndex" value="0" />
-	<html:hidden property="pagesIndex" value="1"/>
 	<html:hidden property="countPage" value="1"/>
 	<html:hidden property="departmentId" name="findPersonForm"/>
 	<html:hidden property="degreeId" name="findPersonForm"/>
@@ -128,13 +126,12 @@ else
 
 <html:form action="/findPerson" >
 <html:hidden property="method" value="findPerson" />
-<html:hidden property="startIndex" value="0" />
+<html:hidden property="startIndex" value="1" />
 <html:hidden property="page" value="1" />
 <bean:define id="roleType" name="findPersonForm" property="roleType" type="java.lang.String"/>
 <html:hidden property="roleType" value="<%= roleType %>"/>
 <bean:define id="degreeType" name="findPersonForm" property="degreeType" type="java.lang.String"/>
 <html:hidden property="degreeType" value="<%= degreeType %>"/>
-<html:hidden property="pagesIndex" value="1"/>
 
 <logic:present name="departments">
 		<tr>
@@ -224,12 +221,13 @@ else
 <logic:present name="pages" >
 Páginas: 
 	<logic:iterate id="pages" name="pages" indexId="pageIndex">	
-		<bean:define id="indexPageId" value="<%= String.valueOf(pageIndex.intValue() + 1) %>" />
-		<logic:equal name="pagesIndex" value="<%= pageContext.findAttribute("indexPageId").toString()%>" >
-			<bean:write name="pagesIndex"/>
+		<bean:define id="indexPageId" value="<%= String.valueOf(pageIndex.intValue() + 1) %>" />		
+		<bean:define id="actualPage" value="<%= pageContext.findAttribute("startIndex").toString()%>"/>
+		<logic:equal name="actualPage" value="<%= pageContext.findAttribute("indexPageId").toString()%>" >
+			<bean:write name="indexPageId"/>
 		</logic:equal>
-		<logic:notEqual name="pagesIndex" value="<%= pageContext.findAttribute("indexPageId").toString()%>" >
-			<html:link page="<%= "/findPerson.do?method=findPerson&amp;name=" + pageContext.findAttribute("name") + "&amp;startIndex=" + pageContext.findAttribute("pages").toString() + "&amp;roleType=" + pageContext.findAttribute("roleType")+ "&amp;degreeId=" + pageContext.findAttribute("degreeId") + "&amp;degreeType=" + pageContext.findAttribute("degreeType")+ "&amp;departmentId=" + pageContext.findAttribute("departmentId") + "&amp;pagesIndex=" + pageContext.findAttribute("indexPageId")%>"><%= pageIndex.intValue() + 1 %></html:link>
+		<logic:notEqual name="actualPage" value="<%= pageContext.findAttribute("indexPageId").toString()%>" >
+			<html:link page="<%= "/findPerson.do?method=findPerson&amp;name=" + pageContext.findAttribute("name") + "&amp;startIndex=" + pageContext.findAttribute("indexPageId").toString() + "&amp;roleType=" + pageContext.findAttribute("roleType")+ "&amp;degreeId=" + pageContext.findAttribute("degreeId") + "&amp;degreeType=" + pageContext.findAttribute("degreeType")+ "&amp;departmentId=" + pageContext.findAttribute("departmentId") %>"><%= pageIndex.intValue() + 1 %></html:link>
 		</logic:notEqual>	
 	</logic:iterate>
 </logic:present>
