@@ -45,7 +45,7 @@
 	<h:outputFormat value="<p>#{bundle['message.writtenEvaluation.by.room']}</p>" escape="false"/>
 	<h:form>
 		<h:outputText escape="false" value="<input id='submittedForm' name='submittedForm' type='hidden' value='true'/>"/>
-		<h:outputText escape="false" value="<input id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{writtenEvaluationsByRoom.executionPeriodOID}'"/>
+		<h:outputText escape="false" value="<input id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{writtenEvaluationsByRoom.executionPeriodOID}'/>"/>
 
 		<h:panelGrid columns="2">
 			<h:outputText value="#{bundle['property.room.name']}"/>
@@ -78,7 +78,7 @@
 	<h:outputFormat value="<br/>" escape="false"/>
 	<h:panelGroup rendered="#{writtenEvaluationsByRoom.rooms != null}">
 	<h:form>
-		<h:outputText escape="false" value="<input id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{writtenEvaluationsByRoom.executionPeriodOID}'"/>
+		<h:outputText escape="false" value="<input id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{writtenEvaluationsByRoom.executionPeriodOID}'/>"/>
 		<h:dataTable value="#{writtenEvaluationsByRoom.rooms}" var="room"
 				headerClass="listClasses-header" rowClasses="listClasses" width="80%">
 			<h:column>

@@ -16,7 +16,7 @@
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.monthHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.yearHidden}"/>
 		<fc:viewState binding="#{SOPEvaluationManagementBackingBean.viewState}" />
-		<h:outputText escape="false" value="<input id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'"/>
+		<h:outputText escape="false" value="<input id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'/>"/>
 
 		<h:panelGrid columns="1" styleClass="infoselected">
 			<h:outputText value="#{bundleSOP['property.executionPeriod']}: <b>#{SOPEvaluationManagementBackingBean.executionPeriodLabel}</b>" escape="false"/>

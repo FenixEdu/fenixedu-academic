@@ -24,7 +24,7 @@
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.beginMinuteHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.endHourHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.endMinuteHidden}"/>
-		<h:outputText escape="false" value="<input id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'"/>
+		<h:outputText escape="false" value="<input id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'/>"/>
 		
 		<h:outputText styleClass="error" rendered="#{!empty SOPEvaluationManagementBackingBean.errorMessage}"
 			value="#{bundleSOP[SOPEvaluationManagementBackingBean.errorMessage]}"/>
