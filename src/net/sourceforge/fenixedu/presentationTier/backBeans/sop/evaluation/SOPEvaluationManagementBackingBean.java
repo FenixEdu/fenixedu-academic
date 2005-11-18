@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -492,16 +493,34 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return true;
     }
 
-    public Calendar getWrittenEvaluationsCalendarBegin() throws FenixFilterException, FenixServiceException {
-        Calendar date = Calendar.getInstance();
-        date.setTime(this.getExecutionPeriod().getBeginDate());
-        return date;
+    public Date getWrittenEvaluationsCalendarBegin() {
+        Date beginDate = getExecutionPeriod().getBeginDate();
+        final IExecutionDegree executionDegree = getExecutionDegree();
+        if (executionDegree != null) {
+            if (getExecutionPeriod().getSemester().intValue() == 1
+                    && executionDegree.getPeriodLessonsFirstSemester().getStart() != null) {
+                beginDate = executionDegree.getPeriodLessonsFirstSemester().getStart();
+            } else if (getExecutionPeriod().getSemester().intValue() == 2
+                    && executionDegree.getPeriodLessonsSecondSemester().getStart() != null) {
+                beginDate = executionDegree.getPeriodLessonsSecondSemester().getStart();
+            }
+        }
+        return beginDate;
     }
 
-    public Calendar getWrittenEvaluationsCalendarEnd() throws FenixFilterException, FenixServiceException {
-        Calendar date = Calendar.getInstance();
-        date.setTime(this.getExecutionPeriod().getEndDate());
-        return date;
+    public Date getWrittenEvaluationsCalendarEnd() {
+        Date endDate = getExecutionPeriod().getEndDate();
+        final IExecutionDegree executionDegree = getExecutionDegree();
+        if (executionDegree != null) {
+            if (getExecutionPeriod().getSemester().intValue() == 1
+                    && executionDegree.getPeriodExamsFirstSemester().getEnd() != null) {
+                endDate = executionDegree.getPeriodExamsFirstSemester().getEnd();
+            } else if (getExecutionPeriod().getSemester().intValue() == 2
+                    && executionDegree.getPeriodExamsSecondSemester().getEnd() != null) {
+                endDate = executionDegree.getPeriodExamsSecondSemester().getEnd();
+            }
+        }
+        return endDate;
     }
     
     public List<CalendarLink> getWrittenTestsCalendarLink() {
