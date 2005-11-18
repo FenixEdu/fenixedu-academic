@@ -58,7 +58,6 @@
 	 	<fc:fenixCalendar
 		 		begin="#{studentCalendar.calendarStartDate}"
 		 		end="#{studentCalendar.calendarEndDate}"
-		 		createLink="createLink"
 		 		editLinkPage="#{studentCalendar.applicationContext}/publico/viewSite.do"
 		 		editLinkParameters="#{studentCalendar.calendarLinks}"/>
 	</h:form>

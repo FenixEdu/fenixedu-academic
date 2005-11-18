@@ -65,8 +65,8 @@
 		<h:outputText value="<br/><br/>" escape="false"/>
 
 	 	<fc:fenixCalendar 
-		 		begin="#{publicEvaluations.executionPeriod.beginDate}" 
-		 		end="#{publicEvaluations.executionPeriod.endDate}"
+		 		begin="#{publicEvaluations.beginDate}" 
+		 		end="#{publicEvaluations.endDate}"
 		 		editLinkPage="#{publicEvaluations.applicationContext}/publico/viewSite.do"
 		 		editLinkParameters="#{publicEvaluations.calendarLinks}"/>
 

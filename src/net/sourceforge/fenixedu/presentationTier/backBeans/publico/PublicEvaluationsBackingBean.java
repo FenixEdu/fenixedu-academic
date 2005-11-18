@@ -320,5 +320,41 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
     public void setExecutionPeriodID(Integer executionPeriodID) {
         this.executionPeriodID = executionPeriodID;
     }
-    
+
+    public Date getBeginDate() throws FenixFilterException, FenixServiceException {
+    	final IExecutionPeriod executionPeriod = getExecutionPeriod();
+    	final IDegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
+    	final IExecutionYear executionYear = executionPeriod.getExecutionYear();
+    	for (final IExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {
+    		if (executionDegree.getDegreeCurricularPlan() == degreeCurricularPlan) {
+    			if (executionPeriod.getSemester().intValue() == 1 && executionDegree.getPeriodLessonsFirstSemester() != null) {
+    				return executionDegree.getPeriodLessonsFirstSemester().getStart();
+    			} else if (executionPeriod.getSemester().intValue() == 2 && executionDegree.getPeriodLessonsSecondSemester() != null) {
+    				return executionDegree.getPeriodLessonsSecondSemester().getStart();
+    			} else {
+    				return executionPeriod.getBeginDate();
+    			}
+    		}
+    	}
+    	return null;
+    }
+
+    public Date getEndDate() throws FenixFilterException, FenixServiceException {
+    	final IExecutionPeriod executionPeriod = getExecutionPeriod();
+    	final IDegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
+    	final IExecutionYear executionYear = executionPeriod.getExecutionYear();
+    	for (final IExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {
+    		if (executionDegree.getDegreeCurricularPlan() == degreeCurricularPlan) {
+    			if (executionPeriod.getSemester().intValue() == 1 && executionDegree.getPeriodExamsFirstSemester() != null) {
+    				return executionDegree.getPeriodExamsFirstSemester().getEnd();
+    			} else if (executionPeriod.getSemester().intValue() == 2 && executionDegree.getPeriodExamsSecondSemester() != null) {
+    				return executionDegree.getPeriodExamsSecondSemester().getEnd();
+    			} else {
+    				return executionPeriod.getEndDate();
+    			}
+    		}
+    	}
+    	return null;
+    }
+
 }

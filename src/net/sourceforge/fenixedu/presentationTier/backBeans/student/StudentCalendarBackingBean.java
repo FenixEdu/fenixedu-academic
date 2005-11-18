@@ -129,7 +129,13 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
         final IDegreeCurricularPlan degreeCurricularPlan = (studentCurricularPlan != null) ? studentCurricularPlan.getDegreeCurricularPlan() : null;
         final IExecutionDegree executionDegree = findExecutinDegree(degreeCurricularPlan, executionPeriod);
         if (evaluationTypeClassname == null || evaluationTypeClassname.length() == 0 || executionDegree == null) {
-            return executionPeriod.getBeginDate();
+        	if (executionDegree != null && executionPeriod.getSemester().intValue() == 1 && executionDegree.getPeriodLessonsFirstSemester() != null) {
+        		return executionDegree.getPeriodLessonsFirstSemester().getStart();
+        	} else if (executionDegree != null && executionPeriod.getSemester().intValue() == 2 && executionDegree.getPeriodLessonsSecondSemester() != null) {
+        		return executionDegree.getPeriodLessonsSecondSemester().getStart();
+        	} else {
+        		return executionPeriod.getBeginDate();
+        	}
         } else {
             if (evaluationTypeClassname.equals(Exam.class.getName())) {
                 if (executionPeriod.getSemester().intValue() == 1) {
@@ -155,7 +161,13 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
         final IDegreeCurricularPlan degreeCurricularPlan = (studentCurricularPlan != null) ? studentCurricularPlan.getDegreeCurricularPlan() : null;
         final IExecutionDegree executionDegree = findExecutinDegree(degreeCurricularPlan, executionPeriod);
         if (evaluationTypeClassname == null || evaluationTypeClassname.length() == 0 || executionDegree == null) {
-            return executionPeriod.getEndDate();
+        	if (executionDegree != null && executionPeriod.getSemester().intValue() == 1 && executionDegree.getPeriodExamsFirstSemester() != null) {
+        		return executionDegree.getPeriodExamsFirstSemester().getEnd();
+        	} else if (executionDegree != null && executionPeriod.getSemester().intValue() == 2 && executionDegree.getPeriodExamsSecondSemester() != null) {
+        		return executionDegree.getPeriodExamsSecondSemester().getEnd();
+        	} else {
+        		return executionPeriod.getEndDate();
+        	}
         } else {
             if (evaluationTypeClassname.equals(Exam.class.getName())) {
                 if (executionPeriod.getSemester().intValue() == 1) {
