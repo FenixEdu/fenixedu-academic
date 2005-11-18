@@ -507,7 +507,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="CoordinatorDegreeCurricularPlanAuthorization" />
+			<chain name="AccessExecutionCoursesAuthorization" />
 		</filterChains>
 	</service>
 

@@ -1039,6 +1039,16 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
+
+    <filterChain>
+        <name>AccessExecutionCoursesAuthorization</name>
+        <expression>CoordinatorDegreeCurricularPlanAuthorizationFilter || TimeTableManagerAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+
+
 </filterChainsDefinitions>
 
 
