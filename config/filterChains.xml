@@ -122,6 +122,13 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
+        <name>EditWrittenEvaluationManagementAuthorization</name>
+        <expression>(TimeTableManagerAuthorization || ExecutionCourseLecturingTeacherAuthorization || ExecutionCourseCoordinatorAuthorization) &amp;&amp; EditWrittenEvaluationAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    <filterChain>
         <name>ExecutionCourseLecturingTeacherAuthorization</name>
         <expression>ExecutionCourseLecturingTeacherAuthorization</expression>
         <description/>

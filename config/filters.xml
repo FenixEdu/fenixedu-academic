@@ -911,4 +911,11 @@
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
+    <filter>
+        <name>EditWrittenEvaluationAuthorization</name>
+        <implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Filtro.EditWrittenEvaluationAuthorization</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
 </filterDefinitions>

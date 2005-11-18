@@ -6456,14 +6456,13 @@
 			<chain name="ExecutionCourseLecturingTeacherOrDegreeCoordinatorAuthorization" />
 		</filterChains>
 	</service>
-	
 	<service>
 		<name>EditWrittenEvaluation</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.EditWrittenEvaluation</implementationClass>
 		<description></description>
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="WrittenEvaluationManagementAuthorization" />
+			<chain name="EditWrittenEvaluationManagementAuthorization" />
 		</filterChains>
 	</service>
 	<service>
@@ -6567,7 +6566,7 @@
 		</description>
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="WrittenEvaluationManagementAuthorization" />
+			<chain name="EditWrittenEvaluationManagementAuthorization" />
 		</filterChains>
 	</service>
 	<service>
