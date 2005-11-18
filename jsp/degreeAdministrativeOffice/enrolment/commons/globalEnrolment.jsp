@@ -11,7 +11,7 @@
 		<html:link page="/courseEnrolmentWithoutRulesManagerDA.do?method=prepareEnrollmentChooseStudentAndExecutionYear&amp;degreeType=DEGREE&amp;userType=0"><bean:message key="link.student.enrollment.without.rules"/></html:link>
 	</li>
 	<li>
-		<html:link page="/prepareEnrollmentChooseStudent.do"><bean:message key="link.student.enrollment.improvment"/></html:link>
+		<html:link page="/improvmentEnrollment.do?method=prepareEnrollmentChooseStudent"><bean:message key="link.student.enrollment.improvment"/></html:link>
 	</li>
 	<br />
 	<br />

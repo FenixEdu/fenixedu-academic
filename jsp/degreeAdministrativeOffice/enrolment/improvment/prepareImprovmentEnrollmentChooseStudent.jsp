@@ -16,6 +16,14 @@
 				<input type="text" name="studentNumber" size="5" maxlength="5"/>
 			</td>
 		</tr>
+		<tr>
+			<td><bean:message key="label.choose.year.execution"/>&nbsp;</td>
+			<td>
+				<html:select property="executionPeriod" >
+					<html:optionsCollection name="executionPeriods"/>
+				</html:select>
+			</td>				
+		</tr>
 	</table>
 	<br/>
 	<br/>
