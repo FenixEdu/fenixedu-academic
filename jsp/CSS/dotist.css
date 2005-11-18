@@ -275,6 +275,12 @@ a:hover {
 	background: #ffc;
 	}
 
+.infoMsg {
+	font: bold 11px Verdana, Arial, Helvetica, sans-serif;
+	color: darkblue;
+	background: #ffc;
+	}
+
 .sucessfulOperarion {
 	font: bold 11px Verdana, Arial, Helvetica, sans-serif;
 	color: darkblue;

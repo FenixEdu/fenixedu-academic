@@ -14,12 +14,12 @@
 		<h:inputHidden binding="#{evaluationManagementBackingBean.evaluationIdHidden}" />
 	
 		<h:outputText styleClass="error" rendered="#{!empty evaluationManagementBackingBean.errorMessage}"
-			value="#{bundle[evaluationManagementBackingBean.errorMessage]}"/>
+			value="#{bundle[evaluationManagementBackingBean.errorMessage]}<br/><br/>" escape="false"/>
 		<h:messages showSummary="true" errorClass="error" rendered="#{empty evaluationManagementBackingBean.errorMessage}"/>
 
-<%-- 		<h:outputText styleClass="info" rendered="#{!empty evaluationManagementBackingBean.evaluation.associatedRoomOccupation}"
-			value="#{bundle['message.evaluation.not.editable']}"/>
---%>
+ 		<h:outputText styleClass="infoMsg" rendered="#{!empty evaluationManagementBackingBean.evaluation.associatedRoomOccupation}"
+			value="#{bundle['message.evaluation.not.editable']}<br/><br/>" escape="false"/>
+
 		<h:panelGrid styleClass="infotable" columns="2" border="0">
 			<h:panelGroup>
 				<h:outputText value="#{bundle['label.date']}" escape="false"/>

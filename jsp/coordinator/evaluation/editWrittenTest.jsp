@@ -18,34 +18,37 @@
 		<h:inputHidden binding="#{coordinatorWrittenTestsManagementBackingBean.evaluationIdHidden}" />
 	
 		<h:outputText styleClass="error" rendered="#{!empty coordinatorWrittenTestsManagementBackingBean.errorMessage}"
-			value="#{bundle[coordinatorWrittenTestsManagementBackingBean.errorMessage]}"/>
+			value="#{bundle[coordinatorWrittenTestsManagementBackingBean.errorMessage]}<br/><br/>" escape="false"/>
 		<h:messages showSummary="true" errorClass="error" rendered="#{empty coordinatorWrittenTestsManagementBackingBean.errorMessage}"/>
+
+ 		<h:outputText styleClass="infoMsg" rendered="#{!empty coordinatorWrittenTestsManagementBackingBean.evaluation.associatedRoomOccupation}"
+			value="#{bundle['message.evaluation.not.editable']}<br/><br/>" escape="false"/>
 
 		<h:panelGrid styleClass="infotable" columns="2" border="0">
 			<h:panelGroup>
 				<h:outputText value="#{bundle['label.date']}: " style="font-weight: bold" escape="false"/>
 			</h:panelGroup>
 			<h:panelGroup>
-				<h:inputText disabled="#{!empty evaluationManagementBackingBean.evaluation.associatedRoomOccupation}" required="true" maxlength="2" size="2" value="#{coordinatorWrittenTestsManagementBackingBean.day}">
+				<h:inputText disabled="#{!empty coordinatorWrittenTestsManagementBackingBean.evaluation.associatedRoomOccupation}" required="true" maxlength="2" size="2" value="#{coordinatorWrittenTestsManagementBackingBean.day}">
 					<f:validateLongRange minimum="1" maximum="31" />
 				</h:inputText>
 				<h:outputText value=" / "/>
-				<h:inputText disabled="#{!empty evaluationManagementBackingBean.evaluation.associatedRoomOccupation}" required="true" maxlength="2" size="2" value="#{coordinatorWrittenTestsManagementBackingBean.month}">
+				<h:inputText disabled="#{!empty coordinatorWrittenTestsManagementBackingBean.evaluation.associatedRoomOccupation}" required="true" maxlength="2" size="2" value="#{coordinatorWrittenTestsManagementBackingBean.month}">
 					<f:validateLongRange minimum="1" maximum="12" />
 				</h:inputText>
 				<h:outputText value=" / "/>
-				<h:inputText disabled="#{!empty evaluationManagementBackingBean.evaluation.associatedRoomOccupation}" required="true" maxlength="4" size="4" value="#{coordinatorWrittenTestsManagementBackingBean.year}"/>
+				<h:inputText disabled="#{!empty coordinatorWrittenTestsManagementBackingBean.evaluation.associatedRoomOccupation}" required="true" maxlength="4" size="4" value="#{coordinatorWrittenTestsManagementBackingBean.year}"/>
 				<h:outputText value=" <i>#{bundle['label.date.instructions.small']}</i>" escape="false"/>
 			</h:panelGroup>
 			<h:panelGroup>
 				<h:outputText value="#{bundle['label.beginning']}: " style="font-weight: bold" escape="false"/>
 			</h:panelGroup>
 			<h:panelGroup>
-				<h:inputText disabled="#{!empty evaluationManagementBackingBean.evaluation.associatedRoomOccupation}" required="true" maxlength="2" size="2" value="#{coordinatorWrittenTestsManagementBackingBean.beginHour}">
+				<h:inputText disabled="#{!empty coordinatorWrittenTestsManagementBackingBean.evaluation.associatedRoomOccupation}" required="true" maxlength="2" size="2" value="#{coordinatorWrittenTestsManagementBackingBean.beginHour}">
 					<f:validateLongRange minimum="0" maximum="23" />
 				</h:inputText>
 				<h:outputText value=" : "/>
-				<h:inputText disabled="#{!empty evaluationManagementBackingBean.evaluation.associatedRoomOccupation}" required="true" maxlength="2" size="2" value="#{coordinatorWrittenTestsManagementBackingBean.beginMinute}">
+				<h:inputText disabled="#{!empty coordinatorWrittenTestsManagementBackingBean.evaluation.associatedRoomOccupation}" required="true" maxlength="2" size="2" value="#{coordinatorWrittenTestsManagementBackingBean.beginMinute}">
 					<f:validateLongRange minimum="0" maximum="59" />
 				</h:inputText>
 				<h:outputText value=" <i>#{bundle['label.hour.instructions']}</i>" escape="false"/>
@@ -54,11 +57,11 @@
 				<h:outputText value="#{bundle['label.end']}: " style="font-weight: bold" escape="false"/>
 			</h:panelGroup>
 			<h:panelGroup>
-				<h:inputText disabled="#{!empty evaluationManagementBackingBean.evaluation.associatedRoomOccupation}" required="true" maxlength="2" size="2" value="#{coordinatorWrittenTestsManagementBackingBean.endHour}">
+				<h:inputText disabled="#{!empty coordinatorWrittenTestsManagementBackingBean.evaluation.associatedRoomOccupation}" required="true" maxlength="2" size="2" value="#{coordinatorWrittenTestsManagementBackingBean.endHour}">
 					<f:validateLongRange minimum="0" maximum="23" />
 				</h:inputText>
 				<h:outputText value=" : "/>
-				<h:inputText disabled="#{!empty evaluationManagementBackingBean.evaluation.associatedRoomOccupation}" required="true" maxlength="2" size="2" value="#{coordinatorWrittenTestsManagementBackingBean.endMinute}">
+				<h:inputText disabled="#{!empty coordinatorWrittenTestsManagementBackingBean.evaluation.associatedRoomOccupation}" required="true" maxlength="2" size="2" value="#{coordinatorWrittenTestsManagementBackingBean.endMinute}">
 					<f:validateLongRange minimum="0" maximum="59" />
 				</h:inputText>
 				<h:outputText value=" <i>#{bundle['label.hour.instructions']}</i>" escape="false"/>
