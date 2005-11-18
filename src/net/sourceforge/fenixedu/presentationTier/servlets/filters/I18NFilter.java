@@ -65,6 +65,15 @@ public class I18NFilter implements Filter {
 
             request.removeAttribute(Globals.LOCALE_KEY);
             request.setAttribute(Globals.LOCALE_KEY, locale);
+        } else {
+            HttpSession httpSession = request.getSession(false);
+            if (httpSession != null && httpSession.getAttribute(Globals.LOCALE_KEY) == null) {
+                final Locale locale = new Locale("pt", "PT");
+                httpSession.setAttribute(Globals.LOCALE_KEY, locale);
+
+                request.removeAttribute(Globals.LOCALE_KEY);
+                request.setAttribute(Globals.LOCALE_KEY, locale);
+            }
         }
 
         chain.doFilter(request, response);
