@@ -47,6 +47,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.time.DateFormatUtils;
@@ -510,8 +511,10 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
                 });
                 final List<LabelValueBean> executionPeriodLabelValueBeans = new ArrayList<LabelValueBean>();
                 for (final IExecutionPeriod ep : executionPeriods) {
-                    executionPeriodLabelValueBeans.add(new LabelValueBean(
-                    		ep.getName() + " " + ep.getExecutionYear().getYear(), ep.getIdInternal().toString()));
+                    if (ep.getState() == PeriodState.OPEN || ep.getState() == PeriodState.CURRENT) {
+                        executionPeriodLabelValueBeans.add(new LabelValueBean(
+                                ep.getName() + " " + ep.getExecutionYear().getYear(), ep.getIdInternal().toString()));
+                    }
                 }
                 request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodLabelValueBeans);
 
