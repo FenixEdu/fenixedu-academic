@@ -8365,7 +8365,7 @@
 		<filterChains>
 			<chain name="ManagerAuthorization"/>
 		</filterChains>
-	</service>	InsertNonAffiliatedTeacher
+	</service>	
 	<service>
 		<name>InsertNonAffiliatedTeacher</name>
 		<implementationClass>
@@ -8374,7 +8374,7 @@
 		<description/>
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="ManagerAuthorization"/>
+			<chain name="ManagerOrGEPAuthorization"/>
 		</filterChains>
 	</service>	
 	<service>
