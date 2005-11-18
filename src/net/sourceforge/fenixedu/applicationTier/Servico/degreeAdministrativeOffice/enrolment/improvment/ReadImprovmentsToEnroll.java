@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithCourseAndDeg
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoImprovmentEnrolmentContext;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
@@ -25,6 +26,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
@@ -40,15 +42,20 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadImprovmentsToEnroll implements IService  {
 
-    public Object run(Integer studentNumber) throws FenixServiceException{
+    public Object run(Integer studentNumber, Integer executionPeriodID) throws FenixServiceException{
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             List previousExecPeriodAprovedEnrol = new ArrayList();
             List beforePreviousExecPeriodAprovedEnrol = new ArrayList();
             List beforeBeforePreviousExecPeriodAprovedEnrol = new ArrayList();
 
-			//Read Execution Periods
-            IExecutionPeriod actualExecPeriod = sp.getIPersistentExecutionPeriod().readActualExecutionPeriod();
+            //Read Execution Periods
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+            IExecutionPeriod actualExecPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(ExecutionPeriod.class, executionPeriodID);
+            if(actualExecPeriod == null) {
+            	throw new InvalidArgumentsServiceException("error.executionPeriod.notExist");
+            }
+
             IExecutionPeriod previousExecPeriod = actualExecPeriod.getPreviousExecutionPeriod();
             IExecutionPeriod beforePreviousExecPeriod = previousExecPeriod.getPreviousExecutionPeriod();
             IExecutionPeriod beforeBeforePreviousExecPeriod = beforePreviousExecPeriod.getPreviousExecutionPeriod();
