@@ -855,7 +855,13 @@
             <form-property name="page" type="java.lang.Integer" initial="0"/>
         	<form-property name="executionPeriodId" type="java.lang.Integer" />
 		</form-bean>
-		
+
+		<form-bean name="downloadForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+	   		<form-property name="itemCode" type="java.lang.String"/>
+   			<form-property name="fileName" type="java.lang.String"/>
+		</form-bean>		
 
     </form-beans>
 
@@ -1683,7 +1689,9 @@
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" >
             <forward name="viewSection" path="/viewSection.jsp"/>
         </action>
-        <action path="/fileDownload" type="net.sourceforge.fenixedu.presentationTier.Action.fileManager.FileRetrievingAction" >
+        <action path="/fileDownload" type="net.sourceforge.fenixedu.presentationTier.Action.fileManager.FileRetrievingAction"
+      		  name="downloadForm"
+      		  validate="false">
             <forward name="xpto1" path="/xpto1.jsp"/>
         </action>
         <action path="/fileList" type="net.sourceforge.fenixedu.presentationTier.Action.fileManager.FileListingAction" >

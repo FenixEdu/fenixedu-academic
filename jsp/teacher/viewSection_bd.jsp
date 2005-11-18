@@ -105,13 +105,33 @@
 		<logic:iterate id="infoLink" name="item" property="links">
 		<tr>
 		<bean:define id="linkName" name="infoLink" property="linkName"/>
-		<td><img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" /></td>
-		<td><bean:define id="link" name="infoLink" property="link"/>
+		<bean:define id="link" name="infoLink" property="link" type="java.lang.String"/>
+		<td>
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" />
+		</td>
+		<td>
+			<bean:write name="infoLink" property="linkName"/>
+		</td>
+<!--
+		<td>
 			<html:link page="<%= "/fileDownload.do?itemCode=" + itemCode + "&fileName=" + link %>" ><bean:write name="infoLink" property="linkName"/></html:link>
 		</td>
-		<td>&nbsp;&nbsp;<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" /> </td>
-			<td><html:link page="<%= "/fileDelete.do?method=deleteFile&objectCode=" + pageContext.findAttribute("objectCode") + "&amp;itemCode=" + itemCode + "&amp;currentSectionCode=" + currentSectionCode + "&fileName=" + link %>"   onclick="<%= "return confirm('Tem a certeza que deseja apagar o ficheiro "+linkName+"?')"%>" >Apagar Ficheiro</html:link>
-			</td>
+-->
+		<td>
+			<html:form action="/fileDownload">
+				<html:hidden property="page" value="0"/>
+				<html:hidden property="itemCode" value="<%= itemCode.toString() %>"/>
+				<html:hidden property="fileName" value="<%= link %>"/>
+				<html:submit styleClass="inputbutton">
+					<bean:message key="button.download"/>
+				</html:submit>
+			</html:form>
+		</td>
+		<td>&nbsp;&nbsp;<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" />
+		</td>
+		<td>
+			<html:link page="<%= "/fileDelete.do?method=deleteFile&objectCode=" + pageContext.findAttribute("objectCode") + "&amp;itemCode=" + itemCode + "&amp;currentSectionCode=" + currentSectionCode + "&fileName=" + link %>"   onclick="<%= "return confirm('Tem a certeza que deseja apagar o ficheiro "+linkName+"?')"%>" >Apagar Ficheiro</html:link>
+		</td>
 		
 		</tr>
 		</logic:iterate>
