@@ -210,7 +210,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
         }
     }
 
-    public Date getBeginDate() {
+    public Date getCalendarBeginDate() {
         Date beginDate = getExecutionPeriod().getBeginDate();
         final IExecutionDegree executionDegree = getExecutionDegree();
         if (executionDegree != null) {
@@ -225,7 +225,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
         return beginDate;
     }
 
-    public Date getEndDate() {
+    public Date getCalendarEndDate() {
         Date endDate = getExecutionPeriod().getEndDate();
         final IExecutionDegree executionDegree = getExecutionDegree();
         if (executionDegree != null) {
