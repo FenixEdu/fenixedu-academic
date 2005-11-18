@@ -106,8 +106,8 @@
 	</managed-bean>
 	
 	<!-- END: STUDENT Managed Beans -->
-
 	
+
 	<!-- BEGIN: COMMON Managed Beans -->
 	<managed-bean>
 		<managed-bean-name>SOPEvaluationManagementBackingBean</managed-bean-name>
@@ -132,7 +132,7 @@
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementMenuBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<description>ProjectManagementBackingBean</description>
 		<managed-bean-name>projectManagementBackingBean</managed-bean-name>
@@ -187,7 +187,7 @@
 	</managed-bean>
 	
 	<!-- END: AdvisoriesManagement Managed Beans -->
-
+	
 	<!-- BEGIN: COORDINATOR Managed Beans -->
 	<managed-bean>
 		<description>coordinatorEvaluationManagementBackingBean</description>
@@ -415,13 +415,13 @@
 		<navigation-case>
 			<from-outcome>createWrittenEvaluation</from-outcome>
 			<to-view-id>/sop/writtenEvaluations/createWrittenTest.jsp</to-view-id>
-		</navigation-case>
+		</navigation-case>			
  		<navigation-case>
 			<from-outcome>writtenEvaluationCalendar</from-outcome>
 			<to-view-id>/sop/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-
+		
 	<navigation-rule>
 		<from-view-id>/sop/writtenEvaluations/commentExecutionCourse.jsp</from-view-id>
  		<navigation-case>
@@ -429,7 +429,7 @@
 			<to-view-id>/sop/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-
+		
 	<navigation-rule>
 		<from-view-id>/sop/writtenEvaluations/createWrittenTest.jsp</from-view-id>
  		<navigation-case>
@@ -651,7 +651,7 @@
 			<from-outcome>enterShowStudentsEnroled</from-outcome>
 			<to-view-id>/teacher/evaluation/showStudentsEnroled.jsp</to-view-id>
 		</navigation-case>
- 		<navigation-case>
+		<navigation-case>
 			<from-outcome>Exam</from-outcome>
 			<to-view-id>/teacher/evaluation/examsIndex.jsp</to-view-id>
 		</navigation-case>
@@ -987,7 +987,7 @@
 	</navigation-rule>
 	
 	<!-- END: Navigation rules from department administrative subapplication -->
-
+	
 	<!-- BEGIN: COORDINATOR Navigation Rules -->
 	<navigation-rule>
 		<from-view-id>/coordinator/evaluation/showWrittenTestsForExecutionCourses.jsp</from-view-id>
@@ -1150,6 +1150,18 @@
 		<attribute>
 			<attribute-name>regex</attribute-name>
 			<attribute-class>java.lang.String</attribute-class>
+		</attribute>
+	</validator>
+	<validator>
+		<validator-id>dateValidator</validator-id>
+		<validator-class>net.sourceforge.fenixedu.presentationTier.jsf.validators.DateValidator</validator-class>
+		<attribute>
+			<attribute-name>format</attribute-name>
+			<attribute-class>java.lang.String</attribute-class>
+		</attribute>
+		<attribute>
+			<attribute-name>strict</attribute-name>
+			<attribute-class>java.lang.Boolean</attribute-class>
 		</attribute>
 	</validator>
 	
