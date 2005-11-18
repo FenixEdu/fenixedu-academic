@@ -32,6 +32,7 @@
 		<!-- ******************* Improvment Enrollment **************** -->
 		<form-bean name="improvmentEnrolmentForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="studentNumber" type="java.lang.Integer"/>
+			<form-property name="executionPeriod" type="java.lang.String"/>			
 			<form-property name="degreeType" type="java.lang.String"/>
 			<form-property name="enrolments" type="java.lang.Integer[]"/>
 			<form-property name="unenrolments" type="java.lang.Integer[]"/>
@@ -252,6 +253,8 @@
 
 			<forward name="prepareEnrolmentViewEnrolments" path="df.page.prepareEnrolmentViewEnrolments"/>
 			<forward name="viewEnrolments" path="/improvmentEnrollment.do?method=start&amp;page=0"/>
+			<forward name="globalEnrolment" path="/globalEnrolment.do"/>
+			<forward name="prepareEnrollmentChooseStudent" path="df.page.prepareImprovmentEnrollmentChooseStudent"/>			
 		</action>
 		
 		<!-- ****************** View Student Curriculum **************************** -->

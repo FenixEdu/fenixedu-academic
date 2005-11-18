@@ -34,6 +34,7 @@
 		<html:hidden property="method" value="improvmentUnenrollStudent"/>
 		<html:hidden property="page" value="2"/>
 		<html:hidden property="studentNumber"/>
+		<html:hidden property="executionPeriod"/>
 		
 		<table width="100%" border="0" cellpadding="0" cellspacing="0">
 			<tr>
@@ -99,6 +100,7 @@
 		<html:hidden property="method" value="improvmentEnrollStudent"/>
 		<html:hidden property="page" value="2"/>
 		<html:hidden property="studentNumber"/>
+		<html:hidden property="executionPeriod"/>
 		
 		<table width="100%" border="0" cellpadding="0" cellspacing="0">
 			<tr>
