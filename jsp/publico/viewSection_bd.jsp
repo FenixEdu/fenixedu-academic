@@ -29,24 +29,9 @@
 					<tr>
 						<td><img src="<%= request.getContextPath() %>/images/list-bullet.gif" alt="" /></td>
 						<td>
-							<bean:write name="infoLink" property="linkName"/>
-						</td>
-<!--
-						<td>
-							<html:link page="<%= "/fileDownload.do?itemCode=" + itemCode + "&fileName=" + link %>" >
+							<html:link href="<%= request.getContextPath() + "/download/" + link + "?itemCode=" + itemCode + "&fileName=" + link %>" >
 								<bean:write name="infoLink" property="linkName"/>
 							</html:link>
-						</td>
--->
-						<td>
-							<html:form action="/fileDownload">
-								<html:hidden property="page" value="0"/>
-								<html:hidden property="itemCode" value="<%= itemCode.toString() %>"/>
-								<html:hidden property="fileName" value="<%= link %>"/>
-								<html:submit styleClass="inputbutton">
-									<bean:message key="button.download"/>
-								</html:submit>
-							</html:form>
 						</td>
 					</tr>	
 				</logic:iterate>

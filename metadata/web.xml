@@ -389,6 +389,11 @@
 			<param-value>true</param-value>
 		</init-param>
 	</servlet>
+    <servlet>
+        <servlet-name>FileDownload</servlet-name>
+        <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.FileDownloadServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
 	<servlet-mapping>
 		<servlet-name>dwr-invoker</servlet-name>
 		<url-pattern>/dwr/*</url-pattern>
@@ -409,6 +414,11 @@
         <servlet-name>DomainBrowser</servlet-name>
         <url-pattern>/domainbrowser/*</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FileDownload</servlet-name>
+        <url-pattern>/download/*</url-pattern>
+    </servlet-mapping>
+
 	<session-config>
 			<session-timeout>120</session-timeout>
 	</session-config>
