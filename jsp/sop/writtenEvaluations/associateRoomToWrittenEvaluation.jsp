@@ -41,7 +41,7 @@
 
 		<h:panelGrid columns="2">
 			<h:outputText value="#{bundleSOP['written.evaluation.order.rooms.by']}: " escape="false"/>
-			<h:selectOneRadio onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.resetRoomsSelectItems}" value="#{SOPEvaluationManagementBackingBean.orderCriteria}">
+			<h:selectOneRadio onchange="this.form.submit();" value="#{SOPEvaluationManagementBackingBean.orderCriteria}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.orderByCriteriaItems}" />
 			</h:selectOneRadio>
 		</h:panelGrid>

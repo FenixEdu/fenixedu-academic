@@ -80,8 +80,6 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     private Integer orderCriteria;
   
     private String labelVacancies = messages.getMessage("label.vacancies");
-    private List<InfoRoom> availableInfoRoom;
-    private List<SelectItem> roomsSelectItems;
     
     private List<Integer> associatedExecutionCourses;
     private Map<Integer, String> associatedExecutionCoursesNames = new HashMap<Integer,String>();
@@ -93,7 +91,6 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     private Map<Integer, String> writtenEvaluationsRooms = new HashMap<Integer, String>();
     
     private String comment;
-    private String associatedRooms;
     private Integer executionPeriodOID;
     
     // BEGIN executionPeriod
@@ -697,8 +694,19 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return orderByCriteriaItems;
     }
 
-    public Integer[] getChosenRoomsIDs() {
-        return (Integer[]) this.getViewState().getAttribute("chosenRoomsIDs");
+    public Integer[] getChosenRoomsIDs() throws FenixFilterException, FenixServiceException {
+        if (this.getViewState().getAttribute("chosenRoomsIDs") == null && this.getEvaluationID() != null) {
+            List<Integer> associatedRooms = new ArrayList<Integer>();
+
+            for (IRoom room : ((IWrittenEvaluation)this.getEvaluation()).getAssociatedRooms()) {
+                associatedRooms.add(room.getIdInternal());
+            }
+            
+            Integer[] selectedRooms = {};
+            this.setChosenRoomsIDs(associatedRooms.toArray(selectedRooms));
+        } 
+
+        return (Integer[]) this.getViewState().getAttribute("chosenRoomsIDs");    
     }
 
     public void setChosenRoomsIDs(Integer[] chosenRoomsIDs) {
@@ -706,91 +714,84 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     public List<SelectItem> getRoomsSelectItems() throws FenixFilterException, FenixServiceException {
-        if (this.roomsSelectItems == null) {
-            if (this.availableInfoRoom == null) {
+        Calendar examDate = Calendar.getInstance();
+        examDate.set(Calendar.YEAR, getYear());
+        examDate.set(Calendar.MONTH, getMonth() - 1);
+        examDate.set(Calendar.DAY_OF_MONTH, getDay());
 
-                Calendar examDate = Calendar.getInstance();
-                examDate.set(Calendar.YEAR, getYear());
-                examDate.set(Calendar.MONTH, getMonth() - 1);
-                examDate.set(Calendar.DAY_OF_MONTH, getDay());
+        DiaSemana dayOfWeek = new DiaSemana(examDate.get(Calendar.DAY_OF_WEEK));
 
-                DiaSemana dayOfWeek = new DiaSemana(examDate.get(Calendar.DAY_OF_WEEK));
+        Calendar examStartTime = Calendar.getInstance();
+        examStartTime.set(Calendar.HOUR_OF_DAY, getBeginHour());
+        examStartTime.set(Calendar.MINUTE, getBeginMinute());
 
-                Calendar examStartTime = Calendar.getInstance();
-                examStartTime.set(Calendar.HOUR_OF_DAY, getBeginHour());
-                examStartTime.set(Calendar.MINUTE, getBeginMinute());
+        Calendar examEndTime = Calendar.getInstance();
+        examEndTime.set(Calendar.HOUR_OF_DAY, getEndHour());
+        examEndTime.set(Calendar.MINUTE, getEndMinute());
 
-                Calendar examEndTime = Calendar.getInstance();
-                examEndTime.set(Calendar.HOUR_OF_DAY, getEndHour());
-                examEndTime.set(Calendar.MINUTE, getEndMinute());
+        Object args[] = { examDate, examDate, examStartTime, examEndTime, dayOfWeek, null, null,
+                Integer.valueOf(RoomOccupation.DIARIA), null, Boolean.FALSE };
+        List<InfoRoom> availableInfoRoom = (List<InfoRoom>) ServiceUtils.executeService(this
+                .getUserView(), "ReadAvailableRoomsForExam", args);
 
-                Object args[] = { examDate, examDate, examStartTime, examEndTime, dayOfWeek, null, null,
-                        Integer.valueOf(RoomOccupation.DIARIA), null, Boolean.FALSE };
-                this.availableInfoRoom = (List<InfoRoom>) ServiceUtils.executeService(this
-                        .getUserView(), "ReadAvailableRoomsForExam", args);
-            }
+        for (IRoom room : ((IWrittenEvaluation)this.getEvaluation()).getAssociatedRooms()) {
+                InfoRoom associatedRoom = InfoRoom.newInfoFromDomain(room);
+                if (!availableInfoRoom.contains(associatedRoom)) {
+                    availableInfoRoom.add(associatedRoom);
+                }
+        }
+        
+        if (this.getOrderCriteria() == 0) {
+            Collections.sort(availableInfoRoom, new BeanComparator("capacidadeExame"));
+            Collections.reverse(availableInfoRoom);
+        } else if (this.getOrderCriteria() == 1) {
+            Collections.sort(availableInfoRoom, new BeanComparator("edificio"));
+        } else if (this.getOrderCriteria() == 2) {
+            Collections.sort(availableInfoRoom, new BeanComparator("tipo"));
+        }
+        
+        List<SelectItem> items = new ArrayList<SelectItem>(availableInfoRoom.size());
+        for (InfoRoom infoRoom : (List<InfoRoom>) availableInfoRoom) {
+            StringBuffer label = new StringBuffer();
+            label.append(infoRoom.getNome());
+            label.append("  ( ");
+            label.append(infoRoom.getCapacidadeExame());
+            label.append(" ");
+            label.append(this.labelVacancies);
+            label.append(", ");
+            label.append(infoRoom.getEdificio());
+            label.append(", ");
+            label.append(getRoomType(infoRoom.getTipo()));
+            label.append(" )");
 
-            fillChosenRoomsIDs();
-            
-            if (this.getOrderCriteria() == 0) {
-                Collections.sort(this.availableInfoRoom, new BeanComparator("capacidadeExame"));
-                Collections.reverse(this.availableInfoRoom);
-            } else if (this.getOrderCriteria() == 1) {
-                Collections.sort(this.availableInfoRoom, new BeanComparator("edificio"));
-            } else if (this.getOrderCriteria() == 2) {
-                Collections.sort(this.availableInfoRoom, new BeanComparator("tipo"));
-            }
-            
-            List<SelectItem> items = new ArrayList<SelectItem>(this.availableInfoRoom.size());
-            for (InfoRoom infoRoom : (List<InfoRoom>) this.availableInfoRoom) {
-                StringBuffer label = new StringBuffer();
-                label.append(infoRoom.getNome());
-                label.append("  ( ");
-                label.append(infoRoom.getCapacidadeExame());
-                label.append(" ");
-                label.append(this.labelVacancies);
-                label.append(", ");
-                label.append(infoRoom.getEdificio());
-                label.append(", ");
-                label.append(getRoomType(infoRoom.getTipo()));
-                label.append(" )");
-
-                items.add(new SelectItem(infoRoom.getIdInternal(), label.toString()));
-            }
-
-            this.roomsSelectItems = items;
+            items.add(new SelectItem(infoRoom.getIdInternal(), label.toString()));
         }
 
-        return this.roomsSelectItems;
+        return items;
     }
 
-    private void fillChosenRoomsIDs() throws FenixFilterException, FenixServiceException {
-        if (this.getEvaluationID() != null) {
-            List<Integer> associatedRooms = new ArrayList<Integer>();
-            if (this.getChosenRoomsIDs() != null) {
-                for (Integer chosenRoom : this.getChosenRoomsIDs()) {
-                    associatedRooms.add(chosenRoom);    
-                }
-            }
+    public String getAssociatedRooms() throws FenixFilterException, FenixServiceException {
+        StringBuffer result = new StringBuffer();
+            
+        if (this.getChosenRoomsIDs() != null && this.getChosenRoomsIDs().length != 0) {
+            for (Integer chosenRoomID : this.getChosenRoomsIDs()) {
+                final Object[] args = { Room.class, chosenRoomID };
+                IRoom room = (IRoom) ServiceUtils.executeService(null, "ReadDomainObject", args);
 
-            for (IRoom room : ((IWrittenEvaluation)this.getEvaluation()).getAssociatedRooms()) {
-                if (this.availableInfoRoom != null) {
-                    InfoRoom associatedRoom = InfoRoom.newInfoFromDomain(room);
-                    if (!this.availableInfoRoom.contains(associatedRoom)) {
-                        this.availableInfoRoom.add(associatedRoom);
-                    }
-                }
-                
-                if(!associatedRooms.contains(room.getIdInternal())) {
-                    associatedRooms.add(room.getIdInternal());
-                }
+                result.append(room.getNome());
+                result.append("; ");
             }
             
-            Integer[] selectedRooms = {};
-            this.setChosenRoomsIDs(associatedRooms.toArray(selectedRooms));
+            if (result.length() > 0) {
+                result.delete(result.length() - 2, result.length() - 1);
+            }
+            
+            return result.toString();
+        } else {
+            return messages.getMessage("label.no.associated.rooms");
         }
     }
-
+    
     public String getRoomType(TipoSala roomType) {
         if (roomType.getTipo() == TipoSala.ANFITEATRO) {
             return enumerations.getMessage("ANFITEATRO");    
@@ -802,12 +803,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return "";
     }
         
-    public void resetRoomsSelectItems(ValueChangeEvent valueChangeEvent) {
-        this.roomsSelectItems = null;
-    }
-
     public String associateRoomToWrittenEvaluation() {
-        return returnToCreateOrEdit();    
+        return returnToCreateOrEdit();
     }
 
     public String createWrittenEvaluation() throws FenixFilterException, FenixServiceException {
@@ -900,34 +897,6 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         }
 
         return WrittenTest.class.getSimpleName();
-    }
-
-    public String getAssociatedRooms() throws FenixFilterException, FenixServiceException {
-        if (this.associatedRooms == null) {
-            StringBuffer result = new StringBuffer();
-            
-            fillChosenRoomsIDs();
-            
-            if (this.getChosenRoomsIDs() != null && this.getChosenRoomsIDs().length != 0) {
-                for (Integer chosenRoomID : this.getChosenRoomsIDs()) {
-                    final Object[] args = { Room.class, chosenRoomID };
-                    IRoom room = (IRoom) ServiceUtils.executeService(null, "ReadDomainObject", args);
-
-                    result.append(room.getNome());
-                    result.append("; ");
-                }
-                
-                if (result.length() > 0) {
-                    result.delete(result.length() - 2, result.length() - 1);
-                }
-                
-                this.associatedRooms = result.toString();
-            } else {
-                this.associatedRooms = messages.getMessage("label.no.associated.rooms");
-            }
-        }
-        
-        return this.associatedRooms;
     }
 
     public void setAssociatedExecutionCourses(List<Integer> associatedExecutionCourses) {
