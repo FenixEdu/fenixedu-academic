@@ -102,7 +102,9 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                     .toString());
         } else if (this.getRequestParameter("executionPeriodID") != null && !this.getRequestParameter("executionPeriodID").equals("")) {
             this.executionPeriodID = Integer.valueOf(this.getRequestParameter("executionPeriodID"));
-        } 
+        } else if (this.executionPeriodID == null) {
+            this.executionPeriodID = getExecutionPeriodOID();
+        }
         return executionPeriodID;
     }
 

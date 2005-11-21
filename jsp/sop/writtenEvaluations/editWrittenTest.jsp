@@ -136,7 +136,7 @@
 		</h:dataTable>
 
 		<h:outputText value="<br/>" escape="false"/>
-		<h:commandButton action="#{SOPEvaluationManagementBackingBean.editWrittenEvaluation}" styleClass="inputbutton" value="#{bundle['button.edit']}"/>
+		<h:commandButton action="#{SOPEvaluationManagementBackingBean.editWrittenEvaluation}" styleClass="inputbutton" value="#{bundle['button.save']}"/>
 		<h:commandButton immediate="true" action="writtenEvaluationCalendar" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>
 	</h:form>
 </ft:tilesView>
