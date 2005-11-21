@@ -11,6 +11,12 @@ public class DomainException extends RuntimeException {
         this.args = args;
     }
 
+    public DomainException(final String key, final Throwable cause, final String ... args) {
+        super(key, cause);
+        this.key = key;
+        this.args = args;
+    }
+
     public String getKey() {
         return key;
     }
