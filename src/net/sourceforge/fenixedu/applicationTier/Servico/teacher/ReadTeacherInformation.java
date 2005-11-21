@@ -117,8 +117,7 @@ public class ReadTeacherInformation implements IService {
 
         infoSiteTeacherInformation.setInfoProfessionalCareers(getInfoCareers(teacher,
                 CareerType.PROFESSIONAL));
-        infoSiteTeacherInformation.setInfoTeachingCareers(getInfoCareers(teacher,
-                CareerType.TEACHING));
+        infoSiteTeacherInformation.setInfoTeachingCareers(getInfoCareers(teacher, CareerType.TEACHING));
 
         IPersistentServiceProviderRegime persistentServiceProviderRegime = sp
                 .getIPersistentServiceProviderRegime();
@@ -302,18 +301,55 @@ public class ReadTeacherInformation implements IService {
                 return InfoQualification.newInfoFromDomain(qualification);
             }
         });
-                
-        Collections.sort(infoQualifications, new BeanComparator("year"));
         
+        //Collections.sort(infoQualifications, new BeanComparator("year"));
+        
+        Collections.sort(infoQualifications, new Comparator() {
+
+            public int compare(Object o1, Object o2) {
+                InfoQualification infoQualification1 = (InfoQualification) o1;
+                InfoQualification infoQualification2 = (InfoQualification) o2;
+                if (infoQualification1.getYear() == null && infoQualification2.getYear() == null) {
+                    return 0;
+                } else if (infoQualification1.getYear() == null) {
+                    return -1;
+                } else if (infoQualification2.getYear() == null) {
+                    return 1;
+                } else {
+                    String[] strings1 = infoQualification1.getYear().split("/");
+                    String[] strings2 = infoQualification2.getYear().split("/");                    
+                    
+                    if (Integer.valueOf(getYear(strings1)) < Integer.valueOf(getYear(strings2))) {
+                        return -1;                     
+                    } else if (Integer.valueOf(getYear(strings1)) > Integer.valueOf(getYear(strings2))) {
+                        return 1;                        
+                    } else if (infoQualification1.getYear().equals(infoQualification2.getYear())) {
+                        return 0;
+                    }
+                }
+                return 0;
+            }
+        
+            private String getYear(String[] strings1) {
+                String year1 = null;
+                if(strings1.length == 1){
+                    year1 = strings1[0];
+                }
+                else if(strings1.length == 2){
+                    year1 = strings1[1];
+                }
+                return year1;
+            }
+        });
+
         return infoQualifications;
     }
 
-    private List getInfoCareers(ITeacher teacher, CareerType careerType)
-            throws ExcepcaoPersistencia {
-        
+    private List getInfoCareers(ITeacher teacher, CareerType careerType) throws ExcepcaoPersistencia {
+
         final List<InfoCareer> oldestCareers = new ArrayList();
         final List<InfoCareer> newestCareers = new ArrayList();
-        
+
         final List<ICareer> careers = teacher.getAssociatedCareers();
         for (final ICareer career : careers) {
             boolean addCareer = false;
@@ -333,7 +369,7 @@ public class ReadTeacherInformation implements IService {
         }
         Collections.sort(newestCareers, new BeanComparator("beginYear"));
         oldestCareers.addAll(newestCareers);
-        
+
         return oldestCareers;
     }
 

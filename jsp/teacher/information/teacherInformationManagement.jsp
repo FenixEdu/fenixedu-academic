@@ -68,9 +68,16 @@
 								<bean:write name="infoQualification" property="year" />							
 							</logic:notEmpty>			 								
 							<logic:empty name="infoQualification" property="year">
-								<dt:format pattern="yyyy">
-									<bean:write name="infoQualification" property="date.time" />							
-								</dt:format>
+								<logic:notEmpty name="infoQualification" property="date">
+									<dt:format pattern="yyyy">
+										<bean:write name="infoQualification" property="date.time" />							
+									</dt:format>
+								</logic:notEmpty>
+							</logic:empty>
+							<logic:empty name="infoQualification" property="year">
+								<logic:empty name="infoQualification" property="date">
+									--
+								</logic:empty>
 							</logic:empty>
 						</td>												
 						<td class="listClasses"><bean:write name="infoQualification" property="school" /></td>

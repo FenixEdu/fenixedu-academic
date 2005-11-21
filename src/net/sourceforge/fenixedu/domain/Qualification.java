@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Calendar;
+
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -37,6 +39,13 @@ public class Qualification extends Qualification_Base {
 	private void setBasicProperties(InfoQualification infoQualification) {
         this.setBranch(infoQualification.getBranch());
         this.setDate(infoQualification.getDate());
+        if(this.getDate() != null && !this.getDate().equals("")){
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(this.getDate());
+            this.setYear(String.valueOf(calendar.get(Calendar.YEAR)));
+        }else{
+            this.setYear(null);
+        }
         this.setDegree(infoQualification.getDegree());
         this.setDegreeRecognition(infoQualification.getDegreeRecognition());
         this.setEquivalenceDate(infoQualification.getEquivalenceDate());
