@@ -106,6 +106,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
                 "ReadDomainObject", args);
 
         List institutions = (List) ServiceUtils.executeService(userView, "ReadAllInstitutions", null);
+        Collections.sort(institutions, new BeanComparator("name"));
 
         request.setAttribute("professorships", executionCourse.getProfessorships());
         request.setAttribute("institutions", institutions);
