@@ -54,6 +54,7 @@
 			</td>
 			<td>
 				<html:text property="mark" size="10"/>
+				&nbsp;<bean:message key="label.integer"/>
 			</td>
 		</tr>
 		<tr>
