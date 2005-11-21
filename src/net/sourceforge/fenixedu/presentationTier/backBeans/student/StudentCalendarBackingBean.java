@@ -25,10 +25,12 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.IProject;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
+import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -62,7 +64,6 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 
 	public Collection<IExecutionPeriod> getExecutionPeriods() throws FenixFilterException, FenixServiceException {
 		if (executionPeriods == null) {
-			System.out.println("Determining exeution periods");
 	        final IStudent student = getStudent();
 
 	        executionPeriods = new TreeSet<IExecutionPeriod>(executionPeriodComparator);
@@ -70,7 +71,6 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 	        	executionPeriods.add(attends.getDisciplinaExecucao().getExecutionPeriod());
 	        }
 		}
-		System.out.println("Getting exeution periods");
         return executionPeriods;
 	}
 
@@ -78,7 +78,6 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 		final IExecutionPeriod executionPeriod = getExecutionPeriod();
 
 		if (executionCourses == null || executionPeriod != executionCourses.iterator().next().getExecutionPeriod()) {
-			System.out.println("Determining exeution courses");
 	        final IStudent student = getStudent();
 
 	        executionCourses = new TreeSet<IExecutionCourse>(executionCourseComparator);
@@ -89,7 +88,6 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 	        	}
 	        }
 		}
-		System.out.println("Getting exeution courses");
         return executionCourses;
 	}
 
@@ -149,6 +147,13 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
                 } else if (executionPeriod.getSemester().intValue() == 2) {
                     return executionDegree.getPeriodLessonsSecondSemester().getStart();
                 }
+            } else if (evaluationTypeClassname.equals(WrittenTest.class.getName())
+                    || evaluationTypeClassname.equals(Project.class.getName())) {
+                if (executionPeriod.getSemester().intValue() == 1) {
+                    return executionDegree.getPeriodLessonsFirstSemester().getStart();
+                } else if (executionPeriod.getSemester().intValue() == 2) {
+                    return executionDegree.getPeriodLessonsSecondSemester().getStart();
+                }
             }
         }
         return null;
@@ -175,7 +180,8 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
                 } else if (executionPeriod.getSemester().intValue() == 2) {
                     return executionDegree.getPeriodExamsSecondSemester().getEnd();
                 }
-            } else if (evaluationTypeClassname.equals(WrittenTest.class.getName())) {
+            } else if (evaluationTypeClassname.equals(WrittenTest.class.getName())
+                    || evaluationTypeClassname.equals(Project.class.getName())) {
                 if (executionPeriod.getSemester().intValue() == 1) {
                     return executionDegree.getPeriodLessonsFirstSemester().getEnd();
                 } else if (executionPeriod.getSemester().intValue() == 2) {
@@ -221,6 +227,24 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
                             calendarLink.setObjectLinkLabel(constructCalendarPresentation(executionCourse, writtenEvaluation));
                             calendarLink.setLinkParameters(constructLinkParameters(executionCourse));
                         }
+                    } else if (evaluation instanceof IProject) {
+                        final IProject project = (IProject) evaluation;
+                        final String evaluationTypeClassname = getEvaluationTypeClassname();
+                        if (evaluationTypeClassname == null
+                                || evaluationTypeClassname.length() == 0
+                                || evaluationTypeClassname.equals(project.getClass().getName())) {
+                            CalendarLink calendarLinkBegin = new CalendarLink();
+                            calendarLinks.add(calendarLinkBegin);
+                            calendarLinkBegin.setObjectOccurrence(project.getBegin());
+                            calendarLinkBegin.setObjectLinkLabel(constructCalendarPresentation(executionCourse, project, project.getBegin(), messages.getMessage("label.evaluation.project.begin")));
+                            calendarLinkBegin.setLinkParameters(constructLinkParameters(executionCourse));
+
+                            CalendarLink calendarLinkEnd = new CalendarLink();
+                            calendarLinks.add(calendarLinkEnd);
+                            calendarLinkEnd.setObjectOccurrence(project.getEnd());
+                            calendarLinkEnd.setObjectLinkLabel(constructCalendarPresentation(executionCourse, project, project.getEnd(), messages.getMessage("label.evaluation.project.end")));
+                            calendarLinkEnd.setLinkParameters(constructLinkParameters(executionCourse));
+                        }
                     }
                 }        		
         	}
@@ -261,6 +285,18 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
         return linkParameters;
     }
 
+    private String constructCalendarPresentation(final IExecutionCourse executionCourse, final IProject project, final Date time, final String tail) {
+        final StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(messages.getMessage("label.evaluation.shortname.project"));        
+        stringBuilder.append(" ");
+        stringBuilder.append(executionCourse.getSigla());
+        stringBuilder.append(" (");
+        stringBuilder.append(hourFormat.format(time));
+        stringBuilder.append(") ");
+        stringBuilder.append(tail);
+        return stringBuilder.toString();
+    }
+
     private String constructCalendarPresentation(final IExecutionCourse executionCourse, final IWrittenEvaluation writtenEvaluation) {
         final StringBuilder stringBuilder = new StringBuilder();
         if (writtenEvaluation instanceof WrittenTest) {
@@ -297,13 +333,10 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 	}
 
 	public void setExecutionPeriodID(Integer executionPeriodID) {
-		System.out.println("In Setting executionPeriodID method");
 		if (this.executionPeriodID != null || !this.executionPeriodID.equals(executionPeriodID)) {
-			System.out.println("In Setting executionPeriodID if method");
 			this.executionCourseID = null;
 			this.executionCourses = null;
 		}
-		System.out.println("Setting executionPeriodID: " + executionPeriodID);
 		this.executionPeriodID = executionPeriodID;
 	}
 

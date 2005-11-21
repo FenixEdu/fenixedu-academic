@@ -50,6 +50,7 @@
 				<f:selectItem itemLabel="#{bundle['label.evaluation.type.all']}" itemValue=""/>
 				<f:selectItem itemLabel="#{bundle['label.evaluation.shortname.exam']}" itemValue="net.sourceforge.fenixedu.domain.Exam"/>
 				<f:selectItem itemLabel="#{bundle['label.evaluation.shortname.test']}" itemValue="net.sourceforge.fenixedu.domain.WrittenTest"/>
+				<f:selectItem itemLabel="#{bundle['label.evaluation.shortname.project']}" itemValue="net.sourceforge.fenixedu.domain.Project"/>
 			</h:selectOneMenu>
 		</h:panelGrid>
 

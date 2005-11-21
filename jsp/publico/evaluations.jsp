@@ -33,6 +33,36 @@
 
 <table class="tab_complex" width="70%" cellspacing="1" cellpadding="2">
 	<tr>
+		<th><bean:message key="label.projects"/></th>
+		<th><bean:message key="label.beginning"/></th>
+		<th><bean:message key="label.end"/></th>
+		<th></th>
+	</tr>
+	<logic:iterate id="evaluation" name="evaluations">
+		<bean:define id="evaluationOID" name="evaluation" property="idInternal"/>
+		<tr>
+			<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.Project">
+				<td>
+					<bean:message key="label.project"/>: <bean:write name="evaluation" property="name"/>
+				</td>
+				<td>
+					<dt:format pattern="dd/MM/yyyy HH:mm"><bean:write name="evaluation" property="begin.time"/></dt:format>
+				</td>
+				<td>
+					<dt:format pattern="dd/MM/yyyy HH:mm"><bean:write name="evaluation" property="end.time"/></dt:format>
+				</td>
+				<td>
+					<html:link page="<%= "/viewSite.do?method=viewMarks&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;evaluationOID=" + evaluationOID %>">
+						<bean:message key="label.publishedMarks"/>
+					</html:link>
+				</td>
+			</logic:equal>
+		</tr>
+	</logic:iterate>
+</table>
+
+<table class="tab_complex" width="70%" cellspacing="1" cellpadding="2">
+	<tr>
 		<th><bean:message key="label.testsAndExams"/></th>
 		<th><bean:message key="label.day"/></th>
 		<th><bean:message key="label.beginning"/></th>

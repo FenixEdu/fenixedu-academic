@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.IProject;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
@@ -245,7 +246,20 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
                                 calendarLink.setObjectOccurrence(writtenEvaluation.getDay());
                                 calendarLink.setObjectLinkLabel(constructCalendarPresentation(executionCourse, writtenEvaluation));
                                 calendarLink.setLinkParameters(constructLinkParameters(executionCourse));
-                            }
+                            } else if (evaluation instanceof IProject) {
+                                final IProject project = (IProject) evaluation;
+                                   CalendarLink calendarLinkBegin = new CalendarLink();
+                                   calendarLinks.add(calendarLinkBegin);
+                                   calendarLinkBegin.setObjectOccurrence(project.getBegin());
+                                   calendarLinkBegin.setObjectLinkLabel(constructCalendarPresentation(executionCourse, project, project.getBegin(), messages.getMessage("label.evaluation.project.begin")));
+                                   calendarLinkBegin.setLinkParameters(constructLinkParameters(executionCourse));
+
+                                   CalendarLink calendarLinkEnd = new CalendarLink();
+                                   calendarLinks.add(calendarLinkEnd);
+                                   calendarLinkEnd.setObjectOccurrence(project.getEnd());
+                                   calendarLinkEnd.setObjectLinkLabel(constructCalendarPresentation(executionCourse, project, project.getEnd(), messages.getMessage("label.evaluation.project.end")));
+                                   calendarLinkEnd.setLinkParameters(constructLinkParameters(executionCourse));
+                            }                            
                         }
                     }
                 }
@@ -263,6 +277,18 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
         linkParameters.put("objectCode", (site != null) ? site.getIdInternal().toString() : null);
         linkParameters.put("executionPeriodOID", executionCourse.getExecutionPeriod().getIdInternal().toString());
         return linkParameters;
+    }
+
+    private String constructCalendarPresentation(final IExecutionCourse executionCourse, final IProject project, final Date time, final String tail) {
+        final StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(messages.getMessage("label.evaluation.shortname.project"));        
+        stringBuilder.append(" ");
+        stringBuilder.append(executionCourse.getSigla());
+        stringBuilder.append(" (");
+        stringBuilder.append(hourFormat.format(time));
+        stringBuilder.append(") ");
+        stringBuilder.append(tail);
+        return stringBuilder.toString();
     }
 
     private String constructCalendarPresentation(final IExecutionCourse executionCourse, final IWrittenEvaluation writtenEvaluation) {
