@@ -211,6 +211,10 @@
             </field>
             <field property="school" depends="required" page="1">
 				<arg0 key="label.grant.qualification.school" resource="true"/>
+            </field>	
+            <field property="mark" depends="integer" page="1">
+	            <msg name="number" key="errors.integer"/>
+				<arg0 key="label.grant.qualification.mark" resource="true"/>
             </field>			
             <field property="qualificationDate" depends="mask, date" page="1">
 				<msg name="date" key="errors.invalid.date"/>
