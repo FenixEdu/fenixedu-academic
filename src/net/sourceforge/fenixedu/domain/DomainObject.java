@@ -8,6 +8,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.InvocationTargetException;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SequenceUtil;
@@ -22,7 +23,11 @@ import org.apache.ojb.broker.metadata.ClassDescriptor;
  */
 public abstract class DomainObject extends DomainObject_Base {
 
-    public class UnableToDetermineIdException extends RuntimeException {}
+    public class UnableToDetermineIdException extends DomainException {
+        public UnableToDetermineIdException(Throwable cause) {
+            super("unable.to.determine.idException", cause);
+        }
+    }
 
     // This variable was created so that locking of domain objects can be
     // disabled for writting test cases. Testing domain code can be done
@@ -80,7 +85,7 @@ public abstract class DomainObject extends DomainObject_Base {
 		setIdInternal(id);
 	    } catch (Exception e) {
             System.out.println("Something went wrong when initializing the idInternal.  Not setting it...");
-            throw new UnableToDetermineIdException();
+            throw new UnableToDetermineIdException(e);
 	    }
 	}
     }
