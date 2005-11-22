@@ -144,7 +144,7 @@ public class EditWrittenEvaluation implements IService {
             final List<String> executionCourseIDs) throws ExcepcaoPersistencia, FenixServiceException {
 
         if (executionCourseIDs.isEmpty()) {
-            throw new FenixServiceException("error.InvalidExecutionCourse");
+            throw new FenixServiceException("error.invalidExecutionCourse");
         }
         final List<IExecutionCourse> result = new ArrayList<IExecutionCourse>();
         final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
@@ -153,7 +153,7 @@ public class EditWrittenEvaluation implements IService {
             final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse
                     .readByOID(ExecutionCourse.class, Integer.valueOf(executionCourseID));
             if (executionCourse == null) {
-                throw new FenixServiceException("error.InvalidExecutionCourse");
+                throw new FenixServiceException("error.invalidExecutionCourse");
             }
             result.add(executionCourse);
         }
