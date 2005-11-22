@@ -16,6 +16,7 @@ padding: 0.3em;
 .leftcolumn {
 text-align: right;
 }
+
 div.pp {
 border: 1px solid #ccc;
 padding-bottom: 0em;
@@ -38,7 +39,6 @@ table.ppdetails {
 background-color: #fff;
 border-collapse: collapse;
 margin: 0.5em 1em;
-/*width: 100%;*/
 }
 table.pphigh {
 background-color: #ffa;
@@ -49,15 +49,15 @@ padding: 0.25em;
 table.ppdetails td.ppleft {
 text-align: right;
 width: 11em;
-/*background-color: #f5f5f5;*/
+}
+table.ppdetails td.ppleft_mail {
+text-align: right;
+width: 6em;
 }
 table.ppdetails tr.highlight {
-/*background-color: #ffffea;*/
-/*border-bottom: 1px solid #eea;*/
 }
 table.ppdetails td.highlight {
 background-color: #ffffea;
-/*border-bottom: 1px solid #eea;*/
 }
 table.ppdetails td.ppright {
 }
@@ -92,6 +92,7 @@ else
 	<html:hidden property="departmentId" name="findPersonForm"/>
 	<html:hidden property="degreeId" name="findPersonForm"/>
 	<html:hidden property="viewPhoto" name="findPersonForm"/>
+	<html:hidden property="name" name="findPersonForm"/>
 	
 	<table class="search">
 			
@@ -194,32 +195,34 @@ else
 			<html:checkbox  property="viewPhoto" />
 		</td>
 	</tr>
-		
+	<tr>
+		<td></td>
+		<td>
+			<html:submit styleClass="inputbutton">
+			<bean:message key="button.search"/>
+			</html:submit>
+			<html:reset  styleClass="inputbutton">
+			<bean:message key="label.clear"/>
+			</html:reset>
+		</td>
+	</tr>
 </table>
-
-<html:submit styleClass="inputbutton">
-	<bean:message key="button.search"/>
-</html:submit>
-<html:reset  styleClass="inputbutton">
-	<bean:message key="label.clear"/>
-</html:reset>	
 </html:form>
+
+
 
 <logic:present name="personListFinded" >
 
-
-
 <bean:size id="numberFindedPersons" name="personListFinded"/>
 	<logic:notEqual name="numberFindedPersons" value="1">
-		<b><bean:message key="label.manager.numberFindedPersons" arg0="<%= pageContext.findAttribute("totalFindedPersons").toString() %>" /></b>	
+		<p><b><bean:message key="label.manager.numberFindedPersons" arg0="<%= pageContext.findAttribute("totalFindedPersons").toString() %>" /></b></p>	
 	</logic:notEqual>
 	<logic:equal name="numberFindedPersons" value="1">
-		<b><bean:message key="label.manager.findedOnePersons" arg0="<%= pageContext.findAttribute("totalFindedPersons").toString() %>" /></b>
+		<p><b><bean:message key="label.manager.findedOnePersons" arg0="<%= pageContext.findAttribute("totalFindedPersons").toString() %>" /></b></p>
 	</logic:equal>
-<br />
 
 <logic:present name="pages" >
-Páginas: 
+<p>Páginas:
 	<logic:iterate id="pages" name="pages" indexId="pageIndex">	
 		<bean:define id="indexPageId" value="<%= String.valueOf(pageIndex.intValue() + 1) %>" />		
 		<bean:define id="actualPage" value="<%= pageContext.findAttribute("startIndex").toString()%>"/>
@@ -230,78 +233,63 @@ Páginas:
 			<html:link page="<%= "/findPerson.do?method=findPerson&amp;name=" + pageContext.findAttribute("name") + "&amp;startIndex=" + pageContext.findAttribute("indexPageId").toString() + "&amp;roleType=" + pageContext.findAttribute("roleType")+ "&amp;degreeId=" + pageContext.findAttribute("degreeId") + "&amp;degreeType=" + pageContext.findAttribute("degreeType")+ "&amp;departmentId=" + pageContext.findAttribute("departmentId") %>"><%= pageIndex.intValue() + 1 %></html:link>
 		</logic:notEqual>	
 	</logic:iterate>
+</p>
 </logic:present>
 
 
 <bean:size id="numberFindedPersons" name="personListFinded"/>
-
 	
-<br /><br />
-
 	<logic:iterate id="personalInfo" name="personListFinded" indexId="personIndex">	   
 
-		<bean:define id="personID" name="personalInfo" property="idInternal"/>
+	<bean:define id="personID" name="personalInfo" property="idInternal"/>
 	
-	  	<table width="100%" cellpadding="0" cellspacing="0">
+  	<div class="pp">
+		<table class="ppid" cellpadding="0" cellspacing="0">
 		  <!-- Nome -->
 		  <tr>
-            	<td class="infoop" width="75%"><span class="emphasis-box"><%= String.valueOf(personIndex.intValue()+1) %></span>
-		    		<strong><bean:write name="personalInfo" property="nome"/> (<bean:write name="personalInfo" property="username"/>)</strong>
-        		
-        		 
-			  	<logic:equal name="viewPhoto" value="true">
-				  	<logic:equal name="personalInfo" property="availablePhoto" value="true">
-				  	<bean:define id="personID" name="personalInfo" property="idInternal"/>
-						<td rowspan="4" width="100">	  	    		  	  	
-		      				<html:img align="middle" height="100" width="100" src="<%= request.getContextPath() +"/person/viewPhoto.do?personCode="+personID.toString()%>"/>
-		      			</td>
-		      		</logic:equal>
-		      	</logic:equal>
-        		
-	      		<bean:size id="mainRolesSize" name="personalInfo" property="mainRoles"></bean:size> 
+           	<td width="70%"> 
+	    		<strong><bean:write name="personalInfo" property="nome"/> (<bean:write name="personalInfo" property="username"/>)</strong>
+          		<bean:size id="mainRolesSize" name="personalInfo" property="mainRoles"></bean:size> 
 		      	<logic:greaterThan name="mainRolesSize" value="0">
-		      	<td class="infoop" width="25%">
 			      	<logic:iterate id="role" name="personalInfo" property="mainRoles" indexId="i">
-			      	
-				      	<b><bean:write name="role"/>
-		      			<logic:notEqual name="mainRolesSize" value="<%= String.valueOf(i.intValue() + 1) %>">
-			      			,&nbsp;
-			      		</logic:notEqual>	      				
-			      		</b>
+				      	<em><bean:write name="role"/><logic:notEqual name="mainRolesSize" value="<%= String.valueOf(i.intValue() + 1) %>">, </logic:notEqual></em>
 		      		</logic:iterate>
-		      	</td> 
-		      	</logic:greaterThan>	
-	           <logic:equal name="mainRolesSize" value="0">
-	      		<td class="infoop" width="30%">&nbsp;</td>
-	    	   </logic:equal>
-	    	   <td class="infoop">
-	    	   <bean:define id="aa" value="<%= "aa" + personIndex %>" />
-	    	      	 
-	    	   <input type = button value=">"  indexed="true" onClick="check(document.getElementById('<%= pageContext.findAttribute("aa").toString() %>'));return false;" >
-	    	   																
-	    	   </td>
-	      </tr>
-	       </table >
+		      	</logic:greaterThan>
+	           <logic:equal name="mainRolesSize" value="0"></logic:equal>
+			</td>
 
-	      <table  width="50%" cellpadding="0" cellspacing="0">
-	       <!-- Telefone de Trabalho -->    
-	                    
-	      <tr>
-	      <logic:notEqual name="personalInfo" property="workPhone" value="">  
-	      	<td ><bean:message key="label.person.workPhone" /></td>
-	        <td class="greytxt"><bean:write name="personalInfo" property="workPhone"/></td>
-	      </logic:notEqual>  
-	      
+			<td width="30%" style="text-align: right;">
+	    	   <bean:define id="aa" value="<%= "aa" + personIndex %>" />
+	    	   <input type = button value=">"  indexed="true" onClick="check(document.getElementById('<%= pageContext.findAttribute("aa").toString() %>'));return false;" >													
+			</td>
 	      </tr>
+		</table >
+	       
+	       	<logic:equal name="viewPhoto" value="true">
+			  	<logic:equal name="personalInfo" property="availablePhoto" value="true">
+			  	<bean:define id="personID" name="personalInfo" property="idInternal"/>	  	    		  	  	
+		  			<html:img height="100" width="100" src="<%= request.getContextPath() +"/person/viewPhoto.do?personCode="+personID.toString()%>"/>
+		   		</logic:equal>
+		   	</logic:equal>
+	      
+	       
+
+		<table class="ppdetails">
+	       <!-- Telefone de Trabalho -->    
+	  		<tr class="highlight">
+				<logic:notEqual name="personalInfo" property="workPhone" value="">  
+					<td class="ppleft"><bean:message key="label.person.workPhone" /></td>
+					<td style="width: 12em"><bean:write name="personalInfo" property="workPhone"/></td>
+				</logic:notEqual>  
+
 	         <!-- E-Mail -->
 	        <logic:equal name="show" value="true">
-	        <tr>
           	  <logic:present name="personalInfo" property="email">
           	 	 <logic:notEqual name="personalInfo" property="email" value=""> 
-		            <td class="greytxt"><bean:message key="label.person.email" /></td>
-		            <td  >
-							<bean:define id="eMail" name="personalInfo" property="email" />
-			    	        <html:link href="<%= "mailto:" + pageContext.findAttribute("eMail").toString() %>"><bean:write name="personalInfo" property="email"/></html:link>		            
+		            <td class="ppleft_mail"><bean:message key="label.person.email" /></td>
+		            <td>
+						<bean:define id="eMail" name="personalInfo" property="email" />
+			    	    <html:link href="<%= "mailto:" + pageContext.findAttribute("eMail").toString() %>"><bean:write name="personalInfo" property="email"/></html:link>		            
 		            </td>		
 		            </logic:notEqual>  
 	         </logic:present>  
@@ -311,10 +299,10 @@ Páginas:
 	       
 	          <logic:equal name="personalInfo" property="availableEmail" value="true">
 	          	<logic:present name="personalInfo" property="email">
-		            <td class="greytxt"><bean:message key="label.person.email" /></td>
-		            <td >
-							<bean:define id="eMail" name="personalInfo" property="email" />
-			    	        <html:link href="<%= "mailto:" + pageContext.findAttribute("eMail").toString() %>"><bean:write name="personalInfo" property="email"/></html:link>		            
+		            <td class="ppleft"><bean:message key="label.person.email" /></td>
+		            <td>
+						<bean:define id="eMail" name="personalInfo" property="email" />
+						<html:link href="<%= "mailto:" + pageContext.findAttribute("eMail").toString() %>"><bean:write name="personalInfo" property="email"/></html:link>		            
 					</td>
 			 	</logic:present>
 	          </logic:equal>
@@ -324,7 +312,7 @@ Páginas:
 	   
 	    
 
-	     <table  width="50%"  id="<%= pageContext.findAttribute("aa").toString() %>" style="display:none" cellpadding="0" cellspacing="0">
+	     <table class="ppdetails" id="<%= pageContext.findAttribute("aa").toString() %>" style="display:none">
 		 <logic:present  name="personalInfo" property="infoEmployee" >
 		      
 		      <!-- Local de Trabalho -->                    
@@ -333,39 +321,42 @@ Páginas:
 		      <bean:define id="infoUnit" name="personalInfo" property="infoEmployee.workingUnit"/>	    			
 		     
 			      <tr>
-			      	<td ><bean:message key="label.person.workPlace" /></td>
-				  	      			      	
-		   			<logic:iterate id="superiorUnit" name="infoUnit" property="superiorUnitsNames">
-						<td class="greytxt"><bean:write name="superiorUnit"/></td></tr><tr><td>&nbsp;</td>		      	
+			      	<td class="ppleft"><bean:message key="label.person.workPlace" /></td>
+				  	<bean:size id="numberOfElem" name="infoUnit" property="superiorUnitsNames"/>     			      	
+		   			<logic:iterate id="superiorUnit" name="infoUnit" property="superiorUnitsNames" indexId="elem">
+						<td class="ppright"><bean:write name="superiorUnit"/></td>
+								<logic:notEqual name="numberOfElem" value="<%= String.valueOf(elem.intValue()+1) %>">
+									<tr><td></td>
+								</logic:notEqual>
 					</logic:iterate>					
 			      </tr>
 		 
 	         </logic:present>
 	         <logic:present  name="personalInfo" property="infoEmployee.mailingUnit" >
 	         <tr>
-	      		<td ><bean:message key="label.person.mailingPlace" /></td>	     
+	      		<td class="ppleft"><bean:message key="label.person.mailingPlace" /></td>	     
 		      	<bean:define id="costCenterNumber" name="personalInfo" property="infoEmployee.mailingUnit.costCenterCode"/>
 		      	<bean:define id="unitName" name="personalInfo" property="infoEmployee.mailingUnit.name"/>
-		      	<td class="greytxt"><bean:write name="costCenterNumber"/> - <bean:write name="unitName"/></td>
+		      	<td class="ppright"><bean:write name="costCenterNumber"/> - <bean:write name="unitName"/></td>
 	      	</tr>
 	        </logic:present>
           </logic:present>
           <logic:present  name="personalInfo" property="infoTeacher" >
 		                        
 		      <tr>
-		      	<td ><bean:message key="label.teacher.category" />:</td>
+		      	<td class="ppleft"><bean:message key="label.teacher.category" />:</td>
 		      	
 			      	<bean:define id="categoryCode" name="personalInfo" property="infoTeacher.infoCategory.code"/>
 			      	<bean:define id="categoryName" name="personalInfo" property="infoTeacher.infoCategory.longName"/>
-			      	<td class="greytxt"><bean:write name="categoryCode"/> - <bean:write name="categoryName"/></td>
+			      	<td class="ppright"><bean:write name="categoryCode"/> - <bean:write name="categoryName"/></td>
 		      </tr>
           </logic:present>
 	      	 <!-- WebPage -->
 	          <logic:equal name="personalInfo" property="availableWebSite" value="true">        
 		         <logic:present name="personalInfo" property="availableWebSite">
 		          <tr>
-		            <td ><bean:message key="label.person.webSite" /></td>		            
-		            <td class="greytxt" >	            	
+		            <td class="ppleft"><bean:message key="label.person.webSite" /></td>		            
+		            <td class="ppright">	            	
 						<logic:present name="personalInfo" property="enderecoWeb">
 							<bean:define id="homepage" name="personalInfo" property="enderecoWeb" />
 				           	<html:link href="<%= pageContext.findAttribute("homepage").toString() %>"><bean:write name="personalInfo" property="enderecoWeb"/></html:link>
@@ -377,26 +368,22 @@ Páginas:
 		       
             
           <logic:present  name="personalInfo" property="infoStudentCurricularPlanList" >
-		      <!-- Locale de Trabalho -->   
+		      <!-- Local de Trabalho -->   
 		      <tr>   
-		      <td ><bean:message key="label.degree" />:</td>  
+		      <td class="ppleft"><bean:message key="label.degree" />:</td>  
 		      
 		      <logic:iterate id="infoStudent" name="personalInfo" property="infoStudentCurricularPlanList">		
 			       <bean:define id="degreeName" name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.nome"/>
 			       <logic:match name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" location="start" value="DEGREE"> 
-			        <td class="greytxt" > <bean:message key="link.degree"/> <bean:write name="degreeName" /></td>
+			        <td class="ppright"> <bean:message key="link.degree"/> <bean:write name="degreeName" /></td>		 
 			       </logic:match>
 			       <logic:match name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" location="start" value="MASTER_DEGREE"> 
-			        <td class="greytxt"> <bean:message key="link.master"/> <bean:write name="degreeName" /></td>
+			        <td class="ppright"> <bean:message key="link.master"/> <bean:write name="degreeName" /></td>
 			       </logic:match>
-		      </tr><tr><td width="30%">&nbsp;</td>
-		      
+		      </tr>		      
 		      </logic:iterate>
           </logic:present>
           </table>
-         
-    	
-    	<br />
+		</div>
 	  </logic:iterate>
-
 </logic:present>
