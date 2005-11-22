@@ -28,8 +28,8 @@
 		
 		<h:outputText styleClass="error" rendered="#{!empty SOPEvaluationManagementBackingBean.errorMessage}"
 			value="#{bundleSOP[SOPEvaluationManagementBackingBean.errorMessage]}"/>
-		<h:messages showSummary="true" errorClass="error" rendered="#{empty SOPEvaluationManagementBackingBean.errorMessage}"/>
-
+<%-- 		<h:messages showSummary="true" errorClass="error" rendered="#{empty SOPEvaluationManagementBackingBean.errorMessage}"/>
+--%>
 		<h:panelGrid columns="2" styleClass="infotable">
 			<h:outputText value="#{bundleSOP['property.context.degree']}: " />
 			<fc:selectOneMenu value="#{SOPEvaluationManagementBackingBean.selectedExecutionDegreeID}"
