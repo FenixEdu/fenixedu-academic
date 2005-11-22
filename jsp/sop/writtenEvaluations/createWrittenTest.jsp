@@ -34,7 +34,14 @@
 			
 			<h:outputText value="#{bundleSOP['property.context.curricular.year']}: #{SOPEvaluationManagementBackingBean.curricularYear}" escape="false"/>
 			
-			<h:outputText value="#{bundleSOP['property.aula.disciplina']}: <b>#{SOPEvaluationManagementBackingBean.executionCourse.nome}</b>" escape="false"/>
+			<h:outputText value="#{bundleSOP['property.courses']}: " escape="false"/>
+			<h:dataTable value="#{SOPEvaluationManagementBackingBean.associatedExecutionCourses}" var="associatedExecutionCourseID">
+				<h:column>
+					<h:outputText value="#{SOPEvaluationManagementBackingBean.associatedExecutionCoursesNames[associatedExecutionCourseID]}<br/> " escape="false"/>
+				</h:column>
+			</h:dataTable>
+			<h:outputText rendered="#{empty SOPEvaluationManagementBackingBean.associatedExecutionCourses}" value="<b>#{bundleSOP['label.no.associated.curricular.courses']}</b>" escape="false"/>		
+			
 		</h:panelGrid>
 		<h:outputText value="<br/><br/>" escape="false"/>
 	
@@ -130,12 +137,17 @@
 		</h:outputFormat>
 		<h:dataTable value="#{SOPEvaluationManagementBackingBean.associatedExecutionCourses}" var="associatedExecutionCourseID">
 			<h:column>
-				<h:outputText value="<b>#{SOPEvaluationManagementBackingBean.associatedExecutionCoursesNames[associatedExecutionCourseID]}</b>" escape="false"/>
+				<h:outputText value="<b>#{SOPEvaluationManagementBackingBean.associatedExecutionCoursesNames[associatedExecutionCourseID]}</b> " escape="false"/>
+				<h:commandLink action="#{SOPEvaluationManagementBackingBean.disassociateExecutionCourse}">
+					<h:outputText value="#{bundleSOP['property.exam.dissociate']}" escape="false"/>
+					<f:param name="executionCourseToDisassociate" value="#{associatedExecutionCourseID}" />
+				</h:commandLink>
 				<h:selectManyCheckbox value="#{SOPEvaluationManagementBackingBean.curricularCourseScopesToAssociate[associatedExecutionCourseID]}" layout="pageDirection" >
 					<f:selectItems value="#{SOPEvaluationManagementBackingBean.curricularCourseScopesSelectItems[associatedExecutionCourseID]}" />	
 				</h:selectManyCheckbox>
 			</h:column>
 		</h:dataTable>
+		<h:outputText rendered="#{empty SOPEvaluationManagementBackingBean.associatedExecutionCourses}" value="<b>#{bundleSOP['label.no.associated.curricular.courses']}</b><br/>" escape="false"/>		
 
 		<h:outputText value="<br/>" escape="false"/>
 		<h:commandButton action="#{SOPEvaluationManagementBackingBean.createWrittenEvaluation}" styleClass="inputbutton" value="#{bundle['button.create']}"/>
