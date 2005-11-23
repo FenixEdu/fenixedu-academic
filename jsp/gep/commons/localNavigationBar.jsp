@@ -54,6 +54,12 @@
 			<bean:message key="link.inquiries.teachingStaff" bundle="INQUIRIES_RESOURCES"/>
 		</html:link>				
 	</li>	
+	<li>
+		<html:link page="/createClassificationsForStudents.do?method=prepare">
+			<bean:message key="button.createClassifications" bundle="INQUIRIES_RESOURCES" />
+		</html:link>
+	</li>
+	
 </ul>
 <%--
 Devido �s inscri��es, as funcionalidades do portal GEP est�o temporariamente desactivadas para n�o causar sobrecarga no servidor.

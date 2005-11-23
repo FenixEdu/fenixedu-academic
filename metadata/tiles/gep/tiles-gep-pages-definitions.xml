@@ -74,5 +74,8 @@
 	<definition name="teachingStaff.viewTeachingStaff" extends="definition.gep.two-column">
 		<put name="body" value="/gep/teachingStaff/viewTeachingStaff.jsp"></put>
 	</definition>
+	<definition name="chooseDegreeCurricularPlan" extends="definition.gep.two-column" >
+		<put name="body" value="/gep/inquiries/classifications/chooseDegreeCurricularPlan.jsp" />
+	</definition>	
 
 </tiles-definitions>
