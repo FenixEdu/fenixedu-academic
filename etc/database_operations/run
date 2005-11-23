@@ -12,3 +12,4 @@ read -s password
 
 # Alter Student Table
 mysql -u$2 -f $1 < alterTableStudent.sql
+mysql -u$2 -f $1 < alterTableExecutionPeriod.sql

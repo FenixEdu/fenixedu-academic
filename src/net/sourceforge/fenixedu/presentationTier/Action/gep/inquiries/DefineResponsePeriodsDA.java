@@ -20,6 +20,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
@@ -58,11 +60,11 @@ public class DefineResponsePeriodsDA extends FenixDispatchAction {
             request.setAttribute("selectedExecutionPeriod", selectedExecutionPeriod);
             final Date inquiryResponseBegin = selectedExecutionPeriod.getInquiryResponseBegin();
             if (inquiryResponseBegin != null) {
-                dynaActionForm.set("inquiryResponseBegin", DateFormatUtil.format("dd/MM/yyyy", inquiryResponseBegin));
+                dynaActionForm.set("inquiryResponseBegin", DateFormatUtil.format("dd/MM/yyyy HH:mm", inquiryResponseBegin));
             }
             final Date inquiryResponseEnd = selectedExecutionPeriod.getInquiryResponseEnd();
             if (inquiryResponseEnd != null) {
-                dynaActionForm.set("inquiryResponseEnd", DateFormatUtil.format("dd/MM/yyyy", inquiryResponseEnd));
+                dynaActionForm.set("inquiryResponseEnd", DateFormatUtil.format("dd/MM/yyyy HH:mm", inquiryResponseEnd));
             }
         }
 		
@@ -82,13 +84,17 @@ public class DefineResponsePeriodsDA extends FenixDispatchAction {
 
         final Integer executionPeriodID = validInteger(executionPeriodIDString) ? Integer.valueOf(executionPeriodIDString) : null;
         final Date inquiryResponseBegin = (inquiryResponseBeginString != null && inquiryResponseBeginString.length() > 0) ?
-                DateFormatUtil.parse("dd/MM/yyyy", inquiryResponseBeginString) : null;
+                DateFormatUtil.parse("dd/MM/yyyy HH:mm", inquiryResponseBeginString + ":00") : null;
         final Date inquiryResponseEnd = (inquiryResponseEndString != null && inquiryResponseEndString.length() > 0) ?
-            DateFormatUtil.parse("dd/MM/yyyy", inquiryResponseEndString) : null;
+            DateFormatUtil.parse("dd/MM/yyyy HH:mm", inquiryResponseEndString + ":00") : null;
 
         final Object[] args = new Object[] { executionPeriodID, inquiryResponseBegin, inquiryResponseEnd };
         final List<IExecutionPeriod> executionPeriods = (List<IExecutionPeriod>)
                 ServiceUtils.executeService(userView, "DefineInquiryResponsePeriod", args);
+
+        final ActionMessages actionMessages = new ActionMessages();
+        actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("message.inquiry.response.period.defined"));
+        saveMessages(request, actionMessages);
 
         return prepare(mapping, actionForm, request, response);
     }

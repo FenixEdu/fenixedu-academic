@@ -31,6 +31,16 @@
 <br/>
 <br/>
 
+<logic:messagesPresent message="true">
+	<html:messages id="message" message="true" bundle="INQUIRIES_RESOURCES">
+		<span class="error">
+			<bean:write name="message"/>
+		</span>
+	</html:messages>
+	<br/>
+	<br/>
+</logic:messagesPresent>
+
 <logic:present name="selectedExecutionPeriod">
 	<bean:message key="link.inquiries.define.response.period.information" bundle="INQUIRIES_RESOURCES"/>
 	<br/><br/>
@@ -63,8 +73,8 @@
 			</tr>
 			<tr>
 				<td colspan="2">
-					<html:submit value="submit" styleClass="inputbutton">
-						<bean:message key="label.define"/>
+					<html:submit styleClass="inputbutton">
+						<bean:message key="label.define" bundle="INQUIRIES_RESOURCES"/>
 					</html:submit>
 				</td>
 			</tr>

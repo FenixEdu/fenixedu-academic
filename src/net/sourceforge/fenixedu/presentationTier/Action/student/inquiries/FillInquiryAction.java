@@ -176,10 +176,10 @@ public class FillInquiryAction extends FenixDispatchAction {
     }
 
     private boolean insidePeriod(final Date inquiryResponseBegin, final Date inquiryResponseEnd) {
-        final String now = DateFormatUtil.format("yyyy/MM/dd", new Date());
-        final String begin = DateFormatUtil.format("yyyy/MM/dd", inquiryResponseBegin);
-        final String end = DateFormatUtil.format("yyyy/MM/dd", inquiryResponseEnd);
-        return begin.compareTo(now) < 0 && now.compareTo(end) < 0;
+        final String now = DateFormatUtil.format("yyyy/MM/dd HH:mm:ss", new Date());
+        final String begin = DateFormatUtil.format("yyyy/MM/dd HH:mm:ss", inquiryResponseBegin);
+        final String end = DateFormatUtil.format("yyyy/MM/dd HH:mm:ss", inquiryResponseEnd);
+        return begin.compareTo(now) <= 0 && now.compareTo(end) < 0;
     }
 
     public ActionForward editInquiry(ActionMapping actionMapping,
