@@ -8365,7 +8365,7 @@
 		<filterChains>
 			<chain name="ManagerAuthorization"/>
 		</filterChains>
-	</service>	
+	</service>
 	<service>
 		<name>InsertNonAffiliatedTeacher</name>
 		<implementationClass>
@@ -9038,5 +9038,14 @@
 		<filterChains>
 			<chain name="GEPAuthorization" />
 		</filterChains>				
+	</service>
+	<service>
+		<name>CreateClassificationsForStudents</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.CreateClassificationsForStudents</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization" />
+		</filterChains>
 	</service>
 </serviceDefinitions>    

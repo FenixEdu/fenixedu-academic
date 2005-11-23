@@ -398,6 +398,7 @@
         <put name="navLocal" value="/manager/guideManagement/mainMenu.jsp" />
 	</definition>
 
+	<!-- ========== STUDENTS MANAGEMENT ========== -->
 	<definition name="show-student-curricular-plan" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/studentCurricularPlan.jsp" />
 	</definition>
@@ -407,6 +408,9 @@
 	<definition name="transfer-enrollments" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/transferEnrollments.jsp" />
 	</definition>
+	<definition name="chooseDegreeCurricularPlan" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/student/classifications/chooseDegreeCurricularPlan.jsp" />
+	</definition>	
 	
 	<!-- ========== COMPETENCE COURSE MANAGEMENT ========== -->	
 	<definition name="df.page.showAllCompetenceCourses" extends="definition.manager.masterPage" >

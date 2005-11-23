@@ -3,6 +3,11 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.util.EntryPhase;
@@ -15,6 +20,10 @@ import net.sourceforge.fenixedu.util.StudentState;
  */
 
 public class Student extends Student_Base {
+
+    private transient Double approvationRatio;
+
+    private transient Double arithmeticMean;
 
     public Student() {
         this.setSpecialSeason(Boolean.FALSE);
@@ -170,6 +179,52 @@ public class Student extends Student_Base {
             }
         }
         return null;
+    }
+
+    public Double getApprovationRatio() {
+        return this.approvationRatio;
+    }
+
+    public Double getArithmeticMean() {
+        return this.arithmeticMean;
+    }
+
+    public void calculateApprovationRatioAndArithmeticMeanIfActive(IExecutionYear currentExecutionYear) {
+
+        int enrollmentsNumber = 0;
+        int approvedEnrollmentsNumber = 0;
+        int totalGrade = 0;
+
+        for (IStudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
+            for (IEnrolment enrolment : studentCurricularPlan.getEnrolments()) {
+                if (enrolment.getCondition() != EnrollmentCondition.INVISIBLE
+                        && enrolment.getExecutionPeriod().getExecutionYear() != currentExecutionYear) {
+                    enrollmentsNumber++;
+                    if (enrolment.getEnrollmentState() == EnrollmentState.APROVED) {
+                        Integer finalGrade = enrolment.getFinalGrade();
+                        if (finalGrade != null) {
+                            approvedEnrollmentsNumber++;
+                            totalGrade += finalGrade;
+                        }
+                    }
+                }
+            }
+        }
+
+        setApprovationRatio((enrollmentsNumber == 0) ? 0 : (double) approvedEnrollmentsNumber
+                / enrollmentsNumber);
+        setArithmeticMean((approvedEnrollmentsNumber == 0) ? 0 : (double) totalGrade
+                / approvedEnrollmentsNumber);
+
+    }
+
+
+    private void setApprovationRatio(Double approvationRatio) {
+        this.approvationRatio = approvationRatio;
+    }
+
+    private void setArithmeticMean(Double arithmeticMean) {
+        this.arithmeticMean = arithmeticMean;
     }
 
 }

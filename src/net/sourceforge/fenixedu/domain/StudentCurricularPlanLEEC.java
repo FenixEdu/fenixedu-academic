@@ -217,7 +217,7 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
         return true;
     }
 
-    protected List getStudentEnrollmentsWithApprovedState() {
+    public List getStudentEnrollmentsWithApprovedState() {
         return (List) CollectionUtils.select(getAllEnrollments(), new Predicate() {
             public boolean evaluate(Object obj) {
                 IEnrolment enrollment = (IEnrolment) obj;

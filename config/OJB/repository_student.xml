@@ -118,6 +118,24 @@
 		column="INTERRUPTED_STUDIES"
 		jdbc-type="BIT"
 	/>
+	<field-descriptor
+		name="entryGradeClassification"
+		column="ENTRY_GRADE_CLASSIFICATION"
+		jdbc-type="CHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCharacter2SqlCharFieldConversion"
+	/>
+	<field-descriptor
+		name="approvationRatioClassification"
+		column="APPROVATION_RATIO_CLASSIFICATION"
+		jdbc-type="CHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCharacter2SqlCharFieldConversion"
+	/>
+	<field-descriptor
+		name="arithmeticMeanClassification"
+		column="ARITHMETIC_MEAN_CLASSIFICATION"
+		jdbc-type="CHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCharacter2SqlCharFieldConversion"
+	/>
 	<reference-descriptor auto-retrieve="false"
 			name="person"
 			class-ref="net.sourceforge.fenixedu.domain.Person"

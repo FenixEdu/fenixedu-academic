@@ -86,6 +86,7 @@ valueType net.sourceforge.fenixedu.domain.organizationalStructure.UnitType      
 valueType net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType                 	as FunctionType;
 valueType net.sourceforge.fenixedu.domain.QualificationType										as QualificationType;
 
+
 /*
 *
 * Class definitions
@@ -934,6 +935,7 @@ class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu
 	public void setAccumulatedWeight(Integer accumulatedWeight);
 	public java.util.List<IEnrolmentEvaluation> getAllFinalEnrolmentEvaluations();
 	public boolean hasSpecialSeason();
+	public Integer getFinalGrade();
 	"
 }
 
@@ -1035,13 +1037,13 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 	class net.sourceforge.fenixedu.domain.onlineTests.OnlineTest extends net.sourceforge.fenixedu.domain.Evaluation {
     	Integer keyDistributedTest;
 	}
-	
+
 	class net.sourceforge.fenixedu.domain.Project extends net.sourceforge.fenixedu.domain.Evaluation {
 	    String name;
 	    Date begin;
         Date end;
         String description;     
-        
+
         interface "
         public void edit(String name, java.util.Date begin, java.util.Date end, String description);
         "           
@@ -1154,7 +1156,7 @@ class net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment extends net.sou
 	Integer keyWrittenEvaluation;
 	
 	interface "
-	public void delete();
+	public void delete();	
 	
 	public boolean isForExecutionPeriod(IExecutionPeriod executionPeriod);
 	"
@@ -2403,25 +2405,25 @@ class net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess extends n
 }
 
 
-class net.sourceforge.fenixedu.domain.Qualification extends net.sourceforge.fenixedu.domain.DomainObject {    
-	Date lastModificationDate;
+class net.sourceforge.fenixedu.domain.Qualification extends net.sourceforge.fenixedu.domain.DomainObject {
+    Date lastModificationDate;
     String degreeRecognition;
     String equivalenceSchool;
     String mark;
-	String title;
+    String title;
     String specializationArea;
     Date date;
     Integer personKey;
-	String branch;
+    String branch;
     Date equivalenceDate;
     String degree;
-	Integer countryKey;    
-	String school;
-	
+    Integer countryKey;
+    String school;
+    
     String year;	
     QualificationType type;
 	
-	interface "
+    interface "
     public void delete();
     public void edit(net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification infoQualification, ICountry country);
     "
@@ -2827,6 +2829,9 @@ class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.d
     Integer keyStudentPersonalDataAuthorization;
     Integer keyDislocatedStudent;
     Boolean interruptedStudies;
+    Character entryGradeClassification;
+    Character approvationRatioClassification;
+    Character arithmeticMeanClassification;        
 
 	interface "
     public IStudentCurricularPlan getActiveStudentCurricularPlan();
@@ -2839,7 +2844,10 @@ class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.d
     public java.util.List<IWrittenTest> getUnenroledWrittenTests(IExecutionPeriod executionPeriod);
     public java.util.List<IProject> getProjects(IExecutionPeriod executionPeriod);
     public boolean isEnroledIn(IEvaluation evaluation);
-    public IRoom getRoomFor(IWrittenEvaluation writtenEvaluation);
+    public IRoom getRoomFor(IWrittenEvaluation writtenEvaluation);    
+    public void calculateApprovationRatioAndArithmeticMeanIfActive(IExecutionYear currentExecutionYear);    
+    public Double getApprovationRatio();
+    public Double getArithmeticMean();
 	"
 }
 
@@ -2877,6 +2885,8 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
     public boolean areNewAreasCompatible(IBranch specializationArea, IBranch secundaryArea)
         throws net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia, net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException, net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 
+    public java.util.List getAllEnrollments();
+    
     public java.util.List getAllStudentEnrolledEnrollmentsInExecutionPeriod(IExecutionPeriod executionPeriod);
 
     public java.util.List getAllStudentEnrollmentsInExecutionPeriod(IExecutionPeriod executionPeriod);
@@ -2904,8 +2914,14 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
     
     public int getNumberOfApprovedCurricularCourses();
     
+    public java.util.List getStudentEnrollmentsWithApprovedState();
+    
+    public int getNumberOfStudentEnrollmentsWithApprovedState();
+    
     public int getNumberOfEnrolledCurricularCourses();
     
+    public int getNumberOfStudentEnrollments();
+        
     public boolean isCurricularCourseApproved(ICurricularCourse curricularCourse);
     
     public boolean isCurricularCourseEnrolled(ICurricularCourse curricularCourse);
@@ -5256,14 +5272,14 @@ relation ProposalBranch {
 
 relation QualificationPerson {
     net.sourceforge.fenixedu.domain.Qualification playsRole associatedQualifications {
-    	multiplicity *;
+        multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Person playsRole person;
 }
 
 relation QualificationCountry {
     net.sourceforge.fenixedu.domain.Qualification playsRole associatedQualifications {
-        multiplicity *;
+    	multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Country playsRole country;
 }

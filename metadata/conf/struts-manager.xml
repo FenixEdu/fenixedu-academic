@@ -537,6 +537,18 @@
 			<form-property name="degreeCurricularPlanID" type="java.lang.Integer"/>
 			<form-property name="method" type="java.lang.String"/>			
 		</form-bean>			
+		
+		<!-- ========== STUDENT MANAGEMENT ========== -->	
+		<form-bean name="createClassificationsForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+			<form-property name="entryGradeLimits" type="java.lang.Integer[]"/>
+			<form-property name="approvationRatioLimits" type="java.lang.Integer[]"/>
+			<form-property name="arithmeticMeanLimits" type="java.lang.Integer[]"/>
+			<form-property name="method" type="java.lang.String"/>
+			<form-property name="degreeCurricularPlanID" type="java.lang.Integer"/>
+		</form-bean>
+		
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -1773,6 +1785,15 @@
 
         <forward name="Success" path="pass-test-kerberos-sucess"/>
       </action>
+ 
+	<!-- Inquiries -->     
+	<action path="/createClassificationsForStudents"
+			parameter="method"
+			name="createClassificationsForm"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.inquiries.CreateClassificationsForStudentsDispatchAction"
+			scope="request">
+		<forward name="chooseDegreeCurricularPlan" path="chooseDegreeCurricularPlan"/>
+	</action>
 
 	</action-mappings>
 

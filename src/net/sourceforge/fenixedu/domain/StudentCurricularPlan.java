@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -33,10 +34,14 @@ import org.apache.commons.collections.Transformer;
  */
 
 public class StudentCurricularPlan extends StudentCurricularPlan_Base {
-    protected Map acumulatedEnrollments;            // For enrollment purposes only
-    protected Integer creditsInSecundaryArea;       // For enrollment purposes only
-    protected Integer creditsInSpecializationArea;  // For enrollment purposes only
-  
+    protected Map acumulatedEnrollments; // For enrollment purposes only
+
+    protected Integer creditsInSecundaryArea; // For enrollment purposes only
+
+    protected Integer creditsInSpecializationArea; // For enrollment purposes
+
+    // only
+
     public StudentCurricularPlan() {
         this.setOjbConcreteClass(getClass().getName());
     }
@@ -57,39 +62,47 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public Integer getCreditsInSecundaryArea() {
-        // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should return a value  
+        // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should
+        // return a value
         return new Integer(0);
     }
 
     public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea) {
-        // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should set a value
+        // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should
+        // set a value
     }
 
     public Integer getCreditsInSpecializationArea() {
-        // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should return a value
+        // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should
+        // return a value
         return new Integer(0);
     }
 
     public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea) {
-        // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should set a value
+        // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should
+        // set a value
     }
 
     public IBranch getSecundaryBranch() {
-        // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should return a value        
+        // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should
+        // return a value
         return null;
     }
 
     public void setSecundaryBranch(IBranch secundaryBranch) {
-        // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should set a value
+        // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should
+        // set a value
     }
-    
+
     public Integer getSecundaryBranchKey() {
-        // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should return a value
+        // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should
+        // return a value
         return null;
     }
 
     public void setSecundaryBranchKey(Integer secundaryBranchKey) {
-        // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should set a value
+        // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should
+        // set a value
     }
 
     // -------------------------------------------------------------
@@ -97,32 +110,28 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     // -------------------------------------------------------------
 
     public List getAllEnrollments() {
-        List<IStudentCurricularPlan> pastStudentCurricularPlans = (List<IStudentCurricularPlan>) CollectionUtils
-                .select(getStudent().getStudentCurricularPlans(), new Predicate() {
-                    public boolean evaluate(Object obj) {
-                        IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) obj;
-                        return studentCurricularPlan.getCurrentState().equals(
-                                StudentCurricularPlanState.PAST);
-                    }
-                });
-
+        
         List allEnrollments = new ArrayList();
+        addNonInvisibleEnrolments(allEnrollments, getEnrolments());
 
-        if (pastStudentCurricularPlans != null && !pastStudentCurricularPlans.isEmpty()) {
-            for (IStudentCurricularPlan plan : pastStudentCurricularPlans) {
-                allEnrollments.addAll(plan.getEnrolments());
+        for (final IStudentCurricularPlan studentCurricularPlan : getStudent()
+                .getStudentCurricularPlans()) {
+            if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.PAST) {
+                addNonInvisibleEnrolments(allEnrollments, studentCurricularPlan.getEnrolments());
             }
         }
 
-        allEnrollments.addAll(getEnrolments());
+        return allEnrollments;
 
-        return (List) CollectionUtils.select(allEnrollments, new Predicate() {
+    }
 
-            public boolean evaluate(Object arg0) {
-                IEnrolment enrollment = (IEnrolment) arg0;
-                return !enrollment.getCondition().equals(EnrollmentCondition.INVISIBLE);
+    private void addNonInvisibleEnrolments(List<IEnrolment> allEnrollments,
+            List<IEnrolment> enrollmentsToAdd) {
+        for (IEnrolment enrolment : enrollmentsToAdd) {
+            if (enrolment.getCondition() != EnrollmentCondition.INVISIBLE) {
+                allEnrollments.add(enrolment);
             }
-        });
+        }
     }
 
     public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod)
@@ -180,7 +189,28 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     protected boolean isApproved(ICurricularCourse curricularCourse, List approvedCourses) {
         return hasEquivalenceIn(curricularCourse, approvedCourses)
-                || hasEquivalenceIn(curricularCourse, getStudentNotNeedToEnrollCurricularCourses());
+                || hasEquivalenceInNotNeedToEnroll(curricularCourse);
+        // || hasEquivalenceIn(curricularCourse,
+        // getStudentNotNeedToEnrollCurricularCourses());
+    }
+
+    private boolean hasEquivalenceInNotNeedToEnroll(ICurricularCourse curricularCourse) {
+
+        // if (getNotNeedToEnrollCurricularCourses().isEmpty()) {
+        // return false;
+        // }
+
+        if (notNeedToEnroll(curricularCourse)) {
+            return true;
+        }
+
+        for (ICurricularCourseEquivalence equiv : curricularCourse.getCurricularCourseEquivalences()) {
+            if (notNeedToEnroll(equiv.getOldCurricularCourse())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     protected boolean hasEquivalenceIn(ICurricularCourse curricularCourse, List otherCourses) {
@@ -603,13 +633,24 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return false;
     }
 
+    protected boolean notNeedToEnroll(final ICurricularCourse curricularCourse) {
+
+        for (INotNeedToEnrollInCurricularCourse needToEnrollInCurricularCourse : getNotNeedToEnrollCurricularCourses()) {
+            ICurricularCourse otherCourse = needToEnrollInCurricularCourse.getCurricularCourse();
+            if ((curricularCourse == otherCourse) || haveSameCompetence(curricularCourse, otherCourse)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private boolean haveSameCompetence(ICurricularCourse course1, ICurricularCourse course2) {
         ICompetenceCourse comp1 = course1.getCompetenceCourse();
         ICompetenceCourse comp2 = course2.getCompetenceCourse();
         return (comp1 != null) && (comp1 == comp2);
     }
 
-    protected List getStudentEnrollmentsWithApprovedState() {
+    public List getStudentEnrollmentsWithApprovedState() {
 
         return (List) CollectionUtils.select(getAllEnrollments(), new Predicate() {
             public boolean evaluate(Object obj) {
@@ -618,7 +659,21 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             }
         });
     }
+    
+    public int getNumberOfStudentEnrollmentsWithApprovedState() {
+        
+        return CollectionUtils.countMatches(getAllEnrollments(), new Predicate() {
+            public boolean evaluate(Object obj) {
+                IEnrolment enrollment = (IEnrolment) obj;
+                return enrollment.getEnrollmentState().equals(EnrollmentState.APROVED);
+            }
+        });
+    }
 
+    public int getNumberOfStudentEnrollments() {
+        return getAllEnrollments().size();
+    }
+    
     protected List getStudentEnrollmentsWithEnrolledState() {
 
         return (List) CollectionUtils.select(getEnrolments(), new Predicate() {
@@ -950,7 +1005,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             notNeedToEnrollInCurricularCourse.delete();
         }
 
-        for (;!getCreditsInAnySecundaryAreas().isEmpty(); getCreditsInAnySecundaryAreas().get(0).delete());
+        for (; !getCreditsInAnySecundaryAreas().isEmpty(); getCreditsInAnySecundaryAreas().get(0)
+                .delete())
+            ;
 
         for (Iterator iter = getCreditsInScientificAreasIterator(); iter.hasNext();) {
             ICreditsInScientificArea creditsInScientificArea = (ICreditsInScientificArea) iter.next();
@@ -998,7 +1055,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         else
             throw new DomainException("error.student.curricular.plan.areas.conflict");
     }
-    
+
     public IGratuitySituation getGratuitySituationByGratuityValues(final IGratuityValues gratuityValues) {
 
         return (IGratuitySituation) CollectionUtils.find(getGratuitySituations(), new Predicate() {
@@ -1008,15 +1065,15 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             }
         });
 
-    }    
-    
+    }
+
     public boolean isEnroledInSpecialSeason(IExecutionPeriod executionPeriod) {
-    	List<IEnrolment> enrolments = getAllStudentEnrollmentsInExecutionPeriod(executionPeriod);
-    	for (IEnrolment enrolment : enrolments) {
-			if(enrolment.hasSpecialSeason()) {
-				return true;
-}
-		}
-    	return false;
+        List<IEnrolment> enrolments = getAllStudentEnrollmentsInExecutionPeriod(executionPeriod);
+        for (IEnrolment enrolment : enrolments) {
+            if (enrolment.hasSpecialSeason()) {
+                return true;
+            }
+        }
+        return false;
     }
 }
