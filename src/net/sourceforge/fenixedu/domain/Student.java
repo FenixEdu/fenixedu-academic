@@ -205,6 +205,8 @@ public class Student extends Student_Base {
                         if (finalGrade != null) {
                             approvedEnrollmentsNumber++;
                             totalGrade += finalGrade;
+                        } else {
+                            enrollmentsNumber--;
                         }
                     }
                 }
