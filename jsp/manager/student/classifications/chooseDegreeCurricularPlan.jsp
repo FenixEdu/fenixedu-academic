@@ -14,7 +14,7 @@
 			<td>
 				<logic:iterate id="entryGradeLimit" name="createClassificationsForm" property="entryGradeLimits" indexId="i" >	
 					<logic:notEqual name="i" value="0"> , </logic:notEqual>
-					<html:text property="entryGradeLimits" value='<%= entryGradeLimit.toString() %>' size="4" />
+					<html:text property="entryGradeLimits" value='<%= entryGradeLimit.toString() %>' size="4" />%
 				</logic:iterate>
 			<td>
 		</tr>
@@ -23,7 +23,7 @@
 			<td>
 				<logic:iterate id="approvationRatioLimit" name="createClassificationsForm" property="approvationRatioLimits" indexId="i" >	
 					<logic:notEqual name="i" value="0"> , </logic:notEqual>
-					<html:text property="approvationRatioLimits" value='<%= approvationRatioLimit.toString() %>' size="4" />
+					<html:text property="approvationRatioLimits" value='<%= approvationRatioLimit.toString() %>' size="4" />%
 				</logic:iterate>
 			</td>
 		</tr>
@@ -32,7 +32,7 @@
 			<td>
 				<logic:iterate id="arithmeticMeanLimit" name="createClassificationsForm" property="arithmeticMeanLimits" indexId="i" >	
 					<logic:notEqual name="i" value="0"> , </logic:notEqual>
-					<html:text property="arithmeticMeanLimits" value='<%= arithmeticMeanLimit.toString() %>' size="4" />
+					<html:text property="arithmeticMeanLimits" value='<%= arithmeticMeanLimit.toString() %>' size="4" />%
 				</logic:iterate>	
 			</td>
 		</tr>
