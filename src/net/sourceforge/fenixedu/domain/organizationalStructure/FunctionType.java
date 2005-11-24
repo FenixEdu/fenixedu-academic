@@ -19,8 +19,8 @@ public enum FunctionType {
     DOCENTE,
     ALUNO,
     REPRESENTANTE,
-    UNKNOWN,
-    VOGAL;
+    VOGAL,
+    UNKNOWN;
     
     public String getName() {
         return name();

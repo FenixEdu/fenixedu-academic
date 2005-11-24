@@ -8945,7 +8945,43 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadRoleByRoleType</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>    
+    </service>
+    <service>
+    	<name>CreateNewUnit</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateNewUnit</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>
     </service>   
+    <service>
+    	<name>CreateNewFunction</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateNewFunction</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>
+    </service> 
+    <service>
+    	<name>DeleteUnit</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.DeleteUnit</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>
+    </service>  
+    <service>
+    	<name>DeleteFunction</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.DeleteFunction</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>
+    </service>        
 	<!--############# CMS ####################-->  
     <service>
 		<name>WriteMailingList</name>

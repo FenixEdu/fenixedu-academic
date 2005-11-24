@@ -161,7 +161,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
         if (this.getPerson().getInactiveFunctions().contains(this.getPersonFunction())
                 && this.getPerson().containsActiveFunction(this.getFunction())) {
-            
+
             setErrorMessage("error.duplicate.function");
 
         } else {
@@ -303,41 +303,37 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
         List<IPerson> persons = new ArrayList();
 
-        int whiteSpaces = getWhiteSpaces(nameWords);
         for (IPerson person : allPersons) {
-            if (verifyNameEquality(nameWords, whiteSpaces, person)) {
+            if (verifyNameEquality(nameWords, person)) {
                 persons.add(person);
             }
         }
         return persons;
     }
+   
+    private boolean verifyNameEquality(String[] nameWords, IPerson person) {
 
-    private int getWhiteSpaces(String[] nameWords) {
-        int whiteSpaces = 0;
-        for (int i = 0; i < nameWords.length; i++) {
-            if (nameWords[i].trim().equals("")) {
-                whiteSpaces++;
-            }
+        if (nameWords == null) {
+            return true;
         }
-        return whiteSpaces;
-    }
 
-    private boolean verifyNameEquality(String[] nameWords, int whiteSpaces, IPerson person) {
-        String personName = person.getNome();
-        if (personName != null) {
-            String[] personNameWords = personName.split(" ");
+        if (person.getNome() != null) {
+            String[] personNameWords = person.getNome().trim().split(" ");
             normalizeName(personNameWords);
-            int count = 0;
-            for (int i = 0; i < nameWords.length; i++) {
-                for (int j = 0; j < personNameWords.length; j++) {
-                    if (!personNameWords[j].trim().equals("") && !nameWords[i].trim().equals("")
-                            && personNameWords[j].trim().equals(nameWords[i].trim())) {
-                        count++;
-                        break;
+            int j, i;
+            for (i = 0; i < nameWords.length; i++) {
+                if (!nameWords[i].equals("")) {
+                    for (j = 0; j < personNameWords.length; j++) {
+                        if (personNameWords[j].equals(nameWords[i])) {
+                            break;
+                        }
+                    }
+                    if (j == personNameWords.length) {
+                        return false;
                     }
                 }
             }
-            if (count == (nameWords.length - whiteSpaces)) {
+            if (i == nameWords.length) {
                 return true;
             }
         }
@@ -349,10 +345,12 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
         SelectItem selectItem = null;
         for (IFunction function : this.getUnit().getFunctions()) {
-            selectItem = new SelectItem();
-            selectItem.setValue(function.getIdInternal());
-            selectItem.setLabel(function.getName());
-            list.add(selectItem);
+            if (!function.isInherentFunction()) {
+                selectItem = new SelectItem();
+                selectItem.setValue(function.getIdInternal());
+                selectItem.setLabel(function.getName());
+                list.add(selectItem);
+            }
         }
         Collections.sort(list, new BeanComparator("label"));
         this.numberOfFunctions = list.size();

@@ -238,7 +238,115 @@
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.sop.evaluation.WrittenEvaluationsByRoomBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
-
+	
+	<!-- MANAGER ORGANIZATIONAL STRUCTURE MANAGEMENT -->
+	
+	<managed-bean>
+		<managed-bean-name>organizationalStructureBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.organizationalStructureManagement.OrganizationalStructureBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>	
+	
+	<navigation-rule>
+		<from-view-id>/manager/organizationalStructureManagament/listAllUnits.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>prepareCreateNewUnit</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/createNewUnit.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/manager/organizationalStructureManagament/createNewUnit.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>listAllUnits</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/listAllUnits.jsp</to-view-id>
+		</navigation-case>	
+		<navigation-case>
+			<from-outcome>backToUnitDetails</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/unitDetails.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/manager/organizationalStructureManagament/createNewFunction.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>backToUnitDetails</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/unitDetails.jsp</to-view-id>
+		</navigation-case>					
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/manager/organizationalStructureManagament/editUnit.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>backToUnitDetails</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/unitDetails.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/manager/organizationalStructureManagament/editFunction.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>backToUnitDetails</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/unitDetails.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/manager/organizationalStructureManagament/createNewSubUnit.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>backToUnitDetails</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/unitDetails.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/manager/organizationalStructureManagament/chooseFunction.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>backToUnitDetails</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/unitDetails.jsp</to-view-id>
+		</navigation-case>		
+		<navigation-case>
+			<from-outcome>listAllUnits</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/listAllUnits.jsp</to-view-id>
+		</navigation-case>	
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/manager/organizationalStructureManagament/chooseUnit.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>backToUnitDetails</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/unitDetails.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/manager/organizationalStructureManagament/unitDetails.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>listAllUnits</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/listAllUnits.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>prepareEditUnit</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/editUnit.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>prepareEditFunction</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/editFunction.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>prepareCreateNewFunction</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/createNewFunction.jsp</to-view-id>
+		</navigation-case>	
+		<navigation-case>
+			<from-outcome>prepareCreateNewSubUnit</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/createNewSubUnit.jsp</to-view-id>
+		</navigation-case>	
+		<navigation-case>
+			<from-outcome>chooseInherentParentFunction</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/chooseUnit.jsp</to-view-id>
+		</navigation-case>	
+	</navigation-rule>
+	
 	<!-- NAVIGATION RULES -->
 	
 	<navigation-rule>

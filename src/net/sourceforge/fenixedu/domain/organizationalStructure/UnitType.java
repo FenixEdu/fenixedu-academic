@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 public enum UnitType {
     
     ORGAO_CENTRAL,
+    DEPARTMENT,
     EDIFICIO_CONSTRUCAO_DIVERSA,
     UNIDADE_DE_INVESTIGACAO,
     UNIDADE_ACADEMICA,
@@ -21,11 +22,10 @@ public enum UnitType {
     SUPERVISAO_SERVICOS_GESTAO_RECURSOS_PEDAGOGICOS_E_CIENTIFICOS,
     DIRECCAO_EXECUTIVA,
     DIRECCAO_ADMINISTRATIVA,
-    OUTROS,
     ACTIVIDADES_EXTRA_CURRICULARES,
     EXTERIOR,
-    UNKNOWN,
-    DIRECCAO_TECNICA;
+    DIRECCAO_TECNICA,
+    UNKNOWN;
       
     public String getName() {
         return name();

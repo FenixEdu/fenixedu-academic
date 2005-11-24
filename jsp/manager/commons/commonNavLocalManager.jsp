@@ -15,6 +15,15 @@
 		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="link.cmsConfiguration" />
 	</html:link>	
 </strong></p>
+
+<br />
+<strong><bean:message bundle="MANAGER_RESOURCES" key="title.manager.organizationalStructureManagement"/></strong>
+<p><strong>&raquo; 
+	<html:link module="/manager" page="/organizationalStructureManagament/listAllUnits.faces">
+		<bean:message bundle="MANAGER_RESOURCES" key="link.manager.organizationalStructureManagement" />
+	</html:link>
+</strong></p>
+
 <br />
 <strong>Gestão de Execuções</strong>
 <p><strong>&raquo; 
@@ -79,7 +88,6 @@
 </strong></p>
 
 <br />
-
 <strong><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manageFiles"/></strong>
 <p><strong>&raquo;
 	<html:link module="/manager" module="/manager" page="/generateFiles.do?method=firstPage">

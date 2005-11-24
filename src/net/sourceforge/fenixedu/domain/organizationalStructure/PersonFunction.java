@@ -11,4 +11,12 @@ public class PersonFunction extends PersonFunction_Base {
         this.setBeginDate(beginDate);
     }
     
+    public boolean isActive(Date currentDate){        
+        if (this.getEndDate() == null || (this.getEndDate() != null
+                && (this.getEndDate().after(currentDate) || this.getEndDate()
+                        .equals(currentDate)))) {
+            return true;
+        }
+        return false;
+    }    
 }

@@ -1613,6 +1613,16 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Function extends n
 	FunctionType type;
 	Integer keyUnit;
 	Integer keyInherentParentFunction;
+	
+	interface"
+	public boolean isInherentFunction();
+	public void edit(String functionName, java.util.Date beginDate, java.util.Date endDate, 
+	  	net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType type,
+		net.sourceforge.fenixedu.domain.organizationalStructure.IUnit unit, 
+		net.sourceforge.fenixedu.domain.organizationalStructure.IFunction parentInherentFunction);
+	public boolean isActive(java.util.Date currentDate);
+	public void delete();
+	"
 }
 
 class net.sourceforge.fenixedu.domain.finalDegreeWork.Group extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2197,6 +2207,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction ext
 	
 	interface"
 	public void edit(net.sourceforge.fenixedu.domain.organizationalStructure.IFunction function, java.util.Date beginDate, java.util.Date endDate, Integer credits);	
+    public boolean isActive(java.util.Date currentDate);
 	"
 }
 
@@ -2285,7 +2296,7 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 	
 	public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction> getInactiveFunctions();
 	
-	public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IFunction> getInherentFunctions();
+	public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IFunction> getActiveInherentFunctions();
 	
 	public boolean containsActiveFunction(net.sourceforge.fenixedu.domain.organizationalStructure.IFunction function);
     "
@@ -3214,6 +3225,11 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.s
 	
 	interface "
 	public IUnit getTopUnit();
+	public void edit(String unitName, String unitCostCenter, java.util.Date beginDate, java.util.Date endDate,
+            net.sourceforge.fenixedu.domain.organizationalStructure.UnitType type, 
+            net.sourceforge.fenixedu.domain.organizationalStructure.IUnit parentUnit);
+    public boolean isActive(java.util.Date currentDate);
+    public void delete();
 	"
 }
 

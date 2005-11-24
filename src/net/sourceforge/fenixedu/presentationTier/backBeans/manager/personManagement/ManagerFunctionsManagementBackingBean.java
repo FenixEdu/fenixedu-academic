@@ -123,10 +123,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
 
     public List<IFunction> getInherentFunctions() throws FenixFilterException, FenixServiceException {
         if (this.inherentFunctions == null) {
-            this.inherentFunctions = new ArrayList<IFunction>();
-            for (IPersonFunction personFunction : this.getActiveFunctions()) {
-                this.inherentFunctions.addAll(personFunction.getFunction().getInherentFunctions());
-            }
+            this.inherentFunctions = this.getPerson().getActiveInherentFunctions();            
         }
         return inherentFunctions;
     }

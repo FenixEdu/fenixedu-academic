@@ -269,6 +269,7 @@ public class SearchPerson implements IService {
         }
     }
     
+    //------------ SearchPerson Results Class -------------
     public static class SearchPersonResults{
         
         List<InfoPerson> validPersons;

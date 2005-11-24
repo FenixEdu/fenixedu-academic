@@ -487,17 +487,23 @@ public class Person extends Person_Base {
 		return groupsCount;
 	}
 	
-	
+//    public List<IPersonFunction> getFunctionsByPeriod(IExecutionPeriod executionPeriod){
+//        
+//        List<IPersonFunction> activeFunctions = new ArrayList<IPersonFunction>();
+//        
+//        for (IPersonFunction personFunction : this.getPersonFunctions()) {
+//            if () {
+//                activeFunctions.add(personFunction);
+//            }
+//        }
+//    }
+   	
     public List<IPersonFunction> getActiveFunctions() {
 
         List<IPersonFunction> activeFunctions = new ArrayList<IPersonFunction>();
-                
-        Calendar calendar = prepareCalendar();
         
         for (IPersonFunction personFunction : this.getPersonFunctions()) {
-            if (personFunction.getEndDate() != null
-                    && (personFunction.getEndDate().after(calendar.getTime()) || personFunction.getEndDate()
-                            .equals(calendar.getTime()))) {
+            if (personFunction.isActive(prepareCalendar().getTime())) {
                 activeFunctions.add(personFunction);
             }
         }
@@ -507,18 +513,16 @@ public class Person extends Person_Base {
     public List<IPersonFunction> getInactiveFunctions() {
 
         List<IPersonFunction> inactiveFunctions = new ArrayList<IPersonFunction>();
-        
-        Calendar calendar = prepareCalendar();
-        
+                
         for (IPersonFunction personFunction : this.getPersonFunctions()) {
-            if (personFunction.getEndDate() != null && personFunction.getEndDate().before(calendar.getTime())) {
+            if (!personFunction.isActive(prepareCalendar().getTime())) {
                 inactiveFunctions.add(personFunction);
             }
         }
         return inactiveFunctions;
     }
     
-    public List<IFunction> getInherentFunctions(){
+    public List<IFunction> getActiveInherentFunctions(){
        
         List<IFunction> inherentFunctions = new ArrayList<IFunction>();
         for (IPersonFunction personFunction : this.getActiveFunctions()) {
