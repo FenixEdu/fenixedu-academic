@@ -78,7 +78,7 @@
 					</html:submit>
 				</td>
 			</tr>
-   </html:submit></p>
+   </p>
 			
 		</table>
 	</html:form>

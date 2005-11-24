@@ -21,49 +21,6 @@
 
 
 <logic:present name='<%= InquiriesUtil.DEGREE_CURRICULAR_PLANS_LIST %>'>
-	<p class="caps"><strong>
-		<bean:message key="title.inquiries.choose.curricular.plans" bundle="INQUIRIES_RESOURCES"/>
-	</strong></p>
-	<html:form action="/sendEmailReminder">
-		<html:hidden property="method" value="sendEmails" />
-		<%--ul style="list-style-type: none;"--%>
-		<table>
-			<tr>
-				<td class="listClasses-header">
-					<bean:message key="table.header.curricular.plan" bundle="INQUIRIES_RESOURCES"/>
-				</td>
-				<td class="listClasses-header">
-					<bean:message key="table.header.acronym" bundle="INQUIRIES_RESOURCES"/>
-				</td>
-				<td class="listClasses-header" />
-			</tr>
-			
-
-			<logic:iterate id="degreeCurricularPlan" name='<%= InquiriesUtil.DEGREE_CURRICULAR_PLANS_LIST %>' type="net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan">
-				<bean:define id="degreeType">
-					<bean:write name="degreeCurricularPlan" property="infoDegree.tipoCurso.name" />	
-				</bean:define>
-				<c:if test="${degreeType == 'DEGREE'}">
-					<tr>
-						<td class="listClasses">
-							<bean:write name="degreeCurricularPlan" property="infoDegree.nome" />
-						</td>
-						<td class="listClasses">
-							<bean:write name="degreeCurricularPlan" property="infoDegree.sigla" />
-						</td>
-						<td class="listClasses">
-							<html:multibox property="degreeCurricularPlanIds">
-								<bean:write name="degreeCurricularPlan" property="idInternal" />
-							</html:multibox>
-						</td>
-					</tr>
-
-				</c:if>
-			</logic:iterate>
-		</table>		
-
-		<br/><br/>
-
 		<p class="caps"><strong>
 			<bean:message key="title.inquiries.edit.reminder" bundle="INQUIRIES_RESOURCES"/>
 		</strong></p>
@@ -102,6 +59,50 @@
 			<bean:message key="message.inquiries.email.reminder.body.end" bundle="INQUIRIES_RESOURCES"/>
 		</bean:define>
 		<html:textarea property="bodyTextEnd" styleClass="reminder" rows="5" value='<%= bodyEnd %>' />
+		<br/>
+		<br/>
+
+	<p class="caps"><strong>
+		<bean:message key="title.inquiries.choose.curricular.plans" bundle="INQUIRIES_RESOURCES"/>
+	</strong></p>
+	<html:form action="/sendEmailReminder">
+		<html:hidden property="method" value="sendEmails" />
+		<%--ul style="list-style-type: none;"--%>
+		<table>
+			<tr>
+				<td class="listClasses-header">
+					<bean:message key="table.header.curricular.plan" bundle="INQUIRIES_RESOURCES"/>
+				</td>
+				<td class="listClasses-header">
+					<bean:message key="table.header.acronym" bundle="INQUIRIES_RESOURCES"/>
+				</td>
+				<td class="listClasses-header" />
+			</tr>
+			
+
+			<logic:iterate id="degreeCurricularPlan" name='<%= InquiriesUtil.DEGREE_CURRICULAR_PLANS_LIST %>' type="net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan">
+				<bean:define id="degreeType">
+					<bean:write name="degreeCurricularPlan" property="infoDegree.tipoCurso.name" />	
+				</bean:define>
+				<c:if test="${degreeType == 'DEGREE'}">
+					<tr>
+						<td class="listClasses">
+							<bean:write name="degreeCurricularPlan" property="infoDegree.nome" /> - <bean:write name="degreeCurricularPlan" property="name" />
+						</td>
+						<td class="listClasses">
+							<bean:write name="degreeCurricularPlan" property="infoDegree.sigla" />
+						</td>
+						<td class="listClasses">
+							<html:multibox property="degreeCurricularPlanIds">
+								<bean:write name="degreeCurricularPlan" property="idInternal" />
+							</html:multibox>
+						</td>
+					</tr>
+
+				</c:if>
+			</logic:iterate>
+		</table>		
+
 		<br/>
 		<br/>
 

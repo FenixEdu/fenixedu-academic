@@ -6,6 +6,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.gep.inquiries;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -23,12 +24,15 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithAttendsAndInquiriesRegistries;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesEmailReminderReport;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRegistry;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.EMail;
 import net.sourceforge.fenixedu.util.InquiriesUtil;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -56,12 +60,13 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 		Iterator<InfoDegreeCurricularPlan> iter = degreeCurricularPlans.iterator();
 		while(iter.hasNext()) {
 			InfoDegreeCurricularPlan idcp = iter.next();
-			//FIXME: THIS SHOULD BE PARAMETRIZABLE!!!!!
-			if(!(idcp.getInfoDegree().getIdInternal().equals(18) || idcp.getInfoDegree().getIdInternal().equals(14))) {
+			if(idcp.getInfoDegree().getTipoCurso() != DegreeType.DEGREE) {
 				iter.remove();
 			}
 		}
-		
+
+        Collections.sort(degreeCurricularPlans, new BeanComparator("infoDegree.nome"));
+
 		request.setAttribute(InquiriesUtil.DEGREE_CURRICULAR_PLANS_LIST, degreeCurricularPlans);
 		
 		return mapping.findForward("chooseDegreeCurricularPlans");
