@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.externalPerson;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -20,6 +21,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.Sessi
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -74,6 +76,7 @@ public class InsertExternalPersonDispatchAction extends DispatchAction {
 
         if (institutions != null)
             if (institutions.isEmpty() == false) {
+                Collections.sort(institutions, new BeanComparator("name"));
                 List institutionsValueBeanList = new ArrayList();
                 Iterator it = institutions.iterator();
                 InfoInstitution infoInstitutions = null;

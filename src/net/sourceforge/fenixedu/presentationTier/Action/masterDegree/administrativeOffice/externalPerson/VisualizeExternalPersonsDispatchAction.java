@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.externalPerson;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.Sessi
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -47,6 +49,7 @@ public class VisualizeExternalPersonsDispatchAction extends FenixDispatchAction 
 
             if (infoInstitutions != null) {
                 if (infoInstitutions.isEmpty() == false) {
+                    Collections.sort(infoInstitutions, new BeanComparator("name"));
                     List infoInstitutionsValueBeanList = new ArrayList();
                     Iterator it = infoInstitutions.iterator();
                     InfoInstitution infoInstitution = null;
