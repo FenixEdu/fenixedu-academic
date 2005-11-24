@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithAttendsAndInquiriesRegistries;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesEmailReminderReport;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRegistry;
-import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -170,15 +169,12 @@ public class SendEmailReminderAction extends FenixDispatchAction {
             email = new EMail("mail.rnl.ist.utl.pt", originMail);
 			subject += " (localhost)";
         }
-		
-
 
 		if(email.send(emailAddress, subject, body)) {
 			report.addSentEmails(1);
 			return true;
 		}
-		
-		
+
 		return false;
 	}
 }

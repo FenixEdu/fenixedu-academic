@@ -32,6 +32,8 @@
 		<bean:message key="message.inquiries.email.reminder.origin.mail" bundle="INQUIRIES_RESOURCES"/>
 		<br/>
 
+	<html:form action="/sendEmailReminder">
+		<html:hidden property="method" value="sendEmails" />
 
 		<p class="underline italic">
 			<bean:message key="title.inquiries.reminder.subject" bundle="INQUIRIES_RESOURCES"/>
@@ -65,8 +67,7 @@
 	<p class="caps"><strong>
 		<bean:message key="title.inquiries.choose.curricular.plans" bundle="INQUIRIES_RESOURCES"/>
 	</strong></p>
-	<html:form action="/sendEmailReminder">
-		<html:hidden property="method" value="sendEmails" />
+
 		<%--ul style="list-style-type: none;"--%>
 		<table>
 			<tr>

@@ -4,18 +4,17 @@
 	<img alt=""  src="<%= request.getContextPath() %>/images/logo-fenix.gif" width="100" height="100"/>
 </center>
 <br />
-<strong>Gestão de CMS</strong>
+<strong>Mensagens e Avisos</strong>
 <p><strong>&raquo; 
-	<html:link module="/manager" module="/cms" action="/userGroupsManagement.do?method=prepare" titleKey="person.userGroupsManagement.label.title">
-		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="link.userGroupsManagement" />
+	<html:link module="/manager" page="/advisoriesManagement/listCurrentAdvisories.faces">
+		Gestão de Avisos
 	</html:link>
-	</strong></p>
-<p><strong>&raquo;
-	<html:link module="/manager" module="/cms" action="/cmsConfigurationManagement.do?method=prepare" titleKey="person.userGroupsManagement.label.title">
-		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="link.cmsConfiguration" />
-	</html:link>	
 </strong></p>
-
+<p><strong>&raquo; 
+	<html:link module="/manager" page="/sendMail.faces">
+		Envio de E-mails
+	</html:link>
+</strong></p>
 <br />
 <strong><bean:message bundle="MANAGER_RESOURCES" key="title.manager.organizationalStructureManagement"/></strong>
 <p><strong>&raquo; 
@@ -136,12 +135,6 @@
 </strong></p>
 
 <p><strong>&raquo; 
-	<html:link module="/manager" module="/manager" page="/advisoriesManagement/listCurrentAdvisories.faces">
-		Gestão de Avisos
-	</html:link>
-</strong></p>
-
-<p><strong>&raquo; 
 	<html:link module="/manager" module="/manager" page="/monitorServices.do?method=monitor">
 		Monitorização de Serviços
 	</html:link>
@@ -178,4 +171,16 @@
 		Kerberos Test
 	</html:link>
 	
+</strong></p>
+<br />
+<strong>Gestão de CMS</strong>
+<p><strong>&raquo; 
+	<html:link module="/manager" module="/cms" action="/userGroupsManagement.do?method=prepare" titleKey="person.userGroupsManagement.label.title">
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="link.userGroupsManagement" />
+	</html:link>
+	</strong></p>
+<p><strong>&raquo;
+	<html:link module="/manager" module="/cms" action="/cmsConfigurationManagement.do?method=prepare" titleKey="person.userGroupsManagement.label.title">
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="link.cmsConfiguration" />
+	</html:link>	
 </strong></p>
