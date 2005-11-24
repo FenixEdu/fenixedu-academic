@@ -19,7 +19,7 @@
 			<h:outputText value="#{organizationalStructureBackingBean.unit.name}" escape="false"/>												
 		</h:panelGrid>	
 	
-		<h:outputText value="<br/><br/>" escape="false" />
+		<h:outputText value="<br/>" escape="false" />
 	
 		<h:outputText styleClass="error" rendered="#{!empty organizationalStructureBackingBean.errorMessage}"
 				value="#{bundle[organizationalStructureBackingBean.errorMessage]}<br/>" escape="false"/>
