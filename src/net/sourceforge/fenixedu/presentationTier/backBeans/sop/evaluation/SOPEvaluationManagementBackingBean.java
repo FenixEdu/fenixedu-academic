@@ -872,7 +872,6 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         }
         
         if (this.getChosenRoomsIDs() != null) {
-            roomsIDs = new ArrayList<String>(this.getChosenRoomsIDs().length);
             for (Integer roomID : this.getChosenRoomsIDs()) {
                 roomsIDs.add(roomID.toString());
             }
@@ -889,7 +888,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
         List<String> executionCourseIDs = new ArrayList<String>(this.getAssociatedExecutionCourses().size());
         List<String> curricularCourseScopeIDs = new ArrayList<String>();
-        List<String> roomsIDs = null;
+        List<String> roomsIDs = new ArrayList<String>();
 
         if (!prepareArguments(executionCourseIDs, curricularCourseScopeIDs, roomsIDs)) {
             return "";
