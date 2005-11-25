@@ -389,7 +389,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         Integer costCenterCode = this.getUnit().getCostCenterCode();
         String costCenterCodeString = null;
         if(costCenterCode != null){
-            costCenterCodeString = costCenterCodeString.toString();
+            costCenterCodeString = costCenterCode.toString();
         }
         return costCenterCodeString;
     }
