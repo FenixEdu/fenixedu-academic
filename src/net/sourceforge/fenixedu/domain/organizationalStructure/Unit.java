@@ -62,7 +62,7 @@ public class Unit extends Unit_Base {
         List<IContract> contracts = new ArrayList<IContract>();
         for (IContract contract : this.getWorkingContracts()) {
             if ((contract.getBeginDate().after(begin) || contract.getBeginDate().equals(begin))
-                    && (contract.getEndDate() == null || (contract.getEndDate().before(end) && contract
+                    && (contract.getEndDate() == null || (contract.getEndDate().before(end) || contract
                             .getEndDate().equals(end)))) {
                 
                 contracts.add(contract);

@@ -28,7 +28,7 @@ public class Department extends Department_Base {
         return result;
     }
 
-    public List getWorkingEmployees() {
+    public List getCurrentActiveWorkingEmployees() {
 
         IUnit unit = this.getUnit();
         List employees = new ArrayList();
@@ -54,18 +54,48 @@ public class Department extends Department_Base {
         }
         return employees;
     }
-
+    
     public List getTeachers() {
 
         List teachers = new ArrayList();
-        List<IEmployee> employees = this.getWorkingEmployees();
+        List<IEmployee> employees = this.getCurrentActiveWorkingEmployees();
 
+        addTeachers(teachers, employees);
+        return teachers;
+    }
+
+    public List<IEmployee> getWorkingEmployees(Date begin, Date end) {
+
+        IUnit unit = this.getUnit();
+        List<IEmployee> employees = new ArrayList<IEmployee>();
+
+        if (unit != null) {
+            for (IContract contract : unit.getWorkingContracts(begin, end)) {                
+                employees.add(contract.getEmployee());                
+            }
+            for (IUnit subUnit : unit.getAssociatedUnits()) {
+                for (IContract contract : subUnit.getWorkingContracts(begin, end)) {                                     
+                    employees.add(contract.getEmployee());                    
+                }
+            }
+        }
+        return employees;
+    }
+
+    
+    public List<ITeacher> getTeachers(Date begin, Date end){
+        
+        List teachers = new ArrayList();     
+        addTeachers(teachers, this.getWorkingEmployees(begin, end));              
+        return teachers;
+    }
+    
+    private void addTeachers(List teachers, List<IEmployee> employees) {
         for (IEmployee employee : employees) {
             ITeacher teacher = employee.getPerson().getTeacher();
             if (teacher != null)
                 teachers.add(teacher);
         }
-        return teachers;
     }
 
     public void createTeacherExpectationDefinitionPeriod(IExecutionYear executionYear, Date startDate,

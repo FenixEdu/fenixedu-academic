@@ -802,9 +802,10 @@ class net.sourceforge.fenixedu.domain.Department extends net.sourceforge.fenixed
 	Integer keyUnit;
 	
 	interface"
-	public java.util.List getWorkingEmployees();
+	public java.util.List getCurrentActiveWorkingEmployees();
 	public java.util.List getTeachers();
-	
+	public java.util.List<net.sourceforge.fenixedu.domain.ITeacher> getTeachers(java.util.Date begin, java.util.Date end);
+	public java.util.List<net.sourceforge.fenixedu.domain.IEmployee> getWorkingEmployees(java.util.Date begin, java.util.Date end);
  	public void createTeacherExpectationDefinitionPeriod(net.sourceforge.fenixedu.domain.IExecutionYear executionYear, java.util.Date startDate, java.util.Date endDate);
  	public ITeacherExpectationDefinitionPeriod readTeacherExpectationDefinitionPeriodByExecutionYear(IExecutionYear executionYear);
 	"
@@ -3230,6 +3231,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.s
             net.sourceforge.fenixedu.domain.organizationalStructure.IUnit parentUnit);
     public boolean isActive(java.util.Date currentDate);
     public void delete();
+    public java.util.List<net.sourceforge.fenixedu.domain.IContract> getWorkingContracts(java.util.Date begin, java.util.Date end);
 	"
 }
 
