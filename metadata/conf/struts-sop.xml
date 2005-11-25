@@ -1255,6 +1255,18 @@
             scope="request"
             validate="true"
             >
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
+				   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
+                   />
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InterceptingActionException"
+				   key="ServidorApresentacao.Action.exceptions.InterceptingActionException"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
+                   />
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidTimeIntervalActionException"
+				   key="ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
+                   />
     	<forward name="ShowLessonForm" path="/manageLesson.jsp"/>
     	<forward name="ShowChooseRoomForm" path="/chooseRoomForLesson.jsp"/>
     	<forward name="EditShift" path="/manageShift.do?method=prepareEditShift&amp;page=0"/>

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InterceptingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidTimeIntervalServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonServiceResult;
@@ -91,7 +92,6 @@ public class EditLesson implements IService {
     private boolean validNoInterceptingLesson(Calendar startTime, Calendar endTime,
             DiaSemana dayOfWeek, Integer frequency, Integer week, IRoom room, IRoomOccupation oldroomOccupation)
             throws FenixServiceException, ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final List<IRoomOccupation> roomOccupations = room.getRoomOccupations();
 
         for (final IRoomOccupation roomOccupation : roomOccupations) {
@@ -100,7 +100,7 @@ public class EditLesson implements IService {
                     oldroomOccupation.getPeriod().getStartDate(),
                     oldroomOccupation.getPeriod().getEndDate(),
                     startTime, endTime, dayOfWeek, frequency, week)) {
-                return false;
+                throw new InterceptingServiceException();
             }
         }
         return true;

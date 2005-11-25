@@ -40,20 +40,8 @@ public class ReadAvailableRoomsForExam implements IService {
         final List<InfoRoom> availableInfoRooms = new ArrayList<InfoRoom>();
         for (final IRoom room : rooms) {
             if (!isOccupied(room, periodStart, periodEnd, startTime, endTime, dayOfWeek, frequency,
-                    weekOfStart)) {
+                    weekOfStart, roomOccupationToRemoveId)) {
                 availableInfoRooms.add(InfoRoom.newInfoFromDomain(room));
-            }
-        }
-
-        if (roomOccupationToRemoveId != null) {
-            final IPersistentRoomOccupation persistentRoomOccupation = persistentSupport
-                    .getIPersistentRoomOccupation();
-            IRoomOccupation roomOccupationToRemove = (IRoomOccupation) persistentRoomOccupation
-                    .readByOID(RoomOccupation.class, roomOccupationToRemoveId);
-
-            if (roomOccupationToRemove.roomOccupationForDateAndTime(periodStart, periodEnd,
-                    startTime, endTime, dayOfWeek, frequency, weekOfStart)) {
-                availableInfoRooms.add(InfoRoom.newInfoFromDomain(roomOccupationToRemove.getRoom()));
             }
         }
 
@@ -62,13 +50,15 @@ public class ReadAvailableRoomsForExam implements IService {
 
     private boolean isOccupied(final IRoom room, final Calendar periodStart, final Calendar periodEnd,
             final Calendar startTime, final Calendar endTime, final DiaSemana dayOfWeek,
-            Integer frequency, Integer weekOfStart) {
+            Integer frequency, Integer weekOfStart, Integer roomOccupationToRemoveId) {
         final List<IRoomOccupation> roomOccupations = room.getRoomOccupations();
         for (final IRoomOccupation roomOccupation : roomOccupations) {
-            boolean isOccupied = roomOccupation.roomOccupationForDateAndTime(periodStart,
-                    periodEnd, startTime, endTime, dayOfWeek, frequency, weekOfStart);
-            if (isOccupied) {
-                return true;
+            if (!roomOccupation.getIdInternal().equals(roomOccupationToRemoveId)) {
+                boolean isOccupied = roomOccupation.roomOccupationForDateAndTime(periodStart,
+                        periodEnd, startTime, endTime, dayOfWeek, frequency, weekOfStart);
+                if (isOccupied) {
+                    return true;
+                }
             }
         }
         return false;

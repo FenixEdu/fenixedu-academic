@@ -7459,7 +7459,6 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-            <chain name="CoordinatorOrStudentOrMasterDegreeAuthorization"/>
 		</filterChains>
 	</service>
 	<service>

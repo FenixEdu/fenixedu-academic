@@ -504,10 +504,13 @@ public class ManageLessonDA extends
                     saveErrors(request, actionErrors);
                     return mapping.getInputForward();
                 } catch (ExistingServiceException ex) {
+                    actionErrors.add("error.existing.service", new ActionError("error.existing.service"));
                     throw new ExistingActionException("A aula", ex);
                 } catch (InterceptingServiceException ex) {
+                    actionErrors.add("error.intercepting.service", new ActionError("error.intercepting.service"));
                     throw new InterceptingActionException(infoSala.getNome(), ex);
                 } catch (InvalidTimeIntervalServiceException ex) {
+                    actionErrors.add("error.invalid.time.service", new ActionError("error.invalid.time.service"));
                     throw new InvalidTimeIntervalActionException(ex);
                 }
 
