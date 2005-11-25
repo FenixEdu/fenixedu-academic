@@ -38,10 +38,16 @@ public class DeleteLessons implements IService {
     public static void deleteLesson(final ISuportePersistente persistentSupport, final Integer lessonOID)
             throws ExcepcaoPersistencia {
         final IAulaPersistente persistenetLesson = persistentSupport.getIAulaPersistente();
+        final ILesson lesson = (ILesson) persistenetLesson.readByOID(Lesson.class, lessonOID);
+        deleteLesson(persistentSupport, lesson);
+    }
+
+    public static void deleteLesson(final ISuportePersistente persistentSupport, final ILesson lesson)
+            throws ExcepcaoPersistencia {
+        final IAulaPersistente persistenetLesson = persistentSupport.getIAulaPersistente();
         final IPersistentRoomOccupation persistentRoomOccupation = persistentSupport
                 .getIPersistentRoomOccupation();
 
-        final ILesson lesson = (ILesson) persistenetLesson.readByOID(Lesson.class, lessonOID);
         final IRoomOccupation roomOccupation = lesson.getRoomOccupation();
 
         roomOccupation.setPeriod(null);

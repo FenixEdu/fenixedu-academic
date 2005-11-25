@@ -31,54 +31,54 @@ public class DeleteShift implements IService {
         boolean result = false;
 
         if (infoShift != null) {
+            deleteShift(infoShift.getIdInternal());
+            result = true;
+        }
 
-            final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        return Boolean.valueOf(result);
+    }
 
-            IShift shift = (IShift) sp.getITurnoPersistente().readByOID(Shift.class,
-                    infoShift.getIdInternal());
-            if (shift != null) {
-                List studentShifts = shift.getStudents();
-                if (studentShifts != null && studentShifts.size() > 0) {
-                    throw new FenixServiceException("error.deleteShift.with.students");
-                }
+    public static void deleteShift(final Integer shiftID) throws ExcepcaoPersistencia, FenixServiceException {
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-                // if the shift has student groups associated it can't be
-                // deleted
-                List studentGroupShift = shift.getAssociatedStudentGroups();
-
-                if (studentGroupShift.size() > 0) {
-                    throw new FenixServiceException("error.deleteShift.with.studentGroups");
-                }
-
-                // if the shift has summaries it can't be deleted
-                IPersistentSummary persistentSummary = sp.getIPersistentSummary();
-                List summariesShift = persistentSummary.readByShift(shift.getDisciplinaExecucao()
-                        .getIdInternal(), shift.getIdInternal());
-                if (summariesShift != null && summariesShift.size() > 0) {
-                    throw new FenixServiceException("error.deleteShift.with.summaries");
-                }
-                IPersistentShiftProfessorship persistentShiftProfessorship = sp
-                        .getIPersistentShiftProfessorship();
-                List professorshipShift = persistentShiftProfessorship.readByShift(shift);
-                for (int i = 0; i < professorshipShift.size(); i++) {
-                    persistentShiftProfessorship.delete((IShiftProfessorship) professorshipShift.get(i));
-                }
-                for (int i = 0; i < shift.getAssociatedLessons().size(); i++) {
-                    ILesson lesson = shift.getAssociatedLessons().get(i);
-
-                    DeleteLessons.deleteLesson(sp, lesson.getIdInternal());
-                }
-                for (int i = 0; i < shift.getAssociatedClasses().size(); i++) {
-                    ISchoolClass schoolClass = shift.getAssociatedClasses().get(i);
-                    schoolClass.getAssociatedShifts().remove(shift);
-                }
-
-                shift.setDisciplinaExecucao(null);
-                sp.getITurnoPersistente().deleteByOID(Shift.class, shift.getIdInternal());
-                result = true;
+        IShift shift = (IShift) sp.getITurnoPersistente().readByOID(Shift.class, shiftID);
+        if (shift != null) {
+            List studentShifts = shift.getStudents();
+            if (studentShifts != null && studentShifts.size() > 0) {
+                throw new FenixServiceException("error.deleteShift.with.students");
             }
 
+            // if the shift has student groups associated it can't be
+            // deleted
+            List studentGroupShift = shift.getAssociatedStudentGroups();
+
+            if (studentGroupShift.size() > 0) {
+                throw new FenixServiceException("error.deleteShift.with.studentGroups");
+            }
+
+            // if the shift has summaries it can't be deleted
+            IPersistentSummary persistentSummary = sp.getIPersistentSummary();
+            List summariesShift = persistentSummary.readByShift(shift.getDisciplinaExecucao()
+                    .getIdInternal(), shift.getIdInternal());
+            if (summariesShift != null && summariesShift.size() > 0) {
+                throw new FenixServiceException("error.deleteShift.with.summaries");
+            }
+
+            final IPersistentShiftProfessorship persistentShiftProfessorship = sp.getIPersistentShiftProfessorship();
+            for (final List<IShiftProfessorship> shiftProfessorship = shift.getAssociatedShiftProfessorship();
+                    !shiftProfessorship.isEmpty();
+                    persistentShiftProfessorship.delete(shiftProfessorship.get(0)));
+
+            for (final List<ILesson> lessons = shift.getAssociatedLessons();
+                    !lessons.isEmpty();
+                    DeleteLessons.deleteLesson(sp, lessons.get(0)));
+
+            for (final List<ISchoolClass> schoolClasses = shift.getAssociatedClasses();
+                    !schoolClasses.isEmpty(); shift.removeAssociatedClasses(schoolClasses.get(0)));
+
+            shift.setDisciplinaExecucao(null);
+            sp.getITurnoPersistente().deleteByOID(Shift.class, shift.getIdInternal());
         }
-        return new Boolean(result);
     }
+
 }
