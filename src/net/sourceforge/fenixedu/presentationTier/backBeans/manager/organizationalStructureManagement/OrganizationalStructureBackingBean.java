@@ -39,12 +39,11 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public Integer principalFunctionID;
 
-    public IUnit unit, chooseUnit, principalFunctionUnit;
+    public IUnit unit, chooseUnit;
 
     public IFunction function;
 
-    public HtmlInputHidden unitIDHidden, chooseUnitIDHidden, functionIDHidden,
-            principalFunctionUnitIDHidden;
+    public HtmlInputHidden unitIDHidden, chooseUnitIDHidden, functionIDHidden;
 
     
     public OrganizationalStructureBackingBean() {
@@ -61,11 +60,6 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 && !getRequestParameter("functionID").toString().equals("")) {
             getFunctionIDHidden()
                     .setValue(Integer.valueOf(getRequestParameter("functionID").toString()));
-        }
-        if (getRequestParameter("principalFunctionUnitID") != null
-                && !getRequestParameter("principalFunctionUnitID").toString().equals("")) {
-            getPrincipalFunctionUnitIDHidden().setValue(
-                    Integer.valueOf(getRequestParameter("principalFunctionUnitID")));
         }
         if (getRequestParameter("principalFunctionID") != null
                 && !getRequestParameter("principalFunctionID").toString().equals("")) {
@@ -116,9 +110,43 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return allUnits;
     }
 
+    public String getAllUnitsToChooseParentUnit() throws FenixFilterException, FenixServiceException {
+        StringBuffer buffer = new StringBuffer();
+        List<IUnit> allUnitsWithoutParent = getAllUnitsWithoutParent();
+        Collections.sort(allUnitsWithoutParent, new BeanComparator("name"));
+        for (IUnit unit : allUnitsWithoutParent) {
+            if (!unit.equals(this.getUnit())) {
+                getUnitTreeToChooseParentUnit(buffer, unit);
+            }
+        }
+        return buffer.toString();
+    }
+
+    public void getUnitTreeToChooseParentUnit(StringBuffer buffer, IUnit parentUnit)
+            throws FenixFilterException, FenixServiceException {
+        buffer.append("<ul>");
+        getUnitsListToChooseParentUnit(parentUnit, 0, buffer);
+        buffer.append("</ul>");
+    }
+
+    private void getUnitsListToChooseParentUnit(IUnit parentUnit, int index, StringBuffer buffer)
+            throws FenixFilterException, FenixServiceException {
+
+        buffer.append("<li>").append("<a href=\"").append(getContextPath()).append(
+                "/manager/organizationalStructureManagament/").append("chooseParentUnit.faces?").append(
+                "unitID=").append(this.getUnit().getIdInternal()).append("&chooseUnitID=").append(
+                parentUnit.getIdInternal()).append("\">").append(parentUnit.getName()).append("</a>")
+                .append("</li>").append("<ul>");
+
+        for (IUnit subUnit : parentUnit.getAssociatedUnits()) {
+            getUnitsListToChooseParentUnit(subUnit, index + 1, buffer);
+        }
+
+        buffer.append("</ul>");
+    }
+
     public String getUnits() throws FenixFilterException, FenixServiceException {
         StringBuffer buffer = new StringBuffer();
-
         List<IUnit> allUnitsWithoutParent = getAllUnitsWithoutParent();
         Collections.sort(allUnitsWithoutParent, new BeanComparator("name"));
         for (IUnit unit : allUnitsWithoutParent) {
@@ -174,10 +202,10 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         buffer.append("<li>").append("<a href=\"").append(getContextPath()).append(
                 "/manager/organizationalStructureManagament/").append("chooseFunction.faces?").append(
-                "unitID=").append(this.getUnit().getIdInternal()).append("&principalFunctionUnitID=")
-                .append(parentUnit.getIdInternal()).append("&functionID=").append(
-                        this.getFunction().getIdInternal()).append("\">").append(parentUnit.getName())
-                .append("</a>").append("</li>").append("<ul>");
+                "unitID=").append(this.getUnit().getIdInternal()).append("&chooseUnitID=").append(
+                parentUnit.getIdInternal()).append("&functionID=").append(
+                this.getFunction().getIdInternal()).append("\">").append(parentUnit.getName()).append(
+                "</a>").append("</li>").append("<ul>");
 
         for (IUnit subUnit : parentUnit.getAssociatedUnits()) {
             getUnitsListToChoosePrincipalFunction(subUnit, index + 1, buffer);
@@ -188,9 +216,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public List<SelectItem> getValidUnitType() {
         List<SelectItem> list = new ArrayList<SelectItem>();
-
-        ResourceBundle bundle = getResourceBundle("ServidorApresentacao/EnumerationResources");
-
+        ResourceBundle bundle = getResourceBundle("ServidorApresentacao/EnumerationResources");       
+        
         SelectItem selectItem = null;
         for (UnitType type : UnitType.values()) {
             selectItem = new SelectItem();
@@ -199,6 +226,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             list.add(selectItem);
         }
         Collections.sort(list, new BeanComparator("label"));
+        
+        addDefaultSelectedItem(list, bundle);
+        
         return list;
     }
 
@@ -215,9 +245,19 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             list.add(selectItem);
         }
         Collections.sort(list, new BeanComparator("label"));
+        
+        addDefaultSelectedItem(list, bundle);
+        
         return list;
     }
 
+    private void addDefaultSelectedItem(List<SelectItem> list, ResourceBundle bundle) {
+        SelectItem firstItem = new SelectItem();
+        firstItem.setLabel(bundle.getString("dropDown.Default"));
+        firstItem.setValue("#");        
+        list.add(0, firstItem);
+    }
+    
     public String createTopUnit() throws FenixFilterException, FenixServiceException {
 
         if (verifyCostCenterCode()) {
@@ -229,9 +269,11 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             return "";
         }
 
+        UnitType type = getUnitType();
+        
         final Object[] argsToRead = { null, null, this.getUnitName(), this.getUnitCostCenter(),
                 datesResult.getBeginDate(), datesResult.getEndDate(),
-                UnitType.valueOf(this.getUnitTypeName()) };
+                type};
 
         try {
             ServiceUtils.executeService(getUserView(), "CreateNewUnit", argsToRead);
@@ -254,9 +296,11 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             return "";
         }
 
+        UnitType type = getUnitType();
+        
         final Object[] argsToRead = { null, this.getUnit().getIdInternal(), this.getUnitName(),
                 this.getUnitCostCenter(), datesResult.getBeginDate(), datesResult.getEndDate(),
-                UnitType.valueOf(this.getUnitTypeName()) };
+                type};
 
         try {
             ServiceUtils.executeService(getUserView(), "CreateNewUnit", argsToRead);
@@ -267,7 +311,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         return "backToUnitDetails";
     }
-
+    
     public String editUnit() throws FenixFilterException, FenixServiceException {
 
         if (verifyCostCenterCode()) {
@@ -279,10 +323,12 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             return "";
         }
 
+        UnitType type = getUnitType();
+        
         final Object[] argsToRead = { this.getChooseUnit().getIdInternal(),
                 this.getChooseUnit().getParentUnit().getIdInternal(), this.getUnitName(),
                 this.getUnitCostCenter(), datesResult.getBeginDate(), datesResult.getEndDate(),
-                UnitType.valueOf(this.getUnitTypeName()) };
+                type };
 
         try {
             ServiceUtils.executeService(getUserView(), "CreateNewUnit", argsToRead);
@@ -294,6 +340,68 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return "backToUnitDetails";
     }
 
+    private UnitType getUnitType() throws FenixFilterException, FenixServiceException {
+        UnitType type = null;
+        if(!this.getUnitTypeName().equals("#")){
+            UnitType.valueOf(this.getUnitTypeName());
+        }
+        return type;
+    }
+    
+    public String associateParentUnit() throws FenixFilterException, FenixServiceException {
+        
+        String costCenterCodeString = getValidCosteCenterCode();
+        
+        final Object[] argsToRead = { this.getUnit().getIdInternal(),
+                this.getChooseUnit().getIdInternal(), this.getUnit().getName(),
+                costCenterCodeString, this.getUnit().getBeginDate(),
+                this.getUnit().getEndDate(), this.getUnit().getType() };
+
+        try {
+            ServiceUtils.executeService(getUserView(), "CreateNewUnit", argsToRead);
+        } catch (FenixServiceException e) {
+            setErrorMessage(e.getMessage());
+            return "";
+        }
+
+        return "backToUnitDetails";
+    }
+
+    public String disassociateParentUnit() throws FenixFilterException, FenixServiceException {
+
+        String costCenterCodeString = getValidCosteCenterCode();
+        
+        final Object[] argsToRead = { this.getUnit().getIdInternal(), null, this.getUnit().getName(),
+                costCenterCodeString, this.getUnit().getBeginDate(),
+                this.getUnit().getEndDate(), this.getUnit().getType() };
+
+        try {
+            ServiceUtils.executeService(getUserView(), "CreateNewUnit", argsToRead);
+        } catch (FenixServiceException e) {
+            setErrorMessage(e.getMessage());
+            return "";
+        }
+
+        return "";
+    }
+
+    private String getValidCosteCenterCode() throws FenixFilterException, FenixServiceException {
+        Integer costCenterCode = this.getUnit().getCostCenterCode();
+        String costCenterCodeString = null;
+        if(costCenterCode != null){
+            costCenterCodeString = costCenterCodeString.toString();
+        }
+        return costCenterCodeString;
+    }
+
+    private FunctionType getFunctionType() throws FenixFilterException, FenixServiceException {
+        FunctionType type = null;
+        if(!this.getFunctionTypeName().equals("#")){
+            FunctionType.valueOf(this.getFunctionTypeName());
+        }
+        return type;
+    }
+    
     public String createFunction() throws FenixFilterException, FenixServiceException {
 
         PrepareDatesResult datesResult = prepareDates(this.getFunctionBeginDate(), this
@@ -302,9 +410,11 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             return "";
         }
 
+        FunctionType type = getFunctionType();
+        
         final Object[] argsToRead = { null, this.getUnit().getIdInternal(), this.getFunctionName(),
                 datesResult.getBeginDate(), datesResult.getEndDate(),
-                FunctionType.valueOf(this.getFunctionTypeName()), null };
+                type, null };
 
         try {
             ServiceUtils.executeService(getUserView(), "CreateNewFunction", argsToRead);
@@ -331,10 +441,12 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             parentInherentFunctionID = parentInherentFunction.getIdInternal();
         }
 
+        FunctionType type = getFunctionType();
+        
         final Object[] argsToRead = { this.getFunction().getIdInternal(),
                 this.getFunction().getUnit().getIdInternal(), this.getFunctionName(),
                 datesResult.getBeginDate(), datesResult.getEndDate(),
-                FunctionType.valueOf(this.getFunctionTypeName()), parentInherentFunctionID };
+                type, parentInherentFunctionID };
 
         try {
             ServiceUtils.executeService(getUserView(), "CreateNewFunction", argsToRead);
@@ -346,14 +458,20 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return "backToUnitDetails";
     }
 
-    public String associateInherentParentFunction() throws FenixFilterException, FenixServiceException {
+    public String prepareAssociateInherentParentFunction() throws FenixFilterException,
+            FenixServiceException {
 
         IFunction function = this.getFunction();
-
         if (!function.getPersonFunctions().isEmpty()) {
             setErrorMessage("error.becomeInherent");
             return "";
         }
+        return "chooseInherentParentFunction";
+    }
+
+    public String associateInherentParentFunction() throws FenixFilterException, FenixServiceException {
+
+        IFunction function = this.getFunction();
 
         final Object[] argsToRead = { function.getIdInternal(), function.getUnit().getIdInternal(),
                 function.getName(), function.getBeginDate(), function.getEndDate(), function.getType(),
@@ -663,35 +781,12 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         this.functionIDHidden = functionIDHidden;
     }
 
-    public IUnit getPrincipalFunctionUnit() throws FenixFilterException, FenixServiceException {
-        if (this.principalFunctionUnit == null) {
-            this.principalFunctionUnit = (IUnit) readDomainObject(Unit.class, Integer.valueOf(this
-                    .getPrincipalFunctionUnitIDHidden().getValue().toString()));
-        }
-        return principalFunctionUnit;
-    }
-
-    public void setPrincipalFunctionUnit(IUnit principalFunctionUnit) {
-        this.principalFunctionUnit = principalFunctionUnit;
-    }
-
     public Integer getPrincipalFunctionID() {
         return principalFunctionID;
     }
 
     public void setPrincipalFunctionID(Integer principalFunctionID) {
         this.principalFunctionID = principalFunctionID;
-    }
-
-    public HtmlInputHidden getPrincipalFunctionUnitIDHidden() {
-        if (this.principalFunctionUnitIDHidden == null) {
-            this.principalFunctionUnitIDHidden = new HtmlInputHidden();
-        }
-        return principalFunctionUnitIDHidden;
-    }
-
-    public void setPrincipalFunctionUnitIDHidden(HtmlInputHidden principalFunctionUnitIDHidden) {
-        this.principalFunctionUnitIDHidden = principalFunctionUnitIDHidden;
     }
 
     public class PrepareDatesResult {

@@ -9,14 +9,14 @@
 	<h:form>	
 
 		<h:inputHidden binding="#{organizationalStructureBackingBean.unitIDHidden}"/>
-		<h:inputHidden binding="#{organizationalStructureBackingBean.principalFunctionUnitIDHidden}"/>	
+		<h:inputHidden binding="#{organizationalStructureBackingBean.chooseUnitIDHidden}"/>	
 		<h:inputHidden binding="#{organizationalStructureBackingBean.functionIDHidden}"/>
 										
 		<h:outputText value="<h2>#{bundle['title.chooseFunction']}</h2><br/>" escape="false" />		
 		
 		<h:panelGrid styleClass="infoselected" columns="2">
 			<h:outputText value="<b>#{bundle['message.name']}</b>" escape="false"/>		
-			<h:outputText value="#{organizationalStructureBackingBean.principalFunctionUnit.name}" escape="false"/>												
+			<h:outputText value="#{organizationalStructureBackingBean.chooseUnit.name}" escape="false"/>												
 		</h:panelGrid>
 		
 		<h:outputText value="<br/>" escape="false" />		
@@ -24,8 +24,8 @@
 		<h:outputText styleClass="error" rendered="#{!empty organizationalStructureBackingBean.errorMessage}"
 				value="#{bundle[organizationalStructureBackingBean.errorMessage]}<br/>" escape="false"/>
 								
-		<h:dataTable value="#{organizationalStructureBackingBean.principalFunctionUnit.functions}" var="function"
-			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty organizationalStructureBackingBean.principalFunctionUnit.functions}">
+		<h:dataTable value="#{organizationalStructureBackingBean.chooseUnit.functions}" var="function"
+			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty organizationalStructureBackingBean.chooseUnit.functions}">
 			<h:column>
 				<f:facet name="header">
 					<h:outputText value="#{bundle['title.FunctionName']}" />
@@ -64,7 +64,7 @@
 			</h:column>
 		</h:dataTable>		
 		
-		<h:outputText value="#{bundle['unit.withoutFunctions']}<br/>" rendered="#{empty organizationalStructureBackingBean.principalFunctionUnit.functions}" 
+		<h:outputText value="#{bundle['unit.withoutFunctions']}<br/>" rendered="#{empty organizationalStructureBackingBean.chooseUnit.functions}" 
 				styleClass="error" escape="false"/>				
 		
 		<h:outputText value="<br/>" escape="false" />	

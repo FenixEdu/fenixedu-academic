@@ -262,6 +262,26 @@
 	</navigation-rule>
 	
 	<navigation-rule>
+		<from-view-id>/manager/organizationalStructureManagament/listAllUnitsToChooseParentUnit.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>backToUnitDetails</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/unitDetails.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/manager/organizationalStructureManagament/chooseParentUnit.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>backToUnitDetails</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/unitDetails.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>listAllUnitsToChooseParentUnit</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/listAllUnitsToChooseParentUnit.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	
+	<navigation-rule>
 		<from-view-id>/manager/organizationalStructureManagament/createNewUnit.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>listAllUnits</from-outcome>
@@ -313,7 +333,7 @@
 		</navigation-case>		
 		<navigation-case>
 			<from-outcome>listAllUnits</from-outcome>
-			<to-view-id>/manager/organizationalStructureManagament/listAllUnits.jsp</to-view-id>
+			<to-view-id>/manager/organizationalStructureManagament/chooseUnit.jsp</to-view-id>
 		</navigation-case>	
 	</navigation-rule>
 	
@@ -350,6 +370,10 @@
 		<navigation-case>
 			<from-outcome>chooseInherentParentFunction</from-outcome>
 			<to-view-id>/manager/organizationalStructureManagament/chooseUnit.jsp</to-view-id>
+		</navigation-case>	
+		<navigation-case>
+			<from-outcome>prepareChooseParentUnit</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/listAllUnitsToChooseParentUnit.jsp</to-view-id>
 		</navigation-case>	
 	</navigation-rule>
 	

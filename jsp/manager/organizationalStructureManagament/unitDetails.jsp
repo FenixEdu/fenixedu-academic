@@ -69,9 +69,21 @@
 				<h:commandLink action="#{organizationalStructureBackingBean.deleteUnit}" value="#{bundle['message.manager.delete']}">
 					<f:param id="chooseUnitID3" name="chooseUnitID" value="#{unit.idInternal}"/>
 				</h:commandLink>				
-			</h:column>			
-		</h:dataTable>					
-			
+			</h:column>
+			<h:column rendered="#{empty organizationalStructureBackingBean.unit.parentUnit}">	
+				<f:facet name="header">
+					<h:outputText value="#{bundle['message.action']}" />
+				</f:facet>								
+				<h:commandLink action="prepareChooseParentUnit" value="#{bundle['message.subUnit']}"/> 				
+			</h:column>
+			<h:column rendered="#{!empty organizationalStructureBackingBean.unit.parentUnit}">	
+				<f:facet name="header">
+					<h:outputText value="#{bundle['message.action']}" />
+				</f:facet>								
+				<h:commandLink action="#{organizationalStructureBackingBean.disassociateParentUnit}" value="#{bundle['message.topUnit']}"/> 				
+			</h:column>					
+		</h:dataTable>									
+					
 		<h:outputText value="<br/><h3>#{bundle['message.subUnits']}</h3>" escape="false" />
 		<h:commandLink action="prepareCreateNewSubUnit" value="#{bundle['link.new.unit3']}"/>		
 		<h:outputText value="<br/><br/>" escape="false"/>		
@@ -187,12 +199,12 @@
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>								
-				<h:commandLink action="chooseInherentParentFunction" value="#{bundle['message.inherentTo2']}">
+				<h:commandLink action="#{organizationalStructureBackingBean.prepareAssociateInherentParentFunction}" value="#{bundle['message.inherentTo2']}">
 					<f:param id="functionID3" name="functionID" value="#{function.idInternal}"/>
 				</h:commandLink>				
 			</h:column>
-		</h:dataTable>			
-		
+		</h:dataTable>					
+				
 		<h:outputText value="#{bundle['unit.withoutNonInherentFunctions']}<br/>" rendered="#{empty organizationalStructureBackingBean.allNonInherentFunctions}" 
 				styleClass="error" escape="false"/>
 				
