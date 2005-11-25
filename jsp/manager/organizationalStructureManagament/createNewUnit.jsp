@@ -25,7 +25,7 @@
 			
 			<h:outputText value="<b>#{bundle['message.costCenter']}</b>" escape="false"/>
 			<h:panelGroup>
-				<h:inputText id="costCenter" required="true" size="10" value="#{organizationalStructureBackingBean.unitCostCenter}">
+				<h:inputText id="costCenter" size="10" value="#{organizationalStructureBackingBean.unitCostCenter}">
 					<fc:regexValidator regex="[0-9]*"/>
 				</h:inputText>
 				<h:message for="costCenter" styleClass="error"/>

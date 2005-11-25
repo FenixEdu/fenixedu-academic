@@ -4,8 +4,11 @@
  */
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import net.sourceforge.fenixedu.domain.IContract;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class Unit extends Unit_Base {
@@ -20,9 +23,12 @@ public class Unit extends Unit_Base {
         return unit;
     }
 
-    public void edit(String unitName, String unitCostCenter, Date beginDate, Date endDate, UnitType type, IUnit parentUnit) {
+    public void edit(String unitName, String unitCostCenter, Date beginDate, Date endDate,
+            UnitType type, IUnit parentUnit) {
         this.setName(unitName);
-        this.setCostCenterCode(Integer.valueOf(unitCostCenter));
+        if(unitCostCenter != null && !unitCostCenter.equals("")){
+            this.setCostCenterCode(Integer.valueOf(unitCostCenter));
+        }
         this.setBeginDate(beginDate);
         this.setEndDate(endDate);
         this.setType(type);
@@ -42,13 +48,26 @@ public class Unit extends Unit_Base {
         if (this.getAssociatedUnits().isEmpty() && this.getFunctions().isEmpty()
                 && this.getWorkingContracts().isEmpty() && this.getMailingContracts().isEmpty()
                 && this.getSalaryContracts().isEmpty()) {
-            
+
             this.setParentUnit(null);
             this.setDepartment(null);
             super.deleteDomainObject();
-        
+
         } else {
             throw new DomainException("error.delete.unit");
         }
+    }
+
+    public List<IContract> getWorkingContracts(Date begin, Date end) {
+        List<IContract> contracts = new ArrayList<IContract>();
+        for (IContract contract : this.getWorkingContracts()) {
+            if ((contract.getBeginDate().after(begin) || contract.getBeginDate().equals(begin))
+                    && (contract.getEndDate() == null || (contract.getEndDate().before(end) && contract
+                            .getEndDate().equals(end)))) {
+                
+                contracts.add(contract);
+            }
+        }
+        return contracts;
     }
 }
