@@ -66,14 +66,17 @@ table.ppdetails td.ppright {
 
 
 <script language="JavaScript">
-function check(e)
+function check(e,v)
 {
 if (e.style.display == "none")
   {
   e.style.display = "";
+  v.value = "-";
   }
 else
-  {e.style.display = "none";}
+  {e.style.display = "none";
+  v.value = "+";
+  }
 }
 </script>
 
@@ -260,7 +263,8 @@ else
 
 			<td width="30%" style="text-align: right;">
 	    	   <bean:define id="aa" value="<%= "aa" + personIndex %>" />
-	    	   <input type = button value=">"  indexed="true" onClick="check(document.getElementById('<%= pageContext.findAttribute("aa").toString() %>'));return false;" >													
+	    	   <bean:define id="id" value="<%= "id" + personIndex %>" />
+	    	   <input type = button value="+"  id="<%= pageContext.findAttribute("id").toString()%>" indexed="true" onClick="check(document.getElementById('<%= pageContext.findAttribute("aa").toString() %>'),document.getElementById('<%= pageContext.findAttribute("id").toString() %>'));return false;" >													
 			</td>
 	      </tr>
 		</table >
