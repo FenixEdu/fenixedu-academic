@@ -225,6 +225,11 @@
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.evaluation.CoordinatorProjectsManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>CoordinatorStudentsBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.CoordinatorStudentsBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 	<!-- END: COORDINATOR Managed Beans -->
 
 	<managed-bean>

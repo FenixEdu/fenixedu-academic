@@ -2860,6 +2860,8 @@ class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.d
     public void calculateApprovationRatioAndArithmeticMeanIfActive(IExecutionYear currentExecutionYear);    
     public Double getApprovationRatio();
     public Double getArithmeticMean();
+    public Integer getApprovedEnrollmentsNumber();
+    public Integer getEnrollmentsNumber();
 	"
 }
 

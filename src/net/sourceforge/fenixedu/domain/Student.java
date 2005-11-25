@@ -3,9 +3,6 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -24,6 +21,10 @@ public class Student extends Student_Base {
     private transient Double approvationRatio;
 
     private transient Double arithmeticMean;
+
+    private transient Integer enrollmentsNumber = 0;
+
+    private transient Integer approvedEnrollmentsNumber = 0;
 
     public Student() {
         this.setSpecialSeason(Boolean.FALSE);
@@ -182,10 +183,16 @@ public class Student extends Student_Base {
     }
 
     public Double getApprovationRatio() {
+        if (this.approvationRatio == null) {
+            calculateApprovationRatioAndArithmeticMeanIfActive(null);
+        }
         return this.approvationRatio;
     }
 
     public Double getArithmeticMean() {
+        if (this.arithmeticMean == null) {
+            calculateApprovationRatioAndArithmeticMeanIfActive(null);
+        }
         return this.arithmeticMean;
     }
 
@@ -198,7 +205,7 @@ public class Student extends Student_Base {
         for (IStudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
             for (IEnrolment enrolment : studentCurricularPlan.getEnrolments()) {
                 if (enrolment.getCondition() != EnrollmentCondition.INVISIBLE
-                        && enrolment.getExecutionPeriod().getExecutionYear() != currentExecutionYear) {
+                        && (currentExecutionYear == null || enrolment.getExecutionPeriod().getExecutionYear() != currentExecutionYear)) {
                     enrollmentsNumber++;
                     if (enrolment.getEnrollmentState() == EnrollmentState.APROVED) {
                         Integer finalGrade = enrolment.getFinalGrade();
@@ -213,6 +220,9 @@ public class Student extends Student_Base {
             }
         }
 
+        setEnrollmentsNumber(Integer.valueOf(enrollmentsNumber));
+        setApprovedEnrollmentsNumber(Integer.valueOf(approvedEnrollmentsNumber));
+
         setApprovationRatio((enrollmentsNumber == 0) ? 0 : (double) approvedEnrollmentsNumber
                 / enrollmentsNumber);
         setArithmeticMean((approvedEnrollmentsNumber == 0) ? 0 : (double) totalGrade
@@ -220,13 +230,34 @@ public class Student extends Student_Base {
 
     }
 
-
     private void setApprovationRatio(Double approvationRatio) {
         this.approvationRatio = approvationRatio;
     }
 
     private void setArithmeticMean(Double arithmeticMean) {
         this.arithmeticMean = arithmeticMean;
+    }
+
+    public Integer getApprovedEnrollmentsNumber() {
+        if (this.approvedEnrollmentsNumber == null) {
+            calculateApprovationRatioAndArithmeticMeanIfActive(null);
+        }
+        return approvedEnrollmentsNumber;
+    }
+
+    private void setApprovedEnrollmentsNumber(Integer approvedEnrollmentsNumber) {
+        this.approvedEnrollmentsNumber = approvedEnrollmentsNumber;
+    }
+
+    public Integer getEnrollmentsNumber() {
+        if (this.enrollmentsNumber == null) {
+            calculateApprovationRatioAndArithmeticMeanIfActive(null);
+        }
+        return enrollmentsNumber;
+    }
+
+    private void setEnrollmentsNumber(Integer enrollmentsNumber) {
+        this.enrollmentsNumber = enrollmentsNumber;
     }
 
 }
