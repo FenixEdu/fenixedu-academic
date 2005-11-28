@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoClassWithInfoExecutionDeg
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
@@ -42,7 +41,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAnnouncement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAssociatedCurricularCourses;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteBibliography;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluationMarks;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluations;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteFirstPage;
@@ -380,7 +378,8 @@ public class ExecutionCourseSiteComponentBuilder {
                                 && dateAndHourSummary.get(Calendar.DAY_OF_WEEK) == lesson.getDiaSemana()
                                         .getDiaSemana().intValue()
                                 && !beginLesson.after(dateAndHourSummary)
-                                && endLesson.after(dateAndHourSummary)) {
+                                && endLesson.after(dateAndHourSummary)
+                                && lesson.getSala().equals(summary.getRoom())) {
                             removeSummary = false;
                         }
                     }
