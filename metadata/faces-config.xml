@@ -1176,6 +1176,18 @@
 			<to-view-id>/coordinator/evaluation/editEvaluation.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/coordinator/evaluation/deleteEvaluation.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCalendar</from-outcome>
+			<to-view-id>/coordinator/evaluation/evaluationsCalendar.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>viewDeletePage</from-outcome>
+			<to-view-id>/coordinator/evaluation/deleteEvaluation.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 	
 	<navigation-rule>
 		<from-view-id>/coordinator/evaluation/showExecutionCourses.jsp</from-view-id>

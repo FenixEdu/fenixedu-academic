@@ -69,9 +69,8 @@ table.executionCoursesWithoutWrittenEvaluations td {
 	<f:loadBundle basename="ServidorApresentacao/ApplicationResources" var="bundle"/>
 	<h:outputText value="<h2>#{bundle['link.evaluations.calendar']}</h2>" escape="false"/>
 
-		<h:form>
-	<h:outputText value="<div class='infoop' style='width: 30em'>" escape="false" />
-
+	<h:form>
+		<h:outputText value="<div class='infoop' style='width: 30em'>" escape="false" />
 			<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CoordinatorEvaluationsBackingBean.degreeCurricularPlanID}'"/>
 			<h:panelGrid columns="2">
 				<h:outputText value="#{bundle['label.coordinator.selectedExecutionPeriod']}:" styleClass="boldFontClass"/>
@@ -94,8 +93,8 @@ table.executionCoursesWithoutWrittenEvaluations td {
 					<f:selectItem itemLabel="#{bundle['label.evaluation.type.project']}" itemValue="net.sourceforge.fenixedu.domain.Project"/>
 				</h:selectOneMenu>
 			</h:panelGrid>
-
-	<h:outputText value="</div>" escape="false"/>
+		<h:outputText value="</div>" escape="false"/>
+	</h:form>
 
 	<h:outputText value="<br/>" escape="false" />
 	<h:outputText value="<strong>#{bundle['label.coordinator.instructions']}</strong>" escape="false" />
@@ -113,40 +112,120 @@ table.executionCoursesWithoutWrittenEvaluations td {
 			editLinkParameters="#{CoordinatorEvaluationsBackingBean.calendarLinks}"
 			/>
 
-		</h:form>
+		
 
-	<h:outputText value="<br/><i>#{bundle['label.coordinator.definedProjects']}</i><br/>" escape="false" styleClass="boldFontClass"/>
+	<h:outputText value="<br/><br/>" escape="false" styleClass="boldFontClass"/>
 	<f:verbatim>
-		<table class="style2u">
+		<table class="style2u" width="80%">
 			<tr>			
-				<th><c:out value="${bundle['label.coordinator.identification']}" escapeXml="false"/></th>
-				<th><c:out value="${bundle['label.publish.date']}" escapeXml="false"/></th>
-				<th><c:out value="${bundle['label.delivery.date']}" escapeXml="false"/></th>
-				<th><c:out value="${bundle['label.description']}" escapeXml="false"/></th>
-				<th style="width: 9em;"></th>				
+				<th><c:out value="${bundle['title.evaluation']}" escapeXml="false"/></th>
+				<th><c:out value="${bundle['label.begin']}" escapeXml="false"/></th>
+				<th><c:out value="${bundle['label.end']}" escapeXml="false"/></th>
+				<th><c:out value="${bundle['label.attending.students.count']}" escapeXml="false"/></th>
+				<th style="width: 9em;"></th>
 			</tr>			
-			<c:forEach items="${CoordinatorEvaluationsBackingBean.executionCourses}" var="executionCourse">
-				<tr class="space"><td></td></tr>
-				<tr><td colspan="5" class="header"><c:out value="${executionCourse.sigla} - ${executionCourse.nome}" /></td></tr>
-				<c:forEach items="${executionCourse.associatedEvaluations}" var="evaluation">
+			<c:forEach items="${CoordinatorEvaluationsBackingBean.executionCoursesMap}" var="executionCourseEvaluationEntry">
+				<tr><td colspan="5" class="header">
+					<c:out value="${executionCourseEvaluationEntry.key.sigla} - ${executionCourseEvaluationEntry.key.nome}" />
+					<c:out value=" | "/>
+					<c:url var="createEvaluationURL" value="createEvaluation.faces">
+						<c:param name="degreeCurricularPlanID" value="${CoordinatorEvaluationsBackingBean.degreeCurricularPlanID}"/>
+						<c:param name="executionPeriodID" value="${CoordinatorEvaluationsBackingBean.executionPeriodID}"/>
+						<c:param name="curricularYearID" value="${CoordinatorEvaluationsBackingBean.curricularYearID}"/>
+						<c:param name="executionCourseID" value="${executionCourseEvaluationEntry.key.idInternal}"/>
+					</c:url>
+					<a href='<c:out value="${createEvaluationURL}"/>'>
+						<c:out value="${bundle['label.create.evaluation']}"/>
+					</a>
+				</td></tr>
+				<c:forEach items="${executionCourseEvaluationEntry.value}" var="evaluation">
 					<c:if test="${evaluation.class.name == 'net.sourceforge.fenixedu.domain.WrittenTest'}">
 						<tr>
 							<td><c:out value="${evaluation.description}"/></td>
-							<td><fmt:formatDate pattern="dd/MM/yyyy" value="${evaluation.dayDate}"/></td>
-							<td><fmt:formatDate pattern="HH:mm" value="${evaluation.beginningDate}"/></td>
-							<td><fmt:formatDate pattern="HH:mm" value="${evaluation.endDate}"/></td>
-							<td></td>
+							<td><fmt:formatDate pattern="dd/MM/yyyy" value="${evaluation.dayDate}"/> <fmt:formatDate pattern="HH:mm" value="${evaluation.beginningDate}"/></td>
+							<td><fmt:formatDate pattern="dd/MM/yyyy" value="${evaluation.dayDate}"/> <fmt:formatDate pattern="HH:mm" value="${evaluation.endDate}"/></td>
+							<td><c:out value="${executionCourseEvaluationEntry.key.attendsCount}"/></td>
+							<td>
+								<fmt:formatDate var="date" pattern="dd/MM/yyyy" value="${evaluation.dayDate}"/>
+								<fmt:formatDate var="begin" pattern="dd/MM/yyyy" value="${evaluation.beginningDate}"/>
+								<fmt:formatDate var="end" pattern="dd/MM/yyyy" value="${evaluation.endDate}"/>
+								<c:url var="editEvaluationURL" value="editEvaluation.faces">
+									<c:param name="degreeCurricularPlanID" value="${CoordinatorEvaluationsBackingBean.degreeCurricularPlanID}"/>
+									<c:param name="executionPeriodID" value="${CoordinatorEvaluationsBackingBean.executionPeriodID}"/>
+									<c:param name="curricularYearID" value="${CoordinatorEvaluationsBackingBean.curricularYearID}"/>
+									<c:param name="evaluationID" value="${evaluation.idInternal}"/>
+									<c:param name="evaluationType" value="${evaluation.class.name}"/>
+									<c:param name="executionCourseID" value="${executionCourseEvaluationEntry.key.idInternal}"/>
+									<c:param name="description" value="${evaluation.description}"/>
+									<c:param name="date" value="${date}"/>
+									<c:param name="beginTime" value="${begin}"/>
+									<c:param name="endTime" value="${end}"/>
+								</c:url>
+								<a href='<c:out value="${editEvaluationURL}"/>'>
+									<c:out value="${bundle['label.edit']}"/>
+								</a>
+								<c:out value=" | "/>
+								<c:url var="deleteEvaluationURL" value="deleteEvaluation.faces">
+									<c:param name="degreeCurricularPlanID" value="${CoordinatorEvaluationsBackingBean.degreeCurricularPlanID}"/>
+									<c:param name="executionPeriodID" value="${CoordinatorEvaluationsBackingBean.executionPeriodID}"/>
+									<c:param name="curricularYearID" value="${CoordinatorEvaluationsBackingBean.curricularYearID}"/>
+									<c:param name="evaluationID" value="${evaluation.idInternal}"/>
+									<c:param name="evaluationType" value="${evaluation.class.name}"/>
+									<c:param name="executionCourseID" value="${executionCourseEvaluationEntry.key.idInternal}"/>
+									<c:param name="description" value="${evaluation.description}"/>
+									<c:param name="date" value="${date}"/>
+									<c:param name="beginTime" value="${begin}"/>
+									<c:param name="endTime" value="${end}"/>
+								</c:url>
+								<a href='<c:out value="${deleteEvaluationURL}"/>'>
+									<c:out value="${bundle['label.delete']}"/>
+								</a>
+							</td>
 						</tr>
 					</c:if>
 				</c:forEach>
-				<c:forEach items="${executionCourse.associatedEvaluations}" var="evaluation">
+				<c:forEach items="${executionCourseEvaluationEntry.value}" var="evaluation">
 					<c:if test="${evaluation.class.name == 'net.sourceforge.fenixedu.domain.Project'}">
 						<tr>
 							<td><c:out value="${evaluation.name}"/></td>
 							<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm" value="${evaluation.begin}"/></td>
 							<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm" value="${evaluation.end}"/></td>
-							<td></td>
-							<td></td>
+							<td><c:out value="${executionCourseEvaluationEntry.key.attendsCount}"/></td>
+							<td>
+								<fmt:formatDate var="begin" pattern="dd/MM/yyyy HH:mm" value="${evaluation.begin}"/>
+								<fmt:formatDate var="end" pattern="dd/MM/yyyy HH:mm" value="${evaluation.end}"/>
+								<c:url var="editEvaluationURL" value="editEvaluation.faces">
+									<c:param name="degreeCurricularPlanID" value="${CoordinatorEvaluationsBackingBean.degreeCurricularPlanID}"/>
+									<c:param name="executionPeriodID" value="${CoordinatorEvaluationsBackingBean.executionPeriodID}"/>
+									<c:param name="curricularYearID" value="${CoordinatorEvaluationsBackingBean.curricularYearID}"/>
+									<c:param name="evaluationID" value="${evaluation.idInternal}"/>
+									<c:param name="evaluationType" value="${evaluation.class.name}"/>
+									<c:param name="executionCourseID" value="${executionCourseEvaluationEntry.key.idInternal}"/>
+									<c:param name="name" value="${evaluation.name}"/>
+									<c:param name="begin" value="${begin}"/>
+									<c:param name="end" value="${end}"/>
+									<c:param name="description" value="${evaluation.description}"/>
+								</c:url>
+								<a href='<c:out value="${editEvaluationURL}"/>'>
+									<c:out value="${bundle['label.edit']}"/>
+								</a>
+								<c:out value=" | "/>
+								<c:url var="deleteEvaluationURL" value="deleteEvaluation.faces">
+									<c:param name="degreeCurricularPlanID" value="${CoordinatorEvaluationsBackingBean.degreeCurricularPlanID}"/>
+									<c:param name="executionPeriodID" value="${CoordinatorEvaluationsBackingBean.executionPeriodID}"/>
+									<c:param name="curricularYearID" value="${CoordinatorEvaluationsBackingBean.curricularYearID}"/>
+									<c:param name="evaluationID" value="${evaluation.idInternal}"/>
+									<c:param name="evaluationType" value="${evaluation.class.name}"/>
+									<c:param name="executionCourseID" value="${executionCourseEvaluationEntry.key.idInternal}"/>
+									<c:param name="name" value="${evaluation.name}"/>
+									<c:param name="begin" value="${begin}"/>
+									<c:param name="end" value="${end}"/>
+									<c:param name="description" value="${evaluation.description}"/>
+								</c:url>
+								<a href='<c:out value="${deleteEvaluationURL}"/>'>
+									<c:out value="${bundle['label.delete']}"/>
+								</a>
+							</td>
 						</tr>
 					</c:if>
 				</c:forEach>

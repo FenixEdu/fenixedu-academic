@@ -423,4 +423,10 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
     	return i;
     }
 
+    public Integer getCountVacancies() {
+        final int writtenEvaluationEnrolmentsCount = getWrittenEvaluationEnrolmentsCount();
+        final int countNumberReservedSeats = getCountNumberReservedSeats().intValue();
+        return Integer.valueOf(countNumberReservedSeats - writtenEvaluationEnrolmentsCount);
+    }
+
 }
