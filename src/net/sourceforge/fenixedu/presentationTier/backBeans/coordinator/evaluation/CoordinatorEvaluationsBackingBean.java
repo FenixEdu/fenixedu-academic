@@ -14,6 +14,7 @@ import java.util.TreeSet;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -446,7 +447,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         return "viewCalendar";
     }
 
-    public String createWrittenTest() throws FenixFilterException, FenixServiceException, ParseException {
+    public String createWrittenTest() throws FenixFilterException, FenixServiceException {
     	final IExecutionCourse executionCourse = getExecutionCourse();
 
     	final List<String> executionCourseIDs = new ArrayList<String>(1);
@@ -454,12 +455,17 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 
 		final List<String> curricularCourseScopeIDs = getCurricularCourseScopeIDs(executionCourse);
 
-		final Object[] args = { getExecutionCourseID(),
-				DateFormatUtil.parse("dd/MM/yyyy", getDate()),
-				DateFormatUtil.parse("HH:mm", getBeginTime()),
-				DateFormatUtil.parse("HH:mm", getEndTime()),
-				executionCourseIDs, curricularCourseScopeIDs, null, null, getDescription() };
-		ServiceUtils.executeService(getUserView(), "CreateWrittenEvaluation", args);
+		try {
+			final Object[] args = { getExecutionCourseID(),
+					DateFormatUtil.parse("dd/MM/yyyy", getDate()),
+					DateFormatUtil.parse("HH:mm", getBeginTime()),
+					DateFormatUtil.parse("HH:mm", getEndTime()),
+					executionCourseIDs, curricularCourseScopeIDs, null, null, getDescription() };
+			ServiceUtils.executeService(getUserView(), "CreateWrittenEvaluation", args);
+		} catch (ParseException ex) {
+			setErrorMessage("error.invalid.date");
+			return "viewCreationPage";
+		}
 
 		return "viewCalendar";
     }
@@ -472,21 +478,34 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 
 		final List<String> curricularCourseScopeIDs = getCurricularCourseScopeIDs(executionCourse);
 
-		final Object[] args = { executionCourse.getIdInternal(),
-				DateFormatUtil.parse("dd/MM/yyyy", getDate()),
-				DateFormatUtil.parse("HH:mm", getBeginTime()),
-				DateFormatUtil.parse("HH:mm", getEndTime()),
-				executionCourseIDs, curricularCourseScopeIDs, null, getEvaluationID(), null, getDescription() };
-		ServiceUtils.executeService(getUserView(), "EditWrittenEvaluation", args);
+		try {
+			final Object[] args = { executionCourse.getIdInternal(),
+					DateFormatUtil.parse("dd/MM/yyyy", getDate()),
+					DateFormatUtil.parse("HH:mm", getBeginTime()),
+					DateFormatUtil.parse("HH:mm", getEndTime()),
+					executionCourseIDs, curricularCourseScopeIDs, null, getEvaluationID(), null, getDescription() };
+			ServiceUtils.executeService(getUserView(), "EditWrittenEvaluation", args);
+		} catch (ParseException ex) {
+			setErrorMessage("error.invalid.date");
+			return "viewEditPage";
+		} catch (NotAuthorizedFilterException ex) {
+			setErrorMessage(ex.getMessage());
+			return "viewEditPage";			
+		}
 
 		return "viewCalendar";
 	}
 
     public String editProject() throws FenixFilterException, FenixServiceException, ParseException {
-        final Object[] args = { getExecutionCourseID(), getEvaluationID(), getName(),
-                DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBegin()),
-                DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEnd()), getDescription() };
-        ServiceUtils.executeService(getUserView(), "EditProject", args);
+		try {
+			final Object[] args = { getExecutionCourseID(), getEvaluationID(), getName(),
+                	DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBegin()),
+                	DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEnd()), getDescription() };
+        	ServiceUtils.executeService(getUserView(), "EditProject", args);
+    	} catch (ParseException ex) {
+    		setErrorMessage("error.invalid.date");
+    		return "viewCreationPage";
+    	}
 
 		return "viewCalendar";
 	}
@@ -555,7 +574,12 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         final String evaluationType = getEvaluationType();
         final Object[] args = { getExecutionCourseID(), getEvaluationID() };
         if (evaluationType.equals(WrittenEvaluation.class.getName())) {
-            ServiceUtils.executeService(getUserView(), "DeleteWrittenEvaluation", args);
+        	try {
+            	ServiceUtils.executeService(getUserView(), "DeleteWrittenEvaluation", args);
+			} catch (NotAuthorizedFilterException ex) {
+				setErrorMessage(ex.getMessage());
+				return "viewDeletePage";			
+			}
         } else {
             ServiceUtils.executeService(getUserView(), "DeleteEvaluation", args);
         }

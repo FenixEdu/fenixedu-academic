@@ -88,7 +88,7 @@ table.executionCoursesWithoutWrittenEvaluations td {
 
 				<h:outputText value="#{bundle['label.evaluation.type']}: "/>
 				<h:selectOneMenu value="#{CoordinatorEvaluationsBackingBean.evaluationType}" onchange="this.form.submit()">
-					<f:selectItem itemLabel="" itemValue=""/>
+					<f:selectItem itemLabel="#{bundle['message.all']}" itemValue=""/>
 					<f:selectItem itemLabel="#{bundle['label.evaluation.type.writtenTest']}" itemValue="net.sourceforge.fenixedu.domain.WrittenTest"/>
 					<f:selectItem itemLabel="#{bundle['label.evaluation.type.project']}" itemValue="net.sourceforge.fenixedu.domain.Project"/>
 				</h:selectOneMenu>
