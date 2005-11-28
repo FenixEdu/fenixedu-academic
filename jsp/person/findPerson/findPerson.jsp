@@ -48,11 +48,11 @@ padding: 0.25em;
 }
 table.ppdetails td.ppleft {
 text-align: right;
-width: 11em;
+width: 10em;
 }
 table.ppdetails td.ppleft_mail {
 text-align: right;
-width: 6em;
+width: 10em;
 }
 table.ppdetails tr.highlight {
 }
