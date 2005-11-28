@@ -264,13 +264,12 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         } else {
             int begin = (this.getPage() - 1) * SessionConstants.LIMIT_FINDED_PERSONS;
             int end = begin + SessionConstants.LIMIT_FINDED_PERSONS;
-            for (int i = begin; i < end; i++) {
-                if (i <= (allPersonsList.size() - 1)) {
-                    getPersonsList().add(allPersonsList.get(i));
-                } else {
-                    break;
-                }
+            if(end >= allPersonsList.size()){
+                getPersonsList().addAll(allPersonsList.subList(begin, allPersonsList.size()));
             }
+            else{
+                getPersonsList().addAll(allPersonsList.subList(begin, end));
+            }            
         }
         return "";
     }

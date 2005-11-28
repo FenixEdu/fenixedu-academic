@@ -53,8 +53,10 @@ public class SearchPerson implements IService {
 
             this.nameWords = (name != null && !name.equals("")) ? getNameWords(name) : null;
             this.email = (email != null && !email.equals("")) ? normalize(email.trim()) : null;
-            this.username = (username != null && !username.equals("")) ? normalize(username.trim()) : null;
-            this.documentIdNumber = (documentIdNumber != null && !documentIdNumber.equals("")) ? normalize(documentIdNumber.trim())
+            this.username = (username != null && !username.equals("")) ? normalize(username.trim())
+                    : null;
+            this.documentIdNumber = (documentIdNumber != null && !documentIdNumber.equals("")) ? normalize(documentIdNumber
+                    .trim())
                     : null;
 
             if (roleType != null && roleType.length() > 0) {
@@ -87,15 +89,8 @@ public class SearchPerson implements IService {
         public static List<InfoPerson> getIntervalPersons(Integer start, Integer end,
                 List<InfoPerson> allPersons) {
 
-            List<InfoPerson> persons = new ArrayList<InfoPerson>();
-            for (int i = start; i < end; i++) {
-                if (i < allPersons.size()) {
-                    persons.add(allPersons.get(i));
-                } else {
-                    break;
-                }
-            }
-            return persons;
+            return (end >= allPersons.size()) ? allPersons.subList(start, allPersons.size()) : allPersons
+                    .subList(start, end);
         }
 
         public IDegree getDegree() {
@@ -131,8 +126,8 @@ public class SearchPerson implements IService {
         }
     }
 
-    public SearchPersonResults run(SearchParameters searchParameters, Predicate predicate) throws ExcepcaoPersistencia,
-            FenixServiceException {
+    public SearchPersonResults run(SearchParameters searchParameters, Predicate predicate)
+            throws ExcepcaoPersistencia, FenixServiceException {
 
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final List<IPerson> persons;
@@ -171,11 +166,11 @@ public class SearchPerson implements IService {
 
         Collections.sort(allValidPersons, new BeanComparator("nome"));
         List<InfoPerson> infoPersons = new ArrayList<InfoPerson>();
-        
+
         for (IPerson person : (List<IPerson>) allValidPersons) {
             infoPersons.add(InfoPerson.newInfoFromDomain(person));
         }
-        
+
         return new SearchPersonResults(infoPersons, totalPersons);
     }
 
@@ -268,18 +263,19 @@ public class SearchPerson implements IService {
             return false;
         }
     }
-    
-    //------------ SearchPerson Results Class -------------
-    public static class SearchPersonResults{
-        
+
+    // ------------ SearchPerson Results Class -------------
+    public static class SearchPersonResults {
+
         List<InfoPerson> validPersons;
+
         int totalPersons;
-        
+
         public SearchPersonResults(List<InfoPerson> validPersons, int totalPersons) {
             this.totalPersons = totalPersons;
             this.validPersons = validPersons;
-        } 
-        
+        }
+
         public int getTotalPersons() {
             return totalPersons;
         }
