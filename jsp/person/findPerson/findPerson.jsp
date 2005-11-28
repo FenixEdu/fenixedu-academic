@@ -374,7 +374,7 @@ else
           <logic:present  name="personalInfo" property="infoStudentCurricularPlanList" >
 		      <!-- Local de Trabalho -->   
 		      <tr>   
-		      <td class="ppleft"><bean:message key="label.degree" />:</td>  
+		      <td class="ppleft"><bean:message key="label.degree.name" />:</td>  
 		      
 		      <logic:iterate id="infoStudent" name="personalInfo" property="infoStudentCurricularPlanList">		
 			       <bean:define id="degreeName" name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.nome"/>
