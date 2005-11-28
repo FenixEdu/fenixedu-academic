@@ -94,7 +94,7 @@ table.executionCoursesWithoutWrittenEvaluations td {
 				</h:selectOneMenu>
 			</h:panelGrid>
 		<h:outputText value="</div>" escape="false"/>
-	</h:form>
+
 
 	<h:outputText value="<br/>" escape="false" />
 	<h:outputText value="<strong>#{bundle['label.coordinator.instructions']}</strong>" escape="false" />
@@ -112,7 +112,7 @@ table.executionCoursesWithoutWrittenEvaluations td {
 			editLinkParameters="#{CoordinatorEvaluationsBackingBean.calendarLinks}"
 			/>
 
-		
+	</h:form>		
 
 	<h:outputText value="<br/><br/>" escape="false" styleClass="boldFontClass"/>
 	<f:verbatim>
