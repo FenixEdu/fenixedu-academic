@@ -159,11 +159,11 @@ else
 <logic:present name="nonMasterDegree">
 		<tr>
 		<td class="leftcolumn">
-			<bean:message key="link.degree.nonMaster"/>:
+			<bean:message key="label.degree.name"/>:
 		</td>
 		<td>
 			<html:select property="degreeId">	
-				<html:option key="dropDown.Default" value=""/>
+				<html:option key="dropDown.Degree" value=""/>
 				<logic:iterate id="degree" name="nonMasterDegree" > 
 			   	<bean:define id="degreeID" name="degree" property="idInternal"/>
 			   		
@@ -184,7 +184,7 @@ else
 </logic:notPresent>
 		
 	<tr>
-		<td class="leftcolumn"><bean:message key="label.nameWord" /></td>
+		<td class="leftcolumn"><bean:message key="label.nameWord" />:</td>
 		<td>
 			<html:text name="findPersonForm" property="name" size="50"/>
 			<html:hidden property="name" name="findPersonForm"/>
