@@ -255,7 +255,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 
         for (final IExecutionCourse executionCourse : getExecutionCourses()) {
 			for (final IEvaluation evaluation : executionCourse.getAssociatedEvaluations()) {
-				if (evaluationType == null || evaluationType.equals(evaluation.getClass().getName())) {
+				if (evaluationType == null || evaluationType.length() == 0 || evaluationType.equals(evaluation.getClass().getName())) {
 					if (evaluation instanceof IWrittenEvaluation) {
 						final IWrittenEvaluation writtenEvaluation = (IWrittenEvaluation) evaluation;
 						constructCalendarLink(calendarLinks, writtenEvaluation, executionCourse);
