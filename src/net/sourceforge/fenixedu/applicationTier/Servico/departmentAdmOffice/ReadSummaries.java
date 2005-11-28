@@ -320,7 +320,8 @@ public class ReadSummaries implements IService {
                                 && dateAndHourSummary.get(Calendar.DAY_OF_WEEK) == lesson.getDiaSemana()
                                         .getDiaSemana().intValue()
                                 && !beginLesson.after(dateAndHourSummary)
-                                && endLesson.after(dateAndHourSummary)) {
+                                && endLesson.after(dateAndHourSummary)
+                                && lesson.getSala().equals(summary.getRoom())) {
                             removeSummary = false;
                         }
                     }

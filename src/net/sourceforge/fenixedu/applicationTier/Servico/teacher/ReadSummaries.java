@@ -12,6 +12,7 @@ import java.util.ListIterator;
 
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.utils.summary.SummaryUtils;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -358,12 +359,13 @@ public class ReadSummaries implements IService {
                         endLesson.set(Calendar.HOUR_OF_DAY, lesson.getFim().get(Calendar.HOUR_OF_DAY));
                         endLesson.set(Calendar.MINUTE, lesson.getFim().get(Calendar.MINUTE));
                         endLesson.set(Calendar.SECOND, 00);
-
+                                                                       
                         if (summary.getSummaryType() == shift.getTipo()
                                 && dateAndHourSummary.get(Calendar.DAY_OF_WEEK) == lesson.getDiaSemana()
                                         .getDiaSemana().intValue()
                                 && !beginLesson.after(dateAndHourSummary)
-                                && endLesson.after(dateAndHourSummary)) {
+                                && endLesson.after(dateAndHourSummary)
+                                && lesson.getSala().equals(summary.getRoom())) {
                             removeSummary = false;
                         }
                     }
