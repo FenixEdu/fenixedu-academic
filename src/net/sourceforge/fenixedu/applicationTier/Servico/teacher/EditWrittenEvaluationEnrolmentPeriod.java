@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
@@ -12,8 +12,8 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class EditWrittenEvaluationEnrolmentPeriod implements IService {
 
-    public void run(Integer executionCourseID, Integer writtenEvaluationID, Calendar beginDate,
-            Calendar endDate, Calendar beginTime, Calendar endTime) throws FenixServiceException,
+    public void run(Integer executionCourseID, Integer writtenEvaluationID, Date beginDate,
+            Date endDate, Date beginTime, Date endTime) throws FenixServiceException,
             ExcepcaoPersistencia {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
@@ -24,7 +24,6 @@ public class EditWrittenEvaluationEnrolmentPeriod implements IService {
         if (writtenEvaluation == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");
         }
-        writtenEvaluation.editEnrolmentPeriod(beginDate.getTime(), endDate.getTime(), beginTime
-                .getTime(), endTime.getTime());
+        writtenEvaluation.editEnrolmentPeriod(beginDate, endDate, beginTime, endTime);
     }
 }

@@ -220,6 +220,11 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>	
 	<managed-bean>
+		<managed-bean-name>CoordinatorEvaluationsBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.evaluation.CoordinatorEvaluationsBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>	
+	<managed-bean>
 		<description>CoordinatorProjectsManagementBackingBean</description>
 		<managed-bean-name>coordinatorProjectsManagementBackingBean</managed-bean-name>
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.evaluation.CoordinatorProjectsManagementBackingBean</managed-bean-class>
@@ -1145,6 +1150,30 @@
 		<navigation-case>
 			<from-outcome>editWrittenTest</from-outcome>
 			<to-view-id>/coordinator/evaluation/editWrittenTest.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/coordinator/evaluation/createEvaluation.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCalendar</from-outcome>
+			<to-view-id>/coordinator/evaluation/evaluationsCalendar.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>viewCreationPage</from-outcome>
+			<to-view-id>/coordinator/evaluation/createEvaluation.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/coordinator/evaluation/editEvaluation.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCalendar</from-outcome>
+			<to-view-id>/coordinator/evaluation/evaluationsCalendar.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>viewEditPage</from-outcome>
+			<to-view-id>/coordinator/evaluation/editEvaluation.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	

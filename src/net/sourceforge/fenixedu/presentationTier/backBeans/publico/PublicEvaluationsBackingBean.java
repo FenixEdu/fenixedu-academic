@@ -58,12 +58,12 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
     private IDegree degree;
 
 	public Integer getDegreeID() {
-		return (degreeID == null) ? degreeID = getAndHoldParameter("degreeID") : degreeID;
+		return (degreeID == null) ? degreeID = getAndHoldIntegerParameter("degreeID") : degreeID;
     }
 
 	public Integer getDegreeCurricularPlanID() throws FenixFilterException, FenixServiceException {
 		if (degreeCurricularPlanID == null) {
-			degreeCurricularPlanID = getAndHoldParameter("degreeCurricularPlanID");
+			degreeCurricularPlanID = getAndHoldIntegerParameter("degreeCurricularPlanID");
 			if (degreeCurricularPlanID == null) {
 				degreeCurricularPlanID = getMostRecentDegreeCurricularPlan().getIdInternal();
 			}
@@ -73,7 +73,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
 
 	public Integer getExecutionPeriodID() throws FenixFilterException, FenixServiceException {
 		if (executionPeriodID == null || !contains(getExecutionPeriodSelectItems(), executionPeriodID)) {
-			executionPeriodID = getAndHoldParameter("executionPeriodID");
+			executionPeriodID = getAndHoldIntegerParameter("executionPeriodID");
 			if (executionPeriodID == null) {
 				executionPeriodID = getMostRecentExecutionPeriod().getIdInternal();
 			}
@@ -82,7 +82,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
 	}
 
     public Integer getCurricularYearID() {
-        return (curricularYearID == null) ? curricularYearID = getAndHoldParameter("curricularYearID") : curricularYearID;
+        return (curricularYearID == null) ? curricularYearID = getAndHoldIntegerParameter("curricularYearID") : curricularYearID;
     }
 
 	public IDegree getDegree() throws FenixFilterException, FenixServiceException {
@@ -312,18 +312,6 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
             }
         }
         return false;
-    }
-
-    private Integer getAndHoldParameter(final String parameterName) {
-        final String parameterString = getRequestParameter(parameterName);
-        final Integer parameterValue;
-        if (parameterString != null && parameterString.length() > 0) {
-            parameterValue = Integer.valueOf(parameterString);
-            setRequestAttribute(parameterName, parameterValue);
-        } else {
-            parameterValue = null;
-        }
-        return parameterValue;
     }
 
     public String getApplicationContext() {

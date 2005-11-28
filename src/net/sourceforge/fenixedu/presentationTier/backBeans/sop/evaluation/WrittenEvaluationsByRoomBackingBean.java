@@ -108,20 +108,8 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
     }
 
     public Integer getExecutionPeriodOID() {
-        return (executionPeriodOID == null) ? executionPeriodOID = getAndHoldParameter("executionPeriodOID")
+        return (executionPeriodOID == null) ? executionPeriodOID = getAndHoldIntegerParameter("executionPeriodOID")
                 : executionPeriodOID;
-    }
-
-    private Integer getAndHoldParameter(final String parameterName) {
-        final String parameterString = getRequestParameter(parameterName);
-        final Integer parameterValue;
-        if (parameterString != null && parameterString.length() > 0) {
-            parameterValue = Integer.valueOf(parameterString);
-            setRequestAttribute(parameterName, parameterValue);
-        } else {
-            parameterValue = null;
-        }
-        return parameterValue;
     }
 
     private Set<Integer> selectedRoomIDs = null;

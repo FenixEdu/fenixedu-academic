@@ -1267,7 +1267,7 @@ class net.sourceforge.fenixedu.domain.ExecutionPeriod extends net.sourceforge.fe
 }
 
 
-class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.fenixedu.domain.DomainObject implements net.sourceforge.fenixedu.fileSuport.INode {
+class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.fenixedu.domain.DomainObject implements net.sourceforge.fenixedu.fileSuport.INode, java.lang.Comparable {
 	Date beginDate;
 	Date endDate;
 	String year;

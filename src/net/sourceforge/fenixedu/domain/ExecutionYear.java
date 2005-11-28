@@ -63,4 +63,9 @@ public class ExecutionYear extends ExecutionYear_Base {
         return previousExecutionYear;
     }
 
+    public int compareTo(Object object) {
+        final IExecutionYear executionYear = (IExecutionYear) object;
+        return getYear().compareTo(executionYear.getYear());
+    }
+
 }

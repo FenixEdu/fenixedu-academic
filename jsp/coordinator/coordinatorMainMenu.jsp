@@ -167,6 +167,13 @@
 	<br /><br />
 	<strong><bean:message key="label.coordinator.manageEvaluations" /></strong>
 	<ul>
+<!--
+		<li>
+			<html:link page="<%="/evaluation/evaluationsCalendar.faces?degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>">
+	        	<bean:message key="link.calendar" />
+	        </html:link>
+		</li>
+-->
 		<li>
 			<html:link page="<%="/evaluation/showWrittenTestsForExecutionCourses.faces?degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>">
 	        	<bean:message key="link.writtenTests" />

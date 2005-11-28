@@ -177,7 +177,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
         endTime.set(Calendar.HOUR_OF_DAY, new Integer(enrollmentEndHourArray[0]).intValue());
         endTime.set(Calendar.MINUTE, new Integer(enrollmentEndHourArray[1]).intValue());
 
-        Object args[] = { disciplinaExecucaoIdInternal, examIdInternal, beginDate, endDate, beginTime,
+        Object args[] = { disciplinaExecucaoIdInternal, examIdInternal, beginDate.getTime(), endDate.getTime(), beginTime.getTime(),
                 endTime };
 
         try {

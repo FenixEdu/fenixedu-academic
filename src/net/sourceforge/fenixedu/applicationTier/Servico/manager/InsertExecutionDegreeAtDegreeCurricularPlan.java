@@ -128,7 +128,7 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IService {
             InfoPeriod infoPeriodNew = infoPeriodList.get(infoPeriodListSize - 1);
 
             IPeriod period = (IPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew
-                    .getStartDate(), infoPeriodNew.getEndDate(), null);
+                    .getStartDate().getTime(), infoPeriodNew.getEndDate().getTime(), null);
 
             if (period == null) {
                 Calendar startDate = infoPeriodNew.getStartDate();
@@ -144,8 +144,8 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IService {
 
                 infoPeriodNew = infoPeriodList.get(i);
 
-                period = (IPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew.getStartDate(),
-                        infoPeriodNew.getEndDate(), keyNextPeriod);
+                period = (IPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew.getStartDate().getTime(),
+                        infoPeriodNew.getEndDate().getTime(), keyNextPeriod);
 
                 if (period == null) {
                     Calendar startDate = infoPeriodNew.getStartDate();

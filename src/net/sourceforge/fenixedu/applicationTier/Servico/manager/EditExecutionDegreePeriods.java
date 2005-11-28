@@ -75,8 +75,8 @@ public class EditExecutionDegreePeriods implements IService {
         final ISuportePersistente persistentSuport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
         final IPersistentPeriod periodDAO = persistentSuport.getIPersistentPeriod();
-        IPeriod period = (IPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew.getStartDate(),
-                infoPeriodNew.getEndDate(), null);
+        IPeriod period = (IPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew.getStartDate().getTime(),
+                infoPeriodNew.getEndDate().getTime(), null);
 
         if (period == null) {
             Calendar startDate = infoPeriodNew.getStartDate();
@@ -92,8 +92,8 @@ public class EditExecutionDegreePeriods implements IService {
 
             infoPeriodNew = infoPeriodList.get(i);
 
-            period = (IPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew.getStartDate(),
-                    infoPeriodNew.getEndDate(), keyNextPeriod);
+            period = (IPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew.getStartDate().getTime(),
+                    infoPeriodNew.getEndDate().getTime(), keyNextPeriod);
 
             if (period == null) {
                 Calendar startDate = infoPeriodNew.getStartDate();

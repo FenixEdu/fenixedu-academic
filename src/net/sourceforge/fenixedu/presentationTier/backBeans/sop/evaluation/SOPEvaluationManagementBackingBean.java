@@ -841,7 +841,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         }
         
         final Season season = (getSeason() != null) ? new Season(getSeason()) : null;
-        final Object[] args = { null, this.getBegin(), this.getBegin(), this.getEnd(), executionCourseIDs,
+        final Object[] args = { null, this.getBegin().getTime(), this.getBegin().getTime(), this.getEnd().getTime(), executionCourseIDs,
                 curricularCourseScopeIDs, roomsIDs, season, this.getDescription() };
         try {
             ServiceUtils.executeService(getUserView(), "CreateWrittenEvaluation", args);
@@ -895,7 +895,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         }
         
         final Season season = (getSeason() != null) ? new Season(getSeason()) : null;
-        final Object[] args = { null, this.getBegin(), this.getBegin(), this.getEnd(), executionCourseIDs,
+        final Object[] args = { null, this.getBegin().getTime(), this.getBegin().getTime(), this.getEnd().getTime(), executionCourseIDs,
                 curricularCourseScopeIDs, roomsIDs, this.evaluationID, season, this.getDescription() };
         try {
             ServiceUtils.executeService(getUserView(), "EditWrittenEvaluation", args);
@@ -1214,20 +1214,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     
     public Integer getExecutionPeriodOID() {
-        return (executionPeriodOID == null) ? executionPeriodOID = getAndHoldParameter("executionPeriodOID")
+        return (executionPeriodOID == null) ? executionPeriodOID = getAndHoldIntegerParameter("executionPeriodOID")
                 : executionPeriodOID;
-    }
-
-    private Integer getAndHoldParameter(final String parameterName) {
-        final String parameterString = getRequestParameter(parameterName);
-        final Integer parameterValue;
-        if (parameterString != null && parameterString.length() > 0) {
-            parameterValue = Integer.valueOf(parameterString);
-            setRequestAttribute(parameterName, parameterValue);
-        } else {
-            parameterValue = null;
-        }
-        return parameterValue;
     }
     
 }

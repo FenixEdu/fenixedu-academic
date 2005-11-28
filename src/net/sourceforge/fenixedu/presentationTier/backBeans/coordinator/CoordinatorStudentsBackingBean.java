@@ -51,28 +51,4 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
         return sortedStudentCurricularPlans;
     }
 
-    private Integer getAndHoldIntegerParameter(final String parameterName) {
-        final String parameterString = getRequestParameter(parameterName);
-        final Integer parameterValue;
-        if (parameterString != null && parameterString.length() > 0) {
-            parameterValue = Integer.valueOf(parameterString);
-            setRequestAttribute(parameterName, parameterValue);
-        } else {
-            parameterValue = null;
-        }
-        return parameterValue;
-    }
-
-    private String getAndHoldStringParameter(final String parameterName) {
-        final String parameterString = getRequestParameter(parameterName);
-        final String parameterValue;
-        if (parameterString != null && parameterString.length() > 0) {
-            parameterValue = parameterString;
-            setRequestAttribute(parameterName, parameterValue);
-        } else {
-            parameterValue = null;
-        }
-        return parameterValue;
-    }
-
 }

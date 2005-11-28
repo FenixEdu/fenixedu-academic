@@ -15,6 +15,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 public class UIFenixCalendar extends UIInput {
     public static final String COMPONENT_TYPE = "net.sourceforge.fenixedu.presentationTier.jsf.components.UIFenixCalendar";
@@ -240,8 +241,16 @@ public class UIFenixCalendar extends UIInput {
     }
 
     private String dateLink(Calendar date) {
-        return "&day=" + date.get(Calendar.DAY_OF_MONTH) + "&month=" + (date.get(Calendar.MONTH) + 1)
-                + "&year=" + date.get(Calendar.YEAR);
+    	final StringBuilder stringBuilder = new StringBuilder();
+    	stringBuilder.append("&day=");
+    	stringBuilder.append(date.get(Calendar.DAY_OF_MONTH));
+    	stringBuilder.append("&month=");
+    	stringBuilder.append((date.get(Calendar.MONTH) + 1));
+    	stringBuilder.append("&year=");
+    	stringBuilder.append(date.get(Calendar.YEAR));
+    	stringBuilder.append("&selectedDate=");
+    	stringBuilder.append(DateFormatUtil.format("dd/MM/yyyy", date.getTime()));
+        return stringBuilder.toString();
     }
 
 }

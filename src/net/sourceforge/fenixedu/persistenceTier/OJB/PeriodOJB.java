@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.Period;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -18,11 +18,11 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class PeriodOJB extends ObjectFenixOJB implements IPersistentPeriod {
 
-    public Object readByCalendarAndNextPeriod(Calendar startDate, Calendar endDate, Integer keyNextPeriod)
+    public Object readByCalendarAndNextPeriod(Date startDate, Date endDate, Integer keyNextPeriod)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("start", startDate.getTime());
-        criteria.addEqualTo("end", endDate.getTime());
+        criteria.addEqualTo("start", startDate);
+        criteria.addEqualTo("end", endDate);
         if (keyNextPeriod != null) {
             criteria.addEqualTo("nextPeriod.idInternal", keyNextPeriod);
         }

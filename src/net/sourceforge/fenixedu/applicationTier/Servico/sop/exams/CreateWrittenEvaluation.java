@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.sop.exams;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -35,8 +35,8 @@ public class CreateWrittenEvaluation implements IService {
      *            allowing more than one execution course to be associated with
      *            the written evaluation
      */
-    public void run(Integer executionCourseID, Calendar writtenEvaluationDate,
-            Calendar writtenEvaluationStartTime, Calendar writtenEvaluationEndTime,
+    public void run(Integer executionCourseID, Date writtenEvaluationDate,
+            Date writtenEvaluationStartTime, Date writtenEvaluationEndTime,
             List<String> executionCourseIDs, List<String> curricularCourseScopeIDs,
             List<String> roomIDs, Season examSeason, String writtenTestDescription)
             throws FenixServiceException, ExcepcaoPersistencia {
@@ -60,13 +60,13 @@ public class CreateWrittenEvaluation implements IService {
         // creating the new written evaluation, according to the service
         // arguments
         if (examSeason != null) {
-            DomainFactory.makeExam(writtenEvaluationDate.getTime(),
-                    writtenEvaluationStartTime.getTime(), writtenEvaluationEndTime.getTime(),
+            DomainFactory.makeExam(writtenEvaluationDate,
+                    writtenEvaluationStartTime, writtenEvaluationEndTime,
                     executionCoursesToAssociate, curricularCourseScopesToAssociate, roomsToAssociate,
                     period, examSeason);
         } else if (writtenTestDescription != null) {
-            DomainFactory.makeWrittenTest(writtenEvaluationDate.getTime(), writtenEvaluationStartTime
-                    .getTime(), writtenEvaluationEndTime.getTime(), executionCoursesToAssociate,
+            DomainFactory.makeWrittenTest(writtenEvaluationDate, writtenEvaluationStartTime,
+            		writtenEvaluationEndTime, executionCoursesToAssociate,
                     curricularCourseScopesToAssociate, roomsToAssociate, period, writtenTestDescription);
         } else {
             throw new InvalidArgumentsServiceException();
@@ -130,13 +130,12 @@ public class CreateWrittenEvaluation implements IService {
     }
 
     private IPeriod readPeriod(final ISuportePersistente persistentSupport,
-            final Calendar writtenEvaluationDate) throws ExcepcaoPersistencia {
+            final Date writtenEvaluationDate) throws ExcepcaoPersistencia {
         final IPersistentPeriod persistentPeriod = persistentSupport.getIPersistentPeriod();
         IPeriod period = (IPeriod) persistentPeriod.readByCalendarAndNextPeriod(writtenEvaluationDate,
                 writtenEvaluationDate, null);
         if (period == null) {
-            period = DomainFactory.makePeriod(writtenEvaluationDate.getTime(), writtenEvaluationDate
-                    .getTime());
+            period = DomainFactory.makePeriod(writtenEvaluationDate, writtenEvaluationDate);
         }
         return period;
     }

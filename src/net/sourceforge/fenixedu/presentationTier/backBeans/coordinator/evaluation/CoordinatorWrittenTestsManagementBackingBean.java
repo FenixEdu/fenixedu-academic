@@ -36,8 +36,8 @@ public class CoordinatorWrittenTestsManagementBackingBean extends
             executionCourseIDs.add(this.getExecutionCourseID().toString());
             final List<String> curricularCourseScopeIDs = getCurricularCourseScopeIDs(executionCourse);
 
-            final Object[] args = { this.getExecutionCourseID(), this.getBegin(), this.getBegin(),
-                    this.getEnd(), executionCourseIDs, curricularCourseScopeIDs, null, null,
+            final Object[] args = { this.getExecutionCourseID(), this.getBegin().getTime(), this.getBegin().getTime(),
+                    this.getEnd().getTime(), executionCourseIDs, curricularCourseScopeIDs, null, null,
                     this.getDescription() };
             ServiceUtils.executeService(getUserView(), "CreateWrittenEvaluation", args);
 
@@ -63,8 +63,8 @@ public class CoordinatorWrittenTestsManagementBackingBean extends
             executionCourseIDs.add(this.getExecutionCourseID().toString());
             final List<String> curricularCourseScopeIDs = getCurricularCourseScopeIDs(executionCourse);
 
-            final Object[] args = { executionCourse.getIdInternal(), this.getBegin(), this.getBegin(),
-                    this.getEnd(), executionCourseIDs, curricularCourseScopeIDs, null,
+            final Object[] args = { executionCourse.getIdInternal(), this.getBegin().getTime(), this.getBegin().getTime(),
+                    this.getEnd().getTime(), executionCourseIDs, curricularCourseScopeIDs, null,
                     this.getEvaluationID(), null, this.getDescription() };
             ServiceUtils.executeService(getUserView(), "EditWrittenEvaluation", args);
 

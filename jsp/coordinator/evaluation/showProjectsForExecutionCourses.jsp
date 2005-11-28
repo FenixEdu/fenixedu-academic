@@ -67,7 +67,7 @@ table.executionCoursesWithoutWrittenEvaluations td {
 	<f:loadBundle basename="ServidorApresentacao/ApplicationResources" var="bundle"/>	
 	<h:form>
 		<h:inputHidden binding="#{coordinatorProjectsInformationBackingBean.degreeCurricularPlanIdHidden}"/>		
-		<h:outputText value="<h2>#{bundle['label.coordinator.manageProjects']}</h2>" escape="false" />		
+		<h:outputText value="<h2>#{bundle['label.coordinator.manageProjects']}</h2>" escape="false" />
 		<h:outputText value="<div class='infoop' style='width: 30em'>" escape="false" />		
 		<h:panelGrid columns="2">
 			<h:outputText value="#{bundle['label.coordinator.selectedExecutionPeriod']}:" styleClass="boldFontClass" />

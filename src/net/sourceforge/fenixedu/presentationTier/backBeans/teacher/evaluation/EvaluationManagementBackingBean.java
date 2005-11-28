@@ -508,8 +508,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         Calendar enrolmentEndDay = getEnrolmentEnd();
         Calendar enrolmentEndTime = getEnrolmentEnd();
 
-        final Object[] args = { getExecutionCourseID(), getEvaluationID(), enrolmentBeginDay,
-                enrolmentEndDay, enrolmentBeginTime, enrolmentEndTime };
+        final Object[] args = { getExecutionCourseID(), getEvaluationID(), enrolmentBeginDay.getTime(),
+                enrolmentEndDay.getTime(), enrolmentBeginTime.getTime(), enrolmentEndTime.getTime() };
 
         try {
             ServiceUtils.executeService(getUserView(), "EditWrittenEvaluationEnrolmentPeriod", args);
@@ -579,7 +579,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         }
 
         final Season season = (getSeason() != null) ? new Season(getSeason()) : null;
-        final Object[] args = { this.getExecutionCourseID(), this.getBegin(), this.getBegin(), this.getEnd(), executionCourseIDs,
+        final Object[] args = { this.getExecutionCourseID(), this.getBegin().getTime(), this.getBegin().getTime(), this.getEnd().getTime(), executionCourseIDs,
                 curricularCourseScopeIDs, null, season, this.getDescription() };
         try {
             ServiceUtils.executeService(getUserView(), "CreateWrittenEvaluation", args);
@@ -722,7 +722,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         }
 
         final Season season = (getSeason() != null) ? new Season(getSeason()) : null;
-        final Object[] args = { this.getExecutionCourseID(), this.getBegin(), this.getBegin(), this.getEnd(), executionCourseIDs,
+        final Object[] args = { this.getExecutionCourseID(), this.getBegin().getTime(), this.getBegin().getTime(), this.getEnd().getTime(), executionCourseIDs,
                 curricularCourseScopeIDs, null, this.evaluationID, season, this.getDescription() };
         try {
             ServiceUtils.executeService(getUserView(), "EditWrittenEvaluation", args);

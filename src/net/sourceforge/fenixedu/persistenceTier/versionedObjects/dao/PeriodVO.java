@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -12,11 +11,8 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
 
 public class PeriodVO extends VersionedObjectsBase implements IPersistentPeriod {
 
-    public Object readByCalendarAndNextPeriod(Calendar startDate, Calendar endDate, Integer keyNextPeriod)
+    public Object readByCalendarAndNextPeriod(Date start, Date end, Integer keyNextPeriod)
             throws ExcepcaoPersistencia {
-
-        Date start = startDate.getTime();
-        Date end = endDate.getTime();
 
         List<IPeriod> periods = (List<IPeriod>) readAll(Period.class);
         for (IPeriod period : periods) {

@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.sop.exams;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -39,8 +39,8 @@ public class EditWrittenEvaluation implements IService {
      *            used in remaining operations, allowing more than one execution
      *            course to be associated with the written evaluation
      */
-    public void run(Integer executionCourseID, Calendar writtenEvaluationDate, Calendar writtenEvaluationStartTime,
-            Calendar writtenEvaluationEndTime, List<String> executionCourseIDs,
+    public void run(Integer executionCourseID, Date writtenEvaluationDate, Date writtenEvaluationStartTime,
+            Date writtenEvaluationEndTime, List<String> executionCourseIDs,
             List<String> curricularCourseScopeIDs, List<String> roomIDs, Integer writtenEvaluationOID,
             Season examSeason, String writtenTestDescription) throws FenixServiceException,
             ExcepcaoPersistencia {
@@ -68,13 +68,13 @@ public class EditWrittenEvaluation implements IService {
         }
 
         if (examSeason != null) {
-            ((IExam) writtenEvaluation).edit(writtenEvaluationDate.getTime(), writtenEvaluationStartTime
-                    .getTime(), writtenEvaluationEndTime.getTime(), executionCoursesToAssociate,
+            ((IExam) writtenEvaluation).edit(writtenEvaluationDate, writtenEvaluationStartTime, 
+            		writtenEvaluationEndTime, executionCoursesToAssociate,
                     curricularCourseScopeToAssociate, roomsToAssociate, period, examSeason);
         } else if (writtenTestDescription != null) {
-            ((IWrittenTest) writtenEvaluation).edit(writtenEvaluationDate.getTime(),
-                    writtenEvaluationStartTime.getTime(), writtenEvaluationEndTime.getTime(),
-                    executionCoursesToAssociate, curricularCourseScopeToAssociate, roomsToAssociate,
+            ((IWrittenTest) writtenEvaluation).edit(writtenEvaluationDate, writtenEvaluationStartTime, 
+            		writtenEvaluationEndTime, executionCoursesToAssociate,
+            		curricularCourseScopeToAssociate, roomsToAssociate,
                     period, writtenTestDescription);
         } else {
             throw new InvalidArgumentsServiceException();
@@ -82,14 +82,14 @@ public class EditWrittenEvaluation implements IService {
     }
 
     private IPeriod readPeriod(final ISuportePersistente persistentSupport,
-            final IWrittenEvaluation writtenEvaluation, final Calendar writtenEvaluationDate)
+            final IWrittenEvaluation writtenEvaluation, final Date writtenEvaluationDate)
             throws ExcepcaoPersistencia {
         IPeriod period = null;
         if (!writtenEvaluation.getAssociatedRoomOccupation().isEmpty()) {
             period = writtenEvaluation.getAssociatedRoomOccupation().get(0).getPeriod();
             if (writtenEvaluation.getAssociatedRoomOccupation().containsAll(period.getRoomOccupations())) {
-                period.setStartDate(writtenEvaluationDate);
-                period.setEndDate(writtenEvaluationDate);
+                period.setStart(writtenEvaluationDate);
+                period.setEnd(writtenEvaluationDate);
             } else {
                 period = null;
             }
@@ -98,7 +98,7 @@ public class EditWrittenEvaluation implements IService {
             final IPersistentPeriod persistentPeriod = persistentSupport.getIPersistentPeriod();
             period = (IPeriod) persistentPeriod.readByCalendarAndNextPeriod(writtenEvaluationDate, writtenEvaluationDate, null);
             if (period == null) {
-                period = DomainFactory.makePeriod(writtenEvaluationDate.getTime(), writtenEvaluationDate.getTime());
+                period = DomainFactory.makePeriod(writtenEvaluationDate, writtenEvaluationDate);
             }
         }
         return period;

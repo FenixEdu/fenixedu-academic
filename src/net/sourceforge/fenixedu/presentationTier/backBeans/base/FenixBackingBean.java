@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.base;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -115,9 +116,9 @@ public class FenixBackingBean {
         addMessage(FacesMessage.SEVERITY_WARN, message);
     }
 
-    public Object readAllDomainObjects(final Class clazz) throws FenixFilterException,
+    public List readAllDomainObjects(final Class clazz) throws FenixFilterException,
             FenixServiceException {
-        return ServiceUtils
+        return (List) ServiceUtils
                 .executeService(getUserView(), "ReadAllDomainObjects", new Object[] { clazz });
     }
 
@@ -125,6 +126,30 @@ public class FenixBackingBean {
             throws FenixFilterException, FenixServiceException {
         return (IDomainObject) ServiceUtils.executeService(getUserView(), "ReadDomainObject",
                 new Object[] { clazz, idInternal });
+    }
+
+    protected Integer getAndHoldIntegerParameter(final String parameterName) {
+        final String parameterString = getRequestParameter(parameterName);
+        final Integer parameterValue;
+        if (parameterString != null && parameterString.length() > 0) {
+            parameterValue = Integer.valueOf(parameterString);
+            setRequestAttribute(parameterName, parameterValue);
+        } else {
+            parameterValue = null;
+        }
+        return parameterValue;
+    }
+
+    protected String getAndHoldStringParameter(final String parameterName) {
+        final String parameterString = getRequestParameter(parameterName);
+        final String parameterValue;
+        if (parameterString != null && parameterString.length() > 0) {
+            parameterValue = parameterString;
+            setRequestAttribute(parameterName, parameterValue);
+        } else {
+            parameterValue = null;
+        }
+        return parameterValue;
     }
 
 }
