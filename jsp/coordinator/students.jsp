@@ -45,7 +45,7 @@ vertical-align: top;
 			<f:facet name="header">
 				<h:outputLink>
 					<f:param name="degreeCurricularPlanID" value="#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}"/>
-					<f:param name="sortBy" value="person.nome"/>
+					<f:param name="sortBy" value="student.person.nome"/>
 					<h:outputText value="#{bundle['label.name']}" />
 				</h:outputLink>
 			</f:facet>
@@ -57,7 +57,7 @@ vertical-align: top;
 			<f:facet name="header">
 				<h:outputLink>
 					<f:param name="degreeCurricularPlanID" value="#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}"/>
-					<f:param name="sortBy" value="person.email"/>
+					<f:param name="sortBy" value="student.person.email"/>
 					<h:outputText value="#{bundle['label.email']}" />
 				</h:outputLink>
 			</f:facet>
