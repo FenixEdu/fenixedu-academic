@@ -492,6 +492,7 @@
 			<to-view-id>/departmentMember/expectationManagement/viewPersonalExpectation.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	
 	<!-- End of Create Personal Expectation SubProcess -->
 	
 	<!-- Edit Personal Expectation SubProcess -->
@@ -1325,6 +1326,14 @@
 		</component-type>
 		<component-class>
 			net.sourceforge.fenixedu.presentationTier.jsf.components.UIDataRepeater
+		</component-class>
+	</component>
+	<component>
+		<component-type>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UIAutoComplete
+		</component-type>
+		<component-class>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UIAutoComplete
 		</component-class>
 	</component>
 	
