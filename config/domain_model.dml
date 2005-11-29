@@ -186,6 +186,12 @@ class net.sourceforge.fenixedu.domain.Contract extends net.sourceforge.fenixedu.
 	Integer keyCategory;
 	Date beginDate;
 	Date endDate;
+	Integer percentage;
+	Integer hoursNumber;
+	
+	interface"
+	public boolean belongsToPeriod(java.util.Date beginDate, java.util.Date endDate);
+	"
 }
 
 class net.sourceforge.fenixedu.domain.CostCenter extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2209,6 +2215,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction ext
 	interface"
 	public void edit(net.sourceforge.fenixedu.domain.organizationalStructure.IFunction function, java.util.Date beginDate, java.util.Date endDate, Integer credits);	
     public boolean isActive(java.util.Date currentDate);
+	public boolean belongsToPeriod(java.util.Date beginDate, java.util.Date endDate);
 	"
 }
 
@@ -3129,7 +3136,10 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	
 	public void createTeacherPersonalExpectation(
              net.sourceforge.fenixedu.dataTransferObject.InfoTeacherPersonalExpectation infoTeacherPersonalExpectation, IExecutionYear executionYear);
-	
+           
+    public int getManagementFunctionsCredits(IExecutionPeriod executionPeriod);
+    public int getServiceExemptionCredits(IExecutionPeriod executionPeriod);
+    public int getHoursByCategory(IExecutionPeriod executionPeriod);       
 	"
 }
 
@@ -3223,11 +3233,10 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.s
 	Date endDate;
 	UnitType type;
 	Integer costCenterCode;
-	Integer keyParentUnit;
 	Integer keyDepartment;	
 	
 	interface "
-	public IUnit getTopUnit();
+	public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IUnit> getTopUnits();
 	public void edit(String unitName, String unitCostCenter, java.util.Date beginDate, java.util.Date endDate,
             net.sourceforge.fenixedu.domain.organizationalStructure.UnitType type, 
             net.sourceforge.fenixedu.domain.organizationalStructure.IUnit parentUnit);
@@ -6049,11 +6058,13 @@ relation ContractWorkingUnit {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole workingUnit;
 }
 
-relation UnitParentUnit {
-    net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole associatedUnits{
+relation UnitUnit {
+    net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole subUnits{
     	multiplicity *;
     }
-	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole parentUnit;
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole parentUnits{
+		multiplicity *;
+    }
 }
 
 relation DepartmentUnit {

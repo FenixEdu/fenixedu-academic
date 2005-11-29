@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.organizationalStructure.IUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitType;
 
 /**
  * 
@@ -25,9 +26,7 @@ public class Employee extends Employee_Base {
     public IDepartment getDepartmentWorkingPlace() {
 
         IContract contract = getCurrentContract();
-
         if (contract != null && contract.getWorkingUnit() != null) {
-            
             return getUnitDepartment(contract.getWorkingUnit());
         }
         return null;
@@ -36,9 +35,7 @@ public class Employee extends Employee_Base {
     public IDepartment getDepartmentMailingPlace() {
 
         IContract contract = getCurrentContract();
-
         if (contract != null && contract.getMailingUnit() != null) {
-
             return getUnitDepartment(contract.getMailingUnit());
         }
         return null;
@@ -56,11 +53,14 @@ public class Employee extends Employee_Base {
     }
 
     private IDepartment getUnitDepartment(IUnit unit) {
-        if (unit.getParentUnit() != null) {
-            while (unit.getParentUnit() != null) {
-                unit = unit.getParentUnit();
-            }            
+
+        List<IUnit> allTopUnits = unit.getTopUnits();
+        for (IUnit topUnit : allTopUnits) {
+            if (topUnit.getType().equals(UnitType.DEPARTMENT)
+                    && topUnit.getDepartment().getCurrentActiveWorkingEmployees().contains(this)) {
+                return topUnit.getDepartment();
+            }
         }
-        return unit.getDepartment();
+        return null;
     }
 }

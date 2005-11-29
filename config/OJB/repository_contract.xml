@@ -45,6 +45,16 @@
 	   column="KEY_EMPLOYEE"  
 	   jdbc-type="INTEGER"
     />
+    <field-descriptor id="9" 
+	   name="hoursNumber"    
+	   column="HOURS_NUMBER"  
+	   jdbc-type="INTEGER"
+    />
+    <field-descriptor id="10" 
+	   name="percentage"    
+	   column="PERCENTAGE"  
+	   jdbc-type="INTEGER"
+    />
 
 	<reference-descriptor auto-retrieve="false"
     	name="salaryUnit"

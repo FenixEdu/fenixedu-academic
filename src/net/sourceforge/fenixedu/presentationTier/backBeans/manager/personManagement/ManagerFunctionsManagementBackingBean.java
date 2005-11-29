@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -69,8 +70,9 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
         allUnits.addAll((List<IUnit>) ServiceUtils.executeService(null, "ReadAllDomainObject",
                 argsToRead));
 
+        Date currentDate = Calendar.getInstance().getTime();
         for (IUnit unit : allUnits) {
-            if (unit.getParentUnit() == null) {
+            if (unit.getParentUnits().isEmpty() && unit.isActive(currentDate)) {
                 getUnitTree(buffer, unit);
             }
         }
@@ -91,8 +93,11 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
                 "&unitID=").append(parentUnit.getIdInternal()).append("\">")
                 .append(parentUnit.getName()).append("</a>").append("</li>").append("<ul>");
 
-        for (IUnit subUnit : parentUnit.getAssociatedUnits()) {
-            getUnitsList(subUnit, index + 1, buffer);
+        Date currentDate = Calendar.getInstance().getTime();
+        for (IUnit subUnit : parentUnit.getSubUnits()) {
+            if (subUnit.isActive(currentDate)) {
+                getUnitsList(subUnit, index + 1, buffer);
+            }
         }
 
         buffer.append("</ul>");
@@ -123,7 +128,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
 
     public List<IFunction> getInherentFunctions() throws FenixFilterException, FenixServiceException {
         if (this.inherentFunctions == null) {
-            this.inherentFunctions = this.getPerson().getActiveInherentFunctions();            
+            this.inherentFunctions = this.getPerson().getActiveInherentFunctions();
         }
         return inherentFunctions;
     }

@@ -21,9 +21,15 @@
 									
 		<h:commandLink value="#{bundle['link.new.unit']}" action="prepareCreateNewUnit" />						
 			
-		<h:outputText value="<br/><br/><h3>#{bundle['title.all.units']}</h3>" escape="false"/>
+		<h:outputText value="<br/><br/><h3>#{bundle['title.all.units']}</h3><br/>" escape="false"/>
+		
+		<h:outputText value="<b>#{bundle['message.listingType']}</b>" escape="false"/>
+		<fc:selectOneMenu value="#{organizationalStructureBackingBean.listingTypeValue}" 
+			onchange="this.form.submit();">
+			<f:selectItems value="#{organizationalStructureBackingBean.listingType}"/>				
+		</fc:selectOneMenu>		
 			
-		<h:outputText value="#{organizationalStructureBackingBean.units}" escape="false"/>
+		<h:outputText value="<br/><br/>#{organizationalStructureBackingBean.units}" escape="false"/>
 				
 	</h:form>
 </ft:tilesView>

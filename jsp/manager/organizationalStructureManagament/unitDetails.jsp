@@ -70,17 +70,17 @@
 					<f:param id="chooseUnitID3" name="chooseUnitID" value="#{unit.idInternal}"/>
 				</h:commandLink>				
 			</h:column>
-			<h:column rendered="#{empty organizationalStructureBackingBean.unit.parentUnit}">	
+			<h:column>	
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>								
 				<h:commandLink action="prepareChooseParentUnit" value="#{bundle['message.subUnit']}"/> 				
 			</h:column>
-			<h:column rendered="#{!empty organizationalStructureBackingBean.unit.parentUnit}">	
+			<h:column rendered="#{!empty organizationalStructureBackingBean.unit.parentUnits}">	
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>								
-				<h:commandLink action="#{organizationalStructureBackingBean.disassociateParentUnit}" value="#{bundle['message.topUnit']}"/> 				
+				<h:commandLink action="prepareChooseParentUnitToRemove" value="#{bundle['message.topUnit']}"/> 				
 			</h:column>					
 		</h:dataTable>									
 					
@@ -88,8 +88,8 @@
 		<h:commandLink action="prepareCreateNewSubUnit" value="#{bundle['link.new.unit3']}"/>		
 		<h:outputText value="<br/><br/>" escape="false"/>		
 			
-		<h:dataTable value="#{organizationalStructureBackingBean.unit.associatedUnits}" var="unit"
-			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty organizationalStructureBackingBean.unit.associatedUnits}">
+		<h:dataTable value="#{organizationalStructureBackingBean.unit.subUnits}" var="unit"
+			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty organizationalStructureBackingBean.unit.subUnits}">
 			<h:column>	
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.unitName']}" />
@@ -142,7 +142,7 @@
 			</h:column>				
 		</h:dataTable>
 		
-		<h:outputText value="#{bundle['unit.withoutSubUnits']}<br/>" rendered="#{empty organizationalStructureBackingBean.unit.associatedUnits}" 
+		<h:outputText value="#{bundle['unit.withoutSubUnits']}<br/>" rendered="#{empty organizationalStructureBackingBean.unit.subUnits}" 
 				styleClass="error" escape="false"/>
 		
 		<h:outputText value="<br/><h3>#{bundle['title.Functions']}</h3>" escape="false" />		

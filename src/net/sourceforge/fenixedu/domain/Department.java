@@ -42,7 +42,7 @@ public class Department extends Department_Base {
                     employees.add(employee);
                 }
             }
-            for (IUnit subUnit : unit.getAssociatedUnits()) {
+            for (IUnit subUnit : unit.getSubUnits()) {
                 for (IContract contract : subUnit.getWorkingContracts()) {
                     IEmployee employee = contract.getEmployee();
                     if (employee.getActive().booleanValue()
@@ -73,7 +73,7 @@ public class Department extends Department_Base {
             for (IContract contract : unit.getWorkingContracts(begin, end)) {                
                 employees.add(contract.getEmployee());                
             }
-            for (IUnit subUnit : unit.getAssociatedUnits()) {
+            for (IUnit subUnit : unit.getSubUnits()) {
                 for (IContract contract : subUnit.getWorkingContracts(begin, end)) {                                     
                     employees.add(contract.getEmployee());                    
                 }

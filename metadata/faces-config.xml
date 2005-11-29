@@ -170,8 +170,8 @@
 	</managed-bean>
 	<managed-bean>
 		<description>FacultyFunctionsManagementBackingBean</description>
-		<managed-bean-name>facultyFunctionsManagementBackingBean</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.personManagement.FacultyAdmOfficeFunctionsManagement</managed-bean-class>
+		<managed-bean-name>facultyAdmOfficeFunctionsManagementBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.facultyAdmOffice.FacultyAdmOfficeFunctionsManagement</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 
@@ -268,6 +268,14 @@
 		<navigation-case>
 			<from-outcome>prepareCreateNewUnit</from-outcome>
 			<to-view-id>/manager/organizationalStructureManagament/createNewUnit.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/manager/organizationalStructureManagament/listUnitParentUnits.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>backToUnitDetails</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/unitDetails.jsp</to-view-id>
 		</navigation-case>			
 	</navigation-rule>
 	
@@ -384,6 +392,10 @@
 		<navigation-case>
 			<from-outcome>prepareChooseParentUnit</from-outcome>
 			<to-view-id>/manager/organizationalStructureManagament/listAllUnitsToChooseParentUnit.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>prepareChooseParentUnitToRemove</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/listUnitParentUnits.jsp</to-view-id>
 		</navigation-case>	
 	</navigation-rule>
 	

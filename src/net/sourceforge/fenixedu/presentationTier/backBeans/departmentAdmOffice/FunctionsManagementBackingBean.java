@@ -122,9 +122,9 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
             ParseException {
 
         if (this.getUnit() == null
-                || (this.getUnit().getTopUnit() != null && !this.getUnit().getTopUnit().equals(
+                || (!this.getUnit().getTopUnits().isEmpty() && !this.getUnit().getTopUnits().contains(
                         getEmployeeDepartmentUnit()))
-                || (this.getUnit().getTopUnit() == null && !this.getUnit().equals(
+                || (this.getUnit().getTopUnits().isEmpty() && !this.getUnit().equals(
                         getEmployeeDepartmentUnit()))) {
             setErrorMessage("error.invalid.unit");
 
@@ -222,15 +222,31 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     private void addValidFunctions(List<IPersonFunction> functions, List<IPersonFunction> functions_) {
         for (IPersonFunction person_function : functions) {
             IUnit unit = person_function.getFunction().getUnit();
-            if (unit.getParentUnit() == null) {
+            if (unit.getParentUnits().isEmpty()) {
                 if (unit.equals(this.getEmployeeDepartmentUnit())) {
                     functions_.add(person_function);
                 }
-            } else if (unit.getTopUnit().equals(this.getEmployeeDepartmentUnit())) {
-                functions_.add(person_function);
+            } else {
+                if (addPersonFunction(unit.getParentUnits(), this.getEmployeeDepartmentUnit())) {
+                    functions_.add(person_function);
+                }
             }
-
         }
+    }
+
+    private boolean addPersonFunction(List<IUnit> parentUnits, IUnit employeeUnit) {
+        boolean found = false;
+        for (IUnit unit : parentUnits) {
+            if (unit.equals(employeeUnit)) {
+                return true;
+            } else {
+                found = addPersonFunction(unit.getParentUnits(), employeeUnit);
+                if (found) {
+                    return found;
+                }
+            }
+        }
+        return false;
     }
 
     public String verifyFunction() throws FenixFilterException, FenixServiceException {
@@ -264,12 +280,11 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         } else {
             int begin = (this.getPage() - 1) * SessionConstants.LIMIT_FINDED_PERSONS;
             int end = begin + SessionConstants.LIMIT_FINDED_PERSONS;
-            if(end >= allPersonsList.size()){
+            if (end >= allPersonsList.size()) {
                 getPersonsList().addAll(allPersonsList.subList(begin, allPersonsList.size()));
-            }
-            else{
+            } else {
                 getPersonsList().addAll(allPersonsList.subList(begin, end));
-            }            
+            }
         }
         return "";
     }
@@ -309,7 +324,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         }
         return persons;
     }
-   
+
     private boolean verifyNameEquality(String[] nameWords, IPerson person) {
 
         if (nameWords == null) {
@@ -360,7 +375,12 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     public String getUnits() throws FenixFilterException, FenixServiceException {
         StringBuffer buffer = new StringBuffer();
         buffer.append("<ul>");
-        getUnitsList(this.getEmployeeDepartmentUnit(), 0, buffer);
+        if (this.getEmployeeDepartmentUnit().isActive(Calendar.getInstance().getTime())) {
+            getUnitsList(this.getEmployeeDepartmentUnit(), 0, buffer);
+        }
+        else{
+            return "";
+        }
         buffer.append("</ul>");
         return buffer.toString();
     }
@@ -372,7 +392,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 personID).append("&unitID=").append(parentUnit.getIdInternal()).append("\">").append(
                 parentUnit.getName()).append("</a>").append("</li>").append("<ul>");
 
-        for (IUnit subUnit : parentUnit.getAssociatedUnits()) {
+        for (IUnit subUnit : parentUnit.getSubUnits()) {
             getUnitsList(subUnit, index + 1, buffer);
         }
 

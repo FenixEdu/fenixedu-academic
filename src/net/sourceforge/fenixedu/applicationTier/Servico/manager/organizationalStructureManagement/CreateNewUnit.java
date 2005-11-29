@@ -36,7 +36,11 @@ public class CreateNewUnit implements IService {
         
         IUnit parentUnit = null;
         if(parentUnitID != null){
-            parentUnit = (IUnit) suportePersistente.getIPersistentObject().readByOID(Unit.class, parentUnitID);            
+            parentUnit = (IUnit) suportePersistente.getIPersistentObject().readByOID(Unit.class, parentUnitID);
+            if(unit.getParentUnits().contains(parentUnit)){
+                unit.removeParentUnits(parentUnit);
+                parentUnit = null;
+            }
         }
         
         unit.edit(unitName, unitCostCenter, beginDate, endDate, type, parentUnit);

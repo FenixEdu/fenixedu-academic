@@ -23,8 +23,10 @@
 			<h:outputText value="<b>#{bundle['label.search.unit']}:</b>" escape="false"/>	
 			<h:panelGroup>
 				<h:outputText value="#{functionsManagementBackingBean.unit.name}"/>	
-				<h:outputText value=" - <i>#{functionsManagementBackingBean.unit.topUnit.name}</i>" 
-					rendered="#{functionsManagementBackingBean.unit.topUnit != null}" escape="false"/>
+				<h:outputText value=" - " rendered="#{!empty functionsManagementBackingBean.unit.topUnits}"/>	
+				<fc:dataRepeater value="#{functionsManagementBackingBean.unit.topUnits}" var="topUnit">
+					<h:outputText value="#{topUnit.name}<br/>" escape="false" />
+				</fc:dataRepeater>
 			</h:panelGroup>					
 		</h:panelGrid>	
 						

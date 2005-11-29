@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.organizationalStructure.IUnit;
@@ -44,34 +43,40 @@ public class InfoUnit extends InfoObject {
 
     public void copyFromDomain(IUnit unit) {
         super.copyFromDomain(unit);
-        if (unit != null) {
-            List superiorUnits = new ArrayList();
+        if (unit != null) {            
             setCostCenterCode(unit.getCostCenterCode().toString());
             setName(unit.getName());
             IUnit unitBase = unit;
-            getParentUnitsNames(unit, superiorUnits, unitBase);
+            getParentUnitsNames(unit, unitBase);
         }
     }
 
   
-    private void getParentUnitsNames(IUnit unit, List superiorUnits, IUnit unitBase) {
+    private void getParentUnitsNames(IUnit unit, IUnit unitBase) {
+        
+        List superiorUnits = new ArrayList();
         String unitName = unitBase.getName();                
         unitName = unitBase.getCostCenterCode().toString() + " - " + unitName; 
-        if (unit.getParentUnit() != null) {
-            while (unit.getParentUnit() != null) {                    
-                String uniName = unit.getParentUnit().getName();
-                superiorUnits.add(uniName);                    
-                unit = unit.getParentUnit();
-            } 
-          
-            superiorUnits.add(0, unitName);
-            Collections.reverse(superiorUnits);
+        
+        if (!unit.getTopUnits().isEmpty() && unit.getTopUnits().size() == 1) {                     
+            superiorUnits.add(0, unit.getTopUnits().get(0).getName());
+            superiorUnits.add(1, unitName);
             setSuperiorUnitsNames(superiorUnits);
         }
         else{
-            superiorUnits.add(0, unitName);
+            StringBuffer buffer = new StringBuffer();
+            int size = unit.getTopUnits().size(), i = 0;
+            for (IUnit unit2 : unit.getTopUnits()) {
+                buffer.append(unit2.getName());
+                i++;
+                if(i < size){
+                    buffer.append(" / ");
+                }
+            }
+            superiorUnits.add(0, buffer.toString());
+            superiorUnits.add(1, unitName);
             setSuperiorUnitsNames(superiorUnits);
-        }
+        }                
     }
 
     public static InfoUnit newInfoFromDomain(IUnit unit) {

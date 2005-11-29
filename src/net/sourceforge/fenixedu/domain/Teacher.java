@@ -188,15 +188,15 @@ public class Teacher extends Teacher_Base {
         }
         return executionCourses;
     }
-    
+
     public List<ITeacherServiceExemption> getServiceExemptionSituations(Date beginDate, Date endDate) {
 
         List<ITeacherServiceExemption> serviceExemptions = new ArrayList<ITeacherServiceExemption>();
         for (ITeacherServiceExemption serviceExemption : this.getServiceExemptionSituations()) {
             if ((serviceExemption.getStart().after(beginDate) && (serviceExemption.getEnd() == null || serviceExemption
                     .getEnd().before(endDate)))
-                    || (serviceExemption.getStart().before(beginDate)
-                    && (serviceExemption.getEnd() == null || serviceExemption.getEnd().after(endDate)))) {
+                    || (serviceExemption.getStart().before(beginDate) && (serviceExemption.getEnd() == null || serviceExemption
+                            .getEnd().after(endDate)))) {
                 serviceExemptions.add(serviceExemption);
             }
         }
@@ -314,4 +314,52 @@ public class Teacher extends Teacher_Base {
 
     }
 
+    public int getHoursByCategory(IExecutionPeriod executionPeriod) {
+
+        // Date begin = executionPeriod.getBeginDate();
+        // Date end = executionPeriod.getEndDate();
+        //
+        // List<IContract> list = new ArrayList<IContract>();
+        // for (IContract contract :
+        // this.getPerson().getEmployee().getContracts()) {
+        // if(contract.belongsToPeriod(begin, end)){
+        // list.add(contract);
+        // }
+        // }
+
+        return 0;
+    }
+
+    public int getServiceExemptionCredits(IExecutionPeriod executionPeriod) {
+
+        // Date begin = executionPeriod.getBeginDate();
+        // Date end = executionPeriod.getEndDate();
+        //
+        // List<ITeacherServiceExemption> list = new
+        // ArrayList<ITeacherServiceExemption>();
+        // for (ITeacherServiceExemption serviceExemption :
+        // this.getServiceExemptionSituations()) {
+        // if (serviceExemption.belongsToPeriod(begin, end)) {
+        // list.add(serviceExemption);
+        // }
+        // }
+
+        return 0;
+    }
+
+    public int getManagementFunctionsCredits(IExecutionPeriod executionPeriod) {
+
+        // Date begin = executionPeriod.getBeginDate();
+        // Date end = executionPeriod.getEndDate();
+        //
+        // List<IPersonFunction> list = new ArrayList<IPersonFunction>();
+        // for (IPersonFunction personFunction :
+        // this.getPerson().getPersonFunctions()) {
+        // if (personFunction.belongsToPeriod(begin, end)) {
+        // list.add(personFunction);
+        // }
+        // }
+
+        return 0;
+    }
 }

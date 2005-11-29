@@ -13,26 +13,38 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class Unit extends Unit_Base {
 
-    public IUnit getTopUnit() {
+    public List<IUnit> getTopUnits() {
         IUnit unit = this;
-        if (unit.getParentUnit() != null) {
-            while (unit.getParentUnit() != null) {
-                unit = unit.getParentUnit();
+        List<IUnit> allTopUnits = new ArrayList<IUnit>();
+        if (!unit.getParentUnits().isEmpty()) {
+            for (IUnit parentUnit : this.getParentUnits()) {
+                if (parentUnit.getParentUnits().isEmpty() && !allTopUnits.contains(parentUnit)) {
+                    allTopUnits.add(parentUnit);
+                } else if(!parentUnit.getParentUnits().isEmpty()){
+                    for (IUnit parentUnit2 : parentUnit.getTopUnits()) {
+                        if(!allTopUnits.contains(parentUnit2)){
+                            allTopUnits.add(parentUnit2);
+                        }
+                    }                   
+                }
             }
         }
-        return unit;
+        return allTopUnits;
     }
 
     public void edit(String unitName, String unitCostCenter, Date beginDate, Date endDate,
             UnitType type, IUnit parentUnit) {
+        
         this.setName(unitName);
-        if(unitCostCenter != null && !unitCostCenter.equals("")){
-            this.setCostCenterCode(Integer.valueOf(unitCostCenter));
-        }
         this.setBeginDate(beginDate);
         this.setEndDate(endDate);
         this.setType(type);
-        this.setParentUnit(parentUnit);
+        if (unitCostCenter != null && !unitCostCenter.equals("")) {
+            this.setCostCenterCode(Integer.valueOf(unitCostCenter));
+        }        
+        if(parentUnit != null){
+            this.addParentUnits(parentUnit);
+        }
     }
 
     public boolean isActive(Date currentDate) {
@@ -45,11 +57,14 @@ public class Unit extends Unit_Base {
     }
 
     public void delete() {
-        if (this.getAssociatedUnits().isEmpty() && this.getFunctions().isEmpty()
-                && this.getWorkingContracts().isEmpty() && this.getMailingContracts().isEmpty()
-                && this.getSalaryContracts().isEmpty()) {
+        if (this.getSubUnits().isEmpty()
+                && (this.getParentUnits().isEmpty() || this.getParentUnits().size() == 1)
+                && this.getFunctions().isEmpty() && this.getWorkingContracts().isEmpty()
+                && this.getMailingContracts().isEmpty() && this.getSalaryContracts().isEmpty()) {
 
-            this.setParentUnit(null);
+            if (!this.getParentUnits().isEmpty()) {
+                this.removeParentUnits(this.getParentUnits().get(0));
+            }
             this.setDepartment(null);
             super.deleteDomainObject();
 
@@ -64,7 +79,7 @@ public class Unit extends Unit_Base {
             if ((contract.getBeginDate().after(begin) || contract.getBeginDate().equals(begin))
                     && (contract.getEndDate() == null || (contract.getEndDate().before(end) || contract
                             .getEndDate().equals(end)))) {
-                
+
                 contracts.add(contract);
             }
         }

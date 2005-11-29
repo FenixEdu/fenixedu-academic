@@ -37,8 +37,10 @@
 		<h:outputText value="<b>#{bundle['label.search.unit']}:</b>" escape="false"/>
 		<h:panelGroup>
 			<h:outputText value="#{managerFunctionsManagementBackingBean.unit.name}"/>	
-			<h:outputText value=" - <i>#{managerFunctionsManagementBackingBean.unit.topUnit.name}</i>"
-				rendered="#{managerFunctionsManagementBackingBean.unit.topUnit != null}" escape="false"/>	
+			<h:outputText value=" - " rendered="#{!empty managerFunctionsManagementBackingBean.unit.topUnits}"/>	
+			<fc:dataRepeater value="#{managerFunctionsManagementBackingBean.unit.topUnits}" var="topUnit">
+				<h:outputText value="#{topUnit.name}<br/>" escape="false" />
+			</fc:dataRepeater>	
 		</h:panelGroup>	
 	
 		<h:outputText value="<b>#{bundle['label.credits']}</b>" escape="false"/>	

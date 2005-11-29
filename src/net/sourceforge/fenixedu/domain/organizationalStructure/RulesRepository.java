@@ -21,15 +21,15 @@ public class RulesRepository {
         if (unit.getName().equals("Assembleia de Representantes")) {
             return isElegibleAssembleiaRepresentantes(person, functionName);
         }
-        if (unit.getName().equals("Comissão Executiva")) {
-            String parentUnitName = unit.getParentUnit().getName();
-            if (parentUnitName.equals("Conselho Científico")) {
-                return isElegibleConselhoCientifico(person, functionName);
-            }
-            if (parentUnitName.equals("Conselho Pedagógico")) {
-                return isElegibleConselhoPedagogico(person, functionName);
-            }
-        }
+//        if (unit.getName().equals("Comissão Executiva")) {
+//            String parentUnitName = unit.getParentUnit().getName();
+//            if (parentUnitName.equals("Conselho Científico")) {
+//                return isElegibleConselhoCientifico(person, functionName);
+//            }
+//            if (parentUnitName.equals("Conselho Pedagógico")) {
+//                return isElegibleConselhoPedagogico(person, functionName);
+//            }
+//        }
         if (unit.getName().equals("Conselho Administrativo")) {
             return isElegibleConselhoAdministrativo(person, functionName);
         }

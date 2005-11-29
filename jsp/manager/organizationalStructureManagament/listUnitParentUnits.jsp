@@ -9,7 +9,6 @@
 	<h:form>	
 
 		<h:inputHidden binding="#{organizationalStructureBackingBean.unitIDHidden}"/>
-		<h:inputHidden binding="#{organizationalStructureBackingBean.chooseUnitIDHidden}"/>	
 		
 		<h:outputText styleClass="error" rendered="#{!empty organizationalStructureBackingBean.errorMessage}"
 				value="#{bundle[organizationalStructureBackingBean.errorMessage]}<br/>" escape="false"/>
@@ -23,8 +22,8 @@
 		
 		<h:outputText value="<br/>" escape="false" />	
 		
-		<h:dataTable value="#{organizationalStructureBackingBean.chooseUnit}" var="unit"
-			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty organizationalStructureBackingBean.chooseUnit}">
+		<h:dataTable value="#{organizationalStructureBackingBean.unit.parentUnits}" var="unit"
+			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty organizationalStructureBackingBean.unit.parentUnits}">
 			<h:column>
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.unitName']}" />
@@ -58,14 +57,19 @@
 				<h:outputFormat value="{0, date, dd/MM/yyyy}" rendered="#{!empty organizationalStructureBackingBean.unit.endDate}">
 					<f:param value="#{organizationalStructureBackingBean.unit.endDate}"/>
 				</h:outputFormat>					
-			</h:column>										
+			</h:column>	
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{bundle['message.action']}" />
+				</f:facet>
+				<h:commandLink action="#{organizationalStructureBackingBean.disassociateParentUnit}" value="#{bundle['button.choose']}">
+					<f:param id="chooseUnitID" name="chooseUnitID" value="#{unit.idInternal}"/>
+				</h:commandLink> 				
+			</h:column>						
 		</h:dataTable>				
 		
-		<h:outputText value="<br/>" escape="false" />								
-		<h:commandButton action="#{organizationalStructureBackingBean.associateParentUnit}" value="#{bundle['button.choose']}" 
-			styleClass="inputbutton"/> 		
-		<h:commandButton action="listAllUnitsToChooseParentUnit" immediate="true" value="#{bundle['label.return']}"
-			 styleClass="inputbutton"/>	
+		<h:outputText value="<br/>" escape="false" />		
+		<h:commandButton action="backToUnitDetails" immediate="true" value="#{bundle['label.return']}" styleClass="inputbutton"/>						
 				
 	</h:form>
 </ft:tilesView>

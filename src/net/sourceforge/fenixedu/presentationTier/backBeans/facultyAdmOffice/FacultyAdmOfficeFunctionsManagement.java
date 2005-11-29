@@ -5,6 +5,8 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.facultyAdmOffice;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
@@ -25,8 +27,9 @@ public class FacultyAdmOfficeFunctionsManagement extends ManagerFunctionsManagem
         allUnits.addAll((List<IUnit>) ServiceUtils.executeService(null, "ReadAllDomainObject",
                 argsToRead));
 
+        Date currentDate = Calendar.getInstance().getTime();
         for (IUnit unit : allUnits) {
-            if (unit.getParentUnit() == null) {
+            if (unit.getParentUnits().isEmpty() && unit.isActive(currentDate)) {
                 getUnitTree(buffer, unit);
             }
         }
@@ -43,12 +46,15 @@ public class FacultyAdmOfficeFunctionsManagement extends ManagerFunctionsManagem
     private void getUnitsList(IUnit parentUnit, int index, StringBuffer buffer) {
 
         buffer.append("<li>").append("<a href=\"").append(getContextPath()).append(
-                "/facultyAdmOffice/functionsManagement/chooseFunction.faces?personID=").append(personID).append(
-                "&unitID=").append(parentUnit.getIdInternal()).append("\">")
-                .append(parentUnit.getName()).append("</a>").append("</li>").append("<ul>");
+                "/facultyAdmOffice/functionsManagement/chooseFunction.faces?personID=").append(personID)
+                .append("&unitID=").append(parentUnit.getIdInternal()).append("\">").append(
+                        parentUnit.getName()).append("</a>").append("</li>").append("<ul>");
 
-        for (IUnit subUnit : parentUnit.getAssociatedUnits()) {
-            getUnitsList(subUnit, index + 1, buffer);
+        Date currentDate = Calendar.getInstance().getTime();
+        for (IUnit subUnit : parentUnit.getSubUnits()) {
+            if (subUnit.isActive(currentDate)) {
+                getUnitsList(subUnit, index + 1, buffer);
+            }
         }
 
         buffer.append("</ul>");

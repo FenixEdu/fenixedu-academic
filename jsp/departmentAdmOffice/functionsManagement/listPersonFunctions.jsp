@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
+<%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
@@ -44,7 +45,9 @@
 				<f:facet name="header">
 					<h:outputText value="#{bundle['label.belongs.to']}" />
 				</f:facet>				
-				<h:outputText value="#{person_function.function.unit.topUnit.name}"/>
+				<fc:dataRepeater value="#{person_function.function.unit.topUnits}" var="topUnit">
+					<h:outputText value="#{topUnit.name}<br/>" escape="false" />
+				</fc:dataRepeater>
 			</h:column>	
 			<h:column>
 				<f:facet name="header">
@@ -104,8 +107,9 @@
 				<f:facet name="header">
 					<h:outputText value="#{bundle['label.belongs.to']}" />
 				</f:facet>				
-				<h:outputText value="#{function.unit.topUnit.name}" 
-					rendered="#{function.unit.topUnit != null}"/>
+				<fc:dataRepeater value="#{function.unit.topUnits}" var="topUnit">
+					<h:outputText value="#{topUnit.name}<br/>" escape="false" />
+				</fc:dataRepeater>
 			</h:column>
 			
 		</h:dataTable>					
@@ -130,7 +134,9 @@
 				<f:facet name="header">
 					<h:outputText value="#{bundle['label.belongs.to']}" />
 				</f:facet>				
-				<h:outputText value="#{person_function.function.unit.topUnit.name}"/>
+				<fc:dataRepeater value="#{person_function.function.unit.topUnits}" var="topUnit">
+					<h:outputText value="#{topUnit.name}<br/>" escape="false" />
+				</fc:dataRepeater>
 			</h:column>			
 			<h:column>
 				<f:facet name="header">

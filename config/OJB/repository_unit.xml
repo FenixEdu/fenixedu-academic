@@ -25,11 +25,6 @@
 	   column="KEY_DEPARTMENT"  
 	   jdbc-type="INTEGER"
     />
-	<field-descriptor id="5" 
-	   name="keyParentUnit"    
-	   column="KEY_PARENT_UNIT"  
-	   jdbc-type="INTEGER"
-    />
 	<field-descriptor id="6" 
 	   name="type"    
 	   column="TYPE"  
@@ -52,19 +47,23 @@
         class-ref="net.sourceforge.fenixedu.domain.Department">
 	    <foreignkey field-ref="keyDepartment"/>
 	</reference-descriptor>
-
-	<reference-descriptor auto-retrieve="false"
-    	name="parentUnit"
-        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
-	    <foreignkey field-ref="keyParentUnit"/>
-	</reference-descriptor>
 	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-        name="associatedUnits"
-        element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
-		<inverse-foreignkey field-ref="keyParentUnit"/>
-    </collection-descriptor>
-
+			name="parentUnits"
+			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"
+			indirection-table="UNIT_UNIT">
+		<fk-pointing-to-element-class column="KEY_PARENT_UNIT" />
+		<fk-pointing-to-this-class column="KEY_SUB_UNIT" />
+	</collection-descriptor>
+	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="subUnits"
+			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"
+			indirection-table="UNIT_UNIT">
+		<fk-pointing-to-element-class column="KEY_SUB_UNIT" />
+		<fk-pointing-to-this-class column="KEY_PARENT_UNIT" />
+	</collection-descriptor>
+	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
         name="salaryContracts"
         element-class-ref="net.sourceforge.fenixedu.domain.Contract">

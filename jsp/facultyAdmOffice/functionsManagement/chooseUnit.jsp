@@ -9,7 +9,7 @@
 	
 	<h:form>
 	
-		<h:inputHidden binding="#{managerFunctionsManagementBackingBean.personIDHidden}"/>
+		<h:inputHidden binding="#{facultyAdmOfficeFunctionsManagementBackingBean.personIDHidden}"/>
 				
 		<h:outputText value="<H2>#{bundle['label.chooseUnit']}</H2>" escape="false"/>		
 
@@ -17,13 +17,13 @@
 		
 		<h:panelGroup styleClass="infoop">
 			<h:outputText value="<b>#{bundle['label.name']}</b>: " escape="false"/>		
-			<h:outputText value="#{managerFunctionsManagementBackingBean.person.nome}" escape="false"/>		
+			<h:outputText value="#{facultyAdmOfficeFunctionsManagementBackingBean.person.nome}" escape="false"/>		
 		</h:panelGroup>
 		<h:outputText value="<br/><br/><br/>" escape="false" />
 		
 		<h:outputText value="<p><strong>#{bundle['label.units']}</strong>:</p>" escape="false"/>		
 					
-		<h:outputText value="#{managerFunctionsManagementBackingBean.units}<br/>" escape="false"/>
+		<h:outputText value="#{facultyAdmOfficeFunctionsManagementBackingBean.units}<br/>" escape="false"/>
 		
 		<h:commandButton styleClass="inputbutton" value="#{bundle['button.choose.new.person']}" action="backToList"/>
 						    				
