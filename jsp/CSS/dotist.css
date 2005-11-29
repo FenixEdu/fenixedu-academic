@@ -704,4 +704,21 @@ margin-left:auto;
 margin-top:30px;
 padding:0px;
 text-align: left;
-}		
+}
+
+div.autoComplete {
+      position:absolute;
+      width:250px;
+      background-color:white;
+      border:1px solid #888;
+      margin:0px;
+      padding:0px;
+     
+    }
+ul.autoCompleteItems  {
+      list-style-type: none;
+      margin:0px;
+      padding:0px;
+   }
+
+ul.autoCompleteItems li.selected { background-color:  #cef; }

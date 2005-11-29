@@ -394,6 +394,15 @@
         <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.FileDownloadServlet</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>AutoCompleteServlet</servlet-name>
+        <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.ajax.AutoCompleteServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+   	<servlet-mapping>
+		<servlet-name>AutoCompleteServlet</servlet-name>
+		<url-pattern>/ajax/AutoCompleteServlet</url-pattern>
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>dwr-invoker</servlet-name>
 		<url-pattern>/dwr/*</url-pattern>

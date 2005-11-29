@@ -8364,7 +8364,7 @@
 		<filterChains>
 			<chain name="ManagerAuthorization"/>
 		</filterChains>
-	</service>
+	</service>	
 	<service>
 		<name>InsertNonAffiliatedTeacher</name>
 		<implementationClass>
@@ -8944,7 +8944,7 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadRoleByRoleType</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>    
-    </service>
+    </service>   
     <service>
     	<name>CreateNewUnit</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateNewUnit</implementationClass>
@@ -9081,6 +9081,17 @@
 		<isTransactional>true</isTransactional>
 		<filterChains>
 			<chain name="ManagerOrGEPAuthorization" />
+		</filterChains>
+	</service>
+    <service>
+		<name>AutoCompleteSimpleSearchService</name>
+		<implementationClass>
+			net.sourceforge.fenixedu.applicationTier.Servico.commons.AutoCompleteSimpleSearchService
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="DepartmentMemberOrTeacherAuthorization" />
 		</filterChains>
 	</service>
 </serviceDefinitions>    
