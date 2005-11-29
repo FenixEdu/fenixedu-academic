@@ -48,7 +48,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
         final List<IStudentCurricularPlan> sortedStudentCurricularPlans =
                 new ArrayList<IStudentCurricularPlan>(degreeCurricularPlan.getStudentCurricularPlans());
         Collections.sort(sortedStudentCurricularPlans, new BeanComparator(sortBy));
-        return sortedStudentCurricularPlans;
+        return sortedStudentCurricularPlans.subList(0, Math.min(100, sortedStudentCurricularPlans.size()));
     }
 
 }
