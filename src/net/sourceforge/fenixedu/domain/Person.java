@@ -76,14 +76,14 @@ public class Person extends Person_Base {
 
     public void edit(InfoPerson personToEdit, ICountry country) {
         setProperties(personToEdit);
-        if(country != null){
+        if (country != null) {
             setPais(country);
-        }        
-    }    
-    
+        }
+    }
+
     public void update(InfoPerson updatedPersonalData, ICountry country) {
         updateProperties(updatedPersonalData);
-        setPais((ICountry) valueToUpdate(getPais(),country));
+        setPais((ICountry) valueToUpdate(getPais(), country));
     }
 
     public void editPersonalContactInformation(InfoPerson personToEdit) {
@@ -160,33 +160,33 @@ public class Person extends Person_Base {
         setPassword(PasswordEncryptor.encryptPassword(newPassword));
     }
 
-    public void updateUsername(){
-    	this.setUsername(UsernameUtils.updateUsername(this));
+    public void updateUsername() {
+        this.setUsername(UsernameUtils.updateUsername(this));
     }
-    
-    public void updateIstUsername(){
+
+    public void updateIstUsername() {
         this.setIstUsername(UsernameUtils.updateIstUsername(this));
     }
-    
-	public IRole getPersonRole(RoleType roleType){
-		
-		for (IRole role : this.getPersonRoles()) {
-			if(role.getRoleType().equals(roleType)){
-				return role;
-			}
-		}
-		return null;
-	}    
-    
-	public Boolean hasRole(final RoleType roleType){
-		for (final IRole role : this.getPersonRoles()) {
-			if (role.getRoleType() == roleType) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
+
+    public IRole getPersonRole(RoleType roleType) {
+
+        for (IRole role : this.getPersonRoles()) {
+            if (role.getRoleType().equals(roleType)) {
+                return role;
+            }
+        }
+        return null;
+    }
+
+    public Boolean hasRole(final RoleType roleType) {
+        for (final IRole role : this.getPersonRoles()) {
+            if (role.getRoleType() == roleType) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public IStudent getStudentByType(DegreeType degreeType) {
         for (IStudent student : this.getStudents()) {
             if (student.getDegreeType().equals(degreeType)){
@@ -195,11 +195,10 @@ public class Person extends Person_Base {
         }
         return null;
     }
-    
-    public String getNacionalidade(){
+
+    public String getNacionalidade() {
         return this.getPais().getNationality();
     }
-    
 
     /***************************************************************************
      * PRIVATE METHODS *
@@ -224,7 +223,7 @@ public class Person extends Person_Base {
         setDistritoNaturalidade(infoPerson.getDistritoNaturalidade());
         setEmail(infoPerson.getEmail());
         setEnderecoWeb(infoPerson.getEnderecoWeb());
-        setMaritalStatus(infoPerson.getMaritalStatus());
+        setMaritalStatus((infoPerson.getMaritalStatus() == null) ? MaritalStatus.UNKNOWN : infoPerson.getMaritalStatus());
         setFreguesiaMorada(infoPerson.getFreguesiaMorada());
         setFreguesiaNaturalidade(infoPerson.getFreguesiaNaturalidade());
         setLocalEmissaoDocumentoIdentificacao(infoPerson.getLocalEmissaoDocumentoIdentificacao());
@@ -247,60 +246,52 @@ public class Person extends Person_Base {
                     .generatePassword(this)));
 
         setAvailableEmail(infoPerson.getAvailableEmail());
-        setAvailablePhoto(infoPerson.getAvailablePhoto());
+        setAvailablePhoto(Boolean.TRUE);
         setAvailableWebSite(infoPerson.getAvailableWebSite());
         setWorkPhone(infoPerson.getWorkPhone());
     }
 
     private void updateProperties(InfoPerson infoPerson) {
 
-        setNome(valueToUpdate(getNome(), infoPerson.getNome()));
-        setNumeroDocumentoIdentificacao(valueToUpdate(getNumeroDocumentoIdentificacao(), infoPerson
-                .getNumeroDocumentoIdentificacao()));
-        setIdDocumentType((IDDocumentType) valueToUpdate(getIdDocumentType(), infoPerson
+        setNome(valueToUpdateIfNewNotNull(getNome(), infoPerson.getNome()));
+        setNumeroDocumentoIdentificacao(valueToUpdateIfNewNotNull(getNumeroDocumentoIdentificacao(), infoPerson.getNumeroDocumentoIdentificacao()));
+        setIdDocumentType((IDDocumentType) valueToUpdateIfNewNotNull(getIdDocumentType(), infoPerson
                 .getTipoDocumentoIdentificacao()));
-        setCodigoFiscal(valueToUpdate(getCodigoFiscal(), infoPerson.getCodigoFiscal()));
-        setCodigoPostal(valueToUpdate(getCodigoPostal(), infoPerson.getCodigoPostal()));
-        setConcelhoMorada(valueToUpdate(getConcelhoMorada(), infoPerson.getConcelhoMorada()));
-        setConcelhoNaturalidade(valueToUpdate(getConcelhoNaturalidade(), infoPerson
-                .getConcelhoNaturalidade()));
-        setDataEmissaoDocumentoIdentificacao((Date) valueToUpdate(
-                getDataEmissaoDocumentoIdentificacao(), infoPerson
-                        .getDataEmissaoDocumentoIdentificacao()));
-        setDataValidadeDocumentoIdentificacao((Date) valueToUpdate(
-                getDataValidadeDocumentoIdentificacao(), infoPerson
-                        .getDataValidadeDocumentoIdentificacao()));
-        setDistritoMorada(valueToUpdate(getDistritoMorada(), infoPerson.getDistritoMorada()));
-        setDistritoNaturalidade(valueToUpdate(getDistritoNaturalidade(), infoPerson
-                .getDistritoNaturalidade()));
+        setCodigoFiscal(valueToUpdateIfNewNotNull(getCodigoFiscal(), infoPerson.getCodigoFiscal()));
+        setCodigoPostal(valueToUpdateIfNewNotNull(getCodigoPostal(), infoPerson.getCodigoPostal()));
+        setConcelhoMorada(valueToUpdateIfNewNotNull(getConcelhoMorada(), infoPerson.getConcelhoMorada()));
+        setConcelhoNaturalidade(valueToUpdateIfNewNotNull(getConcelhoNaturalidade(), infoPerson.getConcelhoNaturalidade()));
+        setDataEmissaoDocumentoIdentificacao((Date) valueToUpdateIfNewNotNull(getDataEmissaoDocumentoIdentificacao(), infoPerson.getDataEmissaoDocumentoIdentificacao()));
+        setDataValidadeDocumentoIdentificacao((Date) valueToUpdateIfNewNotNull(getDataValidadeDocumentoIdentificacao(), infoPerson.getDataValidadeDocumentoIdentificacao()));
+        setDistritoMorada(valueToUpdateIfNewNotNull(getDistritoMorada(), infoPerson.getDistritoMorada()));
+        setDistritoNaturalidade(valueToUpdateIfNewNotNull(getDistritoNaturalidade(), infoPerson.getDistritoNaturalidade()));
         setEmail(valueToUpdate(getEmail(), infoPerson.getEmail()));
         setEnderecoWeb(valueToUpdate(getEnderecoWeb(), infoPerson.getEnderecoWeb()));
-        setMaritalStatus((MaritalStatus) valueToUpdate(getMaritalStatus(), infoPerson.getMaritalStatus()));
-        setFreguesiaMorada(valueToUpdate(getFreguesiaMorada(), infoPerson.getFreguesiaMorada()));
-        setFreguesiaNaturalidade(valueToUpdate(getFreguesiaNaturalidade(), infoPerson
-                .getFreguesiaNaturalidade()));
-        setLocalEmissaoDocumentoIdentificacao(valueToUpdate(getLocalEmissaoDocumentoIdentificacao(),
-                infoPerson.getLocalEmissaoDocumentoIdentificacao()));
-        setLocalidade(valueToUpdate(getLocalidade(), infoPerson.getLocalidade()));
-        setLocalidadeCodigoPostal(valueToUpdate(getLocalidadeCodigoPostal(), infoPerson
-                .getLocalidadeCodigoPostal()));
-        setMorada(valueToUpdate(getMorada(), infoPerson.getMorada()));
-        setNascimento((Date) valueToUpdate(getNascimento(), infoPerson.getNascimento()));
-        setNomeMae(valueToUpdate(getNomeMae(), infoPerson.getNomeMae()));
-        setNomePai(valueToUpdate(getNomePai(), infoPerson.getNomePai()));
-        setNumContribuinte(valueToUpdate(getNumContribuinte(), infoPerson.getNumContribuinte()));
-        setProfissao(valueToUpdate(getProfissao(), infoPerson.getProfissao()));
-        setGender((Gender) valueToUpdate(getGender(), infoPerson.getSexo()));
+        MaritalStatus maritalStatus = (MaritalStatus) valueToUpdateIfNewNotNull(getMaritalStatus(), infoPerson.getMaritalStatus());        
+        setMaritalStatus((maritalStatus == null) ? MaritalStatus.UNKNOWN : maritalStatus);
+        setFreguesiaMorada(valueToUpdateIfNewNotNull(getFreguesiaMorada(), infoPerson.getFreguesiaMorada()));
+        setFreguesiaNaturalidade(valueToUpdateIfNewNotNull(getFreguesiaNaturalidade(), infoPerson.getFreguesiaNaturalidade()));
+        setLocalEmissaoDocumentoIdentificacao(valueToUpdateIfNewNotNull(getLocalEmissaoDocumentoIdentificacao(), infoPerson.getLocalEmissaoDocumentoIdentificacao()));
+        setLocalidade(valueToUpdateIfNewNotNull(getLocalidade(), infoPerson.getLocalidade()));
+        setLocalidadeCodigoPostal(valueToUpdateIfNewNotNull(getLocalidadeCodigoPostal(), infoPerson.getLocalidadeCodigoPostal()));
+        setMorada(valueToUpdateIfNewNotNull(getMorada(), infoPerson.getMorada()));
+        setNascimento((Date) valueToUpdateIfNewNotNull(getNascimento(), infoPerson.getNascimento()));
+        setNomeMae(valueToUpdateIfNewNotNull(getNomeMae(), infoPerson.getNomeMae()));
+        setNomePai(valueToUpdateIfNewNotNull(getNomePai(), infoPerson.getNomePai()));
+        setNumContribuinte(valueToUpdateIfNewNotNull(getNumContribuinte(), infoPerson.getNumContribuinte()));
+        setProfissao(valueToUpdateIfNewNotNull(getProfissao(), infoPerson.getProfissao()));
+        setGender((Gender) valueToUpdateIfNewNotNull(getGender(), infoPerson.getSexo()));
         setTelefone(valueToUpdate(getTelefone(), infoPerson.getTelefone()));
         setTelemovel(valueToUpdate(getTelemovel(), infoPerson.getTelemovel()));
-        setAvailableEmail((Boolean) valueToUpdate(getAvailableEmail(), infoPerson.getAvailableEmail()));
-        setAvailablePhoto((Boolean) valueToUpdate(getAvailablePhoto(), infoPerson.getAvailablePhoto()));
-        setAvailableWebSite((Boolean) valueToUpdate(getAvailableWebSite(), infoPerson
-                .getAvailableWebSite()));
+//        setAvailableEmail((Boolean) valueToUpdate(getAvailableEmail(), infoPerson.getAvailableEmail()));
+//        setAvailablePhoto((Boolean) valueToUpdate(getAvailablePhoto(), infoPerson.getAvailablePhoto()));
+//        setAvailableWebSite((Boolean) valueToUpdate(getAvailableWebSite(), infoPerson
+//                .getAvailableWebSite()));
         setWorkPhone(valueToUpdate(getWorkPhone(), infoPerson.getWorkPhone()));
 
-        setPassword(valueToUpdate(getPassword(), PasswordEncryptor.encryptPassword(GeneratePassword
-                .getInstance().generatePassword(this))));
+        // setPassword(valueToUpdate(getPassword(),
+        // PasswordEncryptor.encryptPassword(GeneratePassword
+        // .getInstance().generatePassword(this))));
 
     }
 
@@ -319,6 +310,24 @@ public class Person extends Person_Base {
             return newValue;
         }
         return actualValue;
+
+    }
+
+    private String valueToUpdateIfNewNotNull(String actualValue, String newValue) {
+
+        if (newValue == null || newValue.length() == 0) {
+            return actualValue;
+        }
+        return newValue;
+
+    }
+
+    private Object valueToUpdateIfNewNotNull(Object actualValue, Object newValue) {
+
+        if (newValue == null) {
+            return actualValue;
+        }
+        return newValue;
 
     }
 
@@ -447,8 +456,8 @@ public class Person extends Person_Base {
     public String getSlideNameForCandidateDocuments() {
         return "/candidateDocuments/person/P" + getIdInternal();
     }
-    
-        public void removeRoleByType(final RoleType roleType) {
+
+    public void removeRoleByType(final RoleType roleType) {
         final IRole role = getPersonRole(roleType);
         if (role != null) {
             removePersonRoles(role);
@@ -469,7 +478,7 @@ public class Person extends Person_Base {
             }
         }
     }
-        
+
     public Iterator<IUserGroup> getUserGroupsIterator()
     {
     	return new FilterIterator(this.getContentsIterator(),new ContentAssignableClassPredicate(IUserGroup.class));
@@ -497,11 +506,11 @@ public class Person extends Person_Base {
 //            }
 //        }
 //    }
-   	
+	
     public List<IPersonFunction> getActiveFunctions() {
 
         List<IPersonFunction> activeFunctions = new ArrayList<IPersonFunction>();
-        
+
         for (IPersonFunction personFunction : this.getPersonFunctions()) {
             if (personFunction.isActive(prepareCalendar().getTime())) {
                 activeFunctions.add(personFunction);
@@ -513,17 +522,17 @@ public class Person extends Person_Base {
     public List<IPersonFunction> getInactiveFunctions() {
 
         List<IPersonFunction> inactiveFunctions = new ArrayList<IPersonFunction>();
-                
+
         for (IPersonFunction personFunction : this.getPersonFunctions()) {
-            if (!personFunction.isActive(prepareCalendar().getTime())) {
+           if (!personFunction.isActive(prepareCalendar().getTime())) {
                 inactiveFunctions.add(personFunction);
             }
         }
         return inactiveFunctions;
     }
-    
+
     public List<IFunction> getActiveInherentFunctions(){
-       
+
         List<IFunction> inherentFunctions = new ArrayList<IFunction>();
         for (IPersonFunction personFunction : this.getActiveFunctions()) {
             inherentFunctions.addAll(personFunction.getFunction().getInherentFunctions());
@@ -539,7 +548,7 @@ public class Person extends Person_Base {
         calendar.set(Calendar.MILLISECOND, 0);
         return calendar;
     }
-    
+
     public boolean containsActiveFunction(IFunction function) {
 
         for (IPersonFunction person_Function : this.getActiveFunctions()) {
