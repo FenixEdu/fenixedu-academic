@@ -16,3 +16,6 @@ mysql -u$2 -f $1 < createUnitUnitTable.sql
 mysql -u$2 -f $1 < updateUnitUnitTable.sql > res.sql
 mysql -u$2 -f $1 < res.sql
 rm -rf res.sql
+
+# Create File Entry Table
+mysql -u$2 -f $1 < createFileEntryTable.sql

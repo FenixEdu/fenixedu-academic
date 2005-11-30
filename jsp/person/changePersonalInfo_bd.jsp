@@ -269,6 +269,7 @@
 	        	<html:checkbox property="availableWebSite" value="true"/></td>
           </tr>
           <!-- Photo -->
+          <!--
           <tr valign="top">
           	<td><bean:message key="label.person.photo" /></td>
             <td>
@@ -277,6 +278,8 @@
  				&nbsp;<bean:message key="label.person.availablePhoto" />
 	        	<html:checkbox property="availablePhoto" value="true"/></td>
           </tr>
+		   	-->
+   		<html:hidden property="availablePhoto" value="true"/>
    	</table>
 <br /><br />
 <html:submit property="Alterar" styleClass="inputbutton">Alterar</html:submit>

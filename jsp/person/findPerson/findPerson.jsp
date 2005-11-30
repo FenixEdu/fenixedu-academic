@@ -76,7 +76,7 @@ if (e.style.display == "none")
 else
   {e.style.display = "none";
   v.value = "+";
-  }
+}
 }
 </script>
 
@@ -272,7 +272,7 @@ else
 	       	<logic:equal name="viewPhoto" value="true">
 			  	<logic:equal name="personalInfo" property="availablePhoto" value="true">
 			  	<bean:define id="personID" name="personalInfo" property="idInternal"/>	  	    		  	  	
-		  			<html:img height="100" width="100" src="<%= request.getContextPath() +"/person/viewPhoto.do?personCode="+personID.toString()%>"/>
+		  			<html:img src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&personCode="+personID.toString()%>"/>
 		   		</logic:equal>
 		   	</logic:equal>
 	      

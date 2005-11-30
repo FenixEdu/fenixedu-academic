@@ -254,6 +254,12 @@
 			type="net.sourceforge.fenixedu.presentationTier.Action.person.ViewPhotoAction"
 			>
 		</action>		
+
+		<action path="/retrievePersonalPhoto"
+			type="net.sourceforge.fenixedu.presentationTier.Action.person.RetrievePersonalPhotoAction"
+			parameter="method"
+			>
+		</action>				
 								
     </action-mappings>
     

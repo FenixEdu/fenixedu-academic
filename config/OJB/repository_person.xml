@@ -230,6 +230,16 @@
         column="KEY_CMS"
         jdbc-type="INTEGER"
     />      
+    <field-descriptor
+        name="keyPersonalPhoto"
+        column="KEY_PERSONAL_PHOTO"
+        jdbc-type="INTEGER"
+    />     
+    <reference-descriptor auto-retrieve="false"
+    	name="personalPhoto"
+        class-ref="net.sourceforge.fenixedu.domain.FileEntry">
+	    <foreignkey field-ref="keyPersonalPhoto"/>
+	</reference-descriptor>    
     <reference-descriptor auto-retrieve="false"
     	name="grantOwner"
         class-ref="net.sourceforge.fenixedu.domain.grant.owner.GrantOwner">

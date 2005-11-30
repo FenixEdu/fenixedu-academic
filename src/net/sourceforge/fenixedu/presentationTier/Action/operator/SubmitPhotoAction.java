@@ -1,37 +1,39 @@
-/*
- * Created on Aug 9, 2004
- *
- */
 package net.sourceforge.fenixedu.presentationTier.Action.operator;
 
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FileAlreadyExistsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FileNameTooLongServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.util.ContentType;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.upload.FormFile;
 
-/**
- * @author Nuno Correia
- * @author Ricardo Rodrigues
- */
 public class SubmitPhotoAction extends DispatchAction {
+
+    private static int outputPhotoWidth = 100;
+
+    private static int outputPhotoHeight = 100;
 
     public ActionForward preparePhotoUpload(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -42,89 +44,68 @@ public class SubmitPhotoAction extends DispatchAction {
     public ActionForward photoUpload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = SessionUtils.getUserView(request);
 
         DynaActionForm photoForm = (DynaActionForm) form;
         FormFile formFile = (FormFile) photoForm.get("theFile");
         String username = (String) photoForm.get("username");
-        ActionErrors actionErrors = new ActionErrors();
-        InfoPerson infoPerson = null;
+        ActionMessages actionMessages = new ActionMessages();
 
         if (formFile == null || (formFile != null && formFile.getFileData().length == 0)) {
-            actionErrors.add("fileRequired", new ActionError("errors.fileRequired"));
-            saveErrors(request, actionErrors);
+            actionMessages.add("fileRequired", new ActionMessage("errors.fileRequired"));
+            saveMessages(request, actionMessages);
             return mapping.findForward("chooseFile");
         }
 
+        // process image
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(formFile.getFileData());
+        BufferedImage image = ImageIO.read(inputStream);
+        ContentType contentType = ContentType.getContentType(formFile.getContentType());
+        ByteArrayOutputStream outputStream = processImage(image, contentType);
+
         try {
-            Object[] args = { username };
-            infoPerson = (InfoPerson) ServiceUtils
-                    .executeService(userView, "ReadPersonByUsername", args);
+            
+            Object[] args = { outputStream.toByteArray(),
+                    contentType, username };
+            ServiceUtils.executeService(userView, "StorePersonalPhoto", args);
+
         } catch (ExcepcaoInexistente e) {
-            actionErrors.add("unknownPerson", new ActionError("error.exception.nonExisting", username));
-            saveErrors(request, actionErrors);
-            //return preparePhotoUpload(mapping, form, request, response);
-            return mapping.findForward("chooseFile");
-        } catch (FenixServiceException e) {
-            actionErrors.add("unableReadPerson", new ActionError("errors.unableReadPerson", username));
-            saveErrors(request, actionErrors);
-            //return preparePhotoUpload(mapping, form, request, response);
-            return mapping.findForward("chooseFile");
-
-        }
-
-        // String fileType = formFile.getContentType().replaceFirst("/", ".");
-        String fileName = "personPhoto.jpeg";
-        //+ fileType.substring(fileType.indexOf("."));
-
-        FileSuportObject file = new FileSuportObject();
-
-        file.setContent(formFile.getFileData());
-        file.setContentType(formFile.getContentType());
-
-        file.setFileName(fileName);
-        file.setLinkName(fileName);
-
-        file.setContentType(formFile.getContentType());
-
-        Object[] args1 = { file, infoPerson.getIdInternal() };
-        Boolean serviceResult = null;
-
-        try {
-            serviceResult = (Boolean) ServiceUtils.executeService(userView, "StorePhoto", args1);
-        } catch (FileAlreadyExistsServiceException e1) {
-            actionErrors.add("fileAlreadyExists", new ActionError("errors.fileAlreadyExists", file
-                    .getFileName()));
-            saveErrors(request, actionErrors);
-            //return preparePhotoUpload(mapping, form, request, response);
-            return mapping.findForward("chooseFile");
-
-        } catch (FileNameTooLongServiceException e1) {
-            actionErrors.add("fileNameTooLong", new ActionError("errors.fileNameTooLong", file
-                    .getFileName()));
-            saveErrors(request, actionErrors);
-            //return preparePhotoUpload(mapping, form, request, response);
-            return mapping.findForward("chooseFile");
-
-        } catch (FenixServiceException e1) {
-            actionErrors.add("unableToStoreFile", new ActionError("errors.unableToStoreFile", file
-                    .getFileName()));
-            saveErrors(request, actionErrors);
-            //return preparePhotoUpload(mapping, form, request, response);
-            return mapping.findForward("chooseFile");
-
-        }
-        if (!serviceResult.booleanValue()) {
-            actionErrors.add("fileTooBig", new ActionError("errors.fileTooBig", file.getFileName()));
-            saveErrors(request, actionErrors);
-            //return preparePhotoUpload(mapping, form, request, response);
+            actionMessages.add("unknownPerson", new ActionMessage("error.exception.nonExisting",
+                    username));
+            saveMessages(request, actionMessages);
             return mapping.findForward("chooseFile");
         }
 
-        actionErrors.add("updateCompleted", new ActionError("label.operator.submit.ok", ""));
-        saveErrors(request, actionErrors);
-        //return preparePhotoUpload(mapping, form, request, response);
+        actionMessages.add("updateCompleted", new ActionMessage("label.operator.submit.ok", ""));
+        saveMessages(request, actionMessages);
         return mapping.findForward("chooseFile");
+    }
+
+    private ByteArrayOutputStream processImage(BufferedImage photoImage, ContentType contentType) throws IOException {
+
+        // calculate resize factor
+        double resizeFactor = Math.min((double) outputPhotoWidth / photoImage.getWidth(),
+                (double) outputPhotoHeight / photoImage.getHeight());
+
+        // resize image
+        AffineTransform tx = new AffineTransform();
+        tx.scale(resizeFactor, resizeFactor);
+        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+        photoImage = op.filter(photoImage, null);
+
+        // set compression
+        ImageWriter writer = (ImageWriter) ImageIO.getImageWritersByMIMEType(contentType.getMimeType()).next();
+        ImageWriteParam param = writer.getDefaultWriteParam();
+        if(contentType.equals(ContentType.JPG)){
+            param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+            param.setCompressionQuality(1);
+        }
+
+        // write to stream
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        writer.setOutput(ImageIO.createImageOutputStream(outputStream));
+        writer.write(null, new IIOImage(photoImage, null, null), param);
+
+        return outputStream;
     }
 }

@@ -10,10 +10,7 @@
  	<tr valign="bottom">
  		<td><h2><bean:message key="label.person.title.personalConsult" /></h2></td>
  		<td align="right">
- 			<logic:present name="personalInfo">
- 				<bean:define id="personID" name="personalInfo" property="idInternal"/>
- 				<html:img align="middle" height="100" width="100" src="<%= request.getContextPath() +"/person/viewPhoto.do?personCode="+personID.toString()%>"/>
- 			</logic:present>
+ 			<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto" %>" />
  		</td>
  	</tr>
  </table>
