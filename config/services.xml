@@ -7140,6 +7140,15 @@
 		<filterChains />
 	</service>
 	<service>
+		<name>StorePersonalPhoto</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.fileManager.StorePersonalPhoto</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="OperatorAuthorization" />
+		</filterChains>
+	</service>		
+	<service>
 		<name>RetrievePhoto</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.fileManager.RetrievePhoto</implementationClass>
 		<description />
@@ -8364,7 +8373,7 @@
 		<filterChains>
 			<chain name="ManagerAuthorization"/>
 		</filterChains>
-	</service>	
+	</service>
 	<service>
 		<name>InsertNonAffiliatedTeacher</name>
 		<implementationClass>
@@ -9063,7 +9072,7 @@
 		</filterChains>				
 	</service>
 	<!--######################################-->  
-    	<service>
+    <service>
 		<name>DefineInquiryResponsePeriod</name>
 		<implementationClass>
 			net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.DefineInquiryResponsePeriod
