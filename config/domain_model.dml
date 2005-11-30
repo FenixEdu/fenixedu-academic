@@ -85,6 +85,9 @@ valueType net.sourceforge.fenixedu.util.tests.TestType                  				    
 valueType net.sourceforge.fenixedu.domain.organizationalStructure.UnitType                  	as UnitType;
 valueType net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType                 	as FunctionType;
 valueType net.sourceforge.fenixedu.domain.QualificationType										as QualificationType;
+valueType net.sourceforge.fenixedu.util.ByteArray												as ByteArray;
+valueType net.sourceforge.fenixedu.util.ContentType                                             as ContentType;
+
 
 /*
 *
@@ -1043,13 +1046,13 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 	class net.sourceforge.fenixedu.domain.onlineTests.OnlineTest extends net.sourceforge.fenixedu.domain.Evaluation {
     	Integer keyDistributedTest;
 	}
-	
+
 	class net.sourceforge.fenixedu.domain.Project extends net.sourceforge.fenixedu.domain.Evaluation {
 	    String name;
 	    Date begin;
         Date end;
         String description;     
-        
+
         interface "
         public void edit(String name, java.util.Date begin, java.util.Date end, String description);
         "           
@@ -1162,7 +1165,7 @@ class net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment extends net.sou
 	Integer keyWrittenEvaluation;
 	
 	interface "
-	public void delete();
+	public void delete();	
 	
 	public boolean isForExecutionPeriod(IExecutionPeriod executionPeriod);
 	"
@@ -1233,7 +1236,7 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
 
 	public java.util.List<IProject> getAssociatedProjects();
 	
-	public boolean teacherLecturesExecutionCourse(ITeacher teacher);
+	public boolean teacherLecturesExecutionCourse(ITeacher teacher); 
 		
 	public Integer getFirstTimeEnrolmentStudentNumber();
 	
@@ -1772,6 +1775,16 @@ class net.sourceforge.fenixedu.domain.GuideSituation extends net.sourceforge.fen
     GuideState situation;
 }
 
+class net.sourceforge.fenixedu.domain.FileEntry extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyPerson;
+    ByteArray content;
+    ContentType contentType;
+    
+    interface "
+    public byte[] getContents();
+    public void delete();
+    "
+}
 
 class net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyExecutionPeriod;
@@ -2234,6 +2247,7 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 	Integer keyTeacher;
 	Integer keyExternalPerson;	
 	Integer keyGrantOwner;
+	Integer keyPersonalPhoto;
 	String localidade;
 	String codigoFiscal;
 	String telemovel;
@@ -2433,25 +2447,25 @@ class net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess extends n
 }
 
 
-class net.sourceforge.fenixedu.domain.Qualification extends net.sourceforge.fenixedu.domain.DomainObject {    
-	Date lastModificationDate;
+class net.sourceforge.fenixedu.domain.Qualification extends net.sourceforge.fenixedu.domain.DomainObject {
+    Date lastModificationDate;
     String degreeRecognition;
     String equivalenceSchool;
     String mark;
-	String title;
+    String title;
     String specializationArea;
     Date date;
     Integer personKey;
-	String branch;
+    String branch;
     Date equivalenceDate;
     String degree;
-	Integer countryKey;    
-	String school;
-	
+    Integer countryKey;
+    String school;
+    
     String year;	
     QualificationType type;
 	
-	interface "
+    interface "
     public void delete();
     public void edit(net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification infoQualification, ICountry country);
     "
@@ -2872,7 +2886,7 @@ class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.d
     public java.util.List<IWrittenTest> getUnenroledWrittenTests(IExecutionPeriod executionPeriod);
     public java.util.List<IProject> getProjects(IExecutionPeriod executionPeriod);
     public boolean isEnroledIn(IEvaluation evaluation);
-    public IRoom getRoomFor(IWrittenEvaluation writtenEvaluation);
+    public IRoom getRoomFor(IWrittenEvaluation writtenEvaluation);    
     public void calculateApprovationRatioAndArithmeticMeanIfActive(IExecutionYear currentExecutionYear);    
     public Double getApprovationRatio();
     public Double getArithmeticMean();
@@ -3145,7 +3159,7 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	
 	public void createTeacherPersonalExpectation(
              net.sourceforge.fenixedu.dataTransferObject.InfoTeacherPersonalExpectation infoTeacherPersonalExpectation, IExecutionYear executionYear);
-             
+	
 	public int getManagementFunctionsCredits(IExecutionPeriod executionPeriod);
     public int getServiceExemptionCredits(IExecutionPeriod executionPeriod);
     public int getHoursByCategory(IExecutionPeriod executionPeriod);    
@@ -4418,6 +4432,11 @@ relation ExtraWorkRequestsWhoEmployee {
 	net.sourceforge.fenixedu.domain.Employee playsRole whoEmployee;
 }
 
+relation FileEntryPerson {
+    net.sourceforge.fenixedu.domain.FileEntry playsRole personalPhoto;
+    net.sourceforge.fenixedu.domain.Person playsRole person;
+}
+
 relation GaugingTestResultStudent {
     net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult playsRole associatedGaugingTestResult;
     net.sourceforge.fenixedu.domain.Student playsRole student;
@@ -5311,14 +5330,14 @@ relation ProposalBranch {
 
 relation QualificationPerson {
     net.sourceforge.fenixedu.domain.Qualification playsRole associatedQualifications {
-    	multiplicity *;
+        multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Person playsRole person;
 }
 
 relation QualificationCountry {
     net.sourceforge.fenixedu.domain.Qualification playsRole associatedQualifications {
-        multiplicity *;
+    	multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Country playsRole country;
 }
@@ -6074,7 +6093,7 @@ relation UnitUnit {
     }
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole parentUnits{
 		multiplicity *;
-	}
+}
 }
 
 relation DepartmentUnit {
