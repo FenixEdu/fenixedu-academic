@@ -89,6 +89,12 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	
+	<managed-bean>
+		<managed-bean-name>viewTeacherService</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember.teacherService.ViewTeacherService</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
 	<!-- End of Backbeans from department member subapplication -->
 
 	<!-- BEGIN: STUDENT Managed Beans -->
@@ -185,7 +191,7 @@
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.advisoriesManagement.AdvisoriesManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
-
+	
 	<managed-bean>
 		<managed-bean-name>SendMailBackingBean</managed-bean-name>
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.SendMailBackingBean</managed-bean-class>
@@ -254,7 +260,7 @@
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.sop.evaluation.WrittenEvaluationsByRoomBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
-	
+
 	<!-- MANAGER ORGANIZATIONAL STRUCTURE MANAGEMENT -->
 	
 	<managed-bean>
@@ -452,6 +458,17 @@
 		</navigation-case>			
 	</navigation-rule>
 	<navigation-rule>
+		<from-view-id>/departmentMember/viewTeacherService/chooseExecutionYear.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>listDistributionTeachersByTeacher</from-outcome>
+			<to-view-id>/departmentMember/viewTeacherService/viewTeacherService.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>listDistributionTeachersByCourse</from-outcome>
+			<to-view-id>/departmentMember/viewTeacherService/viewTeacherServiceByCourse.jsp</to-view-id>
+		</navigation-case>	
+	</navigation-rule>
+	<navigation-rule>
 		<from-view-id>/departmentMember/viewDepartmentTeachers/viewTeacherDetails.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>back</from-outcome>
@@ -504,7 +521,6 @@
 			<to-view-id>/departmentMember/expectationManagement/viewPersonalExpectation.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	
 	<!-- End of Create Personal Expectation SubProcess -->
 	
 	<!-- Edit Personal Expectation SubProcess -->
@@ -558,7 +574,7 @@
 	<!-- End of Edit Personal Expectation SubProcess -->
 	
 	<!-- End Process -->
-	
+			
 	<!-- End Navigation rules from department member subapplication -->
 
 
@@ -1165,7 +1181,7 @@
 			<to-view-id>/coordinator/evaluation/editWrittenTest.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-
+	
 	<navigation-rule>
 		<from-view-id>/coordinator/evaluation/createEvaluation.jsp</from-view-id>
 		<navigation-case>

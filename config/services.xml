@@ -9063,7 +9063,7 @@
 		</filterChains>				
 	</service>
 	<!--######################################-->  
-    <service>
+    	<service>
 		<name>DefineInquiryResponsePeriod</name>
 		<implementationClass>
 			net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.DefineInquiryResponsePeriod
@@ -9074,6 +9074,7 @@
 			<chain name="GEPAuthorization" />
 		</filterChains>				
 	</service>
+	<!--######################################-->
 	<service>
 		<name>CreateClassificationsForStudents</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.CreateClassificationsForStudents</implementationClass>
@@ -9094,4 +9095,22 @@
 			<chain name="DepartmentMemberOrTeacherAuthorization" />
 		</filterChains>
 	</service>
+	<service>
+    	<name>ReadTeacherServiceDistributionByTeachers</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.teacherService.ReadTeacherServiceDistributionByTeachers</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="DepartmentMemberOrTeacherAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>ReadTeacherServiceDistributionByCourse</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.teacherService.ReadTeacherServiceDistributionByCourse</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="DepartmentMemberOrTeacherAuthorization"></chain>
+        </filterChains>     
+    </service>
 </serviceDefinitions>    

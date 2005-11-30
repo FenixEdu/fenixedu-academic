@@ -188,7 +188,7 @@ public class Teacher extends Teacher_Base {
         }
         return executionCourses;
     }
-
+    
     public List<ITeacherServiceExemption> getServiceExemptionSituations(Date beginDate, Date endDate) {
 
         List<ITeacherServiceExemption> serviceExemptions = new ArrayList<ITeacherServiceExemption>();
@@ -211,6 +211,20 @@ public class Teacher extends Teacher_Base {
         }
 
         return executionCourses;
+    }
+    
+    public Double getHoursLecturedOnExecutionCourse(IExecutionCourse executionCourse){
+    	double returnValue = 0;
+    	
+    	for(IProfessorship professorShipEntry: executionCourse.getProfessorships()){
+    		if(professorShipEntry.getTeacher() == this){
+    			for(IShiftProfessorship shiftProfessorShiftEntry: professorShipEntry.getAssociatedShiftProfessorship()) {
+    				returnValue += shiftProfessorShiftEntry.getShift().hours();
+    			}
+    		}
+    	}
+		
+		return returnValue;
     }
 
     /***************************************************************************
@@ -328,8 +342,7 @@ public class Teacher extends Teacher_Base {
         // }
 
         return 0;
-    }
-
+}
     public int getServiceExemptionCredits(IExecutionPeriod executionPeriod) {
 
         // Date begin = executionPeriod.getBeginDate();

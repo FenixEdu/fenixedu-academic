@@ -363,5 +363,88 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
         return result;
     }
+    
+    
+    private int countAssociatedStudentsByEnrolmentNumber(int enrolmentNumber){
+    	int executionCourseAssociatedStudents = 0;
+		
+		for(ICurricularCourse curricularCourseFromExecutionCourseEntry: getAssociatedCurricularCourses()) {
+			for(IEnrolment enrolmentsEntry: curricularCourseFromExecutionCourseEntry.getEnrolments()) {
+				if(enrolmentsEntry.getExecutionPeriod() == getExecutionPeriod()) {
+					
+					IStudentCurricularPlan studentCurricularPlanEntry = enrolmentsEntry.getStudentCurricularPlan();
+					int numberOfEnrolmentsForThatExecutionCourse = 0;
+					
+					for(IEnrolment enrolmentsFromStudentCPEntry: studentCurricularPlanEntry.getEnrolments()) {
+						if(enrolmentsFromStudentCPEntry.getCurricularCourse() == curricularCourseFromExecutionCourseEntry) {
+							++numberOfEnrolmentsForThatExecutionCourse;
+						}
+					}
+						
+					if(numberOfEnrolmentsForThatExecutionCourse == enrolmentNumber) {
+						executionCourseAssociatedStudents++;
+					}
+				}
+			}
+		}
+		
+		return executionCourseAssociatedStudents;
+    }
+    
+    
+    public Integer getTotalEnrolmentStudentNumber() {  
+		int executionCourseStudentNumber = 0;
+		
+		for(ICurricularCourse curricularCourseFromExecutionCourseEntry: getAssociatedCurricularCourses()) {
+			for(IEnrolment enrolmentsEntry: curricularCourseFromExecutionCourseEntry.getEnrolments()) {
+				if(enrolmentsEntry.getExecutionPeriod() == getExecutionPeriod()) {
+					executionCourseStudentNumber++;
+				}
+			}
+		}
+		
+		return executionCourseStudentNumber;
+    }
+    
+    public Integer getFirstTimeEnrolmentStudentNumber(){
+		
+		return countAssociatedStudentsByEnrolmentNumber(1);
+    }
+    
+    
+    public Integer getSecondOrMoreTimeEnrolmentStudentNumber() {
+		
+		return getTotalEnrolmentStudentNumber() - getFirstTimeEnrolmentStudentNumber();    	
+    }
+    
+    
+    public Double getTotalHours(ShiftType shiftType) {
+    	double totalTime = 0;
+				
+    	for(IShift shiftEntry : this.getAssociatedShifts()){
+			if(shiftEntry.getTipo() == shiftType){
+				totalTime += shiftEntry.hours();
+			}
+		}	
+    	
+    	return totalTime;
+    }
+        
+    
+    public Double getStudentsNumberByShift(ShiftType shiftType) {
+    	int numShifts = 0;
+		int executionCourseStudentNumber = getTotalEnrolmentStudentNumber();
+    	
+    	for(IShift shiftEntry : this.getAssociatedShifts()){
+			if(shiftEntry.getTipo() == shiftType){
+				numShifts++;
+			}
+		}
+    	
+    	if(numShifts == 0)
+    		return 0.0;
+    	else 
+    		return (double) executionCourseStudentNumber / numShifts;
+    }
 
 }

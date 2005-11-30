@@ -27,6 +27,11 @@
 			</html:link>
 		</li>
 		</logic:equal>
+		<li>
+			<html:link page="/viewTeacherService/chooseExecutionYear.faces">
+				<bean:message key="link.teacherService"/>
+			</html:link>
+		</li>
 	</ul>
 	
 	<br />
