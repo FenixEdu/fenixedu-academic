@@ -22,8 +22,6 @@ public class Student extends Student_Base {
 
     private transient Double arithmeticMean;
 
-    private transient Integer enrollmentsNumber = 0;
-
     private transient Integer approvedEnrollmentsNumber = 0;
 
     public Student() {
@@ -200,6 +198,7 @@ public class Student extends Student_Base {
 
         int enrollmentsNumber = 0;
         int approvedEnrollmentsNumber = 0;
+        int actualApprovedEnrollmentsNumber = 0;
         int totalGrade = 0;
 
         for (IStudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
@@ -208,6 +207,8 @@ public class Student extends Student_Base {
                         && (currentExecutionYear == null || enrolment.getExecutionPeriod().getExecutionYear() != currentExecutionYear)) {
                     enrollmentsNumber++;
                     if (enrolment.getEnrollmentState() == EnrollmentState.APROVED) {
+                        actualApprovedEnrollmentsNumber++;
+
                         Integer finalGrade = enrolment.getFinalGrade();
                         if (finalGrade != null) {
                             approvedEnrollmentsNumber++;
@@ -220,8 +221,7 @@ public class Student extends Student_Base {
             }
         }
 
-        setEnrollmentsNumber(Integer.valueOf(enrollmentsNumber));
-        setApprovedEnrollmentsNumber(Integer.valueOf(approvedEnrollmentsNumber));
+        setApprovedEnrollmentsNumber(Integer.valueOf(actualApprovedEnrollmentsNumber));
 
         setApprovationRatio((enrollmentsNumber == 0) ? 0 : (double) approvedEnrollmentsNumber
                 / enrollmentsNumber);
@@ -247,17 +247,6 @@ public class Student extends Student_Base {
 
     private void setApprovedEnrollmentsNumber(Integer approvedEnrollmentsNumber) {
         this.approvedEnrollmentsNumber = approvedEnrollmentsNumber;
-    }
-
-    public Integer getEnrollmentsNumber() {
-        if (this.enrollmentsNumber == null) {
-            calculateApprovationRatioAndArithmeticMeanIfActive(null);
-        }
-        return enrollmentsNumber;
-    }
-
-    private void setEnrollmentsNumber(Integer enrollmentsNumber) {
-        this.enrollmentsNumber = enrollmentsNumber;
     }
 
 }

@@ -152,4 +152,16 @@ public class FenixBackingBean {
         return parameterValue;
     }
 
+    protected Double getAndHoldDoubleParameter(final String parameterName) {
+        final String parameterString = getRequestParameter(parameterName);
+        final Double parameterValue;
+        if (parameterString != null && parameterString.length() > 0) {
+            parameterValue = Double.valueOf(parameterString);
+            setRequestAttribute(parameterName, parameterValue);
+        } else {
+            parameterValue = null;
+        }
+        return parameterValue;
+    }
+
 }
