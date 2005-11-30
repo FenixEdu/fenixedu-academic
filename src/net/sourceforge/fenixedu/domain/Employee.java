@@ -56,7 +56,8 @@ public class Employee extends Employee_Base {
 
         List<IUnit> allTopUnits = unit.getTopUnits();
         for (IUnit topUnit : allTopUnits) {
-            if (topUnit.getType().equals(UnitType.DEPARTMENT)
+            if (topUnit.getType() != null && topUnit.getType().equals(UnitType.DEPARTMENT)
+                    && topUnit.getDepartment() != null
                     && topUnit.getDepartment().getCurrentActiveWorkingEmployees().contains(this)) {
                 return topUnit.getDepartment();
             }
