@@ -6092,21 +6092,21 @@ relation UnitFunction {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
 }
 
-relation FunctionParentInherentFuntion {
+relation FunctionParentInherentFunction {
     net.sourceforge.fenixedu.domain.organizationalStructure.Function playsRole inherentFunctions  {
     	multiplicity *;
     }
 	net.sourceforge.fenixedu.domain.organizationalStructure.Function playsRole parentInherentFunction;
 }
 
-relation PersonPersonFuntion {
+relation PersonPersonFunction {
 	net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction playsRole personFunctions  {
     	multiplicity *;
     }
 	net.sourceforge.fenixedu.domain.Person playsRole person;
 }
 
-relation FuntionPersonFunction {
+relation FunctionPersonFunction {
 	net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction playsRole personFunctions  {
     	multiplicity *;
     }

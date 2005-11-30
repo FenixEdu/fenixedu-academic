@@ -3,6 +3,6 @@ package relations;
 import net.sourceforge.fenixedu.stm.VBox;
 import net.sourceforge.fenixedu.stm.RelationList;
 import net.sourceforge.fenixedu.stm.OJBFunctionalSetWrapper;
-public class FunctionParentInherentFuntion extends FunctionParentInherentFuntion_Base {
+public class FunctionParentInherentFunction extends FunctionParentInherentFunction_Base {
     
 }

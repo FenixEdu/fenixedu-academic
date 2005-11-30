@@ -3,6 +3,6 @@ package relations;
 import net.sourceforge.fenixedu.stm.VBox;
 import net.sourceforge.fenixedu.stm.RelationList;
 import net.sourceforge.fenixedu.stm.OJBFunctionalSetWrapper;
-public class PersonPersonFuntion extends PersonPersonFuntion_Base {
+public class FunctionPersonFunction extends FunctionPersonFunction_Base {
     
 }

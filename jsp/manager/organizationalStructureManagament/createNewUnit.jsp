@@ -51,6 +51,16 @@
 				<f:selectItems value="#{organizationalStructureBackingBean.validUnitType}"/>				
 			</fc:selectOneMenu>
 			
+			<h:outputText value="<b>#{bundle['message.department']}</b>" escape="false"/>
+			<fc:selectOneMenu value="#{organizationalStructureBackingBean.departmentID}">
+				<f:selectItems value="#{organizationalStructureBackingBean.departments}"/>				
+			</fc:selectOneMenu>
+			
+			<h:outputText value="<b>#{bundle['message.degree']}</b>" escape="false"/>
+			<fc:selectOneMenu value="#{organizationalStructureBackingBean.degreeID}">
+				<f:selectItems value="#{organizationalStructureBackingBean.degrees}"/>				
+			</fc:selectOneMenu>
+			
 		</h:panelGrid>
 		
 		<h:outputText value="<br/>" escape="false" />	
