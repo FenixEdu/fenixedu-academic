@@ -268,7 +268,6 @@ vertical-align: top;
 			</f:facet>
 			<h:form>
 				<h:outputText value="<img src='#{CoordinatorStudentsBackingBean.contextPath}/person/retrievePersonalPhoto.do?method=retrieveByID&personCode=#{studentCurricularPlan.student.person.idInternal}'/>" escape="false"/>
-				<h:graphicImage url="#{CoordinatorStudentsBackingBean.contextPath}/person/retrievePersonalPhoto.do?method=retrieveByID&personCode=#{studentCurricularPlan.student.person.idInternal}"/>
 			</h:form>
 		</h:column>
 	</h:dataTable>
