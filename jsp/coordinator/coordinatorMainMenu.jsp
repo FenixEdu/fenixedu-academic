@@ -104,13 +104,11 @@
 		<br/><br/>
 		<strong><bean:message key="label.coordinator.degreeSite.students"/></strong>
 		<ul>
-<!--
 			<li>
 				<html:link page="<%= "/students.faces?degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 				    <bean:message key="list.students"/>
 				</html:link>			
 			</li>
--->
 			<li>
 				<html:link page="<%= "/viewStudentCurriculum.do?method=prepareView&amp;executionDegreeId=" + executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 				    <bean:message key="label.coordinator.studentInformation"/>
@@ -167,13 +165,12 @@
 	<br /><br />
 	<strong><bean:message key="label.coordinator.manageEvaluations" /></strong>
 	<ul>
-<!--
 		<li>
 			<html:link page="<%="/evaluation/evaluationsCalendar.faces?degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>">
 	        	<bean:message key="link.calendar" />
 	        </html:link>
 		</li>
--->
+<!--
 		<li>
 			<html:link page="<%="/evaluation/showWrittenTestsForExecutionCourses.faces?degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>">
 	        	<bean:message key="link.writtenTests" />
@@ -184,6 +181,7 @@
 	        	<bean:message key="link.projects" />
 	        </html:link>
 		</li>
+-->
 	</ul>
 	<br/>
 </logic:present>
