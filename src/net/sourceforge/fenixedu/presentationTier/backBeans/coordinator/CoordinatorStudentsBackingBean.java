@@ -41,6 +41,8 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 
     private Integer maxIndex = null;
 
+    private Boolean showPhoto = null;
+
     public Integer getDegreeCurricularPlanID() {
         return (degreeCurricularPlanID == null) ? degreeCurricularPlanID = getAndHoldIntegerParameter("degreeCurricularPlanID") : degreeCurricularPlanID;
     }
@@ -279,5 +281,14 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
     public Integer getResultsPerPage() {
         return Integer.valueOf(RESULTS_PER_PAGE);
     }
+
+	public Boolean getShowPhoto() {
+        final String showPhotoString = getAndHoldStringParameter("showPhoto");
+        return ("true".equals(showPhotoString)) ? Boolean.TRUE : showPhoto;
+	}
+
+	public void setShowPhoto(Boolean showPhoto) {
+		this.showPhoto = showPhoto;
+	}
 
 }

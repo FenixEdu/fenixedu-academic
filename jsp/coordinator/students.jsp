@@ -52,6 +52,11 @@ vertical-align: top;
 				<h:outputText value=" - " />
 				<h:inputText id="maxNumberApprovedString" value="#{CoordinatorStudentsBackingBean.maxNumberApprovedString}" size="4"/>
 			</h:panelGroup>
+
+			<h:outputText value="#{bundle['label.viewPhoto']}: " />
+			<h:selectBooleanCheckbox id="showPhoto" value="#{CoordinatorStudentsBackingBean.showPhoto}">
+				true
+			</h:selectBooleanCheckbox>
 		</h:panelGrid>
 
 		<h:commandButton styleClass="inputbutton" value="#{bundle['button.search']}"/>
@@ -78,6 +83,7 @@ vertical-align: top;
 					<c:param name="maxNumberApprovedString" value="${CoordinatorStudentsBackingBean.maxNumberApprovedString}"/>
 					<c:param name="minStudentNumberString" value="${CoordinatorStudentsBackingBean.minStudentNumberString}"/>
 					<c:param name="maxStudentNumberString" value="${CoordinatorStudentsBackingBean.maxStudentNumberString}"/>
+					<c:param name="showPhoto" value="${CoordinatorStudentsBackingBean.showPhoto}"/>
 					<c:param name="minIndex" value="${CoordinatorStudentsBackingBean.minIndex - CoordinatorStudentsBackingBean.resultsPerPage}"/>
 					<c:param name="maxIndex" value="${CoordinatorStudentsBackingBean.maxIndex - CoordinatorStudentsBackingBean.resultsPerPage}"/>
 				</c:url>
@@ -100,6 +106,7 @@ vertical-align: top;
 					<c:param name="maxNumberApprovedString" value="${CoordinatorStudentsBackingBean.maxNumberApprovedString}"/>
 					<c:param name="minStudentNumberString" value="${CoordinatorStudentsBackingBean.minStudentNumberString}"/>
 					<c:param name="maxStudentNumberString" value="${CoordinatorStudentsBackingBean.maxStudentNumberString}"/>
+					<c:param name="showPhoto" value="${CoordinatorStudentsBackingBean.showPhoto}"/>
 					<c:param name="minIndex" value="${pageIndex}"/>
 					<c:param name="maxIndex" value="${pageIndex + CoordinatorStudentsBackingBean.resultsPerPage - 1}"/>
 				</c:url>
@@ -122,6 +129,7 @@ vertical-align: top;
 					<c:param name="maxNumberApprovedString" value="${CoordinatorStudentsBackingBean.maxNumberApprovedString}"/>
 					<c:param name="minStudentNumberString" value="${CoordinatorStudentsBackingBean.minStudentNumberString}"/>
 					<c:param name="maxStudentNumberString" value="${CoordinatorStudentsBackingBean.maxStudentNumberString}"/>
+					<c:param name="showPhoto" value="${CoordinatorStudentsBackingBean.showPhoto}"/>
 					<c:param name="minIndex" value="${CoordinatorStudentsBackingBean.minIndex + CoordinatorStudentsBackingBean.resultsPerPage}"/>
 					<c:param name="maxIndex" value="${CoordinatorStudentsBackingBean.maxIndex + CoordinatorStudentsBackingBean.resultsPerPage}"/>
 				</c:url>
@@ -150,6 +158,7 @@ vertical-align: top;
 					<f:param name="maxNumberApprovedString" value="#{CoordinatorStudentsBackingBean.maxNumberApprovedString}"/>
 					<f:param name="minStudentNumberString" value="#{CoordinatorStudentsBackingBean.minStudentNumberString}"/>
 					<f:param name="maxStudentNumberString" value="#{CoordinatorStudentsBackingBean.maxStudentNumberString}"/>
+					<f:param name="showPhoto" value="#{CoordinatorStudentsBackingBean.showPhoto}"/>
 					<h:outputText value="#{bundle['label.number']}" />
 				</h:outputLink>
 			</f:facet>
@@ -169,6 +178,7 @@ vertical-align: top;
 					<f:param name="maxNumberApprovedString" value="#{CoordinatorStudentsBackingBean.maxNumberApprovedString}"/>
 					<f:param name="minStudentNumberString" value="#{CoordinatorStudentsBackingBean.minStudentNumberString}"/>
 					<f:param name="maxStudentNumberString" value="#{CoordinatorStudentsBackingBean.maxStudentNumberString}"/>
+					<f:param name="showPhoto" value="#{CoordinatorStudentsBackingBean.showPhoto}"/>
 					<h:outputText value="#{bundle['label.name']}" />
 				</h:outputLink>
 			</f:facet>
@@ -188,6 +198,7 @@ vertical-align: top;
 					<f:param name="maxNumberApprovedString" value="#{CoordinatorStudentsBackingBean.maxNumberApprovedString}"/>
 					<f:param name="minStudentNumberString" value="#{CoordinatorStudentsBackingBean.minStudentNumberString}"/>
 					<f:param name="maxStudentNumberString" value="#{CoordinatorStudentsBackingBean.maxStudentNumberString}"/>
+					<f:param name="showPhoto" value="#{CoordinatorStudentsBackingBean.showPhoto}"/>
 					<h:outputText value="#{bundle['label.email']}" />
 				</h:outputLink>
 			</f:facet>
@@ -206,6 +217,7 @@ vertical-align: top;
 					<f:param name="maxNumberApprovedString" value="#{CoordinatorStudentsBackingBean.maxNumberApprovedString}"/>
 					<f:param name="minStudentNumberString" value="#{CoordinatorStudentsBackingBean.minStudentNumberString}"/>
 					<f:param name="maxStudentNumberString" value="#{CoordinatorStudentsBackingBean.maxStudentNumberString}"/>
+					<f:param name="showPhoto" value="#{CoordinatorStudentsBackingBean.showPhoto}"/>
 					<h:outputText value="#{bundle['label.student.curricular.plan.state']}" />
 				</h:outputLink>
 			</f:facet>
@@ -224,6 +236,7 @@ vertical-align: top;
 					<f:param name="maxNumberApprovedString" value="#{CoordinatorStudentsBackingBean.maxNumberApprovedString}"/>
 					<f:param name="minStudentNumberString" value="#{CoordinatorStudentsBackingBean.minStudentNumberString}"/>
 					<f:param name="maxStudentNumberString" value="#{CoordinatorStudentsBackingBean.maxStudentNumberString}"/>
+					<f:param name="showPhoto" value="#{CoordinatorStudentsBackingBean.showPhoto}"/>
 					<h:outputText value="#{bundle['label.number.approved.curricular.courses']}" />
 				</h:outputLink>
 			</f:facet>
@@ -241,6 +254,7 @@ vertical-align: top;
 					<f:param name="maxNumberApprovedString" value="#{CoordinatorStudentsBackingBean.maxNumberApprovedString}"/>
 					<f:param name="minStudentNumberString" value="#{CoordinatorStudentsBackingBean.minStudentNumberString}"/>
 					<f:param name="maxStudentNumberString" value="#{CoordinatorStudentsBackingBean.maxStudentNumberString}"/>
+					<f:param name="showPhoto" value="#{CoordinatorStudentsBackingBean.showPhoto}"/>
 					<h:outputText value="#{bundle['label.average']}" />
 				</h:outputLink>
 			</f:facet>
@@ -248,12 +262,13 @@ vertical-align: top;
 				<f:converter converterId="net.sourceforge.fenixedu.presentationTier.jsf.converter.SimpleRoundConverter"/>
 			</h:outputText>
 		</h:column>
-		<h:column>
+		<h:column rendered="#{CoordinatorStudentsBackingBean.showPhoto == true}">
 			<f:facet name="header">
 				<h:outputText value="#{bundle['label.person.photo']}" />
 			</f:facet>
 			<h:form>
-				<h:graphicImage url="#{CoordinatorStudentsBackingBean.contextPath}/person/viewPhoto.do?personCode=#{studentCurricularPlan.student.person.idInternal}"/>
+				<h:outputText value="<img src='#{CoordinatorStudentsBackingBean.contextPath}/person/retrievePersonalPhoto.do?method=retrieveByID&personCode=#{studentCurricularPlan.student.person.idInternal}'/>" escape="false"/>
+				<h:graphicImage url="#{CoordinatorStudentsBackingBean.contextPath}/person/retrievePersonalPhoto.do?method=retrieveByID&personCode=#{studentCurricularPlan.student.person.idInternal}"/>
 			</h:form>
 		</h:column>
 	</h:dataTable>
