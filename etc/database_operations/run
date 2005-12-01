@@ -10,12 +10,4 @@ echo Using database: $1
 echo Enter password for $2:
 read -s password
 
-# Alter Unit Table
-mysql -u$2 -f $1 < alterContractTable.sql
-mysql -u$2 -f $1 < createUnitUnitTable.sql
-mysql -u$2 -f $1 < updateUnitUnitTable.sql > res.sql
-mysql -u$2 -f $1 < res.sql
-rm -rf res.sql
-
-# Create File Entry Table
-mysql -u$2 -f $1 < createFileEntryTable.sql
+mysql -u$2 -f $1 < fixProjectDates.sql

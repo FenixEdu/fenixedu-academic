@@ -575,12 +575,14 @@
       <field-descriptor
          name="begin"
          column="PROJECT_BEGIN"
-         jdbc-type="DATE"
+         jdbc-type="TIMESTAMP"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"/>
       />
       <field-descriptor
          name="end"
          column="PROJECT_END"
-         jdbc-type="DATE"
+         jdbc-type="TIMESTAMP"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"/>
       />
       <field-descriptor
          name="description"
