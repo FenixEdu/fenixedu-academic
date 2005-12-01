@@ -15,6 +15,11 @@
       <phase-listener>net.sourceforge.fenixedu.presentationTier.jsf.phaseListeners.PhaseTracker</phase-listener>
     </lifecycle>-->
 
+	<converter>
+		<converter-id>net.sourceforge.fenixedu.presentationTier.jsf.converter.SimpleRoundConverter</converter-id>
+		<converter-class>net.sourceforge.fenixedu.presentationTier.jsf.converter.SimpleRoundConverter</converter-class>
+	</converter>
+
 	<!-- MANAGED BEANS -->
 
 	<managed-bean>

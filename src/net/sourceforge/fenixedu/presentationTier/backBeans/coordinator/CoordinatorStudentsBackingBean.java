@@ -269,7 +269,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 
     public List<Integer> getIndexes() throws FenixFilterException, FenixServiceException {
         final List<Integer> indexes = new ArrayList<Integer>();
-        final double numberIndexes = Math.ceil(getNumberResults() / RESULTS_PER_PAGE);
+        final double numberIndexes = Math.ceil(0.5 + getNumberResults() / RESULTS_PER_PAGE);
         for (int i = 1; i <= numberIndexes; i++) {
             indexes.add(Integer.valueOf((i - 1) * RESULTS_PER_PAGE + 1));
         }

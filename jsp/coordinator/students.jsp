@@ -1,6 +1,7 @@
 <%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
+<%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 <style>
 .alignright {
 text-align: right;
@@ -31,49 +32,110 @@ vertical-align: top;
 				<f:selectItem itemLabel="#{bundleEnum['PAST']}" itemValue="PAST"/>
 			</h:selectOneMenu>
 
-			<h:outputText value="#{bundle['label.average.lower.bound']}: " />
-			<h:inputText id="minGradeString" value="#{CoordinatorStudentsBackingBean.minGradeString}" />
+			<h:outputText value="#{bundle['label.student.number']}: " />
+			<h:panelGroup>
+				<h:inputText id="minStudentNumberString" value="#{CoordinatorStudentsBackingBean.minStudentNumberString}" size="6"/>
+				<h:outputText value=" - " />
+				<h:inputText id="maxStudentNumberString" value="#{CoordinatorStudentsBackingBean.maxStudentNumberString}" size="6"/>
+			</h:panelGroup>
 
-			<h:outputText value="#{bundle['label.average.upper.bound']}: " />
-			<h:inputText id="maxGradeString" value="#{CoordinatorStudentsBackingBean.maxGradeString}" />
+			<h:outputText value="#{bundle['label.average']}: " />
+			<h:panelGroup>
+				<h:inputText id="minGradeString" value="#{CoordinatorStudentsBackingBean.minGradeString}" size="4"/>
+				<h:outputText value=" - " />
+				<h:inputText id="maxGradeString" value="#{CoordinatorStudentsBackingBean.maxGradeString}" size="4"/>
+			</h:panelGroup>
 
-			<h:outputText value="#{bundle['label.number.approved.lower.bound']}: " />
-			<h:inputText id="minNumberApprovedString" value="#{CoordinatorStudentsBackingBean.minNumberApprovedString}" />
-
-			<h:outputText value="#{bundle['label.number.approved.upper.bound']}: " />
-			<h:inputText id="maxNumberApprovedString" value="#{CoordinatorStudentsBackingBean.maxNumberApprovedString}" />
-
-			<h:outputText value="#{bundle['label.student.number.lower.bound']}: " />
-			<h:inputText id="minStudentNumberString" value="#{CoordinatorStudentsBackingBean.minStudentNumberString}" />
-
-			<h:outputText value="#{bundle['label.student.number.upper.bound']}: " />
-			<h:inputText id="maxStudentNumberString" value="#{CoordinatorStudentsBackingBean.maxStudentNumberString}" />
+			<h:outputText value="#{bundle['label.number.approved.curricular.courses']}: " />
+			<h:panelGroup>
+				<h:inputText id="minNumberApprovedString" value="#{CoordinatorStudentsBackingBean.minNumberApprovedString}" size="4"/>
+				<h:outputText value=" - " />
+				<h:inputText id="maxNumberApprovedString" value="#{CoordinatorStudentsBackingBean.maxNumberApprovedString}" size="4"/>
+			</h:panelGroup>
 		</h:panelGrid>
 
 		<h:commandButton styleClass="inputbutton" value="#{bundle['button.search']}"/>
 	</h:form>
 
-	<h:outputText value="<br/><br/>#{bundle['label.number.results']}: " escape="false"/>
+	<h:outputText value="<br/>#{bundle['label.number.results']}: " escape="false"/>
 	<h:outputText value="#{CoordinatorStudentsBackingBean.numberResults}"/>
+	<h:outputText value="<br/><br/>" escape="false"/>
 
-	<h:dataTable value="#{CoordinatorStudentsBackingBean.indexes}" var="index">
-		<h:column>
-			<h:outputLink>
-				<f:param name="degreeCurricularPlanID" value="#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}"/>
-				<f:param name="sortBy" value="student.number"/>
-				<f:param name="studentCurricularPlanStateString" value="#{CoordinatorStudentsBackingBean.studentCurricularPlanStateString}"/>
-				<f:param name="minGradeString" value="#{CoordinatorStudentsBackingBean.minGradeString}"/>
-				<f:param name="maxGradeString" value="#{CoordinatorStudentsBackingBean.maxGradeString}"/>
-				<f:param name="minNumberApprovedString" value="#{CoordinatorStudentsBackingBean.minNumberApprovedString}"/>
-				<f:param name="maxNumberApprovedString" value="#{CoordinatorStudentsBackingBean.maxNumberApprovedString}"/>
-				<f:param name="minStudentNumberString" value="#{CoordinatorStudentsBackingBean.minStudentNumberString}"/>
-				<f:param name="maxStudentNumberString" value="#{CoordinatorStudentsBackingBean.maxStudentNumberString}"/>
-				<f:param name="minIndex" value="#{index}"/>
-				<h:outputText value="#{index}" />
-			</h:outputLink>
-		</h:column>
-	</h:dataTable>
+	<h:panelGrid>
+	<h:panelGroup>
+	<h:outputText value="<center>" escape="false"/>
+	<f:verbatim>
+		<c:forEach items="${CoordinatorStudentsBackingBean.indexes}" var="pageIndex" varStatus="status">
+			<c:if test="${status.first}">
+			<c:if test="${pageIndex != CoordinatorStudentsBackingBean.minIndex}">
+				<c:url value="students.faces" var="pageURL">
+					<c:param name="degreeCurricularPlanID" value="${CoordinatorStudentsBackingBean.degreeCurricularPlanID}"/>
+					<c:param name="sortBy" value="${CoordinatorStudentsBackingBean.sortBy}"/>
+					<c:param name="studentCurricularPlanStateString" value="${CoordinatorStudentsBackingBean.studentCurricularPlanStateString}"/>
+					<c:param name="minGradeString" value="${CoordinatorStudentsBackingBean.minGradeString}"/>
+					<c:param name="maxGradeString" value="${CoordinatorStudentsBackingBean.maxGradeString}"/>
+					<c:param name="minNumberApprovedString" value="${CoordinatorStudentsBackingBean.minNumberApprovedString}"/>
+					<c:param name="maxNumberApprovedString" value="${CoordinatorStudentsBackingBean.maxNumberApprovedString}"/>
+					<c:param name="minStudentNumberString" value="${CoordinatorStudentsBackingBean.minStudentNumberString}"/>
+					<c:param name="maxStudentNumberString" value="${CoordinatorStudentsBackingBean.maxStudentNumberString}"/>
+					<c:param name="minIndex" value="${CoordinatorStudentsBackingBean.minIndex - CoordinatorStudentsBackingBean.resultsPerPage}"/>
+					<c:param name="maxIndex" value="${CoordinatorStudentsBackingBean.maxIndex - CoordinatorStudentsBackingBean.resultsPerPage}"/>
+				</c:url>
+				<a href='<c:out value="${pageURL}"/>'>
+					<c:out value="<< "/>
+				</a>
+			</c:if>
+			</c:if>
+			<c:if test="${pageIndex == CoordinatorStudentsBackingBean.minIndex}">
+				<c:out value="${status.index + 1}"/>
+			</c:if>
+			<c:if test="${pageIndex != CoordinatorStudentsBackingBean.minIndex}">
+				<c:url value="students.faces" var="pageURL">
+					<c:param name="degreeCurricularPlanID" value="${CoordinatorStudentsBackingBean.degreeCurricularPlanID}"/>
+					<c:param name="sortBy" value="${CoordinatorStudentsBackingBean.sortBy}"/>
+					<c:param name="studentCurricularPlanStateString" value="${CoordinatorStudentsBackingBean.studentCurricularPlanStateString}"/>
+					<c:param name="minGradeString" value="${CoordinatorStudentsBackingBean.minGradeString}"/>
+					<c:param name="maxGradeString" value="${CoordinatorStudentsBackingBean.maxGradeString}"/>
+					<c:param name="minNumberApprovedString" value="${CoordinatorStudentsBackingBean.minNumberApprovedString}"/>
+					<c:param name="maxNumberApprovedString" value="${CoordinatorStudentsBackingBean.maxNumberApprovedString}"/>
+					<c:param name="minStudentNumberString" value="${CoordinatorStudentsBackingBean.minStudentNumberString}"/>
+					<c:param name="maxStudentNumberString" value="${CoordinatorStudentsBackingBean.maxStudentNumberString}"/>
+					<c:param name="minIndex" value="${pageIndex}"/>
+					<c:param name="maxIndex" value="${pageIndex + CoordinatorStudentsBackingBean.resultsPerPage - 1}"/>
+				</c:url>
+				<a href='<c:out value="${pageURL}"/>'>
+					<c:out value="${status.index + 1}"/>
+				</a>
+			</c:if>
+			<c:if test="${!status.last}">
+				<c:out value=" - "/>
+			</c:if>
+			<c:if test="${status.last}">
+			<c:if test="${pageIndex != CoordinatorStudentsBackingBean.minIndex}">
+				<c:url value="students.faces" var="pageURL">
+					<c:param name="degreeCurricularPlanID" value="${CoordinatorStudentsBackingBean.degreeCurricularPlanID}"/>
+					<c:param name="sortBy" value="${CoordinatorStudentsBackingBean.sortBy}"/>
+					<c:param name="studentCurricularPlanStateString" value="${CoordinatorStudentsBackingBean.studentCurricularPlanStateString}"/>
+					<c:param name="minGradeString" value="${CoordinatorStudentsBackingBean.minGradeString}"/>
+					<c:param name="maxGradeString" value="${CoordinatorStudentsBackingBean.maxGradeString}"/>
+					<c:param name="minNumberApprovedString" value="${CoordinatorStudentsBackingBean.minNumberApprovedString}"/>
+					<c:param name="maxNumberApprovedString" value="${CoordinatorStudentsBackingBean.maxNumberApprovedString}"/>
+					<c:param name="minStudentNumberString" value="${CoordinatorStudentsBackingBean.minStudentNumberString}"/>
+					<c:param name="maxStudentNumberString" value="${CoordinatorStudentsBackingBean.maxStudentNumberString}"/>
+					<c:param name="minIndex" value="${CoordinatorStudentsBackingBean.minIndex + CoordinatorStudentsBackingBean.resultsPerPage}"/>
+					<c:param name="maxIndex" value="${CoordinatorStudentsBackingBean.maxIndex + CoordinatorStudentsBackingBean.resultsPerPage}"/>
+				</c:url>
+				<a href='<c:out value="${pageURL}"/>'>
+					<c:out value=" >>"/>
+				</a>
+			</c:if>
+			</c:if>
+		</c:forEach>
+	</f:verbatim>
+	<h:outputText value="</center>" escape="false"/>
+	</h:panelGroup>
 
+	<h:panelGroup>
 	<h:dataTable value="#{CoordinatorStudentsBackingBean.studentCurricularPlans}" var="studentCurricularPlan" cellpadding="0"
 			headerClass="listClasses-header" columnClasses="listClasses">
 		<h:column>
@@ -182,7 +244,9 @@ vertical-align: top;
 					<h:outputText value="#{bundle['label.average']}" />
 				</h:outputLink>
 			</f:facet>
-			<h:outputText value="#{studentCurricularPlan.student.arithmeticMean}"/>
+			<h:outputText value="#{studentCurricularPlan.student.arithmeticMean}">
+				<f:converter converterId="net.sourceforge.fenixedu.presentationTier.jsf.converter.SimpleRoundConverter"/>
+			</h:outputText>
 		</h:column>
 		<h:column>
 			<f:facet name="header">
@@ -193,5 +257,7 @@ vertical-align: top;
 			</h:form>
 		</h:column>
 	</h:dataTable>
+	</h:panelGroup>
+	</h:panelGrid>
 
 </ft:tilesView>
