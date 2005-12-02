@@ -34,10 +34,10 @@ public class JdbcMysqlFileSupport {
         } catch (IOException e) {
             throw new Error(e);
         }
-        driver = properties.getProperty("db.slide.driver");
-        alias = "jdbc:" + properties.getProperty("db.slide.alias");
-        user = properties.getProperty("db.slide.user");
-        password = properties.getProperty("db.slide.pass");
+        driver = properties.getProperty("db.slide.driver").trim();
+        alias = properties.getProperty("db.slide.alias").trim();
+        user = properties.getProperty("db.slide.user").trim();
+        password = properties.getProperty("db.slide.pass").trim();
     }
 
     private interface Closure {
