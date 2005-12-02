@@ -52,34 +52,26 @@
 			<!-- Temporary solution (until we make expectations available for all departments) DEI Code = 28 -->
 			<% String deiCode = "28"; %>
 
-			<logic:equal name="userView" property="person.employee.departmentWorkingPlace.code" value="<%= deiCode %>">
-				<li>
-					<html:link page="/teacher/teacherExpectationDefinitionPeriod/viewTeacherExpectationDefinitionPeriod.faces">
-						<bean:message key="link.teacherExpectationDefinitionPeriodManagement"/>
-					</html:link>
-				</li>
-			</logic:equal>
+			<logic:notEmpty name="userView" property="person.employee.departmentWorkingPlace">
+				<logic:equal name="userView" property="person.employee.departmentWorkingPlace.code" value="<%= deiCode %>">
+					<li>
+						<html:link page="/teacher/teacherExpectationDefinitionPeriod/viewTeacherExpectationDefinitionPeriod.faces">
+							<bean:message key="link.teacherExpectationDefinitionPeriodManagement"/>
+						</html:link>
+					</li>
+				</logic:equal>
+			</logic:notEmpty>
 		</ul>
+		<!-- 
+		<ul>
+			<li class="navheader">
+				<html:link page="/functionsManagement/personSearchForFunctionsManagement.faces">
+					<bean:message key="link.functions.management"/>
+				</html:link>
+			</li>
+		</ul>
+		 -->
 		<br/>
 	</logic:present>
-	<!-- 
-	<ul>
-		<li class="navheader">
-			<strong> <bean:message key="link.functions.management"/> </strong>
-		</li>
-	</ul>
 	
-	<ul>
-		<li>
-			<html:link page="/teacher/functionsManagement/personSearchForFunctionsManagement.faces?link=chooseUnit">
-				<bean:message key="link.functions.management.new"/>
-			</html:link>
-		</li>		
-		<li>	
-			<html:link page="/teacher/functionsManagement/personSearchForFunctionsManagement.faces?link=listPersonFunctions">		
-				<bean:message key="link.functions.management.edit"/>			
-			</html:link>	
-		</li>
-	</ul>
-	-->
 </logic:present>
