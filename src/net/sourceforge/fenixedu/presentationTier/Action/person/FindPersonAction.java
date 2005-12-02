@@ -105,7 +105,19 @@ public class FindPersonAction extends FenixDispatchAction {
         if (name != null && name.length() > 0) {
             findPersonForm.set("name", name);
         }
+        
+        Boolean viewPhoto = null;
+       
+        if (request.getParameter("viewPhoto") != null
+                && request.getParameter("viewPhoto").length() > 0) {
+        	viewPhoto = getCheckBoxValue((String) request.getParameter("viewPhoto"));
 
+        } else if (findPersonForm.get("viewPhoto") != null) {
+        	viewPhoto = getCheckBoxValue((String) findPersonForm.get("viewPhoto"));
+        }
+        findPersonForm.set("viewPhoto",viewPhoto.toString());
+        request.setAttribute("viewPhoto", viewPhoto);
+      
         return mapping.findForward("findPerson");
     }
 
@@ -242,8 +254,15 @@ public class FindPersonAction extends FenixDispatchAction {
         } else {
             request.setAttribute("show", Boolean.FALSE);
         }
+        Boolean viewPhoto = null;
+        if (request.getParameter("viewPhoto") != null
+                && request.getParameter("viewPhoto").length() > 0) {            
+        	viewPhoto = getCheckBoxValue((String) request.getParameter("viewPhoto"));
 
-        Boolean viewPhoto = getCheckBoxValue((String) findPersonForm.get("viewPhoto"));
+        } else if (findPersonForm.get("viewPhoto") != null) {
+        	viewPhoto = getCheckBoxValue((String) findPersonForm.get("viewPhoto"));
+        }
+        findPersonForm.set("viewPhoto", viewPhoto.toString());
         request.setAttribute("viewPhoto", viewPhoto);
         return mapping.findForward("findPerson");
 

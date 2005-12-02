@@ -233,7 +233,7 @@ else
 			<bean:write name="indexPageId"/>
 		</logic:equal>
 		<logic:notEqual name="actualPage" value="<%= pageContext.findAttribute("indexPageId").toString()%>" >
-			<html:link page="<%= "/findPerson.do?method=findPerson&amp;name=" + pageContext.findAttribute("name") + "&amp;startIndex=" + pageContext.findAttribute("indexPageId").toString() + "&amp;roleType=" + pageContext.findAttribute("roleType")+ "&amp;degreeId=" + pageContext.findAttribute("degreeId") + "&amp;degreeType=" + pageContext.findAttribute("degreeType")+ "&amp;departmentId=" + pageContext.findAttribute("departmentId") %>"><%= pageIndex.intValue() + 1 %></html:link>
+			<html:link page="<%= "/findPerson.do?method=findPerson&amp;name=" + pageContext.findAttribute("name") + "&amp;startIndex=" + pageContext.findAttribute("indexPageId").toString() + "&amp;roleType=" + pageContext.findAttribute("roleType")+ "&amp;degreeId=" + pageContext.findAttribute("degreeId") + "&amp;degreeType=" + pageContext.findAttribute("degreeType")+ "&amp;departmentId=" + pageContext.findAttribute("departmentId") +"&amp;viewPhoto=" + pageContext.findAttribute("viewPhoto")%>"><%= pageIndex.intValue() + 1 %></html:link>
 		</logic:notEqual>	
 	</logic:iterate>
 </p>
