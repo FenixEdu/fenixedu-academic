@@ -275,7 +275,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 selectItem.setLabel("(L) " + degree.getNome());
             } else if (degree.getTipoCurso().equals(DegreeType.MASTER_DEGREE)) {
                 selectItem.setLabel("(M) " + degree.getNome());
-            } 
+            }
             selectItem.setValue(degree.getIdInternal().toString());
             list.add(selectItem);
         }
@@ -340,17 +340,11 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
 
         UnitType type = getUnitType();
-        Integer departmentID = null, degreeID = null;
-
-        if (this.getDepartmentID() != null && !this.getDepartmentID().equals("#")) {
-            departmentID = Integer.valueOf(this.getDepartmentID());
-        }
-        if (this.getDegreeID() != null && !this.getDegreeID().equals("#")) {
-            degreeID = Integer.valueOf(this.getDegreeID());
-        }
+        CreateNewUnitParameters parameters = new CreateNewUnitParameters(departmentID, degreeID, this, 1);
 
         final Object[] argsToRead = { null, null, this.getUnitName(), this.getUnitCostCenter(),
-                datesResult.getBeginDate(), datesResult.getEndDate(), type, departmentID, degreeID };
+                datesResult.getBeginDate(), datesResult.getEndDate(), type,
+                parameters.getDepartmentID(), parameters.getDegreeID() };
 
         try {
             ServiceUtils.executeService(getUserView(), "CreateNewUnit", argsToRead);
@@ -374,18 +368,11 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
 
         UnitType type = getUnitType();
-        Integer departmentID = null, degreeID = null;
-
-        if (this.getDepartmentID() != null && !this.getDepartmentID().equals("#")) {
-            departmentID = Integer.valueOf(this.getDepartmentID());
-        }
-        if (this.getDegreeID() != null && !this.getDegreeID().equals("#")) {
-            degreeID = Integer.valueOf(this.getDegreeID());
-        }
+        CreateNewUnitParameters parameters = new CreateNewUnitParameters(departmentID, degreeID, this, 1);
 
         final Object[] argsToRead = { null, this.getUnit().getIdInternal(), this.getUnitName(),
                 this.getUnitCostCenter(), datesResult.getBeginDate(), datesResult.getEndDate(), type,
-                departmentID, degreeID };
+                parameters.getDepartmentID(), parameters.getDegreeID() };
 
         try {
             ServiceUtils.executeService(getUserView(), "CreateNewUnit", argsToRead);
@@ -409,18 +396,11 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
 
         UnitType type = getUnitType();
-        Integer departmentID = null, degreeID = null;
-
-        if (this.getDepartmentID() != null && !this.getDepartmentID().equals("#")) {
-            departmentID = Integer.valueOf(this.getDepartmentID());
-        }
-        if (this.getDegreeID() != null && !this.getDegreeID().equals("#")) {
-            degreeID = Integer.valueOf(this.getDegreeID());
-        }
+        CreateNewUnitParameters parameters = new CreateNewUnitParameters(departmentID, degreeID, this, 1);
 
         final Object[] argsToRead = { this.getChooseUnit().getIdInternal(), null, this.getUnitName(),
                 this.getUnitCostCenter(), datesResult.getBeginDate(), datesResult.getEndDate(), type,
-                departmentID, degreeID };
+                parameters.getDepartmentID(), parameters.getDegreeID() };
 
         try {
             ServiceUtils.executeService(getUserView(), "CreateNewUnit", argsToRead);
@@ -444,18 +424,12 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         String costCenterCodeString = getValidCosteCenterCode();
 
-        Integer departmentID = null, degreeID = null;
-        if (this.getUnit().getDepartment() != null) {
-            departmentID = this.getUnit().getDepartment().getIdInternal();
-        }
-        if (this.getUnit().getDegree() != null) {
-            degreeID = this.getUnit().getDegree().getIdInternal();
-        }
+        CreateNewUnitParameters parameters = new CreateNewUnitParameters(departmentID, degreeID, this, 2);
 
         final Object[] argsToRead = { this.getUnit().getIdInternal(),
                 this.getChooseUnit().getIdInternal(), this.getUnit().getName(), costCenterCodeString,
                 this.getUnit().getBeginDate(), this.getUnit().getEndDate(), this.getUnit().getType(),
-                departmentID, degreeID };
+                parameters.getDepartmentID(), parameters.getDegreeID() };
 
         try {
             ServiceUtils.executeService(getUserView(), "CreateNewUnit", argsToRead);
@@ -471,19 +445,12 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         String costCenterCodeString = getValidCosteCenterCode();
 
-        Integer departmentID = null, degreeID = null;
-
-        if (this.getUnit().getDepartment() != null) {
-            departmentID = this.getUnit().getDepartment().getIdInternal();
-        }
-        if (this.getUnit().getDegree() != null) {
-            degreeID = this.getUnit().getDegree().getIdInternal();
-        }
+        CreateNewUnitParameters parameters = new CreateNewUnitParameters(departmentID, degreeID, this, 2);
 
         final Object[] argsToRead = { this.getUnit().getIdInternal(),
                 this.getChooseUnit().getIdInternal(), this.getUnit().getName(), costCenterCodeString,
                 this.getUnit().getBeginDate(), this.getUnit().getEndDate(), this.getUnit().getType(),
-                departmentID, degreeID };
+                parameters.getDepartmentID(), parameters.getDegreeID() };
 
         try {
             ServiceUtils.executeService(getUserView(), "CreateNewUnit", argsToRead);
@@ -949,24 +916,43 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             return beginDate;
         }
 
-        public void setBeginDate(Date beginDate) {
-            this.beginDate = beginDate;
-        }
-
         public Date getEndDate() {
             return endDate;
-        }
-
-        public void setEndDate(Date endDate) {
-            this.endDate = endDate;
         }
 
         public boolean isTest() {
             return test;
         }
+    }
 
-        public void setTest(boolean test) {
-            this.test = test;
+    public class CreateNewUnitParameters {
+
+        private Integer degreeID, departmentID;
+
+        public CreateNewUnitParameters(String departmentID, String degreeID,
+                OrganizationalStructureBackingBean bean, int mode) throws NumberFormatException,
+                FenixFilterException, FenixServiceException {
+
+            if (mode == 1) {
+                this.departmentID = (bean.getDepartmentID() != null && !bean.getDepartmentID().equals(
+                        "#")) ? Integer.valueOf(bean.getDepartmentID()) : null;
+                this.degreeID = (bean.getDegreeID() != null && !bean.getDegreeID().equals("#")) ? Integer
+                        .valueOf(bean.getDegreeID())
+                        : null;
+            } else if (mode == 2) {
+                this.departmentID = (bean.getUnit().getDepartment() != null) ? bean.getUnit()
+                        .getDepartment().getIdInternal() : null;
+                this.degreeID = (bean.getUnit().getDegree() != null) ? bean.getUnit().getDegree()
+                        .getIdInternal() : null;
+            }
+        }
+
+        public Integer getDegreeID() {
+            return degreeID;
+        }
+
+        public Integer getDepartmentID() {
+            return departmentID;
         }
     }
 }
