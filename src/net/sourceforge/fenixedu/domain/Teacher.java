@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
+import net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
 import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
@@ -189,20 +190,6 @@ public class Teacher extends Teacher_Base {
         return executionCourses;
     }
     
-    public List<ITeacherServiceExemption> getServiceExemptionSituations(Date beginDate, Date endDate) {
-
-        List<ITeacherServiceExemption> serviceExemptions = new ArrayList<ITeacherServiceExemption>();
-        for (ITeacherServiceExemption serviceExemption : this.getServiceExemptionSituations()) {
-            if ((serviceExemption.getStart().after(beginDate) && (serviceExemption.getEnd() == null || serviceExemption
-                    .getEnd().before(endDate)))
-                    || (serviceExemption.getStart().before(beginDate) && (serviceExemption.getEnd() == null || serviceExemption
-                            .getEnd().after(endDate)))) {
-                serviceExemptions.add(serviceExemption);
-            }
-        }
-        return serviceExemptions;
-    }
-
     public List<IExecutionCourse> getAllLecturedExecutionCourses() {
         List<IExecutionCourse> executionCourses = new ArrayList<IExecutionCourse>();
 
@@ -212,19 +199,20 @@ public class Teacher extends Teacher_Base {
 
         return executionCourses;
     }
-    
-    public Double getHoursLecturedOnExecutionCourse(IExecutionCourse executionCourse){
-    	double returnValue = 0;
-    	
-    	for(IProfessorship professorShipEntry: executionCourse.getProfessorships()){
-    		if(professorShipEntry.getTeacher() == this){
-    			for(IShiftProfessorship shiftProfessorShiftEntry: professorShipEntry.getAssociatedShiftProfessorship()) {
-    				returnValue += shiftProfessorShiftEntry.getShift().hours();
-    			}
-    		}
-    	}
-		
-		return returnValue;
+
+    public Double getHoursLecturedOnExecutionCourse(IExecutionCourse executionCourse) {
+        double returnValue = 0;
+
+        for (IProfessorship professorShipEntry : executionCourse.getProfessorships()) {
+            if (professorShipEntry.getTeacher() == this) {
+                for (IShiftProfessorship shiftProfessorShiftEntry : professorShipEntry
+                        .getAssociatedShiftProfessorship()) {
+                    returnValue += shiftProfessorShiftEntry.getShift().hours();
+                }
+            }
+        }
+
+        return returnValue;
     }
 
     /***************************************************************************
@@ -328,21 +316,35 @@ public class Teacher extends Teacher_Base {
 
     }
 
+    public List<ITeacherServiceExemption> getServiceExemptionSituations(Date beginDate, Date endDate) {
+
+        List<ITeacherServiceExemption> serviceExemptions = new ArrayList<ITeacherServiceExemption>();
+        for (ITeacherServiceExemption serviceExemption : this.getServiceExemptionSituations()) {
+            if ((serviceExemption.getStart().before(beginDate) || serviceExemption.getStart().after(
+                    beginDate))
+                    && ((serviceExemption.getEnd() != null && (serviceExemption.getEnd().before(endDate) || serviceExemption
+                            .getEnd().after(endDate))) || serviceExemption.getEnd() == null)) {
+                serviceExemptions.add(serviceExemption);
+            }
+        }
+        return serviceExemptions;
+    }
+    
     public int getHoursByCategory(IExecutionPeriod executionPeriod) {
 
-        // Date begin = executionPeriod.getBeginDate();
-        // Date end = executionPeriod.getEndDate();
-        //
-        // List<IContract> list = new ArrayList<IContract>();
-        // for (IContract contract :
-        // this.getPerson().getEmployee().getContracts()) {
-        // if(contract.belongsToPeriod(begin, end)){
-        // list.add(contract);
-        // }
-        // }
+//        Date begin = executionPeriod.getBeginDate();
+//        Date end = executionPeriod.getEndDate();
+//
+//        List<IContract> list = new ArrayList<IContract>();
+//        for (IContract contract : this.getPerson().getEmployee().getContracts()) {
+//            if (contract.belongsToPeriod(begin, end)) {
+//                list.add(contract);
+//            }
+//        }
 
         return 0;
-}
+    }
+
     public int getServiceExemptionCredits(IExecutionPeriod executionPeriod) {
 
         // Date begin = executionPeriod.getBeginDate();
@@ -362,16 +364,15 @@ public class Teacher extends Teacher_Base {
 
     public int getManagementFunctionsCredits(IExecutionPeriod executionPeriod) {
 
-        // Date begin = executionPeriod.getBeginDate();
-        // Date end = executionPeriod.getEndDate();
-        //
-        // List<IPersonFunction> list = new ArrayList<IPersonFunction>();
-        // for (IPersonFunction personFunction :
-        // this.getPerson().getPersonFunctions()) {
-        // if (personFunction.belongsToPeriod(begin, end)) {
-        // list.add(personFunction);
-        // }
-        // }
+//        Date begin = executionPeriod.getBeginDate();
+//        Date end = executionPeriod.getEndDate();
+//
+//        List<IPersonFunction> list = new ArrayList<IPersonFunction>();
+//        for (IPersonFunction personFunction : this.getPerson().getPersonFunctions()) {
+//            if (personFunction.belongsToPeriod(begin, end)) {
+//                list.add(personFunction);
+//            }
+//        }
 
         return 0;
     }

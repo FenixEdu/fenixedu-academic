@@ -3153,8 +3153,9 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	public java.util.List<IExecutionCourse> getAllLecturedExecutionCourses();
 	
 	public java.util.List<IMasterDegreeThesisDataVersion> getGuidedMasterDegreeThesisByExecutionYear(IExecutionYear executionYear);
-	
-	public java.util.List<net.sourceforge.fenixedu.domain.teacher.ITeacherServiceExemption> getServiceExemptionSituations(java.util.Date beginDate, java.util.Date endDate);
+
+	public java.util.List<net.sourceforge.fenixedu.domain.teacher.ITeacherServiceExemption> getServiceExemptionSituations(java.util.Date beginDate, java.util.Date endDate);	
+
 	public java.util.List<IMasterDegreeThesisDataVersion> getAllGuidedMasterDegreeThesis();
 	
 	public void createTeacherPersonalExpectation(

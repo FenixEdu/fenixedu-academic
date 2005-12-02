@@ -496,17 +496,6 @@ public class Person extends Person_Base {
 		return groupsCount;
 	}
 	
-//    public List<IPersonFunction> getFunctionsByPeriod(IExecutionPeriod executionPeriod){
-//        
-//        List<IPersonFunction> activeFunctions = new ArrayList<IPersonFunction>();
-//        
-//        for (IPersonFunction personFunction : this.getPersonFunctions()) {
-//            if () {
-//                activeFunctions.add(personFunction);
-//            }
-//        }
-//    }
-	
     public List<IPersonFunction> getActiveFunctions() {
 
         List<IPersonFunction> activeFunctions = new ArrayList<IPersonFunction>();
