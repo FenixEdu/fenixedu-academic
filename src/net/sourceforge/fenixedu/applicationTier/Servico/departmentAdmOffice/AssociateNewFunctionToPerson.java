@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction;
+import net.sourceforge.fenixedu.domain.organizationalStructure.RulesRepository;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -38,12 +39,16 @@ public class AssociateNewFunctionToPerson implements IService {
             throw new FenixServiceException("error.noFunction");
         }
         
-        IPersonFunction personFunction = DomainFactory.makePersonFunction();
-        
-        personFunction.setPerson(person);
-        personFunction.setFunction(function);
-        personFunction.setCredits(credits);
-        personFunction.setBeginDate(beginDate);
-        personFunction.setEndDate(endDate);        
+        if(RulesRepository.isElegible(person, function.getUnit(), function.getName())){                      
+            IPersonFunction personFunction = DomainFactory.makePersonFunction();
+            personFunction.setPerson(person);
+            personFunction.setFunction(function);
+            personFunction.setCredits(credits);
+            personFunction.setBeginDate(beginDate);
+            personFunction.setEndDate(endDate);
+        }
+        else{
+            throw new FenixServiceException("error.associateFunction");
+        }
     }
 }

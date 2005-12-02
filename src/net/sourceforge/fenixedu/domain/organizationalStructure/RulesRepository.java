@@ -15,8 +15,8 @@ public class RulesRepository {
 // DAR ORIGEM A UM MODELO DE REGRAS E EXCEPÇÕES APLICADO ÀS FUNÇÕES.
     
     public static Boolean isElegible(IPerson person, IUnit unit, String functionName) {
-        if (unit.getName().equals("IST")) {
-            return isElegibleIST(person, functionName);
+        if (unit.getName().equals("Conselho Directivo")) {
+            return isElegibleConselhoDirectivo(person, functionName);
         }
         if (unit.getName().equals("Assembleia de Representantes")) {
             return isElegibleAssembleiaRepresentantes(person, functionName);
@@ -54,9 +54,9 @@ public class RulesRepository {
         return true;
     }
     
-    private static Boolean isElegibleIST (IPerson person, String functionName) {
+    private static Boolean isElegibleConselhoDirectivo (IPerson person, String functionName) {
         // presidente
-        if ( functionName.equals("Presidente")) {
+        if ( functionName.equals("Presidente do IST")) {
             return (isCatedraticTeacher(person) || isAssociatedTeacher(person));
         }
         return true;

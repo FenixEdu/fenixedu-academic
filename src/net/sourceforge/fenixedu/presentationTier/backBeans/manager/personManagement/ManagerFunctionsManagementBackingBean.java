@@ -62,13 +62,9 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
     }
 
     public String getUnits() throws FenixFilterException, FenixServiceException {
+        
         StringBuffer buffer = new StringBuffer();
-
-        final Object[] argsToRead = { Unit.class };
-
-        List<IUnit> allUnits = new ArrayList<IUnit>();
-        allUnits.addAll((List<IUnit>) ServiceUtils.executeService(null, "ReadAllDomainObject",
-                argsToRead));
+        List<IUnit> allUnits = readAllDomainObjects(Unit.class);
 
         Date currentDate = Calendar.getInstance().getTime();
         for (IUnit unit : allUnits) {
