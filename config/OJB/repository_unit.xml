@@ -41,11 +41,22 @@
 	   column="END_DATE"  
 	   jdbc-type="DATE"
     />
+    <field-descriptor id="9"
+	   name="keyDegree"    
+	   column="KEY_DEGREE"  
+	   jdbc-type="INTEGER"
+    />
 
 	<reference-descriptor auto-retrieve="false"
     	name="department"
         class-ref="net.sourceforge.fenixedu.domain.Department">
 	    <foreignkey field-ref="keyDepartment"/>
+	</reference-descriptor>
+	
+	<reference-descriptor auto-retrieve="false"
+    	name="degree"
+        class-ref="net.sourceforge.fenixedu.domain.Degree">
+	    <foreignkey field-ref="keyDegree"/>
 	</reference-descriptor>
 	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"

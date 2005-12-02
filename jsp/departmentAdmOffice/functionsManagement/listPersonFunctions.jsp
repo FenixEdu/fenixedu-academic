@@ -12,7 +12,10 @@
 	
 		<h:inputHidden binding="#{functionsManagementBackingBean.personIDHidden}"/>
 			
-		<h:outputText value="<H2>#{bundle['label.search.function']}</H2>" escape="false"/>	
+		<h:outputText styleClass="error" rendered="#{!empty functionsManagementBackingBean.errorMessage}"
+			value="#{bundle[functionsManagementBackingBean.errorMessage]}<br/>" escape="false"/>	
+			
+		<h:outputText value="<H2>#{bundle['label.search.functionManagement']}</H2>" escape="false"/>	
 
 		<h:outputText value="<br/>" escape="false" />	
 

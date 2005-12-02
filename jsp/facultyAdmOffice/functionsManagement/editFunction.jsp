@@ -33,7 +33,7 @@
 		<h:outputText styleClass="error" rendered="#{!empty facultyAdmOfficeFunctionsManagementBackingBean.errorMessage}"
 				value="#{bundle[facultyAdmOfficeFunctionsManagementBackingBean.errorMessage]}"/>
 	
-		<h:outputText value="<br/><br/>" escape="false" />
+		<h:outputText value="<br/>" escape="false" />
 	
 		<h:panelGrid columns="2" styleClass="infoop">			
 			<h:outputText value="<b>#{bundle['label.search.function']}:</b>" escape="false"/>			

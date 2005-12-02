@@ -41,6 +41,18 @@
 		column="CLASS_NAME_FOR_DEGREE_CURRICULAR_PLANS"
 		jdbc-type="VARCHAR"
 	/>
+	<field-descriptor
+		name="keyUnit"
+		column="KEY_UNIT"
+		jdbc-type="INTEGER"
+	 />
+	
+	<reference-descriptor auto-retrieve="false"
+         name="unit"
+         class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
+         <foreignkey field-ref="keyUnit"/>
+    </reference-descriptor>
+	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="degreeCurricularPlans"
 			element-class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"

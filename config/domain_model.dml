@@ -664,6 +664,7 @@ class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.do
 	String nameEn;
 	String sigla;
     DegreeType tipoCurso;
+    Integer keyUnit;
 	
 	interface "
 
@@ -3257,6 +3258,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.s
 	UnitType type;
 	Integer costCenterCode;
 	Integer keyDepartment;	
+	Integer keyDegree;
 	
 	interface "
 	public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IUnit> getTopUnits();
@@ -6097,6 +6099,11 @@ relation UnitUnit {
 
 relation DepartmentUnit {
     net.sourceforge.fenixedu.domain.Department playsRole department;    
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
+}
+
+relation DegreetUnit {
+    net.sourceforge.fenixedu.domain.Degree playsRole degree;    
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
 }
 

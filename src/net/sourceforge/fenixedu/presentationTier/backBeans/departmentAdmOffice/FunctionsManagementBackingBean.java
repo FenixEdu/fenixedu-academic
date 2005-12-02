@@ -375,10 +375,10 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     public String getUnits() throws FenixFilterException, FenixServiceException {
         StringBuffer buffer = new StringBuffer();
         buffer.append("<ul>");
-        if (this.getEmployeeDepartmentUnit().isActive(Calendar.getInstance().getTime())) {
+        if (this.getEmployeeDepartmentUnit() != null
+                && this.getEmployeeDepartmentUnit().isActive(Calendar.getInstance().getTime())) {
             getUnitsList(this.getEmployeeDepartmentUnit(), 0, buffer);
-        }
-        else{
+        } else {            
             return "";
         }
         buffer.append("</ul>");

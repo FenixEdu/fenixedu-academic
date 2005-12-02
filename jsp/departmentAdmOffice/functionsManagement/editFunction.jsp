@@ -23,6 +23,7 @@
 			<h:outputText value="<b>#{bundle['label.search.unit']}:</b>" escape="false"/>	
 			<h:panelGroup>
 				<h:outputText value="#{functionsManagementBackingBean.unit.name}"/>	
+				<h:outputText value=" - " rendered="#{!empty functionsManagementBackingBean.unit.topUnits}"/>	
 				<fc:dataRepeater value="#{functionsManagementBackingBean.unit.topUnits}" var="topUnit">
 					<h:outputText value="#{topUnit.name}<br/>" escape="false" />
 				</fc:dataRepeater>
@@ -32,7 +33,7 @@
 		<h:outputText styleClass="error" rendered="#{!empty functionsManagementBackingBean.errorMessage}"
 				value="#{bundle[functionsManagementBackingBean.errorMessage]}"/>
 	
-		<h:outputText value="<br/><br/>" escape="false" />
+		<h:outputText value="<br/>" escape="false" />
 	
 		<h:panelGrid columns="2" styleClass="infoop">			
 			<h:outputText value="<b>#{bundle['label.search.function']}:</b>" escape="false"/>			
