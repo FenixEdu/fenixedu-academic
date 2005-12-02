@@ -5,13 +5,12 @@ import java.util.Properties;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.fileSuport.FileSuport;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
-import net.sourceforge.fenixedu.fileSuport.IFileSuport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import net.sourceforge.fenixedu.persistenceTier.fileSupport.JdbcMysqlFileSupport;
 
 import org.apache.log4j.Logger;
 import org.apache.slide.common.SlideException;
@@ -22,7 +21,8 @@ public class CheckIsAliveService implements IService {
 
     private static final Logger logger = Logger.getLogger(CheckIsAliveService.class);
 
-    private static final String SLIDE_CONTENT_FILENAME = "/EY43/EP81/EC39036/S4613/S4868/I6606/Conceitos.pdf";
+    private static final String SLIDE_CONTENT_DIR = "/EY43/EP81/EC39036/S4613/S4868/I6606";
+    private static final String SLIDE_CONTENT_FILENAME = "Conceitos.pdf";
     private static boolean CHECK_DB = false;
     private static boolean CHECK_SLIDE = false;
 
@@ -78,9 +78,7 @@ public class CheckIsAliveService implements IService {
     }
 
     private void checkSlideDatabaseOps() throws SlideException {
-        final IFileSuport fileSuport = FileSuport.getInstance();
-
-        final FileSuportObject fileSuportObject = fileSuport.retrieveFile(SLIDE_CONTENT_FILENAME);
+        final FileSuportObject fileSuportObject = JdbcMysqlFileSupport.retrieveFile(SLIDE_CONTENT_DIR, SLIDE_CONTENT_FILENAME);
 
         if (fileSuportObject == null) {
             logger.fatal("Got a null result checking slide database.");

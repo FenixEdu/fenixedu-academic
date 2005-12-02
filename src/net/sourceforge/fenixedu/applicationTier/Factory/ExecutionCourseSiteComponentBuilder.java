@@ -52,7 +52,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSummary;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSummaryWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
-import net.sourceforge.fenixedu.dataTransferObject.util.CMSUtils;
 import net.sourceforge.fenixedu.domain.IAnnouncement;
 import net.sourceforge.fenixedu.domain.IBibliographicReference;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
@@ -73,8 +72,6 @@ import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.fileSuport.FileSuport;
-import net.sourceforge.fenixedu.fileSuport.IFileSuport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
@@ -88,7 +85,6 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
-import org.apache.slide.common.SlideException;
 
 /**
  * @author João Mota
@@ -509,16 +505,11 @@ public class ExecutionCourseSiteComponentBuilder {
         }
         List infoItemsList = new ArrayList(itemsList.size());
         Iterator iter = itemsList.iterator();
-        IFileSuport fileSuport = FileSuport.getInstance();
 
         while (iter.hasNext()) {
             IItem item = (IItem) iter.next();
             InfoItem infoItem = InfoItem.newInfoFromDomain(item);
-            try {
-                infoItem.setLinks(CMSUtils.getItemLinks(fileSuport, item.getSlideName()));
-            } catch (SlideException e1) {
-                // the item does not have a folder associated
-            }
+            infoItem.setLinks(item.getSlideName());
             infoItemsList.add(infoItem);
         }
 

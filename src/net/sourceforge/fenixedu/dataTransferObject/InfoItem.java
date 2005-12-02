@@ -3,9 +3,16 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IItem;
+import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
+import net.sourceforge.fenixedu.persistenceTier.fileSupport.JdbcMysqlFileSupport;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 /**
  * @author Ivo Brandão
@@ -177,6 +184,19 @@ public class InfoItem extends InfoObject implements Comparable {
      */
     public void setLinks(List links) {
         this.links = links;
+    }
+
+    public void setLinks(final String slideName) {
+        final Collection<FileSuportObject> fileSupportObjects = JdbcMysqlFileSupport.listFiles(slideName);
+        final List<InfoLink> infoLinks = new ArrayList<InfoLink>(fileSupportObjects.size());
+        for (final FileSuportObject fileSuportObject : fileSupportObjects) {
+            final InfoLink infoLink = new InfoLink();
+            infoLink.setLink(fileSuportObject.getFileName());
+            infoLink.setLinkName(fileSuportObject.getLinkName());
+            infoLinks.add(infoLink);
+        }
+        Collections.sort(infoLinks, new BeanComparator("linkName"));
+        setLinks(infoLinks);
     }
 
     public void copyFromDomain(IItem item) {
