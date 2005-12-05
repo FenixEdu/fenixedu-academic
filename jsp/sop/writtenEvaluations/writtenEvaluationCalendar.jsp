@@ -150,7 +150,7 @@ table.executionCoursesWithoutWrittenEvaluations td {
 						<th><c:out value="${bundle['label.coordinator.identification']}" escapeXml="false"/></th>
 						<th><c:out value="${bundle['label.coordinator.evaluationDate']}" escapeXml="false"/></th>
 						<th><c:out value="${bundle['label.coordinator.enroledStudents']}"escapeXml="false"/></th>
-						<th><c:out value="${bundle['label.coordinator.freeSpaces']}" escapeXml="false"/></th>
+						<th><c:out value="${bundle['label.coordinator.missingPlaces']}" escapeXml="false"/></th>
 						<th><c:out value="${bundle['label.coordinator.enrolmentPeriod']}" escapeXml="false"/></th>
 						<th><c:out value="${bundle['label.coordinator.rooms']}"/></th>
 						<th style="width: 9em;"></th>				
@@ -196,7 +196,7 @@ table.executionCoursesWithoutWrittenEvaluations td {
 									<c:out value=" ${bundle['label.coordinator.to']} "/>
 									<fmt:formatDate pattern="HH:mm" value="${evaluation.endDate}"/>
 								</td>
-								<td><c:out value="${evaluation.writtenEvaluationEnrolmentsCount}"/></td>
+								<td><c:out value="${SOPEvaluationManagementBackingBean.executionCoursesEnroledStudents[executionCourse.idInternal]}"/></td>
 								<td>
 									<c:if test="${SOPEvaluationManagementBackingBean.writtenEvaluationsFreeSpace[evaluation.idInternal] != 0}">
 										<c:out value="${SOPEvaluationManagementBackingBean.writtenEvaluationsFreeSpace[evaluation.idInternal]}"/>
