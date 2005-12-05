@@ -25,19 +25,20 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
 /**
  * @author jpvl
  */
 public class CRUDTeacherInstitutionWorkingTimeAction extends CRUDActionByOID {
-    /**
-     * @param string
-     * @return
-     */
+
     private DiaSemana getWeekDay(String weekday) {
         int weekDayInt = 0;
         try {
@@ -52,10 +53,6 @@ public class CRUDTeacherInstitutionWorkingTimeAction extends CRUDActionByOID {
         return new DiaSemana(weekDayInt);
     }
 
-    /**
-     * @param semana
-     * @return
-     */
     private String getWeekDayString(DiaSemana weekday) {
         switch (weekday.getDiaSemana().intValue()) {
         case DiaSemana.DOMINGO:
@@ -78,13 +75,6 @@ public class CRUDTeacherInstitutionWorkingTimeAction extends CRUDActionByOID {
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorApresentacao.Action.framework.CRUDActionByOID#populateFormFromInfoObject(org.apache.struts.action.ActionMapping,
-     *      net.sourceforge.fenixedu.dataTransferObject.InfoObject, org.apache.struts.action.ActionForm,
-     *      javax.servlet.http.HttpServletRequest)
-     */
     protected void populateFormFromInfoObject(ActionMapping mapping, InfoObject infoObject,
             ActionForm form, HttpServletRequest request) {
         InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = (InfoTeacherInstitutionWorkTime) infoObject;
@@ -126,12 +116,6 @@ public class CRUDTeacherInstitutionWorkingTimeAction extends CRUDActionByOID {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorApresentacao.Action.framework.CRUDActionByOID#populateInfoObjectFromForm(org.apache.struts.action.ActionForm,
-     *      ServidorApresentacao.mapping.framework.CRUDMapping)
-     */
     protected InfoObject populateInfoObjectFromForm(ActionForm form, CRUDMapping mapping) {
         DynaActionForm teacherInstitutionWorkTimeForm = (DynaActionForm) form;
         InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = new InfoTeacherInstitutionWorkTime();
@@ -164,11 +148,6 @@ public class CRUDTeacherInstitutionWorkingTimeAction extends CRUDActionByOID {
         return infoTeacherInstitutionWorkTime;
     }
 
-    /**
-     * @param calendar
-     * @param integer
-     * @param integer2
-     */
     private void setHoursAndMinutes(Calendar calendar, Integer hour, Integer minutes) {
         calendar.set(Calendar.HOUR_OF_DAY, hour != null ? hour.intValue() : 0);
         calendar.set(Calendar.MINUTE, minutes != null ? minutes.intValue() : 0);
@@ -190,32 +169,30 @@ public class CRUDTeacherInstitutionWorkingTimeAction extends CRUDActionByOID {
         DynaActionForm dynaForm = (DynaActionForm) form;
         Object args[] = { infoTeacher, Integer.valueOf((String) dynaForm.get("executionPeriodId")) };
 
-        TeacherInstitutionWorkingTimeDTO teacherInstitutionWorkingTimeDTO = (TeacherInstitutionWorkingTimeDTO) ServiceUtils
-                .executeService(userView, "ReadTeacherInstitutionWorkingTime", args);
+        TeacherInstitutionWorkingTimeDTO teacherInstitutionWorkingTimeDTO = null;
+        try {
+            teacherInstitutionWorkingTimeDTO = (TeacherInstitutionWorkingTimeDTO) ServiceUtils
+                .executeService(userView, "ReadTeacherInstitutionWorkingTime", args);        
+            ComparatorChain comparatorChain = new ComparatorChain();    
+            BeanComparator weekDayComparator = new BeanComparator("weekDay.diaSemana");
+            BeanComparator startTimeComparator = new BeanComparator("startTime");    
+            comparatorChain.addComparator(weekDayComparator);
+            comparatorChain.addComparator(startTimeComparator);    
+            Collections.sort(teacherInstitutionWorkingTimeDTO.getInfoTeacherInstitutionWorkTimeList(),
+                    comparatorChain);    
+            request.setAttribute("teacherInstitutionWorkingTime", teacherInstitutionWorkingTimeDTO);    
+            return mapping.findForward("list-teacher-institution-working-time");
 
-        ComparatorChain comparatorChain = new ComparatorChain();
-
-        BeanComparator weekDayComparator = new BeanComparator("weekDay.diaSemana");
-        BeanComparator startTimeComparator = new BeanComparator("startTime");
-
-        comparatorChain.addComparator(weekDayComparator);
-        comparatorChain.addComparator(startTimeComparator);
-
-        Collections.sort(teacherInstitutionWorkingTimeDTO.getInfoTeacherInstitutionWorkTimeList(),
-                comparatorChain);
-
-        request.setAttribute("teacherInstitutionWorkingTime", teacherInstitutionWorkingTimeDTO);
-
-        return mapping.findForward("list-teacher-institution-working-time");
+        } catch (final Exception e) {
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("message.teacher-not-belong-to-department",
+                    new ActionError("message.teacher-not-belong-to-department"));
+            saveErrors(request, actionErrors);
+            request.setAttribute("executionPeriodId", dynaForm.get("executionPeriodId"));
+            return mapping.findForward("notAuthorized");
+        }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorApresentacao.Action.framework.CRUDActionByOID#prepareFormConstants(org.apache.struts.action.ActionMapping,
-     *      org.apache.struts.action.ActionForm,
-     *      javax.servlet.http.HttpServletRequest)
-     */
     protected void prepareFormConstants(ActionMapping mapping, ActionForm form,
             HttpServletRequest request) throws Exception {
         super.prepareFormConstants(mapping, form, request);

@@ -534,10 +534,7 @@
             <set-property property="oidProperty" value="idInternal"/>
             <set-property property="requestAttribute" value="infoTeacherInstitutionWorkingTime" />
             <set-property property="infoObjectClassName" 
-                value="net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InfoTeacherInstitutionWorkTime" />
-            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException" 
-                key="message.teacher-not-belong-to-department" 
-                path="/teacherSearchForTeacherInstitutionWorkingTimeManagement.do?method=searchForm&amp;page=0"/>
+                value="net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InfoTeacherInstitutionWorkTime" />           
             <exception 
                 type="net.sourceforge.fenixedu.applicationTier.Servico.teacher.workingTime.EditTeacherInstitutionWorkingTimeByOID$InvalidPeriodException" 
                 key="message.invalidPeriod" 
@@ -560,6 +557,8 @@
                 path="/manageTeacherInstitutionWorkingTime.do?page=0&amp;method=list"/>
             <forward name="list-teacher-institution-working-time" 
                 path="list-teacher-institution-working-time"/>
+            <forward name="notAuthorized"
+            	path="/teacherSearchForTeacherInstitutionWorkingTimeManagement.do?method=searchForm&amp;page=0"/>
         </action>
         <!-- =======================================================================  -->
         <!-- =======  USE CASE : List deparment teachers ===================================== -->

@@ -8,7 +8,12 @@
 <p class="infoop">
 	<bean:message name="searchInfo"/>
 </p>
-<span class="error"><html:errors/></span>
+
+<span class="error"><html:errors/>
+ <logic:present name="errors">
+  <bean:write name="errors" filter="true" />
+ </logic:present >
+</span>
 
 <bean:define id="path" name="<%= Globals.MAPPING_KEY %>" property="path" type="java.lang.String"/>
 <html:form action="<%= path %>" focus="teacherNumber">
