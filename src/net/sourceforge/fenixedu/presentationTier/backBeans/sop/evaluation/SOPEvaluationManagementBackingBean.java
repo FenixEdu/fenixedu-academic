@@ -739,10 +739,12 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         Calendar examStartTime = Calendar.getInstance();
         examStartTime.set(Calendar.HOUR_OF_DAY, getBeginHour());
         examStartTime.set(Calendar.MINUTE, getBeginMinute());
-
+        examStartTime.set(Calendar.SECOND, 0);
+        
         Calendar examEndTime = Calendar.getInstance();
         examEndTime.set(Calendar.HOUR_OF_DAY, getEndHour());
         examEndTime.set(Calendar.MINUTE, getEndMinute());
+        examEndTime.set(Calendar.SECOND, 0);
 
         Object args[] = { examDate, examDate, examStartTime, examEndTime, dayOfWeek, null, null,
                 Integer.valueOf(RoomOccupation.DIARIA), null, Boolean.FALSE };
