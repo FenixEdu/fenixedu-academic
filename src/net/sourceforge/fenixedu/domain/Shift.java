@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -48,14 +49,25 @@ public class Shift extends Shift_Base {
 
     private void checkIfSummaryExistFor(final Date summaryDate, final Date summaryHour) {
         final Iterator associatedSummaries = getAssociatedSummariesIterator();
+        Date summaryDateAux = prepareDate(summaryDate);               
         while (associatedSummaries.hasNext()) {
             ISummary summary = (ISummary) associatedSummaries.next();
-            if (summary.getSummaryDate().equals(summaryDate)
+            Date iterSummaryDate = prepareDate(summary.getSummaryDate());
+            if (iterSummaryDate.equals(summaryDateAux)
                     && summary.getSummaryHour().equals(summaryHour)) {
-                throw new DomainException(this.getClass().getName(), "error.summary.already.exists");
+                throw new DomainException("error.summary.already.exists");
             }
         }
         return;
     }
-
+  
+    private Date prepareDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
+    }    
 }
