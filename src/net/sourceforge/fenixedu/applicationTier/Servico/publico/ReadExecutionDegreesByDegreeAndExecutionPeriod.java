@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -80,7 +81,7 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod implements IServico 
             //Execution degrees
             IPersistentExecutionDegree persistentExecutionDegre = sp.getIPersistentExecutionDegree();
             List executionDegreeList = persistentExecutionDegre.readByDegreeAndExecutionYear(degree.getIdInternal(),
-                    executionYear.getYear());
+                    executionYear.getYear(), CurricularStage.OLD);
             if (executionDegreeList == null || executionDegreeList.size() <= 0) {
                 throw new FenixServiceException("error.impossibleDegreeSite");
             }

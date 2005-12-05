@@ -1,11 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCourseManagement;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.ICompetenceCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCompetenceCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -21,7 +23,14 @@ public class ReadAllCurricularCoursesByCompetenceCourse implements IService {
 			throw new NonExistingServiceException("error.manager.noCompetenceCourse");
 		}
 		
-		return competenceCourse.getAssociatedCurricularCourses();
+        List<ICurricularCourse> result = new ArrayList<ICurricularCourse>();
+        for (ICurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCourses()) {
+            if (curricularCourse.getCurricularStage().equals(CurricularStage.OLD)) {
+                result.add(curricularCourse);
+            }
+        }
+        
+        return result;
 	}
 
 }

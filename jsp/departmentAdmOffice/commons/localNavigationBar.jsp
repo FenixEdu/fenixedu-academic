@@ -21,7 +21,6 @@
 			</html:link>
 		</li>
 	</ul>
-	<br />
 
 	<logic:present role="DEPARTMENT_CREDITS_MANAGER">
 		<ul>
@@ -71,7 +70,24 @@
 			</li>
 		</ul>
 		 -->
-		<br/>
 	</logic:present>
-	
+<!-- 
+	<ul>
+		<li class="navheader">
+			<strong><bean:message key="link.group.managementGroups.title"/></strong>
+		</li>
+	</ul>
+	<ul>
+		<li>
+			<html:link page="/managementGroups/curricularPlanManagementGroups.faces">
+				<bean:message key="link.curricularPlanManagementGroups"/>
+			</html:link>
+		</li>
+		<li>
+			<html:link page="/managementGroups/competenceCourseManagementGroups.faces">
+				<bean:message key="link.competenceCourseManagementGroups"/>
+			</html:link>
+		</li>
+	</ul>
+ -->		
 </logic:present>

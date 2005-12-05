@@ -29,6 +29,7 @@ valueType net.sourceforge.fenixedu.tools.enrollment.AreaType                    
 valueType net.sourceforge.fenixedu.domain.branch.BranchType                                     as BranchType;
 valueType net.sourceforge.fenixedu.util.CurricularCourseExecutionScope                          as CurricularCourseExecutionScope;
 valueType net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType                       as CurricularCourseType;
+valueType net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage                       as CurricularStage;
 valueType net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState as DegreeCurricularPlanState;
 valueType net.sourceforge.fenixedu.domain.degree.DegreeType                                     as DegreeType;
 valueType net.sourceforge.fenixedu.util.DelegateYearType                                        as DelegateYearType; 
@@ -406,6 +407,19 @@ class net.sourceforge.fenixedu.domain.cms.infrastructure.MailAddressAlias extend
 }
 
 
+class net.sourceforge.fenixedu.domain.degreeStructure.Context extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer curricularSemesterKey;
+	Integer degreeModuleKey;
+	Integer courseGroupKey;
+	Integer beginExecutionPeriodKey;
+	Integer endExecutionPeriodKey;
+	
+	interface "
+		public void delete();
+	"
+}
+
+
 class net.sourceforge.fenixedu.domain.Contributor extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer contributorNumber;
 	String contributorAddress;
@@ -494,62 +508,6 @@ class net.sourceforge.fenixedu.domain.CreditsInScientificArea extends net.source
 	
 	interface "
 	public void delete();
-	"
-}
-
-
-class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.fenixedu.domain.DomainObject {
-	Double ectsCredits;
-	Boolean basic;
-	Integer universityKey;
-	Boolean mandatoryEnrollment;
-	Integer maximumValueForAcumulatedEnrollments;
-	Double theoPratHours;
-	Double weigth;
-	Integer keyScientificArea;
-	Integer degreeCurricularPlanKey;
-	String code;
-	Boolean enrollmentAllowed;
-	Double theoreticalHours;
-	Integer keyCompetenceCourse;
-	Integer keyStudentCourseReport;
-	Double labHours;
-	Double credits;
-	Integer enrollmentWeigth;
-	Double praticalHours;
-	Boolean mandatory;
-	String name;
-	String nameEn;
-	String acronym;
-	Integer minimumValueForAcumulatedEnrollments;
-    CurricularCourseType type;
-    CurricularCourseExecutionScope curricularCourseExecutionScope;
-	
-	interface "
-    public ICurricularYear getCurricularYearByBranchAndSemester(final IBranch branch,final Integer semester);
-
-    public ICurricularYear getCurricularYearByBranchAndSemester(final IBranch branch, final Integer semester, final java.util.Date date);
-
-    public String getCurricularCourseUniqueKeyForEnrollment();
-
-    public boolean hasActiveScopeInGivenSemester(final Integer semester);
-
-    public boolean hasActiveScopeInGivenSemesterForGivenBranch(final Integer semester, final IBranch branch);
-
-    public boolean hasActiveScopeInGivenSemesterForGivenBranch(final ICurricularSemester curricularSemester, final IBranch branch);
-
-    public boolean hasActiveScopeInGivenSemesterForCommonAndGivenBranch(final Integer semester, final IBranch branch);
-
-    public java.util.List<ICurricularCourseScope> getActiveScopesInExecutionPeriod(final IExecutionPeriod executionPeriod);
-    
-    public java.util.List<ICurricularCourseScope> getActiveScopesInExecutionPeriodAndSemester(final IExecutionPeriod executionPeriod);
-    
-     public ICurriculum insertCurriculum(String program, String programEn, String operacionalObjectives, 
-    	String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn);
-	 
-	 public java.util.List getExecutionCoursesByExecutionPeriod (final IExecutionPeriod executionPeriod);
-
-	 public ICurriculum findLatestCurriculum();
 	"
 }
 
@@ -690,6 +648,8 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     String anotation;
     DegreeCurricularPlanState state;
     MarkType markType;
+    CurricularStage curricularStage;
+    Integer degreeModuleKey;
     
     interface "
     public IStudentCurricularPlan getNewStudentCurricularPlan();
@@ -704,9 +664,9 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     
     public java.util.List getCommonAreas();
     
-    public java.util.List getSpecializationAreas();
+    public java.util.List<IBranch> getSpecializationAreas();
     
-    public java.util.List getSecundaryAreas();
+    public java.util.List<IBranch> getSecundaryAreas();
     
     public java.util.List getTFCs();
     
@@ -725,6 +685,8 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
 	public boolean isGradeValid(String grade);
 	
 	public IEnrolmentPeriodInCurricularCoursesSpecialSeason getEnrolmentPeriodInCurricularCoursesSpecialSeasonByExecutionPeriod(IExecutionPeriod executionPeriod);
+	
+	public String print();
     "
 }
 
@@ -788,6 +750,79 @@ class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixed
 }
 
 
+class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyNewDegreeCurricularPlan;
+    String ojbConcreteClass;
+	String name;
+	String nameEn;
+	String acronym;
+	String code;
+	
+	interface "
+		public void delete();
+		public boolean isLeaf();
+		public void print(java.lang.StringBuffer stringBuffer, String tabs, IContext previousContext);
+	"
+}
+
+	class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule {
+		Double ectsCredits; 
+		Boolean basic; 
+		Double theoPratHours; 
+		Double theoreticalHours; 
+		Double labHours; 
+		Double praticalHours; 
+		CurricularCourseType type; 
+	
+		Boolean mandatory; 
+		Double weigth; 
+		Boolean mandatoryEnrollment; 
+		Boolean enrollmentAllowed; 
+		Integer enrollmentWeigth; 
+		Integer maximumValueForAcumulatedEnrollments; 
+		Integer minimumValueForAcumulatedEnrollments; 
+	
+		Double credits;
+		CurricularCourseExecutionScope curricularCourseExecutionScope; 
+	    CurricularStage curricularStage;
+	
+		Integer universityKey;
+		Integer keyScientificArea;
+		Integer keyCompetenceCourse;
+		Integer keyStudentCourseReport;
+		Integer degreeCurricularPlanKey;
+		
+		interface "
+	    public ICurricularYear getCurricularYearByBranchAndSemester(final IBranch branch,final Integer semester);
+	
+	    public ICurricularYear getCurricularYearByBranchAndSemester(final IBranch branch, final Integer semester, final java.util.Date date);
+	
+	    public String getCurricularCourseUniqueKeyForEnrollment();
+	
+	    public boolean hasActiveScopeInGivenSemester(final Integer semester);
+	
+	    public boolean hasActiveScopeInGivenSemesterForGivenBranch(final Integer semester, final IBranch branch);
+	
+	    public boolean hasActiveScopeInGivenSemesterForGivenBranch(final ICurricularSemester curricularSemester, final IBranch branch);
+	
+	    public boolean hasActiveScopeInGivenSemesterForCommonAndGivenBranch(final Integer semester, final IBranch branch);
+	
+	    public java.util.List<ICurricularCourseScope> getActiveScopesInExecutionPeriod(final IExecutionPeriod executionPeriod);
+	    
+	    public java.util.List<ICurricularCourseScope> getActiveScopesInExecutionPeriodAndSemester(final IExecutionPeriod executionPeriod);
+	    
+	     public ICurriculum insertCurriculum(String program, String programEn, String operacionalObjectives, 
+	    	String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn);
+		 
+		 public java.util.List getExecutionCoursesByExecutionPeriod (final IExecutionPeriod executionPeriod);
+	
+		 public ICurriculum findLatestCurriculum();
+		"
+	}
+
+	class net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup extends net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule {
+	}
+
 
 class net.sourceforge.fenixedu.domain.student.Delegate extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionYear;
@@ -824,6 +859,7 @@ class net.sourceforge.fenixedu.domain.Department extends net.sourceforge.fenixed
 class net.sourceforge.fenixedu.domain.CompetenceCourse extends net.sourceforge.fenixedu.domain.DomainObject {
 	String name;
 	String code;
+	CurricularStage curricularStage;
 	interface "
 	public void delete();
 	public void addCurricularCourses(java.util.Collection<ICurricularCourse> curricularCourses);
@@ -831,6 +867,25 @@ class net.sourceforge.fenixedu.domain.CompetenceCourse extends net.sourceforge.f
     public void addDepartments(java.util.Collection<IDepartment> departments);
 	"
 }
+
+
+class net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyCompetenceCourse;
+	Integer keyExecutionYear;
+	Double ectsCredits; 
+	Boolean basic; 
+	Double theoPratHours; 
+	Double theoreticalHours; 
+	Double labHours; 
+	Double praticalHours; 
+	String generalObjectives;
+	String operacionalObjectives;
+	String program;
+	String generalObjectivesEn;
+	String operacionalObjectivesEn;
+	String programEn;
+}
+
 
 class net.sourceforge.fenixedu.domain.DislocatedStudent extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyCountry;
@@ -3711,6 +3766,15 @@ relation CourseEquivalencyTheme {
 }
 
 
+relation CourseGroupContext {
+	net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup playsRole courseGroup;
+	
+	net.sourceforge.fenixedu.domain.degreeStructure.Context playsRole courseGroupContexts{
+		multiplicity *;
+	}
+}
+
+
 relation CurricularCourseCourseEquivalency {
     net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency playsRole courseEquivalencies {
         multiplicity *;
@@ -3757,6 +3821,22 @@ relation OtherTypeCreditLineExecutionPeriod {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+}
+
+
+relation CompetenceCourseInformationCompetenceCourse {
+	net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation playsRole courseInformations {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.CompetenceCourse playsRole competenceCourse;
+}
+
+
+relation CompetenceCourseInformationExecutionYear {
+	net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation playsRole courseInformations {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 }
 
 
@@ -3884,6 +3964,16 @@ relation CurricularCourseUniversity {
 	net.sourceforge.fenixedu.domain.University playsRole university;
 }
 
+
+relation CurricularSemesterContext {
+	net.sourceforge.fenixedu.domain.CurricularSemester playsRole curricularSemester;
+	
+	net.sourceforge.fenixedu.domain.degreeStructure.Context playsRole contexts{
+		multiplicity *;
+	}
+}
+
+
 relation CurricularSemesterCurricularYear {
     net.sourceforge.fenixedu.domain.CurricularSemester playsRole curricularSemesters {
         multiplicity *;
@@ -3914,6 +4004,14 @@ relation DegreeCurricularPlanCurricularCourseEquivalence {
 	}
 }
 
+
+relation DegreeCurricularPlanDegreeModule {
+    net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole degreeModule;
+    
+    net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole newDegreeCurricularPlan;
+}
+
+
 relation DegreeCurricularPlanEnrolmentPeriod {
 	net.sourceforge.fenixedu.domain.EnrolmentPeriod playsRole enrolmentPeriods {
 		multiplicity *;
@@ -3940,6 +4038,15 @@ relation DegreeDegreeCurricularPlan {
 relation DegreeDegreeInfo {
 	net.sourceforge.fenixedu.domain.Degree playsRole degree;
 	net.sourceforge.fenixedu.domain.DegreeInfo playsRole degreeInfos {
+		multiplicity *;
+	}
+}
+
+
+relation DegreeModuleContext {
+	net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole degreeModule;
+	
+	net.sourceforge.fenixedu.domain.degreeStructure.Context playsRole degreeModuleContexts{
 		multiplicity *;
 	}
 }
@@ -4307,6 +4414,24 @@ relation ExecutionDegreePeriodLessonsSecondSemester {
 	}
 	net.sourceforge.fenixedu.domain.Period playsRole periodLessonsSecondSemester;
 }
+
+
+relation ExecutionPeriodContextBegin {
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole beginExecutionPeriod;
+	
+	net.sourceforge.fenixedu.domain.degreeStructure.Context playsRole beginExecutionPeriodContexts{
+		multiplicity *;
+	}
+}
+
+relation ExecutionPeriodContextEnd {
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole endExecutionPeriod;
+	
+	net.sourceforge.fenixedu.domain.degreeStructure.Context playsRole endExecutionPeriodContexts{
+		multiplicity *;
+	}
+}
+
 
 relation ExecutionPeriodExecutionCourse {
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole associatedExecutionCourses {

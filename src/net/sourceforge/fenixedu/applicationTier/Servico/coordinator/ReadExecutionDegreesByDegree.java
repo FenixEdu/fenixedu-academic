@@ -7,6 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -30,7 +31,7 @@ public class ReadExecutionDegreesByDegree implements IService {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionDegree cursoExecucaoPersistente = sp.getIPersistentExecutionDegree();
 
-            allExecutionDegrees = cursoExecucaoPersistente.readExecutionsDegreesByDegree(idDegree);
+            allExecutionDegrees = cursoExecucaoPersistente.readExecutionsDegreesByDegree(idDegree, CurricularStage.OLD);
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);
         }

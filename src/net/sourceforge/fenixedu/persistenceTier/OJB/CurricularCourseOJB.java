@@ -5,6 +5,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 
@@ -18,12 +19,19 @@ import org.apache.ojb.broker.query.Criteria;
 
 public class CurricularCourseOJB extends PersistentObjectOJB implements IPersistentCurricularCourse {
 
+    public List<ICurricularCourse> readByCurricularStage(CurricularStage curricularStage) throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("curricularStage", curricularStage);
+        return queryList(CurricularCourse.class, crit);
+    }
+    
     public List readCurricularCoursesByDegreeCurricularPlan(String name, String degreeName, String degreeSigla)
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("degreeCurricularPlan.name", name);
         crit.addEqualTo("degreeCurricularPlan.degree.nome", degreeName);
         crit.addEqualTo("degreeCurricularPlan.degree.sigla", degreeSigla);
+        crit.addEqualTo("curricularStage", CurricularStage.OLD);
         return queryList(CurricularCourse.class, crit);
     }
 	
@@ -34,6 +42,7 @@ public class CurricularCourseOJB extends PersistentObjectOJB implements IPersist
         crit.addEqualTo("name", name);
         crit.addEqualTo("code", code);
         crit.addEqualTo("degreeCurricularPlan.idInternal", degreeCurricularPlanId);
+        crit.addEqualTo("curricularStage", CurricularStage.OLD);
         return (ICurricularCourse) queryObject(CurricularCourse.class, crit);
 
     }
@@ -44,6 +53,7 @@ public class CurricularCourseOJB extends PersistentObjectOJB implements IPersist
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlanKey);
         criteria.addEqualTo("basic", basic);
+        criteria.addEqualTo("curricularStage", CurricularStage.OLD);
         return queryList(CurricularCourse.class, criteria);
     }
 
@@ -54,7 +64,7 @@ public class CurricularCourseOJB extends PersistentObjectOJB implements IPersist
         Criteria criteria = new Criteria();
         criteria.addEqualTo("code", curricularCourseCode);
         criteria.addEqualTo("degreeCurricularPlan.idInternal", degreeCurricularPlanID);
-
+        criteria.addEqualTo("curricularStage", CurricularStage.OLD);
         return queryList(CurricularCourse.class, criteria);
     }
 	
@@ -64,7 +74,7 @@ public class CurricularCourseOJB extends PersistentObjectOJB implements IPersist
         Criteria criteria = new Criteria();
         criteria.addEqualTo("name", curricularCourseName);
         criteria.addEqualTo("degreeCurricularPlan.idInternal", degreeCurricularPlanKey);
-
+        criteria.addEqualTo("curricularStage", CurricularStage.OLD);
         return queryList(CurricularCourse.class, criteria);
     }
 
@@ -75,6 +85,7 @@ public class CurricularCourseOJB extends PersistentObjectOJB implements IPersist
         criteria.addEqualTo("degreeCurricularPlan.degree.idInternal", degreeKey);
         criteria.addEqualTo("degreeCurricularPlan.state", DegreeCurricularPlanState.ACTIVE);
         criteria.addEqualTo("associatedExecutionCourses.executionPeriod.executionYear.idInternal", executionYearKey);
+        criteria.addEqualTo("curricularStage", CurricularStage.OLD);
         return queryList(CurricularCourse.class, criteria, true);
     }
 
@@ -87,7 +98,9 @@ public class CurricularCourseOJB extends PersistentObjectOJB implements IPersist
         criteria.addEqualTo("associatedExecutionCourses.executionPeriod.executionYear.idInternal",
                 executionYearKey);
         criteria.addEqualTo("scopes.curricularSemester.curricularYear.year", year);
+        criteria.addEqualTo("curricularStage", CurricularStage.OLD);
         return queryList(CurricularCourse.class, criteria, true);
     }
+
 
 }

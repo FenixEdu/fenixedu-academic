@@ -9,6 +9,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
+import net.sourceforge.fenixedu.domain.degreeStructure.IContext;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -21,6 +23,20 @@ import org.apache.commons.lang.StringUtils;
 
 public class CurricularCourse extends CurricularCourse_Base {
 
+    protected CurricularCourse() {
+        super();
+        this.setOjbConcreteClass(CurricularCourse.class.getName());
+    }
+
+    public CurricularCourse(String name, String code, String acronym, Boolean enrolmentAllowed, CurricularStage curricularStage) {
+        this();
+        setName(name);
+        setCode(code);
+        setAcronym(acronym);
+        setEnrollmentAllowed(enrolmentAllowed);
+        setCurricularStage(curricularStage);
+    }
+    
     public String toString() {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("[").append(this.getClass()).append(":").append("idInternal = ").append(
@@ -29,7 +45,24 @@ public class CurricularCourse extends CurricularCourse_Base {
                         this.getDegreeCurricularPlan()).append(";type = ").append(this.getType());
         return stringBuffer.toString();
     }
+    
+    public void print(StringBuffer dcp, String tabs, IContext previousContext) {
+        String tab = tabs + "\t";
+        dcp.append(tab);
+        dcp.append("[CC ").append(this.getIdInternal()).append("][");
+        dcp.append(previousContext.getCurricularSemester().getCurricularYear().getYear()).append("Y,");
+        dcp.append(previousContext.getCurricularSemester().getSemester()).append("S] ");
+        dcp.append(this.getName()).append("\n");
+    }
 
+    public boolean isLeaf() {
+        return true;
+    }
+    
+    public void delete() {
+        setCompetenceCourse(null);
+    }
+    
     public boolean curricularCourseIsMandatory() {
         return getMandatory().booleanValue();
     }

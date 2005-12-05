@@ -2,12 +2,15 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Collection;
 
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class CompetenceCourse extends CompetenceCourse_Base {
     
-    public CompetenceCourse(String code, String name, Collection<IDepartment> departments) {
-    	fillFields(code, name);
+    public CompetenceCourse(String code, String name, Collection<IDepartment> departments, CurricularStage curricularStage) {
+    	super();
+        setCurricularStage(curricularStage);
+        fillFields(code, name);
         if(departments != null) {
         	addDepartments(departments);
         }

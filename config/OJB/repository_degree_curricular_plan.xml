@@ -102,6 +102,23 @@
 		column="ANOTATION"
 		jdbc-type="LONGVARCHAR"
 	/>
+	<field-descriptor
+		name="curricularStage"
+		column="CURRICULAR_STAGE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularStage2SqlCurricularStageFieldConversion"
+	/>
+	<field-descriptor
+		name="degreeModuleKey"
+		column="KEY_DEGREE_MODULE"
+		jdbc-type="INTEGER"
+	/>
+	<reference-descriptor auto-retrieve="false"
+			name="degreeModule"
+			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
+			>
+		<foreignkey field-ref="degreeModuleKey"/>
+	</reference-descriptor>
 	<reference-descriptor auto-retrieve="false"
 			name="degree"
 			class-ref="net.sourceforge.fenixedu.domain.Degree"
@@ -250,6 +267,23 @@
 		column="ANOTATION"
 		jdbc-type="LONGVARCHAR"
 	/>
+	<field-descriptor
+		name="curricularStage"
+		column="CURRICULAR_STAGE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularStage2SqlCurricularStageFieldConversion"
+	/>
+	<field-descriptor
+		name="degreeModuleKey"
+		column="KEY_DEGREE_MODULE"
+		jdbc-type="INTEGER"
+	/>
+	<reference-descriptor auto-retrieve="false"
+			name="degreeModule"
+			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
+			>
+		<foreignkey field-ref="degreeModuleKey"/>
+	</reference-descriptor>	
 	<reference-descriptor auto-retrieve="false"
 			name="degree"
 			class-ref="net.sourceforge.fenixedu.domain.Degree"
@@ -397,6 +431,23 @@
 		column="ANOTATION"
 		jdbc-type="LONGVARCHAR"
 	/>
+	<field-descriptor
+		name="curricularStage"
+		column="CURRICULAR_STAGE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularStage2SqlCurricularStageFieldConversion"
+	/>
+	<field-descriptor
+		name="degreeModuleKey"
+		column="KEY_DEGREE_MODULE"
+		jdbc-type="INTEGER"
+	/>
+	<reference-descriptor auto-retrieve="false"
+			name="degreeModule"
+			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
+			>
+		<foreignkey field-ref="degreeModuleKey"/>
+	</reference-descriptor>
 	<reference-descriptor auto-retrieve="false"
 			name="degree"
 			class-ref="net.sourceforge.fenixedu.domain.Degree"
@@ -544,6 +595,23 @@
 		column="ANOTATION"
 		jdbc-type="LONGVARCHAR"
 	/>
+	<field-descriptor
+		name="curricularStage"
+		column="CURRICULAR_STAGE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularStage2SqlCurricularStageFieldConversion"
+	/>
+	<field-descriptor
+		name="degreeModuleKey"
+		column="KEY_DEGREE_MODULE"
+		jdbc-type="INTEGER"
+	/>
+	<reference-descriptor auto-retrieve="false"
+			name="degreeModule"
+			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
+			>
+		<foreignkey field-ref="degreeModuleKey"/>
+	</reference-descriptor>
 	<reference-descriptor auto-retrieve="false"
 			name="degree"
 			class-ref="net.sourceforge.fenixedu.domain.Degree"
@@ -692,6 +760,23 @@
 		column="ANOTATION"
 		jdbc-type="LONGVARCHAR"
 	/>
+	<field-descriptor
+		name="curricularStage"
+		column="CURRICULAR_STAGE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularStage2SqlCurricularStageFieldConversion"
+	/>
+	<field-descriptor
+		name="degreeModuleKey"
+		column="KEY_DEGREE_MODULE"
+		jdbc-type="INTEGER"
+	/>
+	<reference-descriptor auto-retrieve="false"
+			name="degreeModule"
+			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
+			>
+		<foreignkey field-ref="degreeModuleKey"/>
+	</reference-descriptor>	
 	<reference-descriptor auto-retrieve="false"
 			name="degree"
 			class-ref="net.sourceforge.fenixedu.domain.Degree"
@@ -840,6 +925,23 @@
 		column="ANOTATION"
 		jdbc-type="LONGVARCHAR"
 	/>
+	<field-descriptor
+		name="curricularStage"
+		column="CURRICULAR_STAGE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularStage2SqlCurricularStageFieldConversion"
+	/>
+	<field-descriptor
+		name="degreeModuleKey"
+		column="KEY_DEGREE_MODULE"
+		jdbc-type="INTEGER"
+	/>
+	<reference-descriptor auto-retrieve="false"
+			name="degreeModule"
+			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
+			>
+		<foreignkey field-ref="degreeModuleKey"/>
+	</reference-descriptor>	
 	<reference-descriptor auto-retrieve="false"
 			name="degree"
 			class-ref="net.sourceforge.fenixedu.domain.Degree"
@@ -987,6 +1089,23 @@
 		column="ANOTATION"
 		jdbc-type="LONGVARCHAR"
 	/>
+	<field-descriptor
+		name="curricularStage"
+		column="CURRICULAR_STAGE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularStage2SqlCurricularStageFieldConversion"
+	/>
+	<field-descriptor
+		name="degreeModuleKey"
+		column="KEY_DEGREE_MODULE"
+		jdbc-type="INTEGER"
+	/>
+	<reference-descriptor auto-retrieve="false"
+			name="degreeModule"
+			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
+			>
+		<foreignkey field-ref="degreeModuleKey"/>
+	</reference-descriptor>	
 	<reference-descriptor auto-retrieve="false"
 			name="degree"
 			class-ref="net.sourceforge.fenixedu.domain.Degree"
@@ -1134,6 +1253,23 @@
 		column="ANOTATION"
 		jdbc-type="LONGVARCHAR"
 	/>
+	<field-descriptor
+		name="curricularStage"
+		column="CURRICULAR_STAGE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularStage2SqlCurricularStageFieldConversion"
+	/>
+	<field-descriptor
+		name="degreeModuleKey"
+		column="KEY_DEGREE_MODULE"
+		jdbc-type="INTEGER"
+	/>
+	<reference-descriptor auto-retrieve="false"
+			name="degreeModule"
+			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
+			>
+		<foreignkey field-ref="degreeModuleKey"/>
+	</reference-descriptor>	
 	<reference-descriptor auto-retrieve="false"
 			name="degree"
 			class-ref="net.sourceforge.fenixedu.domain.Degree"

@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 
@@ -19,40 +20,41 @@ public class DegreeCurricularPlanOJB extends PersistentObjectOJB implements
         IPersistentDegreeCurricularPlan {
 
     public List readAll() throws ExcepcaoPersistencia {
-        return queryList(DegreeCurricularPlan.class, new Criteria());
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("curricularStage", CurricularStage.OLD);
+
+        return queryList(DegreeCurricularPlan.class, criteria);
     }
 
-    public List readByDegreeAndState(Integer degreeId, DegreeCurricularPlanState state)
+    public List readByDegreeAndState(Integer degreeId, DegreeCurricularPlanState state, CurricularStage curricularStage)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degree.idInternal", degreeId);
         criteria.addEqualTo("state", state);
+        criteria.addEqualTo("curricularStage", curricularStage);
 
         return queryList(DegreeCurricularPlan.class, criteria);
     }
-    
-    public IDegreeCurricularPlan readByNameAndDegree(String name, Integer degreeId)
-        throws ExcepcaoPersistencia {
 
-            Criteria criteria = new Criteria();
-            criteria.addEqualTo("name", name);
-            criteria.addEqualTo("degreeKey", degreeId);
-            
-            return (IDegreeCurricularPlan) queryObject(DegreeCurricularPlan.class, criteria);
-    }
-    public List readByDegree(Integer degreeId)
-    	throws ExcepcaoPersistencia {
+    public IDegreeCurricularPlan readByNameAndDegree(String name, Integer degreeId, CurricularStage curricularStage)
+            throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
+        criteria.addEqualTo("name", name);
         criteria.addEqualTo("degreeKey", degreeId);
+        criteria.addEqualTo("curricularStage", curricularStage);
+
+        return (IDegreeCurricularPlan) queryObject(DegreeCurricularPlan.class, criteria);
+    }
+
+    public List readByDegreeTypeAndState(DegreeType degreeType, DegreeCurricularPlanState state)
+            throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("degree.tipoCurso", degreeType);
+        criteria.addEqualTo("state", state);
+        criteria.addEqualTo("curricularStage", CurricularStage.OLD);
         
         return queryList(DegreeCurricularPlan.class, criteria);
     }
-    public List readByDegreeTypeAndState(DegreeType degreeType, DegreeCurricularPlanState state)
-        throws ExcepcaoPersistencia {
-            Criteria criteria = new Criteria();
-            criteria.addEqualTo("degree.tipoCurso", degreeType);
-            criteria.addEqualTo("state", state);
-            return queryList(DegreeCurricularPlan.class, criteria);
-    }
+    
 }

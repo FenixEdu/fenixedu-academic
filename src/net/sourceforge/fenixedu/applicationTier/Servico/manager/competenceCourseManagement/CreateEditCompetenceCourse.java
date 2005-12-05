@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ICompetenceCourse;
 import net.sourceforge.fenixedu.domain.IDepartment;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCompetenceCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
@@ -35,7 +36,7 @@ public class CreateEditCompetenceCourse implements IService {
 		try {
 			ICompetenceCourse competenceCourse = null;
 			if(competenceCourseID == null) {
-				competenceCourse = new CompetenceCourse(code, name, departments);
+				competenceCourse = new CompetenceCourse(code, name, departments, CurricularStage.OLD);
 			} else {
 				IPersistentCompetenceCourse persistentCompetenceCourse = suportePersistente.getIPersistentCompetenceCourse();
 				competenceCourse = (ICompetenceCourse) persistentCompetenceCourse.readByOID(CompetenceCourse.class, competenceCourseID);

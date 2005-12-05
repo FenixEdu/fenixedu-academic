@@ -1,0 +1,289 @@
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule" table="DEGREE_MODULE">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="keyNewDegreeCurricularPlan"
+		column="KEY_NEW_DEGREE_CURRICULAR_PLAN"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="name"
+		column="NAME"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="nameEn"
+		column="NAME_EN"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="code"
+		column="CODE"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="acronym"
+		column="ACRONYM"
+		jdbc-type="VARCHAR"
+	/>		
+	<field-descriptor
+         name="ojbConcreteClass"
+         column="CLASS_NAME"
+         jdbc-type="VARCHAR"
+    />		
+	<reference-descriptor auto-retrieve="false"
+			name="newDegreeCurricularPlan"
+			class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
+            >
+		<foreignkey field-ref="keyNewDegreeCurricularPlan"/>
+	</reference-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="degreeModuleContexts"
+			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.Context">
+		<inverse-foreignkey field-ref="degreeModuleKey"/>
+	</collection-descriptor>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.CurricularCourse" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup" />
+</class-descriptor>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup" table="DEGREE_MODULE">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="keyNewDegreeCurricularPlan"
+		column="KEY_NEW_DEGREE_CURRICULAR_PLAN"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="name"
+		column="NAME"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="nameEn"
+		column="NAME_EN"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="code"
+		column="CODE"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="acronym"
+		column="ACRONYM"
+		jdbc-type="VARCHAR"
+	/>		
+	<field-descriptor
+         name="ojbConcreteClass"
+         column="CLASS_NAME"
+         jdbc-type="VARCHAR"
+    />		
+	<reference-descriptor auto-retrieve="false"
+			name="newDegreeCurricularPlan"
+			class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
+            >
+		<foreignkey field-ref="keyNewDegreeCurricularPlan"/>
+	</reference-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="degreeModuleContexts"
+			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.Context">
+		<inverse-foreignkey field-ref="degreeModuleKey"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="courseGroupContexts"
+			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.Context">
+		<inverse-foreignkey field-ref="courseGroupKey"/>
+	</collection-descriptor>
+</class-descriptor>
+
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.degreeStructure.Context -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.degreeStructure.Context" table="CONTEXT">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="curricularSemesterKey"
+		column="KEY_CURRICULAR_SEMESTER"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="degreeModuleKey"
+		column="KEY_DEGREE_MODULE"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="courseGroupKey"
+		column="KEY_COURSE_GROUP"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="beginExecutionPeriodKey"
+		column="KEY_BEGIN_EXECUTION_PERIOD"
+		jdbc-type="INTEGER"
+	/>
+
+	<field-descriptor
+		name="endExecutionPeriodKey"
+		column="KEY_END_EXECUTION_PERIOD"
+		jdbc-type="INTEGER"
+	/>
+	
+	<reference-descriptor auto-retrieve="false"
+			name="curricularSemester"
+			class-ref="net.sourceforge.fenixedu.domain.CurricularSemester"
+            >
+		<foreignkey field-ref="curricularSemesterKey"/>
+	</reference-descriptor>
+	
+	<reference-descriptor auto-retrieve="false"
+			name="degreeModule"
+			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
+            >
+		<foreignkey field-ref="degreeModuleKey"/>
+	</reference-descriptor>	
+	
+	<reference-descriptor auto-retrieve="false"
+			name="courseGroup"
+			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup"
+            >
+		<foreignkey field-ref="courseGroupKey"/>
+	</reference-descriptor>
+
+	<reference-descriptor auto-retrieve="false"
+			name="beginExecutionPeriod"
+			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
+            >
+		<foreignkey field-ref="beginExecutionPeriodKey"/>
+	</reference-descriptor>
+	
+	<reference-descriptor auto-retrieve="false"
+			name="endExecutionPeriod"
+			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
+            >
+		<foreignkey field-ref="endExecutionPeriodKey"/>
+	</reference-descriptor>				
+</class-descriptor>
+
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation" table="COMPETENCE_COURSE_INFORMATION">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="keyCompetenceCourse"
+		column="KEY_COMPETENCE_COURSE"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="keyExecutionYear"
+		column="KEY_EXECUTION_YEAR"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="ectsCredits"
+		column="ECTS_CREDITS"
+		jdbc-type="DOUBLE"
+	/>
+	<field-descriptor
+		name="basic"
+		column="BASIC"
+		jdbc-type="BIT"
+	/>
+	<field-descriptor
+		name="theoPratHours"
+		column="THEO_PRAT_HOURS"
+		jdbc-type="DOUBLE"
+	/>
+	<field-descriptor
+		name="theoreticalHours"
+		column="THEORETICAL_HOURS"
+		jdbc-type="DOUBLE"
+	/>
+	<field-descriptor
+		name="labHours"
+		column="LAB_HOURS"
+		jdbc-type="DOUBLE"
+	/>
+	<field-descriptor
+		name="praticalHours"
+		column="PRATICAL_HOURS"
+		jdbc-type="DOUBLE"
+	/>
+	<field-descriptor
+        name="generalObjectives"
+        column="GENERAL_OBJECTIVES"
+        jdbc-type="LONGVARCHAR"
+	/>
+	<field-descriptor
+        name="operacionalObjectives"
+        column="OPERACIONAL_OBJECTIVES"
+        jdbc-type="LONGVARCHAR"
+	/>
+	<field-descriptor
+        name="program"
+        column="PROGRAM"
+        jdbc-type="LONGVARCHAR"
+	/>
+	<field-descriptor
+        name="generalObjectivesEn"
+        column="GENERAL_OBJECTIVES_EN"
+        jdbc-type="LONGVARCHAR"
+	/>
+	<field-descriptor
+        name="operacionalObjectivesEn"
+        column="OPERACIONAL_OBJECTIVES_EN"
+        jdbc-type="LONGVARCHAR"
+	/>
+	<field-descriptor
+        name="programEn"
+        column="PROGRAM_EN"
+        jdbc-type="LONGVARCHAR"
+	/>
+	<reference-descriptor auto-retrieve="false"
+		name="competenceCourse"
+		class-ref="net.sourceforge.fenixedu.domain.CompetenceCourse"
+		>
+		<foreignkey field-ref="keyCompetenceCourse"/>
+	</reference-descriptor>		
+	<reference-descriptor auto-retrieve="false"
+		name="executionYear"
+		class-ref="net.sourceforge.fenixedu.domain.ExecutionYear"
+		>
+		<foreignkey field-ref="keyExecutionYear"/>
+	</reference-descriptor>		
+</class-descriptor>

@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -52,17 +53,15 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriodId implements IServic
             if (degree == null) {
                 throw new InvalidArgumentsServiceException();
             }
-            List curricularPlans = degree.getDegreeCurricularPlans();
-            Iterator iter = curricularPlans.iterator();
+            List<IDegreeCurricularPlan> curricularPlans = degree.getDegreeCurricularPlans();
             List curricularCourses = new ArrayList();
-            while (iter.hasNext()) {
-                IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) iter.next();
-                if (degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE)) {
+            for (IDegreeCurricularPlan degreeCurricularPlan : curricularPlans) {
+                if (degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE) && degreeCurricularPlan.getCurricularStage().equals(CurricularStage.OLD)) {
                     curricularCourses.addAll(degreeCurricularPlan.getCurricularCourses());
                 }
             }
             List executionCourses = new ArrayList();
-            iter = curricularCourses.iterator();
+            Iterator iter = curricularCourses.iterator();
             while (iter.hasNext()) {
                 ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
                 executionCourses.addAll(CollectionUtils.select(curricularCourse

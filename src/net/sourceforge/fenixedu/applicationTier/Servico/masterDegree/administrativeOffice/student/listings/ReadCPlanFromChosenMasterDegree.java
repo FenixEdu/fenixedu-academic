@@ -1,14 +1,15 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.listings;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -20,27 +21,15 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadCPlanFromChosenMasterDegree implements IService {
 
-    public List run(Integer idInternal) throws FenixServiceException {
-        ISuportePersistente sp = null;
-        List degreeCurricularPlansList = new ArrayList();
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+    public List run(Integer idInternal) throws FenixServiceException, ExcepcaoPersistencia {
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IDegree degree = (IDegree) sp.getICursoPersistente().readByOID(Degree.class, idInternal);
 
-            // Get the Master Degree
-            IDegree degree = (IDegree)sp.getICursoPersistente().readByOID(Degree.class,idInternal);
-
-            // Get the List of Degree Curricular Plans
-            degreeCurricularPlansList = degree.getDegreeCurricularPlans();
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
-
-        Iterator iterator = degreeCurricularPlansList.iterator();
-        List result = new ArrayList();
-        while (iterator.hasNext()) {
-            result.add(InfoDegreeCurricularPlanWithDegree.newInfoFromDomain((IDegreeCurricularPlan) iterator.next()));
+        List<InfoDegreeCurricularPlan> result = new ArrayList<InfoDegreeCurricularPlan>();
+        for (IDegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
+            if (dcp.getCurricularStage().equals(CurricularStage.OLD)) {
+                result.add(InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(dcp));
+            }
         }
 
         return result;

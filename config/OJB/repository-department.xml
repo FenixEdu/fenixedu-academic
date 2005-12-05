@@ -102,6 +102,12 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
+   	<field-descriptor
+		name="curricularStage"
+		column="CURRICULAR_STAGE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularStage2SqlCurricularStageFieldConversion"
+	/>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="departments"
 		element-class-ref="net.sourceforge.fenixedu.domain.Department"
@@ -165,4 +171,9 @@
          class-ref="net.sourceforge.fenixedu.domain.ExecutionYear">
          <foreignkey field-ref="keyExecutionYear"/>
     </reference-descriptor>
+   	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="courseInformations"
+			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation">
+		<inverse-foreignkey field-ref="keyCompetenceCourse"/>
+	</collection-descriptor>
 </class-descriptor>

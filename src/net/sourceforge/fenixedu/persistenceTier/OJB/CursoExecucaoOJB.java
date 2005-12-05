@@ -15,6 +15,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -61,9 +62,10 @@ public class CursoExecucaoOJB extends PersistentObjectOJB implements IPersistent
         return queryList(ExecutionDegree.class, criteria);
     }
 
-    public List readByDegreeAndExecutionYear(Integer degreeOID, String year) throws ExcepcaoPersistencia {
+    public List readByDegreeAndExecutionYear(Integer degreeOID, String year, CurricularStage curricularStage) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionYear.year", year);
+        criteria.addEqualTo("degreeCurricularPlan.curricularStage", curricularStage);
         criteria.addEqualTo("degreeCurricularPlan.degree.idInternal", degreeOID);
         return queryList(ExecutionDegree.class, criteria);
     }
@@ -91,9 +93,9 @@ public class CursoExecucaoOJB extends PersistentObjectOJB implements IPersistent
         return queryList(ExecutionDegree.class, criteria);
     }
 
-    public List readExecutionsDegreesByDegree(Integer degreeOID) throws ExcepcaoPersistencia {
+    public List readExecutionsDegreesByDegree(Integer degreeOID, CurricularStage curricularStage) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-
+        criteria.addEqualTo("degreeCurricularPlan.curricularStage", curricularStage);
         criteria.addEqualTo("degreeCurricularPlan.degree.idInternal", degreeOID);
 
         return queryList(ExecutionDegree.class, criteria);

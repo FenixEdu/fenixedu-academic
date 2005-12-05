@@ -184,7 +184,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.CurricularCourse -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.CurricularCourse" table="CURRICULAR_COURSE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.CurricularCourse" table="DEGREE_MODULE">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -207,6 +207,11 @@
 		column="KEY_DEGREE_CURRICULAR_PLAN"
 		jdbc-type="INTEGER"
 	/> 
+	<field-descriptor
+		name="keyNewDegreeCurricularPlan"
+		column="KEY_NEW_DEGREE_CURRICULAR_PLAN"
+		jdbc-type="INTEGER"
+	/>
 	<field-descriptor
 		name="credits"
 		column="CREDITS"
@@ -325,6 +330,17 @@
 		column="ACRONYM"
 		jdbc-type="VARCHAR"
 	/>
+	<field-descriptor
+		name="curricularStage"
+		column="CURRICULAR_STAGE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularStage2SqlCurricularStageFieldConversion"
+	/>
+	<field-descriptor
+         name="ojbConcreteClass"
+         column="CLASS_NAME"
+         jdbc-type="VARCHAR"
+    />		
 	<reference-descriptor auto-retrieve="false"
 			name="university"
 			class-ref="net.sourceforge.fenixedu.domain.University"
@@ -343,6 +359,12 @@
 			>
 		<foreignkey field-ref="degreeCurricularPlanKey"/>
 	 </reference-descriptor>
+ 	<reference-descriptor auto-retrieve="false"
+			name="newDegreeCurricularPlan"
+			class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
+            >
+		<foreignkey field-ref="keyNewDegreeCurricularPlan"/>
+	</reference-descriptor>
 	 <reference-descriptor auto-retrieve="false"
 			name="scientificArea"
 			class-ref="net.sourceforge.fenixedu.domain.ScientificArea"
@@ -464,7 +486,11 @@
 			>
 		<inverse-foreignkey field-ref="curricularCourseIdInternal"/>
 	</collection-descriptor>
-	 
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="degreeModuleContexts"
+			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.Context">
+		<inverse-foreignkey field-ref="degreeModuleKey"/>
+	</collection-descriptor>
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
@@ -551,8 +577,12 @@
 			>
 		<inverse-foreignkey field-ref="curricularSemesterKey"/>
 	</collection-descriptor>    
-
-
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="contexts"
+			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.Context"
+			>
+		<inverse-foreignkey field-ref="curricularSemesterKey"/>
+	</collection-descriptor>    
 </class-descriptor>
 
 

@@ -72,6 +72,7 @@
 <!ENTITY teacherServiceExemption SYSTEM "repository_teacher_service_exemption.xml">
 <!ENTITY qualification SYSTEM "repository_qualification.xml">
 <!ENTITY fileEntry SYSTEM "repository_fileEntry.xml">
+<!ENTITY degreeStructure SYSTEM "repository_degree_structure.xml">
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
 
@@ -145,5 +146,6 @@
 	&teacherServiceExemption;
 	&qualification;
 	&fileEntry;
+	&degreeStructure;
 	
 </descriptor-repository>

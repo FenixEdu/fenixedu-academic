@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfAc
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfCurricularCoursesEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PrecedencesEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PreviousYearsCurricularCourseEnrollmentRule;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
@@ -32,16 +33,17 @@ import org.apache.commons.collections.Predicate;
 
 public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
-    public DegreeCurricularPlan() {
-        setOjbConcreteClass(getClass().getName());
+    protected DegreeCurricularPlan() {
+        super();
+        this.setOjbConcreteClass(getClass().getName());
     }
 
     public DegreeCurricularPlan(IDegree degree, String name, DegreeCurricularPlanState state,
             Date inicialDate, Date endDate, Integer degreeDuration,
             Integer minimalYearForOptionalCourses, Double neededCredits, MarkType markType,
-            Integer numerusClausus, String annotation) {
+            Integer numerusClausus, String annotation, CurricularStage curricularStage) {
 
-        setOjbConcreteClass(getClass().getName());
+        this();
 
         setDegree(degree);
         setName(name);
@@ -54,6 +56,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         setMarkType(markType);
         setNumerusClausus(numerusClausus);
         setAnotation(annotation);
+        setCurricularStage(curricularStage);
         setConcreteClassForStudentCurricularPlans(degree.getConcreteClassForDegreeCurricularPlans());
     }
 
@@ -72,6 +75,19 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return result;
     }
 
+    public String print() {
+        if (!this.getCurricularStage().equals(CurricularStage.OLD)) {
+            StringBuffer dcp = new StringBuffer();
+            
+            dcp.append("[DCP ").append(this.getIdInternal()).append("] ").append(this.getName()).append("\n");
+            this.getDegreeModule().print(dcp, "", null);
+                        
+            return dcp.toString();
+        } else {
+            return "";    
+        }
+    }
+    
     public IStudentCurricularPlan getNewStudentCurricularPlan() {
         IStudentCurricularPlan studentCurricularPlan = null;
 

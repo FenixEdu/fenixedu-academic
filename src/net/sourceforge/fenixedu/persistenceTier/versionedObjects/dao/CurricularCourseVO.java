@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
@@ -21,10 +22,20 @@ import org.apache.commons.collections.Predicate;
 
 public class CurricularCourseVO extends VersionedObjectsBase implements IPersistentCurricularCourse {
 
+    public List readByCurricularStage(CurricularStage curricularStage) throws ExcepcaoPersistencia {
+        List<ICurricularCourse> result = new ArrayList<ICurricularCourse>();
+        for (ICurricularCourse cc : (List<ICurricularCourse>) readAll(CurricularCourse.class)) {
+            if (cc.getCurricularStage().equals(curricularStage)) {
+                result.add(cc);
+            }
+        }
+        return result;
+    }
+    
     public List readCurricularCoursesByDegreeCurricularPlan(final String name, final String degreeName,
             final String degreeSigla) throws ExcepcaoPersistencia {
 
-        final Collection curricularCourses = readAll(CurricularCourse.class);
+        final Collection curricularCourses = readByCurricularStage(CurricularStage.OLD);
 
         return (List) CollectionUtils.select(curricularCourses, new Predicate() {
             public boolean evaluate(Object obj) {
@@ -43,7 +54,7 @@ public class CurricularCourseVO extends VersionedObjectsBase implements IPersist
     public List readCurricularCoursesByDegreeCurricularPlanAndBasicAttribute(
             final Integer degreeCurricularPlanKey, final Boolean basic) throws ExcepcaoPersistencia {
 
-        final Collection curricularCourses = readAll(CurricularCourse.class);
+        final Collection curricularCourses = readByCurricularStage(CurricularStage.OLD);
 
         return (List) CollectionUtils.select(curricularCourses, new Predicate() {
             public boolean evaluate(Object obj) {
@@ -57,7 +68,7 @@ public class CurricularCourseVO extends VersionedObjectsBase implements IPersist
     public List readbyCourseNameAndDegreeCurricularPlan(final String curricularCourseName,
             final Integer degreeCurricularPlanKey) throws ExcepcaoPersistencia {
 
-        final Collection curricularCourses = readAll(CurricularCourse.class);
+        final Collection curricularCourses = readByCurricularStage(CurricularStage.OLD);
 
         return (List) CollectionUtils.select(curricularCourses, new Predicate() {
             public boolean evaluate(Object obj) {
@@ -71,7 +82,7 @@ public class CurricularCourseVO extends VersionedObjectsBase implements IPersist
     public List readExecutedCurricularCoursesByDegreeAndExecutionYear(final Integer degreeKey,
             final Integer executionYearKey) throws ExcepcaoPersistencia {
 
-        final Collection curricularCourses = readAll(CurricularCourse.class);
+        final Collection curricularCourses = readByCurricularStage(CurricularStage.OLD);
 
         return (List) CollectionUtils.select(curricularCourses, new Predicate() {
             public boolean evaluate(Object obj) {
@@ -98,7 +109,7 @@ public class CurricularCourseVO extends VersionedObjectsBase implements IPersist
     public List readExecutedCurricularCoursesByDegreeAndYearAndExecutionYear(final Integer degreeKey,
             final Integer year, final Integer executionYearKey) throws ExcepcaoPersistencia {
 
-        final Collection curricularCourses = readAll(CurricularCourse.class);
+        final Collection curricularCourses = readByCurricularStage(CurricularStage.OLD);
 
         return (List) CollectionUtils.select(curricularCourses, new Predicate() {
             public boolean evaluate(Object obj) {

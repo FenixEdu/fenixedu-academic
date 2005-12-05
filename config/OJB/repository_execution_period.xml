@@ -162,4 +162,16 @@
 			>
 		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
 	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="beginExecutionPeriodContexts"
+			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.Context"
+			>
+		<inverse-foreignkey field-ref="beginExecutionPeriodKey"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="endExecutionPeriodContexts"
+			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.Context"
+			>
+		<inverse-foreignkey field-ref="endExecutionPeriodKey"/>
+	</collection-descriptor>
 </class-descriptor> 

@@ -39,6 +39,9 @@ public class ReadAvailableRoomsForExam implements IService {
 
         final List<InfoRoom> availableInfoRooms = new ArrayList<InfoRoom>();
         for (final IRoom room : rooms) {
+            if (room.getNome().equals("QA")) {
+                System.out.println();
+            }
             if (!isOccupied(room, periodStart, periodEnd, startTime, endTime, dayOfWeek, frequency,
                     weekOfStart, roomOccupationToRemoveId)) {
                 availableInfoRooms.add(InfoRoom.newInfoFromDomain(room));

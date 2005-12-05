@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -35,7 +36,7 @@ public class InsertDegreeCurricularPlan implements IService {
                 .getEndDate(), infoDegreeCurricularPlan.getDegreeDuration(), infoDegreeCurricularPlan
                 .getMinimalYearForOptionalCourses(), infoDegreeCurricularPlan.getNeededCredits(),
                 infoDegreeCurricularPlan.getMarkType(), infoDegreeCurricularPlan.getNumerusClausus(),
-                infoDegreeCurricularPlan.getAnotation());
+                infoDegreeCurricularPlan.getAnotation(), CurricularStage.OLD);
     }
 
 }

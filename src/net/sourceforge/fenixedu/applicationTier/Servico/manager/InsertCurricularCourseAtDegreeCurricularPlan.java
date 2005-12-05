@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
@@ -72,13 +73,11 @@ public class InsertCurricularCourseAtDegreeCurricularPlan implements IService {
                 IPersistentCurricularCourse persistentCurricularCourse = persistentSuport
                         .getIPersistentCurricularCourse();
 
-                ICurricularCourse curricularCourse = DomainFactory.makeCurricularCourse();
+                ICurricularCourse curricularCourse = DomainFactory.makeCurricularCourse(name, code, infoCurricularCourse.getAcronym(), infoCurricularCourse.getEnrollmentAllowed(), CurricularStage.OLD);
 
                 curricularCourse.setBasic(infoCurricularCourse.getBasic());
-                curricularCourse.setCode(code);
                 curricularCourse.setDegreeCurricularPlan(degreeCurricularPlan);
                 curricularCourse.setMandatory(infoCurricularCourse.getMandatory());
-                curricularCourse.setName(name);
                 curricularCourse.setNameEn(nameEn);
                 curricularCourse.setType(infoCurricularCourse.getType());
                 curricularCourse.setTheoreticalHours(infoCurricularCourse.getTheoreticalHours());
@@ -94,8 +93,6 @@ public class InsertCurricularCourseAtDegreeCurricularPlan implements IService {
                 curricularCourse.setEnrollmentWeigth(infoCurricularCourse.getEnrollmentWeigth());
                 curricularCourse.setWeigth(infoCurricularCourse.getWeigth());
                 curricularCourse.setMandatoryEnrollment(infoCurricularCourse.getMandatoryEnrollment());
-                curricularCourse.setEnrollmentAllowed(infoCurricularCourse.getEnrollmentAllowed());
-                curricularCourse.setAcronym(infoCurricularCourse.getAcronym());
             } else {
                 throw new ExistingAcronymException();
             }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IDegreeInfo;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 
 public class InfoDegreeWithInfoDegreeCurricularPlansAndInfoDegreeInfos extends InfoDegree {
 	
@@ -22,8 +23,10 @@ public class InfoDegreeWithInfoDegreeCurricularPlansAndInfoDegreeInfos extends I
             }
 			
 			for (IDegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
-				InfoDegreeCurricularPlan infoDCP = InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(dcp);
-				this.getInfoDegreeCurricularPlans().add(infoDCP);
+				if (dcp.getCurricularStage().equals(CurricularStage.OLD)) {
+                    InfoDegreeCurricularPlan infoDCP = InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(dcp);
+                    this.getInfoDegreeCurricularPlans().add(infoDCP);
+                }
 			}
         }
     }

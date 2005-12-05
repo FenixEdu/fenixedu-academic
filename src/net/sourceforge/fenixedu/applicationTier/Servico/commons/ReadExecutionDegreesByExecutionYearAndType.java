@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -62,7 +63,7 @@ public class ReadExecutionDegreesByExecutionYearAndType implements IService {
         final IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
 
         final List executionDegrees = executionDegreeDAO.readByDegreeAndExecutionYear(degree
-                .getIdInternal(), executionYear.getYear());
+                .getIdInternal(), executionYear.getYear(), CurricularStage.OLD);
         return getInfoExecutionDegrees(executionDegrees);
     }
 

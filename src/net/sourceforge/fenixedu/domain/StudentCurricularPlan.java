@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -19,6 +18,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.degree.enrollment.INotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.IEnrollmentRule;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
@@ -577,8 +577,12 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             sameCompetenceCurricularCourses = new ArrayList<ICurricularCourse>();
             sameCompetenceCurricularCourses.add(curricularCourse);
         } else {
-            sameCompetenceCurricularCourses = curricularCourse.getCompetenceCourse()
-                    .getAssociatedCurricularCourses();
+            sameCompetenceCurricularCourses = new ArrayList<ICurricularCourse>();
+            for (ICurricularCourse course : curricularCourse.getCompetenceCourse().getAssociatedCurricularCourses()) {
+                if (course.getCurricularStage().equals(CurricularStage.OLD)) {
+                    sameCompetenceCurricularCourses.add(course);
+                }
+            }
         }
 
         for (ICurricularCourse course : sameCompetenceCurricularCourses) {

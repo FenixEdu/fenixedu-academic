@@ -13,6 +13,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 
 public interface IPersistentExecutionDegree extends IPersistentObject {
 
@@ -28,7 +29,7 @@ public interface IPersistentExecutionDegree extends IPersistentObject {
 
     public List readMasterDegrees(String executionYear) throws ExcepcaoPersistencia;
 
-    public List readByDegreeAndExecutionYear(Integer degreeOID, String year) throws ExcepcaoPersistencia;
+    public List readByDegreeAndExecutionYear(Integer degreeOID, String year, CurricularStage curricularStage) throws ExcepcaoPersistencia;
 
     public List readByTeacher(Integer teacherOID) throws ExcepcaoPersistencia;
 
@@ -37,7 +38,7 @@ public interface IPersistentExecutionDegree extends IPersistentObject {
 
     public List readByDegreeCurricularPlan(Integer degreeCurricularPlanOID) throws ExcepcaoPersistencia;
 
-    public List readExecutionsDegreesByDegree(Integer degreeOID) throws ExcepcaoPersistencia;
+    public List readExecutionsDegreesByDegree(Integer degreeOID, CurricularStage curricularStage) throws ExcepcaoPersistencia;
 
     public List readByExecutionCourseAndByTeacher(Integer executionCourseOID, Integer teacherOID)
             throws ExcepcaoPersistencia;

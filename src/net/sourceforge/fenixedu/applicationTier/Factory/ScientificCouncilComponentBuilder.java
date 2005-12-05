@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
@@ -181,7 +182,7 @@ public class ScientificCouncilComponentBuilder {
             IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp
                     .getIPersistentDegreeCurricularPlan();
             List degreeCurricularPlans = persistentDegreeCurricularPlan.readByDegreeAndState(degree.getIdInternal(),
-                    DegreeCurricularPlanState.ACTIVE);
+                    DegreeCurricularPlanState.ACTIVE, CurricularStage.OLD);
             Iterator iter = degreeCurricularPlans.iterator();
             List infoDegreeCurricularPlans = new ArrayList();
             while (iter.hasNext()) {

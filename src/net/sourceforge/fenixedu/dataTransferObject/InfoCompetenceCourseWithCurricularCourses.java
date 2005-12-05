@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ICompetenceCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 
 public class InfoCompetenceCourseWithCurricularCourses extends
 		InfoCompetenceCourse {
@@ -14,7 +15,9 @@ public class InfoCompetenceCourseWithCurricularCourses extends
         if (competenceCourse != null) {
         	List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
         	for (ICurricularCourse course : competenceCourse.getAssociatedCurricularCourses()) {
-				infoCurricularCourses.add(InfoCurricularCourseWithInfoDegreeCurricularPlan.newInfoFromDomain(course));
+				if (course.getCurricularStage().equals(CurricularStage.OLD)) {
+                    infoCurricularCourses.add(InfoCurricularCourseWithInfoDegreeCurricularPlan.newInfoFromDomain(course));                    
+                }
 			}
             setAssociatedCurricularCourses(infoCurricularCourses);
         }

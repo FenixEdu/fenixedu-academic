@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
@@ -98,7 +99,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
         final Integer degreeCurricularPlanID = getDegreeCurricularPlanID();
         if (degree != null && degreeCurricularPlanID != null) {
         	for (final IDegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlans()) {
-        		if (degreeCurricularPlanID.equals(degreeCurricularPlan.getIdInternal())) {
+        		if (degreeCurricularPlanID.equals(degreeCurricularPlan.getIdInternal()) && degreeCurricularPlan.getCurricularStage().equals(CurricularStage.OLD)) {
         			return degreeCurricularPlan;
         		}
         	}
@@ -109,7 +110,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
     public IDegreeCurricularPlan getMostRecentDegreeCurricularPlan() throws FenixFilterException, FenixServiceException {
         IDegreeCurricularPlan mostRecentDegreeCurricularPlan = null;
         for (final IDegreeCurricularPlan degreeCurricularPlan : getDegree().getDegreeCurricularPlans()) {
-            if (degreeCurricularPlan.getState() == DegreeCurricularPlanState.ACTIVE) {
+            if (degreeCurricularPlan.getState() == DegreeCurricularPlanState.ACTIVE && degreeCurricularPlan.getCurricularStage().equals(CurricularStage.OLD)) {
                 final Date initialDate = degreeCurricularPlan.getInitialDate();
                 final Date mostRecentInitialDate = degreeCurricularPlan.getInitialDate();
                 if (mostRecentDegreeCurricularPlan == null || initialDate.after(mostRecentInitialDate)) {
@@ -191,7 +192,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
         final IDegree degree = getDegree();
         if (degree != null) {
             for (final IDegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlans()) {
-                if (degreeCurricularPlan.getState() == DegreeCurricularPlanState.ACTIVE) {
+                if (degreeCurricularPlan.getState() == DegreeCurricularPlanState.ACTIVE && degreeCurricularPlan.getCurricularStage().equals(CurricularStage.OLD)) {
                     final Date initialDate = degreeCurricularPlan.getInitialDate();
                     degreeCurricularPlanSelectItems.add(new SelectItem(degreeCurricularPlan.getIdInternal(), yearFormat.format(initialDate)));
                 }
