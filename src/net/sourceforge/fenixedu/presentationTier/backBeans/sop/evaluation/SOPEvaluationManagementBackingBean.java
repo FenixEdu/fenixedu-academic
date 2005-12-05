@@ -47,6 +47,7 @@ import net.sourceforge.fenixedu.util.TipoSala;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.util.MessageResources;
 
 public class SOPEvaluationManagementBackingBean extends EvaluationManagementBackingBean {
@@ -758,12 +759,26 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         }
         
         if (this.getOrderCriteria() == 0) {
-            Collections.sort(availableInfoRoom, new BeanComparator("capacidadeExame"));
-            Collections.reverse(availableInfoRoom);
+            final ComparatorChain comparatorChain = new ComparatorChain();
+            comparatorChain.addComparator(new ReverseComparator(new BeanComparator(
+                    "capacidadeExame")));
+            comparatorChain.addComparator(new BeanComparator("nome"));
+           
+            Collections.sort(availableInfoRoom, comparatorChain);
         } else if (this.getOrderCriteria() == 1) {
-            Collections.sort(availableInfoRoom, new BeanComparator("edificio"));
+            final ComparatorChain comparatorChain = new ComparatorChain();
+            comparatorChain.addComparator(new ReverseComparator(new BeanComparator(
+                    "edificio")));
+            comparatorChain.addComparator(new BeanComparator("nome"));
+           
+            Collections.sort(availableInfoRoom, comparatorChain);
         } else if (this.getOrderCriteria() == 2) {
-            Collections.sort(availableInfoRoom, new BeanComparator("tipo"));
+            final ComparatorChain comparatorChain = new ComparatorChain();
+            comparatorChain.addComparator(new ReverseComparator(new BeanComparator(
+                    "tipo")));
+            comparatorChain.addComparator(new BeanComparator("nome"));
+           
+            Collections.sort(availableInfoRoom, comparatorChain);
         }
         
         List<SelectItem> items = new ArrayList<SelectItem>(availableInfoRoom.size());
