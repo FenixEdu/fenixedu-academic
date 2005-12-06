@@ -489,6 +489,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
         result.set(getEnrolmentBeginYear(), getEnrolmentBeginMonth() - 1, getEnrolmentBeginDay(),
                 getEnrolmentBeginHour(), getEnrolmentBeginMinute());
+        
+        result.set(Calendar.SECOND, 0);
+        result.set(Calendar.MILLISECOND, 0);
 
         return result;
     }
@@ -499,6 +502,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         result.set(getEnrolmentEndYear(), getEnrolmentEndMonth() - 1, getEnrolmentEndDay(),
                 getEnrolmentEndHour(), getEnrolmentEndMinute());
 
+        result.set(Calendar.SECOND, 0);
+        result.set(Calendar.MILLISECOND, 0);
+        
         return result;
     }
 
@@ -549,6 +555,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         result.set(this.getYear(), this.getMonth() - 1, this.getDay(), this.getBeginHour(), this
                 .getBeginMinute());
 
+        result.set(Calendar.SECOND, 0);
+        result.set(Calendar.MILLISECOND, 0);
+        
         return result;
     }
 
@@ -558,6 +567,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         result.set(this.getYear(), this.getMonth() - 1, this.getDay(), this.getEndHour(), this
                 .getEndMinute());
 
+        result.set(Calendar.SECOND, 0);
+        result.set(Calendar.MILLISECOND, 0);
+        
         return result;
     }
     
