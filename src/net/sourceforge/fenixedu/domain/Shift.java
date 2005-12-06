@@ -42,8 +42,10 @@ public class Shift extends Shift_Base {
         }
     }
 
-    public void transferSummary(ISummary summary, Date summaryDate, Date summaryHour, IRoom room) {
-        checkIfSummaryExistFor(summaryDate, summaryHour);
+    public void transferSummary(ISummary summary, Date summaryDate, Date summaryHour, IRoom room, boolean newSummary) {
+        if(newSummary){
+            checkIfSummaryExistFor(summaryDate, summaryHour);
+        }
         summary.modifyShift(this, summaryDate, summaryHour, room);
     }
 

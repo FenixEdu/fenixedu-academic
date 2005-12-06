@@ -57,7 +57,7 @@ public class InsertSummary implements IService {
                     .getSummaryText(), infoSummary.getStudentsNumber(), infoSummary.getIsExtraLesson(),
                     professorship);
             shift.transferSummary(summary, infoSummary.getSummaryDate().getTime(), infoSummary
-                    .getSummaryHour().getTime(), room);
+                    .getSummaryHour().getTime(), room, true);
             return true;
         }
 
@@ -68,7 +68,7 @@ public class InsertSummary implements IService {
                         infoSummary.getSummaryText(), infoSummary.getStudentsNumber(), infoSummary
                                 .getIsExtraLesson(), teacher);
                 shift.transferSummary(summary, infoSummary.getSummaryDate().getTime(), infoSummary
-                        .getSummaryHour().getTime(), room);
+                        .getSummaryHour().getTime(), room, true);
                 return true;
             }
             else{
@@ -82,7 +82,7 @@ public class InsertSummary implements IService {
                     .getSummaryText(), infoSummary.getStudentsNumber(), infoSummary.getIsExtraLesson(),
                     teacherName);
             shift.transferSummary(summary, infoSummary.getSummaryDate().getTime(), infoSummary
-                    .getSummaryHour().getTime(), room);
+                    .getSummaryHour().getTime(), room, true);
             return true;
         }
 

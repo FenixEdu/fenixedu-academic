@@ -49,7 +49,7 @@ public class EditSummary implements IService {
         final IRoom room = SummaryUtils.getRoom(persistentSupport, summary, shift, infoSummary);
 
         shift.transferSummary(summary, infoSummary.getSummaryDate().getTime(), infoSummary
-                .getSummaryHour().getTime(), room);
+                .getSummaryHour().getTime(), room, !summary.getShift().equals(shift));
 
         final IProfessorship professorship = SummaryUtils.getProfessorship(persistentSupport, infoSummary);
         if (professorship != null) {

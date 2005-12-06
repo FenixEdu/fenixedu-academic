@@ -52,9 +52,9 @@ public class EditSummary implements IService {
         
         final IShift shift = SummaryUtils.getShift(persistentSupport, summary, infoSummary);
         final IRoom room = SummaryUtils.getRoom(persistentSupport, summary, shift, infoSummary);
-
+               
         shift.transferSummary(summary, infoSummary.getSummaryDate().getTime(), infoSummary
-                .getSummaryHour().getTime(), room);
+                .getSummaryHour().getTime(), room, !summary.getShift().equals(shift));
 
         final IProfessorship professorship = SummaryUtils.getProfessorship(persistentSupport,
                 infoSummary);
