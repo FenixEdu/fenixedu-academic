@@ -776,6 +776,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         examDate.set(Calendar.YEAR, getYear());
         examDate.set(Calendar.MONTH, getMonth() - 1);
         examDate.set(Calendar.DAY_OF_MONTH, getDay());
+        examDate.set(Calendar.SECOND, 0);
+        examDate.set(Calendar.MILLISECOND, 0);
 
         DiaSemana dayOfWeek = new DiaSemana(examDate.get(Calendar.DAY_OF_WEEK));
 
@@ -783,11 +785,13 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         examStartTime.set(Calendar.HOUR_OF_DAY, getBeginHour());
         examStartTime.set(Calendar.MINUTE, getBeginMinute());
         examStartTime.set(Calendar.SECOND, 0);
+        examStartTime.set(Calendar.MILLISECOND, 0);
         
         Calendar examEndTime = Calendar.getInstance();
         examEndTime.set(Calendar.HOUR_OF_DAY, getEndHour());
         examEndTime.set(Calendar.MINUTE, getEndMinute());
         examEndTime.set(Calendar.SECOND, 0);
+        examEndTime.set(Calendar.MILLISECOND, 0);
 
         Object args[] = { examDate, examDate, examStartTime, examEndTime, dayOfWeek, null, null,
                 Integer.valueOf(RoomOccupation.DIARIA), null, Boolean.FALSE };
