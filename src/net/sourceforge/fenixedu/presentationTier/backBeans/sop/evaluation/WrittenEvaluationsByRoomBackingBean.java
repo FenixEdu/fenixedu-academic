@@ -295,6 +295,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         linkParameters.put("executionDegreeID", executionDegree.getIdInternal().toString());
         linkParameters.put("curricularYearID", curricularYear.getIdInternal().toString());
         linkParameters.put("evaluationTypeClassname", writtenEvaluation.getClass().getName());
+        linkParameters.put("executionPeriodOID", this.getExecutionPeriodOID().toString());
         return linkParameters;
     }
 
