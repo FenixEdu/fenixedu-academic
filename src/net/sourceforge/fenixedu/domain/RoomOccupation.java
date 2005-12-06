@@ -110,6 +110,12 @@ public class RoomOccupation extends RoomOccupation_Base {
         if (!room.equals(this.getRoom())) {
             return false;
         }
+        
+        startTime.set(Calendar.SECOND, 0);
+        startTime.set(Calendar.MILLISECOND, 0);
+        endTime.set(Calendar.SECOND, 0);
+        endTime.set(Calendar.MILLISECOND, 0);
+        
         if (this.getPeriod().intersectPeriods(period)) {
             if (dayOfWeek.equals(this.getDayOfWeek())) {
                 if (CalendarUtil.intersectTimes(this.getStartTime(), this.getEndTime(), startTime,
