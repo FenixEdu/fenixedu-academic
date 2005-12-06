@@ -3147,7 +3147,7 @@ class net.sourceforge.fenixedu.domain.Summary extends net.sourceforge.fenixedu.d
     public void edit(String title, String summaryText, Integer studentsNumber, Boolean isExtraLesson,
             String teacherName);
             
-	public void modifyShift(IShift shift, java.util.Date summaryDate, java.util.Date summaryHour, IRoom room);            
+	public void modifyShift(IShift shift, java.util.Date summaryDate, java.util.Date summaryHour, IRoom room, boolean newSummary);            
 	
 	public void delete();
     "
