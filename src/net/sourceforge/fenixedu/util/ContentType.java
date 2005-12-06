@@ -21,25 +21,29 @@ public enum ContentType {
         case GIF:
             return "image/gif";
         case PNG:
-            return "image/png";            
+            return "image/png";
         default:
             return "*/*";
         }
 
     }
-    
-    public static ContentType getContentType(String httpContentType){
-        
-        if(httpContentType.toLowerCase().equals("image/gif")){
+
+    public static ContentType getContentType(String httpContentType) {
+
+        String contentTypeInLowerCase = httpContentType.toLowerCase();
+        if (contentTypeInLowerCase.equals("image/gif")) {
             return GIF;
         }
-        if(httpContentType.toLowerCase().equals("image/jpeg") || httpContentType.toLowerCase().equals("image/jpg")){
+        if (contentTypeInLowerCase.equals("image/jpeg")
+                || contentTypeInLowerCase.equals("image/jpg")
+                || contentTypeInLowerCase.equals("image/pjpeg")) {
             return JPG;
         }
-        if(httpContentType.toLowerCase().equals("image/png")){
+        if (contentTypeInLowerCase.equals("image/png")
+                || contentTypeInLowerCase.equals("image/x-png")) {
             return PNG;
         }
-        
+
         return null;
     }
 
