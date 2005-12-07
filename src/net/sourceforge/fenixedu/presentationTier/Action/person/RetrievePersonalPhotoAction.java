@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.IFileEntry;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -29,8 +30,8 @@ import org.apache.struts.action.ActionMapping;
  */
 public class RetrievePersonalPhotoAction extends FenixDispatchAction {
 
-    public ActionForward retrieveOwnPhoto(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
+    public ActionForward retrieveOwnPhoto(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
 
         IUserView userView = SessionUtils.getUserView(request);
         IFileEntry personalPhoto = userView.getPerson().getPersonalPhoto();
@@ -62,6 +63,13 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
         IFileEntry personalPhoto = person.getPersonalPhoto();
 
         if (personalPhoto != null) {
+
+            if (!person.getAvailablePhoto()) {
+                IPerson requester = userView.getPerson();
+                if (requester.hasRole(RoleType.STUDENT) || requester.hasRole(RoleType.GRANT_OWNER)) {
+                    return null;
+                }
+            }
 
             try {
                 response.setContentType(personalPhoto.getContentType().getMimeType());

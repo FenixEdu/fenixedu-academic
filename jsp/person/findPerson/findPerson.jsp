@@ -269,15 +269,11 @@ else
 	      </tr>
 		</table >
 	       
-	       	<logic:equal name="viewPhoto" value="true">
-			  	<logic:equal name="personalInfo" property="availablePhoto" value="true">
-			  	<bean:define id="personID" name="personalInfo" property="idInternal"/>	  	    		  	  	
-		  			<html:img src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&personCode="+personID.toString()%>"/>
-		   		</logic:equal>
-		   	</logic:equal>
+       	<logic:equal name="viewPhoto" value="true">
+		  	<bean:define id="personID" name="personalInfo" property="idInternal"/>	  	    		  	  	
+  			<html:img src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&personCode="+personID.toString()%>"/>
+	   	</logic:equal>
 	      
-	       
-
 		<table class="ppdetails">
 	       <!-- Telefone de Trabalho -->    
 	  		<tr class="highlight">
