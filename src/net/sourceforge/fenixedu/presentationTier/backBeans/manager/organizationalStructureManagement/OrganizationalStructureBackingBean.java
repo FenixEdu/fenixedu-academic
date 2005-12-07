@@ -157,7 +157,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         StringBuffer buffer = new StringBuffer();
         List<IUnit> allUnitsWithoutParent = getAllUnitsWithoutParent();
         Collections.sort(allUnitsWithoutParent, new BeanComparator("name"));
-        Date currentDate = Calendar.getInstance().getTime();
+        Date currentDate = prepareCurrentDate();
 
         for (IUnit unit : allUnitsWithoutParent) {
             if ((this.getListingTypeValue().equals("0") && unit.isActive(currentDate))
@@ -346,14 +346,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 datesResult.getBeginDate(), datesResult.getEndDate(), type,
                 parameters.getDepartmentID(), parameters.getDegreeID() };
 
-        try {
-            ServiceUtils.executeService(getUserView(), "CreateNewUnit", argsToRead);
-        } catch (FenixServiceException e) {
-            setErrorMessage(e.getMessage());
-            return "";
-        }
-
-        return "listAllUnits";
+        return executeCreateNewUnitService(argsToRead, "listAllUnits");
     }
 
     public String createSubUnit() throws FenixFilterException, FenixServiceException {
@@ -374,14 +367,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 this.getUnitCostCenter(), datesResult.getBeginDate(), datesResult.getEndDate(), type,
                 parameters.getDepartmentID(), parameters.getDegreeID() };
 
-        try {
-            ServiceUtils.executeService(getUserView(), "CreateNewUnit", argsToRead);
-        } catch (FenixServiceException e) {
-            setErrorMessage(e.getMessage());
-            return "";
-        }
-
-        return "backToUnitDetails";
+        return executeCreateNewUnitService(argsToRead, "backToUnitDetails");
     }
 
     public String editUnit() throws FenixFilterException, FenixServiceException {
@@ -402,14 +388,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 this.getUnitCostCenter(), datesResult.getBeginDate(), datesResult.getEndDate(), type,
                 parameters.getDepartmentID(), parameters.getDegreeID() };
 
-        try {
-            ServiceUtils.executeService(getUserView(), "CreateNewUnit", argsToRead);
-        } catch (FenixServiceException e) {
-            setErrorMessage(e.getMessage());
-            return "";
-        }
-
-        return "backToUnitDetails";
+        return executeCreateNewUnitService(argsToRead, "backToUnitDetails");
     }
 
     private UnitType getUnitType() throws FenixFilterException, FenixServiceException {
@@ -431,14 +410,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 this.getUnit().getBeginDate(), this.getUnit().getEndDate(), this.getUnit().getType(),
                 parameters.getDepartmentID(), parameters.getDegreeID() };
 
-        try {
-            ServiceUtils.executeService(getUserView(), "CreateNewUnit", argsToRead);
-        } catch (FenixServiceException e) {
-            setErrorMessage(e.getMessage());
-            return "";
-        }
-
-        return "backToUnitDetails";
+        return executeCreateNewUnitService(argsToRead, "backToUnitDetails");
     }
 
     public String disassociateParentUnit() throws FenixFilterException, FenixServiceException {
@@ -452,14 +424,22 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 this.getUnit().getBeginDate(), this.getUnit().getEndDate(), this.getUnit().getType(),
                 parameters.getDepartmentID(), parameters.getDegreeID() };
 
+        return executeCreateNewUnitService(argsToRead, "backToUnitDetails");
+    }
+
+    private String executeCreateNewUnitService(final Object[] argsToRead, String defaultReturn)
+            throws FenixFilterException {
         try {
             ServiceUtils.executeService(getUserView(), "CreateNewUnit", argsToRead);
         } catch (FenixServiceException e) {
             setErrorMessage(e.getMessage());
             return "";
+        } catch (DomainException e) {
+            setErrorMessage(e.getMessage());
+            return "";
         }
 
-        return "backToUnitDetails";
+        return defaultReturn;
     }
 
     private String getValidCosteCenterCode() throws FenixFilterException, FenixServiceException {
@@ -492,14 +472,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         final Object[] argsToRead = { null, this.getUnit().getIdInternal(), this.getFunctionName(),
                 datesResult.getBeginDate(), datesResult.getEndDate(), type, null };
 
-        try {
-            ServiceUtils.executeService(getUserView(), "CreateNewFunction", argsToRead);
-        } catch (FenixServiceException e) {
-            setErrorMessage(e.getMessage());
-            return "";
-        }
-
-        return "backToUnitDetails";
+        return executeCreateNewFunctionService(argsToRead);
     }
 
     public String editFunction() throws FenixFilterException, FenixServiceException {
@@ -523,14 +496,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 this.getFunction().getUnit().getIdInternal(), this.getFunctionName(),
                 datesResult.getBeginDate(), datesResult.getEndDate(), type, parentInherentFunctionID };
 
-        try {
-            ServiceUtils.executeService(getUserView(), "CreateNewFunction", argsToRead);
-        } catch (FenixServiceException e) {
-            setErrorMessage(e.getMessage());
-            return "";
-        }
-
-        return "backToUnitDetails";
+        return executeCreateNewFunctionService(argsToRead);
     }
 
     public String prepareAssociateInherentParentFunction() throws FenixFilterException,
@@ -552,9 +518,17 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 function.getName(), function.getBeginDate(), function.getEndDate(), function.getType(),
                 this.principalFunctionID };
 
+        return executeCreateNewFunctionService(argsToRead);
+    }
+
+    private String executeCreateNewFunctionService(final Object[] argsToRead) throws FenixFilterException {
         try {
             ServiceUtils.executeService(getUserView(), "CreateNewFunction", argsToRead);
         } catch (FenixServiceException e) {
+            setErrorMessage(e.getMessage());
+            return "";
+        }
+        catch (DomainException e) {
             setErrorMessage(e.getMessage());
             return "";
         }
@@ -724,13 +698,13 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return (day + "/" + month + "/" + year);
     }
 
-    private Calendar prepareCalendar() {
+    private Date prepareCurrentDate() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-        return calendar;
+        return calendar.getTime();
     }
 
     public HtmlInputHidden getUnitIDHidden() {
@@ -838,7 +812,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         for (IUnit unit : allUnits) {
             if (unit.getCostCenterCode() != null && !unit.equals(this.getChooseUnit())
                     && this.getUnitCostCenter().equals(String.valueOf(unit.getCostCenterCode()))
-                    && unit.isActive(prepareCalendar().getTime())) {
+                    && unit.isActive(prepareCurrentDate())) {
                 setErrorMessage("error.costCenter.alreadyExists");
                 return true;
             }

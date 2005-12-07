@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDepartment;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitType;
@@ -25,7 +26,7 @@ public class CreateNewUnit implements IService {
 
     public void run(Integer unitID, Integer parentUnitID, String unitName, String unitCostCenter,
             Date beginDate, Date endDate, UnitType type, Integer departmentID, Integer degreeID)
-            throws ExcepcaoPersistencia, FenixServiceException {
+            throws ExcepcaoPersistencia, FenixServiceException, DomainException {
 
         ISuportePersistente suportePersistente = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();

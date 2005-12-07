@@ -20,9 +20,9 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
     }
 
     public boolean belongsToPeriod(Date beginDate, Date endDate) {
-        if ((this.getStart().after(beginDate) || this.getStart().equals(beginDate))
-                && (this.getEnd() == null || (this.getEnd().equals(endDate) || this.getEnd().before(
-                        endDate)))) {
+        if ((this.getStart().before(beginDate) || this.getStart().after(beginDate))
+                && (this.getEnd() == null || (this.getEnd().before(endDate) || this
+                        .getEnd().after(endDate)))) {
             return true;
         }
         return false;

@@ -108,7 +108,7 @@ public class SummaryTest extends DomainTestBase {
         }
 
         try {
-            shift.transferSummary(summary, summaryDate, summaryHour, this.room);
+            shift.transferSummary(summary, summaryDate, summaryHour, this.room, true);
             fail("Expected DomainException: summary already exists!");
         } catch (DomainException e) {
             checkIfSummaryAttributesAreCorrect(this.summary, "title", "summaryText", 20, true, summaryDate,
@@ -121,7 +121,7 @@ public class SummaryTest extends DomainTestBase {
         sleep(1000);
         summaryDate = SummaryUtils.createSummaryDate(2005, 5, 6);
         summaryHour = SummaryUtils.createSummaryHour(11, 0);
-        shift.transferSummary(summary, summaryDate, summaryHour, this.room);
+        shift.transferSummary(summary, summaryDate, summaryHour, this.room, false);
         summary.edit("newTitle", "newSummaryText", 40, false, this.professorship);
         sleep(1000);
         Date dateAfterEdition = Calendar.getInstance().getTime();
@@ -135,7 +135,7 @@ public class SummaryTest extends DomainTestBase {
         sleep(1000);
         summaryDate = SummaryUtils.createSummaryDate(2005, 5, 7);
         summaryHour = SummaryUtils.createSummaryHour(11, 0);
-        shift.transferSummary(summary, summaryDate, summaryHour, this.room);
+        shift.transferSummary(summary, summaryDate, summaryHour, this.room, false);
         summary.edit("newTitle2", "newSummaryText2", 30, false, this.teacher);
         sleep(1000);
         dateAfterEdition = Calendar.getInstance().getTime();
@@ -149,7 +149,7 @@ public class SummaryTest extends DomainTestBase {
         sleep(1000);
         summaryDate = SummaryUtils.createSummaryDate(2005, 5, 8);
         summaryHour = SummaryUtils.createSummaryHour(11, 0);
-        shift.transferSummary(summary, summaryDate, summaryHour, this.room);
+        shift.transferSummary(summary, summaryDate, summaryHour, this.room, false);
         summary.edit("newTitle3", "newSummaryText3", 40, true, "JPNF");
         sleep(1000);
         dateAfterEdition = Calendar.getInstance().getTime();
@@ -166,7 +166,7 @@ public class SummaryTest extends DomainTestBase {
         sleep(1000);
         summaryDate = SummaryUtils.createSummaryDate(2005, 5, 10);
         summaryHour = SummaryUtils.createSummaryHour(11, 0);
-        alternativeShift.transferSummary(summary, summaryDate, summaryHour, this.room);
+        alternativeShift.transferSummary(summary, summaryDate, summaryHour, this.room, false);
         summary.edit("newTitle3", "newSummaryText3", 40, true, "JPNF");
         sleep(1000);
         dateAfterEdition = Calendar.getInstance().getTime();

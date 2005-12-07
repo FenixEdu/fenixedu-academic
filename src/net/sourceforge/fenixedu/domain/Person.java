@@ -501,7 +501,7 @@ public class Person extends Person_Base {
         List<IPersonFunction> activeFunctions = new ArrayList<IPersonFunction>();
 
         for (IPersonFunction personFunction : this.getPersonFunctions()) {
-            if (personFunction.isActive(prepareCalendar().getTime())) {
+            if (personFunction.isActive(prepareCurrentDate())) {
                 activeFunctions.add(personFunction);
             }
         }
@@ -513,7 +513,7 @@ public class Person extends Person_Base {
         List<IPersonFunction> inactiveFunctions = new ArrayList<IPersonFunction>();
 
         for (IPersonFunction personFunction : this.getPersonFunctions()) {
-           if (!personFunction.isActive(prepareCalendar().getTime())) {
+           if (!personFunction.isActive(prepareCurrentDate())) {
                 inactiveFunctions.add(personFunction);
             }
         }
@@ -529,13 +529,13 @@ public class Person extends Person_Base {
         return inherentFunctions;
     }
 
-    private Calendar prepareCalendar() {
+    private Date prepareCurrentDate() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-        return calendar;
+        return calendar.getTime();
     }
 
     public boolean containsActiveFunction(IFunction function) {

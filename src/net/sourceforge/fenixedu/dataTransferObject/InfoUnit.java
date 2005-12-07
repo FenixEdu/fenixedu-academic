@@ -73,8 +73,13 @@ public class InfoUnit extends InfoObject {
                     buffer.append(" / ");
                 }
             }
-            superiorUnits.add(0, buffer.toString());
-            superiorUnits.add(1, unitName);
+            if(size != 0){
+                superiorUnits.add(0, buffer.toString());
+                superiorUnits.add(1, unitName);
+            }
+            else{
+                superiorUnits.add(0, unitName);
+            }
             setSuperiorUnitsNames(superiorUnits);
         }                
     }

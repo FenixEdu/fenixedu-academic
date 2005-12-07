@@ -7,23 +7,23 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.manager.personManage
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanComparator;
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.departmentAdmOffice.FunctionsManagementBackingBean;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBackingBean {
 
@@ -55,6 +55,8 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
             } catch (ParseException e) {
                 setErrorMessage("error.date1.format");
             } catch (FenixServiceException e) {
+                setErrorMessage(e.getMessage());
+            } catch (DomainException e) {
                 setErrorMessage(e.getMessage());
             }
         }

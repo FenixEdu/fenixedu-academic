@@ -8,6 +8,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DomainFactory;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IFunction;
@@ -22,7 +23,7 @@ public class CreateNewFunction implements IService {
 
     public void run(Integer functionID, Integer unitID, String functionName, Date beginDate,
             Date endDate, FunctionType type, Integer parentInherentFunctionID)
-            throws ExcepcaoPersistencia, FenixServiceException {
+            throws ExcepcaoPersistencia, FenixServiceException, DomainException {
 
         ISuportePersistente suportePersistente = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();

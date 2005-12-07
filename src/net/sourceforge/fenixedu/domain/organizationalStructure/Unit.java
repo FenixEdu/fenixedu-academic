@@ -20,12 +20,12 @@ public class Unit extends Unit_Base {
             for (IUnit parentUnit : this.getParentUnits()) {
                 if (parentUnit.getParentUnits().isEmpty() && !allTopUnits.contains(parentUnit)) {
                     allTopUnits.add(parentUnit);
-                } else if(!parentUnit.getParentUnits().isEmpty()){
+                } else if (!parentUnit.getParentUnits().isEmpty()) {
                     for (IUnit parentUnit2 : parentUnit.getTopUnits()) {
-                        if(!allTopUnits.contains(parentUnit2)){
+                        if (!allTopUnits.contains(parentUnit2)) {
                             allTopUnits.add(parentUnit2);
                         }
-                    }                   
+                    }
                 }
             }
         }
@@ -34,23 +34,25 @@ public class Unit extends Unit_Base {
 
     public void edit(String unitName, String unitCostCenter, Date beginDate, Date endDate,
             UnitType type, IUnit parentUnit) {
-        
-        this.setName(unitName);
+
+        this.setName(unitName);        
         this.setBeginDate(beginDate);
+        if(endDate != null && endDate.before(beginDate)){
+            throw new DomainException("error.endDateBeforeBeginDate");
+        }
         this.setEndDate(endDate);
         this.setType(type);
         if (unitCostCenter != null && !unitCostCenter.equals("")) {
             this.setCostCenterCode(Integer.valueOf(unitCostCenter));
-        }        
-        if(parentUnit != null){
+        }
+        if (parentUnit != null) {
             this.addParentUnits(parentUnit);
         }
     }
 
     public boolean isActive(Date currentDate) {
         if (this.getEndDate() == null
-                || (this.getEndDate() != null && (this.getEndDate().after(currentDate) || this
-                        .getEndDate().equals(currentDate)))) {
+                || (this.getEndDate().after(currentDate) || this.getEndDate().equals(currentDate))) {
             return true;
         }
         return false;

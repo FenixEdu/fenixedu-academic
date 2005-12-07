@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction;
@@ -23,7 +24,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class AssociateNewFunctionToPerson implements IService {
 
     public void run(Integer functionID, Integer personID, Integer credits,
-            Date beginDate, Date endDate) throws ExcepcaoPersistencia, FenixServiceException {
+            Date beginDate, Date endDate) throws ExcepcaoPersistencia, FenixServiceException, DomainException {
 
         ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
         
@@ -42,10 +43,7 @@ public class AssociateNewFunctionToPerson implements IService {
         if(RulesRepository.isElegible(person, function.getUnit(), function.getName())){                      
             IPersonFunction personFunction = DomainFactory.makePersonFunction();
             personFunction.setPerson(person);
-            personFunction.setFunction(function);
-            personFunction.setCredits(credits);
-            personFunction.setBeginDate(beginDate);
-            personFunction.setEndDate(endDate);
+            personFunction.edit(function, beginDate, endDate, credits);                      
         }
         else{
             throw new FenixServiceException("error.associateFunction");

@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction;
@@ -41,53 +42,23 @@ import sun.text.Normalizer;
 
 public class FunctionsManagementBackingBean extends FenixBackingBean {
 
-    private String personName;
-
-    public List<IPerson> personsList;
-
-    public List<IPerson> allPersonsList;
+    public List<IPerson> personsList, allPersonsList;
 
     public List<IFunction> inherentFunctions;
 
-    public List<IPersonFunction> activeFunctions;
+    public List<IPersonFunction> activeFunctions, inactiveFunctions;
 
-    public List<IPersonFunction> inactiveFunctions;
-
-    public Integer page;
-
-    public Integer personID;
+    public Integer page, personID, unitID, functionID, numberOfFunctions, personFunctionID;
 
     public IUnit unit;
 
-    public Integer unitID;
+    public String credits, beginDate, endDate, personName;
 
-    public Integer functionID;
+    public HtmlInputHidden creditsHidden, beginDateHidden, endDateHidden, personIDHidden, unitIDHidden;
 
-    public String credits;
-
-    public String beginDate;
-
-    public String endDate;
-
-    public HtmlInputHidden creditsHidden;
-
-    public HtmlInputHidden beginDateHidden;
-
-    public HtmlInputHidden endDateHidden;
-
-    public HtmlInputHidden personIDHidden;
-
-    public HtmlInputHidden unitIDHidden;
-
-    public HtmlInputHidden functionIDHidden;
-
-    public HtmlInputHidden personFunctionIDHidden;
+    public HtmlInputHidden functionIDHidden, personFunctionIDHidden;
 
     public IFunction function;
-
-    public Integer numberOfFunctions;
-
-    private Integer personFunctionID;
 
     public IPersonFunction personFunction;
 
@@ -152,6 +123,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 setErrorMessage("error.date1.format");
             } catch (FenixServiceException e) {
                 setErrorMessage(e.getMessage());
+            } catch (DomainException e) {
+                setErrorMessage(e.getMessage());
             }
         }
         return "";
@@ -184,9 +157,10 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 setErrorMessage("error.date1.format");
             } catch (FenixServiceException e) {
                 setErrorMessage(e.getMessage());
+            } catch (DomainException e) {
+                setErrorMessage(e.getMessage());
             }
         }
-
         return "";
     }
 

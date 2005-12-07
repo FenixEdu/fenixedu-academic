@@ -17,6 +17,9 @@ public class Function extends Function_Base {
             IFunction parentInherentFunction) {       
         this.setName(functionName);
         this.setBeginDate(beginDate);
+        if(endDate != null && endDate.before(beginDate)){
+            throw new DomainException("error.endDateBeforeBeginDate");
+        }
         this.setEndDate(endDate);
         this.setType(type);
         this.setUnit(unit);

@@ -46,7 +46,7 @@
 				<h:outputText value="#{bundle['date.format']}"/>				
 			</h:panelGroup>
 		
-			<h:outputText value="<b>#{bundle['message.uniType']}</b>" escape="false"/>
+			<h:outputText value="<b>#{bundle['message.functionType']}</b>" escape="false"/>
 			<fc:selectOneMenu value="#{organizationalStructureBackingBean.functionTypeName}">
 				<f:selectItems value="#{organizationalStructureBackingBean.validFunctionType}"/>				
 			</fc:selectOneMenu>		
