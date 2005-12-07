@@ -46,15 +46,32 @@
 	   jdbc-type="INTEGER"
     />
     <field-descriptor id="9" 
-	   name="hoursNumber"    
-	   column="HOURS_NUMBER"  
+	   name="lessonHours"    
+	   column="LESSON_HOURS_NUMBER"  
 	   jdbc-type="INTEGER"
     />
     <field-descriptor id="10" 
+	   name="totalHours"    
+	   column="TOTAL_HOURS_NUMBER"  
+	   jdbc-type="INTEGER"
+    />
+    <field-descriptor id="11" 
 	   name="percentage"    
 	   column="PERCENTAGE"  
 	   jdbc-type="INTEGER"
     />
+    <field-descriptor id="12" 
+	   name="legalRegimenType"    
+	   column="LEGAL_REGIMEN_TYPE"  
+	   jdbc-type="VARCHAR"
+	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.LegalRegimenType2SqlLegalRegimenTypeConversion"
+    />
+    <field-descriptor id="13" 
+	   name="regimenType"    
+	   column="REGIMEN_TYPE"  
+	   jdbc-type="VARCHAR"
+	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.RegimenType2SqlRegimenTypeConversion"
+    />    
 
 	<reference-descriptor auto-retrieve="false"
     	name="salaryUnit"

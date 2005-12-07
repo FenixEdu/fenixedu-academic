@@ -88,6 +88,8 @@ valueType net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType  
 valueType net.sourceforge.fenixedu.domain.QualificationType										as QualificationType;
 valueType net.sourceforge.fenixedu.util.ByteArray												as ByteArray;
 valueType net.sourceforge.fenixedu.util.ContentType                                             as ContentType;
+valueType net.sourceforge.fenixedu.util.ContractRegimenType                                     as ContractRegimenType;
+valueType net.sourceforge.fenixedu.util.ContractLegalRegimenType                                as ContractLegalRegimenType;
 
 
 /*
@@ -187,11 +189,14 @@ class net.sourceforge.fenixedu.domain.Contract extends net.sourceforge.fenixedu.
 	Integer keyMailingUnit;
 	Integer keyWorkingUnit;
 	Integer keyCategory;
+	Integer percentage;
+	Integer lessonHours;
+	Integer totalHours;
 	Date beginDate;
 	Date endDate;
-	Integer percentage;
-	Integer hoursNumber;
-	
+	ContractLegalRegimenType legalRegimenType;
+	ContractRegimenType regimenType;
+				
 	interface"
 	public boolean belongsToPeriod(java.util.Date beginDate, java.util.Date endDate);
 	"
@@ -2284,14 +2289,14 @@ class net.sourceforge.fenixedu.domain.Period extends net.sourceforge.fenixedu.do
 }
 
 class net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer credits;
+	Double credits;
 	Integer keyPerson;
 	Integer keyFunction;
 	Date beginDate;
-	Date endDate;	
+	Date endDate;
 	
 	interface"
-	public void edit(net.sourceforge.fenixedu.domain.organizationalStructure.IFunction function, java.util.Date beginDate, java.util.Date endDate, Integer credits);	
+	public void edit(net.sourceforge.fenixedu.domain.organizationalStructure.IFunction function, java.util.Date beginDate, java.util.Date endDate, Double credits);	
     public boolean isActive(java.util.Date currentDate);
 	public boolean belongsToPeriod(java.util.Date beginDate, java.util.Date endDate);
 	"

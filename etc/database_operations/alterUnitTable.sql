@@ -1,0 +1,1 @@
+alter table UNIT drop column KEY_PARENT_UNIT;

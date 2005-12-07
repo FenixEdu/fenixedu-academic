@@ -45,6 +45,9 @@ public class Unit extends Unit_Base {
         if (unitCostCenter != null && !unitCostCenter.equals("")) {
             this.setCostCenterCode(Integer.valueOf(unitCostCenter));
         }
+        else{
+            this.setCostCenterCode(null);
+        }
         if (parentUnit != null) {
             this.addParentUnits(parentUnit);
         }

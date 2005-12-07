@@ -15,3 +15,6 @@ echo Creating BOLONHA Role ...
 mysql -u$2 -f $1 < addBolonhaManagerRole.sql
 echo BOLONHA Role created.
 
+mysql -u$2 -f $1 < alterContractTable.sql
+mysql -u$2 -f $1 < alterUnitTable.sql
+mysql -u$2 -f $1 < alterPersonFunctionTable.sql
