@@ -9,7 +9,7 @@ package net.sourceforge.fenixedu.util;
  */
 public enum ContentType {
 
-    JPG, GIF, PNG;
+    JPG, PNG;
 
     public String getMimeType() {
 
@@ -18,8 +18,6 @@ public enum ContentType {
         switch (type) {
         case JPG:
             return "image/jpeg";
-        case GIF:
-            return "image/gif";
         case PNG:
             return "image/png";
         default:
@@ -31,9 +29,7 @@ public enum ContentType {
     public static ContentType getContentType(String httpContentType) {
 
         String contentTypeInLowerCase = httpContentType.toLowerCase();
-        if (contentTypeInLowerCase.equals("image/gif")) {
-            return GIF;
-        }
+
         if (contentTypeInLowerCase.equals("image/jpeg")
                 || contentTypeInLowerCase.equals("image/jpg")
                 || contentTypeInLowerCase.equals("image/pjpeg")) {
