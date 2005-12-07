@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.backBeans.departmentAdministrativeOffice;
+package net.sourceforge.fenixedu.presentationTier.backBeans.departmentAdmOffice;
 
 import java.text.DateFormat;
 import java.text.ParseException;

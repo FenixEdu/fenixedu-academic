@@ -159,10 +159,17 @@
 	<managed-bean>
 		<description>TeacherExpectationDefinitionPeriodManagement</description>
 		<managed-bean-name>teacherExpectationDefinitionPeriodManagement</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.departmentAdministrativeOffice.TeacherExpectationDefinitionPeriodManagement</managed-bean-class>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.departmentAdmOffice.TeacherExpectationDefinitionPeriodManagement</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
-	
+
+	<managed-bean>
+		<description>ManagementGroupsBackingBean</description>
+		<managed-bean-name>ManagementGroupsBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.departmentAdmOffice.ManagementGroupsBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
 	<!-- END: Backbeans from department administrative office subapplication -->
 
 	<!-- BEGIN: FunctionsManagement Managed Beans -->

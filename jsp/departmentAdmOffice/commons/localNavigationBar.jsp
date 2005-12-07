@@ -79,13 +79,13 @@
 	</ul>
 	<ul>
 		<li>
-			<html:link page="/managementGroups/curricularPlanManagementGroups.faces">
-				<bean:message key="link.curricularPlanManagementGroups"/>
+			<html:link page="/managementGroups/curricularPlansManagementGroup.faces">
+				<bean:message key="link.curricularPlansManagementGroup"/>
 			</html:link>
 		</li>
 		<li>
-			<html:link page="/managementGroups/competenceCourseManagementGroups.faces">
-				<bean:message key="link.competenceCourseManagementGroups"/>
+			<html:link page="/managementGroups/competenceCoursesManagementGroup.faces">
+				<bean:message key="link.competenceCoursesManagementGroup"/>
 			</html:link>
 		</li>
 	</ul>
