@@ -19,9 +19,8 @@ text-align: right;
 
 div.pp {
 border: 1px solid #ccc;
-padding-bottom: 0em;
+padding-bottom: 0;
 margin: 0.5em 0;
-float: left;
 }
 table.ppid {
 padding: 0.5em;
