@@ -55,12 +55,16 @@ public class Employee extends Employee_Base {
     private IDepartment getEmployeeUnitDepartment(IUnit unit) {
 
         List<IUnit> allTopUnits = unit.getTopUnits();
-        for (IUnit topUnit : allTopUnits) {
-            if (topUnit.getType() != null && topUnit.getType().equals(UnitType.DEPARTMENT)
-                    && topUnit.getDepartment() != null
-                    && topUnit.getDepartment().getCurrentActiveWorkingEmployees().contains(this)) {
-                return topUnit.getDepartment();
+        if (!allTopUnits.isEmpty()) {
+            for (IUnit topUnit : allTopUnits) {
+                if (topUnit.getType() != null && topUnit.getType().equals(UnitType.DEPARTMENT)
+                        && topUnit.getDepartment() != null
+                        && topUnit.getDepartment().getCurrentActiveWorkingEmployees().contains(this)) {
+                    return topUnit.getDepartment();
+                }
             }
+        } else if (unit.getType() != null && unit.getType().equals(UnitType.DEPARTMENT)) {
+            return unit.getDepartment();
         }
         return null;
     }
