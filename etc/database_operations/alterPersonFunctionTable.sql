@@ -1,0 +1,1 @@
+alter table PERSON_FUNCTION change column CREDITS CREDITS double default NULL;

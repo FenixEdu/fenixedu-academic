@@ -33,7 +33,7 @@
 	<field-descriptor id="6" 
 	   name="credits"    
 	   column="CREDITS"  
-	   jdbc-type="INTEGER"
+	   jdbc-type="DOUBLE"
     />
 
 	<reference-descriptor auto-retrieve="false"

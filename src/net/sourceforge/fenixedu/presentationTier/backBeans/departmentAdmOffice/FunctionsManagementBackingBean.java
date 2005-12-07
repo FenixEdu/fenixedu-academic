@@ -106,7 +106,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         } else {
 
             DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-            Integer credits = Integer.valueOf(this.getCredits());
+            Double credits = Double.valueOf(this.getCredits());
 
             Date beginDate_ = null, endDate_ = null;
             try {
@@ -140,7 +140,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         } else {
 
             DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-            Integer credits = Integer.valueOf(this.getCredits());
+            Double credits = Double.valueOf(this.getCredits());
             Date beginDate_ = null, endDate_ = null;
 
             try {

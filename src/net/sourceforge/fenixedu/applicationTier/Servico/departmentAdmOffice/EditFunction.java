@@ -20,7 +20,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class EditFunction implements IService {
 
     public void run(Integer personFunctionID, Integer functionID, Date beginDate, Date endDate,
-            Integer credits) throws ExcepcaoPersistencia, FenixServiceException, DomainException {
+            Double credits) throws ExcepcaoPersistencia, FenixServiceException, DomainException {
 
         ISuportePersistente suportePersistente = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();

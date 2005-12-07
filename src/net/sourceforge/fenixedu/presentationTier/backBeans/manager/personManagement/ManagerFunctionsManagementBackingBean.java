@@ -39,7 +39,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
         } else {
 
             DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-            Integer credits = Integer.valueOf(this.getCredits());
+            Double credits = Double.valueOf(this.getCredits());
 
             Date beginDate_ = null, endDate_ = null;
             try {

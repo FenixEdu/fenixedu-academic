@@ -23,7 +23,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class AssociateNewFunctionToPerson implements IService {
 
-    public void run(Integer functionID, Integer personID, Integer credits,
+    public void run(Integer functionID, Integer personID, Double credits,
             Date beginDate, Date endDate) throws ExcepcaoPersistencia, FenixServiceException, DomainException {
 
         ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
