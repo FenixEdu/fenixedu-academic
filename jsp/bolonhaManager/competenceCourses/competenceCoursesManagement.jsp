@@ -5,6 +5,6 @@
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="ServidorApresentacao/BolonhaManagerResources" var="bolonhaBundle"/>
 	
-	<h2><h:outputText value="#{bolonhaBundle['manageCompetencesCourses']}"/></h2>
+	<h2><h:outputText value="#{bolonhaBundle['competenceCoursesManagement']}"/></h2>
 	
 </ft:tilesView>

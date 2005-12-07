@@ -10,13 +10,13 @@
 <logic:present role="BOLONHA_MANAGER">	
 	<ul>
 		<li>
-			<html:link page="/competenceCourses/manageCompetenceCourses.faces">
-				<bean:message key="manageCompetencesCourses"/>
+			<html:link page="/competenceCourses/competenceCoursesManagement.faces">
+				<bean:message key="competenceCoursesManagement"/>
 			</html:link>
 		</li>
 		<li>
-			<html:link page="/curricularPlans/manageCurricularPlans.faces">
-				<bean:message key="manageCurricularPlans"/>
+			<html:link page="/curricularPlans/curricularPlansManagement.faces">
+				<bean:message key="curricularPlansManagement"/>
 			</html:link>
 		</li>
 	</ul>	
