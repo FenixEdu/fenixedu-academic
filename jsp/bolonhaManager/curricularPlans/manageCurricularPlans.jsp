@@ -5,6 +5,10 @@
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="ServidorApresentacao/BolonhaManagerResources" var="bolonhaBundle"/>
 	
-	<h2><h:outputText value="#{bolonhaBundle['manageDegreeCurricularPlans']}"/></h2>
+	<h2><h:outputText value="#{bolonhaBundle['manageCurricularPlans']}"/></h2>
+	
+	<h:outputLink value="createCurricularPlan.faces">
+		<h:outputText />
+	</h:outputLink>
 	
 </ft:tilesView>

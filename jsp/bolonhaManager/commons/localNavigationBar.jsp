@@ -15,8 +15,8 @@
 			</html:link>
 		</li>
 		<li>
-			<html:link page="/degreeCurricularPlans/manageDegreeCurricularPlans.faces">
-				<bean:message key="manageDegreeCurricularPlans"/>
+			<html:link page="/curricularPlans/manageCurricularPlans.faces">
+				<bean:message key="manageCurricularPlans"/>
 			</html:link>
 		</li>
 	</ul>	
