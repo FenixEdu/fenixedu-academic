@@ -65,7 +65,9 @@ public enum RoleType {
     
     INSTITUCIONAL_PROJECTS_MANAGER,
     
-    DEPARTMENT_MEMBER;
+    DEPARTMENT_MEMBER,
+    
+    BOLONHA_MANAGER;
     
     public String getName() {
         return name();    
