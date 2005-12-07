@@ -57,10 +57,16 @@ public class SubmitPhotoAction extends DispatchAction {
             return mapping.findForward("chooseFile");
         }
 
+        ContentType contentType = ContentType.getContentType(formFile.getContentType());
+        if(contentType == null){
+            actionMessages.add("unsupportedFile", new ActionMessage("errors.unsupportedFile"));
+            saveMessages(request, actionMessages);
+            return mapping.findForward("chooseFile");
+        }
+        
         // process image
         ByteArrayInputStream inputStream = new ByteArrayInputStream(formFile.getFileData());
-        BufferedImage image = ImageIO.read(inputStream);
-        ContentType contentType = ContentType.getContentType(formFile.getContentType());
+        BufferedImage image = ImageIO.read(inputStream);        
         ByteArrayOutputStream outputStream = processImage(image, contentType);
 
         try {
@@ -70,7 +76,7 @@ public class SubmitPhotoAction extends DispatchAction {
             ServiceUtils.executeService(userView, "StorePersonalPhoto", args);
 
         } catch (ExcepcaoInexistente e) {
-            actionMessages.add("unknownPerson", new ActionMessage("error.exception.nonExisting",
+            actionMessages.add("unknownPerson", new ActionMessage("error.exception.nonExistingPerson",
                     username));
             saveMessages(request, actionMessages);
             return mapping.findForward("chooseFile");

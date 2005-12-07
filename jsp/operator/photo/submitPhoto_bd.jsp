@@ -3,8 +3,11 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-<span class="error"><html:errors/></span>
-
+<html:messages id="message" message="true" bundle="MANAGER_RESOURCES">
+	<span class="error">
+		<bean:write name="message"/>
+	</span>
+</html:messages>
 
 <br />
 <html:form action="/submitPhoto.do?method=photoUpload" enctype="multipart/form-data">
