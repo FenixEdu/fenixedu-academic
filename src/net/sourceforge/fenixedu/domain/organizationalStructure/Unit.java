@@ -32,7 +32,7 @@ public class Unit extends Unit_Base {
         return allTopUnits;
     }
 
-    public void edit(String unitName, String unitCostCenter, Date beginDate, Date endDate,
+    public void edit(String unitName, Integer unitCostCenter, Date beginDate, Date endDate,
             UnitType type, IUnit parentUnit) {
 
         this.setName(unitName);        
@@ -41,13 +41,8 @@ public class Unit extends Unit_Base {
             throw new DomainException("error.endDateBeforeBeginDate");
         }
         this.setEndDate(endDate);
-        this.setType(type);
-        if (unitCostCenter != null && !unitCostCenter.equals("")) {
-            this.setCostCenterCode(Integer.valueOf(unitCostCenter));
-        }
-        else{
-            this.setCostCenterCode(null);
-        }
+        this.setType(type);       
+        this.setCostCenterCode(unitCostCenter);               
         if (parentUnit != null) {
             this.addParentUnits(parentUnit);
         }
@@ -70,7 +65,7 @@ public class Unit extends Unit_Base {
             if (!this.getParentUnits().isEmpty()) {
                 this.removeParentUnits(this.getParentUnits().get(0));
             }
-            this.setDepartment(null);
+            this.removeDepartment();
             super.deleteDomainObject();
 
         } else {
@@ -84,7 +79,6 @@ public class Unit extends Unit_Base {
             if ((contract.getBeginDate().after(begin) || contract.getBeginDate().equals(begin))
                     && (contract.getEndDate() == null || (contract.getEndDate().before(end) || contract
                             .getEndDate().equals(end)))) {
-
                 contracts.add(contract);
             }
         }

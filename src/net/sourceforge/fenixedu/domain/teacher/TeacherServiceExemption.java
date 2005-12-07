@@ -9,7 +9,7 @@ import java.util.Date;
 public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 
     public void delete() {
-        this.setTeacher(null);
+        this.removeTeacher();
         super.deleteDomainObject();
     }
 

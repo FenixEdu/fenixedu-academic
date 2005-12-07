@@ -381,7 +381,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             return "";
         }
 
-        UnitType type = getUnitType();
+        UnitType type = getUnitType();        
         CreateNewUnitParameters parameters = new CreateNewUnitParameters(departmentID, degreeID, this, 1);
 
         final Object[] argsToRead = { this.getChooseUnit().getIdInternal(), null, this.getUnitName(),

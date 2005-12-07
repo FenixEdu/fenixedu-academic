@@ -42,8 +42,12 @@ public class CreateNewUnit implements IService {
         }
 
         IUnit parentUnit = setParentUnits(parentUnitID, suportePersistente, unit);
-
-        unit.edit(unitName, unitCostCenter, beginDate, endDate, type, parentUnit);
+        Integer costCenterCode = null;
+        if (unitCostCenter != null && !unitCostCenter.equals("")) {
+            costCenterCode = (Integer.valueOf(unitCostCenter));
+        }
+        
+        unit.edit(unitName, costCenterCode, beginDate, endDate, type, parentUnit);
 
         setDepartment(departmentID, suportePersistente, unit);
 

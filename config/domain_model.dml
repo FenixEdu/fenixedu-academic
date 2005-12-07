@@ -3323,7 +3323,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.s
 	
 	interface "
 	public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IUnit> getTopUnits();
-	public void edit(String unitName, String unitCostCenter, java.util.Date beginDate, java.util.Date endDate,
+	public void edit(String unitName, Integer unitCostCenter, java.util.Date beginDate, java.util.Date endDate,
             net.sourceforge.fenixedu.domain.organizationalStructure.UnitType type, 
             net.sourceforge.fenixedu.domain.organizationalStructure.IUnit parentUnit);
     public boolean isActive(java.util.Date currentDate);
