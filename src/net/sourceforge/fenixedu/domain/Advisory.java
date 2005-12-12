@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.domain;
 
 
+
+
 /**
  * @author Nuno Nunes & Luis Cruz
  * 

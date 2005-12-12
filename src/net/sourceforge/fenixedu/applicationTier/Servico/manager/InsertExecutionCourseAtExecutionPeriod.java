@@ -3,6 +3,9 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.cms.CmsService;
+import net.sourceforge.fenixedu.applicationTier.Servico.cms.groupManagement.WriteExecutionCourseUserGroup;
+import net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.WriteMailingList;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -61,7 +64,7 @@ public class InsertExecutionCourseAtExecutionPeriod implements IService {
             executionCourse.setComment(infoExecutionCourse.getComment());
 
             executionCourse.createSite();            
-
+            
         } catch (ExistingPersistentException existingException) {
             throw new ExistingServiceException("A disciplina execução com sigla "
                     + existentExecutionCourse.getSigla() + " e período execução "
@@ -69,6 +72,6 @@ public class InsertExecutionCourseAtExecutionPeriod implements IService {
                     existingException);
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);
-        }
-    }
+        }                
+	}	
 }

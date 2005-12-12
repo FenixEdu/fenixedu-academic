@@ -42,5 +42,11 @@ public class ExecutionPeriod extends ExecutionPeriod_Base {
             return getExecutionYear().compareTo(executionYear);
         }
     }
+    
+
+	public String getQualifiedName()
+	{
+		return new StringBuffer().append(this.getName()).append(" ").append(this.getExecutionYear().getYear()).toString();
+	}
 
 }

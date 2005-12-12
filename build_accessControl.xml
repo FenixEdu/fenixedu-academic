@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project basedir="." default="inject" name="Fenix Build File">
+	
+	<taskdef name="injectAccessControl" classname="net.sourceforge.fenixedu.accessControl.injector.antTask.InjectAccessControl">
+
+		<classpath>
+	        <pathelement path="build/WEB-INF/classes"/>
+	        <fileset dir="lib">
+			<include name="**/*.jar"/>
+	        </fileset>
+		</classpath>
+	</taskdef>
+		
+	<target name="inject">
+		<injectAccessControl verbose="false" 
+				targetClassesDir="build/WEB-INF/classes/" 
+				codeProducerClassName="net.sourceforge.fenixedu.accessControl.FenixAccessControlCallsGenerator"
+				accessControlAnnotation="net.sourceforge.fenixedu.accessControl.Checked">
+			<classpath>
+		        <pathelement path="build/WEB-INF/classes"/>
+		        <fileset dir="lib">
+				<include name="**/*.jar"/>
+		        </fileset>
+			</classpath>
+			
+			<fileset dir="build/WEB-INF/classes">
+				<include name="**/domain/*.*"/>
+			</fileset>
+		</injectAccessControl>
+	</target>
+	
+</project>

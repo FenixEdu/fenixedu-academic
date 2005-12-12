@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
+import java.util.Collection;
+
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -12,11 +14,10 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadAllDomainObject<E> implements IService  {
     
-    public E run(Class<E> clazz) throws ExcepcaoPersistencia {
+    public Collection<E> run(Class<E> clazz) throws ExcepcaoPersistencia {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentObject persistentObject = sp.getIPersistentObject();
 
-        return (E) persistentObject.readAll(clazz);
+        return (Collection<E>) persistentObject.readAll(clazz);
     }
-
 }

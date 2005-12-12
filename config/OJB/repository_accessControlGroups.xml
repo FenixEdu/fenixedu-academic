@@ -1,0 +1,1366 @@
+<class-descriptor class="net.sourceforge.fenixedu.domain.accessControl.UserGroup">              
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.accessControl.NodeGroup" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.accessControl.LeafGroup"/>  
+    <field-descriptor
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />        
+    <field-descriptor
+        name="creationDate"
+        column="CREATION_DATE"
+        jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
+	/>             
+    <field-descriptor
+        name="keyCreator"
+        column="KEY_CREATOR"
+        jdbc-type="INTEGER"
+    />       
+    <field-descriptor
+        name="name"
+        column="NAME"
+        jdbc-type="VARCHAR"
+    />   
+    <field-descriptor
+        name="description"
+        column="description"
+        jdbc-type="VARCHAR"
+    />                  
+
+    <field-descriptor
+        name="keyMailingList"
+        column="KEY_MAILING_LIST"
+        jdbc-type="INTEGER"
+    />          
+    <field-descriptor
+        name="keyReadersGroup"
+        column="KEY_READERS_GROUP"
+        jdbc-type="INTEGER"
+    />                  
+    <field-descriptor
+        name="keyWritersGroup"
+        column="KEY_WRITERS_GROUP"
+        jdbc-type="INTEGER"
+    />              
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="writableGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			>
+		<inverse-foreignkey field-ref="keyWritersGroup"/>
+	</collection-descriptor>	    
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="readableGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			>
+		<inverse-foreignkey field-ref="keyReadersGroup"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="writableContents"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
+			>
+		<inverse-foreignkey field-ref="keyWritersGroup"/>
+	</collection-descriptor>	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="readableContents"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
+			>
+		<inverse-foreignkey field-ref="keyReadersGroup"/>
+	</collection-descriptor>	
+	 <reference-descriptor auto-retrieve="false"
+    	name="readers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyReadersGroup"/>
+	</reference-descriptor>	
+	 <reference-descriptor auto-retrieve="false"
+    	name="writers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyWritersGroup"/>
+	</reference-descriptor>		            
+	 <reference-descriptor auto-retrieve="false"
+    	name="mailingList"
+        class-ref="net.sourceforge.fenixedu.domain.cms.messaging.MailingList">
+	    <foreignkey field-ref="keyMailingList"/>
+	</reference-descriptor> 	    
+	 <reference-descriptor auto-retrieve="false"
+    	name="creator"
+        class-ref="net.sourceforge.fenixedu.domain.Person">
+	    <foreignkey field-ref="keyCreator"/>
+	</reference-descriptor>
+ 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="aggregators"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.NodeGroup"
+			indirection-table="AC_USER_GROUP_AGGREGATION"
+			>
+		<fk-pointing-to-element-class column="KEY_AGGREGATOR"/>
+		<fk-pointing-to-this-class column="KEY_PART" />
+	</collection-descriptor>	     
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="owners"
+			element-class-ref="net.sourceforge.fenixedu.domain.Person"
+			refresh="true" 
+			indirection-table="AC_GROUP_OWNERSHIP">
+		<fk-pointing-to-element-class column="KEY_OWNER"/>
+		<fk-pointing-to-this-class column="KEY_GROUP" />	
+	</collection-descriptor>	
+</class-descriptor>    
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.accessControl.NodeGroup">                                    
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.accessControl.GroupUnion" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.accessControl.GroupDifference" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.accessControl.GroupIntersection" />
+    <field-descriptor
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />     
+    <field-descriptor
+        name="creationDate"
+        column="CREATION_DATE"
+        jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
+	/>                   
+    <field-descriptor
+        name="keyCreator"
+        column="KEY_CREATOR"
+        jdbc-type="INTEGER"
+    />
+    <field-descriptor
+        name="name"
+        column="NAME"
+        jdbc-type="VARCHAR"
+    />   
+    <field-descriptor
+        name="description"
+        column="description"
+        jdbc-type="VARCHAR"
+    />                 
+    <field-descriptor
+        name="keyMailingList"
+        column="KEY_MAILING_LIST"
+        jdbc-type="INTEGER"
+    />          
+        <field-descriptor
+        name="keyReadersGroup"
+        column="KEY_READERS_GROUP"
+        jdbc-type="INTEGER"
+    />                  
+    <field-descriptor
+        name="keyWritersGroup"
+        column="KEY_WRITERS_GROUP"
+        jdbc-type="INTEGER"
+    /> 
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="writableGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			>
+		<inverse-foreignkey field-ref="keyWritersGroup"/>
+	</collection-descriptor>	    
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="readableGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			>
+		<inverse-foreignkey field-ref="keyReadersGroup"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="writableContents"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
+			>
+		<inverse-foreignkey field-ref="keyWritersGroup"/>
+	</collection-descriptor>	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="readableContents"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
+			>
+		<inverse-foreignkey field-ref="keyReadersGroup"/>
+	</collection-descriptor>	    
+	 <reference-descriptor auto-retrieve="false"
+    	name="readers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyReadersGroup"/>
+	</reference-descriptor>	
+	 <reference-descriptor auto-retrieve="false"
+    	name="writers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyWritersGroup"/>
+	</reference-descriptor>		    
+	 <reference-descriptor auto-retrieve="false"
+    	name="mailingList"
+        class-ref="net.sourceforge.fenixedu.domain.cms.messaging.MailingList">
+	    <foreignkey field-ref="keyMailingList"/>
+	</reference-descriptor> 	    
+	 <reference-descriptor auto-retrieve="false"
+    	name="creator"
+        class-ref="net.sourceforge.fenixedu.domain.Person">
+	    <foreignkey field-ref="keyCreator"/>
+	</reference-descriptor>                
+    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="parts"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			indirection-table="AC_USER_GROUP_AGGREGATION"
+			>
+		<fk-pointing-to-element-class column="KEY_PART"/>
+		<fk-pointing-to-this-class column="KEY_AGGREGATOR" />
+	</collection-descriptor>		
+ 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="aggregators"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.NodeGroup"
+			indirection-table="AC_USER_GROUP_AGGREGATION"
+			>
+		<fk-pointing-to-element-class column="KEY_AGGREGATOR"/>
+		<fk-pointing-to-this-class column="KEY_PART" />
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="owners"
+			element-class-ref="net.sourceforge.fenixedu.domain.Person"
+			refresh="true" 
+			indirection-table="AC_GROUP_OWNERSHIP">
+		<fk-pointing-to-element-class column="KEY_OWNER"/>
+		<fk-pointing-to-this-class column="KEY_GROUP" />	
+	</collection-descriptor>	
+</class-descriptor>    
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.accessControl.LeafGroup">                                    
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseUserGroup" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.accessControl.PersonGroup" />       
+    <field-descriptor
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />     
+    <field-descriptor
+        name="creationDate"
+        column="CREATION_DATE"
+        jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
+	/>                                             
+    <field-descriptor
+        name="keyCreator"
+        column="KEY_CREATOR"
+        jdbc-type="INTEGER"
+    />
+
+    <field-descriptor
+        name="name"
+        column="NAME"
+        jdbc-type="VARCHAR"
+    />   
+    <field-descriptor
+        name="description"
+        column="description"
+        jdbc-type="VARCHAR"
+    />                  
+	 <reference-descriptor auto-retrieve="false"
+    	name="creator"
+        class-ref="net.sourceforge.fenixedu.domain.Person">
+	    <foreignkey field-ref="keyCreator"/>
+	</reference-descriptor>
+    <field-descriptor
+        name="keyMailingList"
+        column="KEY_MAILING_LIST"
+        jdbc-type="INTEGER"
+    />     
+    <field-descriptor
+        name="keyReadersGroup"
+        column="KEY_READERS_GROUP"
+        jdbc-type="INTEGER"
+    />                  
+    <field-descriptor
+        name="keyWritersGroup"
+        column="KEY_WRITERS_GROUP"
+        jdbc-type="INTEGER"
+    />          
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="writableGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			>
+		<inverse-foreignkey field-ref="keyWritersGroup"/>
+	</collection-descriptor>	    
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="readableGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			>
+		<inverse-foreignkey field-ref="keyReadersGroup"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="writableContents"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
+			>
+		<inverse-foreignkey field-ref="keyWritersGroup"/>
+	</collection-descriptor>	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="readableContents"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
+			>
+		<inverse-foreignkey field-ref="keyReadersGroup"/>
+	</collection-descriptor>	    
+	 <reference-descriptor auto-retrieve="false"
+    	name="readers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyReadersGroup"/>
+	</reference-descriptor>	
+	 <reference-descriptor auto-retrieve="false"
+    	name="writers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyWritersGroup"/>
+	</reference-descriptor>		    
+	 <reference-descriptor auto-retrieve="false"
+    	name="mailingList"
+        class-ref="net.sourceforge.fenixedu.domain.cms.messaging.MailingList">
+	    <foreignkey field-ref="keyMailingList"/>
+	</reference-descriptor> 		
+    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="aggregators"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.NodeGroup"
+			indirection-table="AC_USER_GROUP_AGGREGATION"
+			>
+		<fk-pointing-to-element-class column="KEY_PART"/>
+		<fk-pointing-to-this-class column="KEY_AGGREGATOR" />
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="owners"
+			element-class-ref="net.sourceforge.fenixedu.domain.Person"
+			refresh="true" 
+			indirection-table="AC_GROUP_OWNERSHIP">
+		<fk-pointing-to-element-class column="KEY_OWNER"/>
+		<fk-pointing-to-this-class column="KEY_GROUP" />	
+	</collection-descriptor>	
+         
+</class-descriptor>    
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseUserGroup">                                    
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseStudentsGroup" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup" />
+    <field-descriptor
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />       
+    <field-descriptor
+        name="creationDate"
+        column="CREATION_DATE"
+        jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
+	/>              
+    <field-descriptor
+        name="keyCreator"
+        column="KEY_CREATOR"
+        jdbc-type="INTEGER"
+    />
+    <field-descriptor
+        name="name"
+        column="NAME"
+        jdbc-type="VARCHAR"
+    />   
+    <field-descriptor
+        name="description"
+        column="description"
+        jdbc-type="VARCHAR"
+    />                  
+    <field-descriptor
+        name="keyExecutionCourse"
+        column="KEY_EXECUTION_COURSE"
+        jdbc-type="INTEGER"
+    />          
+    <field-descriptor
+        name="keyMailingList"
+        column="KEY_MAILING_LIST"
+        jdbc-type="INTEGER"
+    />  
+     <field-descriptor
+        name="keyReadersGroup"
+        column="KEY_READERS_GROUP"
+        jdbc-type="INTEGER"
+    />                  
+    <field-descriptor
+        name="keyWritersGroup"
+        column="KEY_WRITERS_GROUP"
+        jdbc-type="INTEGER"
+    />       
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="writableGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			>
+		<inverse-foreignkey field-ref="keyWritersGroup"/>
+	</collection-descriptor>	    
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="readableGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			>
+		<inverse-foreignkey field-ref="keyReadersGroup"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="writableContents"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
+			>
+		<inverse-foreignkey field-ref="keyWritersGroup"/>
+	</collection-descriptor>	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="readableContents"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
+			>
+		<inverse-foreignkey field-ref="keyReadersGroup"/>
+	</collection-descriptor>	    
+	 <reference-descriptor auto-retrieve="false"
+    	name="readers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyReadersGroup"/>
+	</reference-descriptor>	
+	 <reference-descriptor auto-retrieve="false"
+    	name="writers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyWritersGroup"/>
+	</reference-descriptor>		            
+	 <reference-descriptor auto-retrieve="false"
+    	name="mailingList"
+        class-ref="net.sourceforge.fenixedu.domain.cms.messaging.MailingList">
+	    <foreignkey field-ref="keyMailingList"/>
+	</reference-descriptor> 		    
+	 <reference-descriptor auto-retrieve="false"
+    	name="creator"
+        class-ref="net.sourceforge.fenixedu.domain.Person">
+	    <foreignkey field-ref="keyCreator"/>
+	</reference-descriptor>         
+    <reference-descriptor auto-retrieve="false"
+    	name="executionCourse"
+    	class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse">
+    	<foreignkey field-ref="keyExecutionCourse"/>
+    </reference-descriptor>
+ 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="aggregators"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.NodeGroup"
+			indirection-table="AC_USER_GROUP_AGGREGATION"
+			>
+		<fk-pointing-to-element-class column="KEY_PART"/>
+		<fk-pointing-to-this-class column="KEY_AGGREGATOR" />
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="owners"
+			element-class-ref="net.sourceforge.fenixedu.domain.Person"
+			refresh="true" 
+			indirection-table="AC_GROUP_OWNERSHIP">
+		<fk-pointing-to-element-class column="KEY_OWNER"/>
+		<fk-pointing-to-this-class column="KEY_GROUP" />	
+	</collection-descriptor>	
+</class-descriptor>    
+
+
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.accessControl.GroupDifference"
+                  table="AC_GROUP_DIFFERENCE">                                    
+    <field-descriptor
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />    
+    <field-descriptor
+        name="creationDate"
+        column="CREATION_DATE"
+        jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
+	/>             
+    <field-descriptor
+        name="keyCreator"
+        column="KEY_CREATOR"
+        jdbc-type="INTEGER"
+    />            
+    <field-descriptor
+        name="name"
+        column="NAME"
+        jdbc-type="VARCHAR"
+    />   
+    <field-descriptor
+        name="description"
+        column="description"
+        jdbc-type="VARCHAR"
+    />              
+
+    <field-descriptor
+        name="keyMailingList"
+        column="KEY_MAILING_LIST"
+        jdbc-type="INTEGER"
+    />    
+    <field-descriptor
+        name="keyReadersGroup"
+        column="KEY_READERS_GROUP"
+        jdbc-type="INTEGER"
+    />                  
+    <field-descriptor
+        name="keyWritersGroup"
+        column="KEY_WRITERS_GROUP"
+        jdbc-type="INTEGER"
+    />           
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="writableGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			>
+		<inverse-foreignkey field-ref="keyWritersGroup"/>
+	</collection-descriptor>	    
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="readableGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			>
+		<inverse-foreignkey field-ref="keyReadersGroup"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="writableContents"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
+			>
+		<inverse-foreignkey field-ref="keyWritersGroup"/>
+	</collection-descriptor>	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="readableContents"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
+			>
+		<inverse-foreignkey field-ref="keyReadersGroup"/>
+	</collection-descriptor>	    
+	 <reference-descriptor auto-retrieve="false"
+    	name="mailingList"
+        class-ref="net.sourceforge.fenixedu.domain.cms.messaging.MailingList">
+	    <foreignkey field-ref="keyMailingList"/>
+	</reference-descriptor> 		    
+	 <reference-descriptor auto-retrieve="false"
+    	name="creator"
+        class-ref="net.sourceforge.fenixedu.domain.Person">
+	    <foreignkey field-ref="keyCreator"/>
+	</reference-descriptor>
+	 <reference-descriptor auto-retrieve="false"
+    	name="readers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyReadersGroup"/>
+	</reference-descriptor>	
+	 <reference-descriptor auto-retrieve="false"
+    	name="writers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyWritersGroup"/>
+	</reference-descriptor>			
+    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="parts"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			indirection-table="AC_USER_GROUP_AGGREGATION"
+			>
+		<fk-pointing-to-element-class column="KEY_PART"/>
+		<fk-pointing-to-this-class column="KEY_AGGREGATOR" />
+	</collection-descriptor>	
+ 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="aggregators"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.NodeGroup"
+			indirection-table="AC_USER_GROUP_AGGREGATION"
+			>
+		<fk-pointing-to-element-class column="KEY_AGGREGATOR"/>
+		<fk-pointing-to-this-class column="KEY_PART" />
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="owners"
+			element-class-ref="net.sourceforge.fenixedu.domain.Person"
+			refresh="true" 
+			indirection-table="AC_GROUP_OWNERSHIP">
+		<fk-pointing-to-element-class column="KEY_OWNER"/>
+		<fk-pointing-to-this-class column="KEY_GROUP" />	
+	</collection-descriptor>	
+</class-descriptor>    
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.accessControl.GroupUnion"
+                  table="AC_GROUP_UNION">                                    
+    <field-descriptor
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />    
+    <field-descriptor
+        name="creationDate"
+        column="CREATION_DATE"
+        jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
+	/>             
+    <field-descriptor
+        name="keyCreator"
+        column="KEY_CREATOR"
+        jdbc-type="INTEGER"
+    />            
+     <field-descriptor
+        name="name"
+        column="NAME"
+        jdbc-type="VARCHAR"
+    />    
+    <field-descriptor
+        name="description"
+        column="DESCRIPTION"
+        jdbc-type="VARCHAR"
+    />    
+    <field-descriptor
+        name="keyMailingList"
+        column="KEY_MAILING_LIST"
+        jdbc-type="INTEGER"
+    />      
+    <field-descriptor
+        name="keyReadersGroup"
+        column="KEY_READERS_GROUP"
+        jdbc-type="INTEGER"
+    />                  
+    <field-descriptor
+        name="keyWritersGroup"
+        column="KEY_WRITERS_GROUP"
+        jdbc-type="INTEGER"
+    />         
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="writableGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			>
+		<inverse-foreignkey field-ref="keyWritersGroup"/>
+	</collection-descriptor>	    
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="readableGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			>
+		<inverse-foreignkey field-ref="keyReadersGroup"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="writableContents"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
+			>
+		<inverse-foreignkey field-ref="keyWritersGroup"/>
+	</collection-descriptor>	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="readableContents"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
+			>
+		<inverse-foreignkey field-ref="keyReadersGroup"/>
+	</collection-descriptor>	    
+	 <reference-descriptor auto-retrieve="false"
+    	name="readers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyReadersGroup"/>
+	</reference-descriptor>	
+	 <reference-descriptor auto-retrieve="false"
+    	name="writers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyWritersGroup"/>
+	</reference-descriptor>		    
+	 <reference-descriptor auto-retrieve="false"
+    	name="mailingList"
+        class-ref="net.sourceforge.fenixedu.domain.cms.messaging.MailingList">
+	    <foreignkey field-ref="keyMailingList"/>
+	</reference-descriptor> 		    
+	 <reference-descriptor auto-retrieve="false"
+    	name="creator"
+        class-ref="net.sourceforge.fenixedu.domain.Person">
+	    <foreignkey field-ref="keyCreator"/>
+	</reference-descriptor>        
+	    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="parts"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			indirection-table="AC_USER_GROUP_AGGREGATION"
+			>
+		<fk-pointing-to-element-class column="KEY_PART"/>
+		<fk-pointing-to-this-class column="KEY_AGGREGATOR" />
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="aggregators"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.NodeGroup"
+			indirection-table="AC_USER_GROUP_AGGREGATION"
+			>
+		<fk-pointing-to-element-class column="KEY_AGGREGATOR"/>
+		<fk-pointing-to-this-class column="KEY_PART" />
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="owners"
+			element-class-ref="net.sourceforge.fenixedu.domain.Person"
+			refresh="true" 
+			indirection-table="AC_GROUP_OWNERSHIP">
+		<fk-pointing-to-element-class column="KEY_OWNER"/>
+		<fk-pointing-to-this-class column="KEY_GROUP" />	
+	</collection-descriptor>	
+</class-descriptor>    
+	
+<class-descriptor class="net.sourceforge.fenixedu.domain.accessControl.GroupIntersection"
+                  table="AC_GROUP_INTERSECTION">                                    
+    <field-descriptor
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />    
+    <field-descriptor
+        name="creationDate"
+        column="CREATION_DATE"
+        jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
+	/>             
+    <field-descriptor
+        name="keyCreator"
+        column="KEY_CREATOR"
+        jdbc-type="INTEGER"
+    />            
+     <field-descriptor
+        name="name"
+        column="NAME"
+        jdbc-type="VARCHAR"
+    />    
+    <field-descriptor
+        name="description"
+        column="DESCRIPTION"
+        jdbc-type="VARCHAR"
+    />    
+    <field-descriptor
+        name="keyMailingList"
+        column="KEY_MAILING_LIST"
+        jdbc-type="INTEGER"
+    />        
+    <field-descriptor
+        name="keyReadersGroup"
+        column="KEY_READERS_GROUP"
+        jdbc-type="INTEGER"
+    />                  
+    <field-descriptor
+        name="keyWritersGroup"
+        column="KEY_WRITERS_GROUP"
+        jdbc-type="INTEGER"
+    />       
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="writableGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			>
+		<inverse-foreignkey field-ref="keyWritersGroup"/>
+	</collection-descriptor>	    
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="readableGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			>
+		<inverse-foreignkey field-ref="keyReadersGroup"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="writableContents"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
+			>
+		<inverse-foreignkey field-ref="keyWritersGroup"/>
+	</collection-descriptor>	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="readableContents"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
+			>
+		<inverse-foreignkey field-ref="keyReadersGroup"/>
+	</collection-descriptor>	    
+	 <reference-descriptor auto-retrieve="false"
+    	name="readers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyReadersGroup"/>
+	</reference-descriptor>	
+	 <reference-descriptor auto-retrieve="false"
+    	name="writers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyWritersGroup"/>
+	</reference-descriptor>		    
+	 <reference-descriptor auto-retrieve="false"
+    	name="mailingList"
+        class-ref="net.sourceforge.fenixedu.domain.cms.messaging.MailingList">
+	    <foreignkey field-ref="keyMailingList"/>
+	</reference-descriptor> 		    
+	 <reference-descriptor auto-retrieve="false"
+    	name="creator"
+        class-ref="net.sourceforge.fenixedu.domain.Person">
+	    <foreignkey field-ref="keyCreator"/>
+	</reference-descriptor>        
+	    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="parts"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			indirection-table="AC_USER_GROUP_AGGREGATION"
+			>
+		<fk-pointing-to-element-class column="KEY_PART"/>
+		<fk-pointing-to-this-class column="KEY_AGGREGATOR" />
+	</collection-descriptor>
+ 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="aggregators"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.NodeGroup"
+			indirection-table="AC_USER_GROUP_AGGREGATION"
+			>
+		<fk-pointing-to-element-class column="KEY_AGGREGATOR"/>
+		<fk-pointing-to-this-class column="KEY_PART" />
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="owners"
+			element-class-ref="net.sourceforge.fenixedu.domain.Person"
+			refresh="true" 
+			indirection-table="AC_GROUP_OWNERSHIP">
+		<fk-pointing-to-element-class column="KEY_OWNER"/>
+		<fk-pointing-to-this-class column="KEY_GROUP" />	
+	</collection-descriptor>	
+</class-descriptor>    
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseStudentsGroup"
+                  table="AC_EXECUTION_COURSE_STUDENTS_GROUP">                                    
+    <field-descriptor
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />    
+    <field-descriptor
+        name="creationDate"
+        column="CREATION_DATE"
+        jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
+	/>             
+    <field-descriptor
+        name="keyCreator"
+        column="KEY_CREATOR"
+        jdbc-type="INTEGER"
+    />         
+    <field-descriptor
+        name="keyExecutionCourse"
+        column="KEY_EXECUTION_COURSE"
+        jdbc-type="INTEGER"
+    />         
+     <field-descriptor
+        name="name"
+        column="NAME"
+        jdbc-type="VARCHAR"
+    />    
+    <field-descriptor
+        name="description"
+        column="DESCRIPTION"
+        jdbc-type="VARCHAR"
+    />    
+    <field-descriptor
+        name="keyMailingList"
+        column="KEY_MAILING_LIST"
+        jdbc-type="INTEGER"
+    />         
+    <field-descriptor
+        name="keyReadersGroup"
+        column="KEY_READERS_GROUP"
+        jdbc-type="INTEGER"
+    />                  
+    <field-descriptor
+        name="keyWritersGroup"
+        column="KEY_WRITERS_GROUP"
+        jdbc-type="INTEGER"
+    />      
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="writableGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			>
+		<inverse-foreignkey field-ref="keyWritersGroup"/>
+	</collection-descriptor>	    
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="readableGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			>
+		<inverse-foreignkey field-ref="keyReadersGroup"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="writableContents"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
+			>
+		<inverse-foreignkey field-ref="keyWritersGroup"/>
+	</collection-descriptor>	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="readableContents"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
+			>
+		<inverse-foreignkey field-ref="keyReadersGroup"/>
+	</collection-descriptor>	    
+	 <reference-descriptor auto-retrieve="false"
+    	name="readers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyReadersGroup"/>
+	</reference-descriptor>	
+	 <reference-descriptor auto-retrieve="false"
+    	name="writers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyWritersGroup"/>
+	</reference-descriptor>		    
+	 <reference-descriptor auto-retrieve="false"
+    	name="mailingList"
+        class-ref="net.sourceforge.fenixedu.domain.cms.messaging.MailingList">
+	    <foreignkey field-ref="keyMailingList"/>
+	</reference-descriptor> 		    
+    <reference-descriptor auto-retrieve="false"
+    	name="executionCourse"
+    	class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse">
+    	<foreignkey field-ref="keyExecutionCourse"/>
+    </reference-descriptor>	    
+	<reference-descriptor auto-retrieve="false"
+    	name="creator"
+        class-ref="net.sourceforge.fenixedu.domain.Person">
+	    <foreignkey field-ref="keyCreator"/>
+	</reference-descriptor> 
+ 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="aggregators"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.NodeGroup"
+			indirection-table="AC_USER_GROUP_AGGREGATION"
+			>
+		<fk-pointing-to-element-class column="KEY_AGGREGATOR"/>
+		<fk-pointing-to-this-class column="KEY_PART" />
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="owners"
+			element-class-ref="net.sourceforge.fenixedu.domain.Person"
+			refresh="true" 
+			indirection-table="AC_GROUP_OWNERSHIP">
+		<fk-pointing-to-element-class column="KEY_OWNER"/>
+		<fk-pointing-to-this-class column="KEY_GROUP" />	
+	</collection-descriptor>	   
+</class-descriptor>    
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup"
+                  table="AC_EXECUTION_COURSE_TEACHERS_GROUP">                                    
+    <field-descriptor
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />    
+    <field-descriptor
+        name="creationDate"
+        column="CREATION_DATE"
+        jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
+	/>             
+    <field-descriptor
+        name="keyCreator"
+        column="KEY_CREATOR"
+        jdbc-type="INTEGER"
+    />            
+   <field-descriptor
+        name="keyExecutionCourse"
+        column="KEY_EXECUTION_COURSE"
+        jdbc-type="INTEGER"
+    />      
+     <field-descriptor
+        name="name"
+        column="NAME"
+        jdbc-type="VARCHAR"
+    />    
+    <field-descriptor
+        name="description"
+        column="DESCRIPTION"
+        jdbc-type="VARCHAR"
+    />    
+    <field-descriptor
+        name="keyMailingList"
+        column="KEY_MAILING_LIST"
+        jdbc-type="INTEGER"
+    />       
+    <field-descriptor
+        name="keyReadersGroup"
+        column="KEY_READERS_GROUP"
+        jdbc-type="INTEGER"
+    />                  
+    <field-descriptor
+        name="keyWritersGroup"
+        column="KEY_WRITERS_GROUP"
+        jdbc-type="INTEGER"
+    />   
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="writableGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			>
+		<inverse-foreignkey field-ref="keyWritersGroup"/>
+	</collection-descriptor>	    
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="readableGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			>
+		<inverse-foreignkey field-ref="keyReadersGroup"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="writableContents"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
+			>
+		<inverse-foreignkey field-ref="keyWritersGroup"/>
+	</collection-descriptor>	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="readableContents"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
+			>
+		<inverse-foreignkey field-ref="keyReadersGroup"/>
+	</collection-descriptor>	    
+	 <reference-descriptor auto-retrieve="false"
+    	name="readers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyReadersGroup"/>
+	</reference-descriptor>	
+	 <reference-descriptor auto-retrieve="false"
+    	name="writers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyWritersGroup"/>
+	</reference-descriptor>		         
+	 <reference-descriptor auto-retrieve="false"
+    	name="mailingList"
+        class-ref="net.sourceforge.fenixedu.domain.cms.messaging.MailingList">
+	    <foreignkey field-ref="keyMailingList"/>
+	</reference-descriptor> 		    
+    <reference-descriptor auto-retrieve="false"
+    	name="executionCourse"
+    	class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse">
+    	<foreignkey field-ref="keyExecutionCourse"/>
+    </reference-descriptor>	    
+	 <reference-descriptor auto-retrieve="false"
+    	name="creator"
+        class-ref="net.sourceforge.fenixedu.domain.Person">
+	    <foreignkey field-ref="keyCreator"/>
+	</reference-descriptor>
+ 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="aggregators"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.NodeGroup"
+			indirection-table="AC_USER_GROUP_AGGREGATION"
+			>
+		<fk-pointing-to-element-class column="KEY_AGGREGATOR"/>
+		<fk-pointing-to-this-class column="KEY_PART" />
+	</collection-descriptor>	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="owners"
+			element-class-ref="net.sourceforge.fenixedu.domain.Person"
+			refresh="true" 
+			indirection-table="AC_GROUP_OWNERSHIP">
+		<fk-pointing-to-element-class column="KEY_OWNER"/>
+		<fk-pointing-to-this-class column="KEY_GROUP" />	
+	</collection-descriptor>	 
+</class-descriptor>    
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.accessControl.PersonGroup"
+                  table="AC_PERSON_GROUP">                                    
+    <field-descriptor
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />    
+    <field-descriptor
+        name="creationDate"
+        column="CREATION_DATE"
+        jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
+	/>             
+    <field-descriptor
+        name="keyCreator"
+        column="KEY_CREATOR"
+        jdbc-type="INTEGER"
+    />            
+     <field-descriptor
+        name="name"
+        column="NAME"
+        jdbc-type="VARCHAR"
+    />    
+    <field-descriptor
+        name="description"
+        column="DESCRIPTION"
+        jdbc-type="VARCHAR"
+    />    
+    <field-descriptor
+        name="keyMailingList"
+        column="KEY_MAILING_LIST"
+        jdbc-type="INTEGER"
+    />  
+    <field-descriptor
+        name="keyReadersGroup"
+        column="KEY_READERS_GROUP"
+        jdbc-type="INTEGER"
+    />                  
+    <field-descriptor
+        name="keyWritersGroup"
+        column="KEY_WRITERS_GROUP"
+        jdbc-type="INTEGER"
+    />    
+    <field-descriptor
+        name="keyPerson"
+        column="KEY_PERSON"
+        jdbc-type="INTEGER"
+    />            
+	 <reference-descriptor auto-retrieve="false"
+    	name="person"
+    	class-ref="net.sourceforge.fenixedu.domain.Person">
+    	<foreignkey field-ref="keyPerson"/>
+    </reference-descriptor>	        
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="writableGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			>
+		<inverse-foreignkey field-ref="keyWritersGroup"/>
+	</collection-descriptor>	    
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="readableGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			>
+		<inverse-foreignkey field-ref="keyReadersGroup"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="writableContents"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
+			>
+		<inverse-foreignkey field-ref="keyWritersGroup"/>
+	</collection-descriptor>	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="readableContents"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
+			>
+		<inverse-foreignkey field-ref="keyReadersGroup"/>
+	</collection-descriptor>	      
+	 <reference-descriptor auto-retrieve="false"
+    	name="readers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyReadersGroup"/>
+	</reference-descriptor>	
+	 <reference-descriptor auto-retrieve="false"
+    	name="writers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyWritersGroup"/>
+	</reference-descriptor>		    
+	 <reference-descriptor auto-retrieve="false"
+    	name="mailingList"
+        class-ref="net.sourceforge.fenixedu.domain.cms.messaging.MailingList">
+	    <foreignkey field-ref="keyMailingList"/>
+	</reference-descriptor> 		    
+	 <reference-descriptor auto-retrieve="false"
+    	name="creator"
+        class-ref="net.sourceforge.fenixedu.domain.Person">
+	    <foreignkey field-ref="keyCreator"/>
+	</reference-descriptor>
+ 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="aggregators"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.NodeGroup"
+			indirection-table="AC_USER_GROUP_AGGREGATION"
+			>
+		<fk-pointing-to-element-class column="KEY_AGGREGATOR"/>
+		<fk-pointing-to-this-class column="KEY_PART" />
+	</collection-descriptor>		
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="owners"
+			element-class-ref="net.sourceforge.fenixedu.domain.Person"
+			refresh="true" 
+			indirection-table="AC_GROUP_OWNERSHIP">
+		<fk-pointing-to-element-class column="KEY_OWNER"/>
+		<fk-pointing-to-this-class column="KEY_GROUP" />	
+	</collection-descriptor>	
+</class-descriptor>
+	
+<class-descriptor class="net.sourceforge.fenixedu.domain.accessControl.RoleGroup"
+                  table="AC_ROLE_GROUP">                                    
+    <field-descriptor
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />    
+    <field-descriptor
+        name="creationDate"
+        column="CREATION_DATE"
+        jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
+	/>             
+    <field-descriptor
+        name="keyCreator"
+        column="KEY_CREATOR"
+        jdbc-type="INTEGER"
+    />            
+     <field-descriptor
+        name="name"
+        column="NAME"
+        jdbc-type="VARCHAR"
+    />    
+    <field-descriptor
+        name="description"
+        column="DESCRIPTION"
+        jdbc-type="VARCHAR"
+    />    
+    <field-descriptor
+        name="keyMailingList"
+        column="KEY_MAILING_LIST"
+        jdbc-type="INTEGER"
+    />  
+    <field-descriptor
+        name="keyReadersGroup"
+        column="KEY_READERS_GROUP"
+        jdbc-type="INTEGER"
+    />                  
+    <field-descriptor
+        name="keyWritersGroup"
+        column="KEY_WRITERS_GROUP"
+        jdbc-type="INTEGER"
+    />    
+    <field-descriptor
+        name="keyRole"
+        column="KEY_ROLE"
+        jdbc-type="INTEGER"
+    />            
+	 <reference-descriptor auto-retrieve="false"
+    	name="role"
+    	class-ref="net.sourceforge.fenixedu.domain.Role">
+    	<foreignkey field-ref="keyRole"/>
+    </reference-descriptor>	        
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="writableGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			>
+		<inverse-foreignkey field-ref="keyWritersGroup"/>
+	</collection-descriptor>	    
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="readableGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			>
+		<inverse-foreignkey field-ref="keyReadersGroup"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="writableContents"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
+			>
+		<inverse-foreignkey field-ref="keyWritersGroup"/>
+	</collection-descriptor>	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="readableContents"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
+			>
+		<inverse-foreignkey field-ref="keyReadersGroup"/>
+	</collection-descriptor>	      
+	 <reference-descriptor auto-retrieve="false"
+    	name="readers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyReadersGroup"/>
+	</reference-descriptor>	
+	 <reference-descriptor auto-retrieve="false"
+    	name="writers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyWritersGroup"/>
+	</reference-descriptor>		    
+	 <reference-descriptor auto-retrieve="false"
+    	name="mailingList"
+        class-ref="net.sourceforge.fenixedu.domain.cms.messaging.MailingList">
+	    <foreignkey field-ref="keyMailingList"/>
+	</reference-descriptor> 		    
+	 <reference-descriptor auto-retrieve="false"
+    	name="creator"
+        class-ref="net.sourceforge.fenixedu.domain.Person">
+	    <foreignkey field-ref="keyCreator"/>
+	</reference-descriptor>
+ 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="aggregators"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.NodeGroup"
+			indirection-table="AC_USER_GROUP_AGGREGATION"
+			>
+		<fk-pointing-to-element-class column="KEY_AGGREGATOR"/>
+		<fk-pointing-to-this-class column="KEY_PART" />
+	</collection-descriptor>		
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="owners"
+			element-class-ref="net.sourceforge.fenixedu.domain.Person"
+			refresh="true" 
+			indirection-table="AC_GROUP_OWNERSHIP">
+		<fk-pointing-to-element-class column="KEY_OWNER"/>
+		<fk-pointing-to-this-class column="KEY_GROUP" />	
+	</collection-descriptor>		
+</class-descriptor>   
+
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.accessControl.PublicRequestersGroup"
+                  table="AC_PUBLIC_REQUESTER_GROUP">                                    
+    <field-descriptor
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />    
+    <field-descriptor
+        name="creationDate"
+        column="CREATION_DATE"
+        jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
+	/>             
+    <field-descriptor
+        name="keyCreator"
+        column="KEY_CREATOR"
+        jdbc-type="INTEGER"
+    />            
+     <field-descriptor
+        name="name"
+        column="NAME"
+        jdbc-type="VARCHAR"
+    />    
+    <field-descriptor
+        name="description"
+        column="DESCRIPTION"
+        jdbc-type="VARCHAR"
+    />    
+    <field-descriptor
+        name="keyMailingList"
+        column="KEY_MAILING_LIST"
+        jdbc-type="INTEGER"
+    />  
+    <field-descriptor
+        name="keyReadersGroup"
+        column="KEY_READERS_GROUP"
+        jdbc-type="INTEGER"
+    />                  
+    <field-descriptor
+        name="keyWritersGroup"
+        column="KEY_WRITERS_GROUP"
+        jdbc-type="INTEGER"
+    />    
+
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="writableGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			>
+		<inverse-foreignkey field-ref="keyWritersGroup"/>
+	</collection-descriptor>	    
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="readableGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
+			>
+		<inverse-foreignkey field-ref="keyReadersGroup"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="writableContents"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
+			>
+		<inverse-foreignkey field-ref="keyWritersGroup"/>
+	</collection-descriptor>	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="readableContents"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
+			>
+		<inverse-foreignkey field-ref="keyReadersGroup"/>
+	</collection-descriptor>	      
+	 <reference-descriptor auto-retrieve="false"
+    	name="readers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyReadersGroup"/>
+	</reference-descriptor>	
+	 <reference-descriptor auto-retrieve="false"
+    	name="writers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyWritersGroup"/>
+	</reference-descriptor>		    
+	 <reference-descriptor auto-retrieve="false"
+    	name="mailingList"
+        class-ref="net.sourceforge.fenixedu.domain.cms.messaging.MailingList">
+	    <foreignkey field-ref="keyMailingList"/>
+	</reference-descriptor> 		    
+	 <reference-descriptor auto-retrieve="false"
+    	name="creator"
+        class-ref="net.sourceforge.fenixedu.domain.Person">
+	    <foreignkey field-ref="keyCreator"/>
+	</reference-descriptor>
+ 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="aggregators"
+			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.NodeGroup"
+			indirection-table="AC_USER_GROUP_AGGREGATION"
+			>
+		<fk-pointing-to-element-class column="KEY_AGGREGATOR"/>
+		<fk-pointing-to-this-class column="KEY_PART" />
+	</collection-descriptor>		
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="owners"
+			element-class-ref="net.sourceforge.fenixedu.domain.Person"
+			refresh="true" 
+			indirection-table="AC_GROUP_OWNERSHIP">
+		<fk-pointing-to-element-class column="KEY_OWNER"/>
+		<fk-pointing-to-this-class column="KEY_GROUP" />	
+	</collection-descriptor>		
+</class-descriptor>   

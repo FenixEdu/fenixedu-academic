@@ -23,19 +23,21 @@ public class MailConversation extends MailConversation_Base
 		{
 			IMailMessage message1 = (IMailMessage) arg0;
 			IMailMessage message2 = (IMailMessage) arg1;
-			return - message1.getCreationDate().compareTo(message2.getCreationDate());
+			return -message1.getCreationDate().compareTo(message2.getCreationDate());
 		}
 	}
+
 	public MailConversation()
 	{
 		super();
 	}
+
 	public boolean isAboutSubject(final String subject)
 	{
 		boolean result = false;
 		if (subject != null && this.getSubject() != null)
 		{
-			String[] replyMarkers = this.getOwner().getCms().getConfiguration().getConversationReplyMarkersToUse();
+			String[] replyMarkers = this.getCms().getConfiguration().getConversationReplyMarkersToUse();
 			String thisConversationSubject = this.getSubject().trim();
 			String targetSubject = new String(subject);
 			if (this.subjectIndicatesReply(subject))
@@ -62,7 +64,7 @@ public class MailConversation extends MailConversation_Base
 	private boolean subjectIndicatesReply(String subject)
 	{
 		boolean result = false;
-		int index = StringUtils.indexOfAny(subject.trim(), this.getOwner().getCms().getConfiguration().getConversationReplyMarkers());
+		int index = StringUtils.indexOfAny(subject.trim(), this.getCms().getConfiguration().getConversationReplyMarkers());
 		result = (index == 0);
 
 		return result;
@@ -71,7 +73,25 @@ public class MailConversation extends MailConversation_Base
 	@SuppressWarnings("unchecked")
 	public Iterator<IMailMessage> getMailMessagesIterator()
 	{
-		return new OrderedIterator(new FilterIterator(this.getChildrenIterator(), new ContentAssignableClassPredicate(IMailMessage.class)),new LastMessagesFirstComparator());
+		return new OrderedIterator<IMailMessage>(new FilterIterator(this.getChildrenIterator(), new ContentAssignableClassPredicate(IMailMessage.class)), new LastMessagesFirstComparator());
+	}
+
+	@SuppressWarnings("unchecked")
+	public Iterator<IMailingList> getMailingListsIterator()
+	{
+		return new FilterIterator(this.getParentsIterator(), new ContentAssignableClassPredicate(IMailingList.class));
+	}
+
+	public int getMailingListsCount()
+	{
+		int listsCount = 0;
+		Iterator<IMailingList> lists = this.getMailingListsIterator();
+		while (lists.hasNext())
+		{
+			lists.next();
+			listsCount++;
+		}
+		return listsCount;
 	}
 
 	public IMailMessage getLastReply()
@@ -112,7 +132,7 @@ public class MailConversation extends MailConversation_Base
 	{
 		int mailMessagesCount = 0;
 		Iterator<IMailMessage> messages = this.getMailMessagesIterator();
-		while (messages.hasNext())			
+		while (messages.hasNext())
 		{
 			messages.next();
 			mailMessagesCount++;
@@ -122,13 +142,26 @@ public class MailConversation extends MailConversation_Base
 
 	public int getSize() throws MessagingException
 	{
-		int size=0;
+		int size = 0;
 		Iterator<IMailMessage> messagesIterator = this.getMailMessagesIterator();
-		while(messagesIterator.hasNext())
+		while (messagesIterator.hasNext())
 		{
 			IMailMessage message = messagesIterator.next();
-			size+=message.getSize();
+			size += message.getSize();
 		}
 		return size;
+	}
+
+	@Override
+	public void delete()
+	{
+		Iterator<IMailMessage> iterator = this.getMailMessagesIterator();
+		while (iterator.hasNext())
+		{
+			IMailMessage message = iterator.next();
+			if (message.getMailConversationsCount() == 0) message.delete();
+		}
+
+		super.delete();
 	}
 }

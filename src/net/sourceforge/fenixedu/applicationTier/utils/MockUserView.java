@@ -47,5 +47,10 @@ public class MockUserView implements IUserView {
 	public IPerson getPerson() {
 		return person;
 	}
+	
+	public boolean isPublicRequester()
+	{
+		return false;
+	}
 
 }

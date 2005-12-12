@@ -59,5 +59,15 @@
 	<definition name="showThread" extends="cms.masterPage" >
 		<put name="body" value="/cms/messaging/showThread.jsp" />
 	</definition>
-	<!-- =============================================== -->								    
+	<!-- =============================================== -->
+	<!-- ================= by gedl 15-11-2005 =========== -->
+	<definition name="showConfiguration" extends="cms.masterPage" >
+		<put name="body" value="/cms/basic/showConfiguration.jsp" />
+	</definition>
+	<!-- =============================================== -->	
+	<!-- ================= by gedl 6-12-2005 =========== -->
+	<definition name="showAllExecutionCourseWebsites" extends="cms.masterPage" >
+		<put name="body" value="/cms/executionCourseWebsite/showAllExecutionCourseWebsites.jsp" />
+	</definition>
+	<!-- =============================================== -->									    
 </tiles-definitions>

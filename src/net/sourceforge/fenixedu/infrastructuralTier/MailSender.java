@@ -1,62 +1,74 @@
 /**
  * 
  */
+
+
 package net.sourceforge.fenixedu.infrastructuralTier;
 
-import java.util.ArrayList;
+
 import java.util.Collection;
-import java.util.Random;
 
-import relations.MailingListQueueOutgoingMails;
-
-import net.sourceforge.fenixedu.domain.cms.infrastructure.CmsConfiguration;
+import net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.ReadMailingListsWithOutgoingMails;
 import net.sourceforge.fenixedu.domain.cms.messaging.IMailMessage;
 import net.sourceforge.fenixedu.domain.cms.messaging.IMailingList;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.stm.Transaction;
+import relations.MailingListQueueOutgoingMails;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>
- * <br/>
- * <br/>
- * <br/>
- * Created on 16:34:01,20/Out/2005
+ * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
+ *         <br/> Created on 10:24:51,20/Out/2005
  * @version $Id$
  */
-public class MailSender implements Runnable
+public class MailSender
 {
-	private MailingListQueueManager manager;
-	private IMailingList mailingList;
-	
-	public MailSender (MailingListQueueManager manager, IMailingList mailingList)
-	{	
-		this.manager = manager;
-		this.mailingList = mailingList;
+
+	public static void main(String[] args)
+	{
+		System.out.println("#######Olá mundo cruel");
+		SuportePersistenteOJB.fixDescriptors();
+		Transaction.begin();
+		MailSender sender = new MailSender();
+		sender.run();
+		Transaction.commit();
+		System.out.println("######## E COMMITEI !!!!!!!!!!!!!! :D :D: D:D");
+		System.out.println("#######Adeus mundo cruel");
+		
 	}
 
 	public void run()
 	{
-		Transaction.begin();
-		System.out.println("#######Vou começar a tratar as cenas (ml:" +this.mailingList.getName() +")!!!!!!!!!!, sou o gajo que de facto envia");
-		Random r = new Random();
-		if (r.nextInt(2) < 1);
+		System.out.println("$$$$$$$$$$Eu senhor todo poderoso vou ver se e preciso comprar escravos");
+		try
 		{
-			System.out.println("#######Este vai demorar....... (" + this.manager);
-//				Thread.sleep(14000);
-			System.out.println("#######Acordei (" + this.manager + ") que acabei!!");
+			ReadMailingListsWithOutgoingMails service = new ReadMailingListsWithOutgoingMails();
+			Collection<IMailingList> mailingLists = service.run();
+			System.out.println("Ha " + mailingLists.size() + " queues para tratar");
+			for (IMailingList mailingList : mailingLists)
+			{
+				this.send(mailingList);
+
+			}
 		}
-		Collection<IMailMessage> localQueue = new ArrayList<IMailMessage>();
-		localQueue.addAll(mailingList.getQueue().getMessages());
-		for (IMailMessage message : localQueue)
+		catch (Exception e)
 		{
-			// enviar !!!!!!!!!! n esquecer do REPLY TO LIST se for o caso
-			MailingListQueueOutgoingMails.remove(mailingList.getQueue(),message);
-			String hello = mailingList.getOwner().getCms().getConfiguration().getSmtpServerAddressToUse();
+			System.out.println("EXCEPCAAAAAAAAAAAAAAAO");
+			e.printStackTrace();
+			System.out.println("###############EXCEPCAAAAAAAAAAAAAAAO##############");
 		}
-		System.out.println("#######Vou avisar o meu manager (" + this.manager + ") que acabei!!");
-		manager.signalFinishedProcessing(mailingList.getIdInternal());
-		System.out.println("#######Adeus mundo cruel");		
-		Transaction.commit();
-		System.out.println("######## E COMMITEI !!!!!!!!!!!!!! :D :D: D:D");
 	}
 
+	public void send(IMailingList mailingList)
+	{
+		System.out.println("#######Vou começar a tratar as cenas (ml:" + mailingList.getName()
+				+ ")!!!!!!!!!!, sou o gajo que de facto envia");
+
+		for (IMailMessage message : mailingList.getQueue().getMessages())
+		{
+			// enviar !!!!!!!!!! n esquecer do REPLY TO LIST se for o caso
+			MailingListQueueOutgoingMails.remove(mailingList.getQueue(), message);
+			String hello = mailingList.getCms().getConfiguration().getSmtpServerAddressToUse();
+			System.out.println("Deveria estar a usar este SMTP: " + hello);
+		}
+	}
 }

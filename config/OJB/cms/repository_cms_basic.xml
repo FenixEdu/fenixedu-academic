@@ -15,7 +15,7 @@
         name="name"
         column="NAME"
         jdbc-type="VARCHAR"
-    />       
+    />
 	 <reference-descriptor auto-retrieve="false"
     	name="configuration"
         class-ref="net.sourceforge.fenixedu.domain.cms.infrastructure.CmsConfiguration">
@@ -35,10 +35,10 @@
 	</collection-descriptor>			
 </class-descriptor>
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.cms.Content">              
-    <extent-class class-ref="net.sourceforge.fenixedu.domain.cms.UserGroup" />
+<class-descriptor class="net.sourceforge.fenixedu.domain.cms.Content">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.cms.Bin" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.cms.messaging.MailMessage" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.cms.website.Website"/>
     <field-descriptor
         name="idInternal"
         column="ID_INTERNAL"
@@ -52,8 +52,8 @@
         jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>                     
     <field-descriptor
-        name="keyPerson"
-        column="KEY_PERSON"
+        name="keyCreator"
+        column="KEY_CREATOR"
         jdbc-type="INTEGER"
     />   
     <field-descriptor
@@ -71,15 +71,35 @@
         column="KEY_CMS"
         jdbc-type="INTEGER"
     />
+	 <field-descriptor
+        name="keyReadersGroup"
+        column="KEY_READERS_GROUP"
+        jdbc-type="INTEGER"
+    />                  
+    <field-descriptor
+        name="keyWritersGroup"
+        column="KEY_WRITERS_GROUP"
+        jdbc-type="INTEGER"
+    />
+	 <reference-descriptor auto-retrieve="false"
+    	name="readers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyReadersGroup"/>
+	</reference-descriptor>	
+	 <reference-descriptor auto-retrieve="false"
+    	name="writers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyWritersGroup"/>
+	</reference-descriptor>		                
 	<reference-descriptor auto-retrieve="false"
     	name="cms"
         class-ref="net.sourceforge.fenixedu.domain.cms.Cms">
 	    <foreignkey field-ref="keyCms"/>
 	</reference-descriptor>	      
 	 <reference-descriptor auto-retrieve="false"
-    	name="owner"
+    	name="creator"
         class-ref="net.sourceforge.fenixedu.domain.Person">
-	    <foreignkey field-ref="keyPerson"/>
+	    <foreignkey field-ref="keyCreator"/>
 	</reference-descriptor>	 
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="parents"
@@ -89,6 +109,14 @@
 		<fk-pointing-to-element-class column="KEY_PARENT"/>
 		<fk-pointing-to-this-class column="KEY_CHILD" />	 
 	</collection-descriptor>	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="owners"
+			element-class-ref="net.sourceforge.fenixedu.domain.Person"
+			refresh="true" 
+			indirection-table="CMS_CONTENT_OWNERSHIP">
+		<fk-pointing-to-element-class column="KEY_OWNER"/>
+		<fk-pointing-to-this-class column="KEY_CONTENT" />	
+	</collection-descriptor>						
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.cms.Bin">              
@@ -108,7 +136,7 @@
 	/>                     
     <field-descriptor
         name="keyPerson"
-        column="KEY_PERSON"
+        column="KEY_CREATOR"
         jdbc-type="INTEGER"
     />   
     <field-descriptor
@@ -126,13 +154,33 @@
         column="KEY_CMS"
         jdbc-type="INTEGER"
     />     
+     <field-descriptor
+        name="keyReadersGroup"
+        column="KEY_READERS_GROUP"
+        jdbc-type="INTEGER"
+    />                  
+    <field-descriptor
+        name="keyWritersGroup"
+        column="KEY_WRITERS_GROUP"
+        jdbc-type="INTEGER"
+    />        
+	 <reference-descriptor auto-retrieve="false"
+    	name="readers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyReadersGroup"/>
+	</reference-descriptor>	
+	 <reference-descriptor auto-retrieve="false"
+    	name="writers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyWritersGroup"/>
+	</reference-descriptor>		    
 	<reference-descriptor auto-retrieve="false"
     	name="cms"
         class-ref="net.sourceforge.fenixedu.domain.cms.Cms">
 	    <foreignkey field-ref="keyCms"/>
 	</reference-descriptor>	        
 	 <reference-descriptor auto-retrieve="false"
-    	name="owner"
+    	name="creator"
         class-ref="net.sourceforge.fenixedu.domain.Person">
 	    <foreignkey field-ref="keyPerson"/>
 	</reference-descriptor>
@@ -152,6 +200,14 @@
 		<fk-pointing-to-element-class column="KEY_PARENT"/>
 		<fk-pointing-to-this-class column="KEY_CHILD" />	 
 	</collection-descriptor>		
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="owners"
+			element-class-ref="net.sourceforge.fenixedu.domain.Person"
+			refresh="true" 
+			indirection-table="CMS_CONTENT_OWNERSHIP">
+		<fk-pointing-to-element-class column="KEY_OWNER"/>
+		<fk-pointing-to-this-class column="KEY_CONTENT" />	
+	</collection-descriptor>				
 </class-descriptor>
 
 
@@ -165,11 +221,6 @@
         autoincrement="true"
     /> 
     <field-descriptor
-        name="replyToMailingList"
-        column="REPLY_TO_MAILING_LIST"
-        jdbc-type="BOOLEAN"
-    />
-    <field-descriptor
         name="mailingListsHost"
         column="MAILING_LIST_HOST"
         jdbc-type="VARCHAR"
@@ -182,13 +233,8 @@
     <field-descriptor
         name="filterNonTextualAttachments"
         column="FILTER_NON_TEXTUAL_ATTACHMENTS"
-        jdbc-type="BOOLEAN"
+        jdbc-type="BIT"
     />        
-    <field-descriptor
-        name="sendMailInterval"
-        column="SEND_MAIL_INTERVAL"
-        jdbc-type="INTEGER"
-    />    
     <field-descriptor
         name="conversationReplyMarkers"
         column="CONVERSATION_REPLY_MARKERS"
@@ -209,11 +255,6 @@
         column="KEY_CMS"
         jdbc-type="INTEGER"
     />        
-    <field-descriptor
-        name="sendMailTimeout"
-        column="SEND_MAIL_TIMEOUT"
-        jdbc-type="INTEGER"
-    />            
 	<reference-descriptor auto-retrieve="false"
     	name="cms"
         class-ref="net.sourceforge.fenixedu.domain.cms.Cms">

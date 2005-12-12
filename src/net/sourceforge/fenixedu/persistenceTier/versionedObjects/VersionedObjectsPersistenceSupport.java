@@ -10,6 +10,8 @@ import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCu
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryModality;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryTheme;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
+import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailAddressAlias;
+import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailingList;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPositionCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentOtherTypeCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
@@ -88,8 +90,8 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimburs
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentSmsTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransaction;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.CMSVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.IPersistentMailAddressAlias;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.MailAdressAliasVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.MailingListVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AdvisoryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AnnouncementVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AulaVO;
@@ -1010,6 +1012,11 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 	public IPersistentMailAddressAlias getIPersistentMailAdressAlias()
 	{
 		return new MailAdressAliasVO();
+	}
+
+	public IPersistentMailingList getIPersistentMailingList()
+	{
+		return new MailingListVO();
 	}
     
 }

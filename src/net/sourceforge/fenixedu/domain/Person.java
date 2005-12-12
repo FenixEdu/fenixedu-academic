@@ -9,8 +9,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.domain.cms.IUserGroup;
-import net.sourceforge.fenixedu.domain.cms.predicates.ContentAssignableClassPredicate;
+import net.sourceforge.fenixedu.domain.accessControl.IUserGroup;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IFunction;
@@ -20,8 +19,6 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.util.UsernameUtils;
-
-import org.apache.commons.collections.iterators.FilterIterator;
 
 public class Person extends Person_Base {
 
@@ -481,7 +478,7 @@ public class Person extends Person_Base {
 
     public Iterator<IUserGroup> getUserGroupsIterator()
     {
-    	return new FilterIterator(this.getContentsIterator(),new ContentAssignableClassPredicate(IUserGroup.class));
+    	return this.getOwnedGroupsIterator();
     }
 
 	public int getUserGroupsCount()

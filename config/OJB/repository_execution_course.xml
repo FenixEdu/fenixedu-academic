@@ -70,11 +70,21 @@
          column="COMMENT"
         jdbc-type="LONGVARCHAR"
 	/>	
+	<field-descriptor
+		 name="keyExecutionCourseWebsite"
+         column="KEY_EXECUTION_COURSE_WEBSITE"
+        jdbc-type="INTEGER"
+	/>		
 	<reference-descriptor auto-retrieve="false"
 			name="executionPeriod"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod" >
 		<foreignkey field-ref="keyExecutionPeriod"/>
 	</reference-descriptor>
+	<reference-descriptor auto-retrieve="false"
+			name="executionCourseWebsite"
+			class-ref="net.sourceforge.fenixedu.domain.cms.website.ExecutionCourseWebsite" >
+		<foreignkey field-ref="keyExecutionCourseWebsite"/>
+	</reference-descriptor>	
 	<reference-descriptor auto-retrieve="false"
 			name="courseReport"
 			class-ref="net.sourceforge.fenixedu.domain.gesdis.CourseReport" 
@@ -217,4 +227,10 @@
 		<fk-pointing-to-this-class column="KEY_EXECUTION_COURSE"/>
 		<fk-pointing-to-element-class column="KEY_EVALUATION"/>
 	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+		name="associatedShifts" 
+		element-class-ref="net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseUserGroup"
+		>
+		<inverse-foreignkey field-ref="keyExecutionCourse"/>
+	</collection-descriptor>	
 </class-descriptor>

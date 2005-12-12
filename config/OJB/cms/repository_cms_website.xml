@@ -1,0 +1,172 @@
+<class-descriptor class="net.sourceforge.fenixedu.domain.cms.website.Website">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.cms.website.ExecutionCourseWebsite" />
+	<field-descriptor
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+    <field-descriptor
+        name="creationDate"
+        column="CREATION_DATE"
+        jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
+	/>                     
+    <field-descriptor
+        name="keyCreator"
+        column="KEY_CREATOR"
+        jdbc-type="INTEGER"
+    />   
+    <field-descriptor
+        name="name"
+        column="NAME"
+        jdbc-type="VARCHAR"
+    />   
+    <field-descriptor
+        name="description"
+        column="description"
+        jdbc-type="VARCHAR"
+    />           
+    <field-descriptor
+        name="keyCms"
+        column="KEY_CMS"
+        jdbc-type="INTEGER"
+    />
+	 <field-descriptor
+        name="keyReadersGroup"
+        column="KEY_READERS_GROUP"
+        jdbc-type="INTEGER"
+    />                  
+    <field-descriptor
+        name="keyWritersGroup"
+        column="KEY_WRITERS_GROUP"
+        jdbc-type="INTEGER"
+    />
+	 <reference-descriptor auto-retrieve="false"
+    	name="readers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyReadersGroup"/>
+	</reference-descriptor>	
+	 <reference-descriptor auto-retrieve="false"
+    	name="writers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyWritersGroup"/>
+	</reference-descriptor>		                
+	<reference-descriptor auto-retrieve="false"
+    	name="cms"
+        class-ref="net.sourceforge.fenixedu.domain.cms.Cms">
+	    <foreignkey field-ref="keyCms"/>
+	</reference-descriptor>	      
+	 <reference-descriptor auto-retrieve="false"
+    	name="creator"
+        class-ref="net.sourceforge.fenixedu.domain.Person">
+	    <foreignkey field-ref="keyCreator"/>
+	</reference-descriptor>	 
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="parents"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Bin"
+			indirection-table="CMS_CONTENT_HIERARCHY"
+			>
+		<fk-pointing-to-element-class column="KEY_PARENT"/>
+		<fk-pointing-to-this-class column="KEY_CHILD" />	 
+	</collection-descriptor>	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="owners"
+			element-class-ref="net.sourceforge.fenixedu.domain.Person"
+			refresh="true" 
+			indirection-table="CMS_CONTENT_OWNERSHIP">
+		<fk-pointing-to-element-class column="KEY_OWNER"/>
+		<fk-pointing-to-this-class column="KEY_CONTENT" />	
+	</collection-descriptor>			
+</class-descriptor>		
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.cms.website.ExecutionCourseWebsite" table="CMS_EXECUTION_COURSE_WEBSITE">
+	<field-descriptor
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+    <field-descriptor
+        name="keyExecutionCourse"
+        column="KEY_EXECUTION_COURSE"
+        jdbc-type="INTEGER"
+    />
+    <field-descriptor
+        name="creationDate"
+        column="CREATION_DATE"
+        jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
+	/>                     
+    <field-descriptor
+        name="keyCreator"
+        column="KEY_CREATOR"
+        jdbc-type="INTEGER"
+    />   
+    <field-descriptor
+        name="name"
+        column="NAME"
+        jdbc-type="VARCHAR"
+    />   
+    <field-descriptor
+        name="description"
+        column="DESCRIPTION"
+        jdbc-type="VARCHAR"
+    />           
+    <field-descriptor
+        name="keyCms"
+        column="KEY_CMS"
+        jdbc-type="INTEGER"
+    />
+	 <field-descriptor
+        name="keyReadersGroup"
+        column="KEY_READERS_GROUP"
+        jdbc-type="INTEGER"
+    />                  
+    <field-descriptor
+        name="keyWritersGroup"
+        column="KEY_WRITERS_GROUP"
+        jdbc-type="INTEGER"
+    />
+	 <reference-descriptor auto-retrieve="false"
+    	name="readers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyReadersGroup"/>
+	</reference-descriptor>	
+	 <reference-descriptor auto-retrieve="false"
+    	name="executionCourse"
+        class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse">
+	    <foreignkey field-ref="keyExecutionCourse"/>
+	</reference-descriptor>		
+	 <reference-descriptor auto-retrieve="false"
+    	name="writers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
+	    <foreignkey field-ref="keyWritersGroup"/>
+	</reference-descriptor>		                
+	<reference-descriptor auto-retrieve="false"
+    	name="cms"
+        class-ref="net.sourceforge.fenixedu.domain.cms.Cms">
+	    <foreignkey field-ref="keyCms"/>
+	</reference-descriptor>	      
+	 <reference-descriptor auto-retrieve="false"
+    	name="creator"
+        class-ref="net.sourceforge.fenixedu.domain.Person">
+	    <foreignkey field-ref="keyCreator"/>
+	</reference-descriptor>	 
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="parents"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Bin"
+			indirection-table="CMS_CONTENT_HIERARCHY"
+			>
+		<fk-pointing-to-element-class column="KEY_PARENT"/>
+		<fk-pointing-to-this-class column="KEY_CHILD" />	 
+	</collection-descriptor>	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="owners"
+			element-class-ref="net.sourceforge.fenixedu.domain.Person"
+			refresh="true" 
+			indirection-table="CMS_CONTENT_OWNERSHIP">
+		<fk-pointing-to-element-class column="KEY_OWNER"/>
+		<fk-pointing-to-this-class column="KEY_CONTENT" />	
+	</collection-descriptor>			
+</class-descriptor>		

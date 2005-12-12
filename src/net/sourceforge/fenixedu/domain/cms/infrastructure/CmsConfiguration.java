@@ -5,17 +5,21 @@ package net.sourceforge.fenixedu.domain.cms.infrastructure;
 public class CmsConfiguration extends CmsConfiguration_Base
 {
 	private static String SMTP_SERVER_ADDRESS_DEFAULT = "mail.adm";
-	private static Boolean REPLY_TO_MAILING_LIST_DEFAULT = true;
 	private static Boolean FILTER_NON_TEXTUAL_ATTACHMENTS_DEFAULT = true;
-	private static Integer SEND_MAIL_INTERVAL_DEFAULT = 60;
 	private static String MAILING_LIST_HOST_DEFAULT = "lists.fenix.ist.utl.pt";
-	private static String CONVERSATION_REPLY_MARKERS_DEFAULT = "Re Reply";
-	private static Integer MAX_ATTACHMENT_SIZE = 10000000;
-	private static Integer MAX_MESSAGE_SIZE =    10500000;	
+	private static String CONVERSATION_REPLY_MARKERS_DEFAULT = "Re:,Res:,Reply:,Resposta:";
+	private static Integer MAX_ATTACHMENT_SIZE_DEFAULT = 10000000;
+	private static Integer MAX_MESSAGE_SIZE_DEFAULT =    10500000;	
 
 	public CmsConfiguration()
 	{
 		super();
+		this.setSmtpServerAddress(SMTP_SERVER_ADDRESS_DEFAULT);
+		this.setFilterNonTextualAttachments(FILTER_NON_TEXTUAL_ATTACHMENTS_DEFAULT);
+		this.setMailingListsHost(MAILING_LIST_HOST_DEFAULT);
+		this.setConversationReplyMarkers(CONVERSATION_REPLY_MARKERS_DEFAULT);
+		this.setMaxAttachmentSize(MAX_ATTACHMENT_SIZE_DEFAULT);
+		this.setMaxMessageSize(MAX_MESSAGE_SIZE_DEFAULT);
 	}
 
 	public String getSmtpServerAddressToUse()
@@ -23,25 +27,13 @@ public class CmsConfiguration extends CmsConfiguration_Base
 		return this.getSmtpServerAddress() == null ? SMTP_SERVER_ADDRESS_DEFAULT
 				: this.getSmtpServerAddress();
 	}
-
-	public Boolean getReplyToMailingListToUse()
-	{
-		return this.getReplyToMailingList() == null ? REPLY_TO_MAILING_LIST_DEFAULT
-				: this.getReplyToMailingList();
-	}
-
+	
 	public boolean getFilterNonTextualAttachmentsToUse()
 	{
 		return this.getFilterNonTextualAttachments() == null ? FILTER_NON_TEXTUAL_ATTACHMENTS_DEFAULT
 				: this.getFilterNonTextualAttachments();
 	}
-
-	public Integer getSendMailIntervalToUse()
-	{
-		return this.getSendMailInterval() == null ? SEND_MAIL_INTERVAL_DEFAULT
-				: this.getSendMailInterval();
-	}
-	
+		
 	public String getMailingListsHostToUse()
 	{
 		return this.getMailingListsHost() == null? MAILING_LIST_HOST_DEFAULT: this.getMailingListsHost();
@@ -54,16 +46,17 @@ public class CmsConfiguration extends CmsConfiguration_Base
 
 	public Integer getMaxAttachmentSizeToUse()
 	{
-		return this.getMaxAttachmentSize() == null? MAX_ATTACHMENT_SIZE: this.getMaxAttachmentSize();
+		return this.getMaxAttachmentSize() == null? MAX_ATTACHMENT_SIZE_DEFAULT: this.getMaxAttachmentSize();
 	}
 
 	public Integer getMaxMessageSizeToUse()
 	{
-		return this.getMaxMessageSize() == null? MAX_MESSAGE_SIZE:this.getMaxMessageSize();
+		return this.getMaxMessageSize() == null? MAX_MESSAGE_SIZE_DEFAULT:this.getMaxMessageSize();
 	}
-	
-	public Integer getSendMailTimeoutToUse()
+		
+	public void delete()
 	{
-		return this.getSendMailTimeout() == null? MAX_MESSAGE_SIZE:this.getSendMailTimeout();
-	}
+		relations.CmsConfiguration.remove(this.getCms(),this);
+		super.deleteDomainObject();
+	}		
 }

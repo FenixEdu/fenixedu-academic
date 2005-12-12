@@ -7,17 +7,17 @@
 <%@ page import="java.util.Set" %>
 <%@ page import="java.util.TreeSet" %>
 <%@ page import="net.sourceforge.fenixedu.domain.IStudent" %>
-<%@ page import="net.sourceforge.fenixedu.domain.cms.UserGroup" %>
-<%@ page import="net.sourceforge.fenixedu.domain.cms.UserGroupTypes"%>
+<%@ page import="net.sourceforge.fenixedu.domain.accessControl.UserGroup" %>
+<%@ page import="net.sourceforge.fenixedu.domain.accessControl.UserGroupTypes"%>
 
 <span class="error"><html:errors/></span>
 <logic:present name="group">
-	<bean:define id="group" name="group" type="net.sourceforge.fenixedu.domain.cms.UserGroup"/>
+	<bean:define id="group" name="group" type="net.sourceforge.fenixedu.domain.accessControl.UserGroup"/>
 	<bean:define id="readableGroupType" value="<%=UserGroupTypes.userGroupTypeByClass(group.getClass()).toString()%>"/>
-	<h2><bean:message bundle="CMS_RESOURCES" key="cms.userGroupsManagement.label"/></h2>	
-	<b><bean:message bundle="CMS_RESOURCES" key="cms.userGroupsManagement.creating.type.label"/></b> <bean:message bundle="CMS_RESOURCES" name="readableGroupType" bundle="ENUMERATION_RESOURCES"/><br/>
-	<b><bean:message bundle="CMS_RESOURCES" key="cms.name.label"/>:</b> <bean:write name="group" property="name"/><br/>
-	<b><bean:message bundle="CMS_RESOURCES" key="cms.description.label"/>:</b> <bean:write name="group" property="description"/><br/>
+	<h2><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.userGroupsManagement.label"/></h2>	
+	<b><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.userGroupsManagement.creating.type.label"/></b> <bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" name="readableGroupType" bundle="ENUMERATION_RESOURCES"/><br/>
+	<b><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.name.label"/>:</b> <bean:write name="group" property="name"/><br/>
+	<b><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.description.label"/>:</b> <bean:write name="group" property="description"/><br/>
 	
 	<html:form action="/mailingListManagement" method="get">
 		<html:hidden property="method" value="create"/>
@@ -25,7 +25,7 @@
 		<table>
 			<tr>				
 				<td>
-					<bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingList.creating.name.label"/>
+					<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.creating.name.label"/>
 				</td>
 				<td>
 					<html:text property="name"/>
@@ -33,7 +33,7 @@
 			</tr>
 			<tr>
 				<td>
-					<bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingList.creating.description.label"/>
+					<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.creating.description.label"/>
 				</td>
 				<td>
 					<html:text property="description"/>
@@ -41,7 +41,7 @@
 			</tr>
 			<tr>				
 				<td>
-					<bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingList.creating.address.label"/>
+					<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.creating.address.label"/>
 				</td>
 				<td>
 					<html:text property="address"/>@lists.fenix.ist.utl.pt
@@ -49,7 +49,7 @@
 			</tr>			
 		</table>
 		<html:submit styleClass="inputbutton">
-					<bean:message bundle="CMS_RESOURCES" key="cms.save.button"/>
+					<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.save.button"/>
 		</html:submit>
 	</html:form>
 	

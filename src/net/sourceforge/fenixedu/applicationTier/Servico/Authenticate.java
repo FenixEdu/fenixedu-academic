@@ -112,6 +112,11 @@ public class Authenticate implements IService, Serializable {
         public String getFullName() {
             return getPerson().getNome();
         }
+
+		public boolean isPublicRequester()
+		{
+			return false;
+		}
     }
 
     public static final boolean isValidUserView(IUserView userView) {

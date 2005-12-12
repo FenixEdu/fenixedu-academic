@@ -945,64 +945,6 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
 <!--############# CMS ####################-->
-<!-- =========by gedl 25-10-2005============  -->
-<filterChain>
-	<name>ReadAllMailingListsPostFilterChain</name>
-	<expression>ReadAllMailingListsFilter</expression>
-	<description/>
-	<invocationTiming>2</invocationTiming>
-	<filterClass>net.sourceforge.fenixedu.applicationTier.Servico.cms.CmsService</filterClass>
-</filterChain>
-
-<filterChain>
-	<name>WriteMailingListPostFilterChain</name>
-	<expression>WriteMailingListFilter</expression>
-	<description/>
-	<invocationTiming>2</invocationTiming>
-	<filterClass>net.sourceforge.fenixedu.applicationTier.Servico.cms.CmsService</filterClass>
-</filterChain>
-
-<filterChain>
-	<name>ProcessReceivedMailPostFilterChain</name>
-	<expression>ProcessReceivedMailFilter</expression>
-	<description/>
-	<invocationTiming>2</invocationTiming>
-	<filterClass>net.sourceforge.fenixedu.applicationTier.Servico.cms.CmsService</filterClass>
-</filterChain>
-
-<filterChain>
-	<name>WriteExecutionCourseUserGroupPostFilterChain</name>
-	<expression>WriteExecutionCourseUserGroupFilter</expression>
-	<description/>
-	<invocationTiming>2</invocationTiming>
-	<filterClass>net.sourceforge.fenixedu.applicationTier.Servico.cms.CmsService</filterClass>
-</filterChain>
-    
-<filterChain>
-	<name>DeleteUserGroupPostFilterChain</name>
-	<expression>DeleteUserGroupFilter</expression>
-	<description/>
-	<invocationTiming>2</invocationTiming>
-	<filterClass>net.sourceforge.fenixedu.applicationTier.Servico.cms.CmsService</filterClass>
-</filterChain>
-  
-<filterChain>
-	<name>WriteGroupAggregatorPostFilterChain</name>
-	<expression>WriteGroupAggregatorFilter</expression>	
-	<description/>
-	<invocationTiming>2</invocationTiming>
-	<filterClass>net.sourceforge.fenixedu.applicationTier.Servico.cms.CmsService</filterClass>
-</filterChain>
-<!-- ======================================  --> 
-<!-- =========by gedl 9-11-2005============  -->
-<filterChain>
-	<name>ReadMailMessageByIdPostFilterChain</name>
-	<expression>ReadMailMessageByIdFilter</expression>	
-	<description/>
-	<invocationTiming>2</invocationTiming>
-	<filterClass>net.sourceforge.fenixedu.applicationTier.Servico.cms.CmsService</filterClass>
-</filterChain>
-<!-- ======================================  --> 
 
 <!-- =========by gedl 14-11-2005============  -->
 <filterChain>
@@ -1015,7 +957,7 @@
 
 <filterChain>
 	<name>ProcessReceivedMailPreFilterChain</name>
-	<expression>AcceptableMessageSize</expression>	
+	<expression>AcceptableMessageSize &amp;&amp; MailerAuthenticated</expression>	
 	<description/>
 	<invocationTiming>1</invocationTiming>
 	<filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.cms.accessControl.CmsAccessControlFilter</filterClass>
@@ -1028,6 +970,7 @@
 	<invocationTiming>1</invocationTiming>
 	<filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.cms.accessControl.CmsAccessControlFilter</filterClass>
 </filterChain>
+
 
 <!-- ======================================  --> 
 
@@ -1057,6 +1000,3 @@
     </filterChain>
 
 </filterChainsDefinitions>
-
-
-

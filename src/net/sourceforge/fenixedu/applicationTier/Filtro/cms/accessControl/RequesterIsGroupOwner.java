@@ -4,7 +4,7 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.cms.accessControl;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.cms.IUserGroup;
+import net.sourceforge.fenixedu.domain.accessControl.IUserGroup;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.FilterParameters;
@@ -25,10 +25,10 @@ public class RequesterIsGroupOwner extends CmsAccessControlFilter
 	{
 		IUserView userView = (IUserView) request.getRequester();
 		IUserGroup userGroup = (IUserGroup) request.getServiceParameters().getParameter(0);
-		if (!userView.getPerson().equals(userGroup.getOwner()))
-		{
-			throw new RequesterNotAllowedToDelete("UserGroup");
-		}
+//		if (!userGroup.getOwners().contains(userView.getPerson()))
+//		{
+//			throw new RequesterNotAllowedToDelete("UserGroup");
+//		}
 	}
 
 }

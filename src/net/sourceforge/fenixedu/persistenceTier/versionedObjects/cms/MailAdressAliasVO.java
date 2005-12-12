@@ -7,6 +7,7 @@ import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.cms.infrastructure.IMailAddressAlias;
 import net.sourceforge.fenixedu.domain.cms.infrastructure.MailAddressAlias;
+import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailAddressAlias;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
 
 /**

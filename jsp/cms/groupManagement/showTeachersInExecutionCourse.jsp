@@ -9,17 +9,17 @@
 	<logic:present name="elements">
 		
 		<bean:size name="elements" id="numberOfElements" />		
-		<bean:message bundle="CMS_RESOURCES" key="person.userGroupsManagement.elements.label" arg0="<%=numberOfElements.toString()%>"/>
+		<bean:message  bundle="CMS_RESOURCES" key="person.userGroupsManagement.elements.label" arg0="<%=numberOfElements.toString()%>"/>
 		<table>
 			<tr>
 				<td class="listClasses-header">
-					<bean:message bundle="CMS_RESOURCES" key="label.name"/>
+					<bean:message  bundle="CMS_RESOURCES" key="label.name"/>
 				</td>
 				<td class="listClasses-header">
-					<bean:message bundle="CMS_RESOURCES" key="label.teacher.category"/>
+					<bean:message  bundle="CMS_RESOURCES" key="label.teacher.category"/>
 				</td>
 				<td class="listClasses-header">
-					<bean:message bundle="CMS_RESOURCES" key="label.email"/>
+					<bean:message  bundle="CMS_RESOURCES" key="label.email"/>
 				</td>
 			</tr>
 			<logic:iterate id="person" name="elements" type="net.sourceforge.fenixedu.domain.IPerson">

@@ -20,5 +20,7 @@ public interface IUserView extends Serializable {
     public Collection getRoles();
 
     boolean hasRoleType(final RoleType roleType);
+    
+    boolean isPublicRequester();
 
 }

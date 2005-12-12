@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.cms.infrastructure.IMailAddressAlias;
 import net.sourceforge.fenixedu.domain.cms.infrastructure.MailAddressAlias;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.IPersistentMailAddressAlias;
+import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailAddressAlias;
 
 import org.apache.ojb.broker.query.Criteria;
 

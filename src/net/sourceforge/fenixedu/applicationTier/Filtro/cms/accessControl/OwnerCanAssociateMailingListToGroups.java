@@ -6,11 +6,10 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.cms.accessControl;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.cms.IUserGroup;
+import net.sourceforge.fenixedu.domain.accessControl.IUserGroup;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.FilterParameters;
-import pt.utl.ist.berserk.logic.filterManager.IFilter;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 
 /**
@@ -30,10 +29,10 @@ public class OwnerCanAssociateMailingListToGroups extends CmsAccessControlFilter
 		IPerson owner = (IPerson) arg0.getServiceParameters().getParameter(7);
 		for (IUserGroup group : groups)
 		{
-			if (!group.getOwner().equals(owner))
-			{
-				throw new MailingListGroupAssociationNotAllowed();
-			}
+//			if (!group.getOwners().contains(owner))
+//			{
+//				throw new MailingListGroupAssociationNotAllowed();
+//			}
 		}
 	}		
 }

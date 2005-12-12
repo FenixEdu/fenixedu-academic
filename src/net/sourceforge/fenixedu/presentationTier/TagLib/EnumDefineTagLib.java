@@ -11,7 +11,7 @@ import java.util.Collection;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
-import net.sourceforge.fenixedu.domain.cms.UserGroupTypes;
+import net.sourceforge.fenixedu.domain.accessControl.UserGroupTypes;
 
 import org.apache.struts.Globals;
 import org.apache.struts.util.LabelValueBean;

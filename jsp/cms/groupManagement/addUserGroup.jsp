@@ -3,15 +3,15 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
-<%@ page import="net.sourceforge.fenixedu.domain.cms.UserGroupTypes"%>
-<%@ page import="net.sourceforge.fenixedu.domain.cms.UserGroup"%>
+<%@ page import="net.sourceforge.fenixedu.domain.accessControl.UserGroupTypes"%>
+<%@ page import="net.sourceforge.fenixedu.domain.accessControl.UserGroup"%>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.HashMap" %>
 
 <bean:define id="viewAction" name="viewAction" type="java.lang.String"/>
-<h2><bean:message bundle="CMS_RESOURCES" key="cms.userGroupsManagement.title.label"/></h2>
-<bean:message bundle="CMS_RESOURCES" key="cms.userGroupsManagement.saved.info"/>
-<bean:define id="group" type="net.sourceforge.fenixedu.domain.cms.UserGroup" name="group"/>
+<h2><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.userGroupsManagement.title.label"/></h2>
+<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.userGroupsManagement.saved.info"/>
+<bean:define id="group" type="net.sourceforge.fenixedu.domain.accessControl.UserGroup" name="group"/>
 <%
 UserGroupTypes groupType = UserGroupTypes.userGroupTypeByClass(group.getClass());
 request.setAttribute("groupType",groupType);
@@ -20,7 +20,7 @@ request.setAttribute("groupType",groupType);
 <table>
 	<tr>
 		<td>
-			<b><bean:message bundle="CMS_RESOURCES" key="cms.userGroupsManagement.creating.type.label"/></b>
+			<b><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.userGroupsManagement.creating.type.label"/></b>
 			:
 		</td>
 		<td>
@@ -29,7 +29,7 @@ request.setAttribute("groupType",groupType);
 	</tr>
 	<tr>
 		<td>
-			<b><bean:message bundle="CMS_RESOURCES" key="cms.userGroupsManagement.creating.name.label"/></b>
+			<b><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.userGroupsManagement.creating.name.label"/></b>
 			:
 		</td>
 		<td>
@@ -38,7 +38,7 @@ request.setAttribute("groupType",groupType);
 	</tr>
 	<tr>
 		<td>
-			<b><bean:message bundle="CMS_RESOURCES" key="cms.userGroupsManagement.creating.description.label"/></b>
+			<b><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.userGroupsManagement.creating.description.label"/></b>
 			:
 		</td>
 		<td>
@@ -52,5 +52,5 @@ request.setAttribute("groupType",groupType);
 	params.put("groupId",group.getIdInternal());
 	request.setAttribute("params",params);
 	 %>
-<html:link name="params" module="/cms" action="/userGroupsManagement" target="_blank" ><bean:message bundle="CMS_RESOURCES" key="cms.userGroupsManagement.viewElements.link"/></html:link><br/>
-<html:link module="/cms" page="/userGroupsManagement.do?method=prepare" ><bean:message bundle="CMS_RESOURCES" key="cms.userGroupsManagement.label"/></html:link><br/>
+<html:link  name="params" module="/cms" action="/userGroupsManagement" target="_blank" ><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.userGroupsManagement.viewElements.link"/></html:link><br/>
+<html:link  module="/cms" page="/userGroupsManagement.do?method=prepare" ><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.userGroupsManagement.label"/></html:link><br/>

@@ -4,7 +4,9 @@
  * Created on 19 de Agosto de 2002, 1:18
  */
 
+
 package net.sourceforge.fenixedu.persistenceTier.OJB;
+
 
 /**
  * @author ars
@@ -24,6 +26,7 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.SeminaryOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.ThemeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentCMSOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentMailAddressAliasOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentMailingListOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.credits.ManagementPositionCreditLineOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.credits.OtherTypeCreditLineOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.degree.finalProject.TeacherDegreeFinalProjectStudentOJB;
@@ -113,6 +116,8 @@ import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryMo
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryTheme;
 import net.sourceforge.fenixedu.persistenceTier.cache.FenixCache;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
+import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailAddressAlias;
+import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailingList;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPositionCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentOtherTypeCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
@@ -189,7 +194,6 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentPaymentT
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentSmsTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransaction;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.IPersistentMailAddressAlias;
 import net.sourceforge.fenixedu.stm.OJBFunctionalSetWrapper;
 import net.sourceforge.fenixedu.stm.Transaction;
 
@@ -204,1055 +208,1270 @@ import org.apache.ojb.broker.metadata.ObjectReferenceDescriptor;
 import pt.utl.ist.berserk.storage.ITransactionBroker;
 import pt.utl.ist.berserk.storage.exceptions.StorageException;
 
-public class SuportePersistenteOJB implements ISuportePersistente, ITransactionBroker {
-    private static SuportePersistenteOJB _instance = null;
+public class SuportePersistenteOJB implements ISuportePersistente, ITransactionBroker
+{
+	private static SuportePersistenteOJB _instance = null;
 
-    private static HashMap descriptorMap = null;
+	private static HashMap descriptorMap = null;
 
-    public void setDescriptor(DescriptorRepository descriptorRepository, String hashName) {
-        descriptorMap.put(hashName, descriptorRepository);
-    }
-
-    public DescriptorRepository getDescriptor(String hashName) {
-
-        return (DescriptorRepository) descriptorMap.get(hashName);
-    }
-
-    public static PersistenceBroker getCurrentPersistenceBroker() {
-        return Transaction.getOJBBroker();
-    }
-
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#clearCache()
-     */
-    public void clearCache() {
-	getCurrentPersistenceBroker().clearCache();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#clearCache()
-     */
-    public Integer getNumberCachedItems() {
-        return new Integer(FenixCache.getNumberOfCachedItems());
-    }
-
-    public static synchronized SuportePersistenteOJB getInstance() throws ExcepcaoPersistencia {
-        if (_instance == null) {
-            _instance = new SuportePersistenteOJB();
-        }
-        if (descriptorMap == null) {
-            descriptorMap = new HashMap();
-
-        }
-        return _instance;
-    }
-
-    public static synchronized void resetInstance() {
-        if (_instance != null) {
-            PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
-            broker.clearCache();
-            _instance = null;
-        }
-    }
-
-    /** Creates a new instance of SuportePersistenteOJB */
-    private SuportePersistenteOJB() {
-    }
-
-    protected void finalize() throws Throwable {
-    }
-
-    public void iniciarTransaccao() {
-	// commit any current transaction
-	if (Transaction.current() != null) {
-	    Transaction.commit();
+	public void setDescriptor(DescriptorRepository descriptorRepository, String hashName)
+	{
+		descriptorMap.put(hashName, descriptorRepository);
 	}
-	Transaction.begin();
-    }
-
-    public void confirmarTransaccao() {
-	Transaction.checkpoint();
-	Transaction.currentFenixTransaction().setReadOnly();
-    }
-
-    public void cancelarTransaccao() {
-	Transaction.abort();
-    }
-
-    public IAulaPersistente getIAulaPersistente() {
-        return new AulaOJB();
-    }
-
-    public ISalaPersistente getISalaPersistente() {
-        return new SalaOJB();
-    }
-
-    public ITurmaPersistente getITurmaPersistente() {
-        return new TurmaOJB();
-    }
-
-    public ITurnoPersistente getITurnoPersistente() {
-        return new TurnoOJB();
-    }
-
-    public IFrequentaPersistente getIFrequentaPersistente() {
-        return new FrequentaOJB();
-    }
-
-    public IPersistentEnrollment getIPersistentEnrolment() {
-        return new EnrollmentOJB();
-    }
-
-    public IPersistentEnrolmentEvaluation getIPersistentEnrolmentEvaluation() {
-        return new EnrolmentEvaluationOJB();
-    }
-
-    public IPersistentCurricularCourse getIPersistentCurricularCourse() {
-        return new CurricularCourseOJB();
-    }
-
-    public IPersistentExecutionCourse getIPersistentExecutionCourse() {
-        return new ExecutionCourseOJB();
-    }
-
-    public IPersistentCountry getIPersistentCountry() {
-        return new CountryOJB();
-    }
-
-    public IPessoaPersistente getIPessoaPersistente() {
-        return new PessoaOJB();
-    }
-
-    public ICursoPersistente getICursoPersistente() {
-        return new CursoOJB();
-    }
-
-    public IPersistentExecutionDegree getIPersistentExecutionDegree() {
-        return new CursoExecucaoOJB();
-    }
-
-    public IPersistentStudent getIPersistentStudent() {
-        return new StudentOJB();
-    }
-
-    public IPersistentSenior getIPersistentSenior() {
-        return new SeniorOJB();
-    }
-
-    public IPersistentDepartment getIDepartamentoPersistente() {
-        return new DepartmentOJB();
-    }
-
-    public IPersistentDegreeCurricularPlan getIPersistentDegreeCurricularPlan() {
-        return new DegreeCurricularPlanOJB();
-    }
-
-    public IPersistentStudentCurricularPlan getIStudentCurricularPlanPersistente() {
-        return new StudentCurricularPlanOJB();
-    }
-
-    public IPersistentMasterDegreeCandidate getIPersistentMasterDegreeCandidate() {
-        return new MasterDegreeCandidateOJB();
-    }
-
-    public IPersistentCandidateSituation getIPersistentCandidateSituation() {
-        return new CandidateSituationOJB();
-    }
-
-    public IPersistentBibliographicReference getIPersistentBibliographicReference() {
-        return new BibliographicReferenceOJB();
-    }
-
-    /**
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentExecutionPeriod()
-     */
-    public IPersistentExecutionPeriod getIPersistentExecutionPeriod() {
-        return new ExecutionPeriodOJB();
-    }
-
-    /**
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentExecutionYear()
-     */
-
-    public IPersistentExecutionYear getIPersistentExecutionYear() {
-        return new ExecutionYearOJB();
-    }
-
-    /**
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentSite()
-     */
-    public IPersistentSite getIPersistentSite() {
-        return new SiteOJB();
-    }
-
-    /**
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentSection()
-     */
-    public IPersistentSection getIPersistentSection() {
-        return new SectionOJB();
-    }
-
-    /**
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentItem()
-     */
-    public IPersistentItem getIPersistentItem() {
-        return new ItemOJB();
-    }
-
-    /**
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentAnnouncement()
-     */
-    public IPersistentAnnouncement getIPersistentAnnouncement() {
-        return new AnnouncementOJB();
-    }
-
-    /**
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentCurriculum()
-     */
-    public IPersistentCurriculum getIPersistentCurriculum() {
-        return new CurriculumOJB();
-    }
-
-    /**
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentTeacher()
-     */
-    public IPersistentTeacher getIPersistentTeacher() {
-        return new TeacherOJB();
-    }
-
-    public IPersistentExam getIPersistentExam() {
-        return new ExamOJB();
-    }
-
-    public IPersistentBranch getIPersistentBranch() {
-        return new BranchOJB();
-    }
-
-    public IPersistentCurricularYear getIPersistentCurricularYear() {
-        return new CurricularYearOJB();
-    }
-
-    public IPersistentContributor getIPersistentContributor() {
-        return new ContributorOJB();
-    }
-
-    public IPersistentCurricularSemester getIPersistentCurricularSemester() {
-        return new CurricularSemesterOJB();
-    }
-
-    public IPersistentEnrolmentEquivalence getIPersistentEnrolmentEquivalence() {
-        return new EnrolmentEquivalenceOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentProfessorship()
-     */
-    public IPersistentProfessorship getIPersistentProfessorship() {
-        return new ProfessorshipOJB();
-    }
-
-    public IPersistentPrice getIPersistentPrice() {
-        return new PriceOJB();
-    }
-
-    public IPersistentGuideEntry getIPersistentGuideEntry() {
-        return new GuideEntryOJB();
-    }
-
-    public IPersistentGuide getIPersistentGuide() {
-        return new GuideOJB();
-    }
-
-    public IPersistentGuideSituation getIPersistentGuideSituation() {
-        return new GuideSituationOJB();
-    }
-
-    public IPersistentCurricularCourseScope getIPersistentCurricularCourseScope() {
-        return new CurricularCourseScopeOJB();
-    }
-
-    public IPersistentRole getIPersistentRole() {
-        return new RoleOJB();
-    }
-
-    public IPersistentPersonRole getIPersistentPersonRole() {
-        return new PersonRoleOJB();
-    }
-
-    public IPersistentPrecedence getIPersistentPrecedence() {
-        return new PrecedenceOJB();
-    }
-
-    public IPersistentRestriction getIPersistentRestriction() {
-        return new RestrictionOJB();
-    }
-
-    public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod() {
-        return new PersistentEnrolmentPeriod();
-    }
-
-    public IPersistentDegreeCurricularPlanEnrolmentInfo getIPersistentDegreeEnrolmentInfo() {
-        return new DegreeCurricularPlanEnrolmentInfoOJB();
-    }
-
-    public IPersistentStudentKind getIPersistentStudentKind() {
-        return new StudentKindOJB();
-    }
-
-    public IPersistentShiftProfessorship getIPersistentTeacherShiftPercentage() {
-        return new ShiftProfessorshipOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIpersistentWrittenEvaluationEnrolment()
-     */
-    public IPersistentWrittenEvaluationEnrolment getIPersistentWrittenEvaluationEnrolment() {
-        return new WrittenEvaluationEnrolmentOJB();
-    }
-
-    public IPersistentMark getIPersistentMark() {
-        return new MarkOJB();
-    }
-
-    public IPersistentEvaluation getIPersistentEvaluation() {
-        return new EvaluationOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentEmployee()
-     */
-    public IPersistentEmployee getIPersistentEmployee() {
-        return new EmployeeOJB();
-    }
-
-    public IPersistentEquivalentEnrolmentForEnrolmentEquivalence getIPersistentEquivalentEnrolmentForEnrolmentEquivalence() {
-        return new EquivalentEnrolmentForEnrolmentEquivalenceOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentSummary()
-     */
-    public IPersistentSummary getIPersistentSummary() {
-        return new SummaryOJB();
-    }
-
-    public IPersistentQualification getIPersistentQualification() {
-        return new QualificationOJB();
-    }
-
-    public IPersistentCandidateEnrolment getIPersistentCandidateEnrolment() {
-        return new CandidateEnrolmentOJB();
-    }
-
-    public IPersistentStudentGroup getIPersistentStudentGroup() {
-        return new StudentGroupOJB();
-    }
-
-    public IPersistentGrouping getIPersistentGrouping() {
-        return new GroupingOJB();
-    }
-
-    public IPersistentCurricularCourseEquivalence getIPersistentCurricularCourseEquivalence() {
-        return new CurricularCourseEquivalenceOJB();
-    }
-
-    // by gedl AT rnl DOT ist DOT utl DOT pt (July the 25th, 2003)
-    public IPersistentSeminaryModality getIPersistentSeminaryModality() {
-        return new ModalityOJB();
-    }
-
-    // by Barbosa (October 28th, 2003)
-    public IPersistentGrantOwner getIPersistentGrantOwner() {
-        return new GrantOwnerOJB();
-    }
-
-    // by Barbosa (November 18th, 2003)
-    public IPersistentGrantContract getIPersistentGrantContract() {
-        return new GrantContractOJB();
-    }
-
-    // By Barbosa (November 19th, 2003)
-    public IPersistentGrantType getIPersistentGrantType() {
-        return new GrantTypeOJB();
-    }
-
-    // By Barbosa (November 20th, 2003)
-    public IPersistentGrantOrientationTeacher getIPersistentGrantOrientationTeacher() {
-        return new GrantOrientationTeacherOJB();
-    }
-
-    public IPersistentMasterDegreeThesis getIPersistentMasterDegreeThesis() {
-        return new MasterDegreeThesisOJB();
-    }
-
-    public IPersistentMasterDegreeThesisDataVersion getIPersistentMasterDegreeThesisDataVersion() {
-        return new MasterDegreeThesisDataVersionOJB();
-    }
-
-    public IPersistentMasterDegreeProofVersion getIPersistentMasterDegreeProofVersion() {
-        return new MasterDegreeProofVersionOJB();
-    }
-
-    public IPersistentExternalPerson getIPersistentExternalPerson() {
-        return new ExternalPersonOJB();
-    }
-
-    public IPersistentUniversity getIPersistentUniversity() {
-        return new UniversityOJB();
-    }
-
-    public IPersistentEvaluationMethod getIPersistentEvaluationMethod() {
-        return new EvaluationMethodOJB();
-    }
-
-    public IPersistentCoordinator getIPersistentCoordinator() {
-        return new CoordinatorOJB();
-    }
-
-    public IPersistentDegreeInfo getIPersistentDegreeInfo() {
-        return new DegreeInfoOJB();
-    }
-
-    public IPersistentCourseReport getIPersistentCourseReport() {
-        return new CourseReportOJB();
-    }
-
-    public IPersistentCategory getIPersistentCategory() {
-        return new CategoryOJB();
-    }
-
-    public IPersistentCareer getIPersistentCareer() {
-        return new CareerOJB();
-    }
-
-    public IPersistentWeeklyOcupation getIPersistentWeeklyOcupation() {
-        return new WeeklyOcupationOJB();
-    }
-
-    public IPersistentExternalActivity getIPersistentExternalActivity() {
-        return new ExternalActivityOJB();
-    }
-
-    public IPersistentServiceProviderRegime getIPersistentServiceProviderRegime() {
-        return new ServiceProviderRegimeOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentShiftProfessorship()
-     */
-    public IPersistentShiftProfessorship getIPersistentShiftProfessorship() {
-        return new ShiftProfessorshipOJB();
-    }
-
-    public IPersistentReimbursementGuide getIPersistentReimbursementGuide() {
-
-        return new ReimbursementGuideOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentOrientation()
-     */
-    public IPersistentOrientation getIPersistentOrientation() {
-        return new OrientationOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentPublicationsNumber()
-     */
-    public IPersistentPublicationsNumber getIPersistentPublicationsNumber() {
-        return new PublicationsNumberOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentOldPublication()
-     */
-    public IPersistentOldPublication getIPersistentOldPublication() {
-        return new OldPublicationOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentGaugingTestResult()
-     */
-    public IPersistentGaugingTestResult getIPersistentGaugingTestResult() {
-        return new GaugingTestResultOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentSupportLesson()
-     */
-    public IPersistentSupportLesson getIPersistentSupportLesson() {
-        return new SupportLessonOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentTeacherDegreeFinalProjectStudent()
-     */
-    public IPersistentTeacherDegreeFinalProjectStudent getIPersistentTeacherDegreeFinalProjectStudent() {
-        return new TeacherDegreeFinalProjectStudentOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentTeacherInstitutionWorkingTime()
-     */
-    public IPersistentTeacherInstitutionWorkingTime getIPersistentTeacherInstitutionWorkingTime() {
-        return new TeacherInstitutionWorkingTimeOJB();
-    }
-
-    // Nuno Correia & Ricardo Rodrigues
-    public IPersistentCurricularCourseGroup getIPersistentCurricularCourseGroup() {
-        return new CurricularCourseGroupOJB();
-    }
-
-    public IPersistentScientificArea getIPersistentScientificArea() {
-        return new ScientificAreaOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentCampus()
-     */
-    public IPersistentCampus getIPersistentCampus() {
-        return new CampusOJB();
-    }
-
-    // by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)
-    public IPersistentSeminaryTheme getIPersistentSeminaryTheme() {
-        return new ThemeOJB();
-    }
-
-    // by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)
-    public IPersistentSeminary getIPersistentSeminary() {
-        return new SeminaryOJB();
-    }
-
-    // by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)
-    public IPersistentSeminaryCaseStudy getIPersistentSeminaryCaseStudy() {
-        return new CaseStudyOJB();
-    }
-
-    // by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003)
-    public IPersistentSeminaryCandidacy getIPersistentSeminaryCandidacy() {
-        return new CandidacyOJB();
-    }
-
-    // by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003)
-    public IPersistentSeminaryCaseStudyChoice getIPersistentSeminaryCaseStudyChoice() {
-        return new CaseStudyChoiceOJB();
-    }
-
-    // by gedl AT rnl DOT ist DOT utl DOT pt (August the 4th, 2003)
-    public IPersistentSeminaryCurricularCourseEquivalency getIPersistentSeminaryCurricularCourseEquivalency() {
-        return new EquivalencyOJB();
-    }
-
-    public IPersistentMetadata getIPersistentMetadata() {
-        return new MetadataOJB();
-    }
-
-    public IPersistentQuestion getIPersistentQuestion() {
-        return new QuestionOJB();
-    }
-
-    public IPersistentTest getIPersistentTest() {
-        return new TestOJB();
-    }
-
-    public IPersistentTestQuestion getIPersistentTestQuestion() {
-        return new TestQuestionOJB();
-    }
-
-    public IPersistentDistributedTest getIPersistentDistributedTest() {
-        return new DistributedTestOJB();
-    }
-
-    public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion() {
-        return new StudentTestQuestionOJB();
-    }
-
-    public IPersistentStudentTestLog getIPersistentStudentTestLog() {
-        return new StudentTestLogOJB();
-    }
-
-    public IPersistentOnlineTest getIPersistentOnlineTest() {
-        return new OnlineTestOJB();
-    }
-
-    public IPersistentTestScope getIPersistentTestScope() {
-        return new TestScopeOJB();
-    }
-
-    public IPersistentDistributedTestAdvisory getIPersistentDistributedTestAdvisory() {
-        return new DistributedTestAdvisoryOJB();
-    }
-
-    public IPersistentAdvisory getIPersistentAdvisory() {
-        return new AdvisoryOJB();
-    }
-
-    public IPersistentWebSite getIPersistentWebSite() {
-        return new WebSiteOJB();
-    }
-
-    public IPersistentWebSiteSection getIPersistentWebSiteSection() {
-        return new WebSiteSectionOJB();
-    }
-
-    public IPersistentWebSiteItem getIPersistentWebSiteItem() {
-        return new WebSiteItemOJB();
-    }
-
-    public void beginTransaction() {
-	this.iniciarTransaccao();
-    }
-
-    // by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
-    public void commitTransaction() {
-	this.confirmarTransaccao();
-    }
-
-    // by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
-    public void abortTransaction() throws StorageException {
-	this.cancelarTransaccao();
-    }
-
-    // by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
-    public void lockRead(List list) throws StorageException {
-    }
-
-    // by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
-    public void lockRead(Object obj) throws StorageException {
-    }
-
-    // by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
-    public void lockWrite(Object obj) throws StorageException {
-    }
-
-    // by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
-    public PersistenceBroker currentBroker() {
-	return getCurrentPersistenceBroker();
-    }
-
-    public IPersistentGratuityValues getIPersistentGratuityValues() {
-        return new GratuityValuesOJB();
-    }
-
-    public IPersistentGratuitySituation getIPersistentGratuitySituation() {
-        return new GratuitySituationOJB();
-    }
-
-    public IPersistentPaymentPhase getIPersistentPaymentPhase() {
-        return new PaymentPhaseOJB();
-    }
-
-    public IPersistentCreditsInAnySecundaryArea getIPersistentCreditsInAnySecundaryArea() {
-        return new CreditsInAnySecundaryAreaOJB();
-    }
-
-    public IPersistentCreditsInSpecificScientificArea getIPersistentCreditsInSpecificScientificArea() {
-        return new CreditsInSpecificScientificAreaOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentGrantCostCenter()
-     */
-    public IPersistentGrantCostCenter getIPersistentGrantCostCenter() {
-        return new GrantCostCenterOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentGrantPart()
-     */
-    public IPersistentGrantPart getIPersistentGrantPart() {
-        return new GrantPartOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentGrantPaymentEntity()
-     */
-    public IPersistentGrantPaymentEntity getIPersistentGrantPaymentEntity() {
-        return new GrantPaymentEntityOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentGrantSubsidy()
-     */
-    public IPersistentGrantSubsidy getIPersistentGrantSubsidy() {
-        return new GrantSubsidyOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentGrantContractRegime()
-     */
-    public IPersistentGrantContractRegime getIPersistentGrantContractRegime() {
-        return new GrantContractRegimeOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentGrantContractRegime()
-     */
-    public IPersistentGrantInsurance getIPersistentGrantInsurance() {
-        return new GrantInsuranceOJB();
-    }
-
-    public IPersistentGrantContractMovement getIPersistentGrantContractMovement() {
-        return new GrantContractMovementOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentTutor()
-     */
-    public IPersistentTutor getIPersistentTutor() {
-        return new TutorOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentStudentCourseReport()
-     */
-    public IPersistentStudentCourseReport getIPersistentStudentCourseReport() {
-        return new StudentCourseReportOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentDelegate()
-     */
-    public IPersistentDelegate getIPersistentDelegate() {
-        return new DelegateOJB();
-    }
-
-    public IPersistentOtherTypeCreditLine getIPersistentOtherTypeCreditLine() {
-        return new OtherTypeCreditLineOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentManagementPosistionCreditLine()
-     */
-    public IPersistentManagementPositionCreditLine getIPersistentManagementPositionCreditLine() {
-        return new ManagementPositionCreditLineOJB();
-    }
-
-    public IPersistentFinalDegreeWork getIPersistentFinalDegreeWork() {
-        return new FinalDegreeWorkOJB();
-    }
-
-    // Ana e Ricardo
-    public IPersistentRoomOccupation getIPersistentRoomOccupation() {
-        return new RoomOccupationOJB();
-    }
-
-    public IPersistentPeriod getIPersistentPeriod() {
-        return new PeriodOJB();
-    }
-
-    public IPersistentWrittenTest getIPersistentWrittenTest() {
-        return new WrittenTestOJB();
-    }
-
-    public IPersistentReimbursementGuideEntry getIPersistentReimbursementGuideEntry() {
-        return new ReimbursementGuideEntryOJB();
-
-    }
-	
-	public IPersistentSentSms getIPersistentSentSms() {
-        return new SentSmsOJB();
-    }
-
-    // TJBF & PFON
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentPublication()
-     */
-    public IPersistentPublication getIPersistentPublication() {
-        return new PublicationOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentPublicationType()
-     */
-    public IPersistentPublicationType getIPersistentPublicationType() {
-        return new PublicationTypeOJB();
-    }
-
-    // Nuno Correia & Ricardo Rodrigues
-    public IPersistentPersonalDataUseInquiryAnswers getIPersistentPersonalDataUseInquiryAnswers() {
-        return new PersonalDataUseInquiryAnswersOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentPublicationAttribute()
-     */
-    public IPersistentPublicationAttribute getIPersistentPublicationAttribute() {
-        return new PublicationAttributeOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentPublicationFormat()
-     */
-    public IPersistentPublicationFormat getIPersistentPublicationFormat() {
-        return new PublicationFormatOJB();
-    }
-
-    public IPersistentSibsPaymentFile getIPersistentSibsPaymentFile() {
-        return new SibsPaymentFileOJB();
-    }
-
-    public IPersistentSibsPaymentFileEntry getIPersistentSibsPaymentFileEntry() {
-        return new SibsPaymentFileEntryOJB();
-    }
-
-    public IPersistentObject getIPersistentObject() {
-        return new PersistentObjectOJB();
-    }
-
-    public IPersistentGratuityTransaction getIPersistentGratuityTransaction() {
-        return new GratuityTransactionOJB();
-    }
-
-    public IPersistentResidenceCandidacies getIPersistentResidenceCandidacies() {
-        return new ResidenceCandidaciesOJB();
-    }
-
-    public IPersistentReimbursementTransaction getIPersistentReimbursementTransaction() {
-        return new ReimbursementTransactionOJB();
-    }
-
-    public IPersistentSmsTransaction getIPersistentSmsTransaction() {
-        return new SmsTransactionOJB();
-    }
-
-    public IPersistentInsuranceTransaction getIPersistentInsuranceTransaction() {
-        return new InsuranceTransactionOJB();
-    }
-
-    public IPersistentPersonAccount getIPersistentPersonAccount() {
-        return new PersonAccountOJB();
-    }
-
-    public IPersistentTransaction getIPersistentTransaction() {
-        return new TransactionOJB();
-    }
-
-    public IPersistentInsuranceValue getIPersistentInsuranceValue() {
-        return new InsuranceValueOJB();
-    }
-
-    public IPersistentFAQSection getIPersistentFAQSection() {
-        return new FAQSectionOJB();
-    }
-
-    public IPersistentFAQEntries getIPersistentFAQEntries() {
-        return new FAQEntriesOJB();
-    }
-
-    public IPersistentGlossaryEntries getIPersistentGlossaryEntries() {
-        return new GlossaryEntriesOJB();
-    }
-
-    public IPersistentExportGrouping getIPersistentExportGrouping() {
-        return new ExportGroupingOJB();
-    }
- 
-    public IPersistentEnrolmentLog getIPersistentEnrolmentLog() {
-        return new EnrolmentLogOJB();
-    }
-
-    // Rita Ferreira e Jo�o Fialho
-    public IPersistentOldInquiriesSummary getIPersistentOldInquiriesSummary() {
-        return new OldInquiriesSummaryOJB();
-    }
-
-    public IPersistentOldInquiriesTeachersRes getIPersistentOldInquiriesTeachersRes() {
-        return new OldInquiriesTeachersResOJB();
-    }
-
-    public IPersistentOldInquiriesCoursesRes getIPersistentOldInquiriesCoursesRes() {
-        return new OldInquiriesCoursesResOJB();
-    }
-
-    public IPersistentInquiriesCourse getIPersistentInquiriesCourse() {
-        return new InquiriesCourseOJB();
-    }
-
-    public IPersistentInquiriesRegistry getIPersistentInquiriesRegistry() {
-        return new InquiriesRegistryOJB();
-    }
-
-    public IPersistentInquiriesRoom getIPersistentInquiriesRoom() {
-        return new InquiriesRoomOJB();
-    }
-
-    public IPersistentInquiriesTeacher getIPersistentInquiriesTeacher() {
-        return new InquiriesTeacherOJB();
-    }
-
-    //
-    public IPersistentPublicationTeacher getIPersistentPublicationTeacher() {
-        return new PublicationTeacherOJB();
-    }
-
-    public IPersistentCostCenter getIPersistentCostCenter() {
-        return new CostCenterOJB();
-    }
-
-    public IPersistentMoneyCostCenter getIPersistentMoneyCostCenter() {
-        return new MoneyCostCenterOJB();
-    }
-
-    public IPersistentExtraWork getIPersistentExtraWork() {
-        return new ExtraWorkOJB();
-    }
-
-    public IPersistentExtraWorkRequests getIPersistentExtraWorkRequests() {
-        return new ExtraWorkResquestsOJB();
-    }
-
-    public IPersistentPaymentTransaction getIPersistentPaymentTransaction() {
-        return new PaymentTransactionOJB();
-    }
-
-    public IPersistentSecretaryEnrolmentStudent getIPersistentSecretaryEnrolmentStudent() {
-        return new SecretaryEnrolmentStudentOJB();
-    }
-
-    public IPersistentExtraWorkCompensation getIPersistentExtraWorkCompensation() {
-        return new ExtraWorkCompensationOJB();
-    }
-
-    public IPersistentExtraWorkHistoric getIPersistentExtraWorkHistoric() {
-        return new ExtraWorkHistoricOJB();
-    }
-
-    public IPersistentProjectAccess getIPersistentProjectAccess() {
-        return new ProjectAccessOJB();
-    }
-
-    public IPersistentBuilding getIPersistentBuilding() {
-        return new BuildingOJB();
-    }
-
-    public IPersistentInstitution getIPersistentInstitution() {
-        return new InstitutionOJB();
-    }
-
-    public IPersistentNonAffiliatedTeacher getIPersistentNonAffiliatedTeacher() {
-        return new NonAffiliatedTeacherOJB();
-    }
-
-    public IPersistentAuthorship getIPersistentAuthorship() {
-        return new AuthorshipOJB();
-    }
-
-	public IPersistentCompetenceCourse getIPersistentCompetenceCourse() {
+
+	public DescriptorRepository getDescriptor(String hashName)
+	{
+
+		return (DescriptorRepository) descriptorMap.get(hashName);
+	}
+
+	public static PersistenceBroker getCurrentPersistenceBroker()
+	{
+		return Transaction.getOJBBroker();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#clearCache()
+	 */
+	public void clearCache()
+	{
+		getCurrentPersistenceBroker().clearCache();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#clearCache()
+	 */
+	public Integer getNumberCachedItems()
+	{
+		return new Integer(FenixCache.getNumberOfCachedItems());
+	}
+
+	public static synchronized SuportePersistenteOJB getInstance() throws ExcepcaoPersistencia
+	{
+		if (_instance == null)
+		{
+			_instance = new SuportePersistenteOJB();
+		}
+		if (descriptorMap == null)
+		{
+			descriptorMap = new HashMap();
+
+		}
+		return _instance;
+	}
+
+	public static synchronized void resetInstance()
+	{
+		if (_instance != null)
+		{
+			PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+			broker.clearCache();
+			_instance = null;
+		}
+	}
+
+	/** Creates a new instance of SuportePersistenteOJB */
+	private SuportePersistenteOJB()
+	{
+	}
+
+	protected void finalize() throws Throwable
+	{
+	}
+
+	public void iniciarTransaccao()
+	{
+		// commit any current transaction
+		if (Transaction.current() != null)
+		{
+			Transaction.commit();
+		}
+		Transaction.begin();
+	}
+
+	public void confirmarTransaccao()
+	{
+		Transaction.checkpoint();
+		Transaction.currentFenixTransaction().setReadOnly();
+	}
+
+	public void cancelarTransaccao()
+	{
+		Transaction.abort();
+	}
+
+	public IAulaPersistente getIAulaPersistente()
+	{
+		return new AulaOJB();
+	}
+
+	public ISalaPersistente getISalaPersistente()
+	{
+		return new SalaOJB();
+	}
+
+	public ITurmaPersistente getITurmaPersistente()
+	{
+		return new TurmaOJB();
+	}
+
+	public ITurnoPersistente getITurnoPersistente()
+	{
+		return new TurnoOJB();
+	}
+
+	public IFrequentaPersistente getIFrequentaPersistente()
+	{
+		return new FrequentaOJB();
+	}
+
+	public IPersistentEnrollment getIPersistentEnrolment()
+	{
+		return new EnrollmentOJB();
+	}
+
+	public IPersistentEnrolmentEvaluation getIPersistentEnrolmentEvaluation()
+	{
+		return new EnrolmentEvaluationOJB();
+	}
+
+	public IPersistentCurricularCourse getIPersistentCurricularCourse()
+	{
+		return new CurricularCourseOJB();
+	}
+
+	public IPersistentExecutionCourse getIPersistentExecutionCourse()
+	{
+		return new ExecutionCourseOJB();
+	}
+
+	public IPersistentCountry getIPersistentCountry()
+	{
+		return new CountryOJB();
+	}
+
+	public IPessoaPersistente getIPessoaPersistente()
+	{
+		return new PessoaOJB();
+	}
+
+	public ICursoPersistente getICursoPersistente()
+	{
+		return new CursoOJB();
+	}
+
+	public IPersistentExecutionDegree getIPersistentExecutionDegree()
+	{
+		return new CursoExecucaoOJB();
+	}
+
+	public IPersistentStudent getIPersistentStudent()
+	{
+		return new StudentOJB();
+	}
+
+	public IPersistentSenior getIPersistentSenior()
+	{
+		return new SeniorOJB();
+	}
+
+	public IPersistentDepartment getIDepartamentoPersistente()
+	{
+		return new DepartmentOJB();
+	}
+
+	public IPersistentDegreeCurricularPlan getIPersistentDegreeCurricularPlan()
+	{
+		return new DegreeCurricularPlanOJB();
+	}
+
+	public IPersistentStudentCurricularPlan getIStudentCurricularPlanPersistente()
+	{
+		return new StudentCurricularPlanOJB();
+	}
+
+	public IPersistentMasterDegreeCandidate getIPersistentMasterDegreeCandidate()
+	{
+		return new MasterDegreeCandidateOJB();
+	}
+
+	public IPersistentCandidateSituation getIPersistentCandidateSituation()
+	{
+		return new CandidateSituationOJB();
+	}
+
+	public IPersistentBibliographicReference getIPersistentBibliographicReference()
+	{
+		return new BibliographicReferenceOJB();
+	}
+
+	/**
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentExecutionPeriod()
+	 */
+	public IPersistentExecutionPeriod getIPersistentExecutionPeriod()
+	{
+		return new ExecutionPeriodOJB();
+	}
+
+	/**
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentExecutionYear()
+	 */
+
+	public IPersistentExecutionYear getIPersistentExecutionYear()
+	{
+		return new ExecutionYearOJB();
+	}
+
+	/**
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentSite()
+	 */
+	public IPersistentSite getIPersistentSite()
+	{
+		return new SiteOJB();
+	}
+
+	/**
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentSection()
+	 */
+	public IPersistentSection getIPersistentSection()
+	{
+		return new SectionOJB();
+	}
+
+	/**
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentItem()
+	 */
+	public IPersistentItem getIPersistentItem()
+	{
+		return new ItemOJB();
+	}
+
+	/**
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentAnnouncement()
+	 */
+	public IPersistentAnnouncement getIPersistentAnnouncement()
+	{
+		return new AnnouncementOJB();
+	}
+
+	/**
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentCurriculum()
+	 */
+	public IPersistentCurriculum getIPersistentCurriculum()
+	{
+		return new CurriculumOJB();
+	}
+
+	/**
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentTeacher()
+	 */
+	public IPersistentTeacher getIPersistentTeacher()
+	{
+		return new TeacherOJB();
+	}
+
+	public IPersistentExam getIPersistentExam()
+	{
+		return new ExamOJB();
+	}
+
+	public IPersistentBranch getIPersistentBranch()
+	{
+		return new BranchOJB();
+	}
+
+	public IPersistentCurricularYear getIPersistentCurricularYear()
+	{
+		return new CurricularYearOJB();
+	}
+
+	public IPersistentContributor getIPersistentContributor()
+	{
+		return new ContributorOJB();
+	}
+
+	public IPersistentCurricularSemester getIPersistentCurricularSemester()
+	{
+		return new CurricularSemesterOJB();
+	}
+
+	public IPersistentEnrolmentEquivalence getIPersistentEnrolmentEquivalence()
+	{
+		return new EnrolmentEquivalenceOJB();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentProfessorship()
+	 */
+	public IPersistentProfessorship getIPersistentProfessorship()
+	{
+		return new ProfessorshipOJB();
+	}
+
+	public IPersistentPrice getIPersistentPrice()
+	{
+		return new PriceOJB();
+	}
+
+	public IPersistentGuideEntry getIPersistentGuideEntry()
+	{
+		return new GuideEntryOJB();
+	}
+
+	public IPersistentGuide getIPersistentGuide()
+	{
+		return new GuideOJB();
+	}
+
+	public IPersistentGuideSituation getIPersistentGuideSituation()
+	{
+		return new GuideSituationOJB();
+	}
+
+	public IPersistentCurricularCourseScope getIPersistentCurricularCourseScope()
+	{
+		return new CurricularCourseScopeOJB();
+	}
+
+	public IPersistentRole getIPersistentRole()
+	{
+		return new RoleOJB();
+	}
+
+	public IPersistentPersonRole getIPersistentPersonRole()
+	{
+		return new PersonRoleOJB();
+	}
+
+	public IPersistentPrecedence getIPersistentPrecedence()
+	{
+		return new PrecedenceOJB();
+	}
+
+	public IPersistentRestriction getIPersistentRestriction()
+	{
+		return new RestrictionOJB();
+	}
+
+	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod()
+	{
+		return new PersistentEnrolmentPeriod();
+	}
+
+	public IPersistentDegreeCurricularPlanEnrolmentInfo getIPersistentDegreeEnrolmentInfo()
+	{
+		return new DegreeCurricularPlanEnrolmentInfoOJB();
+	}
+
+	public IPersistentStudentKind getIPersistentStudentKind()
+	{
+		return new StudentKindOJB();
+	}
+
+	public IPersistentShiftProfessorship getIPersistentTeacherShiftPercentage()
+	{
+		return new ShiftProfessorshipOJB();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIpersistentWrittenEvaluationEnrolment()
+	 */
+	public IPersistentWrittenEvaluationEnrolment getIPersistentWrittenEvaluationEnrolment()
+	{
+		return new WrittenEvaluationEnrolmentOJB();
+	}
+
+	public IPersistentMark getIPersistentMark()
+	{
+		return new MarkOJB();
+	}
+
+	public IPersistentEvaluation getIPersistentEvaluation()
+	{
+		return new EvaluationOJB();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentEmployee()
+	 */
+	public IPersistentEmployee getIPersistentEmployee()
+	{
+		return new EmployeeOJB();
+	}
+
+	public IPersistentEquivalentEnrolmentForEnrolmentEquivalence getIPersistentEquivalentEnrolmentForEnrolmentEquivalence()
+	{
+		return new EquivalentEnrolmentForEnrolmentEquivalenceOJB();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentSummary()
+	 */
+	public IPersistentSummary getIPersistentSummary()
+	{
+		return new SummaryOJB();
+	}
+
+	public IPersistentQualification getIPersistentQualification()
+	{
+		return new QualificationOJB();
+	}
+
+	public IPersistentCandidateEnrolment getIPersistentCandidateEnrolment()
+	{
+		return new CandidateEnrolmentOJB();
+	}
+
+	public IPersistentStudentGroup getIPersistentStudentGroup()
+	{
+		return new StudentGroupOJB();
+	}
+
+	public IPersistentGrouping getIPersistentGrouping()
+	{
+		return new GroupingOJB();
+	}
+
+	public IPersistentCurricularCourseEquivalence getIPersistentCurricularCourseEquivalence()
+	{
+		return new CurricularCourseEquivalenceOJB();
+	}
+
+	// by gedl AT rnl DOT ist DOT utl DOT pt (July the 25th, 2003)
+	public IPersistentSeminaryModality getIPersistentSeminaryModality()
+	{
+		return new ModalityOJB();
+	}
+
+	// by Barbosa (October 28th, 2003)
+	public IPersistentGrantOwner getIPersistentGrantOwner()
+	{
+		return new GrantOwnerOJB();
+	}
+
+	// by Barbosa (November 18th, 2003)
+	public IPersistentGrantContract getIPersistentGrantContract()
+	{
+		return new GrantContractOJB();
+	}
+
+	// By Barbosa (November 19th, 2003)
+	public IPersistentGrantType getIPersistentGrantType()
+	{
+		return new GrantTypeOJB();
+	}
+
+	// By Barbosa (November 20th, 2003)
+	public IPersistentGrantOrientationTeacher getIPersistentGrantOrientationTeacher()
+	{
+		return new GrantOrientationTeacherOJB();
+	}
+
+	public IPersistentMasterDegreeThesis getIPersistentMasterDegreeThesis()
+	{
+		return new MasterDegreeThesisOJB();
+	}
+
+	public IPersistentMasterDegreeThesisDataVersion getIPersistentMasterDegreeThesisDataVersion()
+	{
+		return new MasterDegreeThesisDataVersionOJB();
+	}
+
+	public IPersistentMasterDegreeProofVersion getIPersistentMasterDegreeProofVersion()
+	{
+		return new MasterDegreeProofVersionOJB();
+	}
+
+	public IPersistentExternalPerson getIPersistentExternalPerson()
+	{
+		return new ExternalPersonOJB();
+	}
+
+	public IPersistentUniversity getIPersistentUniversity()
+	{
+		return new UniversityOJB();
+	}
+
+	public IPersistentEvaluationMethod getIPersistentEvaluationMethod()
+	{
+		return new EvaluationMethodOJB();
+	}
+
+	public IPersistentCoordinator getIPersistentCoordinator()
+	{
+		return new CoordinatorOJB();
+	}
+
+	public IPersistentDegreeInfo getIPersistentDegreeInfo()
+	{
+		return new DegreeInfoOJB();
+	}
+
+	public IPersistentCourseReport getIPersistentCourseReport()
+	{
+		return new CourseReportOJB();
+	}
+
+	public IPersistentCategory getIPersistentCategory()
+	{
+		return new CategoryOJB();
+	}
+
+	public IPersistentCareer getIPersistentCareer()
+	{
+		return new CareerOJB();
+	}
+
+	public IPersistentWeeklyOcupation getIPersistentWeeklyOcupation()
+	{
+		return new WeeklyOcupationOJB();
+	}
+
+	public IPersistentExternalActivity getIPersistentExternalActivity()
+	{
+		return new ExternalActivityOJB();
+	}
+
+	public IPersistentServiceProviderRegime getIPersistentServiceProviderRegime()
+	{
+		return new ServiceProviderRegimeOJB();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentShiftProfessorship()
+	 */
+	public IPersistentShiftProfessorship getIPersistentShiftProfessorship()
+	{
+		return new ShiftProfessorshipOJB();
+	}
+
+	public IPersistentReimbursementGuide getIPersistentReimbursementGuide()
+	{
+
+		return new ReimbursementGuideOJB();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentOrientation()
+	 */
+	public IPersistentOrientation getIPersistentOrientation()
+	{
+		return new OrientationOJB();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentPublicationsNumber()
+	 */
+	public IPersistentPublicationsNumber getIPersistentPublicationsNumber()
+	{
+		return new PublicationsNumberOJB();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentOldPublication()
+	 */
+	public IPersistentOldPublication getIPersistentOldPublication()
+	{
+		return new OldPublicationOJB();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentGaugingTestResult()
+	 */
+	public IPersistentGaugingTestResult getIPersistentGaugingTestResult()
+	{
+		return new GaugingTestResultOJB();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentSupportLesson()
+	 */
+	public IPersistentSupportLesson getIPersistentSupportLesson()
+	{
+		return new SupportLessonOJB();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentTeacherDegreeFinalProjectStudent()
+	 */
+	public IPersistentTeacherDegreeFinalProjectStudent getIPersistentTeacherDegreeFinalProjectStudent()
+	{
+		return new TeacherDegreeFinalProjectStudentOJB();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentTeacherInstitutionWorkingTime()
+	 */
+	public IPersistentTeacherInstitutionWorkingTime getIPersistentTeacherInstitutionWorkingTime()
+	{
+		return new TeacherInstitutionWorkingTimeOJB();
+	}
+
+	// Nuno Correia & Ricardo Rodrigues
+	public IPersistentCurricularCourseGroup getIPersistentCurricularCourseGroup()
+	{
+		return new CurricularCourseGroupOJB();
+	}
+
+	public IPersistentScientificArea getIPersistentScientificArea()
+	{
+		return new ScientificAreaOJB();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentCampus()
+	 */
+	public IPersistentCampus getIPersistentCampus()
+	{
+		return new CampusOJB();
+	}
+
+	// by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)
+	public IPersistentSeminaryTheme getIPersistentSeminaryTheme()
+	{
+		return new ThemeOJB();
+	}
+
+	// by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)
+	public IPersistentSeminary getIPersistentSeminary()
+	{
+		return new SeminaryOJB();
+	}
+
+	// by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)
+	public IPersistentSeminaryCaseStudy getIPersistentSeminaryCaseStudy()
+	{
+		return new CaseStudyOJB();
+	}
+
+	// by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003)
+	public IPersistentSeminaryCandidacy getIPersistentSeminaryCandidacy()
+	{
+		return new CandidacyOJB();
+	}
+
+	// by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003)
+	public IPersistentSeminaryCaseStudyChoice getIPersistentSeminaryCaseStudyChoice()
+	{
+		return new CaseStudyChoiceOJB();
+	}
+
+	// by gedl AT rnl DOT ist DOT utl DOT pt (August the 4th, 2003)
+	public IPersistentSeminaryCurricularCourseEquivalency getIPersistentSeminaryCurricularCourseEquivalency()
+	{
+		return new EquivalencyOJB();
+	}
+
+	public IPersistentMetadata getIPersistentMetadata()
+	{
+		return new MetadataOJB();
+	}
+
+	public IPersistentQuestion getIPersistentQuestion()
+	{
+		return new QuestionOJB();
+	}
+
+	public IPersistentTest getIPersistentTest()
+	{
+		return new TestOJB();
+	}
+
+	public IPersistentTestQuestion getIPersistentTestQuestion()
+	{
+		return new TestQuestionOJB();
+	}
+
+	public IPersistentDistributedTest getIPersistentDistributedTest()
+	{
+		return new DistributedTestOJB();
+	}
+
+	public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion()
+	{
+		return new StudentTestQuestionOJB();
+	}
+
+	public IPersistentStudentTestLog getIPersistentStudentTestLog()
+	{
+		return new StudentTestLogOJB();
+	}
+
+	public IPersistentOnlineTest getIPersistentOnlineTest()
+	{
+		return new OnlineTestOJB();
+	}
+
+	public IPersistentTestScope getIPersistentTestScope()
+	{
+		return new TestScopeOJB();
+	}
+
+	public IPersistentDistributedTestAdvisory getIPersistentDistributedTestAdvisory()
+	{
+		return new DistributedTestAdvisoryOJB();
+	}
+
+	public IPersistentAdvisory getIPersistentAdvisory()
+	{
+		return new AdvisoryOJB();
+	}
+
+	public IPersistentWebSite getIPersistentWebSite()
+	{
+		return new WebSiteOJB();
+	}
+
+	public IPersistentWebSiteSection getIPersistentWebSiteSection()
+	{
+		return new WebSiteSectionOJB();
+	}
+
+	public IPersistentWebSiteItem getIPersistentWebSiteItem()
+	{
+		return new WebSiteItemOJB();
+	}
+
+	public void beginTransaction()
+	{
+		this.iniciarTransaccao();
+	}
+
+	// by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
+	public void commitTransaction()
+	{
+		this.confirmarTransaccao();
+	}
+
+	// by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
+	public void abortTransaction() throws StorageException
+	{
+		this.cancelarTransaccao();
+	}
+
+	// by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
+	public void lockRead(List list) throws StorageException
+	{
+	}
+
+	// by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
+	public void lockRead(Object obj) throws StorageException
+	{
+	}
+
+	// by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
+	public void lockWrite(Object obj) throws StorageException
+	{
+	}
+
+	// by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
+	public PersistenceBroker currentBroker()
+	{
+		return getCurrentPersistenceBroker();
+	}
+
+	public IPersistentGratuityValues getIPersistentGratuityValues()
+	{
+		return new GratuityValuesOJB();
+	}
+
+	public IPersistentGratuitySituation getIPersistentGratuitySituation()
+	{
+		return new GratuitySituationOJB();
+	}
+
+	public IPersistentPaymentPhase getIPersistentPaymentPhase()
+	{
+		return new PaymentPhaseOJB();
+	}
+
+	public IPersistentCreditsInAnySecundaryArea getIPersistentCreditsInAnySecundaryArea()
+	{
+		return new CreditsInAnySecundaryAreaOJB();
+	}
+
+	public IPersistentCreditsInSpecificScientificArea getIPersistentCreditsInSpecificScientificArea()
+	{
+		return new CreditsInSpecificScientificAreaOJB();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentGrantCostCenter()
+	 */
+	public IPersistentGrantCostCenter getIPersistentGrantCostCenter()
+	{
+		return new GrantCostCenterOJB();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentGrantPart()
+	 */
+	public IPersistentGrantPart getIPersistentGrantPart()
+	{
+		return new GrantPartOJB();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentGrantPaymentEntity()
+	 */
+	public IPersistentGrantPaymentEntity getIPersistentGrantPaymentEntity()
+	{
+		return new GrantPaymentEntityOJB();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentGrantSubsidy()
+	 */
+	public IPersistentGrantSubsidy getIPersistentGrantSubsidy()
+	{
+		return new GrantSubsidyOJB();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentGrantContractRegime()
+	 */
+	public IPersistentGrantContractRegime getIPersistentGrantContractRegime()
+	{
+		return new GrantContractRegimeOJB();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentGrantContractRegime()
+	 */
+	public IPersistentGrantInsurance getIPersistentGrantInsurance()
+	{
+		return new GrantInsuranceOJB();
+	}
+
+	public IPersistentGrantContractMovement getIPersistentGrantContractMovement()
+	{
+		return new GrantContractMovementOJB();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentTutor()
+	 */
+	public IPersistentTutor getIPersistentTutor()
+	{
+		return new TutorOJB();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentStudentCourseReport()
+	 */
+	public IPersistentStudentCourseReport getIPersistentStudentCourseReport()
+	{
+		return new StudentCourseReportOJB();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentDelegate()
+	 */
+	public IPersistentDelegate getIPersistentDelegate()
+	{
+		return new DelegateOJB();
+	}
+
+	public IPersistentOtherTypeCreditLine getIPersistentOtherTypeCreditLine()
+	{
+		return new OtherTypeCreditLineOJB();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentManagementPosistionCreditLine()
+	 */
+	public IPersistentManagementPositionCreditLine getIPersistentManagementPositionCreditLine()
+	{
+		return new ManagementPositionCreditLineOJB();
+	}
+
+	public IPersistentFinalDegreeWork getIPersistentFinalDegreeWork()
+	{
+		return new FinalDegreeWorkOJB();
+	}
+
+	// Ana e Ricardo
+	public IPersistentRoomOccupation getIPersistentRoomOccupation()
+	{
+		return new RoomOccupationOJB();
+	}
+
+	public IPersistentPeriod getIPersistentPeriod()
+	{
+		return new PeriodOJB();
+	}
+
+	public IPersistentWrittenTest getIPersistentWrittenTest()
+	{
+		return new WrittenTestOJB();
+	}
+
+	public IPersistentReimbursementGuideEntry getIPersistentReimbursementGuideEntry()
+	{
+		return new ReimbursementGuideEntryOJB();
+
+	}
+
+	public IPersistentSentSms getIPersistentSentSms()
+	{
+		return new SentSmsOJB();
+	}
+
+	// TJBF & PFON
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentPublication()
+	 */
+	public IPersistentPublication getIPersistentPublication()
+	{
+		return new PublicationOJB();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentPublicationType()
+	 */
+	public IPersistentPublicationType getIPersistentPublicationType()
+	{
+		return new PublicationTypeOJB();
+	}
+
+	// Nuno Correia & Ricardo Rodrigues
+	public IPersistentPersonalDataUseInquiryAnswers getIPersistentPersonalDataUseInquiryAnswers()
+	{
+		return new PersonalDataUseInquiryAnswersOJB();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentPublicationAttribute()
+	 */
+	public IPersistentPublicationAttribute getIPersistentPublicationAttribute()
+	{
+		return new PublicationAttributeOJB();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentPublicationFormat()
+	 */
+	public IPersistentPublicationFormat getIPersistentPublicationFormat()
+	{
+		return new PublicationFormatOJB();
+	}
+
+	public IPersistentSibsPaymentFile getIPersistentSibsPaymentFile()
+	{
+		return new SibsPaymentFileOJB();
+	}
+
+	public IPersistentSibsPaymentFileEntry getIPersistentSibsPaymentFileEntry()
+	{
+		return new SibsPaymentFileEntryOJB();
+	}
+
+	public IPersistentObject getIPersistentObject()
+	{
+		return new PersistentObjectOJB();
+	}
+
+	public IPersistentGratuityTransaction getIPersistentGratuityTransaction()
+	{
+		return new GratuityTransactionOJB();
+	}
+
+	public IPersistentResidenceCandidacies getIPersistentResidenceCandidacies()
+	{
+		return new ResidenceCandidaciesOJB();
+	}
+
+	public IPersistentReimbursementTransaction getIPersistentReimbursementTransaction()
+	{
+		return new ReimbursementTransactionOJB();
+	}
+
+	public IPersistentSmsTransaction getIPersistentSmsTransaction()
+	{
+		return new SmsTransactionOJB();
+	}
+
+	public IPersistentInsuranceTransaction getIPersistentInsuranceTransaction()
+	{
+		return new InsuranceTransactionOJB();
+	}
+
+	public IPersistentPersonAccount getIPersistentPersonAccount()
+	{
+		return new PersonAccountOJB();
+	}
+
+	public IPersistentTransaction getIPersistentTransaction()
+	{
+		return new TransactionOJB();
+	}
+
+	public IPersistentInsuranceValue getIPersistentInsuranceValue()
+	{
+		return new InsuranceValueOJB();
+	}
+
+	public IPersistentFAQSection getIPersistentFAQSection()
+	{
+		return new FAQSectionOJB();
+	}
+
+	public IPersistentFAQEntries getIPersistentFAQEntries()
+	{
+		return new FAQEntriesOJB();
+	}
+
+	public IPersistentGlossaryEntries getIPersistentGlossaryEntries()
+	{
+		return new GlossaryEntriesOJB();
+	}
+
+	public IPersistentExportGrouping getIPersistentExportGrouping()
+	{
+		return new ExportGroupingOJB();
+	}
+
+	public IPersistentEnrolmentLog getIPersistentEnrolmentLog()
+	{
+		return new EnrolmentLogOJB();
+	}
+
+	// Rita Ferreira e Jo�o Fialho
+	public IPersistentOldInquiriesSummary getIPersistentOldInquiriesSummary()
+	{
+		return new OldInquiriesSummaryOJB();
+	}
+
+	public IPersistentOldInquiriesTeachersRes getIPersistentOldInquiriesTeachersRes()
+	{
+		return new OldInquiriesTeachersResOJB();
+	}
+
+	public IPersistentOldInquiriesCoursesRes getIPersistentOldInquiriesCoursesRes()
+	{
+		return new OldInquiriesCoursesResOJB();
+	}
+
+	public IPersistentInquiriesCourse getIPersistentInquiriesCourse()
+	{
+		return new InquiriesCourseOJB();
+	}
+
+	public IPersistentInquiriesRegistry getIPersistentInquiriesRegistry()
+	{
+		return new InquiriesRegistryOJB();
+	}
+
+	public IPersistentInquiriesRoom getIPersistentInquiriesRoom()
+	{
+		return new InquiriesRoomOJB();
+	}
+
+	public IPersistentInquiriesTeacher getIPersistentInquiriesTeacher()
+	{
+		return new InquiriesTeacherOJB();
+	}
+
+	//
+	public IPersistentPublicationTeacher getIPersistentPublicationTeacher()
+	{
+		return new PublicationTeacherOJB();
+	}
+
+	public IPersistentCostCenter getIPersistentCostCenter()
+	{
+		return new CostCenterOJB();
+	}
+
+	public IPersistentMoneyCostCenter getIPersistentMoneyCostCenter()
+	{
+		return new MoneyCostCenterOJB();
+	}
+
+	public IPersistentExtraWork getIPersistentExtraWork()
+	{
+		return new ExtraWorkOJB();
+	}
+
+	public IPersistentExtraWorkRequests getIPersistentExtraWorkRequests()
+	{
+		return new ExtraWorkResquestsOJB();
+	}
+
+	public IPersistentPaymentTransaction getIPersistentPaymentTransaction()
+	{
+		return new PaymentTransactionOJB();
+	}
+
+	public IPersistentSecretaryEnrolmentStudent getIPersistentSecretaryEnrolmentStudent()
+	{
+		return new SecretaryEnrolmentStudentOJB();
+	}
+
+	public IPersistentExtraWorkCompensation getIPersistentExtraWorkCompensation()
+	{
+		return new ExtraWorkCompensationOJB();
+	}
+
+	public IPersistentExtraWorkHistoric getIPersistentExtraWorkHistoric()
+	{
+		return new ExtraWorkHistoricOJB();
+	}
+
+	public IPersistentProjectAccess getIPersistentProjectAccess()
+	{
+		return new ProjectAccessOJB();
+	}
+
+	public IPersistentBuilding getIPersistentBuilding()
+	{
+		return new BuildingOJB();
+	}
+
+	public IPersistentInstitution getIPersistentInstitution()
+	{
+		return new InstitutionOJB();
+	}
+
+	public IPersistentNonAffiliatedTeacher getIPersistentNonAffiliatedTeacher()
+	{
+		return new NonAffiliatedTeacherOJB();
+	}
+
+	public IPersistentAuthorship getIPersistentAuthorship()
+	{
+		return new AuthorshipOJB();
+	}
+
+	public IPersistentCompetenceCourse getIPersistentCompetenceCourse()
+	{
 		return new CompetenceCourseOJB();
 	}
-	
-	public IPersistentNotNeedToEnrollInCurricularCourse getIPersistentNotNeedToEnrollInCurricularCourse() {
-        return new NotNeedToEnrollInCurricularCourseOJB();
-    }
-    
-    public IPersistentStudentPersonalDataAuthorization getIPersistentStudentPersonalDataAuthorization() {
-        return new StudentPersonalDataAuthorizationOJB();
-    }
-    
-    public IPersistentDislocatedStudent getIPersistentDislocatedStudent() {
-        return new DislocatedStudentOJB();
-    }
-    
-    public IPersistentDistrict getIPersistentDistrict(){
-        return new DistrictOJB();
-    }
-        
-    public static void fixDescriptors() {
-        final MetadataManager metadataManager = MetadataManager.getInstance();
-            final Collection<ClassDescriptor> classDescriptors = 
-            (Collection<ClassDescriptor>)metadataManager.getGlobalRepository().getDescriptorTable().values();
 
-        for (ClassDescriptor classDescriptor : classDescriptors) {
-            for (ObjectReferenceDescriptor rd : (Collection<ObjectReferenceDescriptor>)classDescriptor.getObjectReferenceDescriptors()) {
-            rd.setCascadingStore(ObjectReferenceDescriptor.CASCADE_LINK);
-            rd.setCascadeRetrieve(false);
-            rd.setLazy(false);
-            }
+	public IPersistentNotNeedToEnrollInCurricularCourse getIPersistentNotNeedToEnrollInCurricularCourse()
+	{
+		return new NotNeedToEnrollInCurricularCourseOJB();
+	}
 
-            for (CollectionDescriptor cod : (Collection<CollectionDescriptor>)classDescriptor.getCollectionDescriptors()) {
-            cod.setCascadingStore(ObjectReferenceDescriptor.CASCADE_NONE);
-            cod.setCollectionClass(OJBFunctionalSetWrapper.class);
-            cod.setCascadeRetrieve(false);
-            cod.setLazy(false);
-            }
-        }
-    }
+	public IPersistentStudentPersonalDataAuthorization getIPersistentStudentPersonalDataAuthorization()
+	{
+		return new StudentPersonalDataAuthorizationOJB();
+	}
 
-    public IPersistentTeacherPersonalExpectation getIPersistentTeacherPersonalExpectation() {
-        return new TeacherPersonalExpectationOJB();
-    }
+	public IPersistentDislocatedStudent getIPersistentDislocatedStudent()
+	{
+		return new DislocatedStudentOJB();
+	}
+
+	public IPersistentDistrict getIPersistentDistrict()
+	{
+		return new DistrictOJB();
+	}
+
+	public static void fixDescriptors()
+	{
+		final MetadataManager metadataManager = MetadataManager.getInstance();
+		final Collection<ClassDescriptor> classDescriptors = (Collection<ClassDescriptor>) metadataManager.getGlobalRepository().getDescriptorTable().values();
+
+		for (ClassDescriptor classDescriptor : classDescriptors)
+		{
+			for (ObjectReferenceDescriptor rd : (Collection<ObjectReferenceDescriptor>) classDescriptor.getObjectReferenceDescriptors())
+			{
+				rd.setCascadingStore(ObjectReferenceDescriptor.CASCADE_LINK);
+				rd.setCascadeRetrieve(false);
+				rd.setLazy(false);
+			}
+
+			for (CollectionDescriptor cod : (Collection<CollectionDescriptor>) classDescriptor.getCollectionDescriptors())
+			{
+				cod.setCascadingStore(ObjectReferenceDescriptor.CASCADE_NONE);
+				cod.setCollectionClass(OJBFunctionalSetWrapper.class);
+				cod.setCascadeRetrieve(false);
+				cod.setLazy(false);
+			}
+		}
+	}
+
+	public IPersistentTeacherPersonalExpectation getIPersistentTeacherPersonalExpectation()
+	{
+		return new TeacherPersonalExpectationOJB();
+	}
 
 	public IPersistentCMS getIPersistentCms()
 	{
 		return new PersistentCMSOJB();
 	}
-	
+
 	public IPersistentMailAddressAlias getIPersistentMailAdressAlias()
 	{
 		return new PersistentMailAddressAliasOJB();
 	}
-	    public IPersistentTeacherExpectationDefinitionPeriod getIPersistentTeacherExpectationDefinitionPeriod() {
-        return new TeacherExpectationDefinitionPeriodOJB();
-    }
+
+	public IPersistentTeacherExpectationDefinitionPeriod getIPersistentTeacherExpectationDefinitionPeriod()
+	{
+		return new TeacherExpectationDefinitionPeriodOJB();
+	}
+
+	public IPersistentMailingList getIPersistentMailingList()
+	{
+		return new PersistentMailingListOJB();
+	}
 }

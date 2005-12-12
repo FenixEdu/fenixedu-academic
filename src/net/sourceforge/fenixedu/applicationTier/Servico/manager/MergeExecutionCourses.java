@@ -83,7 +83,6 @@ public class MergeExecutionCourses implements IService {
         if (!isMergeAllowed(persistentSupport, executionCourseFrom, executionCourseTo)) {
             throw new InvalidArgumentsServiceException();
         }
-
         copyProfessorships(persistentSupport, executionCourseFrom, executionCourseTo);
         copyAttends(executionCourseFrom, executionCourseTo);
         copyBibliographicReference(persistentSupport, executionCourseFrom, executionCourseTo);

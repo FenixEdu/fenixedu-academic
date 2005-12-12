@@ -17,4 +17,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public interface IPersistentCMS
 {
 	ICms readFenixCMS() throws ExcepcaoPersistencia;
+	
+	ICms readCmsByName(String name) throws ExcepcaoPersistencia;
 }

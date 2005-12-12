@@ -1,28 +1,24 @@
 package net.sourceforge.fenixedu.stm;
 
-import java.util.Collection;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.HashMap;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.sql.SQLException;
-
-import org.apache.ojb.broker.PersistenceBroker;
-import org.apache.ojb.broker.OptimisticLockException;
-import org.apache.ojb.broker.accesslayer.LookupException;
-
-import org.apache.ojb.broker.metadata.ClassDescriptor;
-import org.apache.ojb.broker.metadata.CollectionDescriptor;
-import org.apache.ojb.broker.core.ValueContainer;
-
-import org.apache.ojb.broker.util.ObjectModificationDefaultImpl;
+import java.sql.Statement;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.cache.FenixCache;
+
+import org.apache.ojb.broker.OptimisticLockException;
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.accesslayer.LookupException;
+import org.apache.ojb.broker.core.ValueContainer;
+import org.apache.ojb.broker.metadata.ClassDescriptor;
+import org.apache.ojb.broker.metadata.CollectionDescriptor;
+import org.apache.ojb.broker.util.ObjectModificationDefaultImpl;
 
 
 class DBChanges {

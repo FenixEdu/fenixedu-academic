@@ -64,12 +64,13 @@
 <!ENTITY unit SYSTEM "repository_unit.xml">
 <!ENTITY cms SYSTEM "cms/repository_cms.xml">
 <!ENTITY cmsBasic SYSTEM "cms/repository_cms_basic.xml">
-<!ENTITY cmsGroups SYSTEM "cms/repository_cms_groups.xml">
+<!ENTITY accessControlGroups SYSTEM "repository_accessControlGroups.xml">
 <!ENTITY cmsMessaging SYSTEM "cms/repository_cms_messaging.xml">
 <!ENTITY contract SYSTEM "repository_contract.xml">
 <!ENTITY function SYSTEM "repository_function.xml">
 <!ENTITY personFunction SYSTEM "repository_person_function.xml">
 <!ENTITY teacherServiceExemption SYSTEM "repository_teacher_service_exemption.xml">
+<!ENTITY cmsWebsite SYSTEM "cms/repository_cms_website.xml">
 <!ENTITY qualification SYSTEM "repository_qualification.xml">
 <!ENTITY fileEntry SYSTEM "repository_fileEntry.xml">
 <!ENTITY degreeStructure SYSTEM "repository_degree_structure.xml">
@@ -140,8 +141,12 @@
 	&projectsManagement;
 	&unit;
 	&cms;
+	&accessControlGroups;
 	&contract;
 	&function;
+	&person_function;
+	&teacherServiceExemption;
+	&cmsWebsite;
 	&personFunction;
 	&teacherServiceExemption;
 	&qualification;

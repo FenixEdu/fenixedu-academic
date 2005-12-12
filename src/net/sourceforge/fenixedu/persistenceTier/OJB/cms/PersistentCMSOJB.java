@@ -37,12 +37,12 @@ public class PersistentCMSOJB extends PersistentObjectOJB implements IPersistent
 		String fenixCMSName = PersistentCMSOJB.defaultFenixCMSName;
 		if (PersistentCMSOJB.properties == null)
 		{
-			this.properties = new Properties();
+			PersistentCMSOJB.properties = new Properties();
 			try
 			{
-				InputStream inputStream = getClass().getResourceAsStream(this.propertiesFilename);
+				InputStream inputStream = getClass().getResourceAsStream(PersistentCMSOJB.propertiesFilename);
 				properties.load(inputStream);
-				fenixCMSName = this.properties.getProperty("server.url");
+				fenixCMSName = PersistentCMSOJB.properties.getProperty("cms.instance.name");
 				if (fenixCMSName == null)
 				{
 					fenixCMSName = PersistentCMSOJB.defaultFenixCMSName;
@@ -61,12 +61,10 @@ public class PersistentCMSOJB extends PersistentObjectOJB implements IPersistent
 		return (ICms) queryObject(Cms.class, criteria);
 	}
 
-	// public List readByExecutionYear(String executionYear) throws
-	// ExcepcaoPersistencia {
-	// Criteria criteria = new Criteria();
-	// criteria.addEqualTo("executionYear.year", executionYear);
-	// return queryList(ExecutionDegree.class, criteria,
-	// "KEY_DEGREE_CURRICULAR_PLAN", true);
-	// }
-	// }
+	public ICms readCmsByName(String name) throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("name", name);
+		return (ICms) queryObject(Cms.class, criteria);
+	}
 }

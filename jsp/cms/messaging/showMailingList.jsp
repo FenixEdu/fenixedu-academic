@@ -22,11 +22,11 @@
 	<bean:define id="mailingList" name="mailingList" type="net.sourceforge.fenixedu.domain.cms.messaging.IMailingList"/>
 	<bean:define id="numberOfConversations" type="java.lang.Integer" name="mailingList" property="mailConversationsCount"/>
 	
-	<h2><bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.title.label"/></h2> 
+	<h2><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.title.label"/></h2> 
 	<table>
 		<tr>
 			<td>
-				<bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingList.creating.name.label"/>
+				<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.creating.name.label"/>
 			</td>
 			<td>
 				 <b><bean:write name="mailingList" property="name"/></b>
@@ -34,14 +34,14 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingList.creating.description.label"/>
+				<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.creating.description.label"/>
 			</td>
 			<td>
 				<bean:write name="mailingList" property="description"/>
 			</td>
 		<tr>
 			<td>
-				<bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingList.conversationsNumber.label"/>
+				<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.conversationsNumber.label"/>
 			</td>
 			<td>
 				<bean:write name="mailingList" property="mailConversationsCount"/>
@@ -49,7 +49,7 @@
 		</tr>		
 		<tr>
 			<td>
-				<bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingList.messagesNumber.label"/>
+				<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.messagesNumber.label"/>
 			</td>
 			<td>
 				<bean:write name="mailingList" property="mailMessagesCount"/>
@@ -57,7 +57,7 @@
 		</tr>				
 		<tr>
 			<td>
-				<bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingList.size.label"/>
+				<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.size.label"/>
 			</td>
 			<td>
 				<%
@@ -81,7 +81,7 @@
 					String mailingListSizeMessage = mailingListSize+" "+unit;
 					request.setAttribute("mailingListSizeMessage",mailingListSizeMessage);
 				%>
-				<bean:write name="mailingListSizeMessage"/> <bean:message key="cms.aproximate.abbreviation" bundle="CMS_RESOURCES"/>
+				<bean:write name="mailingListSizeMessage"/> <bean:message bundle="MANAGER_RESOURCES" key="cms.aproximate.abbreviation" bundle="CMS_RESOURCES"/>
 			</td>
 		</tr>
 		<logic:greaterThan name="numberOfConversations" value="0">				
@@ -91,9 +91,9 @@
 					&nbsp;
 				</td>
 				<td>
-					<html:link action="/mailingListManagement" module="/cms" name="params">
+					<html:link  action="/mailingListManagement" module="/cms" name="params">
 						<font size="-15">
-							<bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailignList.downloadWholeArchive.label"/>
+							<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailignList.downloadWholeArchive.label"/>
 						</font>
 					</html:link>
 				</td>
@@ -110,16 +110,16 @@
 					params.put("threaded","true");	
 					request.setAttribute("params",params);
 					 %>				
-					<html:link action="/mailingListManagement" module="/cms" name="params">
+					<html:link  action="/mailingListManagement" module="/cms" name="params">
 						<font size="-15">
-							<bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailignList.downloadWholeThreadedArchive.label"/>
+							<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailignList.downloadWholeThreadedArchive.label"/>
 						</font>
 					</html:link>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.addresses.label"/>
+					<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.addresses.label"/>
 				</td>
 				<td>
 					<logic:iterate indexId="index" name="mailingList" id="alias" property="aliasesIterator" type="net.sourceforge.fenixedu.domain.cms.infrastructure.IMailAddressAlias">
@@ -127,64 +127,64 @@
 						replyToList = new StringBuffer().append("mailto:").append(alias.getAddress());
 						replyToList.append("@").append(mailingList.getCms().getConfiguration().getMailingListsHostToUse());
 						 %>
-						 <html:link href="<%=replyToList.toString()%>">
+						 <html:link  href="<%=replyToList.toString()%>">
 							 <bean:write name="alias" property="address"/>
 						</html:link>
 						<logic:greaterThan name="index" value="0">
-						 	<bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.addresses.separator.label"/>
+						 	<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.addresses.separator.label"/>
 						 </logic:greaterThan>
 					</logic:iterate>
 					<%
 					replyToList = new StringBuffer().append("mailto:").append(mailingList.getAddress());
 					replyToList.append("@").append(mailingList.getCms().getConfiguration().getMailingListsHostToUse());
 					 %>				
-					<html:link href="<%=replyToList.toString()%>">
+					<html:link  href="<%=replyToList.toString()%>">
 							 <bean:write name="mailingList" property="address"/>
 					</html:link>
 				</td>
 			</tr>					
 			<tr>
 				<td>
-					<bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.listsState.label"/>
+					<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.listsState.label"/>
 				</td>
 				<td>
 					<logic:equal name="mailingList" property="closed" value="true">
-						<bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.inactive.label"/>
+						<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.inactive.label"/>
 					</logic:equal>
 					<logic:equal name="mailingList" property="closed" value="false">
-						<bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.active.label"/>
+						<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.active.label"/>
 					</logic:equal>					
 				</td>
 			</tr>		
 		</logic:greaterThan>						
 			<tr>
 				<td>
-					<bean:message bundle="CMS_RESOURCES" key="cms.userGroupsManagement.viewMailingList.membersOnly.label"/>
+					<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.userGroupsManagement.viewMailingList.membersOnly.label"/>
 				</td>
 				<td>
 					<logic:equal name="mailingList" property="membersOnly" value="true">
-						<bean:message bundle="CMS_RESOURCES" key="cms.messaging.yes"/>
+						<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.yes"/>
 					</logic:equal>
 					<logic:equal name="mailingList" property="membersOnly" value="false">
-						<bean:message bundle="CMS_RESOURCES" key="cms.messaging.no"/>
+						<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.no"/>
 					</logic:equal>					
 				</td>
 			</tr>
 				<td>
-					<bean:message bundle="CMS_RESOURCES" key="cms.userGroupsManagement.viewMailingList.replyToList.label"/>					
+					<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.userGroupsManagement.viewMailingList.replyToList.label"/>					
 				</td>				
 				<td>
 					<logic:equal name="mailingList" property="replyToList" value="true">
-						<bean:message bundle="CMS_RESOURCES" key="cms.messaging.yes"/>
+						<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.yes"/>
 					</logic:equal>
 					<logic:equal name="mailingList" property="replyToList" value="false">
-						<bean:message bundle="CMS_RESOURCES" key="cms.messaging.no"/>
+						<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.no"/>
 					</logic:equal>					
 				</td>							
 			</tr>							
 	</table>
 	
-	<h3><bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.conversations.title"/></h3>
+	<h3><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.conversations.title"/></h3>
 	<%
 	replyToList = new StringBuffer().append("mailto:").append(mailingList.getAddress());
 	replyToList.append("@").append(mailingList.getCms().getConfiguration().getMailingListsHostToUse());
@@ -192,16 +192,16 @@
 
 	<logic:equal name="mailingList" property="closed" value="false">
 		<ul>
-			<li><html:link href="<%=replyToList.toString()%>"><bean:message key="cms.messaging.mailingList.createNewConversation" bundle="CMS_RESOURCES"/></html:link></li>
+			<li><html:link  href="<%=replyToList.toString()%>"><bean:message bundle="MANAGER_RESOURCES" key="cms.messaging.mailingList.createNewConversation" bundle="CMS_RESOURCES"/></html:link></li>
 		</ul>
 	</logic:equal>						 
 	
 	<table width="100%" class="style1">
 		<tr>
-			<td class="listClasses-header" width="40%"><bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.subject.label"/></td>
-			<td class="listClasses-header" width="40%"><bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.conversationStarter.label"/></td>		
-			<td class="listClasses-header" width="20%"><bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.conversatioCreationDate.label"/></td>					
-			<td class="listClasses-header" width="0%"><bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.messages.label"/></td>							
+			<td class="listClasses-header" width="40%"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.subject.label"/></td>
+			<td class="listClasses-header" width="40%"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.conversationStarter.label"/></td>		
+			<td class="listClasses-header" width="20%"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.conversatioCreationDate.label"/></td>					
+			<td class="listClasses-header" width="0%"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.messages.label"/></td>							
 
 		</tr>		
 		<logic:iterate id="conversation" name="mailingList" property="mailConversationsIterator" type="net.sourceforge.fenixedu.domain.cms.messaging.IMailConversation">
@@ -216,9 +216,9 @@
 						params.put("mailingListID",mailingList.getIdInternal());
 						request.setAttribute("params",params);
 					 %>			
-						<html:link action="/mailingListThreadManagement" module="/cms" name="params">
+						<html:link  action="/mailingListThreadManagement" module="/cms" name="params">
 							<logic:equal name="conversation" property="subject" value="">
-								<bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingConversation.mailMessage.noSubject.label"/>
+								<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingConversation.mailMessage.noSubject.label"/>
 							</logic:equal>
 							<logic:notEqual name="conversation" property="subject" value="">
 								<bean:write name="conversation" property="subject"/>
@@ -236,14 +236,14 @@
 		</logic:iterate>
 	</table>
 	
-	<h3><bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.lastMessages.title"/></h3>
+	<h3><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.lastMessages.title"/></h3>
 	<table width="100%" class="style1">
 			<tr>
-				<th class="listClasses-header" width="15%"><bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.subject.title"/></th>
-				<th class="listClasses-header" width="25%"><bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.conversationStarter.label"/></th>
-				<th class="listClasses-header" width="50%"><bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.message.label"/></th>
-				<th class="listClasses-header" width="10%"><bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.conversatioCreationDate.label"/></th>
-				<th class="listClasses-header" width="0%"><bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.messages.label"/></th>								
+				<th class="listClasses-header" width="15%"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.subject.title"/></th>
+				<th class="listClasses-header" width="25%"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.conversationStarter.label"/></th>
+				<th class="listClasses-header" width="50%"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.message.label"/></th>
+				<th class="listClasses-header" width="10%"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.conversatioCreationDate.label"/></th>
+				<th class="listClasses-header" width="0%"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.messages.label"/></th>								
 			</tr>		
 			
 		<logic:iterate indexId="mailMessageIndex" id="mailMessage" name="mailingList" property="mailMessagesIterator" type="net.sourceforge.fenixedu.domain.cms.messaging.IMailMessage">
@@ -261,9 +261,9 @@
 							params.put("mailingListID",mailingList.getIdInternal());
 							request.setAttribute("params",params);
 						 %>			
-						<html:link action="/mailingListThreadManagement" module="/cms" name="params">
+						<html:link  action="/mailingListThreadManagement" module="/cms" name="params">
 							<logic:equal name="conversation" property="subject" value="">
-								<bean:message bundle="CMS_RESOURCES" key="cms.messaging.mailingConversation.mailMessage.noSubject.label"/>
+								<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingConversation.mailMessage.noSubject.label"/>
 							</logic:equal>
 							<logic:notEqual name="conversation" property="subject" value="">
 								<bean:write name="conversation" property="subject"/>
@@ -286,7 +286,7 @@
 						 %>
 						<logic:lessThan name="conversationIndex" value="1">
 							<td class="listClasses" style="text-align:left" rowspan="<%=conversationsNumber %>">
-								<html:link action="/mailingListThreadManagement" module="/cms" name="params" anchor="<%=mailMessage.getIdInternal().toString()%>">
+								<html:link  action="/mailingListThreadManagement" module="/cms" name="params" anchor="<%=mailMessage.getIdInternal().toString()%>">
 									<email:bodyDigest filter="true" name="mailMessage" bundle="CMS_RESOURCES" chars="10"/>
 								</html:link>
 								<email:writeAttachments name="mailMessage" bundle="CMS_RESOURCES"/>

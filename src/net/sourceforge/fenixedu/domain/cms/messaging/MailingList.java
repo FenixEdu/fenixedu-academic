@@ -16,8 +16,15 @@ import net.sourceforge.fenixedu.domain.cms.predicates.ContentPredicate;
 
 import org.apache.commons.collections.iterators.FilterIterator;
 
+import relations.ContentHierarchy;
+
 public class MailingList extends MailingList_Base
 {
+	public MailingList()
+	{
+		super();
+	}
+
 	
 	private class LastConversationsFirstComparator implements Comparator
 	{
@@ -56,11 +63,6 @@ public class MailingList extends MailingList_Base
 			return result;
 		}
 
-	}
-
-	public MailingList()
-	{
-		super();
 	}
 
 	public Iterator<IMailConversation> getMailConversationsIterator()
@@ -128,5 +130,18 @@ public class MailingList extends MailingList_Base
 			size+=conversation.getSize();
 		}
 		return size;
+	}
+	
+	@Override
+	public void delete()
+	{
+		Iterator<IMailConversation> iterator = this.getMailConversationsIterator();
+		while (iterator.hasNext())
+		{
+			IMailConversation conversation = iterator.next();
+			if(conversation.getMailingListsCount()==0)
+				conversation.delete();
+		}
+		super.delete();
 	}
 }

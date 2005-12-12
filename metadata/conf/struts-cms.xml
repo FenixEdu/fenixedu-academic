@@ -43,8 +43,25 @@
             <form-property name="threadId" type="java.lang.Integer" />
             <form-property name="expandedMessages" type="java.lang.Integer[]"/> 
         </form-bean>
-    <!--  ================================================ -->        
+    <!--  ================================================ -->    
+    
+    <!--  ============= by gedl 15-11-2005  ================-->
+       <form-bean name="cmsConfigurationForm" type="net.sourceforge.fenixedu.presentationTier.Action.cms.basic.CmsConfigurationForm" dynamic="true">
+            <form-property name="smtpServerAddress" type="java.lang.String" />
+            <form-property name="filterNonTextualAttachments" type="java.lang.Boolean" />
+            <form-property name="mailingListHost" type="java.lang.String"/>
+            <form-property name="conversationReplyMarkers" type="java.lang.String"/>
+            <form-property name="maxAttachmentSize" type="java.lang.Integer"/>
+            <form-property name="maxMessageSize" type="java.lang.Integer"/>
+        </form-bean>
+    <!--  ================================================ -->          
+    
+      <!--  ============= by gedl 15-11-2005  ================-->
+       <form-bean name="executionCourseWebsiteManagementForm" type="net.sourceforge.fenixedu.presentationTier.Action.cms.executionCourseWebsite.ExecutionCourseWebSiteManagementForm" dynamic="false"/>
+    <!--  ================================================ -->      
+    
     </form-beans>
+
 
     <!-- ========== Global Exception Definitions ============================== -->
 	<global-exceptions>
@@ -72,7 +89,7 @@
         </action>       
         <!--  ============= by gedl 24-9-2005  ================-->
 		<action path="/userGroupsManagement"
-			type="net.sourceforge.fenixedu.presentationTier.Action.cms.UserGroupsManagement"
+			type="net.sourceforge.fenixedu.presentationTier.Action.cms.groupManagement.UserGroupsManagement"
 			parameter="method"
 			scope="request"
 			name="userGroupForm"
@@ -88,7 +105,7 @@
 		<!--  =================================================-->		
 		<!--  ============= by gedl 26-9-2005  ================-->
 		<action path="/executionCourseStudentsGroupManagement"
-			type="net.sourceforge.fenixedu.presentationTier.Action.cms.ExecutionCourseStudentsGroupManagement"
+			type="net.sourceforge.fenixedu.presentationTier.Action.cms.groupManagement.ExecutionCourseStudentsGroupManagement"
 			parameter="method"
 			scope="request"
 			name="userGroupForm"
@@ -101,7 +118,7 @@
 				
 		<!--  ============= by gedl 29-9-2005  ================-->
 		<action path="/deleteUserGroup"
-			type="net.sourceforge.fenixedu.presentationTier.Action.cms.DeleteUserGroup"
+			type="net.sourceforge.fenixedu.presentationTier.Action.cms.groupManagement.DeleteUserGroup"
 			parameter="method"
 			scope="request"
 			name="userGroupForm"
@@ -109,7 +126,7 @@
 			<forward name="userGroupsManagement" path="/userGroupsManagement.do?method=prepare"/>			
 		</action>		
 		<action path="/executionCourseTeachersGroupManagement"
-			type="net.sourceforge.fenixedu.presentationTier.Action.cms.ExecutionCourseTeachersGroupManagement"
+			type="net.sourceforge.fenixedu.presentationTier.Action.cms.groupManagement.ExecutionCourseTeachersGroupManagement"
 			parameter="method"
 			scope="request"
 			name="userGroupForm"
@@ -122,7 +139,7 @@
 
 		<!--  ============= by gedl 3-10-2005  ================-->		
 		<action path="/unsortedGroupOperationsManagement"
-			type="net.sourceforge.fenixedu.presentationTier.Action.cms.UnsortedGroupOperationsManagement"
+			type="net.sourceforge.fenixedu.presentationTier.Action.cms.groupManagement.UnsortedGroupOperationsManagement"
 			parameter="method"
 			scope="request"
 			name="userGroupForm"
@@ -134,7 +151,7 @@
 		
 		<!--  ============= by gedl 17-10-2005  ================-->		
 		<action path="/recieveEmail"
-			type="net.sourceforge.fenixedu.presentationTier.Action.cms.ReceiveEmail"
+			type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.ReceiveEmail"
 			parameter="method"
 			scope="request"
 			name="receiveEmailForm"
@@ -145,7 +162,7 @@
 
 		<!--  ============= by gedl 18-10-2005  ================-->		
 		<action path="/mailingListManagement"
-			type="net.sourceforge.fenixedu.presentationTier.Action.cms.MailingListManagement"
+			type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.MailingListManagement"
 			parameter="method"
 			scope="request"
 			name="mailingListForm"
@@ -157,7 +174,7 @@
 
 		<!--  ============= by gedl 3-11-2005  ================-->		
 		<action path="/mailingListThreadManagement"
-			type="net.sourceforge.fenixedu.presentationTier.Action.cms.MailingListThreadManagement"
+			type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.MailingListThreadManagement"
 			parameter="method"
 			scope="request"
 			name="mailingListForm"
@@ -169,13 +186,39 @@
 		
 		<!--  ============= by gedl 9-11-2005  ================-->		
 		<action path="/mailMessageManagement"
-			type="net.sourceforge.fenixedu.presentationTier.Action.cms.MailMessageManagement"
+			type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.MailMessageManagement"
 			parameter="method"
 			scope="request"
 			name="mailingListForm"
 			attribute="mailingListForm"
 			>
 			<forward name="showThread" path="showThread"/>						
+		</action>						
+		<!--  =================================================-->	
+		
+		<!--  ============= by gedl 15-11-2005  ================-->		
+		<action path="/cmsConfigurationManagement"
+			type="net.sourceforge.fenixedu.presentationTier.Action.cms.basic.CmsConfigurationManagement"
+			parameter="method"
+			scope="request"
+			name="cmsConfigurationForm"
+			attribute="cmsConfigurationForm"
+			>
+			<forward name="showConfiguration" path="showConfiguration"/>						
+			<forward name="cmsDeleted" path="/cmsConfigurationManagement.do?method=prepare"/>
+			<forward name="cmsCreated" path="/cmsConfigurationManagement.do?method=prepare"/>
+		</action>						
+		<!--  =================================================-->	
+		
+		<!--  ============= by gedl 6-12-2005  ================-->		
+		<action path="/executionCourseWebsiteManagement"
+			type="net.sourceforge.fenixedu.presentationTier.Action.cms.executionCourseWebsite.ExecutionCourseWebsiteManagement"
+			parameter="method"
+			scope="request"
+			name="executionCourseWebsiteManagementForm"
+			attribute="executionCourseWebsiteManagementForm"
+			>
+			<forward name="showlAllExecutionCourseWebsites" path="showAllExecutionCourseWebsites"/>
 		</action>						
 		<!--  =================================================-->	
 								
@@ -186,6 +229,8 @@
     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
     
     <!-- ========== Message Resources Definitions ============================ -->
+	<message-resources parameter="ServidorApresentacao.ManagerResources" key="MANAGER_RESOURCES" null="false"/>
+	<message-resources parameter="ServidorApresentacao.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
     <message-resources parameter="ServidorApresentacao.CmsResources" key="CMS_RESOURCES" null="false" />
     <message-resources parameter="ServidorApresentacao.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
 

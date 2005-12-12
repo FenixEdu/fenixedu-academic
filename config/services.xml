@@ -8999,7 +8999,6 @@
 		<description/>
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="WriteMailingListPostFilterChain" />
 			<chain name="WriteMailingListPreFilterChain" />
 		</filterChains>
 	</service>
@@ -9011,20 +9010,16 @@
 		<description/>
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="ProcessReceivedMailPostFilterChain" />
 			<chain name="ProcessReceivedMailPreFilterChain" />
 		</filterChains>		
 	</service>
     <service>
-		<name>ReadAllMailingLists</name>
+		<name>ReadMailingListsWithOutgoingMails</name>
 		<implementationClass>
-			net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.ReadAllMailingLists
+			net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.ReadMailingListsWithOutgoingMails
 		</implementationClass>
 		<description/>
 		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ReadAllMailingListsPostFilterChain" />
-		</filterChains>				
 	</service>
     	<service>
 		<name>WriteExecutionCourseUserGroup</name>
@@ -9033,9 +9028,7 @@
 		</implementationClass>
 		<description/>
 		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="WriteExecutionCourseUserGroupPostFilterChain" />
-		</filterChains>				
+		<filterChains/>
 	</service>
    	<service>
 		<name>DeleteUserGroup</name>
@@ -9045,7 +9038,6 @@
 		<description/>
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="DeleteUserGroupPostFilterChain" />
 			<chain name="DeleteUserGroupPreFilterChain" />
 		</filterChains>				
 	</service>
@@ -9056,23 +9048,34 @@
 		</implementationClass>
 		<description/>
 		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="WriteGroupAggregatorPostFilterChain" />
-		</filterChains>				
+		<filterChains/>
 	</service>
+    <!-- ======================================  -->  
+ <!-- =========by gedl 15-11-2005============  -->
     <service>
-		<name>ReadMailMessageById</name>
+		<name>ReadCmsByName</name>
 		<implementationClass>
-			net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.ReadMailMessageById
+			net.sourceforge.fenixedu.applicationTier.Servico.cms.basic.ReadCmsByName
 		</implementationClass>
 		<description/>
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="ReadMailMessageByIdPostFilterChain" />
+			<chain name="ManagerAuthorization" />
 		</filterChains>				
 	</service>
-	<!--######################################-->  
+
     <service>
+		<name>WriteCmsConfiguration</name>
+		<implementationClass>
+			net.sourceforge.fenixedu.applicationTier.Servico.cms.basic.WriteCmsConfiguration
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization" />
+		</filterChains>				
+	</service>
+	 <service>
 		<name>DefineInquiryResponsePeriod</name>
 		<implementationClass>
 			net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.DefineInquiryResponsePeriod
@@ -9122,4 +9125,50 @@
         	<chain name="DepartmentMemberOrTeacherAuthorization"></chain>
         </filterChains>     
     </service>
-</serviceDefinitions>    
+    <service>
+		<name>DeleteCms</name>
+		<implementationClass>
+			net.sourceforge.fenixedu.applicationTier.Servico.cms.basic.DeleteCms
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization" />
+		</filterChains>				
+	</service>
+
+    <service>
+		<name>CreateCms</name>
+		<implementationClass>
+			net.sourceforge.fenixedu.applicationTier.Servico.cms.basic.CreateCms
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization" />
+		</filterChains>				
+	</service>
+	
+	<service>
+		<name>WriteExecutionCourseWebsite</name>
+		<implementationClass>
+			net.sourceforge.fenixedu.applicationTier.Servico.cms.website.WriteExecutionCourseWebsite
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains/>				
+	</service>
+	
+	<service>
+		<name>DeleteExecutionCourseWebsite</name>
+		<implementationClass>
+			net.sourceforge.fenixedu.applicationTier.Servico.cms.website.DeleteExecutionCourseWebsite
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains/>				
+	</service>
+	
+    <!-- ======================================  -->
+
+</serviceDefinitions>

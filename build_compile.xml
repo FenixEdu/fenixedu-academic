@@ -171,6 +171,17 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 
 			<replace dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
+				<include name="cms.properties"/>
+				<replacefilter token="@cms.mailer.username@" 
+			    			   property="cms.mailer.username"/>
+				<replacefilter token="@cms.mailer.password@" 
+			    			   property="cms.mailer.password"/>
+			</replace>
+
+
+
+			<replace dir="${build.home.webinf.classes}"
+					 propertyFile="build.properties">
 				<include name="slide.properties"/>
 			    <replacefilter token="@slide.config@" 
 			    			   property="slide.config"/>
@@ -576,6 +587,11 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			<arg value="-d"/>
 			<arg value="${dml.definition.file}"/>
 		</java>	
+		<exec executable="ant" failonerror="true">
+			<arg line="-f"/>
+			<arg line="build_accessControl.xml"/>			
+		</exec>
+
     </target>
 
     <target name="includeJ2EEjar"
@@ -875,7 +891,8 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 	</target>
 
 	<target name="check-oro">
-		<java classname="net.sourceforge.fenixedu.dataConsistency.CheckOverlappingRoomOccupations"
+<!--		<java classname="net.sourceforge.fenixedu.dataConsistency.CheckOverlappingRoomOccupations"-->
+		<java classname="net.sourceforge.fenixedu.infrastructuralTier.MailSender"
 				fork="true"
 				failonerror="true"
 				maxmemory="1024m"

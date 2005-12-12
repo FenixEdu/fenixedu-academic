@@ -14,5 +14,4 @@ public class ReadDomainObject<E> implements IService {
 
         return (E) persistentObject.readByOID(clazz, domainObjectOID);
     }
-
 }

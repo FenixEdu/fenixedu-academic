@@ -37,12 +37,12 @@ public class CMSVO extends VersionedObjectsBase implements IPersistentCMS
 		String fenixCMSName = CMSVO.defaultFenixCMSName;
 		if (CMSVO.properties == null)
 		{
-			this.properties = new Properties();
+			CMSVO.properties = new Properties();
 			try
 			{
-				InputStream inputStream = getClass().getResourceAsStream(this.propertiesFilename);
+				InputStream inputStream = getClass().getResourceAsStream(CMSVO.propertiesFilename);
 				properties.load(inputStream);
-				fenixCMSName = this.properties.getProperty("server.url");
+				fenixCMSName = CMSVO.properties.getProperty("cms.instance.name");
 				if (fenixCMSName == null)
 				{
 					fenixCMSName = CMSVO.defaultFenixCMSName;
@@ -64,6 +64,22 @@ public class CMSVO extends VersionedObjectsBase implements IPersistentCMS
 			}
 		}
 
+		return result;
+	}
+
+	public ICms readCmsByName(String name) throws ExcepcaoPersistencia
+	{
+		ICms result = null;
+		Collection<ICms> CMSs = readAll(Cms.class);
+		for (ICms cms : CMSs)
+		{
+			if (cms.getName().equals(name))
+			{
+				result = cms;
+				break;
+			}
+		}
+		
 		return result;
 	}
 }
