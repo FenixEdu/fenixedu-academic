@@ -52,6 +52,14 @@ public class JdbcMysqlFileSupport {
         }
     };
 
+    private static final Closure updateExecuter = new Closure() {
+        public ResultSet execute(final Connection connection, final String query) throws SQLException {
+            final PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.executeUpdate();
+            return null;
+        }
+    };
+
     private static ResultSet execute(final Closure closure, final String query) {
         Connection connection = null;
         ResultSet resultSet = null;
@@ -84,8 +92,12 @@ public class JdbcMysqlFileSupport {
         return resultSet;
     }
 
-    private static ResultSet executeQuery(final String query) {
+    public static ResultSet executeQuery(final String query) {
         return execute(queryExecuter, query);
+    }
+
+    public static void executeUpdate(final String query) {
+        execute(updateExecuter, query);
     }
 
     public static Collection<FileSuportObject> listFiles(final String directory) {

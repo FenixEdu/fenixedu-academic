@@ -940,7 +940,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             file.setContentType(formFile.getContentType());
             file.setLinkName((String) xptoForm.get("linkName"));
             if (file.getLinkName() == null || file.getLinkName() == "") {
-                file.setLinkName(file.getFileName());
+                file.setLinkName(new String(formFile.getFileName().getBytes(), "ISO-8859-1"));
             }
 
         } catch (FileNotFoundException e) {

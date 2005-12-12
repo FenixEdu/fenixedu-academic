@@ -28,7 +28,6 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import sun.text.Normalizer;
 
 public class SearchPerson implements IService {
 
@@ -182,7 +181,7 @@ public class SearchPerson implements IService {
     }
 
     private static String normalize(String string) {
-        return StringNormalizer.normalize(string);
+        return StringNormalizer.normalize(string).toLowerCase();
     }
 
     // --------------- Search Person Predicate
