@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.util.StringNormalizer;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
@@ -181,8 +182,7 @@ public class SearchPerson implements IService {
     }
 
     private static String normalize(String string) {
-        return Normalizer.normalize(string, Normalizer.DECOMP, Normalizer.DONE).replaceAll(
-                "[^\\p{ASCII}]", "").toLowerCase();
+        return StringNormalizer.normalize(string);
     }
 
     // --------------- Search Person Predicate

@@ -81,6 +81,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
+import net.sourceforge.fenixedu.util.StringNormalizer;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -931,12 +932,11 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Integer itemCode = getItemCode(request);
         DynaActionForm xptoForm = (DynaActionForm) form;
         FormFile formFile = (FormFile) xptoForm.get("theFile");
-
         FileSuportObject file = null;
         try {
             file = new FileSuportObject();
             file.setContent(formFile.getFileData());
-            file.setFileName(new String((formFile.getFileName()).getBytes(), "ISO-8859-1"));
+            file.setFileName(new String(normalize(formFile.getFileName()).getBytes(), "ISO-8859-1"));
             file.setContentType(formFile.getContentType());
             file.setLinkName((String) xptoForm.get("linkName"));
             if (file.getLinkName() == null || file.getLinkName() == "") {
@@ -988,6 +988,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             return prepareFileUpload(mapping, form, request, response);
         }
         return viewSection(mapping, form, request, response);
+    }
+
+    private String normalize(String string) {
+        return StringNormalizer.normalize(string).replaceAll(" ", "_");
     }
 
     public ActionForward deleteFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
