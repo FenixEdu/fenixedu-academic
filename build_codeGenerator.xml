@@ -40,7 +40,6 @@
 			<arg value="${src}"/>
 			<arg value="-db"/>
 			<arg value="${src_gen}"/>
-			<arg value="-gf"/>
 			<arg value="${dml.definition.file}"/>
 			<classpath>
 				<fileset dir="${lib}">
