@@ -64,7 +64,7 @@ public class StoreItemFile implements IService {
                 } catch (Exception e1) {
                     throw new FenixServiceException(e1);
                 }
-                fileSuport.commitTransaction();
+                //fileSuport.commitTransaction();
                 throw new FileAlreadyExistsServiceException();
             }
             fileSuport.commitTransaction();
