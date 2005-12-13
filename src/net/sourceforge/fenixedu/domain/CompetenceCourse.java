@@ -71,9 +71,12 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
 	public void delete() {
+        if (hasAnyAssociatedCurricularCourses()) {
+            throw new DomainException("error.mustdeleteCurricularCoursesFirst");
+        }
 		getDepartments().clear();
-    	getAssociatedCurricularCourses().clear();
-        for(;!getCourseInformations().isEmpty(); getCourseInformations().get(0).delete());
+        getUnit().removeCompetenceCourses(this);
+        for(;!getCourseInformations().isEmpty(); getCourseInformations().get(0).delete());        
     	super.deleteDomainObject();
     }
     

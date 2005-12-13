@@ -3418,9 +3418,9 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.s
     public boolean isActive(java.util.Date currentDate);
     public void delete();
     public java.util.List<net.sourceforge.fenixedu.domain.IContract> getWorkingContracts(java.util.Date begin, java.util.Date end);
-    public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IUnit> getScientificAreas();
-    public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IUnit> getCompetenceCourseGroups();
-    public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IUnit> getDegreeUnits();
+    public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IUnit> getScientificAreaUnits();
+    public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IUnit> getCompetenceCourseGroupUnits();
+	public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IUnit> getDegreeUnits();
 	"
 }
 

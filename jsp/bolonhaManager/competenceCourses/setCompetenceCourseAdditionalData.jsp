@@ -16,9 +16,9 @@
 	<h:outputText value="#{bolonhaBundle['department']}: " style="font-weight: bold"/>
 		<h:outputText value="#{CompetenceCourseManagement.personDepartmentName}"/><br/>
 	<h:outputText value="#{bolonhaBundle['scientificArea']}:" style="font-weight: bold"/>
-		<h:outputText value="#{CompetenceCourseManagement.scientificArea.name}"/><br/>
+		<h:outputText value="#{CompetenceCourseManagement.scientificAreaUnit.name}"/><br/>
 	<h:outputText value="#{bolonhaBundle['group']}: " style="font-weight: bold"/>
-		<h:outputText value="#{CompetenceCourseManagement.competenceCourseGroup.name}"/><br/>
+		<h:outputText value="#{CompetenceCourseManagement.competenceCourseGroupUnit.name}"/><br/>
 	<br/>
 	<h:outputText value="#{bolonhaBundle['name']}: " style="font-weight: bold"/>
 	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.name}" /><br/>
@@ -33,8 +33,8 @@
 	<h:outputText value="#{bolonhaBundle[CompetenceCourseManagement.competenceCourse.regime]}" /><br/>
 	<br/>
 	<h:form>
-		<h:outputText escape="false" value="<input id='scientificAreaID' name='scientificAreaID' type='hidden' value='#{CompetenceCourseManagement.scientificArea.idInternal}'" />
-		<h:outputText escape="false" value="<input id='competenceCourseGroupID' name='competenceCourseGroupID' type='hidden' value='#{CompetenceCourseManagement.competenceCourseGroup.idInternal}'" />
+		<h:outputText escape="false" value="<input id='scientificAreaUnitID' name='scientificAreaUnitID' type='hidden' value='#{CompetenceCourseManagement.scientificAreaUnit.idInternal}'" />
+		<h:outputText escape="false" value="<input id='competenceCourseGroupUnitID' name='competenceCourseGroupUnitID' type='hidden' value='#{CompetenceCourseManagement.competenceCourseGroupUnit.idInternal}'" />
 		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourseID}'" /><br/>
 		
 		<h:outputText value="#{bolonhaBundle['portuguese']}: " />

@@ -85,7 +85,7 @@ public class Unit extends Unit_Base {
         return contracts;
     }
     
-    public List<IUnit> getScientificAreas() {
+    public List<IUnit> getScientificAreaUnits() {
         List<IUnit> result = new ArrayList<IUnit>();        
         for (IUnit unit : this.getSubUnits()) {
             if (unit.getType() != null && unit.getType().equals(UnitType.SCIENTIFIC_AREA)) {
@@ -95,7 +95,7 @@ public class Unit extends Unit_Base {
         return result;
     }
     
-    public List<IUnit> getCompetenceCourseGroups() {
+    public List<IUnit> getCompetenceCourseGroupUnits() {
         List<IUnit> result = new ArrayList<IUnit>();        
         for (IUnit unit : this.getSubUnits()) {
             if (unit.getType() != null && unit.getType().equals(UnitType.COMPETENCE_COURSE_GROUP)) {
@@ -116,5 +116,4 @@ public class Unit extends Unit_Base {
         
         return result;
     }
-
 }

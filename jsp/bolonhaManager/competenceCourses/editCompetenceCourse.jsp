@@ -17,9 +17,9 @@
 		<h:outputText value="#{bolonhaBundle['department']}: " style="font-weight: bold"/>
 			<h:outputText value="#{CompetenceCourseManagement.personDepartmentName}"/><br/>
 		<h:outputText value="#{bolonhaBundle['scientificArea']}:" style="font-weight: bold"/>
-			<h:outputText value="#{CompetenceCourseManagement.scientificArea.name}"/><br/>
+			<h:outputText value="#{CompetenceCourseManagement.scientificAreaUnit.name}"/><br/>
 		<h:outputText value="#{bolonhaBundle['group']}: " style="font-weight: bold"/>
-			<h:outputText value="#{CompetenceCourseManagement.competenceCourseGroup.name}"/><br/>
+			<h:outputText value="#{CompetenceCourseManagement.competenceCourseGroupUnit.name}"/><br/>
 		<br/>
 		<h:outputText value="#{bolonhaBundle['activeCurricularPlans']}: " style="font-weight: bold"/><br/>
 		<h:panelGroup rendered="#{empty CompetenceCourseManagement.competenceCourse.associatedCurricularCourses}">
@@ -31,7 +31,7 @@
 					<h:outputText value="#{curricularCourse.name}"/>
 				</h:column>
 			</h:dataTable>
-		</h:panelGroup>		
+		</h:panelGroup>
 		<br/>
 		<h:outputText styleClass="error" rendered="#{!empty CompetenceCourseManagement.errorMessage}"
 			value="#{bundle[CompetenceCourseManagement.errorMessage]}"/>
