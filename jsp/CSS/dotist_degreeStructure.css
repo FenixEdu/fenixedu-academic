@@ -1,0 +1,59 @@
+.nostyle {
+	list-style: none;
+}
+
+.style2 {
+	
+}
+
+table.style2 {
+	margin-bottom: 1em;
+	/*border: 1px solid #aaa;*/
+	border-collapse: collapse;
+	width: 60%;
+}
+
+table.style2 tr.header {
+	border-bottom: 2px solid #ccc;
+}
+
+table.style2 th {
+	padding: 0.5em 1em;
+	border: 1px solid #ddd;
+	background-color: #eee;
+	font-weight: normal;
+	text-align: left;
+}
+
+table.style2 td {
+	padding: 0.25em 1em;
+	background-color: #fafafa;
+	border: none;
+	border: 1px solid #ddd;
+}
+
+table.style2 td.courses {
+	border-right: 1px solid #eee;
+	background-color: #ffe;
+	padding: 0 1em;
+}
+
+table tr.highlight td.listClasses {
+	background-color: #e9fee9;
+}
+
+.indent1 {
+	margin-left: 3em;
+}
+
+.indent2 {
+	margin-left: 6em;
+}
+
+.indent3 {
+	margin-left: 9em;
+}
+
+.margintop {
+	margin-top: 2em;
+}
