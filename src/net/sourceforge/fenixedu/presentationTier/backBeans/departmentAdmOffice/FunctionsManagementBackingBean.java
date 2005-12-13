@@ -367,7 +367,9 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 parentUnit.getName()).append("</a>").append("</li>").append("<ul>");
 
         for (IUnit subUnit : parentUnit.getSubUnits()) {
-            getUnitsList(subUnit, index + 1, buffer);
+            if(subUnit.isActive(prepareCurrentDate())){
+                getUnitsList(subUnit, index + 1, buffer);
+            }
         }
 
         buffer.append("</ul>");
@@ -387,6 +389,15 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         }
 
         return departmentUnit;
+    }
+    
+    public Date prepareCurrentDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
     }
 
     public IPerson getPerson() throws FenixFilterException, FenixServiceException {

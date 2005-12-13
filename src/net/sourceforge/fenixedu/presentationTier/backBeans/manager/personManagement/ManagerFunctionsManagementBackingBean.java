@@ -90,14 +90,12 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
                 "/manager/functionsManagement/chooseFunction.faces?personID=").append(personID).append(
                 "&unitID=").append(parentUnit.getIdInternal()).append("\">")
                 .append(parentUnit.getName()).append("</a>").append("</li>").append("<ul>");
-
-        Date currentDate = Calendar.getInstance().getTime();
+       
         for (IUnit subUnit : parentUnit.getSubUnits()) {
-            if (subUnit.isActive(currentDate)) {
+            if (subUnit.isActive(prepareCurrentDate())) {
                 getUnitsList(subUnit, index + 1, buffer);
             }
         }
-
         buffer.append("</ul>");
     }
 
