@@ -175,6 +175,7 @@ class net.sourceforge.fenixedu.domain.Branch extends net.sourceforge.fenixedu.do
 
 class net.sourceforge.fenixedu.domain.Building extends net.sourceforge.fenixedu.domain.DomainObject {
 	String name;
+	Integer keyCampus;
 }
 
 
@@ -4502,6 +4503,13 @@ relation ExecutionCourseWebsiteRelation {
 
 relation ExecutionDegreeCampus {
 	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegrees {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Campus playsRole campus;
+}
+
+relation BuildingCampus {
+	net.sourceforge.fenixedu.domain.Building playsRole buildings {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Campus playsRole campus;

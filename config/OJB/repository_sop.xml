@@ -17,6 +17,17 @@
          column="NAME"
          jdbc-type="VARCHAR"
       />
+      <field-descriptor
+         name="keyCampus"
+         column="KEY_CAMPUS"
+         jdbc-type="INTEGER"
+      />
+      <reference-descriptor auto-retrieve="false"
+         name="campus"
+         class-ref="net.sourceforge.fenixedu.domain.Campus"
+      >
+         <foreignkey field-ref="keyCampus"/>
+      </reference-descriptor>
      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="rooms"
 			element-class-ref="net.sourceforge.fenixedu.domain.Room"

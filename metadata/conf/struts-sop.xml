@@ -492,6 +492,8 @@
 		<form-bean name="buildingForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 				<form-property name="name" type="java.lang.String" />
+				<form-property name="buildingID" type="java.lang.String" />
+				<form-property name="campusID" type="java.lang.String" />
 		</form-bean>      
 
 		<form-bean name="publishExamsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">

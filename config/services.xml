@@ -8301,6 +8301,15 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>EditBuilding</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.EditBuilding</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TimeTableManagerAuthorization" />
+		</filterChains>
+	</service>
+	<service>
 		<name>DeleteBuilding</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.DeleteBuilding</implementationClass>
 		<description />

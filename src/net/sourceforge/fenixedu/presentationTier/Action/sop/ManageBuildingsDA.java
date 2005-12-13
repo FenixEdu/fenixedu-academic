@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.Building;
+import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -24,12 +26,15 @@ public class ManageBuildingsDA extends FenixDispatchAction {
 
         final IUserView userView = SessionUtils.getUserView(request);
 
-        final Object args[] = {};
-        final List infoBuildings = (List) ServiceUtils.executeService(userView, "ReadBuildings", args);
+        final Object args1[] = { Building.class };
+        final List buildings = (List) ServiceUtils.executeService(userView, "ReadAllDomainObjects", args1);
+        Collections.sort(buildings, new BeanComparator("name"));
+        request.setAttribute("buildings", buildings);
 
-        Collections.sort(infoBuildings, new BeanComparator("name"));
-
-        request.setAttribute("infoBuildings", infoBuildings);
+        final Object args2[] = { Campus.class };
+        final List campuss = (List) ServiceUtils.executeService(userView, "ReadAllDomainObjects", args2);
+        Collections.sort(campuss, new BeanComparator("name"));
+        request.setAttribute("campuss", campuss);
 
         return mapping.findForward("viewBuildings");
     }
@@ -41,9 +46,25 @@ public class ManageBuildingsDA extends FenixDispatchAction {
 
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
         final String buildingName = (String) dynaActionForm.get("name");
+        final String campusID = (String) dynaActionForm.get("campusID");
 
-        final Object args[] = { buildingName };
+        final Object args[] = { buildingName, Integer.valueOf(campusID) };
         ServiceUtils.executeService(userView, "CreateBuilding", args);
+
+        return prepare(mapping, form, request, response);
+    }
+
+    public ActionForward editBuilding(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        final IUserView userView = SessionUtils.getUserView(request);
+
+        final DynaActionForm dynaActionForm = (DynaActionForm) form;
+        final String buildingID = (String) dynaActionForm.get("buildingID");
+        final String campusID = (String) dynaActionForm.get("campusID");
+
+        final Object args[] = { Integer.valueOf(buildingID), Integer.valueOf(campusID) };
+        ServiceUtils.executeService(userView, "EditBuilding", args);
 
         return prepare(mapping, form, request, response);
     }
