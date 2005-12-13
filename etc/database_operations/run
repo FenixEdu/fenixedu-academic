@@ -21,3 +21,7 @@ echo CompetenceCourseInformation table modified.
 mysql -u$2 -f $1 < alterContractTable.sql
 mysql -u$2 -f $1 < alterUnitTable.sql
 mysql -u$2 -f $1 < alterPersonFunctionTable.sql
+
+mysql -u$2 -f $1 < alterTableStudent.sql
+mysql -u$2 -f $1 < updateStudent.sql > res.sql
+mysql -u$2 -f $1 < res.sql

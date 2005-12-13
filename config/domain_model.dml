@@ -3011,7 +3011,8 @@ class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.d
     Boolean interruptedStudies;
     Character entryGradeClassification;
     Character approvationRatioClassification;
-    Character arithmeticMeanClassification;        
+    Character arithmeticMeanClassification;
+    Integer keySenior;
 
 	interface "
     public IStudentCurricularPlan getActiveStudentCurricularPlan();

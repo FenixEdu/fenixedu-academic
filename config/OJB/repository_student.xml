@@ -136,6 +136,11 @@
 		jdbc-type="CHAR"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCharacter2SqlCharFieldConversion"
 	/>
+	<field-descriptor
+		name="keySenior"
+		column="KEY_SENIOR"
+		jdbc-type="INTEGER"
+	/>
 	<reference-descriptor auto-retrieve="false"
 			name="person"
 			class-ref="net.sourceforge.fenixedu.domain.Person"
@@ -164,6 +169,13 @@
 			class-ref="net.sourceforge.fenixedu.domain.DislocatedStudent">
 		<foreignkey field-ref="keyDislocatedStudent"/>
 	</reference-descriptor>		
+	<reference-descriptor auto-retrieve="false"
+			name="senior"
+			class-ref="net.sourceforge.fenixedu.domain.student.Senior"
+			
+			>
+		<foreignkey field-ref="keySenior"/>
+	</reference-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="studentCurricularPlans"
 			element-class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
