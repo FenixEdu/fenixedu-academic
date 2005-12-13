@@ -10,8 +10,6 @@ import net.sourceforge.fenixedu.domain.IProfessorship;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.iterators.TransformIterator;
 
-import sun.security.krb5.internal.crypto.n;
-
 public class ExecutionCourseTeachersGroup extends ExecutionCourseTeachersGroup_Base
 {
 
