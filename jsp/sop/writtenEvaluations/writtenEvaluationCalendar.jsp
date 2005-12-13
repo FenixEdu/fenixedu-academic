@@ -161,7 +161,19 @@ table.executionCoursesWithoutWrittenEvaluations td {
 							<td colspan="2" class="header" style="font-weight: bold">
 								<c:out value="${executionCourse.sigla} - ${executionCourse.nome}"/>
 							</td>
-							<td colspan="5" class="header">
+							<td colspan="2" class="header" style="font-weight: bold">
+								<c:url var="creationURL" value="showExecutionCourses.faces">
+									<c:param name="executionPeriodID" value="${SOPEvaluationManagementBackingBean.executionPeriodID}"/>
+									<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
+									<c:param name="curricularYearID" value="${SOPEvaluationManagementBackingBean.curricularYearID}"/>
+									<c:param name="executionPeriodOID" value="${SOPEvaluationManagementBackingBean.executionPeriodOID}"/>
+									<c:param name="executionCourseID" value="${executionCourse.idInternal}"/>
+								</c:url>
+								<a href='<c:out value="${creationURL}"/>' style="text-decoration:none">
+									<c:out value="${bundleSOP['link.create.evaluation']}"/>
+								</a>
+							</td>
+							<td colspan="3" class="header">
 								<c:url var="commentURL" value="commentExecutionCourse.faces">
 									<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
 									<c:param name="executionPeriodID" value="${SOPEvaluationManagementBackingBean.executionPeriodID}"/>
@@ -278,6 +290,18 @@ table.executionCoursesWithoutWrittenEvaluations td {
 								<td><b>
 									<c:out value="${executionCourse.sigla} - ${executionCourse.nome}"/>
 									</b>
+								</td>
+								<td>
+									<c:url var="creationURL" value="showExecutionCourses.faces">
+										<c:param name="executionPeriodID" value="${SOPEvaluationManagementBackingBean.executionPeriodID}"/>
+										<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
+										<c:param name="curricularYearID" value="${SOPEvaluationManagementBackingBean.curricularYearID}"/>
+										<c:param name="executionPeriodOID" value="${SOPEvaluationManagementBackingBean.executionPeriodOID}"/>
+										<c:param name="executionCourseID" value="${executionCourse.idInternal}"/>
+									</c:url>
+									<a href='<c:out value="${creationURL}"/>' style="text-decoration:none">
+										<c:out value="${bundleSOP['link.create.evaluation']}"/>
+									</a>
 								</td>
 								<td>
 									<c:url var="commentURL" value="commentExecutionCourse.faces">
