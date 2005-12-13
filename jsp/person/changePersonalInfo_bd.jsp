@@ -275,7 +275,7 @@
             <td>
  				<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto" %>" />
  				&nbsp;<bean:message key="label.person.availablePhoto" />
-	        	<html:checkbox property="availablePhoto" /></td>
+	        	<html:checkbox property="availablePhoto" value="true"/></td>
           </tr>
 
    	</table>
