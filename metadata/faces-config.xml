@@ -1452,6 +1452,14 @@
 	</component>
 	<component>
 		<component-type>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UIDegreeCurricularPlan
+		</component-type>
+		<component-class>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UIDegreeCurricularPlan
+		</component-class>
+	</component>
+	<component>
+		<component-type>
 			net.sourceforge.fenixedu.presentationTier.jsf.components.UIBreadCrumbs
 		</component-type>
 		<component-class>
