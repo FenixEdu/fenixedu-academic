@@ -866,4 +866,10 @@
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
+    <filter>
+        <name>BolonhaManagerAuthorization</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.BolonhaManagerAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
 </filterDefinitions>

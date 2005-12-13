@@ -61,6 +61,9 @@ public class CurricularCourse extends CurricularCourse_Base {
     
     public void delete() {
         setCompetenceCourse(null);
+        // delete contexts??!?!?
+        // super.delete();
+        deleteDomainObject();
     }
     
     public boolean curricularCourseIsMandatory() {

@@ -98,6 +98,12 @@
         element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Function">
 		<inverse-foreignkey field-ref="keyUnit"/>
     </collection-descriptor>
+    
+    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+        name="competenceCourses"
+        element-class-ref="net.sourceforge.fenixedu.domain.CompetenceCourse">
+		<inverse-foreignkey field-ref="keyUnit"/>
+    </collection-descriptor>
 
 </class-descriptor>
 

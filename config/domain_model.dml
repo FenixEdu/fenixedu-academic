@@ -63,6 +63,7 @@ valueType net.sourceforge.fenixedu.util.PublicationArea                         
 valueType net.sourceforge.fenixedu.util.PublicationType                                         as PublicationType;
 valueType net.sourceforge.fenixedu.domain.person.RoleType                                       as RoleType;
 valueType net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState                      as ReimbursementGuideState;
+valueType net.sourceforge.fenixedu.domain.degreeStructure.RegimeType                       as RegimeType;
 valueType net.sourceforge.fenixedu.util.Season                                                  as Season;
 valueType net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason                         as SecretaryEnrolmentStudentReason; 
 valueType net.sourceforge.fenixedu.domain.teacher.ServiceExemptionType                          as ServiceExemptionType;
@@ -913,12 +914,26 @@ class net.sourceforge.fenixedu.domain.Department extends net.sourceforge.fenixed
 class net.sourceforge.fenixedu.domain.CompetenceCourse extends net.sourceforge.fenixedu.domain.DomainObject {
 	String name;
 	String code;
+	Integer keyUnit;
 	CurricularStage curricularStage;
 	interface "
 	public void delete();
 	public void addCurricularCourses(java.util.Collection<ICurricularCourse> curricularCourses);
 	public void edit(String code, String name, java.util.Collection<IDepartment> departments);
+	public void edit(String name, String code, Double ectsCredits, Boolean basic,
+            Double theoreticalHours, Double problemsHours, Double labHours, Double projectHours,
+            Double seminaryHours, net.sourceforge.fenixedu.domain.degreeStructure.RegimeType regime, net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage curricularStage);
     public void addDepartments(java.util.Collection<IDepartment> departments);
+    
+    public Double getEctsCredits();    
+    public boolean isBasic();
+    public Double getTheoreticalHours();
+    public Double getProblemsHours();
+    public Double getLaboratorialHours();
+    public Double getProjectHours();
+    public Double getSeminaryHours();
+    public net.sourceforge.fenixedu.domain.degreeStructure.RegimeType getRegime();
+    public int getTotalLessonHours();
 	"
 }
 
@@ -926,18 +941,30 @@ class net.sourceforge.fenixedu.domain.CompetenceCourse extends net.sourceforge.f
 class net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyCompetenceCourse;
 	Integer keyExecutionYear;
+	String name;
+	String code;
 	Double ectsCredits; 
 	Boolean basic; 
-	Double theoPratHours; 
 	Double theoreticalHours; 
+	Double problemsHours;
 	Double labHours; 
-	Double praticalHours; 
+	Double projectHours;
+	Double seminaryHours;
+	RegimeType regime;
+	
 	String generalObjectives;
 	String operacionalObjectives;
 	String program;
 	String generalObjectivesEn;
 	String operacionalObjectivesEn;
 	String programEn;
+	
+	interface "
+	public void edit(String name, String code, Double ectsCredits, Boolean basic, Double theoreticalHours,
+            Double problemsHours, Double labHours, Double projectHours, Double seminaryHours, RegimeType regime);            
+	public void delete();
+    public int getTotalLessonHours();
+	"
 }
 
 
@@ -3379,6 +3406,8 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.s
     public boolean isActive(java.util.Date currentDate);
     public void delete();
     public java.util.List<net.sourceforge.fenixedu.domain.IContract> getWorkingContracts(java.util.Date begin, java.util.Date end);
+    public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IUnit> getScientificAreas();
+    public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IUnit> getCompetenceCourseGroups();
 	"
 }
 
@@ -4170,6 +4199,13 @@ relation DepartmentCompetenceCourse {
 	net.sourceforge.fenixedu.domain.Department playsRole departments {
 		multiplicity *;
 	}
+}
+
+relation CompetenceCourseUnit {
+	net.sourceforge.fenixedu.domain.CompetenceCourse playsRole competenceCourses {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
 }
 
 

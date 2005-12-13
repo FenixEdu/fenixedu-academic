@@ -10,10 +10,13 @@ echo Using database: $1
 echo Enter password for $2:
 read -s password
 
-# Adding new Role
 echo Creating BOLONHA Role ...
 mysql -u$2 -f $1 < addBolonhaManagerRole.sql
 echo BOLONHA Role created.
+
+echo Altering CompetenceCourseInformation table ...
+mysql -u$2 -f $1 < alterTableCompetenceCourseInformation.sql
+echo CompetenceCourseInformation table modified.
 
 mysql -u$2 -f $1 < alterContractTable.sql
 mysql -u$2 -f $1 < alterUnitTable.sql

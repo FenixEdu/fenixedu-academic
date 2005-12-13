@@ -96,6 +96,11 @@
 		column="CODE"
 		jdbc-type="VARCHAR"
 	/>
+	<field-descriptor
+		name="keyUnit"
+		column="KEY_UNIT"
+		jdbc-type="INTEGER"
+	/>
     <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
@@ -108,6 +113,11 @@
 		jdbc-type="VARCHAR"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularStage2SqlCurricularStageFieldConversion"
 	/>
+	<reference-descriptor auto-retrieve="false"
+         name="unit"
+         class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
+         <foreignkey field-ref="keyUnit"/>
+    </reference-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="departments"
 		element-class-ref="net.sourceforge.fenixedu.domain.Department"
@@ -122,6 +132,11 @@
 		name="associatedCurricularCourses"
 		element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
          >
+		<inverse-foreignkey field-ref="keyCompetenceCourse"/>
+	</collection-descriptor>
+   	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+		name="courseInformations"
+		element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation">
 		<inverse-foreignkey field-ref="keyCompetenceCourse"/>
 	</collection-descriptor>
 </class-descriptor>
@@ -171,9 +186,4 @@
          class-ref="net.sourceforge.fenixedu.domain.ExecutionYear">
          <foreignkey field-ref="keyExecutionYear"/>
     </reference-descriptor>
-   	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="courseInformations"
-			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation">
-		<inverse-foreignkey field-ref="keyCompetenceCourse"/>
-	</collection-descriptor>
 </class-descriptor>

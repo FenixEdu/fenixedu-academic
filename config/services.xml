@@ -9136,7 +9136,6 @@
 			<chain name="ManagerAuthorization" />
 		</filterChains>				
 	</service>
-
     <service>
 		<name>CreateCms</name>
 		<implementationClass>
@@ -9148,7 +9147,6 @@
 			<chain name="ManagerAuthorization" />
 		</filterChains>				
 	</service>
-	
 	<service>
 		<name>WriteExecutionCourseWebsite</name>
 		<implementationClass>
@@ -9158,7 +9156,6 @@
 		<isTransactional>true</isTransactional>
 		<filterChains/>				
 	</service>
-	
 	<service>
 		<name>DeleteExecutionCourseWebsite</name>
 		<implementationClass>
@@ -9168,7 +9165,32 @@
 		<isTransactional>true</isTransactional>
 		<filterChains/>				
 	</service>
-	
-    <!-- ======================================  -->
-
-</serviceDefinitions>
+    <!-- ======================================  -->  
+    <service>
+    	<name>CreateCompetenceCourse</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCompetenceCourse</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="BolonhaManagerAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>EditCompetenceCourse</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCompetenceCourse</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="BolonhaManagerAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>DeleteCompetenceCourse</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteCompetenceCourse</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="BolonhaManagerAuthorization"></chain>
+        </filterChains>     
+    </service>
+</serviceDefinitions>    

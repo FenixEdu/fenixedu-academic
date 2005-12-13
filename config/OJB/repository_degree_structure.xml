@@ -215,6 +215,16 @@
 		autoincrement="true"
 	/>
 	<field-descriptor
+		name="name"
+		column="NAME"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="code"
+		column="CODE"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
 		name="ectsCredits"
 		column="ECTS_CREDITS"
 		jdbc-type="DOUBLE"
@@ -225,13 +235,13 @@
 		jdbc-type="BIT"
 	/>
 	<field-descriptor
-		name="theoPratHours"
-		column="THEO_PRAT_HOURS"
+		name="theoreticalHours"
+		column="THEORETICAL_HOURS"
 		jdbc-type="DOUBLE"
 	/>
 	<field-descriptor
-		name="theoreticalHours"
-		column="THEORETICAL_HOURS"
+		name="problemsHours"
+		column="PROBLEMS_HOURS"
 		jdbc-type="DOUBLE"
 	/>
 	<field-descriptor
@@ -240,9 +250,20 @@
 		jdbc-type="DOUBLE"
 	/>
 	<field-descriptor
-		name="praticalHours"
-		column="PRATICAL_HOURS"
+		name="projectHours"
+		column="PROJECT_HOURS"
 		jdbc-type="DOUBLE"
+	/>
+	<field-descriptor
+		name="seminaryHours"
+		column="SEMINARY_HOURS"
+		jdbc-type="DOUBLE"
+	/>
+	<field-descriptor
+		name="regime"
+		column="REGIME"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaRegimeType2SqlRegimeTypeFieldConversion"
 	/>
 	<field-descriptor
         name="generalObjectives"

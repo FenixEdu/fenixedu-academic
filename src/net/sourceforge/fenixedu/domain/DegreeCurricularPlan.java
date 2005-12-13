@@ -111,7 +111,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
         List result = new ArrayList();
 
-        // result.add(new SecretaryEnrollmentRule(studentCurricularPlan));
         result.add(new MaximumNumberOfAcumulatedEnrollmentsRule(studentCurricularPlan, executionPeriod));
         result.add(new MaximumNumberOfCurricularCoursesEnrollmentRule(studentCurricularPlan,
                 executionPeriod));
@@ -185,11 +184,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return curricularCourses;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see Dominio.IDegreeCurricularPlan#getSpecializationAreas()
-     */
     public List getSpecializationAreas() {
 
         return (List) CollectionUtils.select(getAreas(), new Predicate() {
@@ -202,11 +196,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         });
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see Dominio.IDegreeCurricularPlan#getSecundaryAreas()
-     */
     public List getSecundaryAreas() {
         return (List) CollectionUtils.select(getAreas(), new Predicate() {
 
@@ -237,18 +226,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public List getSpecialListOfCurricularCourses() {
         return new ArrayList();
-    }
-
-    private boolean belongsToSemester(ICurricularCourse curricularCourse, Integer semester) {
-        List scopes = curricularCourse.getScopes();
-        ICurricularCourseScope ccs = null;
-
-        for (int iter = 0; iter < scopes.size(); iter++) {
-            ccs = (ICurricularCourseScope) scopes.get(iter);
-            if (ccs.getCurricularSemester().getSemester().intValue() == semester.intValue())
-                return true;
-        }
-        return false;
     }
 
     public List getAllOptionalCurricularCourseGroups() {

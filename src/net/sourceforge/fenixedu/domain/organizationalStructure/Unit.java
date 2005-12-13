@@ -84,4 +84,24 @@ public class Unit extends Unit_Base {
         }
         return contracts;
     }
+    
+    public List<IUnit> getScientificAreas() {
+        List<IUnit> result = new ArrayList<IUnit>();        
+        for (IUnit unit : this.getSubUnits()) {
+            if (unit.getType() != null && unit.getType().equals(UnitType.SCIENTIFIC_AREA)) {
+                result.add(unit);                
+            }
+        }        
+        return result;
+    }
+    
+    public List<IUnit> getCompetenceCourseGroups() {
+        List<IUnit> result = new ArrayList<IUnit>();        
+        for (IUnit unit : this.getSubUnits()) {
+            if (unit.getType() != null && unit.getType().equals(UnitType.COMPETENCE_COURSE_GROUP)) {
+                result.add(unit);                
+            }
+        }
+        return result;
+    }
 }

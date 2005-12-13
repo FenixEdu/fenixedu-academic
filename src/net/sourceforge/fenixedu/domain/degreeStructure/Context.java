@@ -3,9 +3,6 @@ package net.sourceforge.fenixedu.domain.degreeStructure;
 import net.sourceforge.fenixedu.domain.ICurricularSemester;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.stm.VBox;
-import net.sourceforge.fenixedu.stm.RelationList;
-import net.sourceforge.fenixedu.stm.OJBFunctionalSetWrapper;
 
 public class Context extends Context_Base {
 
