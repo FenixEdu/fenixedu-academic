@@ -104,4 +104,17 @@ public class Unit extends Unit_Base {
         }
         return result;
     }
+    
+    public List<IUnit> getDegreeUnits() {
+        List<IUnit> result = new ArrayList<IUnit>();
+        
+        for (IUnit unit : this.getSubUnits()) {
+            if (unit.getType() != null && unit.getType().equals(UnitType.DEGREE)) {
+                result.add(unit);                
+            }
+        }
+        
+        return result;
+    }
+
 }

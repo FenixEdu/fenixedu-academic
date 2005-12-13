@@ -812,6 +812,7 @@ class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.s
 		public void delete();
 		public boolean isLeaf();
 		public void print(java.lang.StringBuffer stringBuffer, String tabs, IContext previousContext);
+		public Double computeEctsCredits();
 	"
 }
 
@@ -871,6 +872,11 @@ class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.s
 	}
 
 	class net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup extends net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule {
+		interface "
+			public java.util.List<IContext> getContextsWithCurricularCourses();
+			
+			public java.util.List<IContext> getContextsWithCourseGroups();
+		"
 	}
 
 
@@ -3414,6 +3420,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.s
     public java.util.List<net.sourceforge.fenixedu.domain.IContract> getWorkingContracts(java.util.Date begin, java.util.Date end);
     public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IUnit> getScientificAreas();
     public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IUnit> getCompetenceCourseGroups();
+    public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IUnit> getDegreeUnits();
 	"
 }
 

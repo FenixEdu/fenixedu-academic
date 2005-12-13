@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class CourseGroup extends CourseGroup_Base {
@@ -36,5 +40,36 @@ public class CourseGroup extends CourseGroup_Base {
             context.getDegreeModule().print(dcp, tab, context);
         }
     }
+    
+    public List<IContext> getContextsWithCurricularCourses() {
+        List<IContext> result = new ArrayList<IContext>();
+        for (IContext context : this.getCourseGroupContexts()) {
+            if (context.getDegreeModule() instanceof ICurricularCourse) {
+                result.add(context);
+            }
+        }
+        
+        return result;
+    }
 
+    public List<IContext> getContextsWithCourseGroups() {
+        List<IContext> result = new ArrayList<IContext>();
+        for (IContext context : this.getCourseGroupContexts()) {
+            if (context.getDegreeModule() instanceof ICourseGroup) {
+                result.add(context);
+            }
+        }
+        
+        return result;
+    }
+
+    public Double computeEctsCredits() {
+        Double result = 0.0;
+        
+        for (IContext context : this.getCourseGroupContexts()) {
+            result += context.getDegreeModule().computeEctsCredits();
+        }
+        
+        return result;
+    }
 }

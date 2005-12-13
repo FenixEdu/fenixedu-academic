@@ -340,4 +340,16 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         return latestCurriculum;
     }
+    
+    public Double computeEctsCredits() {
+        Double result = 0.0;
+        
+        if (this.getCompetenceCourse().getEctsCredits() != null) {
+            result = this.getEctsCredits();
+        } else if (this.getEctsCredits() != null) {
+            result = this.getEctsCredits();
+        }
+        
+        return result;
+    }
 }
