@@ -873,7 +873,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     public void setDepartmentID(String departmentID) {
         this.departmentID = departmentID;
     }
-
+        
     public class PrepareDatesResult {
 
         private boolean test;

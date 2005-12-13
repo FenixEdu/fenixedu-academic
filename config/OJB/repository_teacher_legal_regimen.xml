@@ -1,0 +1,73 @@
+<!-- Definitions for net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen -->
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen" 
+	table="TEACHER_LEGAL_REGIMEM">
+	
+	<field-descriptor id="1"
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+	/>
+	<field-descriptor id="2"
+	   name="beginDate"    
+	   column="BEGIN_DATE"  
+	   jdbc-type="DATE"
+    />
+	<field-descriptor id="3"	
+	   name="endDate"    
+	   column="END_DATE"  
+	   jdbc-type="DATE"
+    />
+	<field-descriptor id="7" 
+	   name="keyCategory"    
+	   column="KEY_CATEGORY"  
+	   jdbc-type="INTEGER"
+    />
+	<field-descriptor id="8" 
+	   name="keyTeacher"    
+	   column="KEY_TEACHER"  
+	   jdbc-type="INTEGER"
+    />
+    <field-descriptor id="9" 
+	   name="lessonHours"    
+	   column="LESSON_HOURS_NUMBER"  
+	   jdbc-type="INTEGER"
+    />
+    <field-descriptor id="10" 
+	   name="totalHours"    
+	   column="TOTAL_HOURS_NUMBER"  
+	   jdbc-type="DOUBLE"
+    />
+    <field-descriptor id="11" 
+	   name="percentage"    
+	   column="PERCENTAGE"  
+	   jdbc-type="INTEGER"
+    />
+    <field-descriptor id="12" 
+	   name="legalRegimenType"    
+	   column="LEGAL_REGIMEN_TYPE"  
+	   jdbc-type="VARCHAR"
+	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.LegalRegimenType2SqlLegalRegimenTypeConversion"
+    />
+    <field-descriptor id="13" 
+	   name="regimenType"    
+	   column="REGIMEN_TYPE"  
+	   jdbc-type="VARCHAR"
+	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.RegimenType2SqlRegimenTypeConversion"
+    />    
+		
+	<reference-descriptor auto-retrieve="false"
+    	name="category"
+        class-ref="net.sourceforge.fenixedu.domain.teacher.Category">
+	    <foreignkey field-ref="keyCategory"/>
+	</reference-descriptor>
+
+	<reference-descriptor auto-retrieve="false"
+    	name="teacher"
+        class-ref="net.sourceforge.fenixedu.domain.Teacher">
+	    <foreignkey field-ref="keyTeacher"/>
+	</reference-descriptor>
+
+</class-descriptor>

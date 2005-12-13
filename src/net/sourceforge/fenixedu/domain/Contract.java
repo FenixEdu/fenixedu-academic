@@ -16,4 +16,12 @@ public class Contract extends Contract_Base {
         }
         return false;
     }
+    
+    public void delete(){        
+        this.removeEmployee();
+        this.removeMailingUnit();
+        this.removeSalaryUnit();
+        this.removeWorkingUnit();
+        super.deleteDomainObject();
+    }
 }

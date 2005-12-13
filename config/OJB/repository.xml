@@ -74,6 +74,7 @@
 <!ENTITY qualification SYSTEM "repository_qualification.xml">
 <!ENTITY fileEntry SYSTEM "repository_fileEntry.xml">
 <!ENTITY degreeStructure SYSTEM "repository_degree_structure.xml">
+<!ENTITY teacherLegalRegimen SYSTEM "repository_teacher_legal_regimen.xml">
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
 
@@ -152,5 +153,6 @@
 	&qualification;
 	&fileEntry;
 	&degreeStructure;
+	&teacherLegalRegimen;
 	
 </descriptor-repository>

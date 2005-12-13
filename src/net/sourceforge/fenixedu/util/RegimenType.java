@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.util;
 
-public enum ContractRegimenType {
+public enum RegimenType {
 
     INTEGRAL_TIME,
     EXCLUSIVENESS;

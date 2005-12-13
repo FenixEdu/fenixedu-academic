@@ -89,8 +89,8 @@ valueType net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType  
 valueType net.sourceforge.fenixedu.domain.QualificationType										as QualificationType;
 valueType net.sourceforge.fenixedu.util.ByteArray												as ByteArray;
 valueType net.sourceforge.fenixedu.util.ContentType                                             as ContentType;
-valueType net.sourceforge.fenixedu.util.ContractRegimenType                                     as ContractRegimenType;
-valueType net.sourceforge.fenixedu.util.ContractLegalRegimenType                                as ContractLegalRegimenType;
+valueType net.sourceforge.fenixedu.util.RegimenType                      			            as RegimenType;
+valueType net.sourceforge.fenixedu.util.LegalRegimenType  		                                as LegalRegimenType;
 
 
 /*
@@ -188,17 +188,12 @@ class net.sourceforge.fenixedu.domain.Contract extends net.sourceforge.fenixedu.
 	Integer keySalaryUnit;
 	Integer keyMailingUnit;
 	Integer keyWorkingUnit;
-	Integer keyCategory;
-	Integer percentage;
-	Integer lessonHours;
-	Integer totalHours;
 	Date beginDate;
 	Date endDate;
-	ContractLegalRegimenType legalRegimenType;
-	ContractRegimenType regimenType;
 				
 	interface"
 	public boolean belongsToPeriod(java.util.Date beginDate, java.util.Date endDate);
+	public void delete();
 	"
 }
 
@@ -3305,7 +3300,17 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
     public Double getHoursLecturedOnExecutionCourse(IExecutionCourse executionCourse);
 	"
 }
-
+class net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyCategory;
+	Integer keyTeacher;
+	Integer percentage;
+	Integer lessonHours;
+	Double totalHours;	
+	LegalRegimenType legalRegimenType;
+	RegimenType regimenType;
+	Date beginDate;
+	Date endDate;
+}
 
 class net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyTeacher;
@@ -6410,11 +6415,18 @@ relation DegreetUnit {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
 }
 
-relation ContractCategory {
-	net.sourceforge.fenixedu.domain.Contract playsRole contracts {
+relation TeacherLegalRegimenCategory {
+	net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen playsRole teacherLegalRegimens {
 		multiplicity *;
     }
     net.sourceforge.fenixedu.domain.teacher.Category playsRole category;    
+}
+
+relation TeacherLegalRegimenTeacher {
+	net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen playsRole legalRegimens {
+		multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Teacher playsRole teacher;    
 }
 
 relation EmployeeContract {

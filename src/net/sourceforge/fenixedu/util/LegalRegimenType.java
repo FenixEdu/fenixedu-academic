@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.util;
 
-public enum ContractLegalRegimenType {
+public enum LegalRegimenType {
 
     PROVISIONS_ADMINISTRATIVE_CONTRACT,
     TERM_CONTRACT,

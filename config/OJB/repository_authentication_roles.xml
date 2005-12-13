@@ -124,10 +124,7 @@
 
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.Teacher -->
-   <class-descriptor class="net.sourceforge.fenixedu.domain.Teacher"
-	  
-   	  table="TEACHER">
-   	  
+   <class-descriptor class="net.sourceforge.fenixedu.domain.Teacher" table="TEACHER">   	  
       <field-descriptor
          name="idInternal"
          column="ID_INTERNAL"
@@ -161,7 +158,7 @@
          name="keyCategory"
          column="KEY_CATEGORY"
          jdbc-type="INTEGER"/>
-
+       
       <reference-descriptor auto-retrieve="false"
          name="category"
          class-ref="net.sourceforge.fenixedu.domain.teacher.Category"
@@ -410,6 +407,11 @@
 		element-class-ref="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation"
 		
 		>
+		<inverse-foreignkey field-ref="keyTeacher"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+		name="legalRegimens" 
+		element-class-ref="net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen">
 		<inverse-foreignkey field-ref="keyTeacher"/>
 	</collection-descriptor>	
    </class-descriptor>

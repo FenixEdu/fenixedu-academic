@@ -3,6 +3,6 @@ package relations;
 import net.sourceforge.fenixedu.stm.VBox;
 import net.sourceforge.fenixedu.stm.RelationList;
 import net.sourceforge.fenixedu.stm.OJBFunctionalSetWrapper;
-public class ContractCategory extends ContractCategory_Base {
+public class TeacherLegalRegimenTeacher extends TeacherLegalRegimenTeacher_Base {
     
 }

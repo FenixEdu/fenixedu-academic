@@ -36,15 +36,15 @@ public class Unit extends Unit_Base {
             UnitType type, IUnit parentUnit) {
 
         this.setName(unitName);        
-        this.setBeginDate(beginDate);
-        if(endDate != null && endDate.before(beginDate)){
-            throw new DomainException("error.endDateBeforeBeginDate");
-        }
+        this.setBeginDate(beginDate);       
         this.setEndDate(endDate);
         this.setType(type);       
         this.setCostCenterCode(unitCostCenter);               
         if (parentUnit != null) {
             this.addParentUnits(parentUnit);
+        }
+        if(endDate != null && endDate.before(beginDate)){
+            throw new DomainException("error.endDateBeforeBeginDate");
         }
     }
 

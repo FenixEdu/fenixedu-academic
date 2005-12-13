@@ -356,7 +356,6 @@ public class Teacher extends Teacher_Base {
         // list.add(serviceExemption);
         // }
         // }
-
         return 0;
     }
 
@@ -372,7 +371,6 @@ public class Teacher extends Teacher_Base {
         // list.add(personFunction);
         // }
         // }
-
         return 0;
     }
 }
