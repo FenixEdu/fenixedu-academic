@@ -288,7 +288,10 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     public void setDayHidden(HtmlInputHidden dayHidden) {
         if (dayHidden.getValue() != null) {
-            this.day = Integer.valueOf(dayHidden.getValue().toString());
+            final String dayValue = dayHidden.getValue().toString();
+            if (dayValue.length() > 0) {
+                this.day = Integer.valueOf(dayValue);
+            }
         }
         this.dayHidden = dayHidden;
     }
@@ -303,7 +306,10 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     public void setMonthHidden(HtmlInputHidden monthHidden) {
         if (monthHidden.getValue() != null) {
-            this.month = Integer.valueOf(monthHidden.getValue().toString());
+            final String monthValue = monthHidden.getValue().toString();
+            if (monthValue.length() > 0) {
+                this.month = Integer.valueOf(monthValue);
+            }
         }
         this.monthHidden = monthHidden;
     }
@@ -318,7 +324,10 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     public void setYearHidden(HtmlInputHidden yearHidden) {
         if (yearHidden.getValue() != null) {
-            this.year = Integer.valueOf(yearHidden.getValue().toString());
+            final String yearValue = yearHidden.getValue().toString();
+            if (yearValue.length() > 0) {
+                this.year = Integer.valueOf(yearValue);
+            }
         }
         this.yearHidden = yearHidden;
     }
@@ -899,7 +908,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         List<String> executionCourseIDs = new ArrayList<String>(this.getAssociatedExecutionCourses()
                 .size());
         List<String> curricularCourseScopeIDs = new ArrayList<String>();
-        List<String> roomsIDs = null;
+        List<String> roomsIDs = new ArrayList<String>();
 
         if (!prepareArguments(executionCourseIDs, curricularCourseScopeIDs, roomsIDs)) {
             return "";
