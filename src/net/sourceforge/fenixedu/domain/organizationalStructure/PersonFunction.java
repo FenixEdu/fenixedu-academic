@@ -25,9 +25,10 @@ public class PersonFunction extends PersonFunction_Base {
     }
     
     public boolean belongsToPeriod(Date beginDate, Date endDate) {
-        if ((this.getBeginDate().before(beginDate) || this.getBeginDate().after(beginDate))
-                && (this.getEndDate() == null || (this.getEndDate().before(endDate) || this
-                        .getEndDate().after(endDate)))) {
+        if (this.getBeginDate().before(endDate)
+                && (this.getEndDate() == null || ((this.getEndDate().before(endDate) && this
+                        .getEndDate().after(beginDate))
+                        || this.getEndDate().after(endDate) || this.getEndDate().equals(endDate)))) {
             return true;
         }
         return false;
