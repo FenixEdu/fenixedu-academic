@@ -9,9 +9,10 @@ CREATE TABLE `TEACHER_SERVICE_ITEM` (
   `CREDITS` float(10,2) default NULL,
   `HOURS` float default NULL,
   `REASON` text NOT NULL,
-  `WEEKDAY` int(11) default NULL,
+  `WEEKDAY` varchar(50) default NULL,
   `START_TIME` time default NULL,
   `END_TIME` time default NULL,
   `ACK_OPT_LOCK` int(11) default NULL,  
   PRIMARY KEY  (`ID_INTERNAL`)
 )TYPE=InnoDB
+ 
