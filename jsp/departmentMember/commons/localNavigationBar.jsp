@@ -8,10 +8,6 @@
 <style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style>
 
 <logic:present role="DEPARTMENT_MEMBER">
-	
-	<bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
-	<!-- Temporary solution (until we make expectations available for all departments) DEI Code = 28 -->
-	<% String deiCode = "28"; %>
 	<ul>
 		<li class="navheader">
 			<bean:message key="link.group.general.title" />
@@ -30,7 +26,7 @@
 <%--		<li class="navheader">
 			<bean:message key="link.group.individual.title" />		
 		</li>
--->
+--%>
 	</ul>
 	
 	<br />
