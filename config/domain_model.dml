@@ -3440,6 +3440,8 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.s
             net.sourceforge.fenixedu.domain.organizationalStructure.IUnit parentUnit);
     public boolean isActive(java.util.Date currentDate);
     public void delete();
+    public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IUnit> getInactiveSubUnits(java.util.Date currentDate);
+    public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IUnit> getActiveSubUnits(java.util.Date currentDate);
     public java.util.List<net.sourceforge.fenixedu.domain.IContract> getWorkingContracts(java.util.Date begin, java.util.Date end);
     public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IUnit> getScientificAreaUnits();
     public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IUnit> getCompetenceCourseGroupUnits();
