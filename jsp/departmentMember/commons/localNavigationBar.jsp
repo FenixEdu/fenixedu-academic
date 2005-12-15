@@ -10,28 +10,27 @@
 <logic:present role="DEPARTMENT_MEMBER">
 	
 	<bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
-		
 	<!-- Temporary solution (until we make expectations available for all departments) DEI Code = 28 -->
 	<% String deiCode = "28"; %>
-	
 	<ul>
+		<li class="navheader">
+			<bean:message key="link.group.general.title" />
+		</li>
 		<li>
 			<html:link page="/viewDepartmentTeachers/listDepartmentTeachers.faces">
-				<bean:message key="link.departmentTeachers"/>
+				<bean:message key="link.departmentTeachers"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			</html:link>
 		</li>
-		<logic:equal name="userView" property="person.employee.departmentWorkingPlace.code" value="<%= deiCode %>">
-		<li>
-			<html:link page="/expectationManagement/viewPersonalExpectation.faces">
-				<bean:message key="link.personalExpectationsManagement"/>
-			</html:link>
-		</li>
-		</logic:equal>
 		<li>
 			<html:link page="/viewTeacherService/chooseExecutionYear.faces">
 				<bean:message key="link.teacherService"/>
 			</html:link>
 		</li>
+				
+<%--		<li class="navheader">
+			<bean:message key="link.group.individual.title" />		
+		</li>
+-->
 	</ul>
 	
 	<br />
