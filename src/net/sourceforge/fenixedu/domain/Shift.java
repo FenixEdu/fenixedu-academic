@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.teacher.IDegreeTeachingService;
 
 public class Shift extends Shift_Base {
 
@@ -60,7 +61,6 @@ public class Shift extends Shift_Base {
                 throw new DomainException("error.summary.already.exists");
             }
         }
-        return;
     }
   
     private Date prepareDate(Date date) {
@@ -71,5 +71,21 @@ public class Shift extends Shift_Base {
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         return calendar.getTime();
-    }    
+    }
+    
+    public Double getAvailableShiftPercentageForTeacher(ITeacher teacher) {
+        Double availablePercentage = 100.0;
+        for (IDegreeTeachingService degreeTeachingService : getDegreeTeachingServices()) {
+            /**
+             * if shift's type is LABORATORIAL the shift professorship
+             * percentage can exceed 100%
+             */
+            if (degreeTeachingService.getProfessorship().getTeacher() != teacher
+                    && !getTipo().equals(ShiftType.LABORATORIAL)) {
+                availablePercentage -= degreeTeachingService.getPercentage();
+            }
+        }
+        return availablePercentage;
+    }
+
 }

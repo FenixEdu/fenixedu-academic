@@ -14,14 +14,21 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
+import net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
 import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
+import net.sourceforge.fenixedu.domain.teacher.ITeacherLegalRegimen;
 import net.sourceforge.fenixedu.domain.teacher.ITeacherPersonalExpectation;
+import net.sourceforge.fenixedu.domain.teacher.ITeacherService;
 import net.sourceforge.fenixedu.domain.teacher.ITeacherServiceExemption;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
+import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.PublicationArea;
 import net.sourceforge.fenixedu.util.State;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 
 public class Teacher extends Teacher_Base {
 
@@ -47,8 +54,8 @@ public class Teacher extends Teacher_Base {
     }
 
     public Boolean canAddPublicationToTeacherInformationSheet(PublicationArea area) {
-        // NOTA : a linha seguinte contém um número explícito quando não deve
-        // isto deve ser mudado! Mas esta mudança implica tornar explícito o
+        // NOTA : a linha seguinte contém um número explícito quando não deve.
+        // Isto deve ser mudado! Mas esta mudança implica tornar explícito o
         // conceito de Ficha de docente.
         return new Boolean(countPublicationsInArea(area) < 5);
 
@@ -103,6 +110,14 @@ public class Teacher extends Teacher_Base {
         return null;
     }
 
+    public IDepartment getLastWorkingDepartment() {
+        IEmployee employee = this.getPerson().getEmployee();
+        if (employee != null) {
+            return employee.getLastDepartmentWorkingPlace();
+        }
+        return null;
+    }
+
     public IDepartment getMailingDepartment() {
 
         IEmployee employee = this.getPerson().getEmployee();
@@ -145,19 +160,19 @@ public class Teacher extends Teacher_Base {
                 else {
                     IGroup attributedGroupByTeacher = proposal.getGroupAttributedByTeacher();
                     if (attributedGroupByTeacher != null) {
-                        boolean result = false;
+                        boolean toAdd = false;
                         for (Iterator iterator = attributedGroupByTeacher.getGroupStudents().iterator(); iterator
                                 .hasNext();) {
                             IGroupStudent groupStudent = (IGroupStudent) iterator.next();
                             IProposal studentProposal = groupStudent
                                     .getFinalDegreeWorkProposalConfirmation();
                             if (studentProposal != null && studentProposal.equals(proposal)) {
-                                result = true;
+                                toAdd = true;
                             } else {
-                                result = false;
+                                toAdd = false;
                             }
                         }
-                        if (result) {
+                        if (toAdd) {
                             proposalList.add(proposal);
                         }
                     }
@@ -212,6 +227,36 @@ public class Teacher extends Teacher_Base {
         }
 
         return returnValue;
+    }
+
+    public ITeacherService getTeacherServiceByExecutionPeriod(final IExecutionPeriod executionPeriod) {
+        return (ITeacherService) CollectionUtils.find(getTeacherServices(), new Predicate() {
+
+            public boolean evaluate(Object arg0) {
+                ITeacherService teacherService = (ITeacherService) arg0;
+                return teacherService.getExecutionPeriod() == executionPeriod;
+            }
+        });
+    }
+
+    public IProfessorship getProfessorshipByExecutionCourse(final IExecutionCourse executionCourse) {
+        return (IProfessorship) CollectionUtils.find(getProfessorships(), new Predicate() {
+            public boolean evaluate(Object arg0) {
+                IProfessorship professorship = (IProfessorship) arg0;
+                return professorship.getExecutionCourse() == executionCourse;
+            }
+        });
+    }
+
+    public List<IProfessorship> getDegreeProfessorshipsByExecutionPeriod(
+            final IExecutionPeriod executionPeriod) {
+        return (List<IProfessorship>) CollectionUtils.select(getProfessorships(), new Predicate() {
+            public boolean evaluate(Object arg0) {
+                IProfessorship professorship = (IProfessorship) arg0;
+                return professorship.getExecutionCourse().getExecutionPeriod() == executionPeriod
+                        && !professorship.getExecutionCourse().isMasterDegreeOnly();
+            }
+        });
     }
 
     /***************************************************************************
@@ -319,58 +364,155 @@ public class Teacher extends Teacher_Base {
 
         List<ITeacherServiceExemption> serviceExemptions = new ArrayList<ITeacherServiceExemption>();
         for (ITeacherServiceExemption serviceExemption : this.getServiceExemptionSituations()) {
-            if ((serviceExemption.getStart().before(beginDate) || serviceExemption.getStart().after(
-                    beginDate))
-                    && (serviceExemption.getEnd() == null || (serviceExemption.getEnd().before(endDate) || serviceExemption
-                            .getEnd().after(endDate)))) {
+            if (serviceExemption.belongsToPeriod(beginDate, endDate)) {
                 serviceExemptions.add(serviceExemption);
             }
         }
         return serviceExemptions;
     }
+    
+    public List<IPersonFunction> getPersonFuntions(Date beginDate, Date endDate){
+        
+        List<IPersonFunction> personFuntions = new ArrayList<IPersonFunction>();
+        for (IPersonFunction personFunction : getPerson().getPersonFunctions()) {
+            if(personFunction.belongsToPeriod(beginDate,endDate)){
+                personFuntions.add(personFunction);
+            }
+        }
+        return personFuntions;
+    }
 
-    public int getHoursByCategory(IExecutionPeriod executionPeriod) {
+    public int getHoursByCategory(Date begin, Date end) {
 
-//        Date begin = executionPeriod.getBeginDate();
-//        Date end = executionPeriod.getEndDate();
-//
-//        List<IContract> list = new ArrayList<IContract>();
-//        for (IContract contract : this.getPerson().getEmployee().getContracts()) {
-//            if (contract.belongsToPeriod(begin, end)) {
-//                list.add(contract);
-//            }
-//        }       
-        return 0;
+        List<ITeacherLegalRegimen> list = new ArrayList<ITeacherLegalRegimen>();
+        for (ITeacherLegalRegimen teacherLegalRegimen : this.getLegalRegimens()) {
+            if (teacherLegalRegimen.belongsToPeriod(begin, end)) {
+                list.add(teacherLegalRegimen);
+            }
+        }
+       
+        if (list.isEmpty()) {
+            return 0;
+        } else if (list.size() > 1) {
+            return calculateTeacherHours(list, begin, end);
+        } else {
+            return list.iterator().next().getLessonHours();
+        }        
     }
 
     public int getServiceExemptionCredits(IExecutionPeriod executionPeriod) {
 
-        // Date begin = executionPeriod.getBeginDate();
-        // Date end = executionPeriod.getEndDate();
-        //
-        // List<ITeacherServiceExemption> list = new
-        // ArrayList<ITeacherServiceExemption>();
-        // for (ITeacherServiceExemption serviceExemption :
-        // this.getServiceExemptionSituations()) {
-        // if (serviceExemption.belongsToPeriod(begin, end)) {
-        // list.add(serviceExemption);
-        // }
-        // }
-        return 0;
+        Date begin = executionPeriod.getBeginDate();
+        Date end = executionPeriod.getEndDate();
+
+        List<ITeacherServiceExemption> list = getServiceExemptionSituations(begin, end);
+
+        if (list.isEmpty()) {
+            return 0;
+        } else {
+            return calculateServiceExemptionsCredits(list, begin, end);
+        }
     }
 
     public int getManagementFunctionsCredits(IExecutionPeriod executionPeriod) {
 
-        // Date begin = executionPeriod.getBeginDate();
-        // Date end = executionPeriod.getEndDate();
-        //
-        // List<IPersonFunction> list = new ArrayList<IPersonFunction>();
-        // for (IPersonFunction personFunction :
-        // this.getPerson().getPersonFunctions()) {
-        // if (personFunction.belongsToPeriod(begin, end)) {
-        // list.add(personFunction);
-        // }
-        // }
+        // TODO por isto a devolver um double!
+        Date begin = executionPeriod.getBeginDate();
+        Date end = executionPeriod.getEndDate();
+
+        List<IPersonFunction> list = new ArrayList<IPersonFunction>();
+        for (IPersonFunction personFunction : this.getPerson().getPersonFunctions()) {
+            if (personFunction.belongsToPeriod(begin, end)) {
+                list.add(personFunction);
+            }
+        }
+
+        int totalCredits = 0;
+        if (list.size() > 1) {
+            for (IPersonFunction function : list) {
+                totalCredits = (function.getCredits() != null) ? totalCredits
+                        + function.getCredits().intValue() : totalCredits;
+            }
+            return totalCredits;
+        } else if (list.size() == 1) {
+            Double credits = list.iterator().next().getCredits();
+            if (credits != null) {
+                return credits.intValue();
+            }
+        }
         return 0;
+    }
+
+    // /////////////////////////////////////////
+
+    private int calculateTeacherHours(List<ITeacherLegalRegimen> list, Date begin, Date end) {
+
+        Integer numberOfDaysInPeriod = null, maxDays = 0;
+        ITeacherLegalRegimen teacherLegalRegimen = null;
+
+        for (ITeacherLegalRegimen regimen : list) {
+
+            if (regimen.getBeginDate().before(begin) || regimen.getBeginDate().equals(begin)) {
+                numberOfDaysInPeriod = CalendarUtil.getNumberOfDaysBetweenDates(begin, regimen
+                        .getEndDate());
+                if (numberOfDaysInPeriod >= maxDays) {
+                    teacherLegalRegimen = regimen;
+                }
+            }
+            if (regimen.getBeginDate().after(begin) && regimen.getEndDate() != null
+                    && regimen.getEndDate().before(end)) {
+                numberOfDaysInPeriod = CalendarUtil.getNumberOfDaysBetweenDates(regimen.getBeginDate(),
+                        regimen.getEndDate());
+                if (numberOfDaysInPeriod >= maxDays) {
+                    teacherLegalRegimen = regimen;
+                }
+            } else if (regimen.getBeginDate().after(begin)) {
+                numberOfDaysInPeriod = CalendarUtil.getNumberOfDaysBetweenDates(regimen.getBeginDate(),
+                        end);
+                if (numberOfDaysInPeriod >= maxDays) {
+                    teacherLegalRegimen = regimen;
+                }
+            }
+        }
+        return teacherLegalRegimen.getLessonHours();
+    }
+
+    private int calculateServiceExemptionsCredits(List<ITeacherServiceExemption> list, Date begin,
+            Date end) {
+
+        Integer numberOfDaysInPeriod = null, maxDays = 0;
+        ITeacherServiceExemption teacherServiceExemption = null;
+
+        for (ITeacherServiceExemption serviceExemption : list) {
+
+            if (serviceExemption.getStart().before(begin) || serviceExemption.getStart().equals(begin)) {
+                Date endDate = (serviceExemption.getEnd() == null) ? end : serviceExemption.getEnd();
+                numberOfDaysInPeriod = CalendarUtil.getNumberOfDaysBetweenDates(begin, endDate);
+                if (numberOfDaysInPeriod >= maxDays) {
+                    teacherServiceExemption = serviceExemption;
+                }
+            }
+            if (serviceExemption.getStart().after(begin) && serviceExemption.getEnd() != null
+                    && serviceExemption.getEnd().before(end)) {
+                numberOfDaysInPeriod = CalendarUtil.getNumberOfDaysBetweenDates(serviceExemption
+                        .getStart(), serviceExemption.getEnd());
+                if (numberOfDaysInPeriod >= maxDays) {
+                    teacherServiceExemption = serviceExemption;
+                }
+            } else if (serviceExemption.getStart().after(begin)) {
+                numberOfDaysInPeriod = CalendarUtil.getNumberOfDaysBetweenDates(serviceExemption
+                        .getStart(), end);
+                if (numberOfDaysInPeriod >= maxDays) {
+                    teacherServiceExemption = serviceExemption;
+                }
+            }
+        }
+
+        if (teacherServiceExemption.getEnd() != null) {
+            return getHoursByCategory(teacherServiceExemption.getStart(), teacherServiceExemption
+                    .getEnd());
+        } else {
+            return getHoursByCategory(teacherServiceExemption.getStart(), end);
+        }
     }
 }

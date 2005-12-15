@@ -7,8 +7,13 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
+import net.sourceforge.fenixedu.domain.teacher.AdviseType;
+import net.sourceforge.fenixedu.domain.teacher.IAdvise;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.StudentState;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 
 /**
  * @author dcs-rjao
@@ -249,4 +254,21 @@ public class Student extends Student_Base {
         this.approvedEnrollmentsNumber = approvedEnrollmentsNumber;
     }
 
+    public List<IAdvise> getAdvisesByTeacher(final ITeacher teacher) {
+        return (List<IAdvise>) CollectionUtils.select(getAdvises(), new Predicate() {
+
+            public boolean evaluate(Object arg0) {
+                IAdvise advise = (IAdvise) arg0;
+                return advise.getTeacher() == teacher;
+            }
+        });
+    }
+    
+    public List<IAdvise> getAdvisesByType(final AdviseType adviseType) {
+        return (List<IAdvise>) CollectionUtils.select(getAdvises(), new Predicate(){
+            public boolean evaluate(Object arg0) {
+                IAdvise advise = (IAdvise) arg0;                
+                return advise.getAdviseType().equals(adviseType);
+            }});
+    }
 }
