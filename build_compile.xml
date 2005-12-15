@@ -586,12 +586,8 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			<arg value="net.sourceforge.fenixedu.persistenceTier.OJB.DomainAllocator"/>
 			<arg value="-d"/>
 			<arg value="${dml.definition.file}"/>
-		</java>	
-		<exec executable="ant" failonerror="true">
-			<arg line="-f"/>
-			<arg line="build_accessControl.xml"/>			
-		</exec>
-
+		</java>
+		<ant antfile="build_accessControl.xml"/>
     </target>
 
     <target name="includeJ2EEjar"
