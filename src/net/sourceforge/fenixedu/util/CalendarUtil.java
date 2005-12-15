@@ -12,7 +12,7 @@ import org.apache.commons.lang.time.DateFormatUtils;
 /**
  * @author Ana e Ricardo
  * @author Barbosa e Pica
- *  
+ * 
  */
 public class CalendarUtil {
 
@@ -58,10 +58,25 @@ public class CalendarUtil {
         return DateFormatUtils.format(time.getTime(), "HHmmss");
     }
 
+    private static String time2string(Date time) {
+        return DateFormatUtils.format(time, "HHmmss");
+    }
+
+    public static boolean intersectTimes(Date startTime1, Date endTime1, Date startTime2, Date endTime2) {
+        String startTime1String = time2string(startTime1);
+        String endTime1String = time2string(endTime1);
+        String startTime2String = time2string(startTime2);
+        String endTime2String = time2string(endTime2);
+        
+        boolean doesNotIntersect = (endTime2String.compareTo(startTime1String) <= 0)
+                || (startTime2String.compareTo(endTime1String) >= 0);
+        return !doesNotIntersect;
+    }
+
     /*
      * 
      * @author Barbosa @author Pica
-     *  
+     * 
      */
     public static Integer getNumberOfDaysBetweenDates(Date beginDate, Date endDate) {
         Calendar c1 = Calendar.getInstance();

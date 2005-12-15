@@ -1,0 +1,47 @@
+/**
+* Nov 9, 2005
+*/
+package net.sourceforge.fenixedu.util;
+
+/**
+ * @author Ricardo Rodrigues
+ *
+ */
+
+public enum WeekDay {
+
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY,
+    THURSDAY,
+    FRIDAY,
+    SATURDAY,
+    SUNDAY;
+    
+    public String getName(){
+        return name();
+    }
+    
+    public static WeekDay getWeekDay(DiaSemana weekDay) {
+        switch (weekDay.getDiaSemana()) {
+        case DiaSemana.DOMINGO:
+            return WeekDay.SUNDAY;
+        case DiaSemana.SEGUNDA_FEIRA:
+            return WeekDay.MONDAY;
+        case DiaSemana.TERCA_FEIRA:
+            return WeekDay.TUESDAY;
+        case DiaSemana.QUARTA_FEIRA:
+            return WeekDay.WEDNESDAY;
+        case DiaSemana.QUINTA_FEIRA:
+            return WeekDay.THURSDAY;
+        case DiaSemana.SEXTA_FEIRA:
+            return WeekDay.FRIDAY;
+        case DiaSemana.SABADO:
+            return WeekDay.SATURDAY;
+        default:
+            return null;
+        }        
+    }
+}
+
+
