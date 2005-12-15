@@ -594,7 +594,6 @@
 
 	<!-- by gedl September the 11th, 2003 -->
     <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowStudentGroupInfo"
-			name="showStudentGroupInfoForm"
             path="/showStudentGroupInfo"
 	        scope="request"
 			validate="true">

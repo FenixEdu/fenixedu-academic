@@ -26,6 +26,13 @@
 				validate="true">
 		</action>
 		
+			<!-- by gedl September the 11th, 2003 -->
+	    <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowStudentGroupInfo"
+            path="/showStudentGroupInfo"
+	        scope="request"
+			validate="true">
+    	</action>
+		
 	</action-mappings>
   
   <!-- ========== Controller Configuration ================================ -->
