@@ -80,11 +80,11 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
 
     public void getUnitTree(StringBuffer buffer, IUnit parentUnit) {
         buffer.append("<ul>");
-        getUnitsList(parentUnit, 0, buffer);
+        getUnitsList(parentUnit, buffer);
         buffer.append("</ul>");
     }
 
-    private void getUnitsList(IUnit parentUnit, int index, StringBuffer buffer) {
+    private void getUnitsList(IUnit parentUnit, StringBuffer buffer) {
 
         buffer.append("<li>").append("<a href=\"").append(getContextPath()).append(
                 "/manager/functionsManagement/chooseFunction.faces?personID=").append(personID).append(
@@ -93,7 +93,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
        
         for (IUnit subUnit : parentUnit.getSubUnits()) {
             if (subUnit.isActive(prepareCurrentDate())) {
-                getUnitsList(subUnit, index + 1, buffer);
+                getUnitsList(subUnit, buffer);
             }
         }
         buffer.append("</ul>");
