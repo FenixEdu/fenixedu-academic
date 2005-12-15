@@ -9,8 +9,14 @@ import java.util.ResourceBundle;
 
 import javax.faces.model.SelectItem;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
+import net.sourceforge.fenixedu.domain.organizationalStructure.IUnit;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 public class CurricularPlanManagementBackingBean extends FenixBackingBean {
@@ -20,6 +26,24 @@ public class CurricularPlanManagementBackingBean extends FenixBackingBean {
         IEmployee employee = getUserView().getPerson().getEmployee();
         return (employee != null && employee.getDepartmentWorkingPlace() != null) ? employee
                 .getDepartmentWorkingPlace().getRealName() : "";
+    }
+    
+    public List<IDegree> getDepartmentDegrees() throws FenixFilterException, FenixServiceException {
+        Object[] args = { Degree.class, 10 };
+        List result = new ArrayList();
+        result.add(((IDegree) ServiceUtils.executeService(null, "ReadDomainObject", args)));
+        return result;
+        
+//        IEmployee employee = getUserView().getPerson().getEmployee();
+//        if (employee != null && employee.getDepartmentWorkingPlace() != null)  {
+//            IUnit deparmentUnit = employee.getDepartmentWorkingPlace().getUnit();
+//            
+//            for (IUnit degreeUnit : deparmentUnit.getDegreeUnits()) {
+//                result.add(degreeUnit.getDegree());
+//            }
+//        }
+//        
+//        return result;
     }
     
     public List<SelectItem> getCurricularStageTypes() {

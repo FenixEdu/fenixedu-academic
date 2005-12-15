@@ -23,24 +23,22 @@ import org.apache.ojb.broker.query.Criteria;
 
 public class CursoOJB extends PersistentObjectOJB implements ICursoPersistente {
 
-    /** Creates a new instance of CursoOJB */
-    public CursoOJB() {
-    }
-
     public IDegree readBySigla(String sigla) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("sigla", sigla);
         return (IDegree) queryObject(Degree.class, criteria);
     }
 
-    public List readAll() throws ExcepcaoPersistencia {
+    public List<IDegree> readAllFromOldDegreeStructure() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
+        criteria.addColumnIsNull("BOLONHA_DEGREE_TYPE");
         return queryList(Degree.class, criteria);
     }
 
-    public List readAllByDegreeType(DegreeType degreeType) throws ExcepcaoPersistencia {
+    public List<IDegree> readAllByDegreeType(DegreeType degreeType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("tipoCurso", degreeType);
         return queryList(Degree.class, criteria, "nome", true);
     }
+
 }

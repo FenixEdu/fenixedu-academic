@@ -272,6 +272,21 @@
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.sop.evaluation.WrittenEvaluationsByRoomBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+
+	<!-- BEGIN: Bolonha Management Beans -->
+	<managed-bean>
+		<description>ScientificCouncilDegreeManagement</description>
+		<managed-bean-name>ScientificCouncilDegreeManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.curricularPlans.ScientificCouncilDegreeManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<description>ScientificCouncilCurricularPlanManagement</description>
+		<managed-bean-name>ScientificCouncilCurricularPlanManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.curricularPlans.ScientificCouncilCurricularPlanManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<!-- END: Bolonha Management Beans -->
 	
 	<!-- BEGIN: Bolonha Management Beans -->
 	<managed-bean>
@@ -1364,6 +1379,20 @@
 		</navigation-case>
 	</navigation-rule>
 	<!-- END: COORDINATOR Navigation Rules -->	
+	
+
+	<!-- BEGIN: Scientific Council Navigation Rules -->
+	<!-- Degree -->
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/curricularPlans/createDegree.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/scientificCouncil/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- END: Scientific Council Navigation Rules -->
+
 	
 	<!-- BEGIN: Bolonha Navigation Rules -->
 	<!-- CompetenceCourse --> 

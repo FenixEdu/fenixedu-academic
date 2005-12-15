@@ -209,7 +209,7 @@ public class ScientificCouncilComponentBuilder {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             ICursoPersistente persistentDegree = sp.getICursoPersistente();
-            List degrees = persistentDegree.readAll();
+            List degrees = persistentDegree.readAllFromOldDegreeStructure();
             Iterator degreeIterator = degrees.iterator();
             List infoDegrees = new ArrayList();
             while (degreeIterator.hasNext()) {

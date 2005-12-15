@@ -4136,6 +4136,16 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>CreateDegree</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.CreateDegree</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ScientificCouncilAuthorization" />
+		</filterChains>
+	</service>
+	<service>
 		<name>ScientificCouncilComponentService</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.ScientificCouncilComponentService</implementationClass>

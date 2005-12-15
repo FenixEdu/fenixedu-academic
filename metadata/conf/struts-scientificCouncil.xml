@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <!DOCTYPE struts-config PUBLIC
 	"-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
 	"http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
@@ -108,6 +108,7 @@
 	<controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
 
 	<!-- ========== Message Resources Definitions ============================ -->
+    <message-resources parameter="ServidorApresentacao.ScientificCouncilResources" null="false"/>
 
 	<!-- ========== Plug Ins Configuration ================================= -->
 	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
@@ -117,7 +118,7 @@
 
 	<plug-in className="org.apache.struts.tiles.TilesPlugin" >
 		<set-property property="definitions-config"
-					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml" />
+					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/scientificCouncil/tiles-scientificCouncil-definitions.xml,/WEB-INF/tiles/scientificCouncil/tiles-scientificCouncil-pages-definitions.xml" />					  
 		<set-property property="moduleAware" value="true" />
 		<set-property property="definitions-parser-validate" value="true" />
 	</plug-in>    

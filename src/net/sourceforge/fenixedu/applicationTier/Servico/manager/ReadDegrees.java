@@ -19,7 +19,7 @@ public class ReadDegrees implements IService {
 
     public List run(final DegreeType degreeType) throws ExcepcaoPersistencia {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final List<IDegree> degrees = persistentSupport.getICursoPersistente().readAll();
+        final List<IDegree> degrees = persistentSupport.getICursoPersistente().readAllFromOldDegreeStructure();
         final List<InfoDegree> infoDegrees = new ArrayList<InfoDegree>(degrees.size());
         for (final IDegree degree : degrees) {
         	if (degreeType == null || degreeType == degree.getTipoCurso()) {

@@ -27,6 +27,7 @@
 valueType net.sourceforge.fenixedu.domain.teacher.AdviseType								as AdviseType;
 valueType net.sourceforge.fenixedu.util.AgreementType                                           as AgreementType;
 valueType net.sourceforge.fenixedu.tools.enrollment.AreaType                                    as AreaType;
+valueType net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType                              as BolonhaDegreeType;
 valueType net.sourceforge.fenixedu.domain.branch.BranchType                                     as BranchType;
 valueType net.sourceforge.fenixedu.util.CurricularCourseExecutionScope                          as CurricularCourseExecutionScope;
 valueType net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType                       as CurricularCourseType;
@@ -691,7 +692,9 @@ class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.do
 	String nameEn;
 	String sigla;
     DegreeType tipoCurso;
+    BolonhaDegreeType bolonhaDegreeType;
     Integer keyUnit;
+    MarkType markType;
 	
 	interface "
 

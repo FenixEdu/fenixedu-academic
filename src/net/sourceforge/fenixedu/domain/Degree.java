@@ -8,12 +8,14 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Iterator;
 
+import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesSummary;
 import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.domain.student.IDelegate;
+import net.sourceforge.fenixedu.util.MarkType;
 
 /**
  * 
@@ -22,6 +24,29 @@ import net.sourceforge.fenixedu.domain.student.IDelegate;
 
 public class Degree extends Degree_Base {
 
+    public Degree() {
+        super();
+    };
+    
+    public Degree(String name, String nameEn, String sigla, DegreeType degreeType, String concreteClassForDegreeCurricularPlans) {
+        this();
+        setNome(name);
+        setNameEn(nameEn);
+        setSigla(sigla);
+        setTipoCurso(degreeType);
+        setConcreteClassForDegreeCurricularPlans(concreteClassForDegreeCurricularPlans);
+        
+        new DegreeInfo(this);
+    }
+    
+    public Degree(String namePt, String nameEn, String code, BolonhaDegreeType bolonhaDegreeType, MarkType markType) {
+        this();
+        this.setNome(namePt);
+        this.setNameEn(nameEn);
+        this.setSigla(code);
+        this.setBolonhaDegreeType(bolonhaDegreeType);
+    }
+    
     public String toString() {
         String result = "[CURSO";
         result += ", codInt=" + getIdInternal();
@@ -45,19 +70,6 @@ public class Degree extends Degree_Base {
 
         return degreeCurricularPlan;
     }
-	
-	
-	public Degree() {};
-	
-	public Degree(String name, String nameEn, String sigla, DegreeType degreeType, String concreteClassForDegreeCurricularPlans) {
-		setNome(name);
-		setNameEn(nameEn);
-		setSigla(sigla);
-		setTipoCurso(degreeType);
-		setConcreteClassForDegreeCurricularPlans(concreteClassForDegreeCurricularPlans);
-		
-		new DegreeInfo(this);
-	}
 	
 	
 	public void edit(String name, String nameEn, String sigla, DegreeType degreeType) {

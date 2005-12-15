@@ -13,35 +13,37 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-public class CursoVO extends VersionedObjectsBase implements ICursoPersistente
-{
+public class CursoVO extends VersionedObjectsBase implements ICursoPersistente {
 
-    public IDegree readBySigla(String sigla) throws ExcepcaoPersistencia
-    {
-        Iterator degreesIterator = ((List)readAll(Degree.class)).iterator();
+    public IDegree readBySigla(String sigla) throws ExcepcaoPersistencia {
+        Iterator degreesIterator = ((List) readAll(Degree.class)).iterator();
         while (degreesIterator.hasNext()) {
-            IDegree degree = (IDegree)degreesIterator.next();
-            
+            IDegree degree = (IDegree) degreesIterator.next();
+
             if (degree.getSigla().equals(sigla))
                 return degree;
         }
         return null;
     }
 
-    public List readAll() throws ExcepcaoPersistencia
-    {
-        return (List)readAll(Degree.class);
+    public List readAllFromOldDegreeStructure() throws ExcepcaoPersistencia {
+        List degrees = (List) readAll(Degree.class);
+
+        return (List) CollectionUtils.select(degrees, new Predicate() {
+            public boolean evaluate(Object o) {
+                return ((IDegree) o).getBolonhaDegreeType() == null;
+            }
+        });
     }
 
-    public List readAllByDegreeType(final DegreeType degreeType) throws ExcepcaoPersistencia
-    {
-        List degrees = (List)readAll(Degree.class);
-        
-        return (List)CollectionUtils.select(degrees,new Predicate() {
-            public boolean evaluate (Object o) {
-                return ((IDegree)o).getTipoCurso().equals(degreeType);
+    public List readAllByDegreeType(final DegreeType degreeType) throws ExcepcaoPersistencia {
+        List degrees = (List) readAll(Degree.class);
+
+        return (List) CollectionUtils.select(degrees, new Predicate() {
+            public boolean evaluate(Object o) {
+                return ((IDegree) o).getTipoCurso().equals(degreeType);
             }
-        }
-        );
+        });
     }
+
 }
