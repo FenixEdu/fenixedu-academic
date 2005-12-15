@@ -125,7 +125,8 @@ public class InjectAccessControl extends Task
 		{
 			if (this.isClassFile(files[i]))
 			{
-				String nextClass = files[i].replaceAll(File.separator, ".").substring(0, files[i].lastIndexOf("."));
+				final String separator = File.separator.equals("\\") ? "\\\\" : File.separator;
+				String nextClass = files[i].replaceAll(separator, ".").substring(0, files[i].lastIndexOf("."));
 				try
 				{
 					boolean changed = injector.perform(nextClass, targetClassesDir.getAbsolutePath(), this.producerClassByName(), this.annotationClassByName());
