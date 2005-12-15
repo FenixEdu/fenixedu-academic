@@ -17,3 +17,7 @@ echo Altering CompetenceCourseInformation table done.
 echo Creating ExecutionYear 2006/2007 ...
 mysql -u$2 -f $1 < addNewExecutionYear.sql
 echo Creating ExecutionYear 2006/2007 done.
+
+mysql -u$2 -f $1 < createTableAdvise.sql
+mysql -u$2 -f $1 < createTableTeacherService.sql
+mysql -u$2 -f $1 < createTableTeacherServiceItem.sql
