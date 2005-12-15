@@ -34,6 +34,31 @@
 		</td>
 	</tr>
 	<tr>
+		<td>
+			<bean:message key="message.sectionOrder"/>	
+		</td>
+		<td>
+			<html:select property="itemOrder" size="1">
+				<html:option value="-1"><bean:message key="label.end"/></html:option>
+				<html:options collection="itemsList" labelProperty="name" property="itemOrder" />
+			
+			</html:select>
+			<span class="error"><html:errors property="itemOrder"/></span>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<bean:message key="message.itemUrgent"/>
+		</td>
+		<td>
+			<html:select property="urgent" size="1" >	
+				<html:option key="label.no" value="false"></html:option>
+				<html:option key="label.yes" value="true"></html:option>
+			</html:select>
+			<span class="error"><html:errors property="urgent"/></span>
+		</td>
+	</tr>
+	<tr>
 		<td>&nbsp;</td>
 	</tr>
 	<tr>
@@ -84,31 +109,6 @@
 				<html:textarea rows="20" cols="80" property="information"/>
 			</logic:notPresent>
 			<span class="error"><html:errors property="information"/></span>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<bean:message key="message.sectionOrder"/>	
-		</td>
-		<td>
-			<html:select property="itemOrder" size="1">
-				<html:option value="-1"><bean:message key="label.end"/></html:option>
-				<html:options collection="itemsList" labelProperty="name" property="itemOrder" />
-			
-			</html:select>
-			<span class="error"><html:errors property="itemOrder"/></span>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<bean:message key="message.itemUrgent"/>
-		</td>
-		<td>
-			<html:select property="urgent" size="1" >	
-				<html:option key="label.no" value="false"></html:option>
-				<html:option key="label.yes" value="true"></html:option>
-			</html:select>
-			<span class="error"><html:errors property="urgent"/></span>
 		</td>
 	</tr>
 </table>
