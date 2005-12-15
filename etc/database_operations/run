@@ -21,3 +21,6 @@ echo Creating ExecutionYear 2006/2007 done.
 mysql -u$2 -f $1 < createTableAdvise.sql
 mysql -u$2 -f $1 < createTableTeacherService.sql
 mysql -u$2 -f $1 < createTableTeacherServiceItem.sql
+mysql -u$2 -f $1 < updatePersonRoleWithDepartmentMemberRole.sql > res
+mysql -u$2 -f $1 < res
+rm -r res
