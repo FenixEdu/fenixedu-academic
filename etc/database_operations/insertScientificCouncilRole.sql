@@ -1,0 +1,1 @@
+INSERT INTO DEGREE ROLE_TYPE = "SCIENTIFIC_COUNCIL", PORTAL_SUB_APPLICATION = "/scientificCouncil", PAGE = "index.do", PAGE_NAME_PROPERTY = "portal.scientificCouncil";
