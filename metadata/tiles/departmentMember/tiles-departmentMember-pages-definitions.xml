@@ -5,4 +5,11 @@
     <definition name="index" extends="departmentMember.masterPage">
         <put name="body" value="/departmentMember/index.jsp"></put>
     </definition>
+    
+	<definition name="showAllCreditsResume" extends="departmentMember.masterPage">
+		<put name="body" value="/departmentMember/viewTeacherService/credits/listAllTeacherCreditsResume.jsp"/>
+	</definition>
+	<definition name="show-teacher-credits-sheet" extends="departmentMember.masterPage">
+		<put name="body" value="/departmentMember/viewTeacherService/credits/showTeacherCredits.jsp"/>
+	</definition>    
 </tiles-definitions>

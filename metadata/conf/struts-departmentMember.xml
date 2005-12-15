@@ -5,7 +5,11 @@
 <struts-config>
     <!-- ========== Data Source Configuration =============================== -->
     <!-- ========== Form Bean Definitions ================================== -->
-    <form-beans type="org.apache.struts.action.ActionFormBean">		
+    <form-beans type="org.apache.struts.action.ActionFormBean">	
+	    <form-bean name="teacherCreditsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="executionPeriodId" type="java.lang.Integer"/>
+			<form-property name="teacherId" type="java.lang.Integer" />
+		</form-bean>		
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -29,7 +33,19 @@
     <action-mappings type="org.apache.struts.action.ActionMapping">
         <action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
             <forward name="Success" path="index"/>
-        </action>       
+        </action>   
+        
+        <action path="/showAllTeacherCreditsResume" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.credits.ShowAllTeacherCreditsResumeAction">
+            <forward name="show-all-credits-resume" path="showAllCreditsResume"/>
+        </action>
+        <action path="/showFullTeacherCreditsSheet" 	    
+   	        name="teacherCreditsForm"
+   	        parameter="method"
+   	        scope="request"
+            type="net.sourceforge.fenixedu.presentationTier.Action.credits.ShowTeacherCreditsDispatchAction">             
+            <forward name="show-teacher-credits" path="show-teacher-credits-sheet"/>
+        </action>    
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>

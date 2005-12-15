@@ -27,11 +27,15 @@
 				<bean:message key="link.teacherService"/>
 			</html:link>
 		</li>
-				
-<%--		<li class="navheader">
+		<li class="navheader">
 			<bean:message key="link.group.individual.title" />		
 		</li>
---%>
+
+  		<li>
+		  	<html:link page="/showAllTeacherCreditsResume.do">
+		  		<bean:message key="link.teacherService"/>
+		  	</html:link>  
+		</li> 		
 	</ul>
 	
 	<br />
