@@ -54,7 +54,7 @@ public class Section extends Section_Base {
 
         for (IItem item : this.getAssociatedItems()) {
             if (item.getName().equals(itemName))
-                throw new DomainException(this.getClass().getName(), "");
+                throw new DomainException("error.duplicate.item");
         }
 
         IItem item = new Item();
