@@ -24,6 +24,7 @@
  * 
  */
 
+valueType net.sourceforge.fenixedu.domain.teacher.AdviseType								as AdviseType;
 valueType net.sourceforge.fenixedu.util.AgreementType                                           as AgreementType;
 valueType net.sourceforge.fenixedu.tools.enrollment.AreaType                                    as AreaType;
 valueType net.sourceforge.fenixedu.domain.branch.BranchType                                     as BranchType;
@@ -91,6 +92,7 @@ valueType net.sourceforge.fenixedu.util.ByteArray												as ByteArray;
 valueType net.sourceforge.fenixedu.util.ContentType                                             as ContentType;
 valueType net.sourceforge.fenixedu.util.RegimenType                      			            as RegimenType;
 valueType net.sourceforge.fenixedu.util.LegalRegimenType  		                                as LegalRegimenType;
+valueType net.sourceforge.fenixedu.util.WeekDay															as WeekDay;
 
 
 /*
@@ -102,6 +104,22 @@ valueType net.sourceforge.fenixedu.util.LegalRegimenType  		                    
 class net.sourceforge.fenixedu.domain.DomainObject implements java.io.Serializable {
 	Integer ackOptLock;
 	Integer idInternal;
+}
+
+class net.sourceforge.fenixedu.domain.teacher.Advise extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyStartExecutionPeriod;
+	Integer keyEndExecutionPeriod;
+	Integer keyStudent;
+	Integer keyTeacher;
+	AdviseType adviseType;
+	
+	interface "
+	 public void delete();
+	 public ITeacherAdviseService getTeacherAdviseServiceByExecutionPeriod(final net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
+	 public void checkPercentageCoherenceWithOtherAdvises(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod, double percentage);
+	 public void updateEndExecutionPeriod();
+	 public void updateStartExecutionPeriod();
+	"
 }
 
 class net.sourceforge.fenixedu.domain.Advisory extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1076,6 +1094,8 @@ class net.sourceforge.fenixedu.domain.Employee extends net.sourceforge.fenixedu.
 	public IDepartment getDepartmentWorkingPlace();
 	public IDepartment getDepartmentMailingPlace();
 	public IContract getCurrentContract();
+    public IContract getLastContract();
+    public IDepartment getLastDepartmentWorkingPlace();
 	"
 }
 
@@ -2949,7 +2969,92 @@ class net.sourceforge.fenixedu.domain.Section extends net.sourceforge.fenixedu.d
 	"
 }
 
+class net.sourceforge.fenixedu.domain.teacher.TeacherService extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyTeacher;
+	Integer keyExecutionPeriod;
+	
+	interface "
+		public void delete();
+		public Double getCredits();
+		public Double getTeachingDegreeCredits();		
+		public Double getSupportLessonHours();
+		public Double getMasterDegreeServiceCredits();
+		public Double getPastServiceCredits();
+		public Double getOtherServiceCredits();
+		public Double getInstitutionWorkingHours();
+		public Double getTeacherAdviseServiceCredits();
+		public void verifyOverlappingWithInstitutionWorkingTime(java.util.Date startTime, java.util.Date endTime, net.sourceforge.fenixedu.util.WeekDay weekDay);
+		public void verifyOverlappingWithSupportLesson(java.util.Date startTime, java.util.Date endTime, net.sourceforge.fenixedu.util.WeekDay weekDay);
+		public void verifyOverlappingWithTeachingService(java.util.Date startTime, java.util.Date endTime, net.sourceforge.fenixedu.util.WeekDay weekDay);
+		public IDegreeTeachingService getDegreeTeachingServiceByShiftAndExecutionCourse(final net.sourceforge.fenixedu.domain.IShift shift,
+																																						final net.sourceforge.fenixedu.domain.IExecutionCourse executionCourse);
+		public java.util.List<IDegreeTeachingService> getDegreeTeachingServices() ;
+     	public java.util.List<ITeacherMasterDegreeService> getMasterDegreeServices();
+	    public ITeacherPastService getPastService();
+	    public java.util.List<IOtherService> getOtherServices();
+	    public java.util.List<IInstitutionWorkTime> getInstitutionWorkTimes();
+	    public java.util.List<net.sourceforge.fenixedu.domain.ISupportLesson> getSupportLessons();
+	    public java.util.List<ITeacherAdviseService> getTeacherAdviseServices();
+	"
+}
 
+class net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem extends net.sourceforge.fenixedu.domain.DomainObject {
+	String ojbConcreteClass;
+	Integer keyTeacherService;
+}
+
+	class net.sourceforge.fenixedu.domain.teacher.TeacherPastService extends net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem {				
+		Double credits;
+	}
+
+	class net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService extends net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem {	
+		Integer keyProfessorship;
+		Double credits;
+		Double hours;
+	}
+	
+	class net.sourceforge.fenixedu.domain.teacher.OtherService extends net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem {
+		Double credits;
+		String reason; 
+		
+		interface "
+			public void delete();
+		"
+	}
+	
+	class net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime extends net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem {
+		Date startTime;
+		Date endTime;		
+		WeekDay weekDay;
+		
+		interface "
+			public double getHours();			
+			public void update(net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InstitutionWorkTimeDTO institutionWorkTimeDTO);
+			public void delete();
+		"
+	}	
+	
+	class net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService extends net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem {
+		Double percentage;
+		Integer keyShift;
+		Integer keyProfessorship;
+		
+		interface "
+			public void updatePercentage(Double percentage);
+			public void delete();
+		"
+	}
+	
+	class net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService extends net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem {
+		Double percentage;
+		Integer keyAdvise;
+		
+		interface "
+			public void delete();
+			public void updatePercentage(Double percentage);
+		"
+	}
+	
 class net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyTeacher;
     Date lastModificationDate;
@@ -2974,6 +3079,8 @@ class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.dom
     public void associateSchoolClass(net.sourceforge.fenixedu.domain.ISchoolClass schoolClass);
     
     public void transferSummary(ISummary summary, java.util.Date summaryDate, java.util.Date summaryHour, IRoom room, boolean newSummary);
+    
+    public Double getAvailableShiftPercentageForTeacher(ITeacher teacher);
 	"
 }
 
@@ -3075,6 +3182,8 @@ class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.d
     public Double getApprovationRatio();
     public Double getArithmeticMean();
     public Integer getApprovedEnrollmentsNumber();
+    public java.util.List<net.sourceforge.fenixedu.domain.teacher.IAdvise> getAdvisesByTeacher(final ITeacher teacher) ;    
+    public java.util.List<net.sourceforge.fenixedu.domain.teacher.IAdvise> getAdvisesByType(final net.sourceforge.fenixedu.domain.teacher.AdviseType adviseType);    
 	"
 }
 
@@ -3141,14 +3250,8 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
     
     public int getNumberOfApprovedCurricularCourses();
     
-    public java.util.List getStudentEnrollmentsWithApprovedState();
-    
-    public int getNumberOfStudentEnrollmentsWithApprovedState();
-    
     public int getNumberOfEnrolledCurricularCourses();
     
-    public int getNumberOfStudentEnrollments();
-        
     public boolean isCurricularCourseApproved(ICurricularCourse curricularCourse);
     
     public boolean isCurricularCourseEnrolled(ICurricularCourse curricularCourse);
@@ -3291,9 +3394,13 @@ class net.sourceforge.fenixedu.domain.SupportLesson extends net.sourceforge.feni
 	DiaSemana weekDay;
     
 	interface "
+	public void delete();
+	
 	public double hours();
 	
 	public boolean belongsToExecutionPeriod(IExecutionPeriod executionPeriod);
+	
+	public void verifyOverlappings() ;
 	"
 }
 
@@ -3328,6 +3435,7 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	
 	public IDepartment getWorkingDepartment();
    	
+   	public IDepartment getLastWorkingDepartment();
 	
 	public java.util.List<net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal> getFinalDegreeWorksByExecutionYear(IExecutionYear executionYear);
 	
@@ -3338,9 +3446,8 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	public java.util.List<IExecutionCourse> getAllLecturedExecutionCourses();
 	
 	public java.util.List<IMasterDegreeThesisDataVersion> getGuidedMasterDegreeThesisByExecutionYear(IExecutionYear executionYear);
-
-	public java.util.List<net.sourceforge.fenixedu.domain.teacher.ITeacherServiceExemption> getServiceExemptionSituations(java.util.Date beginDate, java.util.Date endDate);	
-
+	public java.util.List<net.sourceforge.fenixedu.domain.teacher.ITeacherServiceExemption> getServiceExemptionSituations(java.util.Date beginDate, java.util.Date endDate);
+	public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction> getPersonFuntions(java.util.Date beginDate, java.util.Date endDate);
 	public java.util.List<IMasterDegreeThesisDataVersion> getAllGuidedMasterDegreeThesis();
 	
 	public void createTeacherPersonalExpectation(
@@ -3348,8 +3455,13 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	
 	public int getManagementFunctionsCredits(IExecutionPeriod executionPeriod);
     public int getServiceExemptionCredits(IExecutionPeriod executionPeriod);
-    public int getHoursByCategory(IExecutionPeriod executionPeriod);    
-    public Double getHoursLecturedOnExecutionCourse(IExecutionCourse executionCourse);
+    public int getHoursByCategory(java.util.Date begin, java.util.Date end);    
+    public Double getHoursLecturedOnExecutionCourse(IExecutionCourse executionCourse);	
+	public net.sourceforge.fenixedu.domain.teacher.ITeacherService getTeacherServiceByExecutionPeriod(final IExecutionPeriod executionPeriod);
+	
+	public IProfessorship getProfessorshipByExecutionCourse(final IExecutionCourse executionCourse);
+	
+	public java.util.List<IProfessorship> getDegreeProfessorshipsByExecutionPeriod(final IExecutionPeriod executionPeriod);
 	"
 }
 class net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3362,6 +3474,10 @@ class net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen extends net.so
 	RegimenType regimenType;
 	Date beginDate;
 	Date endDate;
+	
+	interface "
+	public boolean belongsToPeriod(java.util.Date beginDate, java.util.Date endDate);
+	"
 }
 
 class net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -6464,7 +6580,7 @@ relation UnitUnit {
     }
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole parentUnits{
 		multiplicity *;
-}
+	}
 }
 
 relation DepartmentUnit {
@@ -6537,4 +6653,81 @@ relation TeacherExpectationDefinitionPeriodDepartment {
     	multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Department playsRole department;
+}
+
+relation TeacherServiceTeacher {
+	net.sourceforge.fenixedu.domain.teacher.TeacherService playsRole teacherServices {
+		multiplicity *;
+	}	
+	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+relation TeacherServiceExecutionPeriod {
+	net.sourceforge.fenixedu.domain.teacher.TeacherService playsRole teacherServices {
+		multiplicity*;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation TeacherServiceTeacherServiceItem {
+	net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem playsRole serviceItems {
+		multiplicity*;
+	}
+	net.sourceforge.fenixedu.domain.teacher.TeacherService playsRole teacherService;
+}
+
+relation TeacherMasterDegreeServiceProfessorship {
+	net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService playsRole teacherMasterDegreeServices {
+		multiplicity*;
+	}
+	net.sourceforge.fenixedu.domain.Professorship playsRole professorship;
+}
+
+relation DegreeTeachingServiceProfessorship {
+	net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService playsRole degreeTeachingServices {
+		multiplicity*;
+	}
+	net.sourceforge.fenixedu.domain.Professorship playsRole professorship;
+}
+
+relation DegreeTeachingServiceShift {
+	net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService playsRole degreeTeachingServices {
+		multiplicity*;
+	}
+	net.sourceforge.fenixedu.domain.Shift playsRole shift;
+}
+
+relation AdviseTeacher {
+	net.sourceforge.fenixedu.domain.teacher.Advise playsRole advises {
+		multiplicity*;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+relation AdviseStudent {
+	net.sourceforge.fenixedu.domain.teacher.Advise playsRole advises {
+		multiplicity*;
+	}
+	net.sourceforge.fenixedu.domain.Student playsRole student;
+}
+
+relation AdviseStartPeriod {
+	net.sourceforge.fenixedu.domain.teacher.Advise playsRole associatedStartadvises {
+		multiplicity*;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole startExecutionPeriod;
+}
+
+relation AdviseEndPeriod {
+	net.sourceforge.fenixedu.domain.teacher.Advise playsRole associatedEndadvises {
+		multiplicity*;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole endExecutionPeriod;
+}
+
+relation AdviseTeacherAdviseService {
+	net.sourceforge.fenixedu.domain.teacher.Advise playsRole advise;
+	net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService playsRole teacherAdviseServices {
+		multiplicity*;
+	}
 }
