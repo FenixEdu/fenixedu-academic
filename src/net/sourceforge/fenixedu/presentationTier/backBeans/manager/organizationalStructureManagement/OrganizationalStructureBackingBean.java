@@ -128,11 +128,11 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     public void getUnitTreeToChooseParentUnit(StringBuffer buffer, IUnit parentUnit)
             throws FenixFilterException, FenixServiceException {
         buffer.append("<ul>");
-        getUnitsListToChooseParentUnit(parentUnit, 0, buffer);
+        getUnitsListToChooseParentUnit(parentUnit, buffer);
         buffer.append("</ul>");
     }
 
-    private void getUnitsListToChooseParentUnit(IUnit parentUnit, int index, StringBuffer buffer)
+    private void getUnitsListToChooseParentUnit(IUnit parentUnit, StringBuffer buffer)
             throws FenixFilterException, FenixServiceException {
 
         buffer.append("<li>").append("<a href=\"").append(getContextPath()).append(
@@ -145,7 +145,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             if (!subUnit.equals(this.getUnit())
                     && (this.getUnit().getParentUnits().isEmpty() || !this.getUnit().getParentUnits()
                             .contains(subUnit))) {
-                getUnitsListToChooseParentUnit(subUnit, index + 1, buffer);
+                getUnitsListToChooseParentUnit(subUnit, buffer);
             }
         }
 
@@ -160,29 +160,41 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         Date currentDate = prepareCurrentDate();
 
         for (IUnit unit : allUnitsWithoutParent) {
-            if ((this.getListingTypeValue().equals("0") && unit.isActive(currentDate))
-                    || (this.getListingTypeValue().equals("1") && !unit.isActive(currentDate)))
-                getUnitTree(buffer, unit);
+            if (this.getListingTypeValue().equals("0")
+                    && (unit.isActive(currentDate) || !unit.getActiveSubUnits(currentDate).isEmpty())) {
+                getUnitTree(buffer, unit, unit.getActiveSubUnits(currentDate), currentDate, true);
+            } else if (this.getListingTypeValue().equals("1")
+                    && (!unit.isActive(currentDate) || !unit.getInactiveSubUnits(currentDate).isEmpty())) {
+                getUnitTree(buffer, unit, unit.getInactiveSubUnits(currentDate), currentDate, false);
+            }
         }
 
         return buffer.toString();
     }
 
-    public void getUnitTree(StringBuffer buffer, IUnit parentUnit) {
+    public void getUnitTree(StringBuffer buffer, IUnit parentUnit, List<IUnit> subUnits,
+            Date currentDate, boolean active) {
         buffer.append("<ul>");
-        getUnitsList(parentUnit, 0, buffer);
+        getUnitsList(parentUnit, subUnits, buffer, currentDate, active);
         buffer.append("</ul>");
     }
 
-    private void getUnitsList(IUnit parentUnit, int index, StringBuffer buffer) {
+    private void getUnitsList(IUnit parentUnit, List<IUnit> subUnits, StringBuffer buffer,
+            Date currentDate, boolean active) {
 
         buffer.append("<li>").append("<a href=\"").append(getContextPath()).append(
                 "/manager/organizationalStructureManagament/").append("unitDetails.faces?").append(
                 "unitID=").append(parentUnit.getIdInternal()).append("\">").append(parentUnit.getName())
                 .append("</a>").append("</li>").append("<ul>");
 
-        for (IUnit subUnit : parentUnit.getSubUnits()) {
-            getUnitsList(subUnit, index + 1, buffer);
+        for (IUnit subUnit : subUnits) {
+            if (active) {
+                getUnitsList(subUnit, subUnit.getActiveSubUnits(currentDate), buffer,
+                        currentDate, active);
+            } else {
+                getUnitsList(subUnit, subUnit.getInactiveSubUnits(currentDate), buffer,
+                        currentDate, active);
+            }
         }
 
         buffer.append("</ul>");
@@ -205,11 +217,11 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     public void getUnitTreeToChoosePrincipalFunction(StringBuffer buffer, IUnit parentUnit)
             throws FenixFilterException, FenixServiceException {
         buffer.append("<ul>");
-        getUnitsListToChoosePrincipalFunction(parentUnit, 0, buffer);
+        getUnitsListToChoosePrincipalFunction(parentUnit, buffer);
         buffer.append("</ul>");
     }
 
-    private void getUnitsListToChoosePrincipalFunction(IUnit parentUnit, int index, StringBuffer buffer)
+    private void getUnitsListToChoosePrincipalFunction(IUnit parentUnit, StringBuffer buffer)
             throws FenixFilterException, FenixServiceException {
 
         buffer.append("<li>").append("<a href=\"").append(getContextPath()).append(
@@ -220,7 +232,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 "</a>").append("</li>").append("<ul>");
 
         for (IUnit subUnit : parentUnit.getSubUnits()) {
-            getUnitsListToChoosePrincipalFunction(subUnit, index + 1, buffer);
+            getUnitsListToChoosePrincipalFunction(subUnit, buffer);
         }
 
         buffer.append("</ul>");
@@ -381,7 +393,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             return "";
         }
 
-        UnitType type = getUnitType();        
+        UnitType type = getUnitType();
         CreateNewUnitParameters parameters = new CreateNewUnitParameters(departmentID, degreeID, this, 1);
 
         final Object[] argsToRead = { this.getChooseUnit().getIdInternal(), null, this.getUnitName(),
@@ -521,14 +533,14 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return executeCreateNewFunctionService(argsToRead);
     }
 
-    private String executeCreateNewFunctionService(final Object[] argsToRead) throws FenixFilterException {
+    private String executeCreateNewFunctionService(final Object[] argsToRead)
+            throws FenixFilterException {
         try {
             ServiceUtils.executeService(getUserView(), "CreateNewFunction", argsToRead);
         } catch (FenixServiceException e) {
             setErrorMessage(e.getMessage());
             return "";
-        }
-        catch (DomainException e) {
+        } catch (DomainException e) {
             setErrorMessage(e.getMessage());
             return "";
         }
@@ -873,7 +885,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     public void setDepartmentID(String departmentID) {
         this.departmentID = departmentID;
     }
-        
+
     public class PrepareDatesResult {
 
         private boolean test;

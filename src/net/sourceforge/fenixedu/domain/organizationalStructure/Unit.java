@@ -32,6 +32,26 @@ public class Unit extends Unit_Base {
         return allTopUnits;
     }
 
+    public List<IUnit> getInactiveSubUnits(Date currentDate){
+        List<IUnit> allInactiveSubUnits = new ArrayList<IUnit>();
+        for (IUnit subUnit : this.getSubUnits()) {
+            if(!subUnit.isActive(currentDate)){
+                allInactiveSubUnits.add(subUnit);
+            }
+        }
+        return allInactiveSubUnits;
+    }
+    
+    public List<IUnit> getActiveSubUnits(Date currentDate){
+        List<IUnit> allActiveSubUnits = new ArrayList<IUnit>();
+        for (IUnit subUnit : this.getSubUnits()) {
+            if(subUnit.isActive(currentDate)){
+                allActiveSubUnits.add(subUnit);
+            }
+        }
+        return allActiveSubUnits;
+    }
+    
     public void edit(String unitName, Integer unitCostCenter, Date beginDate, Date endDate,
             UnitType type, IUnit parentUnit) {
 
@@ -76,9 +96,7 @@ public class Unit extends Unit_Base {
     public List<IContract> getWorkingContracts(Date begin, Date end) {
         List<IContract> contracts = new ArrayList<IContract>();
         for (IContract contract : this.getWorkingContracts()) {
-            if ((contract.getBeginDate().after(begin) || contract.getBeginDate().equals(begin))
-                    && (contract.getEndDate() == null || (contract.getEndDate().before(end) || contract
-                            .getEndDate().equals(end)))) {
+            if (contract.belongsToPeriod(begin, end)) {
                 contracts.add(contract);
             }
         }
