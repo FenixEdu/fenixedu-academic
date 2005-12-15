@@ -10,6 +10,8 @@
 	</td>
 	<td class="infoop">
 		<bean:message key="label.teacherService.credits.explanation"/>
+		<br/><br/>
+		<b><bean:message key="label.teacherService.credits.diferentCategories.explanation"/></b>
 	</td>
 </table>
 <br />
@@ -22,7 +24,7 @@
 	<table cellpadding="3" cellspacing="1">
 		<tr>
 			<td colspan="3"> </td>
-			<td colspan="3" class="listClasses-header">Créditos</td>			
+			<td colspan="4" class="listClasses-header">Créditos</td>			
 		</tr>
 		<tr>
 			<td class="listClasses-header"><bean:message key="label.executionPeriod" /></td>
@@ -30,15 +32,16 @@
 			<td class="listClasses-header"><bean:message key="label.teacherService.credits.obtained"/></td>
 			<td class="listClasses-header"><bean:message key="label.teacherService.credits.mandatory"/></td>						
 			<td class="listClasses-header"><bean:message key="label.teacherService.credits.final"/></td>		
+			<td class="listClasses-header"><bean:message key="label.teacherService.credits.total"/></td>			
 		</tr>
 	<% double totalCreditsBalance = 0; %>		
 	<logic:iterate id="creditLineDTO" name="creditsLines" indexId="nrLine">
-		<tr>
-			<td class="listClasses" >
-				<bean:define id="executionPeriod" name="creditLineDTO" property="executionPeriod"/>
-				<bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/>
-			</td>
+		<tr>			
 			<logic:equal name="nrLine" value="0">
+				<td class="listClasses" >
+					<bean:define id="executionPeriod" name="creditLineDTO" property="executionPeriod"/>
+					<bean:message key="label.teacherService.credits.until"/> <bean:write name="executionPeriod" property="executionYear.year"/>
+				</td>
 				<bean:define id="pastCredits" name="creditLineDTO" property="pastServiceCredits"/>				
 				<td colspan="2" class="listClasses" >
 					<b><bean:write name="pastCredits"/></b> (CP)
@@ -46,9 +49,18 @@
 				<% totalCreditsBalance = ((Double)pastCredits).doubleValue(); %>
 				<td class="listClasses">0.0</td>
 				<td class="listClasses">0.0</td>
-				<td class="listClasses"><bean:write name="creditLineDTO" property="pastServiceCredits"/></td>				
+				<td class="listClasses"><bean:write name="creditLineDTO" property="pastServiceCredits"/></td>	
+				<td class="listClasses">								
+					<fmt:formatNumber pattern="###.##">
+						<%= totalCreditsBalance %>
+					</fmt:formatNumber>
+				</td>			
 			</logic:equal>
 			<logic:notEqual name="nrLine" value="0">
+				<td class="listClasses" >
+					<bean:define id="executionPeriod" name="creditLineDTO" property="executionPeriod"/>
+					<bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/>
+				</td>
 				<td class="listClasses" >
 					<tiles:insert definition="creditsResumeLine" flush="false">
 						<tiles:put name="creditLineDTO" beanName="creditLineDTO"/>
@@ -73,18 +85,14 @@
 						<%= ((Double)totalLineCredits).doubleValue() - ((Integer)mandatoryLessonHours).intValue() %>
 					</fmt:formatNumber>
 				</td>
+				<td class="listClasses">								
+					<fmt:formatNumber pattern="###.##">
+						<%= totalCreditsBalance %>
+					</fmt:formatNumber>
+				</td>				
 			</logic:notEqual>
 		</tr>
 	</logic:iterate>
-	<tr>
-		<td></td><td></td><td></td><td></td><td></td>
-		<td>			
-			<b><bean:message key="label.teacherService.credits.total"/>: </b>
-			<fmt:formatNumber pattern="###.##">
-				<%= totalCreditsBalance %>
-			</fmt:formatNumber>
-		</td>
-	</tr>
 	</table>
 	
 	<br />
