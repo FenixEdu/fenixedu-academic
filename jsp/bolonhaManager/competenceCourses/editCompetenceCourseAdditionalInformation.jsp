@@ -1,7 +1,13 @@
 <%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
-
+<style>
+<!--
+.alignRight {
+	text-align: right;
+}
+-->
+</style>
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="ServidorApresentacao/BolonhaManagerResources" var="bolonhaBundle"/>
 	
@@ -11,7 +17,7 @@
 	<h:outputText value="#{bolonhaBundle['step']} 2: #{bolonhaBundle['setData']}"  style="font-weight: bold"/>
 	<br/>
 	<h:outputText styleClass="error" rendered="#{!empty CompetenceCourseManagement.errorMessage}"
-		value="#{bundle[CompetenceCourseManagement.errorMessage]}"/>
+		value="#{bolonhaBundle[CompetenceCourseManagement.errorMessage]}<br/>" escape="false"/>
 	<br/>
 	<h:outputText value="#{bolonhaBundle['department']}: " style="font-weight: bold"/>
 		<h:outputText value="#{CompetenceCourseManagement.personDepartmentName}"/><br/>
@@ -38,22 +44,52 @@
 		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourseID}'" /><br/>
 		
 		<h:outputText value="#{bolonhaBundle['portuguese']}: " />
-		<h:panelGrid columnClasses="infocell" columns="2" border="0">
+		<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0">
 			<h:outputText value="#{bolonhaBundle['program']}: " />
-			<h:inputTextarea required="true" cols="80" rows="5"/>
+			<h:inputTextarea id="program" cols="80" rows="5" value="#{CompetenceCourseManagement.program}"/>
+			<h:outputText value="#{bolonhaBundle['objectives']}: " />
+			<h:panelGroup>
+				<h:outputText value="#{bolonhaBundle['generalObjectives']}: <br/>" escape="false"/>
+				<h:inputTextarea id="generalObjectives" cols="80" rows="5" value="#{CompetenceCourseManagement.generalObjectives}"/>
+				<h:outputText value="<br/>" escape="false"/>
+				<h:outputText value="#{bolonhaBundle['operationalObjectives']}: <br/>" escape="false"/>
+				<h:inputTextarea id="operationalObjectives" cols="80" rows="5" value="#{CompetenceCourseManagement.operationalObjectives}"/>
+			</h:panelGroup>
+			
+			<h:outputText value="#{bolonhaBundle['evaluationMethod']}: " />
+			<h:inputTextarea id="evaluationMethod" cols="80" rows="5" value="#{CompetenceCourseManagement.evaluationMethod}"/>
+			
+			<h:outputText value="#{bolonhaBundle['prerequisites']}: " />
+			<h:inputTextarea id="prerequisites" cols="80" rows="5" value="#{CompetenceCourseManagement.prerequisites}"/>
+			
 		</h:panelGrid>
 		<br/>
 		<h:outputText value="#{bolonhaBundle['english']}: " />
-		<h:panelGrid columnClasses="infocell" columns="2" border="0">
+		<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0">
 			<h:outputText value="#{bolonhaBundle['nameEn']}: " />
-			<h:inputText required="true" maxlength="100" size="40"/>
+			<h:inputText id="nameEn" maxlength="100" size="40" value="#{CompetenceCourseManagement.nameEn}"/>
 	
 			<h:outputText value="#{bolonhaBundle['programEn']}: " />
-			<h:inputTextarea required="true" cols="80" rows="5"/>
+			<h:inputTextarea id="programEn" cols="80" rows="5" value="#{CompetenceCourseManagement.programEn}"/>
+			
+			<h:outputText value="#{bolonhaBundle['objectivesEn']}: " />
+			<h:panelGroup>
+				<h:outputText value="#{bolonhaBundle['generalObjectivesEn']}: <br/>" escape="false"/>
+				<h:inputTextarea id="generalObjectivesEn" cols="80" rows="5" value="#{CompetenceCourseManagement.generalObjectivesEn}"/>
+				<h:outputText value="<br/>" escape="false"/>
+				<h:outputText value="#{bolonhaBundle['operationalObjectivesEn']}: <br/>" escape="false"/>
+				<h:inputTextarea id="operationalObjectivesEn" cols="80" rows="5" value="#{CompetenceCourseManagement.operationalObjectivesEn}"/>
+			</h:panelGroup>
+			
+			<h:outputText value="#{bolonhaBundle['evaluationMethodEn']}: " />
+			<h:inputTextarea id="evaluationMethodEn" cols="80" rows="5" value="#{CompetenceCourseManagement.evaluationMethodEn}"/>
+			
+			<h:outputText value="#{bolonhaBundle['prerequisitesEn']}: " />
+			<h:inputTextarea id="prerequisitesEn" cols="80" rows="5" value="#{CompetenceCourseManagement.prerequisitesEn}"/>
 		</h:panelGrid>
 		<br/><hr>
 		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['submit']}"
-			action="#{CompetenceCourseManagement.setCompetenceCourseAdditionalData}"/>
+			action="#{CompetenceCourseManagement.editCompetenceCourse}"/>
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}"
 			action="competenceCoursesManagement"/>
 	</h:form>

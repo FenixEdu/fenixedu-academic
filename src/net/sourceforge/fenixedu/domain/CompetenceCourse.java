@@ -59,16 +59,26 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 			}
 		}
     }
-    
+
     public void edit(String name, String code, Double ectsCredits, Boolean basic,
             Double theoreticalHours, Double problemsHours, Double labHours, Double projectHours,
             Double seminaryHours, RegimeType regime, CurricularStage curricularStage) {
-        
+
         setCurricularStage(curricularStage);
-        ICompetenceCourseInformation competenceCourseInformation = getRecentCompetenceCourseInformation();
-        competenceCourseInformation.edit(name, code, ectsCredits, basic, theoreticalHours, problemsHours,
-                labHours, projectHours, seminaryHours, regime);
+        getRecentCompetenceCourseInformation().edit(name, code, ectsCredits, basic, theoreticalHours,
+                problemsHours, labHours, projectHours, seminaryHours, regime);
     }
+    
+    public void edit(String program, String generalObjectives, String operationalObjectives,
+            String evaluationMethod, String prerequisites, String nameEn, String programEn,
+            String generalObjectivesEn, String operationalObjectivesEn, String evaluationMethodEn,
+            String prerequisitesEn) {
+
+        getRecentCompetenceCourseInformation().edit(program, generalObjectives, operationalObjectives,
+                evaluationMethod, prerequisites, nameEn, programEn, generalObjectivesEn,
+                operationalObjectivesEn, evaluationMethodEn, prerequisitesEn);
+    }
+
 
 	public void delete() {
         if (hasAnyAssociatedCurricularCourses()) {
@@ -93,7 +103,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
     
     private ICompetenceCourseInformation getRecentCompetenceCourseInformation() {
-        return recentCompetenceCourseInformation != null ? recentCompetenceCourseInformation :
+        return (recentCompetenceCourseInformation != null) ? recentCompetenceCourseInformation :
             (recentCompetenceCourseInformation = findRecentCompetenceCourseInformation()); 
     }
     
@@ -156,6 +166,50 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     
     public RegimeType getRegime() {
         return getRecentCompetenceCourseInformation().getRegime();
+    }
+    
+    public String getProgram() {
+        return getRecentCompetenceCourseInformation().getProgram();
+    }
+    
+    public String getGeneralObjectives() {
+        return getRecentCompetenceCourseInformation().getGeneralObjectives();
+    }
+        
+    public String getOperationalObjectives() {
+        return getRecentCompetenceCourseInformation().getOperationalObjectives();
+    }
+    
+    public String getEvaluationMethod() {
+        return getRecentCompetenceCourseInformation().getEvaluationMethod();
+    }
+    
+    public String getPrerequisites() {
+        return getRecentCompetenceCourseInformation().getPrerequisites();
+    }
+    
+    public String getNameEn() {
+        return getRecentCompetenceCourseInformation().getNameEn();
+    }
+    
+    public String getProgramEn() {
+        return getRecentCompetenceCourseInformation().getProgramEn();
+    }
+    
+    public String getGeneralObjectivesEn() {
+        return getRecentCompetenceCourseInformation().getGeneralObjectivesEn();
+    }
+        
+    public String getOperationalObjectivesEn() {
+        return getRecentCompetenceCourseInformation().getOperationalObjectivesEn();
+    }
+    
+    public String getEvaluationMethodEn() {
+        return getRecentCompetenceCourseInformation().getEvaluationMethodEn();
+    }
+    
+    public String getPrerequisitesEn() {
+        return getRecentCompetenceCourseInformation().getPrerequisitesEn();
     }
     
     public int getTotalLessonHours() {

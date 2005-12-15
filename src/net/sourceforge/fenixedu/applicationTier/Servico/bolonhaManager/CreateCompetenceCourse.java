@@ -23,7 +23,8 @@ public class CreateCompetenceCourse implements IService {
             RegimeType regime, Integer unitID) throws ExcepcaoPersistencia, FenixServiceException {
 
         ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear().readCurrentExecutionYear();
+        //TODO: this should be modified to receive ExecutionYear, but for now we just read the '2006/2007'
+        IExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear().readExecutionYearByName("2006/2007");
         IUnit unit = (IUnit) persistentSupport.getIPersistentObject().readByOID(Unit.class, unitID);
         if (unit == null) {
             throw new FenixServiceException("error.invalidUnit");

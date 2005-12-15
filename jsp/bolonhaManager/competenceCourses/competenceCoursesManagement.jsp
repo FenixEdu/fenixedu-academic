@@ -6,19 +6,18 @@
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="ServidorApresentacao/BolonhaManagerResources" var="bolonhaBundle"/>
 	<h:form>
-		<h:outputText value="#{CompetenceCourseManagement.personDepartmentName}" style="font-style:italic"/>	
+		<h:outputText value="#{CompetenceCourseManagement.personDepartmentName}" style="font-style:italic"/>
 		<h2><h:outputText value="#{bolonhaBundle['competenceCoursesManagement']}"/></h2>		
 		<h:outputText styleClass="error" rendered="#{!empty CompetenceCourseManagement.errorMessage}"
-			value="#{bundle[CompetenceCourseManagement.errorMessage]}"/>
-		<h:outputLink value="">
-			<h:outputText value="#{bolonhaBundle['creatorsGroupManagement']}<br/>" escape="false"/>
-		</h:outputLink>	
-		<br/>
+			value="#{bolonhaBundle[CompetenceCourseManagement.errorMessage]}"/>
+		<br/><style>@import url(<%= request.getContextPath() %>/CSS/dotist_degreeStructure.css);</style>
 		<fc:dataRepeater value="#{CompetenceCourseManagement.scientificAreaUnits}" var="scientificAreaUnit">
 			<h:outputText value="> #{scientificAreaUnit.name}<br/>" style="font-weight: bold" escape="false"/>
 			<fc:dataRepeater value="#{scientificAreaUnit.competenceCourseGroupUnits}" var="competenceCourseGroupUnit">
-				<h:outputText value="#{competenceCourseGroupUnit.name}<br/>" escape="false"/>
-				<h:dataTable value="#{competenceCourseGroupUnit.competenceCourses}" var="competenceCourse">
+				<h:outputText value="<br/>" escape="false"/>
+				<h:outputText value="#{competenceCourseGroupUnit.name}<br/>" escape="false" style="margin-left: 3em;"/>
+				<h:dataTable value="#{competenceCourseGroupUnit.competenceCourses}" var="competenceCourse"
+					styleClass="style2 indent1" footerClass="style2 alignRight">
 					<h:column>
 						<h:outputLink value="showCompetenceCourse.faces">
 							<h:outputText value="#{competenceCourse.name}"/>
@@ -26,6 +25,7 @@
 							<f:param name="competenceCourseGroupUnitID" value="#{competenceCourseGroupUnit.idInternal}"/>
 							<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
 						</h:outputLink>
+						<h:outputText value="  (#{bolonhaBundle[competenceCourse.curricularStage]})" style="font-style:italic"/>
 					</h:column>
 					<h:column>
 						<h:outputLink value="editCompetenceCourse.faces">
@@ -35,22 +35,21 @@
 							<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
 						</h:outputLink>
 						<h:outputText value=", "/>
-						<h:commandLink action="#{CompetenceCourseManagement.deleteCompetenceCourse}"
-							value="#{bolonhaBundle['delete']}">
+						<h:outputLink value="deleteCompetenceCourse.faces">
+							<h:outputText value="#{bolonhaBundle['delete']}" />
+							<f:param name="scientificAreaUnitID" value="#{scientificAreaUnit.idInternal}"/>
+							<f:param name="competenceCourseGroupUnitID" value="#{competenceCourseGroupUnit.idInternal}"/>
 							<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
-						</h:commandLink>
+						</h:outputLink>
 					</h:column>
-					<h:column>
-						<f:facet name="footer">
-							<h:outputLink value="createCompetenceCourse.faces">
-								<h:outputText value="#{bolonhaBundle['createCompetenceCourse']}<br/>" escape="false"/>
-								<f:param name="scientificAreaUnitID" value="#{scientificAreaUnit.idInternal}"/>
-								<f:param name="competenceCourseGroupUnitID" value="#{competenceCourseGroupUnit.idInternal}"/>
-							</h:outputLink>
-						</f:facet>
-					</h:column>			
+					<f:facet name="footer">
+						<h:outputLink value="createCompetenceCourse.faces">
+							<h:outputText value="#{bolonhaBundle['createCompetenceCourse']}<br/>" escape="false"/>
+							<f:param name="scientificAreaUnitID" value="#{scientificAreaUnit.idInternal}"/>
+							<f:param name="competenceCourseGroupUnitID" value="#{competenceCourseGroupUnit.idInternal}"/>
+						</h:outputLink>
+					</f:facet>
 				</h:dataTable>
-				<h:outputText value="<br/>" escape="false"/>
 			</fc:dataRepeater>						
 		</fc:dataRepeater>
 	</h:form>

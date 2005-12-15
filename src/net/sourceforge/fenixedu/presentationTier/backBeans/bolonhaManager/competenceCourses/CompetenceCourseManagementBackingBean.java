@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCompetenceCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.ICompetenceCourse;
@@ -43,6 +44,18 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private Double seminaryHours;
     private String regime;
     private String stage;
+    // CompetenceCourse Additional Data
+    private String program;
+    private String generalObjectives;
+    private String operationalObjectives;
+    private String evaluationMethod;
+    private String prerequisites;
+    private String nameEn;
+    private String programEn;
+    private String generalObjectivesEn;
+    private String operationalObjectivesEn;
+    private String evaluationMethodEn;
+    private String prerequisitesEn;
 
     public Integer getScientificAreaUnitID() {
         return (scientificAreaUnitID == null) ? scientificAreaUnitID = getAndHoldIntegerParameter("scientificAreaUnitID")
@@ -117,7 +130,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             ICompetenceCourse course = (ICompetenceCourse) 
             ServiceUtils.executeService(getUserView(), "CreateCompetenceCourse", args);
             setCompetenceCourseID(course.getIdInternal());
-            return "setCompetenceCourseAdditionalData";
+            return "editCompetenceCourseAdditionalInformation";
         } catch (FenixFilterException e) {
             setErrorMessage("error.creatingCompetenceCourse");
         } catch (FenixServiceException e) {
@@ -127,20 +140,25 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         } 
         return "";
     }
-
+    
     public String editCompetenceCourse() {
         try {
-            Object args[] = {getCompetenceCourseID(), getName(), getEctsCredits(), Boolean.valueOf(isBasic()),
-                getTheoreticalHours(), getProblemsHours(), getLabHours(), getProblemsHours(),
-                getSeminaryHours(), RegimeType.valueOf(getRegime()), CurricularStage.valueOf(getStage())};
-            ServiceUtils.executeService(getUserView(), "EditCompetenceCourse", args);        
+            Object argsEdit[] = { new EditCompetenceCourse.CompetenceCourseInformation(
+                    getCompetenceCourseID(), getName(), getEctsCredits(), Boolean.valueOf(isBasic()),
+                    getTheoreticalHours(), getProblemsHours(), getLabHours(), getProblemsHours(),
+                    getSeminaryHours(), RegimeType.valueOf(getRegime()), CurricularStage
+                            .valueOf(getStage()), getProgram(), getGeneralObjectives(),
+                    getOperationalObjectives(), getEvaluationMethod(), getPrerequisites(), getNameEn(),
+                    getProgramEn(), getGeneralObjectivesEn(), getOperationalObjectivesEn(),
+                    getEvaluationMethodEn(), getPrerequisitesEn()) };
+            ServiceUtils.executeService(getUserView(), "EditCompetenceCourse", argsEdit);
             return "competenceCoursesManagement";
         } catch (FenixFilterException e) {
             setErrorMessage("error.editingCompetenceCourse");
         } catch (FenixServiceException e) {
             setErrorMessage(e.getMessage());
         } catch (DomainException e) {
-            setErrorMessage(e.getMessage());         
+            setErrorMessage(e.getMessage());
         }
         return "";
     }
@@ -149,6 +167,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         try {
             Object[] args = { getCompetenceCourseID() };
             ServiceUtils.executeService(getUserView(), "DeleteCompetenceCourse", args);
+            setErrorMessage("competenceCourseDeleted");
             return "competenceCoursesManagement";
         } catch (FenixFilterException e) {
             setErrorMessage("error.deletingCompetenceCourse");
@@ -253,5 +272,112 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public void setStage(String stage) {
         this.stage = stage;
+    }
+
+    public String getProgram() throws FenixFilterException, FenixServiceException {
+        return (program == null && getCompetenceCourse() != null) ? (program = getCompetenceCourse()
+                .getProgram()) : program;
+    }
+
+    public void setProgram(String program) {
+        this.program = program;
+    }
+
+    public String getGeneralObjectives() throws FenixFilterException, FenixServiceException {
+        return (generalObjectives == null && getCompetenceCourse() != null) ? (generalObjectives = getCompetenceCourse()
+                .getGeneralObjectives())
+                : generalObjectives;
+    }
+
+    public void setGeneralObjectives(String generalObjectives) {
+        this.generalObjectives = generalObjectives;
+    }
+
+    public String getOperationalObjectives() throws FenixFilterException, FenixServiceException {
+        return (operationalObjectives == null && getCompetenceCourse() != null) ? (operationalObjectives = getCompetenceCourse()
+                .getOperationalObjectives())
+                : operationalObjectives;
+    }
+
+    public void setOperationalObjectives(String operationalObjectives) {
+        this.operationalObjectives = operationalObjectives;
+    }
+
+    public String getEvaluationMethod() throws FenixFilterException, FenixServiceException {
+        return (evaluationMethod == null && getCompetenceCourse() != null) ? (evaluationMethod = getCompetenceCourse()
+                .getEvaluationMethod())
+                : evaluationMethod;
+    }
+
+    public void setEvaluationMethod(String evaluationMethod) {
+        this.evaluationMethod = evaluationMethod;
+    }
+
+    public String getPrerequisites() throws FenixFilterException, FenixServiceException {
+        return (prerequisites == null && getCompetenceCourse() != null) ? (prerequisites = getCompetenceCourse()
+                .getPrerequisites())
+                : prerequisites;
+    }
+
+    public void setPrerequisites(String prerequisites) {
+        this.prerequisites = prerequisites;
+    }
+
+    public String getNameEn() throws FenixFilterException, FenixServiceException {
+        return (nameEn == null && getCompetenceCourse() != null) ? (nameEn = getCompetenceCourse()
+                .getNameEn()) : nameEn;
+    }
+
+    public void setNameEn(String nameEn) {
+        this.nameEn = nameEn;
+    }
+
+    public String getProgramEn() throws FenixFilterException, FenixServiceException {
+        return (programEn == null && getCompetenceCourse() != null) ? (programEn = getCompetenceCourse()
+                .getProgramEn()) : programEn;
+    }
+
+    public void setProgramEn(String programEn) {
+        this.programEn = programEn;
+    }
+
+    public String getGeneralObjectivesEn() throws FenixFilterException, FenixServiceException {
+        return (generalObjectivesEn == null && getCompetenceCourse() != null) ? (generalObjectivesEn = getCompetenceCourse()
+                .getGeneralObjectivesEn())
+                : generalObjectivesEn;
+    }
+
+    public void setGeneralObjectivesEn(String generalObjectivesEn) {
+        this.generalObjectivesEn = generalObjectivesEn;
+    }
+
+    public String getOperationalObjectivesEn() throws FenixFilterException, FenixServiceException {
+        return (operationalObjectivesEn == null && getCompetenceCourse() != null) ? (operationalObjectivesEn = getCompetenceCourse()
+                .getOperationalObjectivesEn())
+                : operationalObjectivesEn;
+    }
+
+    public void setOperationalObjectivesEn(String operationalObjectivesEn) {
+        this.operationalObjectivesEn = operationalObjectivesEn;
+    }
+
+    public String getEvaluationMethodEn() throws FenixFilterException, FenixServiceException {
+        return (evaluationMethodEn == null && getCompetenceCourse() != null) ? (evaluationMethodEn = getCompetenceCourse()
+                .getEvaluationMethodEn())
+                : evaluationMethodEn;
+    }
+
+    public void setEvaluationMethodEn(String evaluationMethodEn) {
+        this.evaluationMethodEn = evaluationMethodEn;
+    }
+
+    public String getPrerequisitesEn() throws FenixFilterException, FenixServiceException {
+        return (prerequisitesEn == null && getCompetenceCourse() != null) ? (prerequisitesEn = getCompetenceCourse()
+                .getPrerequisitesEn())
+                : prerequisitesEn;
+    }
+
+    public void setPrerequisitesEn(String prerequisitesEn) {
+        this.prerequisitesEn = prerequisitesEn;
     }
 }

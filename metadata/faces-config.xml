@@ -1335,8 +1335,8 @@
 	<navigation-rule>
 		<from-view-id>/bolonhaManager/competenceCourses/createCompetenceCourse.jsp</from-view-id>
 		<navigation-case>
-			<from-outcome>setCompetenceCourseAdditionalData</from-outcome>
-			<to-view-id>/bolonhaManager/competenceCourses/setCompetenceCourseAdditionalData.jsp</to-view-id>
+			<from-outcome>editCompetenceCourseAdditionalInformation</from-outcome>
+			<to-view-id>/bolonhaManager/competenceCourses/editCompetenceCourseAdditionalInformation.jsp</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>competenceCoursesManagement</from-outcome>
@@ -1344,7 +1344,7 @@
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
-		<from-view-id>/bolonhaManager/competenceCourses/setCompetenceCourseAdditionalData.jsp</from-view-id>
+		<from-view-id>/bolonhaManager/competenceCourses/editCompetenceCourseAdditionalInformation.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>competenceCoursesManagement</from-outcome>
 			<to-view-id>/bolonhaManager/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
@@ -1359,6 +1359,13 @@
 	</navigation-rule>
 	<navigation-rule>
 		<from-view-id>/bolonhaManager/competenceCourses/showCompetenceCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>competenceCoursesManagement</from-outcome>
+			<to-view-id>/bolonhaManager/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/competenceCourses/deleteCompetenceCourse.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>competenceCoursesManagement</from-outcome>
 			<to-view-id>/bolonhaManager/competenceCourses/competenceCoursesManagement.jsp</to-view-id>

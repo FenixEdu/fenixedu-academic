@@ -266,18 +266,38 @@
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaRegimeType2SqlRegimeTypeFieldConversion"
 	/>
 	<field-descriptor
+        name="program"
+        column="PROGRAM"
+        jdbc-type="LONGVARCHAR"
+	/>
+	<field-descriptor
         name="generalObjectives"
         column="GENERAL_OBJECTIVES"
         jdbc-type="LONGVARCHAR"
 	/>
 	<field-descriptor
-        name="operacionalObjectives"
-        column="OPERACIONAL_OBJECTIVES"
+        name="operationalObjectives"
+        column="OPERATIONAL_OBJECTIVES"
         jdbc-type="LONGVARCHAR"
 	/>
 	<field-descriptor
-        name="program"
-        column="PROGRAM"
+        name="evaluationMethod"
+        column="EVALUATION_METHOD"
+        jdbc-type="LONGVARCHAR"
+	/>
+	<field-descriptor
+        name="prerequisites"
+        column="PREREQUISITES"
+        jdbc-type="LONGVARCHAR"
+	/>
+	<field-descriptor
+		name="nameEn"
+		column="NAME_EN"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+        name="programEn"
+        column="PROGRAM_EN"
         jdbc-type="LONGVARCHAR"
 	/>
 	<field-descriptor
@@ -286,13 +306,18 @@
         jdbc-type="LONGVARCHAR"
 	/>
 	<field-descriptor
-        name="operacionalObjectivesEn"
-        column="OPERACIONAL_OBJECTIVES_EN"
+        name="operationalObjectivesEn"
+        column="OPERATIONAL_OBJECTIVES_EN"
         jdbc-type="LONGVARCHAR"
 	/>
 	<field-descriptor
-        name="programEn"
-        column="PROGRAM_EN"
+        name="evaluationMethodEn"
+        column="EVALUATION_METHOD_EN"
+        jdbc-type="LONGVARCHAR"
+	/>
+	<field-descriptor
+        name="prerequisitesEn"
+        column="PREREQUISITES_EN"
         jdbc-type="LONGVARCHAR"
 	/>
 	<reference-descriptor auto-retrieve="false"

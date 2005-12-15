@@ -57,3 +57,7 @@ table tr.highlight td.listClasses {
 .margintop {
 	margin-top: 2em;
 }
+
+.alignRight {
+	text-align: right;
+}

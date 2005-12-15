@@ -44,6 +44,24 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         setRegime(regime);
     }
     
+    public void edit(String program, String generalObjectives, String operationalObjectives,
+            String evaluationMethod, String prerequisites, String nameEn, String programEn,
+            String generalObjectivesEn, String operationalObjectivesEn, String evaluationMethodEn,
+            String prerequisitesEn) {
+        
+        setProgram(program);
+        setGeneralObjectives(generalObjectives);
+        setOperationalObjectives(operationalObjectives);
+        setEvaluationMethod(evaluationMethod);
+        setPrerequisites(prerequisites);
+        setNameEn(nameEn);
+        setProgramEn(programEn);
+        setGeneralObjectivesEn(generalObjectivesEn);
+        setOperationalObjectivesEn(operationalObjectivesEn);
+        setEvaluationMethodEn(evaluationMethodEn);
+        setPrerequisitesEn(prerequisitesEn);
+    }
+    
     public void delete() {
         setExecutionYear(null);
         setCompetenceCourse(null);

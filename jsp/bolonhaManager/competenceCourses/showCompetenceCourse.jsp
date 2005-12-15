@@ -61,10 +61,50 @@
 		</li>
 	</ul>					
 	<br/>
-	<h:outputText style="font-weight: bold" value="#{bolonhaBundle['program']}:" /><br/>
-	<h:outputText value="-PROGRAM-"/><br/><br/>
-	<h:outputText style="font-weight: bold" value="#{bolonhaBundle['bibliography']}:" /><br/>
-	<h:outputText value="-BIBLIOGRAPHY-"/><br/>
+	<h:outputText value="#{bolonhaBundle['portuguese']}: " /><br/>
+	<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0">
+		<h:outputText value="#{bolonhaBundle['program']}: " />
+		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.program}" />
+		
+		<h:outputText value="#{bolonhaBundle['objectives']}: " />
+		<h:panelGroup>
+			<h:outputText value="#{bolonhaBundle['generalObjectives']}: <br/>" style="font-style:italic" escape="false"/>
+			<h:outputText value="#{CompetenceCourseManagement.competenceCourse.generalObjectives}" />
+			<h:outputText value="<br/>" escape="false"/>
+			<h:outputText value="#{bolonhaBundle['operationalObjectives']}: <br/>" style="font-style:italic" escape="false"/>
+			<h:outputText value="#{CompetenceCourseManagement.competenceCourse.operationalObjectives}" />
+		</h:panelGroup>
+		
+		<h:outputText value="#{bolonhaBundle['evaluationMethod']}: " />
+		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.evaluationMethod}" />
+		
+		<h:outputText value="#{bolonhaBundle['prerequisites']}: " />
+		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.prerequisites}" />
+	</h:panelGrid>
+	<br/>
+	<h:outputText value="#{bolonhaBundle['english']}: " />
+	<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0">
+		<h:outputText value="#{bolonhaBundle['nameEn']}: " />
+		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.nameEn}" />
+
+		<h:outputText value="#{bolonhaBundle['programEn']}: " />
+		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.programEn}" />
+		
+		<h:outputText value="#{bolonhaBundle['objectivesEn']}: " />
+		<h:panelGroup>
+			<h:outputText value="#{bolonhaBundle['generalObjectivesEn']}: <br/>" style="font-style:italic" escape="false"/>
+			<h:outputText value="#{CompetenceCourseManagement.competenceCourse.generalObjectivesEn}" />
+			<h:outputText value="<br/>" escape="false"/>
+			<h:outputText value="#{bolonhaBundle['operationalObjectivesEn']}: <br/>" style="font-style:italic" escape="false"/>
+			<h:outputText value="#{CompetenceCourseManagement.competenceCourse.operationalObjectivesEn}" />
+		</h:panelGroup>
+		
+		<h:outputText value="#{bolonhaBundle['evaluationMethodEn']}: " />
+		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.evaluationMethodEn}" />
+		
+		<h:outputText value="#{bolonhaBundle['prerequisitesEn']}: " />
+		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.prerequisitesEn}" />
+	</h:panelGrid>
 	<br/><hr>
 	<h:form>
 		<h:commandLink action="competenceCoursesManagement" value="#{bolonhaBundle['back']}" />
