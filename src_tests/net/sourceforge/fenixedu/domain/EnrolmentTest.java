@@ -22,6 +22,9 @@ public class EnrolmentTest extends DomainTestBase {
 	
 	private IEnrolment enrolmentE;		//enrolment able to unenroll
 	private IEnrolment enrolmentF;		//enrolment unable to unenroll
+    
+    private IEnrolment enrolmentG;
+    private IEnrolment enrolmentH;
 	
 	private IEnrolment enrolmentWithImprovement;
 	private IEnrolment enrolmentWithoutImprovement;
@@ -84,6 +87,10 @@ public class EnrolmentTest extends DomainTestBase {
 	private IStudent studentToImprove = null;
 	private IExecutionPeriod executionPeriodForImprovement = null;
 	private IEmployee someEmployee = null;
+    
+    /*public void setUp() {
+        setUpForIsFirstTime();
+    }*/
 	
 	
 	private void setUpCreateEnrolmentEvaluationForImprovement() {
@@ -394,7 +401,32 @@ public class EnrolmentTest extends DomainTestBase {
 		evaluationWithoutGradeToBeRead = ee2;
 	}
 
-	
+	private void setUpForIsFirstTimeCase() {
+        enrolmentG = new Enrolment();
+        enrolmentH = new Enrolment();
+        IEnrolment enrolmentI = new Enrolment();
+        IEnrolment enrolmentJ = new Enrolment();
+        IEnrolment enrolmentK = new Enrolment();
+        
+        ICurricularCourse curricularCourseG = new CurricularCourse();
+        ICurricularCourse curricularCourseH = new CurricularCourse();
+        ICurricularCourse curricularCourseI = new CurricularCourse();
+        
+        enrolmentG.setCurricularCourse(curricularCourseG);
+        enrolmentH.setCurricularCourse(curricularCourseH);
+        enrolmentI.setCurricularCourse(curricularCourseH);
+        enrolmentJ.setCurricularCourse(curricularCourseI);
+        enrolmentK.setCurricularCourse(curricularCourseI);
+        
+        IStudentCurricularPlan studentCurricularPlanG = new StudentCurricularPlan();
+        IStudentCurricularPlan studentCurricularPlanH = new StudentCurricularPlan();
+        
+        studentCurricularPlanG.addEnrolments(enrolmentG);
+        studentCurricularPlanH.addEnrolments(enrolmentH);
+        studentCurricularPlanH.addEnrolments(enrolmentI);
+        studentCurricularPlanH.addEnrolments(enrolmentJ);
+        studentCurricularPlanG.addEnrolments(enrolmentK);
+    }
 	
 	public void testDelete() {
 		
@@ -657,4 +689,11 @@ public class EnrolmentTest extends DomainTestBase {
 		ee.setEnrolment(enrolment);
 		return ee;
 	}
+    
+    public void testIsFirstTime() {
+        setUpForIsFirstTimeCase();
+        
+        assertTrue("Student should have no more than one enrollment", enrolmentG.isFirstTime());
+        assertFalse("Student should have more than one enrollment", enrolmentH.isFirstTime());
+    }
 }

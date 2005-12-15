@@ -1080,4 +1080,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         }
         return false;
     }
+
+    public List<IEnrolment> getEnrolments(final ICurricularCourse curricularCourse) {
+        List<IEnrolment> results = new ArrayList<IEnrolment>();
+
+        for (IEnrolment enrolment : this.getEnrolments()) {
+            if (enrolment.getCurricularCourse().equals(curricularCourse)) {
+                results.add(enrolment);
+            }
+        }
+
+        return results;
+    }
 }

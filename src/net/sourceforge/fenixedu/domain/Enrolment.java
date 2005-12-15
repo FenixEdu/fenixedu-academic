@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -458,6 +457,8 @@ public class Enrolment extends Enrolment_Base {
                 .valueOf(enrolmentEvaluation.getGrade());
 
     }
-    
-    
+
+    public Boolean isFirstTime() {
+        return this.getStudentCurricularPlan().getEnrolments(this.getCurricularCourse()).size() == 1;
+    }
 }

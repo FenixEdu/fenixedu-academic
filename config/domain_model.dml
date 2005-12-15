@@ -869,6 +869,17 @@ class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.s
 		 public java.util.List getExecutionCoursesByExecutionPeriod (final IExecutionPeriod executionPeriod);
 	
 		 public ICurriculum findLatestCurriculum();
+
+		public java.util.List<IEnrolmentEvaluation> getActiveEnrollmentEvaluations();
+
+		public java.util.List<IEnrolmentEvaluation> getActiveEnrollmentEvaluations(
+        	IExecutionPeriod executionPeriod);
+
+		public java.util.List<IEnrolmentEvaluation> getActiveEnrollmentEvaluations(
+        	IExecutionYear executionYear);
+
+		public java.util.List<IEnrolmentEvaluation> getActiveEnrollmentEvaluations(
+        	IStudent student);
 		"
 	}
 
@@ -909,6 +920,7 @@ class net.sourceforge.fenixedu.domain.Department extends net.sourceforge.fenixed
 	public java.util.List<net.sourceforge.fenixedu.domain.IEmployee> getWorkingEmployees(java.util.Date begin, java.util.Date end);
  	public void createTeacherExpectationDefinitionPeriod(net.sourceforge.fenixedu.domain.IExecutionYear executionYear, java.util.Date startDate, java.util.Date endDate);
  	public ITeacherExpectationDefinitionPeriod readTeacherExpectationDefinitionPeriodByExecutionYear(IExecutionYear executionYear);
+	public java.util.List<ICompetenceCourse> getCompetenceCoursesByExecutionYear(IExecutionYear executionYear);
 	"
 }
 
@@ -951,6 +963,10 @@ class net.sourceforge.fenixedu.domain.CompetenceCourse extends net.sourceforge.f
     public String getEvaluationMethodEn();
     public String getPrerequisitesEn();
     public int getTotalLessonHours();
+    
+	public java.util.Map<IDegree, java.util.List<ICurricularCourse>> getAssociatedCurricularCoursesGroupedByDegree();
+	public java.util.List<IEnrolmentEvaluation> getActiveEnrollmentEvaluations(IExecutionYear executionYear);
+	public Boolean hasActiveScopesInExecutionYear(IExecutionYear executionYear);
 	"
 }
 
@@ -1106,6 +1122,7 @@ class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu
 	public java.util.List<IEnrolmentEvaluation> getAllFinalEnrolmentEvaluations();
 	public boolean hasSpecialSeason();
 	public Integer getFinalGrade();
+	public Boolean isFirstTime();
 	"
 }
 
@@ -1148,6 +1165,8 @@ class net.sourceforge.fenixedu.domain.EnrolmentEvaluation extends net.sourceforg
 			net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType evaluationType, java.util.Date evaluationAvailableDate, 
 			java.util.Date examDate, String observation);
 	public void insertStudentFinalEvaluationForMasterDegree(String grade, IPerson responsibleFor, java.util.Date examDate);
+	public net.sourceforge.fenixedu.domain.curriculum.IGrade getGradeWrapper();
+    public net.sourceforge.fenixedu.domain.curriculum.EnrollmentState getEnrollmentStateByGrade();
     "
 }
 
@@ -1409,6 +1428,8 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
 	public Double getTotalHours(ShiftType shiftType);
 	
  	public Double getStudentsNumberByShift(ShiftType shiftType);
+	
+	public java.util.List<IEnrolmentEvaluation> getActiveEnrollmentEvaluations();
     "
 }
 
@@ -3160,6 +3181,8 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
     public IGratuitySituation getGratuitySituationByGratuityValues(final IGratuityValues gratuityValues);
     
     public boolean isEnroledInSpecialSeason(IExecutionPeriod executionPeriod);
+    
+    public java.util.List<IEnrolment> getEnrolments(final ICurricularCourse curricularCourse);
     "
 }
 

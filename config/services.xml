@@ -9202,4 +9202,25 @@
         	<chain name="BolonhaManagerAuthorization"></chain>
         </filterChains>     
     </service>
+    <service>
+    <name>CreateCompetenceCourseStatistics</name>
+        <implementationClass> net.sourceforge.fenixedu.applicationTier.Servico.department.ComputeCompetenceCourseStatistics</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains/>
+    </service>
+	<service>
+	<name>CreateDegreeCourseStatistics</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.department.ComputeDegreeCourseStatistics</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>  
+        <filterChains/>
+	</service>
+	<service>
+	<name>CreateExecutionCourseStatistics</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.department.ComputeExecutionCourseStatistics</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>  
+        <filterChains/>
+	</service>
 </serviceDefinitions>    

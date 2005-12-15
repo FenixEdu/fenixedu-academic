@@ -1,8 +1,12 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
@@ -214,5 +218,49 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     
     public int getTotalLessonHours() {
         return getRecentCompetenceCourseInformation().getTotalLessonHours();
+    }
+    
+    public Map<IDegree, List<ICurricularCourse>> getAssociatedCurricularCoursesGroupedByDegree() {
+        Map<IDegree, List<ICurricularCourse>> curricularCoursesMap = new HashMap<IDegree, List<ICurricularCourse>>();
+
+        for (ICurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
+            IDegree degree = curricularCourse.getDegreeCurricularPlan().getDegree();
+
+            List<ICurricularCourse> curricularCourses = curricularCoursesMap.get(degree);
+
+            if (curricularCourses == null) {
+                curricularCourses = new ArrayList<ICurricularCourse>();
+                curricularCoursesMap.put(degree, curricularCourses);
+            }
+
+            curricularCourses.add(curricularCourse);
+        }
+
+        return curricularCoursesMap;
+    }
+
+    public List<IEnrolmentEvaluation> getActiveEnrollmentEvaluations(IExecutionYear executionYear) {
+        List<IEnrolmentEvaluation> results = new ArrayList<IEnrolmentEvaluation>();
+
+        for (ICurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
+            results.addAll(curricularCourse.getActiveEnrollmentEvaluations(executionYear));
+        }
+
+        return results;
+    }
+    
+    public Boolean hasActiveScopesInExecutionYear(IExecutionYear executionYear) {
+        List<IExecutionPeriod> executionPeriods = executionYear.getExecutionPeriods();
+        List<ICurricularCourse> curricularCourses = this.getAssociatedCurricularCourses();
+
+        for (IExecutionPeriod executionPeriod : executionPeriods) {
+            for (ICurricularCourse curricularCourse : curricularCourses) {
+                if (curricularCourse.getActiveScopesInExecutionPeriod(executionPeriod).size() > 0)
+
+                    return new Boolean(true);
+            }
+        }
+        return new Boolean(false);
+
     }
 }

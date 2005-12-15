@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.branch.BranchType;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.IContext;
@@ -351,5 +352,49 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         
         return result;
+    }
+    
+    private List<IEnrolmentEvaluation> getActiveEnrollments(IExecutionPeriod executionPeriod,
+            IStudent student) {
+        List<IEnrolment> enrollments = getEnrolments();
+        List<IEnrolmentEvaluation> results = new ArrayList<IEnrolmentEvaluation>();
+
+        for (IEnrolment enrollment : enrollments) {
+            boolean filters = true;
+
+            filters &= !enrollment.getEnrollmentState().equals(EnrollmentState.ANNULED);
+            filters &= executionPeriod == null
+                    || enrollment.getExecutionPeriod().equals(executionPeriod);
+            filters &= student == null
+                    || enrollment.getStudentCurricularPlan().getStudent().equals(student);
+
+            if (filters) {
+                results.addAll(enrollment.getEvaluations());
+            }
+        }
+
+        return results;
+    }
+
+    public List<IEnrolmentEvaluation> getActiveEnrollmentEvaluations(IStudent student) {
+        return getActiveEnrollments(null, student);
+    }
+
+    public List<IEnrolmentEvaluation> getActiveEnrollmentEvaluations() {
+        return getActiveEnrollments(null, null);
+    }
+
+    public List<IEnrolmentEvaluation> getActiveEnrollmentEvaluations(IExecutionPeriod executionPeriod) {
+        return getActiveEnrollments(executionPeriod, null);
+    }
+
+    public List<IEnrolmentEvaluation> getActiveEnrollmentEvaluations(IExecutionYear executionYear) {
+        List<IEnrolmentEvaluation> results = new ArrayList<IEnrolmentEvaluation>();
+
+        for (IExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
+            results.addAll(getActiveEnrollmentEvaluations(executionPeriod));
+        }
+
+        return results;
     }
 }

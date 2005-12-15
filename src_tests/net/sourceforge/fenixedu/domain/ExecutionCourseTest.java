@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.utils.summary.SummaryUtils;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class ExecutionCourseTest extends DomainTestBase {
@@ -20,6 +21,9 @@ public class ExecutionCourseTest extends DomainTestBase {
     private IRoom room;
     private ITeacher teacher;
     private IProfessorship professorship;
+    
+    /*ICurricularCourse curricularCourse;
+    IExecutionPeriod executionPeriod;*/
 
     protected void setUp() throws Exception {
         super.setUp();
@@ -45,6 +49,8 @@ public class ExecutionCourseTest extends DomainTestBase {
         professorship = new Professorship();
         professorship.setExecutionCourse(this.executionCourse);
         professorship.setTeacher(this.teacher);
+        
+        setUpGetActiveEnrollmentEvaluations();
     }
 
     private void setUpForGetAttendsByStudentCase() {
@@ -63,6 +69,74 @@ public class ExecutionCourseTest extends DomainTestBase {
 		otherAttends2.setAluno(new Student());
 		executionCourseToReadFrom.addAttends(otherAttends2);
 	}
+    
+    private void setUpGetActiveEnrollmentEvaluations() {
+        /* Setup curricular course */
+        ICurricularCourse curricularCourse = new CurricularCourse();
+        
+        executionCourse.addAssociatedCurricularCourses(curricularCourse);
+        curricularCourse.addAssociatedExecutionCourses(executionCourse);
+        
+        /* Setup execution period */
+        IExecutionPeriod executionPeriod = new ExecutionPeriod();
+        
+        executionCourse.setExecutionPeriod(executionPeriod);
+        
+        /* Setup enrollments */
+        IEnrolment annuledEnrollment = new Enrolment();
+        annuledEnrollment.setEnrollmentState(EnrollmentState.ANNULED);
+
+        IEnrolment numericApprovedEnrollment = new Enrolment();
+        numericApprovedEnrollment.setEnrollmentState(EnrollmentState.APROVED);
+        
+        IEnrolment apApprovedEnrollment = new Enrolment();
+        apApprovedEnrollment.setEnrollmentState(EnrollmentState.APROVED);
+
+        IEnrolment reprovedEnrollment = new Enrolment();
+        reprovedEnrollment.setEnrollmentState(EnrollmentState.NOT_APROVED);
+        
+        IEnrolment notEvaluatedEnrollment = new Enrolment();
+        notEvaluatedEnrollment.setEnrollmentState(EnrollmentState.NOT_EVALUATED);
+        
+        /* Setup enrollment evaluations */
+        IEnrolmentEvaluation numericFirstEnrolmentEvaluation = new EnrolmentEvaluation();
+        numericFirstEnrolmentEvaluation.setGrade("10");
+        
+        IEnrolmentEvaluation numericSecondEnrolmentEvaluation = new EnrolmentEvaluation();
+        numericSecondEnrolmentEvaluation.setGrade("11");
+        
+        numericFirstEnrolmentEvaluation.setEnrolment(numericApprovedEnrollment);
+        numericSecondEnrolmentEvaluation.setEnrolment(numericApprovedEnrollment);
+        
+        IEnrolmentEvaluation apFirstEnrolmentEvaluation = new EnrolmentEvaluation();
+        apFirstEnrolmentEvaluation.setGrade("AP");
+        
+        apFirstEnrolmentEvaluation.setEnrolment(apApprovedEnrollment);
+        
+        IEnrolmentEvaluation reprovedEnrollmentEvaluation = new EnrolmentEvaluation();
+        reprovedEnrollmentEvaluation.setGrade("RE");
+        
+        reprovedEnrollmentEvaluation.setEnrolment(reprovedEnrollment);
+        
+        IEnrolmentEvaluation notEvaluatedEnrollmentEvaluation = new EnrolmentEvaluation();
+        notEvaluatedEnrollmentEvaluation.setGrade("NA");
+        
+        notEvaluatedEnrollmentEvaluation.setEnrolment(notEvaluatedEnrollment);
+        
+        /* Setup enrollments execution periods */
+        annuledEnrollment.setExecutionPeriod(executionPeriod);
+        numericApprovedEnrollment.setExecutionPeriod(executionPeriod);
+        apApprovedEnrollment.setExecutionPeriod(executionPeriod);
+        reprovedEnrollment.setExecutionPeriod(executionPeriod);
+        notEvaluatedEnrollment.setExecutionPeriod(executionPeriod);
+        
+        /* Setup Curricular Course */
+        annuledEnrollment.setCurricularCourse(curricularCourse);
+        numericApprovedEnrollment.setCurricularCourse(curricularCourse);
+        apApprovedEnrollment.setCurricularCourse(curricularCourse);
+        reprovedEnrollment.setCurricularCourse(curricularCourse);
+        notEvaluatedEnrollment.setCurricularCourse(curricularCourse);
+    }
 
 	public void testEdit() {
         try {
@@ -377,5 +451,9 @@ public class ExecutionCourseTest extends DomainTestBase {
                 .after(dateBeforeEdition));
         assertTrue("Expected ModificationDate Before an initial timestamp", summary
                 .getLastModifiedDate().before(dateAfterEdition));
+    }
+
+    public void testGetActiveEnrollmentEvaluations() {
+        assertEquals("Active Enrollment Evaluations Count", 5, executionCourse.getActiveEnrollmentEvaluations().size());    
     }
 }

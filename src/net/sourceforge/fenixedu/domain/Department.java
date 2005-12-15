@@ -137,4 +137,15 @@ public class Department extends Department_Base {
 
     }
 
+    public List<ICompetenceCourse> getCompetenceCoursesByExecutionYear(IExecutionYear executionYear) {
+        List<ICompetenceCourse> competenceCourses = this.getCompetenceCourses();
+        List<ICompetenceCourse> competenceCoursesByExecutionYear = new ArrayList<ICompetenceCourse>();
+        for (ICompetenceCourse competenceCourse : competenceCourses) {
+            if (competenceCourse.hasActiveScopesInExecutionYear(executionYear)) {
+                competenceCoursesByExecutionYear.add(competenceCourse);
+            }
+
+        }
+        return competenceCoursesByExecutionYear;
+    }
 }

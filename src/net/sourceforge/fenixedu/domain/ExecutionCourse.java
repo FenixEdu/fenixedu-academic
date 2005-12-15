@@ -507,4 +507,16 @@ public class ExecutionCourse extends ExecutionCourse_Base
     		return (double) executionCourseStudentNumber / numShifts;
     }
 
+    public List<IEnrolmentEvaluation> getActiveEnrollmentEvaluations() {
+        List<IEnrolmentEvaluation> results = new ArrayList<IEnrolmentEvaluation>();
+
+        for (ICurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
+            List<IEnrolmentEvaluation> evaluations = curricularCourse
+                    .getActiveEnrollmentEvaluations(this.getExecutionPeriod());
+
+            results.addAll(evaluations);
+        }
+
+        return results;
+    }
 }

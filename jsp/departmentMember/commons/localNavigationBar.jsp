@@ -18,6 +18,11 @@
 			</html:link>
 		</li>
 		<li>
+			<html:link page="/courseStatistics/viewCompetenceCourses.faces">
+				<bean:message key="link.departmentCourses"/>
+			</html:link>
+		</li>
+		<li>
 			<html:link page="/viewTeacherService/chooseExecutionYear.faces">
 				<bean:message key="link.teacherService"/>
 			</html:link>

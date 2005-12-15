@@ -2,9 +2,12 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
+import net.sourceforge.fenixedu.domain.curriculum.GradeFactory;
+import net.sourceforge.fenixedu.domain.curriculum.IGrade;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
@@ -139,6 +142,10 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         } else {
             return 0;
         }
+    }
+
+    public EnrollmentState getEnrollmentStateByGrade() {
+        return getEnrollmentStateByGrade(getGrade());
     }
 
     private EnrollmentState getEnrollmentStateByGrade(String grade) {
@@ -285,4 +292,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         }
 	}
 
+    public IGrade getGradeWrapper() {
+        return GradeFactory.getInstance().getGrade(getGrade());
+    }
 }
