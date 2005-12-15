@@ -70,6 +70,7 @@ import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDislocatedStu
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentNotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentSenior;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentStudentPersonalDataAuthorization;
+import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentAdvise;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCareer;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCategory;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentExternalActivity;
@@ -82,6 +83,11 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentTeacherPerson
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentWeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
+import net.sourceforge.fenixedu.persistenceTier.teacher.service.IPersistentDegreeTeachingService;
+import net.sourceforge.fenixedu.persistenceTier.teacher.service.IPersistentInstitutionWorkTime;
+import net.sourceforge.fenixedu.persistenceTier.teacher.service.IPersistentOtherService;
+import net.sourceforge.fenixedu.persistenceTier.teacher.service.IPersistentTeacherMasterDegreeService;
+import net.sourceforge.fenixedu.persistenceTier.teacher.service.IPersistentTeacherPastService;
 import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentGratuityTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
@@ -224,6 +230,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.EquivalencyVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.ModalityVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.SeminaryVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.AdviseVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.CareerVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.ExternalActivityVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.OldPublicationVO;
@@ -231,6 +238,11 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.Ori
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.ServiceProviderRegimeVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.TeacherPersonalExpectationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.WeeklyOcupationVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.service.DegreeTeachingServiceVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.service.InstitutionWorkTimeVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.service.OtherServiceVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.service.TeacherMasterDegreeServiceVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.service.TeacherPastServiceVO;
 public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     private static final VersionedObjectsPersistenceSupport instance = new VersionedObjectsPersistenceSupport();
@@ -1013,10 +1025,33 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 	{
 		return new MailAdressAliasVO();
 	}
-
+	
 	public IPersistentMailingList getIPersistentMailingList()
 	{
 		return new MailingListVO();
-	}
+	}	
+	    
+    public IPersistentTeacherMasterDegreeService getIPersistentTeacherMasterDegreeService() {
+        return new TeacherMasterDegreeServiceVO();
+    }
     
+    public IPersistentDegreeTeachingService getIPersistentDegreeTeachingService() {
+        return new DegreeTeachingServiceVO();
+    }
+    
+    public IPersistentTeacherPastService getIPersistentTeacherPastService() {
+        return new TeacherPastServiceVO();
+    }
+    
+    public IPersistentInstitutionWorkTime getIPersistentInstitutionWorkTime() {
+        return new InstitutionWorkTimeVO();
+    }
+    
+    public IPersistentOtherService getIPersistentOtherService() {
+        return new OtherServiceVO();
+    }  
+    
+    public IPersistentAdvise getIPersistentAdvise() {
+        return new AdviseVO();
+    }
 }

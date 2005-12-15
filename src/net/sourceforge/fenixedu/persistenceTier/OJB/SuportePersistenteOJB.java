@@ -88,6 +88,7 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.student.DislocatedStudentOJB
 import net.sourceforge.fenixedu.persistenceTier.OJB.student.NotNeedToEnrollInCurricularCourseOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.student.SeniorOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.student.StudentPersonalDataAuthorizationOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.AdviseOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.CareerOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.CategoryOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.ExternalActivityOJB;
@@ -100,6 +101,11 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.WeeklyOcupationOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.professorship.NonAffiliatedTeacherOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.professorship.ShiftProfessorshipOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.professorship.SupportLessonOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.service.DegreeTeachingServiceOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.service.InstitutionWorkTimeOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.service.OtherServiceOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.service.TeacherMasterDegreeServiceOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.service.TeacherPastServiceOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.workingTime.TeacherInstitutionWorkingTimeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.transactions.GratuityTransactionOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.transactions.InsuranceTransactionOJB;
@@ -175,6 +181,7 @@ import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDislocatedStu
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentNotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentSenior;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentStudentPersonalDataAuthorization;
+import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentAdvise;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCareer;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCategory;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentExternalActivity;
@@ -187,6 +194,11 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentTeacherPerson
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentWeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
+import net.sourceforge.fenixedu.persistenceTier.teacher.service.IPersistentDegreeTeachingService;
+import net.sourceforge.fenixedu.persistenceTier.teacher.service.IPersistentInstitutionWorkTime;
+import net.sourceforge.fenixedu.persistenceTier.teacher.service.IPersistentOtherService;
+import net.sourceforge.fenixedu.persistenceTier.teacher.service.IPersistentTeacherMasterDegreeService;
+import net.sourceforge.fenixedu.persistenceTier.teacher.service.IPersistentTeacherPastService;
 import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentGratuityTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
@@ -1473,5 +1485,29 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentMailingList getIPersistentMailingList()
 	{
 		return new PersistentMailingListOJB();
-	}
+	}   
+    
+    public IPersistentTeacherMasterDegreeService getIPersistentTeacherMasterDegreeService() {
+        return new TeacherMasterDegreeServiceOJB();
+    }
+    
+    public IPersistentDegreeTeachingService getIPersistentDegreeTeachingService() {
+        return new DegreeTeachingServiceOJB();
+    }
+    
+    public IPersistentTeacherPastService getIPersistentTeacherPastService() {
+        return new TeacherPastServiceOJB();
+    }
+    
+    public IPersistentInstitutionWorkTime getIPersistentInstitutionWorkTime() {
+        return new InstitutionWorkTimeOJB();
+    }
+    
+    public IPersistentOtherService getIPersistentOtherService() {
+        return new OtherServiceOJB();
+    }  
+    
+    public IPersistentAdvise getIPersistentAdvise() {
+        return new AdviseOJB();
+    }
 }
