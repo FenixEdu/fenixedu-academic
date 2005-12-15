@@ -157,7 +157,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         StringBuffer buffer = new StringBuffer();
         List<IUnit> allUnitsWithoutParent = getAllUnitsWithoutParent();
         Collections.sort(allUnitsWithoutParent, new BeanComparator("name"));
-        Date currentDate = prepareCurrentDate();
+        Date currentDate = Calendar.getInstance().getTime();
 
         for (IUnit unit : allUnitsWithoutParent) {
             if (this.getListingTypeValue().equals("0")
@@ -709,16 +709,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         int year = calendar.get(Calendar.YEAR);
         return (day + "/" + month + "/" + year);
     }
-
-    private Date prepareCurrentDate() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        return calendar.getTime();
-    }
-
+    
     public HtmlInputHidden getUnitIDHidden() {
         if (this.unitIDHidden == null) {
             this.unitIDHidden = new HtmlInputHidden();
@@ -824,7 +815,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         for (IUnit unit : allUnits) {
             if (unit.getCostCenterCode() != null && !unit.equals(this.getChooseUnit())
                     && this.getUnitCostCenter().equals(String.valueOf(unit.getCostCenterCode()))
-                    && unit.isActive(prepareCurrentDate())) {
+                    && unit.isActive(Calendar.getInstance().getTime())) {
                 setErrorMessage("error.costCenter.alreadyExists");
                 return true;
             }

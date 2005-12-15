@@ -92,7 +92,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
                 .append(parentUnit.getName()).append("</a>").append("</li>").append("<ul>");
        
         for (IUnit subUnit : parentUnit.getSubUnits()) {
-            if (subUnit.isActive(prepareCurrentDate())) {
+            if (subUnit.isActive(Calendar.getInstance().getTime())) {
                 getUnitsList(subUnit, buffer);
             }
         }

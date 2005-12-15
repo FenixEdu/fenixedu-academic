@@ -367,7 +367,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 parentUnit.getName()).append("</a>").append("</li>").append("<ul>");
 
         for (IUnit subUnit : parentUnit.getSubUnits()) {
-            if(subUnit.isActive(prepareCurrentDate())){
+            if(subUnit.isActive(Calendar.getInstance().getTime())){
                 getUnitsList(subUnit, index + 1, buffer);
             }
         }

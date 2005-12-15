@@ -13,10 +13,8 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IAdvisory;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IRole;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.AdvisoryRecipients;
@@ -42,9 +40,7 @@ public class CreateAdvisory implements IService {
             throws ExcepcaoPersistencia {
         
         final ISuportePersistente persistenceSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-        
-        final IPessoaPersistente persistentPerson = persistenceSupport.getIPessoaPersistente();
+                .getDefaultPersistenceSupport();       
 
         final IAdvisory advisory = DomainFactory.makeAdvisory();
         advisory.setCreated(infoAdvisory.getCreated());
@@ -52,8 +48,7 @@ public class CreateAdvisory implements IService {
         advisory.setExpires(infoAdvisory.getExpires());
         advisory.setMessage(infoAdvisory.getMessage());
         advisory.setSender(infoAdvisory.getSender());
-
-        //List<IPerson> people = (List<IPerson>) persistentPerson.readAll(Person.class);
+     
         IRole role = persistenceSupport.getIPersistentRole().readByRoleType(RoleType.PERSON);
         List<IPerson> people = role.getAssociatedPersons();
               

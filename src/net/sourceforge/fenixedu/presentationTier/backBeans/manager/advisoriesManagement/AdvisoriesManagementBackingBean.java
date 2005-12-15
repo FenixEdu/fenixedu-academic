@@ -24,8 +24,7 @@ import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-
-import org.apache.commons.collections.CollectionUtils;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 public class AdvisoriesManagementBackingBean extends FenixBackingBean {
 
@@ -35,13 +34,7 @@ public class AdvisoriesManagementBackingBean extends FenixBackingBean {
 
     Integer advisoryID;
 
-    String message;
-
-    String subject;
-
-    String sender;
-
-    String expires;
+    String message, subject, sender, expires;
 
     HtmlInputHidden advisoryIDHidden;
 
@@ -54,15 +47,13 @@ public class AdvisoriesManagementBackingBean extends FenixBackingBean {
     public List<IAdvisory> getAllAdvisories() throws FenixFilterException, FenixServiceException {
 
         if (allAdvisories == null) {
-
             allAdvisories = new ArrayList<IAdvisory>();
-            final Object[] argsToRead = { Advisory.class };
-            List<IAdvisory> allAdvisories_ = (List<IAdvisory>) ServiceUtils.executeService(null,
-                    "ReadAllDomainObject", argsToRead);
-
             Date currentDate = Calendar.getInstance().getTime();
+            List<IAdvisory> allAdvisories_ = readAllDomainObjects(Advisory.class);
             for (IAdvisory advisory : allAdvisories_) {
-                if (advisory.getExpires() != null && advisory.getExpires().after(currentDate)) {
+                if (advisory.getExpires() != null
+                        && (DateFormatUtil.equalDates("yyyyMMddHHmm", advisory.getExpires(), currentDate) || advisory
+                                .getExpires().after(currentDate))) {
                     allAdvisories.add(advisory);
                 }
             }
@@ -135,41 +126,29 @@ public class AdvisoriesManagementBackingBean extends FenixBackingBean {
 
     public RoleType getPeopleOfAdvisory() throws FenixFilterException, FenixServiceException {
 
-        List<RoleType> list = new ArrayList<RoleType>();
-        List<RoleType> resultList = new ArrayList<RoleType>();
+        int teacherCount = 0, studentCount = 0, employeeCount = 0, max;
 
-        IAdvisory advisory = this.getAdvisory();
-        for (IPerson person : advisory.getPeople()) {
+        for (IPerson person : this.getAdvisory().getPeople()) {
 
-            IRole rolePerson = person.getPersonRole(RoleType.TEACHER);
+            IRole roleTeacher = person.getPersonRole(RoleType.TEACHER);
             IRole roleEmployee = person.getPersonRole(RoleType.EMPLOYEE);
             IRole roleStudent = person.getPersonRole(RoleType.STUDENT);
 
-            if (rolePerson != null) {
-                list.add(RoleType.TEACHER);
-            }
-
-            if (roleEmployee != null) {
-                list.add(RoleType.EMPLOYEE);
-            }
-
-            if (roleStudent != null) {
-                list.add(RoleType.STUDENT);
-            }
-
-            if (!resultList.isEmpty()) {
-                resultList = (List<RoleType>) CollectionUtils.intersection(resultList, list);
-            }
-            else{
-                resultList.addAll(list);
-            }
-
-            if (resultList.size() == 1) {
-                return list.get(0);
-            }
-            list.clear();
+            teacherCount = (roleTeacher != null) ? ++teacherCount : teacherCount;
+            employeeCount = (roleEmployee != null) ? ++employeeCount : employeeCount;
+            studentCount = (roleStudent != null) ? ++studentCount : studentCount;
         }
-        return null;
+
+        max = Math.max(teacherCount, employeeCount);
+        max = Math.max(max, studentCount);
+
+        if (teacherCount == max) {
+            return RoleType.TEACHER;
+        } else if (studentCount == max) {
+            return RoleType.STUDENT;
+        } else {
+            return RoleType.EMPLOYEE;
+        }
     }
 
     public void setAdvisory(IAdvisory advisory) {
@@ -221,16 +200,16 @@ public class AdvisoriesManagementBackingBean extends FenixBackingBean {
     }
 
     private String processDate(Date date) throws FenixFilterException, FenixServiceException {
-                
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        
+
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH) + 1;
         int year = calendar.get(Calendar.YEAR);
         int hours = calendar.get(Calendar.HOUR_OF_DAY);
         int minutes = calendar.get(Calendar.MINUTE);
-        
+
         return (day + "/" + month + "/" + year + " " + hours + ":" + minutes);
     }
 

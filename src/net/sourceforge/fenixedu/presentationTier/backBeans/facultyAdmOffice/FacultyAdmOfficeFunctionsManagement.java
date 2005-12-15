@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.facultyAdmOffice;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
@@ -20,10 +19,9 @@ public class FacultyAdmOfficeFunctionsManagement extends ManagerFunctionsManagem
 
         StringBuffer buffer = new StringBuffer();
         List<IUnit> allUnits = readAllDomainObjects(Unit.class);
-
-        Date currentDate = Calendar.getInstance().getTime();
+        
         for (IUnit unit : allUnits) {
-            if (unit.getParentUnits().isEmpty() && unit.isActive(currentDate)) {
+            if (unit.getParentUnits().isEmpty() && unit.isActive(Calendar.getInstance().getTime())) {
                 getUnitTree(buffer, unit);
             }
         }
@@ -44,9 +42,8 @@ public class FacultyAdmOfficeFunctionsManagement extends ManagerFunctionsManagem
                 .append("&unitID=").append(parentUnit.getIdInternal()).append("\">").append(
                         parentUnit.getName()).append("</a>").append("</li>").append("<ul>");
 
-        Date currentDate = Calendar.getInstance().getTime();
         for (IUnit subUnit : parentUnit.getSubUnits()) {
-            if (subUnit.isActive(currentDate)) {
+            if (subUnit.isActive(Calendar.getInstance().getTime())) {
                 getUnitsList(subUnit, index + 1, buffer);
             }
         }

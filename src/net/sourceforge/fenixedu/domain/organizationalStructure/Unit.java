@@ -10,6 +10,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IContract;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 public class Unit extends Unit_Base {
 
@@ -32,45 +33,46 @@ public class Unit extends Unit_Base {
         return allTopUnits;
     }
 
-    public List<IUnit> getInactiveSubUnits(Date currentDate){
+    public List<IUnit> getInactiveSubUnits(Date currentDate) {
         List<IUnit> allInactiveSubUnits = new ArrayList<IUnit>();
         for (IUnit subUnit : this.getSubUnits()) {
-            if(!subUnit.isActive(currentDate)){
+            if (!subUnit.isActive(currentDate)) {
                 allInactiveSubUnits.add(subUnit);
             }
         }
         return allInactiveSubUnits;
     }
-    
-    public List<IUnit> getActiveSubUnits(Date currentDate){
+
+    public List<IUnit> getActiveSubUnits(Date currentDate) {
         List<IUnit> allActiveSubUnits = new ArrayList<IUnit>();
         for (IUnit subUnit : this.getSubUnits()) {
-            if(subUnit.isActive(currentDate)){
+            if (subUnit.isActive(currentDate)) {
                 allActiveSubUnits.add(subUnit);
             }
         }
         return allActiveSubUnits;
     }
-    
+
     public void edit(String unitName, Integer unitCostCenter, Date beginDate, Date endDate,
             UnitType type, IUnit parentUnit) {
 
-        this.setName(unitName);        
-        this.setBeginDate(beginDate);       
+        this.setName(unitName);
+        this.setBeginDate(beginDate);
         this.setEndDate(endDate);
-        this.setType(type);       
-        this.setCostCenterCode(unitCostCenter);               
+        this.setType(type);
+        this.setCostCenterCode(unitCostCenter);
         if (parentUnit != null) {
             this.addParentUnits(parentUnit);
         }
-        if(endDate != null && endDate.before(beginDate)){
+        if (endDate != null && endDate.before(beginDate)) {
             throw new DomainException("error.endDateBeforeBeginDate");
         }
     }
 
     public boolean isActive(Date currentDate) {
         if (this.getEndDate() == null
-                || (this.getEndDate().after(currentDate) || this.getEndDate().equals(currentDate))) {
+                || (DateFormatUtil.equalDates("yyyyMMdd", this.getEndDate(), currentDate) || this
+                        .getEndDate().after(currentDate))) {
             return true;
         }
         return false;
@@ -102,36 +104,36 @@ public class Unit extends Unit_Base {
         }
         return contracts;
     }
-    
+
     public List<IUnit> getScientificAreaUnits() {
-        List<IUnit> result = new ArrayList<IUnit>();        
+        List<IUnit> result = new ArrayList<IUnit>();
         for (IUnit unit : this.getSubUnits()) {
             if (unit.getType() != null && unit.getType().equals(UnitType.SCIENTIFIC_AREA)) {
-                result.add(unit);                
+                result.add(unit);
             }
-        }        
+        }
         return result;
     }
-    
+
     public List<IUnit> getCompetenceCourseGroupUnits() {
-        List<IUnit> result = new ArrayList<IUnit>();        
+        List<IUnit> result = new ArrayList<IUnit>();
         for (IUnit unit : this.getSubUnits()) {
             if (unit.getType() != null && unit.getType().equals(UnitType.COMPETENCE_COURSE_GROUP)) {
-                result.add(unit);                
+                result.add(unit);
             }
         }
         return result;
     }
-    
+
     public List<IUnit> getDegreeUnits() {
         List<IUnit> result = new ArrayList<IUnit>();
-        
+
         for (IUnit unit : this.getSubUnits()) {
             if (unit.getType() != null && unit.getType().equals(UnitType.DEGREE)) {
-                result.add(unit);                
+                result.add(unit);
             }
         }
-        
+
         return result;
     }
 }
