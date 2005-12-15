@@ -61,7 +61,7 @@ border-bottom: 1px solid #ddd;
 
 	
 	<h:outputText value="<h2>#{bundle['label.courseStatistics.competenceStatistics']}</h2>" escape="false" />
-	<h:outputText value="<h3>#{courseStatistics.department.name}</h3>" escape="false" />
+	<h:outputText value="<h3>#{courseStatistics.department.realName}</h3>" escape="false" />
 
 	<h:form>
 
