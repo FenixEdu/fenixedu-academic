@@ -174,4 +174,19 @@
 			>
 		<inverse-foreignkey field-ref="endExecutionPeriodKey"/>
 	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+		name="associatedStartadvises" 
+		element-class-ref="net.sourceforge.fenixedu.domain.teacher.Advise">
+		<inverse-foreignkey field-ref="keyStartExecutionPeriod"/>
+	</collection-descriptor>	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+		name="associatedEndadvises" 
+		element-class-ref="net.sourceforge.fenixedu.domain.teacher.Advise">
+		<inverse-foreignkey field-ref="keyEndExecutionPeriod"/>
+	</collection-descriptor>	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+		name="teacherServices" 
+		element-class-ref="net.sourceforge.fenixedu.domain.teacher.TeacherService">
+		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
+	</collection-descriptor>	
 </class-descriptor> 

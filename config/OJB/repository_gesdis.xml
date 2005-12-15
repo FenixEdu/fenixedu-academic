@@ -474,6 +474,20 @@
 		<inverse-foreignkey field-ref="keyProfessorship"/>
     </collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+         name="degreeTeachingServices"
+         element-class-ref="net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService"
+         
+         >
+		<inverse-foreignkey field-ref="keyProfessorship"/>
+    </collection-descriptor> 
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+         name="teacherMasterDegreeServices"
+         element-class-ref="net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService"
+         
+         >
+		<inverse-foreignkey field-ref="keyProfessorship"/>
+    </collection-descriptor>       
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="supportLessons"
          element-class-ref="net.sourceforge.fenixedu.domain.SupportLesson"
          

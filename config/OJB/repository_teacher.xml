@@ -483,6 +483,90 @@
 			>
 		<inverse-foreignkey field-ref="keyInstitution"/>
 	</collection-descriptor>
-</class-descriptor>
+</class-descriptor>  
+				 
+<!-- Definitions for net.sourceforge.fenixedu.domain.teacher.Advise -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.Advise" table="ADVISE">
 
+      <field-descriptor
+      	name="idInternal"
+      	column="ID_INTERNAL"
+      	jdbc-type="INTEGER"
+      	primarykey="true"
+      	autoincrement="true"
+      />
+      					
+      <field-descriptor
+      	name="keyTeacher"
+      	column="KEY_TEACHER"
+      	jdbc-type="INTEGER"
+      />
+      
+      <field-descriptor
+      	name="keyStudent"
+      	column="KEY_STUDENT"
+      	jdbc-type="INTEGER"
+      />
+ 
+      <field-descriptor
+      	name="keyStartExecutionPeriod"
+      	column="KEY_START_EXECUTION_PERIOD"
+      	jdbc-type="INTEGER"
+      />
+         
+      <field-descriptor
+      	name="keyEndExecutionPeriod"
+      	column="KEY_END_EXECUTION_PERIOD"
+      	jdbc-type="INTEGER"
+      />      
+
+      <field-descriptor
+		name="adviseType"
+		column="ADVISE_TYPE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.AdviseType2SqlAdviseTypeFieldConversion"
+	  />
+	            
+	  <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="false"
+       />
+	
+	<reference-descriptor auto-retrieve="false"
+		name="teacher"
+		class-ref="net.sourceforge.fenixedu.domain.Teacher"        
+		>
+		<foreignkey field-ref="keyTeacher"/>	
+	</reference-descriptor>
+	
+	<reference-descriptor auto-retrieve="false"
+		name="student"
+		class-ref="net.sourceforge.fenixedu.domain.Student"        
+		>
+		<foreignkey field-ref="keyStudent"/>	
+	</reference-descriptor>	
+
+	<reference-descriptor auto-retrieve="false"
+		name="startExecutionPeriod"
+		class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"        
+		>
+		<foreignkey field-ref="keyStartExecutionPeriod"/>	
+	</reference-descriptor>	
+	
+	<reference-descriptor auto-retrieve="false"
+		name="endExecutionPeriod"
+		class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"        
+		>
+		<foreignkey field-ref="keyEndExecutionPeriod"/>	
+	</reference-descriptor>	
+	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+		name="teacherAdviseServices"
+		element-class-ref="net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService">
+		<inverse-foreignkey field-ref="keyAdvise"/>
+	</collection-descriptor>
+		
+</class-descriptor>				  		
 <!-- Mapping of User defined classses ends here -->

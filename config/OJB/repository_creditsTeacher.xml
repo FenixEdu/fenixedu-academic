@@ -184,3 +184,411 @@
   	</collection-descriptor>
 </class-descriptor>
 
+<!-- Definitions for net.sourceforge.fenixedu.domain.teacher.TeacherService -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.TeacherService" table="TEACHER_SERVICE">
+
+      <field-descriptor
+      	name="idInternal"
+      	column="ID_INTERNAL"
+      	jdbc-type="INTEGER"
+      	primarykey="true"
+      	autoincrement="true"
+      />
+      					
+      <field-descriptor
+      	name="keyTeacher"
+      	column="KEY_TEACHER"
+      	jdbc-type="INTEGER"
+      />
+      
+      <field-descriptor
+      	name="keyExecutionPeriod"
+      	column="KEY_EXECUTION_PERIOD"
+      	jdbc-type="INTEGER"
+      />      
+      
+	  <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="false"
+      />
+
+	<reference-descriptor auto-retrieve="false"
+		name="teacher"
+		class-ref="net.sourceforge.fenixedu.domain.Teacher"        
+		>
+		<foreignkey field-ref="keyTeacher"/>	
+	</reference-descriptor>
+	
+	<reference-descriptor auto-retrieve="false"
+		name="executionPeriod"
+		class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"        
+		>
+		<foreignkey field-ref="keyExecutionPeriod"/>	
+	</reference-descriptor>	
+   
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+		name="serviceItems"
+		element-class-ref="net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem">
+		<inverse-foreignkey field-ref="keyTeacherService"/>
+  	</collection-descriptor>
+		
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem">      
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.teacher.TeacherPastService"/>    
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService"/>    
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.teacher.OtherService"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService"/>
+</class-descriptor>    
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.teacher.TeacherPastService -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.TeacherPastService" table="TEACHER_SERVICE_ITEM">
+
+      <field-descriptor
+      	name="idInternal"
+      	column="ID_INTERNAL"
+      	jdbc-type="INTEGER"
+      	primarykey="true"
+      	autoincrement="true"
+      />
+      					
+      <field-descriptor
+      	name="keyTeacherService"
+      	column="KEY_TEACHER_SERVICE"
+      	jdbc-type="INTEGER"
+      />
+      
+      <field-descriptor
+      	name="credits"
+      	column="CREDITS"
+      	jdbc-type="DOUBLE"
+      />      
+      
+	  <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="false"
+      />
+      
+    <field-descriptor
+		name="ojbConcreteClass"
+		column="CLASS_NAME"
+		jdbc-type="VARCHAR"
+	/>      
+
+	<reference-descriptor auto-retrieve="false"
+		name="teacherService"
+		class-ref="net.sourceforge.fenixedu.domain.teacher.TeacherService"        
+		>
+		<foreignkey field-ref="keyTeacherService"/>	
+	</reference-descriptor>
+		
+</class-descriptor>
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService" table="TEACHER_SERVICE_ITEM">
+
+      <field-descriptor
+      	name="idInternal"
+      	column="ID_INTERNAL"
+      	jdbc-type="INTEGER"
+      	primarykey="true"
+      	autoincrement="true"
+      />
+      					
+      <field-descriptor
+      	name="keyTeacherService"
+      	column="KEY_TEACHER_SERVICE"
+      	jdbc-type="INTEGER"
+      />
+
+      <field-descriptor
+      	name="keyProfessorship"
+      	column="KEY_PROFESSORSHIP"
+      	jdbc-type="INTEGER"
+      />
+            
+      <field-descriptor
+      	name="credits"
+      	column="CREDITS"
+      	jdbc-type="DOUBLE"
+      />      
+      
+      <field-descriptor
+      	name="hours"
+      	column="HOURS"
+      	jdbc-type="DOUBLE"
+      />
+            
+	  <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="false"
+      />
+
+    <field-descriptor
+		name="ojbConcreteClass"
+		column="CLASS_NAME"
+		jdbc-type="VARCHAR"
+	/>
+	
+	<reference-descriptor auto-retrieve="false"
+		name="teacherService"
+		class-ref="net.sourceforge.fenixedu.domain.teacher.TeacherService"        
+		>
+		<foreignkey field-ref="keyTeacherService"/>	
+	</reference-descriptor>
+	
+	<reference-descriptor auto-retrieve="false"
+		name="professorship"
+		class-ref="net.sourceforge.fenixedu.domain.Professorship"        
+		>
+		<foreignkey field-ref="keyProfessorship"/>	
+	</reference-descriptor>	
+		
+</class-descriptor>
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.teacher.OtherService -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.OtherService" table="TEACHER_SERVICE_ITEM">
+
+      <field-descriptor
+      	name="idInternal"
+      	column="ID_INTERNAL"
+      	jdbc-type="INTEGER"
+      	primarykey="true"
+      	autoincrement="true"
+      />
+      					
+      <field-descriptor
+      	name="keyTeacherService"
+      	column="KEY_TEACHER_SERVICE"
+      	jdbc-type="INTEGER"
+      />
+      
+      <field-descriptor
+      	name="credits"
+      	column="CREDITS"
+      	jdbc-type="DOUBLE"
+      />      
+      
+	  <field-descriptor
+		name="reason"
+		column="REASON"
+		jdbc-type="VARCHAR"
+	  /> 
+	      
+	  <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="false"
+      />
+      
+    <field-descriptor
+		name="ojbConcreteClass"
+		column="CLASS_NAME"
+		jdbc-type="VARCHAR"
+	/>      
+
+	<reference-descriptor auto-retrieve="false"
+		name="teacherService"
+		class-ref="net.sourceforge.fenixedu.domain.teacher.TeacherService"        
+		>
+		<foreignkey field-ref="keyTeacherService"/>	
+	</reference-descriptor>
+
+</class-descriptor>
+		
+<!-- Definitions for net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime" table="TEACHER_SERVICE_ITEM">
+
+      <field-descriptor
+      	name="idInternal"
+      	column="ID_INTERNAL"
+      	jdbc-type="INTEGER"
+      	primarykey="true"
+      	autoincrement="true"
+      />
+      					
+      <field-descriptor
+      	name="keyTeacherService"
+      	column="KEY_TEACHER_SERVICE"
+      	jdbc-type="INTEGER"
+      />
+      
+      <field-descriptor
+        name="startTime"
+        column="START_TIME"
+        jdbc-type="TIME"
+        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
+       />
+    						    
+      <field-descriptor
+        name="endTime"
+        column="END_TIME"
+        jdbc-type="TIME"
+        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
+       />
+	      
+	  <field-descriptor
+	    name="weekDay"
+	    column="WEEKDAY"
+	    jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.WeekDay2SqlWeekDayFieldConversion"
+	  />
+						        	      
+	  <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="false"
+      />
+      
+    <field-descriptor
+		name="ojbConcreteClass"
+		column="CLASS_NAME"
+		jdbc-type="VARCHAR"
+	/>      
+
+	<reference-descriptor auto-retrieve="false"
+		name="teacherService"
+		class-ref="net.sourceforge.fenixedu.domain.teacher.TeacherService"        
+		>
+		<foreignkey field-ref="keyTeacherService"/>	
+	</reference-descriptor>		
+</class-descriptor>
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService" table="TEACHER_SERVICE_ITEM">
+
+      <field-descriptor
+      	name="idInternal"
+      	column="ID_INTERNAL"
+      	jdbc-type="INTEGER"
+      	primarykey="true"
+      	autoincrement="true"
+      />
+      					
+      <field-descriptor
+      	name="keyTeacherService"
+      	column="KEY_TEACHER_SERVICE"
+      	jdbc-type="INTEGER"
+      />
+      
+      <field-descriptor
+      	name="keyProfessorship"
+      	column="KEY_PROFESSORSHIP"
+      	jdbc-type="INTEGER"
+      />
+        
+      <field-descriptor
+      	name="keyShift"
+      	column="KEY_SHIFT"
+      	jdbc-type="INTEGER"
+      />
+                  
+      <field-descriptor
+      	name="percentage"
+      	column="PERCENTAGE"
+      	jdbc-type="DOUBLE"
+      />      
+            
+	  <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="false"
+      />
+
+    <field-descriptor
+		name="ojbConcreteClass"
+		column="CLASS_NAME"
+		jdbc-type="VARCHAR"
+	/>
+	
+	<reference-descriptor auto-retrieve="false"
+		name="teacherService"
+		class-ref="net.sourceforge.fenixedu.domain.teacher.TeacherService"        
+		>
+		<foreignkey field-ref="keyTeacherService"/>	
+	</reference-descriptor>
+	
+	<reference-descriptor auto-retrieve="false"
+		name="professorship"
+		class-ref="net.sourceforge.fenixedu.domain.Professorship"        
+		>
+		<foreignkey field-ref="keyProfessorship"/>	
+	</reference-descriptor>
+
+	<reference-descriptor auto-retrieve="false"
+		name="shift"
+		class-ref="net.sourceforge.fenixedu.domain.Shift"        
+		>
+		<foreignkey field-ref="keyShift"/>	
+	</reference-descriptor>	
+		
+</class-descriptor>
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService" table="TEACHER_SERVICE_ITEM">
+
+      <field-descriptor
+      	name="idInternal"
+      	column="ID_INTERNAL"
+      	jdbc-type="INTEGER"
+      	primarykey="true"
+      	autoincrement="true"
+      />
+      					
+      <field-descriptor
+      	name="keyTeacherService"
+      	column="KEY_TEACHER_SERVICE"
+      	jdbc-type="INTEGER"
+      />
+
+      <field-descriptor
+      	name="keyAdvise"
+      	column="KEY_ADVISE"
+      	jdbc-type="INTEGER"
+      />
+            
+      <field-descriptor
+      	name="percentage"
+      	column="PERCENTAGE"
+      	jdbc-type="DOUBLE"
+      />      
+	      
+	  <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="false"
+      />
+      
+    <field-descriptor
+		name="ojbConcreteClass"
+		column="CLASS_NAME"
+		jdbc-type="VARCHAR"
+	/>      
+
+	<reference-descriptor auto-retrieve="false"
+		name="teacherService"
+		class-ref="net.sourceforge.fenixedu.domain.teacher.TeacherService"        
+		>
+		<foreignkey field-ref="keyTeacherService"/>	
+	</reference-descriptor>
+	
+	<reference-descriptor auto-retrieve="false"
+		name="advise"
+		class-ref="net.sourceforge.fenixedu.domain.teacher.Advise"        
+		>
+		<foreignkey field-ref="keyAdvise"/>	
+	</reference-descriptor>	
+
+</class-descriptor>

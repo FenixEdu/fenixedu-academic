@@ -188,6 +188,11 @@
          >
 		<inverse-foreignkey field-ref="keyFinalDegreeWorkProposal"/>
     </collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+		name="advises" 
+		element-class-ref="net.sourceforge.fenixedu.domain.teacher.Advise">
+		<inverse-foreignkey field-ref="keyProposal"/>
+	</collection-descriptor>    
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing"
