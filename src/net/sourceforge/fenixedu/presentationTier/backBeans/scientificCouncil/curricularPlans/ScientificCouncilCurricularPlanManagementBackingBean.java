@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.cu
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -15,7 +14,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 public class ScientificCouncilCurricularPlanManagementBackingBean extends FenixBackingBean {
-    private final ResourceBundle scouncilBundle = getResourceBundle("ServidorApresentacao/ScientificCouncilResources");
     
     public List<IDegree> getBolonhaDegrees() throws FenixFilterException, FenixServiceException {
         Object[] args = { Degree.class };

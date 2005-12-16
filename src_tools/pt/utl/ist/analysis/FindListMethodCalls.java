@@ -42,9 +42,7 @@ public class FindListMethodCalls extends ClassFilesVisitor implements Opcodes {
 
 
     protected MethodVisitor makeMethodVisitor(MethodVisitor mv, final String methodName, final String className) {
-	return new MethodAdapter(mv) {
-		private boolean foundLock = false;
-		
+	return new MethodAdapter(mv) {		
 		public void visitMethodInsn(int opcode, String owner, String name, String desc) {
 		    if ((opcode == INVOKEINTERFACE) && "java/util/List".equals(owner)) {
 			for (int i = 0; i < BAD.length; i += 2) {

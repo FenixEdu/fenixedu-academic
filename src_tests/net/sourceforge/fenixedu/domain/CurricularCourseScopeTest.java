@@ -14,7 +14,6 @@ public class CurricularCourseScopeTest extends DomainTestBase {
 	private ICurricularCourse newCurricularCourse;
 	private IBranch newBranch;
 	
-	private ICurricularCourseScope unableToCreateCurricularCourseScope;
 	private ICurricularSemester commonCurricularSemester;
 	private ICurricularCourse commonCurricularCourse;
 	private IBranch commonBranch;
@@ -111,11 +110,9 @@ public class CurricularCourseScopeTest extends DomainTestBase {
 		
 		
 		try {
-			unableToCreateCurricularCourseScope = new CurricularCourseScope(commonBranch, commonCurricularCourse, 
-																			commonCurricularSemester, null, null, null);
+			new CurricularCourseScope(commonBranch, commonCurricularCourse, commonCurricularSemester, null, null, null);
 			fail("Should not have been created.");
 		} catch (DomainException e) {
-			
 		}
 		
 	}

@@ -8,7 +8,6 @@ package net.sourceforge.fenixedu.domain;
 public class ItemTest extends DomainTestBase {
 
     private ISection section;
-    private ISection sectionSuperior;
     private ISite site;
     private IItem item, item2, item3;
 

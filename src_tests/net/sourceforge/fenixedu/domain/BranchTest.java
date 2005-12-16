@@ -21,8 +21,6 @@ public class BranchTest extends DomainTestBase {
 	private List<IStudentCurricularPlan> studentCurricularPlans = new ArrayList();
 	private List<IStudentCurricularPlanLEEC> studentCurricularPlansLEEC = new ArrayList();
 	private List<IStudentCurricularPlanLEIC> studentCurricularPlansLEIC = new ArrayList();
-	private IDegreeCurricularPlan degreeCurricularPlan = null;
-	private List<IProposal> proposals = new ArrayList();
 	private List<ICurricularCourseScope> curricularCourseScopesToDelete = new ArrayList();
 	private List<ICurricularCourseScope> curricularCourseScopesToCommonBranch = new ArrayList();
 
@@ -32,7 +30,6 @@ public class BranchTest extends DomainTestBase {
 	private List<IStudentCurricularPlan> studentCurricularPlansInCommonBranchToDelete = new ArrayList();
 	private List<IStudentCurricularPlanLEEC> studentCurricularPlansLEECInCommonBranchToDelete = new ArrayList();
 	private List<IStudentCurricularPlanLEIC> studentCurricularPlansLEICInCommonBranchToDelete = new ArrayList();
-	private IDegreeCurricularPlan degreeCurricularPlanInCommonBranchToDelete = null;
 	
 	private IBranch commonBranchNotToDelete = null;
 	
@@ -97,7 +94,6 @@ public class BranchTest extends DomainTestBase {
 		
 		IDegreeCurricularPlan dcpD = new DegreeCurricularPlan();
 		dcpD.addAreas(commonBranchToDelete);
-		degreeCurricularPlanInCommonBranchToDelete = dcpD;
 	}
 
 	private void setUpDeleteCaseForNonDeletableBranchWithProposals() {
@@ -138,7 +134,6 @@ public class BranchTest extends DomainTestBase {
 		IDegreeCurricularPlan dcp = new DegreeCurricularPlan();
 		nonCommonBranchToDelete.setDegreeCurricularPlan(dcp);
 		commonBranchInSameDegreeCurricularPlan.setDegreeCurricularPlan(dcp);
-		degreeCurricularPlan = dcp;
 		
 		IDegreeCurricularPlan otherDCP = new DegreeCurricularPlan();
 		commonBranchInOtherDegreeCurricularPlan.setDegreeCurricularPlan(otherDCP);

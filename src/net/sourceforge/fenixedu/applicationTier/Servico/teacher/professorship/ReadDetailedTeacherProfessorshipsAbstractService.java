@@ -34,11 +34,8 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ReadDetailedTeacherProfessorshipsAbstractService implements IService {
     
     private final class Professorships2DetailProfessorship implements Transformer {
-        private final List<IProfessorship> responsiblesFor;
-
-        private Professorships2DetailProfessorship(List<IProfessorship> responsiblesFor) {
+        private Professorships2DetailProfessorship() {
             super();
-            this.responsiblesFor = responsiblesFor;
         }
 
         public Object transform(Object input) {
@@ -94,7 +91,7 @@ public class ReadDetailedTeacherProfessorshipsAbstractService implements IServic
             ISuportePersistente sp) {
 
         List detailedProfessorshipList = (List) CollectionUtils.collect(professorships,
-                new Professorships2DetailProfessorship(responsibleFors));
+                new Professorships2DetailProfessorship());
 
         return detailedProfessorshipList;
     }
