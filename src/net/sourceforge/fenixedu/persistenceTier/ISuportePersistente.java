@@ -223,8 +223,6 @@ public interface ISuportePersistente
 
 	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod();
 
-	public IPersistentDegreeCurricularPlanEnrolmentInfo getIPersistentDegreeEnrolmentInfo();
-
 	public IPersistentStudentKind getIPersistentStudentKind();
 
 	public IPersistentShiftProfessorship getIPersistentTeacherShiftPercentage();

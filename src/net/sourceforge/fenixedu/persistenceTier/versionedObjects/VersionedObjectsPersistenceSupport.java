@@ -783,10 +783,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
         return;
     }
 
-    public IPersistentDegreeCurricularPlanEnrolmentInfo getIPersistentDegreeEnrolmentInfo() {
-        return null;
-    }
-
     public IPersistentExternalActivity getIPersistentExternalActivity() {
         return new ExternalActivityVO();
     }

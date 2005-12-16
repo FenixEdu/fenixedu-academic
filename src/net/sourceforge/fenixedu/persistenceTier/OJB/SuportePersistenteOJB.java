@@ -576,11 +576,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new PersistentEnrolmentPeriod();
 	}
 
-	public IPersistentDegreeCurricularPlanEnrolmentInfo getIPersistentDegreeEnrolmentInfo()
-	{
-		return new DegreeCurricularPlanEnrolmentInfoOJB();
-	}
-
 	public IPersistentStudentKind getIPersistentStudentKind()
 	{
 		return new StudentKindOJB();
