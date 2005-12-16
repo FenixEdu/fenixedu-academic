@@ -21,26 +21,18 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * @author <a href="mailto:joao.mota@ist.utl.pt">Jo�o Mota </a>
  */
 public class ReadAllDepartments implements IService {
-    public ReadAllDepartments() {
-    }
 
-    public List run() throws FenixServiceException {
-
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentDepartment departmentDAO = sp.getIDepartamentoPersistente();
-            List departments = departmentDAO.readAll();
-            Iterator iter = departments.iterator();
-            List infoDepartments = new ArrayList();
-            while (iter.hasNext()) {
-                IDepartment department = (IDepartment) iter.next();
-                InfoDepartment infoDepartment = InfoDepartment.newInfoFromDomain(department);
-                infoDepartments.add(infoDepartment);
-            }
-            return infoDepartments;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+    public List run() throws FenixServiceException, ExcepcaoPersistencia {
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentDepartment departmentDAO = sp.getIDepartamentoPersistente();
+        List departments = departmentDAO.readAll();
+        Iterator iter = departments.iterator();
+        List infoDepartments = new ArrayList();
+        while (iter.hasNext()) {
+            IDepartment department = (IDepartment) iter.next();
+            InfoDepartment infoDepartment = InfoDepartment.newInfoFromDomain(department);
+            infoDepartments.add(infoDepartment);
         }
-
+        return infoDepartments;
     }
 }

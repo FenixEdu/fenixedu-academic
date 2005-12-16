@@ -31,47 +31,39 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 
 public class ComputeCompetenceCourseStatistics extends ComputeCourseStatistics implements IService {
-    public ComputeCompetenceCourseStatistics() {
-    }
 
     public List<CompetenceCourseStatisticsDTO> run(Integer departementID, Integer executionYearID)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentDepartment persistentDepartment = sp.getIDepartamentoPersistente();
+        IDepartment department = (IDepartment) persistentDepartment.readByOID(Department.class,
+                departementID);
+        IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+        IExecutionYear executionYear = (IExecutionYear) persistentExecutionYear.readByOID(
+                ExecutionYear.class, executionYearID);
 
-        try {
+        List<ICompetenceCourse> competenceCourses = department
+                .getCompetenceCoursesByExecutionYear(executionYear);
 
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentDepartment persistentDepartment = sp.getIDepartamentoPersistente();
-            IDepartment department = (IDepartment) persistentDepartment.readByOID(Department.class,
-                    departementID);
-            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-            IExecutionYear executionYear = (IExecutionYear) persistentExecutionYear.readByOID(
-                    ExecutionYear.class, executionYearID);
+        List<ICompetenceCourse> sortedCompetenceCourses = new ArrayList<ICompetenceCourse>();
+        sortedCompetenceCourses.addAll(competenceCourses);
 
-            List<ICompetenceCourse> competenceCourses = department
-                    .getCompetenceCoursesByExecutionYear(executionYear);
+        Collections.sort(sortedCompetenceCourses, new BeanComparator("name"));
 
-            List<ICompetenceCourse> sortedCompetenceCourses = new ArrayList<ICompetenceCourse>();
-            sortedCompetenceCourses.addAll(competenceCourses);
+        List<CompetenceCourseStatisticsDTO> results = new ArrayList<CompetenceCourseStatisticsDTO>();
 
-            Collections.sort(sortedCompetenceCourses, new BeanComparator("name"));
+        for (ICompetenceCourse competenceCourse : sortedCompetenceCourses) {
+            List<IEnrolmentEvaluation> evaluations = competenceCourse
+                    .getActiveEnrollmentEvaluations(executionYear);
 
-            List<CompetenceCourseStatisticsDTO> results = new ArrayList<CompetenceCourseStatisticsDTO>();
+            CompetenceCourseStatisticsDTO competenceCourseStatistics = new CompetenceCourseStatisticsDTO();
+            competenceCourseStatistics.setIdInternal(competenceCourse.getIdInternal());
+            competenceCourseStatistics.setName(competenceCourse.getName());
+            createCourseStatistics(competenceCourseStatistics, evaluations);
 
-            for (ICompetenceCourse competenceCourse : sortedCompetenceCourses) {
-                List<IEnrolmentEvaluation> evaluations = competenceCourse
-                        .getActiveEnrollmentEvaluations(executionYear);
-
-                CompetenceCourseStatisticsDTO competenceCourseStatistics = new CompetenceCourseStatisticsDTO();
-                competenceCourseStatistics.setIdInternal(competenceCourse.getIdInternal());
-                competenceCourseStatistics.setName(competenceCourse.getName());
-                createCourseStatistics(competenceCourseStatistics, evaluations);
-
-                results.add(competenceCourseStatistics);
-            }
-
-            return results;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+            results.add(competenceCourseStatistics);
         }
+
+        return results;
     }
 }

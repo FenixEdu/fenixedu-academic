@@ -53,18 +53,14 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ReadTeacherCreditsSheet implements IService {
 
     private IExecutionPeriod readExecutionPeriod(Integer executionPeriodId,
-            IPersistentExecutionPeriod executionPeriodDAO) throws FenixServiceException {
+            IPersistentExecutionPeriod executionPeriodDAO) throws FenixServiceException,
+            ExcepcaoPersistencia {
         IExecutionPeriod executionPeriod;
-        try {
-            if ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) {
-                executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
-            } else {
-                executionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
-                        executionPeriodId);
-            }
-        } catch (ExcepcaoPersistencia e1) {
-
-            throw new FenixServiceException("Error getting execution period!", e1);
+        if ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) {
+            executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
+        } else {
+            executionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
+                    executionPeriodId);
         }
         return executionPeriod;
     }
@@ -174,13 +170,9 @@ public class ReadTeacherCreditsSheet implements IService {
     }
 
     private ITeacher readTeacher(Integer teacherNumber, IPersistentTeacher teacherDAO)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
         ITeacher teacher;
-        try {
-            teacher = teacherDAO.readByNumber(teacherNumber);
-        } catch (ExcepcaoPersistencia e2) {
-            throw new FenixServiceException("Error getting teacher!", e2);
-        }
+        teacher = teacherDAO.readByNumber(teacherNumber);
         return teacher;
     }
 

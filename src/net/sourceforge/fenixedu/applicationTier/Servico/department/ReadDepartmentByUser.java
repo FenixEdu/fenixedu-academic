@@ -20,25 +20,18 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * @author jpvl
  */
 public class ReadDepartmentByUser implements IService {
-    public ReadDepartmentByUser() {
-    }
 
-    public InfoDepartment run(String username) throws FenixServiceException {
+    public InfoDepartment run(String username) throws FenixServiceException, ExcepcaoPersistencia {
         InfoDepartment infoDepartment = null;
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPessoaPersistente personDAO = sp.getIPessoaPersistente();
-            IPerson person = personDAO.lerPessoaPorUsername(username);
-            List departmentList = person.getManageableDepartmentCredits();
-            if (departmentList != null && !departmentList.isEmpty()) {
-                infoDepartment = InfoDepartment.newInfoFromDomain((IDepartment) departmentList
-                        .get(0));
-            }
-        } catch (ExcepcaoPersistencia e) {
-
-            throw new FenixServiceException("Problems on database!", e);
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPessoaPersistente personDAO = sp.getIPessoaPersistente();
+        IPerson person = personDAO.lerPessoaPorUsername(username);
+        List departmentList = person.getManageableDepartmentCredits();
+        if (departmentList != null && !departmentList.isEmpty()) {
+            infoDepartment = InfoDepartment.newInfoFromDomain((IDepartment) departmentList.get(0));
         }
+
         return infoDepartment;
     }
 }

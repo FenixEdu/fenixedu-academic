@@ -23,82 +23,78 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Fernanda Quitério 21/Nov/2003
- *  
+ * 
  */
 public class EditCurriculumForCurricularCourse implements IService {
 
     public Boolean run(Integer infoExecutionDegreeId, Integer oldCurriculumId,
             Integer curricularCourseCode, InfoCurriculum newInfoCurriculum, String username,
-            String language) throws FenixServiceException {
+            String language) throws FenixServiceException, ExcepcaoPersistencia {
         Boolean result = new Boolean(false);
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
-            IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 
-            if (oldCurriculumId == null) {
-                throw new FenixServiceException("nullCurriculumCode");
-            }
-            if (curricularCourseCode == null) {
-                throw new FenixServiceException("nullCurricularCourseCode");
-            }
-            if (newInfoCurriculum == null) {
-                throw new FenixServiceException("nullCurriculum");
-            }
-            if (username == null) {
-                throw new FenixServiceException("nullUsername");
-            }
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
+        IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
+        IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+        IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 
-            ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
-                    .readByOID(CurricularCourse.class, curricularCourseCode);
-            if (curricularCourse == null) {
-                throw new NonExistingServiceException("noCurricularCourse");
-            }
-
-            IPerson person = persistentPerson.lerPessoaPorUsername(username);
-            if (person == null) {
-                throw new NonExistingServiceException("noPerson");
-            }
-
-            ICurriculum oldCurriculum = (ICurriculum) persistentCurriculum.readByOID(Curriculum.class,
-                    oldCurriculumId);
-            
-            if (oldCurriculum == null) {
-                oldCurriculum = DomainFactory.makeCurriculum();
-
-                oldCurriculum.setCurricularCourse(curricularCourse);
-                Calendar today = Calendar.getInstance();
-                oldCurriculum.setLastModificationDate(today.getTime());
-            }
-            
-            IExecutionYear currentExecutionYear = persistentExecutionYear.readCurrentExecutionYear();
-            
-            if (!oldCurriculum.getLastModificationDate().before(currentExecutionYear.getBeginDate())
-                    && !oldCurriculum.getLastModificationDate().after(currentExecutionYear.getEndDate())) {
-                 
-                oldCurriculum.edit(newInfoCurriculum.getGeneralObjectives(), newInfoCurriculum
-                        .getOperacionalObjectives(), newInfoCurriculum.getProgram(), newInfoCurriculum
-                        .getGeneralObjectivesEn(), newInfoCurriculum.getOperacionalObjectivesEn(),
-                        newInfoCurriculum.getProgramEn(), language, person);
-                
-            } else {
-                ICurriculum newCurriculum = DomainFactory.makeCurriculum();
-                newCurriculum.setCurricularCourse(curricularCourse);
-                
-                newCurriculum.edit(newInfoCurriculum.getGeneralObjectives(), newInfoCurriculum
-                        .getOperacionalObjectives(), newInfoCurriculum.getProgram(), newInfoCurriculum
-                        .getGeneralObjectivesEn(), newInfoCurriculum.getOperacionalObjectivesEn(),
-                        newInfoCurriculum.getProgramEn(), language, person);
-               
-
-            }
-            result = Boolean.TRUE;
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-            throw new FenixServiceException(e);
+        if (oldCurriculumId == null) {
+            throw new FenixServiceException("nullCurriculumCode");
         }
+        if (curricularCourseCode == null) {
+            throw new FenixServiceException("nullCurricularCourseCode");
+        }
+        if (newInfoCurriculum == null) {
+            throw new FenixServiceException("nullCurriculum");
+        }
+        if (username == null) {
+            throw new FenixServiceException("nullUsername");
+        }
+
+        ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+                CurricularCourse.class, curricularCourseCode);
+        if (curricularCourse == null) {
+            throw new NonExistingServiceException("noCurricularCourse");
+        }
+
+        IPerson person = persistentPerson.lerPessoaPorUsername(username);
+        if (person == null) {
+            throw new NonExistingServiceException("noPerson");
+        }
+
+        ICurriculum oldCurriculum = (ICurriculum) persistentCurriculum.readByOID(Curriculum.class,
+                oldCurriculumId);
+
+        if (oldCurriculum == null) {
+            oldCurriculum = DomainFactory.makeCurriculum();
+
+            oldCurriculum.setCurricularCourse(curricularCourse);
+            Calendar today = Calendar.getInstance();
+            oldCurriculum.setLastModificationDate(today.getTime());
+        }
+
+        IExecutionYear currentExecutionYear = persistentExecutionYear.readCurrentExecutionYear();
+
+        if (!oldCurriculum.getLastModificationDate().before(currentExecutionYear.getBeginDate())
+                && !oldCurriculum.getLastModificationDate().after(currentExecutionYear.getEndDate())) {
+
+            oldCurriculum.edit(newInfoCurriculum.getGeneralObjectives(), newInfoCurriculum
+                    .getOperacionalObjectives(), newInfoCurriculum.getProgram(), newInfoCurriculum
+                    .getGeneralObjectivesEn(), newInfoCurriculum.getOperacionalObjectivesEn(),
+                    newInfoCurriculum.getProgramEn(), language, person);
+
+        } else {
+            ICurriculum newCurriculum = DomainFactory.makeCurriculum();
+            newCurriculum.setCurricularCourse(curricularCourse);
+
+            newCurriculum.edit(newInfoCurriculum.getGeneralObjectives(), newInfoCurriculum
+                    .getOperacionalObjectives(), newInfoCurriculum.getProgram(), newInfoCurriculum
+                    .getGeneralObjectivesEn(), newInfoCurriculum.getOperacionalObjectivesEn(),
+                    newInfoCurriculum.getProgramEn(), language, person);
+
+        }
+        result = Boolean.TRUE;
+
         return result;
     }
 }

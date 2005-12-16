@@ -18,7 +18,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
 public class DeleteTutorShip implements IService {
 
@@ -26,7 +26,7 @@ public class DeleteTutorShip implements IService {
     }
 
     public Object run(Integer executionDegreeId, Integer tutorNumber, List tutorIds2Delete)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
 
         if (tutorNumber == null) {
             throw new FenixServiceException("error.tutor.impossibleOperation");
@@ -36,24 +36,19 @@ public class DeleteTutorShip implements IService {
         if (tutorIds2Delete != null && tutorIds2Delete.size() > 0) {
             ISuportePersistente sp;
 
-            try {
-                sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-                IPersistentTutor persistentTutor = sp.getIPersistentTutor();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            IPersistentTutor persistentTutor = sp.getIPersistentTutor();
 
-                ListIterator iterator = tutorIds2Delete.listIterator();
-                while (iterator.hasNext()) {
-                    Integer tutorId = (Integer) iterator.next();
-                    ITutor tutor = (ITutor) persistentTutor.readByOID(Tutor.class, tutorId);
-                    if (tutor != null) {
-                        persistentTutor.deleteByOID(Tutor.class, tutorId);
-                    }
+            ListIterator iterator = tutorIds2Delete.listIterator();
+            while (iterator.hasNext()) {
+                Integer tutorId = (Integer) iterator.next();
+                ITutor tutor = (ITutor) persistentTutor.readByOID(Tutor.class, tutorId);
+                if (tutor != null) {
+                    persistentTutor.deleteByOID(Tutor.class, tutorId);
                 }
-
-                result = Boolean.TRUE;
-            } catch (ExcepcaoPersistencia e) {
-                e.printStackTrace();
-                throw new FenixServiceException("error.tutor.removeTutor");
             }
+
+            result = Boolean.TRUE;
         }
         return result;
     }

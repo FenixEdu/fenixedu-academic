@@ -24,30 +24,27 @@ import net.sourceforge.fenixedu.util.DiaSemana;
  */
 public abstract class CreditsValidator {
 
-    public static void validatePeriod(Integer teacherId, Integer executionPeriodId,
-            DiaSemana weekDay, Date startTime, Date endTime, PeriodType periodType)
-            throws OverlappingPeriodException, FenixServiceException {
+    public static void validatePeriod(Integer teacherId, Integer executionPeriodId, DiaSemana weekDay,
+            Date startTime, Date endTime, PeriodType periodType) throws OverlappingPeriodException,
+            FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente sp = null;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            switch (periodType.getValue()) {
-            case PeriodType.INSTITUTION_WORKING_TIME_PERIOD_TYPE:
-                verifyOverlappingSupportLesson(teacherId, executionPeriodId, weekDay, startTime, endTime, sp);
-                verifyOverlappingLesson(teacherId, executionPeriodId, weekDay, startTime, endTime, sp);
-                break;
-            case PeriodType.LESSON_PERIOD_TYPE:
-                verifyOverlappingSupportLesson(teacherId, executionPeriodId, weekDay, startTime, endTime, sp);
-                verifyOverlappingInstitutionWorkingTime(teacherId, executionPeriodId, weekDay, startTime,
-                        endTime, sp);
-                break;
-            case PeriodType.SUPPORT_LESSON_PERIOD_TYPE:
-                verifyOverlappingInstitutionWorkingTime(teacherId, executionPeriodId, weekDay, startTime,
-                        endTime, sp);
-                verifyOverlappingLesson(teacherId, executionPeriodId, weekDay, startTime, endTime, sp);
-                break;
-            }
-        } catch (ExcepcaoPersistencia e1) {
-            throw new FenixServiceException("Problems on database!", e1);
+
+        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        switch (periodType.getValue()) {
+        case PeriodType.INSTITUTION_WORKING_TIME_PERIOD_TYPE:
+            verifyOverlappingSupportLesson(teacherId, executionPeriodId, weekDay, startTime, endTime, sp);
+            verifyOverlappingLesson(teacherId, executionPeriodId, weekDay, startTime, endTime, sp);
+            break;
+        case PeriodType.LESSON_PERIOD_TYPE:
+            verifyOverlappingSupportLesson(teacherId, executionPeriodId, weekDay, startTime, endTime, sp);
+            verifyOverlappingInstitutionWorkingTime(teacherId, executionPeriodId, weekDay, startTime,
+                    endTime, sp);
+            break;
+        case PeriodType.SUPPORT_LESSON_PERIOD_TYPE:
+            verifyOverlappingInstitutionWorkingTime(teacherId, executionPeriodId, weekDay, startTime,
+                    endTime, sp);
+            verifyOverlappingLesson(teacherId, executionPeriodId, weekDay, startTime, endTime, sp);
+            break;
         }
     }
 
@@ -70,13 +67,13 @@ public abstract class CreditsValidator {
         }
     }
 
-    private static void verifyOverlappingSupportLesson(Integer teacherId,
-            Integer executionPeriodId, DiaSemana weekDay, Date startTime, Date endTime,
-            ISuportePersistente sp) throws ExcepcaoPersistencia, OverlappingSupportLessonPeriod {
+    private static void verifyOverlappingSupportLesson(Integer teacherId, Integer executionPeriodId,
+            DiaSemana weekDay, Date startTime, Date endTime, ISuportePersistente sp)
+            throws ExcepcaoPersistencia, OverlappingSupportLessonPeriod {
         IPersistentSupportLesson supportLessonDAO = sp.getIPersistentSupportLesson();
 
-        List list = supportLessonDAO.readOverlappingPeriod(teacherId, executionPeriodId, weekDay, startTime,
-                endTime);
+        List list = supportLessonDAO.readOverlappingPeriod(teacherId, executionPeriodId, weekDay,
+                startTime, endTime);
         if (!list.isEmpty()) {
             throw new OverlappingSupportLessonPeriod();
         }
@@ -114,8 +111,8 @@ public abstract class CreditsValidator {
             Iterator iterator = shiftProfessorship.getShift().getAssociatedLessons().iterator();
             while (iterator.hasNext()) {
                 ILesson lesson = (ILesson) iterator.next();
-                validatePeriod(teacherId, executionPeriodId, lesson.getDiaSemana(), new Date(lesson.getInicio()
-                        .getTimeInMillis()), new Date(lesson.getFim().getTimeInMillis()),
+                validatePeriod(teacherId, executionPeriodId, lesson.getDiaSemana(), new Date(lesson
+                        .getInicio().getTimeInMillis()), new Date(lesson.getFim().getTimeInMillis()),
                         PeriodType.LESSON_PERIOD);
             }
         }

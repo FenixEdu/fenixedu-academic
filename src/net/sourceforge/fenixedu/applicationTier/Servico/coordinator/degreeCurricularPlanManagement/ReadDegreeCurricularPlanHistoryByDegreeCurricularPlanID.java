@@ -1,4 +1,3 @@
-
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurricularPlanManagement;
 
 import java.util.ArrayList;
@@ -23,39 +22,37 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * 
- * @author  <a href="mailto:amam@mega.ist.utl.pt">Amin Amirali</a>
- * @author  <a href="mailto:frnp@mega.ist.utl.pt">Francisco Paulo</a>
+ * @author <a href="mailto:amam@mega.ist.utl.pt">Amin Amirali</a>
+ * @author <a href="mailto:frnp@mega.ist.utl.pt">Francisco Paulo</a>
  * 
  */
 public class ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID implements IService {
-    public InfoDegreeCurricularPlan run(Integer degreeCurricularPlanID) throws FenixServiceException {
+    public InfoDegreeCurricularPlan run(Integer degreeCurricularPlanID) throws FenixServiceException, ExcepcaoPersistencia {
 
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp
-                    .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
-                            degreeCurricularPlanID);
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            if (degreeCurricularPlan != null) {
-				
-				String name = degreeCurricularPlan.getName();
-				String degreeName = degreeCurricularPlan.getDegree().getNome();
-				String degreeSigla = degreeCurricularPlan.getDegree().getSigla();
-				
-                List allCurricularCourses = sp.getIPersistentCurricularCourse()
-                        .readCurricularCoursesByDegreeCurricularPlan(name, degreeName, degreeSigla);
+        IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp
+                .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
+                        degreeCurricularPlanID);
 
-                if (allCurricularCourses != null && !allCurricularCourses.isEmpty()) {
+        if (degreeCurricularPlan != null) {
 
-                    infoDegreeCurricularPlan = createInfoDegreeCurricularPlan(degreeCurricularPlan,
-                            allCurricularCourses);
-                }
+            String name = degreeCurricularPlan.getName();
+            String degreeName = degreeCurricularPlan.getDegree().getNome();
+            String degreeSigla = degreeCurricularPlan.getDegree().getSigla();
+
+            List allCurricularCourses = sp.getIPersistentCurricularCourse()
+                    .readCurricularCoursesByDegreeCurricularPlan(name, degreeName, degreeSigla);
+
+            if (allCurricularCourses != null && !allCurricularCourses.isEmpty()) {
+
+                infoDegreeCurricularPlan = createInfoDegreeCurricularPlan(degreeCurricularPlan,
+                        allCurricularCourses);
             }
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
         }
+
         return infoDegreeCurricularPlan;
     }
 

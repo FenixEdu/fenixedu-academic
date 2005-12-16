@@ -37,54 +37,50 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadLastSummary implements IService {
 
-	public ReadLastSummary(){}
-	
-	
-	public InfoSummary run(Integer executionCourseId, Integer shiftId, Integer lessonID) throws FenixServiceException {
-		InfoSummary summary = null;
-		
-		try {
-			ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
-			IPersistentSummary persistentSummary = suportePersistente.getIPersistentSummary();
-			IPersistentExecutionCourse persistentExecutionCourse = suportePersistente.getIPersistentExecutionCourse();
-			ITurnoPersistente persistentShift = suportePersistente.getITurnoPersistente();
-			IAulaPersistente aulaPersistente = suportePersistente.getIAulaPersistente();
-			
-			IShift shift = (IShift) persistentShift.readByOID(Shift.class, shiftId);
-			if(shift == null)
-				throw new FenixServiceException("no.shift");		
-						
-			ILesson aula = (ILesson) aulaPersistente.readByOID(Lesson.class, lessonID);								
-			if(aula == null)
-			    throw new FenixServiceException("no.lesson");
-									
-			IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
-                    ExecutionCourse.class, executionCourseId);
-            if (executionCourse == null) {
-                throw new FenixServiceException("no.executioncourse");
+    public InfoSummary run(Integer executionCourseId, Integer shiftId, Integer lessonID)
+            throws FenixServiceException, ExcepcaoPersistencia {
+        InfoSummary summary = null;
+
+        ISuportePersistente suportePersistente = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
+        IPersistentSummary persistentSummary = suportePersistente.getIPersistentSummary();
+        IPersistentExecutionCourse persistentExecutionCourse = suportePersistente
+                .getIPersistentExecutionCourse();
+        ITurnoPersistente persistentShift = suportePersistente.getITurnoPersistente();
+        IAulaPersistente aulaPersistente = suportePersistente.getIAulaPersistente();
+
+        IShift shift = (IShift) persistentShift.readByOID(Shift.class, shiftId);
+        if (shift == null)
+            throw new FenixServiceException("no.shift");
+
+        ILesson aula = (ILesson) aulaPersistente.readByOID(Lesson.class, lessonID);
+        if (aula == null)
+            throw new FenixServiceException("no.lesson");
+
+        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                ExecutionCourse.class, executionCourseId);
+        if (executionCourse == null) {
+            throw new FenixServiceException("no.executioncourse");
+        }
+
+        List summaries = persistentSummary.readByShift(executionCourse.getIdInternal(), shift
+                .getIdInternal());
+        if (summaries != null && summaries.size() > 0) {
+            Comparator comparator = new BeanComparator("summaryDate.time");
+            Collections.sort(summaries, comparator);
+            DiaSemana diaSemana = aula.getDiaSemana();
+            Calendar summaryDate = Calendar.getInstance();
+            int summaryDayOfWeek;
+            for (int i = summaries.size() - 1; i >= 0; i--) {
+                ISummary summary1 = (ISummary) summaries.get(i);
+                summaryDate.setTime(summary1.getSummaryDate());
+                summaryDayOfWeek = summaryDate.get(Calendar.DAY_OF_WEEK);
+                if (summaryDayOfWeek == diaSemana.getDiaSemana().intValue()) {
+                    summary = InfoSummary.newInfoFromDomain(summary1);
+                    break;
+                }
             }
-            
-			List summaries = persistentSummary.readByShift(executionCourse.getIdInternal(), shift.getIdInternal());
-			if(summaries != null && summaries.size() > 0){
-				Comparator comparator = new BeanComparator("summaryDate.time");
-				Collections.sort(summaries, comparator);
-				DiaSemana diaSemana = aula.getDiaSemana();
-				Calendar summaryDate = Calendar.getInstance();
-				int summaryDayOfWeek;
-				for(int i = summaries.size() - 1; i >= 0; i--){
-				    ISummary summary1 = (ISummary) summaries.get(i);
-				    summaryDate.setTime(summary1.getSummaryDate());
-				    summaryDayOfWeek = summaryDate.get(Calendar.DAY_OF_WEEK);
-				    if(summaryDayOfWeek == diaSemana.getDiaSemana().intValue()){
-				        summary = InfoSummary.newInfoFromDomain(summary1);
-				        break;	
-				    }
-				}				
-			}
-			
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-		return summary;
-	}
+        }
+        return summary;
+    }
 }

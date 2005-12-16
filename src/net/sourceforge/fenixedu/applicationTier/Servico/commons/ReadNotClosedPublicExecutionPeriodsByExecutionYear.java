@@ -26,36 +26,36 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadNotClosedPublicExecutionPeriodsByExecutionYear implements IService {
 
-   
-
-    public List run(InfoExecutionYear infoExecutionYear) throws FenixServiceException {
+    public List run(InfoExecutionYear infoExecutionYear) throws FenixServiceException, ExcepcaoPersistencia {
 
         List result = new ArrayList();
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
-            IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
-            IExecutionYear executionYear;
-            List executionPeriods;
 
-            if (infoExecutionYear == null) {
-                executionYear = executionYearDAO.readCurrentExecutionYear();
-                executionPeriods = executionPeriodDAO.readNotClosedPublicExecutionPeriodsByExecutionYears(executionYear.getIdInternal());
-            } else {
-                executionPeriods = executionPeriodDAO.readNotClosedPublicExecutionPeriodsByExecutionYears(infoExecutionYear.getIdInternal());
-            }
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
+        IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
+        IExecutionYear executionYear;
+        List executionPeriods;
 
-            result = (List) CollectionUtils.collect(executionPeriods, new Transformer() {
-
-                public Object transform(Object input) {
-                    IExecutionPeriod executionPeriod = (IExecutionPeriod) input;
-                    InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionPeriod);
-                    return infoExecutionPeriod;
-                }
-            });
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex);
+        if (infoExecutionYear == null) {
+            executionYear = executionYearDAO.readCurrentExecutionYear();
+            executionPeriods = executionPeriodDAO
+                    .readNotClosedPublicExecutionPeriodsByExecutionYears(executionYear.getIdInternal());
+        } else {
+            executionPeriods = executionPeriodDAO
+                    .readNotClosedPublicExecutionPeriodsByExecutionYears(infoExecutionYear
+                            .getIdInternal());
         }
+
+        result = (List) CollectionUtils.collect(executionPeriods, new Transformer() {
+
+            public Object transform(Object input) {
+                IExecutionPeriod executionPeriod = (IExecutionPeriod) input;
+                InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear
+                        .newInfoFromDomain(executionPeriod);
+                return infoExecutionPeriod;
+            }
+        });
+
         return result;
     }
 }

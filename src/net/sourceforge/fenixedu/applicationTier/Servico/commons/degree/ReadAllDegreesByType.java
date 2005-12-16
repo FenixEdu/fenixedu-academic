@@ -16,51 +16,23 @@ import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-
-
 public class ReadAllDegreesByType implements IService {
-    private static ReadAllDegreesByType service = new ReadAllDegreesByType();
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadAllDegreesByType getService() {
-        return service;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private ReadAllDegreesByType() {
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.IServico#getNome()
-     */
-    public String getNome() {
-        return "ReadAllDegreeByType";
-    }
-
-    public List run(String degreeType) throws FenixServiceException {
+    public List run(String degreeType) throws FenixServiceException, ExcepcaoPersistencia {
         List infoDegreesList;
-        try {
-        	
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentDegreeInfo degrees = sp.getIPersistentDegreeInfo();
-            List degreesList = degrees.readDegreeByType(DegreeType.valueOf(degreeType) );
-            infoDegreesList = (List) CollectionUtils.collect(degreesList, new Transformer() {
 
-                public Object transform(Object input) {
-                    IDegree degree = (IDegree) input;
-                    InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
-                    return infoDegree;
-                }
-            });
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException("Problems on database!", e);
-        }
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentDegreeInfo degrees = sp.getIPersistentDegreeInfo();
+        List degreesList = degrees.readDegreeByType(DegreeType.valueOf(degreeType));
+        infoDegreesList = (List) CollectionUtils.collect(degreesList, new Transformer() {
+
+            public Object transform(Object input) {
+                IDegree degree = (IDegree) input;
+                InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
+                return infoDegree;
+            }
+        });
+
         return infoDegreesList;
 
     }

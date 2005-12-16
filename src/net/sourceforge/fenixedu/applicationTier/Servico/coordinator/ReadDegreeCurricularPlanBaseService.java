@@ -62,37 +62,33 @@ abstract public class ReadDegreeCurricularPlanBaseService implements IService {
 
     // Read all curricular course scope of this year
     protected List readActiveCurricularCourseScopesInExecutionYear(Integer degreeCurricularPlanId,
-            IExecutionYear executionYear) throws FenixServiceException {
+            IExecutionYear executionYear) throws FenixServiceException, ExcepcaoPersistencia {
         List infoActiveScopes = null;
-        try {
 
-            final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IPersistentCurricularCourseScope persistentCurricularCourseScope = sp
-                    .getIPersistentCurricularCourseScope();
+        IPersistentCurricularCourseScope persistentCurricularCourseScope = sp
+                .getIPersistentCurricularCourseScope();
 
-            if (degreeCurricularPlanId != null) {
-                List allActiveScopes = persistentCurricularCourseScope
-                        .readCurricularCourseScopesByDegreeCurricularPlanInExecutionYear(
-                                degreeCurricularPlanId, executionYear.getBeginDate(), executionYear
-                                        .getEndDate());
-                if (allActiveScopes != null && allActiveScopes.size() > 0) {
-                    infoActiveScopes = new ArrayList();
+        if (degreeCurricularPlanId != null) {
+            List allActiveScopes = persistentCurricularCourseScope
+                    .readCurricularCourseScopesByDegreeCurricularPlanInExecutionYear(
+                            degreeCurricularPlanId, executionYear.getBeginDate(), executionYear
+                                    .getEndDate());
+            if (allActiveScopes != null && allActiveScopes.size() > 0) {
+                infoActiveScopes = new ArrayList();
 
-                    CollectionUtils.collect(allActiveScopes, new Transformer() {
-                        public Object transform(Object input) {
-                            ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) input;
-                            return InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear
-                                    .newInfoFromDomain(curricularCourseScope);
-                        }
+                CollectionUtils.collect(allActiveScopes, new Transformer() {
+                    public Object transform(Object input) {
+                        ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) input;
+                        return InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear
+                                .newInfoFromDomain(curricularCourseScope);
+                    }
 
-                    }, infoActiveScopes);
-                }
+                }, infoActiveScopes);
             }
-        } catch (ExcepcaoPersistencia e) {
-
-            throw new FenixServiceException(e);
         }
+
         return infoActiveScopes;
 
     }
@@ -100,36 +96,33 @@ abstract public class ReadDegreeCurricularPlanBaseService implements IService {
     // Read all curricular course scope of this year and curricular year
     protected List readActiveCurricularCourseScopesInCurricularYearAndExecutionPeriodAndExecutionDegree(
             IExecutionPeriod executionPeriod, IExecutionDegree executionDegree, Integer curricularYear)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
         List infoActiveScopes = null;
-        try {
 
-            final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IPersistentCurricularCourseScope persistentCurricularCourseScope = sp
-                    .getIPersistentCurricularCourseScope();
-            if (executionPeriod != null) {
+        IPersistentCurricularCourseScope persistentCurricularCourseScope = sp
+                .getIPersistentCurricularCourseScope();
+        if (executionPeriod != null) {
 
-                List allActiveExecution = persistentCurricularCourseScope
-                        .readActiveCurricularCourseScopesByDegreeCurricularPlanAndCurricularYear(
-                                executionDegree.getDegreeCurricularPlan().getIdInternal(),
-                                curricularYear, executionPeriod.getExecutionYear().getBeginDate(),
-                                executionPeriod.getExecutionYear().getEndDate());
+            List allActiveExecution = persistentCurricularCourseScope
+                    .readActiveCurricularCourseScopesByDegreeCurricularPlanAndCurricularYear(
+                            executionDegree.getDegreeCurricularPlan().getIdInternal(), curricularYear,
+                            executionPeriod.getExecutionYear().getBeginDate(), executionPeriod
+                                    .getExecutionYear().getEndDate());
 
-                if (allActiveExecution != null && allActiveExecution.size() > 0) {
-                    infoActiveScopes = new ArrayList();
-                    CollectionUtils.collect(allActiveExecution, new Transformer() {
-                        public Object transform(Object input) {
-                            ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) input;
-                            return InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear
+            if (allActiveExecution != null && allActiveExecution.size() > 0) {
+                infoActiveScopes = new ArrayList();
+                CollectionUtils.collect(allActiveExecution, new Transformer() {
+                    public Object transform(Object input) {
+                        ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) input;
+                        return InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear
                                 .newInfoFromDomain(curricularCourseScope);
-                        }
-                    }, infoActiveScopes);
-                }
+                    }
+                }, infoActiveScopes);
             }
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
         }
+
         return infoActiveScopes;
 
     }

@@ -24,29 +24,16 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadStudentCurricularPlans implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public ReadStudentCurricularPlans() {
-    }
-
     public List run(Integer studentNumber, DegreeType degreeType) throws ExcepcaoInexistente,
-            FenixServiceException {
+            FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente sp = null;
 
         List studentCurricularPlans = null;
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            studentCurricularPlans = sp.getIStudentCurricularPlanPersistente()
-                    .readByStudentNumberAndDegreeType(studentNumber, degreeType);
-
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+        studentCurricularPlans = sp.getIStudentCurricularPlanPersistente()
+                .readByStudentNumberAndDegreeType(studentNumber, degreeType);
 
         if ((studentCurricularPlans == null) || (studentCurricularPlans.size() == 0)) {
             throw new NonExistingServiceException();
@@ -56,7 +43,7 @@ public class ReadStudentCurricularPlans implements IService {
         List result = new ArrayList();
 
         // FIXME: There's a problem with data of the Graduation Students
-        //        For now only Master Degree Students can view their Curriculum
+        // For now only Master Degree Students can view their Curriculum
 
         while (iterator.hasNext()) {
             IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator.next();

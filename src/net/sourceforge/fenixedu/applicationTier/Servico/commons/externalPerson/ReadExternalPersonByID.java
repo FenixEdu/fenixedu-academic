@@ -14,29 +14,22 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 public class ReadExternalPersonByID implements IService {
 
-    public Object run(Integer externalPersonID) throws FenixServiceException {
+    public Object run(Integer externalPersonID) throws FenixServiceException, ExcepcaoPersistencia {
         InfoExternalPerson infoExternalPerson = null;
         IExternalPerson externalPerson = null;
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            externalPerson = (IExternalPerson) sp.getIPersistentExternalPerson().readByOID(
-                    ExternalPerson.class, externalPersonID);
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        externalPerson = (IExternalPerson) sp.getIPersistentExternalPerson().readByOID(
+                ExternalPerson.class, externalPersonID);
 
-            if (externalPerson == null)
-                throw new NonExistingServiceException("error.exception.commons.ExternalPersonNotFound");
+        if (externalPerson == null)
+            throw new NonExistingServiceException("error.exception.commons.ExternalPersonNotFound");
 
-            infoExternalPerson = InfoExternalPerson.newInfoFromDomain(externalPerson);
-
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+        infoExternalPerson = InfoExternalPerson.newInfoFromDomain(externalPerson);
 
         return infoExternalPerson;
     }

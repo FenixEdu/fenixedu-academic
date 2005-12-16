@@ -41,18 +41,14 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  *  
  */
 public class PrepareDegreesListByStudentNumber implements IService {
-    public PrepareDegreesListByStudentNumber() {
-
-    }
 
     public Object run(InfoStudent infoStudent, DegreeType degreeType, Integer executionDegreeId,
             Integer executionPeriodID)
     //Integer studentNumber, Integer executionDegreeIdChosen)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
         List result = null;
         ISuportePersistente sp = null;
 
-        try {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
             IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(ExecutionPeriod.class, executionPeriodID);
@@ -88,13 +84,6 @@ public class PrepareDegreesListByStudentNumber implements IService {
             result = new ArrayList();
             result.add(infoExecutionDegree);
             result.addAll(infoExecutionsDegreesList);
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            excepcaoPersistencia.printStackTrace();
-            throw new FenixServiceException();
-        } catch (FenixServiceException serviceException) {
-            serviceException.printStackTrace();
-            throw new FenixServiceException(serviceException.getMessage());
-        }
 
         return result;
     }

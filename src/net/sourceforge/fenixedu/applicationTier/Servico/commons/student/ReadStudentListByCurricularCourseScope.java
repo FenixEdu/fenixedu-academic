@@ -42,21 +42,15 @@ public class ReadStudentListByCurricularCourseScope implements IService {
         List enrolmentList = null;
 
         ICurricularCourseScope curricularCourseScope = null;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            // Read the Students
+        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            curricularCourseScope = (ICurricularCourseScope) sp.getIPersistentCurricularCourseScope()
-                    .readByOID(CurricularCourseScope.class, curricularCourseScopeID);
+        // Read the Students
 
-            enrolmentList = curricularCourseScope.getCurricularCourse().getEnrolments();
+        curricularCourseScope = (ICurricularCourseScope) sp.getIPersistentCurricularCourseScope()
+                .readByOID(CurricularCourseScope.class, curricularCourseScopeID);
 
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+        enrolmentList = curricularCourseScope.getCurricularCourse().getEnrolments();
 
         if ((enrolmentList == null) || (enrolmentList.size() == 0)) {
             throw new NonExistingServiceException();
@@ -68,9 +62,10 @@ public class ReadStudentListByCurricularCourseScope implements IService {
     /**
      * @param studentCurricularPlans
      * @return A list of Student curricular Plans without the duplicates
-     * @throws ExcepcaoPersistencia 
+     * @throws ExcepcaoPersistencia
      */
-    private List cleanList(List studentCurricularPlans, IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
+    private List cleanList(List studentCurricularPlans, IUserView userView)
+            throws FenixServiceException, ExcepcaoPersistencia {
         List result = new ArrayList();
         Integer numberAux = null;
 
@@ -83,12 +78,15 @@ public class ReadStudentListByCurricularCourseScope implements IService {
                             .getNumber().intValue())) {
                 numberAux = enrolment.getStudentCurricularPlan().getStudent().getNumber();
 
-                /*Object args[] = { enrolment };
-                InfoEnrolmentEvaluation infoEnrolmentEvaluation = (InfoEnrolmentEvaluation) ServiceManagerServiceFactory
-                        .executeService(userView, "GetEnrolmentGrade", args);
-*/
-                InfoEnrolmentEvaluation infoEnrolmentEvaluation = (new GetEnrolmentGrade()).run(enrolment); 
-                    
+                /*
+                 * Object args[] = { enrolment }; InfoEnrolmentEvaluation
+                 * infoEnrolmentEvaluation = (InfoEnrolmentEvaluation)
+                 * ServiceManagerServiceFactory .executeService(userView,
+                 * "GetEnrolmentGrade", args);
+                 */
+                InfoEnrolmentEvaluation infoEnrolmentEvaluation = (new GetEnrolmentGrade())
+                        .run(enrolment);
+
                 InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
                         .newInfoFromDomain(enrolment);
                 infoEnrolment.setInfoEnrolmentEvaluation(infoEnrolmentEvaluation);

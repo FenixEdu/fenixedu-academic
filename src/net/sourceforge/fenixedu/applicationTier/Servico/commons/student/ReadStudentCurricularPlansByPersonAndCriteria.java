@@ -36,145 +36,121 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Andr� Fernandes / Jo�o Brito
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * 
+ * TODO To change the template for this generated type comment go to Window -
+ * Preferences - Java - Code Style - Code Templates
  */
-public class ReadStudentCurricularPlansByPersonAndCriteria implements IService
-{
-	public ReadStudentCurricularPlansByPersonAndCriteria()
-	{
-	}
+public class ReadStudentCurricularPlansByPersonAndCriteria implements IService {
 
-	/*
-	 * devolve InfoXxxx com:
-	 * - StudentCurricularPlan's do aluno
-	 * - Enrolments do aluno (filtrados por um criterio)
-	 * */
-	public InfoStudentCurricularPlansWithSelectedEnrollments run(String username, StudentCurricularPlanIDDomainType curricularPlanID, EnrollmentStateSelectionType criterio) throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia
-	{
-		// curricularPlanID pode ser: ID do CP do aluno, 'all ou 'newest
-		// criterio define que IEnrolments vamos ver: pode ser 'aprovado ou null (selecciona todos) 
+    /*
+     * devolve InfoXxxx com: - StudentCurricularPlan's do aluno - Enrolments do
+     * aluno (filtrados por um criterio)
+     */
+    public InfoStudentCurricularPlansWithSelectedEnrollments run(String username,
+            StudentCurricularPlanIDDomainType curricularPlanID, EnrollmentStateSelectionType criterio)
+            throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
+        // curricularPlanID pode ser: ID do CP do aluno, 'all ou 'newest
+        // criterio define que IEnrolments vamos ver: pode ser 'aprovado ou null
+        // (selecciona todos)
 
-	    ISuportePersistente sp = null;
+        ISuportePersistente sp = null;
         List studentCurricularPlans = new ArrayList();
-        
+
         Predicate predicado = null;
-        
-        if (criterio.equals(EnrollmentStateSelectionType.APPROVED))
-        {
+
+        if (criterio.equals(EnrollmentStateSelectionType.APPROVED)) {
             predicado = EnrollmentPredicates.getApprovedPredicate();
-        }
-        else if (criterio.equals(EnrollmentStateSelectionType.NONE))
-        {
+        } else if (criterio.equals(EnrollmentStateSelectionType.NONE)) {
             predicado = EnrollmentPredicates.getNonePredicate(); // nenhum
-        }
-        else
-        {
+        } else {
             predicado = EnrollmentPredicates.getAllPredicate(); // todos
         }
-        
-        try
-        {
-            
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            
-            if (curricularPlanID.isAll() || curricularPlanID.isNewest())
-            {
-                IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
-                List students = person.getStudents();
-                List studentCPsTemp = null;
-                
-                Iterator studentsIterator = students.iterator();
-                
-                // para cada Student que esta Person �
-                // juntar todos os SCP
-                while(studentsIterator.hasNext())
-                {
-                    IStudent student = (IStudent)studentsIterator.next();
-                            
-                    //seleccionar todos os planos do aluno
-                    studentCPsTemp = student.getStudentCurricularPlans();                   
-                    
-                    studentCurricularPlans.addAll(studentCPsTemp);
+
+        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+
+        if (curricularPlanID.isAll() || curricularPlanID.isNewest()) {
+            IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
+            List students = person.getStudents();
+            List studentCPsTemp = null;
+
+            Iterator studentsIterator = students.iterator();
+
+            // para cada Student que esta Person �
+            // juntar todos os SCP
+            while (studentsIterator.hasNext()) {
+                IStudent student = (IStudent) studentsIterator.next();
+
+                // seleccionar todos os planos do aluno
+                studentCPsTemp = student.getStudentCurricularPlans();
+
+                studentCurricularPlans.addAll(studentCPsTemp);
+            }
+
+            if (curricularPlanID.isNewest()) {
+                // seleccionar o mais recente
+
+                IStudentCurricularPlan planoRecente = null;
+                IStudentCurricularPlan planoTemp = null;
+                Iterator iterator = studentCurricularPlans.iterator();
+
+                while (iterator.hasNext()) {
+                    planoTemp = (IStudentCurricularPlan) iterator.next();
+
+                    if (planoRecente == null
+                            || planoRecente.getStartDate().before(planoTemp.getStartDate())) {
+                        planoRecente = planoTemp;
+                    }
                 }
-		  
-                if (curricularPlanID.isNewest())
-                {
-                    //seleccionar o mais recente
-	            
-	                IStudentCurricularPlan planoRecente = null;
-	                IStudentCurricularPlan planoTemp = null;
-	                Iterator iterator = studentCurricularPlans.iterator();
-	            
-		            while (iterator.hasNext())
-		            {
-		                planoTemp = (IStudentCurricularPlan)iterator.next();
-		                
-		                if (planoRecente == null || 
-		                    planoRecente.getStartDate().before(planoTemp.getStartDate()))
-		                {
-		                    planoRecente = planoTemp;
-		                }
-		            }
-		            
-		            studentCurricularPlans = new ArrayList();
-		            studentCurricularPlans.add(planoRecente);
-                }
-		    }
-		    else // um SCP em particular
-		    {
-		        //obter o CP especificado como curricularPlanID
-		        
-		        studentCurricularPlans.add(	                
-		            sp.getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class, curricularPlanID.getId()));
-		    }
-	    
-        }
-        catch (ExcepcaoPersistencia ex)
+
+                studentCurricularPlans = new ArrayList();
+                studentCurricularPlans.add(planoRecente);
+            }
+        } else // um SCP em particular
         {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
+            // obter o CP especificado como curricularPlanID
+
+            studentCurricularPlans.add(sp.getIStudentCurricularPlanPersistente().readByOID(
+                    StudentCurricularPlan.class, curricularPlanID.getId()));
         }
-        
-	    
+
         InfoStudentCurricularPlansWithSelectedEnrollments currPlanEnrol = new InfoStudentCurricularPlansWithSelectedEnrollments();
-        
-        
+
         Iterator iteratorInfo = studentCurricularPlans.iterator();
         IStudentCurricularPlan studentCurricularPlan = null;
-        
-        while (iteratorInfo.hasNext())
-        {
-            //criacao da info a retornar a partir dos objectos de dominio pretendidos
-            
-            studentCurricularPlan = (IStudentCurricularPlan)iteratorInfo.next();
-            
-            List enrollments = studentCurricularPlan.getEnrolments();// lista de IEnrollment's
-            List selectedEnrollments = ((List)CollectionUtils.select(enrollments,predicado));
-            
+
+        while (iteratorInfo.hasNext()) {
+            // criacao da info a retornar a partir dos objectos de dominio
+            // pretendidos
+
+            studentCurricularPlan = (IStudentCurricularPlan) iteratorInfo.next();
+
+            List enrollments = studentCurricularPlan.getEnrolments();// lista
+                                                                        // de
+                                                                        // IEnrollment's
+            List selectedEnrollments = ((List) CollectionUtils.select(enrollments, predicado));
+
             List infoSelectedEnrollments = new ArrayList();
             Iterator selectedEnrollmentsIterator = selectedEnrollments.iterator();
-            
+
             GetEnrolmentGrade getEnrolmentGrade = new GetEnrolmentGrade();
-            
-            while (selectedEnrollmentsIterator.hasNext())
-            {
-                IEnrolment enrollment = (IEnrolment)selectedEnrollmentsIterator.next();
-                InfoEnrolment infoEnrollment = InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear.newInfoFromDomain(enrollment);
-                
+
+            while (selectedEnrollmentsIterator.hasNext()) {
+                IEnrolment enrollment = (IEnrolment) selectedEnrollmentsIterator.next();
+                InfoEnrolment infoEnrollment = InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear
+                        .newInfoFromDomain(enrollment);
+
                 InfoEnrolmentEvaluation infoEnrolmentEvaluation = getEnrolmentGrade.run(enrollment);
                 infoEnrollment.setInfoEnrolmentEvaluation(infoEnrolmentEvaluation);
-                
+
                 infoSelectedEnrollments.add(infoEnrollment);
             }
 
-            currPlanEnrol.addInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree.newInfoFromDomain(studentCurricularPlan),
-                    										infoSelectedEnrollments);    
+            currPlanEnrol.addInfoStudentCurricularPlan(
+                    InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree
+                            .newInfoFromDomain(studentCurricularPlan), infoSelectedEnrollments);
         }
-        
+
         return currPlanEnrol;
-	}
+    }
 
 }

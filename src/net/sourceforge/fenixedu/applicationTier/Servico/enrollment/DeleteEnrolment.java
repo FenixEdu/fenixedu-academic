@@ -31,75 +31,67 @@ public class DeleteEnrolment implements IService {
 
     // some of these arguments may be null. they are only needed for filter
     public void run(Integer executionDegreeId, Integer studentCurricularPlanId, Integer enrolmentID)
-            throws FenixServiceException, DomainException {
-        try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentEnrollment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
-            IPersistentRestriction persistentRestriction = persistentSuport.getIPersistentRestriction();
-            final IEnrolment enrollment1 = (IEnrolment) enrolmentDAO.readByOID(Enrolment.class, enrolmentID);
+            throws FenixServiceException, DomainException, ExcepcaoPersistencia {
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentEnrollment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
+        IPersistentRestriction persistentRestriction = persistentSuport.getIPersistentRestriction();
+        final IEnrolment enrollment1 = (IEnrolment) enrolmentDAO.readByOID(Enrolment.class, enrolmentID);
 
-            List<IEnrolment> enrollments2Delete = new ArrayList<IEnrolment>();
-            List studentEnrolledEnrollmentsInExecutionPeriod = enrollment1.getStudentCurricularPlan()
-                    .getAllStudentEnrolledEnrollmentsInExecutionPeriod(enrollment1.getExecutionPeriod());
-            List finalEnrollments2Delete = new ArrayList();
-            enrollments2Delete.addAll(CollectionUtils.select(
-                    studentEnrolledEnrollmentsInExecutionPeriod, new Predicate() {
+        List<IEnrolment> enrollments2Delete = new ArrayList<IEnrolment>();
+        List studentEnrolledEnrollmentsInExecutionPeriod = enrollment1.getStudentCurricularPlan()
+                .getAllStudentEnrolledEnrollmentsInExecutionPeriod(enrollment1.getExecutionPeriod());
+        List finalEnrollments2Delete = new ArrayList();
+        enrollments2Delete.addAll(CollectionUtils.select(studentEnrolledEnrollmentsInExecutionPeriod,
+                new Predicate() {
 
-                        public boolean evaluate(Object arg0) {
-                            IEnrolment enrollment2 = (IEnrolment) arg0;
-                            return enrollment2.getCurricularCourse()
-                                    .getCurricularYearByBranchAndSemester(
-                                            enrollment2.getStudentCurricularPlan().getBranch(),
-                                            enrollment2.getExecutionPeriod().getSemester()).getYear()
-                                    .intValue() > enrollment1.getCurricularCourse()
-                                    .getCurricularYearByBranchAndSemester(
-                                            enrollment1.getStudentCurricularPlan().getBranch(),
-                                            enrollment1.getExecutionPeriod().getSemester()).getYear()
-                                    .intValue();
-                        }
-                    }));
+                    public boolean evaluate(Object arg0) {
+                        IEnrolment enrollment2 = (IEnrolment) arg0;
+                        return enrollment2.getCurricularCourse().getCurricularYearByBranchAndSemester(
+                                enrollment2.getStudentCurricularPlan().getBranch(),
+                                enrollment2.getExecutionPeriod().getSemester()).getYear().intValue() > enrollment1
+                                .getCurricularCourse().getCurricularYearByBranchAndSemester(
+                                        enrollment1.getStudentCurricularPlan().getBranch(),
+                                        enrollment1.getExecutionPeriod().getSemester()).getYear()
+                                .intValue();
+                    }
+                }));
 
-            if (enrollment1 != null) {
-                List restrictions = persistentRestriction.readByCurricularCourseAndRestrictionClass(
-                        enrollment1.getCurricularCourse().getIdInternal(),
+        if (enrollment1 != null) {
+            List restrictions = persistentRestriction.readByCurricularCourseAndRestrictionClass(
+                    enrollment1.getCurricularCourse().getIdInternal(),
 
-                        RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse.class);
-                if (restrictions != null) {
-                    Iterator<IRestriction> iter = restrictions.iterator();
-                    while (iter.hasNext()) {
-                        final IRestrictionByCurricularCourse restriction = (IRestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse) iter
-                                .next();
-                        if (enrollment1.getStudentCurricularPlan().isCurricularCourseEnrolled(
-                                restriction.getPrecedence().getCurricularCourse())) {
-                            IEnrolment enrollment2Delete = (IEnrolment) CollectionUtils.find(
-                                    studentEnrolledEnrollmentsInExecutionPeriod, new Predicate() {
+                    RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse.class);
+            if (restrictions != null) {
+                Iterator<IRestriction> iter = restrictions.iterator();
+                while (iter.hasNext()) {
+                    final IRestrictionByCurricularCourse restriction = (IRestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse) iter
+                            .next();
+                    if (enrollment1.getStudentCurricularPlan().isCurricularCourseEnrolled(
+                            restriction.getPrecedence().getCurricularCourse())) {
+                        IEnrolment enrollment2Delete = (IEnrolment) CollectionUtils.find(
+                                studentEnrolledEnrollmentsInExecutionPeriod, new Predicate() {
 
-                                        public boolean evaluate(Object arg0) {
-                                            IEnrolment enrollment = (IEnrolment) arg0;
-                                            return enrollment.getCurricularCourse().equals(
-                                                    restriction.getPrecedence().getCurricularCourse());
-                                        }
-                                    });
-                            if (enrollment2Delete != null
-                                    && !finalEnrollments2Delete.contains(enrollment2Delete)) {
-                                finalEnrollments2Delete.add(enrollment2Delete);
-                            }
+                                    public boolean evaluate(Object arg0) {
+                                        IEnrolment enrollment = (IEnrolment) arg0;
+                                        return enrollment.getCurricularCourse().equals(
+                                                restriction.getPrecedence().getCurricularCourse());
+                                    }
+                                });
+                        if (enrollment2Delete != null
+                                && !finalEnrollments2Delete.contains(enrollment2Delete)) {
+                            finalEnrollments2Delete.add(enrollment2Delete);
                         }
                     }
                 }
             }
-            finalEnrollments2Delete.add(enrollment1);
-            finalEnrollments2Delete.addAll(enrollments2Delete);
-            Iterator<IEnrolment> iter = finalEnrollments2Delete.iterator();
-            while (iter.hasNext()) {
-            	iter.next().unEnroll();
-            }
-
-        } catch (ExcepcaoPersistencia e) {
-
-            throw new FenixServiceException(e);
         }
-    }
+        finalEnrollments2Delete.add(enrollment1);
+        finalEnrollments2Delete.addAll(enrollments2Delete);
+        Iterator<IEnrolment> iter = finalEnrollments2Delete.iterator();
+        while (iter.hasNext()) {
+            iter.next().unEnroll();
+        }
 
+    }
 
 }

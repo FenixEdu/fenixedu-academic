@@ -21,47 +21,40 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ComputeDegreeCourseStatistics extends ComputeCourseStatistics implements IService {
-    public ComputeDegreeCourseStatistics() {
-    }
 
     public List<DegreeCourseStatisticsDTO> run(Integer competenceCourseId, Integer executionYearId)
             throws FenixServiceException, ExcepcaoPersistencia {
-        try {
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentCompetenceCourse persistentCompetenceCourse = sp.getIPersistentCompetenceCourse();
+        ICompetenceCourse competenceCourse = (ICompetenceCourse) persistentCompetenceCourse.readByOID(
+                CompetenceCourse.class, competenceCourseId);
 
-            IPersistentCompetenceCourse persistentCompetenceCourse = sp.getIPersistentCompetenceCourse();
-            ICompetenceCourse competenceCourse = (ICompetenceCourse) persistentCompetenceCourse
-                    .readByOID(CompetenceCourse.class, competenceCourseId);
+        IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+        IExecutionYear executionYear = (IExecutionYear) persistentExecutionYear.readByOID(
+                ExecutionYear.class, executionYearId);
 
-            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-            IExecutionYear executionYear = (IExecutionYear) persistentExecutionYear.readByOID(
-                    ExecutionYear.class, executionYearId);
+        Map<IDegree, List<ICurricularCourse>> groupedCourses = competenceCourse
+                .getAssociatedCurricularCoursesGroupedByDegree();
 
-            Map<IDegree, List<ICurricularCourse>> groupedCourses = competenceCourse
-                    .getAssociatedCurricularCoursesGroupedByDegree();
+        List<DegreeCourseStatisticsDTO> results = new ArrayList<DegreeCourseStatisticsDTO>();
 
-            List<DegreeCourseStatisticsDTO> results = new ArrayList<DegreeCourseStatisticsDTO>();
+        for (IDegree degree : groupedCourses.keySet()) {
+            List<IEnrolmentEvaluation> evaluations = new ArrayList<IEnrolmentEvaluation>();
+            List<ICurricularCourse> curricularCourses = groupedCourses.get(degree);
 
-            for (IDegree degree : groupedCourses.keySet()) {
-                List<IEnrolmentEvaluation> evaluations = new ArrayList<IEnrolmentEvaluation>();
-                List<ICurricularCourse> curricularCourses = groupedCourses.get(degree);
-
-                for (ICurricularCourse curricularCourse : curricularCourses) {
-                    evaluations.addAll(curricularCourse.getActiveEnrollmentEvaluations(executionYear));
-                }
-
-                DegreeCourseStatisticsDTO degreeCourseStatistics = new DegreeCourseStatisticsDTO();
-                degreeCourseStatistics.setIdInternal(degree.getIdInternal());
-                degreeCourseStatistics.setName(degree.getNome());
-                createCourseStatistics(degreeCourseStatistics, evaluations);
-
-                results.add(degreeCourseStatistics);
+            for (ICurricularCourse curricularCourse : curricularCourses) {
+                evaluations.addAll(curricularCourse.getActiveEnrollmentEvaluations(executionYear));
             }
 
-            return results;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+            DegreeCourseStatisticsDTO degreeCourseStatistics = new DegreeCourseStatisticsDTO();
+            degreeCourseStatistics.setIdInternal(degree.getIdInternal());
+            degreeCourseStatistics.setName(degree.getNome());
+            createCourseStatistics(degreeCourseStatistics, evaluations);
+
+            results.add(degreeCourseStatistics);
         }
+
+        return results;
     }
 }

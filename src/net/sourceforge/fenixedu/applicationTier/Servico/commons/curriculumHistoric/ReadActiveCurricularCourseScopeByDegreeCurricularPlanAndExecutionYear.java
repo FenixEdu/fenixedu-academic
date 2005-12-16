@@ -27,31 +27,26 @@ public class ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYe
         ReadDegreeCurricularPlanBaseService {
 
     public InfoDegreeCurricularPlanWithCurricularCourseScopes run(Integer degreeCurricularPlanID,
-            Integer executioYearID) throws FenixServiceException {
-        try {
-            ISuportePersistente suportePersistente = PersistenceSupportFactory
-                    .getDefaultPersistenceSupport();
-            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = suportePersistente
-                    .getIPersistentDegreeCurricularPlan();
-            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
-                    .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
+            Integer executioYearID) throws FenixServiceException, ExcepcaoPersistencia {
+        ISuportePersistente suportePersistente = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
+        IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = suportePersistente
+                .getIPersistentDegreeCurricularPlan();
+        IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
+                .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
 
-            IPersistentExecutionYear persistentExecutionYear = suportePersistente
-                    .getIPersistentExecutionYear();
-            IExecutionYear executionYear = (IExecutionYear) persistentExecutionYear.readByOID(
-                    ExecutionYear.class, executioYearID);
-            List scopes = super.readActiveCurricularCourseScopesInExecutionYear(degreeCurricularPlan
-                    .getIdInternal(), executionYear);
-            InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
-                    .newInfoFromDomain(degreeCurricularPlan);
-            InfoDegreeCurricularPlanWithCurricularCourseScopes curricularPlanWithCurricularCourseScopes = new InfoDegreeCurricularPlanWithCurricularCourseScopes();
-            curricularPlanWithCurricularCourseScopes
-                    .setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-            curricularPlanWithCurricularCourseScopes.setScopes(scopes);
-            return curricularPlanWithCurricularCourseScopes;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
+        IPersistentExecutionYear persistentExecutionYear = suportePersistente
+                .getIPersistentExecutionYear();
+        IExecutionYear executionYear = (IExecutionYear) persistentExecutionYear.readByOID(
+                ExecutionYear.class, executioYearID);
+        List scopes = super.readActiveCurricularCourseScopesInExecutionYear(degreeCurricularPlan
+                .getIdInternal(), executionYear);
+        InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
+                .newInfoFromDomain(degreeCurricularPlan);
+        InfoDegreeCurricularPlanWithCurricularCourseScopes curricularPlanWithCurricularCourseScopes = new InfoDegreeCurricularPlanWithCurricularCourseScopes();
+        curricularPlanWithCurricularCourseScopes.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+        curricularPlanWithCurricularCourseScopes.setScopes(scopes);
+        return curricularPlanWithCurricularCourseScopes;
     }
 
 }

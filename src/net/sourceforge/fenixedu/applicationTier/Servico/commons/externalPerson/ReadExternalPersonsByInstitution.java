@@ -15,31 +15,19 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 public class ReadExternalPersonsByInstitution implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public ReadExternalPersonsByInstitution() {
-    }
-
-    public List run(Integer institutionID) throws FenixServiceException {
+    public List run(Integer institutionID) throws FenixServiceException, ExcepcaoPersistencia {
         List infoExternalPersons = new ArrayList();
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            List<IExternalPerson> externalPersons = sp.getIPersistentExternalPerson().readByInstitution(institutionID);
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        List<IExternalPerson> externalPersons = sp.getIPersistentExternalPerson().readByInstitution(
+                institutionID);
 
-            for (IExternalPerson externalPerson : externalPersons) {
-                infoExternalPersons.add(InfoExternalPerson.newInfoFromDomain(externalPerson));
-            }
-
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
+        for (IExternalPerson externalPerson : externalPersons) {
+            infoExternalPersons.add(InfoExternalPerson.newInfoFromDomain(externalPerson));
         }
 
         return infoExternalPersons;

@@ -10,25 +10,18 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadInstitutionByName implements IService {
 
-    public InfoInstitution run(String institutionName) throws FenixServiceException {
+    public InfoInstitution run(String institutionName) throws FenixServiceException, ExcepcaoPersistencia {
         InfoInstitution infoInstitution = null;
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IInstitution institution = sp.getIPersistentInstitution().readByName(institutionName);
-       
-        
-            if(institution != null)
-            {
-                infoInstitution = new InfoInstitution();
-                infoInstitution.copyFromDomain(institution);
-            }
-            
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IInstitution institution = sp.getIPersistentInstitution().readByName(institutionName);
+
+        if (institution != null) {
+            infoInstitution = new InfoInstitution();
+            infoInstitution.copyFromDomain(institution);
         }
 
         return infoInstitution;
-        
+
     }
 }

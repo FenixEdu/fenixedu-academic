@@ -25,46 +25,42 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadCurricularCourseScopesByExecutionCourseID implements IService {
 
-    public List run(Integer executionCourseID) throws FenixServiceException {
+    public List run(Integer executionCourseID) throws FenixServiceException, ExcepcaoPersistencia {
 
         List infoCurricularCourses = new ArrayList();
-        try {
 
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            // Read The ExecutionCourse
+        // Read The ExecutionCourse
 
-            IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
-                    .readByOID(ExecutionCourse.class, executionCourseID);
+        IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
+                .readByOID(ExecutionCourse.class, executionCourseID);
 
-            // For all associated Curricular Courses read the Scopes
+        // For all associated Curricular Courses read the Scopes
 
-            infoCurricularCourses = new ArrayList();
-            Iterator iterator = executionCourse.getAssociatedCurricularCourses().iterator();
-            while (iterator.hasNext()) {
-                ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
+        infoCurricularCourses = new ArrayList();
+        Iterator iterator = executionCourse.getAssociatedCurricularCourses().iterator();
+        while (iterator.hasNext()) {
+            ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
 
-                IExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-				List curricularCourseScopes = sp.getIPersistentCurricularCourseScope()
-                        .readCurricularCourseScopesByCurricularCourseInExecutionPeriod(curricularCourse.getIdInternal(),
-                                executionPeriod.getBeginDate(),executionPeriod.getEndDate());
+            IExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+            List curricularCourseScopes = sp.getIPersistentCurricularCourseScope()
+                    .readCurricularCourseScopesByCurricularCourseInExecutionPeriod(
+                            curricularCourse.getIdInternal(), executionPeriod.getBeginDate(),
+                            executionPeriod.getEndDate());
 
-                InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
-                        .newInfoFromDomain(curricularCourse);
-                infoCurricularCourse.setInfoScopes(new ArrayList());
+            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
+                    .newInfoFromDomain(curricularCourse);
+            infoCurricularCourse.setInfoScopes(new ArrayList());
 
-                Iterator scopeIterator = curricularCourseScopes.iterator();
-                while (scopeIterator.hasNext()) {
+            Iterator scopeIterator = curricularCourseScopes.iterator();
+            while (scopeIterator.hasNext()) {
 
-                    infoCurricularCourse.getInfoScopes().add(
-                            InfoCurricularCourseScopeWithBranchAndSemesterAndYear
-                                    .newInfoFromDomain((ICurricularCourseScope) scopeIterator.next()));
-                }
-                infoCurricularCourses.add(infoCurricularCourse);
+                infoCurricularCourse.getInfoScopes().add(
+                        InfoCurricularCourseScopeWithBranchAndSemesterAndYear
+                                .newInfoFromDomain((ICurricularCourseScope) scopeIterator.next()));
             }
-
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex);
+            infoCurricularCourses.add(infoCurricularCourse);
         }
 
         return infoCurricularCourses;

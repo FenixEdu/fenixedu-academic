@@ -43,47 +43,39 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadEnrollmentsWithStateEnrolledByStudent implements IService {
 
-    public ReadEnrollmentsWithStateEnrolledByStudent() {
-    }
-
     public Object run(InfoStudent infoStudent, DegreeType degreeType, Integer executionPeriodID)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
         InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
-                    .getIStudentCurricularPlanPersistente();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-            IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
-                    ExecutionPeriod.class, executionPeriodID);
 
-            IStudentCurricularPlan studentCurricularPlan = null;
-            if (infoStudent != null && infoStudent.getNumber() != null) {
-                studentCurricularPlan = persistentStudentCurricularPlan
-                        .readActiveByStudentNumberAndDegreeType(infoStudent.getNumber(), degreeType);
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
+                .getIStudentCurricularPlanPersistente();
+        IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+        IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+                ExecutionPeriod.class, executionPeriodID);
+
+        IStudentCurricularPlan studentCurricularPlan = null;
+        if (infoStudent != null && infoStudent.getNumber() != null) {
+            studentCurricularPlan = persistentStudentCurricularPlan
+                    .readActiveByStudentNumberAndDegreeType(infoStudent.getNumber(), degreeType);
+        }
+        if (studentCurricularPlan == null) {
+            throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
+        }
+
+        if (isStudentCurricularPlanFromChosenExecutionYear(studentCurricularPlan, executionPeriod
+                .getExecutionYear().getYear())) {
+            List enrolmentsInExecutionPeriod = studentCurricularPlan
+                    .getAllStudentEnrolledEnrollmentsInExecutionPeriod(executionPeriod);
+
+            infoStudentEnrolmentContext = buildResult(studentCurricularPlan,
+                    enrolmentsInExecutionPeriod, executionPeriod);
+
+            if (infoStudentEnrolmentContext == null) {
+                throw new FenixServiceException();
             }
-            if (studentCurricularPlan == null) {
-                throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
-            }
-
-            if (isStudentCurricularPlanFromChosenExecutionYear(studentCurricularPlan, executionPeriod
-                    .getExecutionYear().getYear())) {
-                List enrolmentsInExecutionPeriod = studentCurricularPlan
-                        .getAllStudentEnrolledEnrollmentsInExecutionPeriod(executionPeriod);
-
-                infoStudentEnrolmentContext = buildResult(studentCurricularPlan,
-                        enrolmentsInExecutionPeriod, executionPeriod);
-
-                if (infoStudentEnrolmentContext == null) {
-                    throw new FenixServiceException();
-                }
-            } else {
-                throw new FenixServiceException(
-                        "error.student.curriculum.not.from.chosen.execution.year");
-            }
-        } catch (ExcepcaoPersistencia e) {
-
-            throw new FenixServiceException(e);
+        } else {
+            throw new FenixServiceException("error.student.curriculum.not.from.chosen.execution.year");
         }
 
         return infoStudentEnrolmentContext;

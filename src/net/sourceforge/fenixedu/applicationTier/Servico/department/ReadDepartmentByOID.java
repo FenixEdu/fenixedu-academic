@@ -18,22 +18,15 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * @author João Fialho & Rita Ferreira
  */
 public class ReadDepartmentByOID implements IService {
-    public ReadDepartmentByOID() {
-    }
 
-    public InfoDepartment run(Integer oid) throws FenixServiceException {
+    public InfoDepartment run(Integer oid) throws FenixServiceException, ExcepcaoPersistencia {
+        InfoDepartment infoDepartment = null;
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentDepartment departmentDAO = sp.getIDepartamentoPersistente();
 
-    	InfoDepartment infoDepartment = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentDepartment departmentDAO = sp.getIDepartamentoPersistente();
+        IDepartment department = (IDepartment) departmentDAO.readByOID(Department.class, oid);
+        infoDepartment = InfoDepartment.newInfoFromDomain(department);
 
-
-            IDepartment department = (IDepartment)departmentDAO.readByOID(Department.class, oid);
-            infoDepartment = InfoDepartment.newInfoFromDomain(department);
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException("Problems on database!", e);
-        }
         return infoDepartment;
 
     }

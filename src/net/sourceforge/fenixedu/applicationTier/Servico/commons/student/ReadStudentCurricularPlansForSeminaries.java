@@ -24,28 +24,16 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadStudentCurricularPlansForSeminaries implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public ReadStudentCurricularPlansForSeminaries() {
-    }
-
-    public List run(IUserView userView) throws ExcepcaoInexistente, FenixServiceException {
+    public List run(IUserView userView) throws ExcepcaoInexistente, FenixServiceException,
+            ExcepcaoPersistencia {
         ISuportePersistente sp = null;
 
         List studentCurricularPlans = null;
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            studentCurricularPlans = sp.getIStudentCurricularPlanPersistente().readByUsername(
-                    userView.getUtilizador());
-
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+        studentCurricularPlans = sp.getIStudentCurricularPlanPersistente().readByUsername(
+                userView.getUtilizador());
 
         if ((studentCurricularPlans == null) || (studentCurricularPlans.size() == 0)) {
             throw new NonExistingServiceException();

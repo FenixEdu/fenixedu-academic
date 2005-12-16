@@ -22,45 +22,40 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Tânia Pousão 12/Dez/2003
- *  
+ * 
  */
 public class ResponsibleCoordinators implements IService {
 
-    public Boolean run(Integer executionDegreeId, List coordinatorsIds) throws FenixServiceException {
+    public Boolean run(Integer executionDegreeId, List coordinatorsIds) throws FenixServiceException, ExcepcaoPersistencia {
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-            IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-            IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
-                    ExecutionDegree.class, executionDegreeId);
-            if (executionDegree == null) {
-                throw new InvalidArgumentsServiceException();
-            }
-
-            IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
-            Iterator iterator = executionDegree.getCoordinatorsList().iterator();
-            while (iterator.hasNext()) {
-                ICoordinator coordinator = (ICoordinator) iterator.next();
-
-                coordinator = (ICoordinator) persistentCoordinator.readByOID(Coordinator.class,
-                        coordinator.getIdInternal(), true);
-                if (coordinator == null) {
-                    return new Boolean(false);
-                }
-
-                Integer coordinatorId = coordinator.getIdInternal();
-                if (coordinatorsIds.contains(coordinatorId)) {//coordinator is
-                    // responsible
-                    coordinator.setResponsible(Boolean.TRUE);
-                } else {//coordinator isn't responsible
-                    coordinator.setResponsible(Boolean.FALSE);
-                }
-            }
-
-            return new Boolean(true);
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+        IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
+        IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+                ExecutionDegree.class, executionDegreeId);
+        if (executionDegree == null) {
+            throw new InvalidArgumentsServiceException();
         }
+
+        IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
+        Iterator iterator = executionDegree.getCoordinatorsList().iterator();
+        while (iterator.hasNext()) {
+            ICoordinator coordinator = (ICoordinator) iterator.next();
+
+            coordinator = (ICoordinator) persistentCoordinator.readByOID(Coordinator.class, coordinator
+                    .getIdInternal(), true);
+            if (coordinator == null) {
+                return new Boolean(false);
+            }
+
+            Integer coordinatorId = coordinator.getIdInternal();
+            if (coordinatorsIds.contains(coordinatorId)) {// coordinator is
+                // responsible
+                coordinator.setResponsible(Boolean.TRUE);
+            } else {// coordinator isn't responsible
+                coordinator.setResponsible(Boolean.FALSE);
+            }
+        }
+
+        return new Boolean(true);
     }
 }

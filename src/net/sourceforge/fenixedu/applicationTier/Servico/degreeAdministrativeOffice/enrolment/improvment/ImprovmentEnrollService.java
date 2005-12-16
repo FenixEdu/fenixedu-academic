@@ -28,54 +28,53 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * @author nmgo
  */
-public class ImprovmentEnrollService implements IService{
-    
-    public Object run(Integer studentNumber, String employeeUserName, List enrolmentsIds) throws FenixServiceException{
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-            
-            IStudent student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
-            if(student == null) {
-                throw new InvalidArgumentsServiceException();
-            }
-            
-            IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente();
-            IPerson pessoa = pessoaPersistente.lerPessoaPorUsername(employeeUserName);
-			
-	        IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-	        final IExecutionPeriod currentExecutionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
-	        
-            
-            if(pessoa == null) {
-                throw new InvalidArgumentsServiceException();
-            }
-            
-            IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
-            IEmployee employee = persistentEmployee.readByPerson(pessoa);;
-			
-            if(employee == null) {
-                throw new InvalidArgumentsServiceException();
-            }
+public class ImprovmentEnrollService implements IService {
 
-            IPersistentEnrollment persistentEnrollment = sp.getIPersistentEnrolment();
-            
-            Iterator iterator = enrolmentsIds.iterator();
-            while(iterator.hasNext()) {
-                Integer enrolmentId = (Integer) iterator.next();
-                IEnrolment enrollment = (IEnrolment) persistentEnrollment.readByOID(Enrolment.class, enrolmentId);
-                if(enrollment == null) {
-                    throw new InvalidArgumentsServiceException();
-                }
+    public Object run(Integer studentNumber, String employeeUserName, List enrolmentsIds)
+            throws FenixServiceException, ExcepcaoPersistencia {
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 
-				enrollment.createEnrolmentEvaluationForImprovement(employee, currentExecutionPeriod, student);
-            }
-            
-            return new Boolean(true);
-            
-            
-        }catch(ExcepcaoPersistencia ep) {
-            throw new FenixServiceException(ep);
+        IStudent student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
+                DegreeType.DEGREE);
+        if (student == null) {
+            throw new InvalidArgumentsServiceException();
         }
+
+        IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente();
+        IPerson pessoa = pessoaPersistente.lerPessoaPorUsername(employeeUserName);
+
+        IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+        final IExecutionPeriod currentExecutionPeriod = persistentExecutionPeriod
+                .readActualExecutionPeriod();
+
+        if (pessoa == null) {
+            throw new InvalidArgumentsServiceException();
+        }
+
+        IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
+        IEmployee employee = persistentEmployee.readByPerson(pessoa);
+        ;
+
+        if (employee == null) {
+            throw new InvalidArgumentsServiceException();
+        }
+
+        IPersistentEnrollment persistentEnrollment = sp.getIPersistentEnrolment();
+
+        Iterator iterator = enrolmentsIds.iterator();
+        while (iterator.hasNext()) {
+            Integer enrolmentId = (Integer) iterator.next();
+            IEnrolment enrollment = (IEnrolment) persistentEnrollment.readByOID(Enrolment.class,
+                    enrolmentId);
+            if (enrollment == null) {
+                throw new InvalidArgumentsServiceException();
+            }
+
+            enrollment
+                    .createEnrolmentEvaluationForImprovement(employee, currentExecutionPeriod, student);
+        }
+
+        return new Boolean(true);
     }
 }

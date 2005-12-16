@@ -17,28 +17,18 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  */
 public class EditTeacherExpectationDefinitionPeriod implements IService {
-    public EditTeacherExpectationDefinitionPeriod() {
-    }
-
     public void run(Integer teacherExpectationDefinitionPeriodID, Date startDate, Date endDate)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
+        ISuportePersistente persistenceSupport = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
 
-        try {
-            ISuportePersistente persistenceSupport = PersistenceSupportFactory
-                    .getDefaultPersistenceSupport();
+        IPersistentTeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriodDAO = persistenceSupport
+                .getIPersistentTeacherExpectationDefinitionPeriod();
 
-            IPersistentTeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriodDAO = persistenceSupport
-                    .getIPersistentTeacherExpectationDefinitionPeriod();
+        ITeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = (ITeacherExpectationDefinitionPeriod) teacherExpectationDefinitionPeriodDAO
+                .readByOID(TeacherExpectationDefinitionPeriod.class,
+                        teacherExpectationDefinitionPeriodID);
 
-            ITeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = (ITeacherExpectationDefinitionPeriod) teacherExpectationDefinitionPeriodDAO
-                    .readByOID(TeacherExpectationDefinitionPeriod.class,
-                            teacherExpectationDefinitionPeriodID);
-
-            teacherExpectationDefinitionPeriod.edit(startDate, endDate);
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-
+        teacherExpectationDefinitionPeriod.edit(startDate, endDate);
     }
 }

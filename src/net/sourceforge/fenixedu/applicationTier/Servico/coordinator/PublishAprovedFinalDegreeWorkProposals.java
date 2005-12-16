@@ -17,33 +17,26 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Luis Cruz
- *  
+ * 
  */
 public class PublishAprovedFinalDegreeWorkProposals implements IService {
 
-    public PublishAprovedFinalDegreeWorkProposals() {
-        super();
-    }
-
-    public void run(Integer executionDegreeOID) throws FenixServiceException {
+    public void run(Integer executionDegreeOID) throws FenixServiceException, ExcepcaoPersistencia {
         if (executionDegreeOID != null) {
-            try {
-                ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-                IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
-                        .getIPersistentFinalDegreeWork();
 
-                List aprovedFinalDegreeWorkProposals = persistentFinalDegreeWork
-                        .readAprovedFinalDegreeWorkProposals(executionDegreeOID);
-                if (aprovedFinalDegreeWorkProposals != null
-                        && !aprovedFinalDegreeWorkProposals.isEmpty()) {
-                    for (int i = 0; i < aprovedFinalDegreeWorkProposals.size(); i++) {
-                        IProposal proposal = (IProposal) aprovedFinalDegreeWorkProposals.get(i);
-                        persistentFinalDegreeWork.simpleLockWrite(proposal);
-                        proposal.setStatus(FinalDegreeWorkProposalStatus.PUBLISHED_STATUS);
-                    }
+            ISuportePersistente persistentSupport = PersistenceSupportFactory
+                    .getDefaultPersistenceSupport();
+            IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
+                    .getIPersistentFinalDegreeWork();
+
+            List aprovedFinalDegreeWorkProposals = persistentFinalDegreeWork
+                    .readAprovedFinalDegreeWorkProposals(executionDegreeOID);
+            if (aprovedFinalDegreeWorkProposals != null && !aprovedFinalDegreeWorkProposals.isEmpty()) {
+                for (int i = 0; i < aprovedFinalDegreeWorkProposals.size(); i++) {
+                    IProposal proposal = (IProposal) aprovedFinalDegreeWorkProposals.get(i);
+                    persistentFinalDegreeWork.simpleLockWrite(proposal);
+                    proposal.setStatus(FinalDegreeWorkProposalStatus.PUBLISHED_STATUS);
                 }
-            } catch (ExcepcaoPersistencia e) {
-                throw new FenixServiceException(e);
             }
         }
     }

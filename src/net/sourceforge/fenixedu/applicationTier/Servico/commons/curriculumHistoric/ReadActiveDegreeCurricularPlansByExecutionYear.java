@@ -25,30 +25,27 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadActiveDegreeCurricularPlansByExecutionYear implements IService {
 
-    public List run(Integer executionYearID) throws FenixServiceException {
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-            List executionDegrees = persistentExecutionDegree.readByExecutionYearOID(executionYearID);
+    public List run(Integer executionYearID) throws FenixServiceException, ExcepcaoPersistencia {
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
+        List executionDegrees = persistentExecutionDegree.readByExecutionYearOID(executionYearID);
 
-            if (executionDegrees == null) {
-                throw new FenixServiceException("nullDegree");
-            }
-
-            List infoDegreeCurricularPlans = (List) CollectionUtils.collect(executionDegrees,
-                    new Transformer() {
-                        public Object transform(Object obj) {
-                            IExecutionDegree cursoExecucao = (IExecutionDegree) obj;
-                            IDegreeCurricularPlan degreeCurricularPlan = cursoExecucao
-                                    .getDegreeCurricularPlan();
-                            return InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(degreeCurricularPlan);
-                        }
-                    });
-
-            return infoDegreeCurricularPlans;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+        if (executionDegrees == null) {
+            throw new FenixServiceException("nullDegree");
         }
+
+        List infoDegreeCurricularPlans = (List) CollectionUtils.collect(executionDegrees,
+                new Transformer() {
+                    public Object transform(Object obj) {
+                        IExecutionDegree cursoExecucao = (IExecutionDegree) obj;
+                        IDegreeCurricularPlan degreeCurricularPlan = cursoExecucao
+                                .getDegreeCurricularPlan();
+                        return InfoDegreeCurricularPlanWithDegree
+                                .newInfoFromDomain(degreeCurricularPlan);
+                    }
+                });
+
+        return infoDegreeCurricularPlans;
     }
 
 }

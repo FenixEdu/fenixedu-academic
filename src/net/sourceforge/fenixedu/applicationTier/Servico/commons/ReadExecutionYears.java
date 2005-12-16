@@ -22,23 +22,19 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadExecutionYears implements IService {
 
-    public List run() throws FenixServiceException {
+    public List run() throws FenixServiceException, ExcepcaoPersistencia {
 
         List result = new ArrayList();
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
 
-            List executionYears = (List)executionYearDAO.readAll(ExecutionYear.class);
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
 
-            Iterator iterator = executionYears.iterator();
-            while (iterator.hasNext()) {
-                String year = ((IExecutionYear) iterator.next()).getYear();
-                result.add(new LabelValueBean(year, year));
-            }
+        List executionYears = (List) executionYearDAO.readAll(ExecutionYear.class);
 
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex);
+        Iterator iterator = executionYears.iterator();
+        while (iterator.hasNext()) {
+            String year = ((IExecutionYear) iterator.next()).getYear();
+            result.add(new LabelValueBean(year, year));
         }
 
         return result;

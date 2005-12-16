@@ -18,25 +18,13 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadCurricularCourseByID implements IService {
 
-    /**
-     *  
-     */
-    public ReadCurricularCourseByID() {
-
-    }
-
-    public InfoCurricularCourse run(Integer curricularCourseID) throws FenixServiceException {
+    public InfoCurricularCourse run(Integer curricularCourseID) throws FenixServiceException, ExcepcaoPersistencia {
 
         ICurricularCourse curricularCourse = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentObject persistentObject = sp.getIPersistentObject();
-            curricularCourse = (ICurricularCourse) persistentObject.readByOID(CurricularCourse.class,
-                    curricularCourseID);
-
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex);
-        }
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentObject persistentObject = sp.getIPersistentObject();
+        curricularCourse = (ICurricularCourse) persistentObject.readByOID(CurricularCourse.class,
+                curricularCourseID);
 
         if (curricularCourse == null) {
             throw new NonExistingServiceException();

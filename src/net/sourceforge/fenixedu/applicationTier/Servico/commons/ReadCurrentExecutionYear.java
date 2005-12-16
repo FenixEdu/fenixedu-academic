@@ -14,20 +14,16 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadCurrentExecutionYear implements IService {
 
-    public InfoExecutionYear run() {
+    public InfoExecutionYear run() throws ExcepcaoPersistencia {
 
         InfoExecutionYear infoExecutionYear = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
 
-            IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
 
-            infoExecutionYear = InfoExecutionYear.newInfoFromDomain(executionYear);
+        IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
 
-        } catch (ExcepcaoPersistencia ex) {
-            throw new RuntimeException(ex);
-        }
+        infoExecutionYear = InfoExecutionYear.newInfoFromDomain(executionYear);
 
         return infoExecutionYear;
     }

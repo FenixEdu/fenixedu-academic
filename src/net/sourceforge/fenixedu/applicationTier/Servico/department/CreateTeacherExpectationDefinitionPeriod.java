@@ -20,30 +20,21 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  */
 public class CreateTeacherExpectationDefinitionPeriod implements IService {
-    public CreateTeacherExpectationDefinitionPeriod() {
-    }
 
     public void run(Integer departmentID, Integer executionYearID, Date startDate, Date endDate)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-        try {
-            ISuportePersistente persistenceSupport = PersistenceSupportFactory
-                    .getDefaultPersistenceSupport();
-            IPersistentDepartment persistentDepartment = persistenceSupport
-                    .getIDepartamentoPersistente();
-            IPersistentExecutionYear persistentExecutionYear = persistenceSupport
-                    .getIPersistentExecutionYear();
+        ISuportePersistente persistenceSupport = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
+        IPersistentDepartment persistentDepartment = persistenceSupport.getIDepartamentoPersistente();
+        IPersistentExecutionYear persistentExecutionYear = persistenceSupport
+                .getIPersistentExecutionYear();
 
-            IDepartment department = (IDepartment) persistentDepartment.readByOID(Department.class,
-                    departmentID);
-            IExecutionYear executionYear = (IExecutionYear) persistentExecutionYear.readByOID(
-                    ExecutionYear.class, executionYearID);
+        IDepartment department = (IDepartment) persistentDepartment.readByOID(Department.class,
+                departmentID);
+        IExecutionYear executionYear = (IExecutionYear) persistentExecutionYear.readByOID(
+                ExecutionYear.class, executionYearID);
 
-            department.createTeacherExpectationDefinitionPeriod(executionYear, startDate, endDate);
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-
+        department.createTeacherExpectationDefinitionPeriod(executionYear, startDate, endDate);
     }
 }

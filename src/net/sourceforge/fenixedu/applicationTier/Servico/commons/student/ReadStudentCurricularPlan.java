@@ -21,14 +21,8 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadStudentCurricularPlan implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public ReadStudentCurricularPlan() {
-    }
-
     public InfoStudentCurricularPlan run(Integer studentCurricularPlanID) throws ExcepcaoInexistente,
-            FenixServiceException {
+            FenixServiceException, ExcepcaoPersistencia {
         if (studentCurricularPlanID == null) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
@@ -37,18 +31,12 @@ public class ReadStudentCurricularPlan implements IService {
 
         ISuportePersistente sp = null;
         IStudentCurricularPlan studentCurricularPlan = null;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            // The student Curricular plan
-            studentCurricularPlan = (IStudentCurricularPlan) sp.getIStudentCurricularPlanPersistente()
-                    .readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+
+        // The student Curricular plan
+        studentCurricularPlan = (IStudentCurricularPlan) sp.getIStudentCurricularPlanPersistente()
+                .readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
 
         if (studentCurricularPlan == null) {
             throw new NonExistingServiceException();

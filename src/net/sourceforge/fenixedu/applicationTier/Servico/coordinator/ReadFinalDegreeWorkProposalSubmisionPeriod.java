@@ -19,48 +19,38 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadFinalDegreeWorkProposalSubmisionPeriod implements IService {
 
-    public ReadFinalDegreeWorkProposalSubmisionPeriod() {
-        super();
-    }
-
-    public InfoScheduleing run(Integer executionDegreeOID) throws FenixServiceException {
+    public InfoScheduleing run(Integer executionDegreeOID) throws FenixServiceException, ExcepcaoPersistencia {
 
         InfoScheduleing infoScheduleing = null;
 
         if (executionDegreeOID != null) {
 
-            try {
-                ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-                IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
-                        .getIPersistentFinalDegreeWork();
+            ISuportePersistente persistentSupport = PersistenceSupportFactory
+                    .getDefaultPersistenceSupport();
+            IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
+                    .getIPersistentFinalDegreeWork();
 
-                IExecutionDegree cursoExecucao = (IExecutionDegree) persistentFinalDegreeWork.readByOID(
-                        ExecutionDegree.class, executionDegreeOID);
+            IExecutionDegree cursoExecucao = (IExecutionDegree) persistentFinalDegreeWork.readByOID(
+                    ExecutionDegree.class, executionDegreeOID);
 
-                if (cursoExecucao != null) {
-                    IScheduleing scheduleing = persistentFinalDegreeWork
-                            .readFinalDegreeWorkScheduleing(executionDegreeOID);
+            if (cursoExecucao != null) {
+                IScheduleing scheduleing = persistentFinalDegreeWork
+                        .readFinalDegreeWorkScheduleing(executionDegreeOID);
 
-                    if (scheduleing != null) {
-                        infoScheduleing = new InfoScheduleing();
-                        infoScheduleing.setIdInternal(scheduleing.getIdInternal());
-                        infoScheduleing.setStartOfProposalPeriod(scheduleing.getStartOfProposalPeriod());
-                        infoScheduleing.setEndOfProposalPeriod(scheduleing.getEndOfProposalPeriod());
-                        infoScheduleing.setStartOfCandidacyPeriod(scheduleing
-                                .getStartOfCandidacyPeriod());
-                        infoScheduleing.setEndOfCandidacyPeriod(scheduleing.getEndOfCandidacyPeriod());
-                        infoScheduleing.setMinimumNumberOfCompletedCourses(scheduleing
-                                .getMinimumNumberOfCompletedCourses());
-                        infoScheduleing.setMinimumNumberOfStudents(scheduleing
-                                .getMinimumNumberOfStudents());
-                        infoScheduleing.setMaximumNumberOfStudents(scheduleing
-                                .getMaximumNumberOfStudents());
-                        infoScheduleing.setMaximumNumberOfProposalCandidaciesPerGroup(scheduleing
-                                .getMaximumNumberOfProposalCandidaciesPerGroup());
-                    }
+                if (scheduleing != null) {
+                    infoScheduleing = new InfoScheduleing();
+                    infoScheduleing.setIdInternal(scheduleing.getIdInternal());
+                    infoScheduleing.setStartOfProposalPeriod(scheduleing.getStartOfProposalPeriod());
+                    infoScheduleing.setEndOfProposalPeriod(scheduleing.getEndOfProposalPeriod());
+                    infoScheduleing.setStartOfCandidacyPeriod(scheduleing.getStartOfCandidacyPeriod());
+                    infoScheduleing.setEndOfCandidacyPeriod(scheduleing.getEndOfCandidacyPeriod());
+                    infoScheduleing.setMinimumNumberOfCompletedCourses(scheduleing
+                            .getMinimumNumberOfCompletedCourses());
+                    infoScheduleing.setMinimumNumberOfStudents(scheduleing.getMinimumNumberOfStudents());
+                    infoScheduleing.setMaximumNumberOfStudents(scheduleing.getMaximumNumberOfStudents());
+                    infoScheduleing.setMaximumNumberOfProposalCandidaciesPerGroup(scheduleing
+                            .getMaximumNumberOfProposalCandidaciesPerGroup());
                 }
-            } catch (ExcepcaoPersistencia e) {
-                throw new FenixServiceException(e);
             }
         }
 

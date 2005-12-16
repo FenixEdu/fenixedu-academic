@@ -56,90 +56,81 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
 
-    public PrepareInfoShiftEnrollmentByStudentNumber() {
-    }
-
     public Object run(Integer studentNumber, Integer executionDegreeIdChosen)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
         InfoShiftEnrollment infoShiftEnrollment = new InfoShiftEnrollment();
         ISuportePersistente sp = null;
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            // read student to enroll
-            IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-            IStudent student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
-                    DegreeType.DEGREE);
-            if (student == null) {
-                student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
-                        DegreeType.MASTER_DEGREE);
-            }
-            if (student == null) {
-                throw new FenixServiceException("errors.impossible.operation");
-            }
-
-            if (student.getPayedTuition() == null || student.getPayedTuition().equals(Boolean.FALSE)) {
-            	if(student.getInterruptedStudies().equals(Boolean.FALSE))
-            		throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
-            }
-            
-            if (student.getFlunked() == null || student.getFlunked().equals(Boolean.TRUE)) {
-                throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
-            }
-
-            infoShiftEnrollment.setInfoStudent(InfoStudent.newInfoFromDomain(student));
-
-            List attendingExecutionCourses = new ArrayList();
-            // retrieve all courses that student is currently attended in
-            infoShiftEnrollment.setInfoAttendingCourses(readAttendingCourses(sp, student.getNumber(),
-                    student.getDegreeType(), attendingExecutionCourses));
-
-            // retrieve all shifts that student is currently enrollment
-            // it will be shift associated with all or some attending courses
-            infoShiftEnrollment.setInfoShiftEnrollment(readShiftEnrollment(sp, student,
-                    infoShiftEnrollment.getInfoAttendingCourses()));
-
-            // calculate the number of courses that have shift enrollment
-            infoShiftEnrollment.setNumberCourseWithShiftEnrollment(calculeNumberCoursesWithEnrollment(
-                    infoShiftEnrollment.getInfoAttendingCourses(), infoShiftEnrollment
-                            .getInfoShiftEnrollment()));
-
-            // calculate the number of courses in wich are shifts unenrolled
-            infoShiftEnrollment.setNumberCourseUnenrolledShifts(calculeNumberCoursesUnenrolledShifts(
-                    attendingExecutionCourses, infoShiftEnrollment.getInfoShiftEnrollment()));
-
-            // read current execution period
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-            IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
-            if (executionPeriod == null) {
-                throw new FenixServiceException("errors.impossible.operation");
-            }
-
-            // read current execution year
-            IExecutionYear executionYear = executionPeriod.getExecutionYear();
-            if (executionYear == null) {
-                throw new FenixServiceException("errors.impossible.operation");
-            }
-
-            // retrieve the list of existing degrees
-            List infoExecutionDegreeList = readInfoExecutionDegrees(sp, executionYear);
-            infoShiftEnrollment.setInfoExecutionDegreesList(infoExecutionDegreeList);
-
-            // select the first execution degree or the execution degree of the
-            // student logged
-            InfoExecutionDegree infoExecutionDegree = selectExecutionDegree(sp, infoExecutionDegreeList,
-                    executionDegreeIdChosen, student);
-            infoShiftEnrollment.setInfoExecutionDegree(infoExecutionDegree);
-
-            // retrieve all courses pertaining to the selected degree
-            infoShiftEnrollment.setInfoExecutionCoursesList(readInfoExecutionCoursesOfdegree(sp,
-                    executionPeriod, infoExecutionDegree));
-
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-
-            throw new FenixServiceException(excepcaoPersistencia);
+        // read student to enroll
+        IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+        IStudent student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
+                DegreeType.DEGREE);
+        if (student == null) {
+            student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
+                    DegreeType.MASTER_DEGREE);
         }
+        if (student == null) {
+            throw new FenixServiceException("errors.impossible.operation");
+        }
+
+        if (student.getPayedTuition() == null || student.getPayedTuition().equals(Boolean.FALSE)) {
+            if (student.getInterruptedStudies().equals(Boolean.FALSE))
+                throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
+        }
+
+        if (student.getFlunked() == null || student.getFlunked().equals(Boolean.TRUE)) {
+            throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
+        }
+
+        infoShiftEnrollment.setInfoStudent(InfoStudent.newInfoFromDomain(student));
+
+        List attendingExecutionCourses = new ArrayList();
+        // retrieve all courses that student is currently attended in
+        infoShiftEnrollment.setInfoAttendingCourses(readAttendingCourses(sp, student.getNumber(),
+                student.getDegreeType(), attendingExecutionCourses));
+
+        // retrieve all shifts that student is currently enrollment
+        // it will be shift associated with all or some attending courses
+        infoShiftEnrollment.setInfoShiftEnrollment(readShiftEnrollment(sp, student, infoShiftEnrollment
+                .getInfoAttendingCourses()));
+
+        // calculate the number of courses that have shift enrollment
+        infoShiftEnrollment.setNumberCourseWithShiftEnrollment(calculeNumberCoursesWithEnrollment(
+                infoShiftEnrollment.getInfoAttendingCourses(), infoShiftEnrollment
+                        .getInfoShiftEnrollment()));
+
+        // calculate the number of courses in wich are shifts unenrolled
+        infoShiftEnrollment.setNumberCourseUnenrolledShifts(calculeNumberCoursesUnenrolledShifts(
+                attendingExecutionCourses, infoShiftEnrollment.getInfoShiftEnrollment()));
+
+        // read current execution period
+        IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+        IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+        if (executionPeriod == null) {
+            throw new FenixServiceException("errors.impossible.operation");
+        }
+
+        // read current execution year
+        IExecutionYear executionYear = executionPeriod.getExecutionYear();
+        if (executionYear == null) {
+            throw new FenixServiceException("errors.impossible.operation");
+        }
+
+        // retrieve the list of existing degrees
+        List infoExecutionDegreeList = readInfoExecutionDegrees(sp, executionYear);
+        infoShiftEnrollment.setInfoExecutionDegreesList(infoExecutionDegreeList);
+
+        // select the first execution degree or the execution degree of the
+        // student logged
+        InfoExecutionDegree infoExecutionDegree = selectExecutionDegree(sp, infoExecutionDegreeList,
+                executionDegreeIdChosen, student);
+        infoShiftEnrollment.setInfoExecutionDegree(infoExecutionDegree);
+
+        // retrieve all courses pertaining to the selected degree
+        infoShiftEnrollment.setInfoExecutionCoursesList(readInfoExecutionCoursesOfdegree(sp,
+                executionPeriod, infoExecutionDegree));
 
         return infoShiftEnrollment;
     }

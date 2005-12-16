@@ -22,43 +22,34 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
 public class DeleteEnrollmentsList implements IService {
-    public DeleteEnrollmentsList() {
-    }
 
     // some of these arguments may be null. they are only needed for filter
     public void run(InfoStudent infoStudent, DegreeType degreeType, List enrolmentIDList)
-            throws FenixServiceException {
-        try {
-            
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentEnrollment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
-            
-            if (enrolmentIDList != null && enrolmentIDList.size() > 0) {
-                ListIterator iterator = enrolmentIDList.listIterator();
-                while (iterator.hasNext()) {
-                    Integer enrolmentID = (Integer) iterator.next();
-                    
-                    final IEnrolment enrollment = (IEnrolment) enrolmentDAO.readByOID(Enrolment.class,
-                            enrolmentID);
-                    
-					if (enrollment != null) {
-						
-						try {
-							enrollment.unEnroll();
-						}
-						catch (DomainException e) {
-							throw new CantDeleteServiceException();
-						} 
+            throws FenixServiceException, ExcepcaoPersistencia {
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentEnrollment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
 
-					}
+        if (enrolmentIDList != null && enrolmentIDList.size() > 0) {
+            ListIterator iterator = enrolmentIDList.listIterator();
+            while (iterator.hasNext()) {
+                Integer enrolmentID = (Integer) iterator.next();
+
+                final IEnrolment enrollment = (IEnrolment) enrolmentDAO.readByOID(Enrolment.class,
+                        enrolmentID);
+
+                if (enrollment != null) {
+
+                    try {
+                        enrollment.unEnroll();
+                    } catch (DomainException e) {
+                        throw new CantDeleteServiceException();
+                    }
+
                 }
             }
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-            throw new FenixServiceException(e);
         }
     }
 }

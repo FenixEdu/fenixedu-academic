@@ -24,40 +24,35 @@ public class WriteStudentAreasWithoutRestrictions implements IService {
     public WriteStudentAreasWithoutRestrictions() {
     }
 
-    // The first 2 arguments are only used by the filter applyed to this service.
+    // The first 2 arguments are only used by the filter applyed to this
+    // service.
     public void run(InfoStudent infoStudent, DegreeType degreeType, Integer studentCurricularPlanID,
-            Integer specializationAreaID, Integer secundaryAreaID) throws FenixServiceException {
-       
-		try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentBranch persistentBranch = persistentSuport.getIPersistentBranch();
-            IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSuport.getIStudentCurricularPlanPersistente();
+            Integer specializationAreaID, Integer secundaryAreaID) throws FenixServiceException, ExcepcaoPersistencia {
 
-            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan
-                    .readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
-			
-            if (studentCurricularPlan == null) {
-                throw new NonExistingServiceException();
-            }
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentBranch persistentBranch = persistentSuport.getIPersistentBranch();
+        IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSuport
+                .getIStudentCurricularPlanPersistente();
 
-            IBranch specializationArea = (IBranch) persistentBranch.readByOID(Branch.class, specializationAreaID);
-            
-            IBranch secundaryArea = null;
-            if (secundaryAreaID != null) {
-                secundaryArea = (IBranch) persistentBranch.readByOID(Branch.class, secundaryAreaID);
-            }
+        IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan
+                .readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
 
-			try {
-				studentCurricularPlan.setStudentAreasWithoutRestrictions(specializationArea, secundaryArea);
-			}
-			catch (DomainException e) {
-				throw new BothAreasAreTheSameServiceException();
-			}
-            
-			
-        } catch (ExcepcaoPersistencia e) {
+        if (studentCurricularPlan == null) {
+            throw new NonExistingServiceException();
+        }
 
-            throw new FenixServiceException(e);
+        IBranch specializationArea = (IBranch) persistentBranch.readByOID(Branch.class,
+                specializationAreaID);
+
+        IBranch secundaryArea = null;
+        if (secundaryAreaID != null) {
+            secundaryArea = (IBranch) persistentBranch.readByOID(Branch.class, secundaryAreaID);
+        }
+
+        try {
+            studentCurricularPlan.setStudentAreasWithoutRestrictions(specializationArea, secundaryArea);
+        } catch (DomainException e) {
+            throw new BothAreasAreTheSameServiceException();
         }
     }
 

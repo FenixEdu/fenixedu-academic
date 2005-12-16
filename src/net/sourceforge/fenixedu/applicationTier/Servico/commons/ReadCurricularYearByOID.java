@@ -22,10 +22,10 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadCurricularYearByOID implements IService {
 
-    public InfoCurricularYear run(Integer oid) throws FenixServiceException {
+    public InfoCurricularYear run(Integer oid) throws FenixServiceException, ExcepcaoPersistencia {
 
         InfoCurricularYear result = null;
-        try {
+
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentObject persistentObject = sp.getIPersistentObject();
             ICurricularYear curricularYear = (ICurricularYear) persistentObject.readByOID(
@@ -35,9 +35,6 @@ public class ReadCurricularYearByOID implements IService {
             } else {
                 throw new UnexistingCurricularYearException();
             }
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex);
-        }
 
         return result;
     }

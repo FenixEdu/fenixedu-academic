@@ -16,32 +16,23 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author Luis Cruz
- *  
- */
 public class ChangeStatusOfFinalDegreeWorkProposals implements IService {
 
-    public ChangeStatusOfFinalDegreeWorkProposals() {
-        super();
-    }
-
     public void run(Integer executionDegreeOID, List selectedProposalOIDs,
-            FinalDegreeWorkProposalStatus status) throws FenixServiceException {
+            FinalDegreeWorkProposalStatus status) throws FenixServiceException, ExcepcaoPersistencia {
         if (executionDegreeOID != null && selectedProposalOIDs != null) {
-            try {
-                ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-                IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
-                        .getIPersistentFinalDegreeWork();
-                for (int i = 0; i < selectedProposalOIDs.size(); i++) {
-                    IProposal proposal = (IProposal) persistentFinalDegreeWork.readByOID(Proposal.class,
-                            (Integer) selectedProposalOIDs.get(i));
-                    persistentFinalDegreeWork.simpleLockWrite(proposal);
-                    proposal.setStatus(status);
-                }
-            } catch (ExcepcaoPersistencia e) {
-                throw new FenixServiceException(e);
+
+            ISuportePersistente persistentSupport = PersistenceSupportFactory
+                    .getDefaultPersistenceSupport();
+            IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
+                    .getIPersistentFinalDegreeWork();
+            for (int i = 0; i < selectedProposalOIDs.size(); i++) {
+                IProposal proposal = (IProposal) persistentFinalDegreeWork.readByOID(Proposal.class,
+                        (Integer) selectedProposalOIDs.get(i));
+                persistentFinalDegreeWork.simpleLockWrite(proposal);
+                proposal.setStatus(status);
             }
+
         }
     }
 

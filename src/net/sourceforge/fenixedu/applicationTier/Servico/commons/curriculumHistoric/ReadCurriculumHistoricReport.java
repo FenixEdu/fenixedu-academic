@@ -46,53 +46,50 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ReadCurriculumHistoricReport implements IService {
 
     public InfoCurriculumHistoricReport run(Integer curricularCourseID, Integer semester,
-            Integer executionYearID) throws FenixServiceException {
-        try {
-            ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            //read ExecutionYear
-            IPersistentExecutionYear persistentExecutionYear = suportePersistente
-                    .getIPersistentExecutionYear();
-            IExecutionYear executionYear = (IExecutionYear) persistentExecutionYear.readByOID(
-                    ExecutionYear.class, executionYearID, false);
+            Integer executionYearID) throws FenixServiceException, ExcepcaoPersistencia {
 
-            //read ExecutionPeriod
-            IPersistentExecutionPeriod persistentExecutionPeriod = suportePersistente
-                    .getIPersistentExecutionPeriod();
-            IExecutionPeriod executionPeriod = persistentExecutionPeriod.readBySemesterAndExecutionYear(
-                    semester, executionYear.getYear());
+        ISuportePersistente suportePersistente = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
+        // read ExecutionYear
+        IPersistentExecutionYear persistentExecutionYear = suportePersistente
+                .getIPersistentExecutionYear();
+        IExecutionYear executionYear = (IExecutionYear) persistentExecutionYear.readByOID(
+                ExecutionYear.class, executionYearID, false);
 
-            //read CurricularCourse
-            IPersistentCurricularCourse persistentCurricularCourse = suportePersistente
-                    .getIPersistentCurricularCourse();
-            ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
-                    .readByOID(CurricularCourse.class, curricularCourseID);
-            //read all enrollments
-            IPersistentEnrollment persistentEnrollment = suportePersistente.getIPersistentEnrolment();
-            List enrollments = persistentEnrollment.readByCurricularCourseAndExecutionPeriod(
-                    curricularCourse.getIdInternal(), executionPeriod.getIdInternal());
+        // read ExecutionPeriod
+        IPersistentExecutionPeriod persistentExecutionPeriod = suportePersistente
+                .getIPersistentExecutionPeriod();
+        IExecutionPeriod executionPeriod = persistentExecutionPeriod.readBySemesterAndExecutionYear(
+                semester, executionYear.getYear());
 
-            InfoCurriculumHistoricReport infoCurriculumHistoricReport = createInfoCurriculumHistoricReport(enrollments);
+        // read CurricularCourse
+        IPersistentCurricularCourse persistentCurricularCourse = suportePersistente
+                .getIPersistentCurricularCourse();
+        ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+                CurricularCourse.class, curricularCourseID);
+        // read all enrollments
+        IPersistentEnrollment persistentEnrollment = suportePersistente.getIPersistentEnrolment();
+        List enrollments = persistentEnrollment.readByCurricularCourseAndExecutionPeriod(
+                curricularCourse.getIdInternal(), executionPeriod.getIdInternal());
 
-            infoCurriculumHistoricReport.setSemester(semester);
+        InfoCurriculumHistoricReport infoCurriculumHistoricReport = createInfoCurriculumHistoricReport(enrollments);
 
-            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
-                    .newInfoFromDomain(curricularCourse);
-            infoCurriculumHistoricReport.setInfoCurricularCourse(infoCurricularCourse);
+        infoCurriculumHistoricReport.setSemester(semester);
 
-            InfoExecutionYear infoExecutionYear = InfoExecutionYear.newInfoFromDomain(executionYear);
-            infoCurriculumHistoricReport.setInfoExecutionYear(infoExecutionYear);
+        InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
+                .newInfoFromDomain(curricularCourse);
+        infoCurriculumHistoricReport.setInfoCurricularCourse(infoCurricularCourse);
 
-            return infoCurriculumHistoricReport;
-        } catch (ExcepcaoPersistencia ep) {
-            throw new FenixServiceException(ep);
-        }
+        InfoExecutionYear infoExecutionYear = InfoExecutionYear.newInfoFromDomain(executionYear);
+        infoCurriculumHistoricReport.setInfoExecutionYear(infoExecutionYear);
 
+        return infoCurriculumHistoricReport;
     }
 
     /**
      * @param enrollments
      * @return
-     * @throws ExcepcaoPersistencia 
+     * @throws ExcepcaoPersistencia
      */
     private InfoCurriculumHistoricReport createInfoCurriculumHistoricReport(List enrollments)
             throws FenixServiceException, ExcepcaoPersistencia {
@@ -149,7 +146,7 @@ public class ReadCurriculumHistoricReport implements IService {
                     .newInfoFromDomain(enrolmentTemp);
 
             infoEnrolment.setInfoEnrolmentEvaluation(infoEnrolmentEvaluation);
-            
+
             setInfoEnrolmentByEnrolmentEvaluationType(infoEnrolment, enrolmentTemp.getEvaluations());
 
             infoEnrollments.add(infoEnrolment);
@@ -169,27 +166,34 @@ public class ReadCurriculumHistoricReport implements IService {
         List specialSeasonEnrolmentEvaluations = new ArrayList();
         List improvmentEnrolmentEvaluations = new ArrayList();
         List equivalenceEnrolmentEvaluations = new ArrayList();
-        
+
         Iterator iterator = evaluations.iterator();
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
-            if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NORMAL))
+            if (enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NORMAL))
                 normalEnrolmentEvaluations.add(enrolmentEvaluation);
-            
-            if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT))
+
+            if (enrolmentEvaluation.getEnrolmentEvaluationType().equals(
+                    EnrolmentEvaluationType.IMPROVEMENT))
                 improvmentEnrolmentEvaluations.add(enrolmentEvaluation);
-            
-            if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.SPECIAL_SEASON))
+
+            if (enrolmentEvaluation.getEnrolmentEvaluationType().equals(
+                    EnrolmentEvaluationType.SPECIAL_SEASON))
                 specialSeasonEnrolmentEvaluations.add(enrolmentEvaluation);
-            
-            if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.EQUIVALENCE))
+
+            if (enrolmentEvaluation.getEnrolmentEvaluationType().equals(
+                    EnrolmentEvaluationType.EQUIVALENCE))
                 equivalenceEnrolmentEvaluations.add(enrolmentEvaluation);
         }
-        
-        infoEnrolment.setInfoNormalEnrolmentEvaluation(getLatestInfoEnrolmentEvaluation(normalEnrolmentEvaluations));
-        infoEnrolment.setInfoImprovmentEnrolmentEvaluation(getLatestInfoEnrolmentEvaluation(improvmentEnrolmentEvaluations));
-        infoEnrolment.setInfoSpecialSeasonEnrolmentEvaluation(getLatestInfoEnrolmentEvaluation(specialSeasonEnrolmentEvaluations));
-        infoEnrolment.setInfoEquivalenceEnrolmentEvaluation(getLatestInfoEnrolmentEvaluation(equivalenceEnrolmentEvaluations));
+
+        infoEnrolment
+                .setInfoNormalEnrolmentEvaluation(getLatestInfoEnrolmentEvaluation(normalEnrolmentEvaluations));
+        infoEnrolment
+                .setInfoImprovmentEnrolmentEvaluation(getLatestInfoEnrolmentEvaluation(improvmentEnrolmentEvaluations));
+        infoEnrolment
+                .setInfoSpecialSeasonEnrolmentEvaluation(getLatestInfoEnrolmentEvaluation(specialSeasonEnrolmentEvaluations));
+        infoEnrolment
+                .setInfoEquivalenceEnrolmentEvaluation(getLatestInfoEnrolmentEvaluation(equivalenceEnrolmentEvaluations));
     }
 
     /**
@@ -197,7 +201,8 @@ public class ReadCurriculumHistoricReport implements IService {
      * @return
      */
     private InfoEnrolmentEvaluation getLatestInfoEnrolmentEvaluation(List enrolmentEvaluations) {
-        return (enrolmentEvaluations.isEmpty()) ? null : InfoEnrolmentEvaluation.newInfoFromDomain((IEnrolmentEvaluation) Collections.max(enrolmentEvaluations));
+        return (enrolmentEvaluations.isEmpty()) ? null : InfoEnrolmentEvaluation
+                .newInfoFromDomain((IEnrolmentEvaluation) Collections.max(enrolmentEvaluations));
     }
 
 }

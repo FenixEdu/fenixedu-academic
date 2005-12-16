@@ -22,29 +22,24 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * @author jpvl
  */
 public class ReadTeacherManagementPositionsService implements IService {
-    public List run(Integer teacherId) throws FenixServiceException {
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+    public List run(Integer teacherId) throws FenixServiceException, ExcepcaoPersistencia {
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IPersistentManagementPositionCreditLine managementPositionCreditLineDAO = sp
-                    .getIPersistentManagementPositionCreditLine();
+        IPersistentManagementPositionCreditLine managementPositionCreditLineDAO = sp
+                .getIPersistentManagementPositionCreditLine();
 
-            List managementPositions = managementPositionCreditLineDAO.readByTeacher(teacherId);
+        List managementPositions = managementPositionCreditLineDAO.readByTeacher(teacherId);
 
-            List infoManagementPositions = (List) CollectionUtils.collect(managementPositions,
-                    new Transformer() {
+        List infoManagementPositions = (List) CollectionUtils.collect(managementPositions,
+                new Transformer() {
 
-                        public Object transform(Object input) {
-                            IManagementPositionCreditLine managementPositionCreditLine = (IManagementPositionCreditLine) input;
-                            InfoManagementPositionCreditLine infoManagementPositionCreditLine = InfoManagementPositionCreditLine.newInfoFromDomain(managementPositionCreditLine);
-                            return infoManagementPositionCreditLine;
-                        }
-                    });
-            return infoManagementPositions;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException("Problems on database", e);
-
-        }
-
+                    public Object transform(Object input) {
+                        IManagementPositionCreditLine managementPositionCreditLine = (IManagementPositionCreditLine) input;
+                        InfoManagementPositionCreditLine infoManagementPositionCreditLine = InfoManagementPositionCreditLine
+                                .newInfoFromDomain(managementPositionCreditLine);
+                        return infoManagementPositionCreditLine;
+                    }
+                });
+        return infoManagementPositions;
     }
 }

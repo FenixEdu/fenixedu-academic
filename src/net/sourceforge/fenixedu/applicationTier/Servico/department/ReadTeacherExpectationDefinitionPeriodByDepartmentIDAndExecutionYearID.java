@@ -20,30 +20,20 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadTeacherExpectationDefinitionPeriodByDepartmentIDAndExecutionYearID implements IService {
 
-    public ReadTeacherExpectationDefinitionPeriodByDepartmentIDAndExecutionYearID() {
-    }
-
     public ITeacherExpectationDefinitionPeriod run(Integer departmentID, Integer executionYearID)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-        try {
-            ISuportePersistente persistenceSupport = PersistenceSupportFactory
-                    .getDefaultPersistenceSupport();
-            IPersistentDepartment persistentDepartment = persistenceSupport
-                    .getIDepartamentoPersistente();
-            IPersistentExecutionYear persistentExecutionYear = persistenceSupport
-                    .getIPersistentExecutionYear();
+        ISuportePersistente persistenceSupport = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
+        IPersistentDepartment persistentDepartment = persistenceSupport.getIDepartamentoPersistente();
+        IPersistentExecutionYear persistentExecutionYear = persistenceSupport
+                .getIPersistentExecutionYear();
 
-            IDepartment department = (IDepartment) persistentDepartment.readByOID(Department.class,
-                    departmentID);
-            IExecutionYear executionYear = (IExecutionYear) persistentExecutionYear.readByOID(
-                    ExecutionYear.class, executionYearID);
+        IDepartment department = (IDepartment) persistentDepartment.readByOID(Department.class,
+                departmentID);
+        IExecutionYear executionYear = (IExecutionYear) persistentExecutionYear.readByOID(
+                ExecutionYear.class, executionYearID);
 
-            return department.readTeacherExpectationDefinitionPeriodByExecutionYear(executionYear);
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-
+        return department.readTeacherExpectationDefinitionPeriodByExecutionYear(executionYear);
     }
 }

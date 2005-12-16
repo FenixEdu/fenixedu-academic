@@ -27,63 +27,52 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ComputeExecutionCourseStatistics extends ComputeCourseStatistics implements IService {
 
-    public ComputeExecutionCourseStatistics() {
-
-    }
-
     public List<ExecutionCourseStatisticsDTO> run(Integer competenceCourseId, Integer degreeId,
-            Integer executionYearId) throws FenixServiceException {
+            Integer executionYearId) throws FenixServiceException, ExcepcaoPersistencia {
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentCompetenceCourse persistentCompetenceCourse = sp.getIPersistentCompetenceCourse();
+        ICompetenceCourse competenceCourse = (ICompetenceCourse) persistentCompetenceCourse.readByOID(
+                CompetenceCourse.class, competenceCourseId);
 
-            IPersistentCompetenceCourse persistentCompetenceCourse = sp.getIPersistentCompetenceCourse();
-            ICompetenceCourse competenceCourse = (ICompetenceCourse) persistentCompetenceCourse
-                    .readByOID(CompetenceCourse.class, competenceCourseId);
+        ICursoPersistente persistenteDegree = sp.getICursoPersistente();
+        IDegree degree = (IDegree) persistenteDegree.readByOID(Degree.class, degreeId);
 
-            ICursoPersistente persistenteDegree = sp.getICursoPersistente();
-            IDegree degree = (IDegree) persistenteDegree.readByOID(Degree.class, degreeId);
+        IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+        IExecutionYear executionYear = (IExecutionYear) persistentExecutionYear.readByOID(
+                ExecutionYear.class, executionYearId);
 
-            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-            IExecutionYear executionYear = (IExecutionYear) persistentExecutionYear.readByOID(
-                    ExecutionYear.class, executionYearId);
+        List<ICurricularCourse> curricularCourses = competenceCourse
+                .getAssociatedCurricularCoursesGroupedByDegree().get(degree);
 
-            List<ICurricularCourse> curricularCourses = competenceCourse
-                    .getAssociatedCurricularCoursesGroupedByDegree().get(degree);
+        List<IExecutionCourse> executionCourses = new ArrayList<IExecutionCourse>();
 
-            List<IExecutionCourse> executionCourses = new ArrayList<IExecutionCourse>();
-
-            for (IExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
-                for (ICurricularCourse course : curricularCourses) {
-                    executionCourses
-                            .addAll(course.getExecutionCoursesByExecutionPeriod(executionPeriod));
-                }
+        for (IExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
+            for (ICurricularCourse course : curricularCourses) {
+                executionCourses.addAll(course.getExecutionCoursesByExecutionPeriod(executionPeriod));
             }
-
-            List<ExecutionCourseStatisticsDTO> results = new ArrayList<ExecutionCourseStatisticsDTO>();
-
-            for (IExecutionCourse executionCourse : executionCourses) {
-                ExecutionCourseStatisticsDTO executionCourseStatistics = new ExecutionCourseStatisticsDTO();
-                executionCourseStatistics.setIdInternal(competenceCourse.getIdInternal());
-                executionCourseStatistics.setName(competenceCourse.getName());
-
-                executionCourseStatistics.setExecutionPeriod(executionCourse.getExecutionPeriod()
-                        .getName());
-                executionCourseStatistics.setTeacher(getResponsibleTeacherName(executionCourse));
-                executionCourseStatistics.setExecutionYear(executionCourse.getExecutionPeriod()
-                        .getExecutionYear().getYear());
-                executionCourseStatistics.setDegrees(getDegrees(executionCourse));
-
-                createCourseStatistics(executionCourseStatistics, executionCourse
-                        .getActiveEnrollmentEvaluations());
-
-                results.add(executionCourseStatistics);
-            }
-
-            return results;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
         }
+
+        List<ExecutionCourseStatisticsDTO> results = new ArrayList<ExecutionCourseStatisticsDTO>();
+
+        for (IExecutionCourse executionCourse : executionCourses) {
+            ExecutionCourseStatisticsDTO executionCourseStatistics = new ExecutionCourseStatisticsDTO();
+            executionCourseStatistics.setIdInternal(competenceCourse.getIdInternal());
+            executionCourseStatistics.setName(competenceCourse.getName());
+
+            executionCourseStatistics.setExecutionPeriod(executionCourse.getExecutionPeriod().getName());
+            executionCourseStatistics.setTeacher(getResponsibleTeacherName(executionCourse));
+            executionCourseStatistics.setExecutionYear(executionCourse.getExecutionPeriod()
+                    .getExecutionYear().getYear());
+            executionCourseStatistics.setDegrees(getDegrees(executionCourse));
+
+            createCourseStatistics(executionCourseStatistics, executionCourse
+                    .getActiveEnrollmentEvaluations());
+
+            results.add(executionCourseStatistics);
+        }
+
+        return results;
     }
 
     private String getResponsibleTeacherName(IExecutionCourse executionCourse) {

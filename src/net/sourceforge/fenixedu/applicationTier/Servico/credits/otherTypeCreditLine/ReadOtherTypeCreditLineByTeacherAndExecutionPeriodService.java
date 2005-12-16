@@ -51,55 +51,51 @@ public class ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService implement
     }
 
     public TeacherOtherTypeCreditLineDTO run(Integer teacherId, Integer executionPeriodId)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
         TeacherOtherTypeCreditLineDTO teacherOtherTypeCreditLineDTO = new TeacherOtherTypeCreditLineDTO();
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
-            IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
-            IPersistentOtherTypeCreditLine otherTypeCreditLineDAO = sp
-                    .getIPersistentOtherTypeCreditLine();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
+        IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
+        IPersistentOtherTypeCreditLine otherTypeCreditLineDAO = sp.getIPersistentOtherTypeCreditLine();
 
-            ITeacher teacher = (ITeacher) teacherDAO.readByOID(Teacher.class, teacherId);
+        ITeacher teacher = (ITeacher) teacherDAO.readByOID(Teacher.class, teacherId);
 
-            if (teacher == null) {
-                throw new TeacherNotFound();
-            }
-
-            IExecutionPeriod executionPeriod = null;
-
-            if (executionPeriodId == null || executionPeriodId.intValue() == 0) {
-                executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
-            } else {
-                executionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
-                        executionPeriodId);
-            }
-
-            if (executionPeriod == null) {
-                throw new ExecutionPeriodNotFound();
-            }
-
-            List otherTypesList = otherTypeCreditLineDAO.readByTeacherAndExecutionPeriod(teacher.getIdInternal(),
-                    executionPeriod.getIdInternal());
-
-            List infoOtherTypesList = (List) CollectionUtils.collect(otherTypesList, new Transformer() {
-
-                public Object transform(Object input) {
-                    IOtherTypeCreditLine otherTypeCreditLine = (IOtherTypeCreditLine) input;
-                    InfoOtherTypeCreditLine infoOtherTypeCreditLine = InfoOtherTypeCreditLine.newInfoFromDomain(otherTypeCreditLine);
-                    return infoOtherTypeCreditLine;
-                }
-            });
-
-            teacherOtherTypeCreditLineDTO.setCreditLines(infoOtherTypesList);
-            teacherOtherTypeCreditLineDTO.setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(executionPeriod));
-            teacherOtherTypeCreditLineDTO.setInfoTeacher(InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher));
-            return teacherOtherTypeCreditLineDTO;
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-            throw new FenixServiceException("Problems with database!");
+        if (teacher == null) {
+            throw new TeacherNotFound();
         }
 
+        IExecutionPeriod executionPeriod = null;
+
+        if (executionPeriodId == null || executionPeriodId.intValue() == 0) {
+            executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
+        } else {
+            executionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
+                    executionPeriodId);
+        }
+
+        if (executionPeriod == null) {
+            throw new ExecutionPeriodNotFound();
+        }
+
+        List otherTypesList = otherTypeCreditLineDAO.readByTeacherAndExecutionPeriod(teacher
+                .getIdInternal(), executionPeriod.getIdInternal());
+
+        List infoOtherTypesList = (List) CollectionUtils.collect(otherTypesList, new Transformer() {
+
+            public Object transform(Object input) {
+                IOtherTypeCreditLine otherTypeCreditLine = (IOtherTypeCreditLine) input;
+                InfoOtherTypeCreditLine infoOtherTypeCreditLine = InfoOtherTypeCreditLine
+                        .newInfoFromDomain(otherTypeCreditLine);
+                return infoOtherTypeCreditLine;
+            }
+        });
+
+        teacherOtherTypeCreditLineDTO.setCreditLines(infoOtherTypesList);
+        teacherOtherTypeCreditLineDTO.setInfoExecutionPeriod(InfoExecutionPeriod
+                .newInfoFromDomain(executionPeriod));
+        teacherOtherTypeCreditLineDTO.setInfoTeacher(InfoTeacherWithPersonAndCategory
+                .newInfoFromDomain(teacher));
+        return teacherOtherTypeCreditLineDTO;
     }
 
     /*

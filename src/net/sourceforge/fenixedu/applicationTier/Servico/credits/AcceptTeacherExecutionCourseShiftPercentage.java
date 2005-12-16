@@ -49,34 +49,28 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
     }
 
     public List run(InfoTeacher infoTeacher, InfoExecutionCourse infoExecutionCourse,
-            List infoShiftProfessorshipList) throws FenixServiceException {
+            List infoShiftProfessorshipList) throws FenixServiceException, ExcepcaoPersistencia {
         List shiftWithErrors = new ArrayList();
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
-            IPersistentShiftProfessorship shiftProfessorshipDAO = sp
-                    .getIPersistentTeacherShiftPercentage();
-            IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
+        ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
+        IPersistentShiftProfessorship shiftProfessorshipDAO = sp.getIPersistentTeacherShiftPercentage();
+        IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
 
-            // read professorship
-            IProfessorship professorship = professorshipDAO.readByTeacherAndExecutionCourse(infoTeacher
-                    .getIdInternal(), infoExecutionCourse.getIdInternal());
+        // read professorship
+        IProfessorship professorship = professorshipDAO.readByTeacherAndExecutionCourse(infoTeacher
+                .getIdInternal(), infoExecutionCourse.getIdInternal());
 
-            if (professorship != null) {
-                Iterator iterator = infoShiftProfessorshipList.iterator();
+        if (professorship != null) {
+            Iterator iterator = infoShiftProfessorshipList.iterator();
 
-                List<IShiftProfessorship> shiftProfessorshipDeleted = new ArrayList<IShiftProfessorship>();
+            List<IShiftProfessorship> shiftProfessorshipDeleted = new ArrayList<IShiftProfessorship>();
 
-                List shiftProfessorshipAdded = addShiftProfessorships(shiftDAO, shiftProfessorshipDAO,
-                        professorship, iterator, shiftProfessorshipDeleted);
+            List shiftProfessorshipAdded = addShiftProfessorships(shiftDAO, shiftProfessorshipDAO,
+                    professorship, iterator, shiftProfessorshipDeleted);
 
-                validateShiftProfessorshipAdded(shiftProfessorshipAdded);
-            }
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+            validateShiftProfessorshipAdded(shiftProfessorshipAdded);
         }
 
         return shiftWithErrors; // retorna a lista com os turnos que causaram
@@ -85,8 +79,9 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
 
     private List addShiftProfessorships(ITurnoPersistente shiftDAO,
             IPersistentShiftProfessorship shiftProfessorshipDAO, IProfessorship professorship,
-            Iterator iterator, List<IShiftProfessorship> shiftProfessorshipDeleted) throws InvalidProfessorshipPercentage,
-            ExcepcaoPersistencia, OverlappingPeriodException, FenixServiceException {
+            Iterator iterator, List<IShiftProfessorship> shiftProfessorshipDeleted)
+            throws InvalidProfessorshipPercentage, ExcepcaoPersistencia, OverlappingPeriodException,
+            FenixServiceException {
         List<IShiftProfessorship> shiftProfessorshipAdded = new ArrayList<IShiftProfessorship>();
         while (iterator.hasNext()) {
             InfoShiftProfessorship infoShiftProfessorship = (InfoShiftProfessorship) iterator.next();
@@ -112,8 +107,8 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
     private void lockOrDeleteShiftProfessorship(IPersistentShiftProfessorship shiftProfessorshipDAO,
             IProfessorship professorship, Double percentage, IShift shift,
             IShiftProfessorship shiftProfessorship, List<IShiftProfessorship> shiftProfessorshipDeleted,
-            List<IShiftProfessorship> shiftProfessorshipAdded) throws ExcepcaoPersistencia, OverlappingPeriodException,
-            FenixServiceException {
+            List<IShiftProfessorship> shiftProfessorshipAdded) throws ExcepcaoPersistencia,
+            OverlappingPeriodException, FenixServiceException {
         boolean toAdd = false;
         if (percentage.doubleValue() == 0) {
             shiftProfessorshipDAO.delete(shiftProfessorship);
