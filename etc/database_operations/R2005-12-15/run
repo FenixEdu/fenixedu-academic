@@ -26,7 +26,7 @@ mysql -u$2 -f $1 < res
 rm -r res
 
 echo Alter table Degree...
-mysql -u$2 -f $1 < alterTableDegree.sql
+mysql -u$2 -f $1 < alterDegreeTable.sql
 
 echo Insert Scientific Role...
 mysql -u$2 -f $1 < insertScientificCouncilRole.sql
