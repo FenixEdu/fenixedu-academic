@@ -165,13 +165,6 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="contracts"
-		element-class-ref="net.sourceforge.fenixedu.domain.Contract">
-		<inverse-foreignkey field-ref="keyCategory"/>
-  	</collection-descriptor>
-	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="associatedTeachingCareers"
 		element-class-ref="net.sourceforge.fenixedu.domain.teacher.TeachingCareer">
