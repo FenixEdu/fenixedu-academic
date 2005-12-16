@@ -54,8 +54,7 @@ public abstract class UserGroup extends UserGroup_Base
 		Iterator<IPerson> persons = this.getElementsIterator();
 		while(persons.hasNext())
 		{
-			persons.next();
-			if (person.equals(person))
+			if (person.equals(persons.next()))
 			{
 				result=true;
 				break;
