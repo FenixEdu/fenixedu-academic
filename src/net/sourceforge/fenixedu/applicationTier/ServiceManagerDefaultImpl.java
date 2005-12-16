@@ -3,36 +3,30 @@ package net.sourceforge.fenixedu.applicationTier;
 import java.util.Calendar;
 import java.util.HashMap;
 
-import javax.ejb.EJBException;
-import javax.ejb.SessionBean;
-import javax.ejb.SessionContext;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.logging.ServiceExecutionLog;
 import net.sourceforge.fenixedu.applicationTier.logging.SystemInfo;
 import net.sourceforge.fenixedu.applicationTier.logging.UserExecutionLog;
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.stm.ServiceInfo;
 
 import org.apache.commons.collections.FastHashMap;
 import org.apache.log4j.Logger;
 
+import pt.utl.ist.berserk.logic.filterManager.exceptions.ClassNotIFilterException;
+import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterRetrieveException;
+import pt.utl.ist.berserk.logic.filterManager.exceptions.IncompatibleFilterException;
+import pt.utl.ist.berserk.logic.filterManager.exceptions.InvalidFilterException;
+import pt.utl.ist.berserk.logic.filterManager.exceptions.InvalidFilterExpressionException;
 import pt.utl.ist.berserk.logic.serviceManager.IServiceManager;
 import pt.utl.ist.berserk.logic.serviceManager.ServiceManager;
+import pt.utl.ist.berserk.logic.serviceManager.exceptions.InvalidServiceException;
+import pt.utl.ist.berserk.logic.serviceManager.exceptions.ServiceManagerException;
 
-/**
- * This class is the entry point of the system to execute a service. It receives
- * the service to execute, its arguments and an identificator of the entity that
- * wants to run the service.
- * 
- * @author Luis Cruz
- * @author José Pedro Pereira
- * @version
- */
-public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
+public class ServiceManagerDefaultImpl implements IServiceManagerWrapper {
 
-    private static final Logger logger = Logger.getLogger(ServiceManagerBean.class);
+    private static final Logger logger = Logger.getLogger(ServiceManagerDefaultImpl.class);
 
     private static boolean serviceLoggingIsOn;
 
@@ -52,6 +46,12 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
         mapUsersToWatch.setFast(true);
     }
 
+    public class ExceptionWrapper extends RuntimeException {
+        public ExceptionWrapper(Throwable t) {
+            super(t);
+        }
+    }
+
     /**
      * Executes a given service.
      * 
@@ -66,12 +66,13 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
      *            is a vector with the arguments of the service to execute.
      * 
      */
-    public Object execute(IUserView id, String service, Object args[]) {
+    public Object execute(IUserView id, String service, Object args[])
+            throws FenixServiceException {
         return execute(id, service, "run", args);
     }
 
     public Object execute(IUserView id, String service, String method, Object[] args)
-            throws EJBException {
+            throws FenixServiceException {
         try {
             Calendar serviceStartTime = null;
             Calendar serviceEndTime = null;
@@ -114,39 +115,41 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
             }
 
             return serviceResult;
-        } catch (Exception e) {
-            if (e instanceof FenixServiceException || e instanceof DomainException) {
-                e.printStackTrace();
-                logger.warn(e);
-            } else {
-                e.printStackTrace();
-                logger.error(e);
-            }
-            throw (EJBException) new EJBException(e).initCause(e);
+        } catch (ExcepcaoPersistencia e) {
+            e.printStackTrace();
+            logger.error(e);
+            throw new FenixServiceException(e);
+        } catch (InvalidServiceException e) {
+            e.printStackTrace();
+            logger.error(e);
+            throw new FenixServiceException(e);
+        } catch (FilterRetrieveException e) {
+            e.printStackTrace();
+            logger.error(e);
+            throw new FenixServiceException(e);
+        } catch (InvalidFilterExpressionException e) {
+            e.printStackTrace();
+            logger.error(e);
+            throw new FenixServiceException(e);
+        } catch (InvalidFilterException e) {
+            e.printStackTrace();
+            logger.error(e);
+            throw new FenixServiceException(e);
+        } catch (ClassNotIFilterException e) {
+            e.printStackTrace();
+            logger.error(e);
+            throw new FenixServiceException(e);
+        } catch (IncompatibleFilterException e) {
+            e.printStackTrace();
+            logger.error(e);
+            throw new FenixServiceException(e);
+        } catch (ServiceManagerException e) {
+            e.printStackTrace();
+            logger.error(e);
+            throw new FenixServiceException(e);
         } catch (Throwable t) {
-            t.printStackTrace();
-            logger.error(t);
-            throw new EJBException(t.getMessage());
+            throw new ExceptionWrapper(t);
         }
-    }
-
-    public void ejbCreate() {
-        // nothing to do
-    }
-
-    public void ejbActivate() throws EJBException {
-        // nothing to do
-    }
-
-    public void ejbPassivate() throws EJBException {
-        // nothing to do
-    }
-
-    public void ejbRemove() throws EJBException {
-        // nothing to do
-    }
-
-    public void setSessionContext(SessionContext arg0) throws EJBException {
     }
 
     public synchronized void turnServiceLoggingOn(IUserView id) {

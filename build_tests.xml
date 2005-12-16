@@ -22,7 +22,7 @@
     <target name="compile-tests"
     		description="Compile test code">
 		<javac destdir="${build.home.webinf.classes}"
-               extdirs="${lib};${env.JBOSS_HOME}/client"
+               extdirs="${lib}"
                debug="${compile.debug}"
                optimize="${compile.optimize}"
                deprecation="${compile.deprecation}"

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier;
 
-import java.rmi.RemoteException;
 import java.util.HashMap;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -30,31 +29,31 @@ public interface IServiceManagerWrapper {
      * @throws NotAuthorizedException
      */
     public Object execute(IUserView id, String service, Object argumentos[])
-            throws FenixServiceException, RemoteException;
+            throws FenixServiceException;
 
     public Object execute(IUserView id, String service, String methods, Object argumentos[])
-            throws FenixServiceException, RemoteException;
+            throws FenixServiceException;
 
-    public HashMap getMapServicesToWatch(IUserView id) throws RemoteException;
+    public HashMap getMapServicesToWatch(IUserView id);
 
-    public HashMap getMapUsersToWatch(IUserView id) throws RemoteException;
+    public HashMap getMapUsersToWatch(IUserView id);
 
-    public Boolean serviceLoggingIsOn(IUserView id) throws RemoteException;
+    public Boolean serviceLoggingIsOn(IUserView id);
 
-    public Boolean userLoggingIsOn(IUserView id) throws RemoteException;
+    public Boolean userLoggingIsOn(IUserView id);
 
-    public void turnServiceLoggingOn(IUserView id) throws RemoteException;
+    public void turnServiceLoggingOn(IUserView id);
 
-    public void turnServiceLoggingOff(IUserView id) throws RemoteException;
+    public void turnServiceLoggingOff(IUserView id);
 
-    public void turnUserLoggingOn(IUserView id) throws RemoteException;
+    public void turnUserLoggingOn(IUserView id);
 
-    public void turnUserLoggingOff(IUserView id) throws RemoteException;
+    public void turnUserLoggingOff(IUserView id);
 
-    public void clearServiceLogHistory(IUserView id) throws RemoteException;
+    public void clearServiceLogHistory(IUserView id);
 
-    public void clearUserLogHistory(IUserView id) throws RemoteException;
+    public void clearUserLogHistory(IUserView id);
 
-    public SystemInfo getSystemInfo(IUserView id) throws RemoteException;
+    public SystemInfo getSystemInfo(IUserView id);
 
 }
