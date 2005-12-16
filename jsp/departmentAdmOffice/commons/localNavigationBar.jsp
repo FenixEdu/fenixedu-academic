@@ -51,8 +51,8 @@
 			<!-- Temporary solution (until we make expectations available for all departments) DEI Code = 28 -->
 			<% String deiCode = "28"; %>
 
-			<logic:notEmpty name="userView" property="person.employee.departmentWorkingPlace">
-				<logic:equal name="userView" property="person.employee.departmentWorkingPlace.code" value="<%= deiCode %>">
+			<logic:notEmpty name="userView" property="person.employee.currentDepartmentWorkingPlace">
+				<logic:equal name="userView" property="person.employee.currentDepartmentWorkingPlace.code" value="<%= deiCode %>">
 					<li>
 						<html:link page="/teacher/teacherExpectationDefinitionPeriod/viewTeacherExpectationDefinitionPeriod.faces">
 							<bean:message key="link.teacherExpectationDefinitionPeriodManagement"/>
@@ -61,15 +61,6 @@
 				</logic:equal>
 			</logic:notEmpty>
 		</ul>
-		<!-- 
-		<ul>
-			<li class="navheader">
-				<html:link page="/functionsManagement/personSearchForFunctionsManagement.faces">
-					<bean:message key="link.functions.management"/>
-				</html:link>
-			</li>
-		</ul>
-		 -->
 	</logic:present>
 <!-- 
 	<ul>

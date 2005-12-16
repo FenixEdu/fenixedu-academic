@@ -443,7 +443,6 @@
 				</tr>
 			</logic:empty>		
 		</table>
-		<br>&nbsp;</br>
 		<h3>
 			<table>
 				<tr align="center">	

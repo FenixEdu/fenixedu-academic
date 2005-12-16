@@ -10,8 +10,9 @@
 	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="bundleEnum"/>
 		
 	<h:form>	
-		
 		<h:inputHidden binding="#{organizationalStructureBackingBean.unitIDHidden}"/>
+		<h:inputHidden binding="#{organizationalStructureBackingBean.listingTypeValueToFunctionsHidden}"/>
+		<h:inputHidden binding="#{organizationalStructureBackingBean.listingTypeValueToUnitsHidden}"/>
 					
 		<h:outputText styleClass="error" rendered="#{!empty organizationalStructureBackingBean.errorMessage}"
 				value="#{bundle[organizationalStructureBackingBean.errorMessage]}<br/>" escape="false"/>
@@ -58,38 +59,45 @@
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>								
-				<h:commandLink action="prepareEditUnit" value="#{bundle['link.edit']}">
+				<fc:commandLink action="prepareEditUnit" value="#{bundle['link.edit']}">
 					<f:param id="chooseUnitID1" name="chooseUnitID" value="#{unit.idInternal}"/>
-				</h:commandLink>				
+				</fc:commandLink>				
 			</h:column>	
 			<h:column>	
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>								
-				<h:commandLink action="#{organizationalStructureBackingBean.deleteUnit}" value="#{bundle['message.manager.delete']}">
+				<fc:commandLink action="#{organizationalStructureBackingBean.deleteUnit}" value="#{bundle['message.manager.delete']}">
 					<f:param id="chooseUnitID3" name="chooseUnitID" value="#{unit.idInternal}"/>
-				</h:commandLink>				
+				</fc:commandLink>				
 			</h:column>
 			<h:column>	
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>								
-				<h:commandLink action="prepareChooseParentUnit" value="#{bundle['message.subUnit']}"/> 				
+				<fc:commandLink action="prepareChooseParentUnit" value="#{bundle['message.subUnit']}"/> 				
 			</h:column>
 			<h:column rendered="#{!empty organizationalStructureBackingBean.unit.parentUnits}">	
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>								
-				<h:commandLink action="prepareChooseParentUnitToRemove" value="#{bundle['message.topUnit']}"/> 				
+				<fc:commandLink action="prepareChooseParentUnitToRemove" value="#{bundle['message.topUnit']}"/> 				
 			</h:column>					
 		</h:dataTable>									
 					
 		<h:outputText value="<br/><h3>#{bundle['message.subUnits']}</h3>" escape="false" />
-		<h:commandLink action="prepareCreateNewSubUnit" value="#{bundle['link.new.unit3']}"/>		
+		<fc:commandLink action="prepareCreateNewSubUnit" value="#{bundle['link.new.unit3']}"/>		
 		<h:outputText value="<br/><br/>" escape="false"/>		
 			
-		<h:dataTable value="#{organizationalStructureBackingBean.unit.subUnits}" var="unit"
-			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty organizationalStructureBackingBean.unit.subUnits}">
+		<h:outputText value="<b>#{bundle['message.subUnitListingType']}</b>" escape="false"/>
+		<fc:selectOneMenu value="#{organizationalStructureBackingBean.listingTypeValueToUnits}" 
+			onchange="this.form.submit();">
+			<f:selectItems value="#{organizationalStructureBackingBean.listingTypeToUnits}"/>				
+		</fc:selectOneMenu>
+		<h:outputText value="<br/><br/>" escape="false"/>		
+			
+		<h:dataTable value="#{organizationalStructureBackingBean.allSubUnits}" var="unit"
+			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty organizationalStructureBackingBean.allSubUnits}">
 			<h:column>	
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.unitName']}" />
@@ -128,25 +136,32 @@
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>								
-				<h:commandLink action="prepareEditUnit" value="#{bundle['link.edit']}">
+				<fc:commandLink action="prepareEditUnit" value="#{bundle['link.edit']}">
 					<f:param id="chooseUnitID2" name="chooseUnitID" value="#{unit.idInternal}"/>
-				</h:commandLink>				
+				</fc:commandLink>				
 			</h:column>	
 			<h:column>	
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>								
-				<h:commandLink action="#{organizationalStructureBackingBean.deleteSubUnit}" value="#{bundle['message.manager.delete']}">
+				<fc:commandLink action="#{organizationalStructureBackingBean.deleteSubUnit}" value="#{bundle['message.manager.delete']}">
 					<f:param id="chooseUnitID3" name="chooseUnitID" value="#{unit.idInternal}"/>
-				</h:commandLink>				
+				</fc:commandLink>				
 			</h:column>				
 		</h:dataTable>
 		
-		<h:outputText value="#{bundle['unit.withoutSubUnits']}<br/>" rendered="#{empty organizationalStructureBackingBean.unit.subUnits}" 
+		<h:outputText value="#{bundle['unit.withoutSubUnits']}<br/>" rendered="#{empty organizationalStructureBackingBean.allSubUnits}" 
 				styleClass="error" escape="false"/>
 		
 		<h:outputText value="<br/><h3>#{bundle['title.Functions']}</h3>" escape="false" />		
-		<h:commandLink action="prepareCreateNewFunction" value="#{bundle['link.new.function']}"/>		
+		<fc:commandLink action="prepareCreateNewFunction" value="#{bundle['link.new.function']}"/>		
+		<h:outputText value="<br/><br/>" escape="false"/>
+		
+		<h:outputText value="<b>#{bundle['message.functionListingType']}</b>" escape="false"/>
+		<fc:selectOneMenu value="#{organizationalStructureBackingBean.listingTypeValueToFunctions}" 
+			onchange="this.form.submit();">
+			<f:selectItems value="#{organizationalStructureBackingBean.listingTypeToFunctions}"/>				
+		</fc:selectOneMenu>
 		<h:outputText value="<br/><br/>" escape="false"/>
 		
 		<h:dataTable value="#{organizationalStructureBackingBean.allNonInherentFunctions}" var="function"
@@ -183,25 +198,26 @@
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>								
-				<h:commandLink action="prepareEditFunction" value="#{bundle['link.edit']}">
+				<fc:commandLink action="prepareEditFunction" value="#{bundle['link.edit']}">
 					<f:param id="functionID" name="functionID" value="#{function.idInternal}"/>
-				</h:commandLink>				
+					<f:param id="listingTypeToFunctions" name="listingTypeToFunctions" value="#{organizationalStructureBackingBean.listingTypeValueToFunctions}"/>										
+				</fc:commandLink>				
 			</h:column>	
 			<h:column>	
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>								
-				<h:commandLink action="#{organizationalStructureBackingBean.deleteFunction}" value="#{bundle['message.manager.delete']}">
+				<fc:commandLink action="#{organizationalStructureBackingBean.deleteFunction}" value="#{bundle['message.manager.delete']}">
 					<f:param id="functionID2" name="functionID" value="#{function.idInternal}"/>
-				</h:commandLink>				
+				</fc:commandLink>				
 			</h:column>
 			<h:column>	
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>								
-				<h:commandLink action="#{organizationalStructureBackingBean.prepareAssociateInherentParentFunction}" value="#{bundle['message.inherentTo2']}">
-					<f:param id="functionID3" name="functionID" value="#{function.idInternal}"/>
-				</h:commandLink>				
+				<fc:commandLink action="#{organizationalStructureBackingBean.prepareAssociateInherentParentFunction}" value="#{bundle['message.inherentTo2']}">
+					<f:param id="functionID3" name="functionID" value="#{function.idInternal}"/>					
+				</fc:commandLink>				
 			</h:column>
 		</h:dataTable>					
 				
@@ -256,25 +272,25 @@
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>								
-				<h:commandLink action="prepareEditFunction" value="#{bundle['link.edit']}">
+				<fc:commandLink action="prepareEditFunction" value="#{bundle['link.edit']}">
 					<f:param id="functionID" name="functionID" value="#{function.idInternal}"/>
-				</h:commandLink>				
+				</fc:commandLink>				
 			</h:column>	
 			<h:column>	
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>								
-				<h:commandLink action="#{organizationalStructureBackingBean.deleteFunction}" value="#{bundle['message.manager.delete']}">
+				<fc:commandLink action="#{organizationalStructureBackingBean.deleteFunction}" value="#{bundle['message.manager.delete']}">
 					<f:param id="functionID2" name="functionID" value="#{function.idInternal}"/>
-				</h:commandLink>				
+				</fc:commandLink>				
 			</h:column>
 			<h:column>	
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>								
-				<h:commandLink action="#{organizationalStructureBackingBean.disassociateInherentFunction}" value="#{bundle['message.inherentTo3']}">
+				<fc:commandLink action="#{organizationalStructureBackingBean.disassociateInherentFunction}" value="#{bundle['message.inherentTo3']}">
 					<f:param id="functionID3" name="functionID" value="#{function.idInternal}"/>
-				</h:commandLink>				
+				</fc:commandLink>				
 			</h:column>
 		</h:dataTable>			
 		

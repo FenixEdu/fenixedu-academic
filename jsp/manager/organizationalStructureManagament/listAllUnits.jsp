@@ -23,10 +23,10 @@
 			
 		<h:outputText value="<br/><br/><h3>#{bundle['title.all.units']}</h3><br/>" escape="false"/>
 		
-		<h:outputText value="<b>#{bundle['message.listingType']}</b>" escape="false"/>
-		<fc:selectOneMenu value="#{organizationalStructureBackingBean.listingTypeValue}" 
+		<h:outputText value="<b>#{bundle['message.unitListingType']}</b>" escape="false"/>
+		<fc:selectOneMenu value="#{organizationalStructureBackingBean.listingTypeValueToUnits}" 
 			onchange="this.form.submit();">
-			<f:selectItems value="#{organizationalStructureBackingBean.listingType}"/>				
+			<f:selectItems value="#{organizationalStructureBackingBean.listingTypeToUnits}"/>				
 		</fc:selectOneMenu>		
 			
 		<h:outputText value="<br/><br/>#{organizationalStructureBackingBean.units}" escape="false"/>

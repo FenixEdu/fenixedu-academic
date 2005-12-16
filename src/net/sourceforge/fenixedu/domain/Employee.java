@@ -43,7 +43,6 @@ public class Employee extends Employee_Base {
     }
 
     public List<IDepartment> getDepartmentWorkingPlace(Date beginDate, Date endDate) {
-
         List<IDepartment> departments = new ArrayList<IDepartment>();
         for (IContract contract : this.getContracts()) {
             if (contract.belongsToPeriod(beginDate, endDate)) {
@@ -51,12 +50,13 @@ public class Employee extends Employee_Base {
                 if (workingUnit != null) {
                     if (workingUnit.getTopUnits().isEmpty()) {
                         for (IUnit unit : workingUnit.getTopUnits()) {
-                            if (unit.getType().equals(UnitType.DEPARTMENT)
+                            if (unit.getType() != null && unit.getType().equals(UnitType.DEPARTMENT)
                                     && unit.getDepartment() != null) {
                                 departments.add(unit.getDepartment());
                             }
                         }
-                    } else if (workingUnit.getType().equals(UnitType.DEPARTMENT)
+                    } else if (workingUnit.getType() != null
+                            && workingUnit.getType().equals(UnitType.DEPARTMENT)
                             && workingUnit.getDepartment() != null) {
                         departments.add(workingUnit.getDepartment());
                     }
@@ -81,7 +81,8 @@ public class Employee extends Employee_Base {
         Date date = null, currentDate = prepareCurrentDate();
         IContract contractToReturn = null;
         for (IContract contract : this.getContracts()) {
-            if (contract.getEndDate() == null || contract.getEndDate().after(currentDate)) {
+            if (contract.getEndDate() == null || contract.getEndDate().equals(currentDate)
+                    || contract.getEndDate().after(currentDate)) {
                 contractToReturn = contract;
                 break;
             } else if (date == null || date.before(contract.getEndDate())) {

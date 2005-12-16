@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 public class Function extends Function_Base {
 
@@ -28,8 +29,8 @@ public class Function extends Function_Base {
 
     public boolean isActive(Date currentDate) {
         if (this.getEndDate() == null
-                || (this.getEndDate() != null && (this.getEndDate().after(currentDate) || this
-                        .getEndDate().equals(currentDate)))) {
+                || (DateFormatUtil.equalDates("yyyyMMdd", this.getEndDate(), currentDate) || this
+                        .getEndDate().after(currentDate))) {
             return true;
         }
         return false;

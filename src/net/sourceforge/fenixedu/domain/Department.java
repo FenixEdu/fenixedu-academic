@@ -34,7 +34,6 @@ public class Department extends Department_Base {
         List employees = new ArrayList();
 
         if (unit != null) {
-
             for (IContract contract : unit.getWorkingContracts()) {
                 IEmployee employee = contract.getEmployee();
                 if (employee.getActive().booleanValue()

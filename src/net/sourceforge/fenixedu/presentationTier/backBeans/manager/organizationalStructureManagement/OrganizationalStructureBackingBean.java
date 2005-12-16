@@ -42,7 +42,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     private String functionName, functionTypeName, functionBeginDate, functionEndDate;
 
-    private String listingTypeValue, departmentID, degreeID;
+    private String listingTypeValueToUnits, listingTypeValueToFunctions, departmentID, degreeID;
 
     private Integer principalFunctionID;
 
@@ -50,7 +50,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     private IFunction function;
 
-    private HtmlInputHidden unitIDHidden, chooseUnitIDHidden, functionIDHidden;
+    private HtmlInputHidden unitIDHidden, chooseUnitIDHidden, functionIDHidden,
+            listingTypeValueToFunctionsHidden, listingTypeValueToUnitsHidden;
 
     public OrganizationalStructureBackingBean() {
         if (getRequestParameter("unitID") != null
@@ -74,12 +75,30 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
     }
 
+    public List<IUnit> getAllSubUnits() throws FenixFilterException, FenixServiceException {
+        List<IUnit> allSubUnits = new ArrayList<IUnit>();
+        Date currentDate = Calendar.getInstance().getTime();
+        for (IUnit unit : this.getUnit().getSubUnits()) {
+            if ((this.getListingTypeValueToUnitsHidden().getValue().toString().equals("0") && unit
+                    .isActive(currentDate))
+                    || (this.getListingTypeValueToUnitsHidden().getValue().toString().equals("1") && !unit
+                            .isActive(currentDate))) {
+                allSubUnits.add(unit);
+            }
+        }
+        return allSubUnits;
+    }
+
     public List<IFunction> getAllNonInherentFunctions() throws FenixFilterException,
             FenixServiceException {
 
         List<IFunction> allNonInherentFunctions = new ArrayList<IFunction>();
+        Date currentDate = Calendar.getInstance().getTime();
         for (IFunction function : this.getUnit().getFunctions()) {
-            if (!function.isInherentFunction()) {
+            if (!function.isInherentFunction()
+                    && ((this.getListingTypeValueToFunctionsHidden().getValue().toString().equals("0") && function
+                            .isActive(currentDate)) || (this.getListingTypeValueToFunctionsHidden()
+                            .getValue().toString().equals("1") && !function.isActive(currentDate)))) {
                 allNonInherentFunctions.add(function);
             }
         }
@@ -160,10 +179,10 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         Date currentDate = Calendar.getInstance().getTime();
 
         for (IUnit unit : allUnitsWithoutParent) {
-            if (this.getListingTypeValue().equals("0")
+            if (this.getListingTypeValueToUnits().equals("0")
                     && (unit.isActive(currentDate) || !unit.getActiveSubUnits(currentDate).isEmpty())) {
                 getUnitTree(buffer, unit, unit.getActiveSubUnits(currentDate), currentDate, true);
-            } else if (this.getListingTypeValue().equals("1")
+            } else if (this.getListingTypeValueToUnits().equals("1")
                     && (!unit.isActive(currentDate) || !unit.getInactiveSubUnits(currentDate).isEmpty())) {
                 getUnitTree(buffer, unit, unit.getInactiveSubUnits(currentDate), currentDate, false);
             }
@@ -189,11 +208,11 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         for (IUnit subUnit : subUnits) {
             if (active) {
-                getUnitsList(subUnit, subUnit.getActiveSubUnits(currentDate), buffer,
-                        currentDate, active);
+                getUnitsList(subUnit, subUnit.getActiveSubUnits(currentDate), buffer, currentDate,
+                        active);
             } else {
-                getUnitsList(subUnit, subUnit.getInactiveSubUnits(currentDate), buffer,
-                        currentDate, active);
+                getUnitsList(subUnit, subUnit.getInactiveSubUnits(currentDate), buffer, currentDate,
+                        active);
             }
         }
 
@@ -298,7 +317,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return list;
     }
 
-    public List<SelectItem> getListingType() {
+    public List<SelectItem> getListingTypeToUnits() {
         List<SelectItem> list = new ArrayList<SelectItem>();
 
         SelectItem selectItem = new SelectItem();
@@ -306,6 +325,22 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         selectItem.setValue("0");
         SelectItem selectItem2 = new SelectItem();
         selectItem2.setLabel("Inactivas");
+        selectItem2.setValue("1");
+
+        list.add(selectItem);
+        list.add(selectItem2);
+
+        return list;
+    }
+
+    public List<SelectItem> getListingTypeToFunctions() {
+        List<SelectItem> list = new ArrayList<SelectItem>();
+
+        SelectItem selectItem = new SelectItem();
+        selectItem.setLabel("Activos");
+        selectItem.setValue("0");
+        SelectItem selectItem2 = new SelectItem();
+        selectItem2.setLabel("Inactivos");
         selectItem2.setValue("1");
 
         list.add(selectItem);
@@ -709,7 +744,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         int year = calendar.get(Calendar.YEAR);
         return (day + "/" + month + "/" + year);
     }
-    
+
     public HtmlInputHidden getUnitIDHidden() {
         if (this.unitIDHidden == null) {
             this.unitIDHidden = new HtmlInputHidden();
@@ -842,15 +877,52 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         this.principalFunctionID = principalFunctionID;
     }
 
-    public String getListingTypeValue() {
-        if (listingTypeValue == null) {
-            this.listingTypeValue = "0";
+    public String getListingTypeValueToUnits() {
+        if (listingTypeValueToUnits == null) {
+            this.listingTypeValueToUnits = "0";
         }
-        return listingTypeValue;
+        return listingTypeValueToUnits;
     }
 
-    public void setListingTypeValue(String listingTypeValue) {
-        this.listingTypeValue = listingTypeValue;
+    public void setListingTypeValueToUnits(String listingTypeValue) {
+        this.listingTypeValueToUnits = listingTypeValue;
+        this.listingTypeValueToUnitsHidden.setValue(listingTypeValue);
+    }
+
+    public String getListingTypeValueToFunctions() {
+        if (listingTypeValueToFunctions == null) {
+            listingTypeValueToFunctions = "0";
+        }
+        return listingTypeValueToFunctions;
+    }
+
+    public void setListingTypeValueToFunctions(String listingTypeValueToFunctions) {
+        this.listingTypeValueToFunctions = listingTypeValueToFunctions;
+        this.listingTypeValueToFunctionsHidden.setValue(listingTypeValueToFunctions);
+    }
+
+    public HtmlInputHidden getListingTypeValueToFunctionsHidden() {
+        if (listingTypeValueToFunctionsHidden == null) {
+            listingTypeValueToFunctionsHidden = new HtmlInputHidden();
+            listingTypeValueToFunctionsHidden.setValue(getListingTypeValueToFunctions());
+        }
+        return listingTypeValueToFunctionsHidden;
+    }
+
+    public void setListingTypeValueToFunctionsHidden(HtmlInputHidden listingTypeValueToFunctionsHidden) {
+        this.listingTypeValueToFunctionsHidden = listingTypeValueToFunctionsHidden;
+    }
+
+    public HtmlInputHidden getListingTypeValueToUnitsHidden() {
+        if (listingTypeValueToUnitsHidden == null) {
+            listingTypeValueToUnitsHidden = new HtmlInputHidden();
+            listingTypeValueToUnitsHidden.setValue(getListingTypeValueToUnits());
+        }
+        return listingTypeValueToUnitsHidden;
+    }
+
+    public void setListingTypeValueToUnitsHidden(HtmlInputHidden listingTypeValueToUnitsHidden) {
+        this.listingTypeValueToUnitsHidden = listingTypeValueToUnitsHidden;
     }
 
     public String getDegreeID() throws FenixFilterException, FenixServiceException {
