@@ -1,5 +1,6 @@
 <%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
+<%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <style>
 <!--
@@ -21,10 +22,12 @@
 	<br/>
 	<h:outputText value="#{bolonhaBundle['department']}: " style="font-weight: bold"/>
 		<h:outputText value="#{CompetenceCourseManagement.personDepartmentName}"/><br/>
-	<h:outputText value="#{bolonhaBundle['scientificArea']}:" style="font-weight: bold"/>
-		<h:outputText value="#{CompetenceCourseManagement.scientificAreaUnit.name}"/><br/>
+	<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.unit.parentUnits}" var="scientificAreaUnit">
+		<h:outputText value="#{bolonhaBundle['scientificArea']}: " style="font-weight: bold"/>
+		<h:outputText value="#{scientificAreaUnit.name}<br/>" escape="false"/>
+	</fc:dataRepeater>		
 	<h:outputText value="#{bolonhaBundle['group']}: " style="font-weight: bold"/>
-		<h:outputText value="#{CompetenceCourseManagement.competenceCourseGroupUnit.name}"/><br/>
+		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.unit.name}"/><br/>
 	<br/>
 	<h:outputText value="#{bolonhaBundle['name']}: " style="font-weight: bold"/>
 	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.name}" /><br/>
@@ -39,12 +42,9 @@
 	<h:outputText value="#{bolonhaBundle[CompetenceCourseManagement.competenceCourse.regime]}" /><br/>
 	<br/>
 	<h:form>
-		<h:outputText escape="false" value="<input id='scientificAreaUnitID' name='scientificAreaUnitID' type='hidden' value='#{CompetenceCourseManagement.scientificAreaUnit.idInternal}'" />
-		<h:outputText escape="false" value="<input id='competenceCourseGroupUnitID' name='competenceCourseGroupUnitID' type='hidden' value='#{CompetenceCourseManagement.competenceCourseGroupUnit.idInternal}'" />
-		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourseID}'" /><br/>
-		
+		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourseID}'" /><br/>		
 		<h:outputText value="#{bolonhaBundle['portuguese']}: " />
-		<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0">
+		<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0" width="80%">
 			<h:outputText value="#{bolonhaBundle['program']}: " />
 			<h:inputTextarea id="program" cols="80" rows="5" value="#{CompetenceCourseManagement.program}"/>
 			<h:outputText value="#{bolonhaBundle['objectives']}: " />
@@ -65,7 +65,7 @@
 		</h:panelGrid>
 		<br/>
 		<h:outputText value="#{bolonhaBundle['english']}: " />
-		<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0">
+		<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0" width="80%">
 			<h:outputText value="#{bolonhaBundle['nameEn']}: " />
 			<h:inputText id="nameEn" maxlength="100" size="40" value="#{CompetenceCourseManagement.nameEn}"/>
 	

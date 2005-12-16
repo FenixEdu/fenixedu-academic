@@ -1,5 +1,6 @@
 <%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
+<%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <style>
 <!--
@@ -14,11 +15,14 @@
 		<h2><h:outputText value="#{bolonhaBundle['delete']} #{bolonhaBundle['competenceCourse']}"/></h2>
 		<h3><h:outputText value="#{CompetenceCourseManagement.competenceCourse.name}" style="font-weight: bold"/></h3>
 		<h:outputText value="#{bolonhaBundle['department']}: " style="font-weight: bold"/>
-			<h:outputText value="#{CompetenceCourseManagement.personDepartmentName}"/><br/>
-		<h:outputText value="#{bolonhaBundle['scientificArea']}:" style="font-weight: bold"/>
-			<h:outputText value="#{CompetenceCourseManagement.scientificAreaUnit.name}"/><br/>
+		<h:outputText value="#{CompetenceCourseManagement.personDepartmentName}"/><br/>
+		<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.unit.parentUnits}" var="scientificAreaUnit">
+			<h:outputText value="#{bolonhaBundle['scientificArea']}: " style="font-weight: bold"/>
+			<h:outputText value="#{scientificAreaUnit.name}<br/>" escape="false"/>
+		</fc:dataRepeater>		
 		<h:outputText value="#{bolonhaBundle['group']}: " style="font-weight: bold"/>
-			<h:outputText value="#{CompetenceCourseManagement.competenceCourseGroupUnit.name}"/><br/>
+			<h:outputText value="#{CompetenceCourseManagement.competenceCourse.unit.name}"/><br/>
+		<br/>
 		<h:outputText styleClass="error" rendered="#{!empty CompetenceCourseManagement.errorMessage}"
 			value="#{bolonhaBundle[CompetenceCourseManagement.errorMessage]}<br/>" escape="false"/>
 		<br/>

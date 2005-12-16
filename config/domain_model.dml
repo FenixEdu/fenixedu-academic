@@ -759,6 +759,9 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
 	public IEnrolmentPeriodInCurricularCoursesSpecialSeason getEnrolmentPeriodInCurricularCoursesSpecialSeasonByExecutionPeriod(IExecutionPeriod executionPeriod);
 	
 	public String print();
+	
+	public ICurricularCourse createCurricularCourse(String name, String code, String acronym, Boolean enrolmentAllowed,
+	            net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage curricularStage);
     "
 }
 
@@ -1499,10 +1502,10 @@ class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.feni
 	Integer keyInsuranceValue;
     PeriodState state;
     
-    interface "
-    
+    interface "    
 	public java.util.Collection<IExecutionDegree> getExecutionDegreesByType(final net.sourceforge.fenixedu.domain.degree.DegreeType degreeType);
 	public IExecutionYear getPreviousExecutionYear();
+	public IExecutionPeriod getExecutionPeriodForSemester(Integer semester);
     "
 }
 

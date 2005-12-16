@@ -1,5 +1,6 @@
 <%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
+<%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
@@ -22,10 +23,12 @@
 	<br/><br/>
 	<h:outputText value="#{bolonhaBundle['department']}: " style="font-weight: bold"/>
 		<h:outputText value="#{CompetenceCourseManagement.personDepartmentName}"/><br/>
-	<h:outputText value="#{bolonhaBundle['scientificArea']}:" style="font-weight: bold"/>
-		<h:outputText value="#{CompetenceCourseManagement.scientificAreaUnit.name}"/><br/>
+	<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.unit.parentUnits}" var="scientificAreaUnit">
+		<h:outputText value="#{bolonhaBundle['scientificArea']}: " style="font-weight: bold"/>
+		<h:outputText value="#{scientificAreaUnit.name}<br/>" escape="false"/>
+	</fc:dataRepeater>		
 	<h:outputText value="#{bolonhaBundle['group']}: " style="font-weight: bold"/>
-		<h:outputText value="#{CompetenceCourseManagement.competenceCourseGroupUnit.name}"/><br/>	
+		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.unit.name}"/><br/>
 	<br/>
 	<h:outputText value="#{bolonhaBundle['name']}: " style="font-weight: bold"/>
 	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.name}" /><br/>
@@ -62,7 +65,7 @@
 	</ul>					
 	<br/>
 	<h:outputText value="#{bolonhaBundle['portuguese']}: " /><br/>
-	<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0">
+	<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0" width="80%">
 		<h:outputText value="#{bolonhaBundle['program']}: " />
 		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.program}" />
 		
@@ -83,7 +86,7 @@
 	</h:panelGrid>
 	<br/>
 	<h:outputText value="#{bolonhaBundle['english']}: " />
-	<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0">
+	<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0" width="80%">
 		<h:outputText value="#{bolonhaBundle['nameEn']}: " />
 		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.nameEn}" />
 

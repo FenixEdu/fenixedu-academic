@@ -30,7 +30,7 @@
 	<h:form>
 		<h:outputText escape="false" value="<input id='scientificAreaUnitID' name='scientificAreaUnitID' type='hidden' value='#{CompetenceCourseManagement.scientificAreaUnit.idInternal}'"/>
 		<h:outputText escape="false" value="<input id='competenceCourseGroupUnitID' name='competenceCourseGroupUnitID' type='hidden' value='#{CompetenceCourseManagement.competenceCourseGroupUnit.idInternal}'"/>
-		<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0">
+		<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0" width="80%">
 			<h:outputText value="#{bolonhaBundle['name']}: "/>
 			<h:panelGroup>
 				<h:inputText id="name" required="true" maxlength="100" size="40" value="#{CompetenceCourseManagement.name}"/>

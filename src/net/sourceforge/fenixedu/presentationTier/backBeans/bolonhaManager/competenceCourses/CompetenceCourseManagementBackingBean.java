@@ -36,7 +36,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     // CompetenceCourse
     private String name;
     private Double ectsCredits;
-    private boolean basic;
+    private Boolean basic;
     private Double theoreticalHours;
     private Double problemsHours;
     private Double labHours;
@@ -58,20 +58,20 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private String prerequisitesEn;
 
     public Integer getScientificAreaUnitID() {
-        return (scientificAreaUnitID == null) ? scientificAreaUnitID = getAndHoldIntegerParameter("scientificAreaUnitID")
+        return (scientificAreaUnitID == null) ? (scientificAreaUnitID = getAndHoldIntegerParameter("scientificAreaUnitID"))
                 : scientificAreaUnitID;
     }
 
     public Integer getCompetenceCourseGroupUnitID() {
-        return (competenceCourseGroupUnitID == null) ? competenceCourseGroupUnitID = getAndHoldIntegerParameter("competenceCourseGroupUnitID")
+        return (competenceCourseGroupUnitID == null) ? (competenceCourseGroupUnitID = getAndHoldIntegerParameter("competenceCourseGroupUnitID"))
                 : competenceCourseGroupUnitID;
     }
-    
+
     public Integer getCompetenceCourseID() {
-        return (competenceCourseID == null) ? competenceCourseID = getAndHoldIntegerParameter("competenceCourseID")
+        return (competenceCourseID == null) ? (competenceCourseID = getAndHoldIntegerParameter("competenceCourseID"))
                 : competenceCourseID;
     }
-    
+
     public void setCompetenceCourseID(Integer competenceCourseID) {
         this.competenceCourseID = competenceCourseID;
     }
@@ -124,27 +124,27 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public String createCompetenceCourse() {
         try {
-            Object args[] = { getName(), getEctsCredits(), Boolean.valueOf(isBasic()),
-                    getTheoreticalHours(), getProblemsHours(), getLabHours(), getProjectHours(),
-                    getSeminaryHours(), RegimeType.valueOf(getRegime()), getCompetenceCourseGroupUnitID() };            
-            ICompetenceCourse course = (ICompetenceCourse) 
-            ServiceUtils.executeService(getUserView(), "CreateCompetenceCourse", args);
+            Object args[] = { getName(), getEctsCredits(), getBasic(), getTheoreticalHours(),
+                    getProblemsHours(), getLabHours(), getProjectHours(), getSeminaryHours(),
+                    RegimeType.valueOf(getRegime()), getCompetenceCourseGroupUnitID() };
+            ICompetenceCourse course = (ICompetenceCourse) ServiceUtils.executeService(getUserView(),
+                    "CreateCompetenceCourse", args);
             setCompetenceCourseID(course.getIdInternal());
             return "editCompetenceCourseAdditionalInformation";
         } catch (FenixFilterException e) {
             setErrorMessage("error.creatingCompetenceCourse");
         } catch (FenixServiceException e) {
-            setErrorMessage("error.creatingCompetenceCourse");         
+            setErrorMessage("error.creatingCompetenceCourse");
         } catch (DomainException e) {
-            setErrorMessage(e.getMessage());         
-        } 
+            setErrorMessage(e.getMessage());
+        }
         return "";
     }
     
     public String editCompetenceCourse() {
         try {
             Object argsEdit[] = { new EditCompetenceCourse.CompetenceCourseInformation(
-                    getCompetenceCourseID(), getName(), getEctsCredits(), Boolean.valueOf(isBasic()),
+                    getCompetenceCourseID(), getName(), getEctsCredits(), getBasic(),
                     getTheoreticalHours(), getProblemsHours(), getLabHours(), getProblemsHours(),
                     getSeminaryHours(), RegimeType.valueOf(getRegime()), CurricularStage
                             .valueOf(getStage()), getProgram(), getGeneralObjectives(),
@@ -198,11 +198,12 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         this.ectsCredits = ectsCredits;
     }
 
-    public boolean isBasic() throws FenixFilterException, FenixServiceException {
-        return (getCompetenceCourse() != null) ? (basic = getCompetenceCourse().isBasic()) : basic;        
+    public Boolean getBasic() throws FenixFilterException, FenixServiceException {
+        return (basic == null && getCompetenceCourse() != null) ? (basic = Boolean
+                .valueOf(getCompetenceCourse().isBasic())) : basic;
     }
 
-    public void setBasic(boolean basic) {
+    public void setBasic(Boolean basic) {
         this.basic = basic;
     }
 

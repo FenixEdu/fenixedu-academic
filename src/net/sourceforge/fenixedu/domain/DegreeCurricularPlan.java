@@ -301,5 +301,22 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 		}
     	return null;
     }
+    
+    public ICurricularCourse createCurricularCourse(String name, String code, String acronym, Boolean enrolmentAllowed, CurricularStage curricularStage) {        
+        checkAttributes(name, code, acronym);
+        final ICurricularCourse curricularCourse = new CurricularCourse(name, code, acronym, enrolmentAllowed, curricularStage);
+        this.addCurricularCourses(curricularCourse);
+        return curricularCourse;
+    }
 
+    private void checkAttributes(String name, String code, String acronym) {
+        for (final ICurricularCourse curricularCourse : this.getCurricularCourses()) {
+            if (curricularCourse.getName().equals(name) && curricularCourse.getCode().equals(code)) {
+                throw new DomainException("error.curricularCourseWithSameNameAndCode");
+            }
+            if (curricularCourse.getAcronym().equals(acronym)) {
+                throw new DomainException("error.curricularCourseWithSameNameAndCode");
+            }
+        }        
+    }
 }

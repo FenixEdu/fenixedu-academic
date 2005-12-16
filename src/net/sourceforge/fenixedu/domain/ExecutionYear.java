@@ -67,5 +67,14 @@ public class ExecutionYear extends ExecutionYear_Base {
         final IExecutionYear executionYear = (IExecutionYear) object;
         return getYear().compareTo(executionYear.getYear());
     }
+    
+    public IExecutionPeriod getExecutionPeriodForSemester(Integer semester) {
+        for (final IExecutionPeriod executionPeriod : this.getExecutionPeriods()) {
+            if (executionPeriod.getSemester().equals(semester)) {
+                return executionPeriod;
+            }
+        }
+        return null;
+    }
 
 }

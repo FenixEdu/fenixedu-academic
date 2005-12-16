@@ -9,8 +9,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.IContext;
+import net.sourceforge.fenixedu.domain.degreeStructure.ICourseGroup;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -27,13 +29,23 @@ public class CurricularCourse extends CurricularCourse_Base {
         this.setOjbConcreteClass(CurricularCourse.class.getName());
     }
 
-    public CurricularCourse(String name, String code, String acronym, Boolean enrolmentAllowed, CurricularStage curricularStage) {
+    protected CurricularCourse(String name, String code, String acronym, Boolean enrolmentAllowed, CurricularStage curricularStage) {
         this();
         setName(name);
         setCode(code);
         setAcronym(acronym);
         setEnrollmentAllowed(enrolmentAllowed);
         setCurricularStage(curricularStage);
+    }
+    
+    public CurricularCourse(Double weight, CurricularStage curricularStage, ICompetenceCourse competenceCourse, ICourseGroup courseGroup,
+            ICurricularSemester curricularSemester, IExecutionPeriod beginExecutionPeriod) {
+        
+        this();       
+        setWeigth(weight);
+        setCurricularStage(curricularStage);
+        setCompetenceCourse(competenceCourse);
+        new Context(courseGroup, this, curricularSemester, beginExecutionPeriod, null);
     }
     
     public String toString() {
@@ -56,6 +68,12 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public boolean isLeaf() {
         return true;
+    }
+    
+    public void edit(Double weight, CurricularStage curricularStage, ICompetenceCourse competenceCourse) {       
+        setWeigth(weight);
+        setCurricularStage(curricularStage);
+        setCompetenceCourse(competenceCourse);
     }
     
     public void delete() {
@@ -333,14 +351,12 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
     
     public Double computeEctsCredits() {
-        Double result = 0.0;
-        
-        if (this.getCompetenceCourse().getEctsCredits() != null) {
+        Double result = 0.0;        
+        if (this.getEctsCredits() != null) {
             result = this.getEctsCredits();
-        } else if (this.getEctsCredits() != null) {
+        } else if (this.getCompetenceCourse().getEctsCredits() != null) {
             result = this.getEctsCredits();
-        }
-        
+        }        
         return result;
     }
     

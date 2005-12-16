@@ -15,7 +15,7 @@ public class Context extends Context_Base {
             IExecutionPeriod endExecutionPeriod) {
         super();
         if (courseGroup == null || degreeModule == null || beginExecutionPeriod == null) {
-            throw new DomainException("invalid arguments");
+            throw new DomainException("error.incorrectContextValues");
         }
         setCourseGroup(courseGroup);
         setDegreeModule(degreeModule);

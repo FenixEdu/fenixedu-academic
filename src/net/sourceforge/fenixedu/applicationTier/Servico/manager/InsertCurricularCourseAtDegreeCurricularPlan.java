@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
@@ -68,10 +67,10 @@ public class InsertCurricularCourseAtDegreeCurricularPlan implements IService {
                     });
 
             if (cCourse == null) {
-                ICurricularCourse curricularCourse = DomainFactory.makeCurricularCourse(name, code, infoCurricularCourse.getAcronym(), infoCurricularCourse.getEnrollmentAllowed(), CurricularStage.OLD);
-
+                ICurricularCourse curricularCourse = degreeCurricularPlan.createCurricularCourse(name,
+                        code, infoCurricularCourse.getAcronym(), infoCurricularCourse
+                                .getEnrollmentAllowed(), CurricularStage.OLD); 
                 curricularCourse.setBasic(infoCurricularCourse.getBasic());
-                curricularCourse.setDegreeCurricularPlan(degreeCurricularPlan);
                 curricularCourse.setMandatory(infoCurricularCourse.getMandatory());
                 curricularCourse.setNameEn(nameEn);
                 curricularCourse.setType(infoCurricularCourse.getType());

@@ -12,7 +12,6 @@ font-style: italic
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="ServidorApresentacao/BolonhaManagerResources" var="bolonhaBundle"/>
 	
-	<h:outputText value="#{CurricularPlanManagement.personDepartmentName}" styleClass="italic"/>	
 	<h2><h:outputText value="#{bolonhaBundle['curricularPlansManagement']}"/></h2>
 
 	<h:outputText value="* "/>
@@ -20,7 +19,7 @@ font-style: italic
 		<h:outputText value="#{bolonhaBundle['createDegree']}" />
 	</h:outputLink>
 	<h:outputText value="<br/><br/>" escape="false" />
-	
+<%-- 
 	<fc:dataRepeater value="#{CurricularPlanManagement.departmentDegrees}" var="degree">
 		<h:outputText value="<table><tr><td>" escape="false"/>
 		<h:outputText value="<b>#{bolonhaBundle['degree']}:</b><br/>" escape="false" />
@@ -43,7 +42,7 @@ font-style: italic
 		</fc:dataRepeater>
 		<h:outputText value="</table>" escape="false"/>
 	</fc:dataRepeater>
-	
+--%>	
 <%-- 
 	<h:outputText value="* "/>
 	<h:outputLink value="createCurricularPlan.faces">
@@ -57,10 +56,14 @@ font-style: italic
 		<h:outputText value="#{bolonhaBundle['editCurricularPlan']}" />
 	</h:outputLink>
 	<br/>
+	<h:outputText value="--== ................. ==--"/>
 	<br/>
 	<h:outputText value="* "/>
 	<h:outputLink value="createCurricularCourse.faces">
 		<h:outputText value="#{bolonhaBundle['createCurricularCourse']}" />
+		<%-- Temporary values --%>
+		<f:param name="degreeCurricularPlanID" value="422" />
+		<f:param name="courseGroupID" value="15799" />
 	</h:outputLink>
 	<br/>
 	<h:outputText value="* "/>
@@ -72,6 +75,8 @@ font-style: italic
 	<h:outputLink value="associateCurricularCourse.faces">
 		<h:outputText value="#{bolonhaBundle['associateCurricularCourse']}" />
 	</h:outputLink>
+	<br/>
+	<h:outputText value="--== ................. ==--"/>
 	<br/>
 	<h:outputText value="--== Temporary Links ==--"/>
 	<br/>

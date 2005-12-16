@@ -32,5 +32,9 @@ rm -rf res.sql
 
 echo Fixing Scientific Council Role...
 mysql -u$2 -f -p$password $1 < fixScientificCouncilRole.sql
-
 echo done.
+
+echo Changing DegreeModule table and data ...
+mysql -u$2 -f $1 -p$password < alterTableDegreeModule.sql
+mysql -u$2 -f $1 -p$password < updateTableDegreeModule.sql
+echo Changing DegreeModule table and data Done.

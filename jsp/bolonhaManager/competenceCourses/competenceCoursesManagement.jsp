@@ -21,8 +21,6 @@
 					<h:column>
 						<h:outputLink value="showCompetenceCourse.faces">
 							<h:outputText value="#{competenceCourse.name}"/>
-							<f:param name="scientificAreaUnitID" value="#{scientificAreaUnit.idInternal}"/>
-							<f:param name="competenceCourseGroupUnitID" value="#{competenceCourseGroupUnit.idInternal}"/>
 							<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
 						</h:outputLink>
 						<h:outputText value="  (#{bolonhaBundle[competenceCourse.curricularStage]})" style="font-style:italic"/>
@@ -30,15 +28,11 @@
 					<h:column>
 						<h:outputLink value="editCompetenceCourse.faces">
 							<h:outputText value="#{bolonhaBundle['edit']}" />
-							<f:param name="scientificAreaUnitID" value="#{scientificAreaUnit.idInternal}"/>
-							<f:param name="competenceCourseGroupUnitID" value="#{competenceCourseGroupUnit.idInternal}"/>
 							<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
 						</h:outputLink>
 						<h:outputText value=", "/>
 						<h:outputLink value="deleteCompetenceCourse.faces">
 							<h:outputText value="#{bolonhaBundle['delete']}" />
-							<f:param name="scientificAreaUnitID" value="#{scientificAreaUnit.idInternal}"/>
-							<f:param name="competenceCourseGroupUnitID" value="#{competenceCourseGroupUnit.idInternal}"/>
 							<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
 						</h:outputLink>
 					</h:column>
