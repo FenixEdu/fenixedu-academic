@@ -1,9 +1,3 @@
-/*
- * Degree.java
- *
- * Created on 31 de Outubro de 2002, 15:19
- */
-
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Iterator;
@@ -17,34 +11,31 @@ import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.domain.student.IDelegate;
 import net.sourceforge.fenixedu.util.MarkType;
 
-/**
- * 
- * @author Nuno Nunes & Joana Mota
- */
-
 public class Degree extends Degree_Base {
 
     public Degree() {
         super();
     };
-    
-    public Degree(String name, String nameEn, String sigla, DegreeType degreeType, String concreteClassForDegreeCurricularPlans) {
+
+    public Degree(String name, String nameEn, String sigla) {
         this();
         setNome(name);
         setNameEn(nameEn);
         setSigla(sigla);
-        setTipoCurso(degreeType);
-        setConcreteClassForDegreeCurricularPlans(concreteClassForDegreeCurricularPlans);
         
         new DegreeInfo(this);
     }
+
+    public Degree(String name, String nameEn, String sigla, DegreeType degreeType, String concreteClassForDegreeCurricularPlans) {
+        this(name, nameEn, sigla);
+        setTipoCurso(degreeType);
+        setConcreteClassForDegreeCurricularPlans(concreteClassForDegreeCurricularPlans);
+    }
     
     public Degree(String namePt, String nameEn, String code, BolonhaDegreeType bolonhaDegreeType, MarkType markType) {
-        this();
-        this.setNome(namePt);
-        this.setNameEn(nameEn);
-        this.setSigla(code);
+        this(namePt, nameEn, code);
         this.setBolonhaDegreeType(bolonhaDegreeType);
+        this.setMarkType(markType);
     }
     
     public String toString() {

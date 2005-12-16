@@ -109,7 +109,7 @@ public class DegreeTest extends DomainTestBase {
 	}
 
 	private void setUpEdit() {
-		degreeToEditWithDegreeInfo = new Degree("x", "x", "x", null, null);
+		degreeToEditWithDegreeInfo = new Degree("x", "x", "x");
 		degreeToEditWithoutDegreeInfo = new Degree();
 	}
 
