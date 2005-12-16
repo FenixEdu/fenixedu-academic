@@ -135,7 +135,7 @@
         jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>                     
     <field-descriptor
-        name="keyPerson"
+        name="keyCreator"
         column="KEY_CREATOR"
         jdbc-type="INTEGER"
     />   
