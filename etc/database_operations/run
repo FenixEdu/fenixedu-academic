@@ -30,4 +30,7 @@ echo Updating new column in Period
 mysql -u$2 -f -p$password $1 < res.sql
 rm -rf res.sql
 
+echo Fixing Scientific Council Role...
+mysql -u$2 -f -p$password $1 < fixScientificCouncilRole.sql
+
 echo done.
