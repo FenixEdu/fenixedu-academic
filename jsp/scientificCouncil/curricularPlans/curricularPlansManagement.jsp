@@ -13,6 +13,8 @@
 		<h:outputText value="#{scouncilBundle['createDegree']}" />
 	</h:outputLink>
 	<h:outputText value="<br/><br/>" escape="false" />
+
+	<h:messages errorClass="error" infoClass="infoMsg"/>
 	
 	<fc:dataRepeater value="#{ScientificCouncilCurricularPlanManagement.bolonhaDegrees}" var="degree">
 		<h:outputText value="<table><tr><td>" escape="false"/>
