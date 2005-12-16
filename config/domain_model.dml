@@ -24,7 +24,7 @@
  * 
  */
 
-valueType net.sourceforge.fenixedu.domain.teacher.AdviseType								as AdviseType;
+valueType net.sourceforge.fenixedu.domain.teacher.AdviseType								    as AdviseType;
 valueType net.sourceforge.fenixedu.util.AgreementType                                           as AgreementType;
 valueType net.sourceforge.fenixedu.tools.enrollment.AreaType                                    as AreaType;
 valueType net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType                              as BolonhaDegreeType;
@@ -65,7 +65,7 @@ valueType net.sourceforge.fenixedu.util.PublicationArea                         
 valueType net.sourceforge.fenixedu.util.PublicationType                                         as PublicationType;
 valueType net.sourceforge.fenixedu.domain.person.RoleType                                       as RoleType;
 valueType net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState                      as ReimbursementGuideState;
-valueType net.sourceforge.fenixedu.domain.degreeStructure.RegimeType                       as RegimeType;
+valueType net.sourceforge.fenixedu.domain.degreeStructure.RegimeType                            as RegimeType;
 valueType net.sourceforge.fenixedu.util.Season                                                  as Season;
 valueType net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason                         as SecretaryEnrolmentStudentReason; 
 valueType net.sourceforge.fenixedu.domain.teacher.ServiceExemptionType                          as ServiceExemptionType;
@@ -93,7 +93,7 @@ valueType net.sourceforge.fenixedu.util.ByteArray												as ByteArray;
 valueType net.sourceforge.fenixedu.util.ContentType                                             as ContentType;
 valueType net.sourceforge.fenixedu.util.RegimenType                      			            as RegimenType;
 valueType net.sourceforge.fenixedu.util.LegalRegimenType  		                                as LegalRegimenType;
-valueType net.sourceforge.fenixedu.util.WeekDay															as WeekDay;
+valueType net.sourceforge.fenixedu.util.WeekDay													as WeekDay;
 
 
 /*
@@ -3432,6 +3432,8 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
    	public net.sourceforge.fenixedu.domain.teacher.ITeacherPersonalExpectation getTeacherPersonalExpectationByExecutionYear(IExecutionYear executionYear);
 		
 	public IDepartment getCurrentWorkingDepartment();
+	
+	public java.util.List<IDepartment> getWorkingDepartment(java.util.Date beginDate, java.util.Date endDate);
    	
    	public IDepartment getLastWorkingDepartment();
 	
