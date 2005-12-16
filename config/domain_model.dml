@@ -1923,11 +1923,6 @@ class net.sourceforge.fenixedu.domain.Grouping extends net.sourceforge.fenixedu.
     "
 }
 
-class net.sourceforge.fenixedu.domain.GroupingAttends extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyGrouping;
-	Integer keyAttend;
-}
-
 class net.sourceforge.fenixedu.domain.ExportGrouping extends net.sourceforge.fenixedu.domain.DomainObject {
         Integer keySenderExecutionCourse;
         Integer keySenderPerson;

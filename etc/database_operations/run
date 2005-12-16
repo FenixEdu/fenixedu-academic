@@ -1,0 +1,23 @@
+#!/bin/sh
+# -----------------------------------------------------------------------------
+#
+#   Runs sql scripts to update database from previous release.
+#
+# -----------------------------------------------------------------------------
+#
+
+echo Using database: $1
+echo Enter password for $2:
+read -s password
+
+echo Altering table ExecutionDegree
+mysql -u$2 -f -p$password $1 < alterTableExecutionDegree.sql
+
+echo Generating updates for new column in ExecutionDegree
+mysql -u$2 -f -p$password $1 < updateExecutionDegree.sql > res.sql
+
+echo Updating new column in ExecutionDegree
+mysql -u$2 -f -p$password $1 < res.sql
+rm -rf res.sql
+
+echo done.
