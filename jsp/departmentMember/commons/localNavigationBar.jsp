@@ -9,9 +9,6 @@
 
 <logic:present role="DEPARTMENT_MEMBER">
 	<ul>
-		<li class="navheader">
-			<bean:message key="link.group.general.title" />
-		</li>
 		<li>
 			<html:link page="/viewDepartmentTeachers/listDepartmentTeachers.faces">
 				<bean:message key="link.departmentTeachers"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -27,13 +24,10 @@
 				<bean:message key="link.teacherService"/>
 			</html:link>
 		</li>
-		<li class="navheader">
-			<bean:message key="link.group.individual.title" />		
-		</li>
-
+		<br/>
   		<li>
 		  	<html:link page="/showAllTeacherCreditsResume.do">
-		  		<bean:message key="link.teacherService"/>
+		  		<bean:message key="link.teacher.credits"/>
 		  	</html:link>  
 		</li> 		
 	</ul>
