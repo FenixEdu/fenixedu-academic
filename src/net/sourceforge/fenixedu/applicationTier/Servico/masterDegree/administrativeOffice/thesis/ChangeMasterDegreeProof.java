@@ -76,7 +76,7 @@ public class ChangeMasterDegreeProof implements IService {
         List<IExternalPerson> externalJuries = (List<IExternalPerson>) sp.getIPersistentExternalPerson()
                 .readByIDs(externalJuriesIDs);
 
-        IMasterDegreeProofVersion masterDegreeProofVersion = DomainFactory.makeMasterDegreeProofVersion(
+        DomainFactory.makeMasterDegreeProofVersion(
                 storedMasterDegreeThesis, employee, new Date(), proofDate, thesisDeliveryDate,
                 finalResult, attachedCopiesNumber, new State(State.ACTIVE), teacherJuries,
                 externalJuries);

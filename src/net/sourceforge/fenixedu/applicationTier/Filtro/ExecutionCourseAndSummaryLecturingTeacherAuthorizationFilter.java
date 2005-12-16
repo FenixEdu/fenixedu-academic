@@ -286,9 +286,6 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
      * @throws ExcepcaoPersistencia 
      */
     private boolean isResponsible(final ITeacher teacher, ISummary summary) throws ExcepcaoPersistencia {
-        ISuportePersistente persistenteSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-
         if (summary.getShift() == null) {
 
             List responsibleTeachers = summary.getExecutionCourse().responsibleFors();

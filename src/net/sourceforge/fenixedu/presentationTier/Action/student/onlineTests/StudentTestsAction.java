@@ -258,14 +258,7 @@ public class StudentTestsAction extends FenixDispatchAction {
 
             }
 
-            InfoStudentTestQuestion infoStudentTestQuestion = (InfoStudentTestQuestion) infoStudentTestQuestionList.get(0);
-            // if
-            // (infoStudentTestQuestion.getDistributedTest().getCorrectionAvailability().getAvailability().equals(
-            // new Integer(CorrectionAvailability.ALWAYS)))
             request.setAttribute("infoStudentTestQuestionList", infoStudentTestQuestionList);
-            // else
-            // request.setAttribute("infoStudentTestQuestionList", new
-            // ArrayList());
             request.setAttribute("infoSiteStudentTestFeedback", infoSiteStudentTestFeedback);
         }
 

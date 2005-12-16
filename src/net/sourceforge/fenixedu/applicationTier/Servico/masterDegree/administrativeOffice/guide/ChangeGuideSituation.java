@@ -154,7 +154,7 @@ public class ChangeGuideSituation implements IService {
                                     "error.message.transaction.insuranceTransactionAlreadyExists");
                         }
 
-                        IPaymentTransaction paymentTransaction = DomainFactory.makeInsuranceTransaction(
+                        DomainFactory.makeInsuranceTransaction(
                                 guideEntry.getPrice(), new Timestamp(Calendar.getInstance()
                                         .getTimeInMillis()), guideEntry.getDescription(), guide
                                         .getPaymentType(), TransactionType.INSURANCE_PAYMENT,

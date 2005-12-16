@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFile;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFileEntry;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
-import net.sourceforge.fenixedu.domain.transactions.IGratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.IInsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
@@ -39,7 +38,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentInsuranceValue;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
-import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentGratuityTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsPaymentFileUtils;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -126,8 +124,6 @@ public class ProcessSibsPaymentFile implements IService {
 
         IPersistentInsuranceTransaction insuranceTransactionDAO = sp
                 .getIPersistentInsuranceTransaction();
-
-        IPersistentGratuityTransaction gratuityTransactionDAO = sp.getIPersistentGratuityTransaction();
 
         IPersistentGratuitySituation gratuitySituationDAO = sp.getIPersistentGratuitySituation();
 
@@ -280,7 +276,7 @@ public class ProcessSibsPaymentFile implements IService {
             TransactionType transactionType = bindSibsCodeTypeToTransactionCodeType(sibsPaymentFileEntry
                     .getPaymentType());
 
-            IGratuityTransaction gratuityTransaction = DomainFactory.makeGratuityTransaction(
+            DomainFactory.makeGratuityTransaction(
                     sibsPaymentFileEntry.getPayedValue(), new Timestamp(new Date().getTime()), null,
                     PaymentType.SIBS, transactionType, new Boolean(false), responsiblePerson,
                     personAccount, null, gratuitySituation);

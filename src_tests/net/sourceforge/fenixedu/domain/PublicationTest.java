@@ -269,7 +269,7 @@ public class PublicationTest extends DomainTestBase {
     
     public void testCreatePublicationWithoutAuthors() {
         try {
-            IPublication publication = new Publication(inexistentPublicationDTO, publicationType, null);
+            new Publication(inexistentPublicationDTO, publicationType, null);
             fail("The publication shouldn't have been created without authors");
         } catch (DomainException domainException) {
             //everything went as planned since a publication can't be created without authors
@@ -277,7 +277,7 @@ public class PublicationTest extends DomainTestBase {
         
         try {
             List authors1 = new ArrayList<IAuthorship>();
-            IPublication publication = new Publication(inexistentPublicationDTO, publicationType, authors1);
+            new Publication(inexistentPublicationDTO, publicationType, authors1);
             fail("The publication shouldn't have been created without authors");
         } catch (DomainException domainException) {
             //everything went as planned since a publication can't be created without authors

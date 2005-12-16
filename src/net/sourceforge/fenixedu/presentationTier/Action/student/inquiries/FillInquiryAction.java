@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -111,14 +110,6 @@ public class FillInquiryAction extends FenixDispatchAction {
             throw new InvalidSessionActionException();
         }
 
-        // Obtaining the active student curricular plan
-        Object[] argsStudentNumberDegreeType = { infoStudent.getNumber(), infoStudent.getDegreeType() };
-		InfoStudentCurricularPlan infoStudentCurricularPlan =
-			(InfoStudentCurricularPlan) ServiceUtils.executeService(userView,
-					"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType", argsStudentNumberDegreeType);
-
-		InfoDegree studentDegree = infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getInfoDegree();
-
         if (infoStudent.getDegreeType() != DegreeType.DEGREE) {
             request.setAttribute(InquiriesUtil.INQUIRY_MESSAGE_KEY, "message.inquiries.not.open.for.non.degrees");     
             return actionMapping.findForward("inquiryIntroduction");            
@@ -148,11 +139,6 @@ public class FillInquiryAction extends FenixDispatchAction {
         Object[] argsStudent = { infoStudent };
 		List<InfoInquiriesRegistry> studentInquiriesResgistries =
 			(List<InfoInquiriesRegistry>) ServiceUtils.executeService(userView, "inquiries.ReadInquiriesRegistriesByStudent", argsStudent);
-
-        // Obtaining the student execution degree
-		Object[] argsDegreeCPId = { infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getIdInternal() };
-		InfoExecutionDegree infoExecutionDegreeStudent = 
-			(InfoExecutionDegree) ServiceUtils.executeService(userView, "ReadActiveExecutionDegreebyDegreeCurricularPlanID", argsDegreeCPId);
 
         List<InfoFrequenta> evaluatedAttends = new ArrayList<InfoFrequenta>();
 

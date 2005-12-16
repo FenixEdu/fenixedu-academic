@@ -147,7 +147,6 @@ public class FindPersonAction extends FenixDispatchAction {
         Integer departmentId = null;
         Integer degreeId = null;
         String degreeType = null;
-        Integer indexPage = null;
 
         if (request.getParameter("roleType") != null && request.getParameter("roleType").length() > 0) {
             roleType = (String) request.getParameter("roleType");

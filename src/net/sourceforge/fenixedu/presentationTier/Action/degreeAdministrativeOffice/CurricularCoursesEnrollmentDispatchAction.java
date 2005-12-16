@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedBranchChangeException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import net.sourceforge.fenixedu.applicationTier.strategy.enrolment.context.InfoStudentEnrollmentContext;
-import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoAreas2Choose;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoCurricularCourse2EnrollWithInfoCurricularCourse;
@@ -34,7 +33,6 @@ import net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -208,21 +206,6 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
             message = messageException;
         }
         errors.add("notauthorized", new ActionError(message, arg1, arg2));
-    }
-
-    private Integer[] buildArrayForForm(List listToTransform) {
-        List newList = new ArrayList();
-        newList = (List) CollectionUtils.collect(listToTransform, new Transformer() {
-            public Object transform(Object arg0) {
-                InfoObject infoObject = (InfoObject) arg0;
-                return infoObject.getIdInternal();
-            }
-        });
-        Integer[] array = new Integer[newList.size()];
-        for (int i = 0; i < array.length; i++) {
-            array[i] = (Integer) newList.get(i);
-        }
-        return array;
     }
 
     public ActionForward prepareEnrollmentPrepareChooseAreas(ActionMapping mapping, ActionForm form,

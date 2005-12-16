@@ -25,7 +25,7 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
     }
     
     public int getIndexingSize() {
-        return this.RESULTS_PER_PAGE;
+        return ManagementGroupsBackingBean.RESULTS_PER_PAGE;
     }
 
     public int getCurrentPageIndex() {
@@ -45,7 +45,7 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
     }
 
     private List<Integer> initializePageIndexesList() {
-        int nrPages = completeList.size() / this.RESULTS_PER_PAGE;
+        int nrPages = completeList.size() / ManagementGroupsBackingBean.RESULTS_PER_PAGE;
         List<Integer> result = new ArrayList<Integer>(nrPages);
         for (int iter = 0; iter <= nrPages; iter++) {
             result.add(iter);

@@ -724,7 +724,6 @@ public class ExercisesManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
         final IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
         final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
-        Integer exerciseId = getCodeFromRequest(request, "exerciseCode");
         Integer variationCode = getCodeFromRequest(request, "variationCode");
         request.setAttribute("objectCode", executionCourseId);
         request.setAttribute("order", request.getParameter("order"));

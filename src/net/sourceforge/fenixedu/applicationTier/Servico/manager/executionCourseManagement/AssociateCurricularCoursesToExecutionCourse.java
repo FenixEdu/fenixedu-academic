@@ -42,7 +42,6 @@ public class AssociateCurricularCoursesToExecutionCourse implements IService {
                     throw new NonExistingServiceException("noExecutionCourse");
                 }
 
-                List curricularCourses = executionCourse.getAssociatedCurricularCourses();
                 Iterator iter = curricularCourseIds.iterator();
                 while (iter.hasNext()) {
                     Integer curricularCourseId = (Integer) iter.next();

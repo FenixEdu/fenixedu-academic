@@ -38,8 +38,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestLog;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.util.StringAppender;
 import net.sourceforge.fenixedu.util.tests.Response;
 import net.sourceforge.fenixedu.util.tests.ResponseLID;
@@ -94,7 +92,6 @@ public class InsertStudentTestResponses implements IService {
                     .readByStudentAndDistributedTest(student.getIdInternal(), distributedTest.getIdInternal());
             if (studentTestQuestionList.size() == 0)
                 throw new FenixServiceException();
-            IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport.getIPersistentStudentTestQuestion();
             ParseQuestion parse = new ParseQuestion();
 
             for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
@@ -185,7 +182,6 @@ public class InsertStudentTestResponses implements IService {
                 mark.setMark(df.format(Math.max(0, totalMark)));
             }
 
-            IPersistentStudentTestLog persistentStudentTestLog = persistentSuport.getIPersistentStudentTestLog();
             IStudentTestLog studentTestLog = DomainFactory.makeStudentTestLog();
             studentTestLog.setDistributedTest(distributedTest);
             studentTestLog.setStudent(student);

@@ -126,8 +126,6 @@ public class CreateOrEditGrantContract implements IService {
             throws FenixServiceException, ExcepcaoPersistencia {
 
         IPersistentTeacher pTeacher = sp.getIPersistentTeacher();
-        IPersistentGrantOrientationTeacher pGrantOrientationTeacher = sp
-                .getIPersistentGrantOrientationTeacher();
 
         final ITeacher teacher = pTeacher.readByNumber(grantOrientationTeacherInfo
                 .getOrientationTeacherInfo().getTeacherNumber());

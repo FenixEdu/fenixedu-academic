@@ -72,7 +72,7 @@ public class PublicationTeacherTest extends DomainTestBase {
     
     public void testCreatePublicationTeacherNotAuthor() {
         try {
-            IPublicationTeacher publicationTeacher = new PublicationTeacher(publication, teacher2, PublicationArea.CIENTIFIC);
+            new PublicationTeacher(publication, teacher2, PublicationArea.CIENTIFIC);
             fail("The teacher is not an author of the publication, therefore he souldn't be able to associate the publication");
         } catch (DomainException domainException) {
             //the normal course of events took place, since we were trying to associate a teacher with a publication for wich he

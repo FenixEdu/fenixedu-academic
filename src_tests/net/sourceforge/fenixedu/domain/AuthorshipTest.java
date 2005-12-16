@@ -92,7 +92,7 @@ public class AuthorshipTest extends DomainTestBase {
     
     public void testCreateAuthorshipWithExistingOrder() {
     	try {
-    		IAuthorship authorship = new Authorship(publication, person2, 1);
+    		new Authorship(publication, person2, 1);
     		fail("The authorship shouldn't have been sucessfully deleted");
     	} catch (DomainException domainException) {
     		//Caso em que se tenta criar uma autoria para uma determinada publicação/pessoa com uma ordem já existente

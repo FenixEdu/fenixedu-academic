@@ -14,8 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoNewShiftEnrollment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
@@ -125,20 +123,6 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
         }
 
         return mapping.findForward("showShiftsEnrollment");
-    }
-
-    private InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers getAttend(List infoAttends,
-            final InfoExecutionCourse infoExecutionCourse) {
-
-        return (InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers) CollectionUtils.find(
-                infoAttends, new Predicate() {
-
-                    public boolean evaluate(Object arg0) {
-                        InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers infoAttend = 
-                            (InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers) arg0;
-                        return infoAttend.getDisciplinaExecucao().equals(infoExecutionCourse);
-                    }
-                });
     }
 
     private String checkParameter(HttpServletRequest request) {

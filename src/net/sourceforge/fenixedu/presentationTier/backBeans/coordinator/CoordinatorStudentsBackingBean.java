@@ -171,7 +171,6 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
     public int getNumberResults() throws FenixFilterException, FenixServiceException {
         int matches = 0;
         final IDegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
-        final List<IStudentCurricularPlan> studentCurricularPlans = new ArrayList<IStudentCurricularPlan>();
         for (final IStudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlans()) {
             if (matchesSelectCriteria(studentCurricularPlan)) {
                 matches++;

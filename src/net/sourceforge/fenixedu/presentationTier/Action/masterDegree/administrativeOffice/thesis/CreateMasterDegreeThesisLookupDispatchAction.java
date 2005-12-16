@@ -419,10 +419,6 @@ public class CreateMasterDegreeThesisLookupDispatchAction extends LookupDispatch
         Integer studentNumber = (Integer) createMasterDegreeForm.get("studentNumber");
         String dissertationTitle = (String) createMasterDegreeForm.get("dissertationTitle");
         InfoStudentCurricularPlan infoStudentCurricularPlan = null;
-        List infoTeacherGuiders = null;
-        List infoTeacherAssistentGuiders = null;
-        List infoExternalPersonExternalGuiders = null;
-        List infoExternalPersonExternalAssistentGuiders = null;
 
         Object args[] = { studentNumber, DegreeType.valueOf(degreeType) };
         try {
@@ -437,14 +433,14 @@ public class CreateMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 
         try {
             operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
-            infoTeacherGuiders = operations.getTeachersByNumbers(form, request, "guidersNumbers",
+            operations.getTeachersByNumbers(form, request, "guidersNumbers",
                     SessionConstants.GUIDERS_LIST, actionErrors);
-            infoTeacherAssistentGuiders = operations.getTeachersByNumbers(form, request,
+            operations.getTeachersByNumbers(form, request,
                     "assistentGuidersNumbers", SessionConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
-            infoExternalPersonExternalAssistentGuiders = operations.getExternalPersonsByIDs(form,
+            operations.getExternalPersonsByIDs(form,
                     request, "externalAssistentGuidersIDs",
                     SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-            infoExternalPersonExternalGuiders = operations.getExternalPersonsByIDs(form, request,
+            operations.getExternalPersonsByIDs(form, request,
                     "externalGuidersIDs", SessionConstants.EXTERNAL_GUIDERS_LIST, actionErrors);
 
         } catch (Exception e1) {

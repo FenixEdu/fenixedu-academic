@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.IWebSiteItem;
 import net.sourceforge.fenixedu.domain.IWebSiteSection;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -34,7 +33,6 @@ public class AddItem extends ManageWebSiteItem implements IService {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentWebSiteSection persistentWebSiteSection = persistentSuport
                 .getIPersistentWebSiteSection();
-        IPersistentWebSiteItem persistentWebSiteItem = persistentSuport.getIPersistentWebSiteItem();
         IPessoaPersistente persistentPerson = persistentSuport.getIPessoaPersistente();
 
         IWebSiteSection webSiteSection = (IWebSiteSection) persistentWebSiteSection.readByOID(WebSiteSection.class,

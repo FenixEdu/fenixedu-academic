@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.reimbursementGuide;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
@@ -73,8 +72,6 @@ public class CreateReimbursementGuide implements IService {
 
         IReimbursementGuide reimbursementGuide = DomainFactory.makeReimbursementGuide();
 
-        List<IReimbursementGuideEntry> reimbursementGuideEntries = new ArrayList<IReimbursementGuideEntry>(
-                infoReimbursementGuideEntries.size());
         for (InfoReimbursementGuideEntry infoReimbursementGuideEntry : (List<InfoReimbursementGuideEntry>) infoReimbursementGuideEntries) {
 
             // check pre-conditions

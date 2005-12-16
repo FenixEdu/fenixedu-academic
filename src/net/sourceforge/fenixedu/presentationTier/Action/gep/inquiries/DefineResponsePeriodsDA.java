@@ -89,8 +89,7 @@ public class DefineResponsePeriodsDA extends FenixDispatchAction {
             DateFormatUtil.parse("dd/MM/yyyy HH:mm", inquiryResponseEndString + ":00") : null;
 
         final Object[] args = new Object[] { executionPeriodID, inquiryResponseBegin, inquiryResponseEnd };
-        final List<IExecutionPeriod> executionPeriods = (List<IExecutionPeriod>)
-                ServiceUtils.executeService(userView, "DefineInquiryResponsePeriod", args);
+        ServiceUtils.executeService(userView, "DefineInquiryResponsePeriod", args);
 
         final ActionMessages actionMessages = new ActionMessages();
         actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("message.inquiry.response.period.defined"));

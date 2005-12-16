@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExportGrouping;
 import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.IShift;
@@ -22,7 +21,6 @@ import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -118,21 +116,6 @@ public class SeperateExecutionCourse implements IService {
             }
             grouping.delete();
         }
-    }
-
-    private boolean contains(final IExecutionCourse executionCourse, final IGrouping grouping) {
-        for (final IExportGrouping exportGrouping : executionCourse.getExportGroupings()) {
-            if (exportGrouping.getGrouping() == grouping) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private List getShifts(final ISuportePersistente sp, final IExecutionCourse originExecutionCourse)
-            throws ExcepcaoPersistencia {
-        final ITurnoPersistente persistentShift = sp.getITurnoPersistente();
-        return persistentShift.readByExecutionCourse(originExecutionCourse.getIdInternal());
     }
 
     private IExecutionCourse createNewExecutionCourse(IPersistentObject persistentObject,

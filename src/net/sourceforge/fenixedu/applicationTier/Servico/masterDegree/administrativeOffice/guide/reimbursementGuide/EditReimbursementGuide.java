@@ -36,14 +36,12 @@ import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonAccount;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuide;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuideEntry;
-import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;
 import net.sourceforge.fenixedu.util.State;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -78,15 +76,12 @@ public class EditReimbursementGuide implements IService {
         IPersistentReimbursementGuide persistentReimbursementGuide = ps
                 .getIPersistentReimbursementGuide();
 
-        IPersistentReimbursementGuideEntry reimbursementGuideEntryDAO = ps
-                .getIPersistentReimbursementGuideEntry();
         IReimbursementGuide reimbursementGuide = (IReimbursementGuide) persistentReimbursementGuide
                 .readByOID(ReimbursementGuide.class, reimbursementGuideId, true);
 
         if (reimbursementGuide == null) {
             throw new NonExistingServiceException();
         }
-        IPersistentObject persistentObject = ps.getIPersistentObject();
 
         IReimbursementGuideSituation activeSituation = reimbursementGuide
                 .getActiveReimbursementGuideSituation();
@@ -133,9 +128,6 @@ public class EditReimbursementGuide implements IService {
                 personAccount = DomainFactory.makePersonAccount(reimbursementGuide.getGuide()
                         .getPerson());
             }
-
-            IPersistentReimbursementTransaction persistentReimbursementTransaction = ps
-                    .getIPersistentReimbursementTransaction();
 
             IPersistentGratuitySituation persistentGratuitySituation = ps
                     .getIPersistentGratuitySituation();

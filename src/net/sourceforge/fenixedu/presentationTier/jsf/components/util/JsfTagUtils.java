@@ -73,8 +73,6 @@ public class JsfTagUtils {
         }
 
         if (UIComponentTag.isValueReference(attributeValue)) {
-            FacesContext context = FacesContext.getCurrentInstance();
-            Application application = context.getApplication();
             MethodBinding methodBinding = new ActionMethodBinding(attributeValue);
             component.getAttributes().put("action", methodBinding);
 

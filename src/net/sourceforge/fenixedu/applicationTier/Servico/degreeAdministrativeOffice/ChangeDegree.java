@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
@@ -36,7 +35,6 @@ public class ChangeDegree implements IService {
         final IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
         final IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
         final IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
-        final IPersistentEnrollment persistentEnrollment = persistentSupport.getIPersistentEnrolment();
 
         final IPerson personEmployee = persistentPerson.lerPessoaPorUsername(employeeUsername);
         final IEmployee employee = personEmployee.getEmployee();

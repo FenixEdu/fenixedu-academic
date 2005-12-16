@@ -339,7 +339,6 @@ public class TestsManagementAction extends FenixDispatchAction {
         final Integer testCode = getCodeFromRequest(request, "testCode");
         request.setAttribute("objectCode", objectCode);
         request.setAttribute("testCode", testCode);
-        String path = getServlet().getServletContext().getRealPath("/");
         try {
             final InfoTest infoTest = (InfoTest) ServiceUtils.executeService(userView, "ReadTest", new Object[] { objectCode, testCode });
             request.setAttribute("title", infoTest.getTitle());
@@ -1164,7 +1163,6 @@ public class TestsManagementAction extends FenixDispatchAction {
         // Collections.sort(result, new BeanComparator("label"));
         request.setAttribute("successfulChanged", infoSiteDistributedTestAdvisoryList);
 
-        Integer advisoryId = null;
         List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
         for (InfoSiteDistributedTestAdvisory infoSiteDistributedTestAdvisory : infoSiteDistributedTestAdvisoryList) {
             List<InfoStudent> studentWithoutAdvisory = infoSiteDistributedTestAdvisory.getInfoStudentList();

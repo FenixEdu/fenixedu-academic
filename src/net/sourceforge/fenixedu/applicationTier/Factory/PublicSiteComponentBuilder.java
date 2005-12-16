@@ -108,41 +108,36 @@ public class PublicSiteComponentBuilder {
             throws FenixServiceException {
         List infoLessonList = null;
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            List<IShift> shiftList = domainClass.getAssociatedShifts();
-            infoLessonList = new ArrayList();
+        List<IShift> shiftList = domainClass.getAssociatedShifts();
+        infoLessonList = new ArrayList();
 
-            IExecutionPeriod executionPeriod = domainClass.getExecutionPeriod();
-            InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear
-                    .newInfoFromDomain(executionPeriod);
+        IExecutionPeriod executionPeriod = domainClass.getExecutionPeriod();
+        InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear
+                .newInfoFromDomain(executionPeriod);
 
-            for (final Iterator classIterator = shiftList.iterator(); classIterator.hasNext();) {
-                IShift shift = (IShift) classIterator.next();
+        for (final Iterator classIterator = shiftList.iterator(); classIterator.hasNext();) {
+            IShift shift = (IShift) classIterator.next();
 
-                InfoShift infoShift = copyIShift2InfoShift(shift);
-                InfoExecutionCourse infoExecutionCourse = copyIExecutionCourse2InfoExecutionCourse(shift
-                        .getDisciplinaExecucao());
-                infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
-                infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
+            InfoShift infoShift = copyIShift2InfoShift(shift);
+            InfoExecutionCourse infoExecutionCourse = copyIExecutionCourse2InfoExecutionCourse(shift
+                    .getDisciplinaExecucao());
+            infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
+            infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
 
-                List lessonList = shift.getAssociatedLessons();
-                Iterator lessonIterator = lessonList.iterator();
-                while (lessonIterator.hasNext()) {
-                    ILesson elem = (ILesson) lessonIterator.next();
-                    InfoLesson infoLesson = copyILesson2InfoLesson(elem);
+            List lessonList = shift.getAssociatedLessons();
+            Iterator lessonIterator = lessonList.iterator();
+            while (lessonIterator.hasNext()) {
+                ILesson elem = (ILesson) lessonIterator.next();
+                InfoLesson infoLesson = copyILesson2InfoLesson(elem);
 
-                    if (infoLesson != null) {
-                        infoLesson.setInfoShift(infoShift);
-                        infoLesson.getInfoShiftList().add(infoShift);
-                        infoLessonList.add(infoLesson);
-                    }
+                if (infoLesson != null) {
+                    infoLesson.setInfoShift(infoShift);
+                    infoLesson.getInfoShiftList().add(infoShift);
+                    infoLessonList.add(infoLesson);
                 }
             }
-            component.setInfoExecutionPeriod(infoExecutionPeriod);
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex);
         }
+        component.setInfoExecutionPeriod(infoExecutionPeriod);
 
         component.setLessons(infoLessonList);
 

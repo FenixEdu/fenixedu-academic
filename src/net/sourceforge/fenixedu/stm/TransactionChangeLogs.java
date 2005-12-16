@@ -21,7 +21,6 @@ import org.apache.ojb.broker.Identity;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.accesslayer.LookupException;
-import org.apache.ojb.broker.metadata.ClassDescriptor;
 
 public class TransactionChangeLogs {
 
@@ -42,7 +41,7 @@ public class TransactionChangeLogs {
 	if (info == null) {
 	    try {
 		Class realClass = Class.forName(className);
-		ClassDescriptor cld = pb.getClassDescriptor(realClass);
+		pb.getClassDescriptor(realClass);
 		Class topLevelClass = pb.getTopLevelClass(realClass);
 		info = new OIDInfo(realClass, topLevelClass);
 		CLASS_OIDS.put(className, info);
@@ -95,7 +94,7 @@ public class TransactionChangeLogs {
     public static void cleanOldLogs(int txNumber) {
 	synchronized (CHANGE_LOGS) {
 	    while ((! CHANGE_LOGS.isEmpty()) && (CHANGE_LOGS.peek().txNumber <= txNumber)) {
-		ChangeLogSet clSet = CHANGE_LOGS.poll();
+		CHANGE_LOGS.poll();
 	    }
 	}
     }

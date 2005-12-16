@@ -17,12 +17,10 @@ import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseHistoric
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.gesdis.ICourseHistoric;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -75,9 +73,7 @@ public class ReadCurricularCourseHistoric implements IService {
         
         // the historic must only show info regarding the years previous to the year chosen by the user
         List<InfoCourseHistoric> infoCourseHistorics = new ArrayList<InfoCourseHistoric>();
-        final IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
         for (ICourseHistoric courseHistoric : courseHistorics) {
-			IExecutionYear courseHistoricExecutionYear = persistentExecutionYear.readExecutionYearByName(courseHistoric.getCurricularYear());
 			if (courseHistoric.getSemester().equals(semester)) {
 				infoCourseHistorics.add(InfoCourseHistoricWithInfoCurricularCourse.newInfoFromDomain(courseHistoric));
 			}

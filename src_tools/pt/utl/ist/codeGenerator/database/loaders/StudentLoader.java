@@ -58,8 +58,8 @@ public class StudentLoader extends PersonLoader {
 
 			final Integer number = Integer.valueOf(new Double(row.getCell((short) 34).getNumericCellValue()).intValue());
 			final String degreeType = row.getCell((short) 35).getStringCellValue();
-			final String state = row.getCell((short) 36).getStringCellValue();
-			final String entryPhase = row.getCell((short) 37).getStringCellValue();
+			/* final String state = */ row.getCell((short) 36).getStringCellValue();
+			/* final String entryPhase = */ row.getCell((short) 37).getStringCellValue();
 			final double entryGrade = row.getCell((short) 38).getNumericCellValue();
 
             final Student student = new Student();

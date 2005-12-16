@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.IGrouping;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -33,7 +32,6 @@ public class DeleteAllGroupingMembers implements IService {
         ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         IPersistentGrouping persistentGrouping = persistentSupport.getIPersistentGrouping();
-        IPersistentStudentGroup persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
         IGrouping grouping = (IGrouping) persistentGrouping.readByOID(Grouping.class, groupingCode);
 
         if (grouping == null) {

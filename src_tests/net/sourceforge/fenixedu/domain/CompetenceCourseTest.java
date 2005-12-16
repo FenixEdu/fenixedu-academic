@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -150,8 +149,6 @@ public class CompetenceCourseTest extends DomainTestBase {
     }
 
     public void testGetAssociatedCurricularCoursesGroupedByDegree() {
-        Map<IDegree, List<ICurricularCourse>> hashMap = new HashMap<IDegree, List<ICurricularCourse>>();
-        
         Map<IDegree, List<ICurricularCourse>> results = competenceCourse.getAssociatedCurricularCoursesGroupedByDegree();
         
         assertEquals("Associated Curricular Courses Degree Count", 2, results.keySet().size());

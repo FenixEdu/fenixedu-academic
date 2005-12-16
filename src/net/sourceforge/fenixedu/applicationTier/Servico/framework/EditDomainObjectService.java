@@ -116,7 +116,6 @@ public abstract class EditDomainObjectService implements IService {
     public void run(Integer objectId, InfoObject infoObject) throws FenixServiceException {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentObject persistentObject = getIPersistentObject(sp);
 
             IDomainObject objectFromDatabase = getObjectFromDatabase(infoObject, sp);
             if (!canCreate(infoObject, objectFromDatabase)) {

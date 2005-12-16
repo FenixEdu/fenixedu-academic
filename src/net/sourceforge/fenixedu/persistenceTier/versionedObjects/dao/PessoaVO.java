@@ -98,14 +98,10 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
 			DegreeType degreeType, IDepartment department) throws ExcepcaoPersistencia
 	{
 
-		final List<IPerson> persons = new ArrayList<IPerson>();
-
 		final String nameToMatch = name.replaceAll("%", ".*");
 		final String emailToMatch = email.replaceAll("%", ".*");
 		final String usernameToMatch = email.replaceAll("%", ".*");
 		final String documentIdNumberToMatch = documentIdNumber.replaceAll("%", ".*");
-
-		final List<IPerson> allPersons = (List<IPerson>) readAll(Person.class);
 
 		List<IPerson> filteredPersons = new ArrayList<IPerson>();
 
@@ -167,8 +163,6 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
 		final String emailToMatch = email.replaceAll("%", ".*");
 		final String usernameToMatch = email.replaceAll("%", ".*");
 		final String documentIdNumberToMatch = documentIdNumber.replaceAll("%", ".*");
-
-		final List<IPerson> allPersons = (List<IPerson>) readAll(Person.class);
 
 		int count = 0;
 		for (final IPerson person : (List<IPerson>) readAll(Person.class))

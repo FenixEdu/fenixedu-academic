@@ -100,7 +100,7 @@ public class PersonLoader extends BaseLoader {
 			final String gender = row.getCell((short) 2).getStringCellValue();
 			final String COUNTRY = row.getCell((short) 3).getStringCellValue();
 			final Date nascimento = row.getCell((short) 4).getDateCellValue();
-			final String nacionalidade = row.getCell((short) 5).getStringCellValue();
+			/* final String nacionalidade = */ row.getCell((short) 5).getStringCellValue();
 			final String freguesiaNaturalidade = row.getCell((short) 6).getStringCellValue();
             final String concelhoNaturalidade = row.getCell((short) 7).getStringCellValue();
             final String distritoNaturalidade = row.getCell((short) 8).getStringCellValue();

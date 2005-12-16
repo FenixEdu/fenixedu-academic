@@ -39,8 +39,6 @@ import net.sourceforge.fenixedu.domain.IWrittenTest;
 import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.CalendarUtil;
@@ -82,9 +80,7 @@ public class RoomSiteComponentBuilder {
         List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
             IAulaPersistente lessonDAO = sp.getIAulaPersistente();
-            IPersistentExam examDAO = sp.getIPersistentExam();
 
             Calendar startDay = Calendar.getInstance();
             startDay.setTimeInMillis(day.getTimeInMillis());

@@ -41,7 +41,7 @@ public class DeleteDistributedTest implements IService {
             IOnlineTest onlineTest = (IOnlineTest) persistentSuport.getIPersistentOnlineTest().readByDistributedTest(distributedTestId);
             Iterator<IExecutionCourse> executionCourseIterator = onlineTest.getAssociatedExecutionCoursesForOnlineTestIterator();
             while (executionCourseIterator.hasNext()) {
-                IExecutionCourse executionCourse = executionCourseIterator.next();
+                executionCourseIterator.next();
                 executionCourseIterator.remove();
             }
 

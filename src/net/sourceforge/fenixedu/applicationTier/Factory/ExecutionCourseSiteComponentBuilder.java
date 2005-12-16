@@ -522,38 +522,32 @@ public class ExecutionCourseSiteComponentBuilder {
             throws FenixServiceException {
         List shiftsWithAssociatedClassesAndLessons = new ArrayList();
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IExecutionCourse disciplinaExecucao = site.getExecutionCourse();
-            List<IShift> shifts = disciplinaExecucao.getAssociatedShifts();
+        IExecutionCourse disciplinaExecucao = site.getExecutionCourse();
+        List<IShift> shifts = disciplinaExecucao.getAssociatedShifts();
 
-            for (final IShift shift : shifts) {
-                List<ILesson> lessons = shift.getAssociatedLessons();
-                List infoLessons = new ArrayList(lessons.size());
-                List<ISchoolClass> classesShifts = shift.getAssociatedClasses();
-                List infoClasses = new ArrayList(classesShifts.size());
+        for (final IShift shift : shifts) {
+            List<ILesson> lessons = shift.getAssociatedLessons();
+            List infoLessons = new ArrayList(lessons.size());
+            List<ISchoolClass> classesShifts = shift.getAssociatedClasses();
+            List infoClasses = new ArrayList(classesShifts.size());
 
-                for (final ILesson lesson : lessons) {
-                    infoLessons.add(InfoLessonWithInfoRoomAndInfoExecutionCourse
-                            .newInfoFromDomain(lesson));
-                }
-
-                for (final ISchoolClass schoolClass : classesShifts) {
-                    infoClasses.add(InfoClassWithInfoExecutionDegree.newInfoFromDomain(schoolClass));
-                }
-
-                InfoShift infoShift = InfoShiftWithInfoExecutionCourseAndCollections
-                        .newInfoFromDomain(shift);
-
-                InfoShiftWithAssociatedInfoClassesAndInfoLessons shiftWithAssociatedClassesAndLessons = 
-                    new InfoShiftWithAssociatedInfoClassesAndInfoLessons(infoShift, infoLessons, infoClasses);
-
-                shiftsWithAssociatedClassesAndLessons.add(shiftWithAssociatedClassesAndLessons);
+            for (final ILesson lesson : lessons) {
+                infoLessons.add(InfoLessonWithInfoRoomAndInfoExecutionCourse.newInfoFromDomain(lesson));
             }
 
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+            for (final ISchoolClass schoolClass : classesShifts) {
+                infoClasses.add(InfoClassWithInfoExecutionDegree.newInfoFromDomain(schoolClass));
+            }
+
+            InfoShift infoShift = InfoShiftWithInfoExecutionCourseAndCollections
+                    .newInfoFromDomain(shift);
+
+            InfoShiftWithAssociatedInfoClassesAndInfoLessons shiftWithAssociatedClassesAndLessons = new InfoShiftWithAssociatedInfoClassesAndInfoLessons(
+                    infoShift, infoLessons, infoClasses);
+
+            shiftsWithAssociatedClassesAndLessons.add(shiftWithAssociatedClassesAndLessons);
         }
+
         component.setShifts(shiftsWithAssociatedClassesAndLessons);
         component.setInfoExecutionPeriodName(site.getExecutionCourse().getExecutionPeriod().getName());
         component.setInfoExecutionYearName(site.getExecutionCourse().getExecutionPeriod()
@@ -606,7 +600,8 @@ public class ExecutionCourseSiteComponentBuilder {
             infoLesson.setInicio(lesson.getInicio());
             infoLesson.setTipo(lesson.getTipo());
 
-            InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(lesson.getRoomOccupation());
+            InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(lesson
+                    .getRoomOccupation());
             InfoRoom infoRoom = InfoRoom.newInfoFromDomain(lesson.getRoomOccupation().getRoom());
             infoRoomOccupation.setInfoRoom(infoRoom);
             infoLesson.setInfoRoomOccupation(infoRoomOccupation);
@@ -741,30 +736,30 @@ public class ExecutionCourseSiteComponentBuilder {
     private List readLastFiveAnnouncements(IExecutionCourse executionCourse) {
         Set<IAnnouncement> announcements = executionCourse.getSite().getSortedAnnouncements();
 
-	int count = 5;
+        int count = 5;
         List infoAnnouncementsList = new ArrayList(count);
 
-	for (IAnnouncement ann : announcements) {
-	    infoAnnouncementsList.add(copyFromDomain(ann));
-	    count--;
-	    if (count == 0) {
-		break;
-	    }
+        for (IAnnouncement ann : announcements) {
+            infoAnnouncementsList.add(copyFromDomain(ann));
+            count--;
+            if (count == 0) {
+                break;
+            }
         }
 
         return infoAnnouncementsList;
     }
 
     private InfoSiteAnnouncement getInfoSiteAnnouncement(InfoSiteAnnouncement component, ISite site) {
-	Set<IAnnouncement> announcements = site.getSortedAnnouncements();
-	List infoAnnouncementsList = new ArrayList(announcements.size());
+        Set<IAnnouncement> announcements = site.getSortedAnnouncements();
+        List infoAnnouncementsList = new ArrayList(announcements.size());
 
-	for (IAnnouncement ann : announcements) {
-	    infoAnnouncementsList.add(copyFromDomain(ann));
-	}
-	
-	component.setAnnouncements(infoAnnouncementsList);
-	return component;
+        for (IAnnouncement ann : announcements) {
+            infoAnnouncementsList.add(copyFromDomain(ann));
+        }
+
+        component.setAnnouncements(infoAnnouncementsList);
+        return component;
     }
 
     private List readLecturingTeachers(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
@@ -802,7 +797,8 @@ public class ExecutionCourseSiteComponentBuilder {
         return responsibleInfoTeachersList;
     }
 
-    private InfoAnnouncement readLastAnnouncement(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
+    private InfoAnnouncement readLastAnnouncement(IExecutionCourse executionCourse)
+            throws ExcepcaoPersistencia {
         IAnnouncement announcement = executionCourse.getSite().getLastAnnouncement();
         InfoAnnouncement infoAnnouncement = null;
         if (announcement != null) {

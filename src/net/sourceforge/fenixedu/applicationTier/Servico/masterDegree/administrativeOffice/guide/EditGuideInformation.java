@@ -41,7 +41,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonAccount;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransaction;
 import net.sourceforge.fenixedu.util.CalculateGuideTotal;
 import net.sourceforge.fenixedu.util.State;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -204,15 +203,6 @@ public class EditGuideInformation implements IService {
                 guideSituation.setSituation(infoGuide.getInfoGuideSituation().getSituation());
                 guideSituation.setState(new State(State.ACTIVE));
 
-                // Write the new Guide Version
-
-                // // Make sure that everything is written before reading
-                // ...
-                // sp.confirmarTransaccao();
-                // sp.iniciarTransaccao();
-
-                // For Transactions Creation
-                IPersistentTransaction persistentTransaction = sp.getIPersistentTransaction();
                 IPaymentTransaction paymentTransaction = null;
                 IGratuitySituation gratuitySituation = null;
                 IPersistentPersonAccount persistentPersonAccount = sp.getIPersistentPersonAccount();

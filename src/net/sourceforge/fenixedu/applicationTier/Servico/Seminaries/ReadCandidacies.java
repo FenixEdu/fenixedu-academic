@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -76,10 +75,6 @@ public class ReadCandidacies implements IService {
                 candidacyDTO.setStudent(InfoStudentWithInfoPerson.newInfoFromDomain(student));
                 candidacyDTO.setTheme(InfoTheme.newInfoFromDomain(candidacy.getTheme()));
                 List<InfoCaseStudyChoice> infos = new ArrayList<InfoCaseStudyChoice>();
-                Collection c = candidacy.getCaseStudyChoices();
-                int count = c.size();
-                Iterator i = c.iterator();
-                boolean b = i.hasNext();
                 for (Iterator iter = candidacy.getCaseStudyChoices().iterator(); iter.hasNext();)
 				{
 					ICaseStudyChoice element = (ICaseStudyChoice) iter.next();

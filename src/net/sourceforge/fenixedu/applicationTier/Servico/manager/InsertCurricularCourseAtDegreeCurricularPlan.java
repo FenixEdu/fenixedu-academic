@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -69,10 +68,6 @@ public class InsertCurricularCourseAtDegreeCurricularPlan implements IService {
                     });
 
             if (cCourse == null) {
-
-                IPersistentCurricularCourse persistentCurricularCourse = persistentSuport
-                        .getIPersistentCurricularCourse();
-
                 ICurricularCourse curricularCourse = DomainFactory.makeCurricularCourse(name, code, infoCurricularCourse.getAcronym(), infoCurricularCourse.getEnrollmentAllowed(), CurricularStage.OLD);
 
                 curricularCourse.setBasic(infoCurricularCourse.getBasic());

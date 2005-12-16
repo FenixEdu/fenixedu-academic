@@ -153,7 +153,7 @@ public class ChangeDegreeDA extends FenixDispatchAction {
         final String[] enrolementsToTransfer = (String[]) actionForm.get("enrolementsToTransfer");
         final String[] enrolementsToMaintain = (String[]) actionForm.get("enrolementsToMaintain");
         final String[] enrolementsToDelete = (String[]) actionForm.get("enrolementsToDelete");
-        final Set<Integer> enrolementsToTransferIds = new HashSet<Integer>(enrolementsToTransfer.length);
+
         for (int i = 0; i < enrolementsToTransfer.length; i++) {
             final String enrolement = enrolementsToTransfer[i];
             if (enrolements.contains(enrolement)) {
@@ -166,7 +166,6 @@ public class ChangeDegreeDA extends FenixDispatchAction {
                 enrolements.add(enrolement);
             }
         }
-        final Set<Integer> enrolementsToMaintainIds = new HashSet<Integer>(enrolementsToMaintain.length);
         for (int i = 0; i < enrolementsToMaintain.length; i++) {
             final String enrolement = enrolementsToMaintain[i];
             if (enrolements.contains(enrolement)) {
@@ -179,7 +178,6 @@ public class ChangeDegreeDA extends FenixDispatchAction {
                 enrolements.add(enrolement);
             }
         }
-        final Set<Integer> enrolementsToDeleteIds = new HashSet<Integer>(enrolementsToDelete.length);
         for (int i = 0; i < enrolementsToDelete.length; i++) {
             final String enrolement = enrolementsToDelete[i];
             if (enrolements.contains(enrolement)) {

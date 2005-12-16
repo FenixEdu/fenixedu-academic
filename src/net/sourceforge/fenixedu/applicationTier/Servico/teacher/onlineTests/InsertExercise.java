@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
@@ -53,7 +52,6 @@ public class InsertExercise implements IService {
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
-        IPersistentMetadata persistentMetadata = persistentSuport.getIPersistentMetadata();
         IMetadata metadata = null;
         try {
             metadata = DomainFactory.makeMetadata(executionCourse, metadataFile, replacedPath);

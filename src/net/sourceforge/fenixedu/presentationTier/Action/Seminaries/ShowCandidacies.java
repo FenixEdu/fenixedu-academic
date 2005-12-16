@@ -157,7 +157,6 @@ public class ShowCandidacies extends FenixAction {
             throws FenixActionException {
         List seminaries = null;
         List cases = null;
-        List degrees = null;
         List modalities = null;
         List equivalencies = null;
         List themes = null;
@@ -200,26 +199,6 @@ public class ShowCandidacies extends FenixAction {
             e.printStackTrace();
             throw new FenixActionException(e);
         }
-        //this is very ugly, but the boss asked for it :)
-        //we will display only the Master Curricular Plans and the actual
-        // (current execution period) curricular plans for other degree types
-        
-//        for (Iterator iter = degrees.iterator(); iter.hasNext();) {
-//            InfoDegreeCurricularPlan infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) iter.next();
-//            if (infoDegreeCurricularPlan.getInfoDegree().getTipoCurso().equals(DegreeType.MASTER_DEGREE))
-//                avaliableCurricularPlans.add(infoDegreeCurricularPlan);
-//            else if (infoDegreeCurricularPlan.getName().endsWith("2003/2004")) {
-//                String newName = new String();
-//                newName = infoDegreeCurricularPlan.getName().replaceAll("2003/2004", "");
-//                infoDegreeCurricularPlan.setName(newName);
-//                avaliableCurricularPlans.add(infoDegreeCurricularPlan);
-//            } else if (infoDegreeCurricularPlan.getName().indexOf("2") != -1) {
-//                String newName = new String();
-//                newName = infoDegreeCurricularPlan.getName().replaceAll("2003", "");
-//                infoDegreeCurricularPlan.setName(newName);
-//                avaliableCurricularPlans.add(infoDegreeCurricularPlan);
-//            }
-//        }
         Collections.sort(avaliableCurricularPlans, new BeanComparator("name")); // TODO gedl remover dupicados
 
         request.setAttribute("seminaries", seminaries);

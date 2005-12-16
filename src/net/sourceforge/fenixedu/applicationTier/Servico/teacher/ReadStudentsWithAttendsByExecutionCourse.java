@@ -494,15 +494,6 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         return result;
     }
     
-    private boolean hasImprovmentEnrolmentEvaluation(final List<IEnrolmentEvaluation> evaluations) {
-    	return CollectionUtils.exists(evaluations, new Predicate() {
-			public boolean evaluate(Object arg0) {
-				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) arg0;
-				return enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT);
-			}
-    	});
-    }
-    
     private boolean hasSpecialSeasonEnrolmentEvaluation(final List<IEnrolmentEvaluation> evaluations) {
     	return CollectionUtils.exists(evaluations, new Predicate() {
 			public boolean evaluate(Object arg0) {

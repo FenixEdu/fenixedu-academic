@@ -247,28 +247,4 @@ public class RegisterCandidate implements IService {
         throw new InvalidChangeServiceException();
     }
 
-    /**
-     * @param gratuityValues
-     * @return
-     */
-    private Double calculateTotalValueForMasterDegree(IGratuityValues gratuityValues) {
-        Double totalValue = null;
-
-        Double annualValue = gratuityValues.getAnualValue();
-
-        if ((annualValue != null) && (annualValue.doubleValue() != 0)) {
-            // we have data to calculate using annual value
-            totalValue = annualValue;
-        } else {
-            // we have to use the components (scholarship + final proof)
-            // information
-            totalValue = new Double(gratuityValues.getScholarShipValue().doubleValue()
-                    + (gratuityValues.getFinalProofValue() == null ? 0 : gratuityValues
-                            .getFinalProofValue().doubleValue()));
-
-        }
-
-        return totalValue;
-    }
-
 }

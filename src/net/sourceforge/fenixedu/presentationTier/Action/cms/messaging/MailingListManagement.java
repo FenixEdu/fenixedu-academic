@@ -88,23 +88,7 @@ public class MailingListManagement extends FenixDispatchAction
 		IMailingList mailingListToView = null;
 		try
 		{
-			Object d= ServiceManagerServiceFactory.executeService(userView, "ReadDomainObject", new Object[] {MailingList.class, mailingListID});
-			IMailingList ffff = (IMailingList) d;
-			String N = ffff.getName();
 			mailingListToView = (IMailingList) ServiceManagerServiceFactory.executeService(userView, "ReadDomainObject", new Object[] {MailingList.class, mailingListID});
-			String s = "abasdfa";
-			String afasdf = "dfasdfasd";
-			String dfasfads = s + afasdf;
-			Collection<IMailingList> fueca = (Collection<IMailingList>)  ServiceManagerServiceFactory.executeService(userView, "ReadMailingListsWithOutgoingMails", new Object[] {});
-			int a=3;
-			int b=24;
-			int c=2;
-			c++;
-			a=c;
-			a=b;
-			c=a;
-			a++;
-			b--;
 		}
 		catch (Exception e)
 		{

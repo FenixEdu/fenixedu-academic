@@ -76,8 +76,6 @@ public class EnrollmentDeclarations extends FenixDispatchAction {
      * @param allStudentsData
      */
     private void fillStudentData(InfoStudent infoStudent, String degreeName, List allStudentsData) {
-
-        final int columnNumber = 73;
         List studentData = new ArrayList();
         InfoPerson infoPerson = infoStudent.getInfoPerson();
 

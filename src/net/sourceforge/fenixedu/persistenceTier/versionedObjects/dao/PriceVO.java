@@ -37,8 +37,6 @@ public class PriceVO extends VersionedObjectsBase implements IPersistentPrice {
 			DocumentType documentType, String description) throws ExcepcaoPersistencia {
 
 		List<IPrice> priceList = (List<IPrice>) readAll(Price.class);
-		List result = new ArrayList();
-
 		for (IPrice price : priceList) {
 			if (price.getGraduationType().equals(graduationType)
 					&& price.getDocumentType().equals(documentType)

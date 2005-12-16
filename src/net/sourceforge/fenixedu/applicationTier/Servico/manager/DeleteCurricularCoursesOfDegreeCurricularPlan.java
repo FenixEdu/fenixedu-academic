@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.ICurriculum;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -36,7 +35,6 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
         IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
-		IPersistentCurricularCourseScope persistentCurricularCourseScope = sp.getIPersistentCurricularCourseScope();
 
         Iterator iter = curricularCoursesIds.iterator();
         List undeletedCurricularCourses = new ArrayList();

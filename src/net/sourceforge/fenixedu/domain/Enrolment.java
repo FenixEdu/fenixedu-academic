@@ -11,15 +11,10 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
-import net.sourceforge.fenixedu.domain.log.IEnrolmentLog;
-import net.sourceforge.fenixedu.util.EnrolmentAction;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
-import org.apache.ojb.broker.PersistenceBroker;
-import org.apache.ojb.broker.PersistenceBrokerException;
 
 /**
  * @author dcs-rjao
@@ -74,16 +69,6 @@ public class Enrolment extends Enrolment_Base {
         result += "execution Period = " + this.getExecutionPeriod() + "; ";
         result += "curricularCourse = " + this.getCurricularCourse() + "]\n";
         return result;
-    }
-
-    private void createNewEnrolmentLog(EnrolmentAction action, PersistenceBroker arg0)
-            throws PersistenceBrokerException {
-        IEnrolmentLog enrolmentLog = new EnrolmentLog();
-        enrolmentLog.setDate(new Date());
-        enrolmentLog.setAction(action);
-        enrolmentLog.setCurricularCourse(this.getCurricularCourse());
-        enrolmentLog.setStudent(this.getStudentCurricularPlan().getStudent());
-        arg0.store(enrolmentLog);
     }
 
     public void unEnroll() throws DomainException {

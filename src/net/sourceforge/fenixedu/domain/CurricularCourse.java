@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -13,7 +12,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.IContext;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
@@ -256,14 +254,6 @@ public class CurricularCourse extends CurricularCourse_Base {
         });
 
         return !result.isEmpty();
-    }
-
-    private ICurricularYear getCurricularYearWithLowerYear(List listOfScopes) {
-
-		ICurricularCourseScope minYearScope = (ICurricularCourseScope)Collections.min(listOfScopes, 
-								new BeanComparator("curricularSemester.curricularYear.year"));
-		
-		return minYearScope.getCurricularSemester().getCurricularYear();        
     }
 
    private ICurricularYear getCurricularYearWithLowerYear(List listOfScopes, Date date) {

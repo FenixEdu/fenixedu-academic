@@ -17,8 +17,6 @@ import net.sourceforge.fenixedu.domain.projectsManagement.IGeneratedOverheadsRep
 import net.sourceforge.fenixedu.domain.projectsManagement.IOverheadsSummaryReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.ITransferedOverheadsReportLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSuportOracle;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
@@ -33,7 +31,6 @@ public class ReadOverheadReport implements IService {
             throws ExcepcaoPersistencia {
         InfoOverheadReport infoReport = new InfoOverheadReport();
         List<IReportLine> infoLines = new ArrayList<IReportLine>();
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentSuportOracle p = PersistentSuportOracle.getInstance();
         infoReport.setInfoCostCenter(InfoRubric.newInfoFromDomain(p.getIPersistentProjectUser().getCostCenterByID(new Integer(userNumber))));
         if (userNumber.equals(costCenter)) {

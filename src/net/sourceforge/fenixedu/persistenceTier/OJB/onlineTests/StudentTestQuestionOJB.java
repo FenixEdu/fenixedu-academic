@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -175,7 +174,6 @@ public class StudentTestQuestionOJB extends PersistentObjectOJB implements IPers
         List<IStudentTestQuestion> result = queryList(queryCriteria);
 
         List<String> resultList = new ArrayList<String>();
-        Iterator iterator = result.iterator();
         for (IStudentTestQuestion studentTestQuestion : result) {
             resultList.add(studentTestQuestion.getResponse());
         }

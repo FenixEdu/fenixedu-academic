@@ -171,7 +171,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
         
         String language = getLocaleLanguageFromRequest(request);
         
-        Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
+        getFromRequest("executionPeriodOID", request);
         Integer degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
 

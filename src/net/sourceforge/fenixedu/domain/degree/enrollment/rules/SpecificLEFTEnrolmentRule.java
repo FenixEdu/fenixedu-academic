@@ -280,11 +280,6 @@ public class SpecificLEFTEnrolmentRule implements IEnrollmentRule {
 	}
 
 
-	private IStudentCurricularPlan getStudentCurricularPlan() {
-		return studentCurricularPlan;
-	}
-
-
 	private void setStudentCurricularPlan(
 			IStudentCurricularPlan studentCurricularPlan) {
 		this.studentCurricularPlan = studentCurricularPlan;
