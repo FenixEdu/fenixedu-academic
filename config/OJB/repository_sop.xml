@@ -793,6 +793,11 @@
          column="KEY_PERIOD"
          jdbc-type="INTEGER"
       />
+      <field-descriptor id="4"
+         name="keyPreviousPeriod"
+         column="KEY_PREVIOUS_PERIOD"
+         jdbc-type="INTEGER"
+      />
       <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
@@ -804,6 +809,12 @@
          class-ref="net.sourceforge.fenixedu.domain.Period"
       >
          <foreignkey field-ref="keyPeriod"/>
+      </reference-descriptor>
+      <reference-descriptor auto-retrieve="false"
+         name="previousPeriod"
+         class-ref="net.sourceforge.fenixedu.domain.Period"
+      >
+         <foreignkey field-ref="keyPreviousPeriod"/>
       </reference-descriptor>
       <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="roomOccupations"

@@ -1,0 +1,1 @@
+alter table PERIOD add column KEY_PREVIOUS_PERIOD int(11) default null;

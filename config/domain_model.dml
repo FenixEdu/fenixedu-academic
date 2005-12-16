@@ -1467,6 +1467,7 @@ class net.sourceforge.fenixedu.domain.ExecutionDegree extends net.sourceforge.fe
 	Integer keyCurricularPlan;
 	Integer keyCampus;
 	Integer keyGratuityValues;
+	Integer keyFinalDegreeWorkScheduling;
 	
 	interface "
 	
@@ -2406,6 +2407,7 @@ class net.sourceforge.fenixedu.domain.Period extends net.sourceforge.fenixedu.do
 	Integer keyPeriod;
     Date start;
     Date end;
+    Integer keyPreviousPeriod;
 	
 	interface "
     public java.util.Calendar getStartDate();
