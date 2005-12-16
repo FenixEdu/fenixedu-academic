@@ -1,12 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectOutputStream;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Properties;
 
 import javax.ejb.EJBException;
 import javax.ejb.SessionBean;
@@ -19,7 +14,6 @@ import net.sourceforge.fenixedu.applicationTier.logging.UserExecutionLog;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.stm.ServiceInfo;
-import net.sourceforge.fenixedu.stm.VersionNotAvailableException;
 
 import org.apache.commons.collections.FastHashMap;
 import org.apache.log4j.Logger;
