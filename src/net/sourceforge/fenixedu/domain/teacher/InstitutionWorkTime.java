@@ -20,7 +20,7 @@ public class InstitutionWorkTime extends InstitutionWorkTime_Base {
         setStartTime(startTime);
         setEndTime(endTime);
         setWeekDay(weekDay);
-        //verifyOverlappings();
+        verifyOverlappings();
     }
 
     public void delete(){

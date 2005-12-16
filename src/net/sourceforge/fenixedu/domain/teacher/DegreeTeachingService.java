@@ -30,7 +30,7 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
         setShift(shift);
         
         if (percentage == 100) {
-            //verifyAnyOverLapPeriod();
+            verifyAnyOverLapPeriod();
         }
         setPercentage(percentage);
     }
