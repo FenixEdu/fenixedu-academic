@@ -54,7 +54,7 @@ public class ReadTeacherServiceDistributionByTeachers implements IService {
 			
 			executionPeriodList = persistentExecutionPeriod.readByExecutionYear(executionYearID);
 						
-			IDepartment department = persistentTeacher.readTeacherByUsername(username).getCurrentWorkingDepartment();
+			IDepartment department = persistentTeacher.readTeacherByUsername(username).getLastWorkingDepartment();
 			
 			teachers = department.getTeachers();
 			

@@ -36,7 +36,7 @@ public class CourseStatistics extends FenixBackingBean {
     private ICompetenceCourse competenceCourse;
 
     public IDepartment getDepartment() {
-        return getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace();
+        return getUserView().getPerson().getTeacher().getLastWorkingDepartment();
     }
 
     public Integer getCompetenceCourseId() throws FenixFilterException, FenixServiceException {
@@ -112,11 +112,11 @@ public class CourseStatistics extends FenixBackingBean {
     }
 
     private void loadCompetenceCourses() throws FenixFilterException, FenixServiceException {
-        Integer departmentID = getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace()
+        Integer departmentID = getUserView().getPerson().getTeacher().getLastWorkingDepartment()
                 .getIdInternal();
         Object args[] = { departmentID, this.getExecutionYearId() };
         competenceCourses = (List<CompetenceCourseStatisticsDTO>) ServiceUtils.executeService(
-                getUserView(), "CreateCompetenceCourseStatistics", args);
+                getUserView(), "ComputeCompetenceCourseStatistics", args);
     }
 
     public List<CompetenceCourseStatisticsDTO> getCompetenceCourses() throws FenixFilterException,
@@ -130,7 +130,7 @@ public class CourseStatistics extends FenixBackingBean {
 
     private void loadDegreeCourses() throws FenixFilterException, FenixServiceException {
         degreeCourses = (List<DegreeCourseStatisticsDTO>) ServiceUtils.executeService(getUserView(),
-                "CreateDegreeCourseStatistics", new Object[] { getCompetenceCourseId(),
+                "ComputeDegreeCourseStatistics", new Object[] { getCompetenceCourseId(),
                         getExecutionYearId() });
     }
 
@@ -145,7 +145,7 @@ public class CourseStatistics extends FenixBackingBean {
 
     private void loadExecutionCourses() throws FenixFilterException, FenixServiceException {
         executionCourses = (List<ExecutionCourseStatisticsDTO>) ServiceUtils.executeService(
-                getUserView(), "CreateExecutionCourseStatistics", new Object[] {
+                getUserView(), "ComputeExecutionCourseStatistics", new Object[] {
                         this.getCompetenceCourseId(), this.getDegreeId(), getExecutionYearId() });
     }
 

@@ -16,12 +16,12 @@ import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IMasterDegreeThesisDataVersion;
+import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -114,16 +114,8 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
         this.selectedExecutionYearID = selectedExecutionYearID;
     }
 
-    public List getDepartmentTeachers() throws FenixFilterException, FenixServiceException {
-
-        InfoTeacher infoTeacher = (InfoTeacher) ServiceUtils.executeService(getUserView(),
-                "ReadTeacherByUsername", new Object[] { this.getUserView().getUtilizador() });
-
-        InfoDepartment infoDepartment = (InfoDepartment) ServiceUtils.executeService(getUserView(),
-                "ReadDepartmentByTeacher", new Object[] { infoTeacher });
-
-        List<InfoTeacher> result = (List<InfoTeacher>) ServiceUtils.executeService(getUserView(),
-                "ReadDepartmentTeachersByDepartmentID", new Object[] { infoDepartment.getIdInternal() });
+    public List getDepartmentTeachers() throws FenixFilterException, FenixServiceException {               
+        List<ITeacher> result = new ArrayList<ITeacher>(getUserView().getPerson().getTeacher().getLastWorkingDepartment().getTeachers());
 
         ComparatorChain comparatorChain = new ComparatorChain();
         comparatorChain.addComparator(new BeanComparator("teacherNumber"));

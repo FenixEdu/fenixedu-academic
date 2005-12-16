@@ -99,7 +99,7 @@ public class ViewTeacherService extends FenixBackingBean {
     }
     
     public String getDepartmentName() {
-    	return getUserView().getPerson().getTeacher().getCurrentWorkingDepartment().getRealName();
+    	return getUserView().getPerson().getTeacher().getLastWorkingDepartment().getRealName();
     }
 
 
