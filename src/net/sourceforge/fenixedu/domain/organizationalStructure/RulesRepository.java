@@ -84,37 +84,37 @@ public class RulesRepository {
         return true;
     }
 
-    private static Boolean isElegibleConselhoCientifico (IPerson person, String functionName) {
-        if (functionName.equals("Presidente-Adjunto para os assuntos científicos")) {
-            return (isCatedraticTeacher(person) || isAssociatedTeacher(person));
-        }
-        if (functionName.equals("Vice-Presidente")) {
-            return (isTeacher(person));
-        }
-        if (functionName.equals("Secretário(a)")) {
-            return (isEmployee(person));
-        }
-        return true;
-    }
-    
-    private static Boolean isElegibleConselhoPedagogico (IPerson person, String functionName) {
-        if (functionName.equals("Presidente-Adjunto para os assuntos pedagógicos")) {
-            return (isCatedraticTeacher(person) || isAssociatedTeacher(person));
-        }
-        if (functionName.equals("Vice-Presidente Aluno")) {
-            return isStudent(person);
-        }
-        if (functionName.equals("Vogal (Docente)")) {
-            return isTeacher(person);        
-        }
-        if (functionName.equals("Vogal (Aluno)")) {
-            return isStudent(person);
-        }
-        if (functionName.equals("Vogal (Assistente)")) {
-            return isAssistent(person);
-        }
-        return true;
-    }
+//    private static Boolean isElegibleConselhoCientifico (IPerson person, String functionName) {
+//        if (functionName.equals("Presidente-Adjunto para os assuntos científicos")) {
+//            return (isCatedraticTeacher(person) || isAssociatedTeacher(person));
+//        }
+//        if (functionName.equals("Vice-Presidente")) {
+//            return (isTeacher(person));
+//        }
+//        if (functionName.equals("Secretário(a)")) {
+//            return (isEmployee(person));
+//        }
+//        return true;
+//    }
+//    
+//    private static Boolean isElegibleConselhoPedagogico (IPerson person, String functionName) {
+//        if (functionName.equals("Presidente-Adjunto para os assuntos pedagógicos")) {
+//            return (isCatedraticTeacher(person) || isAssociatedTeacher(person));
+//        }
+//        if (functionName.equals("Vice-Presidente Aluno")) {
+//            return isStudent(person);
+//        }
+//        if (functionName.equals("Vogal (Docente)")) {
+//            return isTeacher(person);        
+//        }
+//        if (functionName.equals("Vogal (Aluno)")) {
+//            return isStudent(person);
+//        }
+//        if (functionName.equals("Vogal (Assistente)")) {
+//            return isAssistent(person);
+//        }
+//        return true;
+//    }
  
     private static Boolean isElegibleConselhoAdministrativo (IPerson person, String functionName){
         if (functionName.equals("Presidente-Adjunto para os assuntos administrativos")) {
@@ -225,15 +225,15 @@ public class RulesRepository {
         }
     }
     
-    private static Boolean isAssistent (IPerson person) {
-        if(person.getTeacher() != null 
-                &&
-           person.getTeacher().getCategory().getLongName().contains("ASSISTENTE")) {
-            return true;
-        } 
-        else {
-            return false;
-        }
-    }
+//    private static Boolean isAssistent (IPerson person) {
+//        if(person.getTeacher() != null 
+//                &&
+//           person.getTeacher().getCategory().getLongName().contains("ASSISTENTE")) {
+//            return true;
+//        } 
+//        else {
+//            return false;
+//        }
+//    }
 }
 

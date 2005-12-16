@@ -45,24 +45,24 @@ public class CmsConfigurationManagement extends FenixDispatchAction
 
 	{
 		CmsConfigurationManagement.fenixCmsName = CmsConfigurationManagement.defaultFenixCMSName;
-		if (CmsConfigurationManagement.properties == null)
+		if (properties == null)
 		{
-			this.properties = new Properties();
+			properties = new Properties();
 			try
 			{
-				InputStream inputStream = getClass().getResourceAsStream(this.propertiesFilename);
+				InputStream inputStream = getClass().getResourceAsStream(propertiesFilename);
 				properties.load(inputStream);
-				CmsConfigurationManagement.fenixCmsName = this.properties.getProperty("server.url");
-				if (CmsConfigurationManagement.fenixCmsName == null)
+				fenixCmsName = properties.getProperty("server.url");
+				if (fenixCmsName == null)
 				{
-					CmsConfigurationManagement.fenixCmsName = CmsConfigurationManagement.defaultFenixCMSName;
+					fenixCmsName = defaultFenixCMSName;
 				}
 			}
 
 			catch (Exception e)
 			{
 				// the default cms instance name
-				CmsConfigurationManagement.fenixCmsName = CmsConfigurationManagement.defaultFenixCMSName;
+				fenixCmsName = defaultFenixCMSName;
 			}
 		}
 	}

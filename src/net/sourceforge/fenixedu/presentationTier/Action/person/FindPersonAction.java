@@ -213,7 +213,7 @@ public class FindPersonAction extends FenixDispatchAction {
             Integer start = (startIndex - 1) * SessionConstants.LIMIT_FINDED_PERSONS;
             Integer end = start + SessionConstants.LIMIT_FINDED_PERSONS;
 
-            searchPersons = searchParameters.getIntervalPersons(start, end, result.getValidPersons());
+            searchPersons = SearchParameters.getIntervalPersons(start, end, result.getValidPersons());
 
         } catch (FenixServiceException e) {
             errors.add("impossibleFindPerson", new ActionError(e.getMessage()));

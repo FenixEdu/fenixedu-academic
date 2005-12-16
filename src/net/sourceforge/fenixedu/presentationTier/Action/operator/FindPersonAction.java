@@ -66,7 +66,7 @@ public class FindPersonAction extends FenixDispatchAction {
             result = (SearchPersonResults) ServiceManagerServiceFactory.executeService(userView,
                     "SearchPerson", args);
 
-            searchPersons = searchParameters.getIntervalPersons(0, result.getValidPersons().size(),
+            searchPersons = SearchParameters.getIntervalPersons(0, result.getValidPersons().size(),
                     result.getValidPersons());
 
         } catch (FenixServiceException e) {

@@ -62,8 +62,7 @@ public class DAOClassDescriptor extends ClassDescriptor {
             stringBuilder.append(") {\n");
             stringBuilder.append("\t\t\tfinal Object[] parameters = new Object[] {\n");
 
-            int i = 0;
-            for (final Class parameterType : method.getParameterTypes()) {
+            for (int i = 0; i < method.getParameterTypes().length; ) {
                 if (i++ > 0) {
                     stringBuilder.append(",\n ");
                 }
@@ -90,8 +89,7 @@ public class DAOClassDescriptor extends ClassDescriptor {
             stringBuilder.append(") {\n");
             stringBuilder.append("\t\t\tfinal Object[] parameters = new Object[] {\n");
 
-            int i = 0;
-            for (final Class parameterType : method.getParameterTypes()) {
+            for (int i = 0; i < method.getParameterTypes().length; ) {
                 if (i++ > 0) {
                     stringBuilder.append(",\n ");
                 }
@@ -135,8 +133,7 @@ public class DAOClassDescriptor extends ClassDescriptor {
             stringBuilder.append(".");
             stringBuilder.append(getSimpleClassName(method.getName()));
             stringBuilder.append("(");
-            int i = 0;
-            for (final Class parameterType : method.getParameterTypes()) {
+            for (int i = 0; i < method.getParameterTypes().length; ) {
                 if (i++ > 0) {
                     stringBuilder.append(", ");
                 }

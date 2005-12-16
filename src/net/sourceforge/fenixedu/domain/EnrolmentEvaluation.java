@@ -57,14 +57,14 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         if (this.getEnrolment().getStudentCurricularPlan().getStudent().getDegreeType().equals(
                 DegreeType.MASTER_DEGREE)) {
             return compareMyWhenAlteredDateToAnotherWhenAlteredDate(otherWhenAltered);
-        } else if (this.getObservation() != null && this.getObservation().equals(this.RECTIFICATION)
+        } else if (this.getObservation() != null && this.getObservation().equals(RECTIFICATION)
                 && enrolmentEvaluation.getObservation() != null
-                && enrolmentEvaluation.getObservation().equals(this.RECTIFICATION)) {
+                && enrolmentEvaluation.getObservation().equals(RECTIFICATION)) {
             return compareMyWhenAlteredDateToAnotherWhenAlteredDate(otherWhenAltered);
-        } else if (this.getObservation() != null && this.getObservation().equals(this.RECTIFICATION)) {
+        } else if (this.getObservation() != null && this.getObservation().equals(RECTIFICATION)) {
             return 1;
         } else if (enrolmentEvaluation.getObservation() != null
-                && enrolmentEvaluation.getObservation().equals(this.RECTIFICATION)) {
+                && enrolmentEvaluation.getObservation().equals(RECTIFICATION)) {
             if (this.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT)) {
                 return compareForEqualStates(myEnrolmentState, otherEnrolmentState, otherGrade,
                         otherWhenAltered);

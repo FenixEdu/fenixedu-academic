@@ -43,8 +43,6 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
 	private IAttends attendsToDelete;
 	private IAttends attendsNotToDelete;
 	
-	private IEnrolmentEvaluation mdEvaluationToInsert;
-	
 		
 	private void setUpEdit() {
 		
@@ -181,23 +179,7 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
 		currentExecutionCourse.setExecutionPeriod(currentExecutionPeriod);
 		notCurrentExecutionCourse.setExecutionPeriod(notCurrentExecutionPeriod);
 	}
-	
-	
-	private void setUpInsertStudentFinalEvaluationForMasterDegree() {
-		
-		mdEvaluationToInsert = new EnrolmentEvaluation();
-		IEnrolment mdEnrolmentToInsert = new Enrolment();
-		IStudentCurricularPlan mdStudentCurricularPlanToInsert = new StudentCurricularPlan();
-		IDegreeCurricularPlan mdDegreeCurricularPlanToInsert = new DegreeCurricularPlan();
-		
-		mdEvaluationToInsert.setEnrolment(mdEnrolmentToInsert);
-		mdEnrolmentToInsert.setStudentCurricularPlan(mdStudentCurricularPlanToInsert);
-		mdStudentCurricularPlanToInsert.setDegreeCurricularPlan(mdDegreeCurricularPlanToInsert);
-	}
 
-
-	
-	
 	public void testEdit() {
 		
 		setUpEdit();
