@@ -10,27 +10,24 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.mapping.MappingUtils" %>
 
 <logic:notPresent name="infoDegreeInfo">
-
-
-<bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
-<div class="breadcumbs"><a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a> 
-<bean:define id="institutionUrlTeaching" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/><bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/></bean:define>
-&nbsp;&gt;&nbsp;<a href="<%= institutionUrlTeaching %>"><bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.education" /></a>
+	<bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
+<div class="breadcumbs">
+	<a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a> 
+	<bean:define id="institutionUrlTeaching" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/><bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/></bean:define>
+	&nbsp;&gt;&nbsp;<a href="<%= institutionUrlTeaching %>"><bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.education" /></a>
 	</div>
 </logic:notPresent>
 
 <logic:present name="infoDegreeInfo">
-
 	<bean:define id="infoDegreeInfo" name="infoDegreeInfo"/>
-	<div class="breadcumbs">
 		<bean:define id="degreeType" name="infoDegreeInfo" property="infoDegree.tipoCurso" />	
-<bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
-<div class="breadcumbs"><a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a>
-<bean:define id="institutionUrlTeaching" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/><bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/></bean:define>
-&nbsp;&gt;&nbsp; <a href="<%= institutionUrlTeaching %>"><bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.education" /></a> &nbsp;&gt;&nbsp;
-<bean:write name="infoDegreeInfo" property="infoDegree.sigla" />
+		<bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
+		<div class="breadcumbs"><a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a>
+		<bean:define id="institutionUrlTeaching" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/><bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/></bean:define>
+		&nbsp;&gt;&nbsp; <a href="<%= institutionUrlTeaching %>"><bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.education" /></a> &nbsp;&gt;&nbsp;
+		<bean:write name="infoDegreeInfo" property="infoDegree.sigla" />
 	</div>
-
+s
 <p><span class="error"><html:errors/></span></p>
 
 	<!-- COURSE NAME -->
