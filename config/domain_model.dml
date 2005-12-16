@@ -1094,11 +1094,11 @@ class net.sourceforge.fenixedu.domain.Employee extends net.sourceforge.fenixedu.
 	Integer workingHours;
 
     interface "
-	public IDepartment getDepartmentWorkingPlace();
-	public IDepartment getDepartmentMailingPlace();
+	public IDepartment getCurrentDepartmentWorkingPlace();
+    public IDepartment getLastDepartmentWorkingPlace();
 	public IContract getCurrentContract();
     public IContract getLastContract();
-    public IDepartment getLastDepartmentWorkingPlace();
+    public java.util.List<IDepartment> getDepartmentWorkingPlace(java.util.Date beginDate, java.util.Date endDate);
 	"
 }
 
@@ -3430,10 +3430,8 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 		net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
 		
    	public net.sourceforge.fenixedu.domain.teacher.ITeacherPersonalExpectation getTeacherPersonalExpectationByExecutionYear(IExecutionYear executionYear);
-	
-	public IDepartment getMailingDepartment();
-	
-	public IDepartment getWorkingDepartment();
+		
+	public IDepartment getCurrentWorkingDepartment();
    	
    	public IDepartment getLastWorkingDepartment();
 	

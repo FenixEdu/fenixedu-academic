@@ -17,7 +17,7 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
     private List<Integer> pageIndexes = initializePageIndexesList();
     
     public IDepartment getDepartment() {
-        return getUserView().getPerson().getEmployee().getDepartmentWorkingPlace();
+        return getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace();
     }
     
     public List getCompleteList() {

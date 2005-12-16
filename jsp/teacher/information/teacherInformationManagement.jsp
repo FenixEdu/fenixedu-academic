@@ -398,15 +398,51 @@
 			<td class="listClasses"><html:text property="other" /></td>
 		</tr>
 		</table>
-		<br />
+		<br />		
 		<p class="infoop"><span class="emphasis-box">12</span>
 			<bean:message key="message.teacherInformation.managerPosition" />
 			<bean:write name="infoSiteTeacherInformation" property="infoExecutionPeriod.infoExecutionYear.year" />
 			<bean:message key="label.doublePoint" />
 		</p>
-		<br>&nbsp;</br>
-		<bean:message key="message.teacherInformation.notYetAvailable" />
-		<br>&nbsp;</br>
+		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
+			<bean:define id="datePattern" value="dd-MM-yyyy"/>
+			<logic:notEmpty name="infoSiteTeacherInformation" property="personFunctions">		
+				<tr>
+					<td class="listClasses-header" style="text-align:left"><bean:message key="label.managementPosition.position" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
+					<td class="listClasses-header" width="10%"><bean:message key="label.managementPosition.start" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
+					<td class="listClasses-header" width="10%"><bean:message key="label.managementPosition.end" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
+				</tr>
+				<logic:iterate id="personFunction" name="infoSiteTeacherInformation" property="personFunctions">
+					<tr>
+						<td class="listClasses" style="text-align:left">
+							<bean:write name="personFunction" property="function.name"/>
+						</td>				
+						<td class="listClasses">
+							<dt:format patternId="datePattern">
+								<bean:write name="personFunction" property="beginDate.time"/>
+							</dt:format>
+						</td>
+						<logic:notEmpty name="personFunction" property="endDate">
+							<td class="listClasses">
+								<dt:format patternId="datePattern">
+									<bean:write name="personFunction" property="endDate.time"/>
+								</dt:format>
+							</td>
+						</logic:notEmpty>
+						<logic:empty name="personFunction" property="endDate">
+						-			
+						</logic:empty>
+					</tr>
+				</logic:iterate>
+			</logic:notEmpty>
+			<logic:empty name="infoSiteTeacherInformation" property="personFunctions">
+				<tr>
+					<td colspan="4" class="listClasses"> 
+						<i><bean:message key="message.managementPositions.noRegists" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>						
+					</td>
+				</tr>
+			</logic:empty>		
+		</table>
 		<br>&nbsp;</br>
 		<h3>
 			<table>

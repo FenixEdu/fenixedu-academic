@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +25,7 @@ public class Employee extends Employee_Base {
         return result;
     }
 
-    public IDepartment getDepartmentWorkingPlace() {
+    public IDepartment getCurrentDepartmentWorkingPlace() {
 
         IContract contract = getCurrentContract();
         if (contract != null && contract.getWorkingUnit() != null) {
@@ -33,16 +34,7 @@ public class Employee extends Employee_Base {
         return null;
     }
 
-    public IDepartment getDepartmentMailingPlace() {
-
-        IContract contract = getCurrentContract();
-        if (contract != null && contract.getMailingUnit() != null) {
-            return getEmployeeUnitDepartment(contract.getMailingUnit(), true);
-        }
-        return null;
-    }
-    
-    public IDepartment getLastDepartmentWorkingPlace(){
+    public IDepartment getLastDepartmentWorkingPlace() {
         IContract contract = getLastContract();
         if (contract != null && contract.getWorkingUnit() != null) {
             return getEmployeeUnitDepartment(contract.getWorkingUnit(), false);
@@ -50,16 +42,41 @@ public class Employee extends Employee_Base {
         return null;
     }
 
-    public IContract getCurrentContract() {
+    public List<IDepartment> getDepartmentWorkingPlace(Date beginDate, Date endDate) {
 
+        List<IDepartment> departments = new ArrayList<IDepartment>();
+        for (IContract contract : this.getContracts()) {
+            if (contract.belongsToPeriod(beginDate, endDate)) {
+                IUnit workingUnit = contract.getWorkingUnit();
+                if (workingUnit != null) {
+                    if (workingUnit.getTopUnits().isEmpty()) {
+                        for (IUnit unit : workingUnit.getTopUnits()) {
+                            if (unit.getType().equals(UnitType.DEPARTMENT)
+                                    && unit.getDepartment() != null) {
+                                departments.add(unit.getDepartment());
+                            }
+                        }
+                    } else if (workingUnit.getType().equals(UnitType.DEPARTMENT)
+                            && workingUnit.getDepartment() != null) {
+                        departments.add(workingUnit.getDepartment());
+                    }
+                }
+            }
+        }
+        return departments;
+    }
+
+    public IContract getCurrentContract() {
+        Date currentDate = prepareCurrentDate();
         List<IContract> contracts = this.getContracts();
         for (IContract contract : contracts) {
-            if (contract.getEndDate() == null || contract.getEndDate().after(prepareCurrentDate()))
+            if (contract.getEndDate() == null || contract.getEndDate().equals(currentDate)
+                    || contract.getEndDate().after(currentDate))
                 return contract;
         }
         return null;
-    }    
-    
+    }
+
     public IContract getLastContract() {
         Date date = null, currentDate = prepareCurrentDate();
         IContract contractToReturn = null;
@@ -80,9 +97,11 @@ public class Employee extends Employee_Base {
         List<IUnit> allTopUnits = unit.getTopUnits();
         if (!allTopUnits.isEmpty()) {
             for (IUnit topUnit : allTopUnits) {
-                if (topUnit.getType() != null && topUnit.getType().equals(UnitType.DEPARTMENT)
+                if (topUnit.getType() != null
+                        && topUnit.getType().equals(UnitType.DEPARTMENT)
                         && topUnit.getDepartment() != null
-                        && ( !onlyActiveEmployees || topUnit.getDepartment().getCurrentActiveWorkingEmployees().contains(this))) {
+                        && (!onlyActiveEmployees || topUnit.getDepartment()
+                                .getCurrentActiveWorkingEmployees().contains(this))) {
                     return topUnit.getDepartment();
                 }
             }
@@ -91,7 +110,7 @@ public class Employee extends Employee_Base {
         }
         return null;
     }
-    
+
     private Date prepareCurrentDate() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);

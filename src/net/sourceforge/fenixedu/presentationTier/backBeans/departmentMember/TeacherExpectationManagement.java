@@ -482,7 +482,7 @@ public class TeacherExpectationManagement extends FenixBackingBean {
 
     private ITeacherExpectationDefinitionPeriod getTeacherExpectationDefinitionPeriod(
             Integer executionYearID) throws FenixFilterException, FenixServiceException {
-        Integer departmentID = this.getUserView().getPerson().getEmployee().getDepartmentWorkingPlace()
+        Integer departmentID = this.getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace()
                 .getIdInternal();
 
         ITeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = (ITeacherExpectationDefinitionPeriod) ServiceUtils
@@ -578,7 +578,7 @@ public class TeacherExpectationManagement extends FenixBackingBean {
     public List<SelectItem> getExecutionYears() throws FenixFilterException, FenixServiceException {
 
         List<ITeacherExpectationDefinitionPeriod> expectationDefinitionPeriodsForDepartment = getUserView()
-                .getPerson().getEmployee().getDepartmentWorkingPlace()
+                .getPerson().getEmployee().getCurrentDepartmentWorkingPlace()
                 .getTeacherExpectationDefinitionPeriods();
 
         List<IExecutionYear> executionYears = new ArrayList<IExecutionYear>();

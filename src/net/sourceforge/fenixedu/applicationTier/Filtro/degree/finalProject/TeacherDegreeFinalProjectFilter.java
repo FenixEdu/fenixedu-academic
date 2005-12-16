@@ -63,7 +63,7 @@ public class TeacherDegreeFinalProjectFilter extends AuthorizationByRoleFilter {
 
             List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
             
-            IDepartment department = teacher.getWorkingDepartment();
+            IDepartment department = teacher.getCurrentWorkingDepartment();
 
             if (department == null) {
                 throw new NotAuthorizedException("Teacher number " + teacher.getTeacherNumber()

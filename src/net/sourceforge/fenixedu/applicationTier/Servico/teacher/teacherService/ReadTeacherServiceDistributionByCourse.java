@@ -65,7 +65,7 @@ public class ReadTeacherServiceDistributionByCourse implements IService {
 						
 			teacher = persistenceTeacher.readTeacherByUsername(username);
 		
-			department = teacher.getWorkingDepartment();
+			department = teacher.getCurrentWorkingDepartment();
 			
 			competenceCourseList =  department.getCompetenceCourses();
 			
@@ -139,7 +139,7 @@ public class ReadTeacherServiceDistributionByCourse implements IService {
 			
 			boolean teacherBelongsToDepartment = false;
 			
-			if(teacher.getWorkingDepartment() == department){
+			if(teacher.getCurrentWorkingDepartment() == department){
 				teacherBelongsToDepartment = true;
 			} 
 											

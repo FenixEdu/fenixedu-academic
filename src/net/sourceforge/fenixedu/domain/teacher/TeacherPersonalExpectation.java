@@ -23,7 +23,7 @@ public class TeacherPersonalExpectation extends TeacherPersonalExpectation_Base 
 
         IExecutionYear executionYear = this.getExecutionYear();
         ITeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = this.getTeacher()
-                .getWorkingDepartment().readTeacherExpectationDefinitionPeriodByExecutionYear(
+                .getCurrentWorkingDepartment().readTeacherExpectationDefinitionPeriodByExecutionYear(
                         executionYear);
 
         if (teacherExpectationDefinitionPeriod.isPeriodOpen() == false) {

@@ -70,8 +70,8 @@ public class ScientificCouncilDegreeManagementBackingBean extends FenixBackingBe
 
     public String getPersonDepartmentName() {
         IEmployee employee = getUserView().getPerson().getEmployee();
-        return (employee != null && employee.getDepartmentWorkingPlace() != null) ? employee
-                .getDepartmentWorkingPlace().getRealName() : "";
+        return (employee != null && employee.getCurrentDepartmentWorkingPlace() != null) ? employee
+                .getCurrentDepartmentWorkingPlace().getRealName() : "";
     }
     
     public List<SelectItem> getBolonhaDegreeTypes() {

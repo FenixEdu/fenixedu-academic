@@ -101,32 +101,31 @@ public class Teacher extends Teacher_Base {
         }
     }
 
-    public IDepartment getWorkingDepartment() {
+    public IDepartment getCurrentWorkingDepartment() {
 
         IEmployee employee = this.getPerson().getEmployee();
         if (employee != null) {
-            return employee.getDepartmentWorkingPlace();
+            return employee.getCurrentDepartmentWorkingPlace();
         }
         return null;
     }
-
-    public IDepartment getLastWorkingDepartment() {
+    
+    public IDepartment getLastWorkingDepartment() {        
         IEmployee employee = this.getPerson().getEmployee();
         if (employee != null) {
-            return employee.getLastDepartmentWorkingPlace();
+            return employee.getLastDepartmentWorkingPlace();                       
         }
         return null;
     }
-
-    public IDepartment getMailingDepartment() {
-
+    
+    public List<IDepartment> getWorkingDepartment(Date beginDate, Date endDate) {
         IEmployee employee = this.getPerson().getEmployee();
         if (employee != null) {
-            return employee.getDepartmentMailingPlace();
+            return employee.getDepartmentWorkingPlace(beginDate, endDate);
         }
-        return null;
-    }
-
+        return new ArrayList<IDepartment>();
+    }   
+    
     public ITeacherPersonalExpectation getTeacherPersonalExpectationByExecutionYear(
             IExecutionYear executionYear) {
         ITeacherPersonalExpectation result = null;
@@ -350,7 +349,7 @@ public class Teacher extends Teacher_Base {
         }
 
         ITeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = this
-                .getWorkingDepartment().readTeacherExpectationDefinitionPeriodByExecutionYear(
+                .getCurrentWorkingDepartment().readTeacherExpectationDefinitionPeriodByExecutionYear(
                         executionYear);
 
         if (teacherExpectationDefinitionPeriod.isPeriodOpen() == false) {

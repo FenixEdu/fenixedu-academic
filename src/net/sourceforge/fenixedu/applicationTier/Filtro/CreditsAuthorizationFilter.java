@@ -54,7 +54,7 @@ public class CreditsAuthorizationFilter extends Filtro {
             IPerson requesterPerson = personDAO.lerPessoaPorUsername(requester.getUtilizador());
 
             List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();            
-            IDepartment department = teacherToEdit.getWorkingDepartment();
+            IDepartment department = teacherToEdit.getCurrentWorkingDepartment();
             authorizedRequester = departmentsWithAccessGranted.contains(department);
 
         } else if (AuthorizationUtils.containsRole(roles, RoleType.TEACHER)) {

@@ -51,7 +51,7 @@ public abstract class AbstractTeacherDepartmentAuthorization extends Filtro {
 
             ITeacher teacher = (ITeacher) teacherDAO.readByOID(Teacher.class, teacherId);
 
-            IDepartment teacherDepartment = teacher.getWorkingDepartment();
+            IDepartment teacherDepartment = teacher.getCurrentWorkingDepartment();
 
             List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
 

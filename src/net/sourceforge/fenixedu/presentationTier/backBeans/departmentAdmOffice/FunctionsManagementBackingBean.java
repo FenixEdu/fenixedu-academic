@@ -382,7 +382,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         IUnit departmentUnit = null;
 
         if (personEmployee != null) {
-            IDepartment department = personEmployee.getDepartmentWorkingPlace();
+            IDepartment department = personEmployee.getCurrentDepartmentWorkingPlace();
             if (department != null) {
                 departmentUnit = department.getUnit();
             }

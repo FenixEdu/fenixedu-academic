@@ -116,7 +116,7 @@ public class TeacherExpectationDefinitionPeriodManagement extends FenixBackingBe
     public ITeacherExpectationDefinitionPeriod getTeacherExpectationDefinitionPeriod()
             throws FenixFilterException, FenixServiceException {
 
-        Integer departmentID = getUserView().getPerson().getEmployee().getDepartmentWorkingPlace()
+        Integer departmentID = getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace()
                 .getIdInternal();
 
         if (this.teacherExpectationDefinitionPeriod == null) {
@@ -145,7 +145,7 @@ public class TeacherExpectationDefinitionPeriodManagement extends FenixBackingBe
         String mapping = "";
 
         if (areDatesValid()) {
-            Integer departmentID = getUserView().getPerson().getEmployee().getDepartmentWorkingPlace()
+            Integer departmentID = getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace()
                     .getIdInternal();
 
             ServiceUtils.executeService(getUserView(), "CreateTeacherExpectationDefinitionPeriod",

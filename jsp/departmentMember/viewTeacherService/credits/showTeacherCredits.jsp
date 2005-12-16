@@ -372,11 +372,16 @@
 						<bean:write name="personFunction" property="beginDate.time"/>
 					</dt:format>
 				</td>
-				<td class="listClasses">
-					<dt:format patternId="datePattern">
-						<bean:write name="personFunction" property="endDate.time"/>
-					</dt:format>
-				</td>
+				<logic:notEmpty name="personFunction" property="endDate">
+					<td class="listClasses">
+						<dt:format patternId="datePattern">
+							<bean:write name="personFunction" property="endDate.time"/>
+						</dt:format>
+					</td>
+				</logic:notEmpty>
+				<logic:empty name="personFunction" property="endDate">
+				-			
+				</logic:empty>
 			</tr>
 		</logic:iterate>
 	</logic:notEmpty>

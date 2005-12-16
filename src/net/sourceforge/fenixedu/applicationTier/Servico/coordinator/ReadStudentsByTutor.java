@@ -48,7 +48,7 @@ public class ReadStudentsByTutor implements IService {
             throw new FenixServiceException("error.noTutor");
         }
         
-        IDepartment department = teacherDB.getWorkingDepartment();
+        IDepartment department = teacherDB.getCurrentWorkingDepartment();
 
         // Now only LEEC's teachers can be tutor
         if (!department.getCode().equals(new String("21"))) {

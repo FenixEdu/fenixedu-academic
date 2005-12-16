@@ -36,7 +36,7 @@ public class CourseStatistics extends FenixBackingBean {
     private ICompetenceCourse competenceCourse;
 
     public IDepartment getDepartment() {
-        return getUserView().getPerson().getEmployee().getDepartmentWorkingPlace();
+        return getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace();
     }
 
     public Integer getCompetenceCourseId() throws FenixFilterException, FenixServiceException {
@@ -112,7 +112,7 @@ public class CourseStatistics extends FenixBackingBean {
     }
 
     private void loadCompetenceCourses() throws FenixFilterException, FenixServiceException {
-        Integer departmentID = getUserView().getPerson().getEmployee().getDepartmentWorkingPlace()
+        Integer departmentID = getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace()
                 .getIdInternal();
         Object args[] = { departmentID, this.getExecutionYearId() };
         competenceCourses = (List<CompetenceCourseStatisticsDTO>) ServiceUtils.executeService(

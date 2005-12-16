@@ -334,7 +334,7 @@ public class ReadCourseInformation implements IService {
         while (iter.hasNext()) {
             IProfessorship responsibleFor = (IProfessorship) iter.next();
             ITeacher teacher = responsibleFor.getTeacher();
-            IDepartment department = teacher.getWorkingDepartment();
+            IDepartment department = teacher.getCurrentWorkingDepartment();
 
             infoDepartments.add(InfoDepartment.newInfoFromDomain(department));
         }

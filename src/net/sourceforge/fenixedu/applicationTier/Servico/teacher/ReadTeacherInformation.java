@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.IQualification;
 import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
 import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
 import net.sourceforge.fenixedu.domain.teacher.ICareer;
@@ -190,12 +191,19 @@ public class ReadTeacherInformation implements IService {
         infoSiteTeacherInformation.setInfoCientificPublications(getInfoPublications(sp, teacher,
                 PublicationConstants.CIENTIFIC));
 
+        
         // FIXME possible cause of error: this execution period is used for
         // what?
         infoSiteTeacherInformation.setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
                 .newInfoFromDomain(executionYear.getExecutionPeriods().get(0)));
 
+        infoSiteTeacherInformation.setPersonFunctions(getPersonFunctions(teacher, executionYear));
+        
         return new SiteView(infoSiteTeacherInformation);
+    }
+
+    private List<IPersonFunction> getPersonFunctions(ITeacher teacher, IExecutionYear executionYear) {       
+        return teacher.getPersonFuntions(executionYear.getBeginDate(), executionYear.getEndDate());        
     }
 
     private List getInfoResponsibleExecutionCourses(ISuportePersistente sp, ITeacher teacher,

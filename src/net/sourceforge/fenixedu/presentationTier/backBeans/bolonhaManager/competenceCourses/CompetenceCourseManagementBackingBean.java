@@ -78,8 +78,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public String getPersonDepartmentName() {
         IEmployee employee = getUserView().getPerson().getEmployee();
-        return (employee != null && employee.getDepartmentWorkingPlace() != null) ? employee
-                .getDepartmentWorkingPlace().getRealName() : "";
+        return (employee != null && employee.getCurrentDepartmentWorkingPlace() != null) ? employee
+                .getCurrentDepartmentWorkingPlace().getRealName() : "";
     }
 
     public List<SelectItem> getRegimeTypes() {
@@ -113,8 +113,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public List<IUnit> getScientificAreaUnits() {
         IEmployee employee = getUserView().getPerson().getEmployee();
-        return (employee != null && employee.getDepartmentWorkingPlace() != null) ? employee
-                .getDepartmentWorkingPlace().getUnit().getScientificAreaUnits() : new ArrayList();
+        return (employee != null && employee.getCurrentDepartmentWorkingPlace() != null) ? employee
+                .getCurrentDepartmentWorkingPlace().getUnit().getScientificAreaUnits() : new ArrayList();
     }
     
     public ICompetenceCourse getCompetenceCourse() throws FenixFilterException, FenixServiceException {

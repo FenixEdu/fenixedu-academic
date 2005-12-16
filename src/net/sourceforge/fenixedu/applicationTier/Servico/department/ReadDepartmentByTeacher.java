@@ -26,7 +26,7 @@ public class ReadDepartmentByTeacher implements IService {
         
         ITeacher teacher = (ITeacher) persistentTeacher.readByOID(Teacher.class, infoTeacher.getIdInternal());
         
-        IDepartment department = teacher.getWorkingDepartment();
+        IDepartment department = teacher.getCurrentWorkingDepartment();
         return InfoDepartment.newInfoFromDomain(department);
     }
 }
