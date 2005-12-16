@@ -179,10 +179,10 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         Date currentDate = Calendar.getInstance().getTime();
 
         for (IUnit unit : allUnitsWithoutParent) {
-            if (this.getListingTypeValueToUnits().equals("0")
+            if (this.getListingTypeValueToUnitsHidden().getValue().toString().equals("0")
                     && (unit.isActive(currentDate) || !unit.getActiveSubUnits(currentDate).isEmpty())) {
                 getUnitTree(buffer, unit, unit.getActiveSubUnits(currentDate), currentDate, true);
-            } else if (this.getListingTypeValueToUnits().equals("1")
+            } else if (this.getListingTypeValueToUnitsHidden().getValue().toString().equals("1")
                     && (!unit.isActive(currentDate) || !unit.getInactiveSubUnits(currentDate).isEmpty())) {
                 getUnitTree(buffer, unit, unit.getInactiveSubUnits(currentDate), currentDate, false);
             }
