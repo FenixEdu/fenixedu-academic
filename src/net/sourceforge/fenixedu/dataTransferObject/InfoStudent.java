@@ -6,10 +6,7 @@
 
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.util.StudentState;
 

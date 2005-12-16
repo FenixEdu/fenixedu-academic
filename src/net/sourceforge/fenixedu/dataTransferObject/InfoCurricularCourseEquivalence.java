@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.ICurricularCourseEquivalence;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 
 public class InfoCurricularCourseEquivalence extends InfoObject {
 

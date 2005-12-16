@@ -2,11 +2,11 @@ package net.sourceforge.fenixedu.persistenceTier.cache;
 
 import java.util.Properties;
 
+import net.sourceforge.fenixedu.stm.Transaction;
+
 import org.apache.ojb.broker.Identity;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.cache.ObjectCache;
-
-import net.sourceforge.fenixedu.stm.Transaction;
 
 public class FenixCacheWrapper implements ObjectCache {
 

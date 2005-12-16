@@ -5,8 +5,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.Seminaries;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 
 public class InfoMinimalCurricularCourse extends InfoCurricularCourse{

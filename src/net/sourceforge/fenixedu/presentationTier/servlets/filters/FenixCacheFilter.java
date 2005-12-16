@@ -21,17 +21,13 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.presentationTier.mapping.MappingUtils;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.cache.ResponseCacheOSCacheImpl;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.cache.ResponseContentEntry;
+import net.sourceforge.fenixedu.stm.CommitListener;
+import net.sourceforge.fenixedu.stm.TopLevelTransaction;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.Globals;
-import org.apache.struts.action.Action;
 
 import com.opensymphony.oscache.web.filter.CacheHttpServletResponseWrapper;
-import com.opensymphony.oscache.web.filter.ResponseContent;
-
-import net.sourceforge.fenixedu.stm.CommitListener;
-import net.sourceforge.fenixedu.stm.ReadSet;
-import net.sourceforge.fenixedu.stm.TopLevelTransaction;
 
 
 /**

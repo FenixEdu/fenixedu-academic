@@ -7,8 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.cms.accessControl;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 
 import javax.mail.BodyPart;
 import javax.mail.MessagingException;
@@ -16,9 +14,7 @@ import javax.mail.Multipart;
 import javax.mail.Part;
 import javax.mail.internet.MimeMessage;
 
-import net.sourceforge.fenixedu.domain.cms.ICms;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.FilterParameters;

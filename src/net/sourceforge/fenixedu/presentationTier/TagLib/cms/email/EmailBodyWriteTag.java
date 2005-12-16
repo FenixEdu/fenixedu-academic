@@ -8,12 +8,10 @@ package net.sourceforge.fenixedu.presentationTier.TagLib.cms.email;
 
 import java.net.MalformedURLException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.mail.MessagingException;
-import javax.mail.internet.InternetAddress;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 

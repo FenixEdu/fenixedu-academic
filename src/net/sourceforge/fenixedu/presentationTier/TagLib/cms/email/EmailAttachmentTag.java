@@ -14,9 +14,9 @@ import javax.mail.MessagingException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import org.apache.struts.taglib.TagUtils;
-
 import net.sourceforge.fenixedu.domain.cms.messaging.IMailMessage;
+
+import org.apache.struts.taglib.TagUtils;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>

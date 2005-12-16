@@ -9,7 +9,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.Seminaries;
 
 import java.util.Calendar;
-import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.Seminaries.ISeminary;

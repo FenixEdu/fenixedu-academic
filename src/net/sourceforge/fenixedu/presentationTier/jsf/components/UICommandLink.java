@@ -12,7 +12,6 @@ import javax.faces.component.html.HtmlCommandLink;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.event.ActionEvent;
-import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.JsfRenderUtils;
 

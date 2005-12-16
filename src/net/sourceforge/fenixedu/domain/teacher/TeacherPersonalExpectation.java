@@ -1,9 +1,7 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherPersonalExpectation;
-import net.sourceforge.fenixedu.domain.IDepartment;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.ITeacherExpectationDefinitionPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 

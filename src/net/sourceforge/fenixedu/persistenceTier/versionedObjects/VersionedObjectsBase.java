@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
+import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.QueryByCriteria;
-import org.apache.ojb.broker.PersistenceBroker;
 
 
 public abstract class VersionedObjectsBase {

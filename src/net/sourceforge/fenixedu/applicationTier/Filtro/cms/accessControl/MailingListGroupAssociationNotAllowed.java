@@ -4,7 +4,6 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.cms.accessControl;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.cms.CmsFilterException;
-import net.sourceforge.fenixedu.domain.cms.CmsException;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>

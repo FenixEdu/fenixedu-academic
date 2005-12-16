@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeInfo;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -14,7 +13,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.apache.ojb.broker.query.Criteria;
 
 public class DegreeInfoVO extends VersionedObjectsBase implements IPersistentDegreeInfo
 {

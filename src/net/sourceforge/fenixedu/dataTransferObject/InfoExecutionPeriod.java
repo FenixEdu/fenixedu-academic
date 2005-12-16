@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.stm.VBox;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 /**

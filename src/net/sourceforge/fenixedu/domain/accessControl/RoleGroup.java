@@ -2,10 +2,8 @@ package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.Iterator;
 
-import relations.ExecutionCourseUserGroupHook;
-import relations.RoleUserGroupHook;
-
 import net.sourceforge.fenixedu.domain.IPerson;
+import relations.RoleUserGroupHook;
 public class RoleGroup extends RoleGroup_Base {
     
     public RoleGroup() {

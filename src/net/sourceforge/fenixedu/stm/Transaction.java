@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.stm;
 
-import org.apache.ojb.broker.PersistenceBroker;
-
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.cache.FenixCache;
+
+import org.apache.ojb.broker.PersistenceBroker;
 
 public abstract class Transaction extends jvstm.Transaction {
 

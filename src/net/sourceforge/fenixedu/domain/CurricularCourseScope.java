@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 
 

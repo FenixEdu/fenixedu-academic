@@ -6,8 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.framework;
 
 import java.lang.reflect.Proxy;
 
-import org.apache.ojb.broker.core.proxy.ProxyHelper;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -17,6 +15,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+
+import org.apache.ojb.broker.core.proxy.ProxyHelper;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**

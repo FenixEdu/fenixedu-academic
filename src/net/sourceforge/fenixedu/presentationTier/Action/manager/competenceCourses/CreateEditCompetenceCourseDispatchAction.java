@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.competenceCourses;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;

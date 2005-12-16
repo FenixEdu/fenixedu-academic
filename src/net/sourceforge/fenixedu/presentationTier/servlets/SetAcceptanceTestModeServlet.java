@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Collection;
 import java.util.Map;
 
 import javax.servlet.ServletConfig;
@@ -12,14 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.stm.OJBFunctionalSetWrapper;
 
 import org.apache.ojb.broker.metadata.ClassDescriptor;
-import org.apache.ojb.broker.metadata.CollectionDescriptor;
 import org.apache.ojb.broker.metadata.DescriptorRepository;
 import org.apache.ojb.broker.metadata.FieldDescriptor;
 import org.apache.ojb.broker.metadata.MetadataManager;
-import org.apache.ojb.broker.metadata.ObjectReferenceDescriptor;
 
 public class SetAcceptanceTestModeServlet extends HttpServlet {
 

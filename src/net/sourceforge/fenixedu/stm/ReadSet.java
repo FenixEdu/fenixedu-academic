@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.stm;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 import jvstm.VBox;
 import jvstm.VBoxBody;

@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.accessControl.injector;
 
-import java.lang.reflect.Method;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>

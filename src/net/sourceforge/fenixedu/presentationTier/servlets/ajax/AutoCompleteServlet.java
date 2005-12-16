@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.WrapDynaBean;
 import org.apache.commons.lang.StringUtils;
 
 public class AutoCompleteServlet extends HttpServlet {

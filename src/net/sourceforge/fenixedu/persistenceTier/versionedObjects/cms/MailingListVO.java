@@ -8,7 +8,6 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
 import javax.mail.Address;
 import javax.mail.internet.InternetAddress;

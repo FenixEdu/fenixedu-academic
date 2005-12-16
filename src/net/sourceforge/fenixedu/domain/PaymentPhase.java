@@ -4,8 +4,6 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import java.util.List;
-
 import org.apache.struts.util.MessageResources;
 
 /**

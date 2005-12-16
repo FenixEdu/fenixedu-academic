@@ -8,7 +8,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -25,9 +24,6 @@ import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-
-import org.apache.commons.beanutils.BeanComparator;
-
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadStudentListByCurricularCourseScope implements IService {

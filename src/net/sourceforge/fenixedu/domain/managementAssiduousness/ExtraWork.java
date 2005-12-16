@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.domain.managementAssiduousness;
 
-import net.sourceforge.fenixedu.domain.DomainObject;
 
 /**
  * @author Tânia Pousão

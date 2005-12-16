@@ -4,8 +4,6 @@
  */
 package net.sourceforge.fenixedu.persistenceTier;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IPerson;
 

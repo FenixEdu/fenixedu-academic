@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters.cache;
 
-import com.opensymphony.oscache.web.filter.ResponseContent;
+import java.lang.ref.SoftReference;
+
 import net.sourceforge.fenixedu.stm.ReadSet;
 
-import java.lang.ref.SoftReference;
+import com.opensymphony.oscache.web.filter.ResponseContent;
 
 
 public class ResponseContentEntry {

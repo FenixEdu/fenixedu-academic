@@ -8,14 +8,12 @@ package net.sourceforge.fenixedu.presentationTier.Action.cms.messaging;
 
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,7 +22,6 @@ import net.sourceforge.fenixedu.domain.cms.messaging.IMailConversation;
 import net.sourceforge.fenixedu.domain.cms.messaging.IMailMessage;
 import net.sourceforge.fenixedu.domain.cms.messaging.IMailingList;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailConversation;
-import net.sourceforge.fenixedu.domain.cms.messaging.MailMessage;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;

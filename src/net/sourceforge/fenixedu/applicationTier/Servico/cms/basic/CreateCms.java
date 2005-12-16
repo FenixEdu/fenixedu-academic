@@ -8,9 +8,6 @@ import net.sourceforge.fenixedu.domain.cms.Cms;
 import net.sourceforge.fenixedu.domain.cms.ICms;
 import net.sourceforge.fenixedu.domain.cms.infrastructure.CmsConfiguration;
 import net.sourceforge.fenixedu.domain.cms.infrastructure.ICmsConfiguration;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
-import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>

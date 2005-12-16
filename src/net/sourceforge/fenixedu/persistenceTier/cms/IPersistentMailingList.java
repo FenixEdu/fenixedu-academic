@@ -7,9 +7,6 @@ import java.util.Collection;
 
 import javax.mail.Address;
 
-import relations.ContentOwnership;
-import relations.MailingListQueueOutgoingMails;
-
 import net.sourceforge.fenixedu.domain.cms.messaging.IMailingList;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 

@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAnnouncement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAssociatedCurricularCourses;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteBibliography;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluationMarks;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluationMethods;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluations;

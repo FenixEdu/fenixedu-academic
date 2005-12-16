@@ -6,15 +6,10 @@
 package net.sourceforge.fenixedu.presentationTier.TagLib;
 
 
-import java.util.Collection;
-
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
-import net.sourceforge.fenixedu.domain.accessControl.UserGroupTypes;
-
 import org.apache.struts.Globals;
-import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.util.RequestUtils;
 

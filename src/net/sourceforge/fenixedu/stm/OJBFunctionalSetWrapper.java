@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.stm;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 import org.apache.ojb.broker.ManageableCollection;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerException;
-
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 
 public class OJBFunctionalSetWrapper implements ManageableCollection {

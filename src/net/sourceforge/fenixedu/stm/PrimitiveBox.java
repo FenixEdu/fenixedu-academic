@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.stm;
 
+import jvstm.VBoxBody;
+
 import org.apache.ojb.broker.Identity;
 import org.apache.ojb.broker.PersistenceBroker;
-import org.apache.ojb.broker.metadata.fieldaccess.PersistentField;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
 import org.apache.ojb.broker.metadata.FieldDescriptor;
-
-import jvstm.VBoxBody;
+import org.apache.ojb.broker.metadata.fieldaccess.PersistentField;
 
 class PrimitiveBox<E> extends VBox<E> {
 

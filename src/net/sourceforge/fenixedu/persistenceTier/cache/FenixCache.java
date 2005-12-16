@@ -1,19 +1,17 @@
 package net.sourceforge.fenixedu.persistenceTier.cache;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
-
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.cache.logging.CacheLog;
 
 import org.apache.ojb.broker.Identity;
 import org.apache.ojb.broker.cache.ObjectCache;
-import org.apache.ojb.broker.metadata.MetadataManager;
 import org.apache.ojb.broker.metadata.DescriptorRepository;
+import org.apache.ojb.broker.metadata.MetadataManager;
 
 
 

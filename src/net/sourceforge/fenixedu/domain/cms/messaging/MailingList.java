@@ -4,7 +4,6 @@ package net.sourceforge.fenixedu.domain.cms.messaging;
 
 
 import java.util.Comparator;
-import java.util.Date;
 import java.util.Iterator;
 
 import javax.mail.MessagingException;
@@ -15,8 +14,6 @@ import net.sourceforge.fenixedu.domain.cms.predicates.ContentAssignableClassPred
 import net.sourceforge.fenixedu.domain.cms.predicates.ContentPredicate;
 
 import org.apache.commons.collections.iterators.FilterIterator;
-
-import relations.ContentHierarchy;
 
 public class MailingList extends MailingList_Base
 {

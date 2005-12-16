@@ -3,16 +3,16 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.lang.reflect.Method;
 import java.util.Map;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.stm.Transaction;
+import net.sourceforge.fenixedu.stm.TransactionChangeLogs;
+import net.sourceforge.fenixedu.stm.VBox;
+
+import org.apache.ojb.broker.PersistenceBrokerException;
 import org.apache.ojb.broker.accesslayer.RowReaderDefaultImpl;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
 import org.apache.ojb.broker.metadata.FieldDescriptor;
-import org.apache.ojb.broker.PersistenceBrokerException;
 import org.apache.ojb.broker.util.ClassHelper;
-
-import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.stm.TransactionChangeLogs;
-import net.sourceforge.fenixedu.stm.Transaction;
-import net.sourceforge.fenixedu.stm.VBox;
 
 
 public class FenixRowReader extends RowReaderDefaultImpl {

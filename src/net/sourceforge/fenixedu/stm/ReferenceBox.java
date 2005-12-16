@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.stm;
 
+import jvstm.VBoxBody;
+
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerException;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
-
-import jvstm.VBoxBody;
 
 class ReferenceBox<E> extends VBox<E> {
 

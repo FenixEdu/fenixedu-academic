@@ -12,7 +12,6 @@ import java.util.Vector;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.DomainObject_Base;
-import net.sourceforge.fenixedu.stm.RelationList;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;

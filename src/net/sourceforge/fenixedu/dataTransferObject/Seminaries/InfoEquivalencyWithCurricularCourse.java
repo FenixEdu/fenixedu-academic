@@ -5,7 +5,6 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.Seminaries;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Seminaries.ICourseEquivalency;
 

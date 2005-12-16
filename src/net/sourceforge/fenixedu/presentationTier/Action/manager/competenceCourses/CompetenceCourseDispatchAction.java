@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager.competenceCours
 
 import java.text.Collator;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 

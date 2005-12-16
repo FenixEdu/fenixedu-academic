@@ -8,14 +8,12 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.cms;
 
 import java.io.InputStream;
 import java.util.Properties;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.cms.Cms;
 import net.sourceforge.fenixedu.domain.cms.ICms;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.CMSVO;
 
 import org.apache.ojb.broker.query.Criteria;
 

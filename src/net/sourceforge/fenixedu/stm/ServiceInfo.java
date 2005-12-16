@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.stm;
 
 import java.util.Enumeration;
 import java.util.HashSet;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 

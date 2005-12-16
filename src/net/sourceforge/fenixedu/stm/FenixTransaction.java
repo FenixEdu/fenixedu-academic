@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.stm;
 
-import org.apache.ojb.broker.PersistenceBroker;
-
 import jvstm.VBoxBody;
+
+import org.apache.ojb.broker.PersistenceBroker;
 
 public interface FenixTransaction {
     public void setReadOnly();

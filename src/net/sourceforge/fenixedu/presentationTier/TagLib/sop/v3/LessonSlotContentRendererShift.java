@@ -3,7 +3,6 @@
 */
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3;
 
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRenderer;
 
 /**
  * @author Ricardo Rodrigues

@@ -11,12 +11,10 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-
 import net.sourceforge.fenixedu.stm.Transaction;
 
 import org.apache.ojb.broker.Identity;

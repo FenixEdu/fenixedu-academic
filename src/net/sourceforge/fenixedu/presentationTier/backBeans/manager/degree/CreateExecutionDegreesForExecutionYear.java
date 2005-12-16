@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.faces.component.UISelectItems;
-import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;

@@ -9,13 +9,6 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 
 import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
-import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.AdviseOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.TeacherPersonalExpectationOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.service.DegreeTeachingServiceOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.service.InstitutionWorkTimeOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.service.OtherServiceOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.service.TeacherMasterDegreeServiceOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.service.TeacherPastServiceOJB;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminary;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudy;

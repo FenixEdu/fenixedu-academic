@@ -9,7 +9,6 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.Properties;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.cms.Cms;
 import net.sourceforge.fenixedu.domain.cms.ICms;

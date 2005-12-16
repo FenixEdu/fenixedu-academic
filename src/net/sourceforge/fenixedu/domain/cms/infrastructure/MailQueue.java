@@ -3,13 +3,9 @@
 package net.sourceforge.fenixedu.domain.cms.infrastructure;
 
 
+import net.sourceforge.fenixedu.domain.cms.messaging.IMailMessage;
 import relations.MailingListQueue;
 import relations.MailingListQueueOutgoingMails;
-import net.sourceforge.fenixedu.domain.cms.messaging.IMailMessage;
-import net.sourceforge.fenixedu.domain.cms.messaging.IMailingList;
-import net.sourceforge.fenixedu.stm.VBox;
-import net.sourceforge.fenixedu.stm.RelationList;
-import net.sourceforge.fenixedu.stm.OJBFunctionalSetWrapper;
 
 public class MailQueue extends MailQueue_Base
 {

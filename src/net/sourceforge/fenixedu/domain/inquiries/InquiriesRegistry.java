@@ -4,11 +4,11 @@
  */
 package net.sourceforge.fenixedu.domain.inquiries;
 
-import org.apache.commons.lang.NullArgumentException;
-
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudent;
+
+import org.apache.commons.lang.NullArgumentException;
 
 
 /**

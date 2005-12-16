@@ -1,10 +1,7 @@
 package net.sourceforge.fenixedu.stm;
 
-import net.sourceforge.fenixedu.domain.DomainObject;
-
-import com.thoughtworks.xstream.io.xml.Dom4JDriver;
-
 import jvstm.VBoxBody;
+import net.sourceforge.fenixedu.domain.DomainObject;
 
 public class VBox<E> extends jvstm.VBox<E> implements VersionedSubject {
     static final Object NOT_LOADED_VALUE = new Object();

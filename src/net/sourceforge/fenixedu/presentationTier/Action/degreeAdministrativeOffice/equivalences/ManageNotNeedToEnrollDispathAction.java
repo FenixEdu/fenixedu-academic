@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOff
 
 import java.text.Collator;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
