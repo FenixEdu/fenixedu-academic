@@ -5,10 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <table width="100%" cellspacing="0" cellpadding="5">
-	<td class="infoop">
-		<span class="emphasis-box">info</span>
-	</td>
-	<td class="infoop">
+	<td class="infoselected">
 		<bean:message key="label.teacherService.credits.explanation"/>
 		<br/><br/>
 		<b><bean:message key="label.teacherService.credits.diferentCategories.explanation"/></b>
