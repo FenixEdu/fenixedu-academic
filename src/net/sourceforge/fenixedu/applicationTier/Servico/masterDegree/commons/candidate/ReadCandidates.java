@@ -17,29 +17,23 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadCandidates implements IService {
 
-    public List run(String[] candidateList) throws FenixServiceException {
+	public List run(String[] candidateList) throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = null;
-        List result = new ArrayList();
+		ISuportePersistente sp = null;
+		List result = new ArrayList();
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            // Read the admited candidates
-            int size = candidateList.length;
-            int i = 0;
-            for (i = 0; i < size; i++) {
+		// Read the admited candidates
+		int size = candidateList.length;
+		int i = 0;
+		for (i = 0; i < size; i++) {
 
-                result.add(InfoMasterDegreeCandidateWithInfoPerson
-                        .newInfoFromDomain((IMasterDegreeCandidate) sp
-                                .getIPersistentMasterDegreeCandidate().readByOID(
-                                        MasterDegreeCandidate.class, new Integer(candidateList[i]))));
-            }
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);
+			result.add(InfoMasterDegreeCandidateWithInfoPerson
+					.newInfoFromDomain((IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate()
+							.readByOID(MasterDegreeCandidate.class, new Integer(candidateList[i]))));
+		}
 
-            throw newEx;
-        }
-        return result;
-    }
+		return result;
+	}
 }

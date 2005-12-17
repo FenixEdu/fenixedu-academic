@@ -23,32 +23,26 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * 
  * Created at 3/Set/2003, 14:22:08
- *  
+ * 
  */
 public class GetAllCasesStudy implements IService {
 
-    public GetAllCasesStudy() {
-    }
+	public List run() throws BDException, ExcepcaoPersistencia {
+		List infoCases = new LinkedList();
 
-    public List run() throws BDException {
-        List infoCases = new LinkedList();
-        try {
-            ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentSeminaryCaseStudy persistentCaseStudy = persistenceSupport
-                    .getIPersistentSeminaryCaseStudy();
-            List cases = persistentCaseStudy.readAll();
+		ISuportePersistente persistenceSupport = PersistenceSupportFactory
+				.getDefaultPersistenceSupport();
+		IPersistentSeminaryCaseStudy persistentCaseStudy = persistenceSupport
+				.getIPersistentSeminaryCaseStudy();
+		List cases = persistentCaseStudy.readAll();
 
-            for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
-                ICaseStudy caseStudy = (ICaseStudy) iterator.next();
+		for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
+			ICaseStudy caseStudy = (ICaseStudy) iterator.next();
 
-                infoCases.add(InfoCaseStudy.newInfoFromDomain(caseStudy));
-            }
+			infoCases.add(InfoCaseStudy.newInfoFromDomain(caseStudy));
+		}
 
-        } catch (ExcepcaoPersistencia ex) {
-            throw new BDException(
-                    "Got an error while trying to retrieve mutiple case studies from the database", ex);
-        }
-        return infoCases;
-    }
+		return infoCases;
+	}
 
 }

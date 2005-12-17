@@ -24,13 +24,13 @@ public class ReadAdmitedCandidates implements IService {
      * @return The candidates Admited for Master Degree (Specialization not
      *         Included) This is only for Numerus Clauses count
      * @throws FenixServiceException
+     * @throws ExcepcaoPersistencia 
      */
-    public List run(String[] candidateList, String[] ids) throws FenixServiceException {
+    public List run(String[] candidateList, String[] ids) throws FenixServiceException,
+			ExcepcaoPersistencia {
 
         ISuportePersistente sp = null;
         List result = new ArrayList();
-
-        try {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             // Read the admited candidates
@@ -52,11 +52,6 @@ public class ReadAdmitedCandidates implements IService {
                     }
                 }
             }
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
 
         return result;
 

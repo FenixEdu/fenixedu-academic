@@ -29,43 +29,39 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadCandidateListByPersonAndExecutionDegree implements IService {
 
-    public InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree, InfoPerson infoPerson,
-            Integer number) throws FenixServiceException {
+	public InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree, InfoPerson infoPerson,
+			Integer number) throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = null;
-        IMasterDegreeCandidate result = null;
+		ISuportePersistente sp = null;
+		IMasterDegreeCandidate result = null;
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            // Read the candidates
+		// Read the candidates
 
-            IPerson person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class,infoPerson.getIdInternal());
+		IPerson person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class,
+				infoPerson.getIdInternal());
 
-            result = sp.getIPersistentMasterDegreeCandidate().readByExecutionDegreeAndPersonAndNumber(
-                    infoExecutionDegree.getIdInternal(), person.getIdInternal(), number);
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+		result = sp.getIPersistentMasterDegreeCandidate().readByExecutionDegreeAndPersonAndNumber(
+				infoExecutionDegree.getIdInternal(), person.getIdInternal(), number);
 
-        InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
-                .newInfoFromDomain(result);
-        Iterator situationIterator = result.getSituations().iterator();
-        List situations = new ArrayList();
-        while (situationIterator.hasNext()) {
-            InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation.newInfoFromDomain((ICandidateSituation) situationIterator.next());
-            situations.add(infoCandidateSituation);
+		InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
+				.newInfoFromDomain(result);
+		Iterator situationIterator = result.getSituations().iterator();
+		List situations = new ArrayList();
+		while (situationIterator.hasNext()) {
+			InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation
+					.newInfoFromDomain((ICandidateSituation) situationIterator.next());
+			situations.add(infoCandidateSituation);
 
-            // Check if this is the Active Situation
-            if (infoCandidateSituation.getValidation().equals(new State(State.ACTIVE)))
-                infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
-        }
-        infoMasterDegreeCandidate.setSituationList(situations);
+			// Check if this is the Active Situation
+			if (infoCandidateSituation.getValidation().equals(new State(State.ACTIVE)))
+				infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
+		}
+		infoMasterDegreeCandidate.setSituationList(situations);
 
-        return infoMasterDegreeCandidate;
+		return infoMasterDegreeCandidate;
 
-    }
+	}
 
 }

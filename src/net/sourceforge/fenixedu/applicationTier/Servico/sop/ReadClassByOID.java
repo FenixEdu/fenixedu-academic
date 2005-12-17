@@ -5,7 +5,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
@@ -14,44 +13,26 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  * 
- *  
+ * 
  */
-public class ReadClassByOID implements IServico {
+public class ReadClassByOID implements IService {
 
-    private static ReadClassByOID service = new ReadClassByOID();
+	public InfoClass run(Integer oid) throws FenixServiceException, ExcepcaoPersistencia {
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadClassByOID getService() {
-        return service;
-    }
+		InfoClass result = null;
 
-    /**
-     * @see ServidorAplicacao.IServico#getNome()
-     */
-    public String getNome() {
-        return "ReadClassByOID";
-    }
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ITurmaPersistente classDAO = sp.getITurmaPersistente();
+		ISchoolClass turma = (ISchoolClass) classDAO.readByOID(SchoolClass.class, oid);
+		if (turma != null) {
+			result = InfoClass.newInfoFromDomain(turma);
+		}
 
-    public InfoClass run(Integer oid) throws FenixServiceException {
-
-        InfoClass result = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            ITurmaPersistente classDAO = sp.getITurmaPersistente();
-            ISchoolClass turma = (ISchoolClass) classDAO.readByOID(SchoolClass.class, oid);
-            if (turma != null) {
-                result = InfoClass.newInfoFromDomain(turma);
-            }
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex);
-        }
-
-        return result;
-    }
+		return result;
+	}
 }

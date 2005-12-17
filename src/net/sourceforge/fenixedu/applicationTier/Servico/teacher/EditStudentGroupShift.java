@@ -28,45 +28,40 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class EditStudentGroupShift implements IService {
 
-    public Boolean run(Integer executionCourseCode, Integer studentGroupCode,
-            Integer groupPropertiesCode, Integer newShiftCode) throws FenixServiceException {
+	public Boolean run(Integer executionCourseCode, Integer studentGroupCode,
+			Integer groupPropertiesCode, Integer newShiftCode) throws FenixServiceException,
+			ExcepcaoPersistencia {
 
-        ITurnoPersistente persistentShift = null;
-        IPersistentStudentGroup persistentStudentGroup = null;
-        IPersistentGrouping persistentGroupProperties = null;
+		ITurnoPersistente persistentShift = null;
+		IPersistentStudentGroup persistentStudentGroup = null;
+		IPersistentGrouping persistentGroupProperties = null;
 
-        try {
-            ISuportePersistente persistentSupport = PersistenceSupportFactory
-                    .getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            persistentGroupProperties = persistentSupport.getIPersistentGrouping();
-            persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
-            persistentShift = persistentSupport.getITurnoPersistente();
+		persistentGroupProperties = persistentSupport.getIPersistentGrouping();
+		persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
+		persistentShift = persistentSupport.getITurnoPersistente();
 
-            IGrouping grouping = (IGrouping) persistentGroupProperties.readByOID(Grouping.class,
-                    groupPropertiesCode);
+		IGrouping grouping = (IGrouping) persistentGroupProperties.readByOID(Grouping.class,
+				groupPropertiesCode);
 
-            if (grouping == null) {
-                throw new ExistingServiceException();
-            }
+		if (grouping == null) {
+			throw new ExistingServiceException();
+		}
 
-            IShift shift = (IShift) persistentShift.readByOID(Shift.class, newShiftCode);
+		IShift shift = (IShift) persistentShift.readByOID(Shift.class, newShiftCode);
 
-            //grouping.checkShiftCapacity(shift);
+		// grouping.checkShiftCapacity(shift);
 
-            IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
-                    StudentGroup.class, studentGroupCode);
+		IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
+				StudentGroup.class, studentGroupCode);
 
-            if (studentGroup == null) {
-                throw new InvalidArgumentsServiceException();
-            }
+		if (studentGroup == null) {
+			throw new InvalidArgumentsServiceException();
+		}
 
-            studentGroup.editShift(shift);
+		studentGroup.editShift(shift);
 
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia.getMessage());
-        }
-
-        return Boolean.TRUE;
-    }
+		return Boolean.TRUE;
+	}
 }

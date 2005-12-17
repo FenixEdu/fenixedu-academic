@@ -13,40 +13,39 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Fernanda Quitério
- *  
+ * 
  */
 public class EditItem implements IService {
 
-    /**
-     * Executes the service.
-     *  
-     */
-    public Boolean run(Integer infoExecutionCourseCode, Integer itemCode, InfoItem newInfoItem)
-            throws FenixServiceException {
-        IItem item = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentItem persistentItem = sp.getIPersistentItem();
-            
-            item = (IItem) persistentItem.readByOID(Item.class, itemCode);
+	/**
+	 * Executes the service.
+	 * @throws ExcepcaoPersistencia 
+	 * 
+	 */
+	public Boolean run(Integer infoExecutionCourseCode, Integer itemCode, InfoItem newInfoItem)
+			throws FenixServiceException, ExcepcaoPersistencia {
+		IItem item = null;
 
-            if (item == null) {
-                throw new ExistingServiceException();
-            }
-                                    
-            if (newInfoItem.getItemOrder() == -2)
-                newInfoItem.setItemOrder(new Integer(item.getSection().getAssociatedItemsCount() - 1));
-            
-            int diffOrder = newInfoItem.getItemOrder() - item.getItemOrder().intValue();
-            if(diffOrder < 0)
-                newInfoItem.setItemOrder(newInfoItem.getItemOrder() + 1);
-            
-            item.edit(newInfoItem.getName(), newInfoItem.getInformation(), newInfoItem.getUrgent(), newInfoItem.getItemOrder());
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentItem persistentItem = sp.getIPersistentItem();
 
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-        return new Boolean(true);
-    }
+		item = (IItem) persistentItem.readByOID(Item.class, itemCode);
+
+		if (item == null) {
+			throw new ExistingServiceException();
+		}
+
+		if (newInfoItem.getItemOrder() == -2)
+			newInfoItem.setItemOrder(new Integer(item.getSection().getAssociatedItemsCount() - 1));
+
+		int diffOrder = newInfoItem.getItemOrder() - item.getItemOrder().intValue();
+		if (diffOrder < 0)
+			newInfoItem.setItemOrder(newInfoItem.getItemOrder() + 1);
+
+		item.edit(newInfoItem.getName(), newInfoItem.getInformation(), newInfoItem.getUrgent(),
+				newInfoItem.getItemOrder());
+
+		return new Boolean(true);
+	}
 
 }

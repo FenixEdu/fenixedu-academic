@@ -23,30 +23,25 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * 
  * Created at 3/Set/2003, 16:21:47
- *  
+ * 
  */
 public class GetAllThemes implements IService {
 
-    public GetAllThemes() {
-    }
+	public List run() throws BDException, ExcepcaoPersistencia {
+		List seminariesInfo = new LinkedList();
 
-    public List run() throws BDException {
-        List seminariesInfo = new LinkedList();
-        try {
-            ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentSeminaryTheme persistentTheme = persistenceSupport.getIPersistentSeminaryTheme();
-            List themes = persistentTheme.readAll();
-            for (Iterator iterator = themes.iterator(); iterator.hasNext();) {
+		ISuportePersistente persistenceSupport = PersistenceSupportFactory
+				.getDefaultPersistenceSupport();
+		IPersistentSeminaryTheme persistentTheme = persistenceSupport.getIPersistentSeminaryTheme();
+		List themes = persistentTheme.readAll();
+		for (Iterator iterator = themes.iterator(); iterator.hasNext();) {
 
-                InfoTheme infoTheme = InfoTheme.newInfoFromDomain((ITheme) iterator.next());
+			InfoTheme infoTheme = InfoTheme.newInfoFromDomain((ITheme) iterator.next());
 
-                seminariesInfo.add(infoTheme);
-            }
-        } catch (ExcepcaoPersistencia ex) {
-            throw new BDException(
-                    "Got an error while trying to retrieve multiple themes from the database", ex);
-        }
-        return seminariesInfo;
-    }
+			seminariesInfo.add(infoTheme);
+		}
+
+		return seminariesInfo;
+	}
 
 }

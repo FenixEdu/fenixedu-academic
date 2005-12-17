@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  *  
  */
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
@@ -14,47 +13,23 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class ReadSchoolClass implements IServico {
+public class ReadSchoolClass implements IService {
 
-    private static ReadSchoolClass _servico = new ReadSchoolClass();
+	public InfoClass run(InfoClass infoSchoolClass) throws FenixServiceException, ExcepcaoPersistencia {
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadSchoolClass getService() {
-        return _servico;
-    }
+		InfoClass result = null;
 
-    /**
-     * The actor of this class.
-     */
-    private ReadSchoolClass() {
-    }
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ITurmaPersistente persistentSchoolClass = sp.getITurmaPersistente();
+		ISchoolClass schoolClass = (ISchoolClass) persistentSchoolClass.readByOID(SchoolClass.class,
+				infoSchoolClass.getIdInternal());
+		if (schoolClass != null) {
+			result = InfoClass.newInfoFromDomain(schoolClass);
+		}
 
-    /**
-     * Devolve o nome do servico
-     */
-    public final String getNome() {
-        return "ReadSchoolClass";
-    }
-
-    public InfoClass run(InfoClass infoSchoolClass) throws FenixServiceException {
-
-        InfoClass result = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            ITurmaPersistente persistentSchoolClass = sp.getITurmaPersistente();
-            ISchoolClass schoolClass = (ISchoolClass) persistentSchoolClass.readByOID(SchoolClass.class, infoSchoolClass
-                    .getIdInternal());
-            if (schoolClass != null) {
-                result = InfoClass.newInfoFromDomain(schoolClass);
-            }
-
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex);
-        }
-        return result;
-    }
+		return result;
+	}
 
 }

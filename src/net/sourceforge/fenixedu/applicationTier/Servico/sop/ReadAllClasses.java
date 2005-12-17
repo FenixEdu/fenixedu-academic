@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
+
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
@@ -28,58 +30,34 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
  * @author João Mota
  * 
  * 30/Jun/2003 fenix-branch ServidorAplicacao.Servico.sop
- *  
+ * 
  */
-public class ReadAllClasses implements IServico {
+public class ReadAllClasses implements IService {
 
-    /**
-     *  
-     */
-    private ReadAllClasses() {
-    }
+	public SiteView run(Integer keyExecutionPeriod) throws FenixServiceException, ExcepcaoPersistencia {
+		List infoClasses = null;
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.IServico#getNome()
-     */
-    public String getNome() {
-        return "ReadAllClasses";
-    }
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
-    private static ReadAllClasses service = new ReadAllClasses();
+		IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+				ExecutionPeriod.class, keyExecutionPeriod);
 
-    public static ReadAllClasses getService() {
-        return service;
-    }
+		ITurmaPersistente persistentClass = sp.getITurmaPersistente();
+		List classes = persistentClass.readByExecutionPeriod(executionPeriod.getIdInternal());
 
-    public SiteView run(Integer keyExecutionPeriod) throws FenixServiceException {
-        List infoClasses = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+		infoClasses = new ArrayList();
+		Iterator iter = classes.iterator();
+		while (iter.hasNext()) {
+			ISchoolClass dClass = (ISchoolClass) iter.next();
+			InfoClass infoClass = InfoClass.newInfoFromDomain(dClass);
+			infoClasses.add(infoClass);
+		}
 
-            IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
-                    ExecutionPeriod.class, keyExecutionPeriod);
+		ISiteComponent classesComponent = new InfoSiteClassesComponent(infoClasses);
+		SiteView siteView = new SiteView(classesComponent);
 
-            ITurmaPersistente persistentClass = sp.getITurmaPersistente();
-            List classes = persistentClass.readByExecutionPeriod(executionPeriod.getIdInternal());
-
-            infoClasses = new ArrayList();
-            Iterator iter = classes.iterator();
-            while (iter.hasNext()) {
-                ISchoolClass dClass = (ISchoolClass) iter.next();
-                InfoClass infoClass = InfoClass.newInfoFromDomain(dClass);
-                infoClasses.add(infoClass);
-            }
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-        ISiteComponent classesComponent = new InfoSiteClassesComponent(infoClasses);
-        SiteView siteView = new SiteView(classesComponent);
-
-        return siteView;
-    }
+		return siteView;
+	}
 
 }

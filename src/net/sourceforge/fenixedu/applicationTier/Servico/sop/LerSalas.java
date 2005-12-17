@@ -11,57 +11,31 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class LerSalas implements IServico {
+public class LerSalas implements IService {
 
-    private static LerSalas _servico = new LerSalas();
+	public Object run() throws ExcepcaoPersistencia {
+		List salas = null;
+		List infoSalas = null;
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static LerSalas getService() {
-        return _servico;
-    }
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		salas = sp.getISalaPersistente().readAll();
 
-    /**
-     * The actor of this class.
-     */
-    private LerSalas() {
-    }
+		Iterator iterator = salas.iterator();
+		infoSalas = new ArrayList();
+		while (iterator.hasNext()) {
+			IRoom elem = (IRoom) iterator.next();
+			infoSalas.add(new InfoRoom(elem.getNome(), elem.getBuilding().getName(), elem.getPiso(),
+					elem.getTipo(), elem.getCapacidadeNormal(), elem.getCapacidadeExame()));
+		}
 
-    /**
-     * Devolve o nome do servico
-     */
-    public final String getNome() {
-        return "LerSalas";
-    }
-
-    public Object run() {
-
-        List salas = null;
-        List infoSalas = null;
-
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            salas = sp.getISalaPersistente().readAll();
-
-            Iterator iterator = salas.iterator();
-            infoSalas = new ArrayList();
-            while (iterator.hasNext()) {
-                IRoom elem = (IRoom) iterator.next();
-                infoSalas.add(new InfoRoom(elem.getNome(), elem.getBuilding().getName(), elem.getPiso(), elem
-                        .getTipo(), elem.getCapacidadeNormal(), elem.getCapacidadeExame()));
-            }
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
-        }
-        return infoSalas;
-    }
+		return infoSalas;
+	}
 
 }

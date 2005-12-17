@@ -18,42 +18,35 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadSubstituteCandidates implements IService {
 
-    public List run(String[] candidateList, String[] ids) throws FenixServiceException {
+	public List run(String[] candidateList, String[] ids) throws FenixServiceException,
+			ExcepcaoPersistencia {
 
-        ISuportePersistente sp = null;
-        List result = new ArrayList();
+		ISuportePersistente sp = null;
+		List result = new ArrayList();
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            // Read the substitute candidates
-            int size = candidateList.length;
+		// Read the substitute candidates
+		int size = candidateList.length;
 
-            for (int i = 0; i < size; i++) {
-                if (candidateList[i].equals(SituationName.SUPLENTE_STRING)
-                        || candidateList[i]
-                                .equals(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING)
-                        || candidateList[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING)
-                        || candidateList[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING)) {
+		for (int i = 0; i < size; i++) {
+			if (candidateList[i].equals(SituationName.SUPLENTE_STRING)
+					|| candidateList[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING)
+					|| candidateList[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING)
+					|| candidateList[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING)) {
 
-                    Integer idInternal = new Integer(ids[i]);
+				Integer idInternal = new Integer(ids[i]);
 
-                    IMasterDegreeCandidate masterDegreeCandidateToWrite = (IMasterDegreeCandidate) sp
-                            .getIPersistentMasterDegreeCandidate().readByOID(
-                                    MasterDegreeCandidate.class, idInternal);
-                    result.add(InfoMasterDegreeCandidateWithInfoPerson
-                            .newInfoFromDomain(masterDegreeCandidateToWrite));
-                }
-            }
+				IMasterDegreeCandidate masterDegreeCandidateToWrite = (IMasterDegreeCandidate) sp
+						.getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
+								idInternal);
+				result.add(InfoMasterDegreeCandidateWithInfoPerson
+						.newInfoFromDomain(masterDegreeCandidateToWrite));
+			}
+		}
 
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);
+		return result;
 
-            throw newEx;
-        }
-
-        return result;
-
-    }
+	}
 
 }

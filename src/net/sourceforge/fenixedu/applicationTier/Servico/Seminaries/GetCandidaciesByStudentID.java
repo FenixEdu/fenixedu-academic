@@ -24,33 +24,28 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * 
  * Created at 5/Ago/2003, 19:44:39
- *  
+ * 
  */
 public class GetCandidaciesByStudentID implements IService {
 
-    public GetCandidaciesByStudentID() {
-    }
+	public List run(Integer id) throws BDException, ExcepcaoPersistencia {
+		List candidaciesInfo = new LinkedList();
 
-    public List run(Integer id) throws BDException {
-        List candidaciesInfo = new LinkedList();
-        try {
-            ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentSeminaryCandidacy persistentSeminaryCandidacy = persistenceSupport
-                    .getIPersistentSeminaryCandidacy();
-            List candidacies = persistentSeminaryCandidacy.readByStudentID(id);
-            for (Iterator iterator = candidacies.iterator(); iterator.hasNext();) {
-                ICandidacy candidacy = (ICandidacy) iterator.next();
+		ISuportePersistente persistenceSupport = PersistenceSupportFactory
+				.getDefaultPersistenceSupport();
+		IPersistentSeminaryCandidacy persistentSeminaryCandidacy = persistenceSupport
+				.getIPersistentSeminaryCandidacy();
+		List candidacies = persistentSeminaryCandidacy.readByStudentID(id);
+		for (Iterator iterator = candidacies.iterator(); iterator.hasNext();) {
+			ICandidacy candidacy = (ICandidacy) iterator.next();
 
-                InfoCandidacy infoCandidacy = InfoCandidacy.newInfoFromDomain(candidacy);
+			InfoCandidacy infoCandidacy = InfoCandidacy.newInfoFromDomain(candidacy);
 
-                ISeminary seminary = candidacy.getSeminary();
-                infoCandidacy.setSeminaryName(seminary.getName());
-                candidaciesInfo.add(infoCandidacy);
-            }
-        } catch (ExcepcaoPersistencia ex) {
-            throw new BDException(
-                    "Got an error while trying to retrieve multiple candidacies from the database", ex);
-        }
-        return candidaciesInfo;
-    }
+			ISeminary seminary = candidacy.getSeminary();
+			infoCandidacy.setSeminaryName(seminary.getName());
+			candidaciesInfo.add(infoCandidacy);
+		}
+
+		return candidaciesInfo;
+	}
 }

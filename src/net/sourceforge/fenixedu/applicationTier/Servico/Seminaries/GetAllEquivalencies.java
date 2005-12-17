@@ -23,29 +23,24 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * 
  * Created at 3/Set/2003, 15:35:33
- *  
+ * 
  */
 public class GetAllEquivalencies implements IService {
 
-    public GetAllEquivalencies() {
-    }
+	public List run() throws BDException, ExcepcaoPersistencia {
+		List infoEquivalencies = new LinkedList();
 
-    public List run() throws BDException {
-        List infoEquivalencies = new LinkedList();
-        try {
-            ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentSeminaryCurricularCourseEquivalency persistentEquivalency = persistenceSupport
-                    .getIPersistentSeminaryCurricularCourseEquivalency();
-            List equivalencies = persistentEquivalency.readAll();
-            for (Iterator iterator = equivalencies.iterator(); iterator.hasNext();) {
-                ICourseEquivalency equivalency = (ICourseEquivalency) iterator.next();
+		ISuportePersistente persistenceSupport = PersistenceSupportFactory
+				.getDefaultPersistenceSupport();
+		IPersistentSeminaryCurricularCourseEquivalency persistentEquivalency = persistenceSupport
+				.getIPersistentSeminaryCurricularCourseEquivalency();
+		List equivalencies = persistentEquivalency.readAll();
+		for (Iterator iterator = equivalencies.iterator(); iterator.hasNext();) {
+			ICourseEquivalency equivalency = (ICourseEquivalency) iterator.next();
 
-                infoEquivalencies.add(InfoEquivalencyWithCurricularCourse.newInfoFromDomain(equivalency));
-            }
-        } catch (ExcepcaoPersistencia ex) {
-            throw new BDException(
-                    "Got an error while trying to retrieve mutiple modalities from the database", ex);
-        }
-        return infoEquivalencies;
-    }
+			infoEquivalencies.add(InfoEquivalencyWithCurricularCourse.newInfoFromDomain(equivalency));
+		}
+
+		return infoEquivalencies;
+	}
 }

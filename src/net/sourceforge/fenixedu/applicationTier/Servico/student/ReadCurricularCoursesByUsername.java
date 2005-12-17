@@ -24,30 +24,26 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * This service reads all the Curricular Courses for this student's curricular
  * plans, and not only the Curricular Courses currently in execution. For this
  * case use ReadDisciplinesByStudent Created at 3/Ago/2003, 21:37:27
- *  
+ * 
  */
 public class ReadCurricularCoursesByUsername implements IService {
 
-    public List run(String username) throws BDException {
-        List curricularCourses = new LinkedList();
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            List curricularPlans = sp.getIStudentCurricularPlanPersistente().readByUsername(username);
-            for (Iterator iterator = curricularPlans.iterator(); iterator.hasNext();) {
-                IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator.next();
-                for (Iterator curricularCoursesIterator = studentCurricularPlan
-                        .getDegreeCurricularPlan().getCurricularCourses().iterator(); curricularCoursesIterator
-                        .hasNext();) {
-                    ICurricularCourse curricularCourse = (ICurricularCourse) curricularCoursesIterator
-                            .next();
-                    curricularCourses.add(InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse));
-                }
-            }
-        } catch (ExcepcaoPersistencia ex) {
-            throw new BDException(
-                    "Got an error while trying to retrieve a student's curricular courses from the database",
-                    ex);
-        }
-        return curricularCourses;
-    }
+	public List run(String username) throws BDException, ExcepcaoPersistencia {
+		List curricularCourses = new LinkedList();
+
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		List curricularPlans = sp.getIStudentCurricularPlanPersistente().readByUsername(username);
+		for (Iterator iterator = curricularPlans.iterator(); iterator.hasNext();) {
+			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator.next();
+			for (Iterator curricularCoursesIterator = studentCurricularPlan.getDegreeCurricularPlan()
+					.getCurricularCourses().iterator(); curricularCoursesIterator.hasNext();) {
+				ICurricularCourse curricularCourse = (ICurricularCourse) curricularCoursesIterator
+						.next();
+				curricularCourses.add(InfoCurricularCourseWithInfoDegree
+						.newInfoFromDomain(curricularCourse));
+			}
+		}
+
+		return curricularCourses;
+	}
 }

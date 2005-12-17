@@ -25,35 +25,32 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * 
  * Created at 25/Ago/2003, 15:09:58
- *  
+ * 
  */
 public class DeleteCandidacy implements IService {
 
-    public void run(Integer id) throws BDException {
-        try {
-            ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentSeminaryCandidacy persistentCandidacy = persistenceSupport
-                    .getIPersistentSeminaryCandidacy();
-            IPersistentSeminaryCaseStudyChoice persistentChoice = persistenceSupport
-                    .getIPersistentSeminaryCaseStudyChoice();
-            ICandidacy candidacy = (ICandidacy) persistentCandidacy.readByOID(Candidacy.class, id);
-            List choices = candidacy.getCaseStudyChoices();
-            for (Iterator iterator = choices.iterator(); iterator.hasNext();) {
-                ICaseStudyChoice choice = (ICaseStudyChoice) iterator.next();
-                choice.setCaseStudy(null);
-                persistentChoice.deleteByOID(CaseStudyChoice.class, choice.getIdInternal());
-            }
-            candidacy.setCurricularCourse(null);
-            candidacy.setModality(null);
-            candidacy.setSeminary(null);
-            candidacy.setStudent(null);
-            candidacy.setTheme(null);
-            candidacy.getCaseStudyChoices().clear();
-            persistentCandidacy.deleteByOID(Candidacy.class, id);
-        } catch (ExcepcaoPersistencia ex) {
-            throw new BDException("Got an error while trying to delete a candidacy from the database",
-                    ex);
-        }
-    }
+	public void run(Integer id) throws BDException, ExcepcaoPersistencia {
+
+		ISuportePersistente persistenceSupport = PersistenceSupportFactory
+				.getDefaultPersistenceSupport();
+		IPersistentSeminaryCandidacy persistentCandidacy = persistenceSupport
+				.getIPersistentSeminaryCandidacy();
+		IPersistentSeminaryCaseStudyChoice persistentChoice = persistenceSupport
+				.getIPersistentSeminaryCaseStudyChoice();
+		ICandidacy candidacy = (ICandidacy) persistentCandidacy.readByOID(Candidacy.class, id);
+		List choices = candidacy.getCaseStudyChoices();
+		for (Iterator iterator = choices.iterator(); iterator.hasNext();) {
+			ICaseStudyChoice choice = (ICaseStudyChoice) iterator.next();
+			choice.setCaseStudy(null);
+			persistentChoice.deleteByOID(CaseStudyChoice.class, choice.getIdInternal());
+		}
+		candidacy.setCurricularCourse(null);
+		candidacy.setModality(null);
+		candidacy.setSeminary(null);
+		candidacy.setStudent(null);
+		candidacy.setTheme(null);
+		candidacy.getCaseStudyChoices().clear();
+		persistentCandidacy.deleteByOID(Candidacy.class, id);
+	}
 
 }

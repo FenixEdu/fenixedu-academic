@@ -36,51 +36,46 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 // student package net.sourceforge.fenixedu.(ReadExecutionCourseProjects)
 public class ReadExecutionCourseProjects implements IService {
 
-    public ISiteComponent run(Integer executionCourseCode) throws FenixServiceException {
+	public ISiteComponent run(Integer executionCourseCode) throws FenixServiceException, ExcepcaoPersistencia {
 
-        InfoSiteProjects infoSiteProjects = null;
+		InfoSiteProjects infoSiteProjects = null;
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
-                    .readByOID(ExecutionCourse.class, executionCourseCode);
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
+				.readByOID(ExecutionCourse.class, executionCourseCode);
 
-            List executionCourseProjects = new ArrayList();
-            List groupPropertiesExecutionCourseList = executionCourse.getExportGroupings();
-            Iterator iterGroupPropertiesExecutionCourseList = groupPropertiesExecutionCourseList
-                    .iterator();
-            while (iterGroupPropertiesExecutionCourseList.hasNext()) {
-                IExportGrouping groupPropertiesExecutionCourse = (IExportGrouping) iterGroupPropertiesExecutionCourseList
-                        .next();
-                if (groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 1
-                        || groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 2) {
-                    executionCourseProjects.add(groupPropertiesExecutionCourse.getGrouping());
-                }
-            }
+		List executionCourseProjects = new ArrayList();
+		List groupPropertiesExecutionCourseList = executionCourse.getExportGroupings();
+		Iterator iterGroupPropertiesExecutionCourseList = groupPropertiesExecutionCourseList.iterator();
+		while (iterGroupPropertiesExecutionCourseList.hasNext()) {
+			IExportGrouping groupPropertiesExecutionCourse = (IExportGrouping) iterGroupPropertiesExecutionCourseList
+					.next();
+			if (groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 1
+					|| groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 2) {
+				executionCourseProjects.add(groupPropertiesExecutionCourse.getGrouping());
+			}
+		}
 
-            if (executionCourseProjects.size() != 0) {
-                infoSiteProjects = new InfoSiteProjects();
+		if (executionCourseProjects.size() != 0) {
+			infoSiteProjects = new InfoSiteProjects();
 
-                List infoGroupPropertiesList = new ArrayList();
-                Iterator iterator = executionCourseProjects.iterator();
+			List infoGroupPropertiesList = new ArrayList();
+			Iterator iterator = executionCourseProjects.iterator();
 
-                while (iterator.hasNext()) {
-                    IGrouping groupProperties = (IGrouping) iterator.next();
+			while (iterator.hasNext()) {
+				IGrouping groupProperties = (IGrouping) iterator.next();
 
-                    InfoGrouping infoGroupProperties = InfoGrouping.newInfoFromDomain(groupProperties);
-                    infoGroupPropertiesList.add(infoGroupProperties);
-                }
+				InfoGrouping infoGroupProperties = InfoGrouping.newInfoFromDomain(groupProperties);
+				infoGroupPropertiesList.add(infoGroupProperties);
+			}
 
-                infoSiteProjects.setInfoGroupPropertiesList(infoGroupPropertiesList);
-                InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
-                        .newInfoFromDomain(executionCourse);
-                infoSiteProjects.setInfoExecutionCourse(infoExecutionCourse);
-            }
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-            throw new FenixServiceException("error.impossibleReadExecutionCourseProjects");
-        }
-        return infoSiteProjects;
-    }
+			infoSiteProjects.setInfoGroupPropertiesList(infoGroupPropertiesList);
+			InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
+					.newInfoFromDomain(executionCourse);
+			infoSiteProjects.setInfoExecutionCourse(infoExecutionCourse);
+		}
+
+		return infoSiteProjects;
+	}
 
 }

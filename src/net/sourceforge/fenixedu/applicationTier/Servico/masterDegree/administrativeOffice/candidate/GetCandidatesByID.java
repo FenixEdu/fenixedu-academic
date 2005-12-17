@@ -30,47 +30,43 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class GetCandidatesByID implements IService {
 
-    public InfoMasterDegreeCandidate run(Integer candidateID) throws FenixServiceException {
+	public InfoMasterDegreeCandidate run(Integer candidateID) throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = null;
-        IMasterDegreeCandidate masterDegreeCandidate = null;
+		ISuportePersistente sp = null;
+		IMasterDegreeCandidate masterDegreeCandidate = null;
 
-        if (candidateID == null) {
-            throw new NonExistingServiceException();
-        }
+		if (candidateID == null) {
+			throw new NonExistingServiceException();
+		}
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            masterDegreeCandidate = (IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate()
-                    .readByOID(MasterDegreeCandidate.class, candidateID);
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);
+		masterDegreeCandidate = (IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate()
+				.readByOID(MasterDegreeCandidate.class, candidateID);
 
-            throw newEx;
-        }
+		InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
+				.newInfoFromDomain(masterDegreeCandidate);
 
-        InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
-                .newInfoFromDomain(masterDegreeCandidate);
+		final IExecutionDegree executionDegree = masterDegreeCandidate.getExecutionDegree();
+		final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
+				.newInfoFromDomain(executionDegree);
+		infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
 
-        final IExecutionDegree executionDegree = masterDegreeCandidate.getExecutionDegree();
-        final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan.newInfoFromDomain(executionDegree);
-        infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
+		Iterator situationIterator = masterDegreeCandidate.getSituations().iterator();
+		List situations = new ArrayList();
+		while (situationIterator.hasNext()) {
+			InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation
+					.newInfoFromDomain((ICandidateSituation) situationIterator.next());
+			situations.add(infoCandidateSituation);
 
-        Iterator situationIterator = masterDegreeCandidate.getSituations().iterator();
-        List situations = new ArrayList();
-        while (situationIterator.hasNext()) {
-            InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation.newInfoFromDomain((ICandidateSituation) situationIterator.next());
-            situations.add(infoCandidateSituation);
+			// Check if this is the Active Situation
+			if (infoCandidateSituation.getValidation().equals(new State(State.ACTIVE))) {
 
-            // Check if this is the Active Situation
-            if (infoCandidateSituation.getValidation().equals(new State(State.ACTIVE))) {
+				infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
+			}
 
-                infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
-            }
-
-        }
-        infoMasterDegreeCandidate.setSituationList(situations);
-        return infoMasterDegreeCandidate;
-    }
+		}
+		infoMasterDegreeCandidate.setSituationList(situations);
+		return infoMasterDegreeCandidate;
+	}
 }

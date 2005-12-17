@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -13,50 +12,28 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author João Fialho & Rita Ferreira
  * 
  */
-public class ReadExecutionCourseByCodeAndExecutionPeriodId implements IServico {
+public class ReadExecutionCourseByCodeAndExecutionPeriodId implements IService {
 
-   
-    private static ReadExecutionCourseByCodeAndExecutionPeriodId service =
-        new ReadExecutionCourseByCodeAndExecutionPeriodId();
-
-    public static ReadExecutionCourseByCodeAndExecutionPeriodId getService() {
-        return service;
-    }
-
-    private ReadExecutionCourseByCodeAndExecutionPeriodId() {
-    }
-
-    public String getNome() {
-        return "teacher.ReadExecutionCourseByCodeAndExecutionPeriodId";
-    }
-   
-    public InfoExecutionCourse run(Integer executionPeriodId, String code) throws ExcepcaoInexistente,
-    FenixServiceException {
+	public InfoExecutionCourse run(Integer executionPeriodId, String code) throws ExcepcaoInexistente,
+			FenixServiceException, ExcepcaoPersistencia {
 
 		IExecutionCourse iExecCourse = null;
 		InfoExecutionCourse infoExecCourse = null;
-		
-		try {
-		    ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		    IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
-		    iExecCourse = executionCourseDAO.readByExecutionCourseInitialsAndExecutionPeriodId(code,
-		            executionPeriodId);
-		    if (iExecCourse != null)
-		        infoExecCourse = InfoExecutionCourse.newInfoFromDomain(iExecCourse);
-		} catch (ExcepcaoPersistencia ex) {
-		    ex.printStackTrace();
-		    FenixServiceException newEx = new FenixServiceException("");
-		    newEx.fillInStackTrace();
-		    throw newEx;
-		}
-		
+
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
+		iExecCourse = executionCourseDAO.readByExecutionCourseInitialsAndExecutionPeriodId(code,
+				executionPeriodId);
+		if (iExecCourse != null)
+			infoExecCourse = InfoExecutionCourse.newInfoFromDomain(iExecCourse);
+
 		return infoExecCourse;
 	}
-   
 
 }

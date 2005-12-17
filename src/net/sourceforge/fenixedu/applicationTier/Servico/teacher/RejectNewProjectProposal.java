@@ -37,137 +37,127 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class RejectNewProjectProposal implements IService {
 
-    public Boolean run(Integer executionCourseId, Integer groupPropertiesId, String rejectorUserName)
-            throws FenixServiceException {
+	public Boolean run(Integer executionCourseId, Integer groupPropertiesId, String rejectorUserName)
+			throws FenixServiceException, ExcepcaoPersistencia {
 
-        Boolean result = Boolean.FALSE;
+		Boolean result = Boolean.FALSE;
 
-        if (groupPropertiesId == null) {
-            return result;
-        }
+		if (groupPropertiesId == null) {
+			return result;
+		}
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentGrouping persistentGroupProperties = sp.getIPersistentGrouping();
-            IPersistentExportGrouping persistentExportGrouping = sp
-                    .getIPersistentExportGrouping();
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentGrouping persistentGroupProperties = sp.getIPersistentGrouping();
+		IPersistentExportGrouping persistentExportGrouping = sp.getIPersistentExportGrouping();
+		IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
-            IGrouping groupProperties = (IGrouping) persistentGroupProperties.readByOID(Grouping.class,
-                    groupPropertiesId);
+		IGrouping groupProperties = (IGrouping) persistentGroupProperties.readByOID(Grouping.class,
+				groupPropertiesId);
 
-            if (groupProperties == null) {
-                throw new NotAuthorizedException();
-            }
+		if (groupProperties == null) {
+			throw new NotAuthorizedException();
+		}
 
-            IExportGrouping groupPropertiesExecutionCourse = persistentExportGrouping
-                    .readBy(groupPropertiesId, executionCourseId);
+		IExportGrouping groupPropertiesExecutionCourse = persistentExportGrouping.readBy(
+				groupPropertiesId, executionCourseId);
 
-            if (groupPropertiesExecutionCourse == null) {
-                throw new ExistingServiceException();
-            }
+		if (groupPropertiesExecutionCourse == null) {
+			throw new ExistingServiceException();
+		}
 
-            IPerson receiverPerson = persistentTeacher.readTeacherByUsername(rejectorUserName)
-                    .getPerson();
+		IPerson receiverPerson = persistentTeacher.readTeacherByUsername(rejectorUserName).getPerson();
 
-            IExecutionCourse executionCourse = groupPropertiesExecutionCourse.getExecutionCourse();
-            groupPropertiesExecutionCourse.setReceiverPerson(receiverPerson);
-            groupPropertiesExecutionCourse.getProposalState().setState(3);
-            executionCourse.removeExportGroupings(groupPropertiesExecutionCourse);
-            groupProperties.removeExportGroupings(groupPropertiesExecutionCourse);
+		IExecutionCourse executionCourse = groupPropertiesExecutionCourse.getExecutionCourse();
+		groupPropertiesExecutionCourse.setReceiverPerson(receiverPerson);
+		groupPropertiesExecutionCourse.getProposalState().setState(3);
+		executionCourse.removeExportGroupings(groupPropertiesExecutionCourse);
+		groupProperties.removeExportGroupings(groupPropertiesExecutionCourse);
 
-            persistentExportGrouping.deleteByOID(ExportGrouping.class,
-                    groupPropertiesExecutionCourse.getIdInternal());
+		persistentExportGrouping.deleteByOID(ExportGrouping.class, groupPropertiesExecutionCourse
+				.getIdInternal());
 
-            List group = new ArrayList();
+		List group = new ArrayList();
 
-            List groupPropertiesExecutionCourseList = groupProperties
-                    .getExportGroupings();
-            Iterator iterGroupPropertiesExecutionCourseList = groupPropertiesExecutionCourseList
-                    .iterator();
+		List groupPropertiesExecutionCourseList = groupProperties.getExportGroupings();
+		Iterator iterGroupPropertiesExecutionCourseList = groupPropertiesExecutionCourseList.iterator();
 
-            while (iterGroupPropertiesExecutionCourseList.hasNext()) {
+		while (iterGroupPropertiesExecutionCourseList.hasNext()) {
 
-                IExportGrouping groupPropertiesExecutionCourseAux = (IExportGrouping) iterGroupPropertiesExecutionCourseList
-                        .next();
-                if (groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 1
-                        || groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 2) {
+			IExportGrouping groupPropertiesExecutionCourseAux = (IExportGrouping) iterGroupPropertiesExecutionCourseList
+					.next();
+			if (groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 1
+					|| groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 2) {
 
-                    List professorships = groupPropertiesExecutionCourseAux.getExecutionCourse()
-                            .getProfessorships();
+				List professorships = groupPropertiesExecutionCourseAux.getExecutionCourse()
+						.getProfessorships();
 
-                    Iterator iterProfessorship = professorships.iterator();
-                    while (iterProfessorship.hasNext()) {
-                        IProfessorship professorship = (IProfessorship) iterProfessorship.next();
-                        ITeacher teacher = professorship.getTeacher();
+				Iterator iterProfessorship = professorships.iterator();
+				while (iterProfessorship.hasNext()) {
+					IProfessorship professorship = (IProfessorship) iterProfessorship.next();
+					ITeacher teacher = professorship.getTeacher();
 
-                        if (!(teacher.getPerson()).equals(receiverPerson)
-                                && !group.contains(teacher.getPerson())) {
-                            group.add(teacher.getPerson());
-                        }
-                    }
-                }
-            }
+					if (!(teacher.getPerson()).equals(receiverPerson)
+							&& !group.contains(teacher.getPerson())) {
+						group.add(teacher.getPerson());
+					}
+				}
+			}
+		}
 
-            List professorshipsAux = executionCourse.getProfessorships();
+		List professorshipsAux = executionCourse.getProfessorships();
 
-            Iterator iterProfessorshipsAux = professorshipsAux.iterator();
-            while (iterProfessorshipsAux.hasNext()) {
-                IProfessorship professorshipAux = (IProfessorship) iterProfessorshipsAux.next();
-                ITeacher teacherAux = professorshipAux.getTeacher();
-                if (!(teacherAux.getPerson()).equals(receiverPerson)
-                        && !group.contains(teacherAux.getPerson())) {
-                    group.add(teacherAux.getPerson());
-                }
-            }
+		Iterator iterProfessorshipsAux = professorshipsAux.iterator();
+		while (iterProfessorshipsAux.hasNext()) {
+			IProfessorship professorshipAux = (IProfessorship) iterProfessorshipsAux.next();
+			ITeacher teacherAux = professorshipAux.getTeacher();
+			if (!(teacherAux.getPerson()).equals(receiverPerson)
+					&& !group.contains(teacherAux.getPerson())) {
+				group.add(teacherAux.getPerson());
+			}
+		}
 
-            IPerson senderPerson = groupPropertiesExecutionCourse.getSenderPerson();
+		IPerson senderPerson = groupPropertiesExecutionCourse.getSenderPerson();
 
-            // Create Advisory
-            IAdvisory advisory = createRejectAdvisory(executionCourse, senderPerson, receiverPerson,
-                    groupPropertiesExecutionCourse);
-            for (final Iterator iterator = group.iterator(); iterator.hasNext();) {
-                final IPerson person = (IPerson) iterator.next();
-                sp.getIPessoaPersistente().simpleLockWrite(person);
+		// Create Advisory
+		IAdvisory advisory = createRejectAdvisory(executionCourse, senderPerson, receiverPerson,
+				groupPropertiesExecutionCourse);
+		for (final Iterator iterator = group.iterator(); iterator.hasNext();) {
+			final IPerson person = (IPerson) iterator.next();
+			sp.getIPessoaPersistente().simpleLockWrite(person);
 
-                person.getAdvisories().add(advisory);
-                advisory.getPeople().add(person);
-            }
+			person.getAdvisories().add(advisory);
+			advisory.getPeople().add(person);
+		}
 
-            result = Boolean.TRUE;
+		result = Boolean.TRUE;
 
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-            throw new FenixServiceException("error.groupPropertiesExecutionCourse.delete");
-        }
+		return result;
+	}
 
-        return result;
-    }
+	private IAdvisory createRejectAdvisory(IExecutionCourse executionCourse, IPerson senderPerson,
+			IPerson receiverPerson, IExportGrouping groupPropertiesExecutionCourse) {
+		IAdvisory advisory = DomainFactory.makeAdvisory();
+		advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
+		if (groupPropertiesExecutionCourse.getGrouping().getEnrolmentEndDay() != null) {
+			advisory.setExpires(groupPropertiesExecutionCourse.getGrouping().getEnrolmentEndDay()
+					.getTime());
+		} else {
+			advisory.setExpires(new Date(Calendar.getInstance().getTimeInMillis() + 1728000000));
+		}
+		advisory.setSender("Docente " + receiverPerson.getNome() + " da disciplina "
+				+ executionCourse.getNome());
 
-    private IAdvisory createRejectAdvisory(IExecutionCourse executionCourse, IPerson senderPerson,
-            IPerson receiverPerson, IExportGrouping groupPropertiesExecutionCourse) {
-        IAdvisory advisory = DomainFactory.makeAdvisory();
-        advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
-        if (groupPropertiesExecutionCourse.getGrouping().getEnrolmentEndDay() != null) {
-            advisory.setExpires(groupPropertiesExecutionCourse.getGrouping().getEnrolmentEndDay()
-                    .getTime());
-        } else {
-            advisory.setExpires(new Date(Calendar.getInstance().getTimeInMillis() + 1728000000));
-        }
-        advisory.setSender("Docente " + receiverPerson.getNome() + " da disciplina "
-                + executionCourse.getNome());
+		advisory.setSubject("Proposta Enviada Rejeitada");
 
-        advisory.setSubject("Proposta Enviada Rejeitada");
+		String msg;
+		msg = new String("A proposta de co-avalia��o do agrupamento "
+				+ groupPropertiesExecutionCourse.getGrouping().getName() + ", enviada pelo docente "
+				+ senderPerson.getNome() + " da disciplina "
+				+ groupPropertiesExecutionCourse.getSenderExecutionCourse().getNome()
+				+ " foi rejeitada pelo docente " + receiverPerson.getNome() + " da disciplina "
+				+ executionCourse.getNome() + "!");
 
-        String msg;
-        msg = new String("A proposta de co-avalia��o do agrupamento "
-                + groupPropertiesExecutionCourse.getGrouping().getName()
-                + ", enviada pelo docente " + senderPerson.getNome() + " da disciplina "
-                + groupPropertiesExecutionCourse.getSenderExecutionCourse().getNome()
-                + " foi rejeitada pelo docente " + receiverPerson.getNome() + " da disciplina "
-                + executionCourse.getNome() + "!");
-
-        advisory.setMessage(msg);
-        return advisory;
-    }
+		advisory.setMessage(msg);
+		return advisory;
+	}
 }

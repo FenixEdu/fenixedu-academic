@@ -35,77 +35,69 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class EditStudentGroupsShift implements IService {
 
-    public Boolean run(Integer executionCourseCode, Integer groupPropertiesCode, Integer shiftCode,
-            List studentGroupsCodes) throws FenixServiceException {
+	public Boolean run(Integer executionCourseCode, Integer groupPropertiesCode, Integer shiftCode,
+			List studentGroupsCodes) throws FenixServiceException, ExcepcaoPersistencia {
 
-        IPersistentGrouping persistentGroupProperties = null;
-        ITurnoPersistente persistentShift = null;
-        IPersistentStudentGroup persistentStudentGroup = null;
+		IPersistentGrouping persistentGroupProperties = null;
+		ITurnoPersistente persistentShift = null;
+		IPersistentStudentGroup persistentStudentGroup = null;
 
-        try {
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
+		persistentGroupProperties = persistentSupport.getIPersistentGrouping();
+		persistentShift = persistentSupport.getITurnoPersistente();
 
-            ISuportePersistente persistentSupport = PersistenceSupportFactory
-                    .getDefaultPersistenceSupport();
-            persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
-            persistentGroupProperties = persistentSupport.getIPersistentGrouping();
-            persistentShift = persistentSupport.getITurnoPersistente();
+		IGrouping grouping = (IGrouping) persistentGroupProperties.readByOID(Grouping.class,
+				groupPropertiesCode);
 
-            IGrouping grouping = (IGrouping) persistentGroupProperties.readByOID(Grouping.class,
-                    groupPropertiesCode);
+		if (grouping == null) {
+			throw new ExistingServiceException();
+		}
 
-            if (grouping == null) {
-                throw new ExistingServiceException();
-            }
+		IShift shift = (IShift) persistentShift.readByOID(Shift.class, shiftCode);
 
-            IShift shift = (IShift) persistentShift.readByOID(Shift.class, shiftCode);
+		if (shift == null) {
+			throw new InvalidChangeServiceException();
+		}
 
-            if (shift == null) {
-                throw new InvalidChangeServiceException();
-            }
-            
-            //grouping.checkShiftCapacity(shift);
-            
-            if (grouping.getShiftType() == null
-                    || !grouping.getShiftType().equals(shift.getTipo())) {
-                throw new NonValidChangeServiceException();
-            }
+		// grouping.checkShiftCapacity(shift);
 
-            List<IStudentGroup> studentGroups = buildStudentGroupsList(studentGroupsCodes, persistentStudentGroup);
+		if (grouping.getShiftType() == null || !grouping.getShiftType().equals(shift.getTipo())) {
+			throw new NonValidChangeServiceException();
+		}
 
-            for(IStudentGroup studentGroup : studentGroups){
-                if (!studentGroup.getGrouping().equals(grouping)) {
-                    throw new InvalidArgumentsServiceException();
-                } 
-            }
-                       
-            for(IStudentGroup studentGroup : studentGroups){                                    
-                studentGroup.editShift(shift);
-            }
+		List<IStudentGroup> studentGroups = buildStudentGroupsList(studentGroupsCodes,
+				persistentStudentGroup);
 
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia.getMessage());
-        }
+		for (IStudentGroup studentGroup : studentGroups) {
+			if (!studentGroup.getGrouping().equals(grouping)) {
+				throw new InvalidArgumentsServiceException();
+			}
+		}
 
-        return Boolean.TRUE;
-    }
+		for (IStudentGroup studentGroup : studentGroups) {
+			studentGroup.editShift(shift);
+		}
+		return Boolean.TRUE;
+	}
 
-    private List buildStudentGroupsList(List studentGroupsCodes,
-            IPersistentStudentGroup persistentStudentGroup) throws ExcepcaoPersistencia,
-            InvalidSituationServiceException {
-        
-        List studentGroups = new ArrayList();
-        Iterator iterStudentGroupsCodes = studentGroupsCodes.iterator();
-        
-        while (iterStudentGroupsCodes.hasNext()) {
-            Integer studentGroupCode = (Integer) iterStudentGroupsCodes.next();
-            IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
-                    StudentGroup.class, studentGroupCode);
-            
-            if (studentGroup == null) 
-                throw new InvalidSituationServiceException("error.studentGroupNotInList");
-        
-            studentGroups.add(studentGroup);
-        }
-        return studentGroups;
-    }
+	private List buildStudentGroupsList(List studentGroupsCodes,
+			IPersistentStudentGroup persistentStudentGroup) throws ExcepcaoPersistencia,
+			InvalidSituationServiceException {
+
+		List studentGroups = new ArrayList();
+		Iterator iterStudentGroupsCodes = studentGroupsCodes.iterator();
+
+		while (iterStudentGroupsCodes.hasNext()) {
+			Integer studentGroupCode = (Integer) iterStudentGroupsCodes.next();
+			IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
+					StudentGroup.class, studentGroupCode);
+
+			if (studentGroup == null)
+				throw new InvalidSituationServiceException("error.studentGroupNotInList");
+
+			studentGroups.add(studentGroup);
+		}
+		return studentGroups;
+	}
 }

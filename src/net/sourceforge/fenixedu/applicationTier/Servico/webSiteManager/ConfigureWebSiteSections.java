@@ -20,59 +20,50 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Fernanda Quitério 22/Abr/2004
- *  
+ * 
  */
 public class ConfigureWebSiteSections implements IService {
 
-    public ConfigureWebSiteSections() {
+	public boolean run(InfoWebSite infoWebSite) throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentWebSiteSection persistentWebSiteSection = persistentSuport
+				.getIPersistentWebSiteSection();
+		IPersistentWebSite persistentWebSite = persistentSuport.getIPersistentWebSite();
 
-    }
+		IWebSiteSection webSiteSection = null;
+		Iterator iterSections = infoWebSite.getSections().iterator();
+		while (iterSections.hasNext()) {
+			InfoWebSiteSection infoWebSiteSection = (InfoWebSiteSection) iterSections.next();
 
-    public boolean run(InfoWebSite infoWebSite) throws FenixServiceException {
+			IWebSite webSite = (IWebSite) persistentWebSite.readByOID(WebSite.class, infoWebSite
+					.getIdInternal());
 
-        try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentWebSiteSection persistentWebSiteSection = persistentSuport
-                    .getIPersistentWebSiteSection();
-            IPersistentWebSite persistentWebSite = persistentSuport.getIPersistentWebSite();
+			if (webSite == null) {
+				throw new NonExistingServiceException("website");
+			}
 
-            IWebSiteSection webSiteSection = null;
-            Iterator iterSections = infoWebSite.getSections().iterator();
-            while (iterSections.hasNext()) {
-                InfoWebSiteSection infoWebSiteSection = (InfoWebSiteSection) iterSections.next();
+			IWebSiteSection repeatedWebSiteSection = persistentWebSiteSection.readByWebSiteAndName(
+					webSite, infoWebSiteSection.getName());
 
-                IWebSite webSite = (IWebSite) persistentWebSite.readByOID(WebSite.class, infoWebSite
-                        .getIdInternal());
+			if (repeatedWebSiteSection != null
+					&& !repeatedWebSiteSection.getIdInternal()
+							.equals(infoWebSiteSection.getIdInternal())) {
+				throw new ExistingServiceException(infoWebSiteSection.getName());
+			}
 
-                if (webSite == null) {
-                    throw new NonExistingServiceException("website");
-                }
+			webSiteSection = (IWebSiteSection) persistentWebSiteSection.readByOID(WebSiteSection.class,
+					infoWebSiteSection.getIdInternal(), true);
 
-                IWebSiteSection repeatedWebSiteSection = persistentWebSiteSection.readByWebSiteAndName(
-                        webSite, infoWebSiteSection.getName());
-
-                if (repeatedWebSiteSection != null
-                        && !repeatedWebSiteSection.getIdInternal().equals(
-                                infoWebSiteSection.getIdInternal())) {
-                    throw new ExistingServiceException(infoWebSiteSection.getName());
-                }
-
-                webSiteSection = (IWebSiteSection) persistentWebSiteSection.readByOID(
-                        WebSiteSection.class, infoWebSiteSection.getIdInternal(), true);
-
-                if (webSiteSection == null) {
-                    throw new NonExistingServiceException("websiteSection");
-                }
-                webSiteSection.setName(infoWebSiteSection.getName());
-                webSiteSection.setFtpName(infoWebSiteSection.getFtpName());
-                webSiteSection.setWhatToSort(infoWebSiteSection.getWhatToSort());
-                webSiteSection.setSortingOrder(infoWebSiteSection.getSortingOrder());
-                webSiteSection.setSize(infoWebSiteSection.getSize());
-                webSiteSection.setExcerptSize(infoWebSiteSection.getExcerptSize());
-            }
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
-        }
-        return true;
-    }
+			if (webSiteSection == null) {
+				throw new NonExistingServiceException("websiteSection");
+			}
+			webSiteSection.setName(infoWebSiteSection.getName());
+			webSiteSection.setFtpName(infoWebSiteSection.getFtpName());
+			webSiteSection.setWhatToSort(infoWebSiteSection.getWhatToSort());
+			webSiteSection.setSortingOrder(infoWebSiteSection.getSortingOrder());
+			webSiteSection.setSize(infoWebSiteSection.getSize());
+			webSiteSection.setExcerptSize(infoWebSiteSection.getExcerptSize());
+		}
+		return true;
+	}
 }

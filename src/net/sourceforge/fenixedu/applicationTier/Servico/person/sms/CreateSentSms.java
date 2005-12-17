@@ -18,18 +18,11 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class CreateSentSms implements IService {
 
-    /**
-     *  
-     */
-    public CreateSentSms() {
-    }
-
     public void run(IUserView userView, Date startDate, Date endDate, Integer destinationNumber,
             String message) throws FenixServiceException {
 
         throw new SmsNotSentServiceException("error.person.sendSms");
         //    	
-        //        try {
         //            ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
         //            IPersistentSentSms persistentSentSms = ps.getIPersistentSentSms();
         //
@@ -68,9 +61,6 @@ public class CreateSentSms implements IService {
         //
         //            sentSms.setDeliveryType(SmsDeliveryType.SMSC_SUBMIT);
         //
-        //        } catch (ExcepcaoPersistencia e) {
-        //            throw new FenixServiceException(e);
-        //        }
 
     }
 

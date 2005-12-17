@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -17,62 +18,23 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author joaosa & rmalo
- *
+ * 
  */
 
-public class ReadExecutionPeriod implements IServico {
+public class ReadExecutionPeriod implements IService {
 
-    private static ReadExecutionPeriod service = new ReadExecutionPeriod();
+	public InfoExecutionPeriod run(Integer executionCourseCode) throws FenixServiceException, ExcepcaoPersistencia {
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadExecutionPeriod getService() {
-        return service;
-    }
+		IPersistentExecutionCourse persistentExecutionCourse = null;
+		IExecutionPeriod executionPeriod = null;
 
-    /**
-     * The constructor of this class.
-     */
-    private ReadExecutionPeriod() {
-    }
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+		IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+				ExecutionCourse.class, executionCourseCode);
 
-    /**
-     * The name of the service
-     */
-    public final String getNome() {
-        return "ReadExecutionPeriod";
-    }
+		executionPeriod = executionCourse.getExecutionPeriod();
 
-    /**
-     * Executes the service.
-     */
-
-    public InfoExecutionPeriod run (Integer executionCourseCode) throws FenixServiceException {
-
-        
-        
-        IPersistentExecutionCourse persistentExecutionCourse = null;
-        IExecutionPeriod executionPeriod = null;
-
-        try {
-
-        	 ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-    		IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-              .readByOID(ExecutionCourse.class, executionCourseCode);
-    		
-    		executionPeriod =  executionCourse.getExecutionPeriod();
-    		
-    		
-    		
-    		
-            
-            
-
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia.getMessage());
-        }
-        return InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
-    }
+		return InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
+	}
 }

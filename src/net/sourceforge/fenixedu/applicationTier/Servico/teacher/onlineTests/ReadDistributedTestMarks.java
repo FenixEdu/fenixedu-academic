@@ -34,42 +34,45 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadDistributedTestMarks implements IService {
 
-    public SiteView run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException {
+	public SiteView run(Integer executionCourseId, Integer distributedTestId)
+			throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente persistentSuport;
-        InfoSiteStudentsTestMarks infoSiteStudentsTestMarks = new InfoSiteStudentsTestMarks();
-        try {
-            persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IDistributedTest distributedTest = (IDistributedTest) persistentSuport.getIPersistentDistributedTest().readByOID(DistributedTest.class,
-                    distributedTestId);
-            if (distributedTest == null) {
-                throw new InvalidArgumentsServiceException();
-            }
+		ISuportePersistente persistentSuport;
+		InfoSiteStudentsTestMarks infoSiteStudentsTestMarks = new InfoSiteStudentsTestMarks();
 
-            IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport.getIPersistentStudentTestQuestion();
-            List studentTestQuestionList = persistentStudentTestQuestion.readByDistributedTest(distributedTest.getIdInternal());
+		persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IDistributedTest distributedTest = (IDistributedTest) persistentSuport
+				.getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
+		if (distributedTest == null) {
+			throw new InvalidArgumentsServiceException();
+		}
 
-            List<InfoStudentTestQuestionMark> infoStudentTestQuestionList = (List<InfoStudentTestQuestionMark>) CollectionUtils.collect(
-                    studentTestQuestionList, new Transformer() {
+		IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport
+				.getIPersistentStudentTestQuestion();
+		List studentTestQuestionList = persistentStudentTestQuestion
+				.readByDistributedTest(distributedTest.getIdInternal());
 
-                        public Object transform(Object arg0) {
-                            IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) arg0;
-                            return InfoStudentTestQuestionMark.newInfoFromDomain(studentTestQuestion);
-                        }
+		List<InfoStudentTestQuestionMark> infoStudentTestQuestionList = (List<InfoStudentTestQuestionMark>) CollectionUtils
+				.collect(studentTestQuestionList, new Transformer() {
 
-                    });
+					public Object transform(Object arg0) {
+						IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) arg0;
+						return InfoStudentTestQuestionMark.newInfoFromDomain(studentTestQuestion);
+					}
 
-            infoSiteStudentsTestMarks.setMaximumMark(persistentStudentTestQuestion.getMaximumDistributedTestMark(distributedTest.getIdInternal()));
-            infoSiteStudentsTestMarks.setInfoStudentTestQuestionList(infoStudentTestQuestionList);
-            infoSiteStudentsTestMarks.setExecutionCourse(InfoExecutionCourse.newInfoFromDomain((IExecutionCourse) distributedTest.getTestScope()
-                    .getDomainObject()));
-            infoSiteStudentsTestMarks.setInfoDistributedTest(InfoDistributedTest.newInfoFromDomain(distributedTest));
+				});
 
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-        SiteView siteView = new ExecutionCourseSiteView(infoSiteStudentsTestMarks, infoSiteStudentsTestMarks);
-        return siteView;
-    }
+		infoSiteStudentsTestMarks.setMaximumMark(persistentStudentTestQuestion
+				.getMaximumDistributedTestMark(distributedTest.getIdInternal()));
+		infoSiteStudentsTestMarks.setInfoStudentTestQuestionList(infoStudentTestQuestionList);
+		infoSiteStudentsTestMarks.setExecutionCourse(InfoExecutionCourse
+				.newInfoFromDomain((IExecutionCourse) distributedTest.getTestScope().getDomainObject()));
+		infoSiteStudentsTestMarks.setInfoDistributedTest(InfoDistributedTest
+				.newInfoFromDomain(distributedTest));
+
+		SiteView siteView = new ExecutionCourseSiteView(infoSiteStudentsTestMarks,
+				infoSiteStudentsTestMarks);
+		return siteView;
+	}
 
 }

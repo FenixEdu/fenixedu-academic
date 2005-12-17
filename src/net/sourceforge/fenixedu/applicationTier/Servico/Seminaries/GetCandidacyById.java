@@ -21,27 +21,20 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * 
  * Created at 26/Ago/2003, 14:50:16
- *  
+ * 
  */
 public class GetCandidacyById implements IService {
 
-    public GetCandidacyById() {
-    }
+	public InfoCandidacy run(Integer id) throws BDException, ExcepcaoPersistencia {
+		InfoCandidacy infoCandidacy = null;
 
-    public InfoCandidacy run(Integer id) throws BDException {
-        InfoCandidacy infoCandidacy = null;
-        try {
-            ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentSeminaryCandidacy persistentSeminaryCandidacy = persistenceSupport
-                    .getIPersistentSeminaryCandidacy();
-            ICandidacy candidacy = (ICandidacy) persistentSeminaryCandidacy.readByOID(Candidacy.class,
-                    id);
-            infoCandidacy = InfoCandidacyWithCaseStudyChoices.newInfoFromDomain(candidacy);
+		ISuportePersistente persistenceSupport = PersistenceSupportFactory
+				.getDefaultPersistenceSupport();
+		IPersistentSeminaryCandidacy persistentSeminaryCandidacy = persistenceSupport
+				.getIPersistentSeminaryCandidacy();
+		ICandidacy candidacy = (ICandidacy) persistentSeminaryCandidacy.readByOID(Candidacy.class, id);
+		infoCandidacy = InfoCandidacyWithCaseStudyChoices.newInfoFromDomain(candidacy);
 
-        } catch (ExcepcaoPersistencia ex) {
-            throw new BDException(
-                    "Got an error while trying to retrieve multiple candidacies from the database", ex);
-        }
-        return infoCandidacy;
-    }
+		return infoCandidacy;
+	}
 }

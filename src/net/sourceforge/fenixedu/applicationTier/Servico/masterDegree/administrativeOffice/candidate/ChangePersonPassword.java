@@ -22,28 +22,23 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ChangePersonPassword implements IService {
 
-    public void run(Integer personID, String password) throws ExcepcaoInexistente,
-            FenixServiceException, InvalidPasswordServiceException {
+	public void run(Integer personID, String password) throws ExcepcaoInexistente,
+			FenixServiceException, InvalidPasswordServiceException, ExcepcaoPersistencia {
 
-        // Check if the old password is equal
+		// Check if the old password is equal
 
-        ISuportePersistente sp = null;
+		ISuportePersistente sp = null;
 
-        IPerson person = null;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPessoaPersistente personDAO = sp.getIPessoaPersistente();
+		IPerson person = null;
 
-            person = (IPerson) personDAO.readByOID(Person.class, personID, true);
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPessoaPersistente personDAO = sp.getIPessoaPersistente();
 
-            throw newEx;
-        }
+		person = (IPerson) personDAO.readByOID(Person.class, personID, true);
 
-        if (person == null)
-            throw new ExcepcaoInexistente("Unknown Person!");
+		if (person == null)
+			throw new ExcepcaoInexistente("Unknown Person!");
 
-        person.setPassword(PasswordEncryptor.encryptPassword(password));
-    }
+		person.setPassword(PasswordEncryptor.encryptPassword(password));
+	}
 }

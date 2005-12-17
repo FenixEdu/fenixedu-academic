@@ -32,77 +32,70 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class InsertGroupingMembers implements IService {
 
-    public Boolean run(Integer executionCourseCode, Integer groupPropertiesCode, List studentCodes)
-            throws FenixServiceException {
+	public Boolean run(Integer executionCourseCode, Integer groupPropertiesCode, List studentCodes)
+			throws FenixServiceException, ExcepcaoPersistencia {
 
-        IPersistentGrouping persistentGroupProperties = null;
-        IFrequentaPersistente persistentAttend = null;
-        IPersistentStudent persistentStudent = null;
+		IPersistentGrouping persistentGroupProperties = null;
+		IFrequentaPersistente persistentAttend = null;
+		IPersistentStudent persistentStudent = null;
 
-        List students = new ArrayList();
+		List students = new ArrayList();
 
-        try {
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            ISuportePersistente persistentSupport = PersistenceSupportFactory
-                    .getDefaultPersistenceSupport();
+		persistentGroupProperties = persistentSupport.getIPersistentGrouping();
+		persistentStudent = persistentSupport.getIPersistentStudent();
+		persistentAttend = persistentSupport.getIFrequentaPersistente();
 
-            persistentGroupProperties = persistentSupport.getIPersistentGrouping();
-            persistentStudent = persistentSupport.getIPersistentStudent();
-            persistentAttend = persistentSupport.getIFrequentaPersistente();
+		IGrouping groupProperties = (IGrouping) persistentGroupProperties.readByOID(Grouping.class,
+				groupPropertiesCode);
 
-            IGrouping groupProperties = (IGrouping) persistentGroupProperties.readByOID(Grouping.class,
-                    groupPropertiesCode);
+		if (groupProperties == null) {
+			throw new ExistingServiceException();
+		}
 
-            if (groupProperties == null) {
-                throw new ExistingServiceException();
-            }
+		Iterator iterator = studentCodes.iterator();
 
-            Iterator iterator = studentCodes.iterator();
+		while (iterator.hasNext()) {
+			IStudent student = (IStudent) persistentStudent.readByOID(Student.class, (Integer) iterator
+					.next());
+			students.add(student);
+		}
 
-            while (iterator.hasNext()) {
-                IStudent student = (IStudent) persistentStudent.readByOID(Student.class,
-                        (Integer) iterator.next());
-                students.add(student);
-            }
+		Iterator iterAttends = groupProperties.getAttends().iterator();
 
-            Iterator iterAttends = groupProperties.getAttends().iterator();
+		while (iterAttends.hasNext()) {
+			IAttends existingAttend = (IAttends) iterAttends.next();
+			IStudent existingAttendStudent = existingAttend.getAluno();
 
-            while (iterAttends.hasNext()) {
-                IAttends existingAttend = (IAttends) iterAttends.next();
-                IStudent existingAttendStudent = existingAttend.getAluno();
+			Iterator iteratorStudents = students.iterator();
 
-                Iterator iteratorStudents = students.iterator();
+			while (iteratorStudents.hasNext()) {
 
-                while (iteratorStudents.hasNext()) {
+				IStudent student = (IStudent) iteratorStudents.next();
+				if (student.equals(existingAttendStudent)) {
+					throw new InvalidSituationServiceException();
+				}
+			}
+		}
 
-                    IStudent student = (IStudent) iteratorStudents.next();
-                    if (student.equals(existingAttendStudent)) {
-                        throw new InvalidSituationServiceException();
-                    }
-                }
-            }
+		Iterator iterStudents1 = students.iterator();
 
-            Iterator iterStudents1 = students.iterator();
+		while (iterStudents1.hasNext()) {
+			IAttends attend = null;
+			IStudent student = (IStudent) iterStudents1.next();
 
-            while (iterStudents1.hasNext()) {
-                IAttends attend = null;
-                IStudent student = (IStudent) iterStudents1.next();
+			List listaExecutionCourses = new ArrayList();
+			listaExecutionCourses.addAll(groupProperties.getExecutionCourses());
+			Iterator iterExecutionCourse = listaExecutionCourses.iterator();
+			while (iterExecutionCourse.hasNext() && attend == null) {
+				IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourse.next();
+				attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student.getIdInternal(),
+						executionCourse.getIdInternal());
+			}
+			groupProperties.addAttends(attend);
+		}
 
-                List listaExecutionCourses = new ArrayList();
-                listaExecutionCourses.addAll(groupProperties.getExecutionCourses());
-                Iterator iterExecutionCourse = listaExecutionCourses.iterator();
-                while (iterExecutionCourse.hasNext() && attend == null) {
-                    IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourse.next();
-                    attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student.getIdInternal(),
-                            executionCourse.getIdInternal());
-                }
-                groupProperties.addAttends(attend);
-            }
-
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia.getMessage());
-        }
-
-        return Boolean.TRUE;
-    }
+		return Boolean.TRUE;
+	}
 }

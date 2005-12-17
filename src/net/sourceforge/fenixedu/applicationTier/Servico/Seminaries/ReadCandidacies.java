@@ -38,105 +38,97 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * 
  * Created at 1/Set/2003, 14:47:35
- *  
+ * 
  */
 public class ReadCandidacies implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public ReadCandidacies() {
-    }
+	public List run(Integer modalityID, Integer seminaryID, Integer themeID, Integer case1Id,
+			Integer case2Id, Integer case3Id, Integer case4Id, Integer case5Id,
+			Integer curricularCourseID, Integer degreeID, Boolean approved) throws BDException, ExcepcaoPersistencia {
+		List infoCandidacies = new LinkedList();
 
-    public List run(Integer modalityID, Integer seminaryID, Integer themeID, Integer case1Id,
-            Integer case2Id, Integer case3Id, Integer case4Id, Integer case5Id,
-            Integer curricularCourseID, Integer degreeID, Boolean approved) throws BDException {
-        List infoCandidacies = new LinkedList();
-        try {
-            ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentSeminaryCandidacy persistentCandidacy = persistenceSupport
-                    .getIPersistentSeminaryCandidacy();
-            List candidacies = persistentCandidacy.readByUserInput(modalityID, seminaryID, themeID,
-                    case1Id, case2Id, case3Id, case4Id, case5Id, curricularCourseID, degreeID, approved);
-            for (Iterator iterator = candidacies.iterator(); iterator.hasNext();) {
-                ICandidacy candidacy = (ICandidacy) iterator.next();
-                IStudent student = candidacy.getStudent();
-                IStudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
-                List enrollments = studentCurricularPlan.getEnrolments();
+		ISuportePersistente persistenceSupport = PersistenceSupportFactory
+				.getDefaultPersistenceSupport();
+		IPersistentSeminaryCandidacy persistentCandidacy = persistenceSupport
+				.getIPersistentSeminaryCandidacy();
+		List candidacies = persistentCandidacy.readByUserInput(modalityID, seminaryID, themeID, case1Id,
+				case2Id, case3Id, case4Id, case5Id, curricularCourseID, degreeID, approved);
+		for (Iterator iterator = candidacies.iterator(); iterator.hasNext();) {
+			ICandidacy candidacy = (ICandidacy) iterator.next();
+			IStudent student = candidacy.getStudent();
+			IStudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
+			List enrollments = studentCurricularPlan.getEnrolments();
 
-                InfoCandidacyDetails candidacyDTO = new InfoCandidacyDetails();
-                candidacyDTO.setCurricularCourse(InfoCurricularCourseWithInfoDegree
-                        .newInfoFromDomain(candidacy.getCurricularCourse()));
-                candidacyDTO.setIdInternal(candidacy.getIdInternal());
-                candidacyDTO.setInfoClassification(getInfoClassification(enrollments));
-                candidacyDTO.setModality(InfoModality.newInfoFromDomain(candidacy.getModality()));
-                candidacyDTO.setMotivation(candidacy.getMotivation());
-                candidacyDTO.setSeminary(InfoSeminaryWithEquivalencies.newInfoFromDomain(candidacy.getSeminary()));
-                candidacyDTO.setStudent(InfoStudentWithInfoPerson.newInfoFromDomain(student));
-                candidacyDTO.setTheme(InfoTheme.newInfoFromDomain(candidacy.getTheme()));
-                List<InfoCaseStudyChoice> infos = new ArrayList<InfoCaseStudyChoice>();
-                for (Iterator iter = candidacy.getCaseStudyChoices().iterator(); iter.hasNext();)
-				{
-					ICaseStudyChoice element = (ICaseStudyChoice) iter.next();
-					infos.add(InfoCaseStudyChoice.newInfoFromDomain(element));
-					
-				}                 
-                candidacyDTO.setCases(infos);
-                if (candidacy.getApproved() != null) {
-                    candidacyDTO.setApproved(candidacy.getApproved());
-                } else {
-                    candidacyDTO.setApproved(Boolean.FALSE);
-                }
-                infoCandidacies.add(candidacyDTO);
+			InfoCandidacyDetails candidacyDTO = new InfoCandidacyDetails();
+			candidacyDTO.setCurricularCourse(InfoCurricularCourseWithInfoDegree
+					.newInfoFromDomain(candidacy.getCurricularCourse()));
+			candidacyDTO.setIdInternal(candidacy.getIdInternal());
+			candidacyDTO.setInfoClassification(getInfoClassification(enrollments));
+			candidacyDTO.setModality(InfoModality.newInfoFromDomain(candidacy.getModality()));
+			candidacyDTO.setMotivation(candidacy.getMotivation());
+			candidacyDTO.setSeminary(InfoSeminaryWithEquivalencies.newInfoFromDomain(candidacy
+					.getSeminary()));
+			candidacyDTO.setStudent(InfoStudentWithInfoPerson.newInfoFromDomain(student));
+			candidacyDTO.setTheme(InfoTheme.newInfoFromDomain(candidacy.getTheme()));
+			List<InfoCaseStudyChoice> infos = new ArrayList<InfoCaseStudyChoice>();
+			for (Iterator iter = candidacy.getCaseStudyChoices().iterator(); iter.hasNext();) {
+				ICaseStudyChoice element = (ICaseStudyChoice) iter.next();
+				infos.add(InfoCaseStudyChoice.newInfoFromDomain(element));
 
-            }
-        } catch (ExcepcaoPersistencia ex) {
-            throw new BDException(
-                    "Got an error while trying to retrieve mutiple candidacies from the database", ex);
-        }
-        return infoCandidacies;
-    }
+			}
+			candidacyDTO.setCases(infos);
+			if (candidacy.getApproved() != null) {
+				candidacyDTO.setApproved(candidacy.getApproved());
+			} else {
+				candidacyDTO.setApproved(Boolean.FALSE);
+			}
+			infoCandidacies.add(candidacyDTO);
 
-    /**
-     * @param enrollments
-     * @param infoClassification
-     */
-    private InfoClassification getInfoClassification(List enrollments) {
-        InfoClassification infoClassification = new InfoClassification();
-        int auxInt = 0;
-        float acc = 0;
-        float grade = 0;
-        for (Iterator iter1 = enrollments.iterator(); iter1.hasNext();) {
-            IEnrolment enrollment = (IEnrolment) iter1.next();
-            List enrollmentEvaluations = enrollment.getEvaluations();
-            IEnrolmentEvaluation enrollmentEvaluation = null;
-            if (enrollmentEvaluations != null && !enrollmentEvaluations.isEmpty()) {
-                enrollmentEvaluation = (IEnrolmentEvaluation) Collections.max(enrollmentEvaluations);
-            }
+		}
 
-            String stringGrade;
-            if (enrollmentEvaluation != null) {
+		return infoCandidacies;
+	}
 
-                stringGrade = enrollmentEvaluation.getGrade();
-            } else {
-                stringGrade = "NA";
-            }
+	/**
+	 * @param enrollments
+	 * @param infoClassification
+	 */
+	private InfoClassification getInfoClassification(List enrollments) {
+		InfoClassification infoClassification = new InfoClassification();
+		int auxInt = 0;
+		float acc = 0;
+		float grade = 0;
+		for (Iterator iter1 = enrollments.iterator(); iter1.hasNext();) {
+			IEnrolment enrollment = (IEnrolment) iter1.next();
+			List enrollmentEvaluations = enrollment.getEvaluations();
+			IEnrolmentEvaluation enrollmentEvaluation = null;
+			if (enrollmentEvaluations != null && !enrollmentEvaluations.isEmpty()) {
+				enrollmentEvaluation = (IEnrolmentEvaluation) Collections.max(enrollmentEvaluations);
+			}
 
-            if (stringGrade != null && !stringGrade.equals("") && !stringGrade.equals("RE") && !stringGrade.equals("NA") && !stringGrade.equals("AP")) {
-                Float gradeObject = new Float(stringGrade);
-                grade = gradeObject.floatValue();
-                acc += grade;
-                auxInt++;
-            }
+			String stringGrade;
+			if (enrollmentEvaluation != null) {
 
-        }
-        if (auxInt != 0) {
-            String value = new DecimalFormat("#0.0").format(acc / auxInt);
-            infoClassification.setAritmeticClassification(value);
-        }
-        infoClassification.setCompletedCourses(new Integer(auxInt).toString());
-        return infoClassification;
-    }
+				stringGrade = enrollmentEvaluation.getGrade();
+			} else {
+				stringGrade = "NA";
+			}
 
+			if (stringGrade != null && !stringGrade.equals("") && !stringGrade.equals("RE")
+					&& !stringGrade.equals("NA") && !stringGrade.equals("AP")) {
+				Float gradeObject = new Float(stringGrade);
+				grade = gradeObject.floatValue();
+				acc += grade;
+				auxInt++;
+			}
+
+		}
+		if (auxInt != 0) {
+			String value = new DecimalFormat("#0.0").format(acc / auxInt);
+			infoClassification.setAritmeticClassification(value);
+		}
+		infoClassification.setCompletedCourses(new Integer(auxInt).toString());
+		return infoClassification;
+	}
 
 }

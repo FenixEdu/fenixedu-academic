@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -12,81 +11,38 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author joaosa & rmalo
  */
-public class SelectExportExecutionCourse implements IServico
-{
+public class SelectExportExecutionCourse implements IService {
 
-    private static SelectExportExecutionCourse _servico = new SelectExportExecutionCourse();
+	public Object run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod,
+			Integer curricularYear) throws ExcepcaoPersistencia {
 
-    /**
-	 * The actor of this class.
-	 */
+		List infoExecutionCourseList = new ArrayList();
 
-    private SelectExportExecutionCourse()
-    {
+		List executionCourseList = null;
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-    }
+		IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
-    /**
-	 * Returns Service Name
-	 */
-    public String getNome()
-    {
-        return "SelectExportExecutionCourse";
-    }
+		executionCourseList = executionCourseDAO
+				.readByCurricularYearAndExecutionPeriodAndExecutionDegree(curricularYear,
+						infoExecutionPeriod.getSemester(), infoExecutionDegree
+								.getInfoDegreeCurricularPlan().getName(), infoExecutionDegree
+								.getInfoDegreeCurricularPlan().getInfoDegree().getSigla(),
+						infoExecutionPeriod.getIdInternal());
 
-    /**
-	 * Returns the _servico.
-	 * 
-	 * @return SelectExportExecutionCourse
-	 */
-    public static SelectExportExecutionCourse getService()
-    {
-        return _servico;
-    }
+		for (int i = 0; i < executionCourseList.size(); i++) {
+			IExecutionCourse aux = (IExecutionCourse) executionCourseList.get(i);
+			InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(aux);
+			infoExecutionCourseList.add(infoExecutionCourse);
+		}
 
-    public Object run(
-        InfoExecutionDegree infoExecutionDegree,
-        InfoExecutionPeriod infoExecutionPeriod,
-        Integer curricularYear)
-    {
+		return infoExecutionCourseList;
 
-        List infoExecutionCourseList = new ArrayList();
-
-        try
-        {
-            List executionCourseList = null;
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-            IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
-
-            executionCourseList =
-                executionCourseDAO.readByCurricularYearAndExecutionPeriodAndExecutionDegree(
-                    curricularYear,
-                    infoExecutionPeriod.getSemester(),
-                    infoExecutionDegree.getInfoDegreeCurricularPlan().getName(),
-                    infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla(),               
-                    infoExecutionPeriod.getIdInternal());
-
-            for (int i = 0; i < executionCourseList.size(); i++)
-            {
-                IExecutionCourse aux = (IExecutionCourse) executionCourseList.get(i);
-                InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(aux);
-                infoExecutionCourseList.add(infoExecutionCourse);
-            }
-
-        }
-        catch (ExcepcaoPersistencia e)
-        {
-
-            e.printStackTrace();
-        }
-
-        return infoExecutionCourseList;
-
-    }
+	}
 
 }

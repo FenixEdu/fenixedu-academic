@@ -23,51 +23,42 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class GetBranchListByCandidateID implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public GetBranchListByCandidateID() {
-    }
+	public List run(Integer candidateID) throws FenixServiceException, ExcepcaoPersistencia {
 
-    public List run(Integer candidateID) throws FenixServiceException {
+		ISuportePersistente sp = null;
+		List result = null;
 
-        ISuportePersistente sp = null;
-        List result = null;
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
+				.getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
+						candidateID);
+		// result =
+		// sp.getIPersistentBranch().readByExecutionDegree(masterDegreeCandidate.getExecutionDegree());
+		result = masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan().getAreas();
 
-            IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
-                    .getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
-                            candidateID);
-            //result = sp.getIPersistentBranch().readByExecutionDegree(masterDegreeCandidate.getExecutionDegree());
-			result = masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan().getAreas();
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);
-            throw newEx;
-        }
-        List branchList = new ArrayList();
-        if (result == null) {
-            InfoBranch infoBranch = new InfoBranch();
-            infoBranch.setName("Tronco Comum");
-            branchList.add(infoBranch);
-            return branchList;
-        }
+		List branchList = new ArrayList();
+		if (result == null) {
+			InfoBranch infoBranch = new InfoBranch();
+			infoBranch.setName("Tronco Comum");
+			branchList.add(infoBranch);
+			return branchList;
+		}
 
-        Iterator iterator = result.iterator();
+		Iterator iterator = result.iterator();
 
-        while (iterator.hasNext()) {
-            IBranch branch = (IBranch) iterator.next();
-            InfoBranch infoBranch = InfoBranch.newInfoFromDomain(branch);
+		while (iterator.hasNext()) {
+			IBranch branch = (IBranch) iterator.next();
+			InfoBranch infoBranch = InfoBranch.newInfoFromDomain(branch);
 
-            if ((infoBranch.getName() == null) || (infoBranch.getName().length() == 0)) {
+			if ((infoBranch.getName() == null) || (infoBranch.getName().length() == 0)) {
 
-                // FIXME: Common branch
-                infoBranch.setName("Tronco Comum");
-            }
-            branchList.add(infoBranch);
-        }
+				// FIXME: Common branch
+				infoBranch.setName("Tronco Comum");
+			}
+			branchList.add(infoBranch);
+		}
 
-        return branchList;
-    }
+		return branchList;
+	}
 }

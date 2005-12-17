@@ -33,89 +33,83 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class InsertStudentsInGrouping implements IService {
 
-    public Boolean run(Integer executionCourseCode, Integer groupPropertiesCode, String[] selected)
-            throws FenixServiceException {
+	public Boolean run(Integer executionCourseCode, Integer groupPropertiesCode, String[] selected)
+			throws FenixServiceException, ExcepcaoPersistencia {
 
-        IPersistentGrouping persistentGrouping = null;
-        IFrequentaPersistente persistentAttend = null;
-        IPersistentStudent persistentStudent = null;
-        List students = new ArrayList();
+		IPersistentGrouping persistentGrouping = null;
+		IFrequentaPersistente persistentAttend = null;
+		IPersistentStudent persistentStudent = null;
+		List students = new ArrayList();
 
-        try {
-            ISuportePersistente persistentSupport = PersistenceSupportFactory
-                    .getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            persistentGrouping = persistentSupport.getIPersistentGrouping();
-            persistentStudent = persistentSupport.getIPersistentStudent();
-            persistentAttend = persistentSupport.getIFrequentaPersistente();
+		persistentGrouping = persistentSupport.getIPersistentGrouping();
+		persistentStudent = persistentSupport.getIPersistentStudent();
+		persistentAttend = persistentSupport.getIFrequentaPersistente();
 
-            IGrouping groupProperties = (IGrouping) persistentGrouping.readByOID(Grouping.class,
-                    groupPropertiesCode);
+		IGrouping groupProperties = (IGrouping) persistentGrouping.readByOID(Grouping.class,
+				groupPropertiesCode);
 
-            if (groupProperties == null) {
-                throw new ExistingServiceException();
-            }
+		if (groupProperties == null) {
+			throw new ExistingServiceException();
+		}
 
-            if (selected == null)
-                return Boolean.TRUE;
+		if (selected == null)
+			return Boolean.TRUE;
 
-            List studentCodes = Arrays.asList(selected);
+		List studentCodes = Arrays.asList(selected);
 
-            Iterator iterator = studentCodes.iterator();
+		Iterator iterator = studentCodes.iterator();
 
-            while (iterator.hasNext()) {
-                String number = (String) iterator.next();
-                if (number.equals("Todos os Alunos")) {
-                } else {
-                    IStudent student = (IStudent) persistentStudent.readByOID(Student.class,
-                            new Integer(number));
-                    students.add(student);
-                }
-            }
+		while (iterator.hasNext()) {
+			String number = (String) iterator.next();
+			if (number.equals("Todos os Alunos")) {
+			} else {
+				IStudent student = (IStudent) persistentStudent.readByOID(Student.class, new Integer(
+						number));
+				students.add(student);
+			}
+		}
 
-            Iterator iterAttends = groupProperties.getAttends().iterator();
+		Iterator iterAttends = groupProperties.getAttends().iterator();
 
-            while (iterAttends.hasNext()) {
-                IAttends existingAttend = (IAttends) iterAttends.next();
-                IStudent existingAttendStudent = existingAttend.getAluno();
+		while (iterAttends.hasNext()) {
+			IAttends existingAttend = (IAttends) iterAttends.next();
+			IStudent existingAttendStudent = existingAttend.getAluno();
 
-                List studentsList = new ArrayList();
-                studentsList.addAll(students);
-                Iterator iteratorStudents = studentsList.iterator();
+			List studentsList = new ArrayList();
+			studentsList.addAll(students);
+			Iterator iteratorStudents = studentsList.iterator();
 
-                while (iteratorStudents.hasNext()) {
+			while (iteratorStudents.hasNext()) {
 
-                    IStudent student = (IStudent) iteratorStudents.next();
-                    if (student.equals(existingAttendStudent)) {
-                        throw new InvalidSituationServiceException();
-                    }
-                }
-            }
+				IStudent student = (IStudent) iteratorStudents.next();
+				if (student.equals(existingAttendStudent)) {
+					throw new InvalidSituationServiceException();
+				}
+			}
+		}
 
-            List studentsList1 = new ArrayList();
-            studentsList1.addAll(students);
-            Iterator iterStudents1 = studentsList1.iterator();
+		List studentsList1 = new ArrayList();
+		studentsList1.addAll(students);
+		Iterator iterStudents1 = studentsList1.iterator();
 
-            while (iterStudents1.hasNext()) {
-                IAttends attend = null;
-                IStudent student = (IStudent) iterStudents1.next();
+		while (iterStudents1.hasNext()) {
+			IAttends attend = null;
+			IStudent student = (IStudent) iterStudents1.next();
 
-                List listaExecutionCourses = new ArrayList();
-                listaExecutionCourses.addAll(groupProperties.getExecutionCourses());
-                Iterator iterExecutionCourse = listaExecutionCourses.iterator();
-                while (iterExecutionCourse.hasNext() && attend == null) {
+			List listaExecutionCourses = new ArrayList();
+			listaExecutionCourses.addAll(groupProperties.getExecutionCourses());
+			Iterator iterExecutionCourse = listaExecutionCourses.iterator();
+			while (iterExecutionCourse.hasNext() && attend == null) {
 
-                    IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourse.next();
-                    attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student.getIdInternal(),
-                            executionCourse.getIdInternal());
-                }
-                groupProperties.addAttends(attend);
-            }
+				IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourse.next();
+				attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student.getIdInternal(),
+						executionCourse.getIdInternal());
+			}
+			groupProperties.addAttends(attend);
+		}
 
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia.getMessage());
-        }
-
-        return new Boolean(true);
-    }
+		return new Boolean(true);
+	}
 }

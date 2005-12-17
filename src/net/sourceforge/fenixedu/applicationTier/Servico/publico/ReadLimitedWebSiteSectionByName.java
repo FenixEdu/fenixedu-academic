@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -26,113 +25,87 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
+
 /**
  * @author Fernanda Quitério 02/10/2003
- *  
+ * 
  */
-public class ReadLimitedWebSiteSectionByName implements IServico {
-    private static ReadLimitedWebSiteSectionByName _servico = new ReadLimitedWebSiteSectionByName();
+public class ReadLimitedWebSiteSectionByName implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    private ReadLimitedWebSiteSectionByName() {
+	public Object run(String sectionName) throws ExcepcaoInexistente, FenixServiceException,
+			ExcepcaoPersistencia {
 
-    }
+		IWebSiteSection webSiteSection = null;
+		InfoWebSiteSection infoWebSiteSection = new InfoWebSiteSection();
 
-    /**
-     * Returns Service Name
-     */
-    public String getNome() {
-        return "ReadLimitedWebSiteSectionByName";
-    }
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentWebSiteSection persistentWebSiteSection = sp.getIPersistentWebSiteSection();
+		IPersistentWebSiteItem persistentWebSiteItem = sp.getIPersistentWebSiteItem();
 
-    /**
-     * Returns the _servico.
-     * 
-     * @return ReadLimitedWebSiteSectionByName
-     */
-    public static ReadLimitedWebSiteSectionByName getService() {
-        return _servico;
-    }
+		webSiteSection = persistentWebSiteSection.readByName(sectionName);
 
-    public Object run(String sectionName) throws ExcepcaoInexistente, FenixServiceException {
+		if (webSiteSection == null) {
+			throw new NonExistingServiceException();
+		}
 
-        IWebSiteSection webSiteSection = null;
-        InfoWebSiteSection infoWebSiteSection = new InfoWebSiteSection();
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentWebSiteSection persistentWebSiteSection = sp.getIPersistentWebSiteSection();
-            IPersistentWebSiteItem persistentWebSiteItem = sp.getIPersistentWebSiteItem();
+		List webSiteItems = persistentWebSiteItem
+				.readPublishedWebSiteItemsByWebSiteSection(webSiteSection);
 
-            webSiteSection = persistentWebSiteSection.readByName(sectionName);
+		if (webSiteItems == null || webSiteItems.size() == 0) {
+			throw new NonExistingServiceException();
+		}
 
-            if (webSiteSection == null) {
-                throw new NonExistingServiceException();
-            }
+		// get items with valid dates of publishment
+		CollectionUtils.filter(webSiteItems, new Predicate() {
+			public boolean evaluate(Object arg0) {
+				IWebSiteItem webSiteItem = (IWebSiteItem) arg0;
+				if (!webSiteItem.getOnlineBeginDay().after(Calendar.getInstance().getTime())
+						&& !webSiteItem.getOnlineEndDay().before(Calendar.getInstance().getTime())) {
+					return true;
+				}
 
-            List webSiteItems = persistentWebSiteItem
-                    .readPublishedWebSiteItemsByWebSiteSection(webSiteSection);
+				return false;
+			}
+		});
+		if (webSiteItems.size() == 0) {
+			throw new NonExistingServiceException();
+		}
 
-            if (webSiteItems == null || webSiteItems.size() == 0) {
-                throw new NonExistingServiceException();
-            }
+		List infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {
+			public Object transform(Object arg0) {
+				IWebSiteItem webSiteItem = (IWebSiteItem) arg0;
+				InfoWebSiteItem infoWebSiteItem = InfoWebSiteItem.newInfoFromDomain(webSiteItem);
 
-            // get items with valid dates of publishment
-            CollectionUtils.filter(webSiteItems, new Predicate() {
-                public boolean evaluate(Object arg0) {
-                    IWebSiteItem webSiteItem = (IWebSiteItem) arg0;
-                    if (!webSiteItem.getOnlineBeginDay().after(Calendar.getInstance().getTime())
-                            && !webSiteItem.getOnlineEndDay().before(Calendar.getInstance().getTime())) {
-                        return true;
-                    }
+				return infoWebSiteItem;
+			}
+		});
 
-                    return false;
-                }
-            });
-            if (webSiteItems.size() == 0) {
-                throw new NonExistingServiceException();
-            }
+		Collections.sort(infoWebSiteItems, new BeanComparator("creationDate"));
+		if (webSiteSection.getSortingOrder().equals("descendent")) {
+			Collections.reverse(infoWebSiteItems);
+		}
 
-            List infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {
-                public Object transform(Object arg0) {
-                    IWebSiteItem webSiteItem = (IWebSiteItem) arg0;
-                    InfoWebSiteItem infoWebSiteItem = InfoWebSiteItem.newInfoFromDomain(webSiteItem);
+		// limits number of items to mandatory section size in website
+		if (infoWebSiteItems.size() > webSiteSection.getSize().intValue()) {
+			List limitedList = new ArrayList();
+			ListIterator iterItems = infoWebSiteItems.listIterator();
+			while (iterItems.previousIndex() <= webSiteSection.getSize().intValue()) {
+				InfoWebSiteItem infoWebSiteItem = (InfoWebSiteItem) iterItems.next();
+				limitedList.add(infoWebSiteItem);
+			}
+			infoWebSiteSection.setInfoItemsList(limitedList);
+		} else {
+			infoWebSiteSection.setInfoItemsList(infoWebSiteItems);
+		}
 
-                    return infoWebSiteItem;
-                }
-            });
+		infoWebSiteSection.setIdInternal(webSiteSection.getIdInternal());
+		infoWebSiteSection.setExcerptSize(webSiteSection.getExcerptSize());
+		infoWebSiteSection.setInfoWebSite(InfoWebSite.newInfoFromDomain(webSiteSection.getWebSite()));
+		infoWebSiteSection.setName(webSiteSection.getName());
+		infoWebSiteSection.setSize(webSiteSection.getSize());
+		infoWebSiteSection.setSortingOrder(webSiteSection.getSortingOrder());
 
-            Collections.sort(infoWebSiteItems, new BeanComparator("creationDate"));
-            if (webSiteSection.getSortingOrder().equals("descendent")) {
-                Collections.reverse(infoWebSiteItems);
-            }
-
-            // limits number of items to mandatory section size in website
-            if (infoWebSiteItems.size() > webSiteSection.getSize().intValue()) {
-                List limitedList = new ArrayList();
-                ListIterator iterItems = infoWebSiteItems.listIterator();
-                while (iterItems.previousIndex() <= webSiteSection.getSize().intValue()) {
-                    InfoWebSiteItem infoWebSiteItem = (InfoWebSiteItem) iterItems.next();
-                    limitedList.add(infoWebSiteItem);
-                }
-                infoWebSiteSection.setInfoItemsList(limitedList);
-            } else {
-                infoWebSiteSection.setInfoItemsList(infoWebSiteItems);
-            }
-
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-            throw new FenixServiceException("error.impossibleReadSection");
-        }
-
-        infoWebSiteSection.setIdInternal(webSiteSection.getIdInternal());
-        infoWebSiteSection.setExcerptSize(webSiteSection.getExcerptSize());
-        infoWebSiteSection.setInfoWebSite(InfoWebSite.newInfoFromDomain(webSiteSection.getWebSite()));
-        infoWebSiteSection.setName(webSiteSection.getName());
-        infoWebSiteSection.setSize(webSiteSection.getSize());
-        infoWebSiteSection.setSortingOrder(webSiteSection.getSortingOrder());
-
-        return infoWebSiteSection;
-    }
+		return infoWebSiteSection;
+	}
 }

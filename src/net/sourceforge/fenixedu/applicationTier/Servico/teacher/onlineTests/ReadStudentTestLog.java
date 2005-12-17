@@ -26,35 +26,34 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadStudentTestLog implements IService {
 
-    public List run(Integer executionCourseId, Integer distributedTestId, Integer studentId) throws FenixServiceException {
-        ISuportePersistente persistentSuport;
-        List infoStudentTestLogList = new ArrayList();
-        try {
-            persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IStudent student = (IStudent) persistentSuport.getIPersistentStudent().readByOID(Student.class, studentId);
-            if (student == null) {
-                throw new FenixServiceException();
-            }
-            IDistributedTest distributedTest = (IDistributedTest) persistentSuport.getIPersistentDistributedTest().readByOID(DistributedTest.class,
-                    distributedTestId);
-            if (distributedTest == null) {
-                throw new FenixServiceException();
-            }
-            List<IStudentTestLog> studentTestLogList = persistentSuport.getIPersistentStudentTestLog().readByStudentAndDistributedTest(student,
-                    distributedTest);
+	public List run(Integer executionCourseId, Integer distributedTestId, Integer studentId)
+			throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente persistentSuport;
+		List infoStudentTestLogList = new ArrayList();
+		persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IStudent student = (IStudent) persistentSuport.getIPersistentStudent().readByOID(Student.class,
+				studentId);
+		if (student == null) {
+			throw new FenixServiceException();
+		}
+		IDistributedTest distributedTest = (IDistributedTest) persistentSuport
+				.getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
+		if (distributedTest == null) {
+			throw new FenixServiceException();
+		}
+		List<IStudentTestLog> studentTestLogList = persistentSuport.getIPersistentStudentTestLog()
+				.readByStudentAndDistributedTest(student, distributedTest);
 
-            for (IStudentTestLog studentTestLog : studentTestLogList) {
-                InfoStudentTestLog infoStudentTestLog = InfoStudentTestLogWithStudentAndDistributedTest.newInfoFromDomain(studentTestLog);
-                String[] eventTokens = infoStudentTestLog.getEvent().split(";");
-                List<String> eventList = new ArrayList<String>();
-                for (int i = 0; i < eventTokens.length; i++)
-                    eventList.add(eventTokens[i]);
-                infoStudentTestLog.setEventList(eventList);
-                infoStudentTestLogList.add(infoStudentTestLog);
-            }
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-        return infoStudentTestLogList;
-    }
+		for (IStudentTestLog studentTestLog : studentTestLogList) {
+			InfoStudentTestLog infoStudentTestLog = InfoStudentTestLogWithStudentAndDistributedTest
+					.newInfoFromDomain(studentTestLog);
+			String[] eventTokens = infoStudentTestLog.getEvent().split(";");
+			List<String> eventList = new ArrayList<String>();
+			for (int i = 0; i < eventTokens.length; i++)
+				eventList.add(eventTokens[i]);
+			infoStudentTestLog.setEventList(eventList);
+			infoStudentTestLogList.add(infoStudentTestLog);
+		}
+		return infoStudentTestLogList;
+	}
 }

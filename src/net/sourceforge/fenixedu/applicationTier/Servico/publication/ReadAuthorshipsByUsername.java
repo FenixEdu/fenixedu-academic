@@ -19,33 +19,28 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadAuthorshipsByUsername implements IService {
-    
-    public SiteView run(String user) throws FenixServiceException {
-        try {
-            
 
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            
-            IPerson person = persistentPerson.lerPessoaPorUsername(user);
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
-            
-            InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
-            List<InfoPublication> infoPublications = new ArrayList<InfoPublication>(person.getPersonAuthorshipsCount());
-            
-            for (IAuthorship authorship : person.getPersonAuthorships()) {
-                infoPublications.add(InfoPublication.newInfoFromDomain(authorship.getPublication()));
-            }
+	public SiteView run(String user) throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
+		IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
-            InfoSitePublications infoSitePublications = new InfoSitePublications();
-            infoSitePublications.setInfoTeacher(infoTeacher);
-            infoSitePublications.setInfoPublications(infoPublications);
+		IPerson person = persistentPerson.lerPessoaPorUsername(user);
+		ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
 
-            return new SiteView(infoSitePublications);
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-    }
+		InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
+		List<InfoPublication> infoPublications = new ArrayList<InfoPublication>(person
+				.getPersonAuthorshipsCount());
+
+		for (IAuthorship authorship : person.getPersonAuthorships()) {
+			infoPublications.add(InfoPublication.newInfoFromDomain(authorship.getPublication()));
+		}
+
+		InfoSitePublications infoSitePublications = new InfoSitePublications();
+		infoSitePublications.setInfoTeacher(infoTeacher);
+		infoSitePublications.setInfoPublications(infoPublications);
+
+		return new SiteView(infoSitePublications);
+	}
 
 }

@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.places.campus;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCampus;
 import net.sourceforge.fenixedu.domain.ICampus;
@@ -18,52 +17,29 @@ import net.sourceforge.fenixedu.persistenceTier.places.campus.IPersistentCampus;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
+
 /**
  * @author jpvl
  */
-public class ReadAllCampus implements IServico {
-    private static ReadAllCampus service = new ReadAllCampus();
+public class ReadAllCampus implements IService {
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadAllCampus getService() {
-        return service;
-    }
+	public List run() throws FenixServiceException, ExcepcaoPersistencia {
+		List infoCampusList;
 
-    /**
-     * The actor of this class.
-     */
-    private ReadAllCampus() {
-    }
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentCampus campus = sp.getIPersistentCampus();
+		List campusList = campus.readAll();
+		infoCampusList = (List) CollectionUtils.collect(campusList, new Transformer() {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.IServico#getNome()
-     */
-    public String getNome() {
-        return "ReadAllCampus";
-    }
+			public Object transform(Object input) {
+				ICampus campus = (ICampus) input;
+				InfoCampus infoCampus = InfoCampus.newInfoFromDomain(campus);
+				return infoCampus;
+			}
+		});
 
-    public List run() throws FenixServiceException {
-        List infoCampusList;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentCampus campus = sp.getIPersistentCampus();
-            List campusList = campus.readAll();
-            infoCampusList = (List) CollectionUtils.collect(campusList, new Transformer() {
+		return infoCampusList;
 
-                public Object transform(Object input) {
-                    ICampus campus = (ICampus) input;
-                    InfoCampus infoCampus = InfoCampus.newInfoFromDomain(campus);
-                    return infoCampus;
-                }
-            });
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException("Problems on database!", e);
-        }
-        return infoCampusList;
-
-    }
+	}
 }

@@ -28,55 +28,50 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class EditarSala implements IService {
 
-    public Object run(RoomKey salaAntiga, InfoRoom salaNova) throws ExistingServiceException {
+	public Object run(RoomKey salaAntiga, InfoRoom salaNova) throws ExistingServiceException,
+			ExcepcaoPersistencia {
+		IRoom sala = null;
+		boolean result = false;
 
-        IRoom sala = null;
-        boolean result = false;
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		final IPersistentBuilding persistentBuilding = sp.getIPersistentBuilding();
 
-        try {
+		sala = sp.getISalaPersistente().readByName(salaAntiga.getNomeSala());
 
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            final IPersistentBuilding persistentBuilding = sp.getIPersistentBuilding();
+		if (sala != null) {
 
-            sala = sp.getISalaPersistente().readByName(salaAntiga.getNomeSala());
+			if (!sala.getNome().equals(salaNova.getNome())) {
+				IRoom roomWithSameName = sp.getISalaPersistente().readByName(salaNova.getNome());
+				if (roomWithSameName != null) {
+					throw new ExistingServiceException();
+				}
+			}
 
-            if (sala != null) {
+			final IBuilding building = findBuilding(persistentBuilding, salaNova.getEdificio());
 
-                if (!sala.getNome().equals(salaNova.getNome())) {
-                    IRoom roomWithSameName = sp.getISalaPersistente().readByName(salaNova.getNome());
-                    if (roomWithSameName != null) {
-                        throw new ExistingServiceException();
-                    }
-                }
+			sp.getISalaPersistente().simpleLockWrite(sala);
+			sala.setNome(salaNova.getNome());
+			sala.setPiso(salaNova.getPiso());
+			sala.setCapacidadeNormal(salaNova.getCapacidadeNormal());
+			sala.setCapacidadeExame(salaNova.getCapacidadeExame());
+			sala.setTipo(salaNova.getTipo());
+			sala.setBuilding(building);
 
-                final IBuilding building = findBuilding(persistentBuilding, salaNova.getEdificio());
+			result = true;
+		}
 
-                sp.getISalaPersistente().simpleLockWrite(sala);
-                sala.setNome(salaNova.getNome());
-                sala.setPiso(salaNova.getPiso());
-                sala.setCapacidadeNormal(salaNova.getCapacidadeNormal());
-                sala.setCapacidadeExame(salaNova.getCapacidadeExame());
-                sala.setTipo(salaNova.getTipo());
-                sala.setBuilding(building);
+		return new Boolean(result);
+	}
 
-                result = true;
-            }
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
-        }
-
-        return new Boolean(result);
-    }
-
-    protected IBuilding findBuilding(final IPersistentBuilding persistentBuilding, final String edificio)
-            throws ExcepcaoPersistencia {
-        final List buildings = persistentBuilding.readAll();
-        return (IBuilding) CollectionUtils.find(buildings, new Predicate() {
-            public boolean evaluate(Object arg0) {
-                final IBuilding building = (IBuilding) arg0;
-                return building.getName().equalsIgnoreCase(edificio);
-            }
-        });
-    }
+	protected IBuilding findBuilding(final IPersistentBuilding persistentBuilding, final String edificio)
+			throws ExcepcaoPersistencia {
+		final List buildings = persistentBuilding.readAll();
+		return (IBuilding) CollectionUtils.find(buildings, new Predicate() {
+			public boolean evaluate(Object arg0) {
+				final IBuilding building = (IBuilding) arg0;
+				return building.getName().equalsIgnoreCase(edificio);
+			}
+		});
+	}
 
 }

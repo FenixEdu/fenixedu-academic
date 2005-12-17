@@ -29,9 +29,10 @@ public class AssociateTeacher implements IService {
 
     /**
      * Executes the service.
+     * @throws ExcepcaoPersistencia 
      */
     public boolean run(Integer infoExecutionCourseCode, Integer teacherNumber)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
@@ -53,8 +54,6 @@ public class AssociateTeacher implements IService {
             
         } catch (ExistingPersistentException ex) {
             throw new ExistingServiceException(ex);
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex);
         }
         return true;
     }

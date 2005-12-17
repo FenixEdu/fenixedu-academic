@@ -22,50 +22,40 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author João Mota
- *  
+ * 
  */
 public class ReadSchoolClassByNameInCurrentExecutionPeriod implements IService {
 
-    /**
-     *  
-     */
-    public ReadSchoolClassByNameInCurrentExecutionPeriod() {
-        super();
-    }
+	public SchoolClassDTO run(final String schoolClassName) throws FenixServiceException, ExcepcaoPersistencia {
 
-    public SchoolClassDTO run(final String schoolClassName) throws FenixServiceException {
-        try {
-            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport
-                    .getIPersistentExecutionPeriod();
-            IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
-            ISchoolClass schoolClass = (ISchoolClass) CollectionUtils.find(executionPeriod.getSchoolClasses(),
-                    new Predicate() {
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport
+				.getIPersistentExecutionPeriod();
+		IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+		ISchoolClass schoolClass = (ISchoolClass) CollectionUtils.find(executionPeriod
+				.getSchoolClasses(), new Predicate() {
 
-                        public boolean evaluate(Object arg0) {
-                            ISchoolClass schoolClass = (ISchoolClass) arg0;
-                            return schoolClass.getNome().equalsIgnoreCase(schoolClassName);
-                        }
-                    });
-            if (schoolClass != null) {
-                IDegreeCurricularPlan degreeCurricularPlan = schoolClass.getExecutionDegree()
-                        .getDegreeCurricularPlan();
-                IDegree degree = degreeCurricularPlan.getDegree();
-                SchoolClassDTO schoolClassDTO = new SchoolClassDTO();
-                schoolClassDTO.setExecutionPeriodId(executionPeriod.getIdInternal());
-                schoolClassDTO.setSchoolClassId(schoolClass.getIdInternal());
-                schoolClassDTO.setSchoolClassName(schoolClass.getNome());
-                schoolClassDTO.setDegreeCurricularPlanId(degreeCurricularPlan.getIdInternal());
-                schoolClassDTO.setDegreeCurricularPlanName(degreeCurricularPlan.getName());
-                schoolClassDTO.setDegreeId(degree.getIdInternal());
-                schoolClassDTO.setDegreeInitials(degree.getSigla());
-                return schoolClassDTO;
-            }
-            return null;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
+			public boolean evaluate(Object arg0) {
+				ISchoolClass schoolClass = (ISchoolClass) arg0;
+				return schoolClass.getNome().equalsIgnoreCase(schoolClassName);
+			}
+		});
+		if (schoolClass != null) {
+			IDegreeCurricularPlan degreeCurricularPlan = schoolClass.getExecutionDegree()
+					.getDegreeCurricularPlan();
+			IDegree degree = degreeCurricularPlan.getDegree();
+			SchoolClassDTO schoolClassDTO = new SchoolClassDTO();
+			schoolClassDTO.setExecutionPeriodId(executionPeriod.getIdInternal());
+			schoolClassDTO.setSchoolClassId(schoolClass.getIdInternal());
+			schoolClassDTO.setSchoolClassName(schoolClass.getNome());
+			schoolClassDTO.setDegreeCurricularPlanId(degreeCurricularPlan.getIdInternal());
+			schoolClassDTO.setDegreeCurricularPlanName(degreeCurricularPlan.getName());
+			schoolClassDTO.setDegreeId(degree.getIdInternal());
+			schoolClassDTO.setDegreeInitials(degree.getSigla());
+			return schoolClassDTO;
+		}
+		return null;
 
-    }
+	}
 
 }

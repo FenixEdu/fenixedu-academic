@@ -18,25 +18,20 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadContributor implements IService {
 
-    public InfoContributor run(Integer contributorNumber) throws FenixServiceException {
+	public InfoContributor run(Integer contributorNumber) throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = null;
-        IContributor contributor = null;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente sp = null;
+		IContributor contributor = null;
 
-            // Read the contributor
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            contributor = sp.getIPersistentContributor().readByContributorNumber(contributorNumber);
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+		// Read the contributor
 
-        if (contributor == null)
-            throw new ExcepcaoInexistente("Unknown Contributor !!");
+		contributor = sp.getIPersistentContributor().readByContributorNumber(contributorNumber);
 
-        return InfoContributor.newInfoFromDomain(contributor);
-    }
+		if (contributor == null)
+			throw new ExcepcaoInexistente("Unknown Contributor !!");
+
+		return InfoContributor.newInfoFromDomain(contributor);
+	}
 }

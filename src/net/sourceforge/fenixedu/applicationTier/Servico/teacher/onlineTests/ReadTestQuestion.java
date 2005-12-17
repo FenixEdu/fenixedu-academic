@@ -23,51 +23,56 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadTestQuestion implements IService {
 
-    private String path = new String();
+	private String path = new String();
 
-    public InfoTestQuestion run(Integer executionCourseId, Integer testId, Integer questionId, String path) throws FenixServiceException {
-        this.path = path.replace('\\', '/');
-        try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            ITestQuestion testQuestion = persistentSuport.getIPersistentTestQuestion().readByTestAndQuestion(testId, questionId);
-            InfoTestQuestion infoTestQuestion = InfoTestQuestionWithInfoQuestion.newInfoFromDomain(testQuestion);
-            ParseQuestion parse = new ParseQuestion();
-            try {
-                infoTestQuestion.setQuestion(parse.parseQuestion(infoTestQuestion.getQuestion().getXmlFile(), infoTestQuestion.getQuestion(),
-                        this.path));
-                if (infoTestQuestion.getQuestion().getQuestionType().getType().equals(new Integer(QuestionType.LID)))
-                    infoTestQuestion.getQuestion().setResponseProcessingInstructions(
-                            parse.newResponseList(infoTestQuestion.getQuestion().getResponseProcessingInstructions(), infoTestQuestion.getQuestion()
-                                    .getOptions()));
-                infoTestQuestion.setQuestion(correctQuestionValues(infoTestQuestion.getQuestion(), new Double(infoTestQuestion.getTestQuestionValue()
-                        .doubleValue())));
-            } catch (Exception e) {
-                throw new FenixServiceException(e);
-            }
+	public InfoTestQuestion run(Integer executionCourseId, Integer testId, Integer questionId,
+			String path) throws FenixServiceException, ExcepcaoPersistencia {
+		this.path = path.replace('\\', '/');
+		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ITestQuestion testQuestion = persistentSuport.getIPersistentTestQuestion()
+				.readByTestAndQuestion(testId, questionId);
+		InfoTestQuestion infoTestQuestion = InfoTestQuestionWithInfoQuestion
+				.newInfoFromDomain(testQuestion);
+		ParseQuestion parse = new ParseQuestion();
+		try {
+			infoTestQuestion.setQuestion(parse.parseQuestion(
+					infoTestQuestion.getQuestion().getXmlFile(), infoTestQuestion.getQuestion(),
+					this.path));
+			if (infoTestQuestion.getQuestion().getQuestionType().getType().equals(
+					new Integer(QuestionType.LID)))
+				infoTestQuestion.getQuestion().setResponseProcessingInstructions(
+						parse.newResponseList(infoTestQuestion.getQuestion()
+								.getResponseProcessingInstructions(), infoTestQuestion.getQuestion()
+								.getOptions()));
+			infoTestQuestion.setQuestion(correctQuestionValues(infoTestQuestion.getQuestion(),
+					new Double(infoTestQuestion.getTestQuestionValue().doubleValue())));
+		} catch (Exception e) {
+			throw new FenixServiceException(e);
+		}
 
-            return infoTestQuestion;
+		return infoTestQuestion;
+	}
 
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-    }
+	private InfoQuestion correctQuestionValues(InfoQuestion infoQuestion, Double questionValue) {
+		Double maxValue = new Double(0);
+		for (ResponseProcessing responseProcessing : (List<ResponseProcessing>) infoQuestion
+				.getResponseProcessingInstructions()) {
+			if (responseProcessing.getAction().intValue() == ResponseProcessing.SET
+					|| responseProcessing.getAction().intValue() == ResponseProcessing.ADD)
+				if (maxValue.compareTo(responseProcessing.getResponseValue()) < 0)
+					maxValue = responseProcessing.getResponseValue();
+		}
+		if (maxValue.compareTo(questionValue) != 0) {
+			double difValue = questionValue.doubleValue() * Math.pow(maxValue.doubleValue(), -1);
 
-    private InfoQuestion correctQuestionValues(InfoQuestion infoQuestion, Double questionValue) {
-        Double maxValue = new Double(0);
-        for (ResponseProcessing responseProcessing : (List<ResponseProcessing>) infoQuestion.getResponseProcessingInstructions()) {
-            if (responseProcessing.getAction().intValue() == ResponseProcessing.SET
-                    || responseProcessing.getAction().intValue() == ResponseProcessing.ADD)
-                if (maxValue.compareTo(responseProcessing.getResponseValue()) < 0)
-                    maxValue = responseProcessing.getResponseValue();
-        }
-        if (maxValue.compareTo(questionValue) != 0) {
-            double difValue = questionValue.doubleValue() * Math.pow(maxValue.doubleValue(), -1);
+			for (ResponseProcessing responseProcessing : (List<ResponseProcessing>) infoQuestion
+					.getResponseProcessingInstructions()) {
+				responseProcessing.setResponseValue(new Double(responseProcessing.getResponseValue()
+						.doubleValue()
+						* difValue));
+			}
+		}
 
-            for (ResponseProcessing responseProcessing : (List<ResponseProcessing>) infoQuestion.getResponseProcessingInstructions()) {
-                responseProcessing.setResponseValue(new Double(responseProcessing.getResponseValue().doubleValue() * difValue));
-            }
-        }
-
-        return infoQuestion;
-    }
+		return infoQuestion;
+	}
 }

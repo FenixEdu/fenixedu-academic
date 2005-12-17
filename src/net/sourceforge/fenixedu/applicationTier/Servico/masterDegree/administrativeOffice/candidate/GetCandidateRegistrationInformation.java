@@ -25,48 +25,45 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class GetCandidateRegistrationInformation implements IService {
 
-    public InfoCandidateRegistration run(Integer candidateID) throws FenixServiceException {
+	public InfoCandidateRegistration run(Integer candidateID) throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = null;
+		ISuportePersistente sp = null;
 
-        InfoCandidateRegistration infoCandidateRegistration = null;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		InfoCandidateRegistration infoCandidateRegistration = null;
 
-            IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
-                    .getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
-                            candidateID);
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IStudent student = sp.getIPersistentStudent().readByPersonAndDegreeType(
-                    masterDegreeCandidate.getPerson().getIdInternal(), DegreeType.MASTER_DEGREE);
+		IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
+				.getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
+						candidateID);
 
-            IStudentCurricularPlan studentCurricularPlan = sp.getIStudentCurricularPlanPersistente()
-                    .readActiveStudentCurricularPlan(student.getNumber(), DegreeType.MASTER_DEGREE);
+		IStudent student = sp.getIPersistentStudent().readByPersonAndDegreeType(
+				masterDegreeCandidate.getPerson().getIdInternal(), DegreeType.MASTER_DEGREE);
 
-            infoCandidateRegistration = new InfoCandidateRegistration();
+		IStudentCurricularPlan studentCurricularPlan = sp.getIStudentCurricularPlanPersistente()
+				.readActiveStudentCurricularPlan(student.getNumber(), DegreeType.MASTER_DEGREE);
 
-            infoCandidateRegistration
-                    .setInfoMasterDegreeCandidate(InfoMasterDegreeCandidateWithInfoPerson
-                            .newInfoFromDomain(masterDegreeCandidate));
-            infoCandidateRegistration.setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentAndDegree.newInfoFromDomain(studentCurricularPlan));
+		infoCandidateRegistration = new InfoCandidateRegistration();
 
-            if (studentCurricularPlan.getEnrolments().size() == 0) {
-                infoCandidateRegistration.setEnrolments(null);
-            } else {
-                infoCandidateRegistration.setEnrolments(new ArrayList());
-                Iterator iterator = studentCurricularPlan.getEnrolments().iterator();
-                while (iterator.hasNext()) {
-                    IEnrolment enrolment = (IEnrolment) iterator.next();
-                    InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
-                            .newInfoFromDomain(enrolment);
-                    infoCandidateRegistration.getEnrolments().add(infoEnrolment);
-                }
-            }
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+		infoCandidateRegistration.setInfoMasterDegreeCandidate(InfoMasterDegreeCandidateWithInfoPerson
+				.newInfoFromDomain(masterDegreeCandidate));
+		infoCandidateRegistration
+				.setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentAndDegree
+						.newInfoFromDomain(studentCurricularPlan));
 
-        }
+		if (studentCurricularPlan.getEnrolments().size() == 0) {
+			infoCandidateRegistration.setEnrolments(null);
+		} else {
+			infoCandidateRegistration.setEnrolments(new ArrayList());
+			Iterator iterator = studentCurricularPlan.getEnrolments().iterator();
+			while (iterator.hasNext()) {
+				IEnrolment enrolment = (IEnrolment) iterator.next();
+				InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
+						.newInfoFromDomain(enrolment);
+				infoCandidateRegistration.getEnrolments().add(infoEnrolment);
+			}
+		}
 
-        return infoCandidateRegistration;
-    }
+		return infoCandidateRegistration;
+	}
 }

@@ -23,32 +23,26 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * 
  * Created at 3/Set/2003, 15:10:43
- *  
+ * 
  */
 public class GetAllModalities implements IService {
 
-    public GetAllModalities() {
-    }
+	public List run() throws BDException, ExcepcaoPersistencia {
+		List infoCases = new LinkedList();
 
-    public List run() throws BDException {
-        List infoCases = new LinkedList();
-        try {
-            ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentSeminaryModality persistentModality = persistenceSupport
-                    .getIPersistentSeminaryModality();
-            List cases = persistentModality.readAll();
+		ISuportePersistente persistenceSupport = PersistenceSupportFactory
+				.getDefaultPersistenceSupport();
+		IPersistentSeminaryModality persistentModality = persistenceSupport
+				.getIPersistentSeminaryModality();
+		List cases = persistentModality.readAll();
 
-            for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
-                IModality modality = (IModality) iterator.next();
+		for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
+			IModality modality = (IModality) iterator.next();
 
-                infoCases.add(InfoModality.newInfoFromDomain(modality));
-            }
+			infoCases.add(InfoModality.newInfoFromDomain(modality));
+		}
 
-        } catch (ExcepcaoPersistencia ex) {
-            throw new BDException(
-                    "Got an error while trying to retrieve mutiple modalities from the database", ex);
-        }
-        return infoCases;
-    }
+		return infoCases;
+	}
 
 }

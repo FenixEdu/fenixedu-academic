@@ -24,33 +24,32 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadShiftsByDistributedTest implements IService {
 
-    public List<InfoShift> run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException {
-        try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+	public List<InfoShift> run(Integer executionCourseId, Integer distributedTestId)
+			throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            List<IStudent> studentsList = new ArrayList<IStudent>();
+		List<IStudent> studentsList = new ArrayList<IStudent>();
 
-            if (distributedTestId != null) // lista de alunos que tem teste
-                studentsList = persistentSuport.getIPersistentStudentTestQuestion().readStudentsByDistributedTest(distributedTestId);
+		if (distributedTestId != null) // lista de alunos que tem teste
+			studentsList = persistentSuport.getIPersistentStudentTestQuestion()
+					.readStudentsByDistributedTest(distributedTestId);
 
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport.getIPersistentExecutionCourse().readByOID(ExecutionCourse.class,
-                    executionCourseId);
-            if (executionCourse == null) {
-                throw new InvalidArgumentsServiceException();
-            }
+		IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport
+				.getIPersistentExecutionCourse().readByOID(ExecutionCourse.class, executionCourseId);
+		if (executionCourse == null) {
+			throw new InvalidArgumentsServiceException();
+		}
 
-            List<IShift> shiftList = persistentSuport.getITurnoPersistente().readByExecutionCourse(executionCourse.getIdInternal());
+		List<IShift> shiftList = persistentSuport.getITurnoPersistente().readByExecutionCourse(
+				executionCourse.getIdInternal());
 
-            List<InfoShift> result = new ArrayList<InfoShift>();
-            for (IShift shift : shiftList) {
-                List<IStudent> shiftStudents = shift.getStudents();
-                if (!studentsList.containsAll(shiftStudents)) {
-                    result.add(InfoShift.newInfoFromDomain(shift));
-                }
-            }
-            return result;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-    }
+		List<InfoShift> result = new ArrayList<InfoShift>();
+		for (IShift shift : shiftList) {
+			List<IStudent> shiftStudents = shift.getStudents();
+			if (!studentsList.containsAll(shiftStudents)) {
+				result.add(InfoShift.newInfoFromDomain(shift));
+			}
+		}
+		return result;
+	}
 }

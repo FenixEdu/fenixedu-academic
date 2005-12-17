@@ -21,31 +21,24 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * @author João Mota
  * 
  * 23/Jul/2003 fenix-head ServidorAplicacao.Servico.scientificCouncil
- *  
+ * 
  */
 public class ReadCurricularCourseByOIdService implements IService {
 
-    public ReadCurricularCourseByOIdService() {
+	public SiteView run(Integer curricularCourseId) throws FenixServiceException, ExcepcaoPersistencia {
 
-    }
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentObject persistentObject = sp.getIPersistentObject();
+		ICurricularCourse curricularCourse = (ICurricularCourse) persistentObject.readByOID(
+				CurricularCourse.class, curricularCourseId);
 
-    public SiteView run(Integer curricularCourseId) throws FenixServiceException {
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentObject persistentObject = sp.getIPersistentObject();
-            ICurricularCourse curricularCourse = (ICurricularCourse) persistentObject.readByOID(
-                    CurricularCourse.class, curricularCourseId);
+		InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
+				.newInfoFromDomain(curricularCourse);
 
-            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
-                    .newInfoFromDomain(curricularCourse);
+		SiteView siteView = new SiteView(infoCurricularCourse);
 
-            SiteView siteView = new SiteView(infoCurricularCourse);
+		return siteView;
 
-            return siteView;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-
-    }
+	}
 
 }

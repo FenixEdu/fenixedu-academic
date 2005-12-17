@@ -22,60 +22,46 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author joaosa and rmalo
- *  
+ * 
  */
 
 public class UnEnrollStudentGroupShift implements IService {
 
-    /**
-     * The constructor of this class.
-     */
-    public UnEnrollStudentGroupShift() {
-    }
+	public Boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode)
+			throws FenixServiceException, ExcepcaoPersistencia {
 
-    /**
-     * Executes the service.
-     */
+		IPersistentStudentGroup persistentStudentGroup = null;
+		IPersistentGrouping persistentGrouping = null;
 
-    public Boolean run(Integer executionCourseCode, Integer studentGroupCode,Integer groupPropertiesCode) throws FenixServiceException {
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IPersistentStudentGroup persistentStudentGroup = null;
-        IPersistentGrouping persistentGrouping = null;
+		persistentGrouping = persistentSupport.getIPersistentGrouping();
 
-        try {
-            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IGrouping groupProperties = (IGrouping) persistentGrouping.readByOID(Grouping.class,
+				groupPropertiesCode);
 
-            persistentGrouping = persistentSupport.getIPersistentGrouping();
-            
-            IGrouping groupProperties = (IGrouping)persistentGrouping.readByOID(
-            		Grouping.class, groupPropertiesCode);
-            
-            if(groupProperties == null){
-            	throw new ExistingServiceException();
-            }
-            
-            
-            persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
-            
-            IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup
-                    .readByOID(StudentGroup.class, studentGroupCode);
+		if (groupProperties == null) {
+			throw new ExistingServiceException();
+		}
 
-            if (studentGroup == null) {
-                throw new InvalidArgumentsServiceException();
-            }
+		persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
 
-            if(!(studentGroup.getShift() != null && groupProperties.getShiftType() == null) || studentGroup.getShift() == null){
-            	throw new InvalidChangeServiceException();
-            }
-            
-            IShift shift = null;
-            persistentStudentGroup.simpleLockWrite(studentGroup);
-            studentGroup.setShift(shift);
+		IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
+				StudentGroup.class, studentGroupCode);
 
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia.getMessage());
-        }
+		if (studentGroup == null) {
+			throw new InvalidArgumentsServiceException();
+		}
 
-        return new Boolean(true);
-    }
+		if (!(studentGroup.getShift() != null && groupProperties.getShiftType() == null)
+				|| studentGroup.getShift() == null) {
+			throw new InvalidChangeServiceException();
+		}
+
+		IShift shift = null;
+		persistentStudentGroup.simpleLockWrite(studentGroup);
+		studentGroup.setShift(shift);
+
+		return new Boolean(true);
+	}
 }

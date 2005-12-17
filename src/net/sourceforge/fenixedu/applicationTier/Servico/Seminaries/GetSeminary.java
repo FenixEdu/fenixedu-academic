@@ -21,27 +21,22 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * 
  * Created at 31/Jul/2003, 19:12:41
- *  
+ * 
  */
 public class GetSeminary implements IService {
 
-    public GetSeminary() {
-    }
+	public InfoSeminaryWithEquivalencies run(Integer seminaryID) throws BDException, ExcepcaoPersistencia {
+		InfoSeminaryWithEquivalencies infoSeminary = null;
 
-    public InfoSeminaryWithEquivalencies run(Integer seminaryID) throws BDException {
-        InfoSeminaryWithEquivalencies infoSeminary = null;
-        try {
-            ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentSeminary persistentSeminary = persistenceSupport.getIPersistentSeminary();
-            ISeminary seminary = (ISeminary) persistentSeminary.readByOID(Seminary.class, seminaryID);
-            if (seminary != null) {
+		ISuportePersistente persistenceSupport = PersistenceSupportFactory
+				.getDefaultPersistenceSupport();
+		IPersistentSeminary persistentSeminary = persistenceSupport.getIPersistentSeminary();
+		ISeminary seminary = (ISeminary) persistentSeminary.readByOID(Seminary.class, seminaryID);
+		if (seminary != null) {
 
-                infoSeminary = InfoSeminaryWithEquivalenciesWithAll.newInfoFromDomain(seminary);
-            }
-        } catch (ExcepcaoPersistencia ex) {
-            throw new BDException("Got an error while trying to retrieve a seminary from the database",
-                    ex);
-        }
-        return infoSeminary;
-    }
+			infoSeminary = InfoSeminaryWithEquivalenciesWithAll.newInfoFromDomain(seminary);
+		}
+
+		return infoSeminary;
+	}
 }

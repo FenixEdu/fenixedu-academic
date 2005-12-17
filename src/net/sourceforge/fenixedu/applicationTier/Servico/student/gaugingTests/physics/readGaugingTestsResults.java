@@ -21,48 +21,32 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
- *  
+ * 
  */
 
 public class readGaugingTestsResults implements IService {
 
-    /**
-     * The constructor of this class.
-     */
-    public readGaugingTestsResults() {
-    }
+	public InfoGaugingTestResult run(IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentGaugingTestResult persistentGaugingTestResult = ps.getIPersistentGaugingTestResult();
+		IPessoaPersistente persistentPerson = ps.getIPessoaPersistente();
+		IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
 
-    /**
-     * Executes the service.
-     */
+		IPersistentStudent persistentStudent = ps.getIPersistentStudent();
 
-    public InfoGaugingTestResult run(IUserView userView) throws FenixServiceException {
-        try {
-            ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentGaugingTestResult persistentGaugingTestResult = ps
-                    .getIPersistentGaugingTestResult();
-            IPessoaPersistente persistentPerson = ps.getIPessoaPersistente();
-            IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+		IStudent student = persistentStudent.readByPersonAndDegreeType(person.getIdInternal(),
+				DegreeType.DEGREE);
+		if (student == null) {
+			return null;
+		}
+		IGaugingTestResult gaugingTestsResult = persistentGaugingTestResult.readByStudent(student);
+		if (gaugingTestsResult != null) {
 
-            IPersistentStudent persistentStudent = ps.getIPersistentStudent();
+			InfoGaugingTestResult infoGaugingTestResult = InfoGaugingTestResult
+					.newInfoFromDomain(gaugingTestsResult);
+			return infoGaugingTestResult;
+		}
 
-            IStudent student = persistentStudent.readByPersonAndDegreeType(person.getIdInternal(),
-                    DegreeType.DEGREE);
-            if (student == null) {
-                return null;
-            }
-            IGaugingTestResult gaugingTestsResult = persistentGaugingTestResult.readByStudent(student);
-            if (gaugingTestsResult != null) {
-
-                InfoGaugingTestResult infoGaugingTestResult = InfoGaugingTestResult.newInfoFromDomain(gaugingTestsResult);
-                return infoGaugingTestResult;
-            }
-
-            return null;
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-
-    }
+		return null;
+	}
 }

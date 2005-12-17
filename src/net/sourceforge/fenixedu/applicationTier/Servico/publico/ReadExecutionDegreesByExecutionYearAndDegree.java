@@ -24,23 +24,10 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  */
 public class ReadExecutionDegreesByExecutionYearAndDegree implements IService {
-    private static ReadExecutionDegreesByExecutionYearAndDegree service = new ReadExecutionDegreesByExecutionYearAndDegree();
 
-    public ReadExecutionDegreesByExecutionYearAndDegree() {
-    }
-
-    public String getNome() {
-        return "ReadExecutionDegreesByExecutionYearAndDegree";
-    }
-
-    public static ReadExecutionDegreesByExecutionYearAndDegree getService() {
-        return service;
-    }
-
-    public Object run(IDegree curso, IExecutionYear year) throws FenixServiceException {
+    public Object run(IDegree curso, IExecutionYear year) throws FenixServiceException,
+			ExcepcaoPersistencia {
         List infoExecutionDegrees = new ArrayList();
-
-        try {
 
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
@@ -55,9 +42,7 @@ public class ReadExecutionDegreesByExecutionYearAndDegree implements IService {
                     infoExecutionDegrees.add(infoExecutionDegree);
                 }
             }
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex);
-        }
+
         return infoExecutionDegrees;
     }
 

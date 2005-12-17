@@ -20,24 +20,22 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadPublicExecutionPeriods implements IService {
 
-    public List run() throws FenixServiceException {
+	public List run() throws FenixServiceException, ExcepcaoPersistencia {
 
-        List result = new ArrayList();
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
+		List result = new ArrayList();
 
-            List executionPeriods = executionPeriodDAO.readPublic();
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
 
-            if (executionPeriods != null) {
-                for (int i = 0; i < executionPeriods.size(); i++) {
-                    result.add(InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain((IExecutionPeriod) executionPeriods.get(i)));
-                }
-            }
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex);
-        }
+		List executionPeriods = executionPeriodDAO.readPublic();
 
-        return result;
-    }
+		if (executionPeriods != null) {
+			for (int i = 0; i < executionPeriods.size(); i++) {
+				result.add(InfoExecutionPeriodWithInfoExecutionYear
+						.newInfoFromDomain((IExecutionPeriod) executionPeriods.get(i)));
+			}
+		}
+
+		return result;
+	}
 }

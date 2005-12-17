@@ -21,28 +21,23 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadAllContributors implements IService {
 
-    public List run() throws FenixServiceException {
+	public List run() throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = null;
-        List result = new ArrayList();
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente sp = null;
+		List result = new ArrayList();
 
-            // Read the contributors
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            result = sp.getIPersistentContributor().readAll();
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+		// Read the contributors
 
-        List contributors = new ArrayList();
-        Iterator iterator = result.iterator();
-        while (iterator.hasNext())
-            contributors.add(InfoContributor.newInfoFromDomain((IContributor) iterator.next()));
+		result = sp.getIPersistentContributor().readAll();
 
-        return contributors;
+		List contributors = new ArrayList();
+		Iterator iterator = result.iterator();
+		while (iterator.hasNext())
+			contributors.add(InfoContributor.newInfoFromDomain((IContributor) iterator.next()));
 
-    }
+		return contributors;
+
+	}
 }

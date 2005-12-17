@@ -23,30 +23,24 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * 
  * Created at 4/Ago/2003, 18:58:03
- *  
+ * 
  */
 public class GetCaseStudiesByThemeID implements IService {
 
-    public GetCaseStudiesByThemeID() {
-    }
+	public List run(Integer themeID) throws BDException, ExcepcaoPersistencia {
+		List infoCases = new LinkedList();
 
-    public List run(Integer themeID) throws BDException {
-        List infoCases = new LinkedList();
-        try {
-            ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentSeminaryCaseStudy persistentCaseStudy = persistenceSupport
-                    .getIPersistentSeminaryCaseStudy();
-            List cases = persistentCaseStudy.readByThemeID(themeID);
+		ISuportePersistente persistenceSupport = PersistenceSupportFactory
+				.getDefaultPersistenceSupport();
+		IPersistentSeminaryCaseStudy persistentCaseStudy = persistenceSupport
+				.getIPersistentSeminaryCaseStudy();
+		List cases = persistentCaseStudy.readByThemeID(themeID);
 
-            for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
-                ICaseStudy caseStudy = (ICaseStudy) iterator.next();
-                infoCases.add(InfoCaseStudy.newInfoFromDomain(caseStudy));
-            }
+		for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
+			ICaseStudy caseStudy = (ICaseStudy) iterator.next();
+			infoCases.add(InfoCaseStudy.newInfoFromDomain(caseStudy));
+		}
 
-        } catch (ExcepcaoPersistencia ex) {
-            throw new BDException(
-                    "Got an error while trying to retrieve mutiple case studies from the database", ex);
-        }
-        return infoCases;
-    }
+		return infoCases;
+	}
 }

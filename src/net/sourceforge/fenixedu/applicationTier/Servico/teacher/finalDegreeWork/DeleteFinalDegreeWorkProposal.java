@@ -17,21 +17,12 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class DeleteFinalDegreeWorkProposal implements IService {
 
-    public DeleteFinalDegreeWorkProposal() {
-        super();
-    }
+	public void run(Integer finalDegreeWorkProposalOID) throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-    public void run(Integer finalDegreeWorkProposalOID) throws FenixServiceException {
-        try {
-            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentFinalDegreeWork persistentFinalWork = persistentSupport
+				.getIPersistentFinalDegreeWork();
 
-            IPersistentFinalDegreeWork persistentFinalWork = persistentSupport
-                    .getIPersistentFinalDegreeWork();
-
-            persistentFinalWork.deleteByOID(Proposal.class, finalDegreeWorkProposalOID);
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-
-    }
+		persistentFinalWork.deleteByOID(Proposal.class, finalDegreeWorkProposalOID);
+	}
 }

@@ -31,69 +31,71 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class InsertTestQuestion implements IService {
 
-    private String path = new String();
+	private String path = new String();
 
-    public void run(Integer executionCourseId, Integer testId, String[] metadataId, Integer questionOrder, Double questionValue,
-            CorrectionFormula formula, String path) throws FenixServiceException {
-        this.path = path.replace('\\', '/');
-        try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            for (int i = 0; i < metadataId.length; i++) {
-                IMetadata metadata = (IMetadata) persistentSuport.getIPersistentMetadata().readByOID(Metadata.class, new Integer(metadataId[i]));
-                if (metadata == null) {
-                    throw new InvalidArgumentsServiceException();
-                }
-                IQuestion question = null;
-                if (metadata.getVisibleQuestions() != null && metadata.getVisibleQuestions().size() != 0) {
-                    question = metadata.getVisibleQuestions().get(0);
-                } else {
-                    throw new InvalidArgumentsServiceException();
-                }
-                if (question == null) {
-                    throw new InvalidArgumentsServiceException();
-                }
-                IPersistentTest persistentTest = persistentSuport.getIPersistentTest();
-                ITest test = (ITest) persistentTest.readByOID(Test.class, testId);
-                if (test == null) {
-                    throw new InvalidArgumentsServiceException();
-                }
-                IPersistentTestQuestion persistentTestQuestion = persistentSuport.getIPersistentTestQuestion();
-                List<ITestQuestion> testQuestionList = persistentTestQuestion.readByTest(testId);
-                if (testQuestionList != null) {
-                    if (questionOrder == null || questionOrder.equals(new Integer(-1))) {
-                        questionOrder = new Integer(testQuestionList.size() + 1);
-                    } else
-                        questionOrder = new Integer(questionOrder.intValue() + 1);
-                    for (ITestQuestion iterTestQuestion : testQuestionList) {
-                        Integer iterQuestionOrder = iterTestQuestion.getTestQuestionOrder();
-                        if (questionOrder.compareTo(iterQuestionOrder) <= 0) {
-                            iterTestQuestion.setTestQuestionOrder(new Integer(iterQuestionOrder.intValue() + 1));
-                        }
-                    }
-                }
-                Double thisQuestionValue = questionValue;
-                if (questionValue == null) {
-                    ParseQuestion parseQuestion = new ParseQuestion();
-                    try {
-                        InfoQuestion infoQuestion = InfoQuestion.newInfoFromDomain(question);
-                        infoQuestion = parseQuestion.parseQuestion(infoQuestion.getXmlFile(), infoQuestion, this.path);
-                        thisQuestionValue = infoQuestion.getQuestionValue();
-                    } catch (Exception e) {
-                        throw new FenixServiceException(e);
-                    }
-                    if (thisQuestionValue == null)
-                        thisQuestionValue = new Double(0);
-                }
-                ITestQuestion testQuestion = DomainFactory.makeTestQuestion();
-                test.setLastModifiedDate(Calendar.getInstance().getTime());
-                testQuestion.setQuestion(question);
-                testQuestion.setTest(test);
-                testQuestion.setTestQuestionOrder(questionOrder);
-                testQuestion.setTestQuestionValue(thisQuestionValue);
-                testQuestion.setCorrectionFormula(formula);
-            }
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-    }
+	public void run(Integer executionCourseId, Integer testId, String[] metadataId,
+			Integer questionOrder, Double questionValue, CorrectionFormula formula, String path)
+			throws FenixServiceException, ExcepcaoPersistencia {
+		this.path = path.replace('\\', '/');
+
+		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		for (int i = 0; i < metadataId.length; i++) {
+			IMetadata metadata = (IMetadata) persistentSuport.getIPersistentMetadata().readByOID(
+					Metadata.class, new Integer(metadataId[i]));
+			if (metadata == null) {
+				throw new InvalidArgumentsServiceException();
+			}
+			IQuestion question = null;
+			if (metadata.getVisibleQuestions() != null && metadata.getVisibleQuestions().size() != 0) {
+				question = metadata.getVisibleQuestions().get(0);
+			} else {
+				throw new InvalidArgumentsServiceException();
+			}
+			if (question == null) {
+				throw new InvalidArgumentsServiceException();
+			}
+			IPersistentTest persistentTest = persistentSuport.getIPersistentTest();
+			ITest test = (ITest) persistentTest.readByOID(Test.class, testId);
+			if (test == null) {
+				throw new InvalidArgumentsServiceException();
+			}
+			IPersistentTestQuestion persistentTestQuestion = persistentSuport
+					.getIPersistentTestQuestion();
+			List<ITestQuestion> testQuestionList = persistentTestQuestion.readByTest(testId);
+			if (testQuestionList != null) {
+				if (questionOrder == null || questionOrder.equals(new Integer(-1))) {
+					questionOrder = new Integer(testQuestionList.size() + 1);
+				} else
+					questionOrder = new Integer(questionOrder.intValue() + 1);
+				for (ITestQuestion iterTestQuestion : testQuestionList) {
+					Integer iterQuestionOrder = iterTestQuestion.getTestQuestionOrder();
+					if (questionOrder.compareTo(iterQuestionOrder) <= 0) {
+						iterTestQuestion.setTestQuestionOrder(new Integer(
+								iterQuestionOrder.intValue() + 1));
+					}
+				}
+			}
+			Double thisQuestionValue = questionValue;
+			if (questionValue == null) {
+				ParseQuestion parseQuestion = new ParseQuestion();
+				try {
+					InfoQuestion infoQuestion = InfoQuestion.newInfoFromDomain(question);
+					infoQuestion = parseQuestion.parseQuestion(infoQuestion.getXmlFile(), infoQuestion,
+							this.path);
+					thisQuestionValue = infoQuestion.getQuestionValue();
+				} catch (Exception e) {
+					throw new FenixServiceException(e);
+				}
+				if (thisQuestionValue == null)
+					thisQuestionValue = new Double(0);
+			}
+			ITestQuestion testQuestion = DomainFactory.makeTestQuestion();
+			test.setLastModifiedDate(Calendar.getInstance().getTime());
+			testQuestion.setQuestion(question);
+			testQuestion.setTest(test);
+			testQuestion.setTestQuestionOrder(questionOrder);
+			testQuestion.setTestQuestionValue(thisQuestionValue);
+			testQuestion.setCorrectionFormula(formula);
+		}
+	}
 }

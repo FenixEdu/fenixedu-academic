@@ -23,25 +23,20 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadStudentsWithDistributedTest implements IService {
 
-    public List run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException {
-        List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
-        try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+	public List run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException, ExcepcaoPersistencia {
+		List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
+		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IDistributedTest distributedTest = (IDistributedTest) persistentSuport.getIPersistentDistributedTest().readByOID(DistributedTest.class,
-                    distributedTestId);
-            if (distributedTest == null)
-                throw new FenixServiceException();
+		IDistributedTest distributedTest = (IDistributedTest) persistentSuport
+				.getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
+		if (distributedTest == null)
+			throw new FenixServiceException();
 
-            List<IStudent> studentList = persistentSuport.getIPersistentStudentTestQuestion().readStudentsByDistributedTest(
-                    distributedTest.getIdInternal());
+		List<IStudent> studentList = persistentSuport.getIPersistentStudentTestQuestion()
+				.readStudentsByDistributedTest(distributedTest.getIdInternal());
 
-            for (IStudent student : studentList)
-                infoStudentList.add(InfoStudentWithInfoPerson.newInfoFromDomain(student));
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-        return infoStudentList;
-    }
+		for (IStudent student : studentList)
+			infoStudentList.add(InfoStudentWithInfoPerson.newInfoFromDomain(student));
+		return infoStudentList;
+	}
 }

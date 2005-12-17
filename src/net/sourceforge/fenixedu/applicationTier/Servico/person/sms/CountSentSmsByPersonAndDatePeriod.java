@@ -24,37 +24,25 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * <strong>Description: </strong> <br>
  * This service counts the number of sent Sms's by a person, in a date period
  * delimited by starDate(inclusive) and endDate(exclusive)
- *  
+ * 
  */
 public class CountSentSmsByPersonAndDatePeriod implements IService {
 
-    /**
-     *  
-     */
-    public CountSentSmsByPersonAndDatePeriod() {
-    }
+	public Integer run(IUserView userView, Date startDate, Date endDate) throws FenixServiceException,
+			ExcepcaoPersistencia {
+		ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentSentSms persistentSentSms = ps.getIPersistentSentSms();
 
-    public Integer run(IUserView userView, Date startDate, Date endDate) throws FenixServiceException {
+		IPerson person = ps.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
 
-        try {
-            ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentSentSms persistentSentSms = ps.getIPersistentSentSms();
+		Integer numberOfSms = persistentSentSms.countByPersonAndDatePeriod(person.getIdInternal(),
+				startDate, endDate);
 
-            IPerson person = ps.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+		if (numberOfSms.intValue() >= SmsUtil.getInstance().getMonthlySmsLimit()) {
+			throw new SmsLimitReachedServiceException("error.person.sendSmsLimitReached");
+		}
 
-            Integer numberOfSms = persistentSentSms.countByPersonAndDatePeriod(person.getIdInternal(),
-                    startDate, endDate);
-
-            if (numberOfSms.intValue() >= SmsUtil.getInstance().getMonthlySmsLimit()) {
-                throw new SmsLimitReachedServiceException("error.person.sendSmsLimitReached");
-            }
-
-            return new Integer(SmsUtil.getInstance().getMonthlySmsLimit() - numberOfSms.intValue());
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-
-    }
+		return new Integer(SmsUtil.getInstance().getMonthlySmsLimit() - numberOfSms.intValue());
+	}
 
 }

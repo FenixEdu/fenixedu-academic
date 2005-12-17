@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
@@ -12,65 +11,28 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author joaosa & rmalo
- *  
+ * 
  */
-public class ExecutionCourseHasProposals implements IServico {
+public class ExecutionCourseHasProposals implements IService {
 
-    private static ExecutionCourseHasProposals service = new ExecutionCourseHasProposals();
+	public boolean run(Integer executionCourseCode) throws FenixServiceException, ExcepcaoPersistencia {
+		boolean result = false;
+		IPersistentExecutionCourse persistentExecutionCourse = null;
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static ExecutionCourseHasProposals getService() {
-        return service;
-    }
+		ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-    /**
-     * The constructor of this class.
-     */
-    private ExecutionCourseHasProposals() {
-    }
+		persistentExecutionCourse = ps.getIPersistentExecutionCourse();
 
-    /**
-     * The name of the service
-     */
-    public final String getNome() {
-        return "ExecutionCourseHasProposals";
-    }
+		IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+				ExecutionCourse.class, executionCourseCode);
 
-    /**
-     * Executes the service.
-     */
+		result = executionCourse.hasProposals();
 
-    public boolean run(Integer executionCourseCode) throws FenixServiceException {
+		return result;
 
-        boolean result = false;
-        IPersistentExecutionCourse persistentExecutionCourse = null;
-         
-        try {
-
-            ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        
-            
-            persistentExecutionCourse = ps.getIPersistentExecutionCourse();
-            
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
-            		ExecutionCourse.class, executionCourseCode);
-            
-            result = executionCourse.hasProposals();
-            
-                        
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia.getMessage());
-        }
-        
-        return result;
-
-    }
+	}
 }
-
-
-

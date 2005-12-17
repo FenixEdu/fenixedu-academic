@@ -11,7 +11,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
  * 
  * @author tfc130
  */
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
@@ -20,68 +19,42 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class ReadStudent implements IServico {
+public class ReadStudent implements IService {
 
-    private static ReadStudent _servico = new ReadStudent();
+	// FIXME: We have to read the student by type also !!
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadStudent getService() {
-        return _servico;
-    }
+	public Object run(Integer number) throws ExcepcaoPersistencia {
 
-    /**
-     * The actor of this class.
-     */
-    private ReadStudent() {
-    }
+		InfoStudent infoStudent = null;
 
-    /**
-     * Devolve o nome do servico
-     */
-    public final String getNome() {
-        return "ReadStudent";
-    }
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		// ////////////////////////////////////////////////////////////////////////////////////////////////////////
+		// Isto não é para ficar assim. Está assim temporariamente até se
+		// saber como é feita de facto a distinção
+		// dos aluno, referente ao tipo, a partir da página de login.
+		// ////////////////////////////////////////////////////////////////////////////////////////////////////////
+		IStudent student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
+				DegreeType.DEGREE);
 
-    // FIXME: We have to read the student by type also !!
+		if (student != null) {
+			InfoPerson infoPerson = new InfoPerson();
+			infoPerson.setNome(student.getPerson().getNome());
+			infoPerson.setUsername(student.getPerson().getUsername());
+			infoPerson.setPassword(student.getPerson().getPassword());
+			infoPerson.setDistritoNaturalidade(student.getPerson().getDistritoNaturalidade());
+			infoPerson.setInfoPais(InfoCountry.newInfoFromDomain(student.getPerson().getPais()));
+			infoPerson.setNomePai(student.getPerson().getNomePai());
+			infoPerson.setNomeMae(student.getPerson().getNomeMae());
+			infoPerson.setIdInternal(student.getPerson().getIdInternal());
 
-    public Object run(Integer number) {
+			infoStudent = new InfoStudent(student.getNumber(), student.getState(), infoPerson, student
+					.getDegreeType());
+			infoStudent.setIdInternal(student.getIdInternal());
+		}
 
-        InfoStudent infoStudent = null;
-
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////
-            // Isto não é para ficar assim. Está assim temporariamente até se
-            // saber como é feita de facto a distinção
-            // dos aluno, referente ao tipo, a partir da página de login.
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////
-            IStudent student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
-                    DegreeType.DEGREE);
-
-            if (student != null) {
-                InfoPerson infoPerson = new InfoPerson();
-                infoPerson.setNome(student.getPerson().getNome());
-                infoPerson.setUsername(student.getPerson().getUsername());
-                infoPerson.setPassword(student.getPerson().getPassword());
-                infoPerson.setDistritoNaturalidade(student.getPerson().getDistritoNaturalidade());
-                infoPerson.setInfoPais(InfoCountry.newInfoFromDomain(student.getPerson().getPais()));
-                infoPerson.setNomePai(student.getPerson().getNomePai());
-                infoPerson.setNomeMae(student.getPerson().getNomeMae());
-                infoPerson.setIdInternal(student.getPerson().getIdInternal());
-
-                infoStudent = new InfoStudent(student.getNumber(), student.getState(), infoPerson,
-                        student.getDegreeType());
-                infoStudent.setIdInternal(student.getIdInternal());
-            }
-
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
-        }
-
-        return infoStudent;
-    }
+		return infoStudent;
+	}
 
 }

@@ -23,22 +23,20 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadLessonByOID implements IService {
 
-    public InfoLesson run(Integer oid) throws FenixServiceException {
+	public InfoLesson run(Integer oid) throws FenixServiceException, ExcepcaoPersistencia {
 
-        InfoLesson result = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IAulaPersistente lessonDAO = sp.getIAulaPersistente();
-            ILesson lesson = (ILesson) lessonDAO.readByOID(Lesson.class, oid);
-            if (lesson != null) {
-                InfoLesson infoLesson = InfoLessonWithInfoRoomAndInfoRoomOccupationAndInfoPeriod.newInfoFromDomain(lesson);
+		InfoLesson result = null;
 
-                result = infoLesson;
-            }
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex);
-        }
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IAulaPersistente lessonDAO = sp.getIAulaPersistente();
+		ILesson lesson = (ILesson) lessonDAO.readByOID(Lesson.class, oid);
+		if (lesson != null) {
+			InfoLesson infoLesson = InfoLessonWithInfoRoomAndInfoRoomOccupationAndInfoPeriod
+					.newInfoFromDomain(lesson);
 
-        return result;
-    }
+			result = infoLesson;
+		}
+
+		return result;
+	}
 }

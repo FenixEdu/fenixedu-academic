@@ -20,25 +20,19 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * 
  * Created at 28/Ago/2003, 7:57:10
- *  
+ * 
  */
 public class ReadStudentById implements IService {
 
-    public ReadStudentById() {
-    }
+	public Object run(Integer id) throws FenixServiceException, ExcepcaoPersistencia {
+		InfoStudent infoStudent = null;
 
-    public Object run(Integer id) throws FenixServiceException {
-        InfoStudent infoStudent = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IStudent student = (IStudent) sp.getIPersistentStudent().readByOID(Student.class, id);
-            if (student != null) {
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IStudent student = (IStudent) sp.getIPersistentStudent().readByOID(Student.class, id);
+		if (student != null) {
+			infoStudent = InfoStudentWithInfoPerson.newInfoFromDomain(student);
+		}
 
-                infoStudent = InfoStudentWithInfoPerson.newInfoFromDomain(student);
-            }
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex);
-        }
-        return infoStudent;
-    }
+		return infoStudent;
+	}
 }

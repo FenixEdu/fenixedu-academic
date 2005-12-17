@@ -26,42 +26,34 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * 
  * Created at 25/Ago/2003, 18:18:02
- *  
+ * 
  */
 public class GetCaseStudiesByEquivalencyID implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public GetCaseStudiesByEquivalencyID() {
-    }
+	public List run(Integer equivalencyID) throws BDException, ExcepcaoPersistencia {
+		List infoCases = new LinkedList();
 
-    public List run(Integer equivalencyID) throws BDException {
-        List infoCases = new LinkedList();
-        try {
-            ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentSeminaryCurricularCourseEquivalency persistentEquivalency = persistenceSupport
-                    .getIPersistentSeminaryCurricularCourseEquivalency();
-            //
-            ICourseEquivalency equivalency = (ICourseEquivalency) persistentEquivalency.readByOID(
-                    CourseEquivalency.class, equivalencyID);
-            //
-            List cases = new LinkedList();
-            List themes = equivalency.getThemes();
+		ISuportePersistente persistenceSupport = PersistenceSupportFactory
+				.getDefaultPersistenceSupport();
+		IPersistentSeminaryCurricularCourseEquivalency persistentEquivalency = persistenceSupport
+				.getIPersistentSeminaryCurricularCourseEquivalency();
+		//
+		ICourseEquivalency equivalency = (ICourseEquivalency) persistentEquivalency.readByOID(
+				CourseEquivalency.class, equivalencyID);
+		//
+		List cases = new LinkedList();
+		List themes = equivalency.getThemes();
 
-            for (Iterator iterator = themes.iterator(); iterator.hasNext();) {
-                ITheme theme = (ITheme) iterator.next();
-                cases.addAll(theme.getCaseStudies());
-            }
+		for (Iterator iterator = themes.iterator(); iterator.hasNext();) {
+			ITheme theme = (ITheme) iterator.next();
+			cases.addAll(theme.getCaseStudies());
+		}
 
-            for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
-                ICaseStudy caseStudy = (ICaseStudy) iterator.next();
-                infoCases.add(InfoCaseStudy.newInfoFromDomain(caseStudy));
-            }
-        } catch (ExcepcaoPersistencia ex) {
-            throw new BDException(
-                    "Got an error while trying to retrieve mutiple case studies from the database", ex);
-        }
-        return infoCases;
-    }
+		for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
+			ICaseStudy caseStudy = (ICaseStudy) iterator.next();
+			infoCases.add(InfoCaseStudy.newInfoFromDomain(caseStudy));
+		}
+
+		return infoCases;
+	}
 }

@@ -88,6 +88,7 @@ public class SearchExecutionCourses implements IService {
                     getTeacherReportInformation(infoExecutionCourse, arg0);
 
                 } catch (ExcepcaoPersistencia e) {
+                	throw new RuntimeException(e);
                 }
                 return infoExecutionCourse;
             }
