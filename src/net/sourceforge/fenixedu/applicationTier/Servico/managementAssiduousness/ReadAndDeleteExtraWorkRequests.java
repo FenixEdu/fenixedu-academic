@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.ICostCenter;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests;
 import net.sourceforge.fenixedu.domain.managementAssiduousness.IExtraWorkRequests;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -32,86 +31,74 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  */
 public class ReadAndDeleteExtraWorkRequests implements IService {
-    public ReadAndDeleteExtraWorkRequests() {
-    }
 
-    public List run(String usernameWho, List infoExtraWorkRequestsList)
-            throws Exception {
-        List infoExtraWorkRequestsListAfter = null;
-        List extraWorkRequestsList = null;
-        ISuportePersistente sp;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+	public List run(String usernameWho, List infoExtraWorkRequestsList) throws Exception {
+		List infoExtraWorkRequestsListAfter = null;
+		List extraWorkRequestsList = null;
+		ISuportePersistente sp;
 
-            IPersistentEmployee employeeDAO = sp.getIPersistentEmployee();
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            Iterator iterator = infoExtraWorkRequestsList.listIterator();
-            extraWorkRequestsList = new ArrayList();
-            IPersistentExtraWorkRequests extraWorkRequestsDAO = sp
-                    .getIPersistentExtraWorkRequests();
-            IPersistentCostCenter costCenterDAO = sp
-                    .getIPersistentCostCenter();
-            while (iterator.hasNext()) {
-                InfoExtraWorkRequests infoExtraWorkRequests = (InfoExtraWorkRequests) iterator
-                        .next();
-                if (infoExtraWorkRequests.getForDelete() != null
-                        && infoExtraWorkRequests.getForDelete().equals(
-                                Boolean.TRUE)) {
-                    // delete
-                    extraWorkRequestsDAO.deleteByOID(ExtraWorkRequests.class,
-                            infoExtraWorkRequests.getIdInternal());
-                } else {
-                    // read
-                    IExtraWorkRequests extraWorkRequests = (IExtraWorkRequests) extraWorkRequestsDAO
-                            .readByOID(ExtraWorkRequests.class,
-                                    infoExtraWorkRequests.getIdInternal());
-                    if(extraWorkRequests == null) {
-                        //TODO
-                        continue;
-                    }
-                    
-                    IEmployee employee = (IEmployee) employeeDAO.readByOID(
-                            Employee.class, extraWorkRequests.getEmployeeKey());
-                    if (employee == null) {
-                        // TODO
-                        continue;
-                    }
-                    extraWorkRequests.setEmployee(employee);
+		IPersistentEmployee employeeDAO = sp.getIPersistentEmployee();
 
-                    ICostCenter costCenter = (ICostCenter) costCenterDAO
-                            .readByOID(CostCenter.class, extraWorkRequests.getCostCenterExtraWorkKey());
-                    if (costCenter == null) {
-                        //TODO
-                        continue;
-                    }
-                    extraWorkRequests.setCostCenterExtraWork(costCenter);
+		Iterator iterator = infoExtraWorkRequestsList.listIterator();
+		extraWorkRequestsList = new ArrayList();
+		IPersistentExtraWorkRequests extraWorkRequestsDAO = sp.getIPersistentExtraWorkRequests();
+		IPersistentCostCenter costCenterDAO = sp.getIPersistentCostCenter();
+		while (iterator.hasNext()) {
+			InfoExtraWorkRequests infoExtraWorkRequests = (InfoExtraWorkRequests) iterator.next();
+			if (infoExtraWorkRequests.getForDelete() != null
+					&& infoExtraWorkRequests.getForDelete().equals(Boolean.TRUE)) {
+				// delete
+				extraWorkRequestsDAO.deleteByOID(ExtraWorkRequests.class, infoExtraWorkRequests
+						.getIdInternal());
+			} else {
+				// read
+				IExtraWorkRequests extraWorkRequests = (IExtraWorkRequests) extraWorkRequestsDAO
+						.readByOID(ExtraWorkRequests.class, infoExtraWorkRequests.getIdInternal());
+				if (extraWorkRequests == null) {
+					// TODO
+					continue;
+				}
 
-                    ICostCenter costCenterMoney = (ICostCenter) costCenterDAO.readByOID(CostCenter.class, extraWorkRequests.getCostCenterMoneyKey());
-                    if (costCenterMoney == null) {
-                        //TODO
-                        continue;
-                    }
-                    extraWorkRequests.setCostCenterMoney(costCenterMoney);
-                    
-                    extraWorkRequestsList.add(extraWorkRequests);
-                }
-            }
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-            throw e;
-        }
+				IEmployee employee = (IEmployee) employeeDAO.readByOID(Employee.class, extraWorkRequests
+						.getEmployeeKey());
+				if (employee == null) {
+					// TODO
+					continue;
+				}
+				extraWorkRequests.setEmployee(employee);
 
-        infoExtraWorkRequestsListAfter = (List) CollectionUtils.collect(
-                extraWorkRequestsList, new Transformer() {
+				ICostCenter costCenter = (ICostCenter) costCenterDAO.readByOID(CostCenter.class,
+						extraWorkRequests.getCostCenterExtraWorkKey());
+				if (costCenter == null) {
+					// TODO
+					continue;
+				}
+				extraWorkRequests.setCostCenterExtraWork(costCenter);
 
-                    public Object transform(Object arg0) {
-                        IExtraWorkRequests extraWorkRequests = (IExtraWorkRequests) arg0;
-                        return InfoExtraWorkRequestsWithAll
-                                .newInfoFromDomain(extraWorkRequests);
-                    }
+				ICostCenter costCenterMoney = (ICostCenter) costCenterDAO.readByOID(CostCenter.class,
+						extraWorkRequests.getCostCenterMoneyKey());
+				if (costCenterMoney == null) {
+					// TODO
+					continue;
+				}
+				extraWorkRequests.setCostCenterMoney(costCenterMoney);
 
-                });
+				extraWorkRequestsList.add(extraWorkRequests);
+			}
+		}
 
-        return infoExtraWorkRequestsListAfter;
-    }
+		infoExtraWorkRequestsListAfter = (List) CollectionUtils.collect(extraWorkRequestsList,
+				new Transformer() {
+
+					public Object transform(Object arg0) {
+						IExtraWorkRequests extraWorkRequests = (IExtraWorkRequests) arg0;
+						return InfoExtraWorkRequestsWithAll.newInfoFromDomain(extraWorkRequests);
+					}
+
+				});
+
+		return infoExtraWorkRequestsListAfter;
+	}
 }

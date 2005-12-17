@@ -18,24 +18,17 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadPaymentEntityByNumberAndClass implements IService {
 
-    public ReadPaymentEntityByNumberAndClass() {
-    }
+	public InfoGrantPaymentEntity run(String paymentEntityNumber, String className)
+			throws FenixServiceException, ExcepcaoPersistencia {
+		IGrantPaymentEntity grantPaymentEntity = null;
+		InfoGrantPaymentEntity result = null;
+		IPersistentGrantPaymentEntity pgpe = null;
 
-    public InfoGrantPaymentEntity run(String paymentEntityNumber, String className)
-            throws FenixServiceException {
-        IGrantPaymentEntity grantPaymentEntity = null;
-        InfoGrantPaymentEntity result = null;
-        IPersistentGrantPaymentEntity pgpe = null;
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		pgpe = sp.getIPersistentGrantPaymentEntity();
+		grantPaymentEntity = pgpe.readByNumberAndClass(paymentEntityNumber, className);
+		result = InfoGrantPaymentEntity.newInfoFromDomain(grantPaymentEntity);
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            pgpe = sp.getIPersistentGrantPaymentEntity();
-            grantPaymentEntity = pgpe.readByNumberAndClass(paymentEntityNumber, className);
-            result = InfoGrantPaymentEntity.newInfoFromDomain(grantPaymentEntity);
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e.getMessage());
-        }
-        return result;
-    }
+		return result;
+	}
 }

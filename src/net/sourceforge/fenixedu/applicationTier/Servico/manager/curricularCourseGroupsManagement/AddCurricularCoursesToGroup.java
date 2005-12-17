@@ -18,34 +18,23 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author João Mota
- *  
+ * 
  */
 public class AddCurricularCoursesToGroup implements IService {
 
-    /**
-     *  
-     */
-    public AddCurricularCoursesToGroup() {
-    }
-
-    public void run(Integer groupId, Integer[] courseIds) throws FenixServiceException {
-        try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentCurricularCourse persistentCurricularCourse = persistentSuport
-                    .getIPersistentCurricularCourse();
-            IPersistentCurricularCourseGroup persistentCurricularCourseGroup = persistentSuport
-                    .getIPersistentCurricularCourseGroup();
-            ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) persistentCurricularCourseGroup
-                    .readByOID(CurricularCourseGroup.class, groupId, true);
-            for (int i = 0; i < courseIds.length; i++) {
-                Integer courseId = courseIds[i];
-                ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
-                        .readByOID(CurricularCourse.class, courseId);
-                curricularCourseGroup.getCurricularCourses().add(curricularCourse);
-            }
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-    }
+	public void run(Integer groupId, Integer[] courseIds) throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentCurricularCourse persistentCurricularCourse = persistentSuport
+				.getIPersistentCurricularCourse();
+		IPersistentCurricularCourseGroup persistentCurricularCourseGroup = persistentSuport
+				.getIPersistentCurricularCourseGroup();
+		ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) persistentCurricularCourseGroup
+				.readByOID(CurricularCourseGroup.class, groupId, true);
+		for (int i = 0; i < courseIds.length; i++) {
+			Integer courseId = courseIds[i];
+			ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
+					.readByOID(CurricularCourse.class, courseId);
+			curricularCourseGroup.getCurricularCourses().add(curricularCourse);
+		}
+	}
 }

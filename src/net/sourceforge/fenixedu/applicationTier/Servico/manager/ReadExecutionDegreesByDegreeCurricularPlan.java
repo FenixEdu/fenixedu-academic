@@ -37,21 +37,18 @@ public class ReadExecutionDegreesByDegreeCurricularPlan implements IService {
     /**
      * Executes the service. Returns the current collection of
      * infoExecutionDegrees.
+     * @throws ExcepcaoPersistencia 
      */
-    public List run(Integer idDegreeCurricularPlan) throws FenixServiceException {
+    public List run(Integer idDegreeCurricularPlan) throws FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente sp;
         List allExecutionDegrees = null;
-        try {
+
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp
                     .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                             idDegreeCurricularPlan);
             allExecutionDegrees = sp.getIPersistentExecutionDegree().readByDegreeCurricularPlan(
                     degreeCurricularPlan.getIdInternal());
-
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
-        }
 
         if (allExecutionDegrees == null || allExecutionDegrees.isEmpty()) {
             return allExecutionDegrees;

@@ -30,7 +30,7 @@ public class EditCurricularCourse implements IService {
     public EditCurricularCourse() {
     }
 
-    public void run(InfoCurricularCourse newInfoCurricularCourse) throws FenixServiceException {
+    public void run(InfoCurricularCourse newInfoCurricularCourse) throws FenixServiceException, ExcepcaoPersistencia {
 
         IPersistentCurricularCourse persistentCurricularCourse = null;
         ICurricularCourse oldCurricularCourse = null;
@@ -95,8 +95,6 @@ public class EditCurricularCourse implements IService {
             
         } catch (ExistingPersistentException ex) {
             throw new ExistingServiceException(ex);
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
         }
     }
     

@@ -22,32 +22,27 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * @author Barbosa
  * @author Pica
- *  
+ * 
  */
 public class ReadAllGrantPartsByGrantSubsidy implements IService {
 
-    public ReadAllGrantPartsByGrantSubsidy() {
-    }
+	public List run(Integer grantSubsidyId) throws FenixServiceException, ExcepcaoPersistencia {
+		List result = null;
 
-    public List run(Integer grantSubsidyId) throws FenixServiceException {
-        List result = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentGrantPart pgp = sp.getIPersistentGrantPart();
-            List grantParts = pgp.readAllGrantPartsByGrantSubsidy(grantSubsidyId);
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentGrantPart pgp = sp.getIPersistentGrantPart();
+		List grantParts = pgp.readAllGrantPartsByGrantSubsidy(grantSubsidyId);
 
-            if (grantParts != null) {
-                result = (List) CollectionUtils.collect(grantParts, new Transformer() {
-                    public Object transform(Object o) {
-                        IGrantPart grantPart = (IGrantPart) o;
-                        return InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity
-                                .newInfoFromDomain(grantPart);
-                    }
-                });
-            }
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e.getMessage());
-        }
-        return result;
-    }
+		if (grantParts != null) {
+			result = (List) CollectionUtils.collect(grantParts, new Transformer() {
+				public Object transform(Object o) {
+					IGrantPart grantPart = (IGrantPart) o;
+					return InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity
+							.newInfoFromDomain(grantPart);
+				}
+			});
+		}
+
+		return result;
+	}
 }

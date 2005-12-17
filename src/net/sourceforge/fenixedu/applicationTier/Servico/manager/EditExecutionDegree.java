@@ -27,7 +27,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class EditExecutionDegree implements IService {
 
-    public void run(InfoExecutionDegree infoExecutionDegree) throws FenixServiceException {
+    public void run(InfoExecutionDegree infoExecutionDegree) throws FenixServiceException, ExcepcaoPersistencia {
 
         IPersistentExecutionDegree persistentExecutionDegree = null;
         IExecutionYear executionYear = null;
@@ -68,8 +68,6 @@ public class EditExecutionDegree implements IService {
 
         } catch (ExistingPersistentException ex) {
             throw new ExistingServiceException(ex);
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
         }
     }
 }

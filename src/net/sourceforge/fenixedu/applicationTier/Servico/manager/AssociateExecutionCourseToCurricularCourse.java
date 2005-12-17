@@ -26,45 +26,39 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class AssociateExecutionCourseToCurricularCourse implements IService {
 
-    public void run(Integer executionCourseId, Integer curricularCourseId, Integer executionPeriodId)
-            throws FenixServiceException {
+	public void run(Integer executionCourseId, Integer curricularCourseId, Integer executionPeriodId)
+			throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        try {
+		IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
+				.getIPersistentExecutionCourse();
 
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentCurricularCourse persistentCurricularCourse = persistentSuport
+				.getIPersistentCurricularCourse();
+		ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+				CurricularCourse.class, curricularCourseId);
 
-            IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
-                    .getIPersistentExecutionCourse();
+		if (curricularCourse == null)
+			throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
 
-            IPersistentCurricularCourse persistentCurricularCourse = persistentSuport
-                    .getIPersistentCurricularCourse();
-            ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
-                    .readByOID(CurricularCourse.class, curricularCourseId);
+		List executionCourses = curricularCourse.getAssociatedExecutionCourses();
+		Iterator iter = executionCourses.iterator();
 
-            if (curricularCourse == null)
-                throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
+		while (iter.hasNext()) {
+			Integer associatedExecutionPeriodId = ((IExecutionCourse) iter.next()).getExecutionPeriod()
+					.getIdInternal();
+			if (associatedExecutionPeriodId.equals(executionPeriodId))
+				throw new ExistingServiceException("message.unavailable.execution.period", null);
+		}
 
-            List executionCourses = curricularCourse.getAssociatedExecutionCourses();
-            Iterator iter = executionCourses.iterator();
-
-            while (iter.hasNext()) {
-                Integer associatedExecutionPeriodId = ((IExecutionCourse) iter.next())
-                        .getExecutionPeriod().getIdInternal();
-                if (associatedExecutionPeriodId.equals(executionPeriodId))
-                    throw new ExistingServiceException("message.unavailable.execution.period", null);
-            }
-
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
-                    ExecutionCourse.class, executionCourseId);
-            if (executionCourse == null) {
-                throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
-            }
-            if (! curricularCourse.hasAssociatedExecutionCourses(executionCourse)) {
-                persistentCurricularCourse.simpleLockWrite(curricularCourse);
-                curricularCourse.addAssociatedExecutionCourses(executionCourse);
-            }
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
-        }
-    }
+		IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+				ExecutionCourse.class, executionCourseId);
+		if (executionCourse == null) {
+			throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
+		}
+		if (!curricularCourse.hasAssociatedExecutionCourses(executionCourse)) {
+			persistentCurricularCourse.simpleLockWrite(curricularCourse);
+			curricularCourse.addAssociatedExecutionCourses(executionCourse);
+		}
+	}
 }

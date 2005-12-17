@@ -29,45 +29,42 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
  */
 public class ReadGrantSubsidy extends ReadDomainObjectService {
 
-    protected Class getDomainObjectClass() {
-        return GrantSubsidy.class;
-    }
+	protected Class getDomainObjectClass() {
+		return GrantSubsidy.class;
+	}
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-        return sp.getIPersistentGrantSubsidy();
-    }
+	protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
+		return sp.getIPersistentGrantSubsidy();
+	}
 
-    protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
-        return InfoGrantSubsidyWithContract.newInfoFromDomain((IGrantSubsidy) domainObject);
-    }
+	protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
+		return InfoGrantSubsidyWithContract.newInfoFromDomain((IGrantSubsidy) domainObject);
+	}
 
-    public InfoObject run(Integer objectId) throws FenixServiceException {
-        InfoGrantSubsidy infoGrantSubsidy = (InfoGrantSubsidy) super.run(objectId);
+	public InfoObject run(Integer objectId) throws FenixServiceException, ExcepcaoPersistencia {
+		InfoGrantSubsidy infoGrantSubsidy = (InfoGrantSubsidy) super.run(objectId);
 
-        // TODO The ReadDomainObjectService only reads 2level depth of
-        // references to other objects.
-        // In this case we have InfoGrantSubsidy and its reference to
-        // InfoGrantContract.
-        // Now we need to get the references of InfoGrantContract, e.g.,
-        // InfoGrantOwner
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentGrantContract pgc = sp.getIPersistentGrantContract();
+		// TODO The ReadDomainObjectService only reads 2level depth of
+		// references to other objects.
+		// In this case we have InfoGrantSubsidy and its reference to
+		// InfoGrantContract.
+		// Now we need to get the references of InfoGrantContract, e.g.,
+		// InfoGrantOwner
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentGrantContract pgc = sp.getIPersistentGrantContract();
 
-            InfoGrantContract infoGrantContract = InfoGrantContractWithGrantOwnerAndGrantType
-                    .newInfoFromDomain((IGrantContract) pgc.readByOID(GrantContract.class,
-                            infoGrantSubsidy.getInfoGrantContract().getIdInternal()));
+		InfoGrantContract infoGrantContract = InfoGrantContractWithGrantOwnerAndGrantType
+				.newInfoFromDomain((IGrantContract) pgc.readByOID(GrantContract.class, infoGrantSubsidy
+						.getInfoGrantContract().getIdInternal()));
 
-            // this section of code is temporary!!!! (see above the reason)
-            if (infoGrantSubsidy.getInfoGrantContract().getGrantOwnerInfo() == null)
-                infoGrantSubsidy.getInfoGrantContract().setGrantOwnerInfo(new InfoGrantOwner());
+		// this section of code is temporary!!!! (see above the reason)
+		if (infoGrantSubsidy.getInfoGrantContract().getGrantOwnerInfo() == null)
+			infoGrantSubsidy.getInfoGrantContract().setGrantOwnerInfo(new InfoGrantOwner());
 
-            infoGrantSubsidy.getInfoGrantContract().getGrantOwnerInfo().setIdInternal(
-                    infoGrantContract.getGrantOwnerInfo().getIdInternal());
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e.getMessage());
-        }
-        return infoGrantSubsidy;
-    }
+		infoGrantSubsidy.getInfoGrantContract().getGrantOwnerInfo().setIdInternal(
+				infoGrantContract.getGrantOwnerInfo().getIdInternal());
+
+		return infoGrantSubsidy;
+	}
 
 }

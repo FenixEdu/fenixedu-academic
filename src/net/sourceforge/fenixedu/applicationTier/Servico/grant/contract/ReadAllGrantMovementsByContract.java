@@ -22,32 +22,27 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * @author Barbosa
  * @author Pica
- *  
+ * 
  */
 public class ReadAllGrantMovementsByContract implements IService {
-    public ReadAllGrantMovementsByContract() {
-    }
 
-    public List run(Integer grantContractId) throws FenixServiceException {
-        List result = null;
-        IPersistentGrantContractMovement pgcm = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            pgcm = sp.getIPersistentGrantContractMovement();
-            List grantMovements = pgcm.readAllMovementsByContract(grantContractId);
+	public List run(Integer grantContractId) throws FenixServiceException, ExcepcaoPersistencia {
+		List result = null;
+		IPersistentGrantContractMovement pgcm = null;
 
-            if (grantMovements != null) {
-                result = (List) CollectionUtils.collect(grantMovements, new Transformer() {
-                    public Object transform(Object o) {
-                        IGrantContractMovement grantMovement = (IGrantContractMovement) o;
-                        return InfoGrantContractMovementWithContract.newInfoFromDomain(grantMovement);
-                    }
-                });
-            }
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e.getMessage());
-        }
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		pgcm = sp.getIPersistentGrantContractMovement();
+		List grantMovements = pgcm.readAllMovementsByContract(grantContractId);
 
-        return result;
-    }
+		if (grantMovements != null) {
+			result = (List) CollectionUtils.collect(grantMovements, new Transformer() {
+				public Object transform(Object o) {
+					IGrantContractMovement grantMovement = (IGrantContractMovement) o;
+					return InfoGrantContractMovementWithContract.newInfoFromDomain(grantMovement);
+				}
+			});
+		}
+
+		return result;
+	}
 }

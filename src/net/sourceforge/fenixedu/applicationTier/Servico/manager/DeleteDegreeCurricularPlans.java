@@ -23,34 +23,28 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class DeleteDegreeCurricularPlans implements IService {
 
-    public List run(List degreeCurricularPlansIds) throws FenixServiceException {
+	public List run(List degreeCurricularPlansIds) throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp
+				.getIPersistentDegreeCurricularPlan();
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp.getIPersistentDegreeCurricularPlan();
-            
-            Iterator<Integer> iter = degreeCurricularPlansIds.iterator();
+		Iterator<Integer> iter = degreeCurricularPlansIds.iterator();
 
-            List<String> undeletedDegreeCurricularPlansNames = new ArrayList<String>();
+		List<String> undeletedDegreeCurricularPlansNames = new ArrayList<String>();
 
-            while (iter.hasNext()) {
+		while (iter.hasNext()) {
 
-				Integer degreeCurricularPlanId = (Integer) iter.next();
-				IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOID(
-                        DegreeCurricularPlan.class, degreeCurricularPlanId);
- 
-				try {
-					degreeCurricularPlan.delete();
-				}
-				catch (DomainException e) {
-					undeletedDegreeCurricularPlansNames.add(degreeCurricularPlan.getName());
-				}	
-            }
+			Integer degreeCurricularPlanId = (Integer) iter.next();
+			IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
+					.readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
 
-            return undeletedDegreeCurricularPlansNames;
+			try {
+				degreeCurricularPlan.delete();
+			} catch (DomainException e) {
+				undeletedDegreeCurricularPlansNames.add(degreeCurricularPlan.getName());
+			}
+		}
 
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-    }
+		return undeletedDegreeCurricularPlansNames;
+	}
 }

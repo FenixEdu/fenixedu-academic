@@ -11,22 +11,13 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class DeletePrecedenceFromDegreeCurricularPlan implements IService {
 
-    public DeletePrecedenceFromDegreeCurricularPlan() {
-    }
+	public void run(Integer precedenceID) throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentPrecedence precedenceDAO = persistentSuport.getIPersistentPrecedence();
 
-    public void run(Integer precedenceID) throws FenixServiceException {
+		IPrecedence precedence = (IPrecedence) precedenceDAO.readByOID(Precedence.class, precedenceID);
 
-        try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentPrecedence precedenceDAO = persistentSuport.getIPersistentPrecedence();
-
-            IPrecedence precedence = (IPrecedence) precedenceDAO.readByOID(Precedence.class, precedenceID);
-       
-			if (precedence != null)
-				precedence.delete();
-			
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-    }
+		if (precedence != null)
+			precedence.delete();
+	}
 }

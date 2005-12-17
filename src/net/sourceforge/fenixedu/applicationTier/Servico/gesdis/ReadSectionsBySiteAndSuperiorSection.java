@@ -25,51 +25,48 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadSectionsBySiteAndSuperiorSection implements IService {
 
-    /**
-     * Executes the service. Returns the current collection of all infosections
-     * that belong to a site.
-     * @throws ExcepcaoPersistencia
-     */
-    public List run(InfoSite infoSite, InfoSection infoSuperiorSection) throws FenixServiceException, ExcepcaoPersistencia {
+	/**
+	 * Executes the service. Returns the current collection of all infosections
+	 * that belong to a site.
+	 * 
+	 * @throws ExcepcaoPersistencia
+	 */
+	public List run(InfoSite infoSite, InfoSection infoSuperiorSection) throws FenixServiceException,
+			ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        ISite site = (ISite) sp.getIPersistentSite().readByOID(Site.class, infoSite.getIdInternal());
-        List allSections = null;
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISite site = (ISite) sp.getIPersistentSite().readByOID(Site.class, infoSite.getIdInternal());
+		List allSections = null;
 
-        ISection superiorSection = null;
-        if (infoSuperiorSection != null) {
-            superiorSection = (ISection) sp.getIPersistentSection().readByOID(Section.class, infoSuperiorSection.getIdInternal());
-            superiorSection.setSite(site);
-        }
+		ISection superiorSection = null;
+		if (infoSuperiorSection != null) {
+			superiorSection = (ISection) sp.getIPersistentSection().readByOID(Section.class,
+					infoSuperiorSection.getIdInternal());
+			superiorSection.setSite(site);
+		}
 
-        try {
-            if(superiorSection != null){
-	            allSections = sp.getIPersistentSection().readBySiteAndSection(site.getExecutionCourse().getSigla(),
-	                    site.getExecutionCourse().getExecutionPeriod().getName(),
-	                    site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear(),
-	                    superiorSection.getIdInternal());
-            }
-            else{
-                allSections = sp.getIPersistentSection().readBySiteAndSection(site.getExecutionCourse().getSigla(),
-	                    site.getExecutionCourse().getExecutionPeriod().getName(),
-	                    site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear(),
-	                    null);
-            }
-                
+		if (superiorSection != null) {
+			allSections = sp.getIPersistentSection().readBySiteAndSection(
+					site.getExecutionCourse().getSigla(),
+					site.getExecutionCourse().getExecutionPeriod().getName(),
+					site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear(),
+					superiorSection.getIdInternal());
+		} else {
+			allSections = sp.getIPersistentSection().readBySiteAndSection(
+					site.getExecutionCourse().getSigla(),
+					site.getExecutionCourse().getExecutionPeriod().getName(),
+					site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear(), null);
+		}
 
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
-        }
+		List result = new ArrayList();
+		if (allSections != null) {
+			// build the result of this service
+			Iterator iterator = allSections.iterator();
 
-        List result = new ArrayList();
-        if (allSections != null) {
-            // build the result of this service
-            Iterator iterator = allSections.iterator();
+			while (iterator.hasNext())
+				result.add(InfoSectionWithAll.newInfoFromDomain((ISection) iterator.next()));
+		}
 
-            while (iterator.hasNext())
-                result.add(InfoSectionWithAll.newInfoFromDomain((ISection) iterator.next()));
-        }
-
-        return result;
-    }
+		return result;
+	}
 }

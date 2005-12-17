@@ -25,48 +25,48 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadExecutionCoursesByExecutionPeriod implements IService {
 
-    /**
-     * Executes the service. Returns the current collection of
-     * infoExecutionCourses.
-     */
-    public List run(Integer executionPeriodId) throws FenixServiceException {
-        List allExecutionCoursesFromExecutionPeriod = null;
-        List allExecutionCourses = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+	/**
+	 * Executes the service. Returns the current collection of
+	 * infoExecutionCourses.
+	 * 
+	 * @throws ExcepcaoPersistencia
+	 */
+	public List run(Integer executionPeriodId) throws FenixServiceException, ExcepcaoPersistencia {
+		List allExecutionCoursesFromExecutionPeriod = null;
+		List allExecutionCourses = null;
 
-            IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
-                    ExecutionPeriod.class, executionPeriodId);
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
-            if (executionPeriod == null) {
-                throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
-            }
-            allExecutionCoursesFromExecutionPeriod = executionPeriod.getAssociatedExecutionCourses();
+		IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+				ExecutionPeriod.class, executionPeriodId);
 
-            if (allExecutionCoursesFromExecutionPeriod == null
-                    || allExecutionCoursesFromExecutionPeriod.isEmpty()) {
-                return allExecutionCoursesFromExecutionPeriod;
-            }
-            InfoExecutionCourse infoExecutionCourse = null;
-            allExecutionCourses = new ArrayList(allExecutionCoursesFromExecutionPeriod.size());
-            Iterator iter = allExecutionCoursesFromExecutionPeriod.iterator();
-            while (iter.hasNext()) {
-                IExecutionCourse executionCourse = (IExecutionCourse) iter.next();
-                Boolean hasSite;
-                if(executionCourse.getSite() != null)
-                    hasSite = true;
-                else
-                    hasSite = false;
+		if (executionPeriod == null) {
+			throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
+		}
+		allExecutionCoursesFromExecutionPeriod = executionPeriod.getAssociatedExecutionCourses();
 
-                infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
-                        .newInfoFromDomain(executionCourse);
-                infoExecutionCourse.setHasSite(hasSite);
-                allExecutionCourses.add(infoExecutionCourse);
-            }
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
-        }
-        return allExecutionCourses;
-    }
+		if (allExecutionCoursesFromExecutionPeriod == null
+				|| allExecutionCoursesFromExecutionPeriod.isEmpty()) {
+			return allExecutionCoursesFromExecutionPeriod;
+		}
+		InfoExecutionCourse infoExecutionCourse = null;
+		allExecutionCourses = new ArrayList(allExecutionCoursesFromExecutionPeriod.size());
+		Iterator iter = allExecutionCoursesFromExecutionPeriod.iterator();
+		while (iter.hasNext()) {
+			IExecutionCourse executionCourse = (IExecutionCourse) iter.next();
+			Boolean hasSite;
+			if (executionCourse.getSite() != null)
+				hasSite = true;
+			else
+				hasSite = false;
+
+			infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
+					.newInfoFromDomain(executionCourse);
+			infoExecutionCourse.setHasSite(hasSite);
+			allExecutionCourses.add(infoExecutionCourse);
+		}
+
+		return allExecutionCourses;
+	}
 }

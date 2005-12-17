@@ -23,37 +23,33 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadSections implements IService {
 
-    /**
-     * Executes the service. Returns the current collection of all infosections
-     * that belong to a site.
-     * @throws ExcepcaoPersistencia
-     */
-    public List run(InfoSite infoSite) throws FenixServiceException, ExcepcaoPersistencia {
+	/**
+	 * Executes the service. Returns the current collection of all infosections
+	 * that belong to a site.
+	 * 
+	 * @throws ExcepcaoPersistencia
+	 */
+	public List run(InfoSite infoSite) throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        ISite site = (ISite) sp.getIPersistentSite().readByOID(Site.class, infoSite.getIdInternal());
-        List allSections = null;
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISite site = (ISite) sp.getIPersistentSite().readByOID(Site.class, infoSite.getIdInternal());
+		List allSections = null;
 
-        try {
-            allSections = sp.getIPersistentSection().readBySite(site.getExecutionCourse().getSigla(),
-                    site.getExecutionCourse().getExecutionPeriod().getName(),
-                    site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
+		allSections = sp.getIPersistentSection().readBySite(site.getExecutionCourse().getSigla(),
+				site.getExecutionCourse().getExecutionPeriod().getName(),
+				site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
 
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
-        }
+		if (allSections == null || allSections.isEmpty()) {
+			return allSections;
+		}
 
-        if (allSections == null || allSections.isEmpty()) {
-            return allSections;
-        }
+		// build the result of this service
+		Iterator iterator = allSections.iterator();
+		List result = new ArrayList(allSections.size());
 
-        // build the result of this service
-        Iterator iterator = allSections.iterator();
-        List result = new ArrayList(allSections.size());
+		while (iterator.hasNext())
+			result.add(InfoSectionWithAll.newInfoFromDomain((ISection) iterator.next()));
 
-        while (iterator.hasNext())
-            result.add(InfoSectionWithAll.newInfoFromDomain((ISection) iterator.next()));
-
-        return result;
-    }
+		return result;
+	}
 }

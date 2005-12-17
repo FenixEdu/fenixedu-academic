@@ -29,50 +29,46 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear implements IService {
 
-    public Object run(Integer executionDegreeId, Integer executionPeriodId, Integer curricularYear)
-            throws FenixServiceException {
+	public Object run(Integer executionDegreeId, Integer executionPeriodId, Integer curricularYear)
+			throws FenixServiceException, ExcepcaoPersistencia {
 
-        List infoExecutionCourseList = new ArrayList();
-        try {
-            List executionCourseList = null;
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-            IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
+		List infoExecutionCourseList = new ArrayList();
 
-            if (executionPeriodId == null) {
-                throw new FenixServiceException("nullExecutionPeriodId");
-            }
+		List executionCourseList = null;
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
+		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+		IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
 
-            IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
-                    ExecutionPeriod.class, executionPeriodId);
+		if (executionPeriodId == null) {
+			throw new FenixServiceException("nullExecutionPeriodId");
+		}
 
-            if (executionDegreeId == null && curricularYear == null) {
-                executionCourseList = executionCourseDAO
-                        .readByExecutionPeriodWithNoCurricularCourses(executionPeriod.getIdInternal());
+		IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+				ExecutionPeriod.class, executionPeriodId);
 
-            } else {
-                IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
-                        ExecutionDegree.class, executionDegreeId);
+		if (executionDegreeId == null && curricularYear == null) {
+			executionCourseList = executionCourseDAO
+					.readByExecutionPeriodWithNoCurricularCourses(executionPeriod.getIdInternal());
 
-                executionCourseList = executionCourseDAO
-                        .readByCurricularYearAndExecutionPeriodAndExecutionDegree(curricularYear,
-                                executionPeriod.getSemester(),
-                                executionDegree.getDegreeCurricularPlan().getName(),
-                                executionDegree.getDegreeCurricularPlan().getDegree().getSigla(),
-                                executionPeriod.getIdInternal());
-            }
+		} else {
+			IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+					ExecutionDegree.class, executionDegreeId);
 
-            CollectionUtils.collect(executionCourseList, new Transformer() {
-                public Object transform(Object input) {
-                    IExecutionCourse executionCourse = (IExecutionCourse) input;
-                    return InfoExecutionCourse.newInfoFromDomain(executionCourse);
-                }
-            }, infoExecutionCourseList);
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-        }
+			executionCourseList = executionCourseDAO
+					.readByCurricularYearAndExecutionPeriodAndExecutionDegree(curricularYear,
+							executionPeriod.getSemester(), executionDegree.getDegreeCurricularPlan()
+									.getName(), executionDegree.getDegreeCurricularPlan().getDegree()
+									.getSigla(), executionPeriod.getIdInternal());
+		}
 
-        return infoExecutionCourseList;
-    }
+		CollectionUtils.collect(executionCourseList, new Transformer() {
+			public Object transform(Object input) {
+				IExecutionCourse executionCourse = (IExecutionCourse) input;
+				return InfoExecutionCourse.newInfoFromDomain(executionCourse);
+			}
+		}, infoExecutionCourseList);
+
+		return infoExecutionCourseList;
+	}
 }

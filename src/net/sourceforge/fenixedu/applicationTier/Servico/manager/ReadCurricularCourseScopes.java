@@ -22,33 +22,31 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadCurricularCourseScopes implements IService {
 
-    /**
-     * Executes the service. Returns the current collection of
-     * infoCurricularCourseScopes.
-     */
-    public List run(Integer curricularCourseId) throws FenixServiceException {
-        ISuportePersistente sp;
-        List allCurricularCourseScopes = null;
-        try {
+	/**
+	 * Executes the service. Returns the current collection of
+	 * infoCurricularCourseScopes.
+	 * 
+	 * @throws ExcepcaoPersistencia
+	 */
+	public List run(Integer curricularCourseId) throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente sp;
+		List allCurricularCourseScopes = null;
 
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            ICurricularCourse curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse()
-                    .readByOID(CurricularCourse.class, curricularCourseId);
-            allCurricularCourseScopes = curricularCourse.getScopes();
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ICurricularCourse curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse()
+				.readByOID(CurricularCourse.class, curricularCourseId);
+		allCurricularCourseScopes = curricularCourse.getScopes();
 
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
-        }
+		if (allCurricularCourseScopes == null || allCurricularCourseScopes.isEmpty())
+			return new ArrayList();
 
-        if (allCurricularCourseScopes == null || allCurricularCourseScopes.isEmpty())
-            return new ArrayList();
+		Iterator iterator = allCurricularCourseScopes.iterator();
+		List result = new ArrayList(allCurricularCourseScopes.size());
 
-        Iterator iterator = allCurricularCourseScopes.iterator();
-        List result = new ArrayList(allCurricularCourseScopes.size());
+		while (iterator.hasNext())
+			result.add(InfoCurricularCourseScopeWithBranchAndSemesterAndYear
+					.newInfoFromDomain((ICurricularCourseScope) iterator.next()));
 
-        while (iterator.hasNext())
-			result.add(InfoCurricularCourseScopeWithBranchAndSemesterAndYear.newInfoFromDomain((ICurricularCourseScope) iterator.next()));
-
-        return result;
-    }
+		return result;
+	}
 }

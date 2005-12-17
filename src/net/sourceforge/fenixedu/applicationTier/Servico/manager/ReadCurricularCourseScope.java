@@ -19,24 +19,22 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadCurricularCourseScope implements IService {
 
-    /**
-     * Executes the service. Returns the current InfoCurricularCourseScope.
-     */
-    public InfoCurricularCourseScope run(Integer idInternal) throws FenixServiceException {
-        ICurricularCourseScope curricularCourseScope;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+	/**
+	 * Executes the service. Returns the current InfoCurricularCourseScope.
+	 * @throws ExcepcaoPersistencia 
+	 */
+	public InfoCurricularCourseScope run(Integer idInternal) throws FenixServiceException, ExcepcaoPersistencia {
+		ICurricularCourseScope curricularCourseScope;
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            curricularCourseScope = (ICurricularCourseScope) sp.getIPersistentCurricularCourseScope()
-                    .readByOID(CurricularCourseScope.class, idInternal);
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
-        }
+		curricularCourseScope = (ICurricularCourseScope) sp.getIPersistentCurricularCourseScope()
+				.readByOID(CurricularCourseScope.class, idInternal);
 
-        if (curricularCourseScope == null) {
-            throw new NonExistingServiceException();
-        }
+		if (curricularCourseScope == null) {
+			throw new NonExistingServiceException();
+		}
 
-        return InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear.newInfoFromDomain(curricularCourseScope);
-    }
+		return InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear
+				.newInfoFromDomain(curricularCourseScope);
+	}
 }

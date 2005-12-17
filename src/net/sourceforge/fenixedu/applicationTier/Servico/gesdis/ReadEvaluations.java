@@ -25,9 +25,9 @@ public class ReadEvaluations implements IService {
     /**
      * Executes the service. Returns the current collection of
      * evaluations(tests, exams, projects and final evaluations)
+     * @throws ExcepcaoPersistencia 
      */
-    public List run(Integer executionCourseCode) throws FenixServiceException {
-        try {
+    public List run(Integer executionCourseCode) throws FenixServiceException, ExcepcaoPersistencia {
             ISuportePersistente sp;
             IExecutionCourse executionCourse;
 
@@ -49,9 +49,5 @@ public class ReadEvaluations implements IService {
             }
 
             return infoEvaluations;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-
     }
 }

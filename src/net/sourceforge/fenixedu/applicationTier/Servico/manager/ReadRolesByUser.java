@@ -21,28 +21,25 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadRolesByUser implements IService {
 
-    /**
-     * Executes the service. Returns the current infodegree.
-     */
-    public List run(String username) throws FenixServiceException {
-        List result = null;
+	/**
+	 * Executes the service. Returns the current infodegree.
+	 * @throws ExcepcaoPersistencia 
+	 */
+	public List run(String username) throws FenixServiceException, ExcepcaoPersistencia {
+		List result = null;
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
-            if (person == null) {
-                throw new FenixServiceException("error.noUsername");
-            }
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
+		if (person == null) {
+			throw new FenixServiceException("error.noUsername");
+		}
 
-            result = (List) CollectionUtils.collect(person.getPersonRoles(), new Transformer() {
-                public Object transform(Object arg0) {
-                    return InfoRole.newInfoFromDomain((IRole) arg0);
-                }
-            });
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException("error.noRoles", excepcaoPersistencia);
-        }
+		result = (List) CollectionUtils.collect(person.getPersonRoles(), new Transformer() {
+			public Object transform(Object arg0) {
+				return InfoRole.newInfoFromDomain((IRole) arg0);
+			}
+		});
 
-        return result;
-    }
+		return result;
+	}
 }

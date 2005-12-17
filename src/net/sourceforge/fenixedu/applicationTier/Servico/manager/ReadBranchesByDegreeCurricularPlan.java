@@ -24,39 +24,30 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadBranchesByDegreeCurricularPlan implements IService {
 
-    public ReadBranchesByDegreeCurricularPlan() {
-    }
+	public List run(Integer idDegreeCurricularPlan) throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente sp;
+		List allBranches = null;
 
-    /**
-     * Executes the service. Returns the current collection of infoBranches.
-     */
-    public List run(Integer idDegreeCurricularPlan) throws FenixServiceException {
-        ISuportePersistente sp;
-        List allBranches = null;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp
-                    .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
-                            idDegreeCurricularPlan);
-            if (degreeCurricularPlan == null) {
-                throw new NonExistingServiceException();
-            }
-            allBranches = degreeCurricularPlan.getAreas();
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
-        }
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp
+				.getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
+						idDegreeCurricularPlan);
+		if (degreeCurricularPlan == null) {
+			throw new NonExistingServiceException();
+		}
+		allBranches = degreeCurricularPlan.getAreas();
 
-        if (allBranches == null || allBranches.isEmpty()) {
-            return null;
-        }
+		if (allBranches == null || allBranches.isEmpty()) {
+			return null;
+		}
 
-        // build the result of this service
-        Iterator iterator = allBranches.iterator();
-        List result = new ArrayList(allBranches.size());
+		// build the result of this service
+		Iterator iterator = allBranches.iterator();
+		List result = new ArrayList(allBranches.size());
 
-        while (iterator.hasNext()) {
-            result.add(InfoBranch.newInfoFromDomain((IBranch) iterator.next()));
-        }
-        return result;
-    }
+		while (iterator.hasNext()) {
+			result.add(InfoBranch.newInfoFromDomain((IBranch) iterator.next()));
+		}
+		return result;
+	}
 }

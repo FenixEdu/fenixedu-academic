@@ -21,15 +21,8 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class EditDegree implements IService {
 
-	
-    public EditDegree() {
-    }
-
-
-    public void run(InfoDegree newInfoDegree) throws FenixServiceException {
-
+    public void run(InfoDegree newInfoDegree) throws FenixServiceException, ExcepcaoPersistencia {
         try {
-
 			ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 			ICursoPersistente persistentDegree = persistentSuport.getICursoPersistente();
 			IDegree oldDegree = (IDegree)persistentDegree.readByOID(Degree.class,newInfoDegree.getIdInternal());
@@ -40,12 +33,8 @@ public class EditDegree implements IService {
 			
 			oldDegree.edit(newInfoDegree.getNome(), newInfoDegree.getNameEn(),
 					newInfoDegree.getSigla(), newInfoDegree.getTipoCurso());
-
         } catch (ExistingPersistentException ex) {
             throw new ExistingServiceException(ex);
-			
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
         }
     }
 }

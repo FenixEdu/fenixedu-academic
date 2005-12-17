@@ -22,31 +22,25 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * @author Barbosa
  * @author Pica
- *  
+ * 
  */
 public class ReadAllGrantPaymentEntitiesByClassName implements IService {
-    public ReadAllGrantPaymentEntitiesByClassName() {
-    }
 
-    public List run(String className) throws FenixServiceException {
-        List result = null;
-        IPersistentGrantPaymentEntity pgpe = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            pgpe = sp.getIPersistentGrantPaymentEntity();
-            List grantPaymentEntities = pgpe.readAllPaymentEntitiesByClassName(className);
+	public List run(String className) throws FenixServiceException, ExcepcaoPersistencia {
+		List result = null;
+		IPersistentGrantPaymentEntity pgpe = null;
 
-            result = (List) CollectionUtils.collect(grantPaymentEntities, new Transformer() {
-                public Object transform(Object o) {
-                    IGrantPaymentEntity grantPaymentEntity = (IGrantPaymentEntity) o;
-                    return InfoGrantPaymentEntity.newInfoFromDomain(grantPaymentEntity);
-                }
-            });
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		pgpe = sp.getIPersistentGrantPaymentEntity();
+		List grantPaymentEntities = pgpe.readAllPaymentEntitiesByClassName(className);
 
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e.getMessage());
-        }
+		result = (List) CollectionUtils.collect(grantPaymentEntities, new Transformer() {
+			public Object transform(Object o) {
+				IGrantPaymentEntity grantPaymentEntity = (IGrantPaymentEntity) o;
+				return InfoGrantPaymentEntity.newInfoFromDomain(grantPaymentEntity);
+			}
+		});
 
-        return result;
-    }
+		return result;
+	}
 }

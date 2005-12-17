@@ -12,29 +12,21 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class MergePrecedencesForDegreeCurricularPlan implements IService {
 
-    public MergePrecedencesForDegreeCurricularPlan() {
-    }
+	public void run(Integer firstPrecedenceID, Integer secondPrecedenceID) throws FenixServiceException, ExcepcaoPersistencia {
 
-    public void run(Integer firstPrecedenceID, Integer secondPrecedenceID) throws FenixServiceException {
+		if (firstPrecedenceID.intValue() == secondPrecedenceID.intValue()) {
+			throw new InvalidArgumentsServiceException("error.manager.samePrecedencesForMerge");
+		}
 
-        if (firstPrecedenceID.intValue() == secondPrecedenceID.intValue()) {
-            throw new InvalidArgumentsServiceException("error.manager.samePrecedencesForMerge");
-        }
+		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentPrecedence precedenceDAO = persistentSuport.getIPersistentPrecedence();
 
-        try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentPrecedence precedenceDAO = persistentSuport.getIPersistentPrecedence();
+		IPrecedence firstPrecedence = (IPrecedence) precedenceDAO.readByOID(Precedence.class,
+				firstPrecedenceID);
+		IPrecedence secondPrecedence = (IPrecedence) precedenceDAO.readByOID(Precedence.class,
+				secondPrecedenceID);
 
-            IPrecedence firstPrecedence = (IPrecedence) precedenceDAO.readByOID(Precedence.class,
-                    firstPrecedenceID);
-            IPrecedence secondPrecedence = (IPrecedence) precedenceDAO.readByOID(Precedence.class,
-                    secondPrecedenceID);
-
-			firstPrecedence.mergePrecedences(secondPrecedence);
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-    }
+		firstPrecedence.mergePrecedences(secondPrecedence);
+	}
 
 }

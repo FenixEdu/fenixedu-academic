@@ -19,46 +19,40 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * @author jpvl
  */
 public abstract class ReadDomainObjectService implements IService {
-    public InfoObject run(Integer objectId) throws FenixServiceException {
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentObject persistentObject = getIPersistentObject(sp);
-            IDomainObject domainObject = persistentObject.readByOID(getDomainObjectClass(), objectId);
-            InfoObject infoObject = null;
+	public InfoObject run(Integer objectId) throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentObject persistentObject = getIPersistentObject(sp);
+		IDomainObject domainObject = persistentObject.readByOID(getDomainObjectClass(), objectId);
+		InfoObject infoObject = null;
 
-            if (domainObject != null) {
-                infoObject = newInfoFromDomain(domainObject);
-            }
+		if (domainObject != null) {
+			infoObject = newInfoFromDomain(domainObject);
+		}
 
-            return infoObject;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        } catch (Exception e) {
-            throw new FenixServiceException(e);
-        }
-    }
+		return infoObject;
+	}
 
-    /**
-     * This is the class in witch the broker will read and delete the
-     * DomainObject
-     * 
-     * @return
-     */
-    protected abstract Class getDomainObjectClass();
+	/**
+	 * This is the class in witch the broker will read and delete the
+	 * DomainObject
+	 * 
+	 * @return
+	 */
+	protected abstract Class getDomainObjectClass();
 
-    /**
-     * @param sp
-     * @return
-     */
-    protected abstract IPersistentObject getIPersistentObject(ISuportePersistente sp)
-            throws ExcepcaoPersistencia;
+	/**
+	 * @param sp
+	 * @return
+	 */
+	protected abstract IPersistentObject getIPersistentObject(ISuportePersistente sp)
+			throws ExcepcaoPersistencia;
 
-    /**
-     * This method invokes the cloneing to convert from IDomainObject to
-     * InfoObject
-     * 
-     * @param infoObject
-     * @return
-     */
-    protected abstract InfoObject newInfoFromDomain(IDomainObject domainObject);
+	/**
+	 * This method invokes the cloneing to convert from IDomainObject to
+	 * InfoObject
+	 * 
+	 * @param infoObject
+	 * @return
+	 */
+	protected abstract InfoObject newInfoFromDomain(IDomainObject domainObject);
 }

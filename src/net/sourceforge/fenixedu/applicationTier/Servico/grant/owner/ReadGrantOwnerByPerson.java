@@ -17,25 +17,18 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * @author Barbosa
  * @author Pica
- *  
+ * 
  */
 public class ReadGrantOwnerByPerson implements IService {
 
-    public ReadGrantOwnerByPerson() {
-    }
+	public InfoGrantOwner run(Integer personId) throws FenixServiceException, ExcepcaoPersistencia {
+		InfoGrantOwner infoGrantOwner = null;
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentGrantOwner persistentGrantOwner = sp.getIPersistentGrantOwner();
+		IGrantOwner grantOwner = persistentGrantOwner.readGrantOwnerByPerson(personId);
 
-    public InfoGrantOwner run(Integer personId) throws FenixServiceException {
-        InfoGrantOwner infoGrantOwner = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentGrantOwner persistentGrantOwner = sp.getIPersistentGrantOwner();
-            IGrantOwner grantOwner = persistentGrantOwner.readGrantOwnerByPerson(personId);
-
-            infoGrantOwner = InfoGrantOwnerWithPerson.newInfoFromDomain(grantOwner);
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e.getMessage());
-        }
-        return infoGrantOwner;
-    }
+		infoGrantOwner = InfoGrantOwnerWithPerson.newInfoFromDomain(grantOwner);
+		return infoGrantOwner;
+	}
 
 }

@@ -25,62 +25,46 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadExecutionCoursesByCurricularCourse implements IService {
 
-    /**
-     * The constructor of this class.
-     */
-    public ReadExecutionCoursesByCurricularCourse() {
-    }
+	public List run(Integer curricularCourseId) throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente sp;
+		List allExecutionCourses = null;
 
-    /**
-     * Executes the service. Returns the current collection of
-     * infoExecutionCourses.
-     */
-    public List run(Integer curricularCourseId) throws FenixServiceException {
-        ISuportePersistente sp;
-        List allExecutionCourses = null;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            ICurricularCourse curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse()
-                    .readByOID(CurricularCourse.class, curricularCourseId);
+		ICurricularCourse curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse()
+				.readByOID(CurricularCourse.class, curricularCourseId);
 
-            if (curricularCourse == null) {
+		if (curricularCourse == null) {
 
-                throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
-            }
+			throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
+		}
 
-            allExecutionCourses = curricularCourse.getAssociatedExecutionCourses();
+		allExecutionCourses = curricularCourse.getAssociatedExecutionCourses();
 
-            if (allExecutionCourses == null || allExecutionCourses.isEmpty()) {
-                //return allExecutionCourses;
-                return new ArrayList();
-            }
+		if (allExecutionCourses == null || allExecutionCourses.isEmpty()) {
+			// return allExecutionCourses;
+			return new ArrayList();
+		}
 
-            // build the result of this service
-            Iterator iterator = allExecutionCourses.iterator();
-            List result = new ArrayList(allExecutionCourses.size());
+		// build the result of this service
+		Iterator iterator = allExecutionCourses.iterator();
+		List result = new ArrayList(allExecutionCourses.size());
 
-            Boolean hasSite;
-            while (iterator.hasNext()) {
+		Boolean hasSite;
+		while (iterator.hasNext()) {
 
-				InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod.newInfoFromDomain((IExecutionCourse) iterator.next());
-                try {
-                  
-                   IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOID(ExecutionCourse.class, infoExecutionCourse.getIdInternal());
-                   if(executionCourse.getSite() != null)
-                       hasSite = true;
-                   else
-                       hasSite = false;
-                   
-                } catch (ExcepcaoPersistencia ex) {
-                    throw new FenixServiceException(ex);
-                }
-                infoExecutionCourse.setHasSite(hasSite);
-                result.add(infoExecutionCourse);
-            }
-            return result;
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
-        }
-    }
+			InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
+					.newInfoFromDomain((IExecutionCourse) iterator.next());
+
+			IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
+					.readByOID(ExecutionCourse.class, infoExecutionCourse.getIdInternal());
+			if (executionCourse.getSite() != null)
+				hasSite = true;
+			else
+				hasSite = false;
+			infoExecutionCourse.setHasSite(hasSite);
+			result.add(infoExecutionCourse);
+		}
+		return result;
+	}
 }

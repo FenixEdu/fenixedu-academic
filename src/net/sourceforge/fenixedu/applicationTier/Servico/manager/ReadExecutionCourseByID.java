@@ -13,25 +13,22 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadExecutionCourseByID implements IService {
 
-    public InfoExecutionCourse run(Integer idInternal) throws FenixServiceException {
+	public InfoExecutionCourse run(Integer idInternal) throws FenixServiceException, ExcepcaoPersistencia {
 
-        IExecutionCourse executionCourse = null;
-        InfoExecutionCourseWithNonAffiliatedTeachers infoExecutionCourse = new InfoExecutionCourseWithNonAffiliatedTeachers();
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOID(
-                    ExecutionCourse.class, idInternal);
+		IExecutionCourse executionCourse = null;
+		InfoExecutionCourseWithNonAffiliatedTeachers infoExecutionCourse = new InfoExecutionCourseWithNonAffiliatedTeachers();
 
-            if (executionCourse == null) {
-                throw new NonExistingServiceException();
-            }
-            
-            infoExecutionCourse.copyFromDomain(executionCourse);
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
-        }
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOID(
+				ExecutionCourse.class, idInternal);
 
-        return infoExecutionCourse;
-    }
+		if (executionCourse == null) {
+			throw new NonExistingServiceException();
+		}
+
+		infoExecutionCourse.copyFromDomain(executionCourse);
+
+		return infoExecutionCourse;
+	}
 
 }

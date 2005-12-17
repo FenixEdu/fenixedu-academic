@@ -24,27 +24,23 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadSites implements IService {
 
-    public List run() throws FenixServiceException {
-        ISuportePersistente sp;
-        Collection allSites = null;
+	public List run() throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente sp;
+		Collection allSites = null;
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            allSites = sp.getIPersistentSite().readAll(Site.class);
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
-        }
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		allSites = sp.getIPersistentSite().readAll(Site.class);
 
-        if (allSites == null || allSites.isEmpty())
-            throw new InvalidArgumentsServiceException();
+		if (allSites == null || allSites.isEmpty())
+			throw new InvalidArgumentsServiceException();
 
-        // build the result of this service
-        Iterator iterator = allSites.iterator();
-        List result = new ArrayList(allSites.size());
+		// build the result of this service
+		Iterator iterator = allSites.iterator();
+		List result = new ArrayList(allSites.size());
 
-        while (iterator.hasNext())
-            result.add(InfoSiteWithInfoExecutionCourse.newInfoFromDomain(((ISite) iterator.next())));
+		while (iterator.hasNext())
+			result.add(InfoSiteWithInfoExecutionCourse.newInfoFromDomain(((ISite) iterator.next())));
 
-        return result;
-    }
+		return result;
+	}
 }

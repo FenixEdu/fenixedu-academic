@@ -21,63 +21,55 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadPrecedencesFromDegreeCurricularPlan implements IService {
 
-    public ReadPrecedencesFromDegreeCurricularPlan() {
-    }
+	public Map run(Integer degreeCurricularPlanID) throws FenixServiceException, ExcepcaoPersistencia {
 
-    public Map run(Integer degreeCurricularPlanID) throws FenixServiceException {
+		Map finalListOfInfoPrecedences = new HashMap();
 
-        Map finalListOfInfoPrecedences = new HashMap();
+		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentDegreeCurricularPlan degreeCurricularPlanDAO = persistentSuport
+				.getIPersistentDegreeCurricularPlan();
 
-        try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentDegreeCurricularPlan degreeCurricularPlanDAO = persistentSuport
-                    .getIPersistentDegreeCurricularPlan();
+		IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) degreeCurricularPlanDAO
+				.readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
 
-            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) degreeCurricularPlanDAO
-                    .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
+		List curricularCourses = degreeCurricularPlan.getCurricularCourses();
 
-            List curricularCourses = degreeCurricularPlan.getCurricularCourses();
+		int size = curricularCourses.size();
 
-            int size = curricularCourses.size();
+		for (int i = 0; i < size; i++) {
+			ICurricularCourse curricularCourse = (ICurricularCourse) curricularCourses.get(i);
+			List precedences = curricularCourse.getPrecedences();
+			putInMap(finalListOfInfoPrecedences, curricularCourse, precedences);
+		}
 
-            for (int i = 0; i < size; i++) {
-                ICurricularCourse curricularCourse = (ICurricularCourse) curricularCourses.get(i);
-                List precedences = curricularCourse.getPrecedences();
-                putInMap(finalListOfInfoPrecedences, curricularCourse, precedences);
-            }
+		return finalListOfInfoPrecedences;
+	}
 
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
+	private void putInMap(Map finalListOfInfoPrecedences, ICurricularCourse curricularCourse,
+			List precedences) {
 
-        return finalListOfInfoPrecedences;
-    }
+		if (!precedences.isEmpty()) {
+			InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
+					.newInfoFromDomain(curricularCourse);
 
-    private void putInMap(Map finalListOfInfoPrecedences, ICurricularCourse curricularCourse,
-            List precedences) {
+			List infoPrecedences = clone(precedences);
 
-        if (!precedences.isEmpty()) {
-            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
-                    .newInfoFromDomain(curricularCourse);
+			finalListOfInfoPrecedences.put(infoCurricularCourse, infoPrecedences);
+		}
+	}
 
-            List infoPrecedences = clone(precedences);
+	private List clone(List precedences) {
 
-            finalListOfInfoPrecedences.put(infoCurricularCourse, infoPrecedences);
-        }
-    }
+		List result = new ArrayList();
 
-    private List clone(List precedences) {
+		int size = precedences.size();
 
-        List result = new ArrayList();
+		for (int i = 0; i < size; i++) {
+			IPrecedence precedence = (IPrecedence) precedences.get(i);
+			InfoPrecedence infoPrecedence = InfoPrecedenceWithRestrictions.newInfoFromDomain(precedence);
+			result.add(infoPrecedence);
+		}
 
-        int size = precedences.size();
-
-        for (int i = 0; i < size; i++) {
-            IPrecedence precedence = (IPrecedence) precedences.get(i);
-            InfoPrecedence infoPrecedence = InfoPrecedenceWithRestrictions.newInfoFromDomain(precedence);
-            result.add(infoPrecedence);
-        }
-
-        return result;
-    }
+		return result;
+	}
 }

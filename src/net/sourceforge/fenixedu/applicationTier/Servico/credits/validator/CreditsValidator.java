@@ -103,10 +103,11 @@ public abstract class CreditsValidator {
      * @param teacher
      * @param period
      * @param shift
+     * @throws ExcepcaoPersistencia 
      */
     public static void validatePeriod(Integer teacherId, Integer executionPeriodId,
             IShiftProfessorship shiftProfessorship) throws OverlappingPeriodException,
-            FenixServiceException {
+            FenixServiceException, ExcepcaoPersistencia {
         if (shiftProfessorship.getPercentage().doubleValue() == 100) {
             Iterator iterator = shiftProfessorship.getShift().getAssociatedLessons().iterator();
             while (iterator.hasNext()) {

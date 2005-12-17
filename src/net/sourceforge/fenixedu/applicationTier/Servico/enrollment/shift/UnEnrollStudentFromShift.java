@@ -19,56 +19,59 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class UnEnrollStudentFromShift implements IService {
 
-    /**
-     * 
-     */
-    public UnEnrollStudentFromShift() {
-    }
+	/**
+	 * 
+	 */
+	public UnEnrollStudentFromShift() {
+	}
 
-    /**
-     * @param studentId
-     * @param shiftId
-     * @return
-     * @throws StudentNotFoundServiceException
-     * @throws FenixServiceException
-     */
-    public Boolean run(Integer studentId, Integer shiftId) throws StudentNotFoundServiceException,
-            ShiftNotFoundServiceException, ShiftEnrolmentNotFoundServiceException, FenixServiceException {
-        try {
-            ISuportePersistente persistentSupport = PersistenceSupportFactory
-                    .getDefaultPersistenceSupport();
+	/**
+	 * @param studentId
+	 * @param shiftId
+	 * @return
+	 * @throws StudentNotFoundServiceException
+	 * @throws FenixServiceException
+	 * @throws ExcepcaoPersistencia
+	 */
+	public Boolean run(Integer studentId, Integer shiftId)
+			throws StudentNotFoundServiceException,
+			ShiftNotFoundServiceException,
+			ShiftEnrolmentNotFoundServiceException, FenixServiceException,
+			ExcepcaoPersistencia {
+		ISuportePersistente persistentSupport = PersistenceSupportFactory
+				.getDefaultPersistenceSupport();
 
-            IShift shift = (IShift) persistentSupport.getITurnoPersistente().readByOID(Shift.class,
-                    shiftId);
-            if (shift == null) {
-                throw new ShiftNotFoundServiceException();
-            }
+		IShift shift = (IShift) persistentSupport.getITurnoPersistente()
+				.readByOID(Shift.class, shiftId);
+		if (shift == null) {
+			throw new ShiftNotFoundServiceException();
+		}
 
-            IStudent student = (IStudent) persistentSupport.getIPersistentStudent().readByOID(
-                    Student.class, studentId);
-            if (student == null) {
-                throw new StudentNotFoundServiceException();
-            }
+		IStudent student = (IStudent) persistentSupport.getIPersistentStudent()
+				.readByOID(Student.class, studentId);
+		if (student == null) {
+			throw new StudentNotFoundServiceException();
+		}
 
-            if (student.getPayedTuition() == null || student.getPayedTuition().equals(Boolean.FALSE)) {
-                throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
-            }
-			
-			shift.getStudents().remove(student);
+		if (student.getPayedTuition() == null
+				|| student.getPayedTuition().equals(Boolean.FALSE)) {
+			throw new FenixServiceException(
+					"error.exception.notAuthorized.student.warningTuition");
+		}
 
-            return new Boolean(true);
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-    }
+		shift.getStudents().remove(student);
 
-    public class StudentNotFoundServiceException extends FenixServiceException {
-    }
+		return new Boolean(true);
+	}
 
-    public class ShiftNotFoundServiceException extends FenixServiceException {
-    }
+	public class StudentNotFoundServiceException extends FenixServiceException {
+	}
 
-    public class ShiftEnrolmentNotFoundServiceException extends FenixServiceException {
-    }
+	public class ShiftNotFoundServiceException extends FenixServiceException {
+	}
+
+	public class ShiftEnrolmentNotFoundServiceException extends
+			FenixServiceException {
+	}
 
 }

@@ -24,43 +24,33 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * @author Barbosa
  * @author Pica
- *  
+ * 
  */
 public class ReadGrantContractRegimeByContractAndState implements IService {
-    /**
-     * The constructor of this class.
-     */
-    public ReadGrantContractRegimeByContractAndState() {
-    }
 
-    public List run(Integer grantContractId, Integer state) throws FenixServiceException {
-        List contractRegimes = null;
+	public List run(Integer grantContractId, Integer state) throws FenixServiceException, ExcepcaoPersistencia {
+		List contractRegimes = null;
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentGrantContractRegime persistentGrantContractRegime = sp
-                    .getIPersistentGrantContractRegime();
-            contractRegimes = persistentGrantContractRegime
-                    .readGrantContractRegimeByGrantContractAndState(grantContractId, state);
-      
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e.getMessage());
-        }
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentGrantContractRegime persistentGrantContractRegime = sp
+				.getIPersistentGrantContractRegime();
+		contractRegimes = persistentGrantContractRegime.readGrantContractRegimeByGrantContractAndState(
+				grantContractId, state);
 
-        if (contractRegimes == null)
-            return new ArrayList();
+		if (contractRegimes == null)
+			return new ArrayList();
 
-        List infoContractRegimeList = (ArrayList) CollectionUtils.collect(contractRegimes,
-                new Transformer() {
-                    public Object transform(Object input) {
-                        IGrantContractRegime grantContractRegime = (IGrantContractRegime) input;
-                        InfoGrantContractRegime infoGrantContractRegime = InfoGrantContractRegimeWithTeacherAndContract
-                                .newInfoFromDomain(grantContractRegime);
-                        return infoGrantContractRegime;
-                    }
-                });
+		List infoContractRegimeList = (ArrayList) CollectionUtils.collect(contractRegimes,
+				new Transformer() {
+					public Object transform(Object input) {
+						IGrantContractRegime grantContractRegime = (IGrantContractRegime) input;
+						InfoGrantContractRegime infoGrantContractRegime = InfoGrantContractRegimeWithTeacherAndContract
+								.newInfoFromDomain(grantContractRegime);
+						return infoGrantContractRegime;
+					}
+				});
 
-        return infoContractRegimeList;
+		return infoContractRegimeList;
 
-    }
+	}
 }

@@ -26,71 +26,69 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ListGrantOwners implements IService {
 
-    public ListGrantOwners() {
-    }
+	public ListGrantOwners() {
+	}
 
-    /**
-     * Query the grant owner by criteria of grant contract
-     * 
-     * @returns an array of objects object[0] List of result object[1]
-     *          IndoSpanListGrantOwner
-     */
+	/**
+	 * Query the grant owner by criteria of grant contract
+	 * @throws ExcepcaoPersistencia 
+	 * 
+	 * @returns an array of objects object[0] List of result object[1]
+	 *          IndoSpanListGrantOwner
+	 */
 
-    public Object[] run(InfoSpanListGrantOwner infoSpanListGrantOwner) throws FenixServiceException {
-        //Read the grant owners ordered by span
-        List grantOwnerBySpan = null;
-        IPersistentGrantOwner persistentGrantOwner = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            persistentGrantOwner = sp.getIPersistentGrantOwner();
-            grantOwnerBySpan = persistentGrantOwner.readAllGrantOwnersBySpan(infoSpanListGrantOwner
-                    .getSpanNumber(), SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN,
-                    propertyOrderBy(infoSpanListGrantOwner.getOrderBy()));
+	public Object[] run(InfoSpanListGrantOwner infoSpanListGrantOwner) throws FenixServiceException, ExcepcaoPersistencia {
+		// Read the grant owners ordered by span
+		List grantOwnerBySpan = null;
+		IPersistentGrantOwner persistentGrantOwner = null;
 
-            List listGrantOwner = null;
-            if (grantOwnerBySpan != null && grantOwnerBySpan.size() != 0) {
-                listGrantOwner = new ArrayList();
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		persistentGrantOwner = sp.getIPersistentGrantOwner();
+		grantOwnerBySpan = persistentGrantOwner.readAllGrantOwnersBySpan(infoSpanListGrantOwner
+				.getSpanNumber(), SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN,
+				propertyOrderBy(infoSpanListGrantOwner.getOrderBy()));
 
-                //For each Grant Owner construct the info list object.
-                for (int i = 0; i < grantOwnerBySpan.size(); i++) {
-                    IGrantOwner grantOwner = (IGrantOwner) grantOwnerBySpan.get(i);
-                    listGrantOwner.add(convertToInfoListGrantOwnerByOrder(grantOwner));
-                }
-            }
+		List listGrantOwner = null;
+		if (grantOwnerBySpan != null && grantOwnerBySpan.size() != 0) {
+			listGrantOwner = new ArrayList();
 
-            if (infoSpanListGrantOwner.getTotalElements() == null) {
-                //Setting the search attributes
-                infoSpanListGrantOwner.setTotalElements(persistentGrantOwner.countAll());
-            }
-            Object[] result = { listGrantOwner, infoSpanListGrantOwner };
-            return result;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e.getMessage());
-        }
-    }
+			// For each Grant Owner construct the info list object.
+			for (int i = 0; i < grantOwnerBySpan.size(); i++) {
+				IGrantOwner grantOwner = (IGrantOwner) grantOwnerBySpan.get(i);
+				listGrantOwner.add(convertToInfoListGrantOwnerByOrder(grantOwner));
+			}
+		}
 
-    /*
-     * Returns the order string to add to the criteria
-     */
-    private String propertyOrderBy(String orderBy) {
-        String result = null;
-        if (orderBy.equals("orderByNumber")) {
-            result = "number";
-        } else if (orderBy.equals("orderByFirstName")) {
-            result = "person.nome";
-        }
-        return result;
-    }
+		if (infoSpanListGrantOwner.getTotalElements() == null) {
+			// Setting the search attributes
+			infoSpanListGrantOwner.setTotalElements(persistentGrantOwner.countAll());
+		}
+		Object[] result = { listGrantOwner, infoSpanListGrantOwner };
+		return result;
+	}
 
-    private InfoListGrantOwnerByOrder convertToInfoListGrantOwnerByOrder(IGrantOwner grantOwner) {
-        InfoListGrantOwnerByOrder infoListGrantOwnerByOrder = new InfoListGrantOwnerByOrder();
+	/*
+	 * Returns the order string to add to the criteria
+	 */
+	private String propertyOrderBy(String orderBy) {
+		String result = null;
+		if (orderBy.equals("orderByNumber")) {
+			result = "number";
+		} else if (orderBy.equals("orderByFirstName")) {
+			result = "person.nome";
+		}
+		return result;
+	}
 
-        infoListGrantOwnerByOrder.setGrantOwnerId(grantOwner.getIdInternal());
-        infoListGrantOwnerByOrder.setGrantOwnerNumber(grantOwner.getNumber());
+	private InfoListGrantOwnerByOrder convertToInfoListGrantOwnerByOrder(IGrantOwner grantOwner) {
+		InfoListGrantOwnerByOrder infoListGrantOwnerByOrder = new InfoListGrantOwnerByOrder();
 
-        infoListGrantOwnerByOrder.setFirstName(NameUtils.getFirstName(grantOwner.getPerson().getNome()));
-        infoListGrantOwnerByOrder.setLastName(NameUtils.getLastName(grantOwner.getPerson().getNome()));
+		infoListGrantOwnerByOrder.setGrantOwnerId(grantOwner.getIdInternal());
+		infoListGrantOwnerByOrder.setGrantOwnerNumber(grantOwner.getNumber());
 
-        return infoListGrantOwnerByOrder;
-    }
+		infoListGrantOwnerByOrder.setFirstName(NameUtils.getFirstName(grantOwner.getPerson().getNome()));
+		infoListGrantOwnerByOrder.setLastName(NameUtils.getLastName(grantOwner.getPerson().getNome()));
+
+		return infoListGrantOwnerByOrder;
+	}
 }

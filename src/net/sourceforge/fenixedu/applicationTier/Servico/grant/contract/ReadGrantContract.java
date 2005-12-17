@@ -29,38 +29,33 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadGrantContract extends ReadDomainObjectService implements IService {
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-        return sp.getIPersistentGrantContract();
-    }
+	protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
+		return sp.getIPersistentGrantContract();
+	}
 
-    protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
-        return InfoGrantContractWithGrantOwnerAndGrantType
-                .newInfoFromDomain((IGrantContract) domainObject);
-    }
+	protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
+		return InfoGrantContractWithGrantOwnerAndGrantType
+				.newInfoFromDomain((IGrantContract) domainObject);
+	}
 
-    protected Class getDomainObjectClass() {
-        return GrantContract.class;
-    }
+	protected Class getDomainObjectClass() {
+		return GrantContract.class;
+	}
 
-    public InfoObject run(Integer objectId) throws FenixServiceException {
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentGrantOrientationTeacher pgot = sp.getIPersistentGrantOrientationTeacher();
+	public InfoObject run(Integer objectId) throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentGrantOrientationTeacher pgot = sp.getIPersistentGrantOrientationTeacher();
 
-            InfoGrantContract infoGrantContract = (InfoGrantContract) super.run(objectId);
+		InfoGrantContract infoGrantContract = (InfoGrantContract) super.run(objectId);
 
-            // get the GrantOrientationTeacher for the contract
-            IGrantOrientationTeacher orientationTeacher = pgot
-                    .readActualGrantOrientationTeacherByContract(infoGrantContract.getIdInternal(),
-                            new Integer(0));
-            InfoGrantOrientationTeacher infoOrientationTeacher = InfoGrantOrientationTeacherWithTeacherAndGrantContract
-                    .newInfoFromDomain(orientationTeacher);
-            infoGrantContract.setGrantOrientationTeacherInfo(infoOrientationTeacher);
+		// get the GrantOrientationTeacher for the contract
+		IGrantOrientationTeacher orientationTeacher = pgot.readActualGrantOrientationTeacherByContract(
+				infoGrantContract.getIdInternal(), new Integer(0));
+		InfoGrantOrientationTeacher infoOrientationTeacher = InfoGrantOrientationTeacherWithTeacherAndGrantContract
+				.newInfoFromDomain(orientationTeacher);
+		infoGrantContract.setGrantOrientationTeacherInfo(infoOrientationTeacher);
 
-            return infoGrantContract;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e.getMessage());
-        }
-    }
+		return infoGrantContract;
+	}
 
 }

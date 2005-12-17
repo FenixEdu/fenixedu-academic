@@ -17,28 +17,17 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author João Mota
- *  
+ * 
  */
 public class ReadCurricularCourseGroup implements IService {
 
-    /**
-     *  
-     */
-    public ReadCurricularCourseGroup() {
-    }
-
-    public InfoCurricularCourseGroup run(Integer groupId) throws FenixServiceException {
-        try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentCurricularCourseGroup persistentCurricularCourseGroup = persistentSuport
-                    .getIPersistentCurricularCourseGroup();
-            ICurricularCourseGroup group = (ICurricularCourseGroup) persistentCurricularCourseGroup
-                    .readByOID(CurricularCourseGroup.class, groupId);
-            return InfoCurricularCourseGroupWithInfoBranch.newInfoFromDomain(group);
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-
-    }
+	public InfoCurricularCourseGroup run(Integer groupId) throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentCurricularCourseGroup persistentCurricularCourseGroup = persistentSuport
+				.getIPersistentCurricularCourseGroup();
+		ICurricularCourseGroup group = (ICurricularCourseGroup) persistentCurricularCourseGroup
+				.readByOID(CurricularCourseGroup.class, groupId);
+		return InfoCurricularCourseGroupWithInfoBranch.newInfoFromDomain(group);
+	}
 
 }

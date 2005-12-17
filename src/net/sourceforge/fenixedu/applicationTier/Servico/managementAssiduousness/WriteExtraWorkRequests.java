@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests;
 import net.sourceforge.fenixedu.domain.managementAssiduousness.IExtraWorkRequests;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -33,110 +32,96 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  */
 public class WriteExtraWorkRequests implements IService {
-    public WriteExtraWorkRequests() {
-    }
 
-    public List run(String usernameWho, List infoExtraWorkRequestsList,
-            String costCenterCode, String costCenterMoneyCode) throws Exception {
-        List infoExtraWorkRequestsListAfterWrite = null;
-        List extraWorkRequestsList = null;
-        ISuportePersistente sp;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+	public List run(String usernameWho, List infoExtraWorkRequestsList, String costCenterCode,
+			String costCenterMoneyCode) throws Exception {
+		List infoExtraWorkRequestsListAfterWrite = null;
+		List extraWorkRequestsList = null;
+		ISuportePersistente sp;
 
-            // Read employee logged
-            IEmployee employeeWho = null;
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IPessoaPersistente personDAO = sp.getIPessoaPersistente();
-            IPersistentEmployee employeeDAO = sp.getIPersistentEmployee();
+		// Read employee logged
+		IEmployee employeeWho = null;
 
-            IPerson personWho = personDAO.lerPessoaPorUsername(usernameWho);
-            if (personWho != null) {
-                employeeWho = employeeDAO.readByPerson(personWho
-                        .getIdInternal().intValue());
-            }
+		IPessoaPersistente personDAO = sp.getIPessoaPersistente();
+		IPersistentEmployee employeeDAO = sp.getIPersistentEmployee();
 
-            IPersistentCostCenter costCenterDAO = sp.getIPersistentCostCenter();
-            ICostCenter costCenter = costCenterDAO
-                    .readCostCenterByCode(costCenterCode);
-            if (costCenter == null) {
-                // TODO
-            }
+		IPerson personWho = personDAO.lerPessoaPorUsername(usernameWho);
+		if (personWho != null) {
+			employeeWho = employeeDAO.readByPerson(personWho.getIdInternal().intValue());
+		}
 
-            ICostCenter costCenterMoney = costCenterDAO
-                    .readCostCenterByCode(costCenterMoneyCode);
-            if (costCenterMoney == null) {
-                // TODO
-            }
+		IPersistentCostCenter costCenterDAO = sp.getIPersistentCostCenter();
+		ICostCenter costCenter = costCenterDAO.readCostCenterByCode(costCenterCode);
+		if (costCenter == null) {
+			// TODO
+		}
 
-            Iterator iterator = infoExtraWorkRequestsList.listIterator();
-            extraWorkRequestsList = new ArrayList();
-            IPersistentExtraWorkRequests extraWorkRequestsDAO = sp
-                    .getIPersistentExtraWorkRequests();
-            while (iterator.hasNext()) {
-                InfoExtraWorkRequests infoExtraWorkRequests = (InfoExtraWorkRequests) iterator
-                        .next();
+		ICostCenter costCenterMoney = costCenterDAO.readCostCenterByCode(costCenterMoneyCode);
+		if (costCenterMoney == null) {
+			// TODO
+		}
 
-                IExtraWorkRequests extraWorkRequests = null;
-                if (infoExtraWorkRequests.getIdInternal() != null
-                        && infoExtraWorkRequests.getIdInternal().intValue() > 0) {
-                    extraWorkRequests = (IExtraWorkRequests) extraWorkRequestsDAO
-                            .readByOID(ExtraWorkRequests.class,
-                                    infoExtraWorkRequests.getIdInternal());
-                }
-                if (extraWorkRequests == null) {
-                    extraWorkRequests = new ExtraWorkRequests();
-                } 
-                extraWorkRequestsDAO.simpleLockWrite(extraWorkRequests);
+		Iterator iterator = infoExtraWorkRequestsList.listIterator();
+		extraWorkRequestsList = new ArrayList();
+		IPersistentExtraWorkRequests extraWorkRequestsDAO = sp.getIPersistentExtraWorkRequests();
+		while (iterator.hasNext()) {
+			InfoExtraWorkRequests infoExtraWorkRequests = (InfoExtraWorkRequests) iterator.next();
 
-                extraWorkRequests.setBeginDate(infoExtraWorkRequests.getBeginDate());
-                extraWorkRequests.setEndDate(infoExtraWorkRequests.getEndDate());
-                extraWorkRequests.setOption1(infoExtraWorkRequests.getOption1());
-                extraWorkRequests.setOption2(infoExtraWorkRequests.getOption2());
-                extraWorkRequests.setOption3(infoExtraWorkRequests.getOption3());
-                extraWorkRequests.setOption4(infoExtraWorkRequests.getOption4());
-                extraWorkRequests.setOption5(infoExtraWorkRequests.getOption5());
-                extraWorkRequests.setOption6(infoExtraWorkRequests.getOption6());
-                extraWorkRequests.setOption7(infoExtraWorkRequests.getOption7());
-                extraWorkRequests.setOption8(infoExtraWorkRequests.getOption8());
-                extraWorkRequests.setOption9(infoExtraWorkRequests.getOption9());
-                extraWorkRequests.setOption10(infoExtraWorkRequests.getOption10());
-                extraWorkRequests.setOption11(infoExtraWorkRequests.getOption11());
-                extraWorkRequests.setOption12(infoExtraWorkRequests.getOption12());
-                
-                extraWorkRequests.setCostCenterExtraWork(costCenter);
-                extraWorkRequests.setCostCenterMoney(costCenterMoney);
+			IExtraWorkRequests extraWorkRequests = null;
+			if (infoExtraWorkRequests.getIdInternal() != null
+					&& infoExtraWorkRequests.getIdInternal().intValue() > 0) {
+				extraWorkRequests = (IExtraWorkRequests) extraWorkRequestsDAO.readByOID(
+						ExtraWorkRequests.class, infoExtraWorkRequests.getIdInternal());
+			}
+			if (extraWorkRequests == null) {
+				extraWorkRequests = new ExtraWorkRequests();
+			}
+			extraWorkRequestsDAO.simpleLockWrite(extraWorkRequests);
 
-                IEmployee employee = employeeDAO
-                        .readByNumber(infoExtraWorkRequests.getInfoEmployee()
-                                .getEmployeeNumber());
-                if (employee == null) {
-                    // TODO
-                }
-                extraWorkRequests.setEmployee(employee);
-                
-                extraWorkRequests.setWho(employeeWho.getIdInternal().intValue());
-                extraWorkRequests.setWhoEmployee(employeeWho);
-                extraWorkRequests.setWhen(Calendar.getInstance().getTime());
-                
-                extraWorkRequestsList.add(extraWorkRequests);
-            }
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-            throw e;
-        }
+			extraWorkRequests.setBeginDate(infoExtraWorkRequests.getBeginDate());
+			extraWorkRequests.setEndDate(infoExtraWorkRequests.getEndDate());
+			extraWorkRequests.setOption1(infoExtraWorkRequests.getOption1());
+			extraWorkRequests.setOption2(infoExtraWorkRequests.getOption2());
+			extraWorkRequests.setOption3(infoExtraWorkRequests.getOption3());
+			extraWorkRequests.setOption4(infoExtraWorkRequests.getOption4());
+			extraWorkRequests.setOption5(infoExtraWorkRequests.getOption5());
+			extraWorkRequests.setOption6(infoExtraWorkRequests.getOption6());
+			extraWorkRequests.setOption7(infoExtraWorkRequests.getOption7());
+			extraWorkRequests.setOption8(infoExtraWorkRequests.getOption8());
+			extraWorkRequests.setOption9(infoExtraWorkRequests.getOption9());
+			extraWorkRequests.setOption10(infoExtraWorkRequests.getOption10());
+			extraWorkRequests.setOption11(infoExtraWorkRequests.getOption11());
+			extraWorkRequests.setOption12(infoExtraWorkRequests.getOption12());
 
-        infoExtraWorkRequestsListAfterWrite = (List) CollectionUtils.collect(
-                extraWorkRequestsList, new Transformer() {
+			extraWorkRequests.setCostCenterExtraWork(costCenter);
+			extraWorkRequests.setCostCenterMoney(costCenterMoney);
 
-                    public Object transform(Object arg0) {
-                        IExtraWorkRequests extraWorkRequests = (IExtraWorkRequests) arg0;
-                        return InfoExtraWorkRequestsWithAll
-                                .newInfoFromDomain(extraWorkRequests);
-                    }
+			IEmployee employee = employeeDAO.readByNumber(infoExtraWorkRequests.getInfoEmployee()
+					.getEmployeeNumber());
+			if (employee == null) {
+				// TODO
+			}
+			extraWorkRequests.setEmployee(employee);
 
-                });
+			extraWorkRequests.setWho(employeeWho.getIdInternal().intValue());
+			extraWorkRequests.setWhoEmployee(employeeWho);
+			extraWorkRequests.setWhen(Calendar.getInstance().getTime());
 
-        return infoExtraWorkRequestsListAfterWrite;
-    }
+			extraWorkRequestsList.add(extraWorkRequests);
+		}
+
+		infoExtraWorkRequestsListAfterWrite = (List) CollectionUtils.collect(extraWorkRequestsList,
+				new Transformer() {
+
+					public Object transform(Object arg0) {
+						IExtraWorkRequests extraWorkRequests = (IExtraWorkRequests) arg0;
+						return InfoExtraWorkRequestsWithAll.newInfoFromDomain(extraWorkRequests);
+					}
+
+				});
+
+		return infoExtraWorkRequestsListAfterWrite;
+	}
 }

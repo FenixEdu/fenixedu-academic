@@ -6,6 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
 import net.sourceforge.fenixedu.domain.IExternalPerson;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -18,7 +19,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class SearchExternalPersonsByName implements IService {
 
-    public List run(String name) throws FenixServiceException {
+    public List run(String name) throws FenixServiceException, ExcepcaoPersistencia {
         List infoExternalPersons = new ArrayList();
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();

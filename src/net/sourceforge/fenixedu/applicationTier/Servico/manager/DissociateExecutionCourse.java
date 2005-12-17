@@ -24,37 +24,31 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class DissociateExecutionCourse implements IService {
 
-    //	dissociate an execution course
-    public void run(Integer executionCourseId, Integer curricularCourseId) throws FenixServiceException {
+	// dissociate an execution course
+	public void run(Integer executionCourseId, Integer curricularCourseId) throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        try {
+		IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+		ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+				CurricularCourse.class, curricularCourseId);
 
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		if (curricularCourse == null)
+			throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
 
-            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-            ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
-                    .readByOID(CurricularCourse.class, curricularCourseId);
+		IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+		IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+				ExecutionCourse.class, executionCourseId);
 
-            if (curricularCourse == null)
-                throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
+		if (executionCourse == null)
+			throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
 
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
-                    ExecutionCourse.class, executionCourseId);
+		List executionCourses = curricularCourse.getAssociatedExecutionCourses();
+		List curricularCourses = executionCourse.getAssociatedCurricularCourses();
 
-            if (executionCourse == null)
-                throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
-
-            List executionCourses = curricularCourse.getAssociatedExecutionCourses();
-            List curricularCourses = executionCourse.getAssociatedCurricularCourses();
-
-            if (!executionCourses.isEmpty() && !curricularCourses.isEmpty()) {
-                persistentCurricularCourse.simpleLockWrite(curricularCourse);
-                executionCourses.remove(executionCourse);
-                curricularCourses.remove(curricularCourse);
-            }
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-    }
+		if (!executionCourses.isEmpty() && !curricularCourses.isEmpty()) {
+			persistentCurricularCourse.simpleLockWrite(curricularCourse);
+			executionCourses.remove(executionCourse);
+			curricularCourses.remove(curricularCourse);
+		}
+	}
 }

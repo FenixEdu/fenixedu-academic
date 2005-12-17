@@ -9,7 +9,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoExtraWorkRequestsWithAll;
 import net.sourceforge.fenixedu.domain.ICostCenter;
 import net.sourceforge.fenixedu.domain.managementAssiduousness.IExtraWorkRequests;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentCostCenter;
@@ -20,56 +19,46 @@ import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-
 /**
  * @author T�nia Pous�o
  * 
  */
 public class ReadExtraWorkRequests implements IService {
-    public ReadExtraWorkRequests() {
-    }
 
-    public List run(String usernameWho, Date beginDate, Date endDate, String costCenterCode,
-            String costCenterCodeMoney) throws Exception {
-        List infoExtraWorkRequestsListAfter = null;
-        List extraWorkRequestsList = null;
-        ISuportePersistente sp;
-        try {
-            sp = SuportePersistenteOJB.getInstance();
+	public List run(String usernameWho, Date beginDate, Date endDate, String costCenterCode,
+			String costCenterCodeMoney) throws Exception {
+		List infoExtraWorkRequestsListAfter = null;
+		List extraWorkRequestsList = null;
+		ISuportePersistente sp;
 
-            // Read employee logged
-            IPersistentCostCenter costCenterDAO = sp.getIPersistentCostCenter();
+		sp = SuportePersistenteOJB.getInstance();
 
-            ICostCenter costCenter = costCenterDAO.readCostCenterByCode(costCenterCode);
-            if (costCenter == null) {
-                // TODO
-            }
+		// Read employee logged
+		IPersistentCostCenter costCenterDAO = sp.getIPersistentCostCenter();
 
-            ICostCenter costCenterMoney = costCenterDAO.readCostCenterByCode(costCenterCodeMoney);
-            if (costCenterMoney == null) {
-                // TODO
-            }
-            IPersistentExtraWorkRequests extraWorkRequestsDAO = sp
-                    .getIPersistentExtraWorkRequests();
-            extraWorkRequestsList = extraWorkRequestsDAO
-                    .readExtraWorkRequestBetweenDaysAndByCC(beginDate, endDate, costCenter
-                            .getIdInternal(), costCenterMoney.getIdInternal());
-            if (extraWorkRequestsList != null && extraWorkRequestsList.size() > 0) {
-                infoExtraWorkRequestsListAfter = (List) CollectionUtils.collect(
-                        extraWorkRequestsList, new Transformer() {
-                            public Object transform(Object arg0) {
-                                IExtraWorkRequests extraWorkRequests = (IExtraWorkRequests) arg0;
-                                return InfoExtraWorkRequestsWithAll
-                                        .newInfoFromDomain(extraWorkRequests);
-                            }
+		ICostCenter costCenter = costCenterDAO.readCostCenterByCode(costCenterCode);
+		if (costCenter == null) {
+			// TODO
+		}
 
-                        });
-            }
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-            throw e;
-        }
+		ICostCenter costCenterMoney = costCenterDAO.readCostCenterByCode(costCenterCodeMoney);
+		if (costCenterMoney == null) {
+			// TODO
+		}
+		IPersistentExtraWorkRequests extraWorkRequestsDAO = sp.getIPersistentExtraWorkRequests();
+		extraWorkRequestsList = extraWorkRequestsDAO.readExtraWorkRequestBetweenDaysAndByCC(beginDate,
+				endDate, costCenter.getIdInternal(), costCenterMoney.getIdInternal());
+		if (extraWorkRequestsList != null && extraWorkRequestsList.size() > 0) {
+			infoExtraWorkRequestsListAfter = (List) CollectionUtils.collect(extraWorkRequestsList,
+					new Transformer() {
+						public Object transform(Object arg0) {
+							IExtraWorkRequests extraWorkRequests = (IExtraWorkRequests) arg0;
+							return InfoExtraWorkRequestsWithAll.newInfoFromDomain(extraWorkRequests);
+						}
 
-        return infoExtraWorkRequestsListAfter;
-    }
+					});
+		}
+
+		return infoExtraWorkRequestsListAfter;
+	}
 }

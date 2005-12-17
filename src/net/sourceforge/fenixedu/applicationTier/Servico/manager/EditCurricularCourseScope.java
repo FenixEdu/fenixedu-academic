@@ -22,7 +22,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class EditCurricularCourseScope implements IService {
 
-    public void run(InfoCurricularCourseScope newInfoCurricularCourseScope) throws FenixServiceException {
+    public void run(InfoCurricularCourseScope newInfoCurricularCourseScope) throws FenixServiceException, ExcepcaoPersistencia {
 
         ICurricularCourseScope oldCurricularCourseScope = null;
         ICurricularSemester newCurricularSemester = null;
@@ -66,8 +66,6 @@ public class EditCurricularCourseScope implements IService {
             throw new ExistingServiceException("O âmbito com ramo " + newBranch.getCode() + ", do "
                     + newCurricularSemester.getCurricularYear().getYear() + "º ano, "
                     + newCurricularSemester.getSemester() + "º semestre");
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
         }
     }
 }

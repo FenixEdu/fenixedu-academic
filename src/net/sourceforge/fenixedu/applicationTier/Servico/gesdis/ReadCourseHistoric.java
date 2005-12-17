@@ -31,77 +31,77 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
  * @author <a href="mailto:shmc@mega.ist.utl.pt">Sergio Montelobo </a>
- *  
+ * 
  */
 public class ReadCourseHistoric implements IService {
-    public ReadCourseHistoric() {
-    }
 
-    public List run(Integer executionCourseId) throws FenixServiceException {
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
-                    ExecutionCourse.class, executionCourseId);
-            Integer semester = executionCourse.getExecutionPeriod().getSemester();
-            List curricularCourses = executionCourse.getAssociatedCurricularCourses();
-            return getInfoSiteCoursesHistoric(executionCourse, curricularCourses, semester, sp);
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e.getMessage());
-        }
-    }
+	public List run(Integer executionCourseId) throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+		IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+				ExecutionCourse.class, executionCourseId);
+		Integer semester = executionCourse.getExecutionPeriod().getSemester();
+		List curricularCourses = executionCourse.getAssociatedCurricularCourses();
+		return getInfoSiteCoursesHistoric(executionCourse, curricularCourses, semester, sp);
+	}
 
-    /**
-     * @param curricularCourses
-     * @param sp
-     * @return
-     */
-    private List getInfoSiteCoursesHistoric(IExecutionCourse executionCourse, List curricularCourses, Integer semester,
-            ISuportePersistente sp) throws ExcepcaoPersistencia {
-        List infoSiteCoursesHistoric = new ArrayList();
-        Iterator iter = curricularCourses.iterator();
-        while (iter.hasNext()) {
-            ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
-            infoSiteCoursesHistoric.add(getInfoSiteCourseHistoric(executionCourse.getExecutionPeriod().getExecutionYear(),curricularCourse, semester, sp));
-        }
-        return infoSiteCoursesHistoric;
-    }
+	/**
+	 * @param curricularCourses
+	 * @param sp
+	 * @return
+	 */
+	private List getInfoSiteCoursesHistoric(IExecutionCourse executionCourse, List curricularCourses,
+			Integer semester, ISuportePersistente sp) throws ExcepcaoPersistencia {
+		List infoSiteCoursesHistoric = new ArrayList();
+		Iterator iter = curricularCourses.iterator();
+		while (iter.hasNext()) {
+			ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
+			infoSiteCoursesHistoric.add(getInfoSiteCourseHistoric(executionCourse.getExecutionPeriod()
+					.getExecutionYear(), curricularCourse, semester, sp));
+		}
+		return infoSiteCoursesHistoric;
+	}
 
-    /**
-     * @param curricularCourse
-     * @param sp
-     * @return
-     */
-    private InfoSiteCourseHistoric getInfoSiteCourseHistoric(final IExecutionYear executionYear, ICurricularCourse curricularCourse,
-            Integer semester, ISuportePersistente sp) throws ExcepcaoPersistencia {
-        InfoSiteCourseHistoric infoSiteCourseHistoric = new InfoSiteCourseHistoric();
+	/**
+	 * @param curricularCourse
+	 * @param sp
+	 * @return
+	 */
+	private InfoSiteCourseHistoric getInfoSiteCourseHistoric(final IExecutionYear executionYear,
+			ICurricularCourse curricularCourse, Integer semester, ISuportePersistente sp)
+			throws ExcepcaoPersistencia {
+		InfoSiteCourseHistoric infoSiteCourseHistoric = new InfoSiteCourseHistoric();
 
-        InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegreeCurricularPlan
-                .newInfoFromDomain(curricularCourse);
-        infoSiteCourseHistoric.setInfoCurricularCourse(infoCurricularCourse);
+		InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegreeCurricularPlan
+				.newInfoFromDomain(curricularCourse);
+		infoSiteCourseHistoric.setInfoCurricularCourse(infoCurricularCourse);
 
-        final List<ICourseHistoric> courseHistorics = curricularCourse.getAssociatedCourseHistorics();
-        
-        // the historic must only show info regarding the years previous to the year chosen by the user
-        List<InfoCourseHistoric> infoCourseHistorics = new ArrayList<InfoCourseHistoric>();
-        final IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-        for (ICourseHistoric courseHistoric : courseHistorics) {
-			IExecutionYear courseHistoricExecutionYear = persistentExecutionYear.readExecutionYearByName(courseHistoric.getCurricularYear());
-			if (courseHistoric.getSemester().equals(semester) && courseHistoricExecutionYear.getBeginDate().before(executionYear.getBeginDate())) {
-				infoCourseHistorics.add(InfoCourseHistoricWithInfoCurricularCourse.newInfoFromDomain(courseHistoric));
+		final List<ICourseHistoric> courseHistorics = curricularCourse.getAssociatedCourseHistorics();
+
+		// the historic must only show info regarding the years previous to the
+		// year chosen by the user
+		List<InfoCourseHistoric> infoCourseHistorics = new ArrayList<InfoCourseHistoric>();
+		final IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+		for (ICourseHistoric courseHistoric : courseHistorics) {
+			IExecutionYear courseHistoricExecutionYear = persistentExecutionYear
+					.readExecutionYearByName(courseHistoric.getCurricularYear());
+			if (courseHistoric.getSemester().equals(semester)
+					&& courseHistoricExecutionYear.getBeginDate().before(executionYear.getBeginDate())) {
+				infoCourseHistorics.add(InfoCourseHistoricWithInfoCurricularCourse
+						.newInfoFromDomain(courseHistoric));
 			}
 		}
-        
-        Collections.sort(infoCourseHistorics, new Comparator() {
-            public int compare(Object o1, Object o2) {
-                InfoCourseHistoric infoCourseHistoric1 = (InfoCourseHistoric) o1;
-                InfoCourseHistoric infoCourseHistoric2 = (InfoCourseHistoric) o2;
-                return infoCourseHistoric2.getCurricularYear().compareTo(
-                        infoCourseHistoric1.getCurricularYear());
-            }
-        });
 
-        infoSiteCourseHistoric.setInfoCourseHistorics(infoCourseHistorics);
-        return infoSiteCourseHistoric;
-    }
+		Collections.sort(infoCourseHistorics, new Comparator() {
+			public int compare(Object o1, Object o2) {
+				InfoCourseHistoric infoCourseHistoric1 = (InfoCourseHistoric) o1;
+				InfoCourseHistoric infoCourseHistoric2 = (InfoCourseHistoric) o2;
+				return infoCourseHistoric2.getCurricularYear().compareTo(
+						infoCourseHistoric1.getCurricularYear());
+			}
+		});
+
+		infoSiteCourseHistoric.setInfoCourseHistorics(infoCourseHistorics);
+		return infoSiteCourseHistoric;
+	}
 }

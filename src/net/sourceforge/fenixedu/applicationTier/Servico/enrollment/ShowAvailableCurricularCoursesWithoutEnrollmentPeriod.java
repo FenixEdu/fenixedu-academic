@@ -41,195 +41,220 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * @author David Santos in Jan 27, 2004
  */
 
-public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements IService {
-    public ShowAvailableCurricularCoursesWithoutEnrollmentPeriod() {
-    }
+public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
+		IService {
+	public ShowAvailableCurricularCoursesWithoutEnrollmentPeriod() {
+	}
 
-    // some of these arguments may be null. they are only needed for filter
-    public InfoStudentEnrollmentContext run(Integer executionDegreeId, Integer studentCurricularPlanId,
-            Integer studentNumber) throws Exception {
-        try {
-            IStudent student = getStudent(studentNumber);
+	// some of these arguments may be null. they are only needed for filter
+	public InfoStudentEnrollmentContext run(Integer executionDegreeId,
+			Integer studentCurricularPlanId, Integer studentNumber)
+			throws Exception {
+		IStudent student = getStudent(studentNumber);
 
-            if (student != null) {
-                IStudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(student);
+		if (student != null) {
+			IStudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(student);
 
-                if (studentCurricularPlan != null) {
-                    //					
-                    try {
+			if (studentCurricularPlan != null) {
+				//					
+				try {
 
-                        return getInfoStudentEnrollmentContext(studentCurricularPlan);
-                    } catch (IllegalArgumentException e) {
-                        throw new FenixServiceException("degree");
-                    }
+					return getInfoStudentEnrollmentContext(studentCurricularPlan);
+				} catch (IllegalArgumentException e) {
+					throw new FenixServiceException("degree");
+				}
 
-                }
-                throw new ExistingServiceException("studentCurricularPlan");
+			}
+			throw new ExistingServiceException("studentCurricularPlan");
 
-            }
-            throw new ExistingServiceException("student");
+		}
+		throw new ExistingServiceException("student");
+	}
 
-        } catch (ExcepcaoPersistencia e) {
+	/**
+	 * @param studentCurricularPlan
+	 * @throws ExcepcaoPersistencia
+	 * @throws EnrolmentRuleServiceException
+	 */
+	protected InfoStudentEnrollmentContext getInfoStudentEnrollmentContext(
+			final IStudentCurricularPlan studentCurricularPlan)
+			throws ExcepcaoPersistencia, EnrolmentRuleServiceException {
 
-            throw new FenixServiceException(e);
-        }
-    }
+		final IExecutionPeriod executionPeriod = getExecutionPeriod(null);
 
-    /**
-     * @param studentCurricularPlan
-     * @throws ExcepcaoPersistencia
-     * @throws EnrolmentRuleServiceException 
-     */
-    protected InfoStudentEnrollmentContext getInfoStudentEnrollmentContext(
-            final IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia, EnrolmentRuleServiceException {
+		InfoStudentEnrollmentContext infoStudentEnrolmentContext = new InfoStudentEnrollmentContext();
 
-        final IExecutionPeriod executionPeriod = getExecutionPeriod(null);
+		List curricularCourses2Enroll;
+		try {
+			curricularCourses2Enroll = studentCurricularPlan
+					.getCurricularCoursesToEnroll(executionPeriod);
+		} catch (FenixDomainException e) {
+			throw new EnrolmentRuleServiceException(e.getErrorType());
+		}
 
-        InfoStudentEnrollmentContext infoStudentEnrolmentContext = new InfoStudentEnrollmentContext();
+		infoStudentEnrolmentContext
+				.setCurricularCourses2Enroll(getInfoCurricularCoursesToEnrollFromCurricularCourses(
+						studentCurricularPlan, executionPeriod,
+						curricularCourses2Enroll));
 
-        List curricularCourses2Enroll;
-        try {
-            curricularCourses2Enroll = studentCurricularPlan.getCurricularCoursesToEnroll(executionPeriod);
-        } catch (FenixDomainException e) {
-            throw new EnrolmentRuleServiceException(e.getErrorType());
-        }
+		Collections.sort(infoStudentEnrolmentContext
+				.getCurricularCourses2Enroll(), new Comparator() {
 
-        infoStudentEnrolmentContext
-                .setCurricularCourses2Enroll(getInfoCurricularCoursesToEnrollFromCurricularCourses(
-                        studentCurricularPlan, executionPeriod, curricularCourses2Enroll));
+			public int compare(Object o1, Object o2) {
+				InfoCurricularCourse2Enroll obj1 = (InfoCurricularCourse2Enroll) o1;
+				InfoCurricularCourse2Enroll obj2 = (InfoCurricularCourse2Enroll) o2;
+				return obj1.getCurricularYear().getYear().compareTo(
+						obj2.getCurricularYear().getYear());
+			}
+		});
+		infoStudentEnrolmentContext
+				.setStudentCurrentSemesterInfoEnrollments(getStudentEnrollmentsWithStateEnrolledInExecutionPeriod(
+						studentCurricularPlan, executionPeriod));
+		infoStudentEnrolmentContext
+				.setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSecondaryBranch
+						.newInfoFromDomain(studentCurricularPlan));
+		infoStudentEnrolmentContext
+				.setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
+						.newInfoFromDomain(executionPeriod));
+		infoStudentEnrolmentContext
+				.setCreditsInSpecializationArea(studentCurricularPlan
+						.getCreditsInSpecializationArea());
+		infoStudentEnrolmentContext
+				.setCreditsInSecundaryArea(studentCurricularPlan
+						.getCreditsInSecundaryArea());
+		return infoStudentEnrolmentContext;
+	}
 
-        Collections.sort(infoStudentEnrolmentContext.getCurricularCourses2Enroll(), new Comparator() {
+	/**
+	 * @param studentCurricularPlan
+	 * @param executionPeriod
+	 * @param curricularCourses2Enroll
+	 * @return
+	 */
+	protected List getInfoCurricularCoursesToEnrollFromCurricularCourses(
+			final IStudentCurricularPlan studentCurricularPlan,
+			final IExecutionPeriod executionPeriod,
+			List curricularCourses2Enroll) {
+		return (List) CollectionUtils.collect(curricularCourses2Enroll,
+				new Transformer() {
 
-            public int compare(Object o1, Object o2) {
-                InfoCurricularCourse2Enroll obj1 = (InfoCurricularCourse2Enroll) o1;
-                InfoCurricularCourse2Enroll obj2 = (InfoCurricularCourse2Enroll) o2;
-                return obj1.getCurricularYear().getYear().compareTo(obj2.getCurricularYear().getYear());
-            }
-        });
-        infoStudentEnrolmentContext
-                .setStudentCurrentSemesterInfoEnrollments(getStudentEnrollmentsWithStateEnrolledInExecutionPeriod(
-                        studentCurricularPlan, executionPeriod));
-        infoStudentEnrolmentContext
-                .setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSecondaryBranch
-                        .newInfoFromDomain(studentCurricularPlan));
-        infoStudentEnrolmentContext.setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
-                .newInfoFromDomain(executionPeriod));
-        infoStudentEnrolmentContext.setCreditsInSpecializationArea(studentCurricularPlan
-                .getCreditsInSpecializationArea());
-        infoStudentEnrolmentContext.setCreditsInSecundaryArea(studentCurricularPlan
-                .getCreditsInSecundaryArea());
-        return infoStudentEnrolmentContext;
-    }
+					public Object transform(Object arg0) {
+						InfoCurricularCourse2Enroll infoCurricularCourse = InfoCurricularCourse2EnrollWithInfoCurricularCourse
+								.newInfoFromDomain((CurricularCourse2Enroll) arg0);
 
-    /**
-     * @param studentCurricularPlan
-     * @param executionPeriod
-     * @param curricularCourses2Enroll
-     * @return
-     */
-    protected List getInfoCurricularCoursesToEnrollFromCurricularCourses(
-            final IStudentCurricularPlan studentCurricularPlan, final IExecutionPeriod executionPeriod,
-            List curricularCourses2Enroll) {
-        return (List) CollectionUtils.collect(curricularCourses2Enroll, new Transformer() {
+						infoCurricularCourse
+								.setCurricularYear(InfoCurricularYear
+										.newInfoFromDomain(((CurricularCourse2Enroll) arg0)
+												.getCurricularCourse()
+												.getCurricularYearByBranchAndSemester(
+														studentCurricularPlan
+																.getBranch(),
+														executionPeriod
+																.getSemester())));
+						return infoCurricularCourse;
+					}
+				});
+	}
 
-            public Object transform(Object arg0) {
-                InfoCurricularCourse2Enroll infoCurricularCourse = InfoCurricularCourse2EnrollWithInfoCurricularCourse
-                        .newInfoFromDomain((CurricularCourse2Enroll) arg0);
+	/**
+	 * @param studentCurricularPlan
+	 * @param executionPeriod
+	 * @return
+	 */
+	protected List getStudentEnrollmentsWithStateEnrolledInExecutionPeriod(
+			final IStudentCurricularPlan studentCurricularPlan,
+			final IExecutionPeriod executionPeriod) {
+		return (List) CollectionUtils
+				.collect(
+						studentCurricularPlan
+								.getAllStudentEnrolledEnrollmentsInExecutionPeriod(executionPeriod),
+						new Transformer() {
 
-                infoCurricularCourse.setCurricularYear(InfoCurricularYear
-                        .newInfoFromDomain(((CurricularCourse2Enroll) arg0).getCurricularCourse()
-                                .getCurricularYearByBranchAndSemester(studentCurricularPlan.getBranch(),
-                                        executionPeriod.getSemester())));
-                return infoCurricularCourse;
-            }
-        });
-    }
+							public Object transform(Object arg0) {
 
-    /**
-     * @param studentCurricularPlan
-     * @param executionPeriod
-     * @return
-     */
-    protected List getStudentEnrollmentsWithStateEnrolledInExecutionPeriod(
-            final IStudentCurricularPlan studentCurricularPlan, final IExecutionPeriod executionPeriod) {
-        return (List) CollectionUtils.collect(studentCurricularPlan
-                .getAllStudentEnrolledEnrollmentsInExecutionPeriod(executionPeriod), new Transformer() {
+								return InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear
+										.newInfoFromDomain((IEnrolment) arg0);
+							}
+						});
+	}
 
-            public Object transform(Object arg0) {
+	/**
+	 * @param studentActiveCurricularPlan
+	 * @return IEnrollmentPeriodInCurricularCourses
+	 * @throws ExcepcaoPersistencia
+	 * @throws OutOfCurricularCourseEnrolmentPeriod
+	 */
+	public static IEnrolmentPeriodInCurricularCourses getEnrolmentPeriod(
+			IStudentCurricularPlan studentActiveCurricularPlan)
+			throws ExcepcaoPersistencia, OutOfCurricularCourseEnrolmentPeriod {
+		ISuportePersistente persistentSuport = PersistenceSupportFactory
+				.getDefaultPersistenceSupport();
+		IPersistentEnrolmentPeriod enrolmentPeriodDAO = persistentSuport
+				.getIPersistentEnrolmentPeriod();
+		IEnrolmentPeriodInCurricularCourses enrolmentPeriod = enrolmentPeriodDAO
+				.readActualEnrolmentPeriodForDegreeCurricularPlan(studentActiveCurricularPlan
+						.getDegreeCurricularPlan().getIdInternal());
+		if (enrolmentPeriod == null) {
+			IEnrolmentPeriodInCurricularCourses nextEnrolmentPeriod = enrolmentPeriodDAO
+					.readNextEnrolmentPeriodForDegreeCurricularPlan(studentActiveCurricularPlan
+							.getDegreeCurricularPlan().getIdInternal());
+			Date startDate = null;
+			Date endDate = null;
+			if (nextEnrolmentPeriod != null) {
+				startDate = nextEnrolmentPeriod.getStartDate();
+				endDate = nextEnrolmentPeriod.getEndDate();
+			}
+			throw new OutOfCurricularCourseEnrolmentPeriod(startDate, endDate);
+		}
+		return enrolmentPeriod;
+	}
 
-                return InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear
-                        .newInfoFromDomain((IEnrolment) arg0);
-            }
-        });
-    }
+	/**
+	 * @param studentNumber
+	 * @return IStudent
+	 * @throws ExcepcaoPersistencia
+	 */
+	protected IStudent getStudent(Integer studentNumber)
+			throws ExcepcaoPersistencia {
+		ISuportePersistente persistentSuport = PersistenceSupportFactory
+				.getDefaultPersistenceSupport();
+		IPersistentStudent studentDAO = persistentSuport
+				.getIPersistentStudent();
 
-    /**
-     * @param studentActiveCurricularPlan
-     * @return IEnrollmentPeriodInCurricularCourses
-     * @throws ExcepcaoPersistencia
-     * @throws OutOfCurricularCourseEnrolmentPeriod
-     */
-    public static IEnrolmentPeriodInCurricularCourses getEnrolmentPeriod(
-            IStudentCurricularPlan studentActiveCurricularPlan) throws ExcepcaoPersistencia,
-            OutOfCurricularCourseEnrolmentPeriod {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentEnrolmentPeriod enrolmentPeriodDAO = persistentSuport.getIPersistentEnrolmentPeriod();
-        IEnrolmentPeriodInCurricularCourses enrolmentPeriod = enrolmentPeriodDAO
-                .readActualEnrolmentPeriodForDegreeCurricularPlan(studentActiveCurricularPlan
-                        .getDegreeCurricularPlan().getIdInternal());
-        if (enrolmentPeriod == null) {
-            IEnrolmentPeriodInCurricularCourses nextEnrolmentPeriod = enrolmentPeriodDAO
-                    .readNextEnrolmentPeriodForDegreeCurricularPlan(studentActiveCurricularPlan
-                            .getDegreeCurricularPlan().getIdInternal());
-            Date startDate = null;
-            Date endDate = null;
-            if (nextEnrolmentPeriod != null) {
-                startDate = nextEnrolmentPeriod.getStartDate();
-                endDate = nextEnrolmentPeriod.getEndDate();
-            }
-            throw new OutOfCurricularCourseEnrolmentPeriod(startDate, endDate);
-        }
-        return enrolmentPeriod;
-    }
+		return studentDAO.readStudentByNumberAndDegreeType(studentNumber,
+				DegreeType.DEGREE);
+	}
 
-    /**
-     * @param studentNumber
-     * @return IStudent
-     * @throws ExcepcaoPersistencia
-     */
-    protected IStudent getStudent(Integer studentNumber) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentStudent studentDAO = persistentSuport.getIPersistentStudent();
+	/**
+	 * @param student
+	 * @return IStudentCurricularPlan
+	 * @throws ExcepcaoPersistencia
+	 */
+	protected IStudentCurricularPlan getStudentCurricularPlan(IStudent student)
+			throws ExcepcaoPersistencia {
+		ISuportePersistente persistentSuport = PersistenceSupportFactory
+				.getDefaultPersistenceSupport();
+		IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSuport
+				.getIStudentCurricularPlanPersistente();
 
-        return studentDAO.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
-    }
+		return studentCurricularPlanDAO.readActiveStudentCurricularPlan(student
+				.getNumber(), student.getDegreeType());
+	}
 
-    /**
-     * @param student
-     * @return IStudentCurricularPlan
-     * @throws ExcepcaoPersistencia
-     */
-    protected IStudentCurricularPlan getStudentCurricularPlan(IStudent student)
-            throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSuport
-                .getIStudentCurricularPlanPersistente();
+	protected IExecutionPeriod getExecutionPeriod(
+			IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
 
-        return studentCurricularPlanDAO.readActiveStudentCurricularPlan(student.getNumber(), student
-                .getDegreeType());
-    }
+		IExecutionPeriod executionPeriod2Return = executionPeriod;
 
-    protected IExecutionPeriod getExecutionPeriod(IExecutionPeriod executionPeriod)
-            throws ExcepcaoPersistencia {
+		if (executionPeriod == null) {
+			ISuportePersistente daoFactory = PersistenceSupportFactory
+					.getDefaultPersistenceSupport();
+			IPersistentExecutionPeriod executionPeriodDAO = daoFactory
+					.getIPersistentExecutionPeriod();
+			executionPeriod2Return = executionPeriodDAO
+					.readActualExecutionPeriod();
+		}
 
-        IExecutionPeriod executionPeriod2Return = executionPeriod;
-
-        if (executionPeriod == null) {
-            ISuportePersistente daoFactory = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionPeriod executionPeriodDAO = daoFactory.getIPersistentExecutionPeriod();
-            executionPeriod2Return = executionPeriodDAO.readActualExecutionPeriod();
-        }
-
-        return executionPeriod2Return;
-    }
+		return executionPeriod2Return;
+	}
 }

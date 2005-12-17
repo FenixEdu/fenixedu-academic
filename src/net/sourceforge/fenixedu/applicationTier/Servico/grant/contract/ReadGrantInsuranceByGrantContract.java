@@ -19,26 +19,19 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadGrantInsuranceByGrantContract implements IService {
 
-    public ReadGrantInsuranceByGrantContract() {
-    }
+	public InfoGrantInsurance run(Integer idContract) throws FenixServiceException, ExcepcaoPersistencia {
+		IGrantInsurance grantInsurance = null;
+		IPersistentGrantInsurance persistentGrantInsurance = null;
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		persistentGrantInsurance = sp.getIPersistentGrantInsurance();
+		grantInsurance = persistentGrantInsurance.readGrantInsuranceByGrantContract(idContract);
 
-    public InfoGrantInsurance run(Integer idContract) throws FenixServiceException {
-        IGrantInsurance grantInsurance = null;
-        IPersistentGrantInsurance persistentGrantInsurance = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            persistentGrantInsurance = sp.getIPersistentGrantInsurance();
-            grantInsurance = persistentGrantInsurance.readGrantInsuranceByGrantContract(idContract);
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e.getMessage());
-        }
-
-        InfoGrantInsurance infoGrantInsurance = null;
-        if (grantInsurance != null) {
-            infoGrantInsurance = InfoGrantInsuranceWithContractAndPaymentEntity
-                    .newInfoFromDomain(grantInsurance);
-        }
-        return infoGrantInsurance;
-    }
+		InfoGrantInsurance infoGrantInsurance = null;
+		if (grantInsurance != null) {
+			infoGrantInsurance = InfoGrantInsuranceWithContractAndPaymentEntity
+					.newInfoFromDomain(grantInsurance);
+		}
+		return infoGrantInsurance;
+	}
 
 }

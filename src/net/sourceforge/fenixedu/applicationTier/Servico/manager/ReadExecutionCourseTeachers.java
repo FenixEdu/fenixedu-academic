@@ -23,33 +23,31 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadExecutionCourseTeachers implements IService {
 
-    /**
-     * Executes the service. Returns the current collection of infoTeachers.
-     */
+	/**
+	 * Executes the service. Returns the current collection of infoTeachers.
+	 * @throws ExcepcaoPersistencia 
+	 */
 
-    public List run(Integer executionCourseId) throws FenixServiceException {
+	public List run(Integer executionCourseId) throws FenixServiceException, ExcepcaoPersistencia {
 
-        List professorShips = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOID(ExecutionCourse.class, executionCourseId);
-            professorShips = executionCourse.getProfessorships();
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
-        }
+		List professorShips = null;
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
+				.readByOID(ExecutionCourse.class, executionCourseId);
+		professorShips = executionCourse.getProfessorships();
 
-        if (professorShips == null || professorShips.isEmpty())
-            return null;
+		if (professorShips == null || professorShips.isEmpty())
+			return null;
 
-        List infoTeachers = new ArrayList();
-        Iterator iter = professorShips.iterator();
-        ITeacher teacher = null;
+		List infoTeachers = new ArrayList();
+		Iterator iter = professorShips.iterator();
+		ITeacher teacher = null;
 
-        while (iter.hasNext()) {
-            teacher = ((IProfessorship) iter.next()).getTeacher();
-            infoTeachers.add(InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher));
-        }
+		while (iter.hasNext()) {
+			teacher = ((IProfessorship) iter.next()).getTeacher();
+			infoTeachers.add(InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher));
+		}
 
-        return infoTeachers;
-    }
+		return infoTeachers;
+	}
 }

@@ -12,24 +12,17 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- *  
+ * 
  */
 public class ReadNumberCachedItems implements IService {
 
-    /**
-     * Returns info list of all execution periods.
-     */
-    public Integer run() throws FenixServiceException {
-        Integer numberCachedObjects = null;
+	public Integer run() throws FenixServiceException, ExcepcaoPersistencia {
+		Integer numberCachedObjects = null;
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            numberCachedObjects = sp.getNumberCachedItems();
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		numberCachedObjects = sp.getNumberCachedItems();
 
-        return numberCachedObjects;
-    }
+		return numberCachedObjects;
+	}
 
 }

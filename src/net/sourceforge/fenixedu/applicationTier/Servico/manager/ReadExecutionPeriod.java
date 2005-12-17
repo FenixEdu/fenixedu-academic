@@ -19,35 +19,22 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadExecutionPeriod implements IService {
 
-    /**
-     * The constructor of this class.
-     */
-    public ReadExecutionPeriod() {
-    }
+	public InfoExecutionPeriod run(Integer executionPeriodId) throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente sp;
+		InfoExecutionPeriod infoExecutionPeriod = null;
+		IExecutionPeriod executionPeriod = null;
 
-    /**
-     * Executes the service. Returns the current infoExecutionPeriod.
-     */
-    public InfoExecutionPeriod run(Integer executionPeriodId) throws FenixServiceException {
-        ISuportePersistente sp;
-        InfoExecutionPeriod infoExecutionPeriod = null;
-        IExecutionPeriod executionPeriod = null;
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		executionPeriod = (IExecutionPeriod) sp.getIPersistentExecutionPeriod().readByOID(
+				ExecutionPeriod.class, executionPeriodId);
 
-            executionPeriod = (IExecutionPeriod) sp.getIPersistentExecutionPeriod().readByOID(
-                    ExecutionPeriod.class, executionPeriodId);
+		if (executionPeriod == null) {
+			throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
+		}
 
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
-        }
-
-        if (executionPeriod == null) {
-            throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
-        }
-
-        infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionPeriod);
-        return infoExecutionPeriod;
-    }
+		infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear
+				.newInfoFromDomain(executionPeriod);
+		return infoExecutionPeriod;
+	}
 }

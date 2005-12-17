@@ -38,8 +38,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadExecutionCoursesByDegreeAndExecutionPeriodId implements IService {
 
-    public List run(Integer degreeId, Integer executionPeriodId) throws FenixServiceException {
-        try {
+    public List run(Integer degreeId, Integer executionPeriodId) throws FenixServiceException, ExcepcaoPersistencia {
             ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionPeriod persistentExecutionPeriod = ps.getIPersistentExecutionPeriod();
             ICursoPersistente persistentDegree = ps.getICursoPersistente();
@@ -80,9 +79,6 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriodId implements IServic
                         }
                     });
             return infoExecutionCourses;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
 
     }
 }

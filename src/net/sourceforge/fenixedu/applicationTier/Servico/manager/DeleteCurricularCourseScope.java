@@ -18,26 +18,21 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * @author lmac1
  */
 public class DeleteCurricularCourseScope implements IService {
-    public DeleteCurricularCourseScope() {
-    }
 
-    public void run(Integer scopeId) throws FenixServiceException {
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentCurricularCourseScope persistentCurricularCourseScope = sp.getIPersistentCurricularCourseScope();
+	public void run(Integer scopeId) throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentCurricularCourseScope persistentCurricularCourseScope = sp
+				.getIPersistentCurricularCourseScope();
 
-            ICurricularCourseScope scope = (ICurricularCourseScope) persistentCurricularCourseScope
-                    .readByOID(CurricularCourseScope.class, scopeId);
-            if (scope != null) {
-				
-				try {
-					scope.delete();
-				}
-				catch (DomainException e) {
-					throw new CantDeleteServiceException();
-				}            }
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-    }
+		ICurricularCourseScope scope = (ICurricularCourseScope) persistentCurricularCourseScope
+				.readByOID(CurricularCourseScope.class, scopeId);
+		if (scope != null) {
+
+			try {
+				scope.delete();
+			} catch (DomainException e) {
+				throw new CantDeleteServiceException();
+			}
+		}
+	}
 }

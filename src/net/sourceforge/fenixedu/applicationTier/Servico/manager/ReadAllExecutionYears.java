@@ -22,36 +22,23 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadAllExecutionYears implements IService {
 
-    /**
-     * The constructor of this class.
-     */
-    public ReadAllExecutionYears() {
-    }
+	public List run() throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente sp;
+		List allExecutionYears = null;
 
-    /**
-     * Executes the service. Returns the current collection of infoTeachers.
-     */
-    public List run() throws FenixServiceException {
-        ISuportePersistente sp;
-        List allExecutionYears = null;
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		allExecutionYears = (List) sp.getIPersistentExecutionYear().readAll(ExecutionYear.class);
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            allExecutionYears = (List)sp.getIPersistentExecutionYear().readAll(ExecutionYear.class);
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
-        }
+		if (allExecutionYears == null || allExecutionYears.isEmpty())
+			return allExecutionYears;
 
-        if (allExecutionYears == null || allExecutionYears.isEmpty())
-            return allExecutionYears;
+		// build the result of this service
+		Iterator iterator = allExecutionYears.iterator();
+		List result = new ArrayList(allExecutionYears.size());
 
-        // build the result of this service
-        Iterator iterator = allExecutionYears.iterator();
-        List result = new ArrayList(allExecutionYears.size());
+		while (iterator.hasNext())
+			result.add(InfoExecutionYear.newInfoFromDomain((IExecutionYear) iterator.next()));
 
-        while (iterator.hasNext())
-            result.add(InfoExecutionYear.newInfoFromDomain((IExecutionYear) iterator.next()));
-
-        return result;
-    }
+		return result;
+	}
 }

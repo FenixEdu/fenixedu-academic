@@ -30,53 +30,54 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * @author PTRLV
  * 
- *  
+ * 
  */
 public class ReadBibliographicReference implements IService {
 
-    public List run(InfoExecutionCourse infoExecutionCourse, Boolean optional)
-            throws FenixServiceException {
-        List references = null;
-        List infoBibRefs = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-            IPersistentBibliographicReference persistentBibliographicReference = persistentBibliographicReference = sp
-                    .getIPersistentBibliographicReference();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+	public List run(InfoExecutionCourse infoExecutionCourse, Boolean optional)
+			throws FenixServiceException, ExcepcaoPersistencia {
+		List references = null;
+		List infoBibRefs = null;
+		try {
+			ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+			IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+			IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+			IPersistentBibliographicReference persistentBibliographicReference = persistentBibliographicReference = sp
+					.getIPersistentBibliographicReference();
+			IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 
-            IExecutionYear executionYear = persistentExecutionYear
-                    .readExecutionYearByName(infoExecutionCourse.getInfoExecutionPeriod()
-                            .getInfoExecutionYear().getYear());
-            IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(
-                    infoExecutionCourse.getInfoExecutionPeriod().getName(), executionYear.getYear());
-            IExecutionCourse executionCourse = persistentExecutionCourse
-                    .readByExecutionCourseInitialsAndExecutionPeriodId(infoExecutionCourse.getSigla(),
-                            executionPeriod.getIdInternal());
-            references = persistentBibliographicReference.readBibliographicReference(executionCourse.getIdInternal());
+			IExecutionYear executionYear = persistentExecutionYear
+					.readExecutionYearByName(infoExecutionCourse.getInfoExecutionPeriod()
+							.getInfoExecutionYear().getYear());
+			IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(
+					infoExecutionCourse.getInfoExecutionPeriod().getName(), executionYear.getYear());
+			IExecutionCourse executionCourse = persistentExecutionCourse
+					.readByExecutionCourseInitialsAndExecutionPeriodId(infoExecutionCourse.getSigla(),
+							executionPeriod.getIdInternal());
+			references = persistentBibliographicReference.readBibliographicReference(executionCourse
+					.getIdInternal());
 
-            Iterator iterator = references.iterator();
-            infoBibRefs = new ArrayList();
-            while (iterator.hasNext()) {
-                IBibliographicReference bibRef = (IBibliographicReference) iterator.next();
+			Iterator iterator = references.iterator();
+			infoBibRefs = new ArrayList();
+			while (iterator.hasNext()) {
+				IBibliographicReference bibRef = (IBibliographicReference) iterator.next();
 
-                if (optional != null) {
-                    if (bibRef.getOptional().equals(optional)) {
-                        InfoBibliographicReference infoBibRef = InfoBibliographicReference.newInfoFromDomain(bibRef);
-                        infoBibRefs.add(infoBibRef);
-                    }
-                } else {
-                    InfoBibliographicReference infoBibRef = InfoBibliographicReference.newInfoFromDomain(bibRef);
-                    infoBibRefs.add(infoBibRef);
-                }
-            }
+				if (optional != null) {
+					if (bibRef.getOptional().equals(optional)) {
+						InfoBibliographicReference infoBibRef = InfoBibliographicReference
+								.newInfoFromDomain(bibRef);
+						infoBibRefs.add(infoBibRef);
+					}
+				} else {
+					InfoBibliographicReference infoBibRef = InfoBibliographicReference
+							.newInfoFromDomain(bibRef);
+					infoBibRefs.add(infoBibRef);
+				}
+			}
 
-        } catch (ExistingPersistentException e) {
-            throw new ExistingServiceException(e);
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-        return infoBibRefs;
-    }
+		} catch (ExistingPersistentException e) {
+			throw new ExistingServiceException(e);
+		}
+		return infoBibRefs;
+	}
 }

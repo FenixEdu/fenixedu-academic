@@ -24,35 +24,29 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * @author Barbosa
  * @author Pica
- *  
+ * 
  */
 public class ReadAllGrantSubsidiesByGrantContract implements IService {
 
-    public ReadAllGrantSubsidiesByGrantContract() {
-    }
+	public List run(Integer idContract) throws FenixServiceException, ExcepcaoPersistencia {
+		List subsidies = null;
+		IPersistentGrantSubsidy pgs = null;
 
-    public List run(Integer idContract) throws FenixServiceException {
-        List subsidies = null;
-        IPersistentGrantSubsidy pgs = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            pgs = sp.getIPersistentGrantSubsidy();
-            subsidies = pgs.readAllSubsidiesByGrantContract(idContract);
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e.getMessage());
-        }
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		pgs = sp.getIPersistentGrantSubsidy();
+		subsidies = pgs.readAllSubsidiesByGrantContract(idContract);
 
-        if (subsidies == null)
-            return new ArrayList();
+		if (subsidies == null)
+			return new ArrayList();
 
-        List infoSubsidyList = (List) CollectionUtils.collect(subsidies, new Transformer() {
-            public Object transform(Object input) {
-                IGrantSubsidy grantSubsidy = (IGrantSubsidy) input;
-                InfoGrantSubsidy infoGrantSubsidy = InfoGrantSubsidyWithContract
-                        .newInfoFromDomain(grantSubsidy);
-                return infoGrantSubsidy;
-            }
-        });
-        return infoSubsidyList;
-    }
+		List infoSubsidyList = (List) CollectionUtils.collect(subsidies, new Transformer() {
+			public Object transform(Object input) {
+				IGrantSubsidy grantSubsidy = (IGrantSubsidy) input;
+				InfoGrantSubsidy infoGrantSubsidy = InfoGrantSubsidyWithContract
+						.newInfoFromDomain(grantSubsidy);
+				return infoGrantSubsidy;
+			}
+		});
+		return infoSubsidyList;
+	}
 }

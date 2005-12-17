@@ -24,7 +24,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class InsertExecutionCourseAtExecutionPeriod implements IService {
 
-    public void run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
+    public void run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException, ExcepcaoPersistencia {
         IExecutionCourse executionCourse = DomainFactory.makeExecutionCourse();
         IExecutionPeriod executionPeriod = null;
         IExecutionCourse existentExecutionCourse = null;
@@ -67,8 +67,6 @@ public class InsertExecutionCourseAtExecutionPeriod implements IService {
                     + existentExecutionCourse.getSigla() + " e período execução "
                     + executionPeriod.getName() + "-" + executionPeriod.getExecutionYear().getYear(),
                     existingException);
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
         }                
 	}	
 }

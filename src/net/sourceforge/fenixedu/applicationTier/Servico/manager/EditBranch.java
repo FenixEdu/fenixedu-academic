@@ -22,20 +22,8 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class EditBranch implements IService {
 
-    /**
-     * The constructor of this class.
-     */
-    public EditBranch() {
-    }
-
-    /**
-     * Executes the service.
-     */
-
-    public void run(InfoBranch infoBranch) throws FenixServiceException {
-
+    public void run(InfoBranch infoBranch) throws FenixServiceException, ExcepcaoPersistencia {
         try {
-			
 			ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 			IPersistentBranch persistentbranch = persistentSuport.getIPersistentBranch();
 
@@ -46,11 +34,8 @@ public class EditBranch implements IService {
             }
 			
 			branch.edit(infoBranch.getName(),infoBranch.getNameEn(),infoBranch.getCode());
-
         } catch (ExistingPersistentException ex) {
             throw new ExistingServiceException();
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
         }
     }
 }

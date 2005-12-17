@@ -26,37 +26,33 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadInfoExecutionCourseByOID implements IService {
 
-    public InfoExecutionCourse run(Integer executionCourseOID) throws FenixServiceException {
+	public InfoExecutionCourse run(Integer executionCourseOID) throws FenixServiceException, ExcepcaoPersistencia {
 
-        InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
+		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionDegree persistentExecutionCourse = sp.getIPersistentExecutionDegree();
-            if (executionCourseOID == null) {
-                throw new FenixServiceException("nullId");
-            }
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentExecutionDegree persistentExecutionCourse = sp.getIPersistentExecutionDegree();
+		if (executionCourseOID == null) {
+			throw new FenixServiceException("nullId");
+		}
 
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
-                    ExecutionCourse.class, executionCourseOID);
+		IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+				ExecutionCourse.class, executionCourseOID);
 
-            List curricularCourses = executionCourse.getAssociatedCurricularCourses();
+		List curricularCourses = executionCourse.getAssociatedCurricularCourses();
 
-            List infoCurricularCourses = new ArrayList();
+		List infoCurricularCourses = new ArrayList();
 
-            CollectionUtils.collect(curricularCourses, new Transformer() {
-                public Object transform(Object input) {
-                    ICurricularCourse curricularCourse = (ICurricularCourse) input;
+		CollectionUtils.collect(curricularCourses, new Transformer() {
+			public Object transform(Object input) {
+				ICurricularCourse curricularCourse = (ICurricularCourse) input;
 
-                    return InfoCurricularCourse.newInfoFromDomain(curricularCourse);
-                }
-            }, infoCurricularCourses);
+				return InfoCurricularCourse.newInfoFromDomain(curricularCourse);
+			}
+		}, infoCurricularCourses);
 
-            infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
-            infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex);
-        }
-        return infoExecutionCourse;
-    }
+		infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
+		infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
+		return infoExecutionCourse;
+	}
 }

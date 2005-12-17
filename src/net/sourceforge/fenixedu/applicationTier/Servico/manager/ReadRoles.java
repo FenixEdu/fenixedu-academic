@@ -20,24 +20,20 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadRoles implements IService {
 
-    /**
-     * Executes the service. Returns the current infodegree.
-     */
-    public List run() throws FenixServiceException {
-        List result = null;
+	/**
+	 * Executes the service. Returns the current infodegree.
+	 * @throws ExcepcaoPersistencia 
+	 */
+	public List run() throws FenixServiceException, ExcepcaoPersistencia {
+		List result = null;
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            result = (List) CollectionUtils.collect(sp.getIPersistentRole().readAll(),
-                    new Transformer() {
-                        public Object transform(Object arg0) {
-                            return InfoRole.newInfoFromDomain((IRole) arg0);
-                        }
-                    });
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
-        }
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		result = (List) CollectionUtils.collect(sp.getIPersistentRole().readAll(), new Transformer() {
+			public Object transform(Object arg0) {
+				return InfoRole.newInfoFromDomain((IRole) arg0);
+			}
+		});
 
-        return result;
-    }
+		return result;
+	}
 }

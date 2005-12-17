@@ -17,24 +17,20 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadCostCenterByNumber implements IService {
 
- 
- 
- public InfoGrantCostCenter run(String costContractNumber)
- 		throws FenixServiceException {
-		//When creating a New Contract its needed to verify if the costContract exists
-		//chosen for orientator really exists
+	public InfoGrantCostCenter run(String costContractNumber) throws FenixServiceException,
+			ExcepcaoPersistencia {
+		// When creating a New Contract its needed to verify if the costContract
+		// exists
+		// chosen for orientator really exists
 		InfoGrantCostCenter infoGrantCostCenter = new InfoGrantCostCenter();
-		
-		try {  
-			ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-			IPersistentGrantCostCenter pCostContract = sp.getIPersistentGrantCostCenter();
-			IGrantCostCenter costCenter = pCostContract.readGrantCostCenterByNumber(costContractNumber);
-		    if (costCenter == null)
-		        throw new GrantOrientationTeacherNotFoundException();
-		    infoGrantCostCenter = InfoGrantCostCenter.newInfoFromDomain(costCenter);
-		} catch (ExcepcaoPersistencia persistentException) {
-		    throw new FenixServiceException(persistentException.getMessage());
-		}
+
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentGrantCostCenter pCostContract = sp.getIPersistentGrantCostCenter();
+		IGrantCostCenter costCenter = pCostContract.readGrantCostCenterByNumber(costContractNumber);
+		if (costCenter == null)
+			throw new GrantOrientationTeacherNotFoundException();
+		infoGrantCostCenter = InfoGrantCostCenter.newInfoFromDomain(costCenter);
+
 		return infoGrantCostCenter;
 	}
 }

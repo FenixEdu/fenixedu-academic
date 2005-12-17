@@ -105,22 +105,19 @@ public class MergeExecutionCourses implements IService {
     }
 
     private boolean isMergeAllowed(final ISuportePersistente persistentSupport,
-            final IExecutionCourse executionCourseFrom, final IExecutionCourse executionCourseTo) {
+            final IExecutionCourse executionCourseFrom, final IExecutionCourse executionCourseTo) throws ExcepcaoPersistencia {
 
         boolean distributedTestAuthorization = false;
 
         IPersistentMetadata persistentMetadata = persistentSupport.getIPersistentMetadata();
         IPersistentDistributedTest persistentDistributedTest = persistentSupport
                 .getIPersistentDistributedTest();
-        try {
+
             List metadatas = persistentMetadata.readByExecutionCourse(executionCourseFrom);
             List distributedTests = persistentDistributedTest.readByTestScope(executionCourseFrom
                     .getClass().getName(), executionCourseFrom.getIdInternal());
             distributedTestAuthorization = (metadatas == null || metadatas.isEmpty())
                     && (distributedTests == null || distributedTests.isEmpty());
-
-        } catch (ExcepcaoPersistencia e) { // ignore
-        }
 
         return executionCourseTo != null
                 && executionCourseFrom != null

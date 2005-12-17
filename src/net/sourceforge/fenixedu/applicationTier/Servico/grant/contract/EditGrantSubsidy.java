@@ -97,7 +97,7 @@ public class EditGrantSubsidy extends EditDomainObjectService {
         }
     }
 
-    public void run(InfoGrantSubsidy infoGrantSubsidy) throws FenixServiceException {
+    public void run(InfoGrantSubsidy infoGrantSubsidy) throws Exception {
         super.run(new Integer(0), infoGrantSubsidy);
     }
 

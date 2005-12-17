@@ -26,37 +26,34 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadAvailableExecutionPeriods implements IService {
 
-    public List run(List unavailableExecutionPeriodsIds) throws FenixServiceException {
+	public List run(List unavailableExecutionPeriodsIds) throws FenixServiceException, ExcepcaoPersistencia {
 
-        List infoExecutionPeriods = null;
-        IExecutionPeriod executionPeriod = null;
+		List infoExecutionPeriods = null;
+		IExecutionPeriod executionPeriod = null;
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-            Collection executionPeriods = persistentExecutionPeriod.readAll(ExecutionPeriod.class);
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+		Collection executionPeriods = persistentExecutionPeriod.readAll(ExecutionPeriod.class);
 
-            Iterator iter = unavailableExecutionPeriodsIds.iterator();
-            while (iter.hasNext()) {
+		Iterator iter = unavailableExecutionPeriodsIds.iterator();
+		while (iter.hasNext()) {
 
-                executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
-                        ExecutionPeriod.class, (Integer) iter.next());
-                executionPeriods.remove(executionPeriod);
-            }
+			executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+					ExecutionPeriod.class, (Integer) iter.next());
+			executionPeriods.remove(executionPeriod);
+		}
 
-            infoExecutionPeriods = (List) CollectionUtils.collect(executionPeriods,
-                    TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD);
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
+		infoExecutionPeriods = (List) CollectionUtils.collect(executionPeriods,
+				TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD);
 
-        return infoExecutionPeriods;
-    }
+		return infoExecutionPeriods;
+	}
 
-    private Transformer TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD = new Transformer() {
-        public Object transform(Object executionPeriod) {
-            return InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain((IExecutionPeriod) executionPeriod);
-        }
-    };
+	private Transformer TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD = new Transformer() {
+		public Object transform(Object executionPeriod) {
+			return InfoExecutionPeriodWithInfoExecutionYear
+					.newInfoFromDomain((IExecutionPeriod) executionPeriod);
+		}
+	};
 
 }

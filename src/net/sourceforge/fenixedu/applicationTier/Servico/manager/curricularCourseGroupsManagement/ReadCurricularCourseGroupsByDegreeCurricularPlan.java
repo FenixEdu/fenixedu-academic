@@ -26,41 +26,30 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author João Mota
- *  
+ * 
  */
 public class ReadCurricularCourseGroupsByDegreeCurricularPlan implements IService {
 
-    /**
-     *  
-     */
-    public ReadCurricularCourseGroupsByDegreeCurricularPlan() {
+	public List run(Integer degreeCurricularPlanId) throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSuport
+				.getIPersistentDegreeCurricularPlan();
+		IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
+				.readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
+		List groups = new ArrayList();
+		List areas = degreeCurricularPlan.getAreas();
+		Iterator iter = areas.iterator();
+		while (iter.hasNext()) {
+			IBranch branch = (IBranch) iter.next();
+			groups.addAll(branch.getCurricularCourseGroups());
+		}
 
-    }
+		return (List) CollectionUtils.collect(groups, new Transformer() {
 
-    public List run(Integer degreeCurricularPlanId) throws FenixServiceException {
-        try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSuport
-                    .getIPersistentDegreeCurricularPlan();
-            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
-                    .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
-            List groups = new ArrayList();
-            List areas = degreeCurricularPlan.getAreas();
-            Iterator iter = areas.iterator();
-            while (iter.hasNext()) {
-                IBranch branch = (IBranch) iter.next();
-				groups.addAll(branch.getCurricularCourseGroups());
-            }
-
-            return (List) CollectionUtils.collect(groups, new Transformer() {
-
-                public Object transform(Object arg0) {
-                    return InfoCurricularCourseGroupWithInfoBranch.newInfoFromDomain((ICurricularCourseGroup) arg0);
-                }
-            });
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-    }
+			public Object transform(Object arg0) {
+				return InfoCurricularCourseGroupWithInfoBranch
+						.newInfoFromDomain((ICurricularCourseGroup) arg0);
+			}
+		});
+	}
 }

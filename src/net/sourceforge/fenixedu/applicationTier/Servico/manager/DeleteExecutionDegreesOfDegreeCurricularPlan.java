@@ -28,134 +28,129 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class DeleteExecutionDegreesOfDegreeCurricularPlan implements IService {
 
-    // delete a set of executionDegrees
-    public List run(List executionDegreesIds) throws FenixServiceException {
+	// delete a set of executionDegrees
+	public List run(List executionDegreesIds) throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
+		ITurmaPersistente persistentClass = sp.getITurmaPersistente();
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-            ITurmaPersistente persistentClass = sp.getITurmaPersistente();
+		Iterator iter = executionDegreesIds.iterator();
 
-            Iterator iter = executionDegreesIds.iterator();
+		List undeletedExecutionDegreesYears = new ArrayList();
+		List classes;
+		Integer executionDegreeId;
+		IExecutionDegree executionDegree;
 
-            List undeletedExecutionDegreesYears = new ArrayList();
-            List classes;
-            Integer executionDegreeId;
-            IExecutionDegree executionDegree;
+		List masterDegreeCandidates;
+		List guides;
+		List proposals;
+		List groups;
+		IScheduleing scheduleing;
 
-            List masterDegreeCandidates;
-            List guides;
-            List proposals;
-            List groups;
-            IScheduleing scheduleing;
+		while (iter.hasNext()) {
 
-            while (iter.hasNext()) {
+			executionDegreeId = (Integer) iter.next();
 
-                executionDegreeId = (Integer) iter.next();
+			executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+					ExecutionDegree.class, executionDegreeId);
+			if (executionDegree != null) {
+				classes = persistentClass.readByExecutionDegree(executionDegree.getIdInternal());
 
-                executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
-                        ExecutionDegree.class, executionDegreeId);
-                if (executionDegree != null) {
-                    classes = persistentClass.readByExecutionDegree(executionDegree.getIdInternal());
+				masterDegreeCandidates = executionDegree.getMasterDegreeCandidates();
+				guides = executionDegree.getGuides();
+				proposals = executionDegree.getAssociatedFinalDegreeWorkProposals();
+				groups = executionDegree.getAssociatedFinalDegreeWorkGroups();
+				scheduleing = executionDegree.getScheduling();
 
-                    masterDegreeCandidates = executionDegree.getMasterDegreeCandidates();
-                    guides = executionDegree.getGuides();
-                    proposals = executionDegree.getAssociatedFinalDegreeWorkProposals();
-                    groups = executionDegree.getAssociatedFinalDegreeWorkGroups();
-                    scheduleing = executionDegree.getScheduling();
+				if (classes.isEmpty()
+						&& masterDegreeCandidates.isEmpty()
+						&& guides.isEmpty()
+						&& proposals.isEmpty()
+						&& groups.isEmpty()
+						&& (scheduleing == null)
+						&& executionDegree.getPeriodLessonsFirstSemester().getRoomOccupations()
+								.isEmpty()
+						&& executionDegree.getPeriodLessonsSecondSemester().getRoomOccupations()
+								.isEmpty()
+						&& executionDegree.getPeriodExamsFirstSemester().getRoomOccupations().isEmpty()
+						&& executionDegree.getPeriodExamsSecondSemester().getRoomOccupations().isEmpty()) {
 
-                    if (classes.isEmpty()
-                            && masterDegreeCandidates.isEmpty()
-                            && guides.isEmpty()
-                            && proposals.isEmpty()
-                            && groups.isEmpty()
-                            && (scheduleing == null)
-                            && executionDegree.getPeriodLessonsFirstSemester().getRoomOccupations()
-                                    .isEmpty()
-                            && executionDegree.getPeriodLessonsSecondSemester().getRoomOccupations()
-                                    .isEmpty()
-                            && executionDegree.getPeriodExamsFirstSemester().getRoomOccupations()
-                                    .isEmpty()
-                            && executionDegree.getPeriodExamsSecondSemester().getRoomOccupations()
-                                    .isEmpty()) {
+					// persistentExecutionDegree.delete(executionDegree);
 
-                        // persistentExecutionDegree.delete(executionDegree);
+					// ExecutionYear
+					executionDegree.getExecutionYear().getExecutionDegrees().remove(executionDegree);
+					executionDegree.setExecutionYear(null);
 
-                        // ExecutionYear
-                        executionDegree.getExecutionYear().getExecutionDegrees().remove(executionDegree);
-                        executionDegree.setExecutionYear(null);
+					// GratuityValues
+					if (executionDegree.getGratuityValues() != null) {
+						sp.getIPersistentGratuityValues().deleteByOID(GratuityValues.class,
+								executionDegree.getGratuityValues().getIdInternal());
+					}
 
-                        // GratuityValues
-                        if(executionDegree.getGratuityValues() != null) {
-                            sp.getIPersistentGratuityValues().deleteByOID(GratuityValues.class,
-                                    executionDegree.getGratuityValues().getIdInternal());                        	
-                        }
+					// PERIOD's
+					executionDegree.getPeriodLessonsFirstSemester()
+							.getExecutionDegreesForLessonsFirstSemester().remove(executionDegree);
+					executionDegree.setPeriodLessonsFirstSemester(null);
+					if ((executionDegree.getPeriodLessonsFirstSemester() != null)
+							&& (executionDegree.getPeriodLessonsFirstSemester()
+									.getExecutionDegreesForLessonsFirstSemester().size() == 1)) {
+						sp.getIPersistentPeriod().deleteByOID(Period.class,
+								executionDegree.getPeriodLessonsFirstSemester().getIdInternal());
+					}
 
-                        // PERIOD's
-                        executionDegree.getPeriodLessonsFirstSemester()
-                                .getExecutionDegreesForLessonsFirstSemester().remove(executionDegree);
-                        executionDegree.setPeriodLessonsFirstSemester(null);
-                        if ((executionDegree.getPeriodLessonsFirstSemester() != null) && (executionDegree.getPeriodLessonsFirstSemester()
-                                .getExecutionDegreesForLessonsFirstSemester().size() == 1)) {
-                            sp.getIPersistentPeriod().deleteByOID(Period.class,
-                                    executionDegree.getPeriodLessonsFirstSemester().getIdInternal());
-                        }
-                        
-                        executionDegree.getPeriodLessonsSecondSemester()
-                                .getExecutionDegreesForLessonsSecondSemester().remove(executionDegree);
-                        executionDegree.setPeriodLessonsSecondSemester(null);
-                        if ((executionDegree.getPeriodLessonsSecondSemester() != null) && (executionDegree.getPeriodLessonsSecondSemester()
-                                .getExecutionDegreesForLessonsSecondSemester().size() == 1)) {
-                            sp.getIPersistentPeriod().deleteByOID(Period.class,
-                                    executionDegree.getPeriodLessonsSecondSemester().getIdInternal());
-                        }
-                        
-                        executionDegree.getPeriodExamsFirstSemester()
-                                .getExecutionDegreesForExamsFirstSemester().remove(executionDegree);
-                        executionDegree.setPeriodExamsFirstSemester(null);
-                        if ((executionDegree.getPeriodExamsFirstSemester() != null) && (executionDegree.getPeriodExamsFirstSemester()
-                                .getExecutionDegreesForExamsFirstSemester().size() == 1)) {
-                            sp.getIPersistentPeriod().deleteByOID(Period.class,
-                                    executionDegree.getPeriodExamsFirstSemester().getIdInternal());
-                        }
-                        
-                        executionDegree.getPeriodExamsSecondSemester()
-                                .getExecutionDegreesForExamsSecondSemester().remove(executionDegree);
-                        executionDegree.setPeriodExamsSecondSemester(null);
-                        if ((executionDegree.getPeriodExamsSecondSemester() != null) && (executionDegree.getPeriodExamsSecondSemester()
-                                .getExecutionDegreesForExamsSecondSemester().size() == 1)) {
-                            sp.getIPersistentPeriod().deleteByOID(Period.class,
-                                    executionDegree.getPeriodExamsSecondSemester().getIdInternal());
-                        }
-                        
-                        // DegreeCurricularPlan
-                        executionDegree.getDegreeCurricularPlan().getExecutionDegrees().remove(
-                                executionDegree);
-                        executionDegree.setDegreeCurricularPlan(null);
-                        // Coordinator
-                        List<ICoordinator> coordinators = executionDegree.getCoordinatorsList();
-                        for (ICoordinator coordinator : coordinators) {
-                            coordinator.setExecutionDegree(null);
-                            sp.getIPersistentCoordinator().deleteByOID(Coordinator.class,
-                                    coordinator.getIdInternal());
-                        }
-                        executionDegree.getCoordinatorsList().clear();
-                        // Campus
-                        executionDegree.getCampus().getExecutionDegrees().remove(executionDegree);
-                        executionDegree.setCampus(null);
+					executionDegree.getPeriodLessonsSecondSemester()
+							.getExecutionDegreesForLessonsSecondSemester().remove(executionDegree);
+					executionDegree.setPeriodLessonsSecondSemester(null);
+					if ((executionDegree.getPeriodLessonsSecondSemester() != null)
+							&& (executionDegree.getPeriodLessonsSecondSemester()
+									.getExecutionDegreesForLessonsSecondSemester().size() == 1)) {
+						sp.getIPersistentPeriod().deleteByOID(Period.class,
+								executionDegree.getPeriodLessonsSecondSemester().getIdInternal());
+					}
 
-                        sp.getIPersistentExecutionDegree().deleteByOID(ExecutionDegree.class,
-                                executionDegree.getIdInternal());
-                    } else
-                        undeletedExecutionDegreesYears.add(executionDegree.getExecutionYear().getYear());
-                }
-            }
+					executionDegree.getPeriodExamsFirstSemester()
+							.getExecutionDegreesForExamsFirstSemester().remove(executionDegree);
+					executionDegree.setPeriodExamsFirstSemester(null);
+					if ((executionDegree.getPeriodExamsFirstSemester() != null)
+							&& (executionDegree.getPeriodExamsFirstSemester()
+									.getExecutionDegreesForExamsFirstSemester().size() == 1)) {
+						sp.getIPersistentPeriod().deleteByOID(Period.class,
+								executionDegree.getPeriodExamsFirstSemester().getIdInternal());
+					}
 
-            return undeletedExecutionDegreesYears;
+					executionDegree.getPeriodExamsSecondSemester()
+							.getExecutionDegreesForExamsSecondSemester().remove(executionDegree);
+					executionDegree.setPeriodExamsSecondSemester(null);
+					if ((executionDegree.getPeriodExamsSecondSemester() != null)
+							&& (executionDegree.getPeriodExamsSecondSemester()
+									.getExecutionDegreesForExamsSecondSemester().size() == 1)) {
+						sp.getIPersistentPeriod().deleteByOID(Period.class,
+								executionDegree.getPeriodExamsSecondSemester().getIdInternal());
+					}
 
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
+					// DegreeCurricularPlan
+					executionDegree.getDegreeCurricularPlan().getExecutionDegrees().remove(
+							executionDegree);
+					executionDegree.setDegreeCurricularPlan(null);
+					// Coordinator
+					List<ICoordinator> coordinators = executionDegree.getCoordinatorsList();
+					for (ICoordinator coordinator : coordinators) {
+						coordinator.setExecutionDegree(null);
+						sp.getIPersistentCoordinator().deleteByOID(Coordinator.class,
+								coordinator.getIdInternal());
+					}
+					executionDegree.getCoordinatorsList().clear();
+					// Campus
+					executionDegree.getCampus().getExecutionDegrees().remove(executionDegree);
+					executionDegree.setCampus(null);
 
-    }
+					sp.getIPersistentExecutionDegree().deleteByOID(ExecutionDegree.class,
+							executionDegree.getIdInternal());
+				} else
+					undeletedExecutionDegreesYears.add(executionDegree.getExecutionYear().getYear());
+			}
+		}
+
+		return undeletedExecutionDegreesYears;
+	}
 }

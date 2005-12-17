@@ -11,20 +11,12 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class DeleteRestrictionFromDegreeCurricularPlan implements IService {
 
-    public DeleteRestrictionFromDegreeCurricularPlan() {
-    }
+	public void run(Integer restrictionID) throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentRestriction restrictionDAO = persistentSuport.getIPersistentRestriction();
+		IRestriction restriction = (IRestriction) restrictionDAO.readByOID(Restriction.class,
+				restrictionID);
 
-    public void run(Integer restrictionID) throws FenixServiceException {
-
-        try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentRestriction restrictionDAO = persistentSuport.getIPersistentRestriction();
-			IRestriction restriction = (IRestriction)restrictionDAO.readByOID(Restriction.class, restrictionID);
-			
-			restriction.delete();	
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-    }
+		restriction.delete();
+	}
 }

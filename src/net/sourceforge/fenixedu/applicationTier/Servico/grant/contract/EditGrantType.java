@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantType;
@@ -35,7 +34,7 @@ public class EditGrantType extends EditDomainObjectService {
         return pgs.readGrantTypeBySigla(infoGrantType.getSigla());
     }
 
-    public void run(InfoGrantType infoGrantType) throws FenixServiceException {
+    public void run(InfoGrantType infoGrantType) throws Exception {
         super.run(new Integer(0), infoGrantType);
     }
 
