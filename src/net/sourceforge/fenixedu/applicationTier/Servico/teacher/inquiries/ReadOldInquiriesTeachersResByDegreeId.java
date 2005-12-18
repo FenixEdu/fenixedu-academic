@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesTeachersRes;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesTeachersRes;
@@ -17,60 +18,40 @@ import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquirie
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
+
 /**
  * @author João Fialho & Rita Ferreira
  * 
  */
-public class ReadOldInquiriesTeachersResByDegreeId implements IServico {
+public class ReadOldInquiriesTeachersResByDegreeId implements IService {
 
-    private static ReadOldInquiriesTeachersResByDegreeId service = new ReadOldInquiriesTeachersResByDegreeId();
-    
-    private ReadOldInquiriesTeachersResByDegreeId() {
-    }
-    
-    public String getNome() {
-        return "ReadOldInquiriesTeachersResByDegreeId";
-    }
+	public List run(Integer degreeId) throws FenixServiceException, ExcepcaoPersistencia {
+		List oldInquiriesTeachersResList = null;
 
-    /**
-     * @return Returns the service.
-     */
-    public static ReadOldInquiriesTeachersResByDegreeId getService() {
-        return service;
-    }
-    
-    public List run(Integer degreeId) throws FenixServiceException {
-        List oldInquiriesTeachersResList = null;
+		if (degreeId == null) {
+			throw new FenixServiceException("nullDegreeId");
+		}
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentOldInquiriesTeachersRes poits = sp.getIPersistentOldInquiriesTeachersRes();
 
-        try {
-            if (degreeId == null) {
-                throw new FenixServiceException("nullDegreeId");
-            }
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentOldInquiriesTeachersRes poits = sp.getIPersistentOldInquiriesTeachersRes();
-        
-            oldInquiriesTeachersResList = poits.readByDegreeId(degreeId);
-            
-            CollectionUtils.transform(oldInquiriesTeachersResList,new Transformer(){
+		oldInquiriesTeachersResList = poits.readByDegreeId(degreeId);
 
-                public Object transform(Object oldInquiriesTeachersRes) {
-                    InfoOldInquiriesTeachersRes ioits = new InfoOldInquiriesTeachersRes();
-                    try {
-                        ioits.copyFromDomain((IOldInquiriesTeachersRes) oldInquiriesTeachersRes);
+		CollectionUtils.transform(oldInquiriesTeachersResList, new Transformer() {
 
-                    } catch (Exception ex) {
-                    }
-                                        
-                    return ioits;
-                }
-             	});
-                            
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new FenixServiceException(e);
-        }
+			public Object transform(Object oldInquiriesTeachersRes) {
+				InfoOldInquiriesTeachersRes ioits = new InfoOldInquiriesTeachersRes();
+				try {
+					ioits.copyFromDomain((IOldInquiriesTeachersRes) oldInquiriesTeachersRes);
 
-        return oldInquiriesTeachersResList;
-    }  
-    
+				} catch (Exception ex) {
+				}
+
+				return ioits;
+			}
+		});
+
+		return oldInquiriesTeachersResList;
+	}
+
 }

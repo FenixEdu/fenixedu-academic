@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
+
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
@@ -18,6 +20,7 @@ import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -27,88 +30,73 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 /**
  * @author Tânia Pousão Create on 13/Nov/2003
  */
-public class ReadExecutionDegreesByDegreeAndExecutionPeriod implements IServico {
-    private static ReadExecutionDegreesByDegreeAndExecutionPeriod service = new ReadExecutionDegreesByDegreeAndExecutionPeriod();
+public class ReadExecutionDegreesByDegreeAndExecutionPeriod implements IService {
 
-    public ReadExecutionDegreesByDegreeAndExecutionPeriod() {
-    }
+	public List run(Integer executionPeriodId, Integer degreeId) throws FenixServiceException, ExcepcaoPersistencia {
+		List infoExecutionDegreeList = null;
 
-    public String getNome() {
-        return "ReadExecutionDegreesByDegreeAndExecutionPeriod";
-    }
+		if (degreeId == null) {
+			throw new FenixServiceException("error.impossibleDegreeSite");
+		}
 
-    public static ReadExecutionDegreesByDegreeAndExecutionPeriod getService() {
-        return service;
-    }
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
-    public List run(Integer executionPeriodId, Integer degreeId) throws FenixServiceException {
-        List infoExecutionDegreeList = null;
+		// Execution Period
+		IExecutionPeriod executionPeriod;
+		if (executionPeriodId == null) {
+			executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+		} else {
 
-        try {
-            if (degreeId == null) {
-                throw new FenixServiceException("error.impossibleDegreeSite");
-            }
+			executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+					ExecutionPeriod.class, executionPeriodId);
+		}
 
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+		if (executionPeriod == null) {
+			throw new FenixServiceException("error.impossibleDegreeSite");
+		}
 
-            //Execution Period
-            IExecutionPeriod executionPeriod;
-            if (executionPeriodId == null) {
-                executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
-            } else {
+		IExecutionYear executionYear = executionPeriod.getExecutionYear();
+		if (executionYear == null) {
+			throw new FenixServiceException("error.impossibleDegreeSite");
+		}
 
-                executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
-                        ExecutionPeriod.class, executionPeriodId);
-            }
+		// Degree
+		ICursoPersistente persistentDegree = sp.getICursoPersistente();
+		IDegree degree = (IDegree) persistentDegree.readByOID(Degree.class, degreeId);
+		if (degree == null) {
+			throw new FenixServiceException("error.impossibleDegreeSite");
+		}
 
-            if (executionPeriod == null) {
-                throw new FenixServiceException("error.impossibleDegreeSite");
-            }
+		// Execution degrees
+		IPersistentExecutionDegree persistentExecutionDegre = sp.getIPersistentExecutionDegree();
+		List executionDegreeList = persistentExecutionDegre.readByDegreeAndExecutionYear(degree
+				.getIdInternal(), executionYear.getYear(), CurricularStage.OLD);
+		if (executionDegreeList == null || executionDegreeList.size() <= 0) {
+			throw new FenixServiceException("error.impossibleDegreeSite");
+		}
 
-            IExecutionYear executionYear = executionPeriod.getExecutionYear();
-            if (executionYear == null) {
-                throw new FenixServiceException("error.impossibleDegreeSite");
-            }
+		infoExecutionDegreeList = new ArrayList();
+		ListIterator listIterator = executionDegreeList.listIterator();
+		while (listIterator.hasNext()) {
+			IExecutionDegree executionDegree = (IExecutionDegree) listIterator.next();
 
-            //Degree
-            ICursoPersistente persistentDegree = sp.getICursoPersistente();
-            IDegree degree = (IDegree) persistentDegree.readByOID(Degree.class, degreeId);
-            if (degree == null) {
-                throw new FenixServiceException("error.impossibleDegreeSite");
-            }
+			InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithCoordinators
+					.newInfoFromDomain(executionDegree);
+			InfoExecutionYear infoExecutionYear = InfoExecutionYear.newInfoFromDomain(executionDegree
+					.getExecutionYear());
+			infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
 
-            //Execution degrees
-            IPersistentExecutionDegree persistentExecutionDegre = sp.getIPersistentExecutionDegree();
-            List executionDegreeList = persistentExecutionDegre.readByDegreeAndExecutionYear(degree.getIdInternal(),
-                    executionYear.getYear(), CurricularStage.OLD);
-            if (executionDegreeList == null || executionDegreeList.size() <= 0) {
-                throw new FenixServiceException("error.impossibleDegreeSite");
-            }
+			InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
+					.newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
+			InfoDegree infoDegree = InfoDegree.newInfoFromDomain(executionDegree
+					.getDegreeCurricularPlan().getDegree());
+			infoDegreeCurricularPlan.setInfoDegree(infoDegree);
+			infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 
-            infoExecutionDegreeList = new ArrayList();
-            ListIterator listIterator = executionDegreeList.listIterator();
-            while (listIterator.hasNext()) {
-                IExecutionDegree executionDegree = (IExecutionDegree) listIterator.next();
+			infoExecutionDegreeList.add(infoExecutionDegree);
+		}
 
-                InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithCoordinators
-                        .newInfoFromDomain(executionDegree);
-				InfoExecutionYear infoExecutionYear =   InfoExecutionYear.newInfoFromDomain(executionDegree.getExecutionYear());
-				infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
-
-				InfoDegreeCurricularPlan infoDegreeCurricularPlan =   InfoDegreeCurricularPlan.newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
-				InfoDegree infoDegree = InfoDegree.newInfoFromDomain(executionDegree.getDegreeCurricularPlan().getDegree());
-				infoDegreeCurricularPlan.setInfoDegree(infoDegree);
-                infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-                
-                
-                infoExecutionDegreeList.add(infoExecutionDegree);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new FenixServiceException(e);
-        }
-
-        return infoExecutionDegreeList;
-    }
+		return infoExecutionDegreeList;
+	}
 }

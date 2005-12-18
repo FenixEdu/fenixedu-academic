@@ -6,10 +6,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico.inquiries;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesSummary;
 import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesSummary;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesSummary;
@@ -17,57 +17,40 @@ import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquirie
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
+
 /**
  * @author João Fialho & Rita Ferreira
  * 
  */
-public class ReadOldIquiriesSummaryByDegreeID implements IServico{
+public class ReadOldIquiriesSummaryByDegreeID implements IService {
 
-    private static ReadOldIquiriesSummaryByDegreeID service = new ReadOldIquiriesSummaryByDegreeID();
-    
-    private ReadOldIquiriesSummaryByDegreeID() {
-    }
-    
-    public String getNome() {
-        return "ReadOldIquiriesSummaryByDegreeID";
-    }
-    
-    public static ReadOldIquiriesSummaryByDegreeID getService() {
-        return service;
-    }
-    
-    public List run(Integer degreeID) throws FenixServiceException {
-        List oldInquiriesSummaryList = null;
+	public List run(Integer degreeID) throws FenixServiceException, ExcepcaoPersistencia {
+		List oldInquiriesSummaryList = null;
 
-        try {
-            if (degreeID == null) {
-                throw new FenixServiceException("nullDegreeId");
-            }
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentOldInquiriesSummary pois = sp.getIPersistentOldInquiriesSummary();
-        
-            oldInquiriesSummaryList = pois.readByDegreeId(degreeID);
-            
-            CollectionUtils.transform(oldInquiriesSummaryList,new Transformer(){
+		if (degreeID == null) {
+			throw new FenixServiceException("nullDegreeId");
+		}
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentOldInquiriesSummary pois = sp.getIPersistentOldInquiriesSummary();
 
-                public Object transform(Object oldInquiriesSummary) {
-                    InfoOldInquiriesSummary iois = new InfoOldInquiriesSummary();
-                    try {
-                        iois.copyFromDomain((IOldInquiriesSummary) oldInquiriesSummary);
+		oldInquiriesSummaryList = pois.readByDegreeId(degreeID);
 
-                    } catch (Exception ex) {
-                    	ex.printStackTrace();
-                    }
-                    
-                    return iois;
-                }
-             	});
-                            
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new FenixServiceException(e);
-        }
+		CollectionUtils.transform(oldInquiriesSummaryList, new Transformer() {
 
-        return oldInquiriesSummaryList;
-    }  
+			public Object transform(Object oldInquiriesSummary) {
+				InfoOldInquiriesSummary iois = new InfoOldInquiriesSummary();
+				try {
+					iois.copyFromDomain((IOldInquiriesSummary) oldInquiriesSummary);
+
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+
+				return iois;
+			}
+		});
+
+		return oldInquiriesSummaryList;
+	}
 }

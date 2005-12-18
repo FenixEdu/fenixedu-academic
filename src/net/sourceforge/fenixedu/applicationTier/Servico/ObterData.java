@@ -11,63 +11,41 @@ package net.sourceforge.fenixedu.applicationTier.Servico;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.util.Mes;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class ObterData implements IServico {
+public class ObterData implements IService {
 
-    private static ObterData _servico = new ObterData();
+	/**
+	 * Executes the service. Returns the all information about the desired Data.
+	 * 
+	 * @param sitioName
+	 *            is the name of the sitio.
+	 * @param name
+	 *            is the name of the desired Data.
+	 * 
+	 * @throws ExcepcaoInexistente
+	 *             if there is none Data with the desired name, parent and
+	 *             sitio.
+	 */
+	public DataView run() {
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static ObterData getService() {
-        return _servico;
-    }
+		Calendar calendar = Calendar.getInstance();
+		int dia = calendar.get(Calendar.DAY_OF_MONTH);
+		int ano = calendar.get(Calendar.YEAR);
+		int intMes = calendar.get(Calendar.MONTH);
 
-    /**
-     * The ctor of this class.
-     */
-    private ObterData() {
-    }
+		Mes objMes = new Mes(intMes + 1);
 
-    /**
-     * Returns the name of this service.
-     */
-    public final String getNome() {
-        return "ObterData";
-    }
+		String mes = objMes.toString();
 
-    /**
-     * Executes the service. Returns the all information about the desired Data.
-     * 
-     * @param sitioName
-     *            is the name of the sitio.
-     * @param name
-     *            is the name of the desired Data.
-     * 
-     * @throws ExcepcaoInexistente
-     *             if there is none Data with the desired name, parent and
-     *             sitio.
-     */
-    public DataView run() {
+		/*
+		 * Object argumentos[] = {};
+		 * 
+		 * DataView data = (DataView) gestor.executar(null, "ObterData",
+		 * argumentos); request.setAttribute("Data", data);
+		 */
+		return new DataView(dia, mes, ano);
+	}
 
-        Calendar calendar = Calendar.getInstance();
-        int dia = calendar.get(Calendar.DAY_OF_MONTH);
-        int ano = calendar.get(Calendar.YEAR);
-        int intMes = calendar.get(Calendar.MONTH);
-
-        Mes objMes = new Mes(intMes + 1);
-
-        String mes = objMes.toString();
-
-        /*
-         * Object argumentos[] = {};
-         * 
-         * DataView data = (DataView) gestor.executar(null, "ObterData",
-         * argumentos); request.setAttribute("Data", data);
-         */
-
-        return new DataView(dia, mes, ano);
-    }
 }

@@ -1,95 +1,79 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Tânia Pousão Create on 3/Dez/2003
  */
-public class CourseOfTheExpectedDegree implements IServico {
-    private static CourseOfTheExpectedDegree service = new CourseOfTheExpectedDegree();
+public class CourseOfTheExpectedDegree implements IService {
 
-    public static CourseOfTheExpectedDegree getService() {
-        return service;
-    }
+	public Boolean run(Integer curricularCourseCode, String degreeCode) throws FenixServiceException {
+		boolean result = false;
 
-    public CourseOfTheExpectedDegree() {
+		try {
+			result = CurricularCourseDegree(curricularCourseCode, degreeCode)
+					&& CurricularCourseNotBasic(curricularCourseCode);
 
-    }
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new FenixServiceException(e);
+		}
 
-    public final String getNome() {
-        return "CourseOfTheExpectedDegree";
-    }
+		return new Boolean(result);
+	}
 
-    public Boolean run(Integer curricularCourseCode, String degreeCode) throws FenixServiceException {
-        boolean result = false;
+	/**
+	 * @param argumentos
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
+	private boolean CurricularCourseDegree(Integer curricularCourseCode, String degreeCode)
+			throws FenixServiceException, ExcepcaoPersistencia {
+		boolean result = false;
 
-        try {
-            result = CurricularCourseDegree(curricularCourseCode, degreeCode)
-                    && CurricularCourseNotBasic(curricularCourseCode);
+		ICurricularCourse curricularCourse = null;
+		IDegree degree = null;
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new FenixServiceException(e);
-        }
+		ISuportePersistente sp;
 
-        return new Boolean(result);
-    }
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 
-    /**
-     * @param argumentos
-     * @return
-     */
-    private boolean CurricularCourseDegree(Integer curricularCourseCode, String degreeCode)
-            throws FenixServiceException {
-        boolean result = false;
+		curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+				CurricularCourse.class, curricularCourseCode);
 
-        ICurricularCourse curricularCourse = null;
-        IDegree degree = null;
+		degree = curricularCourse.getDegreeCurricularPlan().getDegree();
 
-        ISuportePersistente sp;
-        try {
+		result = degree.getSigla().equals(degreeCode);
 
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+		return result; // codigo do curso de Aeroespacial
+	}
 
-            curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
-                    CurricularCourse.class, curricularCourseCode);
+	/**
+	 * @param argumentos
+	 * @return
+	 * @throws ExcepcaoPersistencia 
+	 */
+	private boolean CurricularCourseNotBasic(Integer curricularCourseCode) throws FenixServiceException, ExcepcaoPersistencia {
+		boolean result = false;
+		ICurricularCourse curricularCourse = null;
 
-            degree = curricularCourse.getDegreeCurricularPlan().getDegree();
+		ISuportePersistente sp;
 
-            result = degree.getSigla().equals(degreeCode);
-        } catch (Exception e) {
-            throw new FenixServiceException(e);
-        }
-        return result; //codigo do curso de Aeroespacial
-    }
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+		curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+				CurricularCourse.class, curricularCourseCode);
+		result = curricularCourse.getBasic().equals(Boolean.FALSE);
 
-    /**
-     * @param argumentos
-     * @return
-     */
-    private boolean CurricularCourseNotBasic(Integer curricularCourseCode) throws FenixServiceException {
-        boolean result = false;
-        ICurricularCourse curricularCourse = null;
-
-        ISuportePersistente sp;
-        try {
-
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-            curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
-                    CurricularCourse.class, curricularCourseCode);
-            result = curricularCourse.getBasic().equals(Boolean.FALSE);
-        } catch (Exception e) {
-            throw new FenixServiceException(e);
-        }
-        return result;
-    }
+		return result;
+	}
 }
