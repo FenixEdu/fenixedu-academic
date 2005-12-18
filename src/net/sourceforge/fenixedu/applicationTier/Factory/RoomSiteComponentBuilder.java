@@ -62,7 +62,7 @@ public class RoomSiteComponentBuilder {
         return instance;
     }
 
-    public ISiteComponent getComponent(ISiteComponent component, Calendar day, IRoom room, IExecutionPeriod executionPeriod)  {
+    public ISiteComponent getComponent(ISiteComponent component, Calendar day, IRoom room, IExecutionPeriod executionPeriod) throws Exception  {
 
         if (component instanceof InfoSiteRoomTimeTable) {
             return getInfoSiteRoomTimeTable((InfoSiteRoomTimeTable) component, day, room, executionPeriod);
@@ -75,10 +75,10 @@ public class RoomSiteComponentBuilder {
     // TODO (rspl): alterar as aulas a ler e o dia da semana
     // FIXME duplicated code: this method is (almost?) identical to ReadLessonsAndExamsInWeekAndRoom.run
     private ISiteComponent getInfoSiteRoomTimeTable(InfoSiteRoomTimeTable component, Calendar day,
-            IRoom room, IExecutionPeriod executionPeriod) {
+            IRoom room, IExecutionPeriod executionPeriod) throws Exception {
 
         List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();
-        try {
+
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IAulaPersistente lessonDAO = sp.getIAulaPersistente();
 
@@ -166,11 +166,6 @@ public class RoomSiteComponentBuilder {
             		}
             	}
             }
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
 
         component.setInfoShowOccupation(infoShowOccupations);
         component.setInfoRoom(InfoRoom.newInfoFromDomain(room));

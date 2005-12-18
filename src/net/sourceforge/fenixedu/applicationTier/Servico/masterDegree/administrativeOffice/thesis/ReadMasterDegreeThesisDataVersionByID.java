@@ -15,32 +15,26 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 public class ReadMasterDegreeThesisDataVersionByID implements IService {
 
-    public Object run(Integer masterDegreeThesisDataVersionID) throws FenixServiceException {
-        InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
-        IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion = null;
+	public Object run(Integer masterDegreeThesisDataVersionID) throws FenixServiceException, ExcepcaoPersistencia {
+		InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
+		IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion = null;
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            masterDegreeThesisDataVersion = (IMasterDegreeThesisDataVersion) sp
-                    .getIPersistentMasterDegreeThesisDataVersion().readByOID(
-                            MasterDegreeThesisDataVersion.class, masterDegreeThesisDataVersionID);
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		masterDegreeThesisDataVersion = (IMasterDegreeThesisDataVersion) sp
+				.getIPersistentMasterDegreeThesisDataVersion().readByOID(
+						MasterDegreeThesisDataVersion.class, masterDegreeThesisDataVersionID);
 
-            if (masterDegreeThesisDataVersion == null)
-                throw new NonExistingServiceException(
-                        "error.exception.masterDegree.nonExistingMasterDegreeThesisDataVersion");
+		if (masterDegreeThesisDataVersion == null)
+			throw new NonExistingServiceException(
+					"error.exception.masterDegree.nonExistingMasterDegreeThesisDataVersion");
 
-            infoMasterDegreeThesisDataVersion = InfoMasterDegreeThesisDataVersionWithGuidersAndRespAndThesis
-                    .newInfoFromDomain(masterDegreeThesisDataVersion);
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+		infoMasterDegreeThesisDataVersion = InfoMasterDegreeThesisDataVersionWithGuidersAndRespAndThesis
+				.newInfoFromDomain(masterDegreeThesisDataVersion);
 
-        return infoMasterDegreeThesisDataVersion;
-    }
+		return infoMasterDegreeThesisDataVersion;
+	}
 }

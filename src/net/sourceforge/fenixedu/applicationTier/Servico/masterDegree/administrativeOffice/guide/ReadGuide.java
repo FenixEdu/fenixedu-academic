@@ -20,24 +20,19 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadGuide implements IService {
 
-    public InfoGuide run(Integer guideId) throws FenixServiceException {
+	public InfoGuide run(Integer guideId) throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = null;
-        IGuide guide;
-        InfoGuide infoGuide = null;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            guide = (IGuide) sp.getIPersistentGuide().readByOID(Guide.class, guideId);
-            if (guide == null) {
-                throw new InvalidArgumentsServiceException();
-            }
-            infoGuide = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide);
+		ISuportePersistente sp = null;
+		IGuide guide;
+		InfoGuide infoGuide = null;
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		guide = (IGuide) sp.getIPersistentGuide().readByOID(Guide.class, guideId);
+		if (guide == null) {
+			throw new InvalidArgumentsServiceException();
+		}
+		infoGuide = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide);
 
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex);
-        }
-
-        return infoGuide;
-    }
+		return infoGuide;
+	}
 
 }

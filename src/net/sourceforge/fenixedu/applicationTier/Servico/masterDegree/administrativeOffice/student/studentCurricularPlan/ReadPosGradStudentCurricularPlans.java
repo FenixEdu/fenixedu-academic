@@ -24,36 +24,31 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadPosGradStudentCurricularPlans implements IService {
 
-    public List run(Integer studentId) throws FenixServiceException {
-        List result = new ArrayList();
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-            IStudent student = (IStudent) persistentStudent.readByOID(Student.class, studentId);
+	public List run(Integer studentId) throws FenixServiceException, ExcepcaoPersistencia {
+		List result = new ArrayList();
 
-            if (student == null) {
-                throw new InvalidArgumentsServiceException("invalidStudentId");
-            }
-            if (student.getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
-                List resultTemp = new ArrayList();
-                resultTemp.addAll(student.getStudentCurricularPlans());
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+		IStudent student = (IStudent) persistentStudent.readByOID(Student.class, studentId);
 
-                Iterator iterator = resultTemp.iterator();
-                while (iterator.hasNext()) {
-                    IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator
-                            .next();
-                    result
-                            .add(InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSecondaryBranchAndInfoDegreeCurricularPlan
-                                    .newInfoFromDomain(studentCurricularPlan));
-                }
-            } else {
-                throw new NotAuthorizedException();
-            }
+		if (student == null) {
+			throw new InvalidArgumentsServiceException("invalidStudentId");
+		}
+		if (student.getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
+			List resultTemp = new ArrayList();
+			resultTemp.addAll(student.getStudentCurricularPlans());
 
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
+			Iterator iterator = resultTemp.iterator();
+			while (iterator.hasNext()) {
+				IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator.next();
+				result
+						.add(InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSecondaryBranchAndInfoDegreeCurricularPlan
+								.newInfoFromDomain(studentCurricularPlan));
+			}
+		} else {
+			throw new NotAuthorizedException();
+		}
 
-        return result;
-    }
+		return result;
+	}
 }

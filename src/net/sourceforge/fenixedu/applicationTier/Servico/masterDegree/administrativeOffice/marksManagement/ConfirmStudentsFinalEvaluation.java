@@ -25,72 +25,64 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Fernanda Quitério 10/07/2003
- *  
+ * 
  */
 public class ConfirmStudentsFinalEvaluation implements IService {
 
-    public Boolean run(Integer curricularCourseCode, String yearString, IUserView userView)
-            throws FenixServiceException {
+	public Boolean run(Integer curricularCourseCode, String yearString, IUserView userView)
+			throws FenixServiceException, ExcepcaoPersistencia {
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-            IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
-            IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-			IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+		IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
+		IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
+		IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
 
-            IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
-			IEmployee employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
+		IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+		IEmployee employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
 
-            ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
-                    .readByOID(CurricularCourse.class, curricularCourseCode, false);
+		ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+				CurricularCourse.class, curricularCourseCode, false);
 
-            List enrolments = null;
-            if (yearString != null) {
-                enrolments = persistentEnrolment.readByCurricularCourseAndYear(curricularCourseCode,
-                        yearString);
-            } else {
-                enrolments = curricularCourse.getEnrolments();
-            }
-			
-			
-            List enrolmentEvaluations = new ArrayList();
-            Iterator iterEnrolment = enrolments.listIterator();
-            while (iterEnrolment.hasNext()) {
-                IEnrolment enrolment = (IEnrolment) iterEnrolment.next();
-             
-				List allEnrolmentEvaluations = enrolment.getEvaluations();
-                IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) allEnrolmentEvaluations
-                        .get(allEnrolmentEvaluations.size() - 1);
-                enrolmentEvaluations.add(enrolmentEvaluation);
-            }
+		List enrolments = null;
+		if (yearString != null) {
+			enrolments = persistentEnrolment.readByCurricularCourseAndYear(curricularCourseCode,
+					yearString);
+		} else {
+			enrolments = curricularCourse.getEnrolments();
+		}
 
-			
-            if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
-				
-                ListIterator iterEnrolmentEvaluations = enrolmentEvaluations.listIterator();
-                while (iterEnrolmentEvaluations.hasNext()) {
-					
-                    IEnrolmentEvaluation enrolmentEvaluationElem = (IEnrolmentEvaluation) iterEnrolmentEvaluations.next();
-					
-                    if (enrolmentEvaluationElem.getGrade() != null && 
-						enrolmentEvaluationElem.getGrade().length() > 0 && 
-						enrolmentEvaluationElem.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.TEMPORARY_OBJ)) {
+		List enrolmentEvaluations = new ArrayList();
+		Iterator iterEnrolment = enrolments.listIterator();
+		while (iterEnrolment.hasNext()) {
+			IEnrolment enrolment = (IEnrolment) iterEnrolment.next();
 
-						enrolmentEvaluationElem.confirmSubmission(employee, "Lançamento de Notas na Secretaria");
-                    }
-                }
-            }
-        } 
-		
-		catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
-            FenixServiceException newEx = new FenixServiceException("");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+			List allEnrolmentEvaluations = enrolment.getEvaluations();
+			IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) allEnrolmentEvaluations
+					.get(allEnrolmentEvaluations.size() - 1);
+			enrolmentEvaluations.add(enrolmentEvaluation);
+		}
 
-        return Boolean.TRUE;
-    }
+		if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
+
+			ListIterator iterEnrolmentEvaluations = enrolmentEvaluations.listIterator();
+			while (iterEnrolmentEvaluations.hasNext()) {
+
+				IEnrolmentEvaluation enrolmentEvaluationElem = (IEnrolmentEvaluation) iterEnrolmentEvaluations
+						.next();
+
+				if (enrolmentEvaluationElem.getGrade() != null
+						&& enrolmentEvaluationElem.getGrade().length() > 0
+						&& enrolmentEvaluationElem.getEnrolmentEvaluationState().equals(
+								EnrolmentEvaluationState.TEMPORARY_OBJ)) {
+
+					enrolmentEvaluationElem.confirmSubmission(employee,
+							"Lançamento de Notas na Secretaria");
+				}
+			}
+		}
+
+		return Boolean.TRUE;
+	}
 
 }

@@ -39,11 +39,6 @@ public class CreateDeclaration implements IService {
 
         } catch (ExistingPersistentException ex) {
             throw new ExistingServiceException(ex);
-        } catch (ExcepcaoPersistencia ex) {
-
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);
-
-            throw newEx;
         }
 
         if (studentCurricularPlanList == null || studentCurricularPlanList.isEmpty()) {
@@ -82,11 +77,6 @@ public class CreateDeclaration implements IService {
 
         } catch (ExistingPersistentException ex) {
             throw new ExistingServiceException(ex);
-        } catch (ExcepcaoPersistencia ex) {
-
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);
-
-            throw newEx;
         }
 
         if (studentCurricularPlanList == null || studentCurricularPlanList.isEmpty()) {
@@ -131,9 +121,6 @@ public class CreateDeclaration implements IService {
 
             } catch (ExistingPersistentException ex) {
                 throw new ExistingServiceException(ex);
-            } catch (ExcepcaoPersistencia ex) {
-                FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);
-                throw newEx;
             }
 
             for (Iterator iterator = studentCurricularPlanListTmp.iterator(); iterator.hasNext();) {

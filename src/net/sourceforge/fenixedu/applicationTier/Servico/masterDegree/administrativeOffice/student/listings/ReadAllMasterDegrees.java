@@ -19,31 +19,26 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadAllMasterDegrees implements IService {
 
-    public List run(DegreeType degreeType) throws FenixServiceException {
+	public List run(DegreeType degreeType) throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = null;
-        List result = new ArrayList();
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente sp = null;
+		List result = new ArrayList();
 
-            // Read the master degrees
-            result = sp.getICursoPersistente().readAllByDegreeType(degreeType);
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            if (result == null || result.size() == 0) {
-                throw new NonExistingServiceException();
-            }
+		// Read the master degrees
+		result = sp.getICursoPersistente().readAllByDegreeType(degreeType);
 
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+		if (result == null || result.size() == 0) {
+			throw new NonExistingServiceException();
+		}
 
-        List degrees = new ArrayList();
-        Iterator iterator = result.iterator();
-        while (iterator.hasNext())
-            degrees.add(InfoDegreeWithInfoDegreeCurricularPlansAndInfoDegreeInfos.newInfoFromDomain((IDegree) iterator.next()));
-        return degrees;
+		List degrees = new ArrayList();
+		Iterator iterator = result.iterator();
+		while (iterator.hasNext())
+			degrees.add(InfoDegreeWithInfoDegreeCurricularPlansAndInfoDegreeInfos
+					.newInfoFromDomain((IDegree) iterator.next()));
+		return degrees;
 
-    }
+	}
 }

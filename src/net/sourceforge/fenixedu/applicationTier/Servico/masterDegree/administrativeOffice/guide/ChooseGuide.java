@@ -33,211 +33,176 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ChooseGuide implements IService {
 
-    public List run(Integer guideNumber, Integer guideYear) throws FenixServiceException {
+	public List run(Integer guideNumber, Integer guideYear) throws FenixServiceException,
+			ExcepcaoPersistencia {
+		ISuportePersistente sp = null;
+		List guides = null;
 
-        ISuportePersistente sp = null;
-        List guides = null;
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		guides = sp.getIPersistentGuide().readByNumberAndYear(guideNumber, guideYear);
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            guides = sp.getIPersistentGuide().readByNumberAndYear(guideNumber, guideYear);
+		if (guides == null || guides.isEmpty()) {
+			throw new NonExistingServiceException();
+		}
 
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+		Iterator iterator = guides.iterator();
+		List result = new ArrayList();
+		while (iterator.hasNext()) {
+			IGuide guide = (IGuide) iterator.next();
 
-        if (guides == null || guides.isEmpty()) {
-            throw new NonExistingServiceException();
-        }
+			InfoGuide infoGuide = InfoGuideWithPersonAndExecutionDegreeAndContributor
+					.newInfoFromDomain(guide);
+			List infoReimbursementGuides = new ArrayList();
+			if (guide.getReimbursementGuides() != null) {
+				Iterator iter = guide.getReimbursementGuides().iterator();
+				while (iter.hasNext()) {
+					IReimbursementGuide reimbursementGuide = (IReimbursementGuide) iter.next();
+					InfoReimbursementGuide infoReimbursementGuide = InfoReimbursementGuide
+							.newInfoFromDomain(reimbursementGuide);
 
-        Iterator iterator = guides.iterator();
-        List result = new ArrayList();
-        while (iterator.hasNext()) {
-            IGuide guide = (IGuide) iterator.next();
+					infoReimbursementGuides.add(infoReimbursementGuide);
 
-            InfoGuide infoGuide = InfoGuideWithPersonAndExecutionDegreeAndContributor
-                    .newInfoFromDomain(guide);
-            List infoReimbursementGuides = new ArrayList();
-            if (guide.getReimbursementGuides() != null) {
-                Iterator iter = guide.getReimbursementGuides().iterator();
-                while (iter.hasNext()) {
-                    IReimbursementGuide reimbursementGuide = (IReimbursementGuide) iter.next();
-                    InfoReimbursementGuide infoReimbursementGuide = InfoReimbursementGuide
-                            .newInfoFromDomain(reimbursementGuide);
+				}
+			}
+			infoGuide.setInfoReimbursementGuides(infoReimbursementGuides);
+			result.add(infoGuide);
+		}
+		return result;
+	}
 
-                    infoReimbursementGuides.add(infoReimbursementGuide);
+	public InfoGuide run(Integer guideNumber, Integer guideYear, Integer guideVersion) throws Exception {
 
-                }
-            }
-            infoGuide.setInfoReimbursementGuides(infoReimbursementGuides);
-            result.add(infoGuide);
-        }
-        return result;
-    }
+		ISuportePersistente sp = null;
+		IGuide guide = null;
 
-    public InfoGuide run(Integer guideNumber, Integer guideYear, Integer guideVersion) throws Exception {
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        ISuportePersistente sp = null;
-        IGuide guide = null;
+		guide = sp.getIPersistentGuide().readByNumberAndYearAndVersion(guideNumber, guideYear,
+				guideVersion);
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		if (guide == null) {
+			throw new NonExistingServiceException();
+		}
+		InfoGuide infoGuide = InfoGuideWithPersonAndExecutionDegreeAndContributorAndExecutionYear
+				.newInfoFromDomain(guide);
 
-            guide = sp.getIPersistentGuide().readByNumberAndYearAndVersion(guideNumber, guideYear,
-                    guideVersion);
+		List infoReimbursementGuides = new ArrayList();
+		if (guide.getReimbursementGuides() != null) {
+			Iterator iter = guide.getReimbursementGuides().iterator();
+			while (iter.hasNext()) {
+				IReimbursementGuide reimbursementGuide = (IReimbursementGuide) iter.next();
+				InfoReimbursementGuide infoReimbursementGuide = InfoReimbursementGuide
+						.newInfoFromDomain(reimbursementGuide);
+				infoReimbursementGuides.add(infoReimbursementGuide);
 
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+			}
 
-        if (guide == null) {
-            throw new NonExistingServiceException();
-        }
-        InfoGuide infoGuide = InfoGuideWithPersonAndExecutionDegreeAndContributorAndExecutionYear
-                .newInfoFromDomain(guide);
+		}
+		infoGuide.setInfoReimbursementGuides(infoReimbursementGuides);
+		return infoGuide;
+	}
 
-        List infoReimbursementGuides = new ArrayList();
-        if (guide.getReimbursementGuides() != null) {
-            Iterator iter = guide.getReimbursementGuides().iterator();
-            while (iter.hasNext()) {
-                IReimbursementGuide reimbursementGuide = (IReimbursementGuide) iter.next();
-                InfoReimbursementGuide infoReimbursementGuide = InfoReimbursementGuide
-                        .newInfoFromDomain(reimbursementGuide);
-                infoReimbursementGuides.add(infoReimbursementGuide);
+	public List run(Integer guideYear) throws Exception {
 
-            }
+		ISuportePersistente sp = null;
+		List guides = null;
 
-        }
-        infoGuide.setInfoReimbursementGuides(infoReimbursementGuides);
-        return infoGuide;
-    }
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-    public List run(Integer guideYear) throws Exception {
+		guides = sp.getIPersistentGuide().readByYear(guideYear);
 
-        ISuportePersistente sp = null;
-        List guides = null;
+		if (guides == null) {
+			throw new NonExistingServiceException();
+		}
+		BeanComparator numberComparator = new BeanComparator("number");
+		BeanComparator versionComparator = new BeanComparator("version");
+		ComparatorChain chainComparator = new ComparatorChain();
+		chainComparator.addComparator(numberComparator);
+		chainComparator.addComparator(versionComparator);
+		Collections.sort(guides, chainComparator);
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		// CollectionUtils.filter(guides,)
+		List result = getLatestVersions(guides);
 
-            guides = sp.getIPersistentGuide().readByYear(guideYear);
+		return result;
 
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+	}
 
-        if (guides == null) {
-            throw new NonExistingServiceException();
-        }
-        BeanComparator numberComparator = new BeanComparator("number");
-        BeanComparator versionComparator = new BeanComparator("version");
-        ComparatorChain chainComparator = new ComparatorChain();
-        chainComparator.addComparator(numberComparator);
-        chainComparator.addComparator(versionComparator);
-        Collections.sort(guides, chainComparator);
+	/**
+	 * 
+	 * This function expects to receive a list ordered by number (Ascending) and
+	 * version (Descending)
+	 * 
+	 * @param guides
+	 * @return The latest version for the guides
+	 */
+	private List getLatestVersions(List guides) {
+		List result = new ArrayList();
+		Integer numberAux = null;
 
-        // CollectionUtils.filter(guides,)
-        List result = getLatestVersions(guides);
+		Collections.reverse(guides);
 
-        return result;
+		Iterator iterator = guides.iterator();
+		while (iterator.hasNext()) {
+			IGuide guide = (IGuide) iterator.next();
 
-    }
+			if ((numberAux == null) || (numberAux.intValue() != guide.getNumber().intValue())) {
+				numberAux = guide.getNumber();
+				InfoGuide infoGuide = InfoGuideWithPersonAndExecutionDegreeAndContributor
+						.newInfoFromDomain(guide);
 
-    /**
-     * 
-     * This function expects to receive a list ordered by number (Ascending) and
-     * version (Descending)
-     * 
-     * @param guides
-     * @return The latest version for the guides
-     */
-    private List getLatestVersions(List guides) {
-        List result = new ArrayList();
-        Integer numberAux = null;
+				List infoReimbursementGuides = new ArrayList();
+				if (guide.getReimbursementGuides() != null) {
+					Iterator iter = guide.getReimbursementGuides().iterator();
+					while (iter.hasNext()) {
+						IReimbursementGuide reimbursementGuide = (IReimbursementGuide) iter.next();
+						InfoReimbursementGuide infoReimbursementGuide = InfoReimbursementGuide
+								.newInfoFromDomain(reimbursementGuide);
+						infoReimbursementGuides.add(infoReimbursementGuide);
 
-        Collections.reverse(guides);
+					}
 
-        Iterator iterator = guides.iterator();
-        while (iterator.hasNext()) {
-            IGuide guide = (IGuide) iterator.next();
+				}
+				infoGuide.setInfoReimbursementGuides(infoReimbursementGuides);
+				result.add(infoGuide);
+			}
+		}
+		Collections.reverse(result);
+		return result;
+	}
 
-            if ((numberAux == null) || (numberAux.intValue() != guide.getNumber().intValue())) {
-                numberAux = guide.getNumber();
-                InfoGuide infoGuide = InfoGuideWithPersonAndExecutionDegreeAndContributor
-                        .newInfoFromDomain(guide);
+	public List run(String identificationDocumentNumber, IDDocumentType identificationDocumentType)
+			throws Exception {
 
-                List infoReimbursementGuides = new ArrayList();
-                if (guide.getReimbursementGuides() != null) {
-                    Iterator iter = guide.getReimbursementGuides().iterator();
-                    while (iter.hasNext()) {
-                        IReimbursementGuide reimbursementGuide = (IReimbursementGuide) iter.next();
-                        InfoReimbursementGuide infoReimbursementGuide = InfoReimbursementGuide
-                                .newInfoFromDomain(reimbursementGuide);
-                        infoReimbursementGuides.add(infoReimbursementGuide);
+		ISuportePersistente sp = null;
+		List guides = null;
+		IPerson person = null;
 
-                    }
+		// Check if person exists
 
-                }
-                infoGuide.setInfoReimbursementGuides(infoReimbursementGuides);
-                result.add(infoGuide);
-            }
-        }
-        Collections.reverse(result);
-        return result;
-    }
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		person = sp.getIPessoaPersistente().lerPessoaPorNumDocIdETipoDocId(identificationDocumentNumber,
+				identificationDocumentType);
 
-    public List run(String identificationDocumentNumber,
-            IDDocumentType identificationDocumentType) throws Exception {
+		if (person == null) {
+			throw new NonExistingServiceException();
+		}
 
-        ISuportePersistente sp = null;
-        List guides = null;
-        IPerson person = null;
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		guides = sp.getIPersistentGuide().readByPerson(identificationDocumentNumber,
+				identificationDocumentType);
 
-        // Check if person exists
+		if ((guides == null) || (guides.size() == 0)) {
+			return null;
+		}
+		BeanComparator numberComparator = new BeanComparator("number");
+		BeanComparator versionComparator = new BeanComparator("version");
+		ComparatorChain chainComparator = new ComparatorChain();
+		chainComparator.addComparator(numberComparator);
+		chainComparator.addComparator(versionComparator);
+		Collections.sort(guides, chainComparator);
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            person = sp.getIPessoaPersistente().lerPessoaPorNumDocIdETipoDocId(
-                    identificationDocumentNumber, identificationDocumentType);
-
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
-
-        if (person == null) {
-            throw new NonExistingServiceException();
-        }
-
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            guides = sp.getIPersistentGuide().readByPerson(identificationDocumentNumber,
-                    identificationDocumentType);
-
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
-
-        if ((guides == null) || (guides.size() == 0)) {
-            return null;
-        }
-        BeanComparator numberComparator = new BeanComparator("number");
-        BeanComparator versionComparator = new BeanComparator("version");
-        ComparatorChain chainComparator = new ComparatorChain();
-        chainComparator.addComparator(numberComparator);
-        chainComparator.addComparator(versionComparator);
-        Collections.sort(guides, chainComparator);
-
-        return getLatestVersions(guides);
-    }
+		return getLatestVersions(guides);
+	}
 
 }

@@ -45,175 +45,155 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class PrepareCreateGuide implements IService {
 
-    public InfoGuide run(String graduationType, InfoExecutionDegree infoExecutionDegree, Integer number,
-            String requesterType, Integer contributorNumber, String contributorName,
-            String contributorAddress) throws FenixServiceException {
+	public InfoGuide run(String graduationType, InfoExecutionDegree infoExecutionDegree, Integer number,
+			String requesterType, Integer contributorNumber, String contributorName,
+			String contributorAddress) throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = null;
-        IContributor contributor = null;
-        IMasterDegreeCandidate masterDegreeCandidate = null;
-        InfoGuide infoGuide = new InfoGuideWithPersonAndExecutionDegreeAndContributor();
+		ISuportePersistente sp = null;
+		IContributor contributor = null;
+		IMasterDegreeCandidate masterDegreeCandidate = null;
+		InfoGuide infoGuide = new InfoGuideWithPersonAndExecutionDegreeAndContributor();
 
-        // Read the Contributor
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            contributor = sp.getIPersistentContributor().readByContributorNumber(contributorNumber);
+		// Read the Contributor
 
-            if ((contributor == null)
-                    && ((contributorAddress == null) || (contributorAddress.length() == 0)
-                            || (contributorName.length() == 0) || (contributorName == null))) {
-                throw new NonExistingContributorServiceException();
-            }
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		contributor = sp.getIPersistentContributor().readByContributorNumber(contributorNumber);
 
-            if ((contributor == null) && (contributorAddress != null)
-                    && (contributorAddress.length() != 0) && (contributorName.length() != 0)
-                    && (contributorName != null)) {
+		if ((contributor == null)
+				&& ((contributorAddress == null) || (contributorAddress.length() == 0)
+						|| (contributorName.length() == 0) || (contributorName == null))) {
+			throw new NonExistingContributorServiceException();
+		}
 
-                // Create the Contributor
-                contributor = DomainFactory.makeContributor();
-                contributor.setContributorNumber(contributorNumber);
-                contributor.setContributorAddress(contributorAddress);
-                contributor.setContributorName(contributorName);
-            }
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);
-            throw newEx;
-        }
+		if ((contributor == null) && (contributorAddress != null) && (contributorAddress.length() != 0)
+				&& (contributorName.length() != 0) && (contributorName != null)) {
 
-        Integer year = null;
-        Calendar calendar = Calendar.getInstance();
-        year = new Integer(calendar.get(Calendar.YEAR));
+			// Create the Contributor
+			contributor = DomainFactory.makeContributor();
+			contributor.setContributorNumber(contributorNumber);
+			contributor.setContributorAddress(contributorAddress);
+			contributor.setContributorName(contributorName);
+		}
 
-        IExecutionDegree executionDegree = null;
-        try {
-            executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree().readByOID(
-                    ExecutionDegree.class, infoExecutionDegree.getIdInternal());
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);
-            throw newEx;
-        }
+		Integer year = null;
+		Calendar calendar = Calendar.getInstance();
+		year = new Integer(calendar.get(Calendar.YEAR));
 
-        // Check if the Requester is a Candidate
-        if (requesterType.equals(GuideRequester.CANDIDATE.name())) {
+		IExecutionDegree executionDegree = null;
 
-            try {
-                masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
-                        .readByNumberAndExecutionDegreeAndSpecialization(number, executionDegree.getIdInternal(),
-                                Specialization.valueOf(graduationType));
-            } catch (ExcepcaoPersistencia ex) {
-                FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);
-                throw newEx;
-            }
+		executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree().readByOID(
+				ExecutionDegree.class, infoExecutionDegree.getIdInternal());
 
-            // Check if the Candidate Exists
-            if (masterDegreeCandidate == null)
-                throw new NonExistingServiceException("O Candidato", null);
+		// Check if the Requester is a Candidate
+		if (requesterType.equals(GuideRequester.CANDIDATE.name())) {
 
-            // Get the price for the Candidate Application
-            IPrice price = null;
-            try {
-                //FIXME to be removed when the descriptions in the DB are changed to keys to resource bundles 
-                String description = getDescription(graduationType);
-                
-                price = sp.getIPersistentPrice().readByGraduationTypeAndDocumentTypeAndDescription(
-                        GraduationType.MASTER_DEGREE, DocumentType.APPLICATION_EMOLUMENT,
-                        description);
-            } catch (ExcepcaoPersistencia ex) {
-                FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-                newEx.fillInStackTrace();
-                throw newEx;
-            }
+			masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
+					.readByNumberAndExecutionDegreeAndSpecialization(number,
+							executionDegree.getIdInternal(), Specialization.valueOf(graduationType));
 
-            if (price == null) {
-                throw new FenixServiceException("Unkown Application Price");
-            }
+			// Check if the Candidate Exists
+			if (masterDegreeCandidate == null)
+				throw new NonExistingServiceException("O Candidato", null);
 
-            infoGuide.setInfoContributor(InfoContributor.newInfoFromDomain(contributor));
-            infoGuide.setInfoPerson(InfoPerson.newInfoFromDomain(masterDegreeCandidate.getPerson()));
-            infoGuide.setYear(year);
-            infoGuide.setTotal(price.getPrice());
+			// Get the price for the Candidate Application
+			IPrice price = null;
+			// FIXME to be removed when the descriptions in the DB are
+			// changed to keys to resource bundles
+			String description = getDescription(graduationType);
 
-            infoGuide.setCreationDate(calendar.getTime());
-            infoGuide.setVersion(new Integer(1));
-            infoGuide.setInfoExecutionDegree(InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan.newInfoFromDomain(executionDegree));
+			price = sp.getIPersistentPrice().readByGraduationTypeAndDocumentTypeAndDescription(
+					GraduationType.MASTER_DEGREE, DocumentType.APPLICATION_EMOLUMENT, description);
 
-            InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
-            infoGuideEntry.setDescription(price.getDescription());
-            infoGuideEntry.setDocumentType(price.getDocumentType());
-            infoGuideEntry.setGraduationType(price.getGraduationType());
-            infoGuideEntry.setInfoGuide(infoGuide);
-            infoGuideEntry.setPrice(price.getPrice());
-            infoGuideEntry.setQuantity(new Integer(1));
+			if (price == null) {
+				throw new FenixServiceException("Unkown Application Price");
+			}
 
-            List<InfoGuideEntry> infoGuideEntries = new ArrayList<InfoGuideEntry>();
-            infoGuideEntries.add(infoGuideEntry);
+			infoGuide.setInfoContributor(InfoContributor.newInfoFromDomain(contributor));
+			infoGuide.setInfoPerson(InfoPerson.newInfoFromDomain(masterDegreeCandidate.getPerson()));
+			infoGuide.setYear(year);
+			infoGuide.setTotal(price.getPrice());
 
-            infoGuide.setInfoGuideEntries(infoGuideEntries);
-            infoGuide.setGuideRequester(GuideRequester.CANDIDATE);
-        }
+			infoGuide.setCreationDate(calendar.getTime());
+			infoGuide.setVersion(new Integer(1));
+			infoGuide
+					.setInfoExecutionDegree(InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
+							.newInfoFromDomain(executionDegree));
 
-        if (requesterType.equals(GuideRequester.STUDENT.name())) {
-            IStudent student = null;
+			InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
+			infoGuideEntry.setDescription(price.getDescription());
+			infoGuideEntry.setDocumentType(price.getDocumentType());
+			infoGuideEntry.setGraduationType(price.getGraduationType());
+			infoGuideEntry.setInfoGuide(infoGuide);
+			infoGuideEntry.setPrice(price.getPrice());
+			infoGuideEntry.setQuantity(new Integer(1));
 
-            try {
-                student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
-                        DegreeType.MASTER_DEGREE);
-                if (student == null)
-                    throw new NonExistingServiceException("O Aluno", null);
+			List<InfoGuideEntry> infoGuideEntries = new ArrayList<InfoGuideEntry>();
+			infoGuideEntries.add(infoGuideEntry);
 
-                final Integer degreeCurricularPlanID = executionDegree.getDegreeCurricularPlan().getIdInternal();
-                List studentCurricularPlanList = (List) CollectionUtils.select(student.getStudentCurricularPlans(),new Predicate(){
-                    
-                    public boolean evaluate(Object arg0) {
-                        IStudentCurricularPlan scp = (IStudentCurricularPlan) arg0;
-                        return scp.getDegreeCurricularPlan().getIdInternal().equals(degreeCurricularPlanID);
-                    }});
+			infoGuide.setInfoGuideEntries(infoGuideEntries);
+			infoGuide.setGuideRequester(GuideRequester.CANDIDATE);
+		}
 
-                // check if student curricular plan contains selected execution
-                // degree
-                if (studentCurricularPlanList.isEmpty()) {
-                    throw new NonExistingServiceException("O Aluno", null);
-                }
-            } catch (ExcepcaoPersistencia ex) {
+		if (requesterType.equals(GuideRequester.STUDENT.name())) {
+			IStudent student = null;
 
-                FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-                newEx.fillInStackTrace();
-                throw newEx;
-            }
+			student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
+					DegreeType.MASTER_DEGREE);
+			if (student == null)
+				throw new NonExistingServiceException("O Aluno", null);
 
-            // Check if the Candidate Exists
-            if (student == null)
-                throw new NonExistingServiceException("O Aluno", null);
+			final Integer degreeCurricularPlanID = executionDegree.getDegreeCurricularPlan()
+					.getIdInternal();
+			List studentCurricularPlanList = (List) CollectionUtils.select(student
+					.getStudentCurricularPlans(), new Predicate() {
 
-            infoGuide.setInfoContributor(InfoContributor.newInfoFromDomain(contributor));
-            infoGuide.setInfoPerson(InfoPerson.newInfoFromDomain(student.getPerson()));
-            infoGuide.setYear(year);
+				public boolean evaluate(Object arg0) {
+					IStudentCurricularPlan scp = (IStudentCurricularPlan) arg0;
+					return scp.getDegreeCurricularPlan().getIdInternal().equals(degreeCurricularPlanID);
+				}
+			});
 
-            infoGuide.setCreationDate(calendar.getTime());
-            infoGuide.setVersion(new Integer(1));
+			// check if student curricular plan contains selected execution
+			// degree
+			if (studentCurricularPlanList.isEmpty()) {
+				throw new NonExistingServiceException("O Aluno", null);
+			}
 
-            infoGuide.setInfoExecutionDegree(InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan.newInfoFromDomain(executionDegree));
+			// Check if the Candidate Exists
+			if (student == null)
+				throw new NonExistingServiceException("O Aluno", null);
 
-            infoGuide.setInfoGuideEntries(new ArrayList());
-            infoGuide.setGuideRequester(GuideRequester.STUDENT);
-        }
+			infoGuide.setInfoContributor(InfoContributor.newInfoFromDomain(contributor));
+			infoGuide.setInfoPerson(InfoPerson.newInfoFromDomain(student.getPerson()));
+			infoGuide.setYear(year);
 
-        return infoGuide;
-    }
+			infoGuide.setCreationDate(calendar.getTime());
+			infoGuide.setVersion(new Integer(1));
 
-    private String getDescription(String graduationType) {
-        
-        switch (Specialization.valueOf(graduationType)) {
-        case MASTER_DEGREE:
-            return "Mestrado";
-        case INTEGRATED_MASTER_DEGREE:
-            return "Integrado";
-        case SPECIALIZATION:
-            return "Especialização";
-        }
-        
-        return null;
-        
-    }
+			infoGuide
+					.setInfoExecutionDegree(InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
+							.newInfoFromDomain(executionDegree));
+
+			infoGuide.setInfoGuideEntries(new ArrayList());
+			infoGuide.setGuideRequester(GuideRequester.STUDENT);
+		}
+
+		return infoGuide;
+	}
+
+	private String getDescription(String graduationType) {
+
+		switch (Specialization.valueOf(graduationType)) {
+		case MASTER_DEGREE:
+			return "Mestrado";
+		case INTEGRATED_MASTER_DEGREE:
+			return "Integrado";
+		case SPECIALIZATION:
+			return "Especialização";
+		}
+
+		return null;
+
+	}
 
 }

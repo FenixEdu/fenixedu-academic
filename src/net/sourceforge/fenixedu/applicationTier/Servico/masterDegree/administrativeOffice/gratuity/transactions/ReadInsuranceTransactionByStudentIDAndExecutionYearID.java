@@ -19,56 +19,50 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- *  
+ * 
  */
 public class ReadInsuranceTransactionByStudentIDAndExecutionYearID implements IService {
 
-    /**
-     * Constructor
-     */
-    public ReadInsuranceTransactionByStudentIDAndExecutionYearID() {
-    }
+	/**
+	 * Constructor
+	 */
+	public ReadInsuranceTransactionByStudentIDAndExecutionYearID() {
+	}
 
-    public InfoInsuranceTransaction run(Integer studentId, Integer executionYearId)
-            throws FenixServiceException {
+	public InfoInsuranceTransaction run(Integer studentId, Integer executionYearId)
+			throws FenixServiceException, ExcepcaoPersistencia {
 
-        InfoInsuranceTransaction infoInsuranceTransaction = null;
+		InfoInsuranceTransaction infoInsuranceTransaction = null;
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IPersistentInsuranceTransaction insuranceTransactionDAO = sp
-                    .getIPersistentInsuranceTransaction();
+		IPersistentInsuranceTransaction insuranceTransactionDAO = sp
+				.getIPersistentInsuranceTransaction();
 
-            IExecutionYear executionYear = (IExecutionYear) sp.getIPersistentExecutionYear().readByOID(
-                    ExecutionYear.class, executionYearId);
+		IExecutionYear executionYear = (IExecutionYear) sp.getIPersistentExecutionYear().readByOID(
+				ExecutionYear.class, executionYearId);
 
-            IStudent student = (IStudent) sp.getIPersistentStudent().readByOID(Student.class, studentId);
+		IStudent student = (IStudent) sp.getIPersistentStudent().readByOID(Student.class, studentId);
 
-            if ((executionYear == null) || (student == null)) {
-                return null;
-            }
+		if ((executionYear == null) || (student == null)) {
+			return null;
+		}
 
-            List insuranceTransactionList = insuranceTransactionDAO
-                    .readAllNonReimbursedByExecutionYearAndStudent(executionYear.getIdInternal(), student.getIdInternal());
+		List insuranceTransactionList = insuranceTransactionDAO
+				.readAllNonReimbursedByExecutionYearAndStudent(executionYear.getIdInternal(), student
+						.getIdInternal());
 
-            if (insuranceTransactionList.size() > 1) {
-                throw new FenixServiceException(
-                        "Database is incoerent. Its not supposed to exist more than one insurance transaction not reimbursed");
+		if (insuranceTransactionList.size() > 1) {
+			throw new FenixServiceException(
+					"Database is incoerent. Its not supposed to exist more than one insurance transaction not reimbursed");
 
-            }
+		}
 
-            if (insuranceTransactionList.size() == 1) {
-                infoInsuranceTransaction = InfoInsuranceTransaction
-                        .newInfoFromDomain((IInsuranceTransaction) insuranceTransactionList.get(0));
-            }
+		if (insuranceTransactionList.size() == 1) {
+			infoInsuranceTransaction = InfoInsuranceTransaction
+					.newInfoFromDomain((IInsuranceTransaction) insuranceTransactionList.get(0));
+		}
 
-            return infoInsuranceTransaction;
-
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
-    }
+		return infoInsuranceTransaction;
+	}
 }

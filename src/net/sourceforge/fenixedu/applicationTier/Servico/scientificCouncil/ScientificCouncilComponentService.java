@@ -5,11 +5,13 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Factory.ScientificCouncilComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author João Mota
@@ -17,36 +19,10 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
  * 23/Jul/2003 fenix-head ServidorAplicacao.Servico.scientificCouncil
  *  
  */
-public class ScientificCouncilComponentService implements IServico {
-
-    private static ScientificCouncilComponentService _servico = new ScientificCouncilComponentService();
-
-    /**
-     * The actor of this class.
-     */
-
-    private ScientificCouncilComponentService() {
-
-    }
-
-    /**
-     * Returns Service Name
-     */
-    public String getNome() {
-        return "ScientificCouncilComponentService";
-    }
-
-    /**
-     * Returns the _servico.
-     * 
-     * @return ReadExecutionCourse
-     */
-    public static ScientificCouncilComponentService getService() {
-        return _servico;
-    }
+public class ScientificCouncilComponentService implements IService {
 
     public SiteView run(ISiteComponent bodyComponent, Integer degreeId, Integer curricularYear,
-            Integer degreeCurricularPlanId) throws FenixServiceException {
+            Integer degreeCurricularPlanId) throws FenixServiceException, ExcepcaoPersistencia {
 
         ScientificCouncilComponentBuilder componentBuilder = ScientificCouncilComponentBuilder
                 .getInstance();

@@ -32,118 +32,95 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class EditGratuitySituationById implements IService {
 
-    public Object run(InfoGratuitySituation infoGratuitySituation)
-            throws FenixServiceException {
-        ISuportePersistente sp = null;
-        try {
-            if (infoGratuitySituation == null) {
-                throw new FenixServiceException();
-            }
+	public Object run(InfoGratuitySituation infoGratuitySituation) throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente sp = null;
 
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentGratuitySituation persistentGratuitySituation = sp
-                    .getIPersistentGratuitySituation();
+		if (infoGratuitySituation == null) {
+			throw new FenixServiceException();
+		}
 
-            IGratuitySituation gratuitySituation = persistentGratuitySituation
-                    .readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
-                            infoGratuitySituation.getInfoStudentCurricularPlan().getIdInternal(), infoGratuitySituation.getInfoGratuityValues().getIdInternal());
-            if (gratuitySituation == null) {
-                throw new NonExistingServiceException(
-                        "Gratuity Situation not exist yet.");
-            }
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentGratuitySituation persistentGratuitySituation = sp.getIPersistentGratuitySituation();
 
-            // employee who made register
-            IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-            IPerson person = persistentPerson
-                    .lerPessoaPorUsername(infoGratuitySituation
-                            .getInfoEmployee().getPerson().getUsername());
-            if (person != null) {
-                IPersistentEmployee persistentEmployee = sp
-                        .getIPersistentEmployee();
-                IEmployee employee = persistentEmployee.readByPerson(person
-                        .getIdInternal().intValue());
-                gratuitySituation.setEmployee(employee);
-            }
+		IGratuitySituation gratuitySituation = persistentGratuitySituation
+				.readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(infoGratuitySituation
+						.getInfoStudentCurricularPlan().getIdInternal(), infoGratuitySituation
+						.getInfoGratuityValues().getIdInternal());
+		if (gratuitySituation == null) {
+			throw new NonExistingServiceException("Gratuity Situation not exist yet.");
+		}
 
-            persistentGratuitySituation.simpleLockWrite(gratuitySituation);
+		// employee who made register
+		IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
+		IPerson person = persistentPerson.lerPessoaPorUsername(infoGratuitySituation.getInfoEmployee()
+				.getPerson().getUsername());
+		if (person != null) {
+			IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
+			IEmployee employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
+			gratuitySituation.setEmployee(employee);
+		}
 
-            Calendar now = Calendar.getInstance();
-            gratuitySituation.setWhen(now.getTime());
+		persistentGratuitySituation.simpleLockWrite(gratuitySituation);
 
-            // Update remaining value
-            double exemptionValue = gratuitySituation.getTotalValue()
-                    .doubleValue()
-                    * (infoGratuitySituation.getExemptionPercentage()
-                            .doubleValue() / 100.0);
+		Calendar now = Calendar.getInstance();
+		gratuitySituation.setWhen(now.getTime());
 
-            if (infoGratuitySituation.getExemptionValue() != null) {
-                exemptionValue += infoGratuitySituation.getExemptionValue()
-                        .doubleValue();
-            }
+		// Update remaining value
+		double exemptionValue = gratuitySituation.getTotalValue().doubleValue()
+				* (infoGratuitySituation.getExemptionPercentage().doubleValue() / 100.0);
 
-            double newRemainingValue = gratuitySituation.getTotalValue()
-                    .doubleValue()
-                    - exemptionValue;
+		if (infoGratuitySituation.getExemptionValue() != null) {
+			exemptionValue += infoGratuitySituation.getExemptionValue().doubleValue();
+		}
 
-            List transactionList = gratuitySituation.getTransactionList();
-            List reimbursementGuideEntries = null;
-            Iterator it = transactionList.iterator();
-            IGratuityTransaction gratuityTransaction = null;
-            double payedValue = 0;
-            double reimbursedValue = 0;
+		double newRemainingValue = gratuitySituation.getTotalValue().doubleValue() - exemptionValue;
 
-            while (it.hasNext()) {
-                gratuityTransaction = (IGratuityTransaction) it.next();
-                payedValue += gratuityTransaction.getValue().doubleValue();
+		List transactionList = gratuitySituation.getTransactionList();
+		List reimbursementGuideEntries = null;
+		Iterator it = transactionList.iterator();
+		IGratuityTransaction gratuityTransaction = null;
+		double payedValue = 0;
+		double reimbursedValue = 0;
 
-                if (gratuityTransaction.getGuideEntry() != null) {
+		while (it.hasNext()) {
+			gratuityTransaction = (IGratuityTransaction) it.next();
+			payedValue += gratuityTransaction.getValue().doubleValue();
 
-                    reimbursementGuideEntries = gratuityTransaction
-                            .getGuideEntry().getReimbursementGuideEntries();
+			if (gratuityTransaction.getGuideEntry() != null) {
 
-                    if (reimbursementGuideEntries != null) {
+				reimbursementGuideEntries = gratuityTransaction.getGuideEntry()
+						.getReimbursementGuideEntries();
 
-                        Iterator reimbursementIterator = reimbursementGuideEntries
-                                .iterator();
-                        IReimbursementGuideEntry reimbursementGuideEntry = null;
+				if (reimbursementGuideEntries != null) {
 
-                        while (reimbursementIterator.hasNext()) {
-                            reimbursementGuideEntry = (IReimbursementGuideEntry) reimbursementIterator
-                                    .next();
-                            if (reimbursementGuideEntry.getReimbursementGuide()
-                                    .getActiveReimbursementGuideSituation()
-                                    .getReimbursementGuideState().equals(
-                                            ReimbursementGuideState.PAYED)) {
+					Iterator reimbursementIterator = reimbursementGuideEntries.iterator();
+					IReimbursementGuideEntry reimbursementGuideEntry = null;
 
-                                reimbursedValue += reimbursementGuideEntry
-                                        .getValue().doubleValue();
-                            }
-                        }
-                    }
-                }
+					while (reimbursementIterator.hasNext()) {
+						reimbursementGuideEntry = (IReimbursementGuideEntry) reimbursementIterator
+								.next();
+						if (reimbursementGuideEntry.getReimbursementGuide()
+								.getActiveReimbursementGuideSituation().getReimbursementGuideState()
+								.equals(ReimbursementGuideState.PAYED)) {
 
-            }
+							reimbursedValue += reimbursementGuideEntry.getValue().doubleValue();
+						}
+					}
+				}
+			}
 
-            gratuitySituation.setRemainingValue(new Double(newRemainingValue
-                    - payedValue + reimbursedValue));
+		}
 
-            gratuitySituation.setExemptionDescription(infoGratuitySituation
-                    .getExemptionDescription());
-            gratuitySituation.setExemptionPercentage(infoGratuitySituation
-                    .getExemptionPercentage());
-            gratuitySituation.setExemptionValue(infoGratuitySituation
-                    .getExemptionValue());
-            gratuitySituation.setExemptionType(infoGratuitySituation
-                    .getExemptionType());
+		gratuitySituation
+				.setRemainingValue(new Double(newRemainingValue - payedValue + reimbursedValue));
 
-            infoGratuitySituation = InfoGratuitySituationWithAll
-                    .newInfoFromDomain(gratuitySituation);
+		gratuitySituation.setExemptionDescription(infoGratuitySituation.getExemptionDescription());
+		gratuitySituation.setExemptionPercentage(infoGratuitySituation.getExemptionPercentage());
+		gratuitySituation.setExemptionValue(infoGratuitySituation.getExemptionValue());
+		gratuitySituation.setExemptionType(infoGratuitySituation.getExemptionType());
 
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-            throw new FenixServiceException();
-        }
+		infoGratuitySituation = InfoGratuitySituationWithAll.newInfoFromDomain(gratuitySituation);
 
-        return infoGratuitySituation;
-    }
+		return infoGratuitySituation;
+	}
 }

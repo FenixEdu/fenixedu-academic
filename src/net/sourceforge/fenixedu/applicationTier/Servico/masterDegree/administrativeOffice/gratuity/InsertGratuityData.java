@@ -40,211 +40,199 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class InsertGratuityData implements IService {
 
-    public Object run(InfoGratuityValues infoGratuityValues) throws FenixServiceException {
-        if (infoGratuityValues == null) {
-            throw new FenixServiceException("impossible.insertGratuityValues");
-        }
-        if (infoGratuityValues.getInfoExecutionDegree() == null
-                || infoGratuityValues.getInfoExecutionDegree().getIdInternal() == null
-                || infoGratuityValues.getInfoExecutionDegree().getIdInternal().intValue() <= 0) {
-            throw new FenixServiceException("impossible.insertGratuityValues");
-        }
+	public Object run(InfoGratuityValues infoGratuityValues) throws FenixServiceException,
+			ExcepcaoPersistencia {
+		if (infoGratuityValues == null) {
+			throw new FenixServiceException("impossible.insertGratuityValues");
+		}
+		if (infoGratuityValues.getInfoExecutionDegree() == null
+				|| infoGratuityValues.getInfoExecutionDegree().getIdInternal() == null
+				|| infoGratuityValues.getInfoExecutionDegree().getIdInternal().intValue() <= 0) {
+			throw new FenixServiceException("impossible.insertGratuityValues");
+		}
 
-        if (infoGratuityValues.getInfoEmployee() == null
-                || infoGratuityValues.getInfoEmployee().getPerson() == null
-                || infoGratuityValues.getInfoEmployee().getPerson().getUsername() == null
-                || infoGratuityValues.getInfoEmployee().getPerson().getUsername().length() <= 0) {
-            throw new FenixServiceException("impossible.insertGratuityValues");
-        }
+		if (infoGratuityValues.getInfoEmployee() == null
+				|| infoGratuityValues.getInfoEmployee().getPerson() == null
+				|| infoGratuityValues.getInfoEmployee().getPerson().getUsername() == null
+				|| infoGratuityValues.getInfoEmployee().getPerson().getUsername().length() <= 0) {
+			throw new FenixServiceException("impossible.insertGratuityValues");
+		}
 
-        ISuportePersistente sp = null;
+		ISuportePersistente sp = null;
 
-        validateGratuity(sp, infoGratuityValues);
+		validateGratuity(sp, infoGratuityValues);
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGratuityValues();
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGratuityValues();
 
-            IGratuityValues gratuityValues = persistentGratuityValues
-                    .readGratuityValuesByExecutionDegree(infoGratuityValues.getInfoExecutionDegree()
-                            .getIdInternal());
+		IGratuityValues gratuityValues = persistentGratuityValues
+				.readGratuityValuesByExecutionDegree(infoGratuityValues.getInfoExecutionDegree()
+						.getIdInternal());
 
-            // execution Degree
-            IExecutionDegree executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree()
-                    .readByOID(ExecutionDegree.class,
-                            infoGratuityValues.getInfoExecutionDegree().getIdInternal(), true);
+		// execution Degree
+		IExecutionDegree executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree()
+				.readByOID(ExecutionDegree.class,
+						infoGratuityValues.getInfoExecutionDegree().getIdInternal(), true);
 
-            boolean isNew = false;
-            if (gratuityValues == null) // it doesn't exist in database, then
-            // write it
-            {
-                gratuityValues = DomainFactory.makeGratuityValues();
-                persistentGratuityValues.simpleLockWrite(gratuityValues);
-                isNew = true;
+		boolean isNew = false;
+		if (gratuityValues == null) // it doesn't exist in database, then
+		// write it
+		{
+			gratuityValues = DomainFactory.makeGratuityValues();
+			persistentGratuityValues.simpleLockWrite(gratuityValues);
+			isNew = true;
 
-                gratuityValues.setExecutionDegree(executionDegree);
+			gratuityValues.setExecutionDegree(executionDegree);
 
-            }
+		}
 
-            executionDegree.setGratuityValues(gratuityValues);
+		executionDegree.setGratuityValues(gratuityValues);
 
-            if (!isNew) {
-                persistentGratuityValues.simpleLockWrite(gratuityValues);
-            }
-            validatePaymentPhasesWithTransaction(sp, gratuityValues);
-            // validateGratuitySituationWithTransaction(sp, gratuityValues);
+		if (!isNew) {
+			persistentGratuityValues.simpleLockWrite(gratuityValues);
+		}
+		validatePaymentPhasesWithTransaction(sp, gratuityValues);
+		// validateGratuitySituationWithTransaction(sp, gratuityValues);
 
-            registerWhoAndWhen(sp, infoGratuityValues, gratuityValues);
+		registerWhoAndWhen(sp, infoGratuityValues, gratuityValues);
 
-            gratuityValues.setAnualValue(infoGratuityValues.getAnualValue());
-            gratuityValues.setScholarShipValue(infoGratuityValues.getScholarShipValue());
-            gratuityValues.setFinalProofValue(infoGratuityValues.getFinalProofValue());
-            gratuityValues.setCreditValue(infoGratuityValues.getCreditValue());
-            gratuityValues.setCourseValue(infoGratuityValues.getCourseValue());
-            gratuityValues.setProofRequestPayment(infoGratuityValues.getProofRequestPayment());
-            gratuityValues.setStartPayment(infoGratuityValues.getStartPayment());
-            gratuityValues.setEndPayment(infoGratuityValues.getEndPayment());
+		gratuityValues.setAnualValue(infoGratuityValues.getAnualValue());
+		gratuityValues.setScholarShipValue(infoGratuityValues.getScholarShipValue());
+		gratuityValues.setFinalProofValue(infoGratuityValues.getFinalProofValue());
+		gratuityValues.setCreditValue(infoGratuityValues.getCreditValue());
+		gratuityValues.setCourseValue(infoGratuityValues.getCourseValue());
+		gratuityValues.setProofRequestPayment(infoGratuityValues.getProofRequestPayment());
+		gratuityValues.setStartPayment(infoGratuityValues.getStartPayment());
+		gratuityValues.setEndPayment(infoGratuityValues.getEndPayment());
 
-            // write all payment phases
-            writePaymentPhases(sp, infoGratuityValues, gratuityValues);
+		// write all payment phases
+		writePaymentPhases(sp, infoGratuityValues, gratuityValues);
 
-            // update gratuity values in all student curricular plan that belong
-            // to this execution
-            // degree
-            // updateStudentsGratuitySituation(sp, gratuityValues,
-            // gratuityValue);
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-            throw new FenixServiceException("impossible.insertGratuityValues");
-        } catch (FenixServiceException fenixServiceException) {
-            throw fenixServiceException;
-        }
+		// update gratuity values in all student curricular plan that belong
+		// to this execution
+		// degree
+		// updateStudentsGratuitySituation(sp, gratuityValues,
+		// gratuityValue);
 
-        return Boolean.TRUE;
-    }
+		return Boolean.TRUE;
+	}
 
-    private Double validateGratuity(ISuportePersistente sp, InfoGratuityValues infoGratuityValues)
-            throws FenixServiceException {
-        // find the gratuity's value
-        Double gratuityValue = null;
+	private Double validateGratuity(ISuportePersistente sp, InfoGratuityValues infoGratuityValues)
+			throws FenixServiceException {
+		// find the gratuity's value
+		Double gratuityValue = null;
 
-        if (infoGratuityValues.getAnualValue() != null) {
-            gratuityValue = infoGratuityValues.getAnualValue();
-        } else {
-            if (infoGratuityValues.getProofRequestPayment() != null
-                    && infoGratuityValues.getProofRequestPayment().equals(Boolean.TRUE)) {
-                gratuityValue = infoGratuityValues.getScholarShipValue();
-            } else {
-                gratuityValue = new Double(infoGratuityValues.getScholarShipValue().doubleValue()
-                        + infoGratuityValues.getFinalProofValue().doubleValue());
-            }
-        }
+		if (infoGratuityValues.getAnualValue() != null) {
+			gratuityValue = infoGratuityValues.getAnualValue();
+		} else {
+			if (infoGratuityValues.getProofRequestPayment() != null
+					&& infoGratuityValues.getProofRequestPayment().equals(Boolean.TRUE)) {
+				gratuityValue = infoGratuityValues.getScholarShipValue();
+			} else {
+				gratuityValue = new Double(infoGratuityValues.getScholarShipValue().doubleValue()
+						+ infoGratuityValues.getFinalProofValue().doubleValue());
+			}
+		}
 
-        List paymentPhasesList = infoGratuityValues.getInfoPaymentPhases();
-        if (paymentPhasesList != null && paymentPhasesList.size() > 0) {
-            // verify if total of all payment phases isn't greater then anual
-            // value
-            ListIterator iterator = paymentPhasesList.listIterator();
-            double totalValuePaymentPhases = 0;
-            while (iterator.hasNext()) {
-                InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) iterator.next();
-                totalValuePaymentPhases += infoPaymentPhase.getValue().floatValue();
-            }
-            if (totalValuePaymentPhases > gratuityValue.doubleValue()) {
-                throw new FenixServiceException("error.masterDegree.gatuyiuty.totalValuePaymentPhases");
-            }
-            // verify if all payment phases's dates are correct
-            validateDatesOfPaymentPhases(paymentPhasesList);
+		List paymentPhasesList = infoGratuityValues.getInfoPaymentPhases();
+		if (paymentPhasesList != null && paymentPhasesList.size() > 0) {
+			// verify if total of all payment phases isn't greater then anual
+			// value
+			ListIterator iterator = paymentPhasesList.listIterator();
+			double totalValuePaymentPhases = 0;
+			while (iterator.hasNext()) {
+				InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) iterator.next();
+				totalValuePaymentPhases += infoPaymentPhase.getValue().floatValue();
+			}
+			if (totalValuePaymentPhases > gratuityValue.doubleValue()) {
+				throw new FenixServiceException("error.masterDegree.gatuyiuty.totalValuePaymentPhases");
+			}
+			// verify if all payment phases's dates are correct
+			validateDatesOfPaymentPhases(paymentPhasesList);
 
-            // registration Payment
-            if (infoGratuityValues.getRegistrationPayment() != null
-                    && infoGratuityValues.getRegistrationPayment().equals(Boolean.TRUE)) {
-                iterator = paymentPhasesList.listIterator();
-                InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) iterator.next();
-                infoPaymentPhase.setDescription(SessionConstants.REGISTRATION_PAYMENT_KEY);
-            }
-        }
-        return gratuityValue;
-    }
+			// registration Payment
+			if (infoGratuityValues.getRegistrationPayment() != null
+					&& infoGratuityValues.getRegistrationPayment().equals(Boolean.TRUE)) {
+				iterator = paymentPhasesList.listIterator();
+				InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) iterator.next();
+				infoPaymentPhase.setDescription(SessionConstants.REGISTRATION_PAYMENT_KEY);
+			}
+		}
+		return gratuityValue;
+	}
 
-    private void validateDatesOfPaymentPhases(List paymentPhasesList) throws FenixServiceException {
-        List paymentPhaseListAux = new ArrayList(paymentPhasesList);
-        Collections.sort(paymentPhaseListAux, new BeanComparator("endDate"));
+	private void validateDatesOfPaymentPhases(List paymentPhasesList) throws FenixServiceException {
+		List paymentPhaseListAux = new ArrayList(paymentPhasesList);
+		Collections.sort(paymentPhaseListAux, new BeanComparator("endDate"));
 
-        ListIterator iterator = paymentPhaseListAux.listIterator();
-        while (iterator.hasNext()) {
-            InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) iterator.next();
+		ListIterator iterator = paymentPhaseListAux.listIterator();
+		while (iterator.hasNext()) {
+			InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) iterator.next();
 
-            if (iterator.hasNext()) {
-                InfoPaymentPhase infoPaymentPhase2Compare = (InfoPaymentPhase) iterator.next();
-                if ((infoPaymentPhase2Compare.getStartDate() != null && !infoPaymentPhase.getEndDate()
-                        .before(infoPaymentPhase2Compare.getStartDate()))
-                        || (infoPaymentPhase2Compare.getStartDate() == null && !infoPaymentPhase
-                                .getEndDate().before(infoPaymentPhase2Compare.getEndDate()))) {
-                    throw new FenixServiceException("error.impossible.paymentPhaseWithWrongDates");
-                }
-                iterator.previous();
-            }
-        }
-    }
+			if (iterator.hasNext()) {
+				InfoPaymentPhase infoPaymentPhase2Compare = (InfoPaymentPhase) iterator.next();
+				if ((infoPaymentPhase2Compare.getStartDate() != null && !infoPaymentPhase.getEndDate()
+						.before(infoPaymentPhase2Compare.getStartDate()))
+						|| (infoPaymentPhase2Compare.getStartDate() == null && !infoPaymentPhase
+								.getEndDate().before(infoPaymentPhase2Compare.getEndDate()))) {
+					throw new FenixServiceException("error.impossible.paymentPhaseWithWrongDates");
+				}
+				iterator.previous();
+			}
+		}
+	}
 
-    private void validatePaymentPhasesWithTransaction(ISuportePersistente sp,
-            IGratuityValues gratuityValues) throws FenixServiceException {
-    }
+	private void validatePaymentPhasesWithTransaction(ISuportePersistente sp,
+			IGratuityValues gratuityValues) throws FenixServiceException {
+	}
 
-    private void registerWhoAndWhen(ISuportePersistente sp, InfoGratuityValues infoGratuityValues,
-            IGratuityValues gratuityValues) throws ExcepcaoPersistencia {
-        // employee who made register
-        IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-        IPerson person = persistentPerson.lerPessoaPorUsername(infoGratuityValues.getInfoEmployee()
-                .getPerson().getUsername());
-        if (person != null) {
-            IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
-            IEmployee employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
-            gratuityValues.setEmployee(employee);
-        }
+	private void registerWhoAndWhen(ISuportePersistente sp, InfoGratuityValues infoGratuityValues,
+			IGratuityValues gratuityValues) throws ExcepcaoPersistencia {
+		// employee who made register
+		IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
+		IPerson person = persistentPerson.lerPessoaPorUsername(infoGratuityValues.getInfoEmployee()
+				.getPerson().getUsername());
+		if (person != null) {
+			IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
+			IEmployee employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
+			gratuityValues.setEmployee(employee);
+		}
 
-        Calendar now = Calendar.getInstance();
-        gratuityValues.setWhen(now.getTime());
-    }
+		Calendar now = Calendar.getInstance();
+		gratuityValues.setWhen(now.getTime());
+	}
 
-    private void writePaymentPhases(ISuportePersistente sp, InfoGratuityValues infoGratuityValues,
-            IGratuityValues gratuityValues) throws FenixServiceException {
-        IPersistentPaymentPhase persistentPaymentPhase = sp.getIPersistentPaymentPhase();
+	private void writePaymentPhases(ISuportePersistente sp, InfoGratuityValues infoGratuityValues,
+			IGratuityValues gratuityValues) throws FenixServiceException, ExcepcaoPersistencia {
+		IPersistentPaymentPhase persistentPaymentPhase = sp.getIPersistentPaymentPhase();
 
-        try {
-            if (gratuityValues.getPaymentPhaseList() != null
-                    && gratuityValues.getPaymentPhaseList().size() > 0) {
-                for (IPaymentPhase paymentPhase : gratuityValues
-                        .getPaymentPhaseList()) {
-                    persistentPaymentPhase.deleteByOID(PaymentPhase.class, paymentPhase.getIdInternal());
-                }
-                gratuityValues.getPaymentPhaseList().clear();
-            }
+		if (gratuityValues.getPaymentPhaseList() != null
+				&& gratuityValues.getPaymentPhaseList().size() > 0) {
+			for (IPaymentPhase paymentPhase : gratuityValues.getPaymentPhaseList()) {
+				persistentPaymentPhase.deleteByOID(PaymentPhase.class, paymentPhase.getIdInternal());
+			}
+			gratuityValues.getPaymentPhaseList().clear();
+		}
 
-            if (infoGratuityValues.getInfoPaymentPhases() != null
-                    && infoGratuityValues.getInfoPaymentPhases().size() > 0) {
-                ListIterator iterator = infoGratuityValues.getInfoPaymentPhases().listIterator();
-                while (iterator.hasNext()) {
-                    InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) iterator.next();
+		if (infoGratuityValues.getInfoPaymentPhases() != null
+				&& infoGratuityValues.getInfoPaymentPhases().size() > 0) {
+			ListIterator iterator = infoGratuityValues.getInfoPaymentPhases().listIterator();
+			while (iterator.hasNext()) {
+				InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) iterator.next();
 
-                    IPaymentPhase paymentPhase = DomainFactory.makePaymentPhase();
-                    paymentPhase.setStartDate(infoPaymentPhase.getStartDate());
-                    paymentPhase.setEndDate(infoPaymentPhase.getEndDate());
-                    paymentPhase.setValue(infoPaymentPhase.getValue());
-                    if (infoPaymentPhase.getDescription() == null) {
-                        infoPaymentPhase.setDescription(String.valueOf(iterator.previousIndex()));
-                    }
-                    paymentPhase.setDescription(infoPaymentPhase.getDescription());
+				IPaymentPhase paymentPhase = DomainFactory.makePaymentPhase();
+				paymentPhase.setStartDate(infoPaymentPhase.getStartDate());
+				paymentPhase.setEndDate(infoPaymentPhase.getEndDate());
+				paymentPhase.setValue(infoPaymentPhase.getValue());
+				if (infoPaymentPhase.getDescription() == null) {
+					infoPaymentPhase.setDescription(String.valueOf(iterator.previousIndex()));
+				}
+				paymentPhase.setDescription(infoPaymentPhase.getDescription());
 
-                    paymentPhase.setGratuityValues(gratuityValues);
+				paymentPhase.setGratuityValues(gratuityValues);
 
-                    persistentPaymentPhase.simpleLockWrite(paymentPhase);
-                }
-            }
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-            throw new FenixServiceException("impossible.insertGratuityValues");
-        }
-    }
+				persistentPaymentPhase.simpleLockWrite(paymentPhase);
+			}
+		}
+	}
 }

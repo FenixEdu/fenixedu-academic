@@ -30,7 +30,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class InsertCurricularCourseAtDegreeCurricularPlan implements IService {
 
-    public void run(InfoCurricularCourse infoCurricularCourse) throws FenixServiceException {
+    public void run(InfoCurricularCourse infoCurricularCourse) throws FenixServiceException, ExcepcaoPersistencia {
 
         try {
             ISuportePersistente persistentSuport = PersistenceSupportFactory
@@ -95,8 +95,6 @@ public class InsertCurricularCourseAtDegreeCurricularPlan implements IService {
             throw new ExistingServiceException("A disciplina curricular "
                     + infoCurricularCourse.getName() + ", com código " + infoCurricularCourse.getCode(),
                     existingException);
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
         }
     }
 

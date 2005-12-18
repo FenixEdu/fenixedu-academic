@@ -33,127 +33,115 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class GetEnrolmentList implements IService {
 
-    public List run(Integer studentCurricularPlanID, EnrollmentState enrollmentState)
-            throws FenixServiceException, Exception {
+	public List run(Integer studentCurricularPlanID, EnrollmentState enrollmentState)
+			throws FenixServiceException, Exception {
 
-        ISuportePersistente sp = null;
-        List enrolmentList = null;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente sp = null;
+		List enrolmentList = null;
 
-            // Read the list
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            enrolmentList = sp.getIPersistentEnrolment()
-                    .readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentCurricularPlanID,
-                            enrollmentState);
+		// Read the list
 
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+		enrolmentList = sp.getIPersistentEnrolment()
+				.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentCurricularPlanID,
+						enrollmentState);
 
-        List result = new ArrayList();
-        Iterator iterator = enrolmentList.iterator();
+		List result = new ArrayList();
+		Iterator iterator = enrolmentList.iterator();
 
-        while (iterator.hasNext()) {
-            IEnrolment enrolment = (IEnrolment) iterator.next();
-            
-            if (enrolment instanceof Proxy) {
-                enrolment = (IEnrolment) ProxyHelper.getRealObject(enrolment);
-            }
-            
+		while (iterator.hasNext()) {
+			IEnrolment enrolment = (IEnrolment) iterator.next();
+
+			if (enrolment instanceof Proxy) {
+				enrolment = (IEnrolment) ProxyHelper.getRealObject(enrolment);
+			}
+
 			if (enrolment instanceof IEnrolmentInExtraCurricularCourse) {
-				continue;				
+				continue;
 			}
-			
-            if (!enrolment.getCurricularCourse().getType()
-                    .equals(CurricularCourseType.P_TYPE_COURSE)) {
-                InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndEvaluationsAndExecutionPeriod
-                        .newInfoFromDomain(enrolment);
-                result.add(infoEnrolment);
-            }
-        }
 
-        return result;
-    }
+			if (!enrolment.getCurricularCourse().getType().equals(CurricularCourseType.P_TYPE_COURSE)) {
+				InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndEvaluationsAndExecutionPeriod
+						.newInfoFromDomain(enrolment);
+				result.add(infoEnrolment);
+			}
+		}
 
-    public List run(Integer studentCurricularPlanID) throws FenixServiceException, Exception {
+		return result;
+	}
 
-        ISuportePersistente sp = null;
-        List enrolmentList = null;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+	public List run(Integer studentCurricularPlanID) throws FenixServiceException, Exception {
 
-            // Read the list
+		ISuportePersistente sp = null;
+		List enrolmentList = null;
 
-            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) sp.getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class, studentCurricularPlanID); 
-            enrolmentList = studentCurricularPlan.getEnrolments();
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+		// Read the list
 
-        List result = new ArrayList();
-        Iterator iterator = enrolmentList.iterator();
+		IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) sp
+				.getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,
+						studentCurricularPlanID);
+		enrolmentList = studentCurricularPlan.getEnrolments();
 
-        while (iterator.hasNext()) {
-            IEnrolment enrolment = (IEnrolment) iterator.next();
-            
-            if (enrolment instanceof Proxy) {
-                enrolment = (IEnrolment) ProxyHelper.getRealObject(enrolment);
-            }
-            
+		List result = new ArrayList();
+		Iterator iterator = enrolmentList.iterator();
+
+		while (iterator.hasNext()) {
+			IEnrolment enrolment = (IEnrolment) iterator.next();
+
+			if (enrolment instanceof Proxy) {
+				enrolment = (IEnrolment) ProxyHelper.getRealObject(enrolment);
+			}
+
 			if (enrolment instanceof IEnrolmentInExtraCurricularCourse) {
-				continue;				
+				continue;
 			}
-			
-            if (!enrolment.getCurricularCourse().getType()
-                    .equals(CurricularCourseType.P_TYPE_COURSE)) {
-                InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
-                        .newInfoFromDomain(enrolment);
-                result.add(infoEnrolment);
-            }
-        }
 
-        return result;
-    }
-
-    public List run(Integer studentCurricularPlanID, EnrollmentState enrollmentState,
-            Boolean pTypeEnrolments) throws FenixServiceException, Exception {
-
-        if (!pTypeEnrolments.booleanValue()) {
-            return this.run(studentCurricularPlanID, enrollmentState);
-        }
-
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        // Read the list
-        List enrolmentList = sp.getIPersistentEnrolment()
-                .readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentCurricularPlanID,
-                        enrollmentState);
-
-        // clone
-        List result = new ArrayList();
-        for (Iterator iter = enrolmentList.iterator(); iter.hasNext();) {
-            IEnrolment enrolment = (IEnrolment) iter.next();
-			
-            if (enrolment instanceof Proxy) {
-                enrolment = (IEnrolment) ProxyHelper.getRealObject(enrolment);
-            }
-            
-            if (enrolment instanceof IEnrolmentInExtraCurricularCourse) {
-				continue;				
+			if (!enrolment.getCurricularCourse().getType().equals(CurricularCourseType.P_TYPE_COURSE)) {
+				InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
+						.newInfoFromDomain(enrolment);
+				result.add(infoEnrolment);
 			}
-			
-            InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndEvaluationsAndExecutionPeriod
-                    .newInfoFromDomain(enrolment);
-            result.add(infoEnrolment);
-        }
+		}
 
-        return result;
-    }
+		return result;
+	}
+
+	public List run(Integer studentCurricularPlanID, EnrollmentState enrollmentState,
+			Boolean pTypeEnrolments) throws FenixServiceException, Exception {
+
+		if (!pTypeEnrolments.booleanValue()) {
+			return this.run(studentCurricularPlanID, enrollmentState);
+		}
+
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+
+		// Read the list
+		List enrolmentList = sp.getIPersistentEnrolment()
+				.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentCurricularPlanID,
+						enrollmentState);
+
+		// clone
+		List result = new ArrayList();
+		for (Iterator iter = enrolmentList.iterator(); iter.hasNext();) {
+			IEnrolment enrolment = (IEnrolment) iter.next();
+
+			if (enrolment instanceof Proxy) {
+				enrolment = (IEnrolment) ProxyHelper.getRealObject(enrolment);
+			}
+
+			if (enrolment instanceof IEnrolmentInExtraCurricularCourse) {
+				continue;
+			}
+
+			InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndEvaluationsAndExecutionPeriod
+					.newInfoFromDomain(enrolment);
+			result.add(infoEnrolment);
+		}
+
+		return result;
+	}
 
 }

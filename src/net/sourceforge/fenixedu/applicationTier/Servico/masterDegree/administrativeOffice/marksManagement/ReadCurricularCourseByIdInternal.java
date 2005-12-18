@@ -13,26 +13,19 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Fernanda Quitério 01/07/2003
- *  
+ * 
  */
 public class ReadCurricularCourseByIdInternal implements IService {
 
-    public InfoCurricularCourse run(Integer curricularCourseCode) throws FenixServiceException {
+	public InfoCurricularCourse run(Integer curricularCourseCode) throws FenixServiceException, ExcepcaoPersistencia {
+		InfoCurricularCourse infoCurricularCourse = null;
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 
-        InfoCurricularCourse infoCurricularCourse = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+		ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+				CurricularCourse.class, curricularCourseCode, false);
 
-            ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
-                    .readByOID(CurricularCourse.class, curricularCourseCode, false);
-
-            infoCurricularCourse = InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse);
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
-        return infoCurricularCourse;
-    }
+		infoCurricularCourse = InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse);
+		return infoCurricularCourse;
+	}
 }

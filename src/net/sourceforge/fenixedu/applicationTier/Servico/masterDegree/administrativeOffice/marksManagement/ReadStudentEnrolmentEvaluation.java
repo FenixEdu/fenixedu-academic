@@ -25,51 +25,49 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Angela 04/07/2003
- *  
+ * 
  */
 public class ReadStudentEnrolmentEvaluation implements IService {
 
-    public InfoSiteEnrolmentEvaluation run(Integer studentEvaluationCode) throws FenixServiceException {
+	public InfoSiteEnrolmentEvaluation run(Integer studentEvaluationCode) throws FenixServiceException, ExcepcaoPersistencia {
 
-        IEnrolmentEvaluation enrolmentEvaluation = null;
-        InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
-        InfoEnrolment infoEnrolment = new InfoEnrolment();
-        InfoTeacher infoTeacher = new InfoTeacher();
-        List infoEnrolmentEvaluations = new ArrayList();
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp
-                    .getIPersistentEnrolmentEvaluation();
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            enrolmentEvaluation = (IEnrolmentEvaluation) persistentEnrolmentEvaluation.readByOID(
-                    EnrolmentEvaluation.class, studentEvaluationCode, false);
+		IEnrolmentEvaluation enrolmentEvaluation = null;
+		InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
+		InfoEnrolment infoEnrolment = new InfoEnrolment();
+		InfoTeacher infoTeacher = new InfoTeacher();
+		List infoEnrolmentEvaluations = new ArrayList();
 
-            infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
-                    .newInfoFromDomain(enrolmentEvaluation.getEnrolment());
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp
+				.getIPersistentEnrolmentEvaluation();
+		IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+		enrolmentEvaluation = (IEnrolmentEvaluation) persistentEnrolmentEvaluation.readByOID(
+				EnrolmentEvaluation.class, studentEvaluationCode, false);
 
-            IPerson person = enrolmentEvaluation.getPersonResponsibleForGrade();
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
-            infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(teacher);
+		infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
+				.newInfoFromDomain(enrolmentEvaluation.getEnrolment());
 
-            infoEnrolmentEvaluation = InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolmentEvaluation);
-            infoEnrolmentEvaluation.setInfoPersonResponsibleForGrade(infoTeacher.getInfoPerson());
-            if (enrolmentEvaluation.getEmployee() != null)
-                infoEnrolmentEvaluation.setInfoEmployee(InfoPerson.newInfoFromDomain(enrolmentEvaluation.getEmployee().getPerson()));
-            infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
-            infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
+		IPerson person = enrolmentEvaluation.getPersonResponsibleForGrade();
+		ITeacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
+		infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(teacher);
 
-            //			enrolmenEvaluation.setEnrolment
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
-        InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = new InfoSiteEnrolmentEvaluation();
-        infoSiteEnrolmentEvaluation.setEnrolmentEvaluations(infoEnrolmentEvaluations);
-        infoSiteEnrolmentEvaluation.setInfoTeacher(infoTeacher);
+		infoEnrolmentEvaluation = InfoEnrolmentEvaluationWithResponsibleForGrade
+				.newInfoFromDomain(enrolmentEvaluation);
+		infoEnrolmentEvaluation.setInfoPersonResponsibleForGrade(infoTeacher.getInfoPerson());
+		if (enrolmentEvaluation.getEmployee() != null)
+			infoEnrolmentEvaluation.setInfoEmployee(InfoPerson.newInfoFromDomain(enrolmentEvaluation
+					.getEmployee().getPerson()));
+		infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
+		infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
 
-        return infoSiteEnrolmentEvaluation;
+		// enrolmenEvaluation.setEnrolment
 
-    }
+		InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = new InfoSiteEnrolmentEvaluation();
+		infoSiteEnrolmentEvaluation.setEnrolmentEvaluations(infoEnrolmentEvaluations);
+		infoSiteEnrolmentEvaluation.setInfoTeacher(infoTeacher);
+
+		return infoSiteEnrolmentEvaluation;
+
+	}
 
 }

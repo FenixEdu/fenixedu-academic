@@ -20,37 +20,25 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadGratuitySituationById implements IService {
 
-    public ReadGratuitySituationById() {
+	public InfoGratuitySituation run(Integer gratuitySituationID) throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente sp = null;
+		InfoGratuitySituation infoGratuitySituation = null;
 
-    }
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentGratuitySituation persistentGratuitySituation = sp.getIPersistentGratuitySituation();
 
-    public InfoGratuitySituation run(Integer gratuitySituationID) throws FenixServiceException {
+		IGratuitySituation gratuitySituation = (IGratuitySituation) persistentGratuitySituation
+				.readByOID(GratuitySituation.class, gratuitySituationID, true);
 
-        ISuportePersistente sp = null;
-        InfoGratuitySituation infoGratuitySituation = null;
+		if (gratuitySituation == null) {
+			throw new NonExistingServiceException(
+					"error.exception.masterDegree.gratuity.notExistingGratuitySituation");
+		}
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentGratuitySituation persistentGratuitySituation = sp
-                    .getIPersistentGratuitySituation();
+		infoGratuitySituation = InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree
+				.newInfoFromDomain(gratuitySituation);
 
-            IGratuitySituation gratuitySituation = (IGratuitySituation) persistentGratuitySituation
-                    .readByOID(GratuitySituation.class, gratuitySituationID, true);
+		return infoGratuitySituation;
 
-            if (gratuitySituation == null) {
-                throw new NonExistingServiceException(
-                        "error.exception.masterDegree.gratuity.notExistingGratuitySituation");
-            }
-
-            infoGratuitySituation = InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree
-                    .newInfoFromDomain(gratuitySituation);
-
-        } catch (ExcepcaoPersistencia e) {
-
-            throw new FenixServiceException(e);
-        }
-
-        return infoGratuitySituation;
-
-    }
+	}
 }

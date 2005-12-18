@@ -13,36 +13,24 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- *  
+ * 
  */
 public class ReadTransactionByID implements IService {
 
-    public ReadTransactionByID() {
+	public InfoTransaction run(Integer transactionId) throws FenixServiceException, ExcepcaoPersistencia {
+		InfoTransaction infoTransaction = null;
 
-    }
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-    public InfoTransaction run(Integer transactionId) throws FenixServiceException {
+		ITransaction transaction = (ITransaction) sp.getIPersistentTransaction().readByOID(
+				Transaction.class, transactionId);
 
-        InfoTransaction infoTransaction = null;
+		if (transaction == null) {
+			throw new ExcepcaoInexistente();
+		}
+		infoTransaction = InfoTransaction.newInfoFromDomain(transaction);
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-            ITransaction transaction = (ITransaction) sp.getIPersistentTransaction().readByOID(
-                    Transaction.class, transactionId);
-
-            if (transaction == null) {
-                throw new ExcepcaoInexistente();
-            }
-            infoTransaction = InfoTransaction.newInfoFromDomain(transaction);
-
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
-
-        return infoTransaction;
-    }
+		return infoTransaction;
+	}
 
 }

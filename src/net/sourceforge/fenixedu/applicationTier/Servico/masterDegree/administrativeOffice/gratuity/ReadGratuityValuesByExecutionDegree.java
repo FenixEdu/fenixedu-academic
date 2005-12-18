@@ -31,56 +31,51 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadGratuityValuesByExecutionDegree implements IService {
 
-    public Object run(Integer executionDegreeID) throws FenixServiceException {
-        if (executionDegreeID == null) {
-            throw new FenixServiceException("error.impossible.noGratuityValues");
-        }
+	public Object run(Integer executionDegreeID) throws FenixServiceException, ExcepcaoPersistencia {
+		if (executionDegreeID == null) {
+			throw new FenixServiceException("error.impossible.noGratuityValues");
+		}
 
-        ISuportePersistente sp = null;
-        IGratuityValues gratuityValues = null;
-        List infoPaymentPhases = null;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGratuityValues();
+		ISuportePersistente sp = null;
+		IGratuityValues gratuityValues = null;
+		List infoPaymentPhases = null;
 
-            gratuityValues = persistentGratuityValues
-                    .readGratuityValuesByExecutionDegree(executionDegreeID);
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-            throw new FenixServiceException("error.impossible.noGratuityValues");
-        }
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGratuityValues();
 
-        InfoGratuityValues infoGratuityValues = null;
-        if (gratuityValues != null) {
-            infoGratuityValues = InfoGratuityValuesWithInfoExecutionDegree
-                    .newInfoFromDomain(gratuityValues);
+		gratuityValues = persistentGratuityValues.readGratuityValuesByExecutionDegree(executionDegreeID);
 
-            infoPaymentPhases = new ArrayList();
-            CollectionUtils.collect(gratuityValues.getPaymentPhaseList(), new Transformer() {
-                public Object transform(Object input) {
-                    IPaymentPhase paymentPhase = (IPaymentPhase) input;
-                    return InfoPaymentPhase.newInfoFromDoamin(paymentPhase);
-                }
-            }, infoPaymentPhases);
+		InfoGratuityValues infoGratuityValues = null;
+		if (gratuityValues != null) {
+			infoGratuityValues = InfoGratuityValuesWithInfoExecutionDegree
+					.newInfoFromDomain(gratuityValues);
 
-            InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) CollectionUtils.find(
-                    infoPaymentPhases, new Predicate() {
-                        public boolean evaluate(Object input) {
-                            InfoPaymentPhase aInfoPaymentPhase = (InfoPaymentPhase) input;
-                            if (aInfoPaymentPhase.getDescription() != null
-                                    && aInfoPaymentPhase.getDescription().equals(
-                                            SessionConstants.REGISTRATION_PAYMENT)) {
-                                return true;
-                            }
-                            return false;
-                        }
-                    });
-            if (infoPaymentPhase != null) {
-                infoGratuityValues.setRegistrationPayment(Boolean.TRUE);
-            }
+			infoPaymentPhases = new ArrayList();
+			CollectionUtils.collect(gratuityValues.getPaymentPhaseList(), new Transformer() {
+				public Object transform(Object input) {
+					IPaymentPhase paymentPhase = (IPaymentPhase) input;
+					return InfoPaymentPhase.newInfoFromDoamin(paymentPhase);
+				}
+			}, infoPaymentPhases);
 
-            infoGratuityValues.setInfoPaymentPhases(infoPaymentPhases);
-        }
-        return infoGratuityValues;
-    }
+			InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) CollectionUtils.find(
+					infoPaymentPhases, new Predicate() {
+						public boolean evaluate(Object input) {
+							InfoPaymentPhase aInfoPaymentPhase = (InfoPaymentPhase) input;
+							if (aInfoPaymentPhase.getDescription() != null
+									&& aInfoPaymentPhase.getDescription().equals(
+											SessionConstants.REGISTRATION_PAYMENT)) {
+								return true;
+							}
+							return false;
+						}
+					});
+			if (infoPaymentPhase != null) {
+				infoGratuityValues.setRegistrationPayment(Boolean.TRUE);
+			}
+
+			infoGratuityValues.setInfoPaymentPhases(infoPaymentPhases);
+		}
+		return infoGratuityValues;
+	}
 }

@@ -20,30 +20,25 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadGratuitySituationByStudentCurricularPlanByGratuityValues implements IService {
 
-    public Object run(Integer studentCurricularPlanID, Integer gratuityValuesID)
-            throws FenixServiceException {
-        ISuportePersistente sp = null;
-        IGratuitySituation gratuitySituation = null;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+	public Object run(Integer studentCurricularPlanID, Integer gratuityValuesID)
+			throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente sp = null;
+		IGratuitySituation gratuitySituation = null;
 
-            IPersistentGratuitySituation persistentGratuitySituation = sp
-                    .getIPersistentGratuitySituation();
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            gratuitySituation = persistentGratuitySituation
-                    .readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
-                            studentCurricularPlanID, gratuityValuesID);
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-            throw new FenixServiceException("error.impossible.insertExemptionGratuity");
-        }
+		IPersistentGratuitySituation persistentGratuitySituation = sp.getIPersistentGratuitySituation();
 
-        InfoGratuitySituation infoGratuitySituation = null;
-        if (gratuitySituation != null) {
-            infoGratuitySituation = InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree
-                    .newInfoFromDomain(gratuitySituation);
-        }
+		gratuitySituation = persistentGratuitySituation
+				.readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(studentCurricularPlanID,
+						gratuityValuesID);
 
-        return infoGratuitySituation;
-    }
+		InfoGratuitySituation infoGratuitySituation = null;
+		if (gratuitySituation != null) {
+			infoGratuitySituation = InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree
+					.newInfoFromDomain(gratuitySituation);
+		}
+
+		return infoGratuitySituation;
+	}
 }

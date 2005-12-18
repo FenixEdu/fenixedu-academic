@@ -23,35 +23,23 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class DeleteGratuitySituationById implements IService {
 
-    /*
-     * This clean the exemption's value, but not delete the object.
-     * 
-     */
-    public Boolean run(Integer gratuitySituationID) throws FenixServiceException {
-        ISuportePersistente sp = null;
+	public Boolean run(Integer gratuitySituationID) throws FenixServiceException, ExcepcaoPersistencia {
+		ISuportePersistente sp = null;
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentGratuitySituation persistentGratuitySituation = sp
-                    .getIPersistentGratuitySituation();
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentGratuitySituation persistentGratuitySituation = sp.getIPersistentGratuitySituation();
 
-            IGratuitySituation gratuitySituation = (IGratuitySituation) persistentGratuitySituation
-                    .readByOID(GratuitySituation.class, gratuitySituationID, true);
-            if (gratuitySituation == null) {
-                return Boolean.TRUE;
-            }
+		IGratuitySituation gratuitySituation = (IGratuitySituation) persistentGratuitySituation
+				.readByOID(GratuitySituation.class, gratuitySituationID, true);
+		if (gratuitySituation == null) {
+			return Boolean.TRUE;
+		}
 
-            gratuitySituation.setExemptionPercentage(null);
-            gratuitySituation.setExemptionValue(null);
-            gratuitySituation.setExemptionType(null);
-            gratuitySituation.setExemptionDescription(null);
-            // gratuitySituation.setEmployee(null);
-            // gratuitySituation.setWhen(null);
-        } catch (ExcepcaoPersistencia e) {
+		gratuitySituation.setExemptionPercentage(null);
+		gratuitySituation.setExemptionValue(null);
+		gratuitySituation.setExemptionType(null);
+		gratuitySituation.setExemptionDescription(null);
 
-            throw new FenixServiceException(e);
-        }
-
-        return Boolean.TRUE;
-    }
+		return Boolean.TRUE;
+	}
 }

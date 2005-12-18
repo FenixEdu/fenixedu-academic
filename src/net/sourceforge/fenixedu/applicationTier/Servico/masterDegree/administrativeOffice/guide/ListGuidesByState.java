@@ -8,11 +8,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.IGuide;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -22,29 +20,23 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ListGuidesByState implements IService {
 
-    public List run(Integer guideYear, GuideState situationOfGuide) throws Exception {
+	public List run(Integer guideYear, GuideState situationOfGuide) throws Exception {
 
-        ISuportePersistente sp = null;
-        List guides = new ArrayList();
+		ISuportePersistente sp = null;
+		List guides = new ArrayList();
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            guides = sp.getIPersistentGuide().readByYearAndState(guideYear, situationOfGuide);
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		guides = sp.getIPersistentGuide().readByYearAndState(guideYear, situationOfGuide);
 
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+		Iterator iterator = guides.iterator();
 
-        Iterator iterator = guides.iterator();
+		List result = new ArrayList();
+		while (iterator.hasNext()) {
+			result.add(InfoGuideWithPersonAndExecutionDegreeAndContributor
+					.newInfoFromDomain((IGuide) iterator.next()));
+		}
 
-        List result = new ArrayList();
-        while (iterator.hasNext()) {
-            result.add(InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain((IGuide) iterator.next()));
-        }
-
-        return result;
-    }
+		return result;
+	}
 
 }

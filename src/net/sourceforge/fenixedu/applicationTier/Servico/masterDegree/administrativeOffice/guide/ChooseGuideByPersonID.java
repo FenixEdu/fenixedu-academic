@@ -9,13 +9,11 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
@@ -29,80 +27,66 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ChooseGuideByPersonID implements IService {
 
-    public List run(Integer personID) throws Exception {
+	public List run(Integer personID) throws Exception {
 
-        ISuportePersistente sp = null;
-        List guides = null;
-        IPerson person = null;
+		ISuportePersistente sp = null;
+		List guides = null;
+		IPerson person = null;
 
-        // Check if person exists
+		// Check if person exists
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class, personID);
+		person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class, personID);
 
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);
+		if (person == null) {
+			throw new NonExistingServiceException();
+		}
 
-            throw newEx;
-        }
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		guides = sp.getIPersistentGuide().readByPerson(person.getNumeroDocumentoIdentificacao(),
+				person.getIdDocumentType());
 
-        if (person == null) {
-            throw new NonExistingServiceException();
-        }
+		BeanComparator numberComparator = new BeanComparator("number");
+		BeanComparator versionComparator = new BeanComparator("version");
+		ComparatorChain chainComparator = new ComparatorChain();
+		chainComparator.addComparator(numberComparator);
+		chainComparator.addComparator(versionComparator);
+		Collections.sort(guides, chainComparator);
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            guides = sp.getIPersistentGuide().readByPerson(person.getNumeroDocumentoIdentificacao(),
-                    person.getIdDocumentType());
+		if ((guides == null) || (guides.size() == 0)) {
+			return null;
+		}
 
-            BeanComparator numberComparator = new BeanComparator("number");
-            BeanComparator versionComparator = new BeanComparator("version");
-            ComparatorChain chainComparator = new ComparatorChain();
-            chainComparator.addComparator(numberComparator);
-            chainComparator.addComparator(versionComparator);
-            Collections.sort(guides, chainComparator);
+		return getLatestVersions(guides);
+	}
 
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+	/**
+	 * 
+	 * This function expects to receive a list ordered by number (Ascending) and
+	 * version (Descending)
+	 * 
+	 * @param guides
+	 * @return The latest version for the guides
+	 */
+	private List getLatestVersions(List guides) {
+		List result = new ArrayList();
 
-        if ((guides == null) || (guides.size() == 0)) {
-            return null;
-        }
+		Collections.reverse(guides);
 
-        return getLatestVersions(guides);
-    }
+		Integer numberAux = null;
 
-    /**
-     * 
-     * This function expects to receive a list ordered by number (Ascending) and
-     * version (Descending)
-     * 
-     * @param guides
-     * @return The latest version for the guides
-     */
-    private List getLatestVersions(List guides) {
-        List result = new ArrayList();
+		Iterator iterator = guides.iterator();
+		while (iterator.hasNext()) {
+			IGuide guide = (IGuide) iterator.next();
 
-        Collections.reverse(guides);
-
-        Integer numberAux = null;
-
-        Iterator iterator = guides.iterator();
-        while (iterator.hasNext()) {
-            IGuide guide = (IGuide) iterator.next();
-
-            if ((numberAux == null) || (numberAux.intValue() != guide.getNumber().intValue())) {
-                numberAux = guide.getNumber();
-                result.add(InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide));
-            }
-        }
-        Collections.reverse(result);
-        return result;
-    }
+			if ((numberAux == null) || (numberAux.intValue() != guide.getNumber().intValue())) {
+				numberAux = guide.getNumber();
+				result.add(InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide));
+			}
+		}
+		Collections.reverse(result);
+		return result;
+	}
 
 }

@@ -54,7 +54,7 @@ public class PublicSiteComponentBuilder {
     }
 
     public ISiteComponent getComponent(ISiteComponent component, ISchoolClass domainClass)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
 
         if (component instanceof InfoSiteTimetable) {
             return getInfoSiteTimetable((InfoSiteTimetable) component, domainClass);
@@ -69,13 +69,13 @@ public class PublicSiteComponentBuilder {
     /**
      * @param classes
      * @return
+     * @throws ExcepcaoPersistencia 
      */
     private ISiteComponent getInfoSiteClasses(InfoSiteClasses component, ISchoolClass domainClass)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
         List classes = new ArrayList();
         List infoClasses = new ArrayList();
 
-        try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             ITurmaPersistente classDAO = sp.getITurmaPersistente();
@@ -90,10 +90,6 @@ public class PublicSiteComponentBuilder {
                 ISchoolClass taux = (ISchoolClass) classes.get(i);
                 infoClasses.add(copyClass2InfoClass(taux));
             }
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
 
         component.setClasses(infoClasses);
         return component;

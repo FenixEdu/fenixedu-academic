@@ -27,52 +27,45 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class InsertStudentsFinalEvaluation implements IService {
 
-    public InsertStudentsFinalEvaluation() {
+	public List run(List<InfoEnrolmentEvaluation> evaluations, Integer teacherNumber,
+			Date evaluationDate, IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
 
-    }
+		List<InfoEnrolmentEvaluation> infoEvaluationsWithError = new ArrayList<InfoEnrolmentEvaluation>();
 
-    public List run(List<InfoEnrolmentEvaluation> evaluations, Integer teacherNumber, Date evaluationDate, IUserView userView)
-            throws FenixServiceException {
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp
+				.getIPersistentEnrolmentEvaluation();
+		IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+		IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 
-        List<InfoEnrolmentEvaluation> infoEvaluationsWithError = new ArrayList<InfoEnrolmentEvaluation>();
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp.getIPersistentEnrolmentEvaluation();
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+		for (InfoEnrolmentEvaluation infoEnrolmentEvaluation : evaluations) {
 
-			for (InfoEnrolmentEvaluation infoEnrolmentEvaluation : evaluations) {
-	
-		        ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);
-		        if (teacher == null) {
-		            throw new NonExistingServiceException();
-		        }
-				
-	            IStudent student = (IStudent) persistentStudent.readByOID(Student.class, infoEnrolmentEvaluation
-	                    .getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent().getIdInternal());
-				
-				infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent().setNumber(student.getNumber());
-								
-				IEnrolmentEvaluation enrolmentEvaluationFromDb = (IEnrolmentEvaluation)persistentEnrolmentEvaluation.
-						readByOID(EnrolmentEvaluation.class, infoEnrolmentEvaluation.getIdInternal());
-				
-				try {
-					enrolmentEvaluationFromDb.insertStudentFinalEvaluationForMasterDegree(infoEnrolmentEvaluation.getGrade(), 
-							teacher.getPerson(), evaluationDate);
-				}
-				
-				catch (DomainException e) {
-					infoEvaluationsWithError.add(infoEnrolmentEvaluation);
-				}
-            }
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
-            FenixServiceException newEx = new FenixServiceException("");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+			ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);
+			if (teacher == null) {
+				throw new NonExistingServiceException();
+			}
 
-        return infoEvaluationsWithError;
-    }
+			IStudent student = (IStudent) persistentStudent.readByOID(Student.class,
+					infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan()
+							.getInfoStudent().getIdInternal());
+
+			infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent()
+					.setNumber(student.getNumber());
+
+			IEnrolmentEvaluation enrolmentEvaluationFromDb = (IEnrolmentEvaluation) persistentEnrolmentEvaluation
+					.readByOID(EnrolmentEvaluation.class, infoEnrolmentEvaluation.getIdInternal());
+
+			try {
+				enrolmentEvaluationFromDb.insertStudentFinalEvaluationForMasterDegree(
+						infoEnrolmentEvaluation.getGrade(), teacher.getPerson(), evaluationDate);
+			}
+
+			catch (DomainException e) {
+				infoEvaluationsWithError.add(infoEnrolmentEvaluation);
+			}
+		}
+
+		return infoEvaluationsWithError;
+	}
 
 }

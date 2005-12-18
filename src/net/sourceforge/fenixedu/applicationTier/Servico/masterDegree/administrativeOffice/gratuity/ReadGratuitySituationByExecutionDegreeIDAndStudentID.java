@@ -16,44 +16,32 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- *  
+ * 
  */
 public class ReadGratuitySituationByExecutionDegreeIDAndStudentID implements IService {
 
-    /**
-     * Constructor
-     */
-    public ReadGratuitySituationByExecutionDegreeIDAndStudentID() {
-    }
+	public InfoGratuitySituation run(Integer executionDegreeID, Integer studentID)
+			throws FenixServiceException, ExcepcaoPersistencia {
 
-    public InfoGratuitySituation run(Integer executionDegreeID, Integer studentID)
-            throws FenixServiceException {
+		InfoGratuitySituation infoGratuitySituation = null;
 
-        InfoGratuitySituation infoGratuitySituation = null;
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IExecutionDegree executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree()
+				.readByOID(ExecutionDegree.class, executionDegreeID);
+		IStudent student = (IStudent) sp.getIPersistentStudent().readByOID(Student.class, studentID);
 
-            IExecutionDegree executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree()
-                    .readByOID(ExecutionDegree.class, executionDegreeID);
-            IStudent student = (IStudent) sp.getIPersistentStudent().readByOID(Student.class, studentID);
+		if ((executionDegree == null) || (student == null)) {
+			return null;
+		}
 
-            if ((executionDegree == null) || (student == null)) {
-                return null;
-            }
+		IGratuitySituation gratuitySituation = sp.getIPersistentGratuitySituation()
+				.readGratuitySituationByExecutionDegreeAndStudent(executionDegree.getIdInternal(),
+						student.getIdInternal());
 
-            IGratuitySituation gratuitySituation = sp.getIPersistentGratuitySituation()
-                    .readGratuitySituationByExecutionDegreeAndStudent(executionDegree.getIdInternal(), student.getIdInternal());
+		infoGratuitySituation = InfoGratuitySituation.newInfoFromDomain(gratuitySituation);
 
-            infoGratuitySituation = InfoGratuitySituation.newInfoFromDomain(gratuitySituation);
-
-            return infoGratuitySituation;
-
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
-    }
+		return infoGratuitySituation;
+	}
 
 }

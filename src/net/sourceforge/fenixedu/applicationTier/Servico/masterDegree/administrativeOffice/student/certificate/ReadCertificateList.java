@@ -19,35 +19,29 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadCertificateList implements IService {
 
-    public List run(GraduationType graduationType, List types) throws FenixServiceException {
+	public List run(GraduationType graduationType, List types) throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = null;
-        List certificates = null;
+		ISuportePersistente sp = null;
+		List certificates = null;
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            // Read the certificates
+		// Read the certificates
 
-            certificates = sp.getIPersistentPrice().readByGraduationTypeAndDocumentType(graduationType,
-                    types);
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+		certificates = sp.getIPersistentPrice().readByGraduationTypeAndDocumentType(graduationType,
+				types);
 
-        if (certificates == null)
-            throw new ExcepcaoInexistente("No Certificates Found !!");
+		if (certificates == null)
+			throw new ExcepcaoInexistente("No Certificates Found !!");
 
-        List result = new ArrayList();
-        Iterator iterator = certificates.iterator();
+		List result = new ArrayList();
+		Iterator iterator = certificates.iterator();
 
-        while (iterator.hasNext()) {
-            IPrice price = (IPrice) iterator.next();
-            result.add(InfoPrice.newInfoFromDoaim(price));
-        }
-        return result;
-    }
+		while (iterator.hasNext()) {
+			IPrice price = (IPrice) iterator.next();
+			result.add(InfoPrice.newInfoFromDoaim(price));
+		}
+		return result;
+	}
 
 }

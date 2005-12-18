@@ -10,7 +10,6 @@ import java.util.Calendar;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -24,7 +23,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class RoomSiteComponentService implements IService {
 
-    public static Object run(ISiteComponent bodyComponent, RoomKey roomKey, Calendar day) throws ExcepcaoPersistencia {
+    public static Object run(ISiteComponent bodyComponent, RoomKey roomKey, Calendar day) throws Exception {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
         final IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
