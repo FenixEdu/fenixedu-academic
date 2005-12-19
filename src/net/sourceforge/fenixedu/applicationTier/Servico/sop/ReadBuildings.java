@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoBuilding;
-import net.sourceforge.fenixedu.domain.IBuilding;
+import net.sourceforge.fenixedu.domain.space.IBuilding;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBuilding;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;

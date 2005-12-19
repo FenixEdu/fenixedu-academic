@@ -5,8 +5,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  * 
  */
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotEmptyServiceException;
-import net.sourceforge.fenixedu.domain.Building;
-import net.sourceforge.fenixedu.domain.IBuilding;
+import net.sourceforge.fenixedu.domain.space.Building;
+import net.sourceforge.fenixedu.domain.space.IBuilding;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBuilding;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;

@@ -6,7 +6,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.domain.IRoom;
+import net.sourceforge.fenixedu.domain.space.IRoom;
 
 /**
  * @author João Fialho & Rita Ferreira

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IBuilding;
+import net.sourceforge.fenixedu.domain.space.IBuilding;
 
 /**
  * @author Luis Cruz

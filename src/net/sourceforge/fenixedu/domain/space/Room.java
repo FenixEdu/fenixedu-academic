@@ -1,7 +1,9 @@
-package net.sourceforge.fenixedu.domain;
+package net.sourceforge.fenixedu.domain.space;
 
 import java.util.Calendar;
 
+import net.sourceforge.fenixedu.domain.IPeriod;
+import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.DiaSemana;
 

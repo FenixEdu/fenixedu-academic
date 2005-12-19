@@ -1297,7 +1297,7 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 	    
 	    public void setEnrollmentEndTime(java.util.Calendar calendar);
 
-		public java.util.List<IRoom> getAssociatedRooms();
+		public java.util.List<net.sourceforge.fenixedu.domain.space.IRoom> getAssociatedRooms();
 		
 		public void delete();
 
@@ -1311,7 +1311,7 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 		public void checkIfCanDistributeStudentsByRooms();
 		
 		public void distributeStudentsByRooms(java.util.List<IStudent> studentsToDistribute, 
-                                              java.util.List<IRoom> selectedRooms);
+                                              java.util.List<net.sourceforge.fenixedu.domain.space.IRoom> selectedRooms);
                                               
 		public IWrittenEvaluationEnrolment getWrittenEvaluationEnrolmentFor(IStudent student);                                              
                                               
@@ -1327,7 +1327,7 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 			interface "
 			public void edit(java.util.Date examDay, java.util.Date examStartTime, java.util.Date examEndTime,
 							 java.util.List<IExecutionCourse> executionCourses, java.util.List<ICurricularCourseScope> curricularCourseScopes, 
-							 java.util.List<IRoom> rooms, IPeriod period, net.sourceforge.fenixedu.util.Season season);
+							 java.util.List<net.sourceforge.fenixedu.domain.space.IRoom> rooms, IPeriod period, net.sourceforge.fenixedu.util.Season season);
     		public boolean isExamsMapPublished();
 	        public boolean getIsExamsMapPublished();
 			"	
@@ -1339,7 +1339,7 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 			interface "
 			public void edit(java.util.Date testDay, java.util.Date testStartTime, java.util.Date testEndTime,
 							 java.util.List<IExecutionCourse> executionCourses, java.util.List<ICurricularCourseScope> curricularCourseScopes, 
-							 java.util.List<IRoom> rooms, IPeriod period, String description);			
+							 java.util.List<net.sourceforge.fenixedu.domain.space.IRoom> rooms, IPeriod period, String description);			
 			"	
 		}
 
@@ -2003,7 +2003,7 @@ class net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse extends net.sour
     Double globalAppreciation;
     
     interface "
-	public void createInquiriesRoom(net.sourceforge.fenixedu.domain.IRoom room, net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRoom infoInquiriesRoom);
+	public void createInquiriesRoom(net.sourceforge.fenixedu.domain.space.IRoom room, net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRoom infoInquiriesRoom);
 
 	public void createInquiriesTeacher(net.sourceforge.fenixedu.domain.INonAffiliatedTeacher nonAffiliatedTeacher, net.sourceforge.fenixedu.domain.ShiftType shiftType, net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher infoInquiriesTeacher);
 
@@ -2788,7 +2788,7 @@ class net.sourceforge.fenixedu.domain.Role extends net.sourceforge.fenixedu.doma
 }
 
 
-class net.sourceforge.fenixedu.domain.RoomOccupation extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.space.RoomOccupation extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer weekOfQuinzenalStart;
 	Integer keyRoom;
 	Integer frequency;
@@ -2810,9 +2810,9 @@ class net.sourceforge.fenixedu.domain.RoomOccupation extends net.sourceforge.fen
 
 	public boolean roomOccupationForDateAndTime(IRoomOccupation roomOccupation);
 	
-	public boolean roomOccupationForDateAndTime(IPeriod period, java.util.Calendar startTime, java.util.Calendar endTime, net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week, IRoom room);
+	public boolean roomOccupationForDateAndTime(net.sourceforge.fenixedu.domain.IPeriod period, java.util.Calendar startTime, java.util.Calendar endTime, net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week, net.sourceforge.fenixedu.domain.space.IRoom room);
 	
-	public boolean roomOccupationForDateAndTime(IPeriod period, java.util.Calendar startTime, java.util.Calendar endTime, net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week);
+	public boolean roomOccupationForDateAndTime(net.sourceforge.fenixedu.domain.IPeriod period, java.util.Calendar startTime, java.util.Calendar endTime, net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week);
 	
     public boolean roomOccupationForDateAndTime(java.util.Calendar startDate, java.util.Calendar endDate, java.util.Calendar startTime, java.util.Calendar endTime, net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week);
 
@@ -2955,12 +2955,12 @@ class net.sourceforge.fenixedu.domain.Section extends net.sourceforge.fenixedu.d
 class net.sourceforge.fenixedu.domain.space.Space extends net.sourceforge.fenixedu.domain.DomainObject {
 }
 
-	class net.sourceforge.fenixedu.domain.Building extends net.sourceforge.fenixedu.domain.space.Space {
+	class net.sourceforge.fenixedu.domain.space.Building extends net.sourceforge.fenixedu.domain.space.Space {
 		String name;
 		Integer keyCampus;
 	}
 
-	class net.sourceforge.fenixedu.domain.Room extends net.sourceforge.fenixedu.domain.space.Space {
+	class net.sourceforge.fenixedu.domain.space.Room extends net.sourceforge.fenixedu.domain.space.Space {
 		Integer keyBuilding;
 		String nome;
 		Integer capacidadeNormal;
@@ -3084,7 +3084,7 @@ class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.dom
     
     public void associateSchoolClass(net.sourceforge.fenixedu.domain.ISchoolClass schoolClass);
     
-    public void transferSummary(ISummary summary, java.util.Date summaryDate, java.util.Date summaryHour, IRoom room, boolean newSummary);
+    public void transferSummary(ISummary summary, java.util.Date summaryDate, java.util.Date summaryHour, net.sourceforge.fenixedu.domain.space.IRoom room, boolean newSummary);
     
     public Double getAvailableShiftPercentageForTeacher(ITeacher teacher);
 	"
@@ -3183,7 +3183,7 @@ class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.d
     public java.util.List<IWrittenTest> getUnenroledWrittenTests(IExecutionPeriod executionPeriod);
     public java.util.List<IProject> getProjects(IExecutionPeriod executionPeriod);
     public boolean isEnroledIn(IEvaluation evaluation);
-    public IRoom getRoomFor(IWrittenEvaluation writtenEvaluation);    
+    public net.sourceforge.fenixedu.domain.space.IRoom getRoomFor(IWrittenEvaluation writtenEvaluation);    
     public void calculateApprovationRatioAndArithmeticMeanIfActive(IExecutionYear currentExecutionYear);    
     public Double getApprovationRatio();
     public Double getArithmeticMean();
@@ -3386,7 +3386,7 @@ class net.sourceforge.fenixedu.domain.Summary extends net.sourceforge.fenixedu.d
     public void edit(String title, String summaryText, Integer studentsNumber, Boolean isExtraLesson,
             String teacherName);
             
-	public void modifyShift(IShift shift, java.util.Date summaryDate, java.util.Date summaryHour, IRoom room);            
+	public void modifyShift(IShift shift, java.util.Date summaryDate, java.util.Date summaryHour, net.sourceforge.fenixedu.domain.space.IRoom room);            
 	
 	public void delete();
     "
@@ -3910,10 +3910,10 @@ relation BranchCurricularCourseScope {
 
 
 relation BuildingRoom {
-	net.sourceforge.fenixedu.domain.Room playsRole rooms {
+	net.sourceforge.fenixedu.domain.space.Room playsRole rooms {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Building playsRole building;
+	net.sourceforge.fenixedu.domain.space.Building playsRole building;
 }
 
 relation CmsConfiguration
@@ -4595,7 +4595,7 @@ relation WrittenEvaluationEnrolmentRoom {
 	net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment playsRole writtenEvaluationEnrolments {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Room playsRole room;
+	net.sourceforge.fenixedu.domain.space.Room playsRole room;
 }
 
 relation WrittenEvaluationEnrolmentStudent {
@@ -4678,7 +4678,7 @@ relation ExecutionDegreeCampus {
 }
 
 relation BuildingCampus {
-	net.sourceforge.fenixedu.domain.Building playsRole buildings {
+	net.sourceforge.fenixedu.domain.space.Building playsRole buildings {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Campus playsRole campus;
@@ -5286,7 +5286,7 @@ relation InquiriesRoomDomainRoom {
     net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom playsRole associatedInquiriesRooms {
         multiplicity *;
     }
-    net.sourceforge.fenixedu.domain.Room playsRole room;
+    net.sourceforge.fenixedu.domain.space.Room playsRole room;
 }
 
 relation InquiriesTeacherInquiriesCourse {
@@ -5347,7 +5347,7 @@ relation LessonExecutionPeriod {
 relation LessonRoomOccupation {
 	net.sourceforge.fenixedu.domain.Lesson playsRole lesson;
 	
-	net.sourceforge.fenixedu.domain.RoomOccupation playsRole roomOccupation;
+	net.sourceforge.fenixedu.domain.space.RoomOccupation playsRole roomOccupation;
 }
 
 relation LessonShift {
@@ -5644,7 +5644,7 @@ relation PaymentTransactionGuideEntry {
 
 relation PeriodRoomOccupation {
 	net.sourceforge.fenixedu.domain.Period playsRole period;
-	net.sourceforge.fenixedu.domain.RoomOccupation playsRole roomOccupations {
+	net.sourceforge.fenixedu.domain.space.RoomOccupation playsRole roomOccupations {
 		multiplicity *;
 	}
 }
@@ -5886,16 +5886,16 @@ relation RoomLesson {
 	net.sourceforge.fenixedu.domain.Lesson playsRole associatedLessons {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Room playsRole sala;
+	net.sourceforge.fenixedu.domain.space.Room playsRole sala;
 }
 
 
 
 relation RoomRoomOccupation {
-	net.sourceforge.fenixedu.domain.RoomOccupation playsRole roomOccupations {
+	net.sourceforge.fenixedu.domain.space.RoomOccupation playsRole roomOccupations {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Room playsRole room;
+	net.sourceforge.fenixedu.domain.space.Room playsRole room;
 }
 
 
@@ -5903,7 +5903,7 @@ relation RoomSummary {
 	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Room playsRole room;
+	net.sourceforge.fenixedu.domain.space.Room playsRole room;
 }
 
 relation SectionItem {
@@ -6370,7 +6370,7 @@ relation WrittenEvaluationCurricularCourseScope {
 relation WrittenEvaluationRoomOccupation {
 	net.sourceforge.fenixedu.domain.WrittenEvaluation playsRole writtenEvaluation;
 	
-	net.sourceforge.fenixedu.domain.RoomOccupation playsRole associatedRoomOccupation {
+	net.sourceforge.fenixedu.domain.space.RoomOccupation playsRole associatedRoomOccupation {
 		multiplicity *;
 	}
 }

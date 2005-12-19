@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.domain.IRoomOccupation;
+import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
 /**

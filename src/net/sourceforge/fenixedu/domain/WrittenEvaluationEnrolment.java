@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.space.IRoom;
 
 public class WrittenEvaluationEnrolment extends WrittenEvaluationEnrolment_Base {
 

@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.space.IRoom;
 import net.sourceforge.fenixedu.domain.teacher.IDegreeTeachingService;
 
 public class Shift extends Shift_Base {

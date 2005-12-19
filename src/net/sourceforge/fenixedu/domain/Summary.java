@@ -8,6 +8,8 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 import java.util.Date;
 
+import net.sourceforge.fenixedu.domain.space.IRoom;
+
 /**
  * @author João Mota
  * @author Susana Fernandes

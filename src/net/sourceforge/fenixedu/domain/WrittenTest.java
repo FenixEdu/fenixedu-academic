@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.space.IRoom;
 
 /**
  * @author Ana e Ricardo

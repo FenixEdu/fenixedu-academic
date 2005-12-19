@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IRoomOccupation;
+import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
 
 /**
  * @author Tânia Pousão

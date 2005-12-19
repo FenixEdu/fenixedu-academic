@@ -9,7 +9,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 /**
  * @author tfc130
  */
-import net.sourceforge.fenixedu.domain.IRoom;
+import net.sourceforge.fenixedu.domain.space.IRoom;
 import net.sourceforge.fenixedu.util.TipoSala;
 
 public class InfoRoom extends InfoObject implements Comparable {

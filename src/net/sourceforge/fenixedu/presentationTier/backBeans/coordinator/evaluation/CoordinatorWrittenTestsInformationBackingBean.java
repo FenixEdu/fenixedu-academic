@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.IWrittenTest;
+import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 
 import org.apache.commons.beanutils.BeanComparator;

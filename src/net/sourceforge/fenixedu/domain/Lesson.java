@@ -6,6 +6,8 @@ package net.sourceforge.fenixedu.domain;
  */
 import java.util.Calendar;
 
+import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.date.TimePeriod;
 

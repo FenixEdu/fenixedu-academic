@@ -2,11 +2,12 @@
  * Created on 9/Out/2003
  *
  */
-package net.sourceforge.fenixedu.domain;
+package net.sourceforge.fenixedu.domain.space;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import net.sourceforge.fenixedu.domain.IPeriod;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
 

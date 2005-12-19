@@ -11,7 +11,7 @@ package net.sourceforge.fenixedu.persistenceTier;
  */
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IRoom;
+import net.sourceforge.fenixedu.domain.space.IRoom;
 
 public interface ISalaPersistente extends IPersistentObject {
     public IRoom readByName(String nome) throws ExcepcaoPersistencia;

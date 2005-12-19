@@ -625,7 +625,7 @@
     </reference-descriptor>
     <reference-descriptor auto-retrieve="false"
          name="room"
-         class-ref="net.sourceforge.fenixedu.domain.Room"
+         class-ref="net.sourceforge.fenixedu.domain.space.Room"
          
     >
     	<foreignkey field-ref="keyRoom"/>

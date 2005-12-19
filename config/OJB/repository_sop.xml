@@ -1,4 +1,4 @@
-<class-descriptor class="net.sourceforge.fenixedu.domain.Building" table="BUILDING">
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.Building" table="BUILDING">
       <field-descriptor
          name="idInternal"
          column="ID_INTERNAL"
@@ -30,13 +30,13 @@
       </reference-descriptor>
      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="rooms"
-			element-class-ref="net.sourceforge.fenixedu.domain.Room"
+			element-class-ref="net.sourceforge.fenixedu.domain.space.Room"
 			>
 		<inverse-foreignkey field-ref="keyBuilding"/>
 	</collection-descriptor>
 </class-descriptor>
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.Room"
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.Room"
    	  table="ROOM"
    >
       <field-descriptor id="1"
@@ -85,7 +85,7 @@
       />
       <reference-descriptor auto-retrieve="false"
          name="building"
-         class-ref="net.sourceforge.fenixedu.domain.Building"
+         class-ref="net.sourceforge.fenixedu.domain.space.Building"
       >
          <foreignkey field-ref="keyBuilding"/>
       </reference-descriptor>
@@ -108,7 +108,7 @@
 
       <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 		name="roomOccupations" 
-		element-class-ref="net.sourceforge.fenixedu.domain.RoomOccupation"
+		element-class-ref="net.sourceforge.fenixedu.domain.space.RoomOccupation"
 		
 		>
 		<inverse-foreignkey field-ref="keyRoom"/>
@@ -377,7 +377,7 @@
       />
       <reference-descriptor auto-retrieve="false"
          name="sala"
-         class-ref="net.sourceforge.fenixedu.domain.Room"
+         class-ref="net.sourceforge.fenixedu.domain.space.Room"
       >
          <foreignkey field-ref="chaveSala"/>
       </reference-descriptor>
@@ -395,7 +395,7 @@
       </reference-descriptor>     
    	  <reference-descriptor auto-retrieve="false"
          name="roomOccupation"
-         class-ref="net.sourceforge.fenixedu.domain.RoomOccupation"
+         class-ref="net.sourceforge.fenixedu.domain.space.RoomOccupation"
       >
          <foreignkey field-ref="keyRoomOccupation"/>
       </reference-descriptor>     
@@ -509,7 +509,7 @@
       <reference-descriptor auto-retrieve="false" name="student" class-ref="net.sourceforge.fenixedu.domain.Student" >
          <foreignkey field-ref="keyStudent"/>
       </reference-descriptor> 
-      <reference-descriptor auto-retrieve="false" name="room" class-ref="net.sourceforge.fenixedu.domain.Room" >
+      <reference-descriptor auto-retrieve="false" name="room" class-ref="net.sourceforge.fenixedu.domain.space.Room" >
          <foreignkey field-ref="keyRoom"/>
       </reference-descriptor> 
 </class-descriptor>
@@ -675,8 +675,8 @@
 </class-descriptor> 
 
    
-<!-- Definitions for net.sourceforge.fenixedu.domain.RoomOccupation -->
-   <class-descriptor class="net.sourceforge.fenixedu.domain.RoomOccupation"
+<!-- Definitions for net.sourceforge.fenixedu.domain.space.RoomOccupation -->
+   <class-descriptor class="net.sourceforge.fenixedu.domain.space.RoomOccupation"
    	  table="ROOM_OCCUPATION"
    >
       <field-descriptor id="1"
@@ -742,7 +742,7 @@
       />
       <reference-descriptor auto-retrieve="false"
          name="room"
-         class-ref="net.sourceforge.fenixedu.domain.Room"
+         class-ref="net.sourceforge.fenixedu.domain.space.Room"
       >
          <foreignkey field-ref="keyRoom"/>
       </reference-descriptor>
@@ -818,7 +818,7 @@
       </reference-descriptor>
       <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="roomOccupations"
-         element-class-ref="net.sourceforge.fenixedu.domain.RoomOccupation"
+         element-class-ref="net.sourceforge.fenixedu.domain.space.RoomOccupation"
          >
          <inverse-foreignkey field-ref="keyPeriod"/>
       </collection-descriptor>
@@ -984,7 +984,7 @@
 	</collection-descriptor>
      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedRoomOccupation"
-			element-class-ref="net.sourceforge.fenixedu.domain.RoomOccupation"
+			element-class-ref="net.sourceforge.fenixedu.domain.space.RoomOccupation"
 			>
 		<inverse-foreignkey field-ref="keyWrittenEvaluation"/>
 	</collection-descriptor>
@@ -1094,7 +1094,7 @@
 	</collection-descriptor>
      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedRoomOccupation"
-			element-class-ref="net.sourceforge.fenixedu.domain.RoomOccupation"
+			element-class-ref="net.sourceforge.fenixedu.domain.space.RoomOccupation"
 			>
 		<inverse-foreignkey field-ref="keyWrittenEvaluation"/>
 	</collection-descriptor>
@@ -1204,7 +1204,7 @@
 	</collection-descriptor>
      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedRoomOccupation"
-			element-class-ref="net.sourceforge.fenixedu.domain.RoomOccupation"
+			element-class-ref="net.sourceforge.fenixedu.domain.space.RoomOccupation"
 			>
 		<inverse-foreignkey field-ref="keyWrittenEvaluation"/>
 	</collection-descriptor>
