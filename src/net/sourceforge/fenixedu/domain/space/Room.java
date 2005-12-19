@@ -9,29 +9,6 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 
 public class Room extends Room_Base {
 
-	public String toString() {
-		String result = "[SALA";
-		result += ", codInt=" + getIdInternal();
-		result += ", nome=" + getNome();
-		result += ", piso=" + getPiso();
-		result += ", tipo=" + getTipo();
-		result += ", capacidadeNormal=" + getCapacidadeNormal();
-		result += ", capacidadeExame=" + getCapacidadeExame();
-		result += "]";
-		return result;
-	}
-
-	private boolean isFree(IPeriod period, Calendar startTime, Calendar endTime, DiaSemana dayOfWeek,
-			Integer frequency, Integer week) {
-		for (final IRoomOccupation roomOccupation : getRoomOccupations()) {
-			if (roomOccupation.roomOccupationForDateAndTime(period, startTime, endTime, dayOfWeek,
-					frequency, week, this)) {
-				return false;
-			}
-		}
-		return true;
-	}
-
 	public void createRoomOccupation(IPeriod period, Calendar startTime, Calendar endTime,
 			DiaSemana dayOfWeek, Integer frequency, Integer week, IWrittenEvaluation writtenEvaluation) {
 		boolean isFree = isFree(period, startTime, endTime, dayOfWeek, RoomOccupation.DIARIA, null);
@@ -45,13 +22,6 @@ public class Room extends Room_Base {
 		roomOccupation.setWrittenEvaluation(writtenEvaluation);
 	}
 
-    private boolean canBeDeleted() {
-        return getAssociatedLessons().isEmpty()
-                && getAssociatedSummaries().isEmpty()
-                && getRoomOccupations().isEmpty()
-                && getWrittenEvaluationEnrolments().isEmpty();
-    }
-
 	public void delete() {
         if (canBeDeleted()) {
             setBuilding(null);
@@ -61,5 +31,35 @@ public class Room extends Room_Base {
             throw new DomainException("errors.invalid.delete.with.objects", args);            
         }
 	}
+
+    private boolean isFree(IPeriod period, Calendar startTime, Calendar endTime, DiaSemana dayOfWeek,
+            Integer frequency, Integer week) {
+        for (final IRoomOccupation roomOccupation : getRoomOccupations()) {
+            if (roomOccupation.roomOccupationForDateAndTime(period, startTime, endTime, dayOfWeek,
+                    frequency, week, this)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean canBeDeleted() {
+        return getAssociatedLessons().isEmpty()
+                && getAssociatedSummaries().isEmpty()
+                && getRoomOccupations().isEmpty()
+                && getWrittenEvaluationEnrolments().isEmpty();
+    }
+
+    public String toString() {
+        String result = "[SALA";
+        result += ", codInt=" + getIdInternal();
+        result += ", nome=" + getNome();
+        result += ", piso=" + getPiso();
+        result += ", tipo=" + getTipo();
+        result += ", capacidadeNormal=" + getCapacidadeNormal();
+        result += ", capacidadeExame=" + getCapacidadeExame();
+        result += "]";
+        return result;
+    }
 
 }
