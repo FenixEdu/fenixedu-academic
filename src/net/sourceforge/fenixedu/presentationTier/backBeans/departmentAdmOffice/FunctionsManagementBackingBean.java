@@ -333,7 +333,9 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
         SelectItem selectItem = null;
         for (IFunction function : this.getUnit().getFunctions()) {
-            if (!function.isInherentFunction()) {
+            if (!function.isInherentFunction()
+                    && ((this.getPersonFunction() != null && function.equals(this.getPersonFunction()
+                            .getFunction())) || function.isActive(Calendar.getInstance().getTime()))) {
                 selectItem = new SelectItem();
                 selectItem.setValue(function.getIdInternal());
                 selectItem.setLabel(function.getName());
@@ -352,7 +354,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         if (this.getEmployeeDepartmentUnit() != null
                 && this.getEmployeeDepartmentUnit().isActive(Calendar.getInstance().getTime())) {
             getUnitsList(this.getEmployeeDepartmentUnit(), 0, buffer);
-        } else {            
+        } else {
             return "";
         }
         buffer.append("</ul>");
@@ -367,7 +369,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 parentUnit.getName()).append("</a>").append("</li>").append("<ul>");
 
         for (IUnit subUnit : parentUnit.getSubUnits()) {
-            if(subUnit.isActive(Calendar.getInstance().getTime())){
+            if (subUnit.isActive(Calendar.getInstance().getTime())) {
                 getUnitsList(subUnit, index + 1, buffer);
             }
         }
@@ -390,7 +392,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
         return departmentUnit;
     }
-    
+
     public Date prepareCurrentDate() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
