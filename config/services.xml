@@ -9241,13 +9241,7 @@
 		<description></description>
 		<isTransactional>true</isTransactional>  
         <filterChains/>
-	</service>
-    <service>
-    	<name>ReadDomainTeacherByNumber</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadDomainTeacherByNumber</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>       
-    </service>    
+	</service>    
     <service>
     	<name>UpdateDegreeTeachingServices</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.UpdateDegreeTeachingServices</implementationClass>
