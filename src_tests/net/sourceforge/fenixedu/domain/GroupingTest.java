@@ -4,9 +4,9 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;

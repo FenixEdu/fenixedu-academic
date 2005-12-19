@@ -4,9 +4,8 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.stm.Transaction;
-
 import junit.framework.TestCase;
+import net.sourceforge.fenixedu.stm.Transaction;
 
 public class DomainTestBase extends TestCase {
 

@@ -5,8 +5,6 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.domain.IEnrolment;
-
 
 public class DistributionTeacherServiceByCourseTest extends DomainTestBase {
 
