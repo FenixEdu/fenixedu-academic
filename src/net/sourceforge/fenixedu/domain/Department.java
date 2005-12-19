@@ -89,6 +89,16 @@ public class Department extends Department_Base {
         return teachers;
     }
     
+    public ITeacher getTeacherByPeriod(Integer teacherNumber, Date begin, Date end){
+        for (IEmployee employee : getWorkingEmployees(begin,end)) {
+            ITeacher teacher = employee.getPerson().getTeacher();
+            if(teacher != null && teacher.getTeacherNumber().equals(teacherNumber)){
+                return teacher;
+            }
+        }
+        return null;
+    }
+    
     private void addTeachers(List teachers, List<IEmployee> employees) {
         for (IEmployee employee : employees) {
             ITeacher teacher = employee.getPerson().getTeacher();
