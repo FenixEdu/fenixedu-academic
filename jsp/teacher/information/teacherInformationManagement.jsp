@@ -409,13 +409,24 @@
 			<logic:notEmpty name="infoSiteTeacherInformation" property="personFunctions">		
 				<tr>
 					<td class="listClasses-header" style="text-align:left"><bean:message key="label.managementPosition.position" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
-					<td class="listClasses-header" width="10%"><bean:message key="label.managementPosition.start" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
+					<td class="listClasses-header" style="text-align:left"><bean:message key="label.managementPosition.unit" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>										
+					<td class="listClasses-header" width="10%"><bean:message key="label.managementPosition.start" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>					
 					<td class="listClasses-header" width="10%"><bean:message key="label.managementPosition.end" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
 				</tr>
 				<logic:iterate id="personFunction" name="infoSiteTeacherInformation" property="personFunctions">
 					<tr>
 						<td class="listClasses" style="text-align:left">
 							<bean:write name="personFunction" property="function.name"/>
+						</td>
+						<td class="listClasses" style="text-align:left">
+							<bean:define id="unit" name="personFunction" property="function.unit"/>
+							<bean:write name="unit" property="name"/>
+							<logic:notEmpty name="unit" property="topUnits">
+								-
+								<logic:iterate id="topUnit" name="unit" property="topUnits">
+									<bean:write name="topUnit" property="name"/>,							
+								</logic:iterate>								
+							</logic:notEmpty>
 						</td>				
 						<td class="listClasses">
 							<dt:format patternId="datePattern">
