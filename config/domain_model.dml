@@ -1844,6 +1844,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Function extends n
 		net.sourceforge.fenixedu.domain.organizationalStructure.IUnit unit, 
 		net.sourceforge.fenixedu.domain.organizationalStructure.IFunction parentInherentFunction);
 	public boolean isActive(java.util.Date currentDate);
+	public boolean belongsToPeriod(java.util.Date beginDate, java.util.Date endDate);
 	public void delete();
 	"
 }

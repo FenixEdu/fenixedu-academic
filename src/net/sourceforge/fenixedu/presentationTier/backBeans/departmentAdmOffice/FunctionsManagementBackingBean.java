@@ -52,7 +52,9 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public IUnit unit;
 
-    public String credits, beginDate, endDate, personName;
+    public Double credits;
+    
+    public String beginDate, endDate, personName;
 
     public HtmlInputHidden creditsHidden, beginDateHidden, endDateHidden, personIDHidden, unitIDHidden;
 
@@ -553,18 +555,18 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         this.beginDate = beginDate;
     }
 
-    public String getCredits() throws FenixFilterException, FenixServiceException {
+    public Double getCredits() throws FenixFilterException, FenixServiceException {
         if (this.credits == null && this.creditsHidden != null && this.creditsHidden.getValue() != null
                 && !this.creditsHidden.getValue().equals("")) {
-            this.credits = this.creditsHidden.getValue().toString();
+            this.credits = Double.valueOf(this.creditsHidden.getValue().toString());
 
         } else if (this.credits == null && this.getPersonFunctionID() != null) {
-            this.credits = this.getPersonFunction().getCredits().toString();
+            this.credits = this.getPersonFunction().getCredits();
         }
         return credits;
     }
 
-    public void setCredits(String credits) {
+    public void setCredits(Double credits) {
         this.credits = credits;
     }
 
@@ -642,7 +644,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public void setCreditsHidden(HtmlInputHidden creditsHidden) {
         if (this.creditsHidden != null) {
-            this.setCredits(this.creditsHidden.getValue().toString());
+            this.setCredits(Double.valueOf(this.creditsHidden.getValue().toString()));
         }
         this.creditsHidden = creditsHidden;
     }

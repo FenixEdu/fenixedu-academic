@@ -43,9 +43,7 @@
 						
 			<h:outputText value="<b>#{bundle['label.credits']}</b>" escape="false"/>
 			<h:panelGroup>
-				<h:inputText id="credits" required="true" size="5" maxlength="5" value="#{functionsManagementBackingBean.credits}">
-					<fc:regexValidator regex="[0-9]+"/>
-				</h:inputText>
+				<h:inputText id="credits" required="true" size="5" maxlength="5" value="#{functionsManagementBackingBean.credits}"/>
 				<h:message for="credits" styleClass="error"/>
 			</h:panelGroup>
 			

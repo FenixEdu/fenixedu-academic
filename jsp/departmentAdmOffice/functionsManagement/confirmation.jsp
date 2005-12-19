@@ -49,7 +49,7 @@
 		<h:outputText value="<b>#{bundle['label.valid']}</b>" escape="false"/>	
 		<h:panelGroup>
 			<h:outputText value="#{functionsManagementBackingBean.beginDate}" escape="false"/>	
-			<h:outputText value="<b>&nbsp;#{bundle['label.to']}</b>" escape="false"/>	
+			<h:outputText value="<b>&nbsp;#{bundle['label.to']}&nbsp;</b>" escape="false"/>	
 			<h:outputText value="#{functionsManagementBackingBean.endDate}" escape="false"/>		
 		</h:panelGroup>
 	</h:panelGrid>

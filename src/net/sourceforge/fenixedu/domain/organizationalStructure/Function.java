@@ -35,6 +35,16 @@ public class Function extends Function_Base {
         }
         return false;
     }
+    
+    public boolean belongsToPeriod(Date beginDate, Date endDate) {
+        if (this.getBeginDate().before(endDate)
+                && (this.getEndDate() == null || ((this.getEndDate().before(endDate) && this
+                        .getEndDate().after(beginDate))
+                        || this.getEndDate().after(endDate) || this.getEndDate().equals(endDate)))) {
+            return true;
+        }
+        return false;
+    }
 
     public void delete() {
         if (this.getPersonFunctions().isEmpty() && this.getInherentFunctions().isEmpty()) {
