@@ -9222,21 +9222,21 @@
         </filterChains>     
     </service>
 	<service>
-	    <name>CreateCompetenceCourseStatistics</name>
+	    <name>ComputeCompetenceCourseStatistics</name>
         <implementationClass> net.sourceforge.fenixedu.applicationTier.Servico.department.ComputeCompetenceCourseStatistics</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains/>
     </service>
 	<service>
-		<name>CreateDegreeCourseStatistics</name>
+		<name>ComputeDegreeCourseStatistics</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.department.ComputeDegreeCourseStatistics</implementationClass>
 		<description></description>
 		<isTransactional>true</isTransactional>  
         <filterChains/>
 	</service>
 	<service>
-		<name>CreateExecutionCourseStatistics</name>
+		<name>ComputeExecutionCourseStatistics</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.department.ComputeExecutionCourseStatistics</implementationClass>
 		<description></description>
 		<isTransactional>true</isTransactional>  
