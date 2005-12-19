@@ -45,16 +45,21 @@ public class Room extends Room_Base {
 		roomOccupation.setWrittenEvaluation(writtenEvaluation);
 	}
 
+    private boolean canBeDeleted() {
+        return getAssociatedLessons().isEmpty()
+                && getAssociatedSummaries().isEmpty()
+                && getRoomOccupations().isEmpty()
+                && getWrittenEvaluationEnrolments().isEmpty();
+    }
+
 	public void delete() {
-		if (!this.getAssociatedLessons().isEmpty()
-				|| !this.getAssociatedSummaries().isEmpty()
-				|| !this.getRoomOccupations().isEmpty()
-				|| !this.getWrittenEvaluationEnrolments().isEmpty()) {
-			String[] args = { "a sala", "as aulas" };
-			throw new DomainException("errors.invalid.delete.with.objects", args);
-		} else {
-			this.setBuilding(null);
-		}
+        if (canBeDeleted()) {
+            setBuilding(null);
+            deleteDomainObject();
+        } else {
+            String[] args = { "a sala", "as aulas" };
+            throw new DomainException("errors.invalid.delete.with.objects", args);            
+        }
 	}
 
 }
