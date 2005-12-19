@@ -935,6 +935,7 @@ class net.sourceforge.fenixedu.domain.Department extends net.sourceforge.fenixed
 	public java.util.List getCurrentActiveWorkingEmployees();
 	public java.util.List getTeachers();
 	public java.util.List<net.sourceforge.fenixedu.domain.ITeacher> getTeachers(java.util.Date begin, java.util.Date end);
+	public net.sourceforge.fenixedu.domain.ITeacher getTeacherByPeriod(Integer teacherNumber, java.util.Date begin, java.util.Date end);
 	public java.util.List<net.sourceforge.fenixedu.domain.IEmployee> getWorkingEmployees(java.util.Date begin, java.util.Date end);
  	public void createTeacherExpectationDefinitionPeriod(net.sourceforge.fenixedu.domain.IExecutionYear executionYear, java.util.Date startDate, java.util.Date endDate);
  	public ITeacherExpectationDefinitionPeriod readTeacherExpectationDefinitionPeriodByExecutionYear(IExecutionYear executionYear);
