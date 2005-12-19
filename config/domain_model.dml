@@ -192,12 +192,6 @@ class net.sourceforge.fenixedu.domain.Branch extends net.sourceforge.fenixedu.do
 }
 
 
-class net.sourceforge.fenixedu.domain.Building extends net.sourceforge.fenixedu.domain.DomainObject {
-	String name;
-	Integer keyCampus;
-}
-
-
 class net.sourceforge.fenixedu.domain.Campus extends net.sourceforge.fenixedu.domain.DomainObject {
 	String name;
 }
@@ -2793,21 +2787,6 @@ class net.sourceforge.fenixedu.domain.Role extends net.sourceforge.fenixedu.doma
 }
 
 
-class net.sourceforge.fenixedu.domain.Room extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyBuilding;
-	String nome;
-	Integer capacidadeNormal;
-	Integer capacidadeExame;
-	Integer piso;
-    TipoSala tipo;
-
-	interface "
-	public void createRoomOccupation(net.sourceforge.fenixedu.domain.IPeriod period, java.util.Calendar startTime, java.util.Calendar endTime,
-            net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week, net.sourceforge.fenixedu.domain.IWrittenEvaluation writtenEvaluation);
-	public void delete();
-	"
-}
-
 class net.sourceforge.fenixedu.domain.RoomOccupation extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer weekOfQuinzenalStart;
 	Integer keyRoom;
@@ -2971,6 +2950,29 @@ class net.sourceforge.fenixedu.domain.Section extends net.sourceforge.fenixedu.d
 		public void delete();
 	"
 }
+
+class net.sourceforge.fenixedu.domain.space.Space extends net.sourceforge.fenixedu.domain.DomainObject {
+}
+
+	class net.sourceforge.fenixedu.domain.Building extends net.sourceforge.fenixedu.domain.space.Space {
+		String name;
+		Integer keyCampus;
+	}
+
+	class net.sourceforge.fenixedu.domain.Room extends net.sourceforge.fenixedu.domain.space.Space {
+		Integer keyBuilding;
+		String nome;
+		Integer capacidadeNormal;
+		Integer capacidadeExame;
+		Integer piso;
+	    TipoSala tipo;
+
+		interface "
+		public void createRoomOccupation(net.sourceforge.fenixedu.domain.IPeriod period, java.util.Calendar startTime, java.util.Calendar endTime,
+	            net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week, net.sourceforge.fenixedu.domain.IWrittenEvaluation writtenEvaluation);
+		public void delete();
+		"
+	}
 
 class net.sourceforge.fenixedu.domain.teacher.TeacherService extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyTeacher;
