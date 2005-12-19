@@ -228,10 +228,10 @@
         </var>
       </field>
       
-	  <field property="majorDegreeYear" depends="integer,range" page="1">
+	  <field property="majorDegreeYear" depends="integer, intRange" page="1">
         <arg0 key="label.candidate.majorDegreeYear" />
-        <arg1 key="${var:min}" resource="false"/>
-        <arg2 key="${var:max}" resource="false"/>        
+        <arg1 key="${var:min}" name="intRange" resource="false"/>
+        <arg2 key="${var:max}" name="intRange" resource="false"/>        
         <var>
           <var-name>min</var-name>
           <var-value>1900</var-value>
@@ -242,10 +242,10 @@
         </var>
       </field>
 
-      <field property="average" depends="floatRange" page="1">
+      <field property="average" depends="floatRange, floatRange" page="1">
         <arg0 key="label.candidate.average" />
-        <arg1 key="${var:min}" resource="false"/>
-        <arg2 key="${var:max}" resource="false"/>        
+        <arg1 key="${var:min}" name="floatRange" resource="false"/>
+        <arg2 key="${var:max}" name="floatRange" resource="false"/>        
         <var>
           <var-name>min</var-name>
           <var-value>0.0</var-value>
