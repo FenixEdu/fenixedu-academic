@@ -1367,6 +1367,12 @@
 			<description>Degree Curricular Plan to be rendered. Type: net.sourceforge.fenixedu.domain.DegreeCurricularPlan</description>
 		</attribute>
 		<attribute>
+			<name>onlyStructure</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>Indicates if only course groups should be rendered. Type: java.lang.Boolean</description>
+		</attribute>
+		<attribute>
 			<name>toEdit</name>
 			<required>true</required>
 			<rtexprvalue>false</rtexprvalue>

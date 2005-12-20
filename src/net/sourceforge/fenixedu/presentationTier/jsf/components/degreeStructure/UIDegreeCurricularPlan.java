@@ -31,21 +31,22 @@ public class UIDegreeCurricularPlan extends UIInput {
 
         final IDegreeCurricularPlan dcp = (IDegreeCurricularPlan) this.getAttributes().get("dcp");
         if (!dcp.getCurricularStage().equals(CurricularStage.OLD)) {
-            final Boolean toEdit = this.getToEdit();
+            final Boolean onlyStructure = this.getBooleanAttribute("onlyStructure");
+            final Boolean toEdit = this.getBooleanAttribute("toEdit");
             
             StringBuffer dcpBuffer = new StringBuffer();
             dcpBuffer.append("[DCP ").append(dcp.getIdInternal()).append("] ").append(dcp.getName());
             System.out.println(dcpBuffer);
             
-            new UIDegreeModule(dcp.getDegreeModule(), toEdit, BASE_DEPTH, "").encodeBegin(context);
+            new UICourseGroup(dcp.getDegreeModule(), onlyStructure, toEdit, BASE_DEPTH, "").encodeBegin(context);
         }
     }
 
-    private Boolean getToEdit() {
-        if (this.getAttributes().get("toEdit") instanceof Boolean) {
-            return (Boolean) this.getAttributes().get("toEdit");
+    private Boolean getBooleanAttribute(String attributeName) {
+        if (this.getAttributes().get(attributeName) instanceof Boolean) {
+            return (Boolean) this.getAttributes().get(attributeName);
         } else {
-            return Boolean.valueOf((String) this.getAttributes().get("toEdit"));
+            return Boolean.valueOf((String) this.getAttributes().get(attributeName));
         }
     }
 

@@ -17,6 +17,7 @@ public class UIDegreeModule extends UIInput {
     public static final String COMPONENT_FAMILY = "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UIDegreeModule";
 
     protected IDegreeModule degreeModule;
+    protected Boolean onlyStructure;
     protected Boolean toEdit;
     protected int depth;
     protected String tabs;
@@ -38,6 +39,11 @@ public class UIDegreeModule extends UIInput {
         this.depth = depth;
         this.tabs = tabs;
     }
+
+    public UIDegreeModule(IDegreeModule degreeModule, Boolean onlyStructure, Boolean toEdit, int depth, String tabs) {
+        this(degreeModule, toEdit, depth, tabs);
+        this.onlyStructure = onlyStructure;
+    }
     
     public String getFamily() {
         return UIDegreeModule.COMPONENT_FAMILY;
@@ -53,7 +59,7 @@ public class UIDegreeModule extends UIInput {
         if (this.degreeModule instanceof ICurricularCourse) {
             new UICurricularCourse(this.degreeModule, this.toEdit, this.depth, this.tabs, null).encodeBegin(facesContext);
         } else if (this.degreeModule instanceof ICourseGroup) {
-            new UICourseGroup(this.degreeModule, this.toEdit, this.depth, this.tabs).encodeBegin(facesContext);
+            new UICourseGroup(this.degreeModule, this.onlyStructure, this.toEdit, this.depth, this.tabs).encodeBegin(facesContext);
         }
     }
     

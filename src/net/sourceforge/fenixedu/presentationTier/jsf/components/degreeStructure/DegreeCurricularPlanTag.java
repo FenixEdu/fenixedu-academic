@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.presentationTier.jsf.components.util.JsfTagUtils
 
 public class DegreeCurricularPlanTag extends UIComponentTag {
     private String dcp;
+    private String onlyStructure;
     private String toEdit;
 
     public String getDcp() {
@@ -17,6 +18,14 @@ public class DegreeCurricularPlanTag extends UIComponentTag {
         this.dcp = dcp;
     }
 
+    public String getOnlyStructure() {
+        return onlyStructure;
+    }
+
+    public void setOnlyStructure(String onlyStructure) {
+        this.onlyStructure = onlyStructure;
+    }
+    
     public String getToEdit() {
         return toEdit;
     }
@@ -37,7 +46,8 @@ public class DegreeCurricularPlanTag extends UIComponentTag {
         super.setProperties(component);
         
         JsfTagUtils.setString(component,"dcp",this.dcp);
-        JsfTagUtils.setString(component,"toEdit",this.toEdit);
+        JsfTagUtils.setString(component,"onlyStructure",this.onlyStructure);
+        JsfTagUtils.setString(component,"toEdit",this.toEdit);        
     }
 
     public void release() {
