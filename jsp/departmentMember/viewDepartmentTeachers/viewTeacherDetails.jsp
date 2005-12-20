@@ -87,7 +87,7 @@
 		<fc:viewState binding="#{viewDepartmentTeachers.viewState}"/>
 				
 		<h:outputText value="<h2>#{bundle['label.teacher.details.title']}</h2>" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" escape="false" />
-		
+				
 		<h:panelGrid columns="2" styleClass="search">
 			<h:outputText value="#{bundle['label.common.executionYear']}:" styleClass="leftColumn"/>
 			<fc:selectOneMenu id="dropDownListExecutionYearID" value="#{viewDepartmentTeachers.selectedExecutionYearID}" valueChangeListener="#{viewDepartmentTeachers.onSelectedExecutionYearChanged}" onchange="this.form.submit();">
@@ -213,6 +213,30 @@
 						
 		<!-- Orientations Information -->
 		<h:outputText value="<h2 id='orientationInformation' class='cd_heading'><span>#{bundle['label.teacher.details.orientationInformation']}</span></h2>" escape="false" />
+		
+		<!-- Final Degree Work Orientations -->
+		<h:outputText value="#{bundle['label.common.degree']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
+		<h:panelGroup rendered="#{!(empty viewDepartmentTeachers.finalDegreeWorkAdvises)}">
+			<h:dataTable value="#{viewDepartmentTeachers.finalDegreeWorkAdvises}" var="finalDegreeWorkAdvise" styleClass="cd">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{bundle['label.teacher.details.orientationInformation.finalDegreeWorkStudentNumber']}" />
+					</f:facet>
+					<h:outputText value="#{finalDegreeWorkAdvise.student.number}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{bundle['label.teacher.details.orientationInformation.finalDegreeWorkStudentName']}" />
+					</f:facet>
+					<h:outputText value="#{finalDegreeWorkAdvise.student.person.nome}" />
+				</h:column>
+			</h:dataTable>
+		</h:panelGroup>
+		<h:panelGrid border="0" cellpadding="0" cellspacing="0" rendered="#{empty viewDepartmentTeachers.finalDegreeWorkAdvises}">
+			<h:outputText value="#{bundle['label.teacher.details.orientationInformation.noFinalDegreeWorks']}" />
+		</h:panelGrid>
+		
+		<h:outputText value="<br/>" escape="false" />
 			
 		<!-- Master Degree Orientations -->
 		<h:outputText value="#{bundle['label.common.masterDegree']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
@@ -224,17 +248,30 @@
 					</f:facet>
 					<h:outputText value="#{masterDegreeThesisDataVersion.dissertationTitle}" />
 				</h:column>
-					<h:column>
+				<h:column>
 					<f:facet name="header">
 						<h:outputText value="#{bundle['label.teacher.details.orientationInformation.masterDegreeThesisStudentName']}" />
 					</f:facet>
 					<h:outputText value="#{masterDegreeThesisDataVersion.masterDegreeThesis.studentCurricularPlan.student.person.nome}" />
 				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{bundle['label.teacher.details.orientationInformation.masterDegreeProofDate']}" />
+					</f:facet>
+					<h:panelGroup rendered="#{(masterDegreeThesisDataVersion.masterDegreeThesis.activeMasterDegreeProofVersion != null) && (masterDegreeThesisDataVersion.masterDegreeThesis.activeMasterDegreeProofVersion.proofDate != null)}">
+						<h:outputFormat value="{0, date, dd / MM / yyyy}" escape="false">
+							<f:param value="#{masterDegreeThesisDataVersion.masterDegreeThesis.activeMasterDegreeProofVersion.proofDate}" />
+						</h:outputFormat>
+					</h:panelGroup>
+					<h:panelGroup rendered="#{(masterDegreeThesisDataVersion.masterDegreeThesis.activeMasterDegreeProofVersion == null) || (masterDegreeThesisDataVersion.masterDegreeThesis.activeMasterDegreeProofVersion.proofDate == null)}">
+						<h:outputText value="#{bundle['label.common.notAvailable']}"></h:outputText>
+					</h:panelGroup>
+				</h:column>
 			</h:dataTable>
 		</h:panelGroup>
 		<h:panelGrid border="0" cellpadding="0" cellspacing="0" rendered="#{empty viewDepartmentTeachers.guidedMasterDegreeThesisList}">
 			<h:outputText value="#{bundle['label.teacher.details.orientationInformation.noMasterDegreeThesis']}" />
-		</h:panelGrid>
+		</h:panelGrid>	
 		
 	</h:form>
 </ft:tilesView>

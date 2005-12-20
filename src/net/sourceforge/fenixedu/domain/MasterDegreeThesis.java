@@ -5,6 +5,8 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.util.State;
+
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
@@ -21,6 +23,20 @@ public class MasterDegreeThesis extends MasterDegreeThesis_Base {
         result += "] \n";
 
         return result;
+    }
+
+    public IMasterDegreeProofVersion getActiveMasterDegreeProofVersion() {
+        IMasterDegreeProofVersion activeMasterDegreeProofVersion = null;
+
+        for (IMasterDegreeProofVersion candidateMasterDegreeProofVersion : this
+                .getMasterDegreeProofVersions()) {
+            if (candidateMasterDegreeProofVersion.getCurrentState().getState() == State.ACTIVE) {
+                activeMasterDegreeProofVersion = candidateMasterDegreeProofVersion;
+                break;
+            }
+        }
+
+        return activeMasterDegreeProofVersion;
     }
 
 }

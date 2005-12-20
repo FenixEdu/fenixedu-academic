@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <%@ taglib uri="/WEB-INF/c.tld"  prefix="c" %>
+<%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 
 <ft:tilesView definition="departmentMember.masterPage"
@@ -53,17 +54,40 @@ padding: 0 0.5em;
 text-decoration: none;
 border-bottom: 1px solid #ddd;
 }
+
+table.search {
+background-color: #f5f5f5;
+border-collapse: collapse;
+}
+table.search tr td {
+border: 1px solid #fff;
+padding: 0.3em;
+}
+.leftcolumn {
+text-align: right;
+}
 </style>
 
 
-	<f:loadBundle basename="ServidorApresentacao/DepartmentMemberResources"
-		var="bundle" />
-	<f:loadBundle basename="ServidorApresentacao/EnumerationResources"
-		var="bundleEnumeration" />
-		
+	<h:form>
+		<f:loadBundle basename="ServidorApresentacao/DepartmentMemberResources"
+			var="bundle" />
+		<f:loadBundle basename="ServidorApresentacao/EnumerationResources"
+			var="bundleEnumeration" />
+			
 		<h:outputText value="<i>#{bundle['label.teacherService.title']}</i><p /><p />" escape="false"/>
 		
 		<h:outputText value="<h2>#{viewTeacherService.departmentName}</h2> <p />" escape="false"/>
+			
+		<h:panelGrid columns="2" styleClass="search">
+			<h:outputText value="#{bundle['label.common.executionYear']}&nbsp;" escape="false" styleClass="leftColumn" />
+			<fc:selectOneMenu value="#{viewTeacherService.selectedExecutionYearID}"
+				onchange="this.form.submit();">
+				<f:selectItems binding="#{viewTeacherService.executionYearItems}"/>
+			</fc:selectOneMenu>
+		</h:panelGrid>
+		
+		<h:outputText value="<br/>" escape="false" />
 	
 		<h:outputText value="<b>#{bundle['label.teacherService.navigateByTeacher']}</b>" escape="false"/>
 		<h:outputText value=" #{bundle['label.teacherService.separator']} " escape="false"/>
@@ -110,6 +134,6 @@ border-bottom: 1px solid #ddd;
 				<c:out value="</tr>" escapeXml="false" />
 			</c:forEach>
 		<c:out value="</table>" escapeXml="false" />
-		
+	</h:form>	
 	
 </ft:tilesView>

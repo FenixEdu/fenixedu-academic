@@ -2138,6 +2138,12 @@ class net.sourceforge.fenixedu.domain.MasterDegreeProofVersion extends net.sourc
 
 class net.sourceforge.fenixedu.domain.MasterDegreeThesis extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyStudentCurricularPlan;
+	
+	interface "
+
+	public IMasterDegreeProofVersion getActiveMasterDegreeProofVersion();
+	
+	"
 }
 
 class net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3446,7 +3452,7 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
    	public net.sourceforge.fenixedu.domain.teacher.ITeacherPersonalExpectation getTeacherPersonalExpectationByExecutionYear(IExecutionYear executionYear);
 		
 	public IDepartment getCurrentWorkingDepartment();
-   	
+	
    	public IDepartment getLastWorkingDepartment();
 	
 	public java.util.List<net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal> getFinalDegreeWorksByExecutionYear(IExecutionYear executionYear);
@@ -3475,6 +3481,11 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	public IProfessorship getProfessorshipByExecutionCourse(final IExecutionCourse executionCourse);
 	
 	public java.util.List<IProfessorship> getDegreeProfessorshipsByExecutionPeriod(final IExecutionPeriod executionPeriod);
+	
+    public java.util.List<net.sourceforge.fenixedu.domain.teacher.IAdvise> getAdvisesByAdviseTypeAndExecutionYear(net.sourceforge.fenixedu.domain.teacher.AdviseType adviseType,IExecutionYear executionYear);
+    
+    public java.util.List<net.sourceforge.fenixedu.domain.teacher.IAdvise> getAdvisesByAdviseType(net.sourceforge.fenixedu.domain.teacher.AdviseType adviseType);
+	
 	"
 }
 class net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen extends net.sourceforge.fenixedu.domain.DomainObject {

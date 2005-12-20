@@ -9388,4 +9388,13 @@
         <description></description>
         <isTransactional>true</isTransactional>
     </service>
+    <service>
+   	 	<name>ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.advise.ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="DepartmentMemberOrTeacherAuthorization"></chain>
+        </filterChains>     
+    </service>
 </serviceDefinitions>    

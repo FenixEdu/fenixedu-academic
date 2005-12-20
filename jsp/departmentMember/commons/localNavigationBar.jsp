@@ -20,7 +20,7 @@
 			</html:link>
 		</li>
 		<li>
-			<html:link page="/viewTeacherService/chooseExecutionYear.faces">
+			<html:link page="/viewTeacherService/viewTeacherService.faces">
 				<bean:message key="link.teacherService"/>
 			</html:link>
 		</li>

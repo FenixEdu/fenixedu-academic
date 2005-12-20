@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
 import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
+import net.sourceforge.fenixedu.domain.teacher.IAdvise;
 import net.sourceforge.fenixedu.domain.teacher.ICategory;
 import net.sourceforge.fenixedu.domain.teacher.ITeacherLegalRegimen;
 import net.sourceforge.fenixedu.domain.teacher.ITeacherPersonalExpectation;
@@ -110,15 +111,15 @@ public class Teacher extends Teacher_Base {
         }
         return null;
     }
-    
-    public IDepartment getLastWorkingDepartment() {        
+
+    public IDepartment getLastWorkingDepartment() {
         IEmployee employee = this.getPerson().getEmployee();
         if (employee != null) {
-            return employee.getLastDepartmentWorkingPlace();                       
+            return employee.getLastDepartmentWorkingPlace();
         }
         return null;
-    }      
-    
+    }
+
     public ITeacherPersonalExpectation getTeacherPersonalExpectationByExecutionYear(
             IExecutionYear executionYear) {
         ITeacherPersonalExpectation result = null;
@@ -362,12 +363,12 @@ public class Teacher extends Teacher_Base {
         }
         return serviceExemptions;
     }
-    
-    public List<IPersonFunction> getPersonFuntions(Date beginDate, Date endDate){
-        
+
+    public List<IPersonFunction> getPersonFuntions(Date beginDate, Date endDate) {
+
         List<IPersonFunction> personFuntions = new ArrayList<IPersonFunction>();
         for (IPersonFunction personFunction : getPerson().getPersonFunctions()) {
-            if(personFunction.belongsToPeriod(beginDate,endDate)){
+            if (personFunction.belongsToPeriod(beginDate, endDate)) {
                 personFuntions.add(personFunction);
             }
         }
@@ -382,14 +383,14 @@ public class Teacher extends Teacher_Base {
                 list.add(teacherLegalRegimen);
             }
         }
-       
+
         if (list.isEmpty()) {
             return 0;
         } else if (list.size() > 1) {
             return calculateTeacherHours(list, begin, end);
         } else {
             return list.iterator().next().getLessonHours();
-        }        
+        }
     }
 
     public int getServiceExemptionCredits(IExecutionPeriod executionPeriod) {
@@ -554,5 +555,45 @@ public class Teacher extends Teacher_Base {
         } else {
             return getHoursByCategory(teacherServiceExemption.getStart(), end);
         }
+    }
+
+    public List<net.sourceforge.fenixedu.domain.teacher.IAdvise> getAdvisesByAdviseTypeAndExecutionYear(
+            net.sourceforge.fenixedu.domain.teacher.AdviseType adviseType, IExecutionYear executionYear) {
+
+        List<IAdvise> result = new ArrayList<IAdvise>();
+        Date executionYearStartDate = executionYear.getBeginDate();
+        Date executionYearEndDate = executionYear.getEndDate();
+
+        for (IAdvise advise : this.getAdvises()) {
+            if ((advise.getAdviseType() == adviseType)) {
+                Date adviseStartDate = advise.getStartExecutionPeriod().getBeginDate();
+                Date adviseEndDate = advise.getEndExecutionPeriod().getEndDate();
+
+                if (((executionYearStartDate.compareTo(adviseStartDate) < 0) && (executionYearEndDate
+                        .compareTo(adviseStartDate) < 0))
+                        || ((executionYearStartDate.compareTo(adviseEndDate) > 0) && (executionYearEndDate
+                                .compareTo(adviseEndDate) > 0))) {
+                    continue;
+                }
+
+                result.add(advise);
+
+            }
+        }
+
+        return result;
+    }
+
+    public List<net.sourceforge.fenixedu.domain.teacher.IAdvise> getAdvisesByAdviseType(
+            net.sourceforge.fenixedu.domain.teacher.AdviseType adviseType) {
+        List<IAdvise> result = new ArrayList<IAdvise>();
+
+        for (IAdvise advise : this.getAdvises()) {
+            if (advise.getAdviseType() == adviseType) {
+                result.add(advise);
+            }
+        }
+
+        return result;
     }
 }

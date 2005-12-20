@@ -64,8 +64,15 @@ public class CourseStatistics extends FenixBackingBean {
             executionYearId = (Integer) getRequestAttribute("executionYearId");
 
             if (executionYearId == null) {
-                executionYearId = (Integer) this.getExecutionYears().get(this.executionYears.size() - 1)
-                        .getValue();
+                InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(
+                        getUserView(), "ReadCurrentExecutionYear", new Object[] {});
+
+                if (infoExecutionYear == null) {
+                    executionYearId = (Integer) this.getExecutionYears().get(
+                            this.executionYears.size() - 1).getValue();
+                } else {
+                    executionYearId = infoExecutionYear.getIdInternal();
+                }
             }
 
             this.getViewState().setAttribute("executionYearId", executionYearId);

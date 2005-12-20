@@ -57,6 +57,17 @@ padding: 0 0.5em;
 text-decoration: none;
 border-bottom: 1px solid #ddd;
 }
+table.search {
+background-color: #f5f5f5;
+border-collapse: collapse;
+}
+table.search tr td {
+border: 1px solid #fff;
+padding: 0.3em;
+}
+.leftcolumn {
+text-align: right;
+}
 </style>
 
 	
@@ -66,17 +77,18 @@ border-bottom: 1px solid #ddd;
 	<h:form>
 
 		<fc:viewState binding="#{courseStatistics.viewState}" />
-
-		<h:outputText value="#{bundle['label.courseStatistics.executionYear']}&nbsp;" escape="false" />
 		
-		<fc:selectOneMenu
-			value="#{courseStatistics.executionYearId}"
-			valueChangeListener="#{courseStatistics.onExecutionYearChangeForCompetenceCourses}"
-			onchange="this.form.submit();">
-			<f:selectItems value="#{courseStatistics.executionYears}" />
-		</fc:selectOneMenu>
+		<h:panelGrid columns="2" styleClass="search">
+			<h:outputText value="#{bundle['label.common.executionYear']}&nbsp;" escape="false" styleClass="leftColumn" />
+			<fc:selectOneMenu
+				value="#{courseStatistics.executionYearId}"
+				valueChangeListener="#{courseStatistics.onExecutionYearChangeForCompetenceCourses}"
+				onchange="this.form.submit();">
+				<f:selectItems value="#{courseStatistics.executionYears}" />
+			</fc:selectOneMenu>
+		</h:panelGrid>
 
-		<h:outputText value="<br /><br />" escape="false" />
+		<h:outputText value="<br />" escape="false" />
 		
 		<f:verbatim>
 			<table class="vtsbc">

@@ -10,6 +10,8 @@ public enum RoleType {
     STUDENT,
 
     TEACHER,
+    
+    DEPARTMENT_MEMBER,
 
     TIME_TABLE_MANAGER,
 
@@ -64,8 +66,6 @@ public enum RoleType {
     PROJECTS_MANAGER,
     
     INSTITUCIONAL_PROJECTS_MANAGER,
-    
-    DEPARTMENT_MEMBER,
     
     BOLONHA_MANAGER;
     
