@@ -48,6 +48,7 @@ public class IndexAction extends Action {
         List executionPeriodsNotClosed = (List) ServiceUtils.executeService(userView,
                 "ReadNotClosedExecutionPeriods", null);
 
+        removeCreditsPointZeroExecutionPeriod(executionPeriodsNotClosed);
         setChoosedExecutionPeriod(request, executionPeriodsNotClosed, executionPeriodForm);
 
         BeanComparator initialDateComparator = new BeanComparator("beginDate");
@@ -56,6 +57,18 @@ public class IndexAction extends Action {
         request.setAttribute("executionPeriods", executionPeriodsNotClosed);
 
         return mapping.findForward("successfull-read");
+    }
+
+    /**
+     * @param executionPeriodsNotClosed
+     */
+    private void removeCreditsPointZeroExecutionPeriod(List<InfoExecutionPeriod> executionPeriodsNotClosed) {
+        for (InfoExecutionPeriod infoExecutionPeriod : executionPeriodsNotClosed) {
+            if(infoExecutionPeriod.getIdInternal().equals(1)){
+                executionPeriodsNotClosed.remove(infoExecutionPeriod);
+                break;
+            }
+        }
     }
 
     /**
