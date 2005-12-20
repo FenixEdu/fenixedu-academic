@@ -1,3 +1,4 @@
+<%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 <%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
@@ -5,97 +6,86 @@
 
 <ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="ServidorApresentacao/ScientificCouncilResources" var="scouncilBundle"/>
+	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="enumerationBundle"/>
 	
-	<h2><h:outputText value="#{scouncilBundle['curricularPlansManagement']}"/></h2>
+	<h:outputText value="<i>#{scouncilBundle['scientificCouncil']}</i>" escape="false"/>
+	<h:outputText value="<h2>#{scouncilBundle['curricularPlansManagement']}</h2>" escape="false"/>
 
-	<h:outputText value="* "/>
+	<h:outputText value="</br>* " escape="false"/>
 	<h:outputLink value="createDegree.faces">
-		<h:outputText value="#{scouncilBundle['createDegree']}" />
+		<h:outputFormat value="#{scouncilBundle['create.param']}">
+			<f:param value="#{scouncilBundle['degree']}"/>
+		</h:outputFormat>
 	</h:outputLink>
 	<h:outputText value="<br/><br/>" escape="false" />
 
 	<h:messages errorClass="error" infoClass="infoMsg"/>
 	
-	<fc:dataRepeater value="#{ScientificCouncilCurricularPlanManagement.bolonhaDegrees}" var="degree">
-		<h:outputText value="<table><tr><td>" escape="false"/>
-		<h:outputText value="<b>#{scouncilBundle['degree']}:</b><br/>" escape="false" />
-		<h:outputText value="#{degree.nome} > " escape="false" />
-		<h:outputLink value="editDegree.faces?degreeID=#{degree.idInternal}">
-			<h:outputText value="#{scouncilBundle['editDegree']}" />
+	<h:outputText value="<table border='0' width='70%'>" escape="false"/>
+		<fc:dataRepeater value="#{ScientificCouncilCurricularPlanManagement.bolonhaDegrees}" var="degree">
+		<h:outputText value="<tr><td colspan='2'><b>#{scouncilBundle['degree']}:</b></td></tr>" escape="false"/>
+
+		<h:outputText value="<tr><td colspan='2'>#{degree.nome} > " escape="false"/>
+		<h:outputLink value="editDegree.faces">
+			<h:outputFormat value="#{scouncilBundle['edit']}"/>
+			<f:param name="degreeId" value="#{degree.idInternal}"/>
 		</h:outputLink>
-		<h:outputText value="<br/>" escape="false" />
-		
-		<h:outputText value="<tr><td>#{scouncilBundle['curricularPlans']}</td></tr>" escape="false"/>
-		<fc:dataRepeater value="#{degree.degreeCurricularPlans}" var="degreeCurricularPlan">
-			<h:outputText value="<tr><td>" escape="false"/>
-			<h:outputText value="<i>#{degreeCurricularPlan.curricularStage.name}:</i></br>" escape="false" />
-			<h:outputText value="#{degreeCurricularPlan.name}</br>" escape="false" />
-			<h:outputText value="</td></tr>" escape="false"/>
-		</fc:dataRepeater>
-		<h:outputText value="</table>" escape="false"/>
-	</fc:dataRepeater>
-	
-<%-- 
-	<h:outputText value="* "/>
-	<h:outputLink value="createCurricularPlan.faces">
-		<h:outputText value="#{scouncilBundle['createCurricularPlan']}" />
-	</h:outputLink>
-	<br/>
-	<h:outputText value="--== Temporary Links ==--"/>
-	<br/>
-	<h:outputText value="* "/>
-	<h:outputLink value="editCurricularPlan.faces">
-		<h:outputText value="#{scouncilBundle['editCurricularPlan']}" />
-	</h:outputLink>
-	<br/>
-	<br/>
-	<h:outputText value="* "/>
-	<h:outputLink value="createCurricularCourse.faces">
-		<h:outputText value="#{scouncilBundle['createCurricularCourse']}" />
-	</h:outputLink>
-	<br/>
-	<h:outputText value="* "/>
-	<h:outputLink value="editCurricularCourse.faces">
-		<h:outputText value="#{scouncilBundle['editCurricularCourse']}" />
-	</h:outputLink>
-	<br/>
-	<h:outputText value="* "/>
-	<h:outputLink value="associateCurricularCourse.faces">
-		<h:outputText value="#{scouncilBundle['associateCurricularCourse']}" />
-	</h:outputLink>
-	<br/>
-	<h:outputText value="--== Temporary Links ==--"/>
-	<br/>
-	<br/>
-	<h:outputText value="ITERATE_DEGREES"/>
-	<h:panelGrid columns="1" border="1">
-		<h:panelGroup>
-			<h:outputText style="font-weight: bold" value="#{scouncilBundle['degree']}: " />
-			<h:outputText value="DEGREE_NAME > "/>
-			<h:outputLink value="editDegree.faces">
-				<h:outputText value="#{scouncilBundle['edit']}" />
+		<h:panelGroup rendered="#{empty degree.degreeCurricularPlans}">
+			<h:outputText value=" , " escape="false"/>
+			<h:outputLink value="deleteDegree.faces">
+				<h:outputFormat value="#{scouncilBundle['delete']}"/>
+				<f:param name="degreeId" value="#{degree.idInternal}"/>
 			</h:outputLink>
 		</h:panelGroup>
-		<h:panelGroup>
-			<h:outputText value="#{scouncilBundle['draft']}: <br/>" styleClass="italic" escape="false"/>
-				<h:outputText style="font-weight: bold" value="#{scouncilBundle['curricularPlan']}: " />
-				<h:outputText value="CURRICULAR_PLAN_NAME > "/>
-				<h:outputLink value="showCurricularPlan.faces">
-					<h:outputText value="#{scouncilBundle['showCurricularPlan']}" />
-				</h:outputLink>
-				<h:outputText value=", "/>
-				<h:outputLink value="editCurricularPlan.faces">
-					<h:outputText value="#{scouncilBundle['edit']} #{scouncilBundle['data']}" />
-				</h:outputLink>
-				<h:outputText value=", "/>
-				<h:outputLink value="editCurricularPlanStructure.faces">
-					<h:outputText value="#{scouncilBundle['edit']} #{scouncilBundle['structure']}" />
-				</h:outputLink>	
-				<h:outputText value="<br/>" escape="false"/>
-			<h:outputText value="#{scouncilBundle['published']}: <br/>" styleClass="italic" escape="false"/>
-			<h:outputText value="#{scouncilBundle['approved']}: " styleClass="italic"/>
-		</h:panelGroup>
-	</h:panelGrid>
---%>	
+		<h:outputText value="</td></tr>" escape="false"/>
+		
+		<h:outputText value="<tr><td colspan='2'><b>#{scouncilBundle['curricularPlan']}:</b></td></tr>" escape="false" rendered="#{!empty degree.degreeCurricularPlans}"/>
+		<h:outputText value="<tr><td colspan='2' align='center'><i>#{scouncilBundle['no.curricularPlan']}.</i></td></tr>" escape="false" rendered="#{empty degree.degreeCurricularPlans}"/>
+
+		<fc:dataRepeater value="#{degree.degreeCurricularPlans}" var="degreeCurricularPlan" rendered="#{!empty degree.degreeCurricularPlans}">
+			<h:outputText value="<tr>" escape="false"/>
+
+			<h:outputText value="<td><i>#{enumerationBundle[degreeCurricularPlan.curricularStage.name]}:</i> " escape="false" />
+			<h:outputText value="#{degreeCurricularPlan.name}</td>" escape="false" />
+
+			<h:outputText value="<td align='right'>" escape="false"/>
+			<h:outputLink value="viewCurricularPlan.faces">
+				<h:outputText value="#{scouncilBundle['view']}" />
+				<f:param name="degreeCurricularPlanId" value="#{degreeCurricularPlan.idInternal}"/>
+			</h:outputLink>
+			<h:outputText value=" , " escape="false"/>
+			<h:outputLink value="editCurricularPlan.faces">
+				<h:outputText value="#{scouncilBundle['editData']}" />
+				<f:param name="degreeCurricularPlanId" value="#{degreeCurricularPlan.idInternal}"/>
+			</h:outputLink>
+			<h:outputText value=" , " escape="false"/>
+			<h:outputLink value="buildCurricularPlan.faces">
+				<h:outputText value="#{scouncilBundle['buildCurricularPlan']}" />
+				<f:param name="degreeCurricularPlanId" value="#{degreeCurricularPlan.idInternal}"/>
+			</h:outputLink>
+			<h:outputText value=" , " escape="false"/>
+			<h:outputLink value="deleteCurricularPlan.faces">
+				<h:outputFormat value="#{scouncilBundle['delete']}"/>
+				<f:param name="degreeCurricularPlanId" value="#{degreeCurricularPlan.idInternal}"/>
+			</h:outputLink>
+			<h:outputText value=" , " escape="false"/>
+			<h:outputLink value="curricularPlanGroup.faces">
+				<h:outputText value="#{scouncilBundle['group']}" />
+				<f:param name="degreeCurricularPlanId" value="#{degreeCurricularPlan.idInternal}"/>
+			</h:outputLink>
+			<h:outputText value="</td>" escape="false"/>
+			
+			<h:outputText value="</tr>" escape="false"/>
+		</fc:dataRepeater>
+
+		<h:outputText value="<tr><td colspan='2' align='right'>" escape="false"/>
+		<h:outputLink value="createCurricularPlan.faces">
+			<h:outputText value="#{scouncilBundle['createCurricularPlan']}" />
+		</h:outputLink>
+		<h:outputText value="</td></tr>" escape="false"/>
+		<h:outputText value="<tr><td colspan='2'>&nbsp;</td></tr>" escape="false"/>
+		
+	</fc:dataRepeater>
+	<h:outputText value="</table>" escape="false"/>	
 
 </ft:tilesView>

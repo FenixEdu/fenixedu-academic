@@ -47,6 +47,7 @@ valueType net.sourceforge.fenixedu.util.EntryPhase                              
 valueType net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType                        as ExemptionGratuityType;
 valueType net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus                           as FinalDegreeWorkProposalStatus;  
 valueType net.sourceforge.fenixedu.domain.person.Gender                                         as Gender;
+valueType net.sourceforge.fenixedu.domain.curriculum.GradeType									as GradeType;
 valueType net.sourceforge.fenixedu.domain.GraduationType                                        as GraduationType;
 valueType net.sourceforge.fenixedu.domain.masterDegree.GuideRequester                           as GuideRequester;
 valueType net.sourceforge.fenixedu.domain.GuideState                                            as GuideState;
@@ -686,14 +687,16 @@ class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.do
 	String nome;
 	String nameEn;
 	String sigla;
+	String acronym;
     DegreeType tipoCurso;
     BolonhaDegreeType bolonhaDegreeType;
     Integer keyUnit;
-    MarkType markType;
+    GradeType gradeType;
 	
 	interface "
 
-	public void edit(String name, String nameEn, String sigla, net.sourceforge.fenixedu.domain.degree.DegreeType degreeType);
+	public void edit(String name, String nameEn, String code, net.sourceforge.fenixedu.domain.degree.DegreeType degreeType);
+	public void edit(String name, String nameEn, String acronym, net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType bolonhaDegreeType, net.sourceforge.fenixedu.domain.curriculum.GradeType gradeType);
 	public void delete();
 	"
 }

@@ -1,6 +1,3 @@
-/*
- * Created on Dec 7, 2005
- */
 package net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.curricularPlans;
 
 import java.util.ArrayList;
@@ -11,76 +8,87 @@ import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IEmployee;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.curriculum.GradeType;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-import net.sourceforge.fenixedu.util.MarkType;
 
 public class ScientificCouncilDegreeManagementBackingBean extends FenixBackingBean {
     private final ResourceBundle scouncilBundle = getResourceBundle("ServidorApresentacao/ScientificCouncilResources");
-    private final ResourceBundle bundleEnumeration = getResourceBundle("ServidorApresentacao/EnumerationResources");
+    private final ResourceBundle enumerationBundle = getResourceBundle("ServidorApresentacao/EnumerationResources");
+    private final ResourceBundle domainExceptionbundle = getResourceBundle("ServidorApresentacao/EnumerationResources");
     private final String NO_SELECTION = "noSelection";  
     
-    private String namePt;
+    private Integer degreeId;
+    private IDegree degree;
+    private String name;
     private String nameEn;
-    private String code;
+    private String acronym;
     private String bolonhaDegreeType;
     private String gradeType;
 
-    public String getNamePt() {
-        return namePt;
+    public Integer getDegreeId() {
+        return (degreeId == null) ? (degreeId = getAndHoldIntegerParameter("degreeId")) : degreeId;
     }
 
-    public void setNamePt(String namePt) {
-        this.namePt = namePt;
+    public void setDegreeId(Integer degreeId) {
+        this.degreeId = degreeId;
+    }
+    
+    public IDegree getDegree() throws FenixFilterException, FenixServiceException {
+        return (degree == null) ? (degree = (IDegree) readDomainObject(Degree.class, getDegreeId())) : degree;
+    }
+    
+    public String getName() throws FenixFilterException, FenixServiceException {
+        return (name == null && getDegree() != null) ? (name = getDegree().getNome()) : name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }    
 
-    public String getNameEn() {
-        return nameEn;
+    public String getNameEn() throws FenixFilterException, FenixServiceException {
+        return (nameEn == null && getDegree() != null) ? (nameEn = getDegree().getNameEn()) : nameEn;
     }
 
     public void setNameEn(String nameEn) {
         this.nameEn = nameEn;
     }
 
-    public String getCode() {
-        return code;
+    public String getAcronym() throws FenixFilterException, FenixServiceException {
+        return (acronym == null && getDegree() != null) ? (acronym = getDegree().getAcronym()) : acronym;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setAcronym(String acronym) {
+        this.acronym = acronym;
     }
 
-    public String getBolonhaDegreeType() {
-        return bolonhaDegreeType;
+    public String getBolonhaDegreeType() throws FenixFilterException, FenixServiceException {
+        return (bolonhaDegreeType == null && getDegree() != null) ? (bolonhaDegreeType = getDegree().getBolonhaDegreeType().getName()) : bolonhaDegreeType;
     }
 
     public void setBolonhaDegreeType(String bolonhaDegreeType) {
         this.bolonhaDegreeType = bolonhaDegreeType;
     }
 
-    public String getGradeType() {
-        return gradeType;
+    public String getGradeType() throws FenixFilterException, FenixServiceException {
+        return (gradeType == null && getDegree() != null) ? (gradeType = getDegree().getNome()) : gradeType;
     }
 
     public void setGradeType(String gradeType) {
         this.gradeType = gradeType;
     }
 
-    public String getPersonDepartmentName() {
-        IEmployee employee = getUserView().getPerson().getEmployee();
-        return (employee != null && employee.getCurrentDepartmentWorkingPlace() != null) ? employee
-                .getCurrentDepartmentWorkingPlace().getRealName() : "";
-    }
-    
     public List<SelectItem> getBolonhaDegreeTypes() {
         List<SelectItem> result = new ArrayList<SelectItem>();
         
         result.add(new SelectItem(this.NO_SELECTION, scouncilBundle.getString("choose")));
-        result.add(new SelectItem(BolonhaDegreeType.DEGREE, bundleEnumeration.getString(BolonhaDegreeType.DEGREE.getName()) + " (3 anos)"));
-        result.add(new SelectItem(BolonhaDegreeType.INTEGRATED_MASTER_DEGREE, bundleEnumeration.getString(BolonhaDegreeType.INTEGRATED_MASTER_DEGREE.getName())  + " (5 anos)"));
-        result.add(new SelectItem(BolonhaDegreeType.MASTER_DEGREE, bundleEnumeration.getString(BolonhaDegreeType.MASTER_DEGREE.getName())  + " (2 anos)"));
+        result.add(new SelectItem(BolonhaDegreeType.DEGREE.name(), enumerationBundle.getString(BolonhaDegreeType.DEGREE.getName()) + " (3 anos)"));
+        result.add(new SelectItem(BolonhaDegreeType.INTEGRATED_MASTER_DEGREE.name(), enumerationBundle.getString(BolonhaDegreeType.INTEGRATED_MASTER_DEGREE.getName())  + " (5 anos)"));
+        result.add(new SelectItem(BolonhaDegreeType.MASTER_DEGREE.name(), enumerationBundle.getString(BolonhaDegreeType.MASTER_DEGREE.getName())  + " (2 anos)"));
         
         return result;
     }
@@ -89,31 +97,58 @@ public class ScientificCouncilDegreeManagementBackingBean extends FenixBackingBe
         List<SelectItem> result = new ArrayList<SelectItem>();
         
         result.add(new SelectItem(this.NO_SELECTION, scouncilBundle.getString("choose")));
-        result.add(new SelectItem(MarkType.TYPE20, "1-20 valores"));
-        result.add(new SelectItem(MarkType.TYPE5, "1-5 valores"));
+        result.add(new SelectItem(GradeType.GRADETWENTY.name(), enumerationBundle.getString(GradeType.GRADETWENTY.name())));
+        result.add(new SelectItem(GradeType.GRADEFIVE.name(), enumerationBundle.getString(GradeType.GRADEFIVE.name())));
         
         return result;
     }
     
     public String createDegree() {
-        if (this.bolonhaDegreeType instanceof String || this.gradeType instanceof String) {
-            this.setErrorMessage("choose.request");
-            return "";
-        }
-        
-        Object[] args = { this.namePt, this.nameEn, this.code, this.bolonhaDegreeType, this.gradeType };
-        try {
-            ServiceUtils.executeService(this.getUserView(), "CreateDegree", args);
-        } catch (FenixFilterException e) {
-            this.setErrorMessage("error.creatingDegree");
-        } catch (FenixServiceException e) {
-            this.setErrorMessage("error.creatingDegree");
-        }
-        
-        return "curricularPlansManagement";
+        Object[] args = { this.name, this.nameEn, this.acronym, BolonhaDegreeType.valueOf(this.bolonhaDegreeType), GradeType.GRADETWENTY }; //GradeType.valueOf(this.gradeType) };
+        return changeDegree("CreateDegree", args, "degree.created", "error.creatingDegree");
     }
     
     public String editDegree() {
+        Object[] args = { this.getDegreeId(), this.name, this.nameEn, this.acronym, BolonhaDegreeType.valueOf(this.bolonhaDegreeType), GradeType.GRADETWENTY }; //GradeType.valueOf(this.gradeType) };
+        return changeDegree("EditDegree", args, "degree.edited", "error.editingDegree");
+    }
+    
+    private String changeDegree(String serviceName, Object[] args, String successfulMsg, String errorMsg) {
+        if (this.bolonhaDegreeType.equals(this.NO_SELECTION)) {// || this.gradeType.equals(this.NO_SELECTION)) {
+            this.setErrorMessage(scouncilBundle.getString("choose.request"));
+            return "";
+        }
+        
+        try {
+            ServiceUtils.executeService(this.getUserView(), serviceName, args);
+        } catch (FenixFilterException e) {
+            this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
+            return "curricularPlansManagement";
+        } catch (Exception e) {
+            this.addErrorMessage(scouncilBundle.getString(errorMsg));
+            return "curricularPlansManagement";
+        } 
+        
+        this.addInfoMessage(scouncilBundle.getString(successfulMsg));
+        return "curricularPlansManagement";
+    }
+    
+    public String deleteDegree() {
+        Object[] args = { this.getDegreeId() };
+        try {
+            ServiceUtils.executeService(this.getUserView(), "DeleteDegree", args);
+        } catch (FenixFilterException e) {
+            this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
+            return "curricularPlansManagement";
+        } catch (DomainException e) {
+            this.addErrorMessage(scouncilBundle.getString(e.getMessage()));
+            return "curricularPlansManagement";
+        } catch (Exception e) {
+            this.addErrorMessage(domainExceptionbundle.getString("error.deletingDegree"));
+            return "curricularPlansManagement";
+        } 
+        
+        this.addInfoMessage(scouncilBundle.getString("degree.deleted"));
         return "curricularPlansManagement";
     }
 

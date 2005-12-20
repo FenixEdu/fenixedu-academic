@@ -6,7 +6,9 @@
 	<f:loadBundle basename="ServidorApresentacao/ScientificCouncilResources" var="scouncilBundle"/>
 	
 	<h:outputText value="<i>#{scouncilBundle['scientificCouncil']}</i>" escape="false"/>
-	<h:outputText value="<h2>#{scouncilBundle['createDegree']}</h2>" escape="false"/>
+	<h:outputFormat value="<h2>#{scouncilBundle['create.param']}</h2>" escape="false">
+		<f:param value="#{scouncilBundle['degree']}"/>
+	</h:outputFormat>
 	<h:form>
 		<h:outputText value="<b>#{scouncilBundle['degree.data']}:</b><br/><br/>" escape="false"/>
 		
@@ -51,7 +53,7 @@
 --%>
 		</h:panelGrid>
 		<br/>
-		<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['submit']}"
+		<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['create']}"
 			action="#{ScientificCouncilDegreeManagement.createDegree}"/>
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{scouncilBundle['cancel']}"
 			action="curricularPlansManagement"/>

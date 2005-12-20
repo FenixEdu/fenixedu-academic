@@ -31,12 +31,6 @@
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaTipoCurso2SqlTipoCursoFieldConversion"
 	/>
 	<field-descriptor
-		name="ackOptLock"
-		column="ACK_OPT_LOCK"
-		jdbc-type="INTEGER"
-		locking="false"
-	/>
-	<field-descriptor
 		name="concreteClassForDegreeCurricularPlans"
 		column="CLASS_NAME_FOR_DEGREE_CURRICULAR_PLANS"
 		jdbc-type="VARCHAR"
@@ -46,13 +40,28 @@
 		column="KEY_UNIT"
 		jdbc-type="INTEGER"
 	 />
-	
+	<field-descriptor
+		name="bolonhaDegreeType"
+		column="BOLONHA_DEGREE_TYPE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaBolonhaDegreeType2SqlBolonhaDegreeTypeFieldConversion"
+	/>
+	<field-descriptor
+		name="gradeType"
+		column="GRADE_TYPE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGradeType2SqlGradeTypeFieldConversion"
+	/>
+	<field-descriptor
+		name="acronym"
+		column="ACRONYM"
+		jdbc-type="VARCHAR"
+	/>
 	<reference-descriptor auto-retrieve="false"
          name="unit"
          class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
          <foreignkey field-ref="keyUnit"/>
     </reference-descriptor>
-	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="degreeCurricularPlans"
 			element-class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"

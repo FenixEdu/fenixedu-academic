@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Iterator;
 
+import net.sourceforge.fenixedu.domain.curriculum.GradeType;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -9,33 +10,133 @@ import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesSummary;
 import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.domain.student.IDelegate;
-import net.sourceforge.fenixedu.util.MarkType;
 
 public class Degree extends Degree_Base {
 
-    public Degree() {
+    protected Degree() {
         super();
     };
 
-    public Degree(String name, String nameEn, String sigla) {
+    protected Degree(String name, String nameEn) {
         this();
-        setNome(name);
-        setNameEn(nameEn);
-        setSigla(sigla);
+        commonFieldsChange(name, nameEn);
+    }
+
+    private void commonFieldsChange(String name, String nameEn) {
+        if (name == null) {
+            throw new DomainException("degree.name.not.null");
+        } else if(nameEn == null) {
+            throw new DomainException("degree.name.en.not.null");
+        } 
+
+        this.setNome(name);
+        this.setNameEn(nameEn);
+    }
+    
+    public Degree(String name, String nameEn, String code, DegreeType degreeType, String concreteClassForDegreeCurricularPlans) {
+        this(name, nameEn);
+        oldStructureFieldsChange(code, degreeType);
+        
+        if (concreteClassForDegreeCurricularPlans == null) {
+            throw new DomainException("degree.concrete.class.not.null");
+        }
+        this.setConcreteClassForDegreeCurricularPlans(concreteClassForDegreeCurricularPlans);
         
         new DegreeInfo(this);
     }
 
-    public Degree(String name, String nameEn, String sigla, DegreeType degreeType, String concreteClassForDegreeCurricularPlans) {
-        this(name, nameEn, sigla);
-        setTipoCurso(degreeType);
-        setConcreteClassForDegreeCurricularPlans(concreteClassForDegreeCurricularPlans);
+    private void oldStructureFieldsChange(String code, DegreeType degreeType) {
+        if (code == null) {
+            throw new DomainException("degree.code.not.null");
+        } else if(degreeType == null) {
+            throw new DomainException("degree.degree.type.not.null");
+        } 
+
+        this.setSigla(code);
+        this.setTipoCurso(degreeType);
+    }
+
+    
+    public Degree(String namePt, String nameEn, String acronym, BolonhaDegreeType bolonhaDegreeType, GradeType gradeType) {
+        this(namePt, nameEn);
+        newStructureFieldsChange(acronym, bolonhaDegreeType, gradeType);
     }
     
-    public Degree(String namePt, String nameEn, String code, BolonhaDegreeType bolonhaDegreeType, MarkType markType) {
-        this(namePt, nameEn, code);
+    private void newStructureFieldsChange(String acronym, BolonhaDegreeType bolonhaDegreeType, GradeType gradeType) {
+        if (acronym == null) {
+            throw new DomainException("degree.acronym.not.null");
+        } else if(bolonhaDegreeType == null) {
+            throw new DomainException("degree.degree.type.not.null");
+        } else if (gradeType == null) {
+            throw new DomainException("degree.grade.type.not.null");
+        }
+
+        this.setAcronym(acronym);
         this.setBolonhaDegreeType(bolonhaDegreeType);
-        this.setMarkType(markType);
+        this.setGradeType(gradeType);
+    }
+
+    public void edit(String name, String nameEn, String code, DegreeType degreeType) {
+        commonFieldsChange(name, nameEn);
+        oldStructureFieldsChange(code, degreeType);
+        
+        if(!hasAnyDegreeInfos())  
+            new DegreeInfo(this);
+    }
+
+    public void edit(String name, String nameEn, String acronym, BolonhaDegreeType bolonhaDegreeType, GradeType gradeType) {
+        commonFieldsChange(name, nameEn);
+        newStructureFieldsChange(acronym, bolonhaDegreeType, gradeType);
+    }
+    
+    public void delete() throws DomainException {
+        
+        if (!hasAnyDegreeCurricularPlans()) {
+            
+            Iterator oicrIterator = getAssociatedOldInquiriesCoursesResIterator();
+            while (oicrIterator.hasNext()) {
+                IOldInquiriesCoursesRes oicr = (IOldInquiriesCoursesRes) oicrIterator.next();
+                oicrIterator.remove();
+                oicr.removeDegree();
+                oicr.delete();
+            }
+        
+            Iterator oitrIterator = getAssociatedOldInquiriesTeachersResIterator();
+            while (oitrIterator.hasNext()) {
+                IOldInquiriesTeachersRes oitr = (IOldInquiriesTeachersRes) oitrIterator.next();
+                oitrIterator.remove();
+                oitr.removeDegree();
+                oitr.delete();
+            }
+                
+            Iterator oisIterator = getAssociatedOldInquiriesSummariesIterator();
+            while (oisIterator.hasNext()) {
+                IOldInquiriesSummary ois = (IOldInquiriesSummary) oisIterator.next();
+                oisIterator.remove();
+                ois.removeDegree();
+                ois.delete();
+            }
+            
+            Iterator delegatesIterator = getDelegateIterator();
+            while(delegatesIterator.hasNext()) {
+                IDelegate delegate = (IDelegate)delegatesIterator.next();
+                delegatesIterator.remove();
+                delegate.removeDegree();
+                delegate.delete();
+            }
+            
+            Iterator degreeInfosIterator = getDegreeInfosIterator();
+            while (degreeInfosIterator.hasNext()) {
+                IDegreeInfo degreeInfo = (IDegreeInfo) degreeInfosIterator.next();
+                degreeInfosIterator.remove();
+                degreeInfo.removeDegree();
+                degreeInfo.delete();
+            }
+            
+            deleteDomainObject();
+        } else {
+            throw new DomainException("error.degree.has.degree.curricular.plans");
+        }
     }
     
     public String toString() {
@@ -62,65 +163,4 @@ public class Degree extends Degree_Base {
         return degreeCurricularPlan;
     }
 	
-	
-	public void edit(String name, String nameEn, String sigla, DegreeType degreeType) {
-		setNome(name);
-		setNameEn(nameEn);
-		setSigla(sigla);
-		setTipoCurso(degreeType);
-		
-        if(!hasAnyDegreeInfos())  
-			new DegreeInfo(this);
-	}
-		
-	
-	public void delete() throws DomainException {
-		
-		if (!hasAnyDegreeCurricularPlans()) {
-			
-			Iterator oicrIterator = getAssociatedOldInquiriesCoursesResIterator();
-			while (oicrIterator.hasNext()) {
-				IOldInquiriesCoursesRes oicr = (IOldInquiriesCoursesRes) oicrIterator.next();
-				oicrIterator.remove();
-				oicr.removeDegree();
-				oicr.delete();
-			}
-		
-			Iterator oitrIterator = getAssociatedOldInquiriesTeachersResIterator();
-			while (oitrIterator.hasNext()) {
-				IOldInquiriesTeachersRes oitr = (IOldInquiriesTeachersRes) oitrIterator.next();
-				oitrIterator.remove();
-				oitr.removeDegree();
-				oitr.delete();
-			}
-				
-			Iterator oisIterator = getAssociatedOldInquiriesSummariesIterator();
-			while (oisIterator.hasNext()) {
-				IOldInquiriesSummary ois = (IOldInquiriesSummary) oisIterator.next();
-				oisIterator.remove();
-				ois.removeDegree();
-				ois.delete();
-			}
-			
-			Iterator delegatesIterator = getDelegateIterator();
-			while(delegatesIterator.hasNext()) {
-				IDelegate delegate = (IDelegate)delegatesIterator.next();
-				delegatesIterator.remove();
-				delegate.removeDegree();
-				delegate.delete();
-			}
-			
-			Iterator degreeInfosIterator = getDegreeInfosIterator();
-			while (degreeInfosIterator.hasNext()) {
-				IDegreeInfo degreeInfo = (IDegreeInfo) degreeInfosIterator.next();
-				degreeInfosIterator.remove();
-				degreeInfo.removeDegree();
-				degreeInfo.delete();
-			}
-			
-			deleteDomainObject();
-		} else {
-			throw new DomainException("error.degree.has.degree.curricular.plans");
-		}
-	}
 }

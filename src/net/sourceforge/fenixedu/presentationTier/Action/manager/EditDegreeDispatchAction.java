@@ -82,7 +82,7 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
         Object args[] = { newInfoDegree };
 
         try {
-            ServiceUtils.executeService(userView, "EditDegree", args);
+            ServiceUtils.executeService(userView, "EditDegreeInOldDegreeStructure", args);
 
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("message.nonExistingDegree", mapping

@@ -38,3 +38,7 @@ echo Changing DegreeModule table and data ...
 mysql -u$2 -f $1 -p$password < alterTableDegreeModule.sql
 mysql -u$2 -f $1 -p$password < updateTableDegreeModule.sql
 echo Changing DegreeModule table and data Done.
+
+echo Altering Degree Table...
+mysql -u$2 -f -p$password $1 < alterDegreeTable.sql
+echo done.

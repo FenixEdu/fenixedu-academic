@@ -1390,6 +1390,20 @@
 			<to-view-id>/scientificCouncil/curricularPlans/curricularPlansManagement.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/curricularPlans/editDegree.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/scientificCouncil/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/curricularPlans/deleteDegree.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/scientificCouncil/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 	
 	<!-- END: Scientific Council Navigation Rules -->
 

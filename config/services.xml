@@ -963,7 +963,7 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>EditDegree</name>
+		<name>EditDegreeInOldDegreeStructure</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.EditDegree</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
@@ -4139,6 +4139,26 @@
 		<name>CreateDegree</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.CreateDegree</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ScientificCouncilAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>EditDegree</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.EditDegree</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ScientificCouncilAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>DeleteDegree</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.DeleteDegree</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>

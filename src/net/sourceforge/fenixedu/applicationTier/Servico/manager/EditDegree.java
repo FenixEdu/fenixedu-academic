@@ -1,40 +1,55 @@
-/*
- * Created on 29/Jul/2003
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import java.util.List;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author lmac1
- */
 public class EditDegree implements IService {
 
-    public void run(InfoDegree newInfoDegree) throws FenixServiceException, ExcepcaoPersistencia {
-        try {
-			ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-			ICursoPersistente persistentDegree = persistentSuport.getICursoPersistente();
-			IDegree oldDegree = (IDegree)persistentDegree.readByOID(Degree.class,newInfoDegree.getIdInternal());
-
-            if (oldDegree == null) {
-                throw new NonExistingServiceException();
-            }
-			
-			oldDegree.edit(newInfoDegree.getNome(), newInfoDegree.getNameEn(),
-					newInfoDegree.getSigla(), newInfoDegree.getTipoCurso());
-        } catch (ExistingPersistentException ex) {
-            throw new ExistingServiceException(ex);
+    public void run(InfoDegree infoDegree) throws FenixServiceException, ExcepcaoPersistencia {
+        if (infoDegree.getIdInternal() == null || infoDegree.getNome() == null || infoDegree.getNameEn() == null
+                || infoDegree.getSigla() == null || infoDegree.getTipoCurso() == null) {
+            throw new InvalidArgumentsServiceException();
         }
+
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
+        final IDegree degreeToEdit = (IDegree) persistentSupport.getIPersistentObject().readByOID(Degree.class,
+                infoDegree.getIdInternal());
+
+        if (degreeToEdit == null) {
+            throw new NonExistingServiceException();
+        } else if (!degreeToEdit.getSigla().equalsIgnoreCase(infoDegree.getSigla())
+                || !degreeToEdit.getNome().equalsIgnoreCase(infoDegree.getNome())
+                || !degreeToEdit.getTipoCurso().equals(infoDegree.getTipoCurso())) {
+            
+            final List<IDegree> degrees = (List<IDegree>) persistentSupport.getICursoPersistente()
+                    .readAllFromOldDegreeStructure();
+
+            // assert unique degree code and unique pair name/type
+            for (IDegree degree : degrees) {
+                if (degree.getSigla().equalsIgnoreCase(infoDegree.getSigla())) {
+                    throw new FenixServiceException("error.existing.code");
+                }
+                if ((degree.getNome().equalsIgnoreCase(infoDegree.getNome()) || degree.getNameEn()
+                        .equalsIgnoreCase(infoDegree.getNameEn()))
+                        && degree.getTipoCurso().equals(infoDegree.getTipoCurso())) {
+                    throw new FenixServiceException("error.existing.name.and.type");
+                }
+            }
+        }
+
+        degreeToEdit.edit(infoDegree.getNome(), infoDegree.getNameEn(), infoDegree.getSigla(), infoDegree
+                .getTipoCurso());
     }
+
 }
