@@ -2,33 +2,37 @@
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
-<ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/BolonhaManagerResources" var="bolonhaBundle"/>
+<ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="ServidorApresentacao/ScientificCouncilResources" var="scouncilBundle"/>
 	
-	<h:outputText value="#{CurricularPlanManagement.personDepartmentName}" style="font-style: italic"/>
-	<h2><h:outputText value="#{bolonhaBundle['createCurricularPlan']}"/></h2>	
+	<h:outputText value="<i>#{scouncilBundle['scientificCouncil']}</i>" escape="false"/>
+	<h:outputFormat value="<h2>#{scouncilBundle['create.param']}</h2>" escape="false">
+		<f:param value="#{scouncilBundle['degree']}"/>
+	</h:outputFormat>
 	<h:form>
-		<h:panelGrid columnClasses="infocell" columns="2" border="0">
-			<h:outputText value="#{bolonhaBundle['degree']}: " />
-			<h:selectOneMenu value="">
-				<%-- <f:selectItems value="#{CompetenceCourseManagement.regimeTypes}" /> --%>
-			</h:selectOneMenu>
+		<h:outputText value="<b>#{scouncilBundle['curricularPlan.data']}:</b><br/><br/>" escape="false"/>
 		
-			<h:outputText value="#{bolonhaBundle['name']}: " />
-			<h:inputText required="true" maxlength="100" size="60"/>
-				
-			<h:outputText value="#{bolonhaBundle['degreeType']}: " />
-			<h:selectOneMenu value="">
-				<%-- <f:selectItems value="#{CompetenceCourseManagement.regimeTypes}" /> --%>
-			</h:selectOneMenu>
+		<h:outputText styleClass="error" rendered="#{!empty ScientificCouncilCurricularPlanManagement.errorMessage}"
+			value="#{ScientificCouncilCurricularPlanManagement.errorMessage}<br/>" escape="false"/>
+		
+		<h:panelGrid columnClasses="infocell" columns="2" border="0">
+			<h:outputText value="#{scouncilBundle['name']}: " />
+			<h:panelGroup>
+				<h:inputText id="name" value="#{ScientificCouncilCurricularPlanManagement.name}" required="true" maxlength="100" size="60"/>
+				<h:message for="name" errorClass="error" rendered="#{empty ScientificCouncilCurricularPlanManagement.errorMessage}"/>
+			</h:panelGroup>
 			
-			<h:outputText value="#{bolonhaBundle['ectsCredits']}: " />
-			<h:inputText required="true" maxlength="5" size="5"/>
+			<h:outputText value="#{scouncilBundle['acronym']}: " />
+			<h:panelGroup>
+				<h:inputText id="acronym" value="#{ScientificCouncilCurricularPlanManagement.acronym}" required="true" maxlength="100" size="10"/>
+				<h:message for="acronym" errorClass="error" rendered="#{empty ScientificCouncilCurricularPlanManagement.errorMessage}"/>
+			</h:panelGroup>
+			
 		</h:panelGrid>
 		<br/>
-		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['submit']}"
-			action="#{CurricularPlanManagement.createCurricularPlan}"/>
-		<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}"
+		<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['create']}"
+			action="#{ScientificCouncilCurricularPlanManagement.createDegreeCurricularPlan}"/>
+		<h:commandButton immediate="true" styleClass="inputbutton" value="#{scouncilBundle['cancel']}"
 			action="curricularPlansManagement"/>
 	</h:form>
 </ft:tilesView>

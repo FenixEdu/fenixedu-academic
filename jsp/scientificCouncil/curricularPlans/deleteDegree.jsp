@@ -37,7 +37,7 @@
 			<h:outputText id="bolonhaDegreeType" value="#{enumerationBundle[ScientificCouncilDegreeManagement.bolonhaDegreeType]}"/>
 <%-- 
  			<h:outputText value="<b>#{scouncilBundle['gradeTypes']}:</b> " escape="false"/>
-			<h:outputText id="gradeType" value="#{ScientificCouncilDegreeManagement.gradeType}"/>
+			<h:outputText id="gradeType" value="#{enumerationBundle[ScientificCouncilDegreeManagement.gradeType]}"/>
 --%>
 		</h:panelGrid>
 		<br/>
