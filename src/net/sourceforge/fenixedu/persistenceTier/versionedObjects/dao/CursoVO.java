@@ -26,20 +26,30 @@ public class CursoVO extends VersionedObjectsBase implements ICursoPersistente {
         return null;
     }
 
-    public List readAllFromOldDegreeStructure() throws ExcepcaoPersistencia {
-        List degrees = (List) readAll(Degree.class);
+    public List<IDegree> readAllFromOldDegreeStructure() throws ExcepcaoPersistencia {
+        List<IDegree> degrees = (List<IDegree>) readAll(Degree.class);
 
-        return (List) CollectionUtils.select(degrees, new Predicate() {
+        return (List<IDegree>) CollectionUtils.select(degrees, new Predicate() {
             public boolean evaluate(Object o) {
                 return ((IDegree) o).getBolonhaDegreeType() == null;
             }
         });
     }
 
-    public List readAllByDegreeType(final DegreeType degreeType) throws ExcepcaoPersistencia {
-        List degrees = (List) readAll(Degree.class);
+    public List<IDegree> readAllFromNewDegreeStructure() throws ExcepcaoPersistencia {
+        List<IDegree> degrees = (List<IDegree>) readAll(Degree.class);
 
-        return (List) CollectionUtils.select(degrees, new Predicate() {
+        return (List<IDegree>) CollectionUtils.select(degrees, new Predicate() {
+            public boolean evaluate(Object o) {
+                return ((IDegree) o).getBolonhaDegreeType() != null;
+            }
+        });
+    }
+
+    public List<IDegree> readAllByDegreeType(final DegreeType degreeType) throws ExcepcaoPersistencia {
+        List<IDegree> degrees = (List<IDegree>) readAll(Degree.class);
+
+        return (List<IDegree>) CollectionUtils.select(degrees, new Predicate() {
             public boolean evaluate(Object o) {
                 return ((IDegree) o).getTipoCurso().equals(degreeType);
             }

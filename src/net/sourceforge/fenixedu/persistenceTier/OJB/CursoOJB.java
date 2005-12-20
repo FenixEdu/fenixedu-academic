@@ -35,6 +35,12 @@ public class CursoOJB extends PersistentObjectOJB implements ICursoPersistente {
         return queryList(Degree.class, criteria);
     }
 
+    public List<IDegree> readAllFromNewDegreeStructure() throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addColumnNotNull("BOLONHA_DEGREE_TYPE");
+        return queryList(Degree.class, criteria);
+    }
+    
     public List<IDegree> readAllByDegreeType(DegreeType degreeType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("tipoCurso", degreeType);

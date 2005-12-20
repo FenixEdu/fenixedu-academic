@@ -10,6 +10,8 @@ public interface ICursoPersistente extends IPersistentObject {
     public IDegree readBySigla(String sigla) throws ExcepcaoPersistencia;
 
     public List<IDegree> readAllFromOldDegreeStructure() throws ExcepcaoPersistencia;
+    
+    public List<IDegree> readAllFromNewDegreeStructure() throws ExcepcaoPersistencia;
 
     public List<IDegree> readAllByDegreeType(DegreeType degreeType) throws ExcepcaoPersistencia;
 
