@@ -117,15 +117,7 @@ public class Teacher extends Teacher_Base {
             return employee.getLastDepartmentWorkingPlace();                       
         }
         return null;
-    }
-    
-    public List<IDepartment> getWorkingDepartment(Date beginDate, Date endDate) {
-        IEmployee employee = this.getPerson().getEmployee();
-        if (employee != null) {
-            return employee.getDepartmentWorkingPlace(beginDate, endDate);
-        }
-        return new ArrayList<IDepartment>();
-    }   
+    }      
     
     public ITeacherPersonalExpectation getTeacherPersonalExpectationByExecutionYear(
             IExecutionYear executionYear) {

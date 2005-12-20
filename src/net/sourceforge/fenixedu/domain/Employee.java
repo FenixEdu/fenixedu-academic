@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -42,47 +41,20 @@ public class Employee extends Employee_Base {
         return null;
     }
 
-    public List<IDepartment> getDepartmentWorkingPlace(Date beginDate, Date endDate) {
-        List<IDepartment> departments = new ArrayList<IDepartment>();
-        for (IContract contract : this.getContracts()) {
-            if (contract.belongsToPeriod(beginDate, endDate)) {
-                IUnit workingUnit = contract.getWorkingUnit();
-                if (workingUnit != null) {
-                    if (workingUnit.getTopUnits().isEmpty()) {
-                        for (IUnit unit : workingUnit.getTopUnits()) {
-                            if (unit.getType() != null && unit.getType().equals(UnitType.DEPARTMENT)
-                                    && unit.getDepartment() != null) {
-                                departments.add(unit.getDepartment());
-                            }
-                        }
-                    } else if (workingUnit.getType() != null
-                            && workingUnit.getType().equals(UnitType.DEPARTMENT)
-                            && workingUnit.getDepartment() != null) {
-                        departments.add(workingUnit.getDepartment());
-                    }
-                }
-            }
-        }
-        return departments;
-    }
-
-    public IContract getCurrentContract() {
-        Date currentDate = prepareCurrentDate();
+    public IContract getCurrentContract() {        
         List<IContract> contracts = this.getContracts();
         for (IContract contract : contracts) {
-            if (contract.getEndDate() == null || contract.getEndDate().equals(currentDate)
-                    || contract.getEndDate().after(currentDate))
+            if (contract.isActive(Calendar.getInstance().getTime()))
                 return contract;
         }
         return null;
     }
 
     public IContract getLastContract() {
-        Date date = null, currentDate = prepareCurrentDate();
+        Date date = null;
         IContract contractToReturn = null;
         for (IContract contract : this.getContracts()) {
-            if (contract.getEndDate() == null || contract.getEndDate().equals(currentDate)
-                    || contract.getEndDate().after(currentDate)) {
+            if (contract.isActive(Calendar.getInstance().getTime())) {
                 contractToReturn = contract;
                 break;
             } else if (date == null || date.before(contract.getEndDate())) {
@@ -110,14 +82,5 @@ public class Employee extends Employee_Base {
             return unit.getDepartment();
         }
         return null;
-    }
-
-    private Date prepareCurrentDate() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        return calendar.getTime();
     }
 }

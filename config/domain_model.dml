@@ -207,6 +207,7 @@ class net.sourceforge.fenixedu.domain.Contract extends net.sourceforge.fenixedu.
 				
 	interface"
 	public boolean belongsToPeriod(java.util.Date beginDate, java.util.Date endDate);
+	public boolean isActive(java.util.Date currentDate);
 	public void delete();
 	"
 }
@@ -1096,7 +1097,6 @@ class net.sourceforge.fenixedu.domain.Employee extends net.sourceforge.fenixedu.
     public IDepartment getLastDepartmentWorkingPlace();
 	public IContract getCurrentContract();
     public IContract getLastContract();
-    public java.util.List<IDepartment> getDepartmentWorkingPlace(java.util.Date beginDate, java.util.Date endDate);
 	"
 }
 
@@ -3443,8 +3443,6 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
    	public net.sourceforge.fenixedu.domain.teacher.ITeacherPersonalExpectation getTeacherPersonalExpectationByExecutionYear(IExecutionYear executionYear);
 		
 	public IDepartment getCurrentWorkingDepartment();
-	
-	public java.util.List<IDepartment> getWorkingDepartment(java.util.Date beginDate, java.util.Date endDate);
    	
    	public IDepartment getLastWorkingDepartment();
 	

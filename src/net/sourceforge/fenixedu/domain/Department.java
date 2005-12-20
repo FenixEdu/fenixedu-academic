@@ -11,8 +11,11 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IUnit;
@@ -29,15 +32,15 @@ public class Department extends Department_Base {
     }
 
     public List getCurrentActiveWorkingEmployees() {
-
         IUnit unit = this.getUnit();
         List employees = new ArrayList();
-
+        Date currentDate = Calendar.getInstance().getTime();
+        
         if (unit != null) {
             for (IContract contract : unit.getWorkingContracts()) {
                 IEmployee employee = contract.getEmployee();
                 if (employee.getActive().booleanValue()
-                        && contract.equals(employee.getCurrentContract())) {
+                        && contract.isActive(currentDate)) {
                     employees.add(employee);
                 }
             }
@@ -45,7 +48,7 @@ public class Department extends Department_Base {
                 for (IContract contract : subUnit.getWorkingContracts()) {
                     IEmployee employee = contract.getEmployee();
                     if (employee.getActive().booleanValue()
-                            && contract.equals(employee.getCurrentContract())) {
+                            && contract.isActive(currentDate)) {
                         employees.add(employee);
                     }
                 }
@@ -55,7 +58,6 @@ public class Department extends Department_Base {
     }
     
     public List getTeachers() {
-
         List teachers = new ArrayList();
         List<IEmployee> employees = this.getCurrentActiveWorkingEmployees();
 
@@ -64,13 +66,12 @@ public class Department extends Department_Base {
     }
 
     public List<IEmployee> getWorkingEmployees(Date begin, Date end) {
-
         IUnit unit = this.getUnit();
-        List<IEmployee> employees = new ArrayList<IEmployee>();
+        Set<IEmployee> employees = new HashSet<IEmployee>();
 
         if (unit != null) {
-            for (IContract contract : unit.getWorkingContracts(begin, end)) {                
-                employees.add(contract.getEmployee());                
+            for (IContract contract : unit.getWorkingContracts(begin, end)) {                                
+                employees.add(contract.getEmployee());                         
             }
             for (IUnit subUnit : unit.getSubUnits()) {
                 for (IContract contract : subUnit.getWorkingContracts(begin, end)) {                                     
@@ -78,7 +79,7 @@ public class Department extends Department_Base {
                 }
             }
         }
-        return employees;
+        return new ArrayList<IEmployee>(employees);
     }
 
     
