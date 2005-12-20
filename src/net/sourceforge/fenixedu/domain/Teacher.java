@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
 import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
+import net.sourceforge.fenixedu.domain.teacher.ICategory;
 import net.sourceforge.fenixedu.domain.teacher.ITeacherLegalRegimen;
 import net.sourceforge.fenixedu.domain.teacher.ITeacherPersonalExpectation;
 import net.sourceforge.fenixedu.domain.teacher.ITeacherService;
@@ -442,7 +443,55 @@ public class Teacher extends Teacher_Base {
         return 0;
     }
 
+    
+    public ICategory getCategoryByPeriod(Date begin, Date end){
+        List<ITeacherLegalRegimen> list = new ArrayList<ITeacherLegalRegimen>();
+        for (ITeacherLegalRegimen teacherLegalRegimen : this.getLegalRegimens()) {
+            if (teacherLegalRegimen.belongsToPeriod(begin, end)) {
+                list.add(teacherLegalRegimen);
+            }
+        }
+       
+        if (list.isEmpty()) {
+            return null;
+        } else if (list.size() > 1) {
+            return getTeacherCategory(list, begin, end);
+        } else {
+            return list.iterator().next().getCategory();
+        }               
+    }
     // /////////////////////////////////////////
+
+    private ICategory getTeacherCategory(List<ITeacherLegalRegimen> list, Date begin, Date end) {
+        Integer numberOfDaysInPeriod = null, maxDays = 0;
+        ITeacherLegalRegimen teacherLegalRegimen = null;
+
+        for (ITeacherLegalRegimen regimen : list) {
+
+            if (regimen.getBeginDate().before(begin) || regimen.getBeginDate().equals(begin)) {
+                numberOfDaysInPeriod = CalendarUtil.getNumberOfDaysBetweenDates(begin, regimen
+                        .getEndDate());
+                if (numberOfDaysInPeriod >= maxDays) {
+                    teacherLegalRegimen = regimen;
+                }
+            }
+            if (regimen.getBeginDate().after(begin) && regimen.getEndDate() != null
+                    && regimen.getEndDate().before(end)) {
+                numberOfDaysInPeriod = CalendarUtil.getNumberOfDaysBetweenDates(regimen.getBeginDate(),
+                        regimen.getEndDate());
+                if (numberOfDaysInPeriod >= maxDays) {
+                    teacherLegalRegimen = regimen;
+                }
+            } else if (regimen.getBeginDate().after(begin)) {
+                numberOfDaysInPeriod = CalendarUtil.getNumberOfDaysBetweenDates(regimen.getBeginDate(),
+                        end);
+                if (numberOfDaysInPeriod >= maxDays) {
+                    teacherLegalRegimen = regimen;
+                }
+            }
+        }
+        return teacherLegalRegimen.getCategory();
+    }
 
     private int calculateTeacherHours(List<ITeacherLegalRegimen> list, Date begin, Date end) {
 

@@ -3467,6 +3467,7 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	public int getManagementFunctionsCredits(IExecutionPeriod executionPeriod);
     public int getServiceExemptionCredits(IExecutionPeriod executionPeriod);
     public int getHoursByCategory(java.util.Date begin, java.util.Date end);    
+    public net.sourceforge.fenixedu.domain.teacher.ICategory getCategoryByPeriod(java.util.Date begin, java.util.Date end);
     public Double getHoursLecturedOnExecutionCourse(IExecutionCourse executionCourse);	
 	public net.sourceforge.fenixedu.domain.teacher.ITeacherService getTeacherServiceByExecutionPeriod(final IExecutionPeriod executionPeriod);
 	
