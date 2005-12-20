@@ -35,4 +35,19 @@ public class DateFormatUtil {
         return dateFormat.format(date1).equals(dateFormat.format(date2));
     }
 
+    public static int compareDates(final String format, final Date date1, final Date date2) {
+        final DateFormat dateFormat = dateFormat(format);
+        final String date1String = dateFormat.format(date1);
+        final String date2String = dateFormat.format(date2);
+        return date1String.compareTo(date2String);
+    }
+
+    public static boolean isBefore(final String format, final Date date1, final Date date2) {
+        return compareDates(format, date1, date2) < 0;
+    }
+
+    public static boolean isAfter(final String format, final Date date1, final Date date2) {
+        return compareDates(format, date1, date2) > 0;
+    }
+
 }

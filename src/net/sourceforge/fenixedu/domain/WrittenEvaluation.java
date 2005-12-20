@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -10,6 +11,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.IRoom;
 import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
 public class WrittenEvaluation extends WrittenEvaluation_Base {
@@ -341,18 +343,27 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public void checkIfCanDistributeStudentsByRooms() {
-
         if (!this.hasAnyAssociatedRoomOccupation()) {
             throw new DomainException("error.no.roms.associated");
         }
+
         final Date todayDate = Calendar.getInstance().getTime();
+        final Date evaluationDateAndTime;
+        try {
+            evaluationDateAndTime = DateFormatUtil.parse("yyyy/MM/dd HH:mm",
+                    DateFormatUtil.format("yyyy/MM/dd ", this.getDayDate()) + DateFormatUtil.format("HH:mm", this.getBeginningDate()));
+        } catch (ParseException e) {
+            // This should never happen, the string where obtained from other dates.
+            throw new Error(e);
+        }
+
         Date enrolmentEndDate = null;
         // This can happen if the Enrolment Period for Evaluation wasn't defined
         if (this.getEnrollmentEndDayDate() != null && this.getEnrollmentEndTimeDate() != null) {
             enrolmentEndDate = createDate(this.getEnrollmentEndDayDate(), this
                     .getEnrollmentEndTimeDate());
         }
-        if (this.getDayDate().before(todayDate)
+        if (DateFormatUtil.isBefore("yyyy/MM/dd HH:mm", evaluationDateAndTime, todayDate)
                 || (enrolmentEndDate != null && enrolmentEndDate.after(todayDate))) {
             throw new DomainException("error.out.of.period.enrollment.period");
         }
