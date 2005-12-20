@@ -108,9 +108,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
 
     public List getDepartmentTeachers() throws FenixFilterException, FenixServiceException {
         IExecutionYear executionYear = (IExecutionYear) readDomainObject(ExecutionYear.class, getSelectedExecutionYearID());
-        
-        System.out.println(executionYear);
-        
+                
         List<ITeacher> result = new ArrayList<ITeacher>(getDepartment().getTeachers(executionYear.getBeginDate(),executionYear.getEndDate()));
 
         ComparatorChain comparatorChain = new ComparatorChain();
