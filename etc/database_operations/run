@@ -10,35 +10,8 @@ echo Using database: $1
 echo Enter password for $2:
 read -s password
 
-echo Altering table ExecutionDegree
-mysql -u$2 -f -p$password $1 < alterTableExecutionDegree.sql
-
-echo Generating updates for new column in ExecutionDegree
-mysql -u$2 -f -p$password $1 < updateExecutionDegree.sql > res.sql
-
-echo Updating new column in ExecutionDegree
-mysql -u$2 -f -p$password $1 < res.sql
-rm -rf res.sql
-
-echo Altering table Period
-mysql -u$2 -f -p$password $1 < alterTablePeriod.sql
-
-echo Generating updates for new column in Period
-mysql -u$2 -f -p$password $1 < updatePeriod.sql > res.sql
-
-echo Updating new column in Period
-mysql -u$2 -f -p$password $1 < res.sql
-rm -rf res.sql
-
-echo Fixing Scientific Council Role...
-mysql -u$2 -f -p$password $1 < fixScientificCouncilRole.sql
-echo done.
-
-echo Changing DegreeModule table and data ...
-mysql -u$2 -f $1 -p$password < alterTableDegreeModule.sql
-mysql -u$2 -f $1 -p$password < updateTableDegreeModule.sql
-echo Changing DegreeModule table and data Done.
-
-echo Altering Degree Table...
+echo Altering table degree
 mysql -u$2 -f -p$password $1 < alterDegreeTable.sql
-echo done.
+
+echo Fixing council role
+mysql -u$2 -f -p$password $1 < fixScientificCouncilRole.sql
