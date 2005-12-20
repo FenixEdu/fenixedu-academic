@@ -55,17 +55,20 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
         mailBody += "Exception: \n" + session.getAttribute(Globals.EXCEPTION_KEY) + "\n\n";
         mailBody += "RequestContext: \n" + requestContext + "\n\n\n";
         mailBody += "SessionContext: \n" + sessionContextGetter(request) + "\n\n\n";
-        mailBody += "Path: " + originalMapping.getPath() + "\n";
-        mailBody += "Name: " + originalMapping.getName() + "\n";
+        if (originalMapping != null) {
+            mailBody += "Path: " + originalMapping.getPath() + "\n";
+            mailBody += "Name: " + originalMapping.getName() + "\n";
+        }
 
         IUserView userView = (IUserView) session.getAttribute("UserView");
         if (userView != null) {
             mailBody += "UserLogedIn: " + userView.getUtilizador() + "\n";
         } else {
-            mailBody += "No user logged in.";
+            mailBody += "No user logged in, or session was lost";
         }
 
         mailBody += stackTrace2String(stackTrace);
+        System.out.println(stackTrace2String(stackTrace));
 
         EMail email = null;
 
