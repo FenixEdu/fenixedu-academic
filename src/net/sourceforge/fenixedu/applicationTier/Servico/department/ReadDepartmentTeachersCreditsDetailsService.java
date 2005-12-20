@@ -91,7 +91,7 @@ public class ReadDepartmentTeachersCreditsDetailsService implements IService {
         IPersistentDepartment departmentDAO = sp.getIDepartamentoPersistente();
         IDepartment department = (IDepartment) departmentDAO.readByOID(Department.class, departmentId);
         
-        List teachers = department.getTeachers();
+        List teachers = department.getCurrentTeachers();
         return teachers;
     }
 }

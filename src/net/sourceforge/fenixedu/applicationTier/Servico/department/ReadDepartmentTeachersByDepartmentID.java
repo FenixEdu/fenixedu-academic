@@ -26,7 +26,7 @@ public class ReadDepartmentTeachersByDepartmentID implements IService {
         IDepartment department = (IDepartment) sp.getIDepartamentoPersistente().readByOID(
                 Department.class, departmentID);
 
-        List teachers = department.getTeachers();
+        List teachers = department.getCurrentTeachers();
 
         for (int i = 0; i < teachers.size(); i++) {
 

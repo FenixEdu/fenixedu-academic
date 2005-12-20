@@ -936,12 +936,13 @@ class net.sourceforge.fenixedu.domain.Department extends net.sourceforge.fenixed
 	Integer keyUnit;
 	
 	interface"
-	public java.util.List getCurrentActiveWorkingEmployees();
-	public java.util.List getTeachers();
-	public java.util.List<net.sourceforge.fenixedu.domain.ITeacher> getTeachers(java.util.Date begin, java.util.Date end);
-	public net.sourceforge.fenixedu.domain.ITeacher getTeacherByPeriod(Integer teacherNumber, java.util.Date begin, java.util.Date end);
-	public java.util.List<net.sourceforge.fenixedu.domain.IEmployee> getWorkingEmployees(java.util.Date begin, java.util.Date end);
- 	public void createTeacherExpectationDefinitionPeriod(net.sourceforge.fenixedu.domain.IExecutionYear executionYear, java.util.Date startDate, java.util.Date endDate);
+	public java.util.List<IEmployee> getCurrentActiveWorkingEmployees();
+	public java.util.List<ITeacher> getCurrentTeachers();
+	public java.util.List<ITeacher> getTeachersHistoric();
+	public java.util.List<ITeacher> getTeachers(java.util.Date begin, java.util.Date end);
+	public ITeacher getTeacherByPeriod(Integer teacherNumber, java.util.Date begin, java.util.Date end);
+	public java.util.List<IEmployee> getWorkingEmployees(java.util.Date begin, java.util.Date end);
+ 	public void createTeacherExpectationDefinitionPeriod(IExecutionYear executionYear, java.util.Date startDate, java.util.Date endDate);
  	public ITeacherExpectationDefinitionPeriod readTeacherExpectationDefinitionPeriodByExecutionYear(IExecutionYear executionYear);
 	public java.util.List<ICompetenceCourse> getCompetenceCoursesByExecutionYear(IExecutionYear executionYear);
 	"

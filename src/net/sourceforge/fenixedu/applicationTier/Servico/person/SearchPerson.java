@@ -142,7 +142,7 @@ public class SearchPerson implements IService {
 
         if ((roleBd.getRoleType() == RoleType.TEACHER) && (searchParameters.getDepartment() != null)) {
             persons = new ArrayList<IPerson>();
-            teachers = searchParameters.getDepartment().getTeachers();
+            teachers = searchParameters.getDepartment().getCurrentTeachers();
             for (ITeacher teacher : teachers) {
                 persons.add(teacher.getPerson());
             }

@@ -31,24 +31,22 @@ public class Department extends Department_Base {
         return result;
     }
 
-    public List getCurrentActiveWorkingEmployees() {
+    public List<IEmployee> getCurrentActiveWorkingEmployees() {
         IUnit unit = this.getUnit();
-        List employees = new ArrayList();
+        List<IEmployee> employees = new ArrayList<IEmployee>();
         Date currentDate = Calendar.getInstance().getTime();
-        
+
         if (unit != null) {
             for (IContract contract : unit.getWorkingContracts()) {
                 IEmployee employee = contract.getEmployee();
-                if (employee.getActive().booleanValue()
-                        && contract.isActive(currentDate)) {
+                if (employee.getActive().booleanValue() && contract.isActive(currentDate)) {
                     employees.add(employee);
                 }
             }
             for (IUnit subUnit : unit.getSubUnits()) {
                 for (IContract contract : subUnit.getWorkingContracts()) {
                     IEmployee employee = contract.getEmployee();
-                    if (employee.getActive().booleanValue()
-                            && contract.isActive(currentDate)) {
+                    if (employee.getActive().booleanValue() && contract.isActive(currentDate)) {
                         employees.add(employee);
                     }
                 }
@@ -56,13 +54,26 @@ public class Department extends Department_Base {
         }
         return employees;
     }
-    
-    public List getTeachers() {
-        List teachers = new ArrayList();
+
+    public List<ITeacher> getCurrentTeachers() {
+        List<ITeacher> teachers = new ArrayList<ITeacher>();
         List<IEmployee> employees = this.getCurrentActiveWorkingEmployees();
 
         addTeachers(teachers, employees);
         return teachers;
+    }
+
+    public List<ITeacher> getTeachersHistoric() {
+        IUnit unit = this.getUnit();
+        Set<IEmployee> allEmployees = new HashSet<IEmployee>();
+        List<ITeacher> allTeachers = new ArrayList<ITeacher>();
+        if (unit != null) {
+            for (IContract contract : unit.getWorkingContracts()) {
+                allEmployees.add(contract.getEmployee());
+            }
+            addTeachers(allTeachers, new ArrayList(allEmployees));
+        }
+        return allTeachers;
     }
 
     public List<IEmployee> getWorkingEmployees(Date begin, Date end) {
@@ -70,37 +81,35 @@ public class Department extends Department_Base {
         Set<IEmployee> employees = new HashSet<IEmployee>();
 
         if (unit != null) {
-            for (IContract contract : unit.getWorkingContracts(begin, end)) {                                
-                employees.add(contract.getEmployee());                         
+            for (IContract contract : unit.getWorkingContracts(begin, end)) {
+                employees.add(contract.getEmployee());
             }
             for (IUnit subUnit : unit.getSubUnits()) {
-                for (IContract contract : subUnit.getWorkingContracts(begin, end)) {                                     
-                    employees.add(contract.getEmployee());                    
+                for (IContract contract : subUnit.getWorkingContracts(begin, end)) {
+                    employees.add(contract.getEmployee());
                 }
             }
         }
         return new ArrayList<IEmployee>(employees);
     }
 
-    
-    public List<ITeacher> getTeachers(Date begin, Date end){
-        
-        List teachers = new ArrayList();     
-        addTeachers(teachers, this.getWorkingEmployees(begin, end));              
+    public List<ITeacher> getTeachers(Date begin, Date end) {
+        List teachers = new ArrayList();
+        addTeachers(teachers, this.getWorkingEmployees(begin, end));
         return teachers;
     }
-    
-    public ITeacher getTeacherByPeriod(Integer teacherNumber, Date begin, Date end){
-        for (IEmployee employee : getWorkingEmployees(begin,end)) {
+
+    public ITeacher getTeacherByPeriod(Integer teacherNumber, Date begin, Date end) {
+        for (IEmployee employee : getWorkingEmployees(begin, end)) {
             ITeacher teacher = employee.getPerson().getTeacher();
-            if(teacher != null && teacher.getTeacherNumber().equals(teacherNumber)){
+            if (teacher != null && teacher.getTeacherNumber().equals(teacherNumber)) {
                 return teacher;
             }
         }
         return null;
     }
-    
-    private void addTeachers(List teachers, List<IEmployee> employees) {
+
+    private void addTeachers(List<ITeacher> teachers, List<IEmployee> employees) {
         for (IEmployee employee : employees) {
             ITeacher teacher = employee.getPerson().getTeacher();
             if (teacher != null)

@@ -49,7 +49,7 @@ public class ReadTeacherServiceDistributionByTeachers implements IService {
 		IDepartment department = persistentTeacher.readTeacherByUsername(username)
 				.getLastWorkingDepartment();
 
-		teachers = department.getTeachers();
+		teachers = department.getCurrentTeachers();
 
 		/* Information about teacher */
 		Double hoursSpentByTeacher;
