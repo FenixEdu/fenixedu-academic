@@ -215,7 +215,7 @@
 		<h:outputText value="<h2 id='orientationInformation' class='cd_heading'><span>#{bundle['label.teacher.details.orientationInformation']}</span></h2>" escape="false" />
 		
 		<!-- Final Degree Work Orientations -->
-		<h:outputText value="#{bundle['label.common.degree']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
+		<h:outputText value="#{bundle['label.common.finalDegreeWorks']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
 		<h:panelGroup rendered="#{!(empty viewDepartmentTeachers.finalDegreeWorkAdvises)}">
 			<h:dataTable value="#{viewDepartmentTeachers.finalDegreeWorkAdvises}" var="finalDegreeWorkAdvise" styleClass="cd">
 				<h:column>

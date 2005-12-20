@@ -60,8 +60,6 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
 
     private ResourceBundle bundle;
 
-    private IDepartment teacherDepartment;
-
     private static final String BUNDLE_NAME = "ServidorApresentacao/DepartmentMemberResources";
 
     private static final String ALL_EXECUTION_YEARS_KEY = "label.common.allExecutionYears";
@@ -106,10 +104,16 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
         this.selectedExecutionYearID = selectedExecutionYearID;
     }
 
-   public List getDepartmentTeachers() throws FenixFilterException, FenixServiceException {
-        IExecutionYear executionYear = (IExecutionYear) readDomainObject(ExecutionYear.class, getSelectedExecutionYearID());
-                
-        List<ITeacher> result = new ArrayList<ITeacher>(getDepartment().getTeachers(executionYear.getBeginDate(),executionYear.getEndDate()));
+    public List<ITeacher> getDepartmentTeachers() throws FenixFilterException, FenixServiceException {
+        Integer executionYearID = getSelectedExecutionYearID();
+
+        if (executionYearID == 0) {
+            executionYearID = null;
+        }
+
+        List<ITeacher> result = new ArrayList<ITeacher>((List<ITeacher>) ServiceUtils.executeService(
+                getUserView(), "ReadDepartmentTeachersByDepartmentIDAndExecutionYearID", new Object[] {
+                        getDepartment().getIdInternal(), executionYearID }));
 
         ComparatorChain comparatorChain = new ComparatorChain();
         comparatorChain.addComparator(new BeanComparator("teacherNumber"));
