@@ -303,6 +303,8 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				<replacefilter 
 				    token="@app.context@"
 				    property="app.context"/>
+			  	<replacefilter token="@login.page@"
+							   value="${login.page}"/>
 				<replacefilter token="@roleback.filename@"
 		    			   property="roleback.filename"/>
 				<replacefilter token="@default.persistenceSupport@"
