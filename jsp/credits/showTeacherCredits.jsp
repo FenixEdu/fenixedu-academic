@@ -65,7 +65,12 @@
 		<table width="100%" cellspacing="1" cellpadding="1" style="margin-bottom:0;margin-top:0">
 			<tr>
 				<td colspan="7" class="listClasses-subheader">
-					<bean:message key="label.teacherCreditsSheet.shiftProfessorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>						
+					<bean:message key="label.teacherCreditsSheet.shiftProfessorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+						<logic:present role="DEPARTMENT_CREDITS_MANAGER">
+							(<html:link page='<%= "/degreeTeachingServiceManagement.do?page=0&amp;method=showTeachingServiceDetails&amp;professorshipID="+ professorshipID + "&amp;executionPeriodId="+ executionPeriodId %>'>
+								<bean:message key="link.teacherCreditsTeacher.shiftProfessorship.management" />
+							</html:link>)
+						</logic:present>
 				</td>
 			</tr>
 			<logic:notEmpty name="degreeTeachingServices">
@@ -163,7 +168,12 @@
 		<table width="100%" style="margin-top:0; margin-bottom:20px">
 			<tr>
 				<td colspan="4" class="listClasses-subheader">
-					<bean:message key="label.teacherCreditsSheet.supportLessons" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>									
+					<bean:message key="label.teacherCreditsSheet.supportLessons" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>				
+					<logic:present role="DEPARTMENT_CREDITS_MANAGER">
+						(<html:link page='<%= "/supportLessonsManagement.do?page=0&amp;method=showSupportLessons&amp;professorshipID="+ professorshipID + "&amp;executionPeriodId="+ executionPeriodId %>'>
+							<bean:message key="link.teacherCreditsTeacher.supportLessons.management" />
+						</html:link>)
+					</logic:present>
 				</td>
 			</tr>
 			<logic:notEmpty name="supportLessonList">
@@ -218,7 +228,12 @@
 <table width="100%">
 	<tr>
 		<td colspan="3" class="listClasses-subheader">
-			<bean:message key="label.teacherCreditsSheet.degreeFinalProjectStudents.items" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>		
+			<bean:message key="label.teacherCreditsSheet.degreeFinalProjectStudents.items" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+			<logic:present role="DEPARTMENT_CREDITS_MANAGER">
+				(<html:link page='<%= "/teacherAdviseServiceManagement.do?method=showTeacherAdvises&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherNumber" paramName="teacher" paramProperty="teacherNumber">
+					<bean:message key="link.teacherCreditsTeacher.manageDegreeFinalProjectStudents"/>
+				</html:link>)
+			</logic:present>
 		</td>
 	</tr>
 	<logic:notEmpty name="adviseServices">
@@ -266,7 +281,12 @@
 <table width="100%" border="0" cellspacing="1" cellpadding="1">
 	<tr>
 		<td colspan="3" class="listClasses-subheader">
-			<bean:message key="label.teacherCreditsSheet.institutionWorkingTime.items" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>			
+			<bean:message key="label.teacherCreditsSheet.institutionWorkingTime.items" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+			<logic:present role="DEPARTMENT_CREDITS_MANAGER">
+				(<html:link page='<%= "/institutionWorkingTimeManagement.do?method=showWorkingTimePeriods&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherNumber" paramName="teacher" paramProperty="teacherNumber">
+					<bean:message key="link.teacherCreditsTeacher.manageInstitutionWorkingTime"/>
+				</html:link>)
+			</logic:present>
 		</td>
 	</tr>
 	<logic:present name="institutionWorkTimeList">
@@ -311,7 +331,13 @@
 <table width="100%" cellspacing="1" cellpadding="3" style="margin-bottom:0;margin-top:0">
 	<tr>
 		<td colspan="2" class="listClasses-subheader">
-				<bean:message key="label.teacherCreditsSheet.otherTypeCreditLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>				
+				<bean:message key="label.teacherCreditsSheet.otherTypeCreditLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+				<logic:present role="DEPARTMENT_CREDITS_MANAGER">
+					<bean:define id="teacherNumber" name="teacher" property="teacherNumber"/>
+					(<html:link page='<%= "/otherServiceManagement.do?page=0&amp;method=showOtherServices&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherNumber" paramName="teacher" paramProperty="teacherNumber">
+						<bean:message key="link.teacherCreditsTeacher.shiftProfessorship.management" />
+					</html:link>)
+				</logic:present>
 		</td>
 	</tr>
 
@@ -355,7 +381,7 @@
 	<logic:notEmpty name="personFunctions">
 		<tr>
 			<td class="listClasses-header" style="text-align:left"><bean:message key="label.managementPosition.position" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
-			<td class="listClasses-header" style="text-align:left"><bean:message key="label.managementPosition.unit" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>										
+			<td class="listClasses-header" style="text-align:left"><bean:message key="label.managementPosition.unit" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>													
 			<td class="listClasses-header" width="10%"><bean:message key="label.managementPosition.credits" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>			
 			<td class="listClasses-header" width="10%"><bean:message key="label.managementPosition.start" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
 			<td class="listClasses-header" width="10%"><bean:message key="label.managementPosition.end" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
@@ -374,7 +400,7 @@
 							<bean:write name="topUnit" property="name"/>,							
 						</logic:iterate>								
 					</logic:notEmpty>
-				</td>		
+				</td>				
 				<td class="listClasses">
 					<bean:write name="personFunction" property="credits"/>
 				</td>
@@ -383,16 +409,16 @@
 						<bean:write name="personFunction" property="beginDate.time"/>
 					</dt:format>
 				</td>
-				<logic:notEmpty name="personFunction" property="endDate">
-					<td class="listClasses">
+				<td class="listClasses">
+					<logic:notEmpty name="personFunction" property="endDate">
 						<dt:format patternId="datePattern">
 							<bean:write name="personFunction" property="endDate.time"/>
 						</dt:format>
-					</td>
-				</logic:notEmpty>
-				<logic:empty name="personFunction" property="endDate">
-				-			
-				</logic:empty>
+					</logic:notEmpty>
+					<logic:empty name="personFunction" property="endDate">
+					-
+					</logic:empty>
+				</td>
 			</tr>
 		</logic:iterate>
 	</logic:notEmpty>
@@ -403,7 +429,7 @@
 			</td>
 		</tr>
 	</logic:empty>
-</table>								
+</table>					
 
 <%-- ============================ SERVICE EXEMPTIONS ================================= --%>
 <h2>
@@ -413,7 +439,7 @@
 <table width="100%" cellspacing="1" cellpadding="3" style="margin-bottom:0;margin-top:0">
 	<tr>
 		<td colspan="4" class="listClasses-subheader">
-				<bean:message key="label.teacherCreditsSheet.serviceExemptionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>			
+			<bean:message key="label.teacherCreditsSheet.serviceExemptionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>			
 		</td>
 	</tr>
 

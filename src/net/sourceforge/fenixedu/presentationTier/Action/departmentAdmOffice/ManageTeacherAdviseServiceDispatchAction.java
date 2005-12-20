@@ -4,13 +4,16 @@
 package net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice;
 
 import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
+import net.sourceforge.fenixedu.domain.IDepartment;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
@@ -51,30 +54,34 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
             FenixFilterException, FenixServiceException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
-
-        ITeacher teacher = null;
-        Integer teacherID = (Integer) dynaForm.get("teacherId");
-        if (teacherID != null) {
-            teacher = (ITeacher) ServiceUtils.executeService(SessionUtils.getUserView(request),
-                    "ReadDomainTeacherByOID", new Object[] { teacherID });
-        } else {
-            Integer teacherNumber = Integer.valueOf(dynaForm.get("teacherNumber").toString());
-            teacher = (ITeacher) ServiceUtils.executeService(SessionUtils.getUserView(request),
-                    "ReadDomainTeacherByNumber", new Object[] { teacherNumber });
-        }
-        dynaForm.set("teacherId", teacher.getIdInternal());
+        IUserView userView = SessionUtils.getUserView(request);
 
         final Integer executionPeriodID = (Integer) dynaForm.get("executionPeriodId");
         final IExecutionPeriod executionPeriod = (IExecutionPeriod) ServiceUtils.executeService(
-                SessionUtils.getUserView(request), "ReadDomainExecutionPeriodByOID",
-                new Object[] { executionPeriodID });
+                userView, "ReadDomainExecutionPeriodByOID", new Object[] { executionPeriodID });        
+
+        Integer teacherNumber = Integer.valueOf(dynaForm.getString("teacherNumber"));
+        List<IDepartment> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
+        ITeacher teacher = null;
+        for (IDepartment department : manageableDepartments) {
+            teacher = department.getTeacherByPeriod(teacherNumber, executionPeriod.getBeginDate(),
+                    executionPeriod.getEndDate());
+            if (teacher != null) {
+                break;
+            }
+        }
+        if (teacher == null) {
+            request.setAttribute("teacherNotFound", "teacherNotFound");
+            return mapping.findForward("teacher-not-found");
+        }
         dynaForm.set("executionPeriodId", executionPeriod.getIdInternal());
+        dynaForm.set("teacherId", teacher.getIdInternal());
 
         ITeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
         if (teacherService != null && !teacherService.getTeacherAdviseServices().isEmpty()) {
             BeanComparator comparator = new BeanComparator("advise.student.number");
-            Iterator orderedAdviseServicesIter = new OrderedIterator(teacherService.getTeacherAdviseServices().iterator(),
-                    comparator);
+            Iterator orderedAdviseServicesIter = new OrderedIterator(teacherService
+                    .getTeacherAdviseServices().iterator(), comparator);
             request.setAttribute("adviseServices", orderedAdviseServicesIter);
         }
 

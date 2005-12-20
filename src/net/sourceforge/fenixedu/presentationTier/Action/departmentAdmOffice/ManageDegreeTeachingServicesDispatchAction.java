@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.ProfessorshipDTO;
+import net.sourceforge.fenixedu.domain.IDepartment;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.IShift;
@@ -56,17 +57,29 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
             FenixFilterException, FenixServiceException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
-        
-        ITeacher teacher = (ITeacher) ServiceUtils.executeService(SessionUtils.getUserView(request),
-                "ReadDomainTeacherByNumber", new Object[] { Integer.valueOf(dynaForm
-                        .get("teacherNumber").toString()) });
-        request.setAttribute("teacher", teacher);
+
+        IUserView userView = SessionUtils.getUserView(request);
 
         final Integer executionPeriodID = (Integer) dynaForm.get("executionPeriodId");
         final IExecutionPeriod executionPeriod = (IExecutionPeriod) ServiceUtils.executeService(
-                SessionUtils.getUserView(request), "ReadDomainExecutionPeriodByOID",
-                new Object[] { executionPeriodID });
+                userView, "ReadDomainExecutionPeriodByOID", new Object[] { executionPeriodID });
 
+        Integer teacherNumber = Integer.valueOf(dynaForm.getString("teacherNumber"));
+        List<IDepartment> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
+        ITeacher teacher = null;
+        for (IDepartment department : manageableDepartments) {
+            teacher = department.getTeacherByPeriod(teacherNumber, executionPeriod.getBeginDate(),
+                    executionPeriod.getEndDate());
+            if(teacher != null){
+                break;
+            }
+        }
+        if (teacher == null) {
+            request.setAttribute("teacherNotFound", "teacherNotFound");
+            return mapping.findForward("teacher-not-found");
+        }
+
+        request.setAttribute("teacher", teacher);
         List<IProfessorship> professorships = teacher
                 .getDegreeProfessorshipsByExecutionPeriod(executionPeriod);
 
@@ -78,10 +91,11 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
                         return new ProfessorshipDTO(professorship);
                     }
                 });
-        Iterator professorshipDTOsIterator = new OrderedIterator(professorshipDTOs.iterator(),
-                new BeanComparator("professorship.executionCourse.nome"));
-        request.setAttribute("professorshipDTOs", professorshipDTOsIterator);
-
+        if (!professorshipDTOs.isEmpty()) {
+            Iterator professorshipDTOsIterator = new OrderedIterator(professorshipDTOs.iterator(),
+                    new BeanComparator("professorship.executionCourse.nome"));
+            request.setAttribute("professorshipDTOs", professorshipDTOsIterator);
+        }
         return mapping.findForward("list-professorships");
     }
 

@@ -3,11 +3,15 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.IDepartment;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.teacher.IOtherService;
@@ -42,22 +46,29 @@ public class ManageOtherServiceDispatchAction extends FenixDispatchAction {
             FenixFilterException, FenixServiceException {
 
         DynaActionForm otherServiceForm = (DynaActionForm) form;
-        Integer teacherID = (Integer) otherServiceForm.get("teacherId");
-        ITeacher teacher = null;
-        if (teacherID == null || teacherID == 0) {
-            teacher = (ITeacher) ServiceUtils.executeService(SessionUtils.getUserView(request),
-                    "ReadDomainTeacherByNumber", new Object[] { Integer.valueOf(otherServiceForm.get(
-                            "teacherNumber").toString()) });
-        } else {
-            teacher = (ITeacher) ServiceUtils.executeService(SessionUtils.getUserView(request),
-                    "ReadDomainTeacherByOID", new Object[] { teacherID });
-        }
-        request.setAttribute("teacher", teacher);
+        IUserView userView = SessionUtils.getUserView(request);
+        Integer teacherNumber = Integer.valueOf(otherServiceForm.getString("teacherNumber"));
 
-        IExecutionPeriod executionPeriod = (IExecutionPeriod) ServiceUtils.executeService(SessionUtils
-                .getUserView(request), "ReadDomainExecutionPeriodByOID",
-                new Object[] { (Integer) otherServiceForm.get("executionPeriodId") });
+        IExecutionPeriod executionPeriod = (IExecutionPeriod) ServiceUtils.executeService(userView,
+                "ReadDomainExecutionPeriodByOID", new Object[] { (Integer) otherServiceForm
+                        .get("executionPeriodId") });
         request.setAttribute("executionPeriod", executionPeriod);
+
+        List<IDepartment> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
+        ITeacher teacher = null;
+        for (IDepartment department : manageableDepartments) {
+            teacher = department.getTeacherByPeriod(teacherNumber, executionPeriod.getBeginDate(),
+                    executionPeriod.getEndDate());
+            if (teacher != null) {
+                break;
+            }
+        }
+        if (teacher == null) {
+            request.setAttribute("teacherNotFound", "teacherNotFound");
+            return mapping.findForward("teacher-not-found");
+        }
+
+        request.setAttribute("teacher", teacher);
 
         ITeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
         if (teacherService != null && !teacherService.getOtherServices().isEmpty()) {

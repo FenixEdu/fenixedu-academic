@@ -6,19 +6,23 @@ package net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InstitutionWorkTimeDTO;
+import net.sourceforge.fenixedu.domain.IDepartment;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.teacher.IInstitutionWorkTime;
 import net.sourceforge.fenixedu.domain.teacher.ITeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.WeekDay;
@@ -51,23 +55,27 @@ public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDisp
             FenixFilterException, FenixServiceException {
 
         DynaActionForm institutionWorkingTimeForm = (DynaActionForm) form;
-
-        ITeacher teacher = null;
-        String teacherIDString = institutionWorkingTimeForm.getString("teacherId");
-        if (teacherIDString == null || teacherIDString.length() == 0 || teacherIDString.startsWith("0")) {
-            teacher = (ITeacher) ServiceUtils.executeService(SessionUtils.getUserView(request),
-                    "ReadDomainTeacherByNumber", new Object[] { Integer
-                            .valueOf(institutionWorkingTimeForm.getString("teacherNumber")) });
-        } else {
-            teacher = (ITeacher) ServiceUtils.executeService(SessionUtils.getUserView(request),
-                    "ReadDomainTeacherByOID", new Object[] { Integer.valueOf(teacherIDString) });
-        }
+        IUserView userView = SessionUtils.getUserView(request);
 
         final Integer executionPeriodID = Integer.valueOf((String) institutionWorkingTimeForm
                 .get("executionPeriodId"));
         final IExecutionPeriod executionPeriod = (IExecutionPeriod) ServiceUtils.executeService(
-                SessionUtils.getUserView(request), "ReadDomainExecutionPeriodByOID",
-                new Object[] { executionPeriodID });
+                userView, "ReadDomainExecutionPeriodByOID", new Object[] { executionPeriodID });
+
+        Integer teacherNumber = Integer.valueOf(institutionWorkingTimeForm.getString("teacherNumber"));
+        List<IDepartment> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
+        ITeacher teacher = null;
+        for (IDepartment department : manageableDepartments) {
+            teacher = department.getTeacherByPeriod(teacherNumber, executionPeriod.getBeginDate(),
+                    executionPeriod.getEndDate());
+            if (teacher != null) {
+                break;
+            }
+        }
+        if (teacher == null) {
+            request.setAttribute("teacherNotFound", "teacherNotFound");
+            return mapping.findForward("teacher-not-found");
+        }
 
         ITeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
         if (teacherService != null && !teacherService.getInstitutionWorkTimes().isEmpty()) {
@@ -147,7 +155,7 @@ public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDisp
 
     public ActionForward editInstitutionWorkingTime(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws NumberFormatException,
-            FenixFilterException, FenixServiceException {
+            FenixFilterException, FenixServiceException, InvalidPeriodException {
 
         InstitutionWorkTimeDTO institutionWorkTimeDTO = getInstitutionWorkTimeDTO(form);
         Calendar begin = Calendar.getInstance();
@@ -221,9 +229,6 @@ public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDisp
         calendar.set(Calendar.MILLISECOND, 0);
     }
 
-    public class InvalidPeriodException extends FenixServiceException {
-        public InvalidPeriodException() {
-            super();
-        }
+    public class InvalidPeriodException extends FenixActionException {
     }
 }

@@ -39,9 +39,9 @@
 					<var-value>${weekDayMask}</var-value>
 				</var>
 			</field>
-			<field property="startTimeHour" depends="required,integer,range" page="1">
+			<field property="startTimeHour" depends="required,integer,intRange" page="1">
 				<msg name="integer" key="errors.invalid.startTimeHour"/>
-				<msg name="range" key="errors.invalid.startTimeHour"/>				
+				<msg name="intRange" key="errors.invalid.startTimeHour"/>				
 				<arg0 key="label.property.startTimeHour" />
 				<var>
 					<var-name>min</var-name>
@@ -52,9 +52,9 @@
 					<var-value>${maxHours}</var-value>
 				</var>
 			</field>
-			<field property="startTimeMinutes" depends="required,integer,range" page="1">
+			<field property="startTimeMinutes" depends="required,integer,intRange" page="1">
 				<msg name="integer" key="errors.invalid.startTimeMinutes"/>				
-				<msg name="range" key="errors.invalid.startTimeMinutes"/>								
+				<msg name="intRange" key="errors.invalid.startTimeMinutes"/>								
 				<arg0 key="label.property.startTimeMinutes" />
 				<var>
 					<var-name>min</var-name>
@@ -65,9 +65,9 @@
 					<var-value>${maxMinutes}</var-value>
 				</var>					
 			</field>
-			<field property="endTimeHour" depends="required,integer,range" page="1">
+			<field property="endTimeHour" depends="required,integer,intRange" page="1">
 				<msg name="integer" key="errors.invalid.endTimeHour"/>				
-				<msg name="range" key="errors.invalid.endTimeHour"/>				
+				<msg name="intRange" key="errors.invalid.endTimeHour"/>				
 				<arg0 key="label.property.endTimeHour" />
 				<var>
 					<var-name>min</var-name>
@@ -78,9 +78,9 @@
 					<var-value>${maxHours}</var-value>
 				</var>
 			</field>
-			<field property="endTimeMinutes" depends="required,integer,range" page="1">
+			<field property="endTimeMinutes" depends="required,integer,intRange" page="1">
 				<msg name="integer" key="errors.invalid.endTimeMinutes"/>
-				<msg name="range" key="errors.invalid.endTimeMinutes"/>				
+				<msg name="intRange" key="errors.invalid.endTimeMinutes"/>				
 				<arg0 key="label.property.endTimeMinutes" />
 				<var>
 					<var-name>min</var-name>
@@ -102,23 +102,25 @@
 				<msg name="required" key="errors.invalid.student-number"/>				
 				<arg0 key="label.property.student-number" />
 			</field>
-			<field property="percentage" depends="required,double" page="1">
+			<field property="percentage" depends="required,double,doubleRange" page="1">
 				<arg0 key="label.teacher-dfp-student.percentage" />
+				<arg1 name="doubleRange" key="0" resource="false"/>
+				<arg2 name="doubleRange" key="100" resource="false"/>
+				<var>
+					<var-name>min</var-name>
+					<var-value>0</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>100</var-value>
+				</var>						
 			</field>
     	</form>
 		<!-- ================================================================ -->    	
 	   	<form name="teacherInstitutionWorkingTimeForm">
-			<field property="weekDay" depends="required,mask" page="1">
-				<msg name="mask" key="errors.invalid.weekDay"/>
-				<arg0 key="label.property.weekDay" />
-				<var>
-					<var-name>mask</var-name>
-					<var-value>${weekDayMask}</var-value>
-				</var>
-			</field>
-			<field property="startTimeHour" depends="required,integer,range" page="1">
+			<field property="startTimeHour" depends="required,integer,intRange" page="1">
 				<msg name="integer" key="errors.invalid.startTimeHour"/>
-				<msg name="range" key="errors.invalid.startTimeHour"/>				
+				<msg name="intRange" key="errors.invalid.startTimeHour"/>				
 				<arg0 key="label.property.startTimeHour" />
 				<var>
 					<var-name>min</var-name>
@@ -129,9 +131,9 @@
 					<var-value>${maxHours}</var-value>
 				</var>
 			</field>
-			<field property="startTimeMinutes" depends="required,integer,range" page="1">
+			<field property="startTimeMinutes" depends="required,integer,intRange" page="1">
 				<msg name="integer" key="errors.invalid.startTimeMinutes"/>				
-				<msg name="range" key="errors.invalid.startTimeMinutes"/>
+				<msg name="intRange" key="errors.invalid.startTimeMinutes"/>
 				<arg0 key="label.property.startTimeMinutes" />
 				<var>
 					<var-name>min</var-name>
@@ -142,9 +144,9 @@
 					<var-value>${maxMinutes}</var-value>
 				</var>
 			</field>
-			<field property="endTimeHour" depends="required,integer,range" page="1">
+			<field property="endTimeHour" depends="required,integer,intRange" page="1">
 				<msg name="integer" key="errors.invalid.endTimeHour"/>				
-				<msg name="range" key="errors.invalid.endTimeHour"/>								
+				<msg name="intRange" key="errors.invalid.endTimeHour"/>								
 				<arg0 key="label.property.endTimeHour" />
 				<var>
 					<var-name>min</var-name>
@@ -155,9 +157,9 @@
 					<var-value>${maxHours}</var-value>
 				</var>
 			</field>
-			<field property="endTimeMinutes" depends="required,integer,range" page="1">
+			<field property="endTimeMinutes" depends="required,integer,intRange" page="1">
 				<msg name="integer" key="errors.invalid.endTimeMinutes"/>
-				<msg name="range" key="errors.invalid.endTimeMinutes"/>
+				<msg name="intRange" key="errors.invalid.endTimeMinutes"/>
 				<arg0 key="label.property.endTimeMinutes" />
 				<var>
 					<var-name>min</var-name>

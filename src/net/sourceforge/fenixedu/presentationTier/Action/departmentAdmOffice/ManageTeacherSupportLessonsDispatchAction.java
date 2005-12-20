@@ -11,16 +11,19 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.ProfessorshipDTO;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.SupportLessonDTO;
+import net.sourceforge.fenixedu.domain.IDepartment;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.ISupportLesson;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.DiaSemana;
@@ -55,32 +58,43 @@ public class ManageTeacherSupportLessonsDispatchAction extends FenixDispatchActi
             FenixFilterException, FenixServiceException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
-
-        ITeacher teacher = (ITeacher) ServiceUtils.executeService(SessionUtils.getUserView(request),
-                "ReadDomainTeacherByNumber", new Object[] { Integer.valueOf(dynaForm
-                        .get("teacherNumber").toString()) });
-        request.setAttribute("teacher", teacher);
-
+        IUserView userView = SessionUtils.getUserView(request);
+        
         final Integer executionPeriodID = (Integer) dynaForm.get("executionPeriodId");
         final IExecutionPeriod executionPeriod = (IExecutionPeriod) ServiceUtils.executeService(
-                SessionUtils.getUserView(request), "ReadDomainExecutionPeriodByOID",
+                userView, "ReadDomainExecutionPeriodByOID",
                 new Object[] { executionPeriodID });
+        
+        Integer teacherNumber = Integer.valueOf(dynaForm.getString("teacherNumber"));
+        List<IDepartment> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
+        ITeacher teacher = null;
+        for (IDepartment department : manageableDepartments) {
+            teacher = department.getTeacherByPeriod(teacherNumber, executionPeriod.getBeginDate(),
+                    executionPeriod.getEndDate());
+            if (teacher != null) {
+                break;
+            }
+        }
+        if (teacher == null) {
+            request.setAttribute("teacherNotFound", "teacherNotFound");
+            return mapping.findForward("teacher-not-found");
+        }        
+        request.setAttribute("teacher", teacher);
 
         List<IProfessorship> professorships = teacher
                 .getDegreeProfessorshipsByExecutionPeriod(executionPeriod);
-
         List<ProfessorshipDTO> professorshipDTOs = (List<ProfessorshipDTO>) CollectionUtils.collect(
                 professorships, new Transformer() {
-
                     public Object transform(Object arg0) {
                         IProfessorship professorship = (IProfessorship) arg0;
                         return new ProfessorshipDTO(professorship);
                     }
                 });
-        Iterator professorshipDTOsIterator = new OrderedIterator(professorshipDTOs.iterator(),
-                new BeanComparator("professorship.executionCourse.nome"));
-        request.setAttribute("professorshipDTOs", professorshipDTOsIterator);
-
+        if (!professorshipDTOs.isEmpty()) {
+            Iterator professorshipDTOsIterator = new OrderedIterator(professorshipDTOs.iterator(),
+                    new BeanComparator("professorship.executionCourse.nome"));
+            request.setAttribute("professorshipDTOs", professorshipDTOsIterator);
+        }
         return mapping.findForward("list-professorships");
     }
 
@@ -92,7 +106,7 @@ public class ManageTeacherSupportLessonsDispatchAction extends FenixDispatchActi
         Integer professorshipID = (Integer) supportLessonForm.get("professorshipID");
 
         IProfessorship professorship = (IProfessorship) ServiceUtils.executeService(SessionUtils
-                .getUserView(request), "ReadDomainProfessorshipByOID", new Object[]{professorshipID});
+                .getUserView(request), "ReadDomainProfessorshipByOID", new Object[] { professorshipID });
 
         ComparatorChain comparatorChain = new ComparatorChain();
         BeanComparator weekDayComparator = new BeanComparator("weekDay.diaSemana");
@@ -100,12 +114,12 @@ public class ManageTeacherSupportLessonsDispatchAction extends FenixDispatchActi
 
         comparatorChain.addComparator(weekDayComparator);
         comparatorChain.addComparator(startTimeComparator);
-        Iterator supportLessonsOrderedIter = new OrderedIterator(professorship.getSupportLessonsIterator(),comparatorChain);
-        
-        request.setAttribute("listSize",professorship.getSupportLessonsCount());
-        request.setAttribute("supportLessons",supportLessonsOrderedIter);
+        if (!professorship.getSupportLessons().isEmpty()) {
+            Iterator supportLessonsOrderedIter = new OrderedIterator(professorship
+                    .getSupportLessonsIterator(), comparatorChain);
+            request.setAttribute("supportLessonList", supportLessonsOrderedIter);
+        }
         request.setAttribute("professorship", professorship);
-
         return mapping.findForward("list-support-lessons");
     }
 
@@ -149,7 +163,7 @@ public class ManageTeacherSupportLessonsDispatchAction extends FenixDispatchActi
         } else {
             Integer professorshipID = (Integer) supportLessonForm.get("professorshipID");
             professorship = (IProfessorship) ServiceUtils.executeService(SessionUtils
-                    .getUserView(request), "ReadProfessorshipByOIDNoInfo",
+                    .getUserView(request), "ReadDomainProfessorshipByOID",
                     new Object[] { professorshipID });
         }
 
@@ -160,7 +174,7 @@ public class ManageTeacherSupportLessonsDispatchAction extends FenixDispatchActi
 
     public ActionForward editSupportLesson(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws NumberFormatException,
-            FenixFilterException, FenixServiceException {
+            FenixFilterException, FenixServiceException, InvalidPeriodException {
 
         DynaActionForm supportLessonForm = (DynaActionForm) form;
         SupportLessonDTO supportLessonDTO = new SupportLessonDTO();
@@ -192,17 +206,17 @@ public class ManageTeacherSupportLessonsDispatchAction extends FenixDispatchActi
 
         return mapping.findForward("successfull-edit");
     }
-    
+
     public ActionForward deleteSupportLesson(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws NumberFormatException,
             FenixFilterException, FenixServiceException {
 
         DynaActionForm supportLessonForm = (DynaActionForm) form;
         Integer supportLessonID = (Integer) supportLessonForm.get("supportLessonID");
-        
+
         ServiceUtils.executeService(SessionUtils.getUserView(request), "DeleteSupportLesson",
                 new Object[] { supportLessonID });
-        
+
         return mapping.findForward("successfull-delete");
     }
 
@@ -252,9 +266,6 @@ public class ManageTeacherSupportLessonsDispatchAction extends FenixDispatchActi
         calendar.set(Calendar.MILLISECOND, 0);
     }
 
-    public class InvalidPeriodException extends FenixServiceException {
-        public InvalidPeriodException() {
-            super();
-        }
+    public class InvalidPeriodException extends FenixActionException {
     }
 }

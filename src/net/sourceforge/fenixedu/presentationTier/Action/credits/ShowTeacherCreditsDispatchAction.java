@@ -9,11 +9,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.dataTransferObject.credits.CreditLineDTO;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.ProfessorshipDTO;
+import net.sourceforge.fenixedu.domain.IDepartment;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.ITeacher;
@@ -57,23 +59,35 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
             FenixFilterException, FenixServiceException {
 
         DynaActionForm teacherCreditsForm = (DynaActionForm) form;
+        IUserView userView = SessionUtils.getUserView(request);
+        IExecutionPeriod executionPeriod = (IExecutionPeriod) ServiceUtils.executeService(userView,
+                "ReadDomainExecutionPeriodByOID", new Object[] { (Integer) teacherCreditsForm
+                        .get("executionPeriodId") });
+
         Integer teacherID = (Integer) teacherCreditsForm.get("teacherId");
         ITeacher teacher = null;
         if (teacherID == null || teacherID == 0) {
-            teacher = (ITeacher) ServiceUtils.executeService(SessionUtils.getUserView(request),
-                    "ReadDomainTeacherByNumber", new Object[] { Integer.valueOf(teacherCreditsForm.get(
-                            "teacherNumber").toString()) });
+            Integer teacherNumber = Integer.valueOf(teacherCreditsForm.getString("teacherNumber"));
+            List<IDepartment> manageableDepartments = userView.getPerson()
+                    .getManageableDepartmentCredits();
+            for (IDepartment department : manageableDepartments) {
+                teacher = department.getTeacherByPeriod(teacherNumber, executionPeriod.getBeginDate(),
+                        executionPeriod.getEndDate());
+                if (teacher != null) {
+                    break;
+                }
+            }
+            if (teacher == null) {
+                request.setAttribute("teacherNotFound", "teacherNotFound");
+                return mapping.findForward("teacher-not-found");
+            }
         } else {
             teacher = (ITeacher) ServiceUtils.executeService(SessionUtils.getUserView(request),
                     "ReadDomainTeacherByOID", new Object[] { teacherID });
         }
+        
         request.setAttribute("teacher", teacher);
-
-        IExecutionPeriod executionPeriod = (IExecutionPeriod) ServiceUtils.executeService(SessionUtils
-                .getUserView(request), "ReadDomainExecutionPeriodByOID",
-                new Object[] { (Integer) teacherCreditsForm.get("executionPeriodId") });
         request.setAttribute("executionPeriod", executionPeriod);
-
         setTeachingServicesAndSupportLessons(request, teacher, executionPeriod);
 
         ITeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
