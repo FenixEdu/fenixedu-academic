@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,6 +41,9 @@ public class JdbcMysqlFileSupport {
         password = properties.getProperty("db.slide.pass").trim();
     }
 
+    private static final String REVISION_CONTENT_INSERT_STATEMENT = "insert into revisioncontent values(?, \"1.0\", ?)";
+    private static final String PROPERTY_INSERT_STATEMENT = "insert into property values(?, \"1.0\", ?, ?, \"DAV:\", null, ?)";
+
     private interface Closure {
         public ResultSet execute(final Connection connection, final String query) throws SQLException;
     }
@@ -60,12 +64,14 @@ public class JdbcMysqlFileSupport {
         }
     };
 
-    private static ResultSet execute(final Closure closure, final String query) {
+    private static ResultSet execute(final Closure closure, final String... queries) {
         Connection connection = null;
         ResultSet resultSet = null;
         try {
             connection = getConnection(driver, alias, user, password);
-            resultSet = closure.execute(connection, query);
+            for (int i = 0; i < queries.length; i++) {
+                resultSet = closure.execute(connection, queries[i]);
+            }
         } catch (ClassNotFoundException e) {
             logger.fatal("Unable to get JdbcMysqlFileSupport - ClassNotFoundException", e);
             try {
@@ -92,12 +98,125 @@ public class JdbcMysqlFileSupport {
         return resultSet;
     }
 
+    private static void executeInsert(FileSuportObject fileSuportObject) {
+        Connection connection = null;
+        try {
+            connection = getConnection(driver, alias, user, password);
+
+            final PreparedStatement revisionContentPS = connection.prepareStatement(REVISION_CONTENT_INSERT_STATEMENT);
+            revisionContentPS.setString(1, fileSuportObject.getUri());
+            revisionContentPS.setBytes(2, fileSuportObject.getContent());
+            revisionContentPS.executeUpdate();
+            revisionContentPS.close();
+
+            final PreparedStatement propertyPSresourcetype = connection.prepareStatement(PROPERTY_INSERT_STATEMENT);
+            propertyPSresourcetype.setString(1, fileSuportObject.getUri());
+            propertyPSresourcetype.setString(2, "resourcetype");
+            propertyPSresourcetype.setString(3, "<collection/>");
+            propertyPSresourcetype.setInt(4, 1);
+            propertyPSresourcetype.executeUpdate();
+            propertyPSresourcetype.close();
+
+            final PreparedStatement propertyPSsource = connection.prepareStatement(PROPERTY_INSERT_STATEMENT);
+            propertyPSsource.setString(1, fileSuportObject.getUri());
+            propertyPSsource.setString(2, "source");
+            propertyPSsource.setString(3, "");
+            propertyPSsource.setInt(4, 1);
+            propertyPSsource.executeUpdate();
+            propertyPSsource.close();
+
+            final PreparedStatement propertyPSdisplayname = connection.prepareStatement(PROPERTY_INSERT_STATEMENT);
+            propertyPSdisplayname.setString(1, fileSuportObject.getUri());
+            propertyPSdisplayname.setString(2, "displayname");
+            propertyPSdisplayname.setString(3, "<![CDATA[" + fileSuportObject.getFileName() + "]]>");
+            propertyPSdisplayname.setInt(4, 1);
+            propertyPSdisplayname.executeUpdate();
+            propertyPSdisplayname.close();
+
+            final PreparedStatement propertyPSlinkName = connection.prepareStatement(PROPERTY_INSERT_STATEMENT);
+            propertyPSlinkName.setString(1, fileSuportObject.getUri());
+            propertyPSlinkName.setString(2, "linkName");
+            propertyPSlinkName.setString(3, fileSuportObject.getLinkName());
+            propertyPSlinkName.setInt(4, 0);
+            propertyPSlinkName.executeUpdate();
+            propertyPSlinkName.close();
+
+            final PreparedStatement propertyPSgetlastmodified = connection.prepareStatement(PROPERTY_INSERT_STATEMENT);
+            propertyPSgetlastmodified.setString(1, fileSuportObject.getUri());
+            propertyPSgetlastmodified.setString(2, "getlastmodified");
+            propertyPSgetlastmodified.setString(3, Calendar.getInstance().getTime().toString());
+            propertyPSgetlastmodified.setInt(4, 1);
+            propertyPSgetlastmodified.executeUpdate();
+            propertyPSgetlastmodified.close();
+
+            final PreparedStatement propertyPSgetcontenttype = connection.prepareStatement(PROPERTY_INSERT_STATEMENT);
+            propertyPSgetcontenttype.setString(1, fileSuportObject.getUri());
+            propertyPSgetcontenttype.setString(2, "getcontenttype");
+            propertyPSgetcontenttype.setString(3, fileSuportObject.getContentType());
+            propertyPSgetcontenttype.setInt(4, 1);
+            propertyPSgetcontenttype.executeUpdate();
+            propertyPSgetcontenttype.close();
+
+            final PreparedStatement propertyPSgetcontentlength = connection.prepareStatement(PROPERTY_INSERT_STATEMENT);
+            propertyPSgetcontentlength.setString(1, fileSuportObject.getUri());
+            propertyPSgetcontentlength.setString(2, "getcontentlength");
+            propertyPSgetcontentlength.setString(3, String.valueOf(fileSuportObject.getContent().length));
+            propertyPSgetcontentlength.setInt(4, 1);
+            propertyPSgetcontentlength.executeUpdate();
+            propertyPSgetcontentlength.close();
+
+            final PreparedStatement propertyPScreationdate = connection.prepareStatement(PROPERTY_INSERT_STATEMENT);
+            propertyPScreationdate.setString(1, fileSuportObject.getUri());
+            propertyPScreationdate.setString(2, "creationdate");
+            propertyPScreationdate.setString(3, Calendar.getInstance().getTime().toString());
+            propertyPScreationdate.setInt(4, 1);
+            propertyPScreationdate.executeUpdate();
+            propertyPScreationdate.close();
+
+            //private static final String REVISION_CONTENT_INSERT_STATEMENT = "insert into revisioncontent values(?, \"1.0\", ?)";
+            //private static final String PROPERTY_INSERT_STATEMENT = "insert into property values(?, \"1.0\", ?, ?, \"DAV:\", null, ?)";
+
+            // Create some binary data
+            //byte[] buffer = "some data".getBytes();
+        
+            // Set value for the prepared statement
+            //pstmt.setBytes(1, buffer);
+        
+            // Insert the data
+            //pstmt.executeUpdate();
+            //pstmt.close();
+        
+        } catch (ClassNotFoundException e) {
+            logger.fatal("Unable to get JdbcMysqlFileSupport - ClassNotFoundException", e);
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                logger.fatal("Unable to roleback connection", e1);
+            }
+            throw new Error(e);
+        } catch (SQLException e) {
+            logger.fatal("Unable to get JdbcMysqlFileSupport - SQLException", e);
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                logger.fatal("Unable to roleback connection", e1);
+            }
+            throw new Error(e);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                logger.fatal("Unable to close connection", e);
+            }
+        }
+    }
+
     public static ResultSet executeQuery(final String query) {
         return execute(queryExecuter, query);
     }
 
-    public static void executeUpdate(final String query) {
-        execute(updateExecuter, query);
+    public static void executeUpdates(final String... queries) {
+        execute(updateExecuter, queries);
     }
 
     public static Collection<FileSuportObject> listFiles(final String directory) {
@@ -201,6 +320,16 @@ public class JdbcMysqlFileSupport {
         }
 
         return fileSuportObject;
+    }
+
+    public static void createFile(final FileSuportObject fileSuportObject) {
+        executeInsert(fileSuportObject);
+    }
+
+    public static void deleteFile(final String directory, final String filename) {
+        final String propertyTableQuery = StringAppender.append("delete from property where uri = \"/files", directory, "/", filename, "\"");
+        final String revisionContentTableQuery = StringAppender.append("delete from revisioncontent where uri = \"/files", directory, "/", filename, "\"");
+        executeUpdates(propertyTableQuery, revisionContentTableQuery);
     }
 
     private static Connection getConnection(final String driver, final String alias, final String user, final String pass)

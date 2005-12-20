@@ -160,10 +160,6 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
-		<filter-name>CheckUserViewFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
 		<filter-name>ManagerFilter</filter-name>
 		<url-pattern>/manager/@manager.filter.pattern@</url-pattern>
 	</filter-mapping>
