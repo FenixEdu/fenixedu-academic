@@ -71,6 +71,11 @@ public class Department extends Department_Base {
             for (IContract contract : unit.getWorkingContracts()) {
                 allEmployees.add(contract.getEmployee());
             }
+            for (IUnit subUnit : unit.getSubUnits()) {
+                for (IContract contract : subUnit.getWorkingContracts()) {
+                    allEmployees.add(contract.getEmployee());
+                }
+            }
             addTeachers(allTeachers, new ArrayList(allEmployees));
         }
         return allTeachers;
