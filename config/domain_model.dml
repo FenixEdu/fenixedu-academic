@@ -24,7 +24,7 @@
  * 
  */
 
-valueType net.sourceforge.fenixedu.domain.teacher.AdviseType								    as AdviseType;
+valueType net.sourceforge.fenixedu.domain.teacher.AdviseType								as AdviseType;
 valueType net.sourceforge.fenixedu.util.AgreementType                                           as AgreementType;
 valueType net.sourceforge.fenixedu.tools.enrollment.AreaType                                    as AreaType;
 valueType net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType                              as BolonhaDegreeType;
@@ -66,7 +66,7 @@ valueType net.sourceforge.fenixedu.util.PublicationArea                         
 valueType net.sourceforge.fenixedu.util.PublicationType                                         as PublicationType;
 valueType net.sourceforge.fenixedu.domain.person.RoleType                                       as RoleType;
 valueType net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState                      as ReimbursementGuideState;
-valueType net.sourceforge.fenixedu.domain.degreeStructure.RegimeType                            as RegimeType;
+valueType net.sourceforge.fenixedu.domain.degreeStructure.RegimeType                       as RegimeType;
 valueType net.sourceforge.fenixedu.util.Season                                                  as Season;
 valueType net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason                         as SecretaryEnrolmentStudentReason; 
 valueType net.sourceforge.fenixedu.domain.teacher.ServiceExemptionType                          as ServiceExemptionType;
@@ -94,7 +94,7 @@ valueType net.sourceforge.fenixedu.util.ByteArray												as ByteArray;
 valueType net.sourceforge.fenixedu.util.ContentType                                             as ContentType;
 valueType net.sourceforge.fenixedu.util.RegimenType                      			            as RegimenType;
 valueType net.sourceforge.fenixedu.util.LegalRegimenType  		                                as LegalRegimenType;
-valueType net.sourceforge.fenixedu.util.WeekDay													as WeekDay;
+valueType net.sourceforge.fenixedu.util.WeekDay															as WeekDay;
 
 
 /*
@@ -407,11 +407,20 @@ class net.sourceforge.fenixedu.domain.cms.Content extends net.sourceforge.fenixe
    "
 	}
 	class net.sourceforge.fenixedu.domain.accessControl.NodeGroup extends net.sourceforge.fenixedu.domain.accessControl.UserGroup{	
+		interface"
+		public void removePart(net.sourceforge.fenixedu.domain.accessControl.IUserGroup group);
+		"
     	}
     	class net.sourceforge.fenixedu.domain.accessControl.GroupDifference extends net.sourceforge.fenixedu.domain.accessControl.NodeGroup{
 	    }			
    		class net.sourceforge.fenixedu.domain.accessControl.GroupUnion extends net.sourceforge.fenixedu.domain.accessControl.NodeGroup{
     	}
+    		class net.sourceforge.fenixedu.domain.department.CompetenceCourseMembersGroup extends net.sourceforge.fenixedu.domain.accessControl.GroupUnion{
+    			Integer keyDepartment;
+	    	}		    	
+    		class net.sourceforge.fenixedu.domain.DegreeCurricularPlanMembersGroup extends net.sourceforge.fenixedu.domain.accessControl.GroupUnion{
+    			Integer keyDegreeCurricularPlan;
+	    	}		    	
 	    class net.sourceforge.fenixedu.domain.accessControl.GroupIntersection extends net.sourceforge.fenixedu.domain.accessControl.NodeGroup{
    		}
 	class net.sourceforge.fenixedu.domain.accessControl.LeafGroup extends net.sourceforge.fenixedu.domain.accessControl.UserGroup{    
@@ -721,6 +730,7 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     MarkType markType;
     CurricularStage curricularStage;
     Integer degreeModuleKey;
+   	Integer keyDegreeCurricularPlanMembersGroup;
     
     interface "
     public IStudentCurricularPlan getNewStudentCurricularPlan();
@@ -948,6 +958,7 @@ class net.sourceforge.fenixedu.domain.Department extends net.sourceforge.fenixed
 	String realName;
 	String name;
 	Integer keyUnit;
+	Integer keyCompetenceCourseMembersGroup;	
 	
 	interface"
 	public java.util.List<IEmployee> getCurrentActiveWorkingEmployees();
@@ -1022,22 +1033,22 @@ class net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformatio
 	Double labHours; 
 	Double projectHours;
 	Double seminaryHours;
-	RegimeType regime;		
+	RegimeType regime;
 	String program;
-    String generalObjectives;
+	String generalObjectives;
     String operationalObjectives;
     String evaluationMethod;
     String prerequisites;
     String nameEn;
     String programEn;
-    String generalObjectivesEn;
+	String generalObjectivesEn;
     String operationalObjectivesEn;
     String evaluationMethodEn;
     String prerequisitesEn;
-    
+	
 	interface "
 	public void edit(String name, String code, Double ectsCredits, Boolean basic, Double theoreticalHours,
-            Double problemsHours, Double labHours, Double projectHours, Double seminaryHours, RegimeType regime);
+            Double problemsHours, Double labHours, Double projectHours, Double seminaryHours, RegimeType regime);            
     public void edit(String program, String generalObjectives, String operationalObjectives,
             String evaluationMethod, String prerequisites, String nameEn, String programEn, String generalObjectivesEn, 
             String operationalObjectivesEn, String evaluationMethodEn, String prerequisitesEn);  
@@ -1516,7 +1527,8 @@ class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.feni
 	Integer keyInsuranceValue;
     PeriodState state;
     
-    interface "    
+    interface "
+    
 	public java.util.Collection<IExecutionDegree> getExecutionDegreesByType(final net.sourceforge.fenixedu.domain.degree.DegreeType degreeType);
 	public IExecutionYear getPreviousExecutionYear();
 	public IExecutionPeriod getExecutionPeriodForSemester(Integer semester);
@@ -3008,7 +3020,7 @@ class net.sourceforge.fenixedu.domain.space.Space extends net.sourceforge.fenixe
 class net.sourceforge.fenixedu.domain.teacher.TeacherService extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyTeacher;
 	Integer keyExecutionPeriod;
-	
+
 	interface "
 		public void delete();
 		public Double getCredits();
@@ -3199,7 +3211,7 @@ class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.d
     Boolean interruptedStudies;
     Character entryGradeClassification;
     Character approvationRatioClassification;
-    Character arithmeticMeanClassification;
+    Character arithmeticMeanClassification;        
     Integer keySenior;
 
 	interface "
@@ -3466,10 +3478,11 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 		net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
 		
    	public net.sourceforge.fenixedu.domain.teacher.ITeacherPersonalExpectation getTeacherPersonalExpectationByExecutionYear(IExecutionYear executionYear);
-		
+	
 	public IDepartment getCurrentWorkingDepartment();
 	
    	public IDepartment getLastWorkingDepartment();
+   	
 	
 	public java.util.List<net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal> getFinalDegreeWorksByExecutionYear(IExecutionYear executionYear);
 	
@@ -3480,7 +3493,8 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	public java.util.List<IExecutionCourse> getAllLecturedExecutionCourses();
 	
 	public java.util.List<IMasterDegreeThesisDataVersion> getGuidedMasterDegreeThesisByExecutionYear(IExecutionYear executionYear);
-	public java.util.List<net.sourceforge.fenixedu.domain.teacher.ITeacherServiceExemption> getServiceExemptionSituations(java.util.Date beginDate, java.util.Date endDate);
+
+	public java.util.List<net.sourceforge.fenixedu.domain.teacher.ITeacherServiceExemption> getServiceExemptionSituations(java.util.Date beginDate, java.util.Date endDate);	
 	public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction> getPersonFuntions(java.util.Date beginDate, java.util.Date endDate);
 	public java.util.List<IMasterDegreeThesisDataVersion> getAllGuidedMasterDegreeThesis();
 	
@@ -3491,7 +3505,7 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
     public int getServiceExemptionCredits(IExecutionPeriod executionPeriod);
     public int getHoursByCategory(java.util.Date begin, java.util.Date end);    
     public net.sourceforge.fenixedu.domain.teacher.ICategory getCategoryByPeriod(java.util.Date begin, java.util.Date end);
-    public Double getHoursLecturedOnExecutionCourse(IExecutionCourse executionCourse);	
+    public Double getHoursLecturedOnExecutionCourse(IExecutionCourse executionCourse);
 	public net.sourceforge.fenixedu.domain.teacher.ITeacherService getTeacherServiceByExecutionPeriod(final IExecutionPeriod executionPeriod);
 	
 	public IProfessorship getProfessorshipByExecutionCourse(final IExecutionCourse executionCourse);
@@ -3514,7 +3528,7 @@ class net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen extends net.so
 	RegimenType regimenType;
 	Date beginDate;
 	Date endDate;
-	
+
 	interface "
 	public boolean belongsToPeriod(java.util.Date beginDate, java.util.Date endDate);
 	"
@@ -4359,6 +4373,11 @@ relation DegreeCurricularPlanCurricularCourse {
 	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole degreeCurricularPlan;
 }
 
+relation DegreeCurricularPlanMembersGroup {
+	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole degreeCurricularPlan;
+	net.sourceforge.fenixedu.domain.DegreeCurricularPlanMembersGroup playsRole curricularPlanMembersGroup;
+}
+
 
 relation DegreeDegreeCurricularPlan {
 	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole degreeCurricularPlans {
@@ -4425,6 +4444,10 @@ relation CompetenceCourseUnit {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
 }
 
+relation DepartmentCompetenceCourseMembersGroup {
+	net.sourceforge.fenixedu.domain.Department playsRole department;
+	net.sourceforge.fenixedu.domain.department.CompetenceCourseMembersGroup playsRole competenceCourseMembersGroup;
+}
 
 relation DislocatedStudentCountry {
 	net.sourceforge.fenixedu.domain.DislocatedStudent playsRole concluedStudents {
@@ -6620,7 +6643,7 @@ relation UnitUnit {
     }
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole parentUnits{
 		multiplicity *;
-	}
+}
 }
 
 relation DepartmentUnit {
