@@ -30,6 +30,20 @@ public class ScientificCouncilDegreeManagementBackingBean extends FenixBackingBe
     private String bolonhaDegreeType;
     private String gradeType;
 
+    public List<IDegree> getBolonhaDegrees() throws FenixFilterException, FenixServiceException {
+        Object[] args = { Degree.class };
+        List<IDegree> allDegrees = (List<IDegree>) ServiceUtils.executeService(null, "ReadAllDomainObject", args);
+        
+        List<IDegree> result = new ArrayList<IDegree>();
+        for (IDegree degree : allDegrees) {
+            if (degree.getBolonhaDegreeType() != null) {
+                result.add(degree);
+            }
+        }
+        
+        return result;
+    }
+    
     public Integer getDegreeId() {
         return (degreeId == null) ? (degreeId = getAndHoldIntegerParameter("degreeId")) : degreeId;
     }
@@ -141,10 +155,10 @@ public class ScientificCouncilDegreeManagementBackingBean extends FenixBackingBe
             this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
             return "curricularPlansManagement";
         } catch (DomainException e) {
-            this.addErrorMessage(scouncilBundle.getString(e.getMessage()));
+            this.addErrorMessage(domainExceptionbundle.getString(e.getMessage()));
             return "curricularPlansManagement";
         } catch (Exception e) {
-            this.addErrorMessage(domainExceptionbundle.getString("error.deletingDegree"));
+            this.addErrorMessage(scouncilBundle.getString("error.deletingDegree"));
             return "curricularPlansManagement";
         } 
         
