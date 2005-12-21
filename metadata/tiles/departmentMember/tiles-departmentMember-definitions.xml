@@ -13,7 +13,11 @@
       <put name="footer" value="/copyright.jsp" />
 	</definition>
 	
-	<definition name="creditsResumeLine" page="/credits/commons/creditsResumeLine.jsp">
+	<definition name="creditsResumeTableLine" page="/departmentMember/viewTeacherService/credits/creditsResumeTableLine.jsp">
 		<put name="creditLineDTO"/>
 	</definition>
+	
+	<definition name="creditsResumeLine" page="/credits/commons/creditsResumeLine.jsp">
+		<put name="creditLineDTO"/>
+	</definition>	
 </tiles-definitions>

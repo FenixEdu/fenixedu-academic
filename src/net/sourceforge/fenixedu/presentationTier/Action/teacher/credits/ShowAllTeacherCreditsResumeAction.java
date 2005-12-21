@@ -39,8 +39,9 @@ public class ShowAllTeacherCreditsResumeAction extends Action {
 
         args[0] = teacher.getIdInternal();
         List<CreditLine> creditsLines = (List) ServiceUtils.executeService(userView, "ReadAllTeacherCredits", args);        
-
-        BeanComparator dateComparator = new BeanComparator("executionPeriod.beginDate");
+        request.setAttribute("creditsLinesSize",creditsLines.size());
+        
+        BeanComparator dateComparator = new BeanComparator("executionPeriod.beginDate");        
         Iterator orderedCreditsLines = new OrderedIterator(creditsLines.iterator(),dateComparator);
         
         request.setAttribute("creditsLines", orderedCreditsLines);

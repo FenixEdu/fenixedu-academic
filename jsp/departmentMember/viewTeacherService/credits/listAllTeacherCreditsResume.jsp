@@ -4,99 +4,144 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
-<table width="100%" cellspacing="0" cellpadding="5">
-	<td class="infoselected">
-		<bean:message key="label.teacherService.credits.explanation"/>
-		<br/><br/>
-		<b><bean:message key="label.teacherService.credits.diferentCategories.explanation"/></b>
-	</td>
-</table>
-<br />
-<br />
+<style>
+	table.ts01 {
+	border-collapse: collapse;
+	margin: 1em 0;
+	}
+	table.ts01 th {
+	border: 1px solid #ccc;
+	background-color: #eee;
+	padding: 0.5em;
+	text-align: center;
+	}
+	table.ts01 td {
+	border: 1px solid #ccc;
+	background-color: #fff;
+	padding: 0.5em;
+	text-align: center;
+	}
+	table.ts01 .highlight01 {
+	background-color: #ffc;
+	}
+	table.ts01 .aleft {
+	text-align: left;
+	}
+	table.ts01 .aright {
+	text-align: right;
+	}
+	.asterisk01 {
+	color: #d42;
+	}		
+</style>
+
+<h2><bean:message key="label.teacherService.credits"/></h2>
+<div class="infoselected">
+	<p><bean:message key="label.teacherService.credits.explanation"/></p>
+	<p><em><bean:message key="label.teacherService.credits.diferentCategories.explanation"/></em></p>
+</div>
+
 <bean:define id="teacherID" name="teacher" property="idInternal" />
 <logic:empty name="creditsLines">
 	<span class="error"><bean:message key="message.teacherCredit.notFound"/></span>
 </logic:empty>
 <logic:notEmpty name="creditsLines">
-	<table cellpadding="3" cellspacing="1">
+	<table class="ts01" cellpadding="3" cellspacing="1">
 		<tr>
-			<td colspan="3"> </td>
-			<td colspan="4" class="listClasses-header">Créditos</td>			
+			<th></th>
+			<th colspan="7"><bean:message key="label.teacherService.credits.resume" /></th>
+			<th colspan="4"><bean:message key="label.teacherService.credits"/></th>			
 		</tr>
 		<tr>
-			<td class="listClasses-header"><bean:message key="label.executionPeriod" /></td>
-			<td class="listClasses-header" colspan="2"><bean:message key="label.teacherService.credits.resume" /></td>			
-			<td class="listClasses-header"><bean:message key="label.teacherService.credits.obtained"/></td>
-			<td class="listClasses-header"><bean:message key="label.teacherService.credits.mandatory"/></td>						
-			<td class="listClasses-header"><bean:message key="label.teacherService.credits.final"/></td>		
-			<td class="listClasses-header"><bean:message key="label.teacherService.credits.total"/></td>			
+			<th><bean:message key="label.executionPeriod"/></th>
+			<th><bean:message key="label.credits.lessons.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>			
+			<th><bean:message key="label.credits.supportLessons.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+			<th><bean:message key="label.credits.degreeFinalProjectStudents.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+			<th><bean:message key="label.credits.institutionWorkTime.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+			<th><bean:message key="label.credits.otherTypeCreditLine.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+			<th><bean:message key="label.credits.managementPositions.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+			<th><bean:message key="label.credits.serviceExemptionSituations.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+			<th><bean:message key="label.teacherService.credits.obtained"/></th>
+			<th><bean:message key="label.teacherService.credits.mandatory"/></th>						
+			<th><bean:message key="label.teacherService.credits.final"/></th>		
+			<th><bean:message key="label.teacherService.credits.total"/></th>			
 		</tr>
 	<% double totalCreditsBalance = 0; %>		
 	<logic:iterate id="creditLineDTO" name="creditsLines" indexId="nrLine">
 		<tr>			
+			<bean:define id="executionPeriod" name="creditLineDTO" property="executionPeriod"/>		
 			<logic:equal name="nrLine" value="0">
-				<td class="listClasses" >
-					<bean:define id="executionPeriod" name="creditLineDTO" property="executionPeriod"/>
-					<bean:message key="label.teacherService.credits.until"/> <bean:write name="executionPeriod" property="executionYear.year"/>
+				<td class="aleft">					
+					<html:link title="Ver detalhes" page='<%= "/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;teacherId=" + teacherID %>' paramId="executionPeriodId" paramName="executionPeriod" paramProperty="idInternal">
+						<bean:message key="label.teacherService.credits.until"/> <bean:write name="executionPeriod" property="executionYear.year"/>
+					</html:link>
 				</td>
-				<bean:define id="pastCredits" name="creditLineDTO" property="pastServiceCredits"/>				
-				<td colspan="2" class="listClasses" >
-					<b><bean:write name="pastCredits"/></b> (CP)
-				</td>				
+				<bean:define id="pastCredits" name="creditLineDTO" property="pastServiceCredits"/>							
 				<% totalCreditsBalance = ((Double)pastCredits).doubleValue(); %>
-				<td class="listClasses">0.0</td>
-				<td class="listClasses">0.0</td>
-				<td class="listClasses"><bean:write name="creditLineDTO" property="pastServiceCredits"/></td>	
-				<td class="listClasses">								
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>	
+				<td class="aright"><span class="asterisk01">*</span>								
 					<fmt:formatNumber pattern="###.##">
 						<%= totalCreditsBalance %>
 					</fmt:formatNumber>
 				</td>			
 			</logic:equal>
 			<logic:notEqual name="nrLine" value="0">
-				<td class="listClasses" >
-					<bean:define id="executionPeriod" name="creditLineDTO" property="executionPeriod"/>
-					<bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/>
+				<td class="aleft">
+					<html:link title="Ver detalhes" page='<%= "/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;teacherId=" + teacherID %>' paramId="executionPeriodId" paramName="executionPeriod" paramProperty="idInternal">
+						<bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/>
+					</html:link>						
 				</td>
-				<td class="listClasses" >
-					<tiles:insert definition="creditsResumeLine" flush="false">
-						<tiles:put name="creditLineDTO" beanName="creditLineDTO"/>
-					</tiles:insert>
-				</td>
-				<td class="listClasses" >
-					<html:link page='<%= "/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;teacherId=" + teacherID %>' paramId="executionPeriodId" paramName="executionPeriod" paramProperty="idInternal">
-						<bean:message key="link.teacherService.credits.details"/>
-					</html:link>
-				</td>
+				<tiles:insert definition="creditsResumeTableLine" flush="false">
+					<tiles:put name="creditLineDTO" beanName="creditLineDTO"/>
+				</tiles:insert>
 				<bean:define id="totalLineCredits" name="creditLineDTO" property="totalCredits"/>
 				<bean:define id="mandatoryLessonHours" name="creditLineDTO" property="mandatoryLessonHours"/>
-				<td class="listClasses">
+				<td>
 					<fmt:formatNumber pattern="###.##">
 						<bean:write name="totalLineCredits"/>
 					</fmt:formatNumber>
 				</td>
-				<td class="listClasses"><%= ((Integer)mandatoryLessonHours).intValue() %></td>
+				<td><%= ((Integer)mandatoryLessonHours).intValue() %></td>
 				<% totalCreditsBalance += ((Double)totalLineCredits).doubleValue() - ((Integer)mandatoryLessonHours).intValue(); %>
-				<td class="listClasses">
+				<td>
 					<fmt:formatNumber pattern="###.##">
 						<%= ((Double)totalLineCredits).doubleValue() - ((Integer)mandatoryLessonHours).intValue() %>
 					</fmt:formatNumber>
 				</td>
-				<td class="listClasses">								
-					<fmt:formatNumber pattern="###.##">
-						<%= totalCreditsBalance %>
-					</fmt:formatNumber>
-				</td>				
+				<logic:equal name="creditsLinesSize" value='<%= (new Integer(nrLine.intValue() + 1)).toString() %>'>
+					<td class="highlight01 aright">	
+						<bean:message key="label.teacherService.credits.totalSum"/>
+						<fmt:formatNumber pattern="###.##">
+							<%= totalCreditsBalance %>
+						</fmt:formatNumber>
+					</td>
+				</logic:equal>
+				<logic:notEqual name="creditsLinesSize" value='<%= (new Integer(nrLine.intValue() + 1)).toString() %>'>
+					<td class="aright">						
+						<fmt:formatNumber pattern="###.##">
+							<%= totalCreditsBalance %>
+						</fmt:formatNumber>
+					</td>
+				</logic:notEqual>
+				
 			</logic:notEqual>
 		</tr>
 	</logic:iterate>
-	</table>
-	
+	</table>	
+	<p><span class="asterisk01">*</span><bean:message key="label.credits.pastCredits.code.definition" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></p>
 	<br />
-	<br />
-	<u><strong><bean:message key="label.credits.legenda" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></strong></u>:
+
+	<p><strong><bean:message key="label.credits.legenda" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong></p>
 	<p>
-	<bean:message key="label.credits.pastCredits.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.pastCredits.code.definition" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp;
 	<bean:message key="label.credits.lessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.lessons.code.definition" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp;
 <%--	<bean:message key="label.credits.masterDegreeLessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.masterDegreeLessons.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp; --%>
 	<bean:message key="label.credits.supportLessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.supportLessons.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp;
@@ -105,5 +150,6 @@
 	<bean:message key="label.credits.otherTypeCreditLine.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.otherTypeCreditLine.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>, &nbsp;
 	<bean:message key="label.credits.managementPositions.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.managementPositions.code.definition" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>, &nbsp;
 	<bean:message key="label.credits.serviceExemptionSituations.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.serviceExemptionSituations.code.definition" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>.
+	</p>
 	
 </logic:notEmpty>
