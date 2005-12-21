@@ -92,10 +92,11 @@ valueType net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType  
 valueType net.sourceforge.fenixedu.domain.QualificationType										as QualificationType;
 valueType net.sourceforge.fenixedu.util.ByteArray												as ByteArray;
 valueType net.sourceforge.fenixedu.util.ContentType                                             as ContentType;
+valueType net.sourceforge.fenixedu.domain.GradeScale												as GradeScale;
+valueType net.sourceforge.fenixedu.util.EvaluationType											as EvaluationType;
 valueType net.sourceforge.fenixedu.util.RegimenType                      			            as RegimenType;
 valueType net.sourceforge.fenixedu.util.LegalRegimenType  		                                as LegalRegimenType;
 valueType net.sourceforge.fenixedu.util.WeekDay															as WeekDay;
-
 
 /*
 *
@@ -152,7 +153,8 @@ class net.sourceforge.fenixedu.domain.Attends extends net.sourceforge.fenixedu.d
 	Integer keyEnrolment;
 	
 	interface "
-	
+	public IFinalMark getFinalMark()	;
+	public IMark getMarkByEvaluation(IEvaluation evaluation);	
 	public void delete();
 	"	
 }
@@ -588,6 +590,7 @@ class net.sourceforge.fenixedu.domain.CreditsInScientificArea extends net.source
 }
 
 
+
 class net.sourceforge.fenixedu.domain.CurricularCourseEquivalence extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer oldCurricularCourseKey;
 	Integer equivalentCurricularCourseKey;
@@ -699,15 +702,16 @@ class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.do
 	String sigla;
 	String acronym;
     DegreeType tipoCurso;
-    BolonhaDegreeType bolonhaDegreeType;
+	BolonhaDegreeType bolonhaDegreeType;
     Integer keyUnit;
-    GradeType gradeType;
+    GradeScale gradeScale;    
 	
 	interface "
 
-	public void edit(String name, String nameEn, String code, net.sourceforge.fenixedu.domain.degree.DegreeType degreeType);
-	public void edit(String name, String nameEn, String acronym, net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType bolonhaDegreeType, net.sourceforge.fenixedu.domain.curriculum.GradeType gradeType);
+	public void edit(String name, String nameEn, String code, net.sourceforge.fenixedu.domain.degree.DegreeType degreeType, net.sourceforge.fenixedu.domain.GradeScale gradeScale);
+	public void edit(String name, String nameEn, String acronym, net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType bolonhaDegreeType, net.sourceforge.fenixedu.domain.GradeScale gradeScale);
 	public void delete();
+	public net.sourceforge.fenixedu.domain.GradeScale getGradeScaleChain();
 	"
 }
 
@@ -728,6 +732,7 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     String anotation;
     DegreeCurricularPlanState state;
     MarkType markType;
+    GradeScale gradeScale;
     CurricularStage curricularStage;
     Integer degreeModuleKey;
    	Integer keyDegreeCurricularPlanMembersGroup;
@@ -759,7 +764,7 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
 	
 	public void edit(String name, net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState state, 
 			java.util.Date inicialDate, java.util.Date endDate, Integer degreeDuration, Integer minimalYearForOptionalCourses, 
-			Double neededCredits, net.sourceforge.fenixedu.util.MarkType markType, Integer numerusClausus, String annotation);
+			Double neededCredits, net.sourceforge.fenixedu.util.MarkType markType, Integer numerusClausus, String annotation, net.sourceforge.fenixedu.domain.GradeScale gradeScale);
 
 	public void delete();
 	
@@ -768,7 +773,8 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
 	public IEnrolmentPeriodInCurricularCoursesSpecialSeason getEnrolmentPeriodInCurricularCoursesSpecialSeasonByExecutionPeriod(IExecutionPeriod executionPeriod);
 	
 	public String print();
-	
+	public net.sourceforge.fenixedu.domain.GradeScale getGradeScaleChain();
+
 	public ICurricularCourse createCurricularCourse(String name, String code, String acronym, Boolean enrolmentAllowed,
 	            net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage curricularStage);
 
@@ -881,6 +887,8 @@ class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.s
 		Integer keyCompetenceCourse;
 		Integer keyStudentCourseReport;
 		Integer degreeCurricularPlanKey;
+	
+	    GradeScale gradeScale;
 		
 		interface "
 		 public void edit(Double weight, String prerequisites, String prerequisitesEn,
@@ -910,6 +918,10 @@ class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.s
 		 public java.util.List getExecutionCoursesByExecutionPeriod (final IExecutionPeriod executionPeriod);
 	
 		 public ICurriculum findLatestCurriculum();
+		 
+		public net.sourceforge.fenixedu.domain.GradeScale getGradeScaleChain();
+		
+		public ICurricularSemester getCurricularSemesterWithLowerYearBySemester(Integer semester, java.util.Date date);		
 
 		public java.util.List<IEnrolmentEvaluation> getActiveEnrollmentEvaluations();
 
@@ -1265,6 +1277,10 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 	public java.util.List<IExecutionCourse> getAttendingExecutionCoursesFor(IStudent student);
 	
 	public void delete();    
+	
+	public IMark addNewMark(IAttends attends, String markValue);
+	
+	public net.sourceforge.fenixedu.util.EvaluationType getEvaluationType();	
 	"
 }
 
@@ -1272,6 +1288,9 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 	class net.sourceforge.fenixedu.domain.FinalEvaluation extends net.sourceforge.fenixedu.domain.Evaluation {		
 		interface "
 		public boolean deleteFrom(IExecutionCourse executionCourse);
+		public java.util.List<IFinalMark> getAlreadySubmitedMarks(IExecutionCourse executionCourse);	
+	    public Integer getGradesListVersion();
+		public java.util.List<IAttends> getNotSubmitedMarkAttends(IExecutionCourse executionCourse);
 		"
 	}
 	
@@ -2128,7 +2147,20 @@ class net.sourceforge.fenixedu.domain.Mark extends net.sourceforge.fenixedu.doma
     String mark;
     Integer keyEvaluation;
     Integer keyAttend;
+    String ojbConcreteClass;    
+    
+	interface "    
+    public void delete();
+    "
 }
+
+	class net.sourceforge.fenixedu.domain.FinalMark extends net.sourceforge.fenixedu.domain.Mark {
+		String submitedMark;
+		Integer gradeListVersion;
+		Date submitDate;
+		Date whenSubmited;
+
+	}
 
 
 class net.sourceforge.fenixedu.domain.MasterDegreeCandidate extends net.sourceforge.fenixedu.domain.DomainObject {
