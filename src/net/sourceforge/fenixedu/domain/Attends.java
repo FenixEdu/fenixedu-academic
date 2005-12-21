@@ -41,5 +41,23 @@ public class Attends extends Attends_Base {
 		else
 			throw new DomainException("error.attends.cant.delete");
 	}
+	
+	public IFinalMark getFinalMark() {
+		for (IMark mark : getAssociatedMarks()) {
+			if(mark instanceof FinalMark) {
+				return (IFinalMark) mark;
+			}
+		}
+		return null;
+	}
+
+	public IMark getMarkByEvaluation(IEvaluation evaluation) {
+		for (IMark mark : getAssociatedMarks()) {
+			if(mark.getEvaluation().equals(evaluation)) {
+				return mark;
+			}
+		}
+		return null;
+	}
 
 }
