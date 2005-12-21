@@ -27,7 +27,7 @@
 		&nbsp;&gt;&nbsp; <a href="<%= institutionUrlTeaching %>"><bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.education" /></a> &nbsp;&gt;&nbsp;
 		<bean:write name="infoDegreeInfo" property="infoDegree.sigla" />
 	</div>
-s
+
 <p><span class="error"><html:errors/></span></p>
 
 	<!-- COURSE NAME -->
