@@ -6,6 +6,8 @@
 
 package net.sourceforge.fenixedu.domain.degree;
 
+import net.sourceforge.fenixedu.domain.GradeScale;
+
 
 /**
  * 
@@ -13,12 +15,22 @@ package net.sourceforge.fenixedu.domain.degree;
  */
 public enum DegreeType {
     
-    DEGREE,
+    DEGREE {
+    	public GradeScale getGradeScale() {
+    		return GradeScale.TYPE20;
+    	}
+    },
     
-    MASTER_DEGREE;
+    MASTER_DEGREE{
+    	public GradeScale getGradeScale() {
+    		return GradeScale.TYPE5;
+    	}    	
+    };
     
     public String getName() {
         return name();
     }
+    
+    public abstract GradeScale getGradeScale();
  
 }
