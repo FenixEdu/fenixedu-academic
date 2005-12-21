@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.curriculum.GradeType;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -17,7 +17,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class EditDegree implements IService {
 
     public void run(Integer idInternal, String name, String nameEn, String acronym,
-            BolonhaDegreeType bolonhaDegreeType, GradeType gradeType) throws FenixServiceException,
+            BolonhaDegreeType bolonhaDegreeType, GradeScale gradeScale) throws FenixServiceException,
             ExcepcaoPersistencia {
         if (name == null || nameEn == null || acronym == null || bolonhaDegreeType == null) {
             throw new InvalidArgumentsServiceException();
@@ -50,7 +50,7 @@ public class EditDegree implements IService {
             }
         }
 
-        degreeToEdit.edit(name, nameEn, acronym, bolonhaDegreeType, gradeType);
+        degreeToEdit.edit(name, nameEn, acronym, bolonhaDegreeType, gradeScale);
     }
 
 }

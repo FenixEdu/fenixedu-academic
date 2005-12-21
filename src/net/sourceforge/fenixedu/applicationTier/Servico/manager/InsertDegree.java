@@ -25,7 +25,7 @@ public class InsertDegree implements IService {
                 .getDefaultPersistenceSupport();
         final List<IDegree> degrees = (List<IDegree>) persistentSupport.getICursoPersistente()
                 .readAllFromOldDegreeStructure();
-
+                
         // assert unique degree code and unique pair name/type
         for (IDegree degree : degrees) {
             if (degree.getSigla().equalsIgnoreCase(infoDegree.getSigla())) {
@@ -38,8 +38,8 @@ public class InsertDegree implements IService {
             }
         }
 
-        DomainFactory.makeDegree(infoDegree.getNome(), infoDegree.getNameEn(), infoDegree.getSigla(),
-                infoDegree.getTipoCurso(), DegreeCurricularPlan.class.getName());
+        DomainFactory.makeDegree(infoDegree.getNome(), infoDegree.getNameEn(),
+				infoDegree.getSigla(), infoDegree.getTipoCurso(), infoDegree.getGradeScale(), DegreeCurricularPlan.class.getName());
     }
 
 }

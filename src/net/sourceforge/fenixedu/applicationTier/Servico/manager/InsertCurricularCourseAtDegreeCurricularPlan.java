@@ -87,6 +87,7 @@ public class InsertCurricularCourseAtDegreeCurricularPlan implements IService {
                 curricularCourse.setEnrollmentWeigth(infoCurricularCourse.getEnrollmentWeigth());
                 curricularCourse.setWeigth(infoCurricularCourse.getWeigth());
                 curricularCourse.setMandatoryEnrollment(infoCurricularCourse.getMandatoryEnrollment());
+                curricularCourse.setGradeScale(infoCurricularCourse.getGradeScale());
             } else {
                 throw new ExistingAcronymException();
             }

@@ -89,6 +89,7 @@ public class EditCurricularCourse implements IService {
                 oldCurricularCourse.setEnrollmentWeigth(newInfoCurricularCourse.getEnrollmentWeigth());
                 oldCurricularCourse.setMandatoryEnrollment(newInfoCurricularCourse.getMandatoryEnrollment());
                 oldCurricularCourse.setEnrollmentAllowed(newInfoCurricularCourse.getEnrollmentAllowed());
+                oldCurricularCourse.setGradeScale(newInfoCurricularCourse.getGradeScale());
             } else {
             	throw new ExistingAcronymException();
             }

@@ -40,6 +40,6 @@ public class EditDegreeCurricularPlan implements IService {
 		degreeCP.edit(newInfoDegreeCP.getName(), newInfoDegreeCP.getState(), newInfoDegreeCP.getInitialDate(),
 				newInfoDegreeCP.getEndDate(), newInfoDegreeCP.getDegreeDuration(), 
 				newInfoDegreeCP.getMinimalYearForOptionalCourses(), newInfoDegreeCP.getNeededCredits(), 
-				newInfoDegreeCP.getMarkType(), newInfoDegreeCP.getNumerusClausus(), newInfoDegreeCP.getAnotation());
+				newInfoDegreeCP.getMarkType(), newInfoDegreeCP.getNumerusClausus(), newInfoDegreeCP.getAnotation(), newInfoDegreeCP.getGradeScale());
     }
 }

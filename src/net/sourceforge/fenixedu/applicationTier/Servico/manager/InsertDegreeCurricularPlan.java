@@ -36,7 +36,7 @@ public class InsertDegreeCurricularPlan implements IService {
                 .getEndDate(), infoDegreeCurricularPlan.getDegreeDuration(), infoDegreeCurricularPlan
                 .getMinimalYearForOptionalCourses(), infoDegreeCurricularPlan.getNeededCredits(),
                 infoDegreeCurricularPlan.getMarkType(), infoDegreeCurricularPlan.getNumerusClausus(),
-                infoDegreeCurricularPlan.getAnotation(), CurricularStage.OLD);
+                infoDegreeCurricularPlan.getAnotation(), CurricularStage.OLD, infoDegreeCurricularPlan.getGradeScale());
     }
 
 }

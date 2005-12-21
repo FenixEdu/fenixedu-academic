@@ -9,6 +9,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.util.CurricularCourseExecutionScope;
@@ -69,6 +70,8 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     private String acronym;
     
     private String nameEn;
+    
+    private GradeScale gradeScale;
 
     /**
      * @return
@@ -561,6 +564,7 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
             setAcronym(curricularCourse.getAcronym());
             setNameEn(curricularCourse.getNameEn());
 			setEnrollmentAllowed(curricularCourse.getEnrollmentAllowed());
+			setGradeScale(curricularCourse.getGradeScale());
         }
     }
 
@@ -593,5 +597,13 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     public String getNameAndCode() {
         return getCode() + " - " + getName();
     }
+
+	public GradeScale getGradeScale() {
+		return gradeScale;
+	}
+
+	public void setGradeScale(GradeScale gradeScale) {
+		this.gradeScale = gradeScale;
+	}
 
 }

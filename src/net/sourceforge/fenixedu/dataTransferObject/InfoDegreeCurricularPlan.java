@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.util.MarkType;
@@ -42,6 +43,8 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
     private String descriptionEn;
 
     private String anotation;
+    
+    private GradeScale gradeScale;
 
     // by gedl AT rnl dot IST dot UTL dot PT (August the 3rd, 2003)
     private List curricularCourses;
@@ -299,7 +302,7 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
             setDegreeDuration(plan.getDegreeDuration());
             setMinimalYearForOptionalCourses(plan.getMinimalYearForOptionalCourses());
             setAnotation(plan.getAnotation());
-            
+            setGradeScale(plan.getGradeScale());
            
         }
     }
@@ -328,6 +331,7 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
         degreeCurricularPlan.setNeededCredits(infoDegreeCurricularPlan.getNeededCredits());
         degreeCurricularPlan.setNumerusClausus(infoDegreeCurricularPlan.getNumerusClausus());
         degreeCurricularPlan.setAnotation(infoDegreeCurricularPlan.getAnotation());
+        degreeCurricularPlan.setGradeScale(infoDegreeCurricularPlan.getGradeScale());
     }
 
     public String getAnotation() {
@@ -345,5 +349,13 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
     public void setInfoExecutionDegrees(List infoExecutionDegrees) {
         this.infoExecutionDegrees = infoExecutionDegrees;
     }
+
+	public GradeScale getGradeScale() {
+		return this.gradeScale;
+	}
+
+	public void setGradeScale(GradeScale gradeScale) {
+		this.gradeScale = gradeScale;
+	}
 
 }

@@ -9,6 +9,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -31,7 +32,9 @@ public class InfoDegree extends InfoObject implements Comparable {
 
     private List infoDegreeInfos = null; // added by Tânia Pousão
 
-    private List infoCoordinators;
+	private List infoCoordinators;
+	
+	private GradeScale gradeScale;
 
     public InfoDegree() {
     }
@@ -130,13 +133,14 @@ public class InfoDegree extends InfoObject implements Comparable {
         this.infoDegreeInfos = infoDegreeInfos;
     }
 
-    public void copyFromDomain(IDegree degree) {
-        super.copyFromDomain(degree);
-        if (degree != null) {
-            setNome(degree.getNome());
-            setSigla(degree.getSigla());
-            setTipoCurso(degree.getTipoCurso());
-            setNameEn(degree.getNameEn());
+	public void copyFromDomain(IDegree degree){
+		super.copyFromDomain(degree);
+		if (degree != null){
+			setNome(degree.getNome());
+			setSigla(degree.getSigla());
+			setTipoCurso(degree.getTipoCurso());
+			setNameEn(degree.getNameEn());
+			setGradeScale(degree.getGradeScale());
 
             List<InfoDegreeCurricularPlan> degreeCurricularPlans = new ArrayList<InfoDegreeCurricularPlan>();
             for (IDegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
@@ -168,6 +172,7 @@ public class InfoDegree extends InfoObject implements Comparable {
         degree.setSigla(infoDegree.getSigla());
         degree.setTipoCurso(infoDegree.getTipoCurso());
         degree.setNameEn(infoDegree.getNameEn());
+		degree.setGradeScale(infoDegree.getGradeScale());        
     }
 
     public String getNameEn() {
@@ -190,8 +195,17 @@ public class InfoDegree extends InfoObject implements Comparable {
         return infoCoordinators;
     }
 
-    public void setInfoCoordinators(List infoCoordinators) {
-        this.infoCoordinators = infoCoordinators;
-    }
+	public void setInfoCoordinators(List infoCoordinators)
+	{
+		this.infoCoordinators = infoCoordinators;
+	}
+
+	public GradeScale getGradeScale() {
+		return this.gradeScale;
+	}
+
+	public void setGradeScale(GradeScale gradeScale) {
+		this.gradeScale = gradeScale;
+	}
 
 }

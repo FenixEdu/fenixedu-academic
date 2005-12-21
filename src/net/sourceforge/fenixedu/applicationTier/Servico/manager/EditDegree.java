@@ -47,9 +47,8 @@ public class EditDegree implements IService {
                 }
             }
         }
-
         degreeToEdit.edit(infoDegree.getNome(), infoDegree.getNameEn(), infoDegree.getSigla(), infoDegree
-                .getTipoCurso());
+                .getTipoCurso(), infoDegree.getGradeScale());
     }
 
 }
