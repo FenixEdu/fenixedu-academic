@@ -17,7 +17,7 @@ margin-bottom: 0;
 
 <ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
 	<f:loadBundle basename="ServidorApresentacao/ApplicationResources" var="bundle"/>
-	
+	<h:messages layout="table" errorClass="error"/>
 	<h:form>
 		<h:inputHidden binding="#{evaluationManagementBackingBean.executionCourseIdHidden}" />
 		
@@ -37,6 +37,7 @@ margin-bottom: 0;
 
 		<h:outputText value="<b> | </b>" escape="false"/>
 		<h:commandLink action="enterSubmitMarksList">
+			<f:param name="evaluationID" value="#{evaluationManagementBackingBean.finalEvaluation.idInternal}" />		
 			<h:outputFormat value="#{bundle['label.submit.listMarks']}" />
 		</h:commandLink>
 		<h:outputText value="</li></ul>" escape="false"/>

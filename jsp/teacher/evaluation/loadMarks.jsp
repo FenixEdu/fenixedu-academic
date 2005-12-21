@@ -59,7 +59,7 @@
 
 			<h:outputText styleClass="error" rendered="#{!empty evaluationManagementBackingBean.errorMessage}"
 				value="#{bundle[evaluationManagementBackingBean.errorMessage]}"/>
-			<h:messages showSummary="true" errorClass="error" rendered="#{empty evaluationManagementBackingBean.errorMessage}"/>
+			<h:messages layout="table" errorClass="error"/>
 
 			<h:outputText value="#{bundle['label.file']}: <br/>" escape="false"/>
 			<h:outputText value="<input size=\"30\" type=\"file\" name=\"theFile\"/>" escape="false"/>

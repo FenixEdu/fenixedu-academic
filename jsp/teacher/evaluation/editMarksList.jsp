@@ -8,7 +8,7 @@
 	<h:outputFormat value="<h2>#{bundle['title.evaluation.manage.marksList']}</h2>" escape="false">
 		<f:param value="#{evaluationManagementBackingBean.executionCourse.nome}" />
 	</h:outputFormat>
-
+	<h:messages layout="table" errorClass="error"/>
 	<h:form>
 		<h:inputHidden binding="#{evaluationManagementBackingBean.executionCourseIdHidden}" />
 		<h:inputHidden binding="#{evaluationManagementBackingBean.evaluationIdHidden}" />
@@ -84,7 +84,7 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header"><h:outputText value="#{bundle['label.mark']}"/></f:facet>
-					<h:inputText size="3" maxlength="4" value="#{evaluationManagementBackingBean.marks[attends.idInternal]}"/>
+					<h:inputText size="3" maxlength="4" value="#{evaluationManagementBackingBean.marks[attends.aluno.number]}"/>
 				</h:column>
 			</h:dataTable>
 
