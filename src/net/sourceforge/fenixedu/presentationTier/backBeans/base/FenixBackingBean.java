@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.UIViewState;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.Globals;
 
 public class FenixBackingBean {
@@ -150,6 +151,18 @@ public class FenixBackingBean {
             parameterValue = null;
         }
         return parameterValue;
+    }
+    
+    protected String getFormatedMessage(final String bundleName, final String key, final String ... args) {
+    	ResourceBundle bundle = getResourceBundle(bundleName);
+    	String message = bundle.getString(key);
+    	if(message != null) {
+    		for(int i = 0; args.length > i; i++) {
+    			String substring = "{" + i + "}";
+    			message = StringUtils.replace(message, substring, args[i]);
+    		}
+    	}
+    	return message;
     }
 
     protected Double getAndHoldDoubleParameter(final String parameterName) {
