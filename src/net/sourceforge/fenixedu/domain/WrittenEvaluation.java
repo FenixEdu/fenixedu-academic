@@ -13,10 +13,12 @@ import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
+import net.sourceforge.fenixedu.util.EvaluationType;
 
 public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     public WrittenEvaluation() {
+    	
     }
 
     public WrittenEvaluation(Date evaluationDay, Date evaluationBeginningTime, Date evaluationEndTime,
@@ -28,6 +30,10 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
                 executionCoursesToAssociate, curricularCourseScopesToAssociate, rooms, period);
     }
 
+	public EvaluationType getEvaluationType() {
+		return EvaluationType.EXAM_TYPE;
+	}
+    
     public String toString() {
         return "[WRITTEN EVALUATION:" + " id= '" + this.getIdInternal() + "'\n" + " day= '"
                 + this.getDay() + "'\n" + " beginning= '" + this.getBeginning() + "'\n" + " end= '"

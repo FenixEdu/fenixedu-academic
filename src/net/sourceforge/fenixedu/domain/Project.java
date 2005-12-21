@@ -7,10 +7,11 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.EvaluationType;
 
 public class Project extends Project_Base {
 
-    private Project() {
+    private Project() {    	
         this.setOjbConcreteClass(Project.class.getName());
     }
 
@@ -41,4 +42,8 @@ public class Project extends Project_Base {
         setEnd(end);
         setDescription((description != null) ? description : "");
     }
+    
+	public EvaluationType getEvaluationType() {
+		return EvaluationType.PROJECT_TYPE;
+	}
 }
