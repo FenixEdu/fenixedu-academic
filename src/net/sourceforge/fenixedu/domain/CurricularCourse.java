@@ -55,6 +55,10 @@ public class CurricularCourse extends CurricularCourse_Base {
         new Context(courseGroup, this, curricularSemester, beginExecutionPeriod, null);
     }
     
+	public GradeScale getGradeScaleChain() {
+    	return super.getGradeScale() != null ? super.getGradeScale() : getDegreeCurricularPlan().getGradeScaleChain();
+    }
+	
     public String toString() {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("[").append(this.getClass()).append(":").append("idInternal = ").append(
@@ -305,6 +309,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
         return minCurricularYear;
     }
+   
 
     // -------------------------------------------------------------
     // END: Only for enrollment purposes
@@ -368,6 +373,22 @@ public class CurricularCourse extends CurricularCourse_Base {
             result = this.getCompetenceCourse().getEctsCredits();
         }        
         return result;
+    }    
+    
+    public ICurricularSemester getCurricularSemesterWithLowerYearBySemester(Integer semester, Date date) {
+    	ICurricularSemester result = null;
+    	for (ICurricularCourseScope curricularCourseScope : getScopes()) {
+			if(curricularCourseScope.getCurricularSemester().getSemester().equals(semester) && curricularCourseScope.isActive(date)) {
+				if(result == null) {
+					result = curricularCourseScope.getCurricularSemester();
+				} else {
+					if(result.getCurricularYear().getYear() > curricularCourseScope.getCurricularSemester().getCurricularYear().getYear()) {
+						result = curricularCourseScope.getCurricularSemester();
+					}
+				}
+			}
+		}
+    	return result;
     }
     
     private List<IEnrolmentEvaluation> getActiveEnrollments(IExecutionPeriod executionPeriod,
@@ -440,5 +461,5 @@ public class CurricularCourse extends CurricularCourse_Base {
             return this.getCompetenceCourse().getName();
         }
         return super.getName();
-    }    
+    }        
 }
