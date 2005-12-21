@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
 <h2><bean:message bundle="MANAGER_RESOURCES" key="message.editDegree" /></h2>
 <br>
@@ -51,7 +52,18 @@
 		
 	</td>
 </tr>
-
+<tr>
+	<td>
+		<bean:message bundle="MANAGER_RESOURCES" key="message.manager.gradeType"/>
+	</td>
+	<td>
+		<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.GradeScale" bundle="ENUMERATION_RESOURCES"/>
+		<html:select property="gradeType">
+			<html:option bundle="ENUMERATION_RESOURCES" key="dropDown.Default" value=""/>
+			<html:options collection="values" property="value" labelProperty="label"/>
+		</html:select>
+	</td>
+</tr>		
 </table>
 <html:hidden property="method" value="edit" />
 <html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
