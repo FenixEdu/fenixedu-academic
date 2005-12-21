@@ -41,13 +41,10 @@ public class TeacherService extends TeacherService_Base {
 
     public Double getCredits() {
         double credits = getMasterDegreeServiceCredits();
-        /*
-         * credits += getStudentsFinalWorkDegreeCredits(); credits +=
-         * getLessonCredits();
-         */
-
-        credits += getPastServiceCredits();
+        credits += getTeachingDegreeCredits();
+        //credits += getPastServiceCredits();
         credits += getOtherServiceCredits();
+        credits += getTeacherAdviseServiceCredits();
         return round(credits);
     }
 
@@ -71,7 +68,9 @@ public class TeacherService extends TeacherService_Base {
     public Double getMasterDegreeServiceCredits() {
         double credits = 0;
         for (ITeacherMasterDegreeService teacherMasterDegreeService : getMasterDegreeServices()) {
-            credits += teacherMasterDegreeService.getCredits();
+            if (teacherMasterDegreeService.getCredits() != null) {
+                credits += teacherMasterDegreeService.getCredits();
+            }
         }
         return round(credits);
     }
@@ -79,11 +78,11 @@ public class TeacherService extends TeacherService_Base {
     public Double getTeacherAdviseServiceCredits() {
         double credits = 0;
         for (ITeacherAdviseService teacherAdviseService : getTeacherAdviseServices()) {
-            credits = credits + ((teacherAdviseService.getPercentage().doubleValue()/100) * (1.0/3));
+            credits = credits + ((teacherAdviseService.getPercentage().doubleValue() / 100) * (1.0 / 3));
         }
         return round(credits);
     }
-    
+
     public Double getPastServiceCredits() {
         double credits = 0;
         ITeacherPastService teacherPastService = getPastService();
