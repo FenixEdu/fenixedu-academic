@@ -52,6 +52,7 @@ public class JdbcMysqlFileSupport {
         public ResultSet execute(final Connection connection, final String query) throws SQLException {
             final PreparedStatement preparedStatement = connection.prepareStatement(query);
             final ResultSet resultSet = preparedStatement.executeQuery();
+            //preparedStatement.close();
             return resultSet;
         }
     };
@@ -60,6 +61,7 @@ public class JdbcMysqlFileSupport {
         public ResultSet execute(final Connection connection, final String query) throws SQLException {
             final PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.executeUpdate();
+            preparedStatement.close();
             return null;
         }
     };
@@ -72,10 +74,11 @@ public class JdbcMysqlFileSupport {
             for (int i = 0; i < queries.length; i++) {
                 resultSet = closure.execute(connection, queries[i]);
             }
+            connection.commit();
         } catch (ClassNotFoundException e) {
             logger.fatal("Unable to get JdbcMysqlFileSupport - ClassNotFoundException", e);
             try {
-                connection.rollback();
+                if (connection != null) connection.rollback();
             } catch (SQLException e1) {
                 logger.fatal("Unable to roleback connection", e1);
             }
@@ -83,14 +86,14 @@ public class JdbcMysqlFileSupport {
         } catch (SQLException e) {
             logger.fatal("Unable to get JdbcMysqlFileSupport - SQLException", e);
             try {
-                connection.rollback();
+                if (connection != null) connection.rollback();
             } catch (SQLException e1) {
                 logger.fatal("Unable to roleback connection", e1);
             }
             throw new Error(e);
         } finally {
-            try {
-                connection.close();
+            try {                
+                if (connection != null) connection.close();
             } catch (SQLException e) {
                 logger.fatal("Unable to close connection", e);
             }
@@ -173,23 +176,11 @@ public class JdbcMysqlFileSupport {
             propertyPScreationdate.executeUpdate();
             propertyPScreationdate.close();
 
-            //private static final String REVISION_CONTENT_INSERT_STATEMENT = "insert into revisioncontent values(?, \"1.0\", ?)";
-            //private static final String PROPERTY_INSERT_STATEMENT = "insert into property values(?, \"1.0\", ?, ?, \"DAV:\", null, ?)";
-
-            // Create some binary data
-            //byte[] buffer = "some data".getBytes();
-        
-            // Set value for the prepared statement
-            //pstmt.setBytes(1, buffer);
-        
-            // Insert the data
-            //pstmt.executeUpdate();
-            //pstmt.close();
-        
+            connection.commit();
         } catch (ClassNotFoundException e) {
             logger.fatal("Unable to get JdbcMysqlFileSupport - ClassNotFoundException", e);
             try {
-                connection.rollback();
+                if (connection != null) connection.rollback();
             } catch (SQLException e1) {
                 logger.fatal("Unable to roleback connection", e1);
             }
@@ -197,14 +188,14 @@ public class JdbcMysqlFileSupport {
         } catch (SQLException e) {
             logger.fatal("Unable to get JdbcMysqlFileSupport - SQLException", e);
             try {
-                connection.rollback();
+                if (connection != null) connection.rollback();
             } catch (SQLException e1) {
                 logger.fatal("Unable to roleback connection", e1);
             }
             throw new Error(e);
         } finally {
             try {
-                connection.close();
+                if (connection != null) connection.close();
             } catch (SQLException e) {
                 logger.fatal("Unable to close connection", e);
             }
