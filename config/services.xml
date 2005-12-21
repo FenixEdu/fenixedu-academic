@@ -9232,9 +9232,36 @@
         	<chain name="BolonhaManagerAuthorization"></chain>
         </filterChains>     
     </service>
-        <service>
+   	<service>
     	<name>CreateCurricularCourse</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCurricularCourse</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="BolonhaManagerAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>EditCurricularCourse</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCurricularCourse</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="BolonhaManagerAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>AddContext</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.AddContext</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="BolonhaManagerAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>EditContext</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditContext</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>

@@ -24,11 +24,11 @@ public class CourseGroup extends CourseGroup_Base {
     }
     
     public void delete() {
-        if(!getCourseGroupContexts().isEmpty()) {
-            throw new DomainException("can't delete Course Group");
+        if(hasAnyCourseGroupContexts()) {
+            throw new DomainException("error.notEmptyCourseGroupContexts");
         }
         super.delete();
-        deleteDomainObject();
+        super.deleteDomainObject();
     }
 
     public void print(StringBuffer dcp, String tabs, IContext previousContext) {

@@ -316,6 +316,16 @@
 		jdbc-type="DOUBLE"
 	/>
 	<field-descriptor
+		name="prerequisites"
+		column="PREREQUISITES"
+		jdbc-type="LONGVARCHAR"
+	/>
+	<field-descriptor
+		name="prerequisitesEn"
+		column="PREREQUISITES_EN"
+		jdbc-type="LONGVARCHAR"
+	/>
+	<field-descriptor
 		name="mandatoryEnrollment"
 		column="MANDATORY_ENROLLMENT"
 		jdbc-type="BIT"

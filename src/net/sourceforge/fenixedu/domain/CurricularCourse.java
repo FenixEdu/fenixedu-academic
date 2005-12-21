@@ -13,6 +13,9 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.IContext;
 import net.sourceforge.fenixedu.domain.degreeStructure.ICourseGroup;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.stm.RelationList;
+import net.sourceforge.fenixedu.stm.VBox;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -38,11 +41,15 @@ public class CurricularCourse extends CurricularCourse_Base {
         setCurricularStage(curricularStage);
     }
     
-    public CurricularCourse(Double weight, CurricularStage curricularStage, ICompetenceCourse competenceCourse, ICourseGroup courseGroup,
-            ICurricularSemester curricularSemester, IExecutionPeriod beginExecutionPeriod) {
+    public CurricularCourse(Double weight, String prerequisites, String prerequisitesEn,
+            CurricularStage curricularStage, ICompetenceCourse competenceCourse,
+            ICourseGroup courseGroup, ICurricularSemester curricularSemester,
+            IExecutionPeriod beginExecutionPeriod) {
         
         this();       
         setWeigth(weight);
+        setPrerequisites(prerequisites);
+        setPrerequisitesEn(prerequisitesEn);
         setCurricularStage(curricularStage);
         setCompetenceCourse(competenceCourse);
         new Context(courseGroup, this, curricularSemester, beginExecutionPeriod, null);
@@ -70,17 +77,20 @@ public class CurricularCourse extends CurricularCourse_Base {
         return true;
     }
     
-    public void edit(Double weight, CurricularStage curricularStage, ICompetenceCourse competenceCourse) {       
+    public void edit(Double weight, String prerequisites, String prerequisitesEn,
+            CurricularStage curricularStage, ICompetenceCourse competenceCourse) {
+        
         setWeigth(weight);
+        setPrerequisites(prerequisites);
+        setPrerequisitesEn(prerequisitesEn);
         setCurricularStage(curricularStage);
         setCompetenceCourse(competenceCourse);
     }
     
     public void delete() {
-        setCompetenceCourse(null);
-        // delete contexts??!?!?
-        // super.delete();
-        deleteDomainObject();
+       super.delete();
+       setCompetenceCourse(null);
+       super.deleteDomainObject();
     }
     
     public boolean curricularCourseIsMandatory() {
@@ -364,10 +374,8 @@ public class CurricularCourse extends CurricularCourse_Base {
             IStudent student) {
         List<IEnrolment> enrollments = getEnrolments();
         List<IEnrolmentEvaluation> results = new ArrayList<IEnrolmentEvaluation>();
-
         for (IEnrolment enrollment : enrollments) {
             boolean filters = true;
-
             filters &= !enrollment.getEnrollmentState().equals(EnrollmentState.ANNULED);
             filters &= executionPeriod == null
                     || enrollment.getExecutionPeriod().equals(executionPeriod);
@@ -378,7 +386,6 @@ public class CurricularCourse extends CurricularCourse_Base {
                 results.addAll(enrollment.getEvaluations());
             }
         }
-
         return results;
     }
 
@@ -403,4 +410,35 @@ public class CurricularCourse extends CurricularCourse_Base {
 
         return results;
     }
+    
+    public IContext addContext(ICourseGroup courseGroup, ICurricularSemester curricularSemester,
+            IExecutionPeriod beginExecutionPeriod, IExecutionPeriod endExecutionPeriod) {
+        checkIfCanCreateContext(courseGroup, curricularSemester);
+        return new Context(courseGroup, this, curricularSemester, beginExecutionPeriod, endExecutionPeriod);
+    }
+    
+    public void editContext(IContext context, ICourseGroup courseGroup, ICurricularSemester curricularSemester) {
+        if (context.getCourseGroup() != courseGroup || context.getCurricularSemester() != curricularSemester 
+                || context.getCurricularSemester().getCurricularYear() != curricularSemester.getCurricularYear()) {
+            checkIfCanCreateContext(courseGroup, curricularSemester);
+            context.edit(courseGroup, this, curricularSemester);            
+        }
+    }
+    
+    private void checkIfCanCreateContext(final ICourseGroup courseGroup, final ICurricularSemester curricularSemester) {
+        for (final IContext context : this.getDegreeModuleContexts()) {
+            if (context.getCourseGroup() == courseGroup && context.getCurricularSemester() == curricularSemester 
+                    && context.getCurricularSemester().getCurricularYear() == curricularSemester.getCurricularYear()) {
+                throw new DomainException("error.contextAlreadyExistForCourseGroup");
+            }
+        }
+    }
+
+    @Override
+    public String getName() {
+        if (super.getName() == null || super.getName().length() == 0) {
+            return this.getCompetenceCourse().getName();
+        }
+        return super.getName();
+    }    
 }

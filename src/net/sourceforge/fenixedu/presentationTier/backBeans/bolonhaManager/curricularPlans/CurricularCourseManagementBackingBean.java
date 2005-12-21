@@ -9,21 +9,28 @@ import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ICompetenceCourse;
+import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.IContext;
 import net.sourceforge.fenixedu.domain.degreeStructure.ICourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.IDegreeModule;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitType;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 public class CurricularCourseManagementBackingBean extends FenixBackingBean {
@@ -34,6 +41,8 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     private Integer curricularYearID = null;
     private Integer curricularSemesterID = null;
     private boolean resetCompetenceCourseID = false;
+    private Integer curricularCourseID = null;
+    private Integer contextID = null;
     
     private Double weight = null;
     private String prerequisites;
@@ -45,6 +54,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public List<SelectItem> departmentUnits = null;
     public List<SelectItem> competenceCourses = null;
     public List<SelectItem> courseGroups = null;
+    public List<SelectItem> curricularCourses = null;
 
     public Integer getDegreeCurricularPlanID() {
         return (degreeCurricularPlanID == null) ? (degreeCurricularPlanID = getAndHoldIntegerParameter("degreeCurricularPlanID"))
@@ -55,16 +65,48 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         this.degreeCurricularPlanID = degreeCurricularPlanID;
     }
 
-    public Integer getCourseGroupID() {
-        return (courseGroupID == null) ? courseGroupID = getAndHoldIntegerParameter("courseGroupID")
-                : courseGroupID;
+    public Integer getCourseGroupID() throws FenixFilterException {
+        if (courseGroupID == null) {
+            if ((courseGroupID = getAndHoldIntegerParameter("courseGroupID")) == null) {
+                try {
+                    courseGroupID = getContext().getCourseGroup().getIdInternal();
+                } catch (FenixServiceException e) {
+                    return courseGroupID;
+                }
+            }
+        }
+        return courseGroupID;
     }
 
     public void setCourseGroupID(Integer courseGroupID) {
         this.courseGroupID = courseGroupID;
     }
+    
+    public Integer getCurricularCourseID() {
+        return (curricularCourseID == null) ? (curricularCourseID = getAndHoldIntegerParameter("curricularCourseID"))
+                : curricularCourseID;
+    }
 
-    public Integer getDepartmentUnitID() {
+    public void setCurricularCourseID(Integer curricularCourseID) {
+        this.curricularCourseID = curricularCourseID;
+    }
+    
+    public Integer getContextID() {
+        return (contextID == null) ? (contextID = getAndHoldIntegerParameter("contextID")) : contextID;
+    }
+
+    public void setContextID(Integer contextID) {
+        this.contextID = contextID;
+    }
+
+    public Integer getDepartmentUnitID() throws FenixFilterException {
+        if (getViewState().getAttribute("departmentUnitID") == null) {
+            try {
+                getViewState().setAttribute("departmentUnitID",
+                        getCurricularCourse().getCompetenceCourse().getDepartmentUnit().getIdInternal());
+            } catch (FenixServiceException e) { //Ignore value              
+            }
+        }
         return (Integer) getViewState().getAttribute("departmentUnitID");
     }
 
@@ -72,7 +114,14 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         getViewState().setAttribute("departmentUnitID", departmentUnitID);
     }
 
-    public Integer getCompetenceCourseID() {
+    public Integer getCompetenceCourseID() throws FenixFilterException {
+        if (getViewState().getAttribute("competenceCourseID") == null) {
+            try {
+                getViewState().setAttribute("competenceCourseID",
+                        getCurricularCourse().getCompetenceCourse().getIdInternal());
+            } catch (FenixServiceException e) { //Ignore value       
+            }
+        }
         return (Integer) getViewState().getAttribute("competenceCourseID");
     }
 
@@ -86,11 +135,15 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public List<SelectItem> getCompetenceCourses() throws FenixFilterException {
-        return readCompetenceCourses();
+        return (competenceCourses == null) ? (competenceCourses = readCompetenceCourses()) : competenceCourses;
     }
 
     public List<SelectItem> getCourseGroups() throws FenixFilterException {
         return (courseGroups == null) ? (courseGroups = readCourseGroups()) : courseGroups;
+    }
+    
+    public List<SelectItem> getCurricularCourses() throws FenixFilterException {
+        return (curricularCourses == null) ? (curricularCourses = readCurricularCourses()) : curricularCourses;
     }
 
     public List<SelectItem> getCurricularYears() {
@@ -130,61 +183,183 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         }
         throw new FenixServiceException("error.gettingDepartmentUnit");
     }
-
-    public void resetCompetenceCourses(ValueChangeEvent event) {
-        resetCompetenceCourseID = true;
+    
+    public ICompetenceCourse getCompetenceCourse() throws FenixFilterException, FenixServiceException {
+        if (getCompetenceCourseID() !=  null && !getCompetenceCourseID().equals(0)) {
+            ICompetenceCourse competenceCourse = (ICompetenceCourse) readDomainObject(CompetenceCourse.class, getCompetenceCourseID());
+            if (competenceCourse == null) {
+                throw new FenixServiceException("error.noCompetenceCourse");
+            }
+            return competenceCourse;
+        }
+        throw new FenixServiceException("error.noCompetenceCourse");
+    }
+    
+    public ICurricularCourse getCurricularCourse() throws FenixFilterException, FenixServiceException {
+        if (getCurricularCourseID() != null) {
+            ICurricularCourse curricularCourse = (ICurricularCourse) readDomainObject(CurricularCourse.class, getCurricularCourseID());
+            if (curricularCourse == null) {
+                throw new FenixServiceException("error.noCurricularCourse");
+            }
+            return curricularCourse;
+        }
+        throw new FenixServiceException("error.noCurricularCourse");
+    }
+    
+    public IContext getContext() throws FenixFilterException, FenixServiceException {
+        if (getContextID() != null) {
+            IContext context = (IContext) readDomainObject(Context.class, getContextID());
+            if (context == null) {
+                throw new FenixServiceException("error.noContext");
+            }
+            return context;
+        }
+        throw new FenixServiceException("error.noContext");
     }
 
-    public Double getWeight() {
-        return (weight == null) ? Double.valueOf(0) : weight;
+    public void resetCompetenceCourse(ValueChangeEvent event) {
+        resetCompetenceCourseID = true;
+        competenceCourses = null;
+    }
+
+    public Double getWeight() throws FenixFilterException {
+        try {
+            return (weight == null) ? (weight = getCurricularCourse().getWeigth()) : weight;
+        } catch (FenixServiceException e) {
+            return Double.valueOf(0);
+        }
     }
 
     public void setWeight(Double weight) {
         this.weight = weight;
     }
     
-    public String getPrerequisites() {
-        return prerequisites;
+    public String getPrerequisites() throws FenixFilterException {
+        try {
+            return (prerequisites == null) ? (prerequisites = getCurricularCourse().getPrerequisites())
+                    : prerequisites;
+        } catch (FenixServiceException e) {
+            return prerequisites;
+        }
     }
 
     public void setPrerequisites(String prerequisites) {
         this.prerequisites = prerequisites;
     }
 
-    public String getPrerequisitesEn() {
-        return prerequisitesEn;
+    public String getPrerequisitesEn() throws FenixFilterException {
+        try {
+            return (prerequisitesEn == null) ? (prerequisitesEn = getCurricularCourse()
+                    .getPrerequisitesEn()) : prerequisitesEn;
+        } catch (FenixServiceException e) {
+            return prerequisitesEn;
+        }
     }
 
     public void setPrerequisitesEn(String prerequisitesEn) {
         this.prerequisitesEn = prerequisitesEn;
     }
 
-    public Integer getCurricularYearID() {
-        return curricularYearID;
+    public Integer getCurricularYearID() throws FenixFilterException {
+        try {
+            return (curricularYearID == null) ? (curricularYearID = getContext().getCurricularSemester()
+                    .getCurricularYear().getYear()) : curricularYearID;
+        } catch (FenixServiceException e) {
+            return curricularYearID;
+        }
     }
 
     public void setCurricularYearID(Integer curricularYearID) {
         this.curricularYearID = curricularYearID;
     }
 
-    public Integer getCurricularSemesterID() {
-        return curricularSemesterID;
+    public Integer getCurricularSemesterID() throws FenixFilterException {
+        try {
+            return (curricularSemesterID == null) ? (curricularSemesterID = getContext()
+                    .getCurricularSemester().getSemester()) : curricularSemesterID;
+        } catch (FenixServiceException e) {
+            return curricularSemesterID;
+        }
     }
 
     public void setCurricularSemesterID(Integer curricularSemesterID) {
         this.curricularSemesterID = curricularSemesterID;
     }
     
-    public String createCurricularCourse() {
-        Object args[] = {getWeight(), getCompetenceCourseID(), getCourseGroupID(), getCurricularYearID(), getCurricularSemesterID()};        
-        return "curricularPlansManagement";
+    public String createCurricularCourse() throws FenixFilterException {        
+        try {
+            checkCompetenceCourse();
+            checkCourseGroup();
+            Object args[] = {getWeight(), getPrerequisites(), getPrerequisitesEn(), getCompetenceCourseID(),
+                    getCourseGroupID(), getCurricularYearID(), getCurricularSemesterID()};
+            ServiceUtils.executeService(getUserView(), "CreateCurricularCourse", args);
+            addInfoMessage(messages.getString("curricularCourseCreated"));
+            return "curricularPlansManagement";
+        } catch (FenixServiceException e) {
+          setErrorMessage(e.getMessage());
+        }
+        return "";
     }
 
-    public String editCurricularCourse() {
-        return "curricularPlansManagement";
+    public String editCurricularCourse() throws FenixFilterException {        
+        try {
+            checkCompetenceCourse();
+            Object args[] = {getCurricularCourse(), getWeight(), getPrerequisites(), getPrerequisitesEn(), getCompetenceCourse()};
+            ServiceUtils.executeService(getUserView(), "EditCurricularCourse", args);
+            addInfoMessage(messages.getString("curricularCourseEdited"));           
+        } catch (FenixServiceException e) {
+            setErrorMessage(e.getMessage());
+        }
+        return "";
+    }
+    
+    private void checkCompetenceCourse() throws FenixFilterException, FenixServiceException {
+        if (getCompetenceCourseID() == null || getCompetenceCourseID().intValue() == 0) {
+            throw new FenixServiceException("error.mustChooseACompetenceCourse");
+        }
+    }
+    
+    private void checkCourseGroup() throws FenixFilterException, FenixServiceException {
+        if (getCourseGroupID() == null || getCourseGroupID().intValue() == 0) {
+            throw new FenixServiceException("error.mustChooseACourseGroup");
+        }
     }
 
-    public String associateCurricularCourse() {
+    public void addContext(ActionEvent event) throws FenixFilterException {
+        try {
+            checkCourseGroup();
+            Object args[] = { getCurricularCourse(), getCourseGroup(), getCurricularYearID(),
+                    getCurricularSemesterID() };
+            ServiceUtils.executeService(getUserView(), "AddContext", args);
+            addInfoMessage(messages.getString("addedNewContextToCurricularCourse"));
+            setContextID(0); //resetContextID
+        } catch (FenixServiceException e) {
+            setErrorMessage(e.getMessage());
+        } catch (DomainException e) {
+            setErrorMessage(e.getMessage());
+        }
+    }
+    
+    public String editContext() throws FenixFilterException {
+        try {
+            checkCourseGroup();
+            Object args[] = { getCurricularCourse(), getContext(), getCourseGroup(),
+                    getCurricularYearID(), getCurricularSemesterID() };
+            ServiceUtils.executeService(getUserView(), "EditContext", args);
+            setContextID(0); // resetContextID
+        } catch (FenixServiceException e) {
+            setErrorMessage(e.getMessage());
+        } catch (DomainException e) {
+            setErrorMessage(e.getMessage());
+        }
+        return "";
+    }
+    
+    public String deleteContext() {
+        return "";
+    }
+    
+    public String deleteCurricularCourse() {
         return "curricularPlansManagement";
     }
 
@@ -221,7 +396,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
                 }
             }
         } catch (FenixServiceException e) { 
-            // Error reading departmentUnit (empty competenceCourse list)
+            // Error reading departmentUnit (empty competenceCourse result)
         }
         return result;
     }
@@ -232,10 +407,10 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         try {
             final IDegreeModule degreeModule = getDegreeCurricularPlan().getDegreeModule();
             if (degreeModule instanceof ICourseGroup) {
-                final ICourseGroup courseGroup = (ICourseGroup) degreeModule;
-                collectChildCourseGroups(result, courseGroup, "");
+                collectChildCourseGroups(result, (ICourseGroup) degreeModule, "");
             }
         } catch (FenixServiceException e) {
+            // Error reading degreeCurricularPlan (empty courseGroup result)
         }
         return result;
     }
@@ -253,5 +428,17 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             collectChildCourseGroups(result, (ICourseGroup) context.getDegreeModule(),
                     currentCourseGroupName);
         }
+    }
+
+    private List<SelectItem> readCurricularCourses() throws FenixFilterException {        
+        final List<SelectItem> result = new ArrayList<SelectItem>();
+        try {
+            for (final ICurricularCourse curricularCourse : getDegreeCurricularPlan().getDcpCurricularCourses()) {
+                result.add(new SelectItem(curricularCourse.getIdInternal(), curricularCourse.getName()));
+            }
+        } catch (FenixServiceException e) {
+            // Error reading degreeCurricularPlan (empty curricularCourse result)
+        }
+        return result;
     }
 }

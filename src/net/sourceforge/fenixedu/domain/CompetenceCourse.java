@@ -222,45 +222,41 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     
     public Map<IDegree, List<ICurricularCourse>> getAssociatedCurricularCoursesGroupedByDegree() {
         Map<IDegree, List<ICurricularCourse>> curricularCoursesMap = new HashMap<IDegree, List<ICurricularCourse>>();
-
         for (ICurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
             IDegree degree = curricularCourse.getDegreeCurricularPlan().getDegree();
-
             List<ICurricularCourse> curricularCourses = curricularCoursesMap.get(degree);
-
             if (curricularCourses == null) {
                 curricularCourses = new ArrayList<ICurricularCourse>();
                 curricularCoursesMap.put(degree, curricularCourses);
             }
-
             curricularCourses.add(curricularCourse);
         }
-
         return curricularCoursesMap;
     }
 
     public List<IEnrolmentEvaluation> getActiveEnrollmentEvaluations(IExecutionYear executionYear) {
         List<IEnrolmentEvaluation> results = new ArrayList<IEnrolmentEvaluation>();
-
         for (ICurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
             results.addAll(curricularCourse.getActiveEnrollmentEvaluations(executionYear));
         }
-
         return results;
     }
     
     public Boolean hasActiveScopesInExecutionYear(IExecutionYear executionYear) {
         List<IExecutionPeriod> executionPeriods = executionYear.getExecutionPeriods();
-        List<ICurricularCourse> curricularCourses = this.getAssociatedCurricularCourses();
-
+        List<ICurricularCourse> curricularCourses = this.getAssociatedCurricularCourses();       
         for (IExecutionPeriod executionPeriod : executionPeriods) {
             for (ICurricularCourse curricularCourse : curricularCourses) {
-                if (curricularCourse.getActiveScopesInExecutionPeriod(executionPeriod).size() > 0)
-
-                    return new Boolean(true);
+                if (curricularCourse.getActiveScopesInExecutionPeriod(executionPeriod).size() > 0) {
+                    return Boolean.TRUE;
+                }
             }
         }
-        return new Boolean(false);
-
+        return Boolean.FALSE;
+    }
+    
+    public IUnit getDepartmentUnit() {
+        final List<IUnit> departmentUnits = this.getUnit().getTopUnits(); 
+        return (departmentUnits.isEmpty()) ? null : this.getUnit().getTopUnits().get(0);
     }
 }

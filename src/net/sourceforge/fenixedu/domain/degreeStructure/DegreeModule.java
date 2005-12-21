@@ -1,11 +1,23 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
 
 public abstract class DegreeModule extends DegreeModule_Base {
     
-    public void delete() {       
+    public void delete() {
+        if (hasAnyDegreeModuleContexts()) {
+            throw new DomainException("error.notEmptyCurricularCourseContexts");
+        }
         setNewDegreeCurricularPlan(null);
-        for(;!getDegreeModuleContexts().isEmpty(); getDegreeModuleContexts().get(0).delete());
     }
     
+    public void deleteContext(IContext context) {
+        if (getDegreeModuleContextsCount() > 1) {
+            context.delete();
+        } else {
+            context.delete();
+            this.delete();
+        }
+    }    
 }

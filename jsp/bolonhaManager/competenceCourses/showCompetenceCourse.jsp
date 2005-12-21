@@ -65,7 +65,7 @@
 	</ul>					
 	<br/>
 	<h:outputText value="#{bolonhaBundle['portuguese']}: " /><br/>
-	<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0" width="80%">
+	<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0" >
 		<h:outputText value="#{bolonhaBundle['program']}: " />
 		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.program}" />
 		
@@ -86,7 +86,7 @@
 	</h:panelGrid>
 	<br/>
 	<h:outputText value="#{bolonhaBundle['english']}: " />
-	<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0" width="80%">
+	<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0" >
 		<h:outputText value="#{bolonhaBundle['nameEn']}: " />
 		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.nameEn}" />
 

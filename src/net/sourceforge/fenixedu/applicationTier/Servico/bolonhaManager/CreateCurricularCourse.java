@@ -20,8 +20,9 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class CreateCurricularCourse implements IService {
 
-    public void run(Double weight, Integer competenceCourseID, Integer courseGroupID, Integer year,
-            Integer semester) throws ExcepcaoPersistencia, FenixServiceException {
+    public void run(Double weight, String prerequisites, String prerequisitesEn,
+            Integer competenceCourseID, Integer courseGroupID, Integer year, Integer semester)
+            throws ExcepcaoPersistencia, FenixServiceException {
 
         ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         ICompetenceCourse competenceCourse = (ICompetenceCourse) persistentSupport
@@ -34,17 +35,20 @@ public class CreateCurricularCourse implements IService {
         if (courseGroup == null) {
             throw new FenixServiceException("error.noCourseGroup");
         }
+        // TODO: check CurricularSemesterID for null value
         ICurricularSemester curricularSemester = persistentSupport.getIPersistentCurricularSemester()
                 .readCurricularSemesterBySemesterAndCurricularYear(semester, year);
         if (curricularSemester == null) {
             throw new FenixServiceException("error.noCurricularSemesterGivenYearAndSemester");
         }
-        // TODO: this should be modified to receive ExecutionYear, but for now we just read the '2006/2007'
+        // TODO: this should be modified to receive ExecutionYear, but for now
+        // we just read the '2006/2007'
         IExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear()
                 .readExecutionYearByName("2006/2007");
-        IExecutionPeriod executionPeriod = executionYear.getExecutionPeriodForSemester(semester);
+        IExecutionPeriod executionPeriod = executionYear.getExecutionPeriodForSemester(Integer.valueOf(1));
 
-        DomainFactory.makeCurricularCourse(weight, CurricularStage.DRAFT, competenceCourse, courseGroup,
-                curricularSemester, executionPeriod);
+        DomainFactory.makeCurricularCourse(weight, prerequisites, prerequisitesEn,
+                CurricularStage.DRAFT, competenceCourse, courseGroup, curricularSemester,
+                executionPeriod);
     }
 }

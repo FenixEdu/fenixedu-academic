@@ -57,23 +57,31 @@ font-style: italic
 	</h:outputLink>
 	<br/>
 	<h:outputText value="--== ................. ==--"/>
-	<br/>
+	<br/> --%>
+	
+	<h:messages styleClass="infomsg"/><br/>
+	
 	<h:outputText value="* "/>
 	<h:outputLink value="createCurricularCourse.faces">
 		<h:outputText value="#{bolonhaBundle['createCurricularCourse']}" />
 		<%-- Temporary values --%>
-		<f:param name="degreeCurricularPlanID" value="422" />
-		<f:param name="courseGroupID" value="15799" />
+		<f:param name="degreeCurricularPlanID" value="462" />
+		<f:param name="courseGroupID" value="15835" />
 	</h:outputLink>
 	<br/>
 	<h:outputText value="* "/>
 	<h:outputLink value="editCurricularCourse.faces">
 		<h:outputText value="#{bolonhaBundle['editCurricularCourse']}" />
+		<f:param name="degreeCurricularPlanID" value="462" />
+		<f:param name="contextID" value="81" />
+		<f:param name="curricularCourseID" value="15854" />
 	</h:outputLink>
 	<br/>
 	<h:outputText value="* "/>
 	<h:outputLink value="associateCurricularCourse.faces">
 		<h:outputText value="#{bolonhaBundle['associateCurricularCourse']}" />
+		<f:param name="degreeCurricularPlanID" value="462" />
+		<f:param name="courseGroupID" value="15835" />
 	</h:outputLink>
 	<br/>
 	<h:outputText value="--== ................. ==--"/>
@@ -110,6 +118,6 @@ font-style: italic
 			<h:outputText value="#{bolonhaBundle['approved']}: " styleClass="italic"/>
 		</h:panelGroup>
 	</h:panelGrid>
---%>	
+	
 
 </ft:tilesView>

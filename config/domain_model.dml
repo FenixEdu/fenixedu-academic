@@ -481,6 +481,7 @@ class net.sourceforge.fenixedu.domain.degreeStructure.Context extends net.source
 	Integer endExecutionPeriodKey;
 	
 	interface "
+	    public void edit(ICourseGroup courseGroup, IDegreeModule degreeModule, net.sourceforge.fenixedu.domain.ICurricularSemester curricularSemester);
 		public void delete();
 	"
 }
@@ -760,6 +761,8 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
 	
 	public ICurricularCourse createCurricularCourse(String name, String code, String acronym, Boolean enrolmentAllowed,
 	            net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage curricularStage);
+
+    public java.util.List<ICurricularCourse> getDcpCurricularCourses();
     "
 }
 
@@ -850,6 +853,8 @@ class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.s
 	
 		Boolean mandatory; 
 		Double weigth; 
+		String prerequisites;
+		String prerequisitesEn;
 		Boolean mandatoryEnrollment; 
 		Boolean enrollmentAllowed; 
 		Integer enrollmentWeigth; 
@@ -867,6 +872,9 @@ class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.s
 		Integer degreeCurricularPlanKey;
 		
 		interface "
+		 public void edit(Double weight, String prerequisites, String prerequisitesEn,
+            net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage curricularStage, ICompetenceCourse competenceCourse);
+            
 	    public ICurricularYear getCurricularYearByBranchAndSemester(final IBranch branch,final Integer semester);
 	
 	    public ICurricularYear getCurricularYearByBranchAndSemester(final IBranch branch, final Integer semester, final java.util.Date date);
@@ -902,6 +910,12 @@ class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.s
 
 		public java.util.List<IEnrolmentEvaluation> getActiveEnrollmentEvaluations(
         	IStudent student);
+       
+       public net.sourceforge.fenixedu.domain.degreeStructure.IContext addContext(net.sourceforge.fenixedu.domain.degreeStructure.ICourseGroup courseGroup,
+           ICurricularSemester curricularSemester, IExecutionPeriod beginExecutionPeriod, IExecutionPeriod endExecutionPeriod);
+       
+       public void editContext(net.sourceforge.fenixedu.domain.degreeStructure.IContext context, net.sourceforge.fenixedu.domain.degreeStructure.ICourseGroup courseGroup,
+           ICurricularSemester curricularSemester);
 		"
 	}
 
@@ -991,6 +1005,7 @@ class net.sourceforge.fenixedu.domain.CompetenceCourse extends net.sourceforge.f
 	public java.util.Map<IDegree, java.util.List<ICurricularCourse>> getAssociatedCurricularCoursesGroupedByDegree();
 	public java.util.List<IEnrolmentEvaluation> getActiveEnrollmentEvaluations(IExecutionYear executionYear);
 	public Boolean hasActiveScopesInExecutionYear(IExecutionYear executionYear);
+	public net.sourceforge.fenixedu.domain.organizationalStructure.IUnit getDepartmentUnit();
 	"
 }
 

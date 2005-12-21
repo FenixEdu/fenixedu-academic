@@ -44,7 +44,7 @@
 	<h:form>
 		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourseID}'" /><br/>		
 		<h:outputText value="#{bolonhaBundle['portuguese']}: " />
-		<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0" width="80%">
+		<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0" >
 			<h:outputText value="#{bolonhaBundle['program']}: " />
 			<h:inputTextarea id="program" cols="80" rows="5" value="#{CompetenceCourseManagement.program}"/>
 			<h:outputText value="#{bolonhaBundle['objectives']}: " />
@@ -65,7 +65,7 @@
 		</h:panelGrid>
 		<br/>
 		<h:outputText value="#{bolonhaBundle['english']}: " />
-		<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0" width="80%">
+		<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0" >
 			<h:outputText value="#{bolonhaBundle['nameEn']}: " />
 			<h:inputText id="nameEn" maxlength="100" size="40" value="#{CompetenceCourseManagement.nameEn}"/>
 	

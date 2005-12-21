@@ -23,6 +23,12 @@ public class Context extends Context_Base {
         setBeginExecutionPeriod(beginExecutionPeriod);
         setEndExecutionPeriod(endExecutionPeriod);
     }
+    
+    public void edit(ICourseGroup courseGroup, IDegreeModule degreeModule, ICurricularSemester curricularSemester) {
+        setCourseGroup(courseGroup);
+        setDegreeModule(degreeModule);
+        setCurricularSemester(curricularSemester);
+    }
 
     public void delete() {
         setCurricularSemester(null);
@@ -30,7 +36,6 @@ public class Context extends Context_Base {
         setCourseGroup(null);
         setBeginExecutionPeriod(null);
         setEndExecutionPeriod(null);
-        deleteDomainObject();
+        super.deleteDomainObject();
     }
-
 }

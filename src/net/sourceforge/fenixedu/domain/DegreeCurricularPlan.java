@@ -2,8 +2,10 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
@@ -16,6 +18,8 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfCu
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PrecedencesEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PreviousYearsCurricularCourseEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
+import net.sourceforge.fenixedu.domain.degreeStructure.IContext;
+import net.sourceforge.fenixedu.domain.degreeStructure.ICourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
@@ -315,8 +319,26 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 throw new DomainException("error.curricularCourseWithSameNameAndCode");
             }
             if (curricularCourse.getAcronym().equals(acronym)) {
-                throw new DomainException("error.curricularCourseWithSameNameAndCode");
+                throw new DomainException("error.curricularCourseWithSameAcronym");
             }
-        }        
+        }
+    }
+    
+    public List<ICurricularCourse> getDcpCurricularCourses() {
+        final Set<ICurricularCourse> result = new HashSet<ICurricularCourse>();
+        if (this.getDegreeModule() instanceof ICourseGroup) {
+            collectChildCurricularCourses(result, (ICourseGroup) this.getDegreeModule());
+        }
+        return new ArrayList(result);
+    }
+
+    private void collectChildCurricularCourses(final Set<ICurricularCourse> result, ICourseGroup courseGroup) {
+        for (final IContext context : courseGroup.getCourseGroupContexts()) {
+            if (context.getDegreeModule() instanceof ICurricularCourse) {
+                result.add((ICurricularCourse) context.getDegreeModule());
+            } else if (context.getDegreeModule() instanceof ICourseGroup) {
+                collectChildCurricularCourses(result, (ICourseGroup) context.getDegreeModule());
+            }
+        }
     }
 }
