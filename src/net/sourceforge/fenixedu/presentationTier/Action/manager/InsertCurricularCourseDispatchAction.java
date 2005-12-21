@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
@@ -103,6 +104,13 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
         infoCurricularCourse.setEnrollmentWeigth(new Integer((String) dynaForm.get("enrollmentWeigth")));
         
         infoCurricularCourse.setAcronym((String) dynaForm.get("acronym"));
+        
+        String gradeTypeString = (String) dynaForm.get("gradeType");
+        GradeScale gradeScale = null;
+        if(gradeTypeString != null && gradeTypeString.length() > 0) {
+        	gradeScale = GradeScale.valueOf(gradeTypeString);
+        }
+        infoCurricularCourse.setGradeScale(gradeScale);
 
         Object args[] = { infoCurricularCourse };
 

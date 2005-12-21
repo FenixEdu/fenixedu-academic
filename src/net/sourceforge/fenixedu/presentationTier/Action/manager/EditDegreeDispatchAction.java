@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
+import net.sourceforge.fenixedu.domain.GradeScale;
+import net.sourceforge.fenixedu.domain.curriculum.GradeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
@@ -60,6 +62,9 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
         readDegreeForm.set("code", oldInfoDegree.getSigla());
         readDegreeForm.set("nameEn",oldInfoDegree.getNameEn());
         readDegreeForm.set("degreeType", degreeType.toString());
+        if(oldInfoDegree.getGradeScale() != null) {
+        	readDegreeForm.set("gradeType", oldInfoDegree.getGradeScale().toString());
+        }
         return mapping.findForward("editDegree");
     }
 
@@ -74,10 +79,17 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
         String name = (String) editDegreeForm.get("name");
         String nameEn = (String) editDegreeForm.get("nameEn");
         String degreeTypeInt = (String) editDegreeForm.get("degreeType");
+        String gradeTypeString = (String) editDegreeForm.get("gradeType");        
 
         DegreeType degreeType = DegreeType.valueOf(degreeTypeInt);
+        GradeScale gradeScale = null;
+        if(gradeTypeString != null && gradeTypeString.length() > 0) {
+        	gradeScale = GradeScale.valueOf(gradeTypeString);
+        }
+        
         InfoDegree newInfoDegree = new InfoDegree(code, name, nameEn, degreeType);
         newInfoDegree.setIdInternal(oldDegreeId);
+        newInfoDegree.setGradeScale(gradeScale);
 
         Object args[] = { newInfoDegree };
 

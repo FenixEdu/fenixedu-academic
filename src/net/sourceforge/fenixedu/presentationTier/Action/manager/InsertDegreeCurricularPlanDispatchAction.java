@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
@@ -64,6 +65,13 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
         String numerusClaususString = (String) dynaForm.get("numerusClausus");
         String anotationString = (String) dynaForm.get("anotation");
 
+        String gradeTypeString = (String) dynaForm.get("gradeType");
+        GradeScale gradeScale = null;
+        if(gradeTypeString != null && gradeTypeString.length() > 0) {
+        	gradeScale = GradeScale.valueOf(gradeTypeString);
+        }
+
+
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
         DegreeCurricularPlanState state = DegreeCurricularPlanState.valueOf(stateString);
 
@@ -106,6 +114,7 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
         infoDegreeCurricularPlan.setDegreeDuration(degreeDuration);
         infoDegreeCurricularPlan.setMinimalYearForOptionalCourses(minimalYearForOptionalCourses);
         infoDegreeCurricularPlan.setAnotation(anotationString);
+        infoDegreeCurricularPlan.setGradeScale(gradeScale);
         InfoDegree infoDegree = new InfoDegree();
         infoDegree.setIdInternal(degreeId);
         infoDegreeCurricularPlan.setInfoDegree(infoDegree);

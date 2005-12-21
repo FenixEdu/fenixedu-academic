@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
@@ -45,9 +46,15 @@ public class InsertDegreeDispatchAction extends FenixDispatchAction {
         String name = (String) dynaForm.get("name");
                 String nameEn = (String) dynaForm.get("nameEn");
         String degreeTypeInt = (String) dynaForm.get("degreeType");
+        String gradeTypeString = (String) dynaForm.get("gradeType");
 
         DegreeType degreeType = DegreeType.valueOf(degreeTypeInt);
+        GradeScale gradeScale = null;
+        if(gradeTypeString != null && gradeTypeString.length() > 0) {
+        	gradeScale = GradeScale.valueOf(gradeTypeString);
+        }
         InfoDegree infoDegree = new InfoDegree(code, name, nameEn,degreeType);
+        infoDegree.setGradeScale(gradeScale);
 
         Object args[] = { infoDegree };
 

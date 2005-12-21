@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
@@ -86,6 +87,10 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
         dynaForm.set("mandatoryEnrollment", oldInfoCurricularCourse.getMandatoryEnrollment().toString());
         dynaForm.set("enrollmentAllowed", oldInfoCurricularCourse.getEnrollmentAllowed().toString());
         dynaForm.set("enrollmentWeigth", oldInfoCurricularCourse.getEnrollmentWeigth().toString());
+        
+        if(oldInfoCurricularCourse.getGradeScale() != null) {
+        	dynaForm.set("gradeType", oldInfoCurricularCourse.getGradeScale().toString());
+        }
 
         return mapping.findForward("editCurricularCourse");
     }
@@ -163,6 +168,13 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
                 .get("enrollmentAllowed")));
         newInfoCurricularCourse.setEnrollmentWeigth(new Integer((String) dynaForm
                 .get("enrollmentWeigth")));
+        
+        String gradeTypeString = (String) dynaForm.get("gradeType");
+        GradeScale gradeScale = null;
+        if(gradeTypeString != null && gradeTypeString.length() > 0) {
+        	gradeScale = GradeScale.valueOf(gradeTypeString);
+        }
+        newInfoCurricularCourse.setGradeScale(gradeScale);
 
         Object args[] = { newInfoCurricularCourse };
 

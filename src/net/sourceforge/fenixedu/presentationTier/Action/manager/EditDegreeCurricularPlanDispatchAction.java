@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -108,6 +109,11 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
             dynaForm.set("neededCredits", oldInfoDegreeCP.getNeededCredits().toString());
 
         dynaForm.set("markType", oldInfoDegreeCP.getMarkType().getType().toString());
+        
+        if(oldInfoDegreeCP.getGradeScale() != null) {
+        	dynaForm.set("gradeType", oldInfoDegreeCP.getGradeScale().toString());
+        }
+
 
         if (oldInfoDegreeCP.getNumerusClausus() != null)
             dynaForm.set("numerusClausus", oldInfoDegreeCP.getNumerusClausus().toString());
@@ -177,6 +183,12 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
             newInfoDegreeCP.setMarkType(markType);
         }
 
+        String gradeTypeString = (String) dynaForm.get("gradeType");
+        GradeScale gradeScale = null;
+        if(gradeTypeString != null && gradeTypeString.length() > 0) {
+        	gradeScale = GradeScale.valueOf(gradeTypeString);
+        }
+        
         if (numerusClaususString.compareTo("") != 0) {
             Integer numerusClausus = new Integer(numerusClaususString);
             newInfoDegreeCP.setNumerusClausus(numerusClausus);
@@ -188,6 +200,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
         newInfoDegreeCP.setMinimalYearForOptionalCourses(minimalYearForOptionalCourses);
         newInfoDegreeCP.setIdInternal(oldDegreeCPId);
         newInfoDegreeCP.setAnotation(anotationtring);
+        newInfoDegreeCP.setGradeScale(gradeScale);
 
         Object args[] = { newInfoDegreeCP };
 
