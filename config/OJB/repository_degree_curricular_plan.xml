@@ -103,6 +103,12 @@
 		jdbc-type="LONGVARCHAR"
 	/>
 	<field-descriptor
+		name="gradeScale"
+		column="GRADE_SCALE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGradeScale2SqlGradeScaleFieldConversion"		
+	/>
+	<field-descriptor
 		name="curricularStage"
 		column="CURRICULAR_STAGE"
 		jdbc-type="VARCHAR"
@@ -279,6 +285,12 @@
 		jdbc-type="LONGVARCHAR"
 	/>
 	<field-descriptor
+		name="gradeScale"
+		column="GRADE_SCALE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGradeScale2SqlGradeScaleFieldConversion"		
+	/>
+	<field-descriptor
 		name="curricularStage"
 		column="CURRICULAR_STAGE"
 		jdbc-type="VARCHAR"
@@ -288,7 +300,7 @@
 		name="degreeModuleKey"
 		column="KEY_DEGREE_MODULE"
 		jdbc-type="INTEGER"
-	/>
+	/>		
 	<reference-descriptor auto-retrieve="false"
 			name="degreeModule"
 			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
@@ -441,6 +453,12 @@
 		name="anotation"
 		column="ANOTATION"
 		jdbc-type="LONGVARCHAR"
+	/>
+	<field-descriptor
+		name="gradeScale"
+		column="GRADE_SCALE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGradeScale2SqlGradeScaleFieldConversion"		
 	/>
 	<field-descriptor
 		name="curricularStage"
@@ -605,6 +623,12 @@
 		name="anotation"
 		column="ANOTATION"
 		jdbc-type="LONGVARCHAR"
+	/>
+	<field-descriptor
+		name="gradeScale"
+		column="GRADE_SCALE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGradeScale2SqlGradeScaleFieldConversion"		
 	/>
 	<field-descriptor
 		name="curricularStage"
@@ -772,6 +796,12 @@
 		jdbc-type="LONGVARCHAR"
 	/>
 	<field-descriptor
+		name="gradeScale"
+		column="GRADE_SCALE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGradeScale2SqlGradeScaleFieldConversion"		
+	/>
+	<field-descriptor
 		name="curricularStage"
 		column="CURRICULAR_STAGE"
 		jdbc-type="VARCHAR"
@@ -935,6 +965,12 @@
 		name="anotation"
 		column="ANOTATION"
 		jdbc-type="LONGVARCHAR"
+	/>
+	<field-descriptor
+		name="gradeScale"
+		column="GRADE_SCALE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGradeScale2SqlGradeScaleFieldConversion"		
 	/>
 	<field-descriptor
 		name="curricularStage"
@@ -1101,6 +1137,12 @@
 		jdbc-type="LONGVARCHAR"
 	/>
 	<field-descriptor
+		name="gradeScale"
+		column="GRADE_SCALE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGradeScale2SqlGradeScaleFieldConversion"		
+	/>	
+	<field-descriptor
 		name="curricularStage"
 		column="CURRICULAR_STAGE"
 		jdbc-type="VARCHAR"
@@ -1110,7 +1152,7 @@
 		name="degreeModuleKey"
 		column="KEY_DEGREE_MODULE"
 		jdbc-type="INTEGER"
-	/>
+	/>	
 	<reference-descriptor auto-retrieve="false"
 			name="degreeModule"
 			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
@@ -1263,6 +1305,12 @@
 		name="anotation"
 		column="ANOTATION"
 		jdbc-type="LONGVARCHAR"
+	/>
+	<field-descriptor
+		name="gradeScale"
+		column="GRADE_SCALE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGradeScale2SqlGradeScaleFieldConversion"		
 	/>
 	<field-descriptor
 		name="curricularStage"

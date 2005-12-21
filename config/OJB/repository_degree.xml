@@ -47,10 +47,10 @@
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaBolonhaDegreeType2SqlBolonhaDegreeTypeFieldConversion"
 	/>
 	<field-descriptor
-		name="gradeType"
-		column="GRADE_TYPE"
+		name="gradeScale"
+		column="GRADE_SCALE"
 		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGradeType2SqlGradeTypeFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGradeScale2SqlGradeScaleFieldConversion"
 	/>
 	<field-descriptor
 		name="acronym"

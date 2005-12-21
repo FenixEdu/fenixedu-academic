@@ -341,6 +341,12 @@
 		jdbc-type="VARCHAR"
 	/>
 	<field-descriptor
+		name="gradeScale"
+		column="GRADE_SCALE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGradeScale2SqlGradeScaleFieldConversion"		
+	/>
+	<field-descriptor
 		name="curricularStage"
 		column="CURRICULAR_STAGE"
 		jdbc-type="VARCHAR"
@@ -350,7 +356,7 @@
          name="ojbConcreteClass"
          column="CLASS_NAME"
          jdbc-type="VARCHAR"
-    />		
+    />			
 	<reference-descriptor auto-retrieve="false"
 			name="university"
 			class-ref="net.sourceforge.fenixedu.domain.University"
