@@ -286,6 +286,12 @@
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.curricularPlans.ScientificCouncilCurricularPlanManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<description>CurricularPlansMembersManagementBackingBean</description>
+		<managed-bean-name>CurricularPlansMembersManagementBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.curricularPlans.CurricularPlansMembersManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>	
 	<!-- END: Bolonha Management Beans -->
 	
 	<!-- BEGIN: Bolonha Management Beans -->
@@ -1391,6 +1397,13 @@
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
+		<from-view-id>/scientificCouncil/curricularPlans/chooseCurricularPlan.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlanChoosed</from-outcome>
+			<to-view-id>/scientificCouncil/curricularPlans/editCurricularPlanMembersGroup.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
 		<from-view-id>/scientificCouncil/curricularPlans/editDegree.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>curricularPlansManagement</from-outcome>
@@ -1404,7 +1417,7 @@
 			<to-view-id>/scientificCouncil/curricularPlans/curricularPlansManagement.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	
+		
 	<!-- END: Scientific Council Navigation Rules -->
 
 	
