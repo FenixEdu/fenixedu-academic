@@ -32,6 +32,7 @@
 				<form-property name="nameEn" type="java.lang.String" />       
 				<form-property name="code" type="java.lang.String" />
 				<form-property name="degreeType" type="java.lang.String" />
+				<form-property name="gradeType" type="java.lang.String" />				
 				<form-property name="internalIds" type="java.lang.Integer[]" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>  
@@ -48,6 +49,7 @@
 				<form-property name="minimalYearForOptionalCourses" type="java.lang.String" />
 				<form-property name="neededCredits" type="java.lang.String" />
 				<form-property name="markType" type="java.lang.String" />
+				<form-property name="gradeType" type="java.lang.String" />				
 				<form-property name="numerusClausus" type="java.lang.String" />
 				<form-property name="anotation" type="java.lang.String" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
@@ -76,7 +78,7 @@
 				<form-property name="maxIncrementNac" type="java.lang.String" />
 				<form-property name="minIncrementNac" type="java.lang.String" />
 				<form-property name="weight" type="java.lang.String" />		            
-
+				<form-property name="gradeType" type="java.lang.String" />
 				<form-property name="enrollmentWeigth" type="java.lang.String"/>
 				<form-property name="mandatoryEnrollment" type="java.lang.String"/>
 				<form-property name="enrollmentAllowed" type="java.lang.String"/>
