@@ -20,5 +20,11 @@
 				<bean:message key="curricularPlansManagement"/>
 			</html:link>
 		</li>
+		
+		<li>
+			<html:link page="/curricularPlans/chooseCurricularPlan.faces">
+				Gerir Grupos
+			</html:link>
+		</li>		
 	</ul>
 </logic:present>
