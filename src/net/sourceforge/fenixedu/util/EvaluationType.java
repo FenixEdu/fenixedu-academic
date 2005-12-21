@@ -14,6 +14,8 @@ public class EvaluationType extends FenixUtil {
     public static final int ONLINE_TEST = 3;
     
     public static final int TEST = 4;
+    
+    public static final int PROJECT = 5;
 
     public static final EvaluationType EXAM_TYPE = new EvaluationType(EXAM);
 
@@ -22,6 +24,8 @@ public class EvaluationType extends FenixUtil {
     public static final EvaluationType ONLINE_TEST_TYPE = new EvaluationType(ONLINE_TEST);
     
     public static final EvaluationType TEST_TYPE = new EvaluationType(TEST);
+    
+    public static final EvaluationType PROJECT_TYPE = new EvaluationType(PROJECT);
 
     public static final String EXAM_STRING = "Exame";
 
@@ -30,6 +34,8 @@ public class EvaluationType extends FenixUtil {
     public static final String ONLINE_TEST_STRING = "Ficha de Trabalho";
     
     public static final String TEST_STRING = "Teste";
+    
+    public static final String PROJECT_STRING = "Projecto";
 
     private Integer type;
 
