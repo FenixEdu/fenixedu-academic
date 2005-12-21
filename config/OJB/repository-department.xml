@@ -33,6 +33,11 @@
 		column="KEY_UNIT"
 		jdbc-type="INTEGER"
 	 />
+	<field-descriptor
+		name="keyCompetenceCourseMembersGroup"
+		column="KEY_COMPETENCE_COURSE_MEMBERS_GROUP"
+		jdbc-type="INTEGER"
+	 />	 	 
      <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
