@@ -19,7 +19,7 @@
 		</html:link>
 		&nbsp;&gt;&nbsp;
 		<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID").toString() + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString()%>" >
-<%-- &amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID") --%>
+
 		<bean:message key="public.degree.information.label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
 	</html:link>
 	&nbsp;&gt;&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION"  key="public.degree.information.label.curriculum"/>		
@@ -29,7 +29,6 @@
 
 <style>@import "<%= request.getContextPath() %>/CSS/table-adjustment.css";</style>
 
-	<!-- COURSE NAME -->
 	<h1>
 	   <bean:define id="degreeType" name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso.name"/>
 	
@@ -43,7 +42,6 @@
 		<bean:write name="infoDegreeCurricularPlan" property="infoDegree.nome" />
 	</h1>
 
-	<!-- CURRICULAR PLAN -->
 	<h2 class="greytxt">
 		<bean:message key="public.degree.information.label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
 		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.of" />
@@ -55,7 +53,6 @@
 		</logic:notEmpty>
 	</h2>
 
-	<!-- EXECUTIVE AND CURRICULAR YEAR SELECTION -->
 	<html:form action="/prepareConsultCurricularPlanNew.do" method="GET" >
 		<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />
 		<html:hidden property="degreeID" value="<%= ""+request.getAttribute("degreeID")%>" />
@@ -86,7 +83,6 @@
 		</table>
 	</html:form> 
 	
-	<!-- CURRICULAR PLAN BY COURSES -->
 	<logic:present name="allActiveCurricularCourseScopes">
 	<logic:notEmpty name="allActiveCurricularCourseScopes">
 
@@ -261,7 +257,6 @@
 							<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.anotation"/></td>
 						<%}%>
 						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.type"/></td>
-<!--						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.branch"/></td>	-->
 						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.credits"/></td>
 						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.ects"/></td>
 						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.weight"/></td>							
@@ -331,7 +326,6 @@
 							<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.anotation"/></td>
 						<%}%>
 						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.type"/></td>
-<!--						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.branch"/></td>	-->
 						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.credits"/></td>
 						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.ects"/></td>
 						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.weight"/></td>							
@@ -365,12 +359,6 @@
 						</logic:empty>
 					<%}%>
 					<td class="<%= rowColor %>"><bean:message name="curricularCourseScopeElem" property="infoCurricularCourse.type.keyName"/></td>
-					<!--<td class="<%= rowColor %>">					
-						<bean:write name="curricularCourseScopeElem" property="infoBranch.name"/>&nbsp;
-						<logic:iterate id="curricularCourseScopeElem" name="curricularCourseScopeElemList" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope" offset="1">
-							<bean:write name="curricularCourseScopeElem" property="infoBranch.name"/>&nbsp;				
-						</logic:iterate>
-					</td>-->
 					<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.credits"/></td>
 					<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.ectsCredits"/></td>
 					<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.weigth"/></td>
