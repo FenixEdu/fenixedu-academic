@@ -1,9 +1,11 @@
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.domain.exceptions.InvalidMarkDomainException;
+
 public class Mark extends Mark_Base {
 
     public Mark() {
-        super();
+    	setOjbConcreteClass(this.getClass().getName());
     }
 
     public Mark(final IAttends attends, final IEvaluation evaluation, final String mark) {
@@ -13,6 +15,14 @@ public class Mark extends Mark_Base {
         setPublishedMark(null);
     }
 
+    public void setMark(String mark) {
+    	if(validateMark(mark)) {
+    		super.setMark(mark);
+    	} else {
+    		throw new InvalidMarkDomainException("errors.invalidMark", mark, getAttend().getAluno().getNumber().toString());
+    	}
+    }
+    
     public String toString() {
         String result = "[" + this.getClass().getName() + ": ";
         result += "idInternal = " + getIdInternal() + "; ";
@@ -22,6 +32,23 @@ public class Mark extends Mark_Base {
         result += "attend = " + getAttend().getIdInternal() + "; ]";
 
         return result;
+    }
+    
+    public void delete() {
+    	setAttend(null);
+    	setEvaluation(null);
+    	deleteDomainObject();
+    }
+    
+    private boolean validateMark(String mark) {
+    	GradeScale gradeScale;
+    	if(getAttend().getEnrolment() == null) {
+    		gradeScale = getAttend().getAluno().getActiveStudentCurricularPlan().getDegreeCurricularPlan().getGradeScaleChain();
+    	} else {
+    		gradeScale = getAttend().getEnrolment().getCurricularCourse().getGradeScaleChain();
+    	}
+    	return gradeScale.isValid(mark, getEvaluation().getEvaluationType());
+    	
     }
 
 }
