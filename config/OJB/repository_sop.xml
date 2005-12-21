@@ -633,6 +633,11 @@
          primarykey="true"
          autoincrement="true"
       />
+      <field-descriptor
+         name="ojbConcreteClass"
+         column="CLASS_NAME"
+         jdbc-type="VARCHAR"
+      />            
        <field-descriptor
 	     name="mark"
 	     column="MARK"
@@ -672,6 +677,86 @@
          <!--  -->
          <foreignkey field-ref="keyEvaluation"/>
       </reference-descriptor> 
+      
+	  <extent-class class-ref="net.sourceforge.fenixedu.domain.FinalMark"/>
+</class-descriptor> 
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.FinalMark -->
+   <class-descriptor class="net.sourceforge.fenixedu.domain.FinalMark"
+   	  table="MARK">
+      <field-descriptor
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor
+         name="ojbConcreteClass"
+         column="CLASS_NAME"
+         jdbc-type="VARCHAR"
+      />      
+       <field-descriptor
+	     name="mark"
+	     column="MARK"
+	     jdbc-type="VARCHAR"
+	  />
+	   <field-descriptor
+	     name="publishedMark"
+	     column="PUBLISHED_MARK"
+	     jdbc-type="VARCHAR"
+	  />
+      <field-descriptor
+         name="keyAttend"
+         column="KEY_ATTEND"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="keyEvaluation"
+         column="KEY_EVALUATION"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="false"
+      />
+      <reference-descriptor auto-retrieve="false"
+         name="attend"
+         class-ref="net.sourceforge.fenixedu.domain.Attends"
+         
+      >
+         <foreignkey field-ref="keyAttend"/>
+      </reference-descriptor>
+      <reference-descriptor auto-retrieve="false"
+         name="evaluation"
+         class-ref="net.sourceforge.fenixedu.domain.Evaluation">
+         <!--  -->
+         <foreignkey field-ref="keyEvaluation"/>
+      </reference-descriptor> 
+      
+      <!-- FinalMark -->
+	  <field-descriptor
+	     name="submitedMark"
+	     column="SUBMITED_MARK"
+	     jdbc-type="VARCHAR"
+	  />
+      <field-descriptor
+         name="gradeListVersion"
+         column="GRADE_LIST_VERSION"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="submitDate"
+         column="SUBMIT_DATE"
+         jdbc-type="DATE"
+      />      
+      <field-descriptor
+         name="whenSubmited"
+         column="WHEN_SUBMITED"
+         jdbc-type="DATE"
+      />      
 </class-descriptor> 
 
    
