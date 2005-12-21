@@ -109,6 +109,7 @@
 
 	<!-- ========== Message Resources Definitions ============================ -->
     <message-resources parameter="ServidorApresentacao.ScientificCouncilResources" null="false"/>
+    <message-resources parameter="ServidorApresentacao.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>	
 
 	<!-- ========== Plug Ins Configuration ================================= -->
 	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
