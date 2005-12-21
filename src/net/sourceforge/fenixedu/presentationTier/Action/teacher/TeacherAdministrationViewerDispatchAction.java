@@ -964,18 +964,21 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         try {
             serviceResult = (Boolean) ServiceUtils.executeService(userView, "StoreItemFile", args);
         } catch (FileAlreadyExistsServiceException e1) {
+            e1.printStackTrace();
             actionErrors.add("fileAlreadyExists", new ActionError("errors.fileAlreadyExists", file
                     .getFileName()));
             saveErrors(request, actionErrors);
             return prepareFileUpload(mapping, form, request, response);
 
         } catch (FileNameTooLongServiceException e1) {
+            e1.printStackTrace();
             actionErrors.add("fileNameTooLong", new ActionError("errors.fileNameTooLong", file
                     .getFileName()));
             saveErrors(request, actionErrors);
             return prepareFileUpload(mapping, form, request, response);
 
         } catch (FenixServiceException e1) {
+            e1.printStackTrace();
             actionErrors.add("unableToStoreFile", new ActionError("errors.unableToStoreFile", file
                     .getFileName()));
             saveErrors(request, actionErrors);

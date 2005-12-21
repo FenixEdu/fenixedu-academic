@@ -1,15 +1,17 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
+import java.util.Collection;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;
 import net.sourceforge.fenixedu.domain.IItem;
 import net.sourceforge.fenixedu.domain.Item;
-import net.sourceforge.fenixedu.fileSuport.FileSuport;
-import net.sourceforge.fenixedu.fileSuport.IFileSuport;
+import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import net.sourceforge.fenixedu.persistenceTier.fileSupport.JdbcMysqlFileSupport;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -29,7 +31,7 @@ public class DeleteItem implements IService {
         if (deletedItem == null) {
             return new Boolean(true);
         }
-       
+
         testFilesExistence(deletedItem);
        
         deletedItem.delete();
@@ -38,11 +40,10 @@ public class DeleteItem implements IService {
     }
 
     private void testFilesExistence(final IItem deletedItem) throws notAuthorizedServiceDeleteException {
-        IFileSuport fileSuport = FileSuport.getInstance();
-        long size = fileSuport.getDirectorySize(deletedItem.getSlideName());
-        
-        if (size > 0) {
+        Collection<FileSuportObject> listFiles = JdbcMysqlFileSupport.listFiles(deletedItem.getSlideName());
+        if (!listFiles.isEmpty()) {
             throw new notAuthorizedServiceDeleteException();
         }
     }
+
 }

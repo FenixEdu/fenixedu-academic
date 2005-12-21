@@ -80,8 +80,6 @@
 				<copy todir="${build.home.webinf.libs}">
 					<fileset dir="${lib}" >
 						<include name="*.jar"/>
-						<exclude name="servlet.jar"/>
-						<exclude name="jta.jar"/>
 					</fileset>
 				</copy>
 			</parallel>
@@ -719,7 +717,6 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 		        <pathelement path="${build.home.webinf.classes};"/>
 		        <fileset dir="${lib}">
 		          <include name="*.jar"/>
-		          <exclude name="servlet.jar"/>
 		        </fileset>
 		        <pathelement location="${env.CATALINA_HOME}/common/classes"/>
 		        <fileset dir="${env.CATALINA_HOME}/common/lib">

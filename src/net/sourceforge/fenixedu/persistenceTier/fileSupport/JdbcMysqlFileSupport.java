@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.transaction.NotSupportedException;
+
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
 import net.sourceforge.fenixedu.util.StringAppender;
@@ -61,7 +63,7 @@ public class JdbcMysqlFileSupport {
         public ResultSet execute(final Connection connection, final String query) throws SQLException {
             final PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.executeUpdate();
-            preparedStatement.close();
+            //preparedStatement.close();
             return null;
         }
     };
@@ -92,7 +94,7 @@ public class JdbcMysqlFileSupport {
             }
             throw new Error(e);
         } finally {
-            try {                
+            try {
                 if (connection != null) connection.close();
             } catch (SQLException e) {
                 logger.fatal("Unable to close connection", e);
@@ -110,7 +112,7 @@ public class JdbcMysqlFileSupport {
             revisionContentPS.setString(1, fileSuportObject.getUri());
             revisionContentPS.setBytes(2, fileSuportObject.getContent());
             revisionContentPS.executeUpdate();
-            revisionContentPS.close();
+            //revisionContentPS.close();
 
             final PreparedStatement propertyPSresourcetype = connection.prepareStatement(PROPERTY_INSERT_STATEMENT);
             propertyPSresourcetype.setString(1, fileSuportObject.getUri());
@@ -118,7 +120,7 @@ public class JdbcMysqlFileSupport {
             propertyPSresourcetype.setString(3, "<collection/>");
             propertyPSresourcetype.setInt(4, 1);
             propertyPSresourcetype.executeUpdate();
-            propertyPSresourcetype.close();
+            //propertyPSresourcetype.close();
 
             final PreparedStatement propertyPSsource = connection.prepareStatement(PROPERTY_INSERT_STATEMENT);
             propertyPSsource.setString(1, fileSuportObject.getUri());
@@ -126,7 +128,7 @@ public class JdbcMysqlFileSupport {
             propertyPSsource.setString(3, "");
             propertyPSsource.setInt(4, 1);
             propertyPSsource.executeUpdate();
-            propertyPSsource.close();
+            //propertyPSsource.close();
 
             final PreparedStatement propertyPSdisplayname = connection.prepareStatement(PROPERTY_INSERT_STATEMENT);
             propertyPSdisplayname.setString(1, fileSuportObject.getUri());
@@ -134,7 +136,7 @@ public class JdbcMysqlFileSupport {
             propertyPSdisplayname.setString(3, "<![CDATA[" + fileSuportObject.getFileName() + "]]>");
             propertyPSdisplayname.setInt(4, 1);
             propertyPSdisplayname.executeUpdate();
-            propertyPSdisplayname.close();
+            //propertyPSdisplayname.close();
 
             final PreparedStatement propertyPSlinkName = connection.prepareStatement(PROPERTY_INSERT_STATEMENT);
             propertyPSlinkName.setString(1, fileSuportObject.getUri());
@@ -142,7 +144,7 @@ public class JdbcMysqlFileSupport {
             propertyPSlinkName.setString(3, fileSuportObject.getLinkName());
             propertyPSlinkName.setInt(4, 0);
             propertyPSlinkName.executeUpdate();
-            propertyPSlinkName.close();
+            //propertyPSlinkName.close();
 
             final PreparedStatement propertyPSgetlastmodified = connection.prepareStatement(PROPERTY_INSERT_STATEMENT);
             propertyPSgetlastmodified.setString(1, fileSuportObject.getUri());
@@ -150,7 +152,7 @@ public class JdbcMysqlFileSupport {
             propertyPSgetlastmodified.setString(3, Calendar.getInstance().getTime().toString());
             propertyPSgetlastmodified.setInt(4, 1);
             propertyPSgetlastmodified.executeUpdate();
-            propertyPSgetlastmodified.close();
+            //propertyPSgetlastmodified.close();
 
             final PreparedStatement propertyPSgetcontenttype = connection.prepareStatement(PROPERTY_INSERT_STATEMENT);
             propertyPSgetcontenttype.setString(1, fileSuportObject.getUri());
@@ -158,7 +160,7 @@ public class JdbcMysqlFileSupport {
             propertyPSgetcontenttype.setString(3, fileSuportObject.getContentType());
             propertyPSgetcontenttype.setInt(4, 1);
             propertyPSgetcontenttype.executeUpdate();
-            propertyPSgetcontenttype.close();
+            //propertyPSgetcontenttype.close();
 
             final PreparedStatement propertyPSgetcontentlength = connection.prepareStatement(PROPERTY_INSERT_STATEMENT);
             propertyPSgetcontentlength.setString(1, fileSuportObject.getUri());
@@ -166,7 +168,7 @@ public class JdbcMysqlFileSupport {
             propertyPSgetcontentlength.setString(3, String.valueOf(fileSuportObject.getContent().length));
             propertyPSgetcontentlength.setInt(4, 1);
             propertyPSgetcontentlength.executeUpdate();
-            propertyPSgetcontentlength.close();
+            //propertyPSgetcontentlength.close();
 
             final PreparedStatement propertyPScreationdate = connection.prepareStatement(PROPERTY_INSERT_STATEMENT);
             propertyPScreationdate.setString(1, fileSuportObject.getUri());
@@ -174,7 +176,7 @@ public class JdbcMysqlFileSupport {
             propertyPScreationdate.setString(3, Calendar.getInstance().getTime().toString());
             propertyPScreationdate.setInt(4, 1);
             propertyPScreationdate.executeUpdate();
-            propertyPScreationdate.close();
+            //propertyPScreationdate.close();
 
             connection.commit();
         } catch (ClassNotFoundException e) {
