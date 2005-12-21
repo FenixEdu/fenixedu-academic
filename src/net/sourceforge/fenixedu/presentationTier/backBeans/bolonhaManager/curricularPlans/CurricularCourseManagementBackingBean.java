@@ -43,6 +43,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     private boolean resetCompetenceCourseID = false;
     private Integer curricularCourseID = null;
     private Integer contextID = null;
+    private boolean forceDeleteContext = false;
     
     private Double weight = null;
     private String prerequisites;
@@ -69,7 +70,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         if (courseGroupID == null) {
             if ((courseGroupID = getAndHoldIntegerParameter("courseGroupID")) == null) {
                 try {
-                    courseGroupID = getContext().getCourseGroup().getIdInternal();
+                    courseGroupID = getContext(getContextID()).getCourseGroup().getIdInternal();
                 } catch (FenixServiceException e) {
                     return courseGroupID;
                 }
@@ -98,7 +99,11 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public void setContextID(Integer contextID) {
         this.contextID = contextID;
     }
-
+    
+    public Integer getContextIDToDelete() {
+        return getAndHoldIntegerParameter("contextIDToDelete");
+    }
+    
     public Integer getDepartmentUnitID() throws FenixFilterException {
         if (getViewState().getAttribute("departmentUnitID") == null) {
             try {
@@ -206,9 +211,9 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         throw new FenixServiceException("error.noCurricularCourse");
     }
     
-    public IContext getContext() throws FenixFilterException, FenixServiceException {
-        if (getContextID() != null) {
-            IContext context = (IContext) readDomainObject(Context.class, getContextID());
+    private IContext getContext(Integer contextID) throws FenixFilterException, FenixServiceException {
+        if (contextID != null) {
+            IContext context = (IContext) readDomainObject(Context.class, contextID);
             if (context == null) {
                 throw new FenixServiceException("error.noContext");
             }
@@ -262,7 +267,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public Integer getCurricularYearID() throws FenixFilterException {
         try {
-            return (curricularYearID == null) ? (curricularYearID = getContext().getCurricularSemester()
+            return (curricularYearID == null) ? (curricularYearID = getContext(getContextID()).getCurricularSemester()
                     .getCurricularYear().getYear()) : curricularYearID;
         } catch (FenixServiceException e) {
             return curricularYearID;
@@ -275,7 +280,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public Integer getCurricularSemesterID() throws FenixFilterException {
         try {
-            return (curricularSemesterID == null) ? (curricularSemesterID = getContext()
+            return (curricularSemesterID == null) ? (curricularSemesterID = getContext(getContextID())
                     .getCurricularSemester().getSemester()) : curricularSemesterID;
         } catch (FenixServiceException e) {
             return curricularSemesterID;
@@ -343,7 +348,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public String editContext() throws FenixFilterException {
         try {
             checkCourseGroup();
-            Object args[] = { getCurricularCourse(), getContext(), getCourseGroup(),
+            Object args[] = { getCurricularCourse(), getContext(getContextID()), getCourseGroup(),
                     getCurricularYearID(), getCurricularSemesterID() };
             ServiceUtils.executeService(getUserView(), "EditContext", args);
             setContextID(0); // resetContextID
@@ -355,12 +360,24 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return "";
     }
     
-    public String deleteContext() {
-        return "";
+    public String deleteContext() throws FenixFilterException {
+        try {
+            if (!forceDeleteContext && getCurricularCourse().getDegreeModuleContextsCount() == 1) {
+                return "confirmDeleteCurricularCourse";
+            }
+            Object args[] = {getCurricularCourse(), getContext(getContextIDToDelete())};
+            ServiceUtils.executeService(getUserView(), "DeleteContext", args);            
+            setContextID(0); // resetContextID
+        } catch (FenixServiceException e) {
+            setErrorMessage(e.getMessage());
+        } catch (DomainException e) {
+            setErrorMessage(e.getMessage());
+        }
+        return forceDeleteContext ? "curricularPlansManagement" : "";
     }
     
-    public String deleteCurricularCourse() {
-        return "curricularPlansManagement";
+    public void setForceDeleteContext(ActionEvent event) {
+        forceDeleteContext = true;
     }
 
     private List<SelectItem> readDepartmentUnits() throws FenixFilterException {

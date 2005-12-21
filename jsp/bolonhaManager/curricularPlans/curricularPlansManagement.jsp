@@ -71,10 +71,16 @@ font-style: italic
 	<br/>
 	<h:outputText value="* "/>
 	<h:outputLink value="editCurricularCourse.faces">
-		<h:outputText value="#{bolonhaBundle['editCurricularCourse']}" />
+		<h:outputText value="test. #{bolonhaBundle['editCurricularCourse']}" />
 		<f:param name="degreeCurricularPlanID" value="462" />
-		<f:param name="contextID" value="81" />
+		<f:param name="contextID" value="210" />
 		<f:param name="curricularCourseID" value="15854" />
+	</h:outputLink>
+	<br/>
+	<h:outputLink value="editCurricularCourse.faces">
+		<h:outputText value="ah. #{bolonhaBundle['editCurricularCourse']}" />
+		<f:param name="degreeCurricularPlanID" value="462" />
+		<f:param name="curricularCourseID" value="15914" />
 	</h:outputLink>
 	<br/>
 	<h:outputText value="* "/>

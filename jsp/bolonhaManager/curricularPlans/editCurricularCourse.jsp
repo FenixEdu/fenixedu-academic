@@ -75,60 +75,64 @@
 			<f:param name="curricularCourseID" value="#{CurricularCourseManagement.curricularCourseID}" />
 		</h:outputLink>
 		<br/><br/>
-		<fc:dataRepeater value="#{CurricularCourseManagement.curricularCourse.degreeModuleContexts}" var="context">
-			<h:panelGrid columnClasses="alignRight,," columns="2" border="0"
-				rendered="#{context.idInternal != CurricularCourseManagement.contextID}">
+		<h:dataTable value="#{CurricularCourseManagement.curricularCourse.degreeModuleContexts}" var="context">
+			<h:column>
+				<h:panelGrid columnClasses="alignRight,," columns="2" border="0"
+					rendered="#{context.idInternal != CurricularCourseManagement.contextID}">
+					
+					<h:outputText value="#{bolonhaBundle['courseGroup']}: "/>
+					<h:outputText value="#{context.courseGroup.name}"/>
+					
+					<h:outputText value="#{bolonhaBundle['curricularYear']}: " />
+					<h:outputText value="#{context.curricularSemester.curricularYear.year}"/>
+					
+					<h:outputText value="#{bolonhaBundle['semester']}: " />
+					<h:outputText value="#{context.curricularSemester.semester}"/>
+					
+					<h:outputText value=" " escape="false"/>
+					<h:panelGroup>
+						<h:outputLink value="editCurricularCourse.faces">
+							<h:outputText value="#{bolonhaBundle['edit']}" />
+							<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}" />
+							<f:param name="courseGroupID" value="#{context.courseGroup.idInternal}" />
+							<f:param name="contextID" value="#{context.idInternal}" />
+							<f:param name="curricularCourseID" value="#{CurricularCourseManagement.curricularCourseID}" />
+						</h:outputLink>
+						<h:outputText value=", " escape="false"/>	
+						<h:commandLink value="#{bolonhaBundle['delete']}" action="#{CurricularCourseManagement.deleteContext}">
+							<f:param name="contextIDToDelete" value="#{context.idInternal}"/>
+						</h:commandLink>
+					</h:panelGroup>
+				</h:panelGrid>
 				
-				<h:outputText value="#{bolonhaBundle['courseGroup']}: "/>
-				<h:outputText value="#{context.courseGroup.name}"/>
+				<h:panelGrid columnClasses="alignRight,," columns="2" border="0"
+					rendered="#{context.idInternal == CurricularCourseManagement.contextID}">
 				
-				<h:outputText value="#{bolonhaBundle['curricularYear']}: " />
-				<h:outputText value="#{context.curricularSemester.curricularYear.year}"/>
+					<h:outputText value="#{bolonhaBundle['courseGroup']}: "/>
+					<h:selectOneMenu value="#{CurricularCourseManagement.courseGroupID}">
+						<f:selectItems value="#{CurricularCourseManagement.courseGroups}" />
+					</h:selectOneMenu>
 				
-				<h:outputText value="#{bolonhaBundle['semester']}: " />
-				<h:outputText value="#{context.curricularSemester.semester}"/>
+					<h:outputText value="#{bolonhaBundle['curricularYear']}: " />
+					<h:selectOneMenu value="#{CurricularCourseManagement.curricularYearID}">
+						<f:selectItems value="#{CurricularCourseManagement.curricularYears}" />
+					</h:selectOneMenu>
 				
-				<h:outputText value=" " escape="false"/>
-				<h:panelGroup>
-					<h:outputLink value="editCurricularCourse.faces">
-						<h:outputText value="#{bolonhaBundle['edit']}" />
-						<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}" />
-						<f:param name="courseGroupID" value="#{context.courseGroup.idInternal}" />
-						<f:param name="contextID" value="#{context.idInternal}" />
-						<f:param name="curricularCourseID" value="#{CurricularCourseManagement.curricularCourseID}" />
-					</h:outputLink>
-					<h:outputText value=", " escape="false"/>	
-					<h:commandLink value="#{bolonhaBundle['delete']}" action=""/>
-				</h:panelGroup>
-			</h:panelGrid>
-			
-			<h:panelGrid columnClasses="alignRight,," columns="2" border="0"
-				rendered="#{context.idInternal == CurricularCourseManagement.contextID}">
-			
-				<h:outputText value="#{bolonhaBundle['courseGroup']}: "/>
-				<h:selectOneMenu value="#{CurricularCourseManagement.courseGroupID}">
-					<f:selectItems value="#{CurricularCourseManagement.courseGroups}" />
-				</h:selectOneMenu>
-			
-				<h:outputText value="#{bolonhaBundle['curricularYear']}: " />
-				<h:selectOneMenu value="#{CurricularCourseManagement.curricularYearID}">
-					<f:selectItems value="#{CurricularCourseManagement.curricularYears}" />
-				</h:selectOneMenu>
-			
-				<h:outputText value="#{bolonhaBundle['semester']}: " />
-				<h:selectOneMenu value="#{CurricularCourseManagement.curricularSemesterID}">
-					<f:selectItems value="#{CurricularCourseManagement.curricularSemesters}" />
-				</h:selectOneMenu>
-				
-				<h:outputText value=" " escape="false"/>
-				<h:panelGroup>
-					<h:outputText escape="false" value="<input id='contextID' name='contextID' type='hidden' value='#{context.idInternal}'"/>
-					<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['update']}"
-						action="#{CurricularCourseManagement.editContext}"/>
-				</h:panelGroup>				
-			</h:panelGrid>
-			<h:outputText value="<br/>" escape="false"/>
-		</fc:dataRepeater>
+					<h:outputText value="#{bolonhaBundle['semester']}: " />
+					<h:selectOneMenu value="#{CurricularCourseManagement.curricularSemesterID}">
+						<f:selectItems value="#{CurricularCourseManagement.curricularSemesters}" />
+					</h:selectOneMenu>
+					
+					<h:outputText value=" " escape="false"/>
+					<h:panelGroup>
+						<h:outputText escape="false" value="<input id='contextID' name='contextID' type='hidden' value='#{context.idInternal}'"/>
+						<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['update']}"
+							action="#{CurricularCourseManagement.editContext}"/>
+					</h:panelGroup>				
+				</h:panelGrid>
+				<h:outputText value="<br/>" escape="false"/>
+			</h:column>
+		</h:dataTable>
 		<br/>
 		<h:panelGrid columnClasses="alignRight,," columns="2" border="0"
 				rendered="#{empty CurricularCourseManagement.contextID}">

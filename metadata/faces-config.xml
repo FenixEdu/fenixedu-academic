@@ -672,13 +672,8 @@
 			
 	<!-- End Navigation rules from department member subapplication -->
 
-
 	<!-- BEGIN: STUDENT Navigation Rules -->
-	
-	
-	
 	<!-- END: STUDENT Navigation Rules -->
-
 		
 	<!-- BEGIN: SOP Navigation Rules -->
 
@@ -1506,9 +1501,24 @@
 			<from-outcome>curricularPlansManagement</from-outcome>
 			<to-view-id>/bolonhaManager/curricularPlans/curricularPlansManagement.jsp</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>confirmDeleteCurricularCourse</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/deleteCurricularCourse.jsp</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
 		<from-view-id>/bolonhaManager/curricularPlans/associateCurricularCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularPlans/deleteCurricularCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularCourse</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/editCurricularCourse.jsp</to-view-id>
+		</navigation-case>
 		<navigation-case>
 			<from-outcome>curricularPlansManagement</from-outcome>
 			<to-view-id>/bolonhaManager/curricularPlans/curricularPlansManagement.jsp</to-view-id>

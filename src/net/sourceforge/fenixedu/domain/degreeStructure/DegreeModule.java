@@ -12,11 +12,11 @@ public abstract class DegreeModule extends DegreeModule_Base {
         setNewDegreeCurricularPlan(null);
     }
     
-    public void deleteContext(IContext context) {
-        if (getDegreeModuleContextsCount() > 1) {
+    public void deleteContext(IContext context) {        
+        if (hasDegreeModuleContexts(context)) {
             context.delete();
-        } else {
-            context.delete();
+        }
+        if (!hasAnyDegreeModuleContexts()) {
             this.delete();
         }
     }    
