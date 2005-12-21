@@ -113,6 +113,17 @@
 		column="KEY_DEGREE_MODULE"
 		jdbc-type="INTEGER"
 	/>
+	<field-descriptor
+		name="keyDegreeCurricularPlanMembersGroup"
+		column="KEY_DEGREE_CURRICULAR_PLAN_MEMBERS_GROUP"
+		jdbc-type="INTEGER"
+	/>	
+	<reference-descriptor auto-retrieve="false"
+			name="curricularPlanMembersGroup"
+			class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanMembersGroup"
+			>
+		<foreignkey field-ref="keyDegreeCurricularPlanMembersGroup"/>
+	</reference-descriptor>
 	<reference-descriptor auto-retrieve="false"
 			name="degreeModule"
 			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
