@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -17,6 +18,8 @@ import java.util.TreeMap;
 import java.util.Map.Entry;
 
 import javax.faces.component.html.HtmlInputHidden;
+import javax.faces.component.html.HtmlInputText;
+import javax.faces.component.html.HtmlSelectOneRadio;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
@@ -26,9 +29,11 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidMarksServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMark;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
+import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
@@ -37,11 +42,11 @@ import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IFinalEvaluation;
+import net.sourceforge.fenixedu.domain.IFinalMark;
 import net.sourceforge.fenixedu.domain.IMark;
 import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
 import net.sourceforge.fenixedu.domain.IWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.IWrittenTest;
-import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.onlineTests.IOnlineTest;
@@ -125,8 +130,24 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     private String originPage;
 
     protected Map<Integer, String> marks = new HashMap<Integer, String>();
-
-    public Integer getExecutionCourseID() {
+    
+    protected String[] attendsIDs;
+    
+    protected String submitEvaluationDate;
+    
+    protected String submitEvaluationDateTextBoxValue;
+    
+    protected HtmlInputText submitEvaluationDateTextBox;
+    
+    protected HtmlSelectOneRadio chooseEvaluationDateRadio;
+    
+    protected List<IFinalMark> alreadySubmitedMarks;
+    
+    protected List<IAttends> notSubmitedMarks;
+    
+    
+    
+	public Integer getExecutionCourseID() {
         if (this.executionCourseID == null) {
             if (this.executionCourseIdHidden != null && this.executionCourseIdHidden.getValue() != null) {
                 this.executionCourseID = Integer.valueOf(this.executionCourseIdHidden.getValue()
@@ -475,7 +496,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public IEvaluation getEvaluation() throws FenixFilterException, FenixServiceException {
         if (this.evaluation == null) {
             if (this.getEvaluationID() != null) {
-                final Object[] args = { WrittenEvaluation.class, this.getEvaluationID() };
+                final Object[] args = { Evaluation.class, this.getEvaluationID() };
                 evaluation = (IEvaluation) ServiceUtils.executeService(null, "ReadDomainObject", args);
             } else { // Should not happen
                 return null;
@@ -489,9 +510,6 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
         result.set(getEnrolmentBeginYear(), getEnrolmentBeginMonth() - 1, getEnrolmentBeginDay(),
                 getEnrolmentBeginHour(), getEnrolmentBeginMinute());
-        
-        result.set(Calendar.SECOND, 0);
-        result.set(Calendar.MILLISECOND, 0);
 
         return result;
     }
@@ -502,9 +520,6 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         result.set(getEnrolmentEndYear(), getEnrolmentEndMonth() - 1, getEnrolmentEndDay(),
                 getEnrolmentEndHour(), getEnrolmentEndMinute());
 
-        result.set(Calendar.SECOND, 0);
-        result.set(Calendar.MILLISECOND, 0);
-        
         return result;
     }
 
@@ -533,8 +548,15 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public String editMarks() throws FenixFilterException, FenixServiceException {
-        final Object[] args = { getEvaluationID(), this.marks };
-        ServiceUtils.executeService(getUserView(), "WriteMarks", args);
+        final Object[] args = { getExecutionCourseID(), getEvaluationID(), this.marks };
+        try {
+        	ServiceUtils.executeService(getUserView(), "WriteMarks", args);
+        } catch (InvalidMarksServiceException e) {
+			for(DomainException domainException: e.getExceptionList()) {
+				addErrorMessage(getFormatedMessage("ServidorApresentacao/ApplicationResources", domainException.getKey(), domainException.getArgs()));
+			}
+			return "";
+		}
         return getEvaluation().getClass().getSimpleName();
     }
 
@@ -555,9 +577,6 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         result.set(this.getYear(), this.getMonth() - 1, this.getDay(), this.getBeginHour(), this
                 .getBeginMinute());
 
-        result.set(Calendar.SECOND, 0);
-        result.set(Calendar.MILLISECOND, 0);
-        
         return result;
     }
 
@@ -567,9 +586,6 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         result.set(this.getYear(), this.getMonth() - 1, this.getDay(), this.getEndHour(), this
                 .getEndMinute());
 
-        result.set(Calendar.SECOND, 0);
-        result.set(Calendar.MILLISECOND, 0);
-        
         return result;
     }
     
@@ -619,8 +635,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             for (final IAttends attends : executionCourse.getAttends()) {
                 for (final IMark mark : attends.getAssociatedMarks()) {
                     if (mark.getEvaluation() == evaluation
-                            && !marks.containsKey(attends.getIdInternal())) {
-                        marks.put(attends.getIdInternal(), mark.getMark());
+                            && !marks.containsKey(attends.getAluno().getNumber())) {
+                        marks.put(attends.getAluno().getNumber(), mark.getMark());
                     }
                 }
             }
@@ -642,11 +658,21 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         InputStream inputStream = null;
         try {
             inputStream = fileItem.getInputStream();
-            final HashMap marks = loadMarks(inputStream);
-
+            final Map<Integer, String> marks = loadMarks(inputStream);
+            
             final Object[] args = { getExecutionCourseID(), getEvaluationID(), marks };
+            
+        	ServiceUtils.executeService(getUserView(), "WriteMarks", args);
+        	
+            /*final Object[] args = { getExecutionCourseID(), getEvaluationID(), marks };
             TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(getUserView(), "InsertEvaluationMarks", args);
-            processServiceErrors(siteView);
+            processServiceErrors(siteView);*/
+
+        } catch (InvalidMarksServiceException e) {
+			for(DomainException domainException: e.getExceptionList()) {
+				addErrorMessage(getFormatedMessage("ServidorApresentacao/ApplicationResources", domainException.getKey(), domainException.getArgs()));
+			}
+			return "";
         } catch (Exception e) {
             this.setErrorMessage(e.getMessage());
             return "";
@@ -663,8 +689,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return "success";
     }
 
-    private HashMap loadMarks(final InputStream inputStream) throws IOException {
-        final HashMap marks = new HashMap();
+    private Map<Integer, String> loadMarks(final InputStream inputStream) throws IOException {
+        final Map<Integer, String> marks = new HashMap<Integer, String>();
 
         final InputStreamReader input = new InputStreamReader(inputStream);
         final BufferedReader reader = new BufferedReader(input);
@@ -678,7 +704,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
                     final StringTokenizer stringTokenizer = new StringTokenizer(lineReader);
                     final String studentNumber = stringTokenizer.nextToken().trim();
                     final String mark = stringTokenizer.nextToken().trim();
-                    marks.put(studentNumber, mark);
+                    marks.put(Integer.valueOf(studentNumber), mark);
                 } catch (NoSuchElementException e) {
                     throw new IOException("error.file.badFormat");
                 }
@@ -1016,5 +1042,105 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public void setOriginPage(String originPage) {
         this.originPage = originPage;
     }
+    
+    
+    //Submit Marks
+    public List<IFinalMark> getAlreadySubmitedMarks() throws FenixFilterException, FenixServiceException{
+    	if(this.alreadySubmitedMarks == null) {
+    		IFinalEvaluation evaluation = (IFinalEvaluation) getEvaluation();
+    		IExecutionCourse executionCourse = getExecutionCourse();
+    		this.alreadySubmitedMarks = evaluation.getAlreadySubmitedMarks(executionCourse);
+    	}
+    	return this.alreadySubmitedMarks;
+    }
+    
+    public List<IAttends> getNotSubmitedMarks() throws FenixFilterException, FenixServiceException{
+    	if(this.notSubmitedMarks == null) {
+	    	IFinalEvaluation evaluation = (IFinalEvaluation) getEvaluation();
+	    	IExecutionCourse executionCourse = getExecutionCourse();
+	    	this.notSubmitedMarks = evaluation.getNotSubmitedMarkAttends(executionCourse); 
+    	}
+    	return this.notSubmitedMarks;
+    }
+    
+    public String submitMarks() {
+    	HttpServletRequest request = getRequest();
+    	attendsIDs = request.getParameterValues("selectedMarks");
+    	if(attendsIDs == null || attendsIDs.length == 0) {
+    		setErrorMessage("error.noStudents.selected");
+    		return "";
+    	}
+    	this.getViewState().setAttribute("attendIDs", attendsIDs);
+    	return "enterSubmitMarksList2";
+    }
 
+    public String submitMarks2() throws FenixFilterException, FenixServiceException, ParseException {
+    	String evaluationDate = getSubmitEvaluationDate();
+    	if(evaluationDate.equals("-1")) {
+    		evaluationDate = (String) getSubmitEvaluationDateTextBox().getValue();
+    	}
+    	String[] attendsIDs = (String[]) this.getViewState().getAttribute("attendIDs");
+    	Object[] args = {getExecutionCourseID(), getEvaluationID(), attendsIDs, DateFormatUtil.parse("dd/MM/yyyy", evaluationDate), getUserView()};
+    	ServiceUtils.executeService(getUserView(), "SubmitMarksNew", args);
+    	return "enterSubmitMarksList2";
+    }
+    
+    public List<SelectItem> getExamsItems() throws FenixFilterException, FenixServiceException {
+    	List<IExam> exams = getExamList();
+    	List<SelectItem> items = new ArrayList<SelectItem>(exams.size());
+    	Collections.sort(exams, new BeanComparator("day"));
+    	for (IExam exam : exams) {
+			items.add(new SelectItem(DateFormatUtil.format("dd/MM/yyyy", exam.getDayDate()), exam.getSeason().toString() + " : " + exam.getDayDate()));
+		}
+    	items.add(new SelectItem("-1", "Outra"));
+    	
+    	return items;
+    }
+
+	public String getSubmitEvaluationDate() {
+		return submitEvaluationDate;
+	}
+
+	public void setSubmitEvaluationDate(String submitEvaluationDate) {
+		this.submitEvaluationDate = submitEvaluationDate;
+	}
+
+	public String getSubmitEvaluationDateTextBoxValue() {
+		return submitEvaluationDateTextBoxValue;
+	}
+
+	public void setSubmitEvaluationDateTextBoxValue(String submitEvaluationDateTextBoxValue) {
+		this.submitEvaluationDateTextBoxValue = submitEvaluationDateTextBoxValue;
+	}
+	
+	public void onCheckBox(ValueChangeEvent changeEvent) {
+		if (this.getChooseEvaluationDateRadio().getValue().toString().equals("-1"))
+		{
+			this.submitEvaluationDateTextBox.setDisabled(false);
+		}
+		else
+		{
+		
+		this.submitEvaluationDateTextBox.setDisabled(true);
+		}
+	}
+
+	public HtmlInputText getSubmitEvaluationDateTextBox() {
+		return submitEvaluationDateTextBox;
+	}
+
+	public void setSubmitEvaluationDateTextBox(
+			HtmlInputText submitEvaluationDateTextBox) {
+		this.submitEvaluationDateTextBox = submitEvaluationDateTextBox;
+	}
+
+	public HtmlSelectOneRadio getChooseEvaluationDateRadio() {
+		return chooseEvaluationDateRadio;
+	}
+
+	public void setChooseEvaluationDateRadio(
+			HtmlSelectOneRadio chooseEvaluationDateRadio) {
+		this.chooseEvaluationDateRadio = chooseEvaluationDateRadio;
+	}
+    
 }
