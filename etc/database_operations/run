@@ -13,3 +13,8 @@ read -s password
 echo Altering table degree module
 mysql -u$2 -f -p$password $1 < alterTableDegreeModule.sql
 echo done.
+
+echo Creating Group Tables
+mysql -u$2 -f -p$password $1 < createDepartmentGoups.sql
+echo done.
+
