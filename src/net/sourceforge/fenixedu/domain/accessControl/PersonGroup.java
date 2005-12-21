@@ -11,7 +11,15 @@ public class PersonGroup extends PersonGroup_Base {
     public PersonGroup() {
         super();
     }
-	    
+
+    public PersonGroup(IPerson creator, IPerson person, INodeGroup aggregator) {
+        super();
+        setCreator(creator);
+        setPerson(person);
+        addAggregators(aggregator);
+    }
+        
+    
 	@Override
 	public int getElementsCount()
 	{
