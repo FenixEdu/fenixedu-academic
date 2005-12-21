@@ -22,6 +22,13 @@
 		<filterChains />
 	</service>
 	<service>
+		<name>ReadDomainObjectsByInternalID</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadDomainObjectsByInternalID</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains />
+	</service>	
+	<service>
 		<name>CheckIsAliveService</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.CheckIsAliveService</implementationClass>
 		<description />
@@ -8947,7 +8954,7 @@
         <filterChains>
         	<chain name="DepartmentAdministrativeOfficeOrManagerAuthorizationChain"></chain>
         </filterChains>     
-    </service>    	
+    </service>
    <service>
     	<name>CreateTeacherExpectationDefinitionPeriod</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.department.CreateTeacherExpectationDefinitionPeriod</implementationClass>
@@ -9102,7 +9109,6 @@
 			<chain name="ManagerAuthorization" />
 		</filterChains>				
 	</service>
-
     <service>
 		<name>WriteCmsConfiguration</name>
 		<implementationClass>
@@ -9114,7 +9120,7 @@
 			<chain name="ManagerAuthorization" />
 		</filterChains>				
 	</service>
-	 <service>
+    <service>
 		<name>DefineInquiryResponsePeriod</name>
 		<implementationClass>
 			net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.DefineInquiryResponsePeriod
@@ -9175,6 +9181,7 @@
 			<chain name="ManagerAuthorization" />
 		</filterChains>				
 	</service>
+
     <service>
 		<name>CreateCms</name>
 		<implementationClass>
@@ -9186,6 +9193,7 @@
 			<chain name="ManagerAuthorization" />
 		</filterChains>				
 	</service>
+	
 	<service>
 		<name>WriteExecutionCourseWebsite</name>
 		<implementationClass>
@@ -9195,6 +9203,7 @@
 		<isTransactional>true</isTransactional>
 		<filterChains/>				
 	</service>
+	
 	<service>
 		<name>DeleteExecutionCourseWebsite</name>
 		<implementationClass>
@@ -9204,7 +9213,8 @@
 		<isTransactional>true</isTransactional>
 		<filterChains/>				
 	</service>
-    <!-- ======================================  -->  
+	
+    <!-- ======================================  -->
     <service>
     	<name>CreateCompetenceCourse</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCompetenceCourse</implementationClass>
@@ -9268,8 +9278,42 @@
         	<chain name="BolonhaManagerAuthorization"></chain>
         </filterChains>     
     </service>
-	<service>
-	    <name>ComputeCompetenceCourseStatistics</name>
+    <service>
+    	<name>CreateCompetenceCourseMembersGroup</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.department.CreateCompetenceCourseMembersGroup</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="DepartmentAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>        
+    <service>
+    	<name>CreateCurricularPlanMembersGroup</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.CreateCurricularPlanMembersGroup</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        </filterChains>     
+    </service>                
+    <service>
+    	<name>UpdateCompetenceCourseMembersGroup</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.department.UpdateMembersGroup</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="DepartmentAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>       
+    <service>
+    	<name>UpdateCurricularPlanMembersGroup</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.department.UpdateMembersGroup</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        </filterChains>     
+    </service>           
+    <service>
+    <name>CreateCompetenceCourseStatistics</name>
         <implementationClass> net.sourceforge.fenixedu.applicationTier.Servico.department.ComputeCompetenceCourseStatistics</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
@@ -9288,7 +9332,7 @@
 		<description></description>
 		<isTransactional>true</isTransactional>  
         <filterChains/>
-	</service>    
+	</service>
     <service>
     	<name>UpdateDegreeTeachingServices</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.UpdateDegreeTeachingServices</implementationClass>
@@ -9413,7 +9457,7 @@
     	<name>ReadDomainTeacherByUsername</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadDomainTeacherByUsername</implementationClass>
         <description></description>
-        <isTransactional>true</isTransactional>
+        <isTransactional>true</isTransactional>       
     </service>
     <service>
    	 	<name>ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID</name>
