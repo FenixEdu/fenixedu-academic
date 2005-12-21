@@ -12,6 +12,10 @@ import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.domain.student.IDelegate;
 
 public class Degree extends Degree_Base {
+	
+	public GradeScale getGradeScaleChain() {
+		return super.getGradeScale() != null ? super.getGradeScale() : getTipoCurso().getGradeScale();
+	}
 
     protected Degree() {
         super();
@@ -19,10 +23,10 @@ public class Degree extends Degree_Base {
 
     protected Degree(String name, String nameEn) {
         this();
-        commonFieldsChange(name, nameEn);
+        commonFieldsChange(name, nameEn, null);
     }
 
-    private void commonFieldsChange(String name, String nameEn) {
+    private void commonFieldsChange(String name, String nameEn, GradeScale gradeScale) {
         if (name == null) {
             throw new DomainException("degree.name.not.null");
         } else if(nameEn == null) {
@@ -31,10 +35,11 @@ public class Degree extends Degree_Base {
 
         this.setNome(name);
         this.setNameEn(nameEn);
+        this.setGradeScale(gradeScale);
     }
     
-    public Degree(String name, String nameEn, String code, DegreeType degreeType, String concreteClassForDegreeCurricularPlans) {
-        this(name, nameEn);
+    public Degree(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale, String concreteClassForDegreeCurricularPlans) {
+        commonFieldsChange(name, nameEn, gradeScale);
         oldStructureFieldsChange(code, degreeType);
         
         if (concreteClassForDegreeCurricularPlans == null) {
@@ -57,36 +62,33 @@ public class Degree extends Degree_Base {
     }
 
     
-    public Degree(String namePt, String nameEn, String acronym, BolonhaDegreeType bolonhaDegreeType, GradeType gradeType) {
-        this(namePt, nameEn);
-        newStructureFieldsChange(acronym, bolonhaDegreeType, gradeType);
+    public Degree(String namePt, String nameEn, String acronym, BolonhaDegreeType bolonhaDegreeType, GradeScale gradeScale) {
+        commonFieldsChange(namePt, nameEn, gradeScale);
+        newStructureFieldsChange(acronym, bolonhaDegreeType);
     }
     
-    private void newStructureFieldsChange(String acronym, BolonhaDegreeType bolonhaDegreeType, GradeType gradeType) {
+    private void newStructureFieldsChange(String acronym, BolonhaDegreeType bolonhaDegreeType) {
         if (acronym == null) {
             throw new DomainException("degree.acronym.not.null");
         } else if(bolonhaDegreeType == null) {
             throw new DomainException("degree.degree.type.not.null");
-        } else if (gradeType == null) {
-            throw new DomainException("degree.grade.type.not.null");
         }
 
         this.setAcronym(acronym);
         this.setBolonhaDegreeType(bolonhaDegreeType);
-        this.setGradeType(gradeType);
     }
 
-    public void edit(String name, String nameEn, String code, DegreeType degreeType) {
-        commonFieldsChange(name, nameEn);
+    public void edit(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale) {
+        commonFieldsChange(name, nameEn, gradeScale);
         oldStructureFieldsChange(code, degreeType);
         
         if(!hasAnyDegreeInfos())  
             new DegreeInfo(this);
     }
 
-    public void edit(String name, String nameEn, String acronym, BolonhaDegreeType bolonhaDegreeType, GradeType gradeType) {
-        commonFieldsChange(name, nameEn);
-        newStructureFieldsChange(acronym, bolonhaDegreeType, gradeType);
+    public void edit(String name, String nameEn, String acronym, BolonhaDegreeType bolonhaDegreeType, GradeScale gradeScale) {
+        commonFieldsChange(name, nameEn, gradeScale);
+        newStructureFieldsChange(acronym, bolonhaDegreeType);
     }
     
     public void delete() throws DomainException {
@@ -162,5 +164,4 @@ public class Degree extends Degree_Base {
 
         return degreeCurricularPlan;
     }
-	
 }

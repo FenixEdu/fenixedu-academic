@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.ID
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
+import net.sourceforge.fenixedu.domain.curriculum.GradeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfAcumulatedEnrollmentsRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfCurricularCoursesEnrollmentRule;
@@ -37,15 +38,15 @@ import org.apache.commons.collections.Predicate;
 
 public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
-    protected DegreeCurricularPlan() {
-        super();
-        this.setOjbConcreteClass(getClass().getName());
-    }
+    public DegreeCurricularPlan() {
+        super();    
+        setOjbConcreteClass(getClass().getName());
+    }    
 
     public DegreeCurricularPlan(IDegree degree, String name, DegreeCurricularPlanState state,
             Date inicialDate, Date endDate, Integer degreeDuration,
             Integer minimalYearForOptionalCourses, Double neededCredits, MarkType markType,
-            Integer numerusClausus, String annotation, CurricularStage curricularStage) {
+            Integer numerusClausus, String annotation, CurricularStage curricularStage, GradeScale gradeScale) {
 
         this();
 
@@ -60,9 +61,15 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         setMarkType(markType);
         setNumerusClausus(numerusClausus);
         setAnotation(annotation);
-        setCurricularStage(curricularStage);
+        setGradeScale(gradeScale);
+        setCurricularStage(curricularStage);        
         setConcreteClassForStudentCurricularPlans(degree.getConcreteClassForDegreeCurricularPlans());
     }
+    
+    public GradeScale getGradeScaleChain() {
+        return super.getGradeScale() != null ? super.getGradeScale() : getDegree().getGradeScaleChain();    	
+    }
+    
 
     public String toString() {
         String result = "[" + this.getClass().getName() + ": ";
@@ -254,7 +261,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public void edit(String name, DegreeCurricularPlanState state, Date inicialDate, Date endDate,
             Integer degreeDuration, Integer minimalYearForOptionalCourses, Double neededCredits,
-            MarkType markType, Integer numerusClausus, String annotation) {
+            MarkType markType, Integer numerusClausus, String annotation, GradeScale gradeScale) {
 
         setName(name);
         setState(state);
@@ -266,6 +273,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         setMarkType(markType);
         setNumerusClausus(numerusClausus);
         setAnotation(annotation);
+        setGradeScale(gradeScale);
     }
 
     private Boolean canBeDeleted() {
