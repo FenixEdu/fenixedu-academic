@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 public class CourseGroup extends CourseGroup_Base {
 
     protected CourseGroup() {
+        super();
         setOjbConcreteClass(CourseGroup.class.getName());
     }
     
