@@ -58,6 +58,8 @@ public class UICurricularCourse extends UIDegreeModule {
         }
         writer.endElement("td");
         writer.startElement("td", this);
+        writer.writeAttribute("align", "center", null);
+        writer.writeAttribute("width", "100px", null);
         writer.append(previousContext.getCurricularSemester().getCurricularYear().getYear().toString()).append("º ");
         writer.append(this.getBundleValue(facesContext, "ServidorApresentacao/BolonhaManagerResources", "year"));
         writer.append(", ");
@@ -65,6 +67,7 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.append(this.getBundleValue(facesContext, "ServidorApresentacao/BolonhaManagerResources", "semester"));
         writer.endElement("td");
         writer.startElement("td", this);
+        writer.writeAttribute("align", "center", null);
         writer.append(((ICurricularCourse)this.degreeModule).computeEctsCredits().toString());
         writer.endElement("td");
         

@@ -68,6 +68,10 @@ public class UICourseGroup extends UIDegreeModule {
         if (!this.onlyStructure && this.toEdit) {
             encodeCourseGroupOptions();
         }
+
+        if (!this.onlyStructure && ((ICourseGroup)this.degreeModule).getContextsWithCurricularCourses().size() > 0) {
+            encodeTotalCreditsFooter();
+        }
         writer.endElement("table");
     }
 
@@ -94,8 +98,6 @@ public class UICourseGroup extends UIDegreeModule {
         if (this.onlyStructure && this.toEdit) {
             encodeEditOptions();
         }
-        writer.append(this.getBundleValue(facesContext, "ServidorApresentacao/BolonhaManagerResources", "credits")).append(": ");
-        writer.append(this.degreeModule.computeEctsCredits().toString());
         writer.endElement("th");
         writer.endElement("tr");
     }
@@ -157,6 +159,29 @@ public class UICourseGroup extends UIDegreeModule {
         
         writer.endElement("ul");
         writer.endElement("td");
+        
+        writer.endElement("tr");
+    }
+
+    private void encodeTotalCreditsFooter() throws IOException {
+        writer.startElement("tr", this);
+
+        writer.startElement("td", this);
+        writer.writeAttribute("align", "right", null);
+        writer.append(this.getBundleValue(facesContext, "ServidorApresentacao/BolonhaManagerResources", "credits")).append(": ");
+        writer.endElement("td");
+        writer.startElement("td", this);
+        writer.append("&nbsp;");
+        writer.endElement("td");
+        writer.startElement("td", this);
+        writer.writeAttribute("align", "center", null);
+        writer.append(this.degreeModule.computeEctsCredits().toString());
+        writer.endElement("td");        
+        if (this.toEdit) {
+            writer.startElement("td", this);
+            writer.append("&nbsp;");
+            writer.endElement("td");
+        }
         
         writer.endElement("tr");
     }
