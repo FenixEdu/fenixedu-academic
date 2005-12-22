@@ -9313,7 +9313,7 @@
         </filterChains>     
     </service>           
     <service>
-    <name>CreateCompetenceCourseStatistics</name>
+    <name>ComputeCompetenceCourseStatistics</name>
         <implementationClass> net.sourceforge.fenixedu.applicationTier.Servico.department.ComputeCompetenceCourseStatistics</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
