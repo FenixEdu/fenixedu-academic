@@ -3534,7 +3534,7 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	public void createTeacherPersonalExpectation(
              net.sourceforge.fenixedu.dataTransferObject.InfoTeacherPersonalExpectation infoTeacherPersonalExpectation, IExecutionYear executionYear);
 	
-	public int getManagementFunctionsCredits(IExecutionPeriod executionPeriod);
+	public double getManagementFunctionsCredits(IExecutionPeriod executionPeriod);
     public int getServiceExemptionCredits(IExecutionPeriod executionPeriod);
     public int getHoursByCategory(java.util.Date begin, java.util.Date end);    
     public net.sourceforge.fenixedu.domain.teacher.ICategory getCategoryByPeriod(java.util.Date begin, java.util.Date end);

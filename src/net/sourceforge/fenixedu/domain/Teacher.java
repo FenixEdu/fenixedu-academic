@@ -407,7 +407,7 @@ public class Teacher extends Teacher_Base {
         }
     }
 
-    public int getManagementFunctionsCredits(IExecutionPeriod executionPeriod) {
+    public double getManagementFunctionsCredits(IExecutionPeriod executionPeriod) {
 
         // TODO por isto a devolver um double!
         Date begin = executionPeriod.getBeginDate();
@@ -420,17 +420,17 @@ public class Teacher extends Teacher_Base {
             }
         }
 
-        int totalCredits = 0;
+        double totalCredits = 0.0;
         if (list.size() > 1) {
             for (IPersonFunction function : list) {
                 totalCredits = (function.getCredits() != null) ? totalCredits
-                        + function.getCredits().intValue() : totalCredits;
+                        + function.getCredits() : totalCredits;
             }
             return totalCredits;
         } else if (list.size() == 1) {
             Double credits = list.iterator().next().getCredits();
             if (credits != null) {
-                return credits.intValue();
+                return credits;
             }
         }
         return 0;
