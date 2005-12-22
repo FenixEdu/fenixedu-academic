@@ -163,7 +163,11 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
     }
 
     public Integer getSelectedCurricularPlanID() {
-        return (Integer) this.getViewState().getAttribute("selectedCurricularPlanID");
+        if (this.getViewState().getAttribute("selectedCurricularPlanID") != null) {
+            return (Integer) this.getViewState().getAttribute("selectedCurricularPlanID");
+        } else {
+            return (Integer) getAndHoldIntegerParameter("dcpId");    
+        }
     }
 
     public void setSelectedCurricularPlanID(Integer selectedCurricularPlanID) {
