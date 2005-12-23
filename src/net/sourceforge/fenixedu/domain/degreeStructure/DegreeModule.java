@@ -9,7 +9,7 @@ public abstract class DegreeModule extends DegreeModule_Base {
         if (hasAnyDegreeModuleContexts()) {
             throw new DomainException("error.notEmptyCurricularCourseContexts");
         }
-        setNewDegreeCurricularPlan(null);
+        removeNewDegreeCurricularPlan();
     }
     
     public void deleteContext(IContext context) {        
