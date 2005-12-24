@@ -10,8 +10,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.IGroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.IUserGroup;
 import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
-import net.sourceforge.fenixedu.domain.department.CompetenceCourseMembersGroup;
-import net.sourceforge.fenixedu.domain.department.ICompetenceCourseMembersGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
