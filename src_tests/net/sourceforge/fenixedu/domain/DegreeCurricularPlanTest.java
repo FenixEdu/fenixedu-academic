@@ -55,7 +55,7 @@ public class DegreeCurricularPlanTest extends DomainTestBase {
 		
 		newDegreeCurricularPlan = new DegreeCurricularPlan(degree, newName, newState, newInicialDate, newEndDate, newDegreeDuration,
 															newMinimalYearForOptionalCourses, newNeededCredits, newMarkType,
-															newNumerusClausus, newAnnotation, CurricularStage.OLD);
+															newNumerusClausus, newAnnotation, CurricularStage.OLD, null);
 	}
 	
 	
@@ -128,7 +128,7 @@ public class DegreeCurricularPlanTest extends DomainTestBase {
 		
 		degreeCurricularPlanToEdit.edit(newName, newState, newInicialDate, newEndDate, newDegreeDuration, 
 				newMinimalYearForOptionalCourses, newNeededCredits, newMarkType,
-				newNumerusClausus, newAnnotation);
+				newNumerusClausus, newAnnotation, null);
 
 		assertCorrectInitialization("Failed to assign property on edit: ", degreeCurricularPlanToEdit,newName,newState,newInicialDate,newEndDate,newDegreeDuration,
 				newMinimalYearForOptionalCourses,newNeededCredits,newMarkType,newNumerusClausus,newAnnotation);	

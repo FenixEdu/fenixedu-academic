@@ -109,13 +109,13 @@ public class DegreeTest extends DomainTestBase {
 	}
 
 	private void setUpEdit() {
-		degreeToEditWithDegreeInfo = new Degree("x", "x", "x");
+		degreeToEditWithDegreeInfo = new Degree("x", "x", "x", null, null);
 		degreeToEditWithoutDegreeInfo = new Degree();
 	}
 
 	private void setUpCreate() {
 		
-		degreeToCreate = new Degree(newName, newNameEn, newSigla, newDegreeType, newConcreteClassForDegreeCurricularPlans);
+		degreeToCreate = new Degree(newName, newNameEn, newSigla, newDegreeType, null, newConcreteClassForDegreeCurricularPlans);
 	}
 
 	
@@ -132,12 +132,12 @@ public class DegreeTest extends DomainTestBase {
 		setUpEdit();
 		
 		
-		degreeToEditWithDegreeInfo.edit(newName, newNameEn, newSigla, newDegreeType);
+		degreeToEditWithDegreeInfo.edit(newName, newNameEn, newSigla, newDegreeType, null);
 
 		assertCorrectInitialization("Edition failed for property", degreeToEditWithDegreeInfo,newName,newNameEn,newSigla,newDegreeType);
 
 		
-		degreeToEditWithoutDegreeInfo.edit(newName, newNameEn, newSigla, newDegreeType);
+		degreeToEditWithoutDegreeInfo.edit(newName, newNameEn, newSigla, newDegreeType, null);
 
 		assertCorrectInitialization("Edition failed for property", degreeToEditWithoutDegreeInfo,newName,newNameEn,newSigla,newDegreeType);
 	}
