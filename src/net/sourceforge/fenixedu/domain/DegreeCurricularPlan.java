@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.ID
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
-import net.sourceforge.fenixedu.domain.curriculum.GradeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfAcumulatedEnrollmentsRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfCurricularCoursesEnrollmentRule;

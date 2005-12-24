@@ -17,11 +17,9 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IDepartment;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;

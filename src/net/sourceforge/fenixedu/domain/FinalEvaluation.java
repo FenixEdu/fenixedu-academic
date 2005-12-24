@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.velocity.runtime.parser.node.GetExecutor;
-
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.EvaluationType;

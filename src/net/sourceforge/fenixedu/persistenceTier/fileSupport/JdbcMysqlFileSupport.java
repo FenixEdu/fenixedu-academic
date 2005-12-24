@@ -12,8 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.transaction.NotSupportedException;
-
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
 import net.sourceforge.fenixedu.util.StringAppender;

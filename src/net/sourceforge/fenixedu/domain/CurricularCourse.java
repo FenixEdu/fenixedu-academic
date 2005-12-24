@@ -14,8 +14,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.IContext;
 import net.sourceforge.fenixedu.domain.degreeStructure.ICourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.stm.RelationList;
-import net.sourceforge.fenixedu.stm.VBox;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;

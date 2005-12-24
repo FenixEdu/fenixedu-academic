@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Iterator;
 
-import net.sourceforge.fenixedu.domain.curriculum.GradeType;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;

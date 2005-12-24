@@ -3,9 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember.tea
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.component.UISelectItem;
 import javax.faces.component.UISelectItems;
-import javax.faces.component.UISelectOne;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
