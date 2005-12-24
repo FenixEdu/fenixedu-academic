@@ -1,7 +1,4 @@
-
-
 package net.sourceforge.fenixedu.presentationTier.servlets.filters;
-
 
 import java.io.IOException;
 import java.util.Collection;
@@ -22,91 +19,78 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.stm.Transaction;
 
-public class CloseTransactionFilter implements Filter
-{
+public class CloseTransactionFilter implements Filter {
 
-	private class PublicRequester implements IUserView
-	{
-		private class InformationNotAvailable extends RuntimeException
-		{
+	private class PublicRequester implements IUserView {
+		private class InformationNotAvailable extends RuntimeException {
 			private static final long serialVersionUID = -7527899059986512251L;
 
-			public InformationNotAvailable(String msg)
-			{
+			public InformationNotAvailable(String msg) {
 				super(msg);
 			}
 		}
 
-		public IPerson getPerson()
-		{
-			throw new InformationNotAvailable("property person not available on a public requester user view");
+		public IPerson getPerson() {
+			throw new InformationNotAvailable(
+					"property person not available on a public requester user view");
 		}
 
-		public String getUtilizador()
-		{
-			throw new InformationNotAvailable("property person not available on a public requester user view");
+		public String getUtilizador() {
+			throw new InformationNotAvailable(
+					"property person not available on a public requester user view");
 		}
 
-		public String getFullName()
-		{
-			throw new InformationNotAvailable("property person not available on a public requester user view");
+		public String getFullName() {
+			throw new InformationNotAvailable(
+					"property person not available on a public requester user view");
 		}
 
-		public Collection getRoles()
-		{
-			throw new InformationNotAvailable("property person not available on a public requester user view");
+		public Collection getRoles() {
+			throw new InformationNotAvailable(
+					"property person not available on a public requester user view");
 		}
 
-		public boolean hasRoleType(RoleType roleType)
-		{
-			throw new InformationNotAvailable("property person not available on a public requester user view");
+		public boolean hasRoleType(RoleType roleType) {
+			throw new InformationNotAvailable(
+					"property person not available on a public requester user view");
 		}
 
-		public boolean isPublicRequester()
-		{
+		public boolean isPublicRequester() {
 			return true;
-		}		
-	}
-	
-	
-	public void init(FilterConfig config)
-	{
-		
+		}
 	}
 
-	public void destroy()
-	{
-		
+	public void init(FilterConfig config) {
+
 	}
 
-	protected IUserView getUserView(ServletRequest request)
-	{
+	public void destroy() {
+
+	}
+
+	protected IUserView getUserView(ServletRequest request) {
 		IUserView userView = null;
-		if (request instanceof HttpServletRequest)
-		{
+		if (request instanceof HttpServletRequest) {
 			HttpServletRequest httpRequest = (HttpServletRequest) request;
 			HttpSession session = httpRequest.getSession(false);
-			if (session != null) userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+			if (session != null)
+				userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		}
 
 		if (userView == null)
 			userView = new PublicRequester();
-		
+
 		return userView;
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException
-	{
+			throws IOException, ServletException {
 		Transaction.begin();
 		Transaction.currentFenixTransaction().setReadOnly();
-		this.setTransactionOwner(request);
-		try
-		{
+		setTransactionOwner(request);
+		try {
 			chain.doFilter(request, response);
-		}
-		finally
-		{
+		} finally {
 			Transaction.forceFinish();
 		}
 	}
@@ -114,8 +98,7 @@ public class CloseTransactionFilter implements Filter
 	/**
 	 * 
 	 */
-	private void setTransactionOwner(ServletRequest request)
-	{
+	private void setTransactionOwner(ServletRequest request) {
 		AccessControl.setUserView(this.getUserView(request));
 	}
 }

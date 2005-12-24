@@ -20,6 +20,8 @@ public class CheckUserViewFilter implements Filter {
 
     private static final String REDIRECT = PropertiesManager.getProperty("login.page");
 
+    private static final int APP_CONTEXT_LENGTH = PropertiesManager.getProperty("app.context").length() + 1;
+
     public void init(FilterConfig config) {
     }
 
@@ -34,7 +36,7 @@ public class CheckUserViewFilter implements Filter {
 
         final String uri = request.getRequestURI();
         final IUserView userView = getUserView(request);
-        if (isPrivateURI(uri) && !validUserView(userView)) {
+        if (isPrivateURI(uri.substring(APP_CONTEXT_LENGTH)) && !validUserView(userView)) {
             response.sendRedirect(REDIRECT);
         } else {
             filterChain.doFilter(request, response);
@@ -47,18 +49,21 @@ public class CheckUserViewFilter implements Filter {
     }
 
     private boolean isPrivateURI(final String uri) {
-        return ((uri.indexOf("/CSS/") == -1)
-                && (uri.indexOf("/images/") == -1)
+        return (uri.length() > 1
+        		&& (uri.indexOf("CSS/") == -1)
+        		&& (uri.indexOf("images/") == -1)
+        		&& (uri.indexOf("index.jsp") == -1)
+                && (uri.indexOf("index.html") == -1)
                 && (uri.indexOf("login.do") == -1)
                 && (uri.indexOf("privado") == -1)
                 && (uri.indexOf("loginPage.jsp") == -1)
                 && (uri.indexOf("logoff.do") == -1)
-                && (uri.indexOf("/publico/") == -1)
+                && (uri.indexOf("publico/") == -1)
                 && (uri.indexOf("showErrorPage.do") == -1)
-                && (uri.indexOf("/manager/manageCache.do") == -1)
-                && (uri.indexOf("/siteMap.do") == -1)
-                && (uri.indexOf("/changeLocaleTo.do") == -1)
-                && (uri.indexOf("/isAlive.do") == -1));
+                && (uri.indexOf("manager/manageCache.do") == -1)
+                && (uri.indexOf("siteMap.do") == -1)
+                && (uri.indexOf("changeLocaleTo.do") == -1)
+                && (uri.indexOf("isAlive.do") == -1));
     }
 
     private boolean validUserView(final IUserView userView) {
