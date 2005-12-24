@@ -30,9 +30,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidMarksServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoMark;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks;
-import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttends;
@@ -716,23 +713,6 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         }
 
         return marks;
-    }
-
-    private void processServiceErrors(final TeacherAdministrationSiteView siteView) {
-        final InfoSiteMarks infoSiteMarks = (InfoSiteMarks) siteView.getComponent();
-        final List<String> studentsListErrors = infoSiteMarks.getStudentsListErrors();
-        if (studentsListErrors != null && studentsListErrors.size() > 0) {
-            for (final String studentNumber : studentsListErrors) {
-                addErrorMessage("errors.student.nonExisting " + studentNumber);
-            }
-        }
-
-        final List<InfoMark> marksListErrors = infoSiteMarks.getMarksListErrors();
-        if (marksListErrors != null && marksListErrors.size() > 0) {
-            for (final InfoMark infoMark : marksListErrors) {
-                addErrorMessage("errors.invalidMark " + infoMark.getMark() + infoMark.getInfoFrequenta().getAluno().getNumber().toString());
-            }
-        }
     }
 
     public String editWrittenTest() throws Exception {
