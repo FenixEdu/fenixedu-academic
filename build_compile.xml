@@ -367,11 +367,6 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				<replacefilter 
 				    token="@app.context@"
 				    property="app.context"/>
-			</replace>
-
-			<replace dir="${build.home.webinf}"
-					 propertyFile="build.properties">
-				<include name="web.xml"/>
 				<replacefilter 
 				    token="@manager.filter.pattern@"
 				    property="manager.filter.pattern"/>
