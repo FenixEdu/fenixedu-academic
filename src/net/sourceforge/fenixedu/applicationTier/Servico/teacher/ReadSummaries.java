@@ -304,7 +304,7 @@ public class ReadSummaries implements IService {
         return professorship;
     }
 
-    private List findLesson(IPersistentSummary persistentSummary, IExecutionCourse executionCourse,
+    public static List findLesson(IPersistentSummary persistentSummary, IExecutionCourse executionCourse,
             IShift shift) throws ExcepcaoPersistencia {
 
         List summariesByExecutionCourse = persistentSummary.readByExecutionCourse(executionCourse
@@ -378,7 +378,7 @@ public class ReadSummaries implements IService {
         return summariesByShift;
     }
 
-    private List allSummaries(List summaries, List summariesByExecutionCourse) {
+    public static List allSummaries(List summaries, List summariesByExecutionCourse) {
         List allSummaries = new ArrayList();
 
         if (summaries == null || summaries.size() <= 0) {

@@ -6,15 +6,14 @@
 package net.sourceforge.fenixedu.applicationTier.Factory;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadSummaries;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAnnouncement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
@@ -310,103 +309,11 @@ public class ExecutionCourseSiteComponentBuilder {
 
 	private List findLesson(IPersistentSummary persistentSummary, IExecutionCourse executionCourse,
 			IShift shift) throws ExcepcaoPersistencia {
-
-		List summariesByExecutionCourse = persistentSummary.readByExecutionCourse(executionCourse
-				.getIdInternal());
-
-		// copy the list
-		List summariesByShift = new ArrayList();
-		summariesByShift.addAll(summariesByExecutionCourse);
-
-		if (summariesByExecutionCourse != null && summariesByExecutionCourse.size() > 0) {
-			ListIterator iterator = summariesByExecutionCourse.listIterator();
-			while (iterator.hasNext()) {
-				ISummary summary = (ISummary) iterator.next();
-
-				Calendar dateAndHourSummary = Calendar.getInstance();
-
-				Calendar summaryDate = Calendar.getInstance();
-				summaryDate.setTime(summary.getSummaryDate());
-
-				Calendar summaryHour = Calendar.getInstance();
-				summaryHour.setTime(summary.getSummaryHour());
-
-				dateAndHourSummary.set(Calendar.DAY_OF_MONTH, summaryDate.get(Calendar.DAY_OF_MONTH));
-				dateAndHourSummary.set(Calendar.MONTH, summaryDate.get(Calendar.MONTH));
-				dateAndHourSummary.set(Calendar.YEAR, summaryDate.get(Calendar.YEAR));
-				dateAndHourSummary.set(Calendar.HOUR_OF_DAY, summaryHour.get(Calendar.HOUR_OF_DAY));
-				dateAndHourSummary.set(Calendar.MINUTE, summaryHour.get(Calendar.MINUTE));
-				dateAndHourSummary.set(Calendar.SECOND, 00);
-
-				Calendar beginLesson = Calendar.getInstance();
-				beginLesson.set(Calendar.DAY_OF_MONTH, summaryDate.get(Calendar.DAY_OF_MONTH));
-				beginLesson.set(Calendar.MONTH, summaryDate.get(Calendar.MONTH));
-				beginLesson.set(Calendar.YEAR, summaryDate.get(Calendar.YEAR));
-
-				Calendar endLesson = Calendar.getInstance();
-				endLesson.set(Calendar.DAY_OF_MONTH, summaryDate.get(Calendar.DAY_OF_MONTH));
-				endLesson.set(Calendar.MONTH, summaryDate.get(Calendar.MONTH));
-				endLesson.set(Calendar.YEAR, summaryDate.get(Calendar.YEAR));
-
-				boolean removeSummary = true;
-				if (shift.getAssociatedLessons() != null && shift.getAssociatedLessons().size() > 0) {
-					ListIterator iterLesson = shift.getAssociatedLessons().listIterator();
-					while (iterLesson.hasNext()) {
-						ILesson lesson = (ILesson) iterLesson.next();
-
-						beginLesson.set(Calendar.HOUR_OF_DAY, lesson.getInicio().get(
-								Calendar.HOUR_OF_DAY));
-						beginLesson.set(Calendar.MINUTE, lesson.getInicio().get(Calendar.MINUTE));
-						beginLesson.set(Calendar.SECOND, 00);
-
-						endLesson.set(Calendar.HOUR_OF_DAY, lesson.getFim().get(Calendar.HOUR_OF_DAY));
-						endLesson.set(Calendar.MINUTE, lesson.getFim().get(Calendar.MINUTE));
-						endLesson.set(Calendar.SECOND, 00);
-
-						if (summary.getSummaryType() == shift.getTipo()
-								&& dateAndHourSummary.get(Calendar.DAY_OF_WEEK) == lesson.getDiaSemana()
-										.getDiaSemana().intValue()
-								&& !beginLesson.after(dateAndHourSummary)
-								&& endLesson.after(dateAndHourSummary)
-								&& lesson.getSala().equals(summary.getRoom())) {
-							removeSummary = false;
-						}
-					}
-				}
-
-				if (removeSummary) {
-					summariesByShift.remove(summary);
-				}
-			}
-		}
-
-		return summariesByShift;
+		return ReadSummaries.findLesson(persistentSummary, executionCourse, shift);
 	}
 
 	private List allSummaries(List summaries, List summariesByExecutionCourse) {
-		List allSummaries = new ArrayList();
-
-		if (summaries == null || summaries.size() <= 0) {
-			if (summariesByExecutionCourse == null) {
-				return new ArrayList();
-			}
-			return summariesByExecutionCourse;
-		}
-
-		if (summariesByExecutionCourse == null || summariesByExecutionCourse.size() <= 0) {
-			return summaries;
-		}
-
-		List intersection = (List) CollectionUtils.intersection(summaries, summariesByExecutionCourse);
-
-		allSummaries.addAll(CollectionUtils.disjunction(summaries, intersection));
-		allSummaries.addAll(CollectionUtils.disjunction(summariesByExecutionCourse, intersection));
-		allSummaries.addAll(intersection);
-
-		if (allSummaries == null) {
-			return new ArrayList();
-		}
-		return allSummaries;
+		return ReadSummaries.allSummaries(summaries, summariesByExecutionCourse);
 	}
 
 	private ISiteComponent getInfoSiteEvaluations(InfoSiteEvaluations component, ISite site) {
