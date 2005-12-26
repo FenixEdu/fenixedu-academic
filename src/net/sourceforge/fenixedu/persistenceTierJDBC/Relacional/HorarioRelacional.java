@@ -1133,8 +1133,7 @@ public class HorarioRelacional implements IHorarioPersistente {
         return horario;
     } /* lerHorarioPorFuncionario */
 
-    public List lerHorarioActualPorNumMecanografico(int numMecanografico) {
-        //ATENCAO: esta função é igual à função lerRotacoesPorNumMecanografico
+    private List lerHorarioActualPorNumMecanografico(int numMecanografico, String errorMessage) {
         List listaHorarios = null;
 
         try {
@@ -1255,9 +1254,13 @@ public class HorarioRelacional implements IHorarioPersistente {
             sql.close();
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("HorarioRelacional.lerHorarioActualPorNumMecanografico: " + e.toString());
+            System.out.println(errorMessage + e.toString());
         }
         return listaHorarios;
+    }
+
+    public List lerHorarioActualPorNumMecanografico(int numMecanografico) {
+    	return lerHorarioActualPorNumMecanografico(numMecanografico, "HorarioRelacional.lerHorarioActualPorNumMecanografico: ");
     } /* lerHorarioActualPorNumMecanografico */
 
     public Horario lerHorarioPorNumFuncionario(int numMecanografico, Timestamp dataConsulta) {
@@ -1629,129 +1632,7 @@ public class HorarioRelacional implements IHorarioPersistente {
     } /* lerRegimesRotacoes */
 
     public List lerRotacoesPorNumMecanografico(int numMecanografico) {
-        List listaHorarios = null;
-
-        try {
-            PreparedStatement sql = UtilRelacional
-                    .prepararComando("SELECT codigoInterno, chaveHorarioActual FROM ass_FUNCIONARIO "
-                            + "WHERE numeroMecanografico = ?");
-            sql.setInt(1, numMecanografico);
-            ResultSet resultado = sql.executeQuery();
-            int chaveFuncionario = 0;
-            int chaveHorario = 0;
-            if (resultado.next()) {
-                chaveFuncionario = resultado.getInt("codigoInterno");
-                chaveHorario = resultado.getInt("chaveHorarioActual");
-            } else {
-                sql.close();
-                return null;
-            }
-            sql.close();
-
-            // data de inicio do horário e número de dias da rotação
-            sql = UtilRelacional.prepararComando("SELECT dataInicio, numDias, posicao FROM ass_HORARIO "
-                    + "WHERE codigoInterno = ?");
-            sql.setInt(1, chaveHorario);
-            resultado = sql.executeQuery();
-            java.util.Date dataInicioHorario = null;
-            int numDiasRotacao = 0;
-            if (resultado.next()) {
-                dataInicioHorario = java.sql.Date.valueOf(resultado.getString("dataInicio"));
-                numDiasRotacao = resultado.getInt("numDias") + resultado.getInt("posicao");
-            } else {
-                sql.close();
-                return null;
-            }
-            sql.close();
-
-            // indice do horário da rotação a ser cumprido agora
-            Calendar agora = Calendar.getInstance();
-            int indiceRotacao = calcularIndiceRotacao(numDiasRotacao, dataInicioHorario, agora.getTime());
-
-            // horário a ser cumprido agora
-            sql = UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_HORARIO "
-                    + "WHERE chaveFuncionario = ? "
-                    + "AND dataInicio = ? AND (? BETWEEN posicao AND (posicao + numDias-1))");
-            sql.setInt(1, chaveFuncionario);
-            sql.setDate(2, new java.sql.Date(dataInicioHorario.getTime()));
-            sql.setInt(3, indiceRotacao);
-            resultado = sql.executeQuery();
-            int chaveHorarioAgora = 0;
-            if (resultado.next()) {
-                chaveHorarioAgora = resultado.getInt("codigoInterno");
-            }
-            sql.close();
-
-            // todos os horarios da rotacao
-            sql = UtilRelacional.prepararComando("SELECT * FROM ass_HORARIO "
-                    + "WHERE chaveFuncionario = ? " + "AND dataInicio = ? ORDER BY posicao");
-            sql.setInt(1, chaveFuncionario);
-            sql.setDate(2, new java.sql.Date(dataInicioHorario.getTime()));
-            resultado = sql.executeQuery();
-
-            Calendar dataHorario = null;
-            java.util.Date dataCumprir = null;
-            java.util.Date dataFim = null;
-            listaHorarios = new ArrayList();
-            while (resultado.next()) {
-                Time descontoObrigatorio = null;
-                Time descontoMinimo = null;
-                Time trabalhoConsecutivo = null;
-                if (resultado.getTime("descontoObrigatorio") != null
-                        && resultado.getTime("descontoMinimo") != null) {
-                    //duracao, logo adiciona-se uma hora
-                    descontoObrigatorio = new Time(
-                            resultado.getTime("descontoObrigatorio").getTime() + 3600 * 1000);
-                    descontoMinimo = new Time(
-                            resultado.getTime("descontoMinimo").getTime() + 3600 * 1000);
-                }
-                if (resultado.getTime("trabalhoConsecutivo") != null) {
-                    trabalhoConsecutivo = new Time(
-                            resultado.getTime("trabalhoConsecutivo").getTime() + 3600 * 1000);
-                }
-
-                // Primeiro dia da proxima rotacao deste horario
-                dataHorario = Calendar.getInstance();
-                if (resultado.getInt("codigoInterno") == chaveHorarioAgora) {
-                    dataHorario.set(Calendar.DAY_OF_MONTH, agora.get(Calendar.DAY_OF_MONTH)
-                            - (indiceRotacao - resultado.getInt("posicao")));
-                } else {
-                    if (indiceRotacao > resultado.getInt("posicao")) {
-                        dataHorario.set(Calendar.DAY_OF_MONTH, agora.get(Calendar.DAY_OF_MONTH)
-                                + ((numDiasRotacao - indiceRotacao) + resultado.getInt("posicao")));
-                    } else if (indiceRotacao < resultado.getInt("posicao")) {
-                        dataHorario.set(Calendar.DAY_OF_MONTH, agora.get(Calendar.DAY_OF_MONTH)
-                                + (resultado.getInt("posicao") - indiceRotacao));
-                    }
-                }
-                dataCumprir = dataHorario.getTime();
-
-                if (resultado.getString("dataFim") != null) {
-                    dataFim = java.sql.Date.valueOf(resultado.getString("dataFim"));
-                } else {
-                    dataFim = null;
-                }
-
-                listaHorarios.add(new Horario(resultado.getInt("codigoInterno"), resultado
-                        .getInt("chaveHorarioTipo"), resultado.getInt("chaveFuncionario"), resultado
-                        .getString("sigla"), resultado.getString("modalidade"), resultado
-                        .getFloat("duracaoSemanal"), resultado.getTimestamp("inicioPF1"), resultado
-                        .getTimestamp("fimPF1"), resultado.getTimestamp("inicioPF2"), resultado
-                        .getTimestamp("fimPF2"), resultado.getTimestamp("inicioHN1"), resultado
-                        .getTimestamp("fimHN1"), resultado.getTimestamp("inicioHN2"), resultado
-                        .getTimestamp("fimHN2"), resultado.getTimestamp("inicioRefeicao"), resultado
-                        .getTimestamp("fimRefeicao"), descontoObrigatorio, descontoMinimo, resultado
-                        .getTimestamp("inicioExpediente"), resultado.getTimestamp("fimExpediente"),
-                        dataCumprir, dataInicioHorario, dataFim, resultado.getInt("numDias"), resultado
-                                .getInt("posicao"), trabalhoConsecutivo, resultado.getInt("quem"),
-                        resultado.getTimestamp("quando")));
-            }
-            sql.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("HorarioRelacional.lerRotacoesPorNumMecanografico: " + e.toString());
-        }
-        return listaHorarios;
+    	return lerHorarioActualPorNumMecanografico(numMecanografico, "HorarioRelacional.lerRotacoesPorNumMecanografico: ");
     } /* lerRotacoesPorNumMecanografico */
 
     public List lerTodosHorariosExcepcao(Date dataInicio, Date dataFim) {
