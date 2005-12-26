@@ -19,8 +19,11 @@ import javax.faces.model.SelectItem;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IDepartment;
 import net.sourceforge.fenixedu.domain.IEmployee;
+import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.Person;
@@ -35,6 +38,8 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
+import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -50,15 +55,19 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public Integer page, personID, unitID, functionID, numberOfFunctions, personFunctionID;
 
+    public Integer executionYearID, executionPeriod, duration;
+
     public IUnit unit;
 
     public Double credits;
-    
+
     public String beginDate, endDate, personName;
 
-    public HtmlInputHidden creditsHidden, beginDateHidden, endDateHidden, personIDHidden, unitIDHidden;
+    public HtmlInputHidden creditsHidden, beginDateHidden, endDateHidden, personIDHidden, unitIDHidden,
+            disabledVarHidden;
 
-    public HtmlInputHidden functionIDHidden, personFunctionIDHidden;
+    public HtmlInputHidden functionIDHidden, personFunctionIDHidden, executionPeriodHidden,
+            executionYearIDHidden, durationHidden;
 
     public IFunction function;
 
@@ -88,7 +97,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         }
         if (getRequestParameter("functionID") != null && !getRequestParameter("functionID").equals("")) {
             this.functionID = Integer.valueOf(getRequestParameter("functionID").toString());
-        }
+        }        
     }
 
     public String associateNewFunction() throws FenixFilterException, FenixServiceException,
@@ -332,7 +341,6 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public List<SelectItem> getValidFunctions() throws FenixFilterException, FenixServiceException {
         List<SelectItem> list = new ArrayList<SelectItem>();
-
         SelectItem selectItem = null;
         for (IFunction function : this.getUnit().getFunctions()) {
             if (!function.isInherentFunction()
@@ -348,6 +356,80 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         this.numberOfFunctions = list.size();
 
         return list;
+    }
+
+    public List<SelectItem> getDurationList() throws FenixFilterException, FenixServiceException {
+        List<SelectItem> list = new ArrayList<SelectItem>();
+        SelectItem selectItem = null;
+
+        for (int i = 1; i <= 4; i++) {
+            selectItem = new SelectItem();
+            selectItem.setValue(new Integer(i));
+            selectItem.setLabel(i + " sem.");
+            list.add(selectItem);
+        }
+
+        return list;
+    }
+
+    public List<SelectItem> getExecutionPeriods() throws FenixFilterException, FenixServiceException {
+        List<SelectItem> list = new ArrayList<SelectItem>();
+
+        SelectItem selectItem = new SelectItem();
+        selectItem.setValue(0);
+        selectItem.setLabel("-");
+
+        SelectItem selectItem1 = new SelectItem();
+        selectItem1.setValue(1);
+        selectItem1.setLabel("1º");
+
+        SelectItem selectItem2 = new SelectItem();
+        selectItem2.setValue(2);
+        selectItem2.setLabel("2º");
+
+        list.add(selectItem);
+        list.add(selectItem1);
+        list.add(selectItem2);
+        return list;
+    }
+
+    public List<SelectItem> getExecutionYears() throws FenixFilterException, FenixServiceException {
+        List<IExecutionYear> allExecutionYears = readAllDomainObjects(ExecutionYear.class);
+        List<SelectItem> list = new ArrayList<SelectItem>();
+        String[] year = null;
+
+        for (IExecutionYear executionYear : allExecutionYears) {
+            year = executionYear.getYear().split("/");
+            if (Integer.valueOf(year[0].trim()) >= 2004) {
+                if (executionYear.getState().equals(PeriodState.CURRENT)) {
+                    newSelectItem(executionYear, list, true);
+                } else {
+                    newSelectItem(executionYear, list, false);
+                }
+            }
+        }
+        return list;
+    }
+
+    private IExecutionYear getCurrentExecutionYear() throws FenixFilterException, FenixServiceException {
+        List<IExecutionYear> allExecutionYears = readAllDomainObjects(ExecutionYear.class);
+        for (IExecutionYear executionYear : allExecutionYears) {
+            if (executionYear.getState().equals(PeriodState.CURRENT)) {
+                return executionYear;
+            }
+        }
+        return null;
+    }
+
+    private void newSelectItem(IExecutionYear executionYear, List<SelectItem> list, boolean current) {
+        SelectItem selectItem = new SelectItem();
+        selectItem.setValue(executionYear.getIdInternal());
+        selectItem.setLabel(executionYear.getYear());
+        if (current) {
+            list.add(0, selectItem);
+        } else {
+            list.add(selectItem);
+        }
     }
 
     public String getUnits() throws FenixFilterException, FenixServiceException {
@@ -393,15 +475,6 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         }
 
         return departmentUnit;
-    }
-
-    public Date prepareCurrentDate() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        return calendar.getTime();
     }
 
     public IPerson getPerson() throws FenixFilterException, FenixServiceException {
@@ -540,13 +613,35 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     }
 
     public String getBeginDate() throws FenixFilterException, FenixServiceException {
+
         if (this.beginDate == null && this.beginDateHidden != null
                 && this.beginDateHidden.getValue() != null
                 && !this.beginDateHidden.getValue().equals("")) {
             this.beginDate = this.beginDateHidden.getValue().toString();
 
         } else if (this.beginDate == null && this.getPersonFunctionID() != null) {
-            this.beginDate = processDate(this.getPersonFunction().getBeginDate());
+            this.beginDate = DateFormatUtil
+                    .format("dd/MM/yyyy", this.getPersonFunction().getBeginDate());
+
+        } else if (this.beginDateHidden == null && this.getPersonFunctionID() == null
+                && this.getExecutionYearIDHidden() != null
+                && this.executionYearIDHidden.getValue() != null
+                && !this.executionYearIDHidden.getValue().equals("")) {
+
+            IExecutionYear executionYear = (IExecutionYear) readDomainObject(ExecutionYear.class,
+                    Integer.valueOf(this.executionYearIDHidden.getValue().toString()));
+
+            IExecutionPeriod executionPeriod = null;
+            if (this.getExecutionPeriodHidden() != null && this.executionPeriodHidden.getValue() != null
+                    && !this.executionPeriodHidden.getValue().equals("")
+                    && !this.executionPeriodHidden.getValue().equals("0")) {
+
+                executionPeriod = executionYear.getExecutionPeriodForSemester(Integer
+                        .valueOf(this.executionPeriodHidden.getValue().toString()));
+            }
+            this.beginDate = (executionPeriod != null) ? DateFormatUtil.format("dd/MM/yyyy",
+                    executionPeriod.getBeginDate()) : DateFormatUtil.format("dd/MM/yyyy", executionYear
+                    .getBeginDate());
         }
         return beginDate;
     }
@@ -571,23 +666,54 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     }
 
     public String getEndDate() throws FenixFilterException, FenixServiceException {
+
         if (this.endDate == null && this.endDateHidden != null && this.endDateHidden.getValue() != null
                 && !this.endDateHidden.getValue().equals("")) {
             this.endDate = this.endDateHidden.getValue().toString();
 
         } else if (this.endDate == null && this.getPersonFunctionID() != null) {
-            this.endDate = processDate(this.getPersonFunction().getEndDate());
+            this.endDate = DateFormatUtil.format("dd/MM/yyyy", this.getPersonFunction().getEndDate());
+
+        } else if (this.endDateHidden == null && this.getPersonFunctionID() == null
+                && this.getExecutionYearIDHidden() != null
+                && this.executionYearIDHidden.getValue() != null
+                && !this.executionYearIDHidden.getValue().equals("")) {
+
+            IExecutionYear executionYear = (IExecutionYear) readDomainObject(ExecutionYear.class,
+                    Integer.valueOf(this.executionYearIDHidden.getValue().toString()));
+
+            IExecutionPeriod executionPeriod = null, finalExecutionPeriod = null;
+            if (this.getExecutionPeriodHidden() != null && this.executionPeriodHidden.getValue() != null
+                    && !this.executionPeriodHidden.getValue().equals("")
+                    && !this.executionPeriodHidden.getValue().equals("0")) {
+
+                executionPeriod = executionYear.getExecutionPeriodForSemester(Integer
+                        .valueOf(this.executionPeriodHidden.getValue().toString()));
+
+                finalExecutionPeriod = (executionPeriod != null) ? getDurationEndDate(executionPeriod,
+                        executionPeriod) : null;
+            }
+            this.endDate = (finalExecutionPeriod != null) ? DateFormatUtil.format("dd/MM/yyyy",
+                    finalExecutionPeriod.getEndDate()) : DateFormatUtil.format("dd/MM/yyyy",
+                    executionYear.getEndDate());
         }
         return endDate;
     }
 
-    private String processDate(Date date) throws FenixFilterException, FenixServiceException {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH) + 1;
-        int year = calendar.get(Calendar.YEAR);
-        return (day + "/" + month + "/" + year);
+    private IExecutionPeriod getDurationEndDate(IExecutionPeriod executionPeriod,
+            IExecutionPeriod finalExecutionPeriod) {
+        if (this.getDurationHidden() != null && this.durationHidden.getValue() != null
+                && !this.durationHidden.getValue().equals("")) {
+            Integer duration = Integer.valueOf(this.durationHidden.getValue().toString());
+            for (int i = 1; i < duration; i++) {
+                if (finalExecutionPeriod.getNextExecutionPeriod() != null) {
+                    finalExecutionPeriod = finalExecutionPeriod.getNextExecutionPeriod();
+                } else {
+                    return executionPeriod;
+                }
+            }
+        }
+        return finalExecutionPeriod;
     }
 
     public void setEndDate(String endDate) {
@@ -748,5 +874,106 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public void setInactiveFunctions(List<IPersonFunction> inactiveFunctions) {
         this.inactiveFunctions = inactiveFunctions;
+    }
+
+    public Integer getExecutionPeriod() {
+        if (executionPeriod == null && executionPeriodHidden != null
+                && executionPeriodHidden.getValue() != null
+                && !executionPeriodHidden.getValue().equals("")) {
+            executionPeriod = Integer.valueOf(executionPeriodHidden.getValue().toString());
+        } else if (executionPeriod == null) {
+            executionPeriod = 0;
+        }
+        return executionPeriod;
+    }
+
+    public void setExecutionPeriod(Integer executionPeriodID) {
+        this.executionPeriod = executionPeriodID;
+        this.executionPeriodHidden.setValue(executionPeriodID);
+    }
+
+    public Integer getExecutionYearID() {
+        if (executionYearID == null && executionYearIDHidden != null
+                && executionYearIDHidden.getValue() != null
+                && !executionYearIDHidden.getValue().equals("")) {
+            executionYearID = Integer.valueOf(executionYearIDHidden.getValue().toString());
+        }
+        return executionYearID;
+    }
+
+    public void setExecutionYearID(Integer executionYearID) {
+        this.executionYearID = executionYearID;
+        this.executionYearIDHidden.setValue(executionYearID);
+    }
+
+    public Integer getDuration() {
+        if (duration == null && durationHidden != null && durationHidden.getValue() != null
+                && !durationHidden.getValue().equals("")) {
+            duration = Integer.valueOf(durationHidden.getValue().toString());
+
+        } else if (this.duration == null) {
+            this.duration = new Integer(1);
+            this.durationHidden.setValue(new Integer(1));
+        }
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+        this.durationHidden.setValue(duration);
+    }
+
+    public HtmlInputHidden getExecutionPeriodHidden() {
+        if (executionPeriodHidden == null) {
+            executionPeriodHidden = new HtmlInputHidden();
+            executionPeriodHidden.setValue(this.getExecutionPeriod());
+        }
+        return executionPeriodHidden;
+    }
+
+    public void setExecutionPeriodHidden(HtmlInputHidden executionPeriodHidden) {
+        this.executionPeriodHidden = executionPeriodHidden;
+    }
+
+    public HtmlInputHidden getExecutionYearIDHidden() throws FenixFilterException, FenixServiceException {
+        if (executionYearIDHidden == null) {
+            executionYearIDHidden = new HtmlInputHidden();
+            IExecutionYear currentExecutionYear = getCurrentExecutionYear();
+            executionYearIDHidden.setValue((currentExecutionYear != null) ? currentExecutionYear
+                    .getIdInternal() : null);
+        }
+        return executionYearIDHidden;
+    }
+
+    public void setExecutionYearIDHidden(HtmlInputHidden executionYearIDHidden) {
+        this.executionYearIDHidden = executionYearIDHidden;
+    }
+
+    public HtmlInputHidden getDurationHidden() {
+        if (this.durationHidden == null) {
+            this.durationHidden = new HtmlInputHidden();
+            this.getDuration();
+        }
+        return durationHidden;
+    }
+
+    public void setDurationHidden(HtmlInputHidden durationHidden) {
+        this.durationHidden = durationHidden;
+    }
+
+    public HtmlInputHidden getDisabledVarHidden() {
+        if(disabledVarHidden == null){
+            disabledVarHidden = new HtmlInputHidden();
+            if (getRequestParameter("disabledVar") != null && !getRequestParameter("disabledVar").equals("")) {
+                disabledVarHidden.setValue(Integer.valueOf(getRequestParameter("disabledVar").toString()));
+            }else{
+                disabledVarHidden.setValue(new Integer(0));
+            }
+        }
+        return disabledVarHidden;
+    }
+
+    public void setDisabledVarHidden(HtmlInputHidden disabledVarHidden) {
+        this.disabledVarHidden = disabledVarHidden;
     }
 }

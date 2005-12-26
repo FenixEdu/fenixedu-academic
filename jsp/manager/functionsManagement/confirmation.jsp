@@ -16,6 +16,10 @@
 	<h:inputHidden binding="#{managerFunctionsManagementBackingBean.beginDateHidden}"/>
 	<h:inputHidden binding="#{managerFunctionsManagementBackingBean.endDateHidden}"/>
 	<h:inputHidden binding="#{managerFunctionsManagementBackingBean.functionIDHidden}"/>
+	<h:inputHidden binding="#{managerFunctionsManagementBackingBean.executionPeriodHidden}"/>
+	<h:inputHidden binding="#{managerFunctionsManagementBackingBean.executionYearIDHidden}"/>
+	<h:inputHidden binding="#{managerFunctionsManagementBackingBean.durationHidden}"/>
+	<h:inputHidden binding="#{managerFunctionsManagementBackingBean.disabledVarHidden}"/>
 
 	<h:outputText value="<h2>#{bundle['label.confirmation']}</h2>" escape="false"/>	
 	<h:outputText value="<br/>" escape="false" />
@@ -55,10 +59,11 @@
 	</h:panelGrid>
 		
 	<h:outputText value="<br/>" escape="false" />
-	<h:panelGrid columns="3">
+	<h:panelGrid columns="4">
 		<h:commandButton action="#{managerFunctionsManagementBackingBean.associateNewFunction}" value="#{bundle['label.confirme']}" styleClass="inputbutton"/>			
 		<h:commandButton action="alterUnit" immediate="true" value="#{bundle['alter.unit.button']}" styleClass="inputbutton"/>						
 		<h:commandButton action="alterFunction" immediate="true" value="#{bundle['alter.function.button']}" styleClass="inputbutton"/>								
+		<h:commandButton action="success" immediate="true" value="#{bundle['button.cancel']}" styleClass="inputbutton"/>								
 	</h:panelGrid>
 	
 	</h:form>

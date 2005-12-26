@@ -74,10 +74,7 @@
 				</f:facet>				
 				<h:outputText value="#{person_function.credits}" />
 			</h:column>
-			<h:column> 			
-				<f:facet name="header">
-					<h:outputText value="#{bundle['label.action']}" />
-				</f:facet>				
+			<h:column> 						
 				<h:commandLink action="prepareEditFunction">
 					<h:outputText value="(#{bundle['link.functions.management.edit']})"/>					
 					<f:param name="personFunctionID" id="personFunctionID1" value="#{person_function.idInternal}"/>

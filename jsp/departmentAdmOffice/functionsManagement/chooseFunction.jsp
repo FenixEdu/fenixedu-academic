@@ -50,7 +50,7 @@
 				<h:outputText value="<b>#{bundle['label.begin.date']}</b>" escape="false"/>
 				<h:panelGroup>
 					<h:inputText id="beginDate" required="true" size="10" value="#{functionsManagementBackingBean.beginDate}">							
-						<fc:regexValidator regex="([1-9]|0[1-9]|[12][0-9]|3[01])[/]([1-9]|0[1-9]|1[012])[/](19|20)\d\d"/>
+						<fc:dateValidator format="dd/MM/yyyy" strict="false"/>
 					</h:inputText>	
 					<h:outputText value="#{bundle['label.date.format']}"/>
 					<h:message for="beginDate" styleClass="error"/>				
@@ -59,7 +59,7 @@
 				<h:outputText value="<b>#{bundle['label.end.date']}</b>" escape="false"/>
 				<h:panelGroup>
 					<h:inputText id="endDate" required="true" size="10" value="#{functionsManagementBackingBean.endDate}">
-						<fc:regexValidator regex="([1-9]|0[1-9]|[12][0-9]|3[01])[/]([1-9]|0[1-9]|1[012])[/](19|20)\d\d"/>
+						<fc:dateValidator format="dd/MM/yyyy" strict="false"/>
 					</h:inputText>				
 					<h:outputText value="#{bundle['label.date.format']}"/>
 					<h:message for="endDate" styleClass="error"/>
@@ -71,6 +71,7 @@
 			<h:panelGroup>
 				<h:commandButton action="#{functionsManagementBackingBean.verifyFunction}" value="#{bundle['label.associate1']}" styleClass="inputbutton"/>							
 				<h:commandButton action="alterUnit" immediate="true" value="#{bundle['button.choose.new.person']}" styleClass="inputbutton"/>						
+				<h:commandButton action="cancel" immediate="true" value="#{bundle['button.cancel']}" styleClass="inputbutton"/>				
 			</h:panelGroup>
 		</h:panelGrid>	
 

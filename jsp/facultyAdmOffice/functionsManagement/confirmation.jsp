@@ -55,10 +55,11 @@
 	</h:panelGrid>
 		
 	<h:outputText value="<br/>" escape="false" />
-	<h:panelGrid columns="3">
+	<h:panelGrid columns="4">
 		<h:commandButton action="#{facultyAdmOfficeFunctionsManagementBackingBean.associateNewFunction}" value="#{bundle['label.confirme']}" styleClass="inputbutton"/>			
 		<h:commandButton action="alterUnit" immediate="true" value="#{bundle['alter.unit.button']}" styleClass="inputbutton"/>						
 		<h:commandButton action="alterFunction" immediate="true" value="#{bundle['alter.function.button']}" styleClass="inputbutton"/>								
+		<h:commandButton action="success" immediate="true" value="#{bundle['button.cancel']}" styleClass="inputbutton"/>
 	</h:panelGrid>
 	
 	</h:form>

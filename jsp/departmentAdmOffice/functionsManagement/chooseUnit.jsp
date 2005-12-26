@@ -20,7 +20,7 @@
 			<h:outputText value="#{functionsManagementBackingBean.person.nome}" escape="false"/>		
 		</h:panelGroup>
 		<h:outputText value="<br/><br/><br/>" escape="false" />
-		
+						
 		<h:outputText value="<p><strong>#{bundle['label.units']}</strong>:</p>" escape="false"/>		
 					
 		<h:outputText value="#{functionsManagementBackingBean.units}<br/>" escape="false"/>

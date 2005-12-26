@@ -12,7 +12,11 @@
 	
 		<h:inputHidden binding="#{managerFunctionsManagementBackingBean.unitIDHidden}"/>
 		<h:inputHidden binding="#{managerFunctionsManagementBackingBean.personIDHidden}"/>
-	
+		<h:inputHidden binding="#{managerFunctionsManagementBackingBean.executionPeriodHidden}"/>
+		<h:inputHidden binding="#{managerFunctionsManagementBackingBean.executionYearIDHidden}"/>
+		<h:inputHidden binding="#{managerFunctionsManagementBackingBean.durationHidden}"/>
+		<h:inputHidden binding="#{managerFunctionsManagementBackingBean.disabledVarHidden}"/>
+			
 		<h:outputText value="<H2>#{bundle['label.search.function']}</H2>" escape="false"/>		
 		<h:outputText value="<br/>" escape="false" />
 		
@@ -32,45 +36,87 @@
 						
 		<h:outputText styleClass="error" rendered="#{!empty managerFunctionsManagementBackingBean.errorMessage}"
 				value="#{bundle[managerFunctionsManagementBackingBean.errorMessage]}"/>
-	
-		<h:panelGrid rendered="#{managerFunctionsManagementBackingBean.numberOfFunctions > 0}">	
-			<h:outputText value="<br/>" escape="false" />
-			<h:panelGrid columns="2" styleClass="infoop">			
-				<h:outputText value="<b>#{bundle['label.search.function']}:</b>" escape="false"/>			
-				<fc:selectOneMenu value="#{managerFunctionsManagementBackingBean.functionID}">
-					<f:selectItems value="#{managerFunctionsManagementBackingBean.validFunctions}"/>
-				</fc:selectOneMenu>
-							
-				<h:outputText value="<b>#{bundle['label.credits']}</b>" escape="false"/>
-				<h:panelGroup>
-					<h:inputText id="credits" required="true" size="5" maxlength="5" value="#{managerFunctionsManagementBackingBean.credits}"/>
-					<h:message for="credits" styleClass="error"/>
-				</h:panelGroup>
-				
-				<h:outputText value="<b>#{bundle['label.begin.date']}</b>" escape="false"/>
-				<h:panelGroup>
-					<h:inputText id="beginDate" required="true" size="10" value="#{managerFunctionsManagementBackingBean.beginDate}">							
-						<fc:regexValidator regex="([1-9]|0[1-9]|[12][0-9]|3[01])[/]([1-9]|0[1-9]|1[012])[/](19|20)\d\d"/>
-					</h:inputText>	
-					<h:outputText value="#{bundle['label.date.format']}"/>
-					<h:message for="beginDate" styleClass="error"/>				
-				</h:panelGroup>			
-							
-				<h:outputText value="<b>#{bundle['label.end.date']}</b>" escape="false"/>
-				<h:panelGroup>
-					<h:inputText id="endDate" required="true" size="10" value="#{managerFunctionsManagementBackingBean.endDate}">
-						<fc:regexValidator regex="([1-9]|0[1-9]|[12][0-9]|3[01])[/]([1-9]|0[1-9]|1[012])[/](19|20)\d\d"/>
-					</h:inputText>				
-					<h:outputText value="#{bundle['label.date.format']}"/>
-					<h:message for="endDate" styleClass="error"/>
-				</h:panelGroup>
-			</h:panelGrid>				
-			
-			<h:outputText value="<br/>" escape="false" />	
 
+		<h:outputText value="<br/>" escape="false" rendered="#{managerFunctionsManagementBackingBean.numberOfFunctions > 0}"/>
+
+		<h:panelGrid rendered="#{managerFunctionsManagementBackingBean.numberOfFunctions > 0}" 
+			columns="2" styleClass="infoop">	
+			<h:outputText value="<b>#{bundle['label.search.function']}:</b>" escape="false"/>			
+			<fc:selectOneMenu value="#{managerFunctionsManagementBackingBean.functionID}">
+				<f:selectItems value="#{managerFunctionsManagementBackingBean.validFunctions}"/>
+			</fc:selectOneMenu>
+						
+			<h:outputText value="<b>#{bundle['label.credits']}</b>" escape="false"/>
+			<h:panelGroup>
+				<h:inputText id="credits" required="false" size="5" maxlength="5" value="#{managerFunctionsManagementBackingBean.credits}"/>
+				<h:message for="credits" styleClass="error"/>
+			</h:panelGroup>
+		</h:panelGrid>		
+		
+		<h:outputText value="<br/><br/>" escape="false" rendered="#{managerFunctionsManagementBackingBean.numberOfFunctions > 0}"/>		
+		
+		<h:panelGrid rendered="#{managerFunctionsManagementBackingBean.numberOfFunctions > 0}"
+			columns="2" styleClass="infoop">							
+			
+			<h:outputText value="<b>#{bundle['label.begin']}</b>" escape="false"/>																
+			<h:panelGroup>
+				<h:outputText value="<b>#{bundle['label.executionYear']}</b>&nbsp;" escape="false"/>
+				<fc:selectOneMenu disabled="#{managerFunctionsManagementBackingBean.disabledVarHidden.value == 1}" onchange="this.form.submit();" value="#{managerFunctionsManagementBackingBean.executionYearID}">
+					<f:selectItems value="#{managerFunctionsManagementBackingBean.executionYears}"/>
+				</fc:selectOneMenu>						
+				<h:outputText value="&nbsp;&nbsp;&nbsp;<b>#{bundle['label.property.executionPeriod']}</b>&nbsp;" escape="false"/>
+				<fc:selectOneMenu disabled="#{managerFunctionsManagementBackingBean.disabledVarHidden.value == 1}" onchange="this.form.submit();" value="#{managerFunctionsManagementBackingBean.executionPeriod}">
+					<f:selectItems value="#{managerFunctionsManagementBackingBean.executionPeriods}"/>
+				</fc:selectOneMenu>
+			</h:panelGroup>
+			
+			<h:outputText value="<b>#{bundle['label.duration']}</b>" escape="false"/>
+			<h:selectOneRadio onchange="this.form.submit();" disabled="#{managerFunctionsManagementBackingBean.executionPeriodHidden.value == 0 || managerFunctionsManagementBackingBean.disabledVarHidden.value == 1}" 
+				value="#{managerFunctionsManagementBackingBean.duration}">
+				<f:selectItems value="#{managerFunctionsManagementBackingBean.durationList}" />
+			</h:selectOneRadio>									
+		</h:panelGrid>				
+		
+		<h:outputText value="" escape="false"/>			
+		<fc:commandLink action="" value="#{bundle['link.functions.management.edit']}">
+			<f:param id="disabledVar1" name="disabledVar" value="0"/>
+		</fc:commandLink> 
+			
+		<h:outputText value="<br/>" escape="false" rendered="#{managerFunctionsManagementBackingBean.numberOfFunctions > 0}"/>		
+		
+		<h:panelGrid rendered="#{managerFunctionsManagementBackingBean.numberOfFunctions > 0}"
+			columns="2" styleClass="infoop">							
+			<h:outputText value="<b>#{bundle['label.begin.date']}</b>" escape="false"/>
+			<h:panelGroup>
+				<h:inputText disabled="#{managerFunctionsManagementBackingBean.disabledVarHidden.value == 0}" id="beginDate"  size="10" value="#{managerFunctionsManagementBackingBean.beginDate}">							
+					<fc:dateValidator format="dd/MM/yyyy" strict="false"/>
+				</h:inputText>	
+				<h:outputText value="#{bundle['label.date.format']}"/>
+				<h:message for="beginDate" styleClass="error"/>				
+			</h:panelGroup>									
+						
+			<h:outputText value="<b>#{bundle['label.end.date']}</b>" escape="false"/>
+			<h:panelGroup>
+				<h:inputText disabled="#{managerFunctionsManagementBackingBean.disabledVarHidden.value == 0}" id="endDate" size="10" value="#{managerFunctionsManagementBackingBean.endDate}">
+					<fc:dateValidator format="dd/MM/yyyy" strict="false"/>
+				</h:inputText>				
+				<h:outputText value="#{bundle['label.date.format']}"/>
+				<h:message for="endDate" styleClass="error"/>
+			</h:panelGroup>
+		</h:panelGrid>					
+		
+		<h:outputText value="" escape="false"/>			
+		<fc:commandLink action="" value="#{bundle['link.functions.management.edit']}">
+			<f:param id="disabledVar2" name="disabledVar" value="1"/>
+		</fc:commandLink> 
+		
+		<h:outputText value="<br/>" escape="false" />	
+		
+		<h:panelGrid columns="3" rendered="#{managerFunctionsManagementBackingBean.numberOfFunctions > 0}">							
 			<h:panelGroup>
 				<h:commandButton action="#{managerFunctionsManagementBackingBean.verifyFunction}" value="#{bundle['label.associate1']}" styleClass="inputbutton"/>							
 				<h:commandButton action="alterUnit" immediate="true" value="#{bundle['button.choose.new.person']}" styleClass="inputbutton"/>						
+				<h:commandButton action="cancel" immediate="true" value="#{bundle['button.cancel']}" styleClass="inputbutton"/>				
 			</h:panelGroup>
 		</h:panelGrid>	
 
