@@ -1,129 +1,57 @@
+<%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 <%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
-<style>
-.italic {
-font-style: italic
-}
-</style>
-
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="ServidorApresentacao/BolonhaManagerResources" var="bolonhaBundle"/>
+	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="enumerationBundle"/>
 	
-	<h2><h:outputText value="#{bolonhaBundle['curricularPlansManagement']}"/></h2>
+	<h:outputText value="<i>#{bolonhaBundle['bolonhaManager']}</i>" escape="false"/>
+	<h:outputText value="<h2>#{bolonhaBundle['curricularPlans']}</h2>" escape="false"/>
+	<h:outputText value="<br/>" escape="false" />
 
-	<h:outputText value="* "/>
-	<h:outputLink value="createDegree.faces">
-		<h:outputText value="#{bolonhaBundle['createDegree']}" />
-	</h:outputLink>
-	<h:outputText value="<br/><br/>" escape="false" />
-<%-- 
-	<fc:dataRepeater value="#{CurricularPlanManagement.departmentDegrees}" var="degree">
-		<h:outputText value="<table><tr><td>" escape="false"/>
-		<h:outputText value="<b>#{bolonhaBundle['degree']}:</b><br/>" escape="false" />
-		<h:outputText value="#{degree.nome} > " escape="false" />
-		<h:outputLink value="editDegree.faces?degreeID=#{degree.idInternal}">
-			<h:outputText value="#{bolonhaBundle['editDegree']}" />
+	<h:messages errorClass="error" infoClass="infoMsg"/>
+	
+	<h:outputText value="<table border='0' width='70%'>" escape="false"/>
+		<fc:dataRepeater value="#{ScientificCouncilDegreeManagement.bolonhaDegrees}" var="degree">
+		<h:outputText value="<tr><td colspan='2'><b>#{bolonhaBundle['degree']}:</b></td></tr>" escape="false"/>
+
+		<h:outputText value="<tr><td colspan='2'>#{degree.nome} > " escape="false"/>
+		<h:outputLink value="viewDegree.faces">
+			<h:outputFormat value="#{bolonhaBundle['view']}"/>
+			<f:param name="degreeId" value="#{degree.idInternal}"/>
 		</h:outputLink>
-		<h:outputText value="<br/>" escape="false" />
-		<fc:dataRepeater value="#{degree.unit.parentUnits}" var="departmentUnit">
-			<h:outputText value="- #{departmentUnit.department.realName}" escape="false"/>
-		</fc:dataRepeater>
 		<h:outputText value="</td></tr>" escape="false"/>
 		
-		<h:outputText value="<tr><td>#{bolonhaBundle['curricularPlans']}</td></tr>" escape="false"/>
-		<fc:dataRepeater value="#{degree.degreeCurricularPlans}" var="degreeCurricularPlan">
-			<h:outputText value="<tr><td>" escape="false"/>
-			<h:outputText value="<i>#{degreeCurricularPlan.curricularStage.name}:</i></br>" escape="false" />
-			<h:outputText value="#{degreeCurricularPlan.name}</br>" escape="false" />
-			<h:outputText value="</td></tr>" escape="false"/>
-		</fc:dataRepeater>
-		<h:outputText value="</table>" escape="false"/>
-	</fc:dataRepeater>
---%>	
-<%-- 
-	<h:outputText value="* "/>
-	<h:outputLink value="createCurricularPlan.faces">
-		<h:outputText value="#{bolonhaBundle['createCurricularPlan']}" />
-	</h:outputLink>
-	<br/>
-	<h:outputText value="--== Temporary Links ==--"/>
-	<br/>
-	<h:outputText value="* "/>
-	<h:outputLink value="editCurricularPlan.faces">
-		<h:outputText value="#{bolonhaBundle['editCurricularPlan']}" />
-	</h:outputLink>
-	<br/>
-	<h:outputText value="--== ................. ==--"/>
-	<br/> --%>
-	
-	<h:messages styleClass="infomsg"/><br/>
-	
-	<h:outputText value="* "/>
-	<h:outputLink value="createCurricularCourse.faces">
-		<h:outputText value="#{bolonhaBundle['createCurricularCourse']}" />
-		<%-- Temporary values --%>
-		<f:param name="degreeCurricularPlanID" value="462" />
-		<f:param name="courseGroupID" value="15835" />
-	</h:outputLink>
-	<br/>
-	<h:outputText value="* "/>
-	<h:outputLink value="editCurricularCourse.faces">
-		<h:outputText value="test. #{bolonhaBundle['editCurricularCourse']}" />
-		<f:param name="degreeCurricularPlanID" value="462" />
-		<f:param name="contextID" value="210" />
-		<f:param name="curricularCourseID" value="15854" />
-	</h:outputLink>
-	<br/>
-	<h:outputLink value="editCurricularCourse.faces">
-		<h:outputText value="ah. #{bolonhaBundle['editCurricularCourse']}" />
-		<f:param name="degreeCurricularPlanID" value="462" />
-		<f:param name="curricularCourseID" value="15914" />
-	</h:outputLink>
-	<br/>
-	<h:outputText value="* "/>
-	<h:outputLink value="associateCurricularCourse.faces">
-		<h:outputText value="#{bolonhaBundle['associateCurricularCourse']}" />
-		<f:param name="degreeCurricularPlanID" value="462" />
-		<f:param name="courseGroupID" value="15835" />
-	</h:outputLink>
-	<br/>
-	<h:outputText value="--== ................. ==--"/>
-	<br/>
-	<h:outputText value="--== Temporary Links ==--"/>
-	<br/>
-	<br/>
-	<h:outputText value="ITERATE_DEGREES"/>
-	<h:panelGrid columns="1" border="1">
-		<h:panelGroup>
-			<h:outputText style="font-weight: bold" value="#{bolonhaBundle['degree']}: " />
-			<h:outputText value="DEGREE_NAME > "/>
-			<h:outputLink value="editDegree.faces">
-				<h:outputText value="#{bolonhaBundle['edit']}" />
+		<h:outputText value="<tr><td colspan='2'><b>#{bolonhaBundle['curricularPlan']}:</b></td></tr>" escape="false" rendered="#{!empty degree.degreeCurricularPlans}"/>
+		<h:outputText value="<tr><td colspan='2' align='center'><i>#{bolonhaBundle['no.curricularPlan']}.</i></td></tr>" escape="false" rendered="#{empty degree.degreeCurricularPlans}"/>
+
+		<fc:dataRepeater value="#{degree.degreeCurricularPlans}" var="degreeCurricularPlan" rendered="#{!empty degree.degreeCurricularPlans}">
+			<h:outputText value="<tr>" escape="false"/>
+
+			<h:outputText value="<td><i>#{enumerationBundle[degreeCurricularPlan.curricularStage.name]}:</i> " escape="false" />
+			<h:outputText value="#{degreeCurricularPlan.name}</td>" escape="false" />
+
+			<h:outputText value="<td align='right'>" escape="false"/>
+			<h:outputLink value="viewCurricularPlan.faces">
+				<h:outputText value="#{bolonhaBundle['view']}" />
+				<f:param name="dcpId" value="#{degreeCurricularPlan.idInternal}"/>
 			</h:outputLink>
-		</h:panelGroup>
-		<h:panelGroup>
-			<h:outputText value="#{bolonhaBundle['draft']}: <br/>" styleClass="italic" escape="false"/>
-				<h:outputText style="font-weight: bold" value="#{bolonhaBundle['curricularPlan']}: " />
-				<h:outputText value="CURRICULAR_PLAN_NAME > "/>
-				<h:outputLink value="showCurricularPlan.faces">
-					<h:outputText value="#{bolonhaBundle['showCurricularPlan']}" />
-				</h:outputLink>
-				<h:outputText value=", "/>
-				<h:outputLink value="editCurricularPlan.faces">
-					<h:outputText value="#{bolonhaBundle['edit']} #{bolonhaBundle['data']}" />
-				</h:outputLink>
-				<h:outputText value=", "/>
-				<h:outputLink value="editCurricularPlanStructure.faces">
-					<h:outputText value="#{bolonhaBundle['edit']} #{bolonhaBundle['structure']}" />
-				</h:outputLink>	
-				<h:outputText value="<br/>" escape="false"/>
-			<h:outputText value="#{bolonhaBundle['published']}: <br/>" styleClass="italic" escape="false"/>
-			<h:outputText value="#{bolonhaBundle['approved']}: " styleClass="italic"/>
-		</h:panelGroup>
-	</h:panelGrid>
-	
+			<h:outputText value=" , " escape="false"/>
+			<h:outputLink value="buildCurricularPlan.faces">
+				<h:outputText value="#{bolonhaBundle['buildCurricularPlan']}" />
+				<f:param name="dcpId" value="#{degreeCurricularPlan.idInternal}"/>
+			</h:outputLink>
+			<h:outputText value="</td>" escape="false"/>
+			
+			<h:outputText value="</tr>" escape="false"/>
+		</fc:dataRepeater>
+
+		<h:outputText value="<tr><td colspan='2'>&nbsp;</td></tr>" escape="false"/>
+		
+	</fc:dataRepeater>
+	<h:outputText value="</table>" escape="false"/>	
 
 </ft:tilesView>

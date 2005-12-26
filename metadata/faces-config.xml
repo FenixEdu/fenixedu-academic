@@ -1487,29 +1487,21 @@
 	</navigation-rule>
 	<!-- Degree -->
 	<navigation-rule>
-		<from-view-id>/bolonhaManager/curricularPlans/createDegree.jsp</from-view-id>
+		<from-view-id>/bolonhaManager/curricularPlans/viewDegree.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>curricularPlansManagement</from-outcome>
 			<to-view-id>/bolonhaManager/curricularPlans/curricularPlansManagement.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
-		<from-view-id>/bolonhaManager/curricularPlans/editDegree.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>curricularPlansManagement</from-outcome>
-			<to-view-id>/bolonhaManager/curricularPlans/curricularPlansManagement.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	<!-- CurricularPlan -->
-	<navigation-rule>
-		<from-view-id>/bolonhaManager/curricularPlans/createCurricularPlan.jsp</from-view-id>
+		<from-view-id>/bolonhaManager/curricularPlans/viewCurricularPlan.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>curricularPlansManagement</from-outcome>
 			<to-view-id>/bolonhaManager/curricularPlans/curricularPlansManagement.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
-		<from-view-id>/bolonhaManager/curricularPlans/editCurricularPlan.jsp</from-view-id>
+		<from-view-id>/bolonhaManager/curricularPlans/buildCurricularPlan.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>curricularPlansManagement</from-outcome>
 			<to-view-id>/bolonhaManager/curricularPlans/curricularPlansManagement.jsp</to-view-id>

@@ -37,7 +37,7 @@
 		</h:outputLink>
 		<h:outputText value="</td></tr>" escape="false"/>
 		
-		<h:outputText value="<tr><td colspan='2'><b>#{scouncilBundle['curricularPlan']}:</b></td></tr>" escape="false" rendered="#{!empty degree.degreeCurricularPlans}"/>
+		<h:outputText value="<tr><td colspan='2'><b>#{scouncilBundle['curricularPlans']}:</b></td></tr>" escape="false" rendered="#{!empty degree.degreeCurricularPlans}"/>
 		<h:outputText value="<tr><td colspan='2' align='center'><i>#{scouncilBundle['no.curricularPlan']}.</i></td></tr>" escape="false" rendered="#{empty degree.degreeCurricularPlans}"/>
 
 		<fc:dataRepeater value="#{degree.degreeCurricularPlans}" var="degreeCurricularPlan" rendered="#{!empty degree.degreeCurricularPlans}">
