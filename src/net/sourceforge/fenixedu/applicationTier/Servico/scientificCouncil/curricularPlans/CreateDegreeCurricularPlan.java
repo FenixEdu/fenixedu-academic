@@ -1,12 +1,12 @@
-package net.sourceforge.fenixedu.applicationTier.Servico.manager;
+package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans;
 
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
@@ -16,41 +16,34 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class InsertDegreeCurricularPlan implements IService {
+public class CreateDegreeCurricularPlan implements IService {
 
-    public void run(InfoDegreeCurricularPlan infoDcp) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(Integer degreeId, String name, Double ectsCredits, CurricularStage curricularStage, GradeScale gradeScale) throws FenixServiceException, ExcepcaoPersistencia {
 
-        if (infoDcp.getInfoDegree().getIdInternal() == null || infoDcp.getName() == null
-                || infoDcp.getInitialDate() == null || infoDcp.getDegreeDuration() == null
-                || infoDcp.getMinimalYearForOptionalCourses() == null) {
+        if (degreeId == null || name == null || ectsCredits == null || curricularStage == null) {
             throw new InvalidArgumentsServiceException();
         }
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
+        final List<IDegreeCurricularPlan> dcps = (List<IDegreeCurricularPlan>) persistentSupport
+                .getIPersistentDegreeCurricularPlan().readFromNewDegreeStructure();
 
         // assert unique pair name/degree
-        final List<IDegreeCurricularPlan> dcps = (List<IDegreeCurricularPlan>) persistentSupport
-                .getIPersistentDegreeCurricularPlan().readByCurricularStage(CurricularStage.OLD);
         for (IDegreeCurricularPlan dcp : dcps) {
-            if (dcp.getDegree().getIdInternal().equals(infoDcp.getInfoDegree().getIdInternal())
-                    && dcp.getName().equalsIgnoreCase(infoDcp.getName())) {
+            if (dcp.getDegree().getIdInternal().equals(degreeId)
+                    && dcp.getName().equalsIgnoreCase(name)) {
                 throw new FenixServiceException("error.degreeCurricularPlan.existing.name.and.degree");
             }
         }
 
         final ICursoPersistente persistentDegree = persistentSupport.getICursoPersistente();
-        final IDegree degree = (IDegree) persistentDegree.readByOID(Degree.class, infoDcp
-                .getInfoDegree().getIdInternal());
+        final IDegree degree = (IDegree) persistentDegree.readByOID(Degree.class, degreeId);
         if (degree == null) {
             throw new FenixServiceException("error.degreeCurricularPlan.non.existing.degree");
         }
 
-        new DegreeCurricularPlan(degree, infoDcp.getName(), infoDcp.getState(),
-                infoDcp.getInitialDate(), infoDcp.getEndDate(), infoDcp.getDegreeDuration(), infoDcp
-                        .getMinimalYearForOptionalCourses(), infoDcp.getNeededCredits(), infoDcp
-                        .getMarkType(), infoDcp.getNumerusClausus(), infoDcp.getAnotation(), infoDcp
-                        .getGradeScale());
+        new DegreeCurricularPlan(degree, name, ectsCredits, curricularStage, gradeScale);
     }
 
 }

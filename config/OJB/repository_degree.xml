@@ -57,6 +57,11 @@
 		column="ACRONYM"
 		jdbc-type="VARCHAR"
 	/>
+	<field-descriptor
+		name="ectsCredits"
+		column="ECTS_CREDITS"
+		jdbc-type="DOUBLE"
+	/>
 	<reference-descriptor auto-retrieve="false"
          name="unit"
          class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">

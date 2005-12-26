@@ -5,11 +5,16 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public abstract class DegreeModule extends DegreeModule_Base {
     
+    public Boolean getCanBeDeleted() {
+        return !hasAnyDegreeModuleContexts(); 
+    }
+    
     public void delete() {
-        if (hasAnyDegreeModuleContexts()) {
-            throw new DomainException("error.notEmptyCurricularCourseContexts");
+        if (getCanBeDeleted()) {
+            removeNewDegreeCurricularPlan();    
+        } else {
+            throw new DomainException("error.notEmptyCurricularCourseContexts");    
         }
-        removeNewDegreeCurricularPlan();
     }
     
     public void deleteContext(IContext context) {        

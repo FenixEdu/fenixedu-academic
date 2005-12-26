@@ -704,12 +704,13 @@ class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.do
     DegreeType tipoCurso;
 	BolonhaDegreeType bolonhaDegreeType;
     Integer keyUnit;
-    GradeScale gradeScale;    
+    GradeScale gradeScale;
+    Double ectsCredits;
 	
 	interface "
 
 	public void edit(String name, String nameEn, String code, net.sourceforge.fenixedu.domain.degree.DegreeType degreeType, net.sourceforge.fenixedu.domain.GradeScale gradeScale);
-	public void edit(String name, String nameEn, String acronym, net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType bolonhaDegreeType, net.sourceforge.fenixedu.domain.GradeScale gradeScale);
+	public void edit(String name, String nameEn, String acronym, net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType bolonhaDegreeType, Double ectsCredits, net.sourceforge.fenixedu.domain.GradeScale gradeScale);
 	public void delete();
 	public net.sourceforge.fenixedu.domain.GradeScale getGradeScaleChain();
 	"
@@ -736,6 +737,7 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     CurricularStage curricularStage;
     Integer degreeModuleKey;
    	Integer keyDegreeCurricularPlanMembersGroup;
+    Double ectsCredits;    
     
     interface "
     public IStudentCurricularPlan getNewStudentCurricularPlan();
@@ -765,6 +767,10 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
 	public void edit(String name, net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState state, 
 			java.util.Date inicialDate, java.util.Date endDate, Integer degreeDuration, Integer minimalYearForOptionalCourses, 
 			Double neededCredits, net.sourceforge.fenixedu.util.MarkType markType, Integer numerusClausus, String annotation, net.sourceforge.fenixedu.domain.GradeScale gradeScale);
+
+	public void edit(String name, Double ectsCredits, 
+		net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage curricularStage, 
+		net.sourceforge.fenixedu.domain.GradeScale gradeScale);
 
 	public void delete();
 	
@@ -851,6 +857,7 @@ class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.s
 	String code;
 	
 	interface "
+		public Boolean getCanBeDeleted();
 		public void delete();
 		public boolean isLeaf();
 		public void print(java.lang.StringBuffer stringBuffer, String tabs, IContext previousContext);

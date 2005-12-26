@@ -6,22 +6,18 @@
 	<f:loadBundle basename="ServidorApresentacao/ScientificCouncilResources" var="scouncilBundle"/>	
 	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="enumerationBundle"/>
 
-	<h:outputText value="<i>#{scouncilBundle['scientificCouncil']}</i>" escape="false"/>
+	<h:outputText value="<i>#{ScientificCouncilDegreeManagement.degree.nome}" escape="false"/>
+	<h:outputText value=" (#{ScientificCouncilDegreeManagement.degree.acronym})</i>" escape="false"/>
 	<h:outputFormat value="<h2>#{scouncilBundle['delete.param']}</h2>" escape="false">
 		<f:param value="#{scouncilBundle['degree']}" />
 	</h:outputFormat>
 	<h:form>
 		<h:outputText escape="false" value="<input id='degreeId' name='degreeId' type='hidden' value='#{ScientificCouncilDegreeManagement.degreeId}'"/><br/>
 		
-		<%-- Error Message --%>
-		<h:outputText styleClass="error" rendered="#{!empty ScientificCouncilDegreeManagement.errorMessage}"
-			value="#{scouncilBundle[ScientificCouncilDegreeManagement.errorMessage]}"/>
-		<h:messages showSummary="true" errorClass="error" rendered="#{empty ScientificCouncilDegreeManagement.errorMessage}"/>
-		
 		<h:outputText value="<b>#{scouncilBundle['degree.data']}:</b><br/><br/>" escape="false"/>
 		
 		<h:outputText styleClass="error" rendered="#{!empty ScientificCouncilDegreeManagement.errorMessage}"
-			value="#{ScientificCouncilDegreeManagement.errorMessage}<br/>" escape="false"/>
+			value="#{ScientificCouncilDegreeManagement.errorMessage}<br/><br/>" escape="false"/>
 		
 		<h:panelGrid styleClass="infoselected" columns="2" border="0">
 			<h:outputText value="<b>#{scouncilBundle['name']} (pt):</b> " escape="false"/>
@@ -35,6 +31,10 @@
 			
 			<h:outputText value="<b>#{scouncilBundle['degreeType']}:</b> " escape="false"/>
 			<h:outputText id="bolonhaDegreeType" value="#{enumerationBundle[ScientificCouncilDegreeManagement.bolonhaDegreeType]}"/>
+
+			<h:outputText value="<b>#{scouncilBundle['ectsCredits']}:</b> " escape="false"/>
+			<h:outputText id="ectsCredits" value="#{ScientificCouncilDegreeManagement.ectsCredits}"/>
+
 <%-- 
  			<h:outputText value="<b>#{scouncilBundle['gradeTypes']}:</b> " escape="false"/>
 			<h:outputText id="gradeType" value="#{enumerationBundle[ScientificCouncilDegreeManagement.gradeType]}"/>

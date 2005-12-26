@@ -1019,7 +1019,7 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>EditDegreeCurricularPlan</name>
+		<name>EditDegreeCurricularPlanInOldDegreeStructure</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.manager.EditDegreeCurricularPlan</implementationClass>
 		<description />
@@ -4166,6 +4166,36 @@
 		<name>DeleteDegree</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.DeleteDegree</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ScientificCouncilAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>CreateDegreeCurricularPlan</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.CreateDegreeCurricularPlan</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ScientificCouncilAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>EditDegreeCurricularPlan</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.EditDegreeCurricularPlan</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ScientificCouncilAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>DeleteDegreeCurricularPlan</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.DeleteDegreeCurricularPlan</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>

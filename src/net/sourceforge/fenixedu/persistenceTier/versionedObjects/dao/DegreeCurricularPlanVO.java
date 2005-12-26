@@ -20,16 +20,26 @@ import org.apache.commons.collections.Predicate;
 public class DegreeCurricularPlanVO extends VersionedObjectsBase implements
         IPersistentDegreeCurricularPlan {
 
-    public List readAll() throws ExcepcaoPersistencia {
+    public List readByCurricularStage(CurricularStage curricularStage) throws ExcepcaoPersistencia {
         List<IDegreeCurricularPlan> result = new ArrayList<IDegreeCurricularPlan>();
         for (IDegreeCurricularPlan dcp : (List<IDegreeCurricularPlan>) readAll(DegreeCurricularPlan.class)) {
-            if (dcp.getCurricularStage().equals(CurricularStage.OLD)) {
+            if (dcp.getCurricularStage().equals(curricularStage)) {
                 result.add(dcp);
             }
         }
         return result;
     }
 
+    public List readFromNewDegreeStructure() throws ExcepcaoPersistencia {
+        List<IDegreeCurricularPlan> result = new ArrayList<IDegreeCurricularPlan>();
+        for (IDegreeCurricularPlan dcp : (List<IDegreeCurricularPlan>) readAll(DegreeCurricularPlan.class)) {
+            if (!dcp.getCurricularStage().equals(CurricularStage.OLD)) {
+                result.add(dcp);
+            }
+        }
+        return result;
+    }
+    
     public List readByDegreeAndState(Integer degreeId, final DegreeCurricularPlanState state, final CurricularStage curricularStage)
             throws ExcepcaoPersistencia {
         IDegree degree = (IDegree) readByOID(Degree.class, degreeId);
@@ -57,7 +67,7 @@ public class DegreeCurricularPlanVO extends VersionedObjectsBase implements
     
     public List readByDegreeTypeAndState(final DegreeType degreeType, final DegreeCurricularPlanState state) throws ExcepcaoPersistencia
     {
-        List degreeCurricularPlans = (List)readAll();
+        List degreeCurricularPlans = (List) readByCurricularStage(CurricularStage.OLD);
         return (List)CollectionUtils.select(degreeCurricularPlans,new Predicate () {
                 public boolean evaluate(Object o) {
                     IDegreeCurricularPlan dcp = (IDegreeCurricularPlan)o; 

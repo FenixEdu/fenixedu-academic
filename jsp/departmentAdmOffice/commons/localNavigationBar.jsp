@@ -62,7 +62,6 @@
 			</logic:notEmpty>
 		</ul>
 	</logic:present>
-<!-- 
 	<ul>
 		<li class="navheader">
 			<strong><bean:message key="link.group.managementGroups.title"/></strong>
@@ -80,5 +79,4 @@
 			</html:link>
 		</li>
 	</ul>
- -->		
 </logic:present>

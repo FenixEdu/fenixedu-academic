@@ -24,12 +24,17 @@ public class CourseGroup extends CourseGroup_Base {
         return false;   
     }
     
+    public Boolean getCanBeDeleted() {
+        return super.getCanBeDeleted() && !hasAnyCourseGroupContexts(); 
+    }
+    
     public void delete() {
-        if(hasAnyCourseGroupContexts()) {
+        if(getCanBeDeleted()) {
+            super.delete();
+            super.deleteDomainObject();
+        } else {
             throw new DomainException("error.notEmptyCourseGroupContexts");
         }
-        super.delete();
-        super.deleteDomainObject();
     }
 
     public void print(StringBuffer dcp, String tabs, IContext previousContext) {

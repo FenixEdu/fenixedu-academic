@@ -19,13 +19,20 @@ import org.apache.ojb.broker.query.Criteria;
 public class DegreeCurricularPlanOJB extends PersistentObjectOJB implements
         IPersistentDegreeCurricularPlan {
 
-    public List readAll() throws ExcepcaoPersistencia {
+    public List readByCurricularStage(CurricularStage curricularStage) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("curricularStage", CurricularStage.OLD);
+        criteria.addEqualTo("curricularStage", curricularStage);
 
         return queryList(DegreeCurricularPlan.class, criteria);
     }
 
+    public List readFromNewDegreeStructure() throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addNotEqualTo("curricularStage", CurricularStage.OLD);
+
+        return queryList(DegreeCurricularPlan.class, criteria);
+    }
+    
     public List readByDegreeAndState(Integer degreeId, DegreeCurricularPlanState state, CurricularStage curricularStage)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();

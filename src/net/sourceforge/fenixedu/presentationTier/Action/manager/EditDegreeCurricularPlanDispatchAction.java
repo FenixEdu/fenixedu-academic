@@ -205,7 +205,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
         Object args[] = { newInfoDegreeCP };
 
         try {
-            ServiceUtils.executeService(userView, "EditDegreeCurricularPlan", args);
+            ServiceUtils.executeService(userView, "EditDegreeCurricularPlanInOldDegreeStructure", args);
 
         } catch (ExistingServiceException e) {
             throw new ExistingActionException("message.manager.existing.degree.curricular.plan", e);

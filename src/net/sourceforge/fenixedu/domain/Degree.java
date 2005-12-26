@@ -11,18 +11,23 @@ import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.domain.student.IDelegate;
 
 public class Degree extends Degree_Base {
-	
-	public GradeScale getGradeScaleChain() {
-		return super.getGradeScale() != null ? super.getGradeScale() : getTipoCurso().getGradeScale();
-	}
 
     protected Degree() {
         super();
     };
 
-    protected Degree(String name, String nameEn) {
+    public Degree(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale,
+            String concreteClassForDegreeCurricularPlans) {
         this();
-        commonFieldsChange(name, nameEn, null);
+        commonFieldsChange(name, nameEn, gradeScale);
+        oldStructureFieldsChange(code, degreeType);
+
+        if (concreteClassForDegreeCurricularPlans == null) {
+            throw new DomainException("degree.concrete.class.not.null");
+        }
+        this.setConcreteClassForDegreeCurricularPlans(concreteClassForDegreeCurricularPlans);
+
+        new DegreeInfo(this);
     }
 
     private void commonFieldsChange(String name, String nameEn, GradeScale gradeScale) {
@@ -37,18 +42,6 @@ public class Degree extends Degree_Base {
         this.setGradeScale(gradeScale);
     }
     
-    public Degree(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale, String concreteClassForDegreeCurricularPlans) {
-        commonFieldsChange(name, nameEn, gradeScale);
-        oldStructureFieldsChange(code, degreeType);
-        
-        if (concreteClassForDegreeCurricularPlans == null) {
-            throw new DomainException("degree.concrete.class.not.null");
-        }
-        this.setConcreteClassForDegreeCurricularPlans(concreteClassForDegreeCurricularPlans);
-        
-        new DegreeInfo(this);
-    }
-
     private void oldStructureFieldsChange(String code, DegreeType degreeType) {
         if (code == null) {
             throw new DomainException("degree.code.not.null");
@@ -61,20 +54,25 @@ public class Degree extends Degree_Base {
     }
 
     
-    public Degree(String namePt, String nameEn, String acronym, BolonhaDegreeType bolonhaDegreeType, GradeScale gradeScale) {
-        commonFieldsChange(namePt, nameEn, gradeScale);
-        newStructureFieldsChange(acronym, bolonhaDegreeType);
+    public Degree(String name, String nameEn, String acronym, BolonhaDegreeType bolonhaDegreeType,
+            Double ectsCredits, GradeScale gradeScale) {
+        this();
+        commonFieldsChange(name, nameEn, gradeScale);
+        newStructureFieldsChange(acronym, bolonhaDegreeType, ectsCredits);
     }
     
-    private void newStructureFieldsChange(String acronym, BolonhaDegreeType bolonhaDegreeType) {
+    private void newStructureFieldsChange(String acronym, BolonhaDegreeType bolonhaDegreeType, Double ectsCredits) {
         if (acronym == null) {
             throw new DomainException("degree.acronym.not.null");
         } else if(bolonhaDegreeType == null) {
             throw new DomainException("degree.degree.type.not.null");
+        } else if (ectsCredits == null) {
+            throw new DomainException("degree.ectsCredits.not.null");
         }
 
         this.setAcronym(acronym);
         this.setBolonhaDegreeType(bolonhaDegreeType);
+        this.setEctsCredits(ectsCredits);
     }
 
     public void edit(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale) {
@@ -85,14 +83,19 @@ public class Degree extends Degree_Base {
             new DegreeInfo(this);
     }
 
-    public void edit(String name, String nameEn, String acronym, BolonhaDegreeType bolonhaDegreeType, GradeScale gradeScale) {
+    public void edit(String name, String nameEn, String acronym, BolonhaDegreeType bolonhaDegreeType,
+            Double ectsCredits, GradeScale gradeScale) {
         commonFieldsChange(name, nameEn, gradeScale);
-        newStructureFieldsChange(acronym, bolonhaDegreeType);
+        newStructureFieldsChange(acronym, bolonhaDegreeType, ectsCredits);
+    }
+    
+    public Boolean getCanBeDeleted() {
+        return !hasAnyDegreeCurricularPlans();
     }
     
     public void delete() throws DomainException {
         
-        if (!hasAnyDegreeCurricularPlans()) {
+        if (getCanBeDeleted()) {
             
             Iterator oicrIterator = getAssociatedOldInquiriesCoursesResIterator();
             while (oicrIterator.hasNext()) {
@@ -163,4 +166,9 @@ public class Degree extends Degree_Base {
 
         return degreeCurricularPlan;
     }
+
+    public GradeScale getGradeScaleChain() {
+        return super.getGradeScale() != null ? super.getGradeScale() : getTipoCurso().getGradeScale();
+    }
+
 }

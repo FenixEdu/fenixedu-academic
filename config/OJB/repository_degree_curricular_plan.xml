@@ -87,12 +87,6 @@
 		jdbc-type="LONGVARCHAR"
 	/>	  
 	<field-descriptor
-		name="ackOptLock"
-		column="ACK_OPT_LOCK"
-		jdbc-type="INTEGER"
-		locking="false"
-	/>
-	<field-descriptor
 		name="concreteClassForStudentCurricularPlans"
 		column="CLASS_NAME_FOR_STUDENT_CURRICULAR_PLANS"
 		jdbc-type="VARCHAR"
@@ -124,6 +118,11 @@
 		column="KEY_DEGREE_CURRICULAR_PLAN_MEMBERS_GROUP"
 		jdbc-type="INTEGER"
 	/>	
+	<field-descriptor
+		name="ectsCredits"
+		column="ECTS_CREDITS"
+		jdbc-type="DOUBLE"
+	/>
 	<reference-descriptor auto-retrieve="false"
 			name="curricularPlanMembersGroup"
 			class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanMembersGroup"
@@ -269,12 +268,6 @@
 		jdbc-type="LONGVARCHAR"
 	/>	  
 	<field-descriptor
-		name="ackOptLock"
-		column="ACK_OPT_LOCK"
-		jdbc-type="INTEGER"
-		locking="false"
-	/>
-	<field-descriptor
 		name="concreteClassForStudentCurricularPlans"
 		column="CLASS_NAME_FOR_STUDENT_CURRICULAR_PLANS"
 		jdbc-type="VARCHAR"
@@ -300,7 +293,12 @@
 		name="degreeModuleKey"
 		column="KEY_DEGREE_MODULE"
 		jdbc-type="INTEGER"
-	/>		
+	/>
+	<field-descriptor
+		name="ectsCredits"
+		column="ECTS_CREDITS"
+		jdbc-type="DOUBLE"
+	/>
 	<reference-descriptor auto-retrieve="false"
 			name="degreeModule"
 			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
@@ -439,12 +437,6 @@
 		jdbc-type="LONGVARCHAR"
 	/>	  
 	<field-descriptor
-		name="ackOptLock"
-		column="ACK_OPT_LOCK"
-		jdbc-type="INTEGER"
-		locking="false"
-	/>
-	<field-descriptor
 		name="concreteClassForStudentCurricularPlans"
 		column="CLASS_NAME_FOR_STUDENT_CURRICULAR_PLANS"
 		jdbc-type="VARCHAR"
@@ -470,6 +462,11 @@
 		name="degreeModuleKey"
 		column="KEY_DEGREE_MODULE"
 		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="ectsCredits"
+		column="ECTS_CREDITS"
+		jdbc-type="DOUBLE"
 	/>
 	<reference-descriptor auto-retrieve="false"
 			name="degreeModule"
@@ -609,12 +606,6 @@
 		jdbc-type="LONGVARCHAR"
 	/>	  
 	<field-descriptor
-		name="ackOptLock"
-		column="ACK_OPT_LOCK"
-		jdbc-type="INTEGER"
-		locking="false"
-	/>
-	<field-descriptor
 		name="concreteClassForStudentCurricularPlans"
 		column="CLASS_NAME_FOR_STUDENT_CURRICULAR_PLANS"
 		jdbc-type="VARCHAR"
@@ -640,6 +631,11 @@
 		name="degreeModuleKey"
 		column="KEY_DEGREE_MODULE"
 		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="ectsCredits"
+		column="ECTS_CREDITS"
+		jdbc-type="DOUBLE"
 	/>
 	<reference-descriptor auto-retrieve="false"
 			name="degreeModule"
@@ -780,12 +776,6 @@
 		jdbc-type="LONGVARCHAR"
 	/>	  
 	<field-descriptor
-		name="ackOptLock"
-		column="ACK_OPT_LOCK"
-		jdbc-type="INTEGER"
-		locking="false"
-	/>
-	<field-descriptor
 		name="concreteClassForStudentCurricularPlans"
 		column="CLASS_NAME_FOR_STUDENT_CURRICULAR_PLANS"
 		jdbc-type="VARCHAR"
@@ -811,6 +801,11 @@
 		name="degreeModuleKey"
 		column="KEY_DEGREE_MODULE"
 		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="ectsCredits"
+		column="ECTS_CREDITS"
+		jdbc-type="DOUBLE"
 	/>
 	<reference-descriptor auto-retrieve="false"
 			name="degreeModule"
@@ -951,12 +946,6 @@
 		jdbc-type="LONGVARCHAR"
 	/>	  
 	<field-descriptor
-		name="ackOptLock"
-		column="ACK_OPT_LOCK"
-		jdbc-type="INTEGER"
-		locking="false"
-	/>
-	<field-descriptor
 		name="concreteClassForStudentCurricularPlans"
 		column="CLASS_NAME_FOR_STUDENT_CURRICULAR_PLANS"
 		jdbc-type="VARCHAR"
@@ -982,6 +971,11 @@
 		name="degreeModuleKey"
 		column="KEY_DEGREE_MODULE"
 		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="ectsCredits"
+		column="ECTS_CREDITS"
+		jdbc-type="DOUBLE"
 	/>
 	<reference-descriptor auto-retrieve="false"
 			name="degreeModule"
@@ -1121,12 +1115,6 @@
 		jdbc-type="LONGVARCHAR"
 	/>	  
 	<field-descriptor
-		name="ackOptLock"
-		column="ACK_OPT_LOCK"
-		jdbc-type="INTEGER"
-		locking="false"
-	/>
-	<field-descriptor
 		name="concreteClassForStudentCurricularPlans"
 		column="CLASS_NAME_FOR_STUDENT_CURRICULAR_PLANS"
 		jdbc-type="VARCHAR"
@@ -1152,7 +1140,12 @@
 		name="degreeModuleKey"
 		column="KEY_DEGREE_MODULE"
 		jdbc-type="INTEGER"
-	/>	
+	/>
+	<field-descriptor
+		name="ectsCredits"
+		column="ECTS_CREDITS"
+		jdbc-type="DOUBLE"
+	/>
 	<reference-descriptor auto-retrieve="false"
 			name="degreeModule"
 			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
@@ -1291,12 +1284,6 @@
 		jdbc-type="LONGVARCHAR"
 	/>	  
 	<field-descriptor
-		name="ackOptLock"
-		column="ACK_OPT_LOCK"
-		jdbc-type="INTEGER"
-		locking="false"
-	/>
-	<field-descriptor
 		name="concreteClassForStudentCurricularPlans"
 		column="CLASS_NAME_FOR_STUDENT_CURRICULAR_PLANS"
 		jdbc-type="VARCHAR"
@@ -1322,6 +1309,11 @@
 		name="degreeModuleKey"
 		column="KEY_DEGREE_MODULE"
 		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="ectsCredits"
+		column="ECTS_CREDITS"
+		jdbc-type="DOUBLE"
 	/>
 	<reference-descriptor auto-retrieve="false"
 			name="degreeModule"

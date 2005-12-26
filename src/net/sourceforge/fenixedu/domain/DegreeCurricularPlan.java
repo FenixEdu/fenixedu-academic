@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfAc
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfCurricularCoursesEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PrecedencesEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PreviousYearsCurricularCourseEnrollmentRule;
+import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.IContext;
 import net.sourceforge.fenixedu.domain.degreeStructure.ICourseGroup;
@@ -31,44 +32,118 @@ import net.sourceforge.fenixedu.util.MarkType;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-/**
- * @author David Santos in Jun 25, 2004
- */
-
 public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
+    private final String DCP_ROOT_NAME = "_ROOT_NAME"; 
+    private final String DCP_ROOT_ACRO = "_ROOT_ACRO";
+    private final String DCP_ROOT_CODE = "_ROOT_CODE";
+    
     public DegreeCurricularPlan() {
         super();    
-        setOjbConcreteClass(getClass().getName());
     }    
 
+    private DegreeCurricularPlan(IDegree degree) {
+        if (degree == null) {
+            throw new DomainException("degreeCurricularPlan.degree.not.null");
+        }
+
+        this.setDegree(degree);
+        this.setOjbConcreteClass(getClass().getName());
+    }
+    
     public DegreeCurricularPlan(IDegree degree, String name, DegreeCurricularPlanState state,
             Date inicialDate, Date endDate, Integer degreeDuration,
             Integer minimalYearForOptionalCourses, Double neededCredits, MarkType markType,
-            Integer numerusClausus, String annotation, CurricularStage curricularStage, GradeScale gradeScale) {
+            Integer numerusClausus, String annotation, GradeScale gradeScale) {
 
-        this();
+        this(degree);
+        commonFieldsChange(name, gradeScale);
+        oldStructureFieldsChange(state, inicialDate, endDate, degreeDuration,
+                minimalYearForOptionalCourses, neededCredits, markType, numerusClausus, annotation);
 
-        setDegree(degree);
-        setName(name);
-        setState(state);
-        setInitialDate(inicialDate);
-        setEndDate(endDate);
-        setDegreeDuration(degreeDuration);
-        setMinimalYearForOptionalCourses(minimalYearForOptionalCourses);
-        setNeededCredits(neededCredits);
-        setMarkType(markType);
-        setNumerusClausus(numerusClausus);
-        setAnotation(annotation);
-        setGradeScale(gradeScale);
-        setCurricularStage(curricularStage);        
-        setConcreteClassForStudentCurricularPlans(degree.getConcreteClassForDegreeCurricularPlans());
+        this.setCurricularStage(CurricularStage.OLD);
+        this.setConcreteClassForStudentCurricularPlans(degree.getConcreteClassForDegreeCurricularPlans());
+    }
+
+    private void commonFieldsChange(String name, GradeScale gradeScale) {
+        if(name == null) {
+            throw new DomainException("degreeCurricularPlan.name.not.null");
+        } 
+
+        this.setName(name);
+        this.setGradeScale(gradeScale);
+    }
+
+    private void oldStructureFieldsChange(DegreeCurricularPlanState state, Date inicialDate,
+            Date endDate, Integer degreeDuration, Integer minimalYearForOptionalCourses,
+            Double neededCredits, MarkType markType, Integer numerusClausus, String annotation) {
+        
+        if (inicialDate == null) {
+            throw new DomainException("degreeCurricularPlan.inicialDate.not.null");
+        } else if (degreeDuration == null) {
+            throw new DomainException("degreeCurricularPlan.degreeDuration.not.null");
+        } else if (minimalYearForOptionalCourses == null) {
+            throw new DomainException("degreeCurricularPlan.minimalYearForOptionalCourses.not.null");
+        }
+        
+        this.setState(state);
+        this.setInitialDate(inicialDate);
+        this.setEndDate(endDate);
+        this.setDegreeDuration(degreeDuration);
+        this.setMinimalYearForOptionalCourses(minimalYearForOptionalCourses);
+        this.setNeededCredits(neededCredits);
+        this.setMarkType(markType);
+        this.setNumerusClausus(numerusClausus);
+        this.setAnotation(annotation);
+    }
+
+    public DegreeCurricularPlan(IDegree degree, String name, Double ectsCredits, CurricularStage curricularStage, GradeScale gradeScale) {
+        this(degree);
+        commonFieldsChange(name, gradeScale);
+        newStructureFieldsChange(ectsCredits, curricularStage);
+        
+        ICourseGroup dcpRoot = new CourseGroup(name + this.DCP_ROOT_NAME, name + this.DCP_ROOT_CODE, name + this.DCP_ROOT_ACRO);
+        this.setDegreeModule(dcpRoot);
     }
     
-    public GradeScale getGradeScaleChain() {
-        return super.getGradeScale() != null ? super.getGradeScale() : getDegree().getGradeScaleChain();    	
+    private void newStructureFieldsChange(Double ectsCredits, CurricularStage curricularStage) {
+        if (ectsCredits == null) {
+            throw new DomainException("degreeCurricularPlan.ectsCredits.not.null");
+        } else if(curricularStage == null) {
+            throw new DomainException("degreeCurricularPlan.curricularStage.not.null");
+        }
+
+        this.setEctsCredits(ectsCredits);
+        this.setCurricularStage(curricularStage);
     }
     
+    public void edit(String name, DegreeCurricularPlanState state, Date inicialDate, Date endDate,
+            Integer degreeDuration, Integer minimalYearForOptionalCourses, Double neededCredits,
+            MarkType markType, Integer numerusClausus, String annotation, GradeScale gradeScale) {
+
+        commonFieldsChange(name, gradeScale);
+        oldStructureFieldsChange(state, inicialDate, endDate, degreeDuration, minimalYearForOptionalCourses, neededCredits, markType, numerusClausus, annotation);
+    }
+
+    public void edit(String name, Double ectsCredits, CurricularStage curricularStage, GradeScale gradeScale) {
+        commonFieldsChange(name, gradeScale);
+        newStructureFieldsChange(ectsCredits, curricularStage);
+    }
+
+    private Boolean getCanBeDeleted() {
+        return ((ICourseGroup)getDegreeModule()).getCanBeDeleted() && !(hasAnyStudentCurricularPlans() || hasAnyCurricularCourseEquivalences()
+                || hasAnyEnrolmentPeriods() || hasAnyCurricularCourses() || hasAnyExecutionDegrees() || hasAnyAreas());
+    }
+
+    public void delete() {
+        if (getCanBeDeleted()) {
+            ((ICourseGroup)getDegreeModule()).delete();
+            removeDegree();
+            
+            deleteDomainObject();
+        } else
+            throw new DomainException("error.degree.curricular.plan.cant.delete");
+    }
 
     public String toString() {
         String result = "[" + this.getClass().getName() + ": ";
@@ -96,6 +171,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         } else {
             return "";    
         }
+    }
+
+    public GradeScale getGradeScaleChain() {
+        return super.getGradeScale() != null ? super.getGradeScale() : getDegree().getGradeScaleChain();        
     }
     
     public IStudentCurricularPlan getNewStudentCurricularPlan() {
@@ -258,39 +337,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return groups;
     }
 
-    public void edit(String name, DegreeCurricularPlanState state, Date inicialDate, Date endDate,
-            Integer degreeDuration, Integer minimalYearForOptionalCourses, Double neededCredits,
-            MarkType markType, Integer numerusClausus, String annotation, GradeScale gradeScale) {
-
-        setName(name);
-        setState(state);
-        setInitialDate(inicialDate);
-        setEndDate(endDate);
-        setDegreeDuration(degreeDuration);
-        setMinimalYearForOptionalCourses(minimalYearForOptionalCourses);
-        setNeededCredits(neededCredits);
-        setMarkType(markType);
-        setNumerusClausus(numerusClausus);
-        setAnotation(annotation);
-        setGradeScale(gradeScale);
-    }
-
-    private Boolean canBeDeleted() {
-
-        return !(hasAnyStudentCurricularPlans() || hasAnyCurricularCourseEquivalences()
-                || hasAnyEnrolmentPeriods() || hasAnyCurricularCourses() || hasAnyExecutionDegrees() || hasAnyAreas());
-    }
-
-    public void delete() {
-
-        if (canBeDeleted()) {
-            removeDegree();
-            deleteDomainObject();
-        } else
-            throw new DomainException("error.degree.curricular.plan.cant.delete");
-
-    }
-
     public boolean isGradeValid(String grade) {
 
         IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory
@@ -348,4 +394,5 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             }
         }
     }
+    
 }

@@ -11,6 +11,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -34,7 +35,7 @@ public class ReadDegreeCurricularPlans implements IService {
 		final ISuportePersistente sp = PersistenceSupportFactory
 				.getDefaultPersistenceSupport();
 
-		final List curricularPlans = sp.getIPersistentDegreeCurricularPlan().readAll();
+		final List curricularPlans = sp.getIPersistentDegreeCurricularPlan().readByCurricularStage(CurricularStage.OLD);
 		final List infoCurricularPlans = new ArrayList(curricularPlans.size());
 
 		for (final Iterator iter = curricularPlans.iterator(); iter.hasNext();) {

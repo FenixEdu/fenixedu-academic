@@ -17,9 +17,10 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class EditDegree implements IService {
 
     public void run(Integer idInternal, String name, String nameEn, String acronym,
-            BolonhaDegreeType bolonhaDegreeType, GradeScale gradeScale) throws FenixServiceException,
+            BolonhaDegreeType bolonhaDegreeType, Double ectsCredits, GradeScale gradeScale) throws FenixServiceException, 
             ExcepcaoPersistencia {
-        if (name == null || nameEn == null || acronym == null || bolonhaDegreeType == null) {
+        if (idInternal == null || name == null || nameEn == null || acronym == null
+                || bolonhaDegreeType == null || ectsCredits == null) {
             throw new InvalidArgumentsServiceException();
         }
 
@@ -45,12 +46,12 @@ public class EditDegree implements IService {
                 if ((degree.getNome().equalsIgnoreCase(name) || degree.getNameEn().equalsIgnoreCase(
                         nameEn))
                         && degree.getBolonhaDegreeType().equals(bolonhaDegreeType)) {
-                    throw new FenixServiceException("error.existing.name.and.type");
+                    throw new FenixServiceException("error.existing.degree.name.and.type");
                 }
             }
         }
 
-        degreeToEdit.edit(name, nameEn, acronym, bolonhaDegreeType, gradeScale);
+        degreeToEdit.edit(name, nameEn, acronym, bolonhaDegreeType, ectsCredits, gradeScale);
     }
 
 }
