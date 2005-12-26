@@ -1,11 +1,3 @@
-/*
- * 
- * Created on 27 of March de 2003
- * 
- * 
- * Autores : - Nuno Nunes (nmsn@rnl.ist.utl.pt) - Joana Mota
- * (jccm@rnl.ist.utl.pt)
- */
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.student;
 
 import java.util.ArrayList;
@@ -77,7 +69,6 @@ public class ReadPersonInfoOfStudentsAction extends FenixAction {
                 return mapping.findForward("NoStudent");
             }
             request.setAttribute("infoStudent", infoStudent);
-            //request.setAttribute("graduationType",graduationType);
             request.setAttribute("studentNumber", studentNumber);
             request.setAttribute("infoPerson", infoStudent.getInfoPerson());
 
@@ -100,9 +91,6 @@ public class ReadPersonInfoOfStudentsAction extends FenixAction {
             }
 
             session.setAttribute(SessionConstants.NATIONALITY_LIST_KEY, nationalityList);
-            //session.setAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY, Arrays.asList(MaritalStatus.values()));
-            /*session.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY,
-                    TipoDocumentoIdentificacao.toArrayList());*/
             session.setAttribute(SessionConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request.getAttribute(Globals.LOCALE_KEY)));
             session.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
             session.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
@@ -114,7 +102,7 @@ public class ReadPersonInfoOfStudentsAction extends FenixAction {
         throw new Exception();
     }
 
-    private String getFromRequest(String parameter, HttpServletRequest request) {
+    public static String getFromRequest(String parameter, HttpServletRequest request) {
         String parameterString = request.getParameter(parameter);
         if (parameterString == null) {
             parameterString = (String) request.getAttribute(parameter);
@@ -122,7 +110,7 @@ public class ReadPersonInfoOfStudentsAction extends FenixAction {
         return parameterString;
     }
 
-    private void populateForm(DynaActionForm changeApplicationInfoForm, InfoPerson infoPerson) {
+    public static void populateForm(DynaActionForm changeApplicationInfoForm, InfoPerson infoPerson) {
         changeApplicationInfoForm.set("identificationDocumentNumber", infoPerson
                 .getNumeroDocumentoIdentificacao());
         if(infoPerson.getTipoDocumentoIdentificacao() != null){
