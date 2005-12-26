@@ -54,7 +54,19 @@ public class ReadCurricularCoursesToEnroll implements IService {
 
     private static final int MAX_CURRICULAR_SEMESTERS = 2;
 
-    public ReadCurricularCoursesToEnroll() {
+    protected List findCurricularCourses(List curricularCourses, IStudentCurricularPlan studentCurricularPlan,
+    		IExecutionPeriod executionPeriod) {
+    	final List result = new ArrayList();
+    	for (final ICurricularCourse curricularCourse : (List<ICurricularCourse>) curricularCourses) {
+    		if (!studentCurricularPlan
+                    .isCurricularCourseApprovedInCurrentOrPreviousPeriod(
+                            (ICurricularCourse) curricularCourse, executionPeriod)
+                    && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(
+                            (ICurricularCourse) curricularCourse, executionPeriod)) {
+    			result.add(curricularCourse);
+    		}
+    	}
+    	return result;
     }
 
     public Object run(InfoStudent infoStudent, DegreeType degreeType, Integer executionPeriodID,
@@ -102,16 +114,8 @@ public class ReadCurricularCoursesToEnroll implements IService {
         final List curricularSemestersListFinal = verifySemesters(curricularSemestersList);
 
         curricularCoursesFromDegreeCurricularPlan = degreeCurricularPlan.getCurricularCourses();
-        curricularCoursesFromDegreeCurricularPlan = (List) CollectionUtils.select(
-                curricularCoursesFromDegreeCurricularPlan, new Predicate() {
-                    public boolean evaluate(Object arg0) {
-                        return !studentCurricularPlan
-                                .isCurricularCourseApprovedInCurrentOrPreviousPeriod(
-                                        (ICurricularCourse) arg0, executionPeriod)
-                                && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(
-                                        (ICurricularCourse) arg0, executionPeriod);
-                    }
-                });
+        curricularCoursesFromDegreeCurricularPlan = findCurricularCourses(curricularCoursesFromDegreeCurricularPlan,
+        		studentCurricularPlan, executionPeriod);
         if (!((curricularYearsList == null || curricularYearsList.size() <= 0) && (curricularSemestersList == null || curricularSemestersList
                 .size() <= 0))) {
 
@@ -136,9 +140,7 @@ public class ReadCurricularCoursesToEnroll implements IService {
                             return result;
                         }
                     });
-        }
-
-        else {
+        } else {
             curricularCoursesFromDegreeCurricularPlan = (List) CollectionUtils.select(
                     curricularCoursesFromDegreeCurricularPlan, new Predicate() {
                         public boolean evaluate(Object arg0) {
