@@ -151,10 +151,12 @@ public class UICourseGroup extends UIDegreeModule {
         writer.writeAttribute("style", "margin: 0; padding: 0.25em 1em;", null);
         
         writer.startElement("li", this);
-        encodeLink("createCurricularCourse.faces?courseGroupId=" + this.degreeModule.getIdInternal(), "create.curricular.course");
+        encodeLink("createCurricularCourse.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
+                .get("dcpId") + "&courseGroupID=" + this.degreeModule.getIdInternal(), "create.curricular.course");
         writer.endElement("li");
         writer.startElement("li", this);
-        encodeLink("associateCurricularCourse.faces?courseGroupId=" + this.degreeModule.getIdInternal(), "associate.curricular.course");
+        encodeLink("associateCurricularCourse.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
+                .get("dcpId") + "&courseGroupID=" + this.degreeModule.getIdInternal(), "associate.curricular.course");
         writer.endElement("li");
         
         writer.endElement("ul");
