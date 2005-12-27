@@ -26,4 +26,8 @@ public enum DegreeType {
         return this.gradeScale;
     }
 
+    public String getName() {
+        return name();
+    }
+
 }
