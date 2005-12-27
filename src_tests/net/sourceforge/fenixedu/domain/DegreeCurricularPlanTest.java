@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.MarkType;
 
@@ -55,7 +54,7 @@ public class DegreeCurricularPlanTest extends DomainTestBase {
 		
 		newDegreeCurricularPlan = new DegreeCurricularPlan(degree, newName, newState, newInicialDate, newEndDate, newDegreeDuration,
 															newMinimalYearForOptionalCourses, newNeededCredits, newMarkType,
-															newNumerusClausus, newAnnotation, CurricularStage.OLD, null);
+															newNumerusClausus, newAnnotation, GradeScale.TYPE20);
 	}
 	
 	

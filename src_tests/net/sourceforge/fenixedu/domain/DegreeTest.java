@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesCoursesRes;
@@ -109,7 +110,7 @@ public class DegreeTest extends DomainTestBase {
 	}
 
 	private void setUpEdit() {
-		degreeToEditWithDegreeInfo = new Degree("x", "x", "x", null, null);
+		degreeToEditWithDegreeInfo = new Degree("x", "x", "x", (BolonhaDegreeType) null, (Double) null, (GradeScale) null);
 		degreeToEditWithoutDegreeInfo = new Degree();
 	}
 

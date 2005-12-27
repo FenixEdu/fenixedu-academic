@@ -30,6 +30,13 @@ public class Degree extends Degree_Base {
         new DegreeInfo(this);
     }
 
+    public Degree(String name, String nameEn, String acronym, BolonhaDegreeType bolonhaDegreeType,
+            Double ectsCredits, GradeScale gradeScale) {
+        this();
+        commonFieldsChange(name, nameEn, gradeScale);
+        newStructureFieldsChange(acronym, bolonhaDegreeType, ectsCredits);
+    }
+
     private void commonFieldsChange(String name, String nameEn, GradeScale gradeScale) {
         if (name == null) {
             throw new DomainException("degree.name.not.null");
@@ -51,14 +58,6 @@ public class Degree extends Degree_Base {
 
         this.setSigla(code);
         this.setTipoCurso(degreeType);
-    }
-
-    
-    public Degree(String name, String nameEn, String acronym, BolonhaDegreeType bolonhaDegreeType,
-            Double ectsCredits, GradeScale gradeScale) {
-        this();
-        commonFieldsChange(name, nameEn, gradeScale);
-        newStructureFieldsChange(acronym, bolonhaDegreeType, ectsCredits);
     }
     
     private void newStructureFieldsChange(String acronym, BolonhaDegreeType bolonhaDegreeType, Double ectsCredits) {
@@ -160,8 +159,11 @@ public class Degree extends Degree_Base {
             Class classDefinition = Class.forName(getConcreteClassForDegreeCurricularPlans());
             degreeCurricularPlan = (IDegreeCurricularPlan) classDefinition.newInstance();
         } catch (InstantiationException e) {
+        	throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
+        	throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
+        	throw new RuntimeException(e);
         }
 
         return degreeCurricularPlan;

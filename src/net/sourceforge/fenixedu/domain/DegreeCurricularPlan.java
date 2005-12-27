@@ -184,8 +184,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             Class classDefinition = Class.forName(getConcreteClassForStudentCurricularPlans());
             studentCurricularPlan = (IStudentCurricularPlan) classDefinition.newInstance();
         } catch (InstantiationException e) {
+        	throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
+        	throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
+        	throw new RuntimeException(e);
         }
 
         return studentCurricularPlan;
