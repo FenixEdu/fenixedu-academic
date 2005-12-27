@@ -37,12 +37,12 @@
 			<h:outputText value="<td align='right'>" escape="false"/>
 			<h:outputLink value="viewCurricularPlan.faces">
 				<h:outputText value="#{bolonhaBundle['view']}" />
-				<f:param name="dcpId" value="#{degreeCurricularPlan.idInternal}"/>
+				<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.idInternal}"/>
 			</h:outputLink>
 			<h:outputText value=" , " escape="false"/>
 			<h:outputLink value="buildCurricularPlan.faces">
 				<h:outputText value="#{bolonhaBundle['buildCurricularPlan']}" />
-				<f:param name="dcpId" value="#{degreeCurricularPlan.idInternal}"/>
+				<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.idInternal}"/>
 			</h:outputLink>
 			<h:outputText value="</td>" escape="false"/>
 			

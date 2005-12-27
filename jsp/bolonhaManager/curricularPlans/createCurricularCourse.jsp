@@ -81,6 +81,6 @@
 		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['create']}"
 			action="#{CurricularCourseManagement.createCurricularCourse}"/>
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}"
-			action="curricularPlansManagement"/>
+			action="buildCurricularPlan"/>
 	</h:form>
 </ft:tilesView>

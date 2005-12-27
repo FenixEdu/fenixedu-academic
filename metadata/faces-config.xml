@@ -1519,6 +1519,13 @@
 			<to-view-id>/bolonhaManager/curricularPlans/curricularPlansManagement.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularPlans/editCurricularPlanStructure.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 	<!-- CurricularCourse -->
 	<navigation-rule>
 		<from-view-id>/bolonhaManager/curricularPlans/createCurricularCourse.jsp</from-view-id>
@@ -1526,12 +1533,20 @@
 			<from-outcome>curricularPlansManagement</from-outcome>
 			<to-view-id>/bolonhaManager/curricularPlans/curricularPlansManagement.jsp</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
 		<from-view-id>/bolonhaManager/curricularPlans/editCurricularCourse.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>curricularPlansManagement</from-outcome>
 			<to-view-id>/bolonhaManager/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/buildCurricularPlan.jsp</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>confirmDeleteCurricularCourse</from-outcome>
@@ -1543,6 +1558,10 @@
 		<navigation-case>
 			<from-outcome>curricularPlansManagement</from-outcome>
 			<to-view-id>/bolonhaManager/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/buildCurricularPlan.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>

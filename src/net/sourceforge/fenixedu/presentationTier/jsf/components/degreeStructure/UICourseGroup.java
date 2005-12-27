@@ -46,9 +46,33 @@ public class UICourseGroup extends UIDegreeModule {
         if (((ICourseGroup)this.degreeModule).getNewDegreeCurricularPlan() == null) {
             // this is not the root course group
             encodeSelf();
-        } else if(!this.onlyStructure) {
+        } else {
             // root course group
-            encodeChildCurricularCourses();
+            writer.startElement("table", this);
+            writer.writeAttribute("border", 1, null);
+
+            writer.startElement("tr", this);
+            writer.startElement("th", this);
+            if (this.onlyStructure && this.toEdit) {
+                writer.append("(");
+                encodeLink("createCourseGroup.faces?courseGroupId=" + this.degreeModule.getIdInternal(), "create.course.group");
+                writer.append(") ");
+            }
+            writer.endElement("th");
+            writer.endElement("tr");
+            
+            if (!this.onlyStructure) {
+                encodeChildCurricularCourses();
+            }
+            
+//            if (!this.onlyStructure && this.toEdit) {
+//                encodeCourseGroupOptions();
+//            }
+//
+//            if (!this.onlyStructure && ((ICourseGroup)this.degreeModule).getContextsWithCurricularCourses().size() > 0) {
+//                encodeTotalCreditsFooter();
+//            }
+            writer.endElement("table");
         }
         encodeChildCourseGroups();
     }
@@ -152,11 +176,11 @@ public class UICourseGroup extends UIDegreeModule {
         
         writer.startElement("li", this);
         encodeLink("createCurricularCourse.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("dcpId") + "&courseGroupID=" + this.degreeModule.getIdInternal(), "create.curricular.course");
+                .get("degreeCurricularPlanID") + "&courseGroupID=" + this.degreeModule.getIdInternal(), "create.curricular.course");
         writer.endElement("li");
         writer.startElement("li", this);
         encodeLink("associateCurricularCourse.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("dcpId") + "&courseGroupID=" + this.degreeModule.getIdInternal(), "associate.curricular.course");
+                .get("degreeCurricularPlanID") + "&courseGroupID=" + this.degreeModule.getIdInternal(), "associate.curricular.course");
         writer.endElement("li");
         
         writer.endElement("ul");

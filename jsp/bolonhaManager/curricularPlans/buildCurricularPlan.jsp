@@ -9,33 +9,33 @@
 	<f:loadBundle basename="ServidorApresentacao/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="enumerationBundle"/>
 	
-	<h:outputText value="<i>#{ScientificCouncilCurricularPlanManagement.dcp.name}" escape="false"/>
-	<h:outputText value=" (#{enumerationBundle[ScientificCouncilCurricularPlanManagement.dcp.curricularStage.name]})</i>" escape="false"/>
+	<h:outputText value="<i>#{CurricularCourseManagement.degreeCurricularPlan.name}" escape="false"/>
+	<h:outputText value=" (#{enumerationBundle[CurricularCourseManagement.degreeCurricularPlan.curricularStage.name]})</i>" escape="false"/>
 	<h:outputText value="<h2>#{bolonhaBundle['buildCurricularPlan']}</h2>" escape="false"/>
 
 	<h:outputText value="#{bolonhaBundle['view.structure.organized.by']}: " escape="false"/>
 	<h:outputLink value="buildCurricularPlan.faces">
 		<h:outputText value="#{bolonhaBundle['groups']}" />
-		<f:param name="dcpId" value="#{ScientificCouncilCurricularPlanManagement.dcpId}"/>
+		<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
 	</h:outputLink>
 	<h:outputText value=" | " escape="false"/>
 	<h:outputLink value="buildCurricularPlan.faces">
 		<h:outputText value="#{bolonhaBundle['curricularYear']}/#{bolonhaBundle['semester']}" />
-		<f:param name="dcpId" value="#{ScientificCouncilCurricularPlanManagement.dcpId}"/>
+		<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
 	</h:outputLink>
 
 	<h:outputText value="</br></br>* " escape="false"/>
 	<h:outputLink value="editCurricularPlanStructure.faces">
 		<h:outputText value="#{bolonhaBundle['edit.curricularPlan.structure']}" />
-		<f:param name="dcpId" value="#{ScientificCouncilCurricularPlanManagement.dcpId}"/>
+		<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
 	</h:outputLink>
 
-	<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{ScientificCouncilCurricularPlanManagement.dcpId}'"/><br/>
-	<fc:degreeCurricularPlanRender dcp="#{ScientificCouncilCurricularPlanManagement.dcp}" onlyStructure="false" toEdit="true" />
+	<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'"/><br/>
+	<fc:degreeCurricularPlanRender dcp="#{CurricularCourseManagement.degreeCurricularPlan}" onlyStructure="false" toEdit="true" />
 
 	<h:outputText value="</br></br>" escape="false"/>
 	<h:form>
-		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{ScientificCouncilCurricularPlanManagement.dcpId}'"/><br/>
+		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'"/><br/>
 		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['return']}"
 			action="curricularPlansManagement"/>
 	</h:form>

@@ -46,8 +46,8 @@
 		</h:panelGrid>
 		<br/><br/><hr>
 		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['associate']}"
-			action="curricularPlansManagement" actionListener="#{CurricularCourseManagement.addContext}"/>	
+			action="buildCurricularPlan" actionListener="#{CurricularCourseManagement.addContext}"/>	
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['back']}"
-			action="curricularPlansManagement"/>
+			action="buildCurricularPlan"/>
 	</h:form>
 </ft:tilesView>

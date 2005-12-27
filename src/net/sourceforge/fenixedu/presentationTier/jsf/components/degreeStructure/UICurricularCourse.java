@@ -81,10 +81,10 @@ public class UICurricularCourse extends UIDegreeModule {
     private void encodeCurricularCourseOptions() throws IOException {
         writer.startElement("td", this);
         encodeLink("editCurricularCourse.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("dcpId") + "&contextID=" + this.previousContext.getIdInternal() + "&curricularCourseID=" + this.degreeModule.getIdInternal(), "edit");
+                .get("degreeCurricularPlanID") + "&contextID=" + this.previousContext.getIdInternal() + "&curricularCourseID=" + this.degreeModule.getIdInternal(), "edit");
         writer.append(" , ");
         encodeLink("deleteCurricularCourse.facesdegreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("dcpId") + "&contextID=" + this.previousContext.getIdInternal() + "&curricularCourseID=" + this.degreeModule.getIdInternal(), "delete");
+                .get("degreeCurricularPlanID") + "&contextID=" + this.previousContext.getIdInternal() + "&curricularCourseID=" + this.degreeModule.getIdInternal(), "delete");
         writer.endElement("td");
     }
     

@@ -158,6 +158,6 @@
 		</h:panelGrid>
 		<br/><hr>
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['back']}"
-			action="curricularPlansManagement"/>
+			action="buildCurricularPlan"/>
 	</h:form>
 </ft:tilesView>
