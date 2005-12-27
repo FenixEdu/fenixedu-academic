@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.accessControl;
 
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.accessControl.IUserGroup;
 import net.sourceforge.fenixedu.domain.cms.IContent;
@@ -19,16 +20,16 @@ import net.sourceforge.fenixedu.domain.cms.IContent;
 public class AccessControl
 {
 
-	public static class IllegalContentAccess extends RuntimeException
+	public static class IllegalDataAccessException extends RuntimeException
 	{
 		private static final long serialVersionUID = 2264135195805915798L;
 
-		public IllegalContentAccess()
+		public IllegalDataAccessException()
 		{
 			super();
 		}
 
-		public IllegalContentAccess(String msg, IPerson person)
+		public IllegalDataAccessException(String msg, IPerson person)
 		{
 			super(msg);
 		}
@@ -46,14 +47,14 @@ public class AccessControl
 		AccessControl.userView.set(userView);
 	}
 
-	public static void check(IContent c, IUserGroup group)
+	public static void check(DomainObject c, IUserGroup group)
 	{
-		System.out.println("Access control :)");
-		System.out.println();
 		IPerson requester = AccessControl.getUserView().getPerson();
 		boolean result = false;
 		
-		result = c.getOwners().contains(requester); 
+        if (c instanceof IContent) {
+            result = ((IContent)c).getOwners().contains(requester);
+        }
 		result |= (group!=null && group.isMember(requester));
 		
 		if (!result)
@@ -62,7 +63,7 @@ public class AccessControl
 			message.append("User ").append(requester.getUsername()).append(" tried to execute access content instance number").append(c.getIdInternal());
 			message.append("but he/she is not authorized to do so");
 
-			throw new IllegalContentAccess(message.toString(),requester);
+			throw new IllegalDataAccessException(message.toString(),requester);
 		}
 	}
 }
