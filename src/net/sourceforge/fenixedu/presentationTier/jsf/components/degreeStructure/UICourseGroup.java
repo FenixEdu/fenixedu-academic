@@ -55,7 +55,7 @@ public class UICourseGroup extends UIDegreeModule {
             writer.startElement("th", this);
             if (this.onlyStructure && this.toEdit) {
                 writer.append("(");
-                encodeLink("createCourseGroup.faces?courseGroupId=" + this.degreeModule.getIdInternal(), "create.course.group");
+                encodeLink("createCourseGroup.faces?parentCourseGroupID=" + this.degreeModule.getIdInternal(), "create.course.group");
                 writer.append(") ");
             }
             writer.endElement("th");
@@ -128,9 +128,9 @@ public class UICourseGroup extends UIDegreeModule {
 
     private void encodeEditOptions() throws IOException {
         writer.append("(");
-        encodeLink("createCourseGroup.faces?courseGroupId=" + this.degreeModule.getIdInternal(), "create.course.group");
+        encodeLink("createCourseGroup.faces?parentCourseGroupID=" + this.degreeModule.getIdInternal(), "create.course.group");
         writer.append(" , ");
-        encodeLink("deleteCourseGroup.faces?courseGroupId=" + this.degreeModule.getIdInternal(), "delete");
+        encodeLink("deleteCourseGroup.faces?parentCourseGroupID=" + this.degreeModule.getIdInternal(), "delete");
         writer.append(") ");
     }
 
