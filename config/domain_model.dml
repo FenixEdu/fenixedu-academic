@@ -156,6 +156,7 @@ class net.sourceforge.fenixedu.domain.Attends extends net.sourceforge.fenixedu.d
 	public IFinalMark getFinalMark()	;
 	public IMark getMarkByEvaluation(IEvaluation evaluation);	
 	public void delete();
+	public java.util.List<IMark> getAssociatedMarksOrderedByEvaluationDate();
 	"	
 }
 
@@ -1506,6 +1507,10 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
  	public Double getStudentsNumberByShift(ShiftType shiftType);
 	
 	public java.util.List<IEnrolmentEvaluation> getActiveEnrollmentEvaluations();
+
+	public java.util.List<IEvaluation> getOrderedAssociatedEvaluations();
+
+	public java.util.Set<IAttends> getOrderedAttends();
     "
 }
 

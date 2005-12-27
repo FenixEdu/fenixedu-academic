@@ -40,8 +40,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTimetable;
 import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.IEvaluation;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.onlineTests.IOnlineTest;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
@@ -169,7 +172,23 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         setFromRequest(request);
         final InfoSiteEvaluationMarks evaluationMarksComponent = new InfoSiteEvaluationMarks();
         evaluationMarksComponent.setEvaluationID(Integer.valueOf(evaluationOID));
-        readSiteView(request, evaluationMarksComponent, null, null, null);
+        final ExecutionCourseSiteView siteView = (ExecutionCourseSiteView) readSiteView(request, evaluationMarksComponent, null, null, null);
+
+        final Integer executionCourseID = ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal();
+        final IEvaluation evaluation = evaluationMarksComponent.getEvaluation();
+        final List<IExecutionCourse> executionCourses;
+        if (evaluation instanceof IOnlineTest) {
+            executionCourses = ((IOnlineTest) evaluation).getAssociatedExecutionCoursesForOnlineTest();
+        } else {
+            executionCourses = evaluation.getAssociatedExecutionCourses();
+        }
+
+        for (final IExecutionCourse executionCourse : executionCourses) {
+            if (executionCourse.getIdInternal().equals(executionCourseID)) {
+                evaluationMarksComponent.setExecutionCourse(executionCourse);
+                break;
+            }
+        }
 
         return mapping.findForward("sucess");
     }

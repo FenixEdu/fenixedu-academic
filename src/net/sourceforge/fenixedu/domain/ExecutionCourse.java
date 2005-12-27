@@ -5,8 +5,13 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.accessControl.IUserGroup;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -15,8 +20,10 @@ import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
 import net.sourceforge.fenixedu.domain.onlineTests.IOnlineTest;
 import net.sourceforge.fenixedu.fileSuport.INode;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.ProposalState;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
@@ -519,4 +526,53 @@ public class ExecutionCourse extends ExecutionCourse_Base
 
         return results;
     }
+
+    private static final Comparator<IEvaluation> EVALUATION_COMPARATOR = new Comparator<IEvaluation>() {
+
+        public int compare(IEvaluation evaluation1, IEvaluation evaluation2) {
+            final String evaluation1ComparisonString = evaluationComparisonString(evaluation1);
+            final String evaluation2ComparisonString = evaluationComparisonString(evaluation2);
+            return evaluation1ComparisonString.compareTo(evaluation2ComparisonString);
+        }
+
+        private String evaluationComparisonString(final IEvaluation evaluation) {
+            final Date evaluationComparisonDate;
+            final String evaluationTypeDistinguisher;
+
+            if (evaluation instanceof IOnlineTest) {
+                evaluationTypeDistinguisher = "1";
+                final IOnlineTest onlineTest = (IOnlineTest) evaluation;
+                evaluationComparisonDate = onlineTest.getDistributedTest().getBeginDateDate();
+            } else if (evaluation instanceof IProject) {
+                evaluationTypeDistinguisher = "2";
+                final IProject project = (IProject) evaluation;
+                evaluationComparisonDate = project.getBegin();
+            } else if (evaluation instanceof IWrittenEvaluation) {
+                evaluationTypeDistinguisher = "3";
+                final IWrittenEvaluation writtenEvaluation = (IWrittenEvaluation) evaluation;
+                evaluationComparisonDate = writtenEvaluation.getDayDate();
+            } else if (evaluation instanceof IFinalEvaluation) {
+                evaluationTypeDistinguisher = "4";
+                final IExecutionCourse executionCourse = evaluation.getAssociatedExecutionCourses().get(0);
+                evaluationComparisonDate = executionCourse.getExecutionPeriod().getEndDate();                
+            } else {
+                throw new DomainException("unknown.evaluation.type", evaluation.getClass().getName());
+            }
+
+            return DateFormatUtil.format(evaluationTypeDistinguisher + "_yyyy/MM/dd", evaluationComparisonDate);
+        }
+    };
+    public List<IEvaluation> getOrderedAssociatedEvaluations() {
+        final List<IEvaluation> orderedEvaluations = new ArrayList<IEvaluation>(getAssociatedEvaluations());
+        Collections.sort(orderedEvaluations, EVALUATION_COMPARATOR);
+        return orderedEvaluations;
+    }
+
+    private static final Comparator<IAttends> ATTENDS_COMPARATOR = new BeanComparator("aluno.number");
+    public Set<IAttends> getOrderedAttends() {
+        final Set<IAttends> orderedAttends = new TreeSet<IAttends>(ATTENDS_COMPARATOR);
+        orderedAttends.addAll(getAttends());
+        return orderedAttends;
+    }
+
 }

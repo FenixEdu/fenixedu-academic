@@ -82,7 +82,7 @@ public class PublicTilesComponentController extends ControllerSupport {
         } else if (component instanceof InfoSiteEvaluations) {
             tileContext.putAttribute("body", "/publico/evaluations.jsp");
         } else if (component instanceof InfoSiteEvaluationMarks) {
-            tileContext.putAttribute("body", "/publico/evaluationMarks.jsp");
+            tileContext.putAttribute("body", "/publico/viewMarks.jsp");
         } else if (component instanceof InfoSiteMarks) {
             tileContext.putAttribute("body", "/publico/viewPublishedMarks_bd.jsp");
         } else

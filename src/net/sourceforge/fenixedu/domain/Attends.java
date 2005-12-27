@@ -6,6 +6,9 @@
 
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 /**
@@ -14,7 +17,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
  */
 public class Attends extends Attends_Base {
 
-	public Attends() {}
+    public Attends() {}
 	
 	public Attends (IStudent student, IExecutionCourse executionCourse) {
 		setAluno(student);
@@ -60,4 +63,16 @@ public class Attends extends Attends_Base {
 		return null;
 	}
 
+    public List<IMark> getAssociatedMarksOrderedByEvaluationDate() {
+        final List<IEvaluation> orderedEvaluations = getDisciplinaExecucao().getOrderedAssociatedEvaluations();
+        final List<IMark> orderedMarks = new ArrayList<IMark>(orderedEvaluations.size());
+        for (int i = 0; i < orderedEvaluations.size(); i++) {
+            orderedMarks.add(null);
+        }
+        for (final IMark mark : getAssociatedMarks()) {
+            final IEvaluation evaluation = mark.getEvaluation();
+            orderedMarks.set(orderedEvaluations.indexOf(evaluation), mark);
+        }
+        return orderedMarks;
+    }
 }
