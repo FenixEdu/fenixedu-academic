@@ -291,10 +291,7 @@
 		<managed-bean-name>CurricularPlansMembersManagementBackingBean</managed-bean-name>
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.curricularPlans.CurricularPlansMembersManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>	
-	<!-- END: Bolonha Management Beans -->
-	
-	<!-- BEGIN: Bolonha Management Beans -->
+	</managed-bean>
 	<managed-bean>
 		<description>DegreeManagementBackingBean</description>
 		<managed-bean-name>DegreeManagement</managed-bean-name>
@@ -312,11 +309,17 @@
 		<managed-bean-name>CurricularCourseManagement</managed-bean-name>
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularPlans.CurricularCourseManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
+	</managed-bean>	
 	<managed-bean>
 		<description>CompetenceCourseManagementBackingBean</description>
 		<managed-bean-name>CompetenceCourseManagement</managed-bean-name>
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.competenceCourses.CompetenceCourseManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<description>CourseGroupManagementBackingBean</description>
+		<managed-bean-name>CourseGroupManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularPlans.CourseGroupManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<!-- END: Bolonha Management Beans -->
@@ -1573,6 +1576,28 @@
 		<navigation-case>
 			<from-outcome>curricularPlansManagement</from-outcome>
 			<to-view-id>/bolonhaManager/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- CourseGroup -->
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularPlans/createCourseGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularPlans/editCourseGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularPlans/deleteCourseGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	<!-- END: Bolonha Navigation Rules -->

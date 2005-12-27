@@ -9288,8 +9288,8 @@
         </filterChains>     
     </service>
     <service>
-    	<name>AddContext</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.AddContext</implementationClass>
+    	<name>AddContextToCurricularCourse</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.AddContextToCurricularCourse</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -9297,8 +9297,44 @@
         </filterChains>     
     </service>
     <service>
-    	<name>EditContext</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditContext</implementationClass>
+    	<name>EditContextFromCurricularCourse</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditContextFromCurricularCourse</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="BolonhaManagerAuthorization"></chain>
+        </filterChains>     
+    </service>
+     <service>
+    	<name>DeleteContextFromCurricularCourse</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteContextFromCurricularCourse</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="BolonhaManagerAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>CreateCourseGroup</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCourseGroup</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="BolonhaManagerAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>EditCourseGroup</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCourseGroup</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="BolonhaManagerAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>DeleteCourseGroup</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteCourseGroup</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>

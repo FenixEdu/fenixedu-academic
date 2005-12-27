@@ -33,10 +33,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
-
     private final String DCP_ROOT_NAME = "_ROOT_NAME"; 
-    private final String DCP_ROOT_ACRO = "_ROOT_ACRO";
-    private final String DCP_ROOT_CODE = "_ROOT_CODE";
     
     public DegreeCurricularPlan() {
         super();    
@@ -102,7 +99,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         commonFieldsChange(name, gradeScale);
         newStructureFieldsChange(ectsCredits, curricularStage);
         
-        ICourseGroup dcpRoot = new CourseGroup(name + this.DCP_ROOT_NAME, name + this.DCP_ROOT_CODE, name + this.DCP_ROOT_ACRO);
+        ICourseGroup dcpRoot = new CourseGroup(name + this.DCP_ROOT_NAME);
         this.setDegreeModule(dcpRoot);
     }
     
@@ -138,8 +135,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public void delete() {
         if (getCanBeDeleted()) {
             ((ICourseGroup)getDegreeModule()).delete();
-            removeDegree();
-            
+            removeDegree();            
             deleteDomainObject();
         } else
             throw new DomainException("error.degree.curricular.plan.cant.delete");

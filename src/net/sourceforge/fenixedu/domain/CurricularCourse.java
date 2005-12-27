@@ -88,11 +88,15 @@ public class CurricularCourse extends CurricularCourse_Base {
         setCurricularStage(curricularStage);
         setCompetenceCourse(competenceCourse);
     }
+ 
+    public Boolean getCanBeDeleted() {
+        return true;
+    }
     
     public void delete() {
-       super.delete();
-       setCompetenceCourse(null);
-       super.deleteDomainObject();
+        super.delete();
+        removeCompetenceCourse();
+        super.deleteDomainObject();
     }
     
     public boolean curricularCourseIsMandatory() {
@@ -430,24 +434,9 @@ public class CurricularCourse extends CurricularCourse_Base {
         return results;
     }
     
-    public IContext addContext(ICourseGroup courseGroup, ICurricularSemester curricularSemester,
-            IExecutionPeriod beginExecutionPeriod, IExecutionPeriod endExecutionPeriod) {
-        checkIfCanCreateContext(courseGroup, curricularSemester);
-        return new Context(courseGroup, this, curricularSemester, beginExecutionPeriod, endExecutionPeriod);
-    }
-    
-    public void editContext(IContext context, ICourseGroup courseGroup, ICurricularSemester curricularSemester) {
-        if (context.getCourseGroup() != courseGroup || context.getCurricularSemester() != curricularSemester 
-                || context.getCurricularSemester().getCurricularYear() != curricularSemester.getCurricularYear()) {
-            checkIfCanCreateContext(courseGroup, curricularSemester);
-            context.edit(courseGroup, this, curricularSemester);            
-        }
-    }
-    
-    private void checkIfCanCreateContext(final ICourseGroup courseGroup, final ICurricularSemester curricularSemester) {
+    protected void checkContextsFor(final ICourseGroup parentCourseGroup, final ICurricularSemester curricularSemester) {
         for (final IContext context : this.getDegreeModuleContexts()) {
-            if (context.getCourseGroup() == courseGroup && context.getCurricularSemester() == curricularSemester 
-                    && context.getCurricularSemester().getCurricularYear() == curricularSemester.getCurricularYear()) {
+            if (context.getCourseGroup() == parentCourseGroup && context.getCurricularSemester() == curricularSemester) {
                 throw new DomainException("error.contextAlreadyExistForCourseGroup");
             }
         }

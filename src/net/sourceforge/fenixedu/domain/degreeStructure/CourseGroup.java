@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.ICurricularSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class CourseGroup extends CourseGroup_Base {
@@ -13,24 +14,26 @@ public class CourseGroup extends CourseGroup_Base {
         setOjbConcreteClass(CourseGroup.class.getName());
     }
     
-    public CourseGroup(String name, String code, String acronym) {
+    public CourseGroup(String name) {
         this();
         setName(name);
-        setCode(code);
-        setAcronym(acronym);
     }
     
     public boolean isLeaf() {
         return false;   
     }
     
+    public void edit(String name) {
+        setName(name);
+    }
+    
     public Boolean getCanBeDeleted() {
-        return super.getCanBeDeleted() && !hasAnyCourseGroupContexts(); 
+        return !hasAnyCourseGroupContexts(); 
     }
     
     public void delete() {
-        if(getCanBeDeleted()) {
-            super.delete();
+        if(getCanBeDeleted()) {         
+            super.delete();            
             super.deleteDomainObject();
         } else {
             throw new DomainException("error.notEmptyCourseGroupContexts");
@@ -79,5 +82,13 @@ public class CourseGroup extends CourseGroup_Base {
         }
         
         return result;
+    }
+    
+    protected void checkContextsFor(final ICourseGroup parentCourseGroup, final ICurricularSemester curricularSemester) {
+        for (final IContext context : this.getDegreeModuleContexts()) {
+            if (context.getCourseGroup() == parentCourseGroup) {
+                throw new DomainException("error.contextAlreadyExistForCourseGroup");
+            }
+        }
     }
 }

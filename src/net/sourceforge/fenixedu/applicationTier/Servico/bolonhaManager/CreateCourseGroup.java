@@ -4,29 +4,27 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularSemester;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.ICourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class AddContext implements IService {
+public class CreateCourseGroup implements IService {
 
-    public void run(ICurricularCourse curricularCourse, ICourseGroup courseGroup, Integer year,
-            Integer semester) throws ExcepcaoPersistencia, FenixServiceException {
+    public void run(final Integer parentCourseGroupID, final String name) throws ExcepcaoPersistencia,
+            FenixServiceException {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-        // TODO: check CurricularSemesterID for null value
-        final ICurricularSemester curricularSemester = persistentSupport
-                .getIPersistentCurricularSemester().readCurricularSemesterBySemesterAndCurricularYear(
-                        semester, year);
-        if (curricularSemester == null) {
-            throw new FenixServiceException("error.noCurricularSemesterGivenYearAndSemester");
+        final ICourseGroup parentCourseGroup = (ICourseGroup) persistentSupport.getIPersistentObject()
+                .readByOID(CourseGroup.class, parentCourseGroupID);
+        if (parentCourseGroup == null) {
+            throw new FenixServiceException("error.noCourseGroup");
         }
         // TODO: this should be modified to receive ExecutionYear, but for now
         // we just read the '2006/2007'
@@ -35,6 +33,7 @@ public class AddContext implements IService {
         final IExecutionPeriod beginExecutionPeriod = executionYear
                 .getExecutionPeriodForSemester(Integer.valueOf(1));
 
-        curricularCourse.addContext(courseGroup, curricularSemester, beginExecutionPeriod, null);
+        final ICourseGroup courseGroup = DomainFactory.makeCourseGroup(name);
+        courseGroup.addContext(parentCourseGroup, null, beginExecutionPeriod, null);
     }
 }

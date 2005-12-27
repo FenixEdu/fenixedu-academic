@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class EditContext implements IService {
+public class EditContextFromCurricularCourse implements IService {
 
     public void run(ICurricularCourse curricularCourse, IContext context, ICourseGroup courseGroup,
             Integer year, Integer semester) throws ExcepcaoPersistencia, FenixServiceException {

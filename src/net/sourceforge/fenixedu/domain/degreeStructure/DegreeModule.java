@@ -1,19 +1,26 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.ICurricularSemester;
+import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 
 
 public abstract class DegreeModule extends DegreeModule_Base {
-    
-    public Boolean getCanBeDeleted() {
-        return !hasAnyDegreeModuleContexts(); 
+       
+    public void delete() {
+        removeNewDegreeCurricularPlan();    
+        for (;!getDegreeModuleContexts().isEmpty(); getDegreeModuleContexts().get(0).delete());
     }
     
-    public void delete() {
-        if (getCanBeDeleted()) {
-            removeNewDegreeCurricularPlan();    
-        } else {
-            throw new DomainException("error.notEmptyCurricularCourseContexts");    
+    public IContext addContext(ICourseGroup courseGroup, ICurricularSemester curricularSemester,
+            IExecutionPeriod beginExecutionPeriod, IExecutionPeriod endExecutionPeriod) {
+        checkContextsFor(courseGroup, curricularSemester);
+        return new Context(courseGroup, this, curricularSemester, beginExecutionPeriod, endExecutionPeriod);
+    }
+    
+    public void editContext(IContext context, ICourseGroup courseGroup, ICurricularSemester curricularSemester) {
+        if (context.getCourseGroup() != courseGroup || context.getCurricularSemester() != curricularSemester) {
+            checkContextsFor(courseGroup, curricularSemester);
+            context.edit(courseGroup, this, curricularSemester);
         }
     }
     
@@ -22,7 +29,9 @@ public abstract class DegreeModule extends DegreeModule_Base {
             context.delete();
         }
         if (!hasAnyDegreeModuleContexts()) {
-            this.delete();
+            delete();
         }
-    }    
+    }
+    
+    protected abstract void checkContextsFor(final ICourseGroup parentCourseGroup, final ICurricularSemester curricularSemester);
 }
