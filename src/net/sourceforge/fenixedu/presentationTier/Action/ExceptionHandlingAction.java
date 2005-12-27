@@ -118,9 +118,11 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
     private String stackTrace2String(StackTraceElement[] stackTrace) {
         String result = "StackTrace: \n ";
         int i = 0;
-        while (i < stackTrace.length) {
-            result += stackTrace[i] + "\n";
-            i++;
+        if (stackTrace != null) {
+            while (i < stackTrace.length) {
+                result += stackTrace[i] + "\n";
+                i++;
+            }
         }
         return result;
     }
