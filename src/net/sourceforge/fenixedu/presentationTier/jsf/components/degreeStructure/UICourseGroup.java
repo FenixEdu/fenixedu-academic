@@ -56,7 +56,7 @@ public class UICourseGroup extends UIDegreeModule {
             if (this.onlyStructure && this.toEdit) {
                 writer.append("(");
                 encodeLink("createCourseGroup.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "parentCourseGroupID=" + this.degreeModule.getIdInternal(), "create.course.group");
+                .get("degreeCurricularPlanID") + "&parentCourseGroupID=" + this.degreeModule.getIdInternal(), "create.course.group");
                 writer.append(") ");
             }
             writer.endElement("th");
@@ -130,7 +130,7 @@ public class UICourseGroup extends UIDegreeModule {
     private void encodeEditOptions() throws IOException {
         writer.append("(");
         encodeLink("createCourseGroup.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "parentCourseGroupID=" + this.degreeModule.getIdInternal(), "create.course.group");
+                .get("degreeCurricularPlanID") + "&parentCourseGroupID=" + this.degreeModule.getIdInternal(), "create.course.group");
         writer.append(" , ");
         encodeLink("editCourseGroup.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
                 .get("degreeCurricularPlanID") + "courseGroupID=" + this.degreeModule.getIdInternal(), "edit");
