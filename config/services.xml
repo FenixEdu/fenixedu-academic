@@ -947,9 +947,6 @@
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadDegrees</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
-		<!--        <filterChains>
-            <chain name="ManagerOrSeminariesCoordinatorOrTimeTableManager"/>
-        </filterChains>-->
 	</service>
 	<service>
 		<name>DeleteDegrees</name>
