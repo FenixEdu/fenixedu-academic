@@ -8,29 +8,22 @@ package net.sourceforge.fenixedu.domain.degree;
 
 import net.sourceforge.fenixedu.domain.GradeScale;
 
-
 /**
  * 
  * @author Nuno Nunes & Joana Mota
  */
 public enum DegreeType {
-    
-    DEGREE {
-    	public GradeScale getGradeScale() {
-    		return GradeScale.TYPE20;
-    	}
-    },
-    
-    MASTER_DEGREE{
-    	public GradeScale getGradeScale() {
-    		return GradeScale.TYPE5;
-    	}    	
-    };
-    
-    public String getName() {
-        return name();
+
+    DEGREE(GradeScale.TYPE20), MASTER_DEGREE(GradeScale.TYPE5);
+
+    private GradeScale gradeScale;
+
+    private DegreeType(GradeScale gradeScale) {
+        this.gradeScale = gradeScale;
     }
-    
-    public abstract GradeScale getGradeScale();
- 
+
+    public GradeScale getGradeScale() {
+        return this.gradeScale;
+    }
+
 }
