@@ -97,7 +97,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         }
         if (getRequestParameter("functionID") != null && !getRequestParameter("functionID").equals("")) {
             this.functionID = Integer.valueOf(getRequestParameter("functionID").toString());
-        }        
+        }
     }
 
     public String associateNewFunction() throws FenixFilterException, FenixServiceException,
@@ -109,7 +109,6 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 || (this.getUnit().getTopUnits().isEmpty() && !this.getUnit().equals(
                         getEmployeeDepartmentUnit()))) {
             setErrorMessage("error.invalid.unit");
-
         } else if (!this.getUnit().getFunctions().contains(this.getFunction())) {
             setErrorMessage("error.invalid.function");
         } else if (this.getPerson().containsActiveFunction(this.getFunction())) {
@@ -121,8 +120,18 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
             Date beginDate_ = null, endDate_ = null;
             try {
-                beginDate_ = format.parse(this.getBeginDate());
-                endDate_ = format.parse(this.getEndDate());
+                if (this.getBeginDate() != null) {
+                    beginDate_ = format.parse(this.getBeginDate());
+                } else {
+                    setErrorMessage("error.notBeginDate");
+                    return "";
+                }
+                if (this.getEndDate() != null) {
+                    endDate_ = format.parse(this.getEndDate());
+                } else {
+                    setErrorMessage("error.notEndDate");
+                    return "";
+                }
 
                 final Object[] argsToRead = { this.getFunctionID(), this.getPersonID(), credits,
                         beginDate_, endDate_ };
@@ -155,8 +164,18 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
             Date beginDate_ = null, endDate_ = null;
 
             try {
-                beginDate_ = format.parse(this.getBeginDate());
-                endDate_ = format.parse(this.getEndDate());
+                if (this.getBeginDate() != null) {
+                    beginDate_ = format.parse(this.getBeginDate());
+                } else {
+                    setErrorMessage("error.notBeginDate");
+                    return "";
+                }
+                if (this.getEndDate() != null) {
+                    endDate_ = format.parse(this.getEndDate());
+                } else {
+                    setErrorMessage("error.notEndDate");
+                    return "";
+                }
 
                 final Object[] argsToRead = { this.getPersonFunctionID(), this.getFunctionID(),
                         beginDate_, endDate_, credits };
@@ -623,18 +642,18 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
             this.beginDate = DateFormatUtil
                     .format("dd/MM/yyyy", this.getPersonFunction().getBeginDate());
 
-        } else if (this.beginDateHidden == null && this.getPersonFunctionID() == null
-                && this.getExecutionYearIDHidden() != null
+        } else if (this.beginDate == null && this.getExecutionYearIDHidden() != null
+                && this.getPersonFunctionID() == null
+                && (this.beginDateHidden == null || this.beginDateHidden.getValue() == null)
                 && this.executionYearIDHidden.getValue() != null
-                && !this.executionYearIDHidden.getValue().equals("")) {
+                && this.getDisabledVarHidden().getValue().toString().equals("0")) {
 
             IExecutionYear executionYear = (IExecutionYear) readDomainObject(ExecutionYear.class,
                     Integer.valueOf(this.executionYearIDHidden.getValue().toString()));
 
             IExecutionPeriod executionPeriod = null;
             if (this.getExecutionPeriodHidden() != null && this.executionPeriodHidden.getValue() != null
-                    && !this.executionPeriodHidden.getValue().equals("")
-                    && !this.executionPeriodHidden.getValue().equals("0")) {
+                    && !this.executionPeriodHidden.getValue().toString().equals("0")) {
 
                 executionPeriod = executionYear.getExecutionPeriodForSemester(Integer
                         .valueOf(this.executionPeriodHidden.getValue().toString()));
@@ -643,7 +662,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                     executionPeriod.getBeginDate()) : DateFormatUtil.format("dd/MM/yyyy", executionYear
                     .getBeginDate());
         }
-        return beginDate;
+        return this.beginDate;
     }
 
     public void setBeginDate(String beginDate) {
@@ -657,6 +676,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
         } else if (this.credits == null && this.getPersonFunctionID() != null) {
             this.credits = this.getPersonFunction().getCredits();
+        } else if (this.credits == null) {
+            this.credits = new Double(0);
         }
         return credits;
     }
@@ -671,21 +692,22 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 && !this.endDateHidden.getValue().equals("")) {
             this.endDate = this.endDateHidden.getValue().toString();
 
-        } else if (this.endDate == null && this.getPersonFunctionID() != null) {
+        } else if (this.endDate == null && this.getPersonFunctionID() != null
+                && this.getPersonFunction().getEndDate() != null) {
             this.endDate = DateFormatUtil.format("dd/MM/yyyy", this.getPersonFunction().getEndDate());
 
-        } else if (this.endDateHidden == null && this.getPersonFunctionID() == null
+        } else if (this.endDate == null && this.getPersonFunctionID() == null
+                && (this.endDateHidden == null || this.getEndDateHidden().getValue() == null)
                 && this.getExecutionYearIDHidden() != null
                 && this.executionYearIDHidden.getValue() != null
-                && !this.executionYearIDHidden.getValue().equals("")) {
+                && this.getDisabledVarHidden().getValue().toString().equals("0")) {
 
             IExecutionYear executionYear = (IExecutionYear) readDomainObject(ExecutionYear.class,
                     Integer.valueOf(this.executionYearIDHidden.getValue().toString()));
 
             IExecutionPeriod executionPeriod = null, finalExecutionPeriod = null;
             if (this.getExecutionPeriodHidden() != null && this.executionPeriodHidden.getValue() != null
-                    && !this.executionPeriodHidden.getValue().equals("")
-                    && !this.executionPeriodHidden.getValue().equals("0")) {
+                    && !this.executionPeriodHidden.getValue().toString().equals("0")) {
 
                 executionPeriod = executionYear.getExecutionPeriodForSemester(Integer
                         .valueOf(this.executionPeriodHidden.getValue().toString()));
@@ -697,7 +719,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                     finalExecutionPeriod.getEndDate()) : DateFormatUtil.format("dd/MM/yyyy",
                     executionYear.getEndDate());
         }
-        return endDate;
+        return this.endDate;
     }
 
     private IExecutionPeriod getDurationEndDate(IExecutionPeriod executionPeriod,
@@ -744,10 +766,10 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         this.personName = personName;
     }
 
-    public HtmlInputHidden getBeginDateHidden() {
+    public HtmlInputHidden getBeginDateHidden() throws FenixFilterException, FenixServiceException {
         if (this.beginDateHidden == null) {
             this.beginDateHidden = new HtmlInputHidden();
-            this.beginDateHidden.setValue(this.beginDate);
+            this.beginDateHidden.setValue(this.getBeginDate());
         }
         return beginDateHidden;
     }
@@ -775,10 +797,10 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         this.creditsHidden = creditsHidden;
     }
 
-    public HtmlInputHidden getEndDateHidden() {
+    public HtmlInputHidden getEndDateHidden() throws FenixFilterException, FenixServiceException {
         if (this.endDateHidden == null) {
             this.endDateHidden = new HtmlInputHidden();
-            this.endDateHidden.setValue(this.endDate);
+            this.endDateHidden.setValue(this.getEndDate());
         }
         return endDateHidden;
     }
@@ -961,14 +983,14 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         this.durationHidden = durationHidden;
     }
 
-    public HtmlInputHidden getDisabledVarHidden() {
-        if(disabledVarHidden == null){
+    public HtmlInputHidden getDisabledVarHidden() throws FenixFilterException, FenixServiceException {
+        if (disabledVarHidden == null) {
             disabledVarHidden = new HtmlInputHidden();
-            if (getRequestParameter("disabledVar") != null && !getRequestParameter("disabledVar").equals("")) {
-                disabledVarHidden.setValue(Integer.valueOf(getRequestParameter("disabledVar").toString()));
-            }else{
-                disabledVarHidden.setValue(new Integer(0));
-            }
+            disabledVarHidden.setValue(new Integer(0));
+
+        } else if (getRequestParameter("disabledVar") != null
+                && !getRequestParameter("disabledVar").equals("")) {
+            disabledVarHidden.setValue(Integer.valueOf(getRequestParameter("disabledVar").toString()));
         }
         return disabledVarHidden;
     }

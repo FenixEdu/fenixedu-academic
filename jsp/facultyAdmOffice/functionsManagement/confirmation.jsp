@@ -16,6 +16,10 @@
 	<h:inputHidden binding="#{facultyAdmOfficeFunctionsManagementBackingBean.beginDateHidden}"/>
 	<h:inputHidden binding="#{facultyAdmOfficeFunctionsManagementBackingBean.endDateHidden}"/>
 	<h:inputHidden binding="#{facultyAdmOfficeFunctionsManagementBackingBean.functionIDHidden}"/>
+	<h:inputHidden binding="#{facultyAdmOfficeFunctionsManagementBackingBean.executionPeriodHidden}"/>
+	<h:inputHidden binding="#{facultyAdmOfficeFunctionsManagementBackingBean.executionYearIDHidden}"/>
+	<h:inputHidden binding="#{facultyAdmOfficeFunctionsManagementBackingBean.durationHidden}"/>
+	<h:inputHidden binding="#{facultyAdmOfficeFunctionsManagementBackingBean.disabledVarHidden}"/>
 
 	<h:outputText value="<h2>#{bundle['label.confirmation']}</h2>" escape="false"/>	
 	<h:outputText value="<br/>" escape="false" />

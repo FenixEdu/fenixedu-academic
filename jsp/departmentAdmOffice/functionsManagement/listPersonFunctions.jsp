@@ -64,7 +64,7 @@
 				<f:facet name="header">
 					<h:outputText value="#{bundle['label.endDate']}" />
 				</f:facet>				
-				<h:outputFormat value="{0, date, dd/MM/yyyy}">
+				<h:outputFormat rendered="#{!empty person_function.endDate}" value="{0, date, dd/MM/yyyy}">
 					<f:param value="#{person_function.endDate}"/>
 				</h:outputFormat>
 			</h:column>
@@ -150,7 +150,7 @@
 				<f:facet name="header">
 					<h:outputText value="#{bundle['label.endDate']}" />
 				</f:facet>				
-				<h:outputFormat value="{0, date, dd/MM/yyyy}">
+				<h:outputFormat rendered="#{!empty person_function.endDate}" value="{0, date, dd/MM/yyyy}">
 					<f:param value="#{person_function.endDate}"/>
 				</h:outputFormat>
 			</h:column>
@@ -166,7 +166,7 @@
 				rendered="#{empty functionsManagementBackingBean.inactiveFunctions}" escape="false"/>							
 			
 		<h:outputText value="<br/><br/>" escape="false"/>				
-		<h:commandButton value="#{bundle['button.choose.new.person']}" action="chooseNewPerson" styleClass="inputbutton"/>
+		<h:commandButton value="#{bundle['button.cancel']}" action="chooseNewPerson" styleClass="inputbutton"/>
 					
 	</h:form>
 

@@ -16,6 +16,10 @@
 	<h:inputHidden binding="#{functionsManagementBackingBean.beginDateHidden}"/>
 	<h:inputHidden binding="#{functionsManagementBackingBean.endDateHidden}"/>
 	<h:inputHidden binding="#{functionsManagementBackingBean.functionIDHidden}"/>
+	<h:inputHidden binding="#{functionsManagementBackingBean.executionPeriodHidden}"/>
+	<h:inputHidden binding="#{functionsManagementBackingBean.executionYearIDHidden}"/>
+	<h:inputHidden binding="#{functionsManagementBackingBean.durationHidden}"/>
+	<h:inputHidden binding="#{functionsManagementBackingBean.disabledVarHidden}"/>
 
 	<h:outputText value="<h2>#{bundle['label.confirmation']}</h2>" escape="false"/>	
 	<h:outputText value="<br/>" escape="false" />

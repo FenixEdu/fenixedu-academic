@@ -38,13 +38,23 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
             setErrorMessage("error.duplicate.function");
         } else {
 
-            DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat format = new SimpleDateFormat("dd/MM/yyyy");            
             Double credits = Double.valueOf(this.getCredits());
 
             Date beginDate_ = null, endDate_ = null;
             try {
-                beginDate_ = format.parse(this.getBeginDate());
-                endDate_ = format.parse(this.getEndDate());
+                if(this.getBeginDate() != null){
+                    beginDate_ = format.parse(this.getBeginDate());
+                }else{
+                    setErrorMessage("error.notBeginDate");
+                    return "";
+                }
+                if (this.getEndDate() != null) {
+                    endDate_ = format.parse(this.getEndDate());
+                }else{
+                    setErrorMessage("error.notEndDate");
+                    return "";
+                }
 
                 final Object[] argsToRead = { this.getFunctionID(), this.getPersonID(), credits,
                         beginDate_, endDate_ };
