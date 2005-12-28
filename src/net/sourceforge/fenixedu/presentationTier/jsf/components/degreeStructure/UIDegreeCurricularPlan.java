@@ -87,8 +87,6 @@ public class UIDegreeCurricularPlan extends UIInput {
             }
             encodeSemesterTable(year, 1, collectCurrentYearCurricularCoursesBySemester(year, 1, dcpCurricularCourses));
             encodeSemesterTable(year, 2, collectCurrentYearCurricularCoursesBySemester(year, 2, dcpCurricularCourses));
-
-            
         }
         
     }
@@ -110,33 +108,27 @@ public class UIDegreeCurricularPlan extends UIInput {
 
     private void encodeSemesterTable(int year, int semester, List<ICurricularCourse> currentSemesterCurricularCourses) throws IOException {
         writer.startElement("table", this);
-        writer.writeAttribute("border", 1, null);
+        writer.writeAttribute("class", "style2", null);
         encodeHeader(year, semester);
+        double totalCredits = 0.0;
         if (currentSemesterCurricularCourses.size() > 0) {
-            encodeCurricularCourses(semester, currentSemesterCurricularCourses);
+             totalCredits = encodeCurricularCourses(semester, currentSemesterCurricularCourses);
         } else {
             encodeEmptySemesterInfo();
         }            
         
-        if (this.toEdit) {
-            encodeCourseGroupOptions();
-        }
-
         if (currentSemesterCurricularCourses.size() > 0) {
-            encodeTotalCreditsFooter();
+            encodeTotalCreditsFooter(totalCredits);
         }
         writer.endElement("table");
     }
 
     private void encodeHeader(int year, int semester) throws IOException {
-        writer.writeAttribute("class", "style2 margintop", null);    
         writer.startElement("tr", this);
+
         writer.startElement("th", this);
-        if (this.toEdit) {
-            writer.writeAttribute("colspan", 4, null);    
-        } else {
-            writer.writeAttribute("colspan", 3, null);
-        }
+        writer.writeAttribute("colspan", 3, null);
+        writer.writeAttribute("class", "aleft", null);
         writer.startElement("strong", this);
         writer.append(String.valueOf(year)).append("º ");
         writer.append(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources", "year"));
@@ -146,17 +138,36 @@ public class UIDegreeCurricularPlan extends UIInput {
         }
         writer.endElement("strong");
         writer.endElement("th");
+        
+        if (this.toEdit) {
+            encodeCourseGroupOptions();
+        }
+        
         writer.endElement("tr");
     }
     
-    private void encodeCurricularCourses(int semester, List<ICurricularCourse> currentYearCurricularCourses) throws IOException {
+    private void encodeCourseGroupOptions() throws IOException {
+        writer.startElement("th", this);
+        writer.writeAttribute("class", "aleft", null);
+        writer.writeAttribute("width", "73px", null);
+        encodeLink("createCurricularCourse.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
+                .get("degreeCurricularPlanID"), "create.curricular.course");
+        writer.endElement("th");
+    }
+    
+    private double encodeCurricularCourses(int semester, List<ICurricularCourse> currentYearCurricularCourses) throws IOException {
+        double totalCredits = 0.0;
+        
         for (ICurricularCourse cc : currentYearCurricularCourses) {
             for (IContext ccContext : cc.getDegreeModuleContexts()) {
                 if (ccContext.getCurricularSemester().getSemester().equals(semester)) {
+                    totalCredits += cc.computeEctsCredits();
                     new UICurricularCourse(cc, this.toEdit, ccContext).encodeBegin(facesContext);   
                 }
             }
         }
+        
+        return totalCredits;
     }
     
     private void encodeEmptySemesterInfo() throws IOException {
@@ -169,7 +180,7 @@ public class UIDegreeCurricularPlan extends UIInput {
         }
         writer.writeAttribute("align", "center", null);
         writer.startElement("i", this);
-        writer.append(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources", "no.associated.curricular.courses"));
+        writer.append(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources", "no.associated.curricular.courses.to.year"));
         writer.endElement("i");
         writer.endElement("td");
         writer.endElement("tr");
@@ -180,33 +191,6 @@ public class UIDegreeCurricularPlan extends UIInput {
         return bundle.getString(bundleKey);
     }
     
-    private void encodeCourseGroupOptions() throws IOException {
-        writer.startElement("tr", this);
-
-        writer.startElement("td", this);
-        writer.writeAttribute("colspan", 3, null);
-        writer.endElement("td");
-        
-        writer.startElement("td", this);
-        writer.writeAttribute("style", "width: 130px;", null);
-        writer.startElement("ul", this);
-        writer.writeAttribute("style", "margin: 0; padding: 0.25em 1em;", null);
-        
-        writer.startElement("li", this);
-        encodeLink("createCurricularCourse.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID"), "create.curricular.course");
-        writer.endElement("li");
-        writer.startElement("li", this);
-        encodeLink("associateCurricularCourse.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID"), "associate.curricular.course");
-        writer.endElement("li");
-        
-        writer.endElement("ul");
-        writer.endElement("td");
-        
-        writer.endElement("tr");
-    }
-    
     protected void encodeLink(String href, String bundleKey) throws IOException {
         writer.startElement("a", this);
         writer.writeAttribute("href", href, null);
@@ -214,22 +198,22 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.endElement("a");
     }
     
-    private void encodeTotalCreditsFooter() throws IOException {
+    private void encodeTotalCreditsFooter(double totalCredits) throws IOException {
         writer.startElement("tr", this);
-
+        
         writer.startElement("td", this);
-        writer.writeAttribute("align", "right", null);
-        writer.append(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources", "credits")).append(": ");
+        writer.writeAttribute("colspan", 2, null);
         writer.endElement("td");
+        
         writer.startElement("td", this);
-        writer.append("&nbsp;");
-        writer.endElement("td");
-        writer.startElement("td", this);
-        writer.writeAttribute("align", "center", null);
-        writer.append("n há milagres");
+        writer.writeAttribute("class", "aright highlight01", null);
+        writer.writeAttribute("width", "73px", null);
+        writer.append(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources", "credits")).append(" ");
+        writer.append(String.valueOf(totalCredits));
         writer.endElement("td");        
         if (this.toEdit) {
             writer.startElement("td", this);
+            writer.writeAttribute("width", "73px", null);
             writer.append("&nbsp;");
             writer.endElement("td");
         }

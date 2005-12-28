@@ -60,6 +60,7 @@ public class UICurricularCourse extends UIDegreeModule {
 
     private void encodeCurricularCourse() throws IOException {
         writer.startElement("tr", this);
+        
         writer.startElement("td", this);
         if (!facesContext.getViewRoot().getLocale().equals(Locale.ENGLISH)) {
             writer.append(this.degreeModule.getName());    
@@ -67,21 +68,24 @@ public class UICurricularCourse extends UIDegreeModule {
             writer.append(this.degreeModule.getNameEn());
         }
         writer.endElement("td");
+        
         writer.startElement("td", this);
         writer.writeAttribute("align", "center", null);
-        writer.writeAttribute("width", "100px", null);
         if (!byYears) {
+            writer.writeAttribute("width", "100px", null);
             writer.append(previousContext.getCurricularSemester().getCurricularYear().getYear().toString()).append("º ");
             writer.append(this.getBundleValue(facesContext, "ServidorApresentacao/BolonhaManagerResources", "year"));
             writer.append(", ");
             writer.append(previousContext.getCurricularSemester().getSemester().toString()).append("º ");
             writer.append(this.getBundleValue(facesContext, "ServidorApresentacao/BolonhaManagerResources", "semester"));
         } else {
+            //writer.writeAttribute("width", "300px", null);
             writer.append(previousContext.getCourseGroup().getName());
         }
         writer.endElement("td");
+        
         writer.startElement("td", this);
-        writer.writeAttribute("align", "center", null);
+        writer.writeAttribute("class", "aright", null);
         writer.append(((ICurricularCourse)this.degreeModule).computeEctsCredits().toString());
         writer.endElement("td");
         
