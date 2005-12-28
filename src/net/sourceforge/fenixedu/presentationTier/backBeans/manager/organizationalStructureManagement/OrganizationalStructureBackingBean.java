@@ -108,8 +108,12 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     public List<IFunction> getAllInherentFunctions() throws FenixFilterException, FenixServiceException {
 
         List<IFunction> allInherentFunctions = new ArrayList<IFunction>();
+        Date currentDate = Calendar.getInstance().getTime();
         for (IFunction function : this.getUnit().getFunctions()) {
-            if (function.isInherentFunction()) {
+            if (function.isInherentFunction()
+                    && ((this.getListingTypeValueToFunctionsHidden().getValue().toString().equals("0") && function
+                            .isActive(currentDate)) || (this.getListingTypeValueToFunctionsHidden()
+                            .getValue().toString().equals("1") && !function.isActive(currentDate)))) {
                 allInherentFunctions.add(function);
             }
         }
