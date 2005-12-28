@@ -56,7 +56,7 @@ public class ExecutionCourseWebsiteManagement extends FenixDispatchAction
 		try
 		{
 			IUserView userView = SessionUtils.getUserView(request);
-			Collection<ExecutionCourseWebsite> websites = (Collection<ExecutionCourseWebsite>) ServiceUtils.executeService(userView,"ReadAllDomainObject",new Object[]{ExecutionCourseWebsite.class});
+			Collection<ExecutionCourseWebsite> websites = (Collection<ExecutionCourseWebsite>) ServiceUtils.executeService(userView,"ReadAllDomainObjects",new Object[]{ExecutionCourseWebsite.class});
 			Collection<InfoExecutionPeriod> infoExecutionPeriods = (Collection<InfoExecutionPeriod>) ServiceUtils.executeService(userView, "ReadExecutionPeriods", null);		
 			if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty())
 			{

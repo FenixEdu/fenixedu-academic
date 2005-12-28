@@ -261,7 +261,11 @@
 			parameter="method"
 			>
 		</action>				
-								
+		
+        <!-- ======== RENDERERS =========== -->
+        <action path="/domain/view" type="net.sourceforge.fenixedu.presentationTier.renderers.actions.ViewObjectAction">
+          <forward name="show" path="domain.view"/>
+        </action>						
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->
@@ -278,6 +282,14 @@
                     value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-person.xml"/>
     </plug-in>
     
+    <plug-in className="net.sourceforge.fenixedu.renderers.plugin.RenderersPlugin">
+      <set-property property="config" value="/WEB-INF/fenix-renderers-config.xml"/>
+      <set-property property="schemas" value="/WEB-INF/fenix-renderers-schemas.xml"/>
+      <set-property property="metaObjectFactory" value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixMetaObjectFactory"/>
+      <set-property property="userIdentityFactory" value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixUserIdentityFactory"/>
+      <set-property property="schemaFactory" value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixSchemaFactory"/>
+    </plug-in>
+
     <plug-in className="org.apache.struts.tiles.TilesPlugin" >
 		<set-property property="definitions-config"
 					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/person/tiles-person-pages-definitions.xml,/WEB-INF/tiles/person/tiles-person-definitions.xml,/WEB-INF/tiles/teacher/tiles-teacher-definitions.xml,/WEB-INF/tiles/teacher/tiles-teacher-pages-definitions.xml" />

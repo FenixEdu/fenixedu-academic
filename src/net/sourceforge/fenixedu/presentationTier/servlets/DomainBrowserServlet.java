@@ -48,6 +48,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
@@ -70,15 +71,10 @@ public class DomainBrowserServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
 
-        String domainModelName = getInitParameter("domainmodel");
-        if (domainModelName != null) {
-            String domainPath = getServletContext().getRealPath(domainModelName);
-            System.out.println("Using the domain at path: '" + domainPath + "'");
-            try { 
-                domainModel = DmlCompiler.getDomainModel(new String[] { domainPath }, true);
-            } catch (Exception e) {
-                domainModel = null;
-            }
+        try { 
+            domainModel = MetadataManager.getDomainModel();
+        } catch (Exception e) {
+            domainModel = null;
         }
     }
 

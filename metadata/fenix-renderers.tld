@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE taglib 
+	PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN" 
+	"http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+
+<taglib>
+
+  <tlib-version>1.0</tlib-version>
+  <jsp-version>1.2</jsp-version>
+
+  <short-name>fr</short-name>
+  <uri>http://fenix-ashes.ist.utl.pt/fenix-renderers</uri>
+  <description>
+    Generic TagLibs to render domain objects.
+  </description>
+  
+  <tag>
+    <name>create</name>
+    <tag-class>net.sourceforge.fenixedu.presentationTier.renderers.taglib.FenixCreateObjectTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Renders a generic input presentation of a domain object.
+    </description>
+
+    <attribute>
+      <name>id</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+          The 'id' of the input context. This attribute allows multiple edit tags to be used
+          in the same page.
+      </description>
+    </attribute>
+
+		<attribute>
+      <name>layout</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+          Indicates wich specific layout will be used to render the object.
+      </description>
+    </attribute>
+
+	<attribute>
+      <name>schema</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+          Selects one of the predefined schemas by name. The name specified in this attribute
+          will be used to obtain a schema to use when rendering the object.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>type</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        	The Java type of the object.
+        	If the attribute 'name' is not specified this attribute together with the attribute 'oid'
+        	specify the identification of the persistent object that will be rendered.
+      </description>
+    </attribute>
+    
+    <attribute>
+      <name>template</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        	The JSP template to use when rendering the object. If both 'template' and 'layout' attributes
+        	are specified, the behaviour is undefined.
+      </description>
+    </attribute>
+  </tag>
+  
+  <tag>
+    <name>edit</name>
+    <tag-class>net.sourceforge.fenixedu.presentationTier.renderers.taglib.FenixEditObjectTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Renders a generic input presentation of a domain object.
+    </description>
+
+    <attribute>
+      <name>id</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+          The 'id' of the input context. This attribute allows multiple edit tags to be used
+          in the same page.
+      </description>
+    </attribute>
+
+        <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+          Specifies the name of the page attribute to fetch. This attribute is related to
+          'scope'.
+      </description>
+    </attribute>
+
+	<attribute>
+      <name>property</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+          Specifies the name of the property to fetch. The value must follow the Apache BeanUtils
+          naming convention for bean properties. If this attribute is not specified then the
+          object refered with the attribute 'name' will be used.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>scope</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        	The scope where the object will be searched. If no scope is specified the object will be
+        	searched using PageScope.findAttribute(name).
+      </description>
+    </attribute>
+
+		<attribute>
+      <name>layout</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+          Indicates wich specific layout will be used to render the object.
+      </description>
+    </attribute>
+
+	<attribute>
+      <name>schema</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+          Selects one of the predefined schemas by name. The name specified in this attribute
+          will be used to obtain a schema to use when rendering the object.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>oid</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        	The identification number of the object.
+        	If the attribute 'name' is not specified this attribute together with the attribute 'type'
+        	specify the identification of the persistent object that will be rendered.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>type</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        	The Java type of the object.
+        	If the attribute 'name' is not specified this attribute together with the attribute 'oid'
+        	specify the identification of the persitent object that will be rendered.
+      </description>
+    </attribute>
+    
+    <attribute>
+      <name>template</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        	The JSP template to use when rendering the object. If both 'template' and 'layout' attributes
+        	are specified, the behaviour is undefined.
+      </description>
+    </attribute>
+  </tag>
+  
+  <tag>
+		<name>destination</name>
+    <tag-class>net.sourceforge.fenixedu.renderers.taglib.EditLinkTag</tag-class>
+    <body-content>empty</body-content>
+    <description>
+      	Configures the destination when everything is ok.
+    </description>
+
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        	The name of the destination.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>path</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        	The destination path.
+      </description>
+    </attribute>
+    
+    <attribute>
+      <name>module</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        	The destination module. The module is used as a prefix of path.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>redirect</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        	Redirect to destination.
+      </description>
+    </attribute>
+  </tag>
+  
+  <tag>
+    <name>layout</name>
+    <tag-class>net.sourceforge.fenixedu.renderers.taglib.LayoutConfigTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      	Allows selection and configuration of a specific layout. The use of this tag overrides the
+      	attributes 'layout' and 'template' of the parent tag.
+    </description>
+
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+        	The name of the layout that will be used to render the object.
+      </description>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>view</name>
+    <tag-class>net.sourceforge.fenixedu.presentationTier.renderers.taglib.FenixViewObjectTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Renders a generic presentation of a domain object.
+    </description>
+
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+          Specifies the name of the page attribute to fetch. This attribute is related to
+          'scope'.
+      </description>
+    </attribute>
+
+	<attribute>
+      <name>property</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+          Specifies the name of the property to fetch. The value must follow the Apache BeanUtils
+          naming convention for bean properties. If this attribute is not specified then the
+          object refered with the attribute 'name' will be used.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>scope</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        	The scope where the object will be searched. If no scope is specified the object will be
+        	searched using PageScope.findAttribute(name).
+      </description>
+    </attribute>
+
+		<attribute>
+      <name>layout</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+          Indicates wich specific layout will be used to render the object.
+      </description>
+    </attribute>
+
+	<attribute>
+      <name>schema</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+          Selects one of the predefined schemas by name. The name specified in this attribute
+          will be used to obtain a schema to use when rendering the object.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>oid</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        	The identification number of the object.
+        	If the attribute 'name' is not specified this attribute together with the attribute 'type'
+        	specify the identification of the persistent object that will be rendered.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>type</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        	The Java type of the object.
+        	If the attribute 'name' is not specified this attribute together with the attribute 'oid'
+        	specify the identification of the persitent object that will be rendered.
+      </description>
+    </attribute>
+    
+    <attribute>
+      <name>template</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        	The JSP template to use when rendering the object. If both 'template' and 'layout' attributes
+        	are specified, the behaviour is undefined.
+      </description>
+    </attribute>
+  </tag>
+  
+  <tag>
+    <name>layout</name>
+    <tag-class>net.sourceforge.fenixedu.renderers.taglib.LayoutConfigTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      	Allows selection and configuration of a specific layout. The use of this tag overrides the
+      	attributes 'layout' and 'template' of the parent tag.
+    </description>
+
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+        	The name of the layout that will be used to render the object.
+      </description>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>property</name>
+    <tag-class>net.sourceforge.fenixedu.renderers.taglib.LayoutPropertyTag</tag-class>
+    <body-content>empty</body-content>
+    <description>
+    		Sets a specific property of the layout.
+    </description>
+
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+    			The name of the property.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>value</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        	The value of the property.
+      </description>
+    </attribute>
+  </tag>
+
+</taglib>

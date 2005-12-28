@@ -10,6 +10,7 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
+import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
@@ -30,41 +31,41 @@ public class StartupServlet extends HttpServlet {
      * @see javax.servlet.Servlet#init(javax.servlet.ServletConfig)
      */
     public void init(ServletConfig config) throws ServletException {
-	super.init(config);
-		
-	SuportePersistenteOJB.fixDescriptors();
+        super.init(config);
 
-	try {
-	    try {
-		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils
-		    .executeService(null, "ReadCurrentExecutionPeriod", null);
-		config.getServletContext().setAttribute(
-							SessionConstants.INFO_EXECUTION_PERIOD_KEY,
-							infoExecutionPeriod);
-		
-		setScheduleForGratuitySituationCreation();
-		
-	    } catch (Throwable e) {
-		throw new ServletException(
-					   "Error reading actual execution period!", e);
-	    }
-	    
-	    try {
-		final Boolean result = (Boolean) ServiceManagerServiceFactory
-		    .executeService(null, "CheckIsAliveService", null);
-		
-		if (result != null && result.booleanValue()) {
-		    System.out.println("Check is alive is working.");
-		} else {
-		    System.out.println("Check is alive is not working.");
-		}
-	    } catch (Exception ex) {
-		System.out.println("Check is alive is not working. Caught excpetion.");
-		ex.printStackTrace();
-	    }
-	} finally {
-	    Transaction.forceFinish();
-	}
+        MetadataManager.init(getServletContext().getRealPath(getInitParameter("domainmodel")));
+
+        SuportePersistenteOJB.fixDescriptors();
+
+        try {
+            try {
+                InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils
+                        .executeService(null, "ReadCurrentExecutionPeriod", null);
+                config.getServletContext().setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY,
+                        infoExecutionPeriod);
+
+                setScheduleForGratuitySituationCreation();
+
+            } catch (Throwable e) {
+                throw new ServletException("Error reading actual execution period!", e);
+            }
+
+            try {
+                final Boolean result = (Boolean) ServiceManagerServiceFactory.executeService(null,
+                        "CheckIsAliveService", null);
+
+                if (result != null && result.booleanValue()) {
+                    System.out.println("Check is alive is working.");
+                } else {
+                    System.out.println("Check is alive is not working.");
+                }
+            } catch (Exception ex) {
+                System.out.println("Check is alive is not working. Caught excpetion.");
+                ex.printStackTrace();
+            }
+        } finally {
+            Transaction.forceFinish();
+        }
     }
 
     /**
@@ -72,7 +73,7 @@ public class StartupServlet extends HttpServlet {
      */
     private void setScheduleForGratuitySituationCreation() {
 
-	TimerTask gratuitySituationCreatorTask = new TimerTask() {
+        TimerTask gratuitySituationCreatorTask = new TimerTask() {
 
 		public void run() {
 		    try {

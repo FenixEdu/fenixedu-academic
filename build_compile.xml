@@ -40,6 +40,9 @@
   	<property name="compile.deprecation" value="off"/>
   	<property name="compile.optimize"    value="on"/>
 
+	<!-- Renderers properties -->
+	<property name="renderers.package.dir" value="net/sourceforge/fenixedu/renderers"/>
+	<property name="renderers.lib.name" value="fenix-renderers.jar"/>
 
     <target name="clean-all"
     		description="Removes any generated files">
@@ -56,6 +59,8 @@
 		<mkdir dir="${build.home}/images/logs"/>
 
 		<sequential>
+			<delete file="${build.home.webinf.libs}/dml.jar"/>
+
 			<parallel>
 				<copy todir="${build.home}">
 					<fileset dir="${web-content}" >
@@ -69,7 +74,6 @@
 				</copy>
 
 				<copy todir="${build.home.webinf}" file="${config}/domain_model.dml"/>
-				<delete file="${build.home.webinf.libs}/dml.jar"/>
 
 				<copy todir="${build.home.webinf}">
 					<fileset dir="${config.web}" >
@@ -554,10 +558,33 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
     </java>	
   </target>
 
+  <target name="check-renderers" description="Checks if the lib built is still up to date">
+  	<uptodate property="renderers.skip-compile" targetfile="${lib}/${renderers.lib.name}">
+  		<srcfiles dir="${src}/${renderers.package.dir}" includes="**/*.*"/>
+  	</uptodate>
+  	<echo level="info">Renderers lib up to date: ${renderers.skip-compile}</echo>
+  </target>
 
+  <target name="compile-renderers" depends="check-renderers" unless="renderers.skip-compile"
+  	      description="Make renderers available as a lib">
+  	<javac srcdir="${src}"
+  		   includes="${renderers.package.dir}/**"
+  		   destdir="${build.home.webinf.classes}"
+ 		   extdirs="${lib}"
+  	       debug="${compile.debug}"
+  	       optimize="${compile.optimize}"
+  	       deprecation="${compile.deprecation}"
+  	       encoding="${encoding}"
+  		   nowarn="true"/>
+  	<jar destfile="${lib}/${renderers.lib.name}"
+  	     basedir="${build.home.webinf.classes}"
+  	     includes="${renderers.package.dir}/**"/>
+  	<delete dir="${build.home.webinf.classes}/${renderers.package.dir}"/>
+  </target>
+	
     <target name="compile"
     		description="Compile application"
-    		depends="compile-domain,i18nDefault, write-filter-hostnames-configuration-file, write-index-redirect-hostnames-configuration-file, generate">
+    		depends="compile-domain,compile-renderers,i18nDefault, write-filter-hostnames-configuration-file, write-index-redirect-hostnames-configuration-file, generate">
 		<javac destdir="${build.home.webinf.classes}"
                extdirs="${lib}"
                debug="${compile.debug}"
@@ -567,6 +594,9 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			   nowarn="true">
 			<src path="${src_gen}"/>
 			<src path="${src}"/>
+			
+			<!-- they are used as a lib and not directly -->
+			<exclude name="${renderers.package.dir}/**"/>
 		</javac>
         <java classname="net.sourceforge.fenixedu.tools.AddOJBConstructors" 
 			dir="${build.home.webinf.classes}"
@@ -604,7 +634,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			<property name="webapp" value="${build.home}"/>
 		</ant>
     </target>
-
+	
     <target name="install"
     		depends="compile"
             description="Deploys standalone application to web server">

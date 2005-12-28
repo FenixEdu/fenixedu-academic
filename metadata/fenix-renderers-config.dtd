@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--
+  The renderers-config element is the document root of the renderers configuration.
+  
+  It allows the definition and configuration of several renderers.
+  -->
+<!ELEMENT renderers-config (renderer)*>
+
+<!-- TODO: correct the comentaries
+  The 'renderer' element defines one renderer in the system.
+  
+  Each renderer must specify at least a type and a class. The type indicates
+  wich type of objects the renderer supports. The class indicates the java class
+  of the renderer.
+  
+  Additionally the layout can be specified to allow variations in the rendering
+  of a certain type.
+  
+  The 'renderer' element also allows the inclusion of properties to configure the
+  defined renderer. This way you can have two layouts for the same type, and using
+  the same renderer, but with diferent configurations.
+  
+  Example:
+  	<renderer type="java.lang.Number" class="my.package.NumberRenderer"/>
+
+  	<renderer type="java.lang.Number" layout="base-2" class="my.package.NumberRenderer">
+  		<property name="base" value="2"/>
+	  </renderer>
+  
+  	<renderer type="java.lang.Number" layout="base-16" class="my.package.NumberRenderer">
+  		<property name="base" value="16"/>
+	  </renderer>
+  -->
+<!ELEMENT renderer (property*)>
+
+<!ATTLIST renderer
+	mode NMTOKEN #IMPLIED
+	type NMTOKEN #REQUIRED
+	layout NMTOKEN #IMPLIED
+	class NMTOKEN #REQUIRED
+>
+
+<!--
+  The property element allows the configuration of the renderer specified with 'class'
+  in the 'renderer' element.
+  
+  When the renderer is selected to render an object it will first be configured with
+  the properties defined by this element.
+  
+  An <property name="property" value="value"/> is the same as calling 
+  'setProperty("value")' in the renderer.
+  -->
+<!ELEMENT property EMPTY>
+
+<!ATTLIST property
+	name NMTOKEN #REQUIRED
+	value NMTOKEN #REQUIRED
+>

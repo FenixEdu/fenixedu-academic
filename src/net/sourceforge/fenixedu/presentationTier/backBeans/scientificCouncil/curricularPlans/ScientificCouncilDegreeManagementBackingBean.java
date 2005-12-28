@@ -33,7 +33,7 @@ public class ScientificCouncilDegreeManagementBackingBean extends FenixBackingBe
 
     public List<IDegree> getBolonhaDegrees() throws FenixFilterException, FenixServiceException {
         Object[] args = { Degree.class };
-        List<IDegree> allDegrees = (List<IDegree>) ServiceUtils.executeService(null, "ReadAllDomainObject", args);
+        List<IDegree> allDegrees = (List<IDegree>) ServiceUtils.executeService(null, "ReadAllDomainObjects", args);
         
         List<IDegree> result = new ArrayList<IDegree>();
         for (IDegree degree : allDegrees) {

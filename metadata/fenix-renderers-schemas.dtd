@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--
+  The root element 'schemas' allows the definition of several schemas. 
+  -->
+<!ELEMENT schemas (schema*)>
+
+<!--
+  Each schema must have an unique name and at least one slot specified.
+  
+  The 'type' attribute specifies to which object type this schema is to be
+  applied. This information is used to verify is the specified slots exist
+  in the object and if there is a way of rendering each slot.
+  -->
+<!ELEMENT schema (slot+)>
+
+<!ATTLIST schema
+	name ID #REQUIRED
+	type NMTOKEN #REQUIRED
+>
+
+<!--
+  The 'slot' element indicates that the slot with the specified name should be
+  rendered when using this schema.
+  
+  Additionaly you can specify the layout used when rendering the slot value and
+  even the schema that will be used.
+  
+  When rendering the slot label a convention is used to automatically find a valid
+  entry in the render resources. Nevertheless you can specify, with the 'key' attribute,
+  the exact key that will be used.
+  -->
+<!ELEMENT slot (property*)>
+
+<!ATTLIST slot
+	name CDATA #REQUIRED
+	layout NMTOKEN #IMPLIED
+	schema IDREF #IMPLIED
+  key NMTOKEN #IMPLIED
+  validator NMTOKEN #IMPLIED
+  default CDATA #IMPLIED
+>
+
+<!--
+  The 'property' element allows the configuration of the renderer used to present
+  each slot value.
+  
+  A property like <property name="property" value="value"/> is the same as 
+  calling setProperty("value") in the renderer before rendering the object.
+  -->
+<!ELEMENT property EMPTY>
+
+<!ATTLIST property
+	name NMTOKEN #REQUIRED
+	value NMTOKEN #REQUIRED
+>

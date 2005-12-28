@@ -521,7 +521,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.StudentCurricularPlan -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.StudentCurricularPlanLEM" table="STUDENT_CURRICULAR_PLAN">
+<class-descriptor class="net.sourceforge.fenixedu.domain.StudentCurricularPlanLEM" table="STUDENT_CURRICULAR_PLAN">
 
 	<field-descriptor
 		name="ojbConcreteClass"

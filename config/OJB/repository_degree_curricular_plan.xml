@@ -1037,7 +1037,7 @@
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEA --> 
 <!-- *************************************************************************************************************** -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEA" table="DEGREE_CURRICULAR_PLAN">
+<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEA" table="DEGREE_CURRICULAR_PLAN">
 	<field-descriptor
 		name="ojbConcreteClass"
 		column="CLASS_NAME"
@@ -1206,7 +1206,7 @@
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLET --> 
 <!-- *************************************************************************************************************** -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLET" table="DEGREE_CURRICULAR_PLAN">
+<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLET" table="DEGREE_CURRICULAR_PLAN">
 	<field-descriptor
 		name="ojbConcreteClass"
 		column="CLASS_NAME"

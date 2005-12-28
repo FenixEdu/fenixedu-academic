@@ -30,4 +30,10 @@
 	<definition name="displayPerson" extends="definition.person.masterPage" >
 		<put name="body" value="/person/findPerson/displayPerson.jsp" />
 	</definition>
+
+	<!-- ========== RENDERERS ========== -->
+  
+    <definition name="domain.view" extends="definition.person.masterPage" >
+	  <put name="body" value="/commons/renderers/view.jsp" />
+	</definition>
 </tiles-definitions>
