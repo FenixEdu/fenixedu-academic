@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
@@ -29,6 +32,8 @@ import org.apache.struts.action.DynaActionForm;
  * @author jorge
  */
 public class AuthenticationAction extends FenixAction {
+
+	private static final int APP_CONTEXT_LENGTH = PropertiesManager.getProperty("app.context").length() + 1;
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -62,7 +67,29 @@ public class AuthenticationAction extends FenixAction {
 
         // Invalidate existing session if it exists
         HttpSession sessao = request.getSession(false);
+        HttpServletRequest originalRequest = null;
+        ActionForward actionForward = null;
         if (sessao != null) {
+        	originalRequest = (HttpServletRequest) sessao.getAttribute("ORIGINAL_REQUEST");
+        	System.out.println("ORIGINAL_REQUEST" + originalRequest);
+        	if (originalRequest != null) {
+        		System.out.println("ORIGINAL_REQUEST uri: " + originalRequest.getRequestURI());
+
+                actionForward = new ActionForward();
+                actionForward.setContextRelative(false);
+                actionForward.setRedirect(false);
+
+            	System.out.println("Original URI reconstruction: " + sessao.getAttribute("ORIGINAL_URI"));
+            	final String originalURI = (String) sessao.getAttribute("ORIGINAL_URI");
+            	actionForward.setPath(originalURI.substring(APP_CONTEXT_LENGTH));
+
+            	// Set request attributes
+            	final Map<String, Object> attributeMap = (Map<String, Object>) sessao.getAttribute("ORIGINAL_ATTRIBUTE_MAP");
+            	for (final Entry<String, Object> entry : attributeMap.entrySet()) {
+            		request.setAttribute(entry.getKey(), entry.getValue());
+            	}
+        	}
+
             sessao.invalidate();
         }
 
@@ -72,6 +99,10 @@ public class AuthenticationAction extends FenixAction {
         // Store the UserView into the session and return
         sessao.setAttribute(SessionConstants.U_VIEW, userView);
         sessao.setAttribute(SessionConstants.SESSION_IS_VALID, new Boolean(true));
+
+        if (originalRequest != null) {
+            return actionForward;
+        }
 
         Collection userRoles = userView.getRoles();
 

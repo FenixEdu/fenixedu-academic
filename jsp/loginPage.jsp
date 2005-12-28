@@ -62,10 +62,10 @@
 			</div>
 		</div>
 		<%-- Invalidate session. This is to work with FenixActionServlet --%>
-		<% 	try {
+		<%-- 	try {
 				session.invalidate();
 			}catch (Exception e){}
-		%>
+		--%>
 
 	</body>
 

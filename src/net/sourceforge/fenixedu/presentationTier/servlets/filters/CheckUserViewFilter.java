@@ -1,6 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters;
 
 import java.io.IOException;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -37,6 +41,47 @@ public class CheckUserViewFilter implements Filter {
         final String uri = request.getRequestURI();
         final IUserView userView = getUserView(request);
         if (isPrivateURI(uri.substring(APP_CONTEXT_LENGTH)) && !validUserView(userView)) {
+        	System.out.println("uri: " + uri);
+//        	for (final Entry<String, String[]> entry : ((Map<String, String[]>) request.getParameterMap()).entrySet()) {
+//        		System.out.println("   parameter: " + entry.getKey());
+//        		for (final String string : entry.getValue()) {
+//        			System.out.println("      |-> " + string);
+//        		}
+//        	}
+//        	final Enumeration enumeration = request.getAttributeNames();
+//        	while (enumeration.hasMoreElements()) {
+//        		final Object object = enumeration.nextElement();
+//        		System.out.println("   attribute: " + object + " = " + request.getAttribute((String) object));
+//        	}
+
+        	final HttpSession httpSession = request.getSession(true);
+        	httpSession.setAttribute("ORIGINAL_REQUEST", request);
+
+            final StringBuilder originalURI = new StringBuilder(request.getRequestURI());
+            boolean isFirst = true;
+        	for (final Entry<String, String[]> entry : ((Map<String, String[]>) request.getParameterMap()).entrySet()) {
+        		for (final String parameterValue : entry.getValue()) {
+            		if (isFirst) {
+            			isFirst = false;
+            			originalURI.append('?');
+            		} else {
+            			originalURI.append('&');
+            		}
+            		originalURI.append(entry.getKey());
+            		originalURI.append('=');
+            		originalURI.append(parameterValue);
+        		}
+        	}
+        	httpSession.setAttribute("ORIGINAL_URI", originalURI.toString());
+
+        	final Map<String, Object> attributeMap = new HashMap<String, Object>();
+        	final Enumeration enumeration = request.getAttributeNames();
+        	while (enumeration.hasMoreElements()) {
+        		final String attributeName = (String) enumeration.nextElement();
+        		attributeMap.put(attributeName, request.getAttribute(attributeName));
+        	}
+        	httpSession.setAttribute("ORIGINAL_ATTRIBUTE_MAP", attributeMap);
+
             response.sendRedirect(REDIRECT);
         } else {
             filterChain.doFilter(request, response);
