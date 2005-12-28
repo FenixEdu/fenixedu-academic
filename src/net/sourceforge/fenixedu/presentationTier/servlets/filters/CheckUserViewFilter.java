@@ -97,6 +97,7 @@ public class CheckUserViewFilter implements Filter {
         return (uri.length() > 1
         		&& (uri.indexOf("CSS/") == -1)
         		&& (uri.indexOf("images/") == -1)
+                && (uri.indexOf("download/") == -1)
         		&& (uri.indexOf("index.jsp") == -1)
                 && (uri.indexOf("index.html") == -1)
                 && (uri.indexOf("login.do") == -1)
