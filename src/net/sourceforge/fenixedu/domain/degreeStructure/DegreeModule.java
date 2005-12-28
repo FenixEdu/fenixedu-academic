@@ -34,4 +34,8 @@ public abstract class DegreeModule extends DegreeModule_Base {
     }
     
     protected abstract void checkContextsFor(final ICourseGroup parentCourseGroup, final ICurricularSemester curricularSemester);
+    
+    public boolean isRoot() {
+        return (getNewDegreeCurricularPlan() != null);
+    }
 }

@@ -863,11 +863,12 @@ class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.s
 		public boolean isLeaf();
 		public void print(java.lang.StringBuffer stringBuffer, String tabs, IContext previousContext);
 		public Double computeEctsCredits();
-		 public net.sourceforge.fenixedu.domain.degreeStructure.IContext addContext(net.sourceforge.fenixedu.domain.degreeStructure.ICourseGroup courseGroup,
+		public net.sourceforge.fenixedu.domain.degreeStructure.IContext addContext(net.sourceforge.fenixedu.domain.degreeStructure.ICourseGroup courseGroup,
            net.sourceforge.fenixedu.domain.ICurricularSemester curricularSemester, net.sourceforge.fenixedu.domain.IExecutionPeriod beginExecutionPeriod, net.sourceforge.fenixedu.domain.IExecutionPeriod endExecutionPeriod);       
-       public void editContext(net.sourceforge.fenixedu.domain.degreeStructure.IContext context, net.sourceforge.fenixedu.domain.degreeStructure.ICourseGroup courseGroup,
+        public void editContext(net.sourceforge.fenixedu.domain.degreeStructure.IContext context, net.sourceforge.fenixedu.domain.degreeStructure.ICourseGroup courseGroup,
            net.sourceforge.fenixedu.domain.ICurricularSemester curricularSemester);
 		public void deleteContext(IContext context);
+		public boolean isRoot();
 	"
 }
 

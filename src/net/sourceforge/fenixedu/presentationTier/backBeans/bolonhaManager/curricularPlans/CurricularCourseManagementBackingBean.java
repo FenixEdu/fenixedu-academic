@@ -41,7 +41,9 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     private Integer curricularYearID = null;
     private Integer curricularSemesterID = null;
     private Integer contextID = null;
+    private Integer curricularCourseID = null;
     private boolean resetCompetenceCourseID = false;
+    private boolean confirmDelete = false;
     
     private Double weight = null;
     private String prerequisites;
@@ -59,10 +61,6 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public Integer getDegreeCurricularPlanID() {
         return getAndHoldIntegerParameter("degreeCurricularPlanID");
-    }
-    
-    public Integer getCurricularCourseID() {
-        return getAndHoldIntegerParameter("curricularCourseID");
     }
     
     public Integer getContextID() {
@@ -90,7 +88,16 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public void setCourseGroupID(Integer courseGroupID) {
         this.courseGroupID = courseGroupID;
-    }   
+    }
+    
+    public Integer getCurricularCourseID() {
+        return (curricularCourseID == null) ? (curricularCourseID = getAndHoldIntegerParameter("curricularCourseID"))
+                : curricularCourseID;
+    }
+    
+    public void setCurricularCourseID(Integer curricularCourseID) {
+        this.curricularCourseID = curricularCourseID;
+    }
     
     public Integer getDepartmentUnitID() throws FenixFilterException, FenixServiceException {
         if (getViewState().getAttribute("departmentUnitID") == null && getCurricularCourse() != null) {
@@ -322,7 +329,8 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }
     
     public void deleteContext(ActionEvent event) throws FenixFilterException, FenixServiceException {
-        if (getCurricularCourse().getDegreeModuleContextsCount() != 1) { // Last context?
+        confirmDelete = getCurricularCourse().getDegreeModuleContextsCount() == 1; // Last context?
+        if (!confirmDelete) { 
             forceDeleteContext(event);
         }
     }    
@@ -340,17 +348,11 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }
     
     public String editCurricularCourseReturnPath() throws FenixFilterException, FenixServiceException {
-        if (getCurricularCourse().getDegreeModuleContextsCount() == 1) { // Last context?
-            return "confirmDeleteCurricularCourse";
-        }
-        return "";
+        return confirmDelete ? "confirmDeleteCurricularCourse" : "";
     }
     
     public String deleteCurricularCourseContextReturnPath() throws FenixFilterException, FenixServiceException {
-        if (getCurricularCourse().getDegreeModuleContextsCount() == 1) { // Last context?
-            return "confirmDeleteCurricularCourse";
-        }
-        return "buildCurricularPlan";
+        return confirmDelete ? "confirmDeleteCurricularCourse" : "buildCurricularPlan";
     }
 
     private List<SelectItem> readDepartmentUnits() throws FenixFilterException {
@@ -402,9 +404,8 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     private void collectChildCourseGroups(final List<SelectItem> result, final ICourseGroup courseGroup,
             final String previousCourseGroupName) {
         String currentCourseGroupName = "";
-        if (courseGroup.getNewDegreeCurricularPlan() == null) { // not root node
-            currentCourseGroupName = ((previousCourseGroupName.length() == 0) ? ""
-                    : (previousCourseGroupName + " > "))
+        if (!courseGroup.isRoot()) {
+            currentCourseGroupName = ((previousCourseGroupName.length() == 0) ? "" : (previousCourseGroupName + " > "))
                     + courseGroup.getName();
             result.add(new SelectItem(courseGroup.getIdInternal(), currentCourseGroupName));
         }
