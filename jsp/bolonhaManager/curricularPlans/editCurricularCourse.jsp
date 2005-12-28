@@ -12,8 +12,6 @@
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="ServidorApresentacao/BolonhaManagerResources" var="bolonhaBundle"/>
 	
-	<h:outputText value="#{CurricularCourseManagement.degreeCurricularPlan.degree.nome}" style="font-style: italic"/>
-	<h:outputText value=" (#{CurricularCourseManagement.degreeCurricularPlan.degree.sigla})" style="font-style: italic"/><br/>
 	<h:outputText value="#{CurricularCourseManagement.degreeCurricularPlan.name}" style="font-style: italic"/>
 	<h2><h:outputText value="#{bolonhaBundle['editCurricularCourse']}"/></h2>
 	<h:outputText styleClass="error" rendered="#{!empty CurricularCourseManagement.errorMessage}"
@@ -99,7 +97,8 @@
 							<f:param name="curricularCourseID" value="#{CurricularCourseManagement.curricularCourseID}" />
 						</h:outputLink>
 						<h:outputText value=", " escape="false"/>	
-						<h:commandLink value="#{bolonhaBundle['delete']}" action="#{CurricularCourseManagement.deleteContext}">
+						<h:commandLink value="#{bolonhaBundle['delete']}" action="#{CurricularCourseManagement.editCurricularCourseReturnPath}"
+							actionListener="#{CurricularCourseManagement.deleteContext}">
 							<f:param name="contextIDToDelete" value="#{context.idInternal}"/>
 						</h:commandLink>
 					</h:panelGroup>
