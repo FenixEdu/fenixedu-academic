@@ -889,6 +889,7 @@
         <forward name="index" path="/index.do" redirect="true"/>
         <forward name="firstPage" path="/switchAction.do?prefix=&amp;page=/loginPage.jsp"/>
         <forward name="logoff" path="/logoff.do" contextRelative="true"/>
+        <forward name="redirect" path="/redirect.do" contextRelative="true"/>
         <forward name="creditsManagement" path="/credits/creditsManagement.do?method=prepare&amp;page=0" 
             contextRelative="true"/>
     </global-forwards>

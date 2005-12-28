@@ -49,7 +49,7 @@
      <forward name="index" path="/index.do" redirect="true"/>
      <forward name="firstPage" path="/switchAction.do?prefix=&amp;page=/loginPage.jsp"/>  
    	 <forward name="logoff" path="/logoff.do" contextRelative="true"/>
-	
+   	 <forward name="redirect" path="/redirect.do" contextRelative="true"/>
     </global-forwards>
 
 	<!-- ========== Action Mapping Definitions =============================== -->

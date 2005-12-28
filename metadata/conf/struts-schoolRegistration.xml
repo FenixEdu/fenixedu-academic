@@ -94,6 +94,7 @@
     <global-forwards type="org.apache.struts.action.ActionForward">
       <forward name="home" path="/mainPortalPage.jsp" redirect="true" contextRelative="true"/>
       <forward name="logoff" path="/logoff.do" contextRelative="true"/>
+      <forward name="redirect" path="/redirect.do" contextRelative="true"/>
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->

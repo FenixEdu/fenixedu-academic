@@ -195,6 +195,7 @@
 	<global-forwards type="org.apache.struts.action.ActionForward">
 		<forward name="ciaplIndex" path="/index.do" contextRelative="true"/>
 		<forward name="logoff" path="/logoff.do" contextRelative="true"/>
+		<forward name="redirect" path="/redirect.do" contextRelative="true"/>
 		<forward name="index" path="/index.do" redirect="true"/>
 		<forward name="globalOutOfPeriod" path="definition.out.of.period" redirect="true"/>
 		<forward name="enrolment" path="/globalEnrolment.do"/>

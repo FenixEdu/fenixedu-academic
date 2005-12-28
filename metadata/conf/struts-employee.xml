@@ -27,6 +27,7 @@
   <!-- ========== Global Forward Definitions ============================== -->
   <global-forwards type="org.apache.struts.action.ActionForward">
     <forward name="logoff" path="/logoff.do" contextRelative="true"/>
+    <forward name="redirect" path="/redirect.do" contextRelative="true"/>
     <forward name="Logon" path="/logon.jsp" />
     <forward name="Index" path="/index.jsp" />
     <forward name="FirstPage" path="/switchAction.do?prefix=&amp;page=/loginPage.jsp"/>

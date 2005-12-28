@@ -70,11 +70,18 @@ public class CheckUserViewFilter implements Filter {
             		originalURI.append(entry.getKey());
             		originalURI.append('=');
             		originalURI.append(parameterValue);
-        		}
+
+                }
         	}
         	httpSession.setAttribute("ORIGINAL_URI", originalURI.toString());
 
-        	final Map<String, Object> attributeMap = new HashMap<String, Object>();
+            final Map<String, Object> parameterMap = new HashMap<String, Object>();
+            for (final Entry<String, Object> entry : ((Map<String, Object>) request.getParameterMap()).entrySet()) {
+                parameterMap.put(entry.getKey(), entry.getValue());
+            }
+            httpSession.setAttribute("ORIGINAL_PARAMETER_MAP", parameterMap);
+
+            final Map<String, Object> attributeMap = new HashMap<String, Object>();
         	final Enumeration enumeration = request.getAttributeNames();
         	while (enumeration.hasMoreElements()) {
         		final String attributeName = (String) enumeration.nextElement();

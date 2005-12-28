@@ -47,6 +47,7 @@
     <global-forwards type="org.apache.struts.action.ActionForward">
         <forward name="index" path="/index.do" redirect="true"/>
         <forward name="logoff" path="/logoff.do" contextRelative="true"/>
+        <forward name="redirect" path="/redirect.do" contextRelative="true"/>
         <forward name="home" path="/mainPortalPage.jsp" redirect="true" contextRelative="true"/>
         <forward name="firstPage" path="/loginPage.jsp"/>
         <forward name="exceptionHandling" path="/exceptionHandlingAction.do?method=goBack" contextRelative="true"/>
@@ -89,9 +90,13 @@
             <forward name="sucess" path="/home.do"/>
             <forward name="changePass" path="/person/changePasswordForward.do"/>
         </action>
+        <action path="/redirect"
+				type="net.sourceforge.fenixedu.presentationTier.Action.commons.LoginRedirectAction">
+            <forward name="Success" path="/loginPage.jsp"/>
+        </action>
         <action path="/logoff"
 				type="net.sourceforge.fenixedu.presentationTier.Action.commons.LogOffAction">
-            <forward name="Success" path="/loginPage.jsp"/>
+            <forward name="null" path="/null"/>
         </action>
         <action path="/dotIstPortal" type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixSwitchAction">
         </action>
