@@ -15,16 +15,26 @@ public class UICurricularCourse extends UIDegreeModule {
     public static final String COMPONENT_FAMILY = "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UICurricularCourse";
 
     private IContext previousContext;
+    private boolean byYears;
     
     public UICurricularCourse() {
         super();
+        this.byYears = false;
     }
 
     public UICurricularCourse(IDegreeModule curricularCourse, Boolean toEdit, int depth, String tabs, IContext previousContext) {
         super(curricularCourse, toEdit, depth, tabs);
         this.previousContext = previousContext;
+        this.byYears = false;
     }
 
+    public UICurricularCourse(ICurricularCourse curricularCourse, Boolean toEdit, IContext previousContext) {
+        this.degreeModule = curricularCourse;
+        this.toEdit = toEdit;
+        this.previousContext = previousContext;
+        this.byYears = true; 
+    }
+    
     public String getFamily() {
         return UICurricularCourse.COMPONENT_FAMILY;
     }
@@ -60,11 +70,15 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.startElement("td", this);
         writer.writeAttribute("align", "center", null);
         writer.writeAttribute("width", "100px", null);
-        writer.append(previousContext.getCurricularSemester().getCurricularYear().getYear().toString()).append("º ");
-        writer.append(this.getBundleValue(facesContext, "ServidorApresentacao/BolonhaManagerResources", "year"));
-        writer.append(", ");
-        writer.append(previousContext.getCurricularSemester().getSemester().toString()).append("º ");
-        writer.append(this.getBundleValue(facesContext, "ServidorApresentacao/BolonhaManagerResources", "semester"));
+        if (!byYears) {
+            writer.append(previousContext.getCurricularSemester().getCurricularYear().getYear().toString()).append("º ");
+            writer.append(this.getBundleValue(facesContext, "ServidorApresentacao/BolonhaManagerResources", "year"));
+            writer.append(", ");
+            writer.append(previousContext.getCurricularSemester().getSemester().toString()).append("º ");
+            writer.append(this.getBundleValue(facesContext, "ServidorApresentacao/BolonhaManagerResources", "semester"));
+        } else {
+            writer.append(previousContext.getCourseGroup().getName());
+        }
         writer.endElement("td");
         writer.startElement("td", this);
         writer.writeAttribute("align", "center", null);
@@ -83,7 +97,7 @@ public class UICurricularCourse extends UIDegreeModule {
         encodeLink("editCurricularCourse.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
                 .get("degreeCurricularPlanID") + "&contextID=" + this.previousContext.getIdInternal() + "&curricularCourseID=" + this.degreeModule.getIdInternal(), "edit");
         writer.append(" , ");
-        encodeLink("deleteCurricularCourse.facesdegreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
+        encodeLink("deleteCurricularCourse.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
                 .get("degreeCurricularPlanID") + "&contextID=" + this.previousContext.getIdInternal() + "&curricularCourseID=" + this.degreeModule.getIdInternal(), "delete");
         writer.endElement("td");
     }

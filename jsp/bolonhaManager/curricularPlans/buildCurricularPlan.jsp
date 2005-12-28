@@ -1,3 +1,4 @@
+<%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
@@ -17,11 +18,13 @@
 	<h:outputLink value="buildCurricularPlan.faces">
 		<h:outputText value="#{bolonhaBundle['groups']}" />
 		<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
+		<f:param name="organizeBy" value="groups"/>
 	</h:outputLink>
 	<h:outputText value=" | " escape="false"/>
 	<h:outputLink value="buildCurricularPlan.faces">
 		<h:outputText value="#{bolonhaBundle['curricularYear']}/#{bolonhaBundle['semester']}" />
 		<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
+		<f:param name="organizeBy" value="years"/>		
 	</h:outputLink>
 
 	<h:outputText value="</br></br>* " escape="false"/>
@@ -31,7 +34,7 @@
 	</h:outputLink>
 
 	<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'"/><br/>
-	<fc:degreeCurricularPlanRender dcp="#{CurricularCourseManagement.degreeCurricularPlan}" onlyStructure="false" toEdit="true" />
+	<fc:degreeCurricularPlanRender dcp="#{CurricularCourseManagement.degreeCurricularPlan}" onlyStructure="false" toEdit="true" organizeBy="<%=request.getParameter("organizeBy")%>"/>
 
 	<h:outputText value="</br></br>" escape="false"/>
 	<h:form>

@@ -48,32 +48,22 @@ public class UICourseGroup extends UIDegreeModule {
             encodeSelf();
         } else {
             // root course group
-            writer.startElement("table", this);
-            writer.writeAttribute("border", 1, null);
-
-            writer.startElement("tr", this);
-            writer.startElement("th", this);
             if (this.onlyStructure && this.toEdit) {
+                writer.startElement("table", this);
+                writer.writeAttribute("border", 1, null);
+    
+                writer.startElement("tr", this);
+                writer.startElement("th", this);
                 writer.append("(");
                 encodeLink("createCourseGroup.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
                 .get("degreeCurricularPlanID") + "&parentCourseGroupID=" + this.degreeModule.getIdInternal(), "create.course.group");
                 writer.append(") ");
-            }
-            writer.endElement("th");
-            writer.endElement("tr");
+                writer.endElement("th");
+                writer.endElement("tr");
             
-            if (!this.onlyStructure) {
                 encodeChildCurricularCourses();
-            }
-            
-//            if (!this.onlyStructure && this.toEdit) {
-//                encodeCourseGroupOptions();
-//            }
-//
-//            if (!this.onlyStructure && ((ICourseGroup)this.degreeModule).getContextsWithCurricularCourses().size() > 0) {
-//                encodeTotalCreditsFooter();
-//            }
-            writer.endElement("table");
+                writer.endElement("table");
+            }                
         }
         encodeChildCourseGroups();
     }

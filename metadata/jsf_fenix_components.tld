@@ -1378,6 +1378,12 @@
 			<rtexprvalue>false</rtexprvalue>
 			<description>Indicates if edit option is to be available. Type: java.lang.Boolean</description>
 		</attribute>
+		<attribute>
+			<name>organizeBy</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>Groups or Years. Type: java.lang.String</description>
+		</attribute>
 	</tag>
   <tag>
 		<name>breadCrumbs</name>
