@@ -123,8 +123,8 @@ public class Authenticate implements IService, Serializable {
         return userView instanceof UserView;
     }
 
-    public IUserView run(final String username, final String password, final String application,
-            final String requestURL) throws ExcepcaoPersistencia, ExcepcaoAutenticacao, InvalidPasswordServiceException {
+    public IUserView run(final String username, final String password, final String requestURL)
+            throws ExcepcaoPersistencia, ExcepcaoAutenticacao, InvalidPasswordServiceException {
 
         final ISuportePersistente persistenceSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();

@@ -2,9 +2,7 @@
  * 
  */
 
-
 package net.sourceforge.fenixedu.presentationTier.Action.externalServices;
-
 
 import java.io.IOException;
 
@@ -25,54 +23,44 @@ import org.apache.struts.action.ActionMapping;
  *         <br/> Created on 12:08:43,13/Out/2005
  * @version $Id$
  */
-public class Authentication extends FenixAction
-{
-	final static String allowedProtocol = "https";
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixActionException
-	{
-		final String username = request.getParameter("username");
-		final String password = request.getParameter("password");
-		final String requestURL = request.getRequestURL().toString();
-		boolean result = false;
+public class Authentication extends FenixAction {
+    final static String allowedProtocol = "https";
 
-		Object argsAutenticacao[] =
-		{ username, password, "", requestURL };
-		try
-		{
-			String scheme = request.getScheme();
-			
-			if (allowedProtocol.equalsIgnoreCase(scheme))
-			{
-				ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsAutenticacao);
-				result = true;
-			}
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
+        final String username = request.getParameter("username");
+        final String password = request.getParameter("password");
+        final String requestURL = request.getRequestURL().toString();
+        boolean result = false;
 
-		}
-		catch (Exception e)
-		{
-			result = false;
-		}
+        Object argsAutenticacao[] = { username, password, requestURL };
+        try {
+            String scheme = request.getScheme();
 
-		try
-		{
-			sendAnswer(response, result);
-		}
-		catch (IOException ex)
-		{
-			throw new FenixActionException(ex);
-		}
+            if (allowedProtocol.equalsIgnoreCase(scheme)) {
+                ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsAutenticacao);
+                result = true;
+            }
 
-		return null;
-	}
+        } catch (Exception e) {
+            result = false;
+        }
 
-	private void sendAnswer(HttpServletResponse response, boolean result) throws IOException
-	{
-		ServletOutputStream writer = response.getOutputStream();
-		response.setContentType("text/plain");
-		writer.print(result);
-		writer.flush();
-		response.flushBuffer();
-	}
+        try {
+            sendAnswer(response, result);
+        } catch (IOException ex) {
+            throw new FenixActionException(ex);
+        }
+
+        return null;
+    }
+
+    private void sendAnswer(HttpServletResponse response, boolean result) throws IOException {
+        ServletOutputStream writer = response.getOutputStream();
+        response.setContentType("text/plain");
+        writer.print(result);
+        writer.flush();
+        response.flushBuffer();
+    }
 
 }

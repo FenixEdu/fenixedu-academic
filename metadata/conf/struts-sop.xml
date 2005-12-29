@@ -555,30 +555,6 @@
               type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" 
               parameter="/sop/principalSalas.jsp"/>
     
-
-     
-<!--      <action path="/editarTurno" forward="/editarTurno.jsp"/>-->
-
-      <!-- action definitions -->
-      <!-- AUTORIZACAO -->
-      <action name="autenticacaoSOPForm"
-              type="net.sourceforge.fenixedu.presentationTier.Action.sop.AutenticacaoSOPFormAction"
-              path="/autenticacaoSOPForm"
-              input="/autenticacaoSOP.jsp"
-              scope="request"
-              attribute="autenticacaoSOPForm">
-        <exception type="net.sourceforge.fenixedu.applicationTier.NotExecutedException"
-                   key="ServidorAplicacao.NotExecutedException"
-                   path="/autenticacaoSOP.do"/>
-        <exception type="net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao"
-                   key="ServidorAplicacao.Servico.ExcepcaoAutenticacao"
-                   path="/autenticacaoSOP.do"/>
-        <forward name="SOP"
-                 path="/sop/paginaPrincipal.jsp"
-                 contextRelative="true"
-                 redirect="true"/>
-      </action>
-
 	  <!-- CONTEXTO -->
 
 	<action path="/chooseExecutionPeriod"

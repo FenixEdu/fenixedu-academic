@@ -153,7 +153,7 @@ public class StudentInfoByUsername extends FenixAction
             throws FenixServiceException, FenixFilterException
     {
         Object argsAutenticacao[] =
-        { username, password, "", requestURL };
+        { username, password, requestURL };
         IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(null,
                 "Autenticacao", argsAutenticacao);
 

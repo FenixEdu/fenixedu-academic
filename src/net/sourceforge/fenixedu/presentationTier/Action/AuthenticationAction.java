@@ -12,13 +12,14 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.mapping.ActionMappingForAuthentication;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionError;
@@ -28,132 +29,112 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import sun.security.krb5.internal.crypto.u;
+
 public class AuthenticationAction extends FenixAction {
 
-	private static final int APP_CONTEXT_LENGTH = PropertiesManager.getProperty("app.context").length() + 1;
+    private static final int APP_CONTEXT_LENGTH = PropertiesManager.getProperty("app.context").length() + 1;
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        IUserView userView = null;
-        ActionForward forwardToReturn;
         try {
-            DynaActionForm authenticationForm = (DynaActionForm) form;
-            ActionMappingForAuthentication authenticationMapping = (ActionMappingForAuthentication) mapping;
+            final IUserView userView = authenticateUser(form, request);
 
-			final String username = (String) authenticationForm.get("username");
-			final String password = (String) authenticationForm.get("password");
-			final String application = authenticationMapping.getApplication();
-			final String requestURL = request.getRequestURL().toString();
-            Object argsAutenticacao[] = { username, password, application, requestURL };
+            if (userView.getRoles().isEmpty()) {
+                return authenticationFailedForward(mapping, request, "errors.noAuthorization");
+            }
 
-            userView = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
-                    argsAutenticacao);
-        } catch (ExcepcaoAutenticacao e) {
-            ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("invalidAuthentication", new ActionError("errors.invalidAuthentication"));
-            saveErrors(request, actionErrors);
-            return mapping.getInputForward();
-        }
-        
-        if (userView.getRoles().isEmpty()) {
-            ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("errors.noAuthorization", new ActionError("errors.noAuthorization"));
-            saveErrors(request, actionErrors);
-            return mapping.getInputForward();
-        }
-
-        // Invalidate existing session if it exists
-        HttpSession sessao = request.getSession(false);
-        HttpServletRequest originalRequest = null;
-        ActionForward actionForward = null;
-        String originalURI = null;
-        String module = null;
-        Map<String, Object> attributeMap = null;
-        Map<String, Object> parameterMap = null;
-
-        if (sessao != null) {
-        	originalRequest = (HttpServletRequest) sessao.getAttribute("ORIGINAL_REQUEST");
-        	System.out.println("ORIGINAL_REQUEST" + originalRequest);
-        	if (originalRequest != null) {
-        		System.out.println("ORIGINAL_REQUEST uri: " + originalRequest.getRequestURI());
-
-                actionForward = new ActionForward();
+            final HttpSession session = request.getSession(false);
+            if (session != null && session.getAttribute("ORIGINAL_REQUEST") != null) {
+                final ActionForward actionForward = new ActionForward();
                 actionForward.setContextRelative(false);
                 actionForward.setRedirect(true);
 
-                originalURI = (String) sessao.getAttribute("ORIGINAL_URI");
-                module = StringUtils.substringBefore(originalURI.substring(APP_CONTEXT_LENGTH), "/");
+                final String originalURI = (String) session.getAttribute("ORIGINAL_URI");
+                final String module = StringUtils.substringBefore(originalURI
+                        .substring(APP_CONTEXT_LENGTH), "/");
 
-            	//actionForward.setPath(originalURI);
-
-//                // Set request parameters
-//                final Map<String, Object> parameterMap = (Map<String, Object>) sessao.getAttribute("ORIGINAL_PARAMETER_MAP");
-//                for (final Entry<String, Object> entry : parameterMap.entrySet()) {
-//                    request.getParameterMap().put(entry.getKey(), entry.getValue());
-//                }
-
-            	// Set request attributes
-            	attributeMap = (Map<String, Object>) sessao.getAttribute("ORIGINAL_ATTRIBUTE_MAP");
-                parameterMap = (Map<String, Object>) sessao.getAttribute("ORIGINAL_PARAMETER_MAP");
-
-//            	for (final Entry<String, Object> entry : attributeMap.entrySet()) {
-//            		request.setAttribute(entry.getKey(), entry.getValue());
-//            	}
+                // Set request attributes
+                final Map<String, Object> attributeMap = (Map<String, Object>) session
+                        .getAttribute("ORIGINAL_ATTRIBUTE_MAP");
+                final Map<String, Object> parameterMap = (Map<String, Object>) session
+                        .getAttribute("ORIGINAL_PARAMETER_MAP");
 
                 actionForward.setPath(module + "/redirect.do");
-        	}
 
-            sessao.invalidate();
+                final HttpSession newSession = createNewSession(request, session, userView);
+
+                newSession.setAttribute("ORIGINAL_URI", originalURI);
+                newSession.setAttribute("ORIGINAL_MODULE", module);
+                newSession.setAttribute("ORIGINAL_PARAMETER_MAP", parameterMap);
+                newSession.setAttribute("ORIGINAL_ATTRIBUTE_MAP", attributeMap);
+
+                return actionForward;
+            } else {
+                createNewSession(request, session, userView);
+
+                Collection userRoles = userView.getRoles();
+
+                InfoRole firstTimeStudentInfoRole = new InfoRole();
+                firstTimeStudentInfoRole.setRoleType(RoleType.FIRST_TIME_STUDENT);
+
+                if (userRoles.contains(firstTimeStudentInfoRole)) {
+                    // TODO impose a period time limit
+                    InfoRole infoRole = getRole(RoleType.FIRST_TIME_STUDENT, userRoles);
+                    return buildRoleForward(infoRole);
+                } else {
+                    InfoRole personInfoRole = new InfoRole();
+                    personInfoRole.setRoleType(RoleType.PERSON);
+                    int numberOfSubApplications = getNumberOfSubApplications(userRoles);
+                    if (numberOfSubApplications == 1 || !userRoles.contains(personInfoRole)) {
+                        final InfoRole firstInfoRole = ((userRoles.isEmpty()) ? null : (InfoRole) userRoles.iterator().next());
+                        return buildRoleForward(firstInfoRole);
+                    } else {
+                        return mapping.findForward("sucess");
+                    }
+                }
+            }
+        } catch (ExcepcaoAutenticacao e) {
+            return authenticationFailedForward(mapping, request, "errors.invalidAuthentication");
+        }
+    }
+
+    private HttpSession createNewSession(final HttpServletRequest request, final HttpSession session,
+            final IUserView userView) {
+        if (session != null) {
+            session.invalidate();
         }
 
-        // Create a new session for this user
-        sessao = request.getSession(true);
+        final HttpSession newSession = request.getSession(true);
 
         // Store the UserView into the session and return
-        sessao.setAttribute(SessionConstants.U_VIEW, userView);
-        sessao.setAttribute(SessionConstants.SESSION_IS_VALID, new Boolean(true));
+        newSession.setAttribute(SessionConstants.U_VIEW, userView);
+        newSession.setAttribute(SessionConstants.SESSION_IS_VALID, Boolean.TRUE);
 
-        if (originalRequest != null) {
-            sessao.setAttribute("ORIGINAL_URI", originalURI);
-            sessao.setAttribute("ORIGINAL_MODULE", module);
-            sessao.setAttribute("ORIGINAL_PARAMETER_MAP", parameterMap);
-            sessao.setAttribute("ORIGINAL_ATTRIBUTE_MAP", attributeMap);
-            return actionForward;
-        }
+        return newSession;
+    }
 
-        Collection userRoles = userView.getRoles();
+    private ActionForward authenticationFailedForward(final ActionMapping mapping,
+            final HttpServletRequest request, final String messageKey) {
+        final ActionErrors actionErrors = new ActionErrors();
+        actionErrors.add(messageKey, new ActionError(messageKey));
+        saveErrors(request, actionErrors);
+        return mapping.getInputForward();
+    }
 
-        int numberOfSubApplications = getNumberOfSubApplications(userRoles);
-        forwardToReturn = mapping.findForward("sucess");
+    private IUserView authenticateUser(final ActionForm form, final HttpServletRequest request)
+            throws FenixServiceException, FenixFilterException {
+        final DynaActionForm authenticationForm = (DynaActionForm) form;
 
-        Iterator iterator = userRoles.iterator();
-        InfoRole firstInfoRole = null;
-        while (iterator.hasNext()) {
-            firstInfoRole = (InfoRole) iterator.next();
-            break;
-        }
+        final String username = (String) authenticationForm.get("username");
+        final String password = (String) authenticationForm.get("password");
+        final String requestURL = request.getRequestURL().toString();
 
-        InfoRole firstTimeStudentInfoRole = new InfoRole();
-        firstTimeStudentInfoRole.setRoleType(RoleType.FIRST_TIME_STUDENT);
+        final Object argsAutenticacao[] = { username, password, requestURL };
+        final IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(null,
+                "Autenticacao", argsAutenticacao);
 
-        if (userRoles.contains(firstTimeStudentInfoRole)) {
-            //ActionErrors actionErrors = new ActionErrors();
-            //actionErrors.add("invalidAuthentication", new
-            // ActionError("errors.invalidAuthentication"));
-            //saveErrors(request, actionErrors);
-            //return mapping.getInputForward();
-            //TODO impose a period time limit
-            InfoRole infoRole = getRole(RoleType.FIRST_TIME_STUDENT, userRoles);
-            forwardToReturn = buildRoleForward(infoRole);
-        } else {
-            InfoRole personInfoRole = new InfoRole();
-            personInfoRole.setRoleType(RoleType.PERSON);
-            if (numberOfSubApplications == 1 || !userRoles.contains(personInfoRole)) {
-                forwardToReturn = buildRoleForward(firstInfoRole);
-            }
-        }
-
-        return forwardToReturn;
+        return userView;
     }
 
     /**

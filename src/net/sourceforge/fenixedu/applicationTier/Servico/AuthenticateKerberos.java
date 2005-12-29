@@ -12,11 +12,11 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class AuthenticateKerberos extends Authenticate implements IService, Serializable {
 
-    public IUserView run(final String username, final String password, final String application,
-            final String requestURL) throws ExcepcaoPersistencia, ExcepcaoAutenticacao, InvalidPasswordServiceException {
+    public IUserView run(final String username, final String password, final String requestURL)
+            throws ExcepcaoPersistencia, ExcepcaoAutenticacao, InvalidPasswordServiceException {
 
     	final Authenticate authenticate = new Authenticate();
-    	final IUserView userView = authenticate.run(username, password, application, requestURL);
+    	final IUserView userView = authenticate.run(username, password, requestURL);
 
     	if (userView != null) {
     		updateKerberos(userView);

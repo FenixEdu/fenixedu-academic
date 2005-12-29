@@ -41,39 +41,10 @@ public class CheckUserViewFilter implements Filter {
         final String uri = request.getRequestURI();
         final IUserView userView = getUserView(request);
         if (isPrivateURI(uri.substring(APP_CONTEXT_LENGTH)) && !validUserView(userView)) {
-        	System.out.println("uri: " + uri);
-//        	for (final Entry<String, String[]> entry : ((Map<String, String[]>) request.getParameterMap()).entrySet()) {
-//        		System.out.println("   parameter: " + entry.getKey());
-//        		for (final String string : entry.getValue()) {
-//        			System.out.println("      |-> " + string);
-//        		}
-//        	}
-//        	final Enumeration enumeration = request.getAttributeNames();
-//        	while (enumeration.hasMoreElements()) {
-//        		final Object object = enumeration.nextElement();
-//        		System.out.println("   attribute: " + object + " = " + request.getAttribute((String) object));
-//        	}
-
         	final HttpSession httpSession = request.getSession(true);
         	httpSession.setAttribute("ORIGINAL_REQUEST", request);
 
-            final StringBuilder originalURI = new StringBuilder(request.getRequestURI());
-            boolean isFirst = true;
-        	for (final Entry<String, String[]> entry : ((Map<String, String[]>) request.getParameterMap()).entrySet()) {
-        		for (final String parameterValue : entry.getValue()) {
-            		if (isFirst) {
-            			isFirst = false;
-            			originalURI.append('?');
-            		} else {
-            			originalURI.append('&');
-            		}
-            		originalURI.append(entry.getKey());
-            		originalURI.append('=');
-            		originalURI.append(parameterValue);
-
-                }
-        	}
-        	httpSession.setAttribute("ORIGINAL_URI", originalURI.toString());
+        	httpSession.setAttribute("ORIGINAL_URI", request.getRequestURI());
 
             final Map<String, Object> parameterMap = new HashMap<String, Object>();
             for (final Entry<String, Object> entry : ((Map<String, Object>) request.getParameterMap()).entrySet()) {
