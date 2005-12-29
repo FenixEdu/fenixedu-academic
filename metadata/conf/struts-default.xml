@@ -92,11 +92,11 @@
         </action>
         <action path="/redirect"
 				type="net.sourceforge.fenixedu.presentationTier.Action.commons.LoginRedirectAction">
-            <forward name="Success" path="/loginPage.jsp"/>
+            <forward name="null" path="/null"/>
         </action>
         <action path="/logoff"
 				type="net.sourceforge.fenixedu.presentationTier.Action.commons.LogOffAction">
-            <forward name="null" path="/null"/>
+			<forward name="Success" path="/loginPage.jsp"/>
         </action>
         <action path="/dotIstPortal" type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixSwitchAction">
         </action>
