@@ -13,7 +13,7 @@
 <bean:define id="component" name="siteView" property="component"/>
 <bean:define id="executionCourse" name="component" property="executionCourse"/>
 
-<table class="tab_complex" width="70%" cellspacing="1" cellpadding="2">
+<table class="tab_complex" cellspacing="1" cellpadding="2">
 	<tr>
 		<th>
 			<bean:message key="label.number"/>
