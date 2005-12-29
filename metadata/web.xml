@@ -205,7 +205,11 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>CheckUserViewFilter</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>CheckUserViewFilter</filter-name>
+		<url-pattern>*.faces</url-pattern>
 	</filter-mapping>
     <!-- Listeners -->
 	<listener>
