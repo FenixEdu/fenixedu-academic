@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     private final ResourceBundle messages = getResourceBundle("ServidorApresentacao/BolonhaManagerResources");
     
+    private Integer competenceCourseID = null;
     private Integer courseGroupID = null;    
     private Integer curricularYearID = null;
     private Integer curricularSemesterID = null;
@@ -49,6 +50,8 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     private String prerequisites;
     private String prerequisitesEn;
 
+    private IUnit departmentUnit = null;
+    private ICompetenceCourse competenceCourse = null;
     private IDegreeCurricularPlan degreeCurricularPlan = null;
     private ICourseGroup courseGroup = null;
     private ICurricularCourse curricularCourse = null;
@@ -112,16 +115,14 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public Integer getCompetenceCourseID() throws FenixFilterException, FenixServiceException {
-        if (getViewState().getAttribute("competenceCourseID") == null && getCurricularCourse() != null) {
-            getViewState().setAttribute("competenceCourseID",
-                    getCurricularCourse().getCompetenceCourse().getIdInternal());
+        if (competenceCourseID == null && getCurricularCourse() != null) {
+            competenceCourseID = getCurricularCourse().getCompetenceCourse().getIdInternal();
         }
-        return (Integer) getViewState().getAttribute("competenceCourseID");
+        return competenceCourseID;
     }
 
     public void setCompetenceCourseID(Integer competenceCourseID) {
-        getViewState().setAttribute("competenceCourseID",
-                resetCompetenceCourseID ? Integer.valueOf(0) : competenceCourseID);
+        this.competenceCourseID = resetCompetenceCourseID ? Integer.valueOf(0) : competenceCourseID;
     }
 
     public List<SelectItem> getDepartmentUnits() throws FenixFilterException {
@@ -168,15 +169,17 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public IUnit getDepartmentUnit() throws FenixFilterException, FenixServiceException {
-        return (getDepartmentUnitID() != null && !getDepartmentUnitID().equals(0)) ? (IUnit) readDomainObject(
-                Unit.class, getDepartmentUnitID())
-                : null;
+       if (departmentUnit == null && getDepartmentUnitID() != null && !getDepartmentUnitID().equals(0)) {
+           departmentUnit = (IUnit) readDomainObject(Unit.class, getDepartmentUnitID());
+       }
+       return departmentUnit;
     }
     
     public ICompetenceCourse getCompetenceCourse() throws FenixFilterException, FenixServiceException {
-        return (getCompetenceCourseID() != null && !getCompetenceCourseID().equals(0)) ? (ICompetenceCourse) readDomainObject(
-                CompetenceCourse.class, getCompetenceCourseID())
-                : null;
+        if (competenceCourse == null && getCompetenceCourseID() != null && !getCompetenceCourseID().equals(0)) {
+            competenceCourse = (ICompetenceCourse) readDomainObject(CompetenceCourse.class, getCompetenceCourseID()); 
+        }
+        return competenceCourse;
     }
     
     public ICurricularCourse getCurricularCourse() throws FenixFilterException, FenixServiceException {

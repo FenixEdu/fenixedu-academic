@@ -62,18 +62,10 @@
 				<f:selectItems value="#{CurricularCourseManagement.curricularYears}" />
 			</h:selectOneMenu>
 			
-			<h:panelGroup rendered="#{(!empty CurricularCourseManagement.competenceCourseID) && (CurricularCourseManagement.competenceCourseID != 0) }">
-				<h:panelGroup rendered="#{CurricularCourseManagement.competenceCourse.regime.name == 'SEMESTER'}">
-					<h:outputText value="#{bolonhaBundle['semester']}: " />
-				</h:panelGroup>
-			</h:panelGroup>
-			<h:panelGroup rendered="#{(!empty CurricularCourseManagement.competenceCourseID) && (CurricularCourseManagement.competenceCourseID != 0) }">
-				<h:panelGroup rendered="#{CurricularCourseManagement.competenceCourse.regime.name == 'SEMESTER'}">
-					<h:selectOneMenu value="#{CurricularCourseManagement.curricularSemesterID}">
-						<f:selectItems value="#{CurricularCourseManagement.curricularSemesters}" />
-					</h:selectOneMenu>			
-				</h:panelGroup>
-			</h:panelGroup>
+			<h:outputText value="#{bolonhaBundle['semester']}: " />
+			<h:selectOneMenu value="#{CurricularCourseManagement.curricularSemesterID}">
+				<f:selectItems value="#{CurricularCourseManagement.curricularSemesters}" />
+			</h:selectOneMenu>			
 		</h:panelGrid>
 		<br/><br/><hr>
 		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['create']}"
