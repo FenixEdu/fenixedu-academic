@@ -539,8 +539,6 @@
             <forward name="teacher-not-found" path="/teacherAdviseServiceManagement.do?method=prepareTeacherSearch&amp;page=0"/>
 			<forward name="search-teacher-form" path="search-for-advise-service"/>   
             <forward name="list-teacher-advise-services" path="list-teacher-advise-services"/>
-            <forward name="successfull-edit" path="/teacherAdviseServiceManagement.do?method=showTeacherAdvises&amp;page=0"/>              
-            <forward name="successfull-delete" path="/teacherAdviseServiceManagement.do?method=showTeacherAdvises&amp;page=0"/>            
 		</action>
 		
 		        

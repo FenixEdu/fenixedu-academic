@@ -111,7 +111,7 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
             saveMessages(request, actionMessages);
             return mapping.getInputForward();
         }
-        return mapping.findForward("successfull-edit");
+        return showTeacherAdvises(mapping, form, request, response);
     }
 
     public ActionForward deleteAdviseService(ActionMapping mapping, ActionForm form,
@@ -121,7 +121,7 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
         Integer adviseServiceID = Integer.valueOf(request.getParameter("teacherAdviseServiceID"));
         ServiceUtils.executeService(SessionUtils.getUserView(request),
                 "DeleteTeacherAdviseServiceByOID", new Object[] { adviseServiceID });
-        return mapping.findForward("successfull-delete");
+        return showTeacherAdvises(mapping, form, request, response);
     }
 
     private void addMessages(AdvisePercentageException ape, ActionMessages actionMessages,

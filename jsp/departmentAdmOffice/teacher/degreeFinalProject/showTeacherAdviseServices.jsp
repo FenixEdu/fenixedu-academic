@@ -25,6 +25,7 @@
 	<html:hidden property="idInternal"/>
 	<html:hidden property="studentId"/>	
 	<html:hidden property="teacherId"/>	
+	<html:hidden property="teacherNumber"/>	
 	<html:hidden property="executionPeriodId"/>
 	
 	<span class="error"><html:errors /></span>
@@ -105,7 +106,7 @@
 					</td>
 					
 					<td class="listClasses">
-						<html:link page='<%= "/teacherAdviseServiceManagement.do?method=deleteAdviseService&amp;page=0&amp;teacherId=" + teacherId +"&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherAdviseServiceID" paramName="teacherAdviseService" paramProperty="idInternal">
+						<html:link page='<%= "/teacherAdviseServiceManagement.do?method=deleteAdviseService&amp;page=0&amp;teacherId=" + teacherId +"&amp;executionPeriodId=" + executionPeriodId + "&amp;teacherNumber=" + teacherNumber %>' paramId="teacherAdviseServiceID" paramName="teacherAdviseService" paramProperty="idInternal">
 							<bean:message key="link.remove"/>
 						</html:link>
 					</td>
