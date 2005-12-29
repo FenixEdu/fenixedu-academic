@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
@@ -21,7 +20,6 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -29,11 +27,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import sun.security.krb5.internal.crypto.u;
-
 public class AuthenticationAction extends FenixAction {
-
-    private static final int APP_CONTEXT_LENGTH = PropertiesManager.getProperty("app.context").length() + 1;
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -51,8 +45,7 @@ public class AuthenticationAction extends FenixAction {
                 actionForward.setRedirect(true);
 
                 final String originalURI = (String) session.getAttribute("ORIGINAL_URI");
-                final String module = StringUtils.substringBefore(originalURI
-                        .substring(APP_CONTEXT_LENGTH), "/");
+                final String originalModule = (String) session.getAttribute("ORIGINAL_MODULE");
 
                 // Set request attributes
                 final Map<String, Object> attributeMap = (Map<String, Object>) session
@@ -60,12 +53,14 @@ public class AuthenticationAction extends FenixAction {
                 final Map<String, Object> parameterMap = (Map<String, Object>) session
                         .getAttribute("ORIGINAL_PARAMETER_MAP");
 
-                actionForward.setPath(module + "/redirect.do");
+                actionForward.setPath("/redirect.do");
+                //actionForward.setModule(originalModule);
 
                 final HttpSession newSession = createNewSession(request, session, userView);
 
                 newSession.setAttribute("ORIGINAL_URI", originalURI);
-                newSession.setAttribute("ORIGINAL_MODULE", module);
+                System.out.println("getting ORIGINAL_URI: " + originalURI);
+                System.out.println("getting ORIGINAL_URI module: " + originalModule);
                 newSession.setAttribute("ORIGINAL_PARAMETER_MAP", parameterMap);
                 newSession.setAttribute("ORIGINAL_ATTRIBUTE_MAP", attributeMap);
 

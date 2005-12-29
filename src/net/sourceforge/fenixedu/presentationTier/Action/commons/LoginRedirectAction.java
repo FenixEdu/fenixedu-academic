@@ -9,12 +9,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
+
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 public class LoginRedirectAction extends Action {
+ 
+    private static final String APP_CONTEXT_APPENDER;
+    static {
+        final String appContext = PropertiesManager.getProperty("app.context");
+        APP_CONTEXT_APPENDER = appContext.length() > 0 ? "/" + appContext : "";
+    }
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -30,7 +38,8 @@ public class LoginRedirectAction extends Action {
 
         servletOutputStream.println("<head>");
         servletOutputStream.println("<title>.IST - Login</title>");
-        servletOutputStream.println("<link href=\"/ciapl/CSS/logdotist.css\" rel=\"stylesheet\" media=\"screen\" type=\"text/css\" />");
+
+        servletOutputStream.println("<link href=\"" + APP_CONTEXT_APPENDER + "/CSS/logdotist.css\" rel=\"stylesheet\" media=\"screen\" type=\"text/css\" />");
         servletOutputStream.println("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\" />");
         servletOutputStream.println("</head>");
 
@@ -38,7 +47,7 @@ public class LoginRedirectAction extends Action {
         servletOutputStream.println("<div id=\"container\">");
 
         servletOutputStream.println("<div id=\"dotist_id\">");
-        servletOutputStream.println("<img alt=\"Logo .IST\" src=\"/ciapl/images/dotist-id.gif\"/>");
+        servletOutputStream.println("<img alt=\"Logo .IST\" src=\"" + APP_CONTEXT_APPENDER + "/images/dotist-id.gif\"/>");
         servletOutputStream.println("</div>");
 
         servletOutputStream.println("<br />");
@@ -96,7 +105,7 @@ public class LoginRedirectAction extends Action {
             servletOutputStream.println("<input type=\"hidden\" name=\"" + attributeName + "\" value=\"" + attributeValue + "\">");
         }
 
-        servletOutputStream.println("<center><input type=\"submit\" value=\"Continue\" class=\"button\"></center>");
+        servletOutputStream.println("<center><input type=\"submit\" value=\"Continuar\" class=\"button\"></center>");
         servletOutputStream.println("</form>");
         
     }
