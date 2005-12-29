@@ -135,12 +135,14 @@ public class TeacherService extends TeacherService_Base {
 
     public void verifyOverlappingWithTeachingService(Date startTime, Date endTime, WeekDay weekDay) {
         for (IDegreeTeachingService degreeTeachingService : getDegreeTeachingServices()) {
-            for (ILesson lesson : degreeTeachingService.getShift().getAssociatedLessons()) {
-                if (weekDay.equals(WeekDay.getWeekDay(lesson.getDiaSemana()))) {
-                    Date lessonStartTime = lesson.getBegin();
-                    Date lessonEndTime = lesson.getEnd();
-                    if (CalendarUtil.intersectTimes(startTime, endTime, lessonStartTime, lessonEndTime)) {
-                        throw new DomainException("message.overlapping.lesson.period");
+            if (degreeTeachingService.getPercentage().doubleValue() == 100) {
+                for (ILesson lesson : degreeTeachingService.getShift().getAssociatedLessons()) {
+                    if (weekDay.equals(WeekDay.getWeekDay(lesson.getDiaSemana()))) {
+                        Date lessonStartTime = lesson.getBegin();
+                        Date lessonEndTime = lesson.getEnd();
+                        if (CalendarUtil.intersectTimes(startTime, endTime, lessonStartTime, lessonEndTime)) {
+                            throw new DomainException("message.overlapping.lesson.period");
+                        }
                     }
                 }
             }
