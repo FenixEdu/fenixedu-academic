@@ -43,25 +43,6 @@ public class CalendarUtil {
         return DateFormatUtils.format(date.getTime(), "yyyyMMdd");
     }
 
-    public static boolean intersectTimes(Calendar startTime1, Calendar endTime1, Calendar startTime2,
-            Calendar endTime2) {
-        String startTime1String = time2string(startTime1);
-        String endTime1String = time2string(endTime1);
-        String startTime2String = time2string(startTime2);
-        String endTime2String = time2string(endTime2);
-        boolean doesNotIntersect = (endTime2String.compareTo(startTime1String) <= 0)
-                || (startTime2String.compareTo(endTime1String) >= 0);
-        return !doesNotIntersect;
-    }
-
-    private static String time2string(Calendar time) {
-        return DateFormatUtils.format(time.getTime(), "HHmmss");
-    }
-
-    private static String time2string(Date time) {
-        return DateFormatUtils.format(time, "HHmmss");
-    }
-
     public static boolean intersectTimes(Date startTime1, Date endTime1, Date startTime2, Date endTime2) {
         String startTime1String = time2string(startTime1);
         String endTime1String = time2string(endTime1);
@@ -73,11 +54,15 @@ public class CalendarUtil {
         return !doesNotIntersect;
     }
 
-    /*
-     * 
-     * @author Barbosa @author Pica
-     * 
-     */
+    public static boolean intersectTimes(Calendar startTime1, Calendar endTime1, Calendar startTime2,
+            Calendar endTime2) {
+        return intersectTimes(startTime1.getTime(), endTime1.getTime(), startTime2.getTime(), endTime2.getTime());
+    }
+
+    private static String time2string(Date time) {
+        return DateFormatUtils.format(time, "HHmmss");
+    }
+
     public static Integer getNumberOfDaysBetweenDates(Date beginDate, Date endDate) {
         Calendar c1 = Calendar.getInstance();
         Calendar c2 = Calendar.getInstance();
