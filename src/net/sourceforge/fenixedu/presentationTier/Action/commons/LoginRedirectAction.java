@@ -41,12 +41,26 @@ public class LoginRedirectAction extends Action {
         servletOutputStream.println("<img alt=\"Logo .IST\" src=\"/ciapl/images/dotist-id.gif\"/>");
         servletOutputStream.println("</div>");
 
+        servletOutputStream.println("<br />");
         servletOutputStream.println("<div id=\"txt\">");
-        servletOutputStream.println("<h1>Redirecting</h1>");
-        servletOutputStream.println("<p>Here you go...</p>");
+        servletOutputStream.println("<h1>Login</h1>");
         servletOutputStream.println("</div>");
 
+        servletOutputStream.println("<br />");
+        servletOutputStream.println("<div id=\"txt\"><center><p>");
+        servletOutputStream.println("Para ser redirecionado para a página que tinha selecionado antes da sessão expirar, carregue no botão Continuar");
+        servletOutputStream.println("</p></center></div>");
+
         writeForm(servletOutputStream, session);
+
+        servletOutputStream.println("<br />");
+        servletOutputStream.println("<div id=\"txt\"><center><p>");
+        servletOutputStream.println("Se deseja seguir para a página inicial habitual, carregue no botão Página Inicial");
+        servletOutputStream.println("</p></center></div>");
+
+        servletOutputStream.println("<form method=\"get\" action=\"home.do\">");
+        servletOutputStream.println("<center><input type=\"submit\" value=\"Página Inicial\" class=\"button\"></center>");
+        servletOutputStream.println("</form>");
 
         servletOutputStream.println("<br />");
         servletOutputStream.println("<div id=\"txt\"><center><p>");
@@ -82,7 +96,7 @@ public class LoginRedirectAction extends Action {
             servletOutputStream.println("<input type=\"hidden\" name=\"" + attributeName + "\" value=\"" + attributeValue + "\">");
         }
 
-        servletOutputStream.println("<input type=\"submit\" value=\"Continue\" class=\"button\">");
+        servletOutputStream.println("<center><input type=\"submit\" value=\"Continue\" class=\"button\"></center>");
         servletOutputStream.println("</form>");
         
     }
