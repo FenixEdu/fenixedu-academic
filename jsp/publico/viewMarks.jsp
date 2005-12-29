@@ -15,14 +15,14 @@
 
 <table class="tab_complex" cellspacing="1" cellpadding="2">
 	<tr>
-		<th>
+		<th nowrap>
 			<bean:message key="label.number"/>
 		</th>
-		<th>
+		<th nowrap>
 			<bean:message key="label.name"/>
 		</th>
 		<logic:iterate id="evaluation" name="executionCourse" property="orderedAssociatedEvaluations">
-			<th>
+			<th nowrap>
 				<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.onlineTests.OnlineTest">
 					<bean:write name="evaluation" property="distributedTest.title"/>
 				</logic:equal>
@@ -43,14 +43,14 @@
 	</tr>
 	<logic:iterate id="attends" name="executionCourse" property="orderedAttends">
 		<tr>
-			<td>
+			<td nowrap>
 				<bean:write name="attends" property="aluno.number"/>
 			</td>
-			<td>
+			<td nowrap>
 				<bean:write name="attends" property="aluno.person.nome"/>
 			</td>
 			<logic:iterate id="mark" name="attends" property="associatedMarksOrderedByEvaluationDate">
-				<td>
+				<td nowrap>
 					<logic:present name="mark">
 						<bean:write name="mark" property="publishedMark"/>
 					</logic:present>
