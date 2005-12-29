@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.framework.factory;
 
-import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.applicationTier.IServiceManagerWrapper;
@@ -11,8 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixRemoteSe
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.logging.SystemInfo;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.utl.ist.berserk.logic.filterManager.FilterInvocationTimingType;
-import pt.utl.ist.berserk.logic.serviceManager.exceptions.FilterChainFailedException;
 
 public class ServiceManagerServiceFactory {
 
@@ -31,21 +28,9 @@ public class ServiceManagerServiceFactory {
                 DomainException domainException = (DomainException) e.getCause();
                 throw domainException;
             }
-            if (e != null && e.getCause() != null && e.getCause() instanceof FilterChainFailedException) {
-                FilterChainFailedException filterChainFailedException = (FilterChainFailedException) e
-                        .getCause();
-                Map failedPreFilters = filterChainFailedException
-                        .getFailedFilters(FilterInvocationTimingType.PRE);
-                Map failedPostFilters = filterChainFailedException
-                        .getFailedFilters(FilterInvocationTimingType.POST);
-                if (failedPreFilters != null && !failedPreFilters.isEmpty()) {
-                    List failledExceptions = (List) failedPreFilters.values().iterator().next();
-                    throw (FenixFilterException) failledExceptions.get(0);
-                }
-                if (failedPostFilters != null && !failedPostFilters.isEmpty()) {
-                    List failledExceptions = (List) failedPostFilters.values().iterator().next();
-                    throw (FenixFilterException) failledExceptions.get(0);
-                }
+            if (e != null && e.getCause() != null && e.getCause() instanceof FenixFilterException) {
+                FenixFilterException fenixFilterException = (FenixFilterException) e.getCause();
+                throw fenixFilterException;
             }
             throw new FenixRemoteServiceException(e);
         }
