@@ -3037,6 +3037,10 @@ class net.sourceforge.fenixedu.domain.Section extends net.sourceforge.fenixedu.d
 class net.sourceforge.fenixedu.domain.space.Space extends net.sourceforge.fenixedu.domain.DomainObject {
 }
 
+class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourceforge.fenixedu.domain.DomainObject {
+	
+}
+
 	class net.sourceforge.fenixedu.domain.space.Building extends net.sourceforge.fenixedu.domain.space.Space {
 		String name;
 		Integer keyCampus;
@@ -6136,6 +6140,20 @@ relation SiteAnnouncement {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Site playsRole site;
+}
+
+relation SpaceSpace {
+	net.sourceforge.fenixedu.domain.space.Space playsRole containedSpaces {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.space.Space playsRole suroundingSpace;
+}
+
+relation SpaceSpaceInformation {
+	net.sourceforge.fenixedu.domain.space.SpaceInformation playsRole spaceInformations {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.space.Space playsRole space;
 }
 
 
