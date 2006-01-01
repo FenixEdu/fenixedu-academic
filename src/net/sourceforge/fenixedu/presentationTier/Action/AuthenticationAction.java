@@ -45,7 +45,6 @@ public class AuthenticationAction extends FenixAction {
                 actionForward.setRedirect(true);
 
                 final String originalURI = (String) session.getAttribute("ORIGINAL_URI");
-                final String originalModule = (String) session.getAttribute("ORIGINAL_MODULE");
 
                 // Set request attributes
                 final Map<String, Object> attributeMap = (Map<String, Object>) session
@@ -54,13 +53,10 @@ public class AuthenticationAction extends FenixAction {
                         .getAttribute("ORIGINAL_PARAMETER_MAP");
 
                 actionForward.setPath("/redirect.do");
-                //actionForward.setModule(originalModule);
 
                 final HttpSession newSession = createNewSession(request, session, userView);
 
                 newSession.setAttribute("ORIGINAL_URI", originalURI);
-                System.out.println("getting ORIGINAL_URI: " + originalURI);
-                System.out.println("getting ORIGINAL_URI module: " + originalModule);
                 newSession.setAttribute("ORIGINAL_PARAMETER_MAP", parameterMap);
                 newSession.setAttribute("ORIGINAL_ATTRIBUTE_MAP", attributeMap);
 

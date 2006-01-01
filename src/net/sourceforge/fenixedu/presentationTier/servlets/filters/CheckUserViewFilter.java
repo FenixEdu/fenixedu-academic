@@ -16,8 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
@@ -47,13 +45,10 @@ public class CheckUserViewFilter implements Filter {
         	httpSession.setAttribute("ORIGINAL_REQUEST", request);
 
         	httpSession.setAttribute("ORIGINAL_URI", uri);
-            System.out.println("Setting ORIGINAL_URI: " + uri);
 
             final String relativeURI = uri.substring(APP_CONTEXT_LENGTH);
             final int indexOfSlash = relativeURI.indexOf('/');
             final String module = (indexOfSlash >= 0) ? relativeURI.substring(0, indexOfSlash) : "";
-            System.out.println("relative url: " + relativeURI);
-            System.out.println("module: " + module);
 
             httpSession.setAttribute("ORIGINAL_MODULE", module);
 

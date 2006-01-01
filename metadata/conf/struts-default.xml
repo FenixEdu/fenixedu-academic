@@ -92,7 +92,7 @@
         </action>
         <action path="/redirect"
 				type="net.sourceforge.fenixedu.presentationTier.Action.commons.LoginRedirectAction">
-            <forward name="null" path="/null"/>
+            <forward name="show-redirect-page" path="/redirect.jsp"/>
         </action>
         <action path="/logoff"
 				type="net.sourceforge.fenixedu.presentationTier.Action.commons.LogOffAction">
