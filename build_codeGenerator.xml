@@ -28,6 +28,7 @@
   	<property name="compile.deprecation" value="off"/>
   	<property name="compile.optimize"    value="on"/>
 
+	<property name="dml.definition.file" value="${config}/domain_model.dml"/>
 
 	<target name="generate-domain"
 	                description="Generate java code from a DML file">
