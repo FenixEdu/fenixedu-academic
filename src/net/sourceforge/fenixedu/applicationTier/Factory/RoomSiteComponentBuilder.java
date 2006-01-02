@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IPeriod;
+import net.sourceforge.fenixedu.domain.IOccupationPeriod;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
 import net.sourceforge.fenixedu.domain.IWrittenTest;
@@ -98,7 +98,7 @@ public class RoomSiteComponentBuilder {
                     ILesson aula = (ILesson) iterator.next();
                     IRoomOccupation roomOccupation = aula.getRoomOccupation();
                     
-                    IPeriod period = roomOccupation.getPeriod();
+                    IOccupationPeriod period = roomOccupation.getPeriod();
                     InfoPeriod infoPeriod = InfoPeriod.newInfoFromDomain(period);
                     
                     if (this.intersectPeriods(day, endDay, infoPeriod)) {

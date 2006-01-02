@@ -20,7 +20,7 @@ public class ExamTest extends DomainTestBase {
 
     private IExam exam;
     private Season season;
-    private IPeriod period;
+    private IOccupationPeriod period;
     private ICurricularCourse curricularCourse;
     private ICurricularCourseScope curricularCourseScope;
 
@@ -181,7 +181,7 @@ public class ExamTest extends DomainTestBase {
 
 //        exam.addAssociatedCurricularCourseScope(curricularCourseScope);
 
-        period = new Period(startTime.getTime(), endTime.getTime());
+        period = new OccupationPeriod(startTime.getTime(), endTime.getTime());
 
         IRoom room1 = new Room();
         room1.setIdInternal(1);

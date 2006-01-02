@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IPeriod;
+import net.sourceforge.fenixedu.domain.IOccupationPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -63,7 +63,7 @@ public class ReadFilteredExamsMap implements IService {
         IExecutionDegree executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree()
                 .readByOID(ExecutionDegree.class, infoExecutionDegree.getIdInternal());
 
-        IPeriod period = null;
+        IOccupationPeriod period = null;
 
         if (infoExecutionPeriod.getSemester().equals(new Integer(1))) {
             period = executionDegree.getPeriodExamsFirstSemester();

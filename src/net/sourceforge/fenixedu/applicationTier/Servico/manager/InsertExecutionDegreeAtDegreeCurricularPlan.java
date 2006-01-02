@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.ICampus;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IPeriod;
+import net.sourceforge.fenixedu.domain.IOccupationPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -125,30 +125,30 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IService {
 
 		InfoPeriod infoPeriodNew = infoPeriodList.get(infoPeriodListSize - 1);
 
-		IPeriod period = (IPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew.getStartDate()
+		IOccupationPeriod period = (IOccupationPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew.getStartDate()
 				.getTime(), infoPeriodNew.getEndDate().getTime(), null);
 
 		if (period == null) {
 			Calendar startDate = infoPeriodNew.getStartDate();
 			Calendar endDate = infoPeriodNew.getEndDate();
-			period = DomainFactory.makePeriod(startDate.getTime(), endDate.getTime());
+			period = DomainFactory.makeOccupationPeriod(startDate.getTime(), endDate.getTime());
 		}
 
 		// iteracoes
 		for (int i = infoPeriodListSize - 2; i >= 0; i--) {
 			Integer keyNextPeriod = period.getIdInternal();
 
-			IPeriod nextPeriod = period;
+			IOccupationPeriod nextPeriod = period;
 
 			infoPeriodNew = infoPeriodList.get(i);
 
-			period = (IPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew.getStartDate()
+			period = (IOccupationPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew.getStartDate()
 					.getTime(), infoPeriodNew.getEndDate().getTime(), keyNextPeriod);
 
 			if (period == null) {
 				Calendar startDate = infoPeriodNew.getStartDate();
 				Calendar endDate = infoPeriodNew.getEndDate();
-				period = DomainFactory.makePeriod(startDate.getTime(), endDate.getTime());
+				period = DomainFactory.makeOccupationPeriod(startDate.getTime(), endDate.getTime());
 				period.setNextPeriod(nextPeriod);
 			}
 		}

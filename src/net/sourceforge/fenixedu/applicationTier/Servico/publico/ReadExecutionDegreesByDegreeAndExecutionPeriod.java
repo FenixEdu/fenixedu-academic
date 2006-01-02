@@ -40,7 +40,7 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod implements IService 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
-		// Execution Period
+		// Execution OccupationPeriod
 		IExecutionPeriod executionPeriod;
 		if (executionPeriodId == null) {
 			executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();

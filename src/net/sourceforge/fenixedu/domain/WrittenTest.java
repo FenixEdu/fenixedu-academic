@@ -19,7 +19,7 @@ public class WrittenTest extends WrittenTest_Base {
     public WrittenTest(Date testDate, Date testStartTime, Date testEndTime,
             List<IExecutionCourse> executionCoursesToAssociate,
             List<ICurricularCourseScope> curricularCourseScopesToAssociate, List<IRoom> rooms,
-            IPeriod period, String description) {
+            IOccupationPeriod period, String description) {
 
         checkEvaluationDate(testDate, executionCoursesToAssociate);
         setAttributesAndAssociateRooms(testDate, testStartTime, testEndTime,
@@ -49,7 +49,7 @@ public class WrittenTest extends WrittenTest_Base {
     public void edit(Date testDate, Date testStartTime, Date testEndTime,
             List<IExecutionCourse> executionCoursesToAssociate,
             List<ICurricularCourseScope> curricularCourseScopesToAssociate, List<IRoom> rooms,
-            IPeriod period, String description) {
+            IOccupationPeriod period, String description) {
         
         checkEvaluationDate(testDate, executionCoursesToAssociate);
 

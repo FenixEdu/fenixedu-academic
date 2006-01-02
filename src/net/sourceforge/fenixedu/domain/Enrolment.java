@@ -66,7 +66,7 @@ public class Enrolment extends Enrolment_Base {
         result += "idInternal = " + super.getIdInternal() + "; ";
         result += "studentCurricularPlan = " + this.getStudentCurricularPlan() + "; ";
         result += "enrollmentState = " + this.getEnrollmentState() + "; ";
-        result += "execution Period = " + this.getExecutionPeriod() + "; ";
+        result += "execution OccupationPeriod = " + this.getExecutionPeriod() + "; ";
         result += "curricularCourse = " + this.getCurricularCourse() + "]\n";
         return result;
     }

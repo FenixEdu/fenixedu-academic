@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IPeriod;
+import net.sourceforge.fenixedu.domain.IOccupationPeriod;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.SchoolClass;
@@ -78,7 +78,7 @@ public class ReadAvailableShiftsForClass implements IService {
                     infoRoomOccupation.setInfoRoom(infoRoom);
                     infoLesson.setInfoSala(infoRoom);
 
-                    final IPeriod period = roomOccupation.getPeriod();
+                    final IOccupationPeriod period = roomOccupation.getPeriod();
                     final InfoPeriod infoPeriod = InfoPeriod.newInfoFromDomain(period);
                     infoRoomOccupation.setInfoPeriod(infoPeriod);
 

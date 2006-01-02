@@ -69,7 +69,7 @@ public class ReadImprovmentsToEnroll implements IService {
             throw new InvalidArgumentsServiceException("error.student.notExist");
         }
 
-        // Read Aproved Enrolments by Execution Period
+        // Read Aproved Enrolments by Execution OccupationPeriod
         List studentCurricularPlans = student.getStudentCurricularPlans();
 
         Iterator<IStudentCurricularPlan> iterator = studentCurricularPlans.iterator();
@@ -98,7 +98,7 @@ public class ReadImprovmentsToEnroll implements IService {
         removeEquivalenceEnrolment(beforeBeforePreviousExecPeriodAprovedEnrol);
 
         // Remove Enrolments Already Improved and get Improvment Enrolments of
-        // this Execution Period
+        // this Execution OccupationPeriod
         List alreadyImprovedEnrolmentsInCurrentExecutionPeriod = new ArrayList();
         alreadyImprovedEnrolmentsInCurrentExecutionPeriod
                 .addAll(removeImprovedEnrolmentAndGetImprovmentsOfCurrentPeriod(actualExecPeriod,
@@ -110,13 +110,13 @@ public class ReadImprovmentsToEnroll implements IService {
                 .addAll(removeImprovedEnrolmentAndGetImprovmentsOfCurrentPeriod(actualExecPeriod,
                         beforeBeforePreviousExecPeriodAprovedEnrol));
 
-        // From Before Before Previous Period remove the ones with scope in
-        // Previous Period
+        // From Before Before Previous OccupationPeriod remove the ones with scope in
+        // Previous OccupationPeriod
         removeFromBeforeBeforePreviousPeriod(beforeBeforePreviousExecPeriodAprovedEnrol,
                 previousExecPeriod);
 
-        // From previous Period remove the ones that not take place in the
-        // Current Period
+        // From previous OccupationPeriod remove the ones that not take place in the
+        // Current OccupationPeriod
         previousExecPeriodAprovedEnrol = removeNotInCurrentExecutionPeriod(
                 previousExecPeriodAprovedEnrol, actualExecPeriod);
 

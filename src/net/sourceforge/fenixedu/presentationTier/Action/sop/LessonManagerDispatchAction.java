@@ -112,7 +112,7 @@ public class LessonManagerDispatchAction extends
             }
             if (infoPeriod == null) {
                 throw new FenixActionException(
-                        "Info Execution Degree doesn't have a Lessons Info Period");
+                        "Info Execution Degree doesn't have a Lessons Info OccupationPeriod");
             }
             infoRoomOccupation.setInfoPeriod(infoPeriod);
             /** *** */
@@ -243,7 +243,7 @@ public class LessonManagerDispatchAction extends
             }
             if (infoPeriod == null) {
                 throw new FenixActionException(
-                        "Info Execution Degree doesn't have a Lessons Info Period");
+                        "Info Execution Degree doesn't have a Lessons Info OccupationPeriod");
             }
             infoRoomOccupation.setInfoPeriod(infoPeriod);
             /** ****** */

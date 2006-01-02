@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IPeriod;
+import net.sourceforge.fenixedu.domain.IOccupationPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
@@ -36,19 +36,19 @@ public class EditExecutionDegreePeriods implements IService {
                 ExecutionDegree.class, infoExecutionDegree.getIdInternal(), false);
 
         InfoPeriod infoPeriodExamsFirstSemester = infoExecutionDegree.getInfoPeriodExamsFirstSemester();
-        IPeriod periodExamsFirstSemester = setCompositePeriod(infoPeriodExamsFirstSemester);
+        IOccupationPeriod periodExamsFirstSemester = setCompositePeriod(infoPeriodExamsFirstSemester);
 
         InfoPeriod infoPeriodExamsSecondSemester = infoExecutionDegree
                 .getInfoPeriodExamsSecondSemester();
-        IPeriod periodExamsSecondSemester = setCompositePeriod(infoPeriodExamsSecondSemester);
+        IOccupationPeriod periodExamsSecondSemester = setCompositePeriod(infoPeriodExamsSecondSemester);
 
         InfoPeriod infoPeriodLessonsFirstSemester = infoExecutionDegree
                 .getInfoPeriodLessonsFirstSemester();
-        IPeriod periodLessonsFirstSemester = setCompositePeriod(infoPeriodLessonsFirstSemester);
+        IOccupationPeriod periodLessonsFirstSemester = setCompositePeriod(infoPeriodLessonsFirstSemester);
 
         InfoPeriod infoPeriodLessonsSecondSemester = infoExecutionDegree
                 .getInfoPeriodLessonsSecondSemester();
-        IPeriod periodLessonsSecondSemester = setCompositePeriod(infoPeriodLessonsSecondSemester);
+        IOccupationPeriod periodLessonsSecondSemester = setCompositePeriod(infoPeriodLessonsSecondSemester);
 
         persistentExecutionDegree.simpleLockWrite(oldExecutionDegree);
         oldExecutionDegree.setPeriodLessonsFirstSemester(periodLessonsFirstSemester);
@@ -58,7 +58,7 @@ public class EditExecutionDegreePeriods implements IService {
     }
 
     // retorna o primeiro period do executiondegree
-    private IPeriod setCompositePeriod(InfoPeriod infoPeriod) throws ExcepcaoPersistencia {
+    private IOccupationPeriod setCompositePeriod(InfoPeriod infoPeriod) throws ExcepcaoPersistencia {
         List<InfoPeriod> infoPeriodList = new ArrayList<InfoPeriod>();
 
         infoPeriodList.add(infoPeriod);
@@ -75,30 +75,30 @@ public class EditExecutionDegreePeriods implements IService {
         final ISuportePersistente persistentSuport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
         final IPersistentPeriod periodDAO = persistentSuport.getIPersistentPeriod();
-        IPeriod period = (IPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew.getStartDate().getTime(),
+        IOccupationPeriod period = (IOccupationPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew.getStartDate().getTime(),
                 infoPeriodNew.getEndDate().getTime(), null);
 
         if (period == null) {
             Calendar startDate = infoPeriodNew.getStartDate();
             Calendar endDate = infoPeriodNew.getEndDate();
-            period = DomainFactory.makePeriod(startDate.getTime(), endDate.getTime());
+            period = DomainFactory.makeOccupationPeriod(startDate.getTime(), endDate.getTime());
         }
 
         // iteracoes
         for (int i = infoPeriodListSize - 2; i >= 0; i--) {
             Integer keyNextPeriod = period.getIdInternal();
 
-            IPeriod nextPeriod = period;
+            IOccupationPeriod nextPeriod = period;
 
             infoPeriodNew = infoPeriodList.get(i);
 
-            period = (IPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew.getStartDate().getTime(),
+            period = (IOccupationPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew.getStartDate().getTime(),
                     infoPeriodNew.getEndDate().getTime(), keyNextPeriod);
 
             if (period == null) {
                 Calendar startDate = infoPeriodNew.getStartDate();
                 Calendar endDate = infoPeriodNew.getEndDate();
-                period = DomainFactory.makePeriod(startDate.getTime(), endDate.getTime());
+                period = DomainFactory.makeOccupationPeriod(startDate.getTime(), endDate.getTime());
                 period.setNextPeriod(nextPeriod);
             }
         }

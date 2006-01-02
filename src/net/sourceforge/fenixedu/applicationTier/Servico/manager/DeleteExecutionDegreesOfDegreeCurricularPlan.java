@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.ICoordinator;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.Period;
+import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IScheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -94,7 +94,7 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan implements IService {
 					if ((executionDegree.getPeriodLessonsFirstSemester() != null)
 							&& (executionDegree.getPeriodLessonsFirstSemester()
 									.getExecutionDegreesForLessonsFirstSemester().size() == 1)) {
-						sp.getIPersistentPeriod().deleteByOID(Period.class,
+						sp.getIPersistentPeriod().deleteByOID(OccupationPeriod.class,
 								executionDegree.getPeriodLessonsFirstSemester().getIdInternal());
 					}
 
@@ -104,7 +104,7 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan implements IService {
 					if ((executionDegree.getPeriodLessonsSecondSemester() != null)
 							&& (executionDegree.getPeriodLessonsSecondSemester()
 									.getExecutionDegreesForLessonsSecondSemester().size() == 1)) {
-						sp.getIPersistentPeriod().deleteByOID(Period.class,
+						sp.getIPersistentPeriod().deleteByOID(OccupationPeriod.class,
 								executionDegree.getPeriodLessonsSecondSemester().getIdInternal());
 					}
 
@@ -114,7 +114,7 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan implements IService {
 					if ((executionDegree.getPeriodExamsFirstSemester() != null)
 							&& (executionDegree.getPeriodExamsFirstSemester()
 									.getExecutionDegreesForExamsFirstSemester().size() == 1)) {
-						sp.getIPersistentPeriod().deleteByOID(Period.class,
+						sp.getIPersistentPeriod().deleteByOID(OccupationPeriod.class,
 								executionDegree.getPeriodExamsFirstSemester().getIdInternal());
 					}
 
@@ -124,7 +124,7 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan implements IService {
 					if ((executionDegree.getPeriodExamsSecondSemester() != null)
 							&& (executionDegree.getPeriodExamsSecondSemester()
 									.getExecutionDegreesForExamsSecondSemester().size() == 1)) {
-						sp.getIPersistentPeriod().deleteByOID(Period.class,
+						sp.getIPersistentPeriod().deleteByOID(OccupationPeriod.class,
 								executionDegree.getPeriodExamsSecondSemester().getIdInternal());
 					}
 

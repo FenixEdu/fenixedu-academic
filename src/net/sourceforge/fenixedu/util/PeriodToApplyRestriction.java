@@ -53,8 +53,8 @@ public class PeriodToApplyRestriction extends FenixValuedEnum {
     }
 
     public String toString() {
-        String result = "Period To Apply Restriction:\n";
-        result += "\n  - Period : " + this.getName();
+        String result = "OccupationPeriod To Apply Restriction:\n";
+        result += "\n  - OccupationPeriod : " + this.getName();
 
         return result;
 

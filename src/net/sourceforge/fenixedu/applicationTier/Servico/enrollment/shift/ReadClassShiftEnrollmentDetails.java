@@ -61,7 +61,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
 				.getIPersistentExecutionPeriod();
 		ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
 
-		// Current Execution Period
+		// Current Execution OccupationPeriod
 		IExecutionPeriod executionPeriod = executionPeriodDAO
 				.readActualExecutionPeriod();
 

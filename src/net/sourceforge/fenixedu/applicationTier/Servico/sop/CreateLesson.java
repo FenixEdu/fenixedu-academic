@@ -25,9 +25,9 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IPeriod;
+import net.sourceforge.fenixedu.domain.IOccupationPeriod;
 import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.Period;
+import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.space.IRoom;
@@ -73,7 +73,7 @@ public class CreateLesson implements IService {
                     final IRoom sala = sp.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
                     roomOccupation.setRoom(sala);
 
-                    final IPeriod period = (IPeriod) sp.getIPersistentPeriod().readByOID(Period.class,
+                    final IOccupationPeriod period = (IOccupationPeriod) sp.getIPersistentPeriod().readByOID(OccupationPeriod.class,
                             infoLesson.getInfoRoomOccupation().getInfoPeriod().getIdInternal());
                     roomOccupation.setPeriod(period);
 

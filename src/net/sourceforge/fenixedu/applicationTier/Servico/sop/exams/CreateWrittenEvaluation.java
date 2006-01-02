@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IPeriod;
+import net.sourceforge.fenixedu.domain.IOccupationPeriod;
 import net.sourceforge.fenixedu.domain.space.IRoom;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -51,7 +51,7 @@ public class CreateWrittenEvaluation implements IService {
                 persistentSupport, curricularCourseScopeIDs);
 
         List<IRoom> roomsToAssociate = null;
-        IPeriod period = null;
+        IOccupationPeriod period = null;
         if (roomIDs != null) {
             roomsToAssociate = readRooms(persistentSupport, roomIDs);
             period = readPeriod(persistentSupport, writtenEvaluationDate);
@@ -129,13 +129,13 @@ public class CreateWrittenEvaluation implements IService {
         return result;
     }
 
-    private IPeriod readPeriod(final ISuportePersistente persistentSupport,
+    private IOccupationPeriod readPeriod(final ISuportePersistente persistentSupport,
             final Date writtenEvaluationDate) throws ExcepcaoPersistencia {
         final IPersistentPeriod persistentPeriod = persistentSupport.getIPersistentPeriod();
-        IPeriod period = (IPeriod) persistentPeriod.readByCalendarAndNextPeriod(writtenEvaluationDate,
+        IOccupationPeriod period = (IOccupationPeriod) persistentPeriod.readByCalendarAndNextPeriod(writtenEvaluationDate,
                 writtenEvaluationDate, null);
         if (period == null) {
-            period = DomainFactory.makePeriod(writtenEvaluationDate, writtenEvaluationDate);
+            period = DomainFactory.makeOccupationPeriod(writtenEvaluationDate, writtenEvaluationDate);
         }
         return period;
     }

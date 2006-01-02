@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.Period;
+import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
 
@@ -26,7 +26,7 @@ public class PeriodOJB extends ObjectFenixOJB implements IPersistentPeriod {
         if (keyNextPeriod != null) {
             criteria.addEqualTo("nextPeriod.idInternal", keyNextPeriod);
         }
-        return queryObject(Period.class, criteria);
+        return queryObject(OccupationPeriod.class, criteria);
     }
 
 }

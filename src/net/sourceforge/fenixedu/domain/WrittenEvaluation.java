@@ -24,7 +24,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
     public WrittenEvaluation(Date evaluationDay, Date evaluationBeginningTime, Date evaluationEndTime,
             List<IExecutionCourse> executionCoursesToAssociate,
             List<ICurricularCourseScope> curricularCourseScopesToAssociate, List<IRoom> rooms,
-            IPeriod period) {
+            IOccupationPeriod period) {
 
         setAttributesAndAssociateRooms(evaluationDay, evaluationBeginningTime, evaluationEndTime,
                 executionCoursesToAssociate, curricularCourseScopesToAssociate, rooms, period);
@@ -162,7 +162,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
     protected void setAttributesAndAssociateRooms(Date day, Date beginning, Date end,
             List<IExecutionCourse> executionCoursesToAssociate,
             List<ICurricularCourseScope> curricularCourseScopesToAssociate, List<IRoom> rooms,
-            IPeriod period) {
+            IOccupationPeriod period) {
 
         checkValidHours(beginning, end);
 
@@ -185,7 +185,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         return true;
     }
 
-    private void associateRooms(final List<IRoom> rooms, final IPeriod period) {
+    private void associateRooms(final List<IRoom> rooms, final IOccupationPeriod period) {
         final DiaSemana dayOfWeek = new DiaSemana(this.getDay().get(Calendar.DAY_OF_WEEK));
         for (final IRoom room : rooms) {
             if (!hasOccupationForRoom(room)) {
@@ -217,7 +217,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
     protected void edit(Date day, Date beginning, Date end,
             List<IExecutionCourse> executionCoursesToAssociate,
             List<ICurricularCourseScope> curricularCourseScopesToAssociate, List<IRoom> rooms,
-            IPeriod period) {
+            IOccupationPeriod period) {
         setAttributesAndAssociateRooms(day, beginning, end, executionCoursesToAssociate,
                 curricularCourseScopesToAssociate, rooms, period);
     }
@@ -364,7 +364,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
 
         Date enrolmentEndDate = null;
-        // This can happen if the Enrolment Period for Evaluation wasn't defined
+        // This can happen if the Enrolment OccupationPeriod for Evaluation wasn't defined
         if (this.getEnrollmentEndDayDate() != null && this.getEnrollmentEndTimeDate() != null) {
             enrolmentEndDate = createDate(this.getEnrollmentEndDayDate(), this
                     .getEnrollmentEndTimeDate());

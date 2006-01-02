@@ -833,7 +833,7 @@
       </reference-descriptor>
       <reference-descriptor auto-retrieve="false"
          name="period"
-         class-ref="net.sourceforge.fenixedu.domain.Period"
+         class-ref="net.sourceforge.fenixedu.domain.OccupationPeriod"
       >
          <foreignkey field-ref="keyPeriod"/>
       </reference-descriptor>
@@ -852,8 +852,8 @@
    </class-descriptor>
 
 
-<!-- Definitions for net.sourceforge.fenixedu.domain.Period -->
-   <class-descriptor class="net.sourceforge.fenixedu.domain.Period"
+<!-- Definitions for net.sourceforge.fenixedu.domain.OccupationPeriod -->
+   <class-descriptor class="net.sourceforge.fenixedu.domain.OccupationPeriod"
    	  table="PERIOD"
    >
       <field-descriptor id="1"
@@ -891,13 +891,13 @@
       />
       <reference-descriptor auto-retrieve="false"
          name="nextPeriod"
-         class-ref="net.sourceforge.fenixedu.domain.Period"
+         class-ref="net.sourceforge.fenixedu.domain.OccupationPeriod"
       >
          <foreignkey field-ref="keyPeriod"/>
       </reference-descriptor>
       <reference-descriptor auto-retrieve="false"
          name="previousPeriod"
-         class-ref="net.sourceforge.fenixedu.domain.Period"
+         class-ref="net.sourceforge.fenixedu.domain.OccupationPeriod"
       >
          <foreignkey field-ref="keyPreviousPeriod"/>
       </reference-descriptor>

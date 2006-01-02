@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IPeriod;
+import net.sourceforge.fenixedu.domain.IOccupationPeriod;
 import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
 import net.sourceforge.fenixedu.domain.IWrittenTest;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
@@ -61,7 +61,7 @@ public class EditWrittenEvaluation implements IService {
                 persistentSupport, curricularCourseScopeIDs);
 
         List<IRoom> roomsToAssociate = null; 
-        IPeriod period = null; 
+        IOccupationPeriod period = null; 
         if (roomIDs != null) {
             roomsToAssociate = readRooms(persistentSupport, roomIDs);
             period = readPeriod(persistentSupport, writtenEvaluation, writtenEvaluationDate); 
@@ -81,10 +81,10 @@ public class EditWrittenEvaluation implements IService {
         }
     }
 
-    private IPeriod readPeriod(final ISuportePersistente persistentSupport,
+    private IOccupationPeriod readPeriod(final ISuportePersistente persistentSupport,
             final IWrittenEvaluation writtenEvaluation, final Date writtenEvaluationDate)
             throws ExcepcaoPersistencia {
-        IPeriod period = null;
+        IOccupationPeriod period = null;
         if (!writtenEvaluation.getAssociatedRoomOccupation().isEmpty()) {
             period = writtenEvaluation.getAssociatedRoomOccupation().get(0).getPeriod();
             if (writtenEvaluation.getAssociatedRoomOccupation().containsAll(period.getRoomOccupations())) {
@@ -96,9 +96,9 @@ public class EditWrittenEvaluation implements IService {
         }
         if (period == null) {
             final IPersistentPeriod persistentPeriod = persistentSupport.getIPersistentPeriod();
-            period = (IPeriod) persistentPeriod.readByCalendarAndNextPeriod(writtenEvaluationDate, writtenEvaluationDate, null);
+            period = (IOccupationPeriod) persistentPeriod.readByCalendarAndNextPeriod(writtenEvaluationDate, writtenEvaluationDate, null);
             if (period == null) {
-                period = DomainFactory.makePeriod(writtenEvaluationDate, writtenEvaluationDate);
+                period = DomainFactory.makeOccupationPeriod(writtenEvaluationDate, writtenEvaluationDate);
             }
         }
         return period;

@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IPeriod;
+import net.sourceforge.fenixedu.domain.IOccupationPeriod;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudent;
@@ -109,7 +109,7 @@ public class ReadClassTimeTableByStudent implements IService {
             InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
             infoRoomOccupation.setInfoRoom(infoRoom);
 
-            IPeriod period = roomOccupation.getPeriod();
+            IOccupationPeriod period = roomOccupation.getPeriod();
             InfoPeriod infoPeriod = InfoPeriod.newInfoFromDomain(period);
             infoRoomOccupation.setInfoPeriod(infoPeriod);
         }

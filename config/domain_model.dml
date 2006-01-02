@@ -1385,7 +1385,7 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 			interface "
 			public void edit(java.util.Date examDay, java.util.Date examStartTime, java.util.Date examEndTime,
 							 java.util.List<IExecutionCourse> executionCourses, java.util.List<ICurricularCourseScope> curricularCourseScopes, 
-							 java.util.List<net.sourceforge.fenixedu.domain.space.IRoom> rooms, IPeriod period, net.sourceforge.fenixedu.util.Season season);
+							 java.util.List<net.sourceforge.fenixedu.domain.space.IRoom> rooms, IOccupationPeriod period, net.sourceforge.fenixedu.util.Season season);
     		public boolean isExamsMapPublished();
 	        public boolean getIsExamsMapPublished();
 			"	
@@ -1397,7 +1397,7 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 			interface "
 			public void edit(java.util.Date testDay, java.util.Date testStartTime, java.util.Date testEndTime,
 							 java.util.List<IExecutionCourse> executionCourses, java.util.List<ICurricularCourseScope> curricularCourseScopes, 
-							 java.util.List<net.sourceforge.fenixedu.domain.space.IRoom> rooms, IPeriod period, String description);			
+							 java.util.List<net.sourceforge.fenixedu.domain.space.IRoom> rooms, IOccupationPeriod period, String description);			
 			"	
 		}
 
@@ -2483,7 +2483,7 @@ class net.sourceforge.fenixedu.domain.PaymentPhase extends net.sourceforge.fenix
     Date startDate;
 }
 
-class net.sourceforge.fenixedu.domain.Period extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.OccupationPeriod extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPeriod;
     Date start;
     Date end;
@@ -2502,7 +2502,7 @@ class net.sourceforge.fenixedu.domain.Period extends net.sourceforge.fenixedu.do
 	
 	public boolean intersectPeriods(final java.util.Calendar start, final java.util.Calendar end);
 
-	public boolean intersectPeriods(IPeriod period);
+	public boolean intersectPeriods(IOccupationPeriod period);
 	
 	public boolean containsDay(java.util.Calendar day);
 	
@@ -2892,9 +2892,9 @@ class net.sourceforge.fenixedu.domain.space.RoomOccupation extends net.sourcefor
 
 	public boolean roomOccupationForDateAndTime(IRoomOccupation roomOccupation);
 	
-	public boolean roomOccupationForDateAndTime(net.sourceforge.fenixedu.domain.IPeriod period, java.util.Calendar startTime, java.util.Calendar endTime, net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week, net.sourceforge.fenixedu.domain.space.IRoom room);
+	public boolean roomOccupationForDateAndTime(net.sourceforge.fenixedu.domain.IOccupationPeriod period, java.util.Calendar startTime, java.util.Calendar endTime, net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week, net.sourceforge.fenixedu.domain.space.IRoom room);
 	
-	public boolean roomOccupationForDateAndTime(net.sourceforge.fenixedu.domain.IPeriod period, java.util.Calendar startTime, java.util.Calendar endTime, net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week);
+	public boolean roomOccupationForDateAndTime(net.sourceforge.fenixedu.domain.IOccupationPeriod period, java.util.Calendar startTime, java.util.Calendar endTime, net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week);
 	
     public boolean roomOccupationForDateAndTime(java.util.Calendar startDate, java.util.Calendar endDate, java.util.Calendar startTime, java.util.Calendar endTime, net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week);
 
@@ -3059,7 +3059,7 @@ class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourcef
 	    TipoSala tipo;
 
 		interface "
-		public void createRoomOccupation(net.sourceforge.fenixedu.domain.IPeriod period, java.util.Calendar startTime, java.util.Calendar endTime,
+		public void createRoomOccupation(net.sourceforge.fenixedu.domain.IOccupationPeriod period, java.util.Calendar startTime, java.util.Calendar endTime,
 	            net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week, net.sourceforge.fenixedu.domain.IWrittenEvaluation writtenEvaluation);
 		public void delete();
 		"
@@ -4814,28 +4814,28 @@ relation ExecutionDegreePeriodExamsFirstSemester {
 	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegreesForExamsFirstSemester {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Period playsRole periodExamsFirstSemester;
+	net.sourceforge.fenixedu.domain.OccupationPeriod playsRole periodExamsFirstSemester;
 }
 
 relation ExecutionDegreePeriodExamsSecondSemester {
 	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegreesForExamsSecondSemester {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Period playsRole periodExamsSecondSemester;
+	net.sourceforge.fenixedu.domain.OccupationPeriod playsRole periodExamsSecondSemester;
 }
 
 relation ExecutionDegreePeriodLessonsFirstSemester {
 	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegreesForLessonsFirstSemester {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Period playsRole periodLessonsFirstSemester;
+	net.sourceforge.fenixedu.domain.OccupationPeriod playsRole periodLessonsFirstSemester;
 }
 
 relation ExecutionDegreePeriodLessonsSecondSemester {
 	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegreesForLessonsSecondSemester {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Period playsRole periodLessonsSecondSemester;
+	net.sourceforge.fenixedu.domain.OccupationPeriod playsRole periodLessonsSecondSemester;
 }
 
 
@@ -5748,15 +5748,15 @@ relation PaymentTransactionGuideEntry {
 
 
 relation PeriodRoomOccupation {
-	net.sourceforge.fenixedu.domain.Period playsRole period;
+	net.sourceforge.fenixedu.domain.OccupationPeriod playsRole period;
 	net.sourceforge.fenixedu.domain.space.RoomOccupation playsRole roomOccupations {
 		multiplicity *;
 	}
 }
 
 relation PeriodNextPeriod {
-    net.sourceforge.fenixedu.domain.Period playsRole previousPeriod;
-    net.sourceforge.fenixedu.domain.Period playsRole nextPeriod;
+    net.sourceforge.fenixedu.domain.OccupationPeriod playsRole previousPeriod;
+    net.sourceforge.fenixedu.domain.OccupationPeriod playsRole nextPeriod;
 }
 
 relation PersonAccountPerson {

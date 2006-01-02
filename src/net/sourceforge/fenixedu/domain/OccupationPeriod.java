@@ -13,12 +13,12 @@ import net.sourceforge.fenixedu.util.CalendarUtil;
  * @author Ana e Ricardo
  * 
  */
-public class Period extends Period_Base {
+public class OccupationPeriod extends OccupationPeriod_Base {
 
-    public Period() {
+    public OccupationPeriod() {
     }
 
-    public Period(Date startDate, Date endDate) {
+    public OccupationPeriod(Date startDate, Date endDate) {
         this.setStart(startDate);
         this.setEnd(endDate);
     }
@@ -59,7 +59,7 @@ public class Period extends Period_Base {
 
     public Calendar getEndDateOfComposite() {
         Calendar end = this.getEndDate();
-        IPeriod period = this.getNextPeriod();
+        IOccupationPeriod period = this.getNextPeriod();
         while (period != null) {
             end = period.getEndDate();
             period = period.getNextPeriod();
@@ -71,7 +71,7 @@ public class Period extends Period_Base {
         return CalendarUtil.intersectDates(start, end, getStartDate(), getEndDate());
     }
 
-    public boolean intersectPeriods(IPeriod period) {
+    public boolean intersectPeriods(IOccupationPeriod period) {
         return intersectPeriods(period.getStartDate(), period.getEndDate());
     }
 
@@ -94,8 +94,8 @@ public class Period extends Period_Base {
     }
 
     private void delete() {
-        final IPeriod previous = getPreviousPeriod();
-        final IPeriod next = getNextPeriod();
+        final IOccupationPeriod previous = getPreviousPeriod();
+        final IOccupationPeriod next = getNextPeriod();
         if (previous != null && next != null) { 
             previous.setNextPeriod(next);
         } else {

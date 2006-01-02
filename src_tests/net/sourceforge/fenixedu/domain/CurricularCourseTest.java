@@ -174,8 +174,8 @@ public class CurricularCourseTest extends DomainTestBase {
     }
     
     public void testGetActiveEnrollmentEvaluationsByExecutionPeriod() {
-        assertEquals("Active Enrollment Evaluations By Execution Period Count", 4, curricularCourse2.getActiveEnrollmentEvaluations(executionPeriodToUse1).size());
-        assertEquals("Active Enrollment Evaluations By Execution Period Count", 1, curricularCourse2.getActiveEnrollmentEvaluations(executionPeriodToUse2).size());
+        assertEquals("Active Enrollment Evaluations By Execution OccupationPeriod Count", 4, curricularCourse2.getActiveEnrollmentEvaluations(executionPeriodToUse1).size());
+        assertEquals("Active Enrollment Evaluations By Execution OccupationPeriod Count", 1, curricularCourse2.getActiveEnrollmentEvaluations(executionPeriodToUse2).size());
     }
     
 	private void testGeneralObjectives(String generalObjectives, String generalObjectivesEng){

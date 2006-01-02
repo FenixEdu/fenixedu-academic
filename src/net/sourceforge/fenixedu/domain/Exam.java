@@ -13,7 +13,7 @@ public class Exam extends Exam_Base {
             List<IExecutionCourse> executionCoursesToAssociate,
             List<ICurricularCourseScope> curricularCourseScopesToAssociate, 
             List<IRoom> rooms,
-            IPeriod period, Season season) {
+            IOccupationPeriod period, Season season) {
 
         checkScopeAndSeasonConstrains(executionCoursesToAssociate, curricularCourseScopesToAssociate, season);
     	
@@ -57,7 +57,7 @@ public class Exam extends Exam_Base {
     public void edit(Date examDay, Date examStartTime, Date examEndTime, 
             List<IExecutionCourse> executionCoursesToAssociate,
             List<ICurricularCourseScope> curricularCourseScopesToAssociate, 
-            List<IRoom> rooms, IPeriod period, Season season) {
+            List<IRoom> rooms, IOccupationPeriod period, Season season) {
 
         // It's necessary to remove this associations before check some constrains
         this.getAssociatedExecutionCourses().clear();

@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IPeriod;
+import net.sourceforge.fenixedu.domain.IOccupationPeriod;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.Lesson;
@@ -318,7 +318,7 @@ public class InitializeExecutionPeriod {
 
     private static IRoomOccupation createRoomOccupation(final IRoomOccupation roomOccupation, final ILesson lesson) {
     	final IRoom room = roomOccupation.getRoom();
-    	final IPeriod period = getPeriod(lesson);
+    	final IOccupationPeriod period = getPeriod(lesson);
 
         final IRoomOccupation newRoomOccupation = new RoomOccupation();
         newRoomOccupation.setDayOfWeek(roomOccupation.getDayOfWeek());
@@ -334,7 +334,7 @@ public class InitializeExecutionPeriod {
         return newRoomOccupation;
     }
 
-    private static IPeriod getPeriod(final ILesson lesson) {
+    private static IOccupationPeriod getPeriod(final ILesson lesson) {
         final ISchoolClass schoolClass = lesson.getShift().getAssociatedClasses().get(0);
         final IExecutionDegree executionDegree = schoolClass.getExecutionDegree();
 
