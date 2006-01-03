@@ -71,10 +71,8 @@
 		<tr>			
 			<bean:define id="executionPeriod" name="creditLineDTO" property="executionPeriod"/>		
 			<logic:equal name="nrLine" value="0">
-				<td class="aleft">					
-					<html:link title="Ver detalhes" page='<%= "/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;teacherId=" + teacherID %>' paramId="executionPeriodId" paramName="executionPeriod" paramProperty="idInternal">
-						<bean:message key="label.teacherService.credits.until"/> <bean:write name="executionPeriod" property="executionYear.year"/>
-					</html:link>
+				<td class="aleft">										
+					<bean:message key="label.teacherService.credits.until"/> <bean:write name="executionPeriod" property="executionYear.year"/>
 				</td>
 				<bean:define id="pastCredits" name="creditLineDTO" property="pastServiceCredits"/>							
 				<% totalCreditsBalance = ((Double)pastCredits).doubleValue(); %>
