@@ -15,6 +15,8 @@
 		<fc:viewState binding="#{CurricularPlansMembersManagementBackingBean.viewState}"/>
 		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{CurricularPlansMembersManagementBackingBean.selectedCurricularPlanID}'"/><br/>
 				
+<h:messages styleClass="error"/>
+				
 		<h:panelGroup rendered="#{!empty CurricularPlansMembersManagementBackingBean.groupMembers}">		
 			<h:outputText value="<b>#{scouncilBundle['groupMembers']}</b> (#{scouncilBundle['groupMembersExplanation']})<br/>" escape="false" />		
 			<h:selectManyCheckbox value="#{CurricularPlansMembersManagementBackingBean.selectedPersonGroupsIDsToRemove}" layout="pageDirection">
@@ -29,7 +31,6 @@
 		<h:panelGrid columns="2" style="infocell" columnClasses="infocell">
 			<h:outputText value="#{scouncilBundle['department']}:" />
 			<h:selectOneMenu value="#{CurricularPlansMembersManagementBackingBean.selectedDepartmentID}" onchange="submit()">
-				<f:selectItem itemLabel="#{scouncilBundle['choose']}" itemValue="0"/>			
 				<f:selectItems value="#{CurricularPlansMembersManagementBackingBean.departments}"  />
 			</h:selectOneMenu>		
 		</h:panelGrid>

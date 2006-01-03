@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.cu
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
@@ -22,6 +23,7 @@ import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.accessControl.IPersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.IUserGroup;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
@@ -30,7 +32,8 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
  * 
  */
 public class CurricularPlansMembersManagementBackingBean extends FenixBackingBean {
-
+    private final ResourceBundle scouncilBundle = getResourceBundle("ServidorApresentacao/ScientificCouncilResources");
+    
     private Integer[] selectedPersonGroupsIDsToRemove;
 
     private Integer[] selectedPersonsIDsToAdd;
@@ -64,7 +67,7 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
         }
 
         if (selectedPersonsIDsToAdd != null) {
-            Object[] argsUpdateGroup = { curricularPlanMembersGroup, selectedPersonsIDsToAdd, null };
+            Object[] argsUpdateGroup = { curricularPlanMembersGroup, selectedPersonsIDsToAdd, null, RoleType.BOLONHA_MANAGER };
             ServiceUtils.executeService(getUserView(), "UpdateCurricularPlanMembersGroup",
                     argsUpdateGroup);
         }
@@ -74,7 +77,7 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
 
         if (selectedPersonGroupsIDsToRemove != null) {
             Object[] args = { getDegreeCurricularPlan().getCurricularPlanMembersGroup(), null,
-                    selectedPersonGroupsIDsToRemove };
+                    selectedPersonGroupsIDsToRemove, RoleType.BOLONHA_MANAGER };
             ServiceUtils.executeService(getUserView(), "UpdateCurricularPlanMembersGroup", args);
         }
     }
@@ -105,6 +108,7 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
                 getUserView(), "ReadAllDomainObjects", args);
 
         List<SelectItem> result = new ArrayList<SelectItem>();
+        result.add(new SelectItem(0, scouncilBundle.getString("choose")));
         for (IDepartment department : departments) {
             result.add(new SelectItem(department.getIdInternal(), department.getRealName()));
         }

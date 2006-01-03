@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.accessControl.IPersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.IUserGroup;
 import net.sourceforge.fenixedu.domain.department.ICompetenceCourseMembersGroup;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
@@ -88,7 +89,7 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
         }
 
         if (selectedPersonsIDsToAdd != null) {
-            Object[] args = { competenceCourseMembersGroup, selectedPersonsIDsToAdd, null };
+            Object[] args = { competenceCourseMembersGroup, selectedPersonsIDsToAdd, null, RoleType.BOLONHA_MANAGER };
             ServiceUtils.executeService(getUserView(), "UpdateCompetenceCourseMembersGroup", args);
         }
     }
@@ -97,7 +98,7 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
 
         if (selectedPersonGroupsIDsToRemove != null) {
             Object[] args = { getDepartment().getCompetenceCourseMembersGroup(), null,
-                    selectedPersonGroupsIDsToRemove };
+                    selectedPersonGroupsIDsToRemove, RoleType.BOLONHA_MANAGER };
             ServiceUtils.executeService(getUserView(), "UpdateCompetenceCourseMembersGroup", args);
         }
     }
