@@ -45,37 +45,3 @@
 	</h:form>
 	
 </ft:tilesView>
-
-<table class="style2">
-	<tr>
-		<th class="aright" width="180px">(<a
-			href="createCourseGroup.faces?degreeCurricularPlanID=402&amp;parentCourseGroupID=16302">Criar
-		Grupo</a>)</th>
-	</tr>
-</table>
-<table class="style2">
-	<tr>
-		<th colspan="3" class="aleft"><strong>Arquitectura e Sistemas
-		Distribuídos </strong></th>
-		<th class="aright" width="170px">(<a
-			href="createCourseGroup.faces?degreeCurricularPlanID=402&amp;parentCourseGroupID=16309">Criar
-		Grupo</a> , <a
-			href="editCourseGroup.faces?degreeCurricularPlanID=402&amp;courseGroupID=16309">Editar</a>
-		, <a
-			href="deleteCourseGroup.faces?degreeCurricularPlanID=402&amp;courseGroupID=16309">Apagar</a>)
-		</th>
-	</tr>
-</table>
-<table class="style2 indent1">
-	<tr>
-		<th colspan="3" class="aleft"><strong>Arquitectura e Sistemas
-		Operativos em ASD </strong></th>
-		<th class="aright" width="150px">(<a
-			href="createCourseGroup.faces?degreeCurricularPlanID=402&amp;parentCourseGroupID=16310">Criar
-		Grupo</a> , <a
-			href="editCourseGroup.faces?degreeCurricularPlanID=402&amp;courseGroupID=16310">Editar</a>
-		, <a
-			href="deleteCourseGroup.faces?degreeCurricularPlanID=402&amp;courseGroupID=16310">Apagar</a>)
-		</th>
-	</tr>
-</table>
