@@ -182,6 +182,26 @@ public class UIDataRepeater extends UIData {
         ValueBinding vb = getValueBinding("rowCountVar");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
+    
+    
+    @Override
+    public Object saveState(FacesContext stateToSave) {
+    	Object state[] = new Object[3];
+    	
+    	state[0] = super.saveState(stateToSave);
+    	state[1] = getRowCountVar();
+    	state[2] = getRowIndexVar();
+    	
+    	return state;
+    }
+    @Override
+    public void restoreState(FacesContext context, Object stateToRestore) {
+    	Object state[] = (Object[]) stateToRestore;
+
+    	super.restoreState(context,state[0]);
+    	setRowCountVar((String) state[1]);
+    	setRowIndexVar((String) state[2]);
+    }
 
     /*
      * @Override public boolean getRendersChildren() { return true; }
