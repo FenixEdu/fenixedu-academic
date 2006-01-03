@@ -16,7 +16,7 @@
 		<h:outputText value="<H2>#{bundle['label.edit.function']}</H2>" escape="false"/>		
 		<h:outputText value="<br/>" escape="false" />
 		
-		<h:panelGrid styleClass="infoop" columns="2">
+		<h:panelGrid columns="2">
 			<h:outputText value="<b>#{bundle['label.name']}</b>: " escape="false"/>		
 			<h:outputText value="#{facultyAdmOfficeFunctionsManagementBackingBean.person.nome}" escape="false"/>									
 				

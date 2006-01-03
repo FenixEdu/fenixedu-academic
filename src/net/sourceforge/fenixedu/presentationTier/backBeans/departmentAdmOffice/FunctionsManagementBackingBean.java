@@ -100,7 +100,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
             this.functionID = Integer.valueOf(getRequestParameter("functionID").toString());
         }
         if (getRequestParameter("disabledVar") != null && !getRequestParameter("disabledVar").equals("")) {
-            this.disabledVar = Integer.valueOf(getRequestParameter("disabledVar").toString());            
+            this.disabledVar = Integer.valueOf(getRequestParameter("disabledVar").toString());
         }
     }
 
@@ -368,7 +368,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         for (IFunction function : this.getUnit().getFunctions()) {
             if (!function.isInherentFunction()
                     && ((this.getPersonFunction() != null && function.equals(this.getPersonFunction()
-                            .getFunction())) || function.isActive(Calendar.getInstance().getTime()))) {
+                            .getFunction())) || (this.getPersonFunction() == null && function
+                            .isActive(Calendar.getInstance().getTime())))) {
                 selectItem = new SelectItem();
                 selectItem.setValue(function.getIdInternal());
                 selectItem.setLabel(function.getName());
@@ -866,7 +867,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public void setExecutionPeriod(Integer executionPeriodID) {
         this.executionPeriod = executionPeriodID;
-        if(executionPeriodID != null){
+        if (executionPeriodID != null) {
             this.executionPeriodHidden.setValue(executionPeriodID);
         }
     }
@@ -877,14 +878,14 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
             duration = Integer.valueOf(durationHidden.getValue().toString());
 
         } else if (this.duration == null) {
-            this.duration = new Integer(1);            
+            this.duration = new Integer(1);
         }
         return duration;
     }
 
     public void setDuration(Integer duration) {
         this.duration = duration;
-        if(duration != null){
+        if (duration != null) {
             this.durationHidden.setValue(duration);
         }
     }
@@ -919,23 +920,24 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     public HtmlInputHidden getDisabledVarHidden() {
         if (disabledVarHidden == null) {
             disabledVarHidden = new HtmlInputHidden();
-            if (getRequestParameter("disabledVar") != null && !getRequestParameter("disabledVar").equals("")) {
-                this.disabledVarHidden.setValue(Integer.valueOf(getRequestParameter("disabledVar").toString()));            
+            if (getRequestParameter("disabledVar") != null
+                    && !getRequestParameter("disabledVar").equals("")) {
+                this.disabledVarHidden.setValue(Integer.valueOf(getRequestParameter("disabledVar")
+                        .toString()));
             }
         }
         return disabledVarHidden;
     }
 
     public void setDisabledVarHidden(HtmlInputHidden disabledVarHidden) {
-        this.disabledVarHidden = disabledVarHidden;                    
+        this.disabledVarHidden = disabledVarHidden;
     }
 
     public Integer getDisabledVar() {
-        if(disabledVar == null && disabledVarHidden != null && disabledVarHidden.getValue() != null
-                && !disabledVarHidden.getValue().equals("")){
+        if (disabledVar == null && disabledVarHidden != null && disabledVarHidden.getValue() != null
+                && !disabledVarHidden.getValue().equals("")) {
             disabledVar = Integer.valueOf(disabledVarHidden.getValue().toString());
-        }
-        else if (disabledVar == null) {
+        } else if (disabledVar == null) {
             disabledVar = 0;
         }
         return disabledVar;

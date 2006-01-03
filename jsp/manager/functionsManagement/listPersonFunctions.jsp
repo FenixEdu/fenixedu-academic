@@ -21,7 +21,7 @@
 			<h:outputText value="#{managerFunctionsManagementBackingBean.person.nome}" escape="false"/>		
 		</h:panelGroup>
 		
-		<h:outputText value="<br/><br/><br/>" escape="false" />	
+		<h:outputText value="<br/><br/>" escape="false" />	
 		
 		<h:commandLink value="#{bundle['label.associate']}" action="associateNewFunction" />
 				
