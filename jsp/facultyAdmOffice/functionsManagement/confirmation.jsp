@@ -17,7 +17,6 @@
 	<h:inputHidden binding="#{facultyAdmOfficeFunctionsManagementBackingBean.endDateHidden}"/>
 	<h:inputHidden binding="#{facultyAdmOfficeFunctionsManagementBackingBean.functionIDHidden}"/>
 	<h:inputHidden binding="#{facultyAdmOfficeFunctionsManagementBackingBean.executionPeriodHidden}"/>
-	<h:inputHidden binding="#{facultyAdmOfficeFunctionsManagementBackingBean.executionYearIDHidden}"/>
 	<h:inputHidden binding="#{facultyAdmOfficeFunctionsManagementBackingBean.durationHidden}"/>
 	<h:inputHidden binding="#{facultyAdmOfficeFunctionsManagementBackingBean.disabledVarHidden}"/>
 

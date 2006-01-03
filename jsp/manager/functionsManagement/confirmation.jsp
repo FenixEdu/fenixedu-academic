@@ -17,7 +17,6 @@
 	<h:inputHidden binding="#{managerFunctionsManagementBackingBean.endDateHidden}"/>
 	<h:inputHidden binding="#{managerFunctionsManagementBackingBean.functionIDHidden}"/>
 	<h:inputHidden binding="#{managerFunctionsManagementBackingBean.executionPeriodHidden}"/>
-	<h:inputHidden binding="#{managerFunctionsManagementBackingBean.executionYearIDHidden}"/>
 	<h:inputHidden binding="#{managerFunctionsManagementBackingBean.durationHidden}"/>
 	<h:inputHidden binding="#{managerFunctionsManagementBackingBean.disabledVarHidden}"/>
 
