@@ -612,8 +612,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
         } else if (this.beginDate == null && this.getPersonFunctionID() == null
                 && (this.beginDateHidden == null || this.beginDateHidden.getValue() == null)
-                && this.getExecutionPeriod() != null
-                && this.getDisabledVar() == 0) {
+                && this.getExecutionPeriod() != null) {
 
             IExecutionPeriod executionPeriod = (IExecutionPeriod) readDomainObject(
                     ExecutionPeriod.class, this.executionPeriod);
@@ -657,8 +656,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
         } else if (this.endDate == null && this.getPersonFunctionID() == null
                 && (this.endDateHidden == null || this.endDateHidden.getValue() == null)
-                && this.getExecutionPeriod() != null
-                && this.getDisabledVar() == 0) {
+                && this.getExecutionPeriod() != null) {
 
             IExecutionPeriod executionPeriod = (IExecutionPeriod) readDomainObject(
                     ExecutionPeriod.class, this.executionPeriod);

@@ -26,14 +26,14 @@
 	<h:outputText styleClass="error" rendered="#{!empty functionsManagementBackingBean.errorMessage}"
 				value="#{bundle[functionsManagementBackingBean.errorMessage]}"/>
 	
-	<h:panelGrid styleClass="infoop" columns="2">
+	<h:panelGrid columns="2">
 		<h:outputText value="<b>#{bundle['label.name']}</b>: " escape="false"/>		
 		<h:outputText value="#{functionsManagementBackingBean.person.nome}"/>		
 	</h:panelGrid>	
 	
 	<h:outputText value="</br></br><br/>" escape="false" />
 	
-	<h:panelGrid styleClass="infoop" columns="2">		
+	<h:panelGrid columns="2">		
 		<h:outputText value="<b>#{bundle['label.new.function']}</b>" escape="false"/>	
 		<h:outputText value="#{functionsManagementBackingBean.function.name}"/>
 				

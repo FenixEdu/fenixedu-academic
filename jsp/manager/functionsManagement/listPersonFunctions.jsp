@@ -16,7 +16,7 @@
 
 		<h:outputText value="<br/>" escape="false" />	
 
-		<h:panelGroup styleClass="infoop">
+		<h:panelGroup>
 			<h:outputText value="<b>#{bundle['label.name']}</b>: " escape="false"/>		
 			<h:outputText value="#{managerFunctionsManagementBackingBean.person.nome}" escape="false"/>		
 		</h:panelGroup>
@@ -73,7 +73,7 @@
 			</h:column>
 			<h:column> 						
 				<h:commandLink action="prepareEditFunction">
-					<h:outputText value="(#{bundle['link.functions.management.edit']})"/>					
+					<h:outputText value="#{bundle['link.functions.management.edit']}"/>					
 					<f:param name="personFunctionID" id="personFunctionID1" value="#{person_function.idInternal}"/>
 					<f:param name="functionID" id="functionID" value="#{person_function.function.idInternal}"/>
 				</h:commandLink>				
@@ -158,7 +158,7 @@
 			</h:column>
 			<h:column> 											
 				<h:commandLink action="prepareEditFunction">
-					<h:outputText value="(#{bundle['link.functions.management.edit']})"/>					
+					<h:outputText value="#{bundle['link.functions.management.edit']}"/>					
 					<f:param name="personFunctionID" id="personFunctionID1" value="#{person_function.idInternal}"/>
 					<f:param name="functionID" id="functionID" value="#{person_function.function.idInternal}"/>
 				</h:commandLink>				
