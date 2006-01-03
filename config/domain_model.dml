@@ -2088,7 +2088,10 @@ class net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse extends net.sour
     Double evaluationMethodAdequation;
     Integer weeklySpentHours;
     Double globalAppreciation;
-    
+    Character entryGradeClassification;
+    Character approvationRatioClassification;
+    Character arithmeticMeanClassification;        
+
     interface "
 	public void createInquiriesRoom(net.sourceforge.fenixedu.domain.space.IRoom room, net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRoom infoInquiriesRoom);
 

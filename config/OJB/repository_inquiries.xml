@@ -127,6 +127,25 @@
 	  locking="false"
 	/>
 
+	<field-descriptor
+		name="entryGradeClassification"
+		column="ENTRY_GRADE_CLASSIFICATION"
+		jdbc-type="CHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCharacter2SqlCharFieldConversion"
+	/>
+	<field-descriptor
+		name="approvationRatioClassification"
+		column="APPROVATION_RATIO_CLASSIFICATION"
+		jdbc-type="CHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCharacter2SqlCharFieldConversion"
+	/>
+	<field-descriptor
+		name="arithmeticMeanClassification"
+		column="ARITHMETIC_MEAN_CLASSIFICATION"
+		jdbc-type="CHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCharacter2SqlCharFieldConversion"
+	/>
+
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedInquiriesRooms"
 			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom"

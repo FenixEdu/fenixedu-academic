@@ -65,7 +65,7 @@ public class WriteInquiry implements IService {
 
         // Writing the inquiries course
         final InfoInquiriesCourse iic = inquiry.getInquiriesCourse();
-        final IInquiriesCourse inquiriesCourse = writeInquiriesCourse(inquiry, iic);
+        final IInquiriesCourse inquiriesCourse = writeInquiriesCourse(inquiry, iic, infoStudent);
 
         // Writting the inquiries teacher
 
@@ -93,7 +93,7 @@ public class WriteInquiry implements IService {
         writeInquiriesRegistry(inquiriesRegistryDAO, inquiriesCourse, infoStudent);
     }
 
-    private IInquiriesCourse writeInquiriesCourse(final InfoInquiry ii, final InfoInquiriesCourse iic)
+    private IInquiriesCourse writeInquiriesCourse(final InfoInquiry ii, final InfoInquiriesCourse iic, final InfoStudent infoStudent)
             throws ExcepcaoPersistencia {
 		
 		IExecutionCourse executionCourse = (IExecutionCourse) persistentObject.readByOID(
@@ -104,14 +104,17 @@ public class WriteInquiry implements IService {
                 ExecutionDegree.class, ii.getExecutionDegreeStudent().getIdInternal());
 		IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentObject.readByOID(
                 ExecutionPeriod.class, ii.getExecutionPeriod().getIdInternal());
+        IStudent student = (IStudent) persistentObject.readByOID(
+                Student.class, infoStudent.getIdInternal());
+
 		ISchoolClass schoolClass = null;
-		
         if (iic.getStudentSchoolClass() != null) {
 			schoolClass = (ISchoolClass) persistentObject.readByOID(
                     SchoolClass.class, iic.getStudentSchoolClass().getIdInternal());
         }
 
-		return DomainFactory.makeInquiriesCourse(executionCourse, executionDegreeCourse, executionDegreeStudent, executionPeriod, schoolClass, iic);
+		return DomainFactory.makeInquiriesCourse(executionCourse, executionDegreeCourse, executionDegreeStudent, executionPeriod, schoolClass, iic,
+                student.getEntryGradeClassification(), student.getApprovationRatioClassification(), student.getArithmeticMeanClassification());
     }
 
     private void writeInquiriesTeacher(final InfoInquiriesTeacher iit, final IInquiriesCourse inquiriesCourse) throws ExcepcaoPersistencia {

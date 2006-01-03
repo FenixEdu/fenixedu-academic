@@ -50,7 +50,9 @@ public class InquiriesCourse extends InquiriesCourse_Base {
 	 */
 	public InquiriesCourse(IExecutionCourse executionCourse, IExecutionDegree executionDegreeCourse,
 			IExecutionDegree executionDegreeStudent, IExecutionPeriod executionPeriod,
-			ISchoolClass schoolClass, InfoInquiriesCourse infoInquiriesCourse) {
+			ISchoolClass schoolClass, InfoInquiriesCourse infoInquiriesCourse,
+            Character entryGradeClassification, Character approvationRatioClassification, 
+            Character arithmeticMeanClassification) {
 		if((executionCourse == null) || (executionDegreeCourse == null) || (executionDegreeStudent == null) || (executionPeriod == null)) {
 			throw new DomainException("Neither the executionCourse, executionDegreeCourse, executionDegreeStudent nor executionPeriod should not be null!");
 		}
@@ -59,6 +61,9 @@ public class InquiriesCourse extends InquiriesCourse_Base {
 		this.setExecutionDegreeStudent(executionDegreeStudent);
 		this.setExecutionPeriod(executionPeriod);
 		this.setStudentSchoolClass(schoolClass);
+        this.setEntryGradeClassification(entryGradeClassification);
+        this.setApprovationRatioClassification(approvationRatioClassification);
+        this.setArithmeticMeanClassification(arithmeticMeanClassification);
 		
 		this.setBasicProperties(infoInquiriesCourse);
 
