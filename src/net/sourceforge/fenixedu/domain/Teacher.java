@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -29,6 +30,7 @@ import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.PublicationArea;
 import net.sourceforge.fenixedu.util.State;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
@@ -386,11 +388,15 @@ public class Teacher extends Teacher_Base {
 
         if (list.isEmpty()) {
             return 0;
-        } else if (list.size() > 1) {
-            return calculateTeacherHours(list, begin, end);
         } else {
+            Collections.sort(list, new BeanComparator("beginDate"));
             return list.iterator().next().getLessonHours();
         }
+//            if (list.size() > 1) {
+//            return calculateTeacherHours(list, begin, end);
+//        } else {
+//            return list.iterator().next().getLessonHours();
+//        }
     }
 
     public int getServiceExemptionCredits(IExecutionPeriod executionPeriod) {
@@ -409,7 +415,6 @@ public class Teacher extends Teacher_Base {
 
     public double getManagementFunctionsCredits(IExecutionPeriod executionPeriod) {
 
-        // TODO por isto a devolver um double!
         Date begin = executionPeriod.getBeginDate();
         Date end = executionPeriod.getEndDate();
 
@@ -444,14 +449,18 @@ public class Teacher extends Teacher_Base {
                 list.add(teacherLegalRegimen);
             }
         }
-       
+               
         if (list.isEmpty()) {
             return null;
-        } else if (list.size() > 1) {
-            return getTeacherCategory(list, begin, end);
         } else {
+            Collections.sort(list,new BeanComparator("beginDate"));
             return list.iterator().next().getCategory();
-        }               
+        }
+//        { if (list.size() > 1) {
+//            return getTeacherCategory(list, begin, end);
+//        } else {
+//            return list.iterator().next().getCategory();
+//        }               
     }
     // /////////////////////////////////////////
 
