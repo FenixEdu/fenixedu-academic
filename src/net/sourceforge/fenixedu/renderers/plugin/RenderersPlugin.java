@@ -184,7 +184,7 @@ public class RenderersPlugin implements PlugIn {
 
                 Class type;
                 try {
-                    type = Class.forName(typeName);
+                    type = getClassForType(typeName);
 
                     Schema schema = new Schema(schemaName, type);
 
@@ -203,7 +203,7 @@ public class RenderersPlugin implements PlugIn {
                         
                         if (validatorName != null) {
                             try {
-                                validator = Class.forName(validatorName);
+                                validator = getClassForType(validatorName);
                             } catch (ClassNotFoundException e) {
                                 logger.warn("specified validator '" + validatorName + "' does not exist");
                             }
@@ -269,7 +269,7 @@ public class RenderersPlugin implements PlugIn {
                 }
 
                 try {
-                    Class objectClass = Class.forName(type);
+                    Class objectClass = getClassForType(type);
                     Class rendererClass = Class.forName(className);
 
                     String modeName = rendererElement.getAttributeValue("mode");
@@ -289,6 +289,20 @@ public class RenderersPlugin implements PlugIn {
                 }
             }
         }
+    }
+
+    private Class getClassForType(String type) throws ClassNotFoundException {
+        String[] primitiveTypesNames = { "void", "boolean", "byte", "short", "int", "long", "char", "float", "double" };
+        Class[]  primitiveTypesClass = { Void.TYPE, Boolean.TYPE, Byte.TYPE, Short.TYPE, Integer.TYPE, 
+                                         Long.TYPE, Character.TYPE, Float.TYPE, Double.TYPE };
+        
+        for (int i = 0; i < primitiveTypesNames.length; i++) {
+            if (type.equals(primitiveTypesNames[i])) {
+                return primitiveTypesClass[i];
+            }
+        }
+        
+        return Class.forName(type);
     }
  
     private Element readConfigRootElement(final ActionServlet servlet, String name, String configFile) throws ServletException {
@@ -313,7 +327,7 @@ public class RenderersPlugin implements PlugIn {
                             return null;
                         }
                         
-                        // TODO: understand the API better and use somethin less hackish
+                        // TODO: understand the API better and use something less hackish
                         return new InputSource(servlet.getServletContext().getResourceAsStream(systemId.substring("file://".length())));
                     }
                     

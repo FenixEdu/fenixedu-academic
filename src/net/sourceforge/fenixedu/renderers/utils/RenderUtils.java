@@ -38,6 +38,12 @@ public class RenderUtils {
             return label;
         }
     
+        label = RenderUtils.getResourceString(RenderUtils.RESOURCE_LABEL_PREFIX + "." + slotName);
+        
+        if (label != null) {
+            return label;
+        }
+        
         label = RenderUtils.getResourceString(slotName);
     
         if (label != null) {

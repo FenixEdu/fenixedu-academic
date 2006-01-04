@@ -20,7 +20,7 @@
     <tei-class>net.sourceforge.fenixedu.renderers.taglib.DefineTei</tei-class>
     <body-content>empty</body-content>
     <description>
-    		Defines the object beeing rendered or one of it's properties in the page scope.
+    	   Defines the object beeing rendered or one of it's properties in the page scope.
     </description>
 
     <attribute>
@@ -28,14 +28,14 @@
       <required>true</required>
       <rtexprvalue>false</rtexprvalue>
       <description>
-    			The name that the value will have to the page.
+        The name defined in the page and that will be associated with the value.
       </description>
     </attribute>
 
     <attribute>
       <name>property</name>
       <required>false</required>
-      <rtexprvalue>false</rtexprvalue>
+      <rtexprvalue>true</rtexprvalue>
       <description>
         	The name of one of the properties of the rendered object. If this attribute is not
         	specified then the rendered object itself will be used and defined in the page.
@@ -45,7 +45,7 @@
     <attribute>
       <name>type</name>
       <required>false</required>
-      <rtexprvalue>false</rtexprvalue>
+      <rtexprvalue>true</rtexprvalue>
       <description>
         	The type of the value that will be defined in the page.
       </description>
@@ -63,24 +63,24 @@
     <attribute>
       <name>property</name>
       <required>true</required>
-      <rtexprvalue>false</rtexprvalue>
+      <rtexprvalue>true</rtexprvalue>
       <description>
-    			The name of the target property.
+        The name of the target property.
       </description>
     </attribute>
 
     <attribute>
       <name>key</name>
       <required>false</required>
-      <rtexprvalue>false</rtexprvalue>
+      <rtexprvalue>true</rtexprvalue>
       <description>
         	The specific key that will be used first when selecting the label.
       </description>
     </attribute>
   </tag>
-  
+
   <tag>
-    <name>view</name>this
+    <name>view</name>
     <tag-class>net.sourceforge.fenixedu.renderers.taglib.TemplateViewObjectTag</tag-class>
     <body-content>JSP</body-content>
     <description>
@@ -93,20 +93,20 @@
       <rtexprvalue>true</rtexprvalue>
       <type>java.lang.String</type>
       <description>
-          Specifies the name of the page attribute to fetch. This attribute is related to
-          'scope'. If this attribute is not given the tag assumes that the developer is
-          refering to the object beeing rendered in the template.
+        Specifies the name of the page attribute to fetch. This attribute is related to
+        'scope'. If this attribute is not given the tag assumes that the developer is
+        refering to the object beeing rendered in the template.
       </description>
     </attribute>
 
-		<attribute>
+	<attribute>
       <name>property</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
       <description>
-          Specifies the name of the property to fetch. The value must follow the Apache BeanUtils
-          naming convention for bean properties. If this attribute is not specified then the
-          object refered with the attribute 'name' will be used.
+        Specifies the name of the property to fetch. The value must follow the Apache BeanUtils
+        naming convention for bean properties. If this attribute is not specified then the
+        object refered with the attribute 'name' will be used.
       </description>
     </attribute>
 
@@ -120,49 +120,25 @@
       </description>
     </attribute>
 
-		<attribute>
+    <attribute>
       <name>layout</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
       <description>
-          Indicates wich specific layout will be used to render the object.
+        Indicates wich specific layout will be used to render the object.
       </description>
     </attribute>
 
-		<attribute>
+    <attribute>
       <name>schema</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
       <description>
-          Selects one of the predefined schemas by name. The name specified in this attribute
-          will be used to obtain a schema to use when rendering the object.
+        Selects one of the predefined schemas by name. The name specified in this attribute
+        will be used to obtain a schema to use when rendering the object.
       </description>
     </attribute>
 
-    <attribute>
-      <name>oid</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-      <type>java.lang.String</type>
-      <description>
-        	The identification number of the object.
-        	If the attribute 'name' is not specified this attribute together with the attribute 'type'
-        	specify the identification of the persistent object that will be rendered.
-      </description>
-    </attribute>
-
-    <attribute>
-      <name>type</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-      <type>java.lang.String</type>
-      <description>
-        	The Java type of the object.
-        	If the attribute 'name' is not specified this attribute together with the attribute 'oid'
-        	specify the identification of the persitent object that will be rendered.
-      </description>
-    </attribute>
-    
     <attribute>
       <name>template</name>
       <required>false</required>
@@ -179,8 +155,8 @@
     <tag-class>net.sourceforge.fenixedu.renderers.taglib.LayoutConfigTag</tag-class>
     <body-content>JSP</body-content>
     <description>
-      	Allows selection and configuration of a specific layout. The use of this tag overrides the
-      	attributes 'layout' and 'template' of the parent tag.
+      Allows selection and configuration of a specific layout. The use of this tag overrides the
+      attributes 'layout' and 'template' of the parent tag.
     </description>
 
     <attribute>
@@ -188,7 +164,7 @@
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
       <description>
-        	The name of the layout that will be used to render the object.
+    	    The name of the layout that will be used to render the object.
       </description>
     </attribute>
   </tag>
@@ -198,7 +174,7 @@
     <tag-class>net.sourceforge.fenixedu.renderers.taglib.LayoutPropertyTag</tag-class>
     <body-content>empty</body-content>
     <description>
-    		Sets a specific property of the layout.
+      Sets a specific property of the layout.
     </description>
 
     <attribute>
@@ -206,7 +182,7 @@
       <required>true</required>
       <rtexprvalue>false</rtexprvalue>
       <description>
-    			The name of the property.
+        The name of the property.
       </description>
     </attribute>
 

@@ -69,7 +69,7 @@ public abstract class TabularLayout extends Layout {
                     cell.setBody(getComponent(rowIndex, columnIndex));
                 }
             } catch (Exception e) {
-                logger.warn("while generating table row " + rowNumber + " catched exception " + e);
+                logger.warn("while generating table row " + rowIndex + " catched exception " + e);
                 e.printStackTrace();
                 table.removeRow(row);
             }

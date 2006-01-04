@@ -1,264 +1,51 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!-- TODO: make this a public id or at least obsolute -->
+<!-- TODO: make this a public id or at least obsolute 
+     Currently there is a semi-hack built in the RendererPlugin to accept this format.
+-->
 <!DOCTYPE schemas SYSTEM "/WEB-INF/fenix-renderers-schemas.dtd">
 
 <schemas>
 <!-- 
-	<schema name="person.birth" type="net.sourceforge.fenixedu.domain.IPerson">
-		<slot name="nascimento" key="special.nascimento" layout="layout" schema="schema">
-			<property name="format" value="yyyy - MM - dd HH:mm"/>
-		</slot>
-	</schema>
+  Example:
+  
+    <schema name="person.birth" type="net.sourceforge.fenixedu.domain.IPerson">
+        <slot name="nascimento" key="person.nascimento.special-case" layout="heading-date">
+            <property name="format" value="yyyy - MM - dd HH:mm"/>
+        </slot>
+    </schema>
+    
+    <schema name="person.country" type="net.sourceforge.fenixedu.domain.IPerson">
+        <slot name="pais" schema="pais.minimal"/>
+    </schema>
+    
+    <schema name="pais.minimal" type="net.sourceforge.fenixedu.domain.IPerson">
+        <slot name="name"/>
+        <slot name="nacionality"/>
+    </schema>
  -->
 
   <schema name="DomainObject.oid" type="net.sourceforge.fenixedu.domain.DomainObject">
     <slot name="idInternal"/>
   </schema>
-    
-  <schema name="person.nome" type="net.sourceforge.fenixedu.domain.IPerson">
+  
+  <!-- FIXME: remove schemas after this, they are used only as example -->
+  <schema name="person.simple-admin-info" type="net.sourceforge.fenixedu.domain.Person">
     <slot name="nome"/>
-  </schema>
-
-  <schema name="person.numeroDocumentoIdentificacao" type="net.sourceforge.fenixedu.domain.IPerson">
-    <slot name="numeroDocumentoIdentificacao"/>
-  </schema>
-   
-  <schema name="person.nascimento" type="net.sourceforge.fenixedu.domain.IPerson">
-    <slot name="nascimento"/>
-  </schema>
-
-  <schema name="person.availableWebSite" type="net.sourceforge.fenixedu.domain.IPerson">
-    <slot name="availableWebSite"/>
-  </schema>
-  
-  <schema name="person.maritalStatus" type="net.sourceforge.fenixedu.domain.IPerson">
-    <slot name="maritalStatus"/>
-  </schema>
-  
-  <schema name="person.minimal" type="net.sourceforge.fenixedu.domain.IPerson">
     <slot name="username"/>
+    <slot name="email"/>
+  </schema>
+  
+  <schema name="person.simple-admin-info.extended" type="net.sourceforge.fenixedu.domain.Person">
     <slot name="nome"/>
-    <slot name="gender"/>
-    <slot name="availableWebSite"/>
-  </schema>
-  
-  <schema name="person.valid-minimal" type="net.sourceforge.fenixedu.domain.IPerson">
-    <slot name="username" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-    <slot name="nome" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-    <slot name="gender"/>
-    <slot name="availableWebSite"/>
-  </schema>
-
-  <schema name="person.create-minimal" type="net.sourceforge.fenixedu.domain.IPerson">
-		<slot name="numeroDocumentoIdentificacao"/>
-		<slot name="idDocumentType"/>
-    <slot name="username"/>
-    <slot name="nome"/>
-    <slot name="gender"/>
-    <slot name="maritalStatus"/>
-    <slot name="availableWebSite"/>
-    <slot name="isPassInKerberos"/>
-  </schema>
-  
-  <schema name="person.create-valid-minimal" type="net.sourceforge.fenixedu.domain.IPerson">
-		<slot name="numeroDocumentoIdentificacao" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-      <property name="size" value="30"/>
-    </slot>
-		<slot name="idDocumentType"/>
-    <slot name="username" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-    <slot name="nome" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-      <property name="size" value="60"/>
-    </slot>
-    <slot name="gender"/>
-    <slot name="maritalStatus"/>
-    <slot name="availableWebSite"/>
-    <slot name="isPassInKerberos"/>
-  </schema>
-
-  <schema name="person.create-valid-minimal.defaults" type="net.sourceforge.fenixedu.domain.IPerson">
-		<slot name="numeroDocumentoIdentificacao" default="1234567890"
-          validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-      <property name="size" value="30"/>
-    </slot>
-		<slot name="idDocumentType" 
-          validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-    <slot name="username" default="Lxxxx" 
-          validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-    <slot name="nome" default="Primeiro Último" 
-          validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-      <property name="size" value="60"/>
-    </slot>
-    <slot name="gender" 
-          validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-    <slot name="maritalStatus" default="UNKNOWN"
-          validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-    <slot name="availableWebSite"/>
-    <slot name="isPassInKerberos" default="true"/>
-  </schema>
-
-  <schema name="person.info" type="net.sourceforge.fenixedu.domain.IPerson">
-		<slot name="nome"/>
-		<slot name="username"/>
-		<slot name="gender"/>
-		<slot name="numeroDocumentoIdentificacao"/>
-		<slot name="idDocumentType"/>
-		<slot name="localEmissaoDocumentoIdentificacao"/>
-		<slot name="dataEmissaoDocumentoIdentificacao"/>
-		<slot name="dataValidadeDocumentoIdentificacao"/>
-		<slot name="numContribuinte"/>
-		<slot name="profissao"/>
-		<slot name="maritalStatus"/>
-	</schema>
-
-  <schema name="infoPerson.info" type="net.sourceforge.fenixedu.domain.IPerson">
-		<slot name="nome"/>
-		<slot name="username"/>
-		<slot name="numeroDocumentoIdentificacao"/>
-		<slot name="localEmissaoDocumentoIdentificacao"/>
-		<slot name="dataEmissaoDocumentoIdentificacao"/>
-		<slot name="dataValidadeDocumentoIdentificacao"/>
-		<slot name="numContribuinte"/>
-		<slot name="profissao"/>
-		<slot name="maritalStatus"/>
-	</schema>
-
-  <schema name="person.info.link" type="net.sourceforge.fenixedu.domain.IPerson">
-		<slot name="nome" layout="link"/>
-		<slot name="username" layout="link">
-    	<property name="destinySchema" value="person.info"/>
-    	<property name="destinyLayout" value="values"/>
-    </slot>
-		<slot name="numeroDocumentoIdentificacao"/>
-		<slot name="localEmissaoDocumentoIdentificacao"/>
-		<slot name="dataEmissaoDocumentoIdentificacao"/>
-		<slot name="dataValidadeDocumentoIdentificacao"/>
-		<slot name="numContribuinte"/>
-		<slot name="profissao"/>
-		<slot name="maritalStatus"/>
-	</schema>
-
-	<schema name="person.filiation" type="net.sourceforge.fenixedu.domain.IPerson">
-		<slot name="nascimento">
-		  <property name="format" value="dd-MMMM-yyyy"/>
-		</slot>
-		<slot name="pais.nationality"/>
-		<slot name="freguesiaNaturalidade"/>
-		<slot name="concelhoNaturalidade"/>
-		<slot name="distritoNaturalidade"/>
-		<slot name="nomePai"/>
-		<slot name="nomeMae"/>
-	</schema>
-
-	<schema name="person.address" type="net.sourceforge.fenixedu.domain.IPerson">
-		<slot name="morada"/>
-		<slot name="codigoPostal"/>
-		<slot name="localidadeCodigoPostal"/>
-		<slot name="localidade"/>
-		<slot name="freguesiaMorada"/>
-		<slot name="concelhoMorada"/>
-		<slot name="distritoMorada"/>
-	</schema>
-
-	<schema name="person.contact" type="net.sourceforge.fenixedu.domain.IPerson">
-		<slot name="telefone"/>
-		<slot name="telemovel"/>
-		<slot name="email"/>
-		<slot name="enderecoWeb"/>
-	</schema>
-  
-  <schema name="person.minimal.link" type="net.sourceforge.fenixedu.domain.IPerson">
     <slot name="username" layout="link"/>
-    <slot name="nome"/>
-    <slot name="gender"/>
-    <slot name="availableWebSite"/>
-  </schema>
-
-	<schema name="person.minimal.link-ext" type="net.sourceforge.fenixedu.domain.IPerson">
-  	<slot name="username" layout="link">
-    	<property name="destinySchema" value="person.info"/>
-	    <property name="destinyLayout" value="values"/>
-  	</slot>
-	  <slot name="nome" layout="link">
-  	  <property name="destinySchema" value="person.info"/>
-	  </slot>
-	  <slot name="availableWebSite"/>
-	</schema>
-    
-  <schema name="person.with-students" type="net.sourceforge.fenixedu.domain.IPerson">
-    <slot name="username"/>
-    <slot name="nome"/>
-    <slot name="gender"/>
-    <slot name="students">
-      <property name="eachSchema" value="student.minimal.link"/>
-      <property name="eachLayout" value="values"/>
+    <slot name="email">
+        <property name="link" value="true"/>
     </slot>
-  </schema>
-
-  <schema name="student.minimal.link" type="net.sourceforge.fenixedu.domain.IPerson">
-    <slot name="number" layout="link">
-      <property name="destinySchema" value="student.info.link"/>
-    </slot>
-  </schema>
-    
-  <schema name="student.info.link" type="net.sourceforge.fenixedu.domain.IStudent">
-    <slot name="number"/>
-    <slot name="entryGrade"/>
-    <slot name="istUniversity"/>
-    <slot name="enrollmentForbidden"/>
-    <slot name="ingression"/>
-    <slot name="contigent"/>
-    <slot name="degreeType"/>
-    <slot name="flunked"/>
-    <slot name="interruptedStudies"/>
-    <slot name="person" schema="person.nome" layout="values">
-      <property name="eachLayout" value="link"/>
-    </slot>
-    <slot name="studentCurricularPlans" schema="student-curricular-plan.minimal.link" layout="tabular"/>
+    <slot name="pais" schema="country.name" layout="values"/>
   </schema>
   
-  <schema name="student-curricular-plan.minimal.link" type="net.sourceforge.fenixedu.domain.IStudentCurricularPlan">
-    <slot name="when" layout="link"/>
-    <slot name="startDate"/>
-  </schema>
-  
-  <schema name="person.nome.case-change" type="net.sourceforge.fenixedu.domain.IPerson">
-    <slot name="nome" layout="case-changer"/>
-  </schema>
-
-  <schema name="shifts.disciplinaExecucao.select" type="net.sourceforge.fenixedu.domain.IShift">
-    <slot name="disciplinaExecucao" layout="select">
-      <property name="selectSchema" value="disciplinaExecucao.nome"/>
-    </slot>
-    <slot name="associatedClasses">
-      <property name="selectSchema" value="schoolClass.nome"/>
-    </slot>
-  </schema>
-  
-  <schema name="disciplinaExecucao.nome" type="net.sourceforge.fenixedu.domain.IExecutionCourse">
-    <slot name="nome"/>
-  </schema>
-
-  <schema name="schoolClass.nome" type="net.sourceforge.fenixedu.domain.IExecutionCourse">
-    <slot name="nome"/>
-  </schema>
-  
-  <schema name="person.a-few-roles" type="net.sourceforge.fenixedu.domain.IPerson">
-    <slot name="pais">
-      <property name="subSchema" value="country.simple-code"/>
-      <property name="subLayout" value="values-dash"/>
-    </slot>
-    <slot name="personRoles">
-      <property name="selectSchema" value="role.type"/>
-    </slot>
-  </schema>
-  
-  <schema name="country.simple-code" type="net.sourceforge.fenixedu.domain.ICountry">
-    <slot name="code" layout="link"/>
-    <slot name="nationality"/>
-  </schema>
-  
-  <schema name="role.type" type="net.sourceforge.fenixedu.domain.IRole">
-    <slot name="roleType"/>
+  <schema name="country.name" type="net.sourceforge.fenixedu.domain.Country">
+    <slot name="name"/>
   </schema>
 </schemas>

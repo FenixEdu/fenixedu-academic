@@ -456,4 +456,20 @@
 	<definition name="df.page.functionsManagement" extends="definition.manager.masterPage" >
 		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
 	</definition>	
+    
+    <!-- ========== Renderers Examples ============ -->
+    <definition name="domain.view" extends="definition.manager.masterPage" >
+      <put name="body" value="/commons/renderers/view.jsp" />
+    </definition>
+    
+    <!-- FIXME: this is temporary and should be removed. -->
+    <!-- also check 'struts-manager.xml' -->
+    
+    <definition name="renderers.index" extends="definition.manager.masterPage" >
+        <put name="body" value="/manager/renderers/index.jsp" />
+    </definition>
+
+    <definition name="renderers.output" extends="definition.manager.masterPage" >
+        <put name="body" value="/manager/renderers/output.jsp" />
+    </definition>
 </tiles-definitions>

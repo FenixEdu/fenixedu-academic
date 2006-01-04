@@ -200,3 +200,10 @@
 		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="link.cmsConfiguration" />
 	</html:link>	
 </strong></p>
+
+<!-- FIXME: This is only temporary to show some examples of how renderers can be used -->
+<br />
+<strong>Renderers</strong>
+<p>
+    <strong>&raquo;<html:link page="/renderers/index.do">Exemplos</html:link></strong>
+</p>

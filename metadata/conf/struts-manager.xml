@@ -1798,6 +1798,18 @@
 		<forward name="chooseDegreeCurricularPlan" path="chooseDegreeCurricularPlan"/>
 	</action>
 
+    <!-- ========= Renderers ================ -->
+    <action path="/domain/view" type="net.sourceforge.fenixedu.presentationTier.renderers.actions.ViewObjectAction">
+        <forward name="show" path="domain.view"/>
+    </action>
+        
+    <!-- FIXME: this is temporary and should be moved. serves only as example -->
+    <!-- check also 'tiles-manager-pages-definitions.xml' -->
+
+    <action path="/renderers/*" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
+      <forward name="Success" path="renderers.{1}"/>
+    </action>
+
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
@@ -1820,5 +1832,13 @@
 		<set-property property="moduleAware" value="true" />
 		<set-property property="definitions-parser-validate" value="true" />
 	</plug-in>    
+
+    <plug-in className="net.sourceforge.fenixedu.renderers.plugin.RenderersPlugin">
+      <set-property property="config" value="/WEB-INF/fenix-renderers-config.xml"/>
+      <set-property property="schemas" value="/WEB-INF/fenix-renderers-schemas.xml"/>
+      <set-property property="metaObjectFactory" value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixMetaObjectFactory"/>
+      <set-property property="userIdentityFactory" value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixUserIdentityFactory"/>
+      <set-property property="schemaFactory" value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixSchemaFactory"/>
+    </plug-in>
 
 </struts-config>

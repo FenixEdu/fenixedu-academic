@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.state.ViewState;
 import net.sourceforge.fenixedu.renderers.contexts.OutputContext;
 import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
+import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
@@ -29,9 +30,10 @@ public class ViewObjectTag extends BaseRenderObjectTag {
         context.setProperties(properties);
         
         Schema realSchema = RenderKit.getInstance().findSchema(schema);
-        context.setMetaObject(MetaObjectFactory.createObject(object, realSchema));
+        MetaObject metaObject = MetaObjectFactory.createObject(object, realSchema);
 
         ViewState viewState = new ViewState(null);
+        viewState.setMetaObject(metaObject);
 
         viewState.setLayout(getLayout());
         viewState.setProperties(getRenderProperties());
@@ -39,6 +41,7 @@ public class ViewObjectTag extends BaseRenderObjectTag {
         viewState.setRequest((HttpServletRequest) pageContext.getRequest());
         
         context.setViewState(viewState);
+        context.setMetaObject(metaObject);
         
         return context;
     }

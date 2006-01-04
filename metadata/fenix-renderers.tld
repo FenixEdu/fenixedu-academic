@@ -20,7 +20,7 @@
     <tag-class>net.sourceforge.fenixedu.presentationTier.renderers.taglib.FenixCreateObjectTag</tag-class>
     <body-content>JSP</body-content>
     <description>
-      Renders a generic input presentation of a domain object.
+      Renders a generic input presentation suitable for creating a new object.
     </description>
 
     <attribute>
@@ -29,27 +29,27 @@
       <rtexprvalue>false</rtexprvalue>
       <type>java.lang.String</type>
       <description>
-          The 'id' of the input context. This attribute allows multiple edit tags to be used
-          in the same page.
+        The 'id' of the input context. This attribute allows multiple create tags to be used
+        in the same page.
       </description>
     </attribute>
 
-		<attribute>
+    <attribute>
       <name>layout</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <description>
-          Indicates wich specific layout will be used to render the object.
+        Indicates wich specific layout will be used to render the object.
       </description>
     </attribute>
 
-	<attribute>
+    <attribute>
       <name>schema</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <description>
-          Selects one of the predefined schemas by name. The name specified in this attribute
-          will be used to obtain a schema to use when rendering the object.
+        Selects one of the predefined schemas by name. The name specified in this attribute
+        will be used to obtain a schema to use when rendering the object.
       </description>
     </attribute>
 
@@ -81,7 +81,7 @@
     <tag-class>net.sourceforge.fenixedu.presentationTier.renderers.taglib.FenixEditObjectTag</tag-class>
     <body-content>JSP</body-content>
     <description>
-      Renders a generic input presentation of a domain object.
+      Renders a generic input presentation of an object.
     </description>
 
     <attribute>
@@ -90,19 +90,19 @@
       <rtexprvalue>false</rtexprvalue>
       <type>java.lang.String</type>
       <description>
-          The 'id' of the input context. This attribute allows multiple edit tags to be used
-          in the same page.
+        The 'id' of the input context. This attribute allows multiple edit tags to be used
+        in the same page.
       </description>
     </attribute>
 
-        <attribute>
+    <attribute>
       <name>name</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <type>java.lang.String</type>
       <description>
-          Specifies the name of the page attribute to fetch. This attribute is related to
-          'scope'.
+        Specifies the name of the page attribute to fetch. This attribute is related to
+        'scope'.
       </description>
     </attribute>
 
@@ -111,9 +111,9 @@
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <description>
-          Specifies the name of the property to fetch. The value must follow the Apache BeanUtils
-          naming convention for bean properties. If this attribute is not specified then the
-          object refered with the attribute 'name' will be used.
+        Specifies the name of the property to fetch. The value must follow the Apache BeanUtils
+        naming convention for bean properties. If this attribute is not specified then the
+        object refered with the attribute 'name' will be used.
       </description>
     </attribute>
 
@@ -127,12 +127,12 @@
       </description>
     </attribute>
 
-		<attribute>
+    <attribute>
       <name>layout</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <description>
-          Indicates wich specific layout will be used to render the object.
+        Indicates wich specific layout will be used to render the object.
       </description>
     </attribute>
 
@@ -141,8 +141,8 @@
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <description>
-          Selects one of the predefined schemas by name. The name specified in this attribute
-          will be used to obtain a schema to use when rendering the object.
+        Selects one of the predefined schemas by name. The name specified in this attribute
+        will be used to obtain a schema to use when rendering the object.
       </description>
     </attribute>
 
@@ -153,8 +153,8 @@
       <type>java.lang.String</type>
       <description>
         	The identification number of the object.
-        	If the attribute 'name' is not specified this attribute together with the attribute 'type'
-        	specify the identification of the persistent object that will be rendered.
+        	If the attribute 'name' is not specified this attribute, together with the attribute 'type',
+        	specifies the identification of the persistent object that will be rendered.
       </description>
     </attribute>
 
@@ -166,7 +166,7 @@
       <description>
         	The Java type of the object.
         	If the attribute 'name' is not specified this attribute together with the attribute 'oid'
-        	specify the identification of the persitent object that will be rendered.
+        	specifies the identification of the persitent object that will be rendered.
       </description>
     </attribute>
     
@@ -182,11 +182,11 @@
   </tag>
   
   <tag>
-		<name>destination</name>
+    <name>destination</name>
     <tag-class>net.sourceforge.fenixedu.renderers.taglib.EditLinkTag</tag-class>
     <body-content>empty</body-content>
     <description>
-      	Configures the destination when everything is ok.
+      Configures the destination when everything is ok.
     </description>
 
     <attribute>
@@ -221,7 +221,7 @@
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <description>
-        	Redirect to destination.
+        Issue redirect to destination?
       </description>
     </attribute>
   </tag>
@@ -231,8 +231,8 @@
     <tag-class>net.sourceforge.fenixedu.renderers.taglib.LayoutConfigTag</tag-class>
     <body-content>JSP</body-content>
     <description>
-      	Allows selection and configuration of a specific layout. The use of this tag overrides the
-      	attributes 'layout' and 'template' of the parent tag.
+      Allows selection and configuration of a specific layout. The use of this tag overrides the
+      attributes 'layout' and 'template' of the parent tag.
     </description>
 
     <attribute>
@@ -250,7 +250,7 @@
     <tag-class>net.sourceforge.fenixedu.presentationTier.renderers.taglib.FenixViewObjectTag</tag-class>
     <body-content>JSP</body-content>
     <description>
-      Renders a generic presentation of a domain object.
+      Renders a generic presentation of an object.
     </description>
 
     <attribute>
@@ -259,8 +259,8 @@
       <rtexprvalue>true</rtexprvalue>
       <type>java.lang.String</type>
       <description>
-          Specifies the name of the page attribute to fetch. This attribute is related to
-          'scope'.
+        Specifies the name of the page attribute to fetch. This attribute is related to
+        'scope'.
       </description>
     </attribute>
 
@@ -269,9 +269,9 @@
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <description>
-          Specifies the name of the property to fetch. The value must follow the Apache BeanUtils
-          naming convention for bean properties. If this attribute is not specified then the
-          object refered with the attribute 'name' will be used.
+        Specifies the name of the property to fetch. The value must follow the Apache BeanUtils
+        naming convention for bean properties. If this attribute is not specified then the
+        object refered with the attribute 'name' will be used.
       </description>
     </attribute>
 
@@ -285,12 +285,12 @@
       </description>
     </attribute>
 
-		<attribute>
+    <attribute>
       <name>layout</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <description>
-          Indicates wich specific layout will be used to render the object.
+        Indicates wich specific layout will be used to render the object.
       </description>
     </attribute>
 
@@ -299,8 +299,8 @@
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <description>
-          Selects one of the predefined schemas by name. The name specified in this attribute
-          will be used to obtain a schema to use when rendering the object.
+        Selects one of the predefined schemas by name. The name specified in this attribute
+        will be used to obtain a schema to use when rendering the object.
       </description>
     </attribute>
 
@@ -344,8 +344,8 @@
     <tag-class>net.sourceforge.fenixedu.renderers.taglib.LayoutConfigTag</tag-class>
     <body-content>JSP</body-content>
     <description>
-      	Allows selection and configuration of a specific layout. The use of this tag overrides the
-      	attributes 'layout' and 'template' of the parent tag.
+      Allows selection and configuration of a specific layout. The use of this tag overrides the
+      attributes 'layout' and 'template' of the parent tag.
     </description>
 
     <attribute>
@@ -353,7 +353,7 @@
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
       <description>
-        	The name of the layout that will be used to render the object.
+        The name of the layout that will be used to render the object.
       </description>
     </attribute>
   </tag>
@@ -371,7 +371,7 @@
       <required>true</required>
       <rtexprvalue>false</rtexprvalue>
       <description>
-    			The name of the property.
+    		The name of the property.
       </description>
     </attribute>
 

@@ -1,66 +1,98 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!-- TODO: make this a public id or at least obsolute -->
+<!-- TODO: make this a public id or at least obsolute 
+     Currently there is a semi-hack built in the RendererPlugin to accept this format.
+-->
 <!DOCTYPE renderers-config SYSTEM "/WEB-INF/fenix-renderers-config.dtd">
 
 <renderers-config>
-<!-- TODO: correct the example
-  Example
+<!--
+  Example:
 	
- 	<ouptut type="java.lang.Integer" layout="testing" 
-			class="net.sourceforge.fenixedu.renderers.TemplateRenderer">
+ 	<renderer type="java.lang.Integer" layout="testing" 
+			  class="net.sourceforge.fenixedu.renderers.TemplateRenderer">
 		<property name="template" value="/template.jsp"/>
-	</output>
+	</renderer>
 	
+    <renderer mode="input" type="java.lang.Integer"
+              class="net.sourceforge.fenixedu.renderers.NumberInputRenderer"/>
+
+    <renderer mode="input" type="java.lang.Integer" layout="base-16" 
+              class="net.sourceforge.fenixedu.renderers.NumberInputRenderer">
+        <property name="base" layout="16"/>
+    </renderer>
+
 	This piece means that any object of type Integer, when presented
-	with the layout "testing" will be rendered by the given renderer
-	preconfigured with the supplied properties.
+	with the layout "testing" will be rendered by the given TemplateRenderer and
+    that the renderer's property 'template' will be set to "/template.jsp". This 
+    should make the rendere delegate the presentation of the number to the
+    given JSP.
+    
+    The second part speficies that the NumberInputRenderer will be used to
+    generate the input presentation of a number. If the requested layout is
+    "base-16" then input format will be assumed to be in hexadecimal.
  -->
   
-  <!-- ouptut -->
+    <!-- ouptut -->
   
-	<renderer type="java.lang.Object" class="net.sourceforge.fenixedu.renderers.StandardObjectRenderer"/>
-  <renderer type="java.lang.Object" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardObjectRenderer"/>
+    <renderer type="java.lang.Object" class="net.sourceforge.fenixedu.renderers.StandardObjectRenderer"/>
+    <renderer type="java.lang.Object" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardObjectRenderer"/>
   
-	<renderer type="java.lang.Object" layout="template" class="net.sourceforge.fenixedu.renderers.TemplateRenderer"/>
-	<renderer type="java.lang.Object" layout="values" class="net.sourceforge.fenixedu.renderers.ValuesRenderer"/>
-  <renderer type="java.lang.Object" layout="link" class="net.sourceforge.fenixedu.presentationTier.renderers.ObjectLinkRenderer">
-    <property name="destinyLayout" value="tabular"/>
-  </renderer>
+    <renderer type="java.lang.Object" layout="template" class="net.sourceforge.fenixedu.renderers.TemplateRenderer"/>
+    <renderer type="java.lang.Object" layout="values" class="net.sourceforge.fenixedu.renderers.ValuesRenderer"/>
+    
+    <!-- NOTE: to be used as a layout for a slot fo a DomainObject only. It's a link to the whole object details -->
+    <renderer type="java.lang.Object" layout="link" class="net.sourceforge.fenixedu.presentationTier.renderers.ObjectLinkRenderer">
+        <property name="destinyLayout" value="tabular"/>
+    </renderer>
   
- 	<renderer type="java.lang.String" class="net.sourceforge.fenixedu.renderers.StringRenderer"/>
-	<renderer type="java.lang.Number" class="net.sourceforge.fenixedu.renderers.NumberRenderer"/>
-	<renderer type="java.lang.Boolean" class="net.sourceforge.fenixedu.renderers.BooleanRenderer"/>
-	<renderer type="java.lang.Enum" class="net.sourceforge.fenixedu.renderers.EnumRenderer"/>
-	<renderer type="java.util.Date" class="net.sourceforge.fenixedu.renderers.DateRenderer"/>
+    <renderer type="java.lang.String" class="net.sourceforge.fenixedu.renderers.StringRenderer"/>
+    
+    <renderer type="java.lang.Number" class="net.sourceforge.fenixedu.renderers.NumberRenderer"/>
+    <renderer type="int" class="net.sourceforge.fenixedu.renderers.NumberRenderer"/>
+    <renderer type="long" class="net.sourceforge.fenixedu.renderers.NumberRenderer"/>
+    <renderer type="short" class="net.sourceforge.fenixedu.renderers.NumberRenderer"/>
+    <renderer type="double" class="net.sourceforge.fenixedu.renderers.NumberRenderer"/>
+    <renderer type="float" class="net.sourceforge.fenixedu.renderers.NumberRenderer"/>
+    
+    <renderer type="java.lang.Boolean" class="net.sourceforge.fenixedu.renderers.BooleanRenderer"/>
+    <renderer type="boolean" class="net.sourceforge.fenixedu.renderers.BooleanRenderer"/>
+    
+    <renderer type="java.lang.Enum" class="net.sourceforge.fenixedu.renderers.EnumRenderer"/>
+    <renderer type="java.util.Date" class="net.sourceforge.fenixedu.renderers.DateRenderer"/>
 
-	<renderer type="net.sourceforge.fenixedu.domain.IDomainObject" class="net.sourceforge.fenixedu.presentationTier.renderers.DomainObjectLinkRenderer">
-    <property name="subLayout" value="values"/>
-    <property name="subSchema" value="DomainObject.oid"/>
-    <property name="destinyLayout" value="tabular"/>
-  </renderer>
+    <renderer type="net.sourceforge.fenixedu.domain.IDomainObject" class="net.sourceforge.fenixedu.presentationTier.renderers.DomainObjectLinkRenderer">
+        <property name="subLayout" value="values"/>
+        <property name="subSchema" value="DomainObject.oid"/>
+        <property name="destinyLayout" value="tabular"/>
+    </renderer>
   
-	<renderer type="java.util.Collection" class="net.sourceforge.fenixedu.renderers.CollectionRenderer"/>
-	<renderer type="java.util.Collection" layout="tabular" class="net.sourceforge.fenixedu.renderers.CollectionRenderer"/>
-  <renderer type="java.util.List" class="net.sourceforge.fenixedu.renderers.ListRenderer"/>
+    <renderer type="java.util.Collection" class="net.sourceforge.fenixedu.renderers.CollectionRenderer"/>
+    <renderer type="java.util.Collection" layout="tabular" class="net.sourceforge.fenixedu.renderers.CollectionRenderer"/>
+    <renderer type="java.util.List" class="net.sourceforge.fenixedu.renderers.ListRenderer"/>
 
-  <renderer type="java.lang.Object" layout="values-dash" class="net.sourceforge.fenixedu.renderers.ValuesRenderer">
-    <property name="htmlSeparator" value=" - "/>
-  </renderer>
+    <!-- input -->
   
-  <!-- input -->
-  
-  <renderer mode="input" type="net.sourceforge.fenixedu.domain.IDomainObject" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
-  <renderer mode="input" type="net.sourceforge.fenixedu.domain.IDomainObject" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
-  <renderer mode="input" type="dml.DomainClass" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
-  <renderer mode="input" type="dml.DomainClass" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
+    <renderer mode="input" type="net.sourceforge.fenixedu.domain.IDomainObject" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
+    <renderer mode="input" type="net.sourceforge.fenixedu.domain.IDomainObject" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
 
-  <renderer mode="input" type="java.lang.String" class="net.sourceforge.fenixedu.renderers.StringInputRenderer"/>
-  <renderer mode="input" type="java.lang.Number" class="net.sourceforge.fenixedu.renderers.NumberInputRenderer"/>
-	<renderer mode="input" type="java.lang.Boolean" class="net.sourceforge.fenixedu.renderers.BooleanInputRenderer"/>
-  <renderer mode="input" type="java.lang.Enum" class="net.sourceforge.fenixedu.renderers.EnumInputRenderer"/>
-  <renderer mode="input" type="java.util.Date" class="net.sourceforge.fenixedu.renderers.DateInputRenderer"/>
+    <renderer mode="input" type="java.lang.String" class="net.sourceforge.fenixedu.renderers.StringInputRenderer"/>
+    
+    <renderer mode="input" type="java.lang.Number" class="net.sourceforge.fenixedu.renderers.NumberInputRenderer"/>
+    <renderer mode="input" type="int" class="net.sourceforge.fenixedu.renderers.NumberInputRenderer"/>
+    <renderer mode="input" type="long" class="net.sourceforge.fenixedu.renderers.NumberInputRenderer"/>
+    <renderer mode="input" type="short" class="net.sourceforge.fenixedu.renderers.NumberInputRenderer"/>
+    <renderer mode="input" type="double" class="net.sourceforge.fenixedu.renderers.NumberInputRenderer"/>
+    <renderer mode="input" type="float" class="net.sourceforge.fenixedu.renderers.NumberInputRenderer"/>
+	
+    <renderer mode="input" type="java.lang.Boolean" class="net.sourceforge.fenixedu.renderers.BooleanInputRenderer"/>
+    <renderer mode="input" type="boolean" class="net.sourceforge.fenixedu.renderers.BooleanInputRenderer"/>
+    
+    <renderer mode="input" type="java.lang.Enum" class="net.sourceforge.fenixedu.renderers.EnumInputRenderer"/>
+    <renderer mode="input" type="java.util.Date" class="net.sourceforge.fenixedu.renderers.DateInputRenderer"/>
 
-  <renderer mode="input" type="java.lang.String" layout="case-changer" class="net.sourceforge.fenixedu.renderers.StringCaseChangerRenderer"/>
-  
+    <!-- NOTE: needed by the create tag. The tag selects a DomainClass but the input can proceed as with a standard domain object -->
+    <renderer mode="input" type="dml.DomainClass" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
+    <renderer mode="input" type="dml.DomainClass" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
+
 </renderers-config>
