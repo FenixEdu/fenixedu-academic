@@ -91,8 +91,8 @@ public class InquiriesTest extends DomainTestBase {
 	}
 	
 	private void setUpCreateInquiriesTeacher() {
-		inquiriesCourse = DomainFactory.makeInquiriesCourse(executionCourse, executionDegreeCourse,
-				executionDegreeStudent, executionPeriod, schoolClass, infoInquiriesCourse);
+		inquiriesCourse = new InquiriesCourse(executionCourse, executionDegreeCourse,
+				executionDegreeStudent, executionPeriod, schoolClass, infoInquiriesCourse, null, null, null);
 		
 		teacher = DomainFactory.makeTeacher();
 		nonAffiliatedTeacher = DomainFactory.makeNonAffiliatedTeacher();
@@ -103,7 +103,7 @@ public class InquiriesTest extends DomainTestBase {
 	
 	private void setUpCreateInquiriesRoom() {
 		inquiriesCourse = DomainFactory.makeInquiriesCourse(executionCourse, executionDegreeCourse,
-				executionDegreeStudent, executionPeriod, schoolClass, infoInquiriesCourse);
+				executionDegreeStudent, executionPeriod, schoolClass, infoInquiriesCourse, null, null, null);
 		
 		room = DomainFactory.makeRoom();
 		initializeInfoInquiriesRoom();	
@@ -118,7 +118,7 @@ public class InquiriesTest extends DomainTestBase {
 		
 		try {
 			DomainFactory.makeInquiriesCourse(null, executionDegreeCourse,
-					executionDegreeStudent, executionPeriod, schoolClass, infoInquiriesCourse);
+					executionDegreeStudent, executionPeriod, schoolClass, infoInquiriesCourse, null, null, null);
 			fail("Should have thrown a DomainException");
 
 		} catch(DomainException de) {
@@ -127,7 +127,7 @@ public class InquiriesTest extends DomainTestBase {
 		
 		try {
 			DomainFactory.makeInquiriesCourse(executionCourse, null,
-					executionDegreeStudent, executionPeriod, schoolClass, infoInquiriesCourse);
+					executionDegreeStudent, executionPeriod, schoolClass, infoInquiriesCourse, null, null, null);
 			fail("Should have thrown a DomainException");
 
 		} catch(DomainException de) {
@@ -136,7 +136,7 @@ public class InquiriesTest extends DomainTestBase {
 		
 		try {
 			DomainFactory.makeInquiriesCourse(executionCourse, executionDegreeCourse,
-					null, executionPeriod, schoolClass, infoInquiriesCourse);
+					null, executionPeriod, schoolClass, infoInquiriesCourse, null, null, null);
 			fail("Should have thrown a DomainException");
 
 		} catch(DomainException de) {
@@ -145,7 +145,7 @@ public class InquiriesTest extends DomainTestBase {
 		
 		try {
 			DomainFactory.makeInquiriesCourse(executionCourse, executionDegreeCourse,
-					executionDegreeStudent, null, schoolClass, infoInquiriesCourse);
+					executionDegreeStudent, null, schoolClass, infoInquiriesCourse, null, null, null);
 			fail("Should have thrown a DomainException");
 
 		} catch(DomainException de) {
@@ -153,7 +153,7 @@ public class InquiriesTest extends DomainTestBase {
 		}
 		
 		InquiriesCourse newInquiriesCourse = DomainFactory.makeInquiriesCourse(executionCourse, executionDegreeCourse,
-				executionDegreeStudent, executionPeriod, schoolClass, infoInquiriesCourse);
+				executionDegreeStudent, executionPeriod, schoolClass, infoInquiriesCourse, null, null, null);
 		
 		assertTrue("Failed to reference executionCourse!", newInquiriesCourse.hasExecutionCourse());
 		assertTrue("Failed to reference executionDegreeCourse!", newInquiriesCourse.hasExecutionDegreeCourse());
