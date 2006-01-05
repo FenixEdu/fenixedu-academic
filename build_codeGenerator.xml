@@ -153,6 +153,8 @@
 	      <arg value=".class"/>
 	   	  <arg value="-i"/>
 	   	  <arg value=".jar"/>
+	   	  <arg value="-i"/>
+	   	  <arg value="src_gen"/>
 	    </java>
 	  </target>
 
