@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
-    private final ResourceBundle bundle = getResourceBundle("ServidorApresentacao/BolonhaManager");
+    private final ResourceBundle bundle = getResourceBundle("ServidorApresentacao/BolonhaManagerResources");
 
     private Integer competenceCourseID = null;
 
