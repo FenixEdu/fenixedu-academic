@@ -25,7 +25,7 @@ public interface IPersistentFinalDegreeWork extends IPersistentObject {
 
     public List readFinalDegreeWorkProposalsByTeacher(Integer teacherOID) throws ExcepcaoPersistencia;
 
-    public List readAprovedFinalDegreeWorkProposals(Integer executionDegreeOID)
+    public List<IProposal> readAprovedFinalDegreeWorkProposals(Integer executionDegreeOID)
             throws ExcepcaoPersistencia;
 
     public List readPublishedFinalDegreeWorkProposalsByExecutionDegree(Integer executionDegreeOID)
