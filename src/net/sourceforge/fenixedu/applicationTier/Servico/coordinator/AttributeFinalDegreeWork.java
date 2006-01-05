@@ -1,6 +1,3 @@
-/*
- * Created on 2004/04/25
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
@@ -13,14 +10,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author Luis Cruz
- */
 public class AttributeFinalDegreeWork implements IService {
-
-    public AttributeFinalDegreeWork() {
-        super();
-    }
 
     public void run(Integer selectedGroupProposal) throws ExcepcaoPersistencia {
         ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -31,19 +21,15 @@ public class AttributeFinalDegreeWork implements IService {
                 GroupProposal.class, selectedGroupProposal);
         if (groupProposal != null) {
             IProposal proposal = groupProposal.getFinalDegreeWorkProposal();
-            persistentFinalDegreeWork.simpleLockWrite(proposal);
             proposal.setGroupAttributed(groupProposal.getFinalDegreeDegreeWorkGroup());
 
             IGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
-            for (int i = 0; i < group.getGroupProposals().size(); i++) {
-                IGroupProposal otherGroupProposal = group.getGroupProposals().get(i);
-                if (!otherGroupProposal.getIdInternal().equals(groupProposal.getIdInternal())
+            for (IGroupProposal otherGroupProposal : group.getGroupProposals()) {
+                if (!(otherGroupProposal == groupProposal)
                         && otherGroupProposal.getFinalDegreeWorkProposal().getGroupAttributed() != null
-                        && otherGroupProposal.getFinalDegreeWorkProposal().getGroupAttributed()
-                                .getIdInternal().equals(group.getIdInternal())) {
+                        && (otherGroupProposal.getFinalDegreeWorkProposal().getGroupAttributed() == group)) {
                     IProposal otherProposal = otherGroupProposal.getFinalDegreeWorkProposal();
-                    persistentFinalDegreeWork.simpleLockWrite(otherProposal);
-                    otherProposal.setGroupAttributed(null);
+                    otherProposal.removeGroupAttributed();
                 }
             }
         }
