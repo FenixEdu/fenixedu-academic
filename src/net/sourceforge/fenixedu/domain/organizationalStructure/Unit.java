@@ -19,7 +19,7 @@ public class Unit extends Unit_Base {
         List<IUnit> allTopUnits = new ArrayList<IUnit>();
         if (unit.hasAnyParentUnits()) {
             for (IUnit parentUnit : this.getParentUnits()) {
-                if (parentUnit.hasAnyParentUnits() && !allTopUnits.contains(parentUnit)) {
+                if (!parentUnit.hasAnyParentUnits() && !allTopUnits.contains(parentUnit)) {
                     allTopUnits.add(parentUnit);
                 } else if (parentUnit.hasAnyParentUnits()) {
                     for (IUnit parentUnit2 : parentUnit.getTopUnits()) {
