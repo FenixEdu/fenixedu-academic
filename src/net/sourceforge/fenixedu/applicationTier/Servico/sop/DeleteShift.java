@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IShiftProfessorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -64,10 +63,9 @@ public class DeleteShift implements IService {
                 throw new FenixServiceException("error.deleteShift.with.summaries");
             }
 
-            final IPersistentShiftProfessorship persistentShiftProfessorship = sp.getIPersistentShiftProfessorship();
             for (final List<IShiftProfessorship> shiftProfessorship = shift.getAssociatedShiftProfessorship();
                     !shiftProfessorship.isEmpty();
-                    persistentShiftProfessorship.delete(shiftProfessorship.get(0)));
+                    shiftProfessorship.get(0).delete());
 
             for (final List<ILesson> lessons = shift.getAssociatedLessons();
                     !lessons.isEmpty();

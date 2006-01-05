@@ -3212,6 +3212,10 @@ class net.sourceforge.fenixedu.domain.ShiftProfessorship extends net.sourceforge
     Integer keyShift;
     Integer keyProfessorship;
     Double percentage;
+
+	interface "    
+	    public void delete();
+    "
 }
 
 
