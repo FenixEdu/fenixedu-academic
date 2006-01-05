@@ -10,10 +10,6 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author - Shezad Anavarali (sana@mega.ist.utl.pt)
- * @author - Nadir Tarmahomed (naat@mega.ist.utl.pt)
- */
 public class EditInstitution implements IService {
 
     public void run(Integer oldInstitutionOID, String newInstitutionName) throws FenixServiceException,
@@ -35,7 +31,6 @@ public class EditInstitution implements IService {
         }
 
         oldInstitution.setName(newInstitutionName);
-        sp.getIPersistentInstitution().simpleLockWrite(oldInstitution);
     }
 
 }

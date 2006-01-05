@@ -1,7 +1,3 @@
-/*
- * Created on 30/Oct/2003
- *  
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
 import java.util.List;
@@ -23,15 +19,10 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRole;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author João Mota 30/Oct/2003
- * 
- */
 public class AddCoordinator implements IService {
 
     public Boolean run(Integer executionDegreeId, Integer teacherNumber) throws FenixServiceException,
@@ -66,8 +57,6 @@ public class AddCoordinator implements IService {
                 IRole role = persistentRole.readByRoleType(RoleType.COORDINATOR);
 
                 IPerson person = teacher.getPerson();
-                IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-                persistentPerson.simpleLockWrite(person);
 
                 if (!person.getPersonRoles().contains(role)) {
                     person.getPersonRoles().add(role);
@@ -80,4 +69,5 @@ public class AddCoordinator implements IService {
         return new Boolean(true);
 
     }
+
 }

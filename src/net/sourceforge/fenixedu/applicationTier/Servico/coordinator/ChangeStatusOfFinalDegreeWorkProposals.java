@@ -1,7 +1,3 @@
-/*
- * Created on 2004/04/04
- *  
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
 import java.util.List;
@@ -18,7 +14,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ChangeStatusOfFinalDegreeWorkProposals implements IService {
 
-    public void run(Integer executionDegreeOID, List selectedProposalOIDs,
+    public void run(Integer executionDegreeOID, List<Integer> selectedProposalOIDs,
             FinalDegreeWorkProposalStatus status) throws FenixServiceException, ExcepcaoPersistencia {
         if (executionDegreeOID != null && selectedProposalOIDs != null) {
 
@@ -26,10 +22,9 @@ public class ChangeStatusOfFinalDegreeWorkProposals implements IService {
                     .getDefaultPersistenceSupport();
             IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                     .getIPersistentFinalDegreeWork();
-            for (int i = 0; i < selectedProposalOIDs.size(); i++) {
+            for (Integer selectedProposalOID : selectedProposalOIDs) {
                 IProposal proposal = (IProposal) persistentFinalDegreeWork.readByOID(Proposal.class,
-                        (Integer) selectedProposalOIDs.get(i));
-                persistentFinalDegreeWork.simpleLockWrite(proposal);
+                        selectedProposalOID);
                 proposal.setStatus(status);
             }
 

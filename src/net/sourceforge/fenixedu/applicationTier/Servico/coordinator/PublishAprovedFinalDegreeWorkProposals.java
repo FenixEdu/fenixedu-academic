@@ -1,7 +1,3 @@
-/*
- * Created on 2004/04/04
- *  
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
 import java.util.List;
@@ -15,10 +11,6 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author Luis Cruz
- * 
- */
 public class PublishAprovedFinalDegreeWorkProposals implements IService {
 
     public void run(Integer executionDegreeOID) throws FenixServiceException, ExcepcaoPersistencia {
@@ -29,12 +21,11 @@ public class PublishAprovedFinalDegreeWorkProposals implements IService {
             IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                     .getIPersistentFinalDegreeWork();
 
-            List aprovedFinalDegreeWorkProposals = persistentFinalDegreeWork
+            List<IProposal> aprovedFinalDegreeWorkProposals = persistentFinalDegreeWork
                     .readAprovedFinalDegreeWorkProposals(executionDegreeOID);
+
             if (aprovedFinalDegreeWorkProposals != null && !aprovedFinalDegreeWorkProposals.isEmpty()) {
-                for (int i = 0; i < aprovedFinalDegreeWorkProposals.size(); i++) {
-                    IProposal proposal = (IProposal) aprovedFinalDegreeWorkProposals.get(i);
-                    persistentFinalDegreeWork.simpleLockWrite(proposal);
+                for (IProposal proposal : aprovedFinalDegreeWorkProposals) {
                     proposal.setStatus(FinalDegreeWorkProposalStatus.PUBLISHED_STATUS);
                 }
             }
