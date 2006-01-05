@@ -1,6 +1,3 @@
-/*
- * Created on 14/Jun/2004
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.ArrayList;
@@ -14,15 +11,11 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IOccupationPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author Ana e Ricardo
- */
 public class EditExecutionDegreePeriods implements IService {
 
     public void run(InfoExecutionDegree infoExecutionDegree) throws ExcepcaoPersistencia {
@@ -30,30 +23,24 @@ public class EditExecutionDegreePeriods implements IService {
         final ISuportePersistente persistentSuport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
 
-        final IPersistentExecutionDegree persistentExecutionDegree = persistentSuport
-                .getIPersistentExecutionDegree();
-        IExecutionDegree oldExecutionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
-                ExecutionDegree.class, infoExecutionDegree.getIdInternal(), false);
+        final IExecutionDegree oldExecutionDegree = (IExecutionDegree) persistentSuport
+                .getIPersistentObject().readByOID(ExecutionDegree.class,
+                        infoExecutionDegree.getIdInternal(), false);
 
-        InfoPeriod infoPeriodExamsFirstSemester = infoExecutionDegree.getInfoPeriodExamsFirstSemester();
-        IOccupationPeriod periodExamsFirstSemester = setCompositePeriod(infoPeriodExamsFirstSemester);
-
-        InfoPeriod infoPeriodExamsSecondSemester = infoExecutionDegree
-                .getInfoPeriodExamsSecondSemester();
-        IOccupationPeriod periodExamsSecondSemester = setCompositePeriod(infoPeriodExamsSecondSemester);
-
-        InfoPeriod infoPeriodLessonsFirstSemester = infoExecutionDegree
-                .getInfoPeriodLessonsFirstSemester();
-        IOccupationPeriod periodLessonsFirstSemester = setCompositePeriod(infoPeriodLessonsFirstSemester);
-
-        InfoPeriod infoPeriodLessonsSecondSemester = infoExecutionDegree
-                .getInfoPeriodLessonsSecondSemester();
-        IOccupationPeriod periodLessonsSecondSemester = setCompositePeriod(infoPeriodLessonsSecondSemester);
-
-        persistentExecutionDegree.simpleLockWrite(oldExecutionDegree);
+        IOccupationPeriod periodLessonsFirstSemester = setCompositePeriod(infoExecutionDegree
+                .getInfoPeriodLessonsFirstSemester());
         oldExecutionDegree.setPeriodLessonsFirstSemester(periodLessonsFirstSemester);
+
+        IOccupationPeriod periodLessonsSecondSemester = setCompositePeriod(infoExecutionDegree
+                .getInfoPeriodLessonsSecondSemester());
         oldExecutionDegree.setPeriodLessonsSecondSemester(periodLessonsSecondSemester);
+
+        IOccupationPeriod periodExamsFirstSemester = setCompositePeriod(infoExecutionDegree
+                .getInfoPeriodExamsFirstSemester());
         oldExecutionDegree.setPeriodExamsFirstSemester(periodExamsFirstSemester);
+
+        IOccupationPeriod periodExamsSecondSemester = setCompositePeriod(infoExecutionDegree
+                .getInfoPeriodExamsSecondSemester());
         oldExecutionDegree.setPeriodExamsSecondSemester(periodExamsSecondSemester);
     }
 
@@ -67,16 +54,14 @@ public class EditExecutionDegreePeriods implements IService {
             infoPeriod = infoPeriod.getNextPeriod();
         }
 
-        // inicializacao
         int infoPeriodListSize = infoPeriodList.size();
-
         InfoPeriod infoPeriodNew = infoPeriodList.get(infoPeriodListSize - 1);
 
         final ISuportePersistente persistentSuport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
         final IPersistentPeriod periodDAO = persistentSuport.getIPersistentPeriod();
-        IOccupationPeriod period = (IOccupationPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew.getStartDate().getTime(),
-                infoPeriodNew.getEndDate().getTime(), null);
+        IOccupationPeriod period = (IOccupationPeriod) periodDAO.readByCalendarAndNextPeriod(
+                infoPeriodNew.getStartDate().getTime(), infoPeriodNew.getEndDate().getTime(), null);
 
         if (period == null) {
             Calendar startDate = infoPeriodNew.getStartDate();
@@ -84,7 +69,6 @@ public class EditExecutionDegreePeriods implements IService {
             period = DomainFactory.makeOccupationPeriod(startDate.getTime(), endDate.getTime());
         }
 
-        // iteracoes
         for (int i = infoPeriodListSize - 2; i >= 0; i--) {
             Integer keyNextPeriod = period.getIdInternal();
 
@@ -92,8 +76,8 @@ public class EditExecutionDegreePeriods implements IService {
 
             infoPeriodNew = infoPeriodList.get(i);
 
-            period = (IOccupationPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew.getStartDate().getTime(),
-                    infoPeriodNew.getEndDate().getTime(), keyNextPeriod);
+            period = (IOccupationPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew
+                    .getStartDate().getTime(), infoPeriodNew.getEndDate().getTime(), keyNextPeriod);
 
             if (period == null) {
                 Calendar startDate = infoPeriodNew.getStartDate();
