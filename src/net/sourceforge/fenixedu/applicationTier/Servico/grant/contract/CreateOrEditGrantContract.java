@@ -1,7 +1,3 @@
-/*
- * Created on 18/Nov/2003
- *  
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -30,10 +26,6 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantType;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author Barbosa
- * @author Pica
- */
 public class CreateOrEditGrantContract implements IService {
 
     public void run(InfoGrantContract infoGrantContract) throws FenixServiceException,
@@ -62,7 +54,6 @@ public class CreateOrEditGrantContract implements IService {
             grantContract = pGrantContract.readGrantContractByNumberAndGrantOwner(infoGrantContract
                     .getContractNumber(), infoGrantContract.getGrantOwnerInfo().getIdInternal());
         }
-        pGrantContract.simpleLockWrite(grantContract);
 
         IGrantOwner grantOwner = (IGrantOwner) pGrantOwner.readByOID(GrantOwner.class, infoGrantContract
                 .getGrantOwnerInfo().getIdInternal());
@@ -95,7 +86,6 @@ public class CreateOrEditGrantContract implements IService {
                         .readByNumber(infoGrantContract.getGrantOrientationTeacherInfo()
                                 .getOrientationTeacherInfo().getTeacherNumber());
 
-                pGrantOrientationTeacher.simpleLockWrite(grantOrientationTeacher);
                 grantOrientationTeacher.setOrientationTeacher(teacher);
 
             }

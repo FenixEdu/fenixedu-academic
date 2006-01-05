@@ -1,8 +1,3 @@
-/*
- * Created on 22/Jan/2004
- *  
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
 import java.util.List;
@@ -23,10 +18,6 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantSubsidy;
 
-/**
- * @author Barbosa
- * @author Pica
- */
 public class EditGrantSubsidy extends EditDomainObjectService {
 
     @Override
@@ -75,25 +66,23 @@ public class EditGrantSubsidy extends EditDomainObjectService {
                 GrantContract.class, infoGrantSubsidy.getInfoGrantContract().getIdInternal());
         grantSubsidy.setGrantContract(grantContract);
         domainObjectLocked = grantSubsidy;
-        
+
         /*
          * If this is a active subsidy, set all others to state 0 (Desactive)
          */
         if (grantSubsidy.getState().equals(InfoGrantSubsidy.getActiveStateValue())) {
-                IPersistentGrantSubsidy persistentGrantSubsidy = sp.getIPersistentGrantSubsidy();
-                List activeSubsidy = persistentGrantSubsidy.readAllSubsidiesByGrantContractAndState(
-                        grantSubsidy.getGrantContract().getIdInternal(), InfoGrantSubsidy
-                                .getActiveStateValue());
-                if (activeSubsidy != null && !activeSubsidy.isEmpty()) {
-                    // Desactivate the Subsidy
-                    for (int i = 0; i < activeSubsidy.size(); i++) {
-                        IGrantSubsidy grantSubsidyTemp = (IGrantSubsidy) activeSubsidy.get(i);
-                        if (!grantSubsidyTemp.equals(grantSubsidy)) {
-                            persistentGrantSubsidy.simpleLockWrite(grantSubsidyTemp);
-                            grantSubsidyTemp.setState(InfoGrantSubsidy.getInactiveStateValue());
-                        }
+            IPersistentGrantSubsidy persistentGrantSubsidy = sp.getIPersistentGrantSubsidy();
+            List<IGrantSubsidy> activeSubsidy = persistentGrantSubsidy
+                    .readAllSubsidiesByGrantContractAndState(grantSubsidy.getGrantContract()
+                            .getIdInternal(), InfoGrantSubsidy.getActiveStateValue());
+            if (activeSubsidy != null && !activeSubsidy.isEmpty()) {
+                // Desactivate the Subsidy
+                for (IGrantSubsidy grantSubsidyTemp : activeSubsidy) {
+                    if (!grantSubsidyTemp.equals(grantSubsidy)) {
+                        grantSubsidyTemp.setState(InfoGrantSubsidy.getInactiveStateValue());
                     }
                 }
+            }
         }
     }
 

@@ -1,7 +1,3 @@
-/*
- * Created on 23/Jan/2004
- *  
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -20,33 +16,26 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPart;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantSubsidy;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author Barbosa
- * @author Pica
- */
 public class EditGrantPart implements IService {
 
     public void run(InfoGrantPart infoGrantPart) throws FenixServiceException, ExcepcaoPersistencia {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-        final IPersistentGrantPart persistentGrantPart = persistentSupport.getIPersistentGrantPart();
         final IPersistentGrantPaymentEntity persistentGrantPaymentEntity = persistentSupport
                 .getIPersistentGrantPaymentEntity();
         final IPersistentGrantSubsidy persistentGrantSubsidy = persistentSupport
                 .getIPersistentGrantSubsidy();
         final IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
-        IGrantPart grantPart = (IGrantPart) persistentGrantPart.readByOID(GrantPart.class, infoGrantPart
-                .getIdInternal());
+        IGrantPart grantPart = (IGrantPart) persistentSupport.getIPersistentObject().readByOID(
+                GrantPart.class, infoGrantPart.getIdInternal());
         if (grantPart == null) {
             grantPart = DomainFactory.makeGrantPart();
         }
-        persistentGrantPart.simpleLockWrite(grantPart);
 
         final IGrantPaymentEntity grantPaymentEntity = (IGrantPaymentEntity) persistentGrantPaymentEntity
                 .readByOID(GrantPaymentEntity.class, infoGrantPart.getInfoGrantPaymentEntity()
