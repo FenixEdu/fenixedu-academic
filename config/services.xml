@@ -8967,8 +8967,17 @@
         </filterChains>     
     </service>  
     <service>
-    	<name>EditFunction</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.EditFunction</implementationClass>
+    	<name>EditPersonFunction</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.EditPersonFunction</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="DepartmentAdministrativeOfficeOrManagerAuthorizationChain"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>DeletePersonFunction</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.DeletePersonFunction</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>

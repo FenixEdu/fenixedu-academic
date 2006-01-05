@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.model.SelectItem;
@@ -19,6 +21,7 @@ import javax.faces.model.SelectItem;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IDepartment;
@@ -27,8 +30,14 @@ import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IRole;
+import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
+import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction;
@@ -56,13 +65,13 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public Integer page, personID, unitID, functionID, numberOfFunctions, personFunctionID;
 
-    public Integer executionPeriod, duration, disabledVar;
+    public Integer executionPeriod, duration, disabledVar, personNumber;
 
     public IUnit unit;
 
     public Double credits;
 
-    public String beginDate, endDate, personName;
+    public String beginDate, endDate, personName, personType;
 
     public HtmlInputHidden creditsHidden, beginDateHidden, endDateHidden, personIDHidden, unitIDHidden,
             disabledVarHidden;
@@ -160,7 +169,6 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 && this.getPerson().containsActiveFunction(this.getFunction())) {
 
             setErrorMessage("error.duplicate.function");
-
         } else {
 
             DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -183,7 +191,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
                 final Object[] argsToRead = { this.getPersonFunctionID(), this.getFunctionID(),
                         beginDate_, endDate_, credits };
-                ServiceUtils.executeService(getUserView(), "EditFunction", argsToRead);
+                ServiceUtils.executeService(getUserView(), "EditPersonFunction", argsToRead);
                 setErrorMessage("message.success");
                 return "alterFunction";
 
@@ -198,15 +206,31 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         return "";
     }
 
-    public List<IPersonFunction> getActiveFunctions() throws FenixFilterException, FenixServiceException {
+    public String deletePersonFunction() throws FenixFilterException, FenixServiceException {
+        activeFunctionsClear();
+        final Object[] argsToRead = { this.getPersonFunctionID() };        
+        ServiceUtils.executeService(getUserView(), "DeletePersonFunction", argsToRead);        
+        setErrorMessage("message.success");
+        return "";
+    }
 
+    private void activeFunctionsClear() throws FenixFilterException, FenixServiceException {
+        this.activeFunctions.remove(this.getPersonFunction());        
+        Iterator<IFunction> iter = this.inherentFunctions.iterator();
+        while(iter.hasNext()){                      
+            if(iter.next().getParentInherentFunction().equals(this.getPersonFunction().getFunction())){
+                iter.remove();
+            }
+        }
+    }
+
+    public List<IPersonFunction> getActiveFunctions() throws FenixFilterException, FenixServiceException {
         if (this.activeFunctions == null) {
             IPerson person = this.getPerson();
             List<IPersonFunction> activeFunctions = person.getActiveFunctions();
             this.activeFunctions = new ArrayList<IPersonFunction>();
 
             addValidFunctions(activeFunctions, this.activeFunctions);
-
             Collections.sort(this.activeFunctions, new BeanComparator("endDate"));
         }
         return this.activeFunctions;
@@ -221,7 +245,6 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
             this.inactiveFunctions = new ArrayList<IPersonFunction>();
 
             addValidFunctions(inactiveFunctions, this.inactiveFunctions);
-
             Collections.sort(this.inactiveFunctions, new BeanComparator("endDate"));
         }
         return this.inactiveFunctions;
@@ -275,46 +298,107 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         }
     }
 
-    public String searchPerson() throws FenixFilterException, FenixServiceException {
+    public String searchPersonByName() throws FenixFilterException, FenixServiceException {
 
         if (allPersonsList == null) {
             allPersonsList = new ArrayList<IPerson>();
         }
-
-        allPersonsList = getAllPersons();
+        allPersonsList = getAllValidPersonsByName();
 
         if (allPersonsList.isEmpty()) {
             setErrorMessage("error.search.person");
         } else {
-            int begin = (this.getPage() - 1) * SessionConstants.LIMIT_FINDED_PERSONS;
-            int end = begin + SessionConstants.LIMIT_FINDED_PERSONS;
-            if (end >= allPersonsList.size()) {
-                getPersonsList().addAll(allPersonsList.subList(begin, allPersonsList.size()));
-            } else {
-                getPersonsList().addAll(allPersonsList.subList(begin, end));
-            }
+            setIntervalPersons();
         }
         return "";
     }
 
-    private List<IPerson> getAllPersons() throws FenixServiceException, FenixFilterException {
+    private void setIntervalPersons() throws FenixFilterException, FenixServiceException {
+        int begin = (this.getPage() - 1) * SessionConstants.LIMIT_FINDED_PERSONS;
+        int end = begin + SessionConstants.LIMIT_FINDED_PERSONS;
+        if (end >= allPersonsList.size()) {
+            getPersonsList().addAll(allPersonsList.subList(begin, allPersonsList.size()));
+        } else {
+            getPersonsList().addAll(allPersonsList.subList(begin, end));
+        }
+    }
 
-        final Object[] argsToRead = { RoleType.PERSON };
-
-        List<IPerson> allPersons = new ArrayList<IPerson>();
-        IRole role = (IRole) ServiceUtils.executeService(null, "ReadRoleByRoleType", argsToRead);
-        allPersons.addAll((List<IPerson>) role.getAssociatedPersons());
-
+    private List<IPerson> getAllValidPersonsByName() throws FenixServiceException, FenixFilterException {
+        List<IPerson> allPersons = getAllPersonsToSearch(RoleType.PERSON);
         String[] nameWords = personName.split(" ");
         normalizeName(nameWords);
         allPersons = getValidPersons(nameWords, allPersons);
         Collections.sort(allPersons, new BeanComparator("nome"));
-
         return allPersons;
     }
 
-    public List<IPerson> getPersonsList() throws FenixFilterException, FenixServiceException {
+    private List<IPerson> getAllPersonsToSearch(RoleType roleType) throws FenixServiceException,
+            FenixFilterException {
+        final Object[] argsToRead = { roleType };
+        IRole role = (IRole) ServiceUtils.executeService(null, "ReadRoleByRoleType", argsToRead);
+        List<IPerson> allPersons = new ArrayList<IPerson>();
+        allPersons.addAll((List<IPerson>) role.getAssociatedPersons());
+        return allPersons;
+    }
 
+    private List<IPerson> getAllPersonsToSearchByClass() throws FenixServiceException,
+            FenixFilterException {
+        List<IPerson> allPersons = new ArrayList<IPerson>();
+        RoleType personTypeAux = RoleType.valueOf(personType);
+        if (personTypeAux.equals(RoleType.EMPLOYEE)) {
+            List<IEmployee> allEmployees = new ArrayList<IEmployee>();
+            allEmployees.addAll(readAllDomainObjects(Employee.class));
+            for (IEmployee employee : allEmployees) {
+                if (employee.getEmployeeNumber().equals(personNumber)) {
+                    if (!employee.getPerson().hasRole(RoleType.TEACHER)) {
+                        allPersons.add(employee.getPerson());
+                    }
+                    return allPersons;
+                }
+            }
+        } else if (personTypeAux.equals(RoleType.TEACHER)) {
+            List<ITeacher> allTeachers = new ArrayList<ITeacher>();
+            allTeachers.addAll(readAllDomainObjects(Teacher.class));
+            for (ITeacher teacher : allTeachers) {
+                if (teacher.getTeacherNumber().equals(personNumber)) {
+                    allPersons.add(teacher.getPerson());
+                    return allPersons;
+                }
+            }
+        } else if (personTypeAux.equals(RoleType.STUDENT)) {
+            List<IStudent> allStudents = new ArrayList<IStudent>();
+            allStudents.addAll(readAllDomainObjects(Student.class));
+            for (IStudent student : allStudents) {
+                if (student.getNumber().equals(personNumber)) {
+                    allPersons.add(student.getPerson());
+                    return allPersons;
+                }
+            }
+        } else if (personTypeAux.equals(RoleType.GRANT_OWNER)) {
+            List<IGrantOwner> allGrantOwner = new ArrayList<IGrantOwner>();
+            allGrantOwner.addAll(readAllDomainObjects(GrantOwner.class));
+            for (IGrantOwner grantOwner : allGrantOwner) {
+                if (grantOwner.getNumber().equals(personNumber)) {
+                    allPersons.add(grantOwner.getPerson());
+                    return allPersons;
+                }
+            }
+        }
+        return allPersons;
+    }
+
+    public String searchPersonByNumber() throws FenixFilterException, FenixServiceException {
+        getPersonsList();
+        this.personsList = getAllPersonsToSearchByClass();
+        if (this.personsList.isEmpty()) {
+            setErrorMessage("error.search.person");
+        } else {
+            this.allPersonsList = this.personsList;
+        }
+        return "";
+    }
+
+    public List<IPerson> getPersonsList() throws FenixFilterException, FenixServiceException {
         if (this.personsList == null) {
             this.personsList = new ArrayList<IPerson>();
         }
@@ -362,6 +446,35 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         return false;
     }
 
+    public List<SelectItem> getPersonTypes() {
+        List<SelectItem> list = new ArrayList<SelectItem>();
+        ResourceBundle bundle = getResourceBundle("ServidorApresentacao/EnumerationResources");
+
+        SelectItem selectItem1 = new SelectItem();
+        selectItem1.setLabel(bundle.getString(RoleType.EMPLOYEE.getName()).trim());
+        selectItem1.setValue(RoleType.EMPLOYEE.name());
+
+        SelectItem selectItem2 = new SelectItem();
+        selectItem2.setLabel(bundle.getString(RoleType.TEACHER.getName()).trim());
+        selectItem2.setValue(RoleType.TEACHER.name());
+
+        SelectItem selectItem3 = new SelectItem();
+        selectItem3.setLabel(bundle.getString(RoleType.GRANT_OWNER.getName()).trim());
+        selectItem3.setValue(RoleType.GRANT_OWNER.name());
+
+        SelectItem selectItem4 = new SelectItem();
+        selectItem4.setLabel(bundle.getString(RoleType.STUDENT.getName()).trim());
+        selectItem4.setValue(RoleType.STUDENT.name());
+
+        list.add(selectItem1);
+        list.add(selectItem2);
+        list.add(selectItem3);
+        list.add(selectItem4);
+
+        Collections.sort(list, new BeanComparator("label"));
+        return list;
+    }
+
     public List<SelectItem> getValidFunctions() throws FenixFilterException, FenixServiceException {
         List<SelectItem> list = new ArrayList<SelectItem>();
         SelectItem selectItem = null;
@@ -407,6 +520,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 newSelectItem(executionYear, list);
             }
         }
+        Collections.sort(list, new BeanComparator("label"));
         return list;
     }
 
@@ -489,7 +603,11 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     public List<IPerson> getAllPersonsList() throws FenixFilterException, FenixServiceException {
         if (allPersonsList == null) {
             if (this.page != null) {
-                searchPerson();
+                if (this.personName != null) {
+                    searchPersonByName();
+                } else if (this.personNumber != null) {
+                    searchPersonByNumber();
+                }
             } else {
                 allPersonsList = new ArrayList<IPerson>();
             }
@@ -945,5 +1063,21 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public void setDisabledVar(Integer disabledVar) {
         this.disabledVar = disabledVar;
+    }
+
+    public Integer getPersonNumber() {
+        return personNumber;
+    }
+
+    public void setPersonNumber(Integer personNumber) {
+        this.personNumber = personNumber;
+    }
+
+    public String getPersonType() {
+        return personType;
+    }
+
+    public void setPersonType(String personType) {
+        this.personType = personType;
     }
 }

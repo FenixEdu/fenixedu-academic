@@ -16,6 +16,12 @@ public class PersonFunction extends PersonFunction_Base {
         }
         this.setEndDate(endDate);
     }
+    
+    public void delete(){
+        removeFunction();
+        removePerson();
+        deleteDomainObject();
+    }
 
     public boolean isActive(Date currentDate) {
         if (this.getEndDate() == null

@@ -2540,6 +2540,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction ext
 	
 	interface"
 	public void edit(net.sourceforge.fenixedu.domain.organizationalStructure.IFunction function, java.util.Date beginDate, java.util.Date endDate, Double credits);	
+	public void delete();
     public boolean isActive(java.util.Date currentDate);
 	public boolean belongsToPeriod(java.util.Date beginDate, java.util.Date endDate);
 	"

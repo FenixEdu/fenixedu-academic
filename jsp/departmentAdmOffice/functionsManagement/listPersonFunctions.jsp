@@ -27,7 +27,11 @@
 		<h:outputText value="<br/><br/>" escape="false" />	
 		
 		<h:commandLink value="#{bundle['label.associate']}" action="associateNewFunction" />
-				
+		
+		<h:outputText value="<br/>" escape="false" rendered="#{!empty functionsManagementBackingBean.errorMessage}"/>	
+		<h:outputText styleClass="error" rendered="#{!empty functionsManagementBackingBean.errorMessage}"
+				value="#{bundle[functionsManagementBackingBean.errorMessage]}" escape="false"/>		
+					
 		<h:outputText value="<br/><br/><h3>#{bundle['label.active.functions']}<h3/>" escape="false" />
 	
 		<h:dataTable value="#{functionsManagementBackingBean.activeFunctions}" var="person_function"
@@ -80,7 +84,13 @@
 					<f:param name="personFunctionID" id="personFunctionID1" value="#{person_function.idInternal}"/>
 					<f:param name="functionID" id="functionID" value="#{person_function.function.idInternal}"/>
 				</h:commandLink>				
-			</h:column>			
+			</h:column>
+			<h:column> 						
+				<h:commandLink action="#{functionsManagementBackingBean.deletePersonFunction}">
+					<h:outputText value="#{bundle['link.delete']}"/>					
+					<f:param name="personFunctionID" id="personFunctionID2" value="#{person_function.idInternal}"/>					
+				</h:commandLink>				
+			</h:column>					
 		</h:dataTable>
 
 		<h:outputText value="#{bundle['error.noActiveFunctions.in.person']}<br/>" styleClass="error" 

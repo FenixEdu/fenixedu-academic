@@ -47,9 +47,9 @@ public class Function extends Function_Base {
     }
 
     public void delete() {
-        if (this.getPersonFunctions().isEmpty() && this.getInherentFunctions().isEmpty()) {
-            this.setParentInherentFunction(null);
-            this.setUnit(null);
+        if (!hasAnyPersonFunctions() && !hasAnyInherentFunctions()) {            
+            removeParentInherentFunction();
+            removeUnit();
             super.deleteDomainObject();
         } else {
             throw new DomainException("error.delete.function");

@@ -17,11 +17,11 @@ public class Unit extends Unit_Base {
     public List<IUnit> getTopUnits() {
         IUnit unit = this;
         List<IUnit> allTopUnits = new ArrayList<IUnit>();
-        if (!unit.getParentUnits().isEmpty()) {
+        if (unit.hasAnyParentUnits()) {
             for (IUnit parentUnit : this.getParentUnits()) {
-                if (parentUnit.getParentUnits().isEmpty() && !allTopUnits.contains(parentUnit)) {
+                if (parentUnit.hasAnyParentUnits() && !allTopUnits.contains(parentUnit)) {
                     allTopUnits.add(parentUnit);
-                } else if (!parentUnit.getParentUnits().isEmpty()) {
+                } else if (parentUnit.hasAnyParentUnits()) {
                     for (IUnit parentUnit2 : parentUnit.getTopUnits()) {
                         if (!allTopUnits.contains(parentUnit2)) {
                             allTopUnits.add(parentUnit2);
@@ -79,17 +79,16 @@ public class Unit extends Unit_Base {
     }
 
     public void delete() {
-        if (this.getSubUnits().isEmpty()
-                && (this.getParentUnits().isEmpty() || this.getParentUnits().size() == 1)
-                && this.getFunctions().isEmpty() && this.getWorkingContracts().isEmpty()
-                && this.getMailingContracts().isEmpty() && this.getSalaryContracts().isEmpty()) {
+        if (!hasAnySubUnits()
+                && (!hasAnyParentUnits() || this.getParentUnits().size() == 1)
+                && !hasAnyFunctions() && !hasAnyWorkingContracts()
+                && !hasAnyMailingContracts() && !hasAnySalaryContracts()) {
 
-            if (!this.getParentUnits().isEmpty()) {
+            if (hasAnyParentUnits()) {
                 this.removeParentUnits(this.getParentUnits().get(0));
             }
-            this.removeDepartment();
-            super.deleteDomainObject();
-
+            removeDepartment();
+            deleteDomainObject();
         } else {
             throw new DomainException("error.delete.unit");
         }
@@ -127,7 +126,6 @@ public class Unit extends Unit_Base {
 
     public List<IUnit> getDegreeUnits() {
         List<IUnit> result = new ArrayList<IUnit>();
-
         for (IUnit unit : this.getSubUnits()) {
             if (unit.getType() != null && unit.getType().equals(UnitType.DEGREE)) {
                 result.add(unit);

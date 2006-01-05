@@ -15,7 +15,7 @@
 		<h:outputText value="<H2>#{bundle['label.search.functionManagement']}</H2>" escape="false"/>	
 
 		<h:outputText value="<br/>" escape="false" />	
-
+	
 		<h:panelGroup>
 			<h:outputText value="<b>#{bundle['label.name']}</b>: " escape="false"/>		
 			<h:outputText value="#{facultyAdmOfficeFunctionsManagementBackingBean.person.nome}" escape="false"/>		
@@ -24,6 +24,10 @@
 		<h:outputText value="<br/><br/>" escape="false" />	
 		
 		<h:commandLink value="#{bundle['label.associate']}" action="associateNewFunction" />
+		
+		<h:outputText value="<br/>" escape="false" rendered="#{!empty facultyAdmOfficeFunctionsManagementBackingBean.errorMessage}"/>	
+		<h:outputText styleClass="error" rendered="#{!empty facultyAdmOfficeFunctionsManagementBackingBean.errorMessage}"
+				value="#{bundle[facultyAdmOfficeFunctionsManagementBackingBean.errorMessage]}" escape="false"/>		
 				
 		<h:outputText value="<br/><br/><h3>#{bundle['label.active.functions']}<h3/>" escape="false" />
 	
@@ -76,6 +80,12 @@
 					<h:outputText value="#{bundle['link.functions.management.edit']}"/>					
 					<f:param name="personFunctionID" id="personFunctionID1" value="#{person_function.idInternal}"/>
 					<f:param name="functionID" id="functionID" value="#{person_function.function.idInternal}"/>
+				</h:commandLink>				
+			</h:column>
+			<h:column> 						
+				<h:commandLink action="#{facultyAdmOfficeFunctionsManagementBackingBean.deletePersonFunction}">
+					<h:outputText value="#{bundle['link.delete']}"/>					
+					<f:param name="personFunctionID" id="personFunctionID2" value="#{person_function.idInternal}"/>					
 				</h:commandLink>				
 			</h:column>			
 		</h:dataTable>
@@ -167,11 +177,10 @@
 		</h:dataTable>
 		
 		<h:outputText value="#{bundle['error.noInactiveFunctions.in.person']}<br/>" styleClass="error" 
-				rendered="#{empty facultyAdmOfficeFunctionsManagementBackingBean.inactiveFunctions}" escape="false"/>							
-			
+				rendered="#{empty facultyAdmOfficeFunctionsManagementBackingBean.inactiveFunctions}" escape="false"/>									
+		
 		<h:outputText value="<br/><br/>" escape="false"/>				
 		<h:commandButton value="#{bundle['button.cancel']}" action="chooseNewPerson" styleClass="inputbutton"/>
 					
 	</h:form>
-
 </ft:tilesView>

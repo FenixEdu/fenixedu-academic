@@ -30,10 +30,10 @@ public class Contract extends Contract_Base {
     }
     
     public void delete(){        
-        this.removeEmployee();
-        this.removeMailingUnit();
-        this.removeSalaryUnit();
-        this.removeWorkingUnit();
-        super.deleteDomainObject();
+        removeEmployee();
+        removeMailingUnit();
+        removeSalaryUnit();
+        removeWorkingUnit();
+        deleteDomainObject();
     }
 }
