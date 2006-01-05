@@ -1,95 +1,78 @@
 <%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
+<%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <style>
-<!--
+.alignLeft {
+	text-align: left;
+}
 .alignRight {
 	text-align: right;
 }
--->
+.backgroundColor {
+	background-color: #f5f5f5;
+}
 </style>
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="ServidorApresentacao/BolonhaManagerResources" var="bolonhaBundle"/>
+	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="enumerationBundle"/>
 	
-	<h2><h:outputText value="#{bolonhaBundle['createCompetenceCourse']}"/></h2> 	
-	
-	<h:outputText value="#{bolonhaBundle['step']} 1: #{bolonhaBundle['createCompetenceCourse']}" style="font-weight: bold"/>
-	<h:outputText value=" > #{bolonhaBundle['step']} 2: #{bolonhaBundle['setData']}"/>
+	<h:outputText value="#{CompetenceCourseManagement.personDepartment.realName}" style="font-style:italic"/>
+	<h:outputFormat value="<h2>#{bolonhaBundle['create.param']}</h2>" escape="false">
+		<f:param value=" #{bolonhaBundle['competenceCourse']}"/>
+	</h:outputFormat>		
+	<h:outputText value="#{bolonhaBundle['step']} 1: " style="font-weight: bold"/>
+	<h:outputFormat value="#{bolonhaBundle['create.param']}" style="font-weight: bold">
+		<f:param value=" #{bolonhaBundle['competenceCourse']}"/>
+	</h:outputFormat>	
+	<h:outputText value=" > #{bolonhaBundle['step']} 2: #{bolonhaBundle['setCompetenceCourseLoad']}"/>
+	<h:outputText value=" > #{bolonhaBundle['step']} 3: #{bolonhaBundle['setData']}"/>
 	<br/>
 	<h:outputText styleClass="error" rendered="#{!empty CompetenceCourseManagement.errorMessage}"
 			value="#{bolonhaBundle[CompetenceCourseManagement.errorMessage]}<br/>" escape="false"/>
 	<br/>
-	<h:outputText value="#{bolonhaBundle['department']}: " style="font-weight: bold"/>
-		<h:outputText value="#{CompetenceCourseManagement.personDepartmentName}"/><br/>
-	<h:outputText value="#{bolonhaBundle['scientificArea']}:" style="font-weight: bold"/>
-		<h:outputText value="#{CompetenceCourseManagement.scientificAreaUnit.name}"/><br/>
-	<h:outputText value="#{bolonhaBundle['group']}: " style="font-weight: bold"/>
-		<h:outputText value="#{CompetenceCourseManagement.competenceCourseGroupUnit.name}"/><br/>
+	<h:outputText value="#{bolonhaBundle['area']}:" style="font-weight: bold"/>
+	<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourseGroupUnit.parentUnits}" var="scientificAreaUnit">
+		<h:outputText value="#{bolonhaBundle['area']}: " style="font-weight: bold"/>
+		<h:outputText value="#{scientificAreaUnit.name} > #{CompetenceCourseManagement.competenceCourseGroupUnit.name}<br/>" escape="false"/>
+	</fc:dataRepeater>
 	<br/>
+	<h:messages styleClass="error"/>
 	<h:form>
-		<h:outputText escape="false" value="<input id='scientificAreaUnitID' name='scientificAreaUnitID' type='hidden' value='#{CompetenceCourseManagement.scientificAreaUnit.idInternal}'"/>
-		<h:outputText escape="false" value="<input id='competenceCourseGroupUnitID' name='competenceCourseGroupUnitID' type='hidden' value='#{CompetenceCourseManagement.competenceCourseGroupUnit.idInternal}'"/>
+		<h:outputText escape="false" value="<input id='competenceCourseGroupUnitID' name='competenceCourseGroupUnitID' type='hidden' value='#{CompetenceCourseManagement.competenceCourseGroupUnit.idInternal}'/>"/>				
+		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='create'/>"/>
 		<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0">
-			<h:outputText value="#{bolonhaBundle['name']}: "/>
+			<h:outputText value="#{bolonhaBundle['name']} (pt): "/>
 			<h:panelGroup>
-				<h:inputText id="name" required="true" maxlength="100" size="40" value="#{CompetenceCourseManagement.name}"/>
-				<h:message styleClass="error" for="name" />
+				<h:inputText id="name" maxlength="100" size="40" value="#{CompetenceCourseManagement.name}"/>
+				<h:message styleClass="error" for="name"/>
+			</h:panelGroup>		
+			
+			<h:outputText value="#{bolonhaBundle['nameEn']} (en): "/>
+			<h:panelGroup>
+				<h:inputText id="nameEn" maxlength="100" size="40" value="#{CompetenceCourseManagement.nameEn}"/>
+				<h:message styleClass="error" for="nameEn" />
 			</h:panelGroup>
 			
-			<h:outputText value="#{bolonhaBundle['ectsCredits']}: "/>
+			<h:outputText value="#{bolonhaBundle['acronym']} (en): "/>
 			<h:panelGroup>
-				<h:inputText id="ectsCredits" required="true" maxlength="5" size="5" value="#{CompetenceCourseManagement.ectsCredits}"/>
-				<h:message styleClass="error" for="ectsCredits" />
+				<h:inputText id="acronym" maxlength="40" size="10" value="#{CompetenceCourseManagement.acronym}"/>
+				<h:message styleClass="error" for="acronym" />
 			</h:panelGroup>
 			
 			<h:outputText value="#{bolonhaBundle['basic']}: "/>
 			<h:selectBooleanCheckbox value="#{CompetenceCourseManagement.basic}"></h:selectBooleanCheckbox>
 			
-			<h:outputText value="#{bolonhaBundle['lessonHours']}: " />
-			<h:panelGrid columns="2">
-				<h:outputText value="#{bolonhaBundle['theoreticalLesson']}: "/>
-				<h:panelGroup>
-					<h:inputText maxlength="5" size="5" value="#{CompetenceCourseManagement.theoreticalHours}"/>
-					<h:outputText value=" h"/>
-				</h:panelGroup>
-				
-				<h:outputText value="#{bolonhaBundle['problemsLesson']}: "/>
-				<h:panelGroup>
-					<h:inputText maxlength="5" size="5" value="#{CompetenceCourseManagement.problemsHours}"/>
-					<h:outputText value=" h"/>
-				</h:panelGroup>			
-				
-				<h:outputText value="#{bolonhaBundle['laboratorialLesson']}: "/>
-				<h:panelGroup>
-					<h:inputText maxlength="5" size="5" value="#{CompetenceCourseManagement.labHours}"/>	
-					<h:outputText value=" h"/>
-				</h:panelGroup>					
-				
-				<h:outputText value="#{bolonhaBundle['projectLesson']}: "/>
-				<h:panelGroup>
-					<h:inputText maxlength="5" size="5" value="#{CompetenceCourseManagement.projectHours}"/>
-					<h:outputText value=" h"/>
-				</h:panelGroup>					
-				
-				<h:outputText value="#{bolonhaBundle['seminaryLesson']}: "/>
-				<h:panelGroup>
-					<h:inputText maxlength="5" size="5" value="#{CompetenceCourseManagement.seminaryHours}"/>
-					<h:outputText value=" h"/>
-				</h:panelGroup>
-				
-				<h:outputText value="#{bolonhaBundle['total']}: " />
-				<h:outputText value="." />
-			</h:panelGrid>
-			
-			<h:outputText value="#{bolonhaBundle['regime']}: " />
-			<h:selectOneMenu  value="#{CompetenceCourseManagement.regime}">
-				<f:selectItems value="#{CompetenceCourseManagement.regimeTypes}" />
-			</h:selectOneMenu>
+			<h:outputText value="#{bolonhaBundle['regime']}: "/>
+			<fc:selectOneMenu value="#{CompetenceCourseManagement.regime}">
+				<f:selectItem itemValue="SEMESTER" itemLabel="#{enumerationBundle['SEMESTER']}"/>
+				<f:selectItem itemValue="ANUAL" itemLabel="#{enumerationBundle['ANUAL']}"/>
+			</fc:selectOneMenu>
 		</h:panelGrid>
 		<br/><hr>
-		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['submit']}"
-			action="#{CompetenceCourseManagement.createCompetenceCourse}"/>
+		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['create']}"
+	 			action="#{CompetenceCourseManagement.createCompetenceCourse}"/> 
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}"
-			action="competenceCoursesManagement"/>
+				action="competenceCoursesManagement"/>
 	</h:form>
 </ft:tilesView>

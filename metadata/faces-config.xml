@@ -585,13 +585,6 @@
 		</navigation-case>			
 	</navigation-rule>
 	<navigation-rule>
-		<from-view-id>/departmentMember/expectationManagement/viewPersonalExpectation.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>create</from-outcome>
-			<to-view-id>/departmentMember/expectationManagement/insertEducationExpectationData.jsp</to-view-id>
-		</navigation-case>			
-	</navigation-rule>
-	<navigation-rule>
 		<from-view-id>/departmentMember/expectationManagement/insertEducationExpectationData.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>next</from-outcome>
@@ -624,6 +617,10 @@
 	<!-- Edit Personal Expectation SubProcess -->
 	<navigation-rule>
 		<from-view-id>/departmentMember/expectationManagement/viewPersonalExpectation.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>create</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/insertEducationExpectationData.jsp</to-view-id>
+		</navigation-case>
 		<navigation-case>
 			<from-outcome>editEducationExpectationData</from-outcome>
 			<to-view-id>/departmentMember/expectationManagement/editEducationExpectationData.jsp</to-view-id>
@@ -1471,8 +1468,8 @@
 	<navigation-rule>
 		<from-view-id>/bolonhaManager/competenceCourses/createCompetenceCourse.jsp</from-view-id>
 		<navigation-case>
-			<from-outcome>editCompetenceCourseAdditionalInformation</from-outcome>
-			<to-view-id>/bolonhaManager/competenceCourses/editCompetenceCourseAdditionalInformation.jsp</to-view-id>
+			<from-outcome>setCompetenceCourseLoad</from-outcome>
+			<to-view-id>/bolonhaManager/competenceCourses/setCompetenceCourseLoad.jsp</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>competenceCoursesManagement</from-outcome>
@@ -1480,7 +1477,33 @@
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
-		<from-view-id>/bolonhaManager/competenceCourses/editCompetenceCourseAdditionalInformation.jsp</from-view-id>
+		<from-view-id>/bolonhaManager/competenceCourses/setCompetenceCourseLoad.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>setCompetenceCourseAdditionalInformation</from-outcome>
+			<to-view-id>/bolonhaManager/competenceCourses/setCompetenceCourseAdditionalInformation.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>editCompetenceCourseMainPage</from-outcome>
+			<to-view-id>/bolonhaManager/competenceCourses/editCompetenceCourseMainPage.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>competenceCoursesManagement</from-outcome>
+			<to-view-id>/bolonhaManager/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/competenceCourses/setCompetenceCourseAdditionalInformation.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCompetenceCourseMainPage</from-outcome>
+			<to-view-id>/bolonhaManager/competenceCourses/editCompetenceCourseMainPage.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>competenceCoursesManagement</from-outcome>
+			<to-view-id>/bolonhaManager/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/competenceCourses/editCompetenceCourseMainPage.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>competenceCoursesManagement</from-outcome>
 			<to-view-id>/bolonhaManager/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
@@ -1489,8 +1512,8 @@
 	<navigation-rule>
 		<from-view-id>/bolonhaManager/competenceCourses/editCompetenceCourse.jsp</from-view-id>
 		<navigation-case>
-			<from-outcome>competenceCoursesManagement</from-outcome>
-			<to-view-id>/bolonhaManager/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+			<from-outcome>editCompetenceCourseMainPage</from-outcome>
+			<to-view-id>/bolonhaManager/competenceCourses/editCompetenceCourseMainPage.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>

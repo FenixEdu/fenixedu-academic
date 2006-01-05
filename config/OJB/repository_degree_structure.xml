@@ -206,33 +206,97 @@
 		jdbc-type="INTEGER"
 		primarykey="true"
 		autoincrement="true"
-	/>
-	<field-descriptor
-		name="keyExecutionYear"
-		column="KEY_EXECUTION_YEAR"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
+	/>	
 	<field-descriptor
 		name="name"
 		column="NAME"
 		jdbc-type="VARCHAR"
 	/>
 	<field-descriptor
-		name="code"
-		column="CODE"
+		name="nameEn"
+		column="NAME_EN"
 		jdbc-type="VARCHAR"
 	/>
 	<field-descriptor
-		name="ectsCredits"
-		column="ECTS_CREDITS"
-		jdbc-type="DOUBLE"
+		name="acronym"
+		column="ACRONYM"
+		jdbc-type="VARCHAR"
 	/>
 	<field-descriptor
 		name="basic"
 		column="BASIC"
 		jdbc-type="BIT"
+	/>
+	<field-descriptor
+		name="regime"
+		column="REGIME"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaRegimeType2SqlRegimeTypeFieldConversion"
+	/>
+	<field-descriptor
+        name="objectives"
+        column="OBJECTIVES"
+        jdbc-type="LONGVARCHAR"
+	/>
+	<field-descriptor
+        name="objectivesEn"
+        column="OBJECTIVES_EN"
+        jdbc-type="LONGVARCHAR"
+	/>
+	<field-descriptor
+        name="program"
+        column="PROGRAM"
+        jdbc-type="LONGVARCHAR"
+	/>
+	<field-descriptor
+        name="programEn"
+        column="PROGRAM_EN"
+        jdbc-type="LONGVARCHAR"
+	/>
+	<field-descriptor
+        name="evaluationMethod"
+        column="EVALUATION_METHOD"
+        jdbc-type="LONGVARCHAR"
+	/>
+	<field-descriptor
+        name="evaluationMethodEn"
+        column="EVALUATION_METHOD_EN"
+        jdbc-type="LONGVARCHAR"
+	/>	
+	<field-descriptor
+        name="endDate"
+        column="END_DATE"
+        jdbc-type="DATE"
+	/>
+	<reference-descriptor auto-retrieve="false"
+			name="competenceCourse"
+			class-ref="net.sourceforge.fenixedu.domain.CompetenceCourse">
+		<foreignkey field-ref="keyCompetenceCourse"/>
+	</reference-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="competenceCourseLoads"
+			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad">
+		<inverse-foreignkey field-ref="keyCompetenceCourseInformation"/>
+	</collection-descriptor>
+</class-descriptor>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad" table="COMPETENCE_COURSE_LOAD">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="keyCompetenceCourseInformation"
+		column="KEY_COMPETENCE_COURSE_INFORMATION"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
 	/>
 	<field-descriptor
 		name="theoreticalHours"
@@ -245,13 +309,8 @@
 		jdbc-type="DOUBLE"
 	/>
 	<field-descriptor
-		name="labHours"
-		column="LAB_HOURS"
-		jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
-		name="projectHours"
-		column="PROJECT_HOURS"
+		name="laboratorialHours"
+		column="LABORATORIAL_HOURS"
 		jdbc-type="DOUBLE"
 	/>
 	<field-descriptor
@@ -260,76 +319,33 @@
 		jdbc-type="DOUBLE"
 	/>
 	<field-descriptor
-		name="regime"
-		column="REGIME"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaRegimeType2SqlRegimeTypeFieldConversion"
+		name="fieldWorkHours"
+		column="FIELD_WORK_HOURS"
+		jdbc-type="DOUBLE"
+	/>	
+	<field-descriptor
+		name="trainingPeriodHours"
+		column="TRAINING_PERIOD_HOURS"
+		jdbc-type="DOUBLE"
 	/>
 	<field-descriptor
-        name="program"
-        column="PROGRAM"
-        jdbc-type="LONGVARCHAR"
+		name="tutorialOrientationHours"
+		column="TUTORIAL_ORIENTATION_HOURS"
+		jdbc-type="DOUBLE"
 	/>
 	<field-descriptor
-        name="generalObjectives"
-        column="GENERAL_OBJECTIVES"
-        jdbc-type="LONGVARCHAR"
+		name="autonomousWorkHours"
+		column="AUTONOMOUS_WORK_HOURS"
+		jdbc-type="DOUBLE"
 	/>
 	<field-descriptor
-        name="operationalObjectives"
-        column="OPERATIONAL_OBJECTIVES"
-        jdbc-type="LONGVARCHAR"
-	/>
-	<field-descriptor
-        name="evaluationMethod"
-        column="EVALUATION_METHOD"
-        jdbc-type="LONGVARCHAR"
-	/>
-	<field-descriptor
-        name="prerequisites"
-        column="PREREQUISITES"
-        jdbc-type="LONGVARCHAR"
-	/>
-	<field-descriptor
-		name="nameEn"
-		column="NAME_EN"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-        name="programEn"
-        column="PROGRAM_EN"
-        jdbc-type="LONGVARCHAR"
-	/>
-	<field-descriptor
-        name="generalObjectivesEn"
-        column="GENERAL_OBJECTIVES_EN"
-        jdbc-type="LONGVARCHAR"
-	/>
-	<field-descriptor
-        name="operationalObjectivesEn"
-        column="OPERATIONAL_OBJECTIVES_EN"
-        jdbc-type="LONGVARCHAR"
-	/>
-	<field-descriptor
-        name="evaluationMethodEn"
-        column="EVALUATION_METHOD_EN"
-        jdbc-type="LONGVARCHAR"
-	/>
-	<field-descriptor
-        name="prerequisitesEn"
-        column="PREREQUISITES_EN"
-        jdbc-type="LONGVARCHAR"
+		name="ectsCredits"
+		column="ECTS_CREDITS"
+		jdbc-type="DOUBLE"
 	/>
 	<reference-descriptor auto-retrieve="false"
-		name="competenceCourse"
-		class-ref="net.sourceforge.fenixedu.domain.CompetenceCourse"
-		>
-		<foreignkey field-ref="keyCompetenceCourse"/>
-	</reference-descriptor>		
-	<reference-descriptor auto-retrieve="false"
-		name="executionYear"
-		class-ref="net.sourceforge.fenixedu.domain.ExecutionYear"
-		>
-		<foreignkey field-ref="keyExecutionYear"/>
-	</reference-descriptor>		
+			name="competenceCourseInformation"
+			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation">
+		<foreignkey field-ref="keyCompetenceCourseInformation"/>
+	</reference-descriptor>
 </class-descriptor>

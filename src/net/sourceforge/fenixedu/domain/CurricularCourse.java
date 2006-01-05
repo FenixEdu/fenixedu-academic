@@ -371,9 +371,9 @@ public class CurricularCourse extends CurricularCourse_Base {
         Double result = 0.0;        
         if (this.getEctsCredits() != null) {
             result = this.getEctsCredits();
-        } else if (this.getCompetenceCourse() != null && this.getCompetenceCourse().getEctsCredits() != null) {
+        } /*else if (this.getCompetenceCourse() != null && this.getCompetenceCourse().getEctsCredits() != null) {
             result = this.getCompetenceCourse().getEctsCredits();
-        }        
+        }   */     
         return result;
     }    
     

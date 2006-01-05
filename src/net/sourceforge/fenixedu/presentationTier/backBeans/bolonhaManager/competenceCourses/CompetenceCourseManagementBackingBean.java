@@ -7,15 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCompetenceCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CourseLoad;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.ICompetenceCourse;
+import net.sourceforge.fenixedu.domain.IDepartment;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
+import net.sourceforge.fenixedu.domain.degreeStructure.ICompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IUnit;
@@ -24,361 +27,389 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
-    private final ResourceBundle messages = getResourceBundle("ServidorApresentacao/BolonhaManagerResources");
+    private final ResourceBundle bundle = getResourceBundle("ServidorApresentacao/BolonhaManager");
 
-    private Integer scientificAreaUnitID = null;
-    private Integer competenceCourseGroupUnitID = null;
     private Integer competenceCourseID = null;
-    private IUnit scientificAreaUnit = null;
+
     private IUnit competenceCourseGroupUnit = null;
+    private List<IUnit> scientificAreaUnits = null;
     private ICompetenceCourse competenceCourse = null;
-
-    // CompetenceCourse
+        
+    // Competence-Course-Information
     private String name;
-    private Double ectsCredits;
-    private Boolean basic;
-    private Double theoreticalHours;
-    private Double problemsHours;
-    private Double labHours;
-    private Double projectHours;
-    private Double seminaryHours;
-    private String regime;
-    private String stage;
-    // CompetenceCourse Additional Data
-    private String program;
-    private String generalObjectives;
-    private String operationalObjectives;
-    private String evaluationMethod;
-    private String prerequisites;
     private String nameEn;
+    private String acronym;
+    private Boolean basic;
+    private String regime;
+    private Integer numberOfPeriods;
+    private boolean setNumberOfPeriods = true;
+    
+    // Competence-Course-Additional-Data
+    private String objectives;
+    private String program;
+    private String evaluationMethod;
+    private String objectivesEn;
     private String programEn;
-    private String generalObjectivesEn;
-    private String operationalObjectivesEn;
-    private String evaluationMethodEn;
-    private String prerequisitesEn;
-
-    public Integer getScientificAreaUnitID() {
-        return (scientificAreaUnitID == null) ? (scientificAreaUnitID = getAndHoldIntegerParameter("scientificAreaUnitID"))
-                : scientificAreaUnitID;
+    private String evaluationMethodEn;    
+    private String stage;
+    
+    public String getAction() {
+        return getAndHoldStringParameter("action");
     }
-
-    public Integer getCompetenceCourseGroupUnitID() {
-        return (competenceCourseGroupUnitID == null) ? (competenceCourseGroupUnitID = getAndHoldIntegerParameter("competenceCourseGroupUnitID"))
-                : competenceCourseGroupUnitID;
-    }
-
-    public Integer getCompetenceCourseID() {
-        return (competenceCourseID == null) ? (competenceCourseID = getAndHoldIntegerParameter("competenceCourseID"))
-                : competenceCourseID;
-    }
-
-    public void setCompetenceCourseID(Integer competenceCourseID) {
-        this.competenceCourseID = competenceCourseID;
-    }
-
-    public String getPersonDepartmentName() {
-        IEmployee employee = getUserView().getPerson().getEmployee();
+    
+    public IDepartment getPersonDepartment() {
+        final IEmployee employee = getUserView().getPerson().getEmployee();
         return (employee != null && employee.getCurrentDepartmentWorkingPlace() != null) ? employee
-                .getCurrentDepartmentWorkingPlace().getRealName() : "";
+                .getCurrentDepartmentWorkingPlace() : null;
     }
-
-    public List<SelectItem> getRegimeTypes() {
-        List<SelectItem> result = new ArrayList<SelectItem>(RegimeType.values().length);
-        for (RegimeType regimeType : RegimeType.values()) {
-            result.add(new SelectItem(regimeType.name(), messages.getString(regimeType.getName())));
-        }
-        return result;
-    }
-
-    public List<SelectItem> getCurricularStageTypes() {
-        List<SelectItem> result = new ArrayList<SelectItem>(3);
-        result.add(new SelectItem(CurricularStage.DRAFT.name(), messages.getString(CurricularStage.DRAFT
-                .getName())));
-        result.add(new SelectItem(CurricularStage.PUBLISHED.name(), messages
-                .getString(CurricularStage.PUBLISHED.getName())));
-        result.add(new SelectItem(CurricularStage.APPROVED.name(), messages.getString(CurricularStage.APPROVED
-                .getName())));
-        return result;
-    }
-
-    public IUnit getScientificAreaUnit() throws FenixFilterException, FenixServiceException {
-        return (scientificAreaUnit == null) ? (scientificAreaUnit = (IUnit) readDomainObject(Unit.class,
-                getScientificAreaUnitID())) : scientificAreaUnit;
-    }
-
-    public IUnit getCompetenceCourseGroupUnit() throws FenixFilterException, FenixServiceException {
-        return (competenceCourseGroupUnit == null) ? (competenceCourseGroupUnit = (IUnit) readDomainObject(
-                Unit.class, getCompetenceCourseGroupUnitID())) : competenceCourseGroupUnit;
-    }
-
+    
     public List<IUnit> getScientificAreaUnits() {
-        IEmployee employee = getUserView().getPerson().getEmployee();
-        return (employee != null && employee.getCurrentDepartmentWorkingPlace() != null) ? employee
-                .getCurrentDepartmentWorkingPlace().getUnit().getScientificAreaUnits() : new ArrayList();
+        if (scientificAreaUnits == null) {
+            final IDepartment department = getPersonDepartment();
+            scientificAreaUnits = (department != null) ? department.getUnit().getScientificAreaUnits() : null;
+        }
+        return scientificAreaUnits;
     }
     
-    public ICompetenceCourse getCompetenceCourse() throws FenixFilterException, FenixServiceException {
-        return (competenceCourse == null) ? (competenceCourse = (ICompetenceCourse) readDomainObject(
-                CompetenceCourse.class, getCompetenceCourseID())) : competenceCourse;
-    }
-
-    public String createCompetenceCourse() {
-        try {
-            Object args[] = { getName(), getEctsCredits(), getBasic(), getTheoreticalHours(),
-                    getProblemsHours(), getLabHours(), getProjectHours(), getSeminaryHours(),
-                    RegimeType.valueOf(getRegime()), getCompetenceCourseGroupUnitID() };
-            ICompetenceCourse course = (ICompetenceCourse) ServiceUtils.executeService(getUserView(),
-                    "CreateCompetenceCourse", args);
-            setCompetenceCourseID(course.getIdInternal());
-            return "editCompetenceCourseAdditionalInformation";
-        } catch (FenixFilterException e) {
-            setErrorMessage("error.creatingCompetenceCourse");
-        } catch (FenixServiceException e) {
-            setErrorMessage("error.creatingCompetenceCourse");
-        } catch (DomainException e) {
-            setErrorMessage(e.getMessage());
-        }
-        return "";
+    public Integer getCompetenceCourseGroupUnitID() {
+        return getAndHoldIntegerParameter("competenceCourseGroupUnitID");        
     }
     
-    public String editCompetenceCourse() {
-        try {
-            Object argsEdit[] = { new EditCompetenceCourse.CompetenceCourseInformation(
-                    getCompetenceCourseID(), getName(), getEctsCredits(), getBasic(),
-                    getTheoreticalHours(), getProblemsHours(), getLabHours(), getProblemsHours(),
-                    getSeminaryHours(), RegimeType.valueOf(getRegime()), CurricularStage
-                            .valueOf(getStage()), getProgram(), getGeneralObjectives(),
-                    getOperationalObjectives(), getEvaluationMethod(), getPrerequisites(), getNameEn(),
-                    getProgramEn(), getGeneralObjectivesEn(), getOperationalObjectivesEn(),
-                    getEvaluationMethodEn(), getPrerequisitesEn()) };
-            ServiceUtils.executeService(getUserView(), "EditCompetenceCourse", argsEdit);
-            return "competenceCoursesManagement";
-        } catch (FenixFilterException e) {
-            setErrorMessage("error.editingCompetenceCourse");
-        } catch (FenixServiceException e) {
-            setErrorMessage(e.getMessage());
-        } catch (DomainException e) {
-            setErrorMessage(e.getMessage());
+    public IUnit getCompetenceCourseGroupUnit() throws FenixFilterException, FenixServiceException {
+        if (competenceCourseGroupUnit == null && getCompetenceCourseGroupUnitID() != null) {
+            competenceCourseGroupUnit = (IUnit) readDomainObject(Unit.class, getCompetenceCourseGroupUnitID());
         }
-        return "";
+        return competenceCourseGroupUnit;
     }
 
-    public String deleteCompetenceCourse() {
-        try {
-            Object[] args = { getCompetenceCourseID() };
-            ServiceUtils.executeService(getUserView(), "DeleteCompetenceCourse", args);
-            setErrorMessage("competenceCourseDeleted");
-            return "competenceCoursesManagement";
-        } catch (FenixFilterException e) {
-            setErrorMessage("error.deletingCompetenceCourse");
-        } catch (FenixServiceException e) {
-            setErrorMessage("error.deletingCompetenceCourse");
-        } catch (DomainException e) {
-            setErrorMessage(e.getMessage());         
+    public String getName() throws FenixFilterException, FenixServiceException {      
+        if (name == null && getCompetenceCourse() != null) {
+            name = getCompetenceCourse().getName();        
         }
-        return "";
-    }
-
-    public String getName() throws FenixFilterException, FenixServiceException {
-        return (name == null && getCompetenceCourse() != null) ? (name = getCompetenceCourse().getName())
-                : name;
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public Double getEctsCredits() throws FenixFilterException, FenixServiceException {
-        return (ectsCredits == null && getCompetenceCourse() != null) ? (ectsCredits = getCompetenceCourse()
-                .getEctsCredits())
-                : ectsCredits;
+    public String getNameEn() throws FenixFilterException, FenixServiceException {        
+        if (nameEn == null && getCompetenceCourse() != null) {
+            nameEn = getCompetenceCourse().getNameEn();
+        }
+        return nameEn;
     }
 
-    public void setEctsCredits(Double ectsCredits) {
-        this.ectsCredits = ectsCredits;
+    public void setNameEn(String nameEn) {
+        this.nameEn = nameEn;
+    }
+    
+    public String getAcronym() throws FenixFilterException, FenixServiceException {
+        if (acronym == null && getCompetenceCourse() != null) {
+            acronym = getCompetenceCourse().getAcronym();
+        }
+        return acronym;
+    }
+
+    public void setAcronym(String acronym) {
+        this.acronym = acronym;
     }
 
     public Boolean getBasic() throws FenixFilterException, FenixServiceException {
-        return (basic == null && getCompetenceCourse() != null) ? (basic = Boolean
-                .valueOf(getCompetenceCourse().isBasic())) : basic;
+        if (basic == null && getCompetenceCourse() != null) {
+            basic = Boolean.valueOf(getCompetenceCourse().isBasic());
+        }
+        return basic;
     }
 
     public void setBasic(Boolean basic) {
         this.basic = basic;
     }
 
-    public Double getTheoreticalHours() throws FenixFilterException, FenixServiceException {        
-        return (theoreticalHours != null) ? theoreticalHours
-                : ((getCompetenceCourse() != null) ? (theoreticalHours = getCompetenceCourse()
-                        .getTheoreticalHours()) : Double.valueOf(0)); 
-    }
-
-    public void setTheoreticalHours(Double theoreticalHours) {
-        this.theoreticalHours = theoreticalHours;
-    }
-
-    public Double getProblemsHours() throws FenixFilterException, FenixServiceException {
-        return (problemsHours != null) ? problemsHours
-                : ((getCompetenceCourse() != null) ? (problemsHours = getCompetenceCourse()
-                        .getProblemsHours()) : Double.valueOf(0));
-    }
-
-    public void setProblemsHours(Double problemsHours) {
-        this.problemsHours = problemsHours;
-    }
-
-    public Double getLabHours() throws FenixFilterException, FenixServiceException {
-        return (labHours != null) ? labHours
-                : ((getCompetenceCourse() != null) ? (labHours = getCompetenceCourse()
-                        .getLaboratorialHours()) : Double.valueOf(0));
-    }
-
-    public void setLabHours(Double labHours) {
-        this.labHours = labHours;
-    }
-
-    public Double getProjectHours() throws FenixFilterException, FenixServiceException {
-        return (projectHours != null) ? projectHours
-                : ((getCompetenceCourse() != null) ? (projectHours = getCompetenceCourse()
-                        .getProjectHours()) : Double.valueOf(0));
-    }
-
-    public void setProjectHours(Double projectHours) {
-        this.projectHours = projectHours;
-    }
-
-    public Double getSeminaryHours() throws FenixFilterException, FenixServiceException {
-        return (seminaryHours != null) ? seminaryHours
-                : ((getCompetenceCourse() != null) ? (seminaryHours = getCompetenceCourse()
-                        .getSeminaryHours()) : Double.valueOf(0));
-    }
-
-    public void setSeminaryHours(Double seminaryHours) {
-        this.seminaryHours = seminaryHours;
-    }
-
-    public String getRegime() throws FenixFilterException, FenixServiceException {
-        return (regime == null && getCompetenceCourse() != null) ? (regime = getCompetenceCourse()
-                .getRegime().getName()) : regime;
+    public String getRegime() {
+        if (regime == null) {
+            regime = (String) getViewState().getAttribute("regime");
+            if (regime == null) {
+                regime = "SEMESTER";
+            }                        
+        }
+        return regime;
     }
 
     public void setRegime(String regime) {
-        this.regime = regime;
+        getViewState().setAttribute("regime", (this.regime = regime));
+    }   
+    
+    public Integer getNumberOfPeriods() {
+        if (numberOfPeriods == null) {
+            numberOfPeriods = (Integer) getViewState().getAttribute("numberOfPeriods");
+            if (numberOfPeriods == null) {
+                numberOfPeriods = Integer.valueOf(1);
+            }
+        }
+        return numberOfPeriods;
+    }
+
+    public void setNumberOfPeriods(Integer numberOfPeriods) {
+        if (setNumberOfPeriods) {
+            getViewState().setAttribute("numberOfPeriods", (this.numberOfPeriods = numberOfPeriods));
+        }        
+    }    
+    
+    public List<SelectItem> getPeriods() {
+        final List<SelectItem> result = new ArrayList<SelectItem>(2);
+        result.add(new SelectItem(Integer.valueOf(1), "1"));
+        if (getRegime().equals("ANUAL")) {
+            result.add(new SelectItem(Integer.valueOf(2), "2"));
+        }
+        return result;
     }
     
-    public String getStage() throws FenixFilterException, FenixServiceException {
-        return (stage == null && getCompetenceCourse() != null) ? (stage = getCompetenceCourse()
-                .getCurricularStage().getName()) : stage;
+    public List<CourseLoad> getCourseLoads() throws FenixFilterException, FenixServiceException {
+        if (getViewState().getAttribute("courseLoads") == null) {
+            final List<CourseLoad> courseLoads;
+            if (getAction().equals("create")) {
+                courseLoads = createNewCourseLoads();
+            } else if (getAction().equals("edit") && getCompetenceCourse() != null) {
+                courseLoads = getExistingCourseLoads();
+            } else {
+                courseLoads = new ArrayList<CourseLoad>(0);
+            }            
+            getViewState().setAttribute("courseLoads", courseLoads);
+        }
+        return (List<CourseLoad>) getViewState().getAttribute("courseLoads");
+    }
+    
+    private List<CourseLoad> createNewCourseLoads() {
+        int numberOfPeriods = getNumberOfPeriods().intValue();
+        final List<CourseLoad> courseLoads = new ArrayList<CourseLoad>(numberOfPeriods);        
+        for (int i = 0; i < numberOfPeriods; i++) {
+            courseLoads.add(new CourseLoad());
+        }
+        return courseLoads;
+    }
+    
+    private List<CourseLoad> getExistingCourseLoads() throws FenixFilterException, FenixServiceException {
+        final List<CourseLoad> courseLoads = new ArrayList<CourseLoad>(getCompetenceCourse().getCompetenceCourseLoads().size());        
+        for (final ICompetenceCourseLoad competenceCourseLoad : getCompetenceCourse().getCompetenceCourseLoads()) {
+            courseLoads.add(new CourseLoad("edit", competenceCourseLoad));
+        }
+        return courseLoads;
+    }
+    
+    public void setCourseLoads(List<CourseLoad> courseLoads) {
+        getViewState().setAttribute("courseLoads", courseLoads);
+    }
+    
+    public void resetCourseLoad(ValueChangeEvent event) throws FenixFilterException, FenixServiceException {
+        calculateCourseLoad((String) event.getNewValue(), 1);
+    }
+    
+    public void resetCorrespondentCourseLoad(ValueChangeEvent event) throws FenixFilterException, FenixServiceException {
+        calculateCourseLoad(getRegime(), ((Integer) event.getNewValue()).intValue());
+    }
+    
+    private void calculateCourseLoad(String regime, int newNumberOfPeriods) throws FenixFilterException, FenixServiceException {
+        final List<CourseLoad> courseLoads = getCourseLoads();
+        if (regime.equals("ANUAL")) {
+            if (newNumberOfPeriods == 2 && courseLoads.size() == 1) {
+                courseLoads.add(new CourseLoad());                
+            } else if (courseLoads.size() > 1) {
+                courseLoads.remove(0);
+            }
+            setCourseLoads(courseLoads);
+        } else if (regime.equals("SEMESTER")) {
+            if (courseLoads.size() > 1) {
+                courseLoads.remove(0);
+                setCourseLoads(courseLoads);
+            }            
+            setNumberOfPeriods(Integer.valueOf(1));
+            setNumberOfPeriods = false; // prevent jsf to reset the value
+        }
+    }
+    
+    public Integer getCompetenceCourseID() {
+        return (competenceCourseID == null) ? (competenceCourseID = getAndHoldIntegerParameter("competenceCourseID")) : competenceCourseID;
+    }
+    
+    public void setCompetenceCourseID(Integer competenceCourseID) {
+        this.competenceCourseID = competenceCourseID;
+    }
+    
+    public ICompetenceCourse getCompetenceCourse() throws FenixFilterException, FenixServiceException {
+        if (competenceCourse == null && getCompetenceCourseID() != null) {
+            competenceCourse = (ICompetenceCourse) readDomainObject(CompetenceCourse.class, getCompetenceCourseID()); 
+        }
+        return competenceCourse;
+    }
+    
+    public void setCompetenceCourse(ICompetenceCourse competenceCourse) {
+        this.competenceCourse = competenceCourse;
+    }
+    
+    public String getObjectives() {
+        return objectives;
     }
 
-    public void setStage(String stage) {
-        this.stage = stage;
+    public void setObjectives(String objectives) {
+        this.objectives = objectives;
     }
 
-    public String getProgram() throws FenixFilterException, FenixServiceException {
-        return (program == null && getCompetenceCourse() != null) ? (program = getCompetenceCourse()
-                .getProgram()) : program;
+    public String getProgram() {
+        return program;
     }
 
     public void setProgram(String program) {
         this.program = program;
     }
 
-    public String getGeneralObjectives() throws FenixFilterException, FenixServiceException {
-        return (generalObjectives == null && getCompetenceCourse() != null) ? (generalObjectives = getCompetenceCourse()
-                .getGeneralObjectives())
-                : generalObjectives;
-    }
-
-    public void setGeneralObjectives(String generalObjectives) {
-        this.generalObjectives = generalObjectives;
-    }
-
-    public String getOperationalObjectives() throws FenixFilterException, FenixServiceException {
-        return (operationalObjectives == null && getCompetenceCourse() != null) ? (operationalObjectives = getCompetenceCourse()
-                .getOperationalObjectives())
-                : operationalObjectives;
-    }
-
-    public void setOperationalObjectives(String operationalObjectives) {
-        this.operationalObjectives = operationalObjectives;
-    }
-
-    public String getEvaluationMethod() throws FenixFilterException, FenixServiceException {
-        return (evaluationMethod == null && getCompetenceCourse() != null) ? (evaluationMethod = getCompetenceCourse()
-                .getEvaluationMethod())
-                : evaluationMethod;
+    public String getEvaluationMethod() {
+        return evaluationMethod;
     }
 
     public void setEvaluationMethod(String evaluationMethod) {
         this.evaluationMethod = evaluationMethod;
     }
 
-    public String getPrerequisites() throws FenixFilterException, FenixServiceException {
-        return (prerequisites == null && getCompetenceCourse() != null) ? (prerequisites = getCompetenceCourse()
-                .getPrerequisites())
-                : prerequisites;
+    public String getObjectivesEn() {
+        return objectivesEn;
     }
 
-    public void setPrerequisites(String prerequisites) {
-        this.prerequisites = prerequisites;
+    public void setObjectivesEn(String objectivesEn) {
+        this.objectivesEn = objectivesEn;
     }
 
-    public String getNameEn() throws FenixFilterException, FenixServiceException {
-        return (nameEn == null && getCompetenceCourse() != null) ? (nameEn = getCompetenceCourse()
-                .getNameEn()) : nameEn;
-    }
-
-    public void setNameEn(String nameEn) {
-        this.nameEn = nameEn;
-    }
-
-    public String getProgramEn() throws FenixFilterException, FenixServiceException {
-        return (programEn == null && getCompetenceCourse() != null) ? (programEn = getCompetenceCourse()
-                .getProgramEn()) : programEn;
+    public String getProgramEn() {
+        return programEn;
     }
 
     public void setProgramEn(String programEn) {
         this.programEn = programEn;
     }
 
-    public String getGeneralObjectivesEn() throws FenixFilterException, FenixServiceException {
-        return (generalObjectivesEn == null && getCompetenceCourse() != null) ? (generalObjectivesEn = getCompetenceCourse()
-                .getGeneralObjectivesEn())
-                : generalObjectivesEn;
-    }
-
-    public void setGeneralObjectivesEn(String generalObjectivesEn) {
-        this.generalObjectivesEn = generalObjectivesEn;
-    }
-
-    public String getOperationalObjectivesEn() throws FenixFilterException, FenixServiceException {
-        return (operationalObjectivesEn == null && getCompetenceCourse() != null) ? (operationalObjectivesEn = getCompetenceCourse()
-                .getOperationalObjectivesEn())
-                : operationalObjectivesEn;
-    }
-
-    public void setOperationalObjectivesEn(String operationalObjectivesEn) {
-        this.operationalObjectivesEn = operationalObjectivesEn;
-    }
-
-    public String getEvaluationMethodEn() throws FenixFilterException, FenixServiceException {
-        return (evaluationMethodEn == null && getCompetenceCourse() != null) ? (evaluationMethodEn = getCompetenceCourse()
-                .getEvaluationMethodEn())
-                : evaluationMethodEn;
+    public String getEvaluationMethodEn() {
+        return evaluationMethodEn;
     }
 
     public void setEvaluationMethodEn(String evaluationMethodEn) {
         this.evaluationMethodEn = evaluationMethodEn;
     }
-
-    public String getPrerequisitesEn() throws FenixFilterException, FenixServiceException {
-        return (prerequisitesEn == null && getCompetenceCourse() != null) ? (prerequisitesEn = getCompetenceCourse()
-                .getPrerequisitesEn())
-                : prerequisitesEn;
+    
+    public String getStage() throws FenixFilterException, FenixServiceException {
+        if (stage == null && getCompetenceCourse() != null) {
+            stage = getCompetenceCourse().getRegime().getName();
+        }
+        return stage;
     }
 
-    public void setPrerequisitesEn(String prerequisitesEn) {
-        this.prerequisitesEn = prerequisitesEn;
+    public void setStage(String stage) {
+        this.stage = stage;
+    }
+    
+    public String createCompetenceCourse() {
+        try {
+            final Object args[] = { getName(), getNameEn(), getAcronym(), getBasic(),
+                    RegimeType.valueOf(getRegime()), getCompetenceCourseGroupUnitID() };
+            final ICompetenceCourse competenceCourse = (ICompetenceCourse) ServiceUtils.executeService(
+                    getUserView(), "CreateCompetenceCourse", args);
+            setCompetenceCourse(competenceCourse);
+            return "setCompetenceCourseLoad";
+        } catch (FenixFilterException e) {
+            setErrorMessage("error.creatingCompetenceCourse");
+        } catch (FenixServiceException e) {
+            setErrorMessage("error.creatingCompetenceCourse");
+        } catch (DomainException e) {
+            setErrorMessage(e.getMessage());
+        }
+        return "";
+    }
+    
+    public String createCompetenceCourseLoad() {
+        try {
+            setCompetenceCourseLoad();
+            return "setCompetenceCourseAdditionalInformation";
+        } catch (FenixFilterException e) {
+            setErrorMessage("error.editingCompetenceCourse");
+        } catch (FenixServiceException e) {
+            setErrorMessage("error.editingCompetenceCourse");
+        }
+        return "";
+    }
+    
+    public String createCompetenceCourseAdditionalInformation() {
+        try {
+            setCompetenceCourseAdditionalInformation();
+            return "competenceCoursesManagement";
+        } catch (FenixFilterException e) {
+            setErrorMessage("error.editingCompetenceCourse");
+        } catch (FenixServiceException e) {
+            setErrorMessage("error.editingCompetenceCourse");
+        }
+        return "";        
+    }
+    
+    public String editCompetenceCourse() {
+        try {
+            final Object args[] = {getCompetenceCourseID(), getName(), getNameEn(), getAcronym(), getBasic(),
+                    CurricularStage.valueOf(getStage()) };
+            ServiceUtils.executeService(getUserView(), "EditCompetenceCourse", args);
+            return "editCompetenceCourseMainPage";
+        } catch (FenixFilterException e) {
+            setErrorMessage("error.editingCompetenceCourse");
+        } catch (FenixServiceException e) {
+            setErrorMessage("error.editingCompetenceCourse");
+        }
+        return "";
+    }   
+    
+    public String editCompetenceCourseLoad() {
+        try {
+            setCompetenceCourseLoad();
+            return "editCompetenceCourseMainPage";
+        } catch (FenixFilterException e) {
+            setErrorMessage("error.editingCompetenceCourse");
+        } catch (FenixServiceException e) {
+            setErrorMessage("error.editingCompetenceCourse");
+        }
+        return "";
+    }
+    
+    public String editCompetenceCourseAdditionalInformation() {
+        try {
+            setCompetenceCourseAdditionalInformation();
+            return "editCompetenceCourseMainPage";
+        } catch (FenixFilterException e) {
+            setErrorMessage("error.editingCompetenceCourse");
+        } catch (FenixServiceException e) {
+            setErrorMessage("error.editingCompetenceCourse");
+        }
+        return "";
+    }
+    
+    private void setCompetenceCourseLoad() throws FenixFilterException, FenixServiceException {
+        Object args[] = { getCompetenceCourseID(), RegimeType.valueOf(getRegime()), getCourseLoads() };
+        ServiceUtils.executeService(getUserView(), "EditCompetenceCourseLoad", args);
+    }
+
+    private void setCompetenceCourseAdditionalInformation() throws FenixFilterException, FenixServiceException {
+        final Object args[] = { getCompetenceCourseID(), getObjectives(), getProgram(),
+                getEvaluationMethod(), getObjectivesEn(), getProgramEn(), getEvaluationMethodEn() };
+        ServiceUtils.executeService(getUserView(), "EditCompetenceCourse", args);
+    }
+    
+    public String deleteCompetenceCourse() {
+        try {
+            Object[] args = { getCompetenceCourseID() };
+            ServiceUtils.executeService(getUserView(), "DeleteCompetenceCourse", args);
+            addInfoMessage(bundle.getString("competenceCourseDeleted"));
+            return "competenceCoursesManagement";
+        } catch (FenixFilterException e) {
+            setErrorMessage("error.deletingCompetenceCourse");
+        } catch (FenixServiceException e) {
+            setErrorMessage("error.deletingCompetenceCourse");
+        } catch (DomainException e) {
+            setErrorMessage(e.getMessage());        
+        }
+        return "";
     }
 }

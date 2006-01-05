@@ -118,6 +118,11 @@
 		jdbc-type="VARCHAR"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularStage2SqlCurricularStageFieldConversion"
 	/>
+	<field-descriptor
+        name="creationDate"
+        column="CREATION_DATE"
+        jdbc-type="DATE"
+	/>
 	<reference-descriptor auto-retrieve="false"
          name="unit"
          class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
@@ -140,7 +145,7 @@
 		<inverse-foreignkey field-ref="keyCompetenceCourse"/>
 	</collection-descriptor>
    	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="courseInformations"
+		name="competenceCourseInformations"
 		element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation">
 		<inverse-foreignkey field-ref="keyCompetenceCourse"/>
 	</collection-descriptor>

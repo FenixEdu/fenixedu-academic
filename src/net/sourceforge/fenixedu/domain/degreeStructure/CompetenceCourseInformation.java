@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
-import net.sourceforge.fenixedu.domain.ICompetenceCourse;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
+import java.util.Date;
 
 public class CompetenceCourseInformation extends CompetenceCourseInformation_Base {
 
@@ -9,67 +8,45 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         super();
     }
 
-    public CompetenceCourseInformation(String name, String code, Double ectsCredits, Boolean basic, Double theoreticalHours,
-            Double problemsHours, Double labHours, Double projectHours, Double seminaryHours, RegimeType regime,
-            ICompetenceCourse competenceCourse, IExecutionYear executionYear) {
-        
-        this();        
+    public CompetenceCourseInformation(String name, String nameEn, String acronym, Boolean basic, RegimeType regimeType, Date endDate) {        
+        this();
         setName(name);
-        setCode(code);
-        setEctsCredits(ectsCredits);        
-        setBasic(basic);
-        setTheoreticalHours(theoreticalHours);
-        setProblemsHours(problemsHours);
-        setLabHours(labHours);
-        setProjectHours(projectHours);
-        setSeminaryHours(seminaryHours);
-        setRegime(regime);
-        
-        setCompetenceCourse(competenceCourse);
-        setExecutionYear(executionYear);
-    }
-    
-    public void edit(String name, String code, Double ectsCredits, Boolean basic, Double theoreticalHours,
-            Double problemsHours, Double labHours, Double projectHours, Double seminaryHours, RegimeType regime) {
-        
-        setName(name);
-        setCode(code);
-        setEctsCredits(ectsCredits);        
-        setBasic(basic);
-        setTheoreticalHours(theoreticalHours);
-        setProblemsHours(problemsHours);
-        setLabHours(labHours);
-        setProjectHours(projectHours);
-        setSeminaryHours(seminaryHours);
-        setRegime(regime);
-    }
-    
-    public void edit(String program, String generalObjectives, String operationalObjectives,
-            String evaluationMethod, String prerequisites, String nameEn, String programEn,
-            String generalObjectivesEn, String operationalObjectivesEn, String evaluationMethodEn,
-            String prerequisitesEn) {
-        
-        setProgram(program);
-        setGeneralObjectives(generalObjectives);
-        setOperationalObjectives(operationalObjectives);
-        setEvaluationMethod(evaluationMethod);
-        setPrerequisites(prerequisites);
         setNameEn(nameEn);
-        setProgramEn(programEn);
-        setGeneralObjectivesEn(generalObjectivesEn);
-        setOperationalObjectivesEn(operationalObjectivesEn);
-        setEvaluationMethodEn(evaluationMethodEn);
-        setPrerequisitesEn(prerequisitesEn);
+        setAcronym(acronym);
+        setBasic(basic);
+        setRegime(regimeType);
+        setEndDate(endDate);
     }
     
-    public void delete() {
-        setExecutionYear(null);
-        setCompetenceCourse(null);
-        super.deleteDomainObject();
+    public void edit(String name, String nameEn, String acronym, Boolean basic) {
+        setName(name);
+        setNameEn(nameEn);
+        setAcronym(acronym);
+        setBasic(basic);
     }
 
-    public int getTotalLessonHours() {
-        return getTheoreticalHours().intValue() + getProblemsHours().intValue() + getLabHours().intValue()
-        + getProjectHours().intValue() + getSeminaryHours().intValue(); 
+    
+    public void edit(String objectives, String program, String evaluationMethod, String objectivesEn,
+            String programEn, String evaluationMethodEn) {
+        setObjectives(objectives);
+        setProgram(program);
+        setEvaluationMethod(evaluationMethod);
+        setObjectivesEn(objectivesEn);
+        setProgramEn(programEn);
+        setEvaluationMethodEn(evaluationMethodEn);
+    }
+    
+    public void delete() {       
+        removeCompetenceCourse();
+        for (; !getCompetenceCourseLoads().isEmpty(); getCompetenceCourseLoads().get(0).delete());
+        super.deleteDomainObject();
+    }
+    
+    public double getTotalEctsCredits() {
+        double result = 0;
+        for (final ICompetenceCourseLoad competenceCourseLoad : getCompetenceCourseLoads()) {
+            result += competenceCourseLoad.getEctsCredits().doubleValue();
+        }
+        return result;
     }
 }

@@ -1,16 +1,16 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
+import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.ICompetenceCourseInformation;
+import net.sourceforge.fenixedu.domain.degreeStructure.ICompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IUnit;
@@ -19,8 +19,12 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     
     private ICompetenceCourseInformation recentCompetenceCourseInformation;
     
+    protected CompetenceCourse() {
+        super();        
+    }
+    
     public CompetenceCourse(String code, String name, Collection<IDepartment> departments, CurricularStage curricularStage) {
-    	super();
+    	this();
         setCurricularStage(curricularStage);
         fillFields(code, name);
         if(departments != null) {
@@ -28,15 +32,24 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         }
     }
     
-    public CompetenceCourse(String name, String code, Double ectsCredits, Boolean basic,
-            Double theoreticalHours, Double problemsHours, Double labHours, Double projectHours,
-            Double seminaryHours, RegimeType regime, CurricularStage curricularStage, IUnit unit, IExecutionYear executionYear) {
-        
-        super();
+    
+    public CompetenceCourse(String name, String nameEn, String acronym, Boolean basic, 
+            RegimeType regimeType, CurricularStage curricularStage, IUnit unit) {           
+        this();
         setCurricularStage(curricularStage);
         setUnit(unit);
-        new CompetenceCourseInformation(name, code, ectsCredits, basic, theoreticalHours, problemsHours,
-                labHours, projectHours, seminaryHours, regime, this, executionYear);
+        addCompetenceCourseInformations(new CompetenceCourseInformation(name, nameEn, acronym, basic, regimeType, null));
+    }
+    
+    public void addCompetenceCourseLoad(Double theoreticalHours, Double problemsHours,
+            Double laboratorialHours, Double seminaryHours, Double fieldWorkHours,
+            Double trainingPeriodHours, Double tutorialOrientationHours, Double autonomousWorkHours,
+            Double ectsCredits) {
+
+        getRecentCompetenceCourseInformation().addCompetenceCourseLoads(
+                new CompetenceCourseLoad(theoreticalHours, problemsHours, laboratorialHours,
+                        seminaryHours, fieldWorkHours, trainingPeriodHours, tutorialOrientationHours,
+                        autonomousWorkHours, ectsCredits));
     }
     
     private void fillFields(String code, String name) {
@@ -52,45 +65,36 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     
     public void edit(String code, String name, Collection<IDepartment> departments) {
     	fillFields(code, name);
-    	for (IDepartment department : getDepartments()) {
+    	for (final IDepartment department : this.getDepartments()) {
 			if(!departments.contains(department)) {
 				removeDepartments(department);
 			}
 		}
-    	for (IDepartment department : departments) {
+    	for (final IDepartment department : departments) {
 			if(!hasDepartments(department)) {
 				addDepartments(department);
 			}
 		}
     }
 
-    public void edit(String name, String code, Double ectsCredits, Boolean basic,
-            Double theoreticalHours, Double problemsHours, Double labHours, Double projectHours,
-            Double seminaryHours, RegimeType regime, CurricularStage curricularStage) {
-
+    public void edit(String name, String nameEn, String acronym, Boolean basic, CurricularStage curricularStage) {
         setCurricularStage(curricularStage);
-        getRecentCompetenceCourseInformation().edit(name, code, ectsCredits, basic, theoreticalHours,
-                problemsHours, labHours, projectHours, seminaryHours, regime);
-    }
-    
-    public void edit(String program, String generalObjectives, String operationalObjectives,
-            String evaluationMethod, String prerequisites, String nameEn, String programEn,
-            String generalObjectivesEn, String operationalObjectivesEn, String evaluationMethodEn,
-            String prerequisitesEn) {
-
-        getRecentCompetenceCourseInformation().edit(program, generalObjectives, operationalObjectives,
-                evaluationMethod, prerequisites, nameEn, programEn, generalObjectivesEn,
-                operationalObjectivesEn, evaluationMethodEn, prerequisitesEn);
+        getRecentCompetenceCourseInformation().edit(name, nameEn, acronym, basic);
     }
 
+    public void edit(String objectives, String program, String evaluationMethod, String objectivesEn,
+            String programEn, String evaluationMethodEn) {
+        getRecentCompetenceCourseInformation().edit(objectives, program, evaluationMethod, objectivesEn,
+                programEn, evaluationMethodEn);
+    }
 
 	public void delete() {
         if (hasAnyAssociatedCurricularCourses()) {
-            throw new DomainException("error.mustdeleteCurricularCoursesFirst");
+            throw new DomainException("error.mustDeleteCurricularCoursesFirst");
         }
 		getDepartments().clear();
-        getUnit().removeCompetenceCourses(this);
-        for(;!getCourseInformations().isEmpty(); getCourseInformations().get(0).delete());        
+        removeUnit();
+        for(;!getCompetenceCourseInformations().isEmpty(); getCompetenceCourseInformations().get(0).delete());        
     	super.deleteDomainObject();
     }
     
@@ -113,15 +117,12 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     
     // TODO: Check this method!!!
     private ICompetenceCourseInformation findRecentCompetenceCourseInformation() {
-        Date now = Calendar.getInstance().getTime();
-        for (ICompetenceCourseInformation courseInformation : getCourseInformations()) {            
-            if (now.before(courseInformation.getExecutionYear().getBeginDate()) || 
-                (now.after(courseInformation.getExecutionYear().getBeginDate()) &&
-                 now.before(courseInformation.getExecutionYear().getEndDate()))) {
-                return courseInformation;
+        for (final ICompetenceCourseInformation competenceCourseInformation : getCompetenceCourseInformations()) {
+            if (competenceCourseInformation.getEndDate() == null) { // endDate not defined: most recent information
+                return competenceCourseInformation;
             }
         }
-        throw new DomainException("invalid.competenceCourseInformation");
+        return null;
     }
 
     @Override
@@ -131,93 +132,53 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         }
         return super.getName();
     }
-    
-    @Override
-    public String getCode() {
-        if (super.getCode() == null || super.getCode().length() == 0) {
-            return getRecentCompetenceCourseInformation().getCode();
-        }
-        return super.getCode();
+
+    public String getNameEn() {
+        return getRecentCompetenceCourseInformation().getNameEn();
     }
     
-    public Double getEctsCredits() {
-        return getRecentCompetenceCourseInformation().getEctsCredits();
+    public String getAcronym() {
+        return getRecentCompetenceCourseInformation().getAcronym();
     }
     
     public boolean isBasic() {
         return getRecentCompetenceCourseInformation().getBasic().booleanValue();
-    }
-
-    public Double getTheoreticalHours() {
-        return getRecentCompetenceCourseInformation().getTheoreticalHours();
-    }
-    
-    public Double getProblemsHours() {
-        return getRecentCompetenceCourseInformation().getProblemsHours();
-    }
-    
-    public Double getLaboratorialHours() {
-        return getRecentCompetenceCourseInformation().getLabHours();
-    }
-    
-    public Double getProjectHours() {
-        return getRecentCompetenceCourseInformation().getProjectHours();
-    }
-    
-    public Double getSeminaryHours() {
-        return getRecentCompetenceCourseInformation().getSeminaryHours();
     }
     
     public RegimeType getRegime() {
         return getRecentCompetenceCourseInformation().getRegime();
     }
     
+    public void setRegime(RegimeType regimeType) {
+        getRecentCompetenceCourseInformation().setRegime(regimeType);
+    }
+    
+    public List<ICompetenceCourseLoad> getCompetenceCourseLoads() {
+        return getRecentCompetenceCourseInformation().getCompetenceCourseLoads();
+    }
+    
+    public String getObjectives() {
+        return getRecentCompetenceCourseInformation().getObjectives();
+    }
+
     public String getProgram() {
         return getRecentCompetenceCourseInformation().getProgram();
     }
-    
-    public String getGeneralObjectives() {
-        return getRecentCompetenceCourseInformation().getGeneralObjectives();
-    }
-        
-    public String getOperationalObjectives() {
-        return getRecentCompetenceCourseInformation().getOperationalObjectives();
-    }
-    
+
     public String getEvaluationMethod() {
         return getRecentCompetenceCourseInformation().getEvaluationMethod();
     }
-    
-    public String getPrerequisites() {
-        return getRecentCompetenceCourseInformation().getPrerequisites();
+
+    public String getObjectivesEn() {
+        return getRecentCompetenceCourseInformation().getObjectivesEn();
     }
-    
-    public String getNameEn() {
-        return getRecentCompetenceCourseInformation().getNameEn();
-    }
-    
+
     public String getProgramEn() {
         return getRecentCompetenceCourseInformation().getProgramEn();
     }
-    
-    public String getGeneralObjectivesEn() {
-        return getRecentCompetenceCourseInformation().getGeneralObjectivesEn();
-    }
-        
-    public String getOperationalObjectivesEn() {
-        return getRecentCompetenceCourseInformation().getOperationalObjectivesEn();
-    }
-    
+
     public String getEvaluationMethodEn() {
         return getRecentCompetenceCourseInformation().getEvaluationMethodEn();
-    }
-    
-    public String getPrerequisitesEn() {
-        return getRecentCompetenceCourseInformation().getPrerequisitesEn();
-    }
-    
-    public int getTotalLessonHours() {
-        return getRecentCompetenceCourseInformation().getTotalLessonHours();
     }
     
     public Map<IDegree, List<ICurricularCourse>> getAssociatedCurricularCoursesGroupedByDegree() {

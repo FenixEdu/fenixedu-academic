@@ -1023,40 +1023,29 @@ class net.sourceforge.fenixedu.domain.CompetenceCourse extends net.sourceforge.f
 	String code;
 	Integer keyUnit;
 	CurricularStage curricularStage;
+	Date creationDate;
+	
 	interface "
 	public void delete();
 	public void addCurricularCourses(java.util.Collection<ICurricularCourse> curricularCourses);
+	public void addCompetenceCourseLoad(Double theoreticalHours, Double problemsHours, Double laboratorialHours, Double seminaryHours,
+	        Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours, Double autonomousWorkHours, Double ectsCredits);
 	public void edit(String code, String name, java.util.Collection<IDepartment> departments);
-	public void edit(String name, String code, Double ectsCredits, Boolean basic,
-            Double theoreticalHours, Double problemsHours, Double labHours, Double projectHours,
-            Double seminaryHours, net.sourceforge.fenixedu.domain.degreeStructure.RegimeType regime,
-            net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage curricularStage);
-    public void edit(String program, String generalObjectives, String operationalObjectives, String evaluationMethod,
-            String prerequisites, String nameEn, String programEn, String generalObjectivesEn, String operationalObjectivesEn,
-            String evaluationMethodEn, String prerequisitesEn);
-    public void addDepartments(java.util.Collection<IDepartment> departments);
-    
-    public Double getEctsCredits();    
-    public boolean isBasic();
-    public Double getTheoreticalHours();
-    public Double getProblemsHours();
-    public Double getLaboratorialHours();
-    public Double getProjectHours();
-    public Double getSeminaryHours();
-    public net.sourceforge.fenixedu.domain.degreeStructure.RegimeType getRegime();
-    public String getProgram();
-    public String getGeneralObjectives();   
-    public String getOperationalObjectives();
-    public String getEvaluationMethod();
-    public String getPrerequisites();
+	public void edit(String name, String nameEn, String acronym, Boolean basic, net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage curricularStage);
+    public void edit(String objectives, String program, String evaluationMethod, String objectivesEn, String programEn, String evaluationMethodEn);
     public String getNameEn();
+    public String getAcronym();
+    public boolean isBasic();
+    public net.sourceforge.fenixedu.domain.degreeStructure.RegimeType getRegime();
+    public void setRegime(net.sourceforge.fenixedu.domain.degreeStructure.RegimeType regimeType);
+    public java.util.List<net.sourceforge.fenixedu.domain.degreeStructure.ICompetenceCourseLoad> getCompetenceCourseLoads();
+    public String getObjectives();
+    public String getProgram();
+    public String getEvaluationMethod();
+    public String getObjectivesEn();
     public String getProgramEn();
-    public String getGeneralObjectivesEn();   
-    public String getOperationalObjectivesEn();
     public String getEvaluationMethodEn();
-    public String getPrerequisitesEn();
-    public int getTotalLessonHours();
-    
+    public void addDepartments(java.util.Collection<IDepartment> departments);
 	public java.util.Map<IDegree, java.util.List<ICurricularCourse>> getAssociatedCurricularCoursesGroupedByDegree();
 	public java.util.List<IEnrolmentEvaluation> getActiveEnrollmentEvaluations(IExecutionYear executionYear);
 	public Boolean hasActiveScopesInExecutionYear(IExecutionYear executionYear);
@@ -1067,40 +1056,45 @@ class net.sourceforge.fenixedu.domain.CompetenceCourse extends net.sourceforge.f
 
 class net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyCompetenceCourse;
-	Integer keyExecutionYear;
 	String name;
-	String code;
-	Double ectsCredits; 
-	Boolean basic; 
-	Double theoreticalHours; 
-	Double problemsHours;
-	Double labHours; 
-	Double projectHours;
-	Double seminaryHours;
-	RegimeType regime;
-	String program;
-	String generalObjectives;
-    String operationalObjectives;
-    String evaluationMethod;
-    String prerequisites;
     String nameEn;
+	String acronym;
+	Boolean basic; 
+	RegimeType regime;
+    String objectives;
+    String objectivesEn;    
+    String program; 
     String programEn;
-	String generalObjectivesEn;
-    String operationalObjectivesEn;
+    String evaluationMethod;    
     String evaluationMethodEn;
-    String prerequisitesEn;
+    Date endDate;
 	
 	interface "
-	public void edit(String name, String code, Double ectsCredits, Boolean basic, Double theoreticalHours,
-            Double problemsHours, Double labHours, Double projectHours, Double seminaryHours, RegimeType regime);            
-    public void edit(String program, String generalObjectives, String operationalObjectives,
-            String evaluationMethod, String prerequisites, String nameEn, String programEn, String generalObjectivesEn, 
-            String operationalObjectivesEn, String evaluationMethodEn, String prerequisitesEn);  
+    public void edit(String name, String nameEn, String acronym, Boolean basic);
+    public void edit(String objectives, String program, String evaluationMethod, String objectivesEn, String programEn, String evaluationMethodEn);
 	public void delete();
-    public int getTotalLessonHours();
 	"
 }
 
+class net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyCompetenceCourseInformation;
+    Double theoreticalHours;
+    Double problemsHours;
+    Double laboratorialHours; 
+	Double seminaryHours;
+	Double fieldWorkHours;
+	Double trainingPeriodHours;
+	Double tutorialOrientationHours;
+	Double autonomousWorkHours;
+	Double ectsCredits; 
+	
+	interface "
+	public void edit(Double theoreticalHours, Double problemsHours, Double laboratorialHours, Double seminaryHours,
+	        Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours, Double autonomousWorkHours, Double ectsCredits);
+	public void delete();
+	public double getTotalContactLessonHours();
+	"
+}
 
 class net.sourceforge.fenixedu.domain.DislocatedStudent extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyCountry;
@@ -1337,7 +1331,7 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 
         interface "
         public void edit(String name, java.util.Date begin, java.util.Date end, String description);
-        "           
+        "
 	}
 
 
@@ -4251,18 +4245,18 @@ relation OtherTypeCreditLineExecutionPeriod {
 
 
 relation CompetenceCourseInformationCompetenceCourse {
-	net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation playsRole courseInformations {
+	net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation playsRole competenceCourseInformations {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.CompetenceCourse playsRole competenceCourse;
 }
 
 
-relation CompetenceCourseInformationExecutionYear {
-	net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation playsRole courseInformations {
-		multiplicity *;
+relation CompetenceCourseInformationCompetenceCourseLoad {
+	net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation playsRole competenceCourseInformation;	
+	net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad playsRole competenceCourseLoads {
+	    multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 }
 
 

@@ -3,156 +3,69 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <style>
-<!--
+.alignLeft {
+	text-align: left;
+}
 .alignRight {
 	text-align: right;
 }
--->
+.backgroundColor {
+	background-color: #f5f5f5;
+}
 </style>
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="ServidorApresentacao/BolonhaManagerResources" var="bolonhaBundle"/>
+	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="enumerationBundle"/>
+	
+	<h:outputFormat value="<h2>#{bolonhaBundle['edit.param']}</h2>" escape="false">
+		<f:param value=" #{bolonhaBundle['competenceCourse']}"/>
+	</h:outputFormat>
+	<h:outputText value="<h3>#{CompetenceCourseManagement.competenceCourse.name}</h3>" escape="false"/>
+	<h:outputText value="#{bolonhaBundle['department']}: " style="font-weight: bold"/>
+	<h:outputText value="#{CompetenceCourseManagement.personDepartment.realName}" style="font-style:italic"/><br/>
+	<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.unit.parentUnits}" var="scientificAreaUnit">
+		<h:outputText value="#{bolonhaBundle['area']}: " style="font-weight: bold"/>
+		<h:outputText value="#{scientificAreaUnit.name} > #{CompetenceCourseManagement.competenceCourse.unit.name}<br/>" escape="false"/>
+	</fc:dataRepeater>
+	<br/>
 	<h:form>
-		<h:outputText value="#{bolonhaBundle['editCompetenceCourse']}" style="font-style:italic"/>
-		<h2><h:outputText value="#{CompetenceCourseManagement.competenceCourse.name}"/></h2>	
 		<h:panelGrid columnClasses="infocell" columns="2" border="0">
 			<h:outputText value="#{bolonhaBundle['state']}: " style="font-weight: bold"/>
 			<h:selectOneMenu value="#{CompetenceCourseManagement.stage}">
-				<f:selectItems value="#{CompetenceCourseManagement.curricularStageTypes}" />
+				<f:selectItem itemValue="DRAFT" itemLabel="#{enumerationBundle['DRAFT']}"/>
+				<f:selectItem itemValue="PUBLISHED" itemLabel="#{enumerationBundle['PUBLISHED']}"/>
+				<f:selectItem itemValue="APPROVED" itemLabel="#{enumerationBundle['APPROVED']}"/>
 			</h:selectOneMenu>
 		</h:panelGrid>
 		<br/>
-		<h:outputText value="#{bolonhaBundle['department']}: " style="font-weight: bold"/>
-		<h:outputText value="#{CompetenceCourseManagement.personDepartmentName}"/><br/>
-		<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.unit.parentUnits}" var="scientificAreaUnit">
-			<h:outputText value="#{bolonhaBundle['scientificArea']}: " style="font-weight: bold"/>
-			<h:outputText value="#{scientificAreaUnit.name}<br/>" escape="false"/>
-		</fc:dataRepeater>		
-		<h:outputText value="#{bolonhaBundle['group']}: " style="font-weight: bold"/>
-			<h:outputText value="#{CompetenceCourseManagement.competenceCourse.unit.name}"/><br/>
-		<br/>
-		<h:outputText value="#{bolonhaBundle['activeCurricularPlans']}: " style="font-weight: bold"/><br/>
-		<h:panelGroup rendered="#{empty CompetenceCourseManagement.competenceCourse.associatedCurricularCourses}">
-			<h:outputText value="(#{bolonhaBundle['noCurricularCourses']})"/>
-		</h:panelGroup>
-		<h:panelGroup rendered="#{!empty CompetenceCourseManagement.competenceCourse.associatedCurricularCourses}">
-			<h:dataTable value="#{CompetenceCourseManagement.competenceCourse.associatedCurricularCourses}" var="curricularCourse">
-				<h:column>
-					<h:outputText value="#{curricularCourse.name}"/>
-				</h:column>
-			</h:dataTable>
-		</h:panelGroup>
-		<br/>
-		<h:outputText styleClass="error" rendered="#{!empty CompetenceCourseManagement.errorMessage}"
-			value="#{bolonhaBundle[CompetenceCourseManagement.errorMessage]}<br/>" escape="false"/>
-		<br/>
-		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourseID}'"/><br/>
-		<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0" >
-			<h:outputText value="#{bolonhaBundle['name']}: "/>
+		<h:messages styleClass="error"/>	
+		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>				
+		<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0">
+			<h:outputText value="#{bolonhaBundle['name']} (pt): "/>
 			<h:panelGroup>
-				<h:inputText id="name" required="true" maxlength="100" size="40" value="#{CompetenceCourseManagement.name}"/>			
-				<h:message styleClass="error" for="name" />
+				<h:inputText id="name" maxlength="100" size="40" value="#{CompetenceCourseManagement.name}"/>
+				<h:message styleClass="error" for="name"/>
+			</h:panelGroup>		
+			
+			<h:outputText value="#{bolonhaBundle['nameEn']} (en): "/>
+			<h:panelGroup>
+				<h:inputText id="nameEn" maxlength="100" size="40" value="#{CompetenceCourseManagement.nameEn}"/>
+				<h:message styleClass="error" for="nameEn" />
 			</h:panelGroup>
-
-			<h:outputText value="#{bolonhaBundle['ectsCredits']}: "/>
+			
+			<h:outputText value="#{bolonhaBundle['acronym']} (en): "/>
 			<h:panelGroup>
-				<h:inputText id="ectsCredits" required="true" maxlength="5" size="5" value="#{CompetenceCourseManagement.ectsCredits}"/>
-				<h:message styleClass="error" for="ectsCredits" />
+				<h:inputText id="acronym" maxlength="40" size="10" value="#{CompetenceCourseManagement.acronym}"/>
+				<h:message styleClass="error" for="acronym" />
 			</h:panelGroup>
 			
 			<h:outputText value="#{bolonhaBundle['basic']}: "/>
 			<h:selectBooleanCheckbox value="#{CompetenceCourseManagement.basic}"></h:selectBooleanCheckbox>
-			
-			<h:outputText value="#{bolonhaBundle['lessonHours']}: " />
-			<h:panelGrid columns="2">
-				<h:outputText value="#{bolonhaBundle['theoreticalLesson']}: "/>
-				<h:panelGroup>
-					<h:inputText maxlength="5" size="5" value="#{CompetenceCourseManagement.theoreticalHours}"/>
-					<h:outputText value=" h"/>
-				</h:panelGroup>
-				
-				<h:outputText value="#{bolonhaBundle['problemsLesson']}: "/>
-				<h:panelGroup>
-					<h:inputText maxlength="5" size="5" value="#{CompetenceCourseManagement.problemsHours}"/>
-					<h:outputText value=" h"/>
-				</h:panelGroup>			
-				
-				<h:outputText value="#{bolonhaBundle['laboratorialLesson']}: "/>
-				<h:panelGroup>
-					<h:inputText maxlength="5" size="5" value="#{CompetenceCourseManagement.labHours}"/>	
-					<h:outputText value=" h"/>
-				</h:panelGroup>					
-				
-				<h:outputText value="#{bolonhaBundle['projectLesson']}: "/>
-				<h:panelGroup>
-					<h:inputText maxlength="5" size="5" value="#{CompetenceCourseManagement.projectHours}"/>
-					<h:outputText value=" h"/>
-				</h:panelGroup>					
-				
-				<h:outputText value="#{bolonhaBundle['seminaryLesson']}: "/>
-				<h:panelGroup>
-					<h:inputText maxlength="5" size="5" value="#{CompetenceCourseManagement.seminaryHours}"/>
-					<h:outputText value=" h"/>
-				</h:panelGroup>
-				
-				<h:outputText value="#{bolonhaBundle['total']}: " />
-				<h:outputText value="XX" />
-			</h:panelGrid>
-			
-			<h:outputText value="#{bolonhaBundle['regime']}: " />
-			<h:selectOneMenu  value="#{CompetenceCourseManagement.regime}">
-				<f:selectItems value="#{CompetenceCourseManagement.regimeTypes}" />
-			</h:selectOneMenu>
-		</h:panelGrid>
-		<br/>
-		<h:outputText value="#{bolonhaBundle['portuguese']}: " />
-		<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0" >
-			<h:outputText value="#{bolonhaBundle['program']}: " />
-			<h:inputTextarea cols="80" rows="5" value="#{CompetenceCourseManagement.program}"/>
-			
-			<h:outputText value="#{bolonhaBundle['objectives']}: " />
-			<h:panelGroup>
-				<h:outputText value="#{bolonhaBundle['generalObjectives']}: <br/>" escape="false"/>
-				<h:inputTextarea cols="80" rows="5" value="#{CompetenceCourseManagement.generalObjectives}"/>
-				<h:outputText value="<br/>" escape="false"/>
-				<h:outputText value="#{bolonhaBundle['operationalObjectives']}: <br/>" escape="false"/>
-				<h:inputTextarea cols="80" rows="5" value="#{CompetenceCourseManagement.operationalObjectives}"/>
-			</h:panelGroup>
-			
-			<h:outputText value="#{bolonhaBundle['evaluationMethod']}: " />
-			<h:inputTextarea cols="80" rows="5" value="#{CompetenceCourseManagement.evaluationMethod}"/>
-			
-			<h:outputText value="#{bolonhaBundle['prerequisites']}: " />
-			<h:inputTextarea cols="80" rows="5" value="#{CompetenceCourseManagement.prerequisites}"/>
-		</h:panelGrid>
-		<br/>
-		<h:outputText value="#{bolonhaBundle['english']}: " />
-		<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0" >
-			<h:outputText value="#{bolonhaBundle['nameEn']}: " />
-			<h:inputText maxlength="100" size="40" value="#{CompetenceCourseManagement.nameEn}"/>
-	
-			<h:outputText value="#{bolonhaBundle['programEn']}: " />
-			<h:inputTextarea cols="80" rows="5" value="#{CompetenceCourseManagement.programEn}"/>
-			
-			<h:outputText value="#{bolonhaBundle['objectivesEn']}: " />
-			<h:panelGroup>
-				<h:outputText value="#{bolonhaBundle['generalObjectivesEn']}: <br/>" escape="false"/>
-				<h:inputTextarea cols="80" rows="5" value="#{CompetenceCourseManagement.generalObjectivesEn}"/>
-				<h:outputText value="<br/>" escape="false"/>
-				<h:outputText value="#{bolonhaBundle['operationalObjectivesEn']}: <br/>" escape="false"/>
-				<h:inputTextarea cols="80" rows="5" value="#{CompetenceCourseManagement.operationalObjectivesEn}"/>
-			</h:panelGroup>
-			
-			<h:outputText value="#{bolonhaBundle['evaluationMethodEn']}: " />
-			<h:inputTextarea cols="80" rows="5" value="#{CompetenceCourseManagement.evaluationMethodEn}"/>
-			
-			<h:outputText value="#{bolonhaBundle['prerequisitesEn']}: " />
-			<h:inputTextarea cols="80" rows="5" value="#{CompetenceCourseManagement.prerequisitesEn}"/>
 		</h:panelGrid>
 		<br/><hr>
-		<h:messages /><br/>
-		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['submit']}"
-			action="#{CompetenceCourseManagement.editCompetenceCourse}"/>
+		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['edit']}"
+	 			action="#{CompetenceCourseManagement.editCompetenceCourse}"/> 
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}"
-			action="competenceCoursesManagement"/>
+				action="editCompetenceCourseMainPage"/>
 	</h:form>
 </ft:tilesView>

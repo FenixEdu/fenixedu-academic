@@ -14,19 +14,24 @@
 	<h:form>
 		<h2><h:outputText value="#{bolonhaBundle['delete']} #{bolonhaBundle['competenceCourse']}"/></h2>
 		<h3><h:outputText value="#{CompetenceCourseManagement.competenceCourse.name}" style="font-weight: bold"/></h3>
+		
 		<h:outputText value="#{bolonhaBundle['department']}: " style="font-weight: bold"/>
-		<h:outputText value="#{CompetenceCourseManagement.personDepartmentName}"/><br/>
+		<h:outputText value="#{CompetenceCourseManagement.personDepartment.realName}"/><br/>
 		<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.unit.parentUnits}" var="scientificAreaUnit">
-			<h:outputText value="#{bolonhaBundle['scientificArea']}: " style="font-weight: bold"/>
-			<h:outputText value="#{scientificAreaUnit.name}<br/>" escape="false"/>
+			<h:outputText value="#{bolonhaBundle['area']}: " style="font-weight: bold"/>
+			<h:outputText value="#{scientificAreaUnit.name} > #{CompetenceCourseManagement.competenceCourse.unit.name}"/>
 		</fc:dataRepeater>		
-		<h:outputText value="#{bolonhaBundle['group']}: " style="font-weight: bold"/>
-			<h:outputText value="#{CompetenceCourseManagement.competenceCourse.unit.name}"/><br/>
+		<br/><br/>
+		<h:outputText value="#{bolonhaBundle['name']} (pt): " style="font-weight: bold"/>
+		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.name}"/><br/>
+		<h:outputText value="#{bolonhaBundle['nameEn']} (en): " style="font-weight: bold"/>
+		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.nameEn}" /><br/>
+		<h:outputText value="#{bolonhaBundle['acronym']}: " style="font-weight: bold"/>
+		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.acronym}" /><br/>	
 		<br/>
 		<h:outputText styleClass="error" rendered="#{!empty CompetenceCourseManagement.errorMessage}"
 			value="#{bolonhaBundle[CompetenceCourseManagement.errorMessage]}<br/>" escape="false"/>
-		<br/>
-		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourseID}'"/><br/>
+		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/><br/>
 		<h:outputText value="#{bolonhaBundle['confirmDeleteMessage']}" styleClass="error"/>
 		<br/><br/>
 		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['yes']}"

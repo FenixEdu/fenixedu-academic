@@ -9254,6 +9254,15 @@
         </filterChains>     
     </service>
     <service>
+    	<name>EditCompetenceCourseLoad</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCompetenceCourseLoad</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="BolonhaManagerAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
     	<name>DeleteCompetenceCourse</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteCompetenceCourse</implementationClass>
         <description></description>

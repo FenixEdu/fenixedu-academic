@@ -94,11 +94,4 @@
         element-class-ref="net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod">
 		<inverse-foreignkey field-ref="keyExecutionYear"/>
     </collection-descriptor>
-    
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="courseInformations"
-			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation">
-		<inverse-foreignkey field-ref="keyExecutionYear"/>
-	</collection-descriptor>
-    
 </class-descriptor> 
