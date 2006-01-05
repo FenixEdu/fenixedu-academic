@@ -28,8 +28,8 @@
 <u><strong><bean:message key="label.credits.legenda" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></strong></u>:
 <p>
 <bean:message key="label.credits.lessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.lessons.code.definition" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp;
-<%-- <bean:message key="label.credits.masterDegreeLessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.masterDegreeLessons.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp; --%>
 <bean:message key="label.credits.supportLessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.supportLessons.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp;
+<bean:message key="label.credits.masterDegreeLessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.masterDegreeLessons.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp;
 <bean:message key="label.credits.degreeFinalProjectStudents.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.degreeFinalProjectStudents.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp;
 <bean:message key="label.credits.institutionWorkTime.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.institutionWorkTime.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>, &nbsp;
 <bean:message key="label.credits.otherTypeCreditLine.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.otherTypeCreditLine.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>, &nbsp;
@@ -220,9 +220,75 @@
 </logic:empty>
 <%-- ================================================================================== --%>
 
+<%-- ========================== MASTER DEGREE PROFESSORSHIPS =============================== --%>
+<h2>
+<span class="emphasis-box">2</span> <i><bean:message key="label.teacherCreditsSheet.masterDegreeProfessorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>
+</h2>
+
+<table width="100%">
+	<tr>
+		<td colspan="4" class="listClasses-subheader">
+			<bean:message key="label.teacherCreditsSheet.masterDegreeProfessorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>		
+		</td>
+	</tr>
+	<logic:notEmpty name="masterDegreeServices">
+			<tr>
+				<td class="listClasses-header" width="20%">
+					<bean:message key="label.masterDegree.curricularPlans" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+				</td>
+				<td class="listClasses-header" style="text-align:left">
+					<bean:message key="label.masterDegree.curricularCourse" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+				</td>
+				<td class="listClasses-header">
+					<bean:message key="label.hours" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+				</td>
+				<td class="listClasses-header">
+					<bean:message key="label.masterDegree.credits" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+				</td>				
+			</tr>			
+			<logic:iterate id="masterDegreeService" name="masterDegreeServices">
+				<tr>
+					<td class="listClasses">										  
+						<logic:iterate id="curricularCourse" name="masterDegreeService" property="professorship.executionCourse.associatedCurricularCourses">
+							<bean:write name="curricularCourse" property="degreeCurricularPlan.name"/> 
+						</logic:iterate>
+					</td>
+					<td class="listClasses" style="text-align:left">
+						<bean:write name="masterDegreeService" property="professorship.executionCourse.nome"/>
+					</td>
+					<td class="listClasses">
+						<logic:empty name="masterDegreeService" property="hours">
+							0
+						</logic:empty>
+						<logic:notEmpty name="masterDegreeService" property="hours">
+							<bean:write name="masterDegreeService" property="hours"/>
+						</logic:notEmpty>
+					</td>
+					<td class="listClasses">
+						<logic:empty name="masterDegreeService" property="credits">
+							0
+						</logic:empty>
+						<logic:notEmpty name="masterDegreeService" property="credits">
+							<bean:write name="masterDegreeService" property="credits"/>
+						</logic:notEmpty>
+					</td>
+				</tr>				
+			</logic:iterate>
+	</logic:notEmpty>
+	<logic:empty name="masterDegreeServices">
+		<tr>
+			<td colspan="2" class="listClasses">
+				<i><bean:message key="label.teacherCreditsSheet.noMasterDegreeProfessorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>		
+			</td>
+		</tr>
+	</logic:empty>
+</table>
+
+<%-- ================================================================================== --%>
+
 <%-- ============================== ADVISES TFC ======================================= --%>
 <h2>
-<span class="emphasis-box">2</span> <i><bean:message key="label.teacherCreditsSheet.degreeFinalProjectStudents" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>
+<span class="emphasis-box">3</span> <i><bean:message key="label.teacherCreditsSheet.degreeFinalProjectStudents" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>
 </h2>
 
 <table width="100%">
@@ -275,7 +341,7 @@
 
 <%-- ========================== TEACHER INSTITUTION WORKING TIME ============================ --%>
 <h2>
-	<span class="emphasis-box">3</span> <i><bean:message key="label.teacherCreditsSheet.institutionWorkingTime" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>
+	<span class="emphasis-box">4</span> <i><bean:message key="label.teacherCreditsSheet.institutionWorkingTime" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>
 </h2>
 
 <table width="100%" border="0" cellspacing="1" cellpadding="1">
@@ -325,7 +391,7 @@
 <%-- ================================================================================== --%>
 <%-- ========================== OTHER SERVICES CREDTIS ================================ --%>
 <h2>
-<span class="emphasis-box">4</span> <bean:message key="label.teacherCreditsSheet.otherTypeCreditLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+<span class="emphasis-box">5</span> <bean:message key="label.teacherCreditsSheet.otherTypeCreditLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 </h2>
 
 <table width="100%" cellspacing="1" cellpadding="3" style="margin-bottom:0;margin-top:0">
@@ -368,7 +434,7 @@
 
 <%-- ========================== Management Position Lines =============================== --%>
 <h2>
-<span class="emphasis-box">5</span> <bean:message key="label.teacherCreditsSheet.managementPositionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+<span class="emphasis-box">6</span> <bean:message key="label.teacherCreditsSheet.managementPositionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 </h2>
 
 <table width="100%" cellspacing="1" cellpadding="3" style="margin-bottom:0;margin-top:0">
@@ -433,7 +499,7 @@
 
 <%-- ============================ SERVICE EXEMPTIONS ================================= --%>
 <h2>
-<span class="emphasis-box">6</span> <bean:message key="label.teacherCreditsSheet.serviceExemptionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+<span class="emphasis-box">7</span> <bean:message key="label.teacherCreditsSheet.serviceExemptionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 </h2>
 
 <table width="100%" cellspacing="1" cellpadding="3" style="margin-bottom:0;margin-top:0">
@@ -490,10 +556,4 @@
 	</logic:empty>
 </table>								
 
-<%-- ================================================================================== --%>
-
-<%-- ========================== MASTER DEGREE PROFESSORSHIPS =============================== --%>
-<%-- <h2>
-<span class="emphasis-box">3</span> <bean:message key="label.teacherCreditsSheet.masterDegreeProfessorships"/>
-</h2> --%>
 <%-- ================================================================================== --%>

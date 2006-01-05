@@ -7,10 +7,10 @@
 			<bean:write name="creditLineDTO" property="teachingDegreeCredits"/>						
 		</b>
 		<bean:message key="label.credits.lessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,
-<%--		<b>	
-			<bean:write name="creditLineDTO" property="masterDegreeCreditsFormatted"/>						
+		<b>	
+			<bean:write name="creditLineDTO" property="masterDegreeCredits"/>						
 		</b>							
-		<bean:message key="label.credits.masterDegreeLessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,  --%>
+		<bean:message key="label.credits.masterDegreeLessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,
 		<b>	
 			<bean:write name="creditLineDTO" property="supportLessonHours"/>
 		</b>							

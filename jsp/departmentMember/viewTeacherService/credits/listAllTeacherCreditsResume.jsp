@@ -49,13 +49,14 @@
 	<table class="ts01" cellpadding="3" cellspacing="1">
 		<tr>
 			<th></th>
-			<th colspan="7"><bean:message key="label.teacherService.credits.resume" /></th>
+			<th colspan="8"><bean:message key="label.teacherService.credits.resume" /></th>
 			<th colspan="4"><bean:message key="label.teacherService.credits"/></th>			
 		</tr>
 		<tr>
 			<th><bean:message key="label.executionPeriod"/></th>
 			<th><bean:message key="label.credits.lessons.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>			
 			<th><bean:message key="label.credits.supportLessons.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+			<th><bean:message key="label.credits.masterDegreeLessons.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>			
 			<th><bean:message key="label.credits.degreeFinalProjectStudents.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 			<th><bean:message key="label.credits.institutionWorkTime.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 			<th><bean:message key="label.credits.otherTypeCreditLine.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
@@ -85,7 +86,8 @@
 				<td></td>
 				<td></td>
 				<td></td>
-				<td></td>	
+				<td></td>
+				<td></td>
 				<td class="aright"><span class="asterisk01">*</span>								
 					<fmt:formatNumber pattern="###.##">
 						<%= totalCreditsBalance %>
@@ -100,32 +102,36 @@
 				</td>
 				<tiles:insert definition="creditsResumeTableLine" flush="false">
 					<tiles:put name="creditLineDTO" beanName="creditLineDTO"/>
-				</tiles:insert>
+				</tiles:insert>				
 				<bean:define id="totalLineCredits" name="creditLineDTO" property="totalCredits"/>
 				<bean:define id="mandatoryLessonHours" name="creditLineDTO" property="mandatoryLessonHours"/>
 				<td>
-					<fmt:formatNumber pattern="###.##">
+					<fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" pattern="###.##">
 						<bean:write name="totalLineCredits"/>
 					</fmt:formatNumber>
 				</td>
-				<td><%= ((Integer)mandatoryLessonHours).intValue() %></td>
+				<td>
+					<fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" pattern="###.##">
+						<%= ((Integer)mandatoryLessonHours).intValue() %>
+					</fmt:formatNumber>
+				</td>
 				<% totalCreditsBalance += ((Double)totalLineCredits).doubleValue() - ((Integer)mandatoryLessonHours).intValue(); %>
 				<td>
-					<fmt:formatNumber pattern="###.##">
+					<fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" pattern="###.##">
 						<%= ((Double)totalLineCredits).doubleValue() - ((Integer)mandatoryLessonHours).intValue() %>
 					</fmt:formatNumber>
 				</td>
 				<logic:equal name="creditsLinesSize" value='<%= (new Integer(nrLine.intValue() + 1)).toString() %>'>
 					<td class="highlight01 aright">	
 						<bean:message key="label.teacherService.credits.totalSum"/>
-						<fmt:formatNumber pattern="###.##">
+						<fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" pattern="###.##">
 							<%= totalCreditsBalance %>
 						</fmt:formatNumber>
 					</td>
 				</logic:equal>
 				<logic:notEqual name="creditsLinesSize" value='<%= (new Integer(nrLine.intValue() + 1)).toString() %>'>
 					<td class="aright">						
-						<fmt:formatNumber pattern="###.##">
+						<fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" pattern="###.##">
 							<%= totalCreditsBalance %>
 						</fmt:formatNumber>
 					</td>
@@ -141,8 +147,8 @@
 	<p><strong><bean:message key="label.credits.legenda" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong></p>
 	<p>
 	<bean:message key="label.credits.lessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.lessons.code.definition" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp;
-<%--	<bean:message key="label.credits.masterDegreeLessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.masterDegreeLessons.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp; --%>
 	<bean:message key="label.credits.supportLessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.supportLessons.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp;
+	<bean:message key="label.credits.masterDegreeLessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.masterDegreeLessons.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp;	
 	<bean:message key="label.credits.degreeFinalProjectStudents.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.degreeFinalProjectStudents.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp;
 	<bean:message key="label.credits.institutionWorkTime.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.institutionWorkTime.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>, &nbsp;
 	<bean:message key="label.credits.otherTypeCreditLine.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.otherTypeCreditLine.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>, &nbsp;

@@ -17,6 +17,8 @@ public class CreditLineDTO {
 
     private double supportLessonHours = 0;
 
+    private double masterDegreeCredits = 0;
+
     private double tfcAdviseCredits = 0;
 
     private double otherCredits = 0;
@@ -28,17 +30,18 @@ public class CreditLineDTO {
     private double serviceExemptionCredits = 0;
 
     private double pastServiceCredits = 0;
-    
+
     private int mandatoryLessonHours = 0;
-    
+
     private IExecutionPeriod executionPeriod;
 
-    public CreditLineDTO(IExecutionPeriod executionPeriod, ITeacherService teacherService, double managementCredits,
-            double exemptionCredits, int lessonHours) {
+    public CreditLineDTO(IExecutionPeriod executionPeriod, ITeacherService teacherService,
+            double managementCredits, double exemptionCredits, int lessonHours) {
         setExecutionPeriod(executionPeriod);
         if (teacherService != null) {
             setTeachingDegreeCredits(teacherService.getTeachingDegreeCredits());
             setSupportLessonHours(teacherService.getSupportLessonHours());
+            setMasterDegreeCredits(teacherService.getMasterDegreeServiceCredits());
             setTfcAdviseCredits(teacherService.getTeacherAdviseServiceCredits());
             setOtherCredits(teacherService.getOtherServiceCredits());
             setInstitutionWorkingHours(teacherService.getInstitutionWorkingHours());
@@ -47,12 +50,12 @@ public class CreditLineDTO {
         setMandatoryLessonHours(lessonHours);
         setManagementCredits(managementCredits);
         setServiceExemptionCredits(exemptionCredits);
-
     }
 
     public double getTotalCredits() {
-        double totalCredits = getTeachingDegreeCredits() + getTfcAdviseCredits() + getOtherCredits()
-                + getManagementCredits() + getServiceExemptionCredits();
+        double totalCredits = getTeachingDegreeCredits() + getMasterDegreeCredits()
+                + getTfcAdviseCredits() + getOtherCredits() + getManagementCredits()
+                + getServiceExemptionCredits();
         return totalCredits;
     }
 
@@ -134,5 +137,13 @@ public class CreditLineDTO {
 
     public void setMandatoryLessonHours(int mandatoryLessonHours) {
         this.mandatoryLessonHours = mandatoryLessonHours;
+    }
+
+    public double getMasterDegreeCredits() {
+        return masterDegreeCredits;
+    }
+
+    public void setMasterDegreeCredits(double masterDegreeCredits) {
+        this.masterDegreeCredits = masterDegreeCredits;
     }
 }

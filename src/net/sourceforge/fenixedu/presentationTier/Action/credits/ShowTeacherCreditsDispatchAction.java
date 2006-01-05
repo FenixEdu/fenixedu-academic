@@ -92,6 +92,7 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
 
         ITeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
         if (teacherService != null) {
+            setMasterDegreeServices(request, teacherService);
             setAdviseServices(request, teacherService);
             setInstitutionWorkTimes(request, teacherService);
             request.setAttribute("otherServices", teacherService.getOtherServices());
@@ -120,6 +121,16 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
                 managementCredits, serviceExemptionCredits, mandatoryLessonHours);
         request.setAttribute("creditLineDTO", creditLineDTO);
         return mapping.findForward("show-teacher-credits");
+    }
+
+    /**
+     * @param request
+     * @param teacherService
+     */
+    private void setMasterDegreeServices(HttpServletRequest request, ITeacherService teacherService) {
+        if(!teacherService.getMasterDegreeServices().isEmpty()){
+            request.setAttribute("masterDegreeServices",teacherService.getMasterDegreeServices());
+        }        
     }
 
     private void setTeachingServicesAndSupportLessons(HttpServletRequest request, ITeacher teacher,
