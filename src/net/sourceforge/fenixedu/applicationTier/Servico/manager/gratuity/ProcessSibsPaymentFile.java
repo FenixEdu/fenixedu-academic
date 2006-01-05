@@ -1,13 +1,8 @@
-/*
- * Created on Feb 20, 2004
- *  
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.gratuity;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
@@ -42,11 +37,6 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranc
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsPaymentFileUtils;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author Shezad Anavarali (sana@mega.ist.utl.pt)
- * @author Nadir Tarmahomed (naat@mega.ist.utl.pt)
- * 
- */
 public class ProcessSibsPaymentFile implements IService {
 
     /**
@@ -66,10 +56,9 @@ public class ProcessSibsPaymentFile implements IService {
 
         }
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        ISibsPaymentFile storedPaymentFile = sp.getIPersistentSibsPaymentFile().readByFilename(filename);
-
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISibsPaymentFile storedPaymentFile = sp.getIPersistentSibsPaymentFile().readByFilename(
+                filename);
         if (storedPaymentFile != null) {
             throw new DuplicateSibsPaymentFileProcessingServiceException(
                     "error.exception.duplicateSibsPaymentFileProcessing");
@@ -78,62 +67,25 @@ public class ProcessSibsPaymentFile implements IService {
         ISibsPaymentFile sibsPaymentFile = SibsPaymentFileUtils.buildPaymentFile(filename, fileEntries);
 
         buildTransactionsAndStoreFile(sp, sibsPaymentFile, userView);
-
     }
 
-    /**
-     * @param sibsPaymentFile
-     * @param userView
-     */
     private void buildTransactionsAndStoreFile(ISuportePersistente sp, ISibsPaymentFile sibsPaymentFile,
             IUserView userView) throws ExcepcaoPersistencia {
 
-        List sibsPaymentFileEntries = sibsPaymentFile.getSibsPaymentFileEntries();
+        List<ISibsPaymentFileEntry> sibsPaymentFileEntries = sibsPaymentFile.getSibsPaymentFileEntries();
 
         int totalPaymentEntries = sibsPaymentFileEntries.size();
 
-        // find duplicates and mark them
-        for (int i = 0; i < totalPaymentEntries; i++) {
-
-            ISibsPaymentFileEntry sibsPaymentFileEntry = (ISibsPaymentFileEntry) sibsPaymentFileEntries
-                    .get(i);
-
-            if (sibsPaymentFileEntry.getPaymentStatus().equals(SibsPaymentStatus.NOT_PROCESSED_PAYMENT) == true) {
-
-                sibsPaymentFileEntry.setPaymentStatus(SibsPaymentStatus.PROCESSED_PAYMENT);
-
-                // Exception cases should be inserted here
-                // e.g. SMS credit payments (i.e. cases where duplicate entry
-                // checking is not required)
-                // assuming the form:
-                // if (isSmsPayment())) {
-                // do specific code if any
-                // }
-                // else { do specific code to insurance and gratuities }
-
-                markDuplicateGratuityAndInsurancePayments(sp, sibsPaymentFileEntry,
-                        sibsPaymentFileEntries, totalPaymentEntries, i);
-            }
-
-            // write the file entry
-            IPersistentSibsPaymentFileEntry sibsPaymentFileEntryDAO = sp
-                    .getIPersistentSibsPaymentFileEntry();
-
-            sibsPaymentFileEntryDAO.simpleLockWrite(sibsPaymentFileEntry);
-        }
-
-        IPersistentInsuranceTransaction insuranceTransactionDAO = sp
-                .getIPersistentInsuranceTransaction();
-
-        IPersistentGratuitySituation gratuitySituationDAO = sp.getIPersistentGratuitySituation();
-
-        IPersistentInsuranceValue insuranceValueDAO = sp.getIPersistentInsuranceValue();
+        findDuplicatesAndMarkThem(sp, sibsPaymentFileEntries, totalPaymentEntries);
 
         // lets build transactions for the entries in file
+        final IPersistentInsuranceTransaction insuranceTransactionDAO = sp
+                .getIPersistentInsuranceTransaction();
+        final IPersistentGratuitySituation gratuitySituationDAO = sp.getIPersistentGratuitySituation();
+        final IPersistentInsuranceValue insuranceValueDAO = sp.getIPersistentInsuranceValue();
         for (int i = 0; i < totalPaymentEntries; i++) {
 
-            ISibsPaymentFileEntry sibsPaymentFileEntry = (ISibsPaymentFileEntry) sibsPaymentFileEntries
-                    .get(i);
+            ISibsPaymentFileEntry sibsPaymentFileEntry = sibsPaymentFileEntries.get(i);
 
             if (sibsPaymentFileEntry.getPaymentStatus().equals(SibsPaymentStatus.PROCESSED_PAYMENT) == false) {
                 continue;
@@ -171,7 +123,6 @@ public class ProcessSibsPaymentFile implements IService {
 
             IPersonAccount personAccount = sp.getIPersistentPersonAccount().readByPerson(
                     student.getPerson().getIdInternal());
-
             if (personAccount == null) {
                 personAccount = DomainFactory.makePersonAccount(student.getPerson());
             }
@@ -213,16 +164,13 @@ public class ProcessSibsPaymentFile implements IService {
 
             // DegreeType should be changed in future to meet Degree gratuity
             // requirements
-            List studentCurricularPlanList = student.getStudentCurricularPlans();
+            List<IStudentCurricularPlan> studentCurricularPlanList = student.getStudentCurricularPlans();
 
-            List executionDegrees = new ArrayList();
-            List studentCurricularPlans = new ArrayList();
+            List<IExecutionDegree> executionDegrees = new ArrayList<IExecutionDegree>();
+            List<IStudentCurricularPlan> studentCurricularPlans = new ArrayList<IStudentCurricularPlan>();
+            for (IStudentCurricularPlan studentCurricularPlan : studentCurricularPlanList) {
 
-            for (Iterator iter = studentCurricularPlanList.iterator(); iter.hasNext();) {
-
-                IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iter.next();
-
-                if (studentCurricularPlan.getSpecialization().equals(specialization) == false) {
+                if (!studentCurricularPlan.getSpecialization().equals(specialization)) {
                     continue;
                 }
 
@@ -239,7 +187,6 @@ public class ProcessSibsPaymentFile implements IService {
             }
 
             if ((executionDegrees.size() == 0) || (studentCurricularPlans.size() == 0)) {
-
                 // Change status to be solved manually because we could not
                 // decide the student curricular plan
                 sibsPaymentFileEntry.setPaymentStatus(SibsPaymentStatus.INVALID_EXECUTION_DEGREE);
@@ -254,32 +201,27 @@ public class ProcessSibsPaymentFile implements IService {
                 continue;
             }
 
-            IExecutionDegree executionDegree = (IExecutionDegree) executionDegrees.get(0);
-
-            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) studentCurricularPlans
-                    .get(0);
+            IExecutionDegree executionDegree = executionDegrees.get(0);
+            IStudentCurricularPlan studentCurricularPlan = studentCurricularPlans.get(0);
 
             IGratuityValues gratuityValues = executionDegree.getGratuityValues();
             IGratuitySituation gratuitySituation = gratuitySituationDAO
                     .readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
                             studentCurricularPlan.getIdInternal(), gratuityValues.getIdInternal());
-
             if (gratuitySituation == null) {
                 // Change status to be solved manually because the student does
                 // not have a gratuity situation
                 sibsPaymentFileEntry
                         .setPaymentStatus(SibsPaymentStatus.UNABLE_TO_DETERMINE_STUDENT_CURRICULAR_PLAN);
-
                 continue;
             }
 
             TransactionType transactionType = bindSibsCodeTypeToTransactionCodeType(sibsPaymentFileEntry
                     .getPaymentType());
 
-            DomainFactory.makeGratuityTransaction(
-                    sibsPaymentFileEntry.getPayedValue(), new Timestamp(new Date().getTime()), null,
-                    PaymentType.SIBS, transactionType, new Boolean(false), responsiblePerson,
-                    personAccount, null, gratuitySituation);
+            DomainFactory.makeGratuityTransaction(sibsPaymentFileEntry.getPayedValue(), new Timestamp(
+                    new Date().getTime()), null, PaymentType.SIBS, transactionType, new Boolean(false),
+                    responsiblePerson, personAccount, null, gratuitySituation);
 
             // update remaining value of gratuity
             double oldRemainingValue = 0;
@@ -295,12 +237,33 @@ public class ProcessSibsPaymentFile implements IService {
 
     }
 
-    /**
-     * @param paymentType
-     * @return
-     */
-    private TransactionType bindSibsCodeTypeToTransactionCodeType(SibsPaymentType sibsPaymentType) {
+    private void findDuplicatesAndMarkThem(ISuportePersistente sp,
+            List<ISibsPaymentFileEntry> sibsPaymentFileEntries, int totalPaymentEntries)
+            throws ExcepcaoPersistencia {
+        for (int i = 0; i < totalPaymentEntries; i++) {
 
+            ISibsPaymentFileEntry sibsPaymentFileEntry = sibsPaymentFileEntries.get(i);
+
+            if (sibsPaymentFileEntry.getPaymentStatus().equals(SibsPaymentStatus.NOT_PROCESSED_PAYMENT)) {
+
+                sibsPaymentFileEntry.setPaymentStatus(SibsPaymentStatus.PROCESSED_PAYMENT);
+
+                // Exception cases should be inserted here
+                // e.g. SMS credit payments (i.e. cases where duplicate entry
+                // checking is not required)
+                // assuming the form:
+                // if (isSmsPayment())) {
+                // do specific code if any
+                // }
+                // else { do specific code to insurance and gratuities }
+
+                markDuplicateGratuityAndInsurancePayments(sp, sibsPaymentFileEntry,
+                        sibsPaymentFileEntries, totalPaymentEntries, i);
+            }
+        }
+    }
+
+    private TransactionType bindSibsCodeTypeToTransactionCodeType(SibsPaymentType sibsPaymentType) {
         // in future if codes change too much, the binding table should be
         // loaded from a config file
         TransactionType transactionType = null;
@@ -328,12 +291,6 @@ public class ProcessSibsPaymentFile implements IService {
         return transactionType;
     }
 
-    /**
-     * @param sibsPaymentFileEntry
-     * @param sibsPaymentFileEntries
-     * @param totalPaymentEntries
-     * @param currentIndex
-     */
     private void markDuplicateGratuityAndInsurancePayments(ISuportePersistente sp,
             ISibsPaymentFileEntry sibsPaymentFileEntry, List sibsPaymentFileEntries,
             int totalPaymentEntries, int currentIndex) throws ExcepcaoPersistencia {
@@ -370,30 +327,24 @@ public class ProcessSibsPaymentFile implements IService {
 
         // next check if the gratuity or insurance payment is repeated in
         // database
-        IPersistentSibsPaymentFileEntry sibsPaymentFileEntryDAO = sp
+        final IPersistentSibsPaymentFileEntry sibsPaymentFileEntryDAO = sp
                 .getIPersistentSibsPaymentFileEntry();
-
         List sibsPaymentFileEntryList = sibsPaymentFileEntryDAO
                 .readByYearAndStudentNumberAndPaymentType(sibsPaymentFileEntry.getYear(),
                         sibsPaymentFileEntry.getStudentNumber(), sibsPaymentFileEntry.getPaymentType());
 
         if (sibsPaymentFileEntryList.size() > 0) {
             if (sibsPaymentFileEntry.getPaymentType().equals(SibsPaymentType.INSURANCE)) {
-
                 sibsPaymentFileEntry.setPaymentStatus(SibsPaymentStatus.DUPLICATE_INSURANCE_PAYMENT);
             } else {
-
                 sibsPaymentFileEntry.setPaymentStatus(SibsPaymentStatus.DUPLICATE_GRATUITY_PAYMENT);
             }
-
         }
     }
 
     private Specialization determineSpecialization(ISibsPaymentFileEntry sibsPaymentFileEntry) {
-
-        // if sibs payment codes change to much in future
-        // this logic should be moved to a config file
-
+        // if sibs payment codes change to much in future this logic should be
+        // moved to a config file
         SibsPaymentType sibsPaymentType = sibsPaymentFileEntry.getPaymentType();
         if (sibsPaymentType.equals(SibsPaymentType.SPECIALIZATION_GRATUTITY_TOTAL)
                 || sibsPaymentType.equals(SibsPaymentType.SPECIALIZATION_GRATUTITY_FIRST_PHASE)
@@ -401,9 +352,7 @@ public class ProcessSibsPaymentFile implements IService {
             return Specialization.SPECIALIZATION;
         }
         return Specialization.MASTER_DEGREE;
-
         // degree code goes here
-
     }
 
 }
