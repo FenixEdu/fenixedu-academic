@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
@@ -47,15 +46,13 @@ public class EditGrantContractRegime extends EditDomainObjectService {
         grantContractRegime.setCostCenterKey(infoGrantContractRegime.getCostCenterKey());
         grantContractRegime.setState(infoGrantContractRegime.getState());
 
-        IPersistentGrantContract persistentGrantContract = sp.getIPersistentGrantContract();
-        IGrantContract grantContract = (IGrantContract) persistentGrantContract.readByOID(
+        IGrantContract grantContract = (IGrantContract) sp.getIPersistentObject().readByOID(
                 GrantContract.class, infoGrantContractRegime.getInfoGrantContract().getIdInternal());
         grantContractRegime.setGrantContract(grantContract);
 
         if (grantContract.getCostCenterKey() != null
                 && grantContract.getCostCenterKey() != new Integer(0)) {
-            IPersistentGrantCostCenter persistentGrantCostCenter = sp.getIPersistentGrantCostCenter();
-            IGrantCostCenter grantCostCenter = (IGrantCostCenter) persistentGrantCostCenter.readByOID(
+            IGrantCostCenter grantCostCenter = (IGrantCostCenter) sp.getIPersistentObject().readByOID(
                     GrantCostCenter.class, infoGrantContractRegime.getIdInternal());
             grantContractRegime.setGrantCostCenter(grantCostCenter);
         } else {
@@ -82,10 +79,8 @@ public class EditGrantContractRegime extends EditDomainObjectService {
     @Override
     protected IDomainObject readObjectByUnique(InfoObject infoObject, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
-        IPersistentGrantContractRegime persistentGrantContractRegime = sp
-                .getIPersistentGrantContractRegime();
         InfoGrantContractRegime infoGrantContractRegime = (InfoGrantContractRegime) infoObject;
-        return persistentGrantContractRegime.readByOID(GrantContractRegime.class,
+        return sp.getIPersistentObject().readByOID(GrantContractRegime.class,
                 infoGrantContractRegime.getIdInternal());
     }
 
@@ -104,13 +99,10 @@ public class EditGrantContractRegime extends EditDomainObjectService {
             IGrantContractRegime grantContractRegime = (IGrantContractRegime) domainObjectLocked;
             // Set the correct grant orientation teacher
 
-            IPersistentGrantOrientationTeacher persistentGrantOrientationTeacher = sp
-                    .getIPersistentGrantOrientationTeacher();
             IPersistentGrantCostCenter pGrantCostCenter = sp.getIPersistentGrantCostCenter();
             IPersistentTeacher pTeacher = sp.getIPersistentTeacher();
 
-            IPersistentGrantContract persistentGrantContract = sp.getIPersistentGrantContract();
-            IGrantContract grantContract = (IGrantContract) persistentGrantContract.readByOID(
+            IGrantContract grantContract = (IGrantContract) sp.getIPersistentObject().readByOID(
                     GrantContract.class, infoGrantContractRegime.getInfoGrantContract().getIdInternal());
 
             if (infoGrantContractRegime.getGrantCostCenterInfo() != null
@@ -128,12 +120,12 @@ public class EditGrantContractRegime extends EditDomainObjectService {
 
             grantContractRegime.setGrantCostCenter(grantContract.getGrantCostCenter());
 
+            IPersistentGrantOrientationTeacher persistentGrantOrientationTeacher = sp
+                    .getIPersistentGrantOrientationTeacher();
             IGrantOrientationTeacher grantOrientationTeacher = persistentGrantOrientationTeacher
                     .readActualGrantOrientationTeacherByContract(grantContract.getIdInternal(),
                             new Integer(0));
             if (grantOrientationTeacher != null) {
-
-                persistentGrantOrientationTeacher.simpleLockWrite(grantOrientationTeacher);
                 InfoTeacher infoTeacher = new InfoTeacher();
                 // If grantOrientationTeacher is filled in
                 // grantContractRegime
@@ -142,16 +134,11 @@ public class EditGrantContractRegime extends EditDomainObjectService {
                     if (infoGrantContractRegime.getInfoTeacher().getTeacherNumber().equals(
                             grantOrientationTeacher.getOrientationTeacher().getTeacherNumber())) {
                         // Update grant orientation teacher of contract
-                        IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
 
-                        teacher = teacherDAO.readByNumber(grantOrientationTeacher
-                                .getOrientationTeacher().getTeacherNumber());
-                        IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-                        IPerson person = (IPerson) persistentPerson.readByOID(Person.class, teacher
-                                .getPerson().getIdInternal());
+                        teacher = grantOrientationTeacher.getOrientationTeacher();
                         infoTeacher.setTeacherNumber(teacher.getTeacherNumber());
                         InfoPerson infoPerson = new InfoPerson();
-                        infoPerson = getInfoPerson(person);
+                        infoPerson = getInfoPerson(teacher.getPerson());
                         infoTeacher.setInfoPerson(infoPerson);
                     } else {
                         teacher = pTeacher.readByNumber(infoGrantContractRegime.getInfoTeacher()
