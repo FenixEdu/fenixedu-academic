@@ -43,6 +43,14 @@
 			</h:panelGroup>
 			
 		</h:panelGrid>
+
+		<h:panelGroup rendered="#{!empty CurricularPlansMembersManagementBackingBean.groupMembers}">		
+			<h:outputText value="<br/><b>#{scouncilBundle['groupMembers']}</b> (#{scouncilBundle['groupMembersExplanation']})<br/>" escape="false" />
+			<h:selectManyCheckbox value="#{CurricularPlansMembersManagementBackingBean.selectedPersonGroupsIDsToRemove}" layout="pageDirection">
+				<f:selectItems value="#{CurricularPlansMembersManagementBackingBean.groupMembers}"  />
+			</h:selectManyCheckbox>
+		</h:panelGroup>
+
 		<br/>
 		<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['edit']}"
 			action="#{ScientificCouncilCurricularPlanManagement.editCurricularPlan}"/>

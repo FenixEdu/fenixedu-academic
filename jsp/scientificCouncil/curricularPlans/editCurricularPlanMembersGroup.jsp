@@ -15,7 +15,7 @@
 		<fc:viewState binding="#{CurricularPlansMembersManagementBackingBean.viewState}"/>
 		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{CurricularPlansMembersManagementBackingBean.selectedCurricularPlanID}'"/><br/>
 				
-<h:messages styleClass="error"/>
+		<h:messages styleClass="error"/>
 				
 		<h:panelGroup rendered="#{!empty CurricularPlansMembersManagementBackingBean.groupMembers}">		
 			<h:outputText value="<b>#{scouncilBundle['groupMembers']}</b> (#{scouncilBundle['groupMembersExplanation']})<br/>" escape="false" />		
@@ -43,6 +43,10 @@
 		</h:panelGroup>
 				
 		<h:commandLink value="#{scouncilBundle['addPersons']}" actionListener="#{CurricularPlansMembersManagementBackingBean.addMembers}" />
+
+		<h:outputText value="<br/><br/>" escape="false" />		
+		<h:commandButton immediate="true" styleClass="inputbutton" value="#{scouncilBundle['return']}"
+			action="curricularPlansManagement"/>
 
 	</h:form>
 	
