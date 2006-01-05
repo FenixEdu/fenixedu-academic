@@ -30,6 +30,13 @@
 
 	<property name="dml.definition.file" value="${config}/domain_model.dml"/>
 
+	  <path id="classpath.analysis">
+	    <pathelement path="${build.home.temp.classes}"/>
+	    <fileset dir="${lib}">
+	      <include name="**/*.jar"/>
+	    </fileset>
+	  </path>
+
 	<target name="generate-domain"
 	                description="Generate java code from a DML file">
 		<echo message="Processing ${dml.definition.file} ..."/>
@@ -128,5 +135,25 @@
 		</java>
     	<antcall target="clean-all"/>
     </target>
+
+	  <target name="eliminate-domain-object-interfaces"
+	          description="Eliminates domain object interfaces.">
+	  	<ant antfile="build_verifier.xml" target="analysis-compile"/>
+	    <java classname="pt.utl.ist.codeDegenerator.DomainObjectInterfaceEliminator" fork="true">
+	      <classpath refid="classpath.analysis"/>
+	      <arg value="-d"/>
+	      <arg value="${dml.definition.file}"/>
+	      <arg value="-f"/>
+	      <arg value="${basedir}"/>
+	      <arg value="-i"/>
+	      <arg value="CVS"/>
+	      <arg value="-i"/>
+		  <arg value="build"/>
+	      <arg value="-i"/>
+	      <arg value=".class"/>
+	   	  <arg value="-i"/>
+	   	  <arg value=".jar"/>
+	    </java>
+	  </target>
 
 </project>
