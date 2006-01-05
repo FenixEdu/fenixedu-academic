@@ -1,7 +1,3 @@
-/*
- * Created on 2003/07/25
- * 
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -15,50 +11,38 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.PeriodState;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author Luis Crus & Sara Ribeiro
- */
-
 public class AlterExecutionPeriodState implements IService {
 
-	public Boolean run(InfoExecutionPeriod infoExecutionPeriod, PeriodState periodState)
-			throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(InfoExecutionPeriod infoExecutionPeriod, PeriodState periodState)
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-		Boolean result = new Boolean(false);
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
+        final IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
-		IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
+        final IExecutionPeriod executionPeriod = executionPeriodDAO.readBySemesterAndExecutionYear(
+                infoExecutionPeriod.getSemester(), executionYearDAO.readExecutionYearByName(
+                        infoExecutionPeriod.getInfoExecutionYear().getYear()).getYear());
 
-		IExecutionPeriod executionPeriod = executionPeriodDAO.readBySemesterAndExecutionYear(
-				infoExecutionPeriod.getSemester(), executionYearDAO.readExecutionYearByName(
-						infoExecutionPeriod.getInfoExecutionYear().getYear()).getYear());
+        if (executionPeriod == null) {
+            throw new InvalidExecutionPeriod();
+        }
 
-		if (executionPeriod == null) {
-			throw new InvalidExecutionPeriod();
-		}
+        if (periodState.getStateCode().equals(PeriodState.CURRENT.getStateCode())) {
+            // Deactivate the current
+            IExecutionPeriod currentExecutionPeriod = executionPeriodDAO.readActualExecutionPeriod();
+            currentExecutionPeriod.setState(new PeriodState(PeriodState.OPEN));
+        }
 
-		if (periodState.getStateCode().equals(PeriodState.CURRENT.getStateCode())) {
-			// Deactivate the current
-			IExecutionPeriod currentExecutionPeriod = executionPeriodDAO.readActualExecutionPeriod();
+        executionPeriod.setState(periodState);
+    }
 
-			executionPeriodDAO.simpleLockWrite(currentExecutionPeriod);
-			currentExecutionPeriod.setState(new PeriodState(PeriodState.OPEN));
+    public class InvalidExecutionPeriod extends FenixServiceException {
 
-		}
+        InvalidExecutionPeriod() {
+            super();
+        }
 
-		executionPeriodDAO.simpleLockWrite(executionPeriod);
-		executionPeriod.setState(periodState);
-
-		return result;
-	}
-
-	public class InvalidExecutionPeriod extends FenixServiceException {
-
-		InvalidExecutionPeriod() {
-			super();
-		}
-
-	}
+    }
 
 }

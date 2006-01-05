@@ -1,6 +1,3 @@
-/*
- * Created on 11/Set/2003
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.List;
@@ -12,43 +9,35 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author lmac1
- */
-
 public class DissociateExecutionCourse implements IService {
 
-	// dissociate an execution course
-	public void run(Integer executionCourseId, Integer curricularCourseId) throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+    public void run(Integer executionCourseId, Integer curricularCourseId) throws FenixServiceException,
+            ExcepcaoPersistencia {
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-		ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
-				CurricularCourse.class, curricularCourseId);
+        final ICurricularCourse curricularCourse = (ICurricularCourse) sp.getIPersistentObject()
+                .readByOID(CurricularCourse.class, curricularCourseId);
+        if (curricularCourse == null) {
+            throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
+        }
 
-		if (curricularCourse == null)
-			throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
+        final IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentObject().readByOID(
+                ExecutionCourse.class, executionCourseId);
+        if (executionCourse == null) {
+            throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
+        }
 
-		IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-		IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
-				ExecutionCourse.class, executionCourseId);
+        List<IExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
+        List<ICurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
 
-		if (executionCourse == null)
-			throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
+        if (!executionCourses.isEmpty() && !curricularCourses.isEmpty()) {
+            executionCourses.remove(executionCourse);
+            curricularCourses.remove(curricularCourse);
+        }
+    }
 
-		List executionCourses = curricularCourse.getAssociatedExecutionCourses();
-		List curricularCourses = executionCourse.getAssociatedCurricularCourses();
-
-		if (!executionCourses.isEmpty() && !curricularCourses.isEmpty()) {
-			persistentCurricularCourse.simpleLockWrite(curricularCourse);
-			executionCourses.remove(executionCourse);
-			curricularCourses.remove(curricularCourse);
-		}
-	}
 }
