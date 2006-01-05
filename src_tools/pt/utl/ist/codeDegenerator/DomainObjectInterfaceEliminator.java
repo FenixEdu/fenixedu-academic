@@ -9,8 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
-
 import antlr.ANTLRException;
 import dml.DmlCompiler;
 import dml.DomainClass;
@@ -97,10 +95,7 @@ public class DomainObjectInterfaceEliminator {
 			while (!filenames.isEmpty()) {
 				fileOutputStream.write(REPLACE_PREFIX);
 				for (final TokenValueBean tokenValueBean : replaceTokens) {
-					fileOutputStream.write(SEPERATOR);
-					fileOutputStream.write(tokenValueBean.getToken().getBytes());
-					fileOutputStream.write(SEPERATOR);
-					fileOutputStream.write(tokenValueBean.getValue().getBytes());
+					writeReplacementTokens(fileOutputStream, tokenValueBean);
 				}
 				fileOutputStream.write(FILENAME_PREFIX);
 				for (int i = 0; i++ < Math.min(500, filenames.size()); filenames.remove(0)) {
@@ -116,6 +111,31 @@ public class DomainObjectInterfaceEliminator {
 		}
 		report.writeReport();
 	}
+
+    private static final byte[] PARENTHESIS = "\"".getBytes();
+
+    private static void writeReplacementTokens(final FileOutputStream fileOutputStream, final TokenValueBean tokenValueBean) throws IOException {
+        writeReplacementToken(fileOutputStream, tokenValueBean, " ");
+        writeReplacementToken(fileOutputStream, tokenValueBean, "<");
+        writeReplacementToken(fileOutputStream, tokenValueBean, ">");
+        writeReplacementToken(fileOutputStream, tokenValueBean, "(");
+        writeReplacementToken(fileOutputStream, tokenValueBean, ",");
+        writeReplacementToken(fileOutputStream, tokenValueBean, ";");
+    }
+
+
+    private static void writeReplacementToken(final FileOutputStream fileOutputStream, final TokenValueBean tokenValueBean, final String postfix) throws IOException {
+        fileOutputStream.write(SEPERATOR);
+        fileOutputStream.write(PARENTHESIS);
+        fileOutputStream.write(tokenValueBean.getToken().getBytes());
+        fileOutputStream.write(postfix.getBytes());
+        fileOutputStream.write(PARENTHESIS);
+        fileOutputStream.write(SEPERATOR);
+        fileOutputStream.write(PARENTHESIS);
+        fileOutputStream.write(tokenValueBean.getValue().getBytes());
+        fileOutputStream.write(postfix.getBytes());
+        fileOutputStream.write(PARENTHESIS);
+    }
 
 	private static DomainModel retreiveDomainModel(final String[] args) {
 		try {
