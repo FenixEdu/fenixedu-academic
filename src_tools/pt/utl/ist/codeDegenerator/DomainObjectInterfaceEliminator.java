@@ -119,6 +119,7 @@ public class DomainObjectInterfaceEliminator {
         writeReplacementToken(fileOutputStream, tokenValueBean, "<");
         writeReplacementToken(fileOutputStream, tokenValueBean, ">");
         writeReplacementToken(fileOutputStream, tokenValueBean, "(");
+        writeReplacementToken(fileOutputStream, tokenValueBean, ")");
         writeReplacementToken(fileOutputStream, tokenValueBean, ",");
         writeReplacementToken(fileOutputStream, tokenValueBean, ";");
     }
