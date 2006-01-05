@@ -98,7 +98,7 @@ public class DomainObjectInterfaceEliminator {
 					writeReplacementTokens(fileOutputStream, tokenValueBean);
 				}
 				fileOutputStream.write(FILENAME_PREFIX);
-				for (int i = 0; i++ < Math.min(200, filenames.size()); filenames.remove(0)) {
+				for (int i = 0; i++ < Math.min(100, filenames.size()); filenames.remove(0)) {
 					fileOutputStream.write(SEPERATOR);
 					fileOutputStream.write(filenames.get(0).getBytes());
 				}
