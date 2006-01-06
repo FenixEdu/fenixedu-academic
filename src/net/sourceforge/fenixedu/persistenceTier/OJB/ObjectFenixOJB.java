@@ -44,10 +44,8 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
     protected void lockRead(Object obj) {
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.IPersistentObject#simpleLockWrite(Dominio.IDomainObject)
+    /**
+     * @deprecated
      */
     public void simpleLockWrite(IDomainObject obj) {
     }

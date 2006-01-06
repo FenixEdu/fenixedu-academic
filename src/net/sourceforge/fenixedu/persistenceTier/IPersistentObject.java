@@ -36,6 +36,7 @@ public interface IPersistentObject {
      *            object to lock
      * @throws ExcepcaoPersistencia
      *             when can't lock object.
+     * @deprecated
      */
     void simpleLockWrite(IDomainObject obj) throws ExcepcaoPersistencia;
 
