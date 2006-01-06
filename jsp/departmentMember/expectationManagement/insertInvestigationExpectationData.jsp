@@ -3,6 +3,15 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
+<style>
+	.alignTopRight {
+		vertical-align: top;
+		text-align: right;
+		tex
+		
+	}
+</style>
+
 <ft:tilesView definition="departmentMember.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="ServidorApresentacao/DepartmentMemberResources" var="bundle"/>
 	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="bundleEnumeration"/>
@@ -30,66 +39,84 @@
 		<!-- Investigation Expectations -->
 		<!-- Research And Dev -->
 		<h:outputText value="<h2>#{bundle['label.personalExpectationsManagement.investigation']}</h2>" escape="false" />
-		<h:panelGrid columns="4" cellpadding="0" cellspacing="0" columnClasses="leftColumn,,rightColumn,errorColumn" style="background-color: #eee; padding: 0.5em; ">
+		<h:panelGrid columns="2" columnClasses="alignTopRight infocell,infocell">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.researchAndDevProjects']}" />
-			<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false" />
-			<h:inputText id="researchAndDevProjects" value="#{teacherExpectationManagement.researchAndDevProjects}" required="true" maxlength="3" size="3" />
-			<h:message for="researchAndDevProjects" styleClass="error"/>
+			<h:panelGroup>
+				<h:inputText id="researchAndDevProjects" value="#{teacherExpectationManagement.researchAndDevProjects}" required="true" maxlength="3" size="3" />
+				<h:outputText value="&nbsp;&nbsp;" escape="false" />
+				<h:message for="researchAndDevProjects" styleClass="error"/>
+			</h:panelGroup>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.jornalArticlePublications']}" />
-			<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false" />
-			<h:inputText id="jornalArticlePublications" value="#{teacherExpectationManagement.jornalArticlePublications}" required="true" maxlength="3" size="3" />
-			<h:message for="jornalArticlePublications" styleClass="error"/>
+			<h:panelGroup>
+				<h:inputText id="jornalArticlePublications" value="#{teacherExpectationManagement.jornalArticlePublications}" required="true" maxlength="3" size="3" />
+				<h:outputText value="&nbsp;&nbsp;" escape="false" />
+				<h:message for="jornalArticlePublications" styleClass="error"/>
+			</h:panelGroup>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.bookPublications']}" />
-			<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false" />
-			<h:inputText id="bookPublications" value="#{teacherExpectationManagement.bookPublications}" required="true" maxlength="3" size="3" />
-			<h:message for="bookPublications" styleClass="error"/>
+			<h:panelGroup>
+				<h:inputText id="bookPublications" value="#{teacherExpectationManagement.bookPublications}" required="true" maxlength="3" size="3" />
+				<h:outputText value="&nbsp;&nbsp;" escape="false" />
+				<h:message for="bookPublications" styleClass="error"/>
+			</h:panelGroup>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.conferencePublications']}" />
-			<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false" />
-			<h:inputText id="conferencePublications" value="#{teacherExpectationManagement.conferencePublications}" required="true" maxlength="3" size="3" />
-			<h:message for="conferencePublications" styleClass="error"/>
+			<h:panelGroup>
+				<h:inputText id="conferencePublications" value="#{teacherExpectationManagement.conferencePublications}" required="true" maxlength="3" size="3" />
+				<h:outputText value="&nbsp;&nbsp;" escape="false" />
+				<h:message for="conferencePublications" styleClass="error"/>
+			</h:panelGroup>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.technicalReportPublications']}" />
-			<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false" />
-			<h:inputText id="technicalReportPublications" value="#{teacherExpectationManagement.technicalReportPublications}" required="true" maxlength="3" size="3" />
-			<h:message for="technicalReportPublications" styleClass="error"/>
+			<h:panelGroup>
+				<h:inputText id="technicalReportPublications" value="#{teacherExpectationManagement.technicalReportPublications}" required="true" maxlength="3" size="3" />
+				<h:outputText value="&nbsp;&nbsp;" escape="false" />
+				<h:message for="technicalReportPublications" styleClass="error"/>
+			</h:panelGroup>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.patentPublications']}" />
-			<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false" />
-			<h:inputText id="patentPublications" value="#{teacherExpectationManagement.patentPublications}" required="true" maxlength="3" size="3" />
-			<h:message for="patentPublications" styleClass="error"/>
+			<h:panelGroup>
+				<h:inputText id="patentPublications" value="#{teacherExpectationManagement.patentPublications}" required="true" maxlength="3" size="3" />
+				<h:outputText value="&nbsp;&nbsp;" escape="false" />
+				<h:message for="patentPublications" styleClass="error"/>
+			</h:panelGroup>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.otherPublications']}" />
-			<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false" />
-			<h:inputText id="otherPublications" value="#{teacherExpectationManagement.otherPublications}" required="true" maxlength="3" size="3" />
-			<h:message for="otherPublications" styleClass="error"/>
+			<h:panelGroup>
+				<h:inputText id="otherPublications" value="#{teacherExpectationManagement.otherPublications}" required="true" maxlength="3" size="3" />
+				<h:outputText value="&nbsp;&nbsp;" escape="false" />
+				<h:message for="otherPublications" styleClass="error"/>
+			</h:panelGroup>
 		</h:panelGrid>
 		<h:panelGrid columns="1">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.otherPublicationsDescription']}" />
-			<h:inputTextarea cols="45" rows="3" id="otherPublicationsDescription" value="#{teacherExpectationManagement.otherPublicationsDescription}" />
+			<fc:htmlEditor width="400" height="95" id="otherPublicationsDescription" value="#{teacherExpectationManagement.otherPublicationsDescription}" required="false" showButtons="false"/>
 			<h:message for="otherPublicationsDescription" styleClass="error"/>
 		</h:panelGrid>
 			
 		<h:panelGrid columns="1">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.mainFocus']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" escape="false" />
-			<fc:htmlEditor id="researchAndDevMainFocus" value="#{teacherExpectationManagement.researchAndDevMainFocus}" height="300" width="300" designMode="true" />
+			<fc:htmlEditor id="researchAndDevMainFocus" value="#{teacherExpectationManagement.researchAndDevMainFocus}" height="300" width="300" showButtons="true" />
 		</h:panelGrid>
 	
 		<h:outputText value="<br/>" escape="false" />
 								
 		<h:outputText value="<p>#{bundle['label.personalExpectationsManagement.orientation']}</p>" style="font: bold 13px Verdana, Arial, Helvetica, sans-serif;" escape="false" />
-		<h:panelGrid columns="4" cellpadding="0" cellspacing="0" columnClasses="leftColumn,,rightColumn,errorColumn" style="background-color: #eee; padding: 0.5em; ">
+		<h:panelGrid columns="2" columnClasses="alignTopRight infocell,infocell" >
 				<h:outputText value="#{bundle['label.personalExpectationsManagement.phdOrientations']}" />
-				<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false" />
-				<h:inputText id="phdOrientations" value="#{teacherExpectationManagement.phdOrientations}" required="true" maxlength="3" size="3" />
-				<h:message for="phdOrientations" styleClass="error"/>
+				<h:panelGroup>
+					<h:inputText id="phdOrientations" value="#{teacherExpectationManagement.phdOrientations}" required="true" maxlength="3" size="3" />
+					<h:outputText value="&nbsp;&nbsp;" escape="false"/>
+					<h:message for="phdOrientations" styleClass="error"/>
+				</h:panelGroup>
 				
 				<h:outputText value="#{bundle['label.personalExpectationsManagement.masterDegreeOrientations']}" />
-				<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false" />
-				<h:inputText id="masterDegreeOrientations" value="#{teacherExpectationManagement.masterDegreeOrientations}" required="true" maxlength="3" size="3" />
-				<h:message for="masterDegreeOrientations" styleClass="error"/>
+				<h:panelGroup>
+					<h:inputText id="masterDegreeOrientations" value="#{teacherExpectationManagement.masterDegreeOrientations}" required="true" maxlength="3" size="3" />
+					<h:outputText value="&nbsp;&nbsp;" escape="false" />
+					<h:message for="masterDegreeOrientations" styleClass="error"/>
+				</h:panelGroup>
 				
 		</h:panelGrid>
 		
@@ -131,17 +158,19 @@
 		
 		<h:outputText value="<br/>" escape="false" />
 		
-		<h:panelGrid columns="4" cellpadding="0" cellspacing="0" columnClasses="leftColumn,,rightColumn,errorColumn" style="background-color: #eee; padding: 0.5em; ">
+		<h:panelGrid columns="4" columnClasses="alignTopRight infocell">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.finalDegreeWorkOrientations']}" />
-			<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false" />
-			<h:inputText id="finalDegreeWorkOrientations" value="#{teacherExpectationManagement.finalDegreeWorkOrientations}" required="true" maxlength="3" size="3" />
-			<h:message for="finalDegreeWorkOrientations" styleClass="error"/>
+			<h:panelGroup>
+				<h:inputText id="finalDegreeWorkOrientations" value="#{teacherExpectationManagement.finalDegreeWorkOrientations}" required="true" maxlength="3" size="3" />
+				<h:outputText value="&nbsp;&nbsp;" escape="false" />
+				<h:message for="finalDegreeWorkOrientations" styleClass="error"/>
+			</h:panelGroup>
 		</h:panelGrid>
 		
 		
 		<h:panelGrid columns="1">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.mainFocus']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" escape="false" />
-			<fc:htmlEditor value="#{teacherExpectationManagement.orientationsMainFocus}" height="300" width="300" designMode="true" />
+			<fc:htmlEditor value="#{teacherExpectationManagement.orientationsMainFocus}" height="300" width="300" showButtons="true" />
 		</h:panelGrid>
 
 									

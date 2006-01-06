@@ -113,6 +113,11 @@
 					<h:outputText escape="false" value="#{bundle['label.teacher.details.orientationInformation']}"/>
 				</h:outputLink>
 			<h:outputText value="</li>" escape="false"/>
+			<h:outputText value="<li>" escape="false"/>
+				<h:outputLink value="#functionsInformation">
+					<h:outputText escape="false" value="#{bundle['label.teacher.details.functionsInformation']}"/>
+				</h:outputLink>
+			<h:outputText value="</li>" escape="false"/>
 		<h:outputText value="</ul>" escape="false"/>
 				
 		<!-- Personal Information -->
@@ -271,7 +276,49 @@
 		</h:panelGroup>
 		<h:panelGrid border="0" cellpadding="0" cellspacing="0" rendered="#{empty viewDepartmentTeachers.guidedMasterDegreeThesisList}">
 			<h:outputText value="#{bundle['label.teacher.details.orientationInformation.noMasterDegreeThesis']}" />
-		</h:panelGrid>	
+		</h:panelGrid>
+				
+		<!-- Functions -->
+		<h:outputText value="<h2 id='functionsInformation' class='cd_heading'><span>#{bundle['label.teacher.details.functionsInformation']}</span></h2>" escape="false" />
+		<h:panelGroup rendered="#{!(empty viewDepartmentTeachers.teacherFunctions)}">
+			<h:dataTable value="#{viewDepartmentTeachers.teacherFunctions}" var="teacherFunction" styleClass="cd">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{bundle['label.teacher.details.functionsInformation.functionName']}" />
+					</f:facet>
+					<h:outputText value="#{teacherFunction.function.name}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{bundle['label.teacher.details.functionsInformation.startDate']}" />
+					</f:facet>
+					<h:panelGroup rendered="#{teacherFunction.beginDate != null}">
+						<h:outputFormat value="{0, date, dd / MM / yyyy}" escape="false">
+							<f:param value="#{teacherFunction.beginDate}" />
+						</h:outputFormat>
+					</h:panelGroup>
+					<h:panelGroup rendered="#{teacherFunction.beginDate == null}">
+						<h:outputText value="#{bundle['label.common.notAvailable']}" />
+					</h:panelGroup>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{bundle['label.teacher.details.functionsInformation.endDate']}" />
+					</f:facet>
+					<h:panelGroup rendered="#{teacherFunction.endDate != null}">
+						<h:outputFormat value="{0, date, dd / MM / yyyy}" escape="false">
+							<f:param value="#{teacherFunction.endDate}" />
+						</h:outputFormat>
+					</h:panelGroup>
+					<h:panelGroup rendered="#{teacherFunction.endDate == null}">
+						<h:outputText value="#{bundle['label.common.notAvailable']}" />
+					</h:panelGroup>
+				</h:column>
+			</h:dataTable>
+		</h:panelGroup>
+		<h:panelGrid border="0" cellpadding="0" cellspacing="0" rendered="#{empty viewDepartmentTeachers.teacherFunctions}">
+			<h:outputText value="#{bundle['label.teacher.details.functionsInformation.noFunctions']}" />
+		</h:panelGrid>
 		
 	</h:form>
 </ft:tilesView>

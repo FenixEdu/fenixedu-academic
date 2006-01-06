@@ -21,6 +21,10 @@
 			.indent {
 			padding: 0 2em;
 			}
+			.limbottom li {
+			padding-bottom: 8px;			
+			
+			}
 		</style>
 	</f:verbatim>
 		
@@ -61,8 +65,8 @@
 				<h:outputText value="</li>" escape="false"/>
 				<h:outputText value="<li>" escape="false"/>
 					<h:outputText value="<i>#{bundle['label.personalExpectationsManagement.description']}</i>" escape="false" />
-					<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false" />
-					<h:outputText value="#{teacherExpectationManagement.graduationsDescription}" />
+					<h:outputText value="<br/>" escape="false" />
+					<h:outputText value="#{teacherExpectationManagement.graduationsDescription}" escape="false" />
 				<h:outputText value="</li>"  escape="false"/>
 			<h:outputText value="</ul>" escape="false"/>
 
@@ -76,8 +80,8 @@
 				<h:outputText value="</li>" escape="false"/>
 				<h:outputText value="<li>" escape="false"/>
 					<h:outputText value="<i>#{bundle['label.personalExpectationsManagement.description']}</i>" escape="false"/>
-					<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false" />
-					<h:outputText value="#{teacherExpectationManagement.cientificPosGraduationsDescription}" />
+					<h:outputText value="<br/>" escape="false" />
+					<h:outputText value="#{teacherExpectationManagement.cientificPosGraduationsDescription}" escape="false" />
 				<h:outputText value="</li>"  escape="false"/>
 			<h:outputText value="</ul>" escape="false"/>
 			
@@ -91,8 +95,8 @@
 				<h:outputText value="</li>" escape="false"/>
 				<h:outputText value="<li>" escape="false"/>
 					<h:outputText value="<i>#{bundle['label.personalExpectationsManagement.description']}</i>" escape="false" />
-					<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false" />
-					<h:outputText value="#{teacherExpectationManagement.professionalPosGraduationsDescription}" />
+					<h:outputText value="<br/>" escape="false" />
+					<h:outputText value="#{teacherExpectationManagement.professionalPosGraduationsDescription}" escape="false" />
 				<h:outputText value="</li>"  escape="false"/>
 			<h:outputText value="</ul>" escape="false"/>
 			
@@ -106,14 +110,14 @@
 				<h:outputText value="</li>" escape="false"/>
 				<h:outputText value="<li>" escape="false"/>
 					<h:outputText value="<i>#{bundle['label.personalExpectationsManagement.description']}</i>" escape="false" />
-					<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false" />
-					<h:outputText value="#{teacherExpectationManagement.seminariesDescription}" />
+					<h:outputText value="<br/>" escape="false" />
+					<h:outputText value="#{teacherExpectationManagement.seminariesDescription}" escape="false" />
 				<h:outputText value="</li>"  escape="false"/>
 			<h:outputText value="</ul>" escape="false"/>
 											
 			<h:panelGrid columns="1">
 				<h:outputText value="#{bundle['label.personalExpectationsManagement.mainFocus']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" escape="false" />
-				<h:outputText value="#{teacherExpectationManagement.educationMainFocus}" escape="false" />
+				<h:outputText value="<div style=\"padding: 6px 0; padding-left: 40px;\">#{teacherExpectationManagement.educationMainFocus}</div>" escape="false" />
 			</h:panelGrid>
 			
 			<h:panelGrid columns="1" rendered="#{teacherExpectationManagement.expectationDefinitionPeriodOpen}">
@@ -134,12 +138,12 @@
 				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.technicalReportPublications']}</i>&nbsp;&nbsp;&nbsp;#{teacherExpectationManagement.technicalReportPublications}</li>" escape="false"/>				
 				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.patentPublications']}</i>&nbsp;&nbsp;&nbsp;#{teacherExpectationManagement.patentPublications}</li>" escape="false"/>
 				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.otherPublications']}</i>&nbsp;&nbsp;&nbsp;#{teacherExpectationManagement.otherPublications}</li>" escape="false"/>
-				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.otherPublicationsDescription']}</i>&nbsp;&nbsp;&nbsp;#{teacherExpectationManagement.otherPublicationsDescription}</li>" escape="false"/>
+				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.otherPublicationsDescription']}</i><br/>#{teacherExpectationManagement.otherPublicationsDescription}</li>" escape="false"/>
 			<h:outputText value="</ul>" escape="false" />
 			
 			<h:panelGrid columns="1">
 				<h:outputText value="#{bundle['label.personalExpectationsManagement.mainFocus']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" escape="false" />
-				<h:outputText value="#{teacherExpectationManagement.researchAndDevMainFocus}" escape="false" />	
+				<h:outputText value="<div style=\"padding: 6px 0; padding-left: 40px;\">#{teacherExpectationManagement.researchAndDevMainFocus}</div>" escape="false" />
 			</h:panelGrid>
 
 			<h:outputText value="<br/>" escape="false" />
@@ -154,7 +158,7 @@
 			
 			<h:panelGrid columns="1">
 				<h:outputText value="#{bundle['label.personalExpectationsManagement.mainFocus']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" escape="false" />
-				<h:outputText value="#{teacherExpectationManagement.orientationsMainFocus}" escape="false" />
+				<h:outputText value="<div style=\"padding: 6px 0; padding-left: 40px;\">#{teacherExpectationManagement.orientationsMainFocus}</div>" escape="false" />
 			</h:panelGrid>			
 		
 			<h:panelGrid columns="1" rendered="#{teacherExpectationManagement.expectationDefinitionPeriodOpen}">
@@ -167,15 +171,15 @@
 			
 			<!-- University Service Expectations -->
 			<h:outputText value="<p class='header'><strong>#{bundle['label.personalExpectationsManagement.universityService']}</strong></p>" escape="false" />
-			<h:outputText value="<ul>" escape="false" />
-				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.departmentOrgans']}</i>&nbsp;&nbsp;&nbsp;#{teacherExpectationManagement.departmentOrgans}</li>" escape="false" />
-				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.istOrgans']}</i>&nbsp;&nbsp;&nbsp;#{teacherExpectationManagement.istOrgans}</li>" escape="false" />
-				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.utlOrgans']}</i>&nbsp;&nbsp;&nbsp;#{teacherExpectationManagement.utlOrgans}</li>" escape="false"/>
+			<h:outputText value="<ul class=\"limbottom\">" escape="false" />
+				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.departmentOrgans']}</i><br/>#{teacherExpectationManagement.departmentOrgans}</li>" escape="false" />
+				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.istOrgans']}</i><br/>#{teacherExpectationManagement.istOrgans}</li>" escape="false" />
+				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.utlOrgans']}</i><br/>#{teacherExpectationManagement.utlOrgans}</li>" escape="false"/>
 			<h:outputText value="</ul>" escape="false" />
 
 			<h:panelGrid columns="1">
 				<h:outputText value="#{bundle['label.personalExpectationsManagement.mainFocus']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" escape="false" />
-				<h:outputText id="universityServiceMainFocusText" value="#{teacherExpectationManagement.universityServiceMainFocus}" escape="false" />
+				<h:outputText value="<div style=\"padding: 6px 0; padding-left: 40px;\">#{teacherExpectationManagement.universityServiceMainFocus}</div>" escape="false" />				
 			</h:panelGrid>
 			
 			<h:outputText value="<br/>" escape="false" />
@@ -189,17 +193,17 @@
 			
 			<!-- Professional Activity Expectations -->
 			<h:outputText value="<p class='header'><strong>#{bundle['label.personalExpectationsManagement.professionalActivity']}</strong></p>" escape="false" />
-			<h:outputText value="<ul>" escape="false" />
-				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.cientificComunityService']}</i>&nbsp;&nbsp;&nbsp;#{teacherExpectationManagement.cientificComunityService}</li>" escape="false" />
-				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.societyService']}</i>&nbsp;&nbsp;&nbsp;#{teacherExpectationManagement.societyService}</li>" escape="false" />
-				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.consulting']}</i>&nbsp;&nbsp;&nbsp;#{teacherExpectationManagement.consulting}</li>" escape="false" />
-				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.companySocialOrgans']}</i>&nbsp;&nbsp;&nbsp;#{teacherExpectationManagement.companySocialOrgans}</li>" escape="false" />
-				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.companyPositions']}</i>&nbsp;&nbsp;&nbsp;#{teacherExpectationManagement.companyPositions}</li>" escape="false" />
+			<h:outputText value="<ul class=\"limbottom\">" escape="false" />
+				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.cientificComunityService']}</i><br/>#{teacherExpectationManagement.cientificComunityService}</li>" escape="false" />
+				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.societyService']}</i><br/>#{teacherExpectationManagement.societyService}</li>" escape="false" />
+				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.consulting']}</i><br/>#{teacherExpectationManagement.consulting}</li>" escape="false" />
+				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.companySocialOrgans']}</i><br/>#{teacherExpectationManagement.companySocialOrgans}</li>" escape="false" />
+				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.companyPositions']}</i><br/>#{teacherExpectationManagement.companyPositions}</li>" escape="false" />
 			<h:outputText value="</ul>" escape="false" />
 			
 			<h:panelGrid columns="1">
 				<h:outputText value="#{bundle['label.personalExpectationsManagement.mainFocus']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" escape="false" />
-				<h:outputText value="#{teacherExpectationManagement.professionalActivityMainFocus}" escape="false" />
+				<h:outputText value="<div style=\"padding: 6px 0; padding-left: 40px;\">#{teacherExpectationManagement.professionalActivityMainFocus}</div>" escape="false" />				
 			</h:panelGrid>
 			
 			<h:outputText value="<br/>" escape="false" />

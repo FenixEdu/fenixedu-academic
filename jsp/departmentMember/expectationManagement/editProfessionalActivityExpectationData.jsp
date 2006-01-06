@@ -54,40 +54,30 @@
 		<h:outputText value="<h2>#{bundle['label.personalExpectationsManagement.professionalActivity']}</h2>" escape="false" />
 		<h:panelGrid columns="1">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.cientificComunityService']}" />
-			<h:inputTextarea cols="45" rows="3" id="cientificComunityService" value="#{teacherExpectationManagement.cientificComunityService}" required="true">
-				<f:validateLength minimum="0" maximum="250" />
-			</h:inputTextarea>
+			<fc:htmlEditor width="400" height="95" id="cientificComunityService" value="#{teacherExpectationManagement.cientificComunityService}" required="false" showButtons="false"/>
 			<h:message for="cientificComunityService" styleClass="error"/>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.societyService']}" />
-			<h:inputTextarea cols="45" rows="3" id="societyService" value="#{teacherExpectationManagement.societyService}" required="true" >
-				<f:validateLength minimum="0" maximum="250" />
-			</h:inputTextarea>
+			<fc:htmlEditor width="400" height="95" id="societyService" value="#{teacherExpectationManagement.societyService}" required="false" showButtons="false"/>
 			<h:message for="societyService" styleClass="error"/>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.consulting']}" />
-			<h:inputTextarea cols="45" rows="3" id="consulting" value="#{teacherExpectationManagement.consulting}" required="true" >
-				<f:validateLength minimum="0" maximum="250" />
-			</h:inputTextarea>
+			<fc:htmlEditor width="400" height="95" id="consulting" value="#{teacherExpectationManagement.consulting}" required="false" showButtons="false"/>
 			<h:message for="consulting" styleClass="error"/>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.companySocialOrgans']}" />
-			<h:inputTextarea cols="45" rows="3" id="companySocialOrgans" value="#{teacherExpectationManagement.companySocialOrgans}" required="true" >
-				<f:validateLength minimum="0" maximum="250" />
-			</h:inputTextarea>
+			<fc:htmlEditor width="400" height="95" id="companySocialOrgans" value="#{teacherExpectationManagement.companySocialOrgans}" required="false" showButtons="false"/>
 			<h:message for="companySocialOrgans" styleClass="error"/>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.companyPositions']}" />
-			<h:inputTextarea cols="45" rows="3" id="companyPositions" value="#{teacherExpectationManagement.companyPositions}" required="true" >
-				<f:validateLength minimum="0" maximum="250" />
-			</h:inputTextarea>
+			<fc:htmlEditor width="400" height="95" id="companyPositions" value="#{teacherExpectationManagement.companyPositions}" required="false" showButtons="false"/>
 			<h:message for="companyPositions" styleClass="error"/>
 			
 		</h:panelGrid>
 		
 		<h:panelGrid columns="1">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.mainFocus']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" escape="false" />
-			<fc:htmlEditor value="#{teacherExpectationManagement.professionalActivityMainFocus}" height="300" width="300" designMode="true"/>
+			<fc:htmlEditor value="#{teacherExpectationManagement.professionalActivityMainFocus}" height="300" width="300" showButtons="true"/>
 		</h:panelGrid>
 		
 		<h:outputText value="<br/>" escape="false" />

@@ -393,7 +393,7 @@ class net.sourceforge.fenixedu.domain.cms.Content extends net.sourceforge.fenixe
     class net.sourceforge.fenixedu.domain.cms.website.WebsiteItem extends net.sourceforge.fenixedu.domain.cms.Content {
     }    
     
- class net.sourceforge.fenixedu.domain.accessControl.UserGroup extends net.sourceforge.fenixedu.domain.DomainObject {
+ class net.sourceforge.fenixedu.domain.accessControl.UserGroup extends net.sourceforge.fenixedu.domain.DomainObject{
  	Integer keyReadersGroup;
  	Integer keyWritersGroup;
 	Integer keyMailingList; 
@@ -401,73 +401,49 @@ class net.sourceforge.fenixedu.domain.cms.Content extends net.sourceforge.fenixe
 	String name;
 	Date creationDate;
 	String description;   
-
 	interface "
-		public abstract java.util.Iterator<net.sourceforge.fenixedu.domain.IPerson> getElementsIterator();    
-		public abstract int getElementsCount();
-		public abstract boolean isMember(net.sourceforge.fenixedu.domain.IPerson person);
-		public void delete();
-		public boolean allows(net.sourceforge.fenixedu.applicationTier.IUserView userView);
+	public abstract java.util.Iterator<net.sourceforge.fenixedu.domain.IPerson> getElementsIterator();    
+	public abstract int getElementsCount();
+	public abstract boolean isMember(net.sourceforge.fenixedu.domain.IPerson person);
+	public void delete();
+	public boolean allows(net.sourceforge.fenixedu.applicationTier.IUserView userView);
    "
-}
-
-	class net.sourceforge.fenixedu.domain.accessControl.NodeGroup extends net.sourceforge.fenixedu.domain.accessControl.UserGroup {
-		interface"
-			public void removePart(net.sourceforge.fenixedu.domain.accessControl.IUserGroup group);
-		"
 	}
-    
-    	class net.sourceforge.fenixedu.domain.accessControl.GroupDifference extends net.sourceforge.fenixedu.domain.accessControl.NodeGroup {
-    	
-	    }			
-   		
-   		class net.sourceforge.fenixedu.domain.accessControl.GroupUnion extends net.sourceforge.fenixedu.domain.accessControl.NodeGroup {
-   		
+	class net.sourceforge.fenixedu.domain.accessControl.NodeGroup extends net.sourceforge.fenixedu.domain.accessControl.UserGroup{	
+		interface"
+		public void removePart(net.sourceforge.fenixedu.domain.accessControl.IUserGroup group);
+		"
     	}
-
-    		class net.sourceforge.fenixedu.domain.department.CompetenceCourseMembersGroup extends net.sourceforge.fenixedu.domain.accessControl.GroupUnion {
+    	class net.sourceforge.fenixedu.domain.accessControl.GroupDifference extends net.sourceforge.fenixedu.domain.accessControl.NodeGroup{
+	    }			
+   		class net.sourceforge.fenixedu.domain.accessControl.GroupUnion extends net.sourceforge.fenixedu.domain.accessControl.NodeGroup{
+    	}
+    		class net.sourceforge.fenixedu.domain.department.CompetenceCourseMembersGroup extends net.sourceforge.fenixedu.domain.accessControl.GroupUnion{
     			Integer keyDepartment;
 	    	}		    	
-    	
-    		class net.sourceforge.fenixedu.domain.DegreeCurricularPlanMembersGroup extends net.sourceforge.fenixedu.domain.accessControl.GroupUnion {
+    		class net.sourceforge.fenixedu.domain.DegreeCurricularPlanMembersGroup extends net.sourceforge.fenixedu.domain.accessControl.GroupUnion{
     			Integer keyDegreeCurricularPlan;
-	    	}
-
-
-	    class net.sourceforge.fenixedu.domain.accessControl.GroupIntersection extends net.sourceforge.fenixedu.domain.accessControl.NodeGroup {
-
+	    	}		    	
+	    class net.sourceforge.fenixedu.domain.accessControl.GroupIntersection extends net.sourceforge.fenixedu.domain.accessControl.NodeGroup{
    		}
-
-
-	class net.sourceforge.fenixedu.domain.accessControl.LeafGroup extends net.sourceforge.fenixedu.domain.accessControl.UserGroup {
-
-    }
-
+	class net.sourceforge.fenixedu.domain.accessControl.LeafGroup extends net.sourceforge.fenixedu.domain.accessControl.UserGroup{    
+        }
    	    class net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseUserGroup extends net.sourceforge.fenixedu.domain.accessControl.LeafGroup {
-	   	    Integer keyExecutionCourse;
+   	    Integer keyExecutionCourse;
    	    }
-
-	   	    class net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseStudentsGroup extends net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseUserGroup {    	
-
+	   	    class net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseStudentsGroup extends net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseUserGroup{    	
 	   	    }    	
-
-		    class net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup extends net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseUserGroup {
-
+		    class net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup extends net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseUserGroup{
 	   	    }    	
-
-
-   	    class net.sourceforge.fenixedu.domain.accessControl.PersonGroup extends net.sourceforge.fenixedu.domain.accessControl.LeafGroup {
-	   	    Integer keyPerson;
+   	    class net.sourceforge.fenixedu.domain.accessControl.PersonGroup extends net.sourceforge.fenixedu.domain.accessControl.LeafGroup{
+   	    Integer keyPerson;
    	    }
-
-		class net.sourceforge.fenixedu.domain.accessControl.RoleGroup extends net.sourceforge.fenixedu.domain.accessControl.LeafGroup {
-			Integer keyRole;
+		class net.sourceforge.fenixedu.domain.accessControl.RoleGroup extends net.sourceforge.fenixedu.domain.accessControl.LeafGroup{
+		Integer keyRole;
    	    }   	    
-
-		class net.sourceforge.fenixedu.domain.accessControl.PublicRequestersGroup extends net.sourceforge.fenixedu.domain.accessControl.LeafGroup {
-
-   	    }
-
+		class net.sourceforge.fenixedu.domain.accessControl.PublicRequestersGroup extends net.sourceforge.fenixedu.domain.accessControl.LeafGroup{
+   	    }   	       	    
+    
 
 class net.sourceforge.fenixedu.domain.cms.infrastructure.MailQueue extends net.sourceforge.fenixedu.domain.DomainObject
 {
@@ -1064,9 +1040,9 @@ class net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformatio
 	RegimeType regime;
     String objectives;
     String objectivesEn;    
-    String program; 
+	String program;
     String programEn;
-    String evaluationMethod;    
+    String evaluationMethod;
     String evaluationMethodEn;
     Date endDate;
 	
@@ -1089,7 +1065,7 @@ class net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad exten
 	Double autonomousWorkHours;
 	Double ectsCredits;
 	Integer order;
-	
+
 	interface "
 	public void edit(Double theoreticalHours, Double problemsHours, Double laboratorialHours, Double seminaryHours, Double fieldWorkHours,
 	        Double trainingPeriodHours, Double tutorialOrientationHours, Double autonomousWorkHours, Double ectsCredits, Integer order);
@@ -1333,7 +1309,7 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 
         interface "
         public void edit(String name, java.util.Date begin, java.util.Date end, String description);
-        "
+        "           
 	}
 
 
@@ -2087,7 +2063,7 @@ class net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse extends net.sour
     Character entryGradeClassification;
     Character approvationRatioClassification;
     Character arithmeticMeanClassification;        
-
+    
     interface "
 	public void createInquiriesRoom(net.sourceforge.fenixedu.domain.space.IRoom room, net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRoom infoInquiriesRoom);
 
@@ -2637,6 +2613,10 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 	public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IFunction> getActiveInherentFunctions();
 	
 	public boolean containsActiveFunction(net.sourceforge.fenixedu.domain.organizationalStructure.IFunction function);
+	
+	public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction> getPersonFuntions(java.util.Date beginDate, java.util.Date endDate);
+	
+	
     "
 }
 
@@ -4258,7 +4238,7 @@ relation CompetenceCourseInformationCompetenceCourse {
 relation CompetenceCourseInformationCompetenceCourseLoad {
 	net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation playsRole competenceCourseInformation;	
 	net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad playsRole competenceCourseLoads {
-	    multiplicity *;
+		multiplicity *;
 	}
 }
 

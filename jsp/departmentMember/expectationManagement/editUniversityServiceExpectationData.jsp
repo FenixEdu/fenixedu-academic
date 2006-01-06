@@ -48,27 +48,24 @@
 		<h:outputText value="<h2>#{bundle['label.personalExpectationsManagement.universityService']}</h2>" escape="false" />
 		<h:panelGrid columns="1">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.departmentOrgans']}" />
-			<h:inputTextarea cols="45" rows="3" id="departmentOrgans" value="#{teacherExpectationManagement.departmentOrgans}" required="true">
-				<f:validateLength minimum="0" maximum="250" />
-			</h:inputTextarea>
+			<fc:htmlEditor width="400" height="95" id="departmentOrgans" value="#{teacherExpectationManagement.departmentOrgans}" required="false" showButtons="false"/>
+			<h:outputText value="&nbsp;&nbsp;" escape="false" />	
 			<h:message for="departmentOrgans" styleClass="error"/>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.istOrgans']}" />
-			<h:inputTextarea cols="45" rows="3" id="istOrgans" value="#{teacherExpectationManagement.istOrgans}" required="true">
-				<f:validateLength minimum="0" maximum="250" />
-			</h:inputTextarea>
+			<fc:htmlEditor width="400" height="95" id="istOrgans" value="#{teacherExpectationManagement.istOrgans}" required="false" showButtons="false"/>
+			<h:outputText value="&nbsp;&nbsp;" escape="false" />	
 			<h:message for="istOrgans" styleClass="error"/>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.utlOrgans']}" />
-			<h:inputTextarea cols="45" rows="3" id="utlOrgans" value="#{teacherExpectationManagement.utlOrgans}" required="true">
-				<f:validateLength minimum="0" maximum="250" />
-			</h:inputTextarea>
+			<fc:htmlEditor width="400" height="95" id="utlOrgans" value="#{teacherExpectationManagement.utlOrgans}" required="false" showButtons="false"/>
+			<h:outputText value="&nbsp;&nbsp;" escape="false" />	
 			<h:message for="utlOrgans" styleClass="error"/>
 		</h:panelGrid>
 					
 		<h:panelGrid columns="1">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.mainFocus']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" escape="false" />
-			<fc:htmlEditor value="#{teacherExpectationManagement.universityServiceMainFocus}" height="300" width="300" designMode="true"/>
+			<fc:htmlEditor value="#{teacherExpectationManagement.universityServiceMainFocus}" height="300" width="300" showButtons="true"/>
 		</h:panelGrid>
 		
 		<!-- Professional Activity Expectations -->

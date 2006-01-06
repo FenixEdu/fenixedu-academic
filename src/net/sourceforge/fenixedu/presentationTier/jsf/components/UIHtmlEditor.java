@@ -30,12 +30,12 @@ public class UIHtmlEditor extends UIInput {
         Integer width = (Integer) this.getAttributes().get("width");
         Integer height = (Integer) this.getAttributes().get("height");
         String value = (String) this.getValue();
-        Boolean designMode = (Boolean) this.getAttributes().get("designMode");
+        Boolean showButtons = (Boolean) this.getAttributes().get("showButtons");
         Boolean required = (Boolean) this.getAttributes().get("required");
         Integer maxLength = (Integer) this.getAttributes().get("maxLength");
 
-        if (designMode == null) {
-            designMode = Boolean.TRUE;
+        if (showButtons == null) {
+            showButtons = Boolean.TRUE;
         }
 
         this.setRequired((required != null) ? required : Boolean.FALSE);
@@ -47,16 +47,16 @@ public class UIHtmlEditor extends UIInput {
         encodeHiddenField(writer, hiddenFieldClientId, value);
         initializeEditorScriptIfRequired(writer, requestMap, context);
         encodeHtmlEditor(context, writer, hiddenFieldClientId, htmlEditorClientId, width, height,
-                designMode);
+                showButtons);
     }
 
     private void encodeHtmlEditor(FacesContext context, ResponseWriter writer,
             String hiddenFieldClientId, String htmlEditorClientId, Integer width, Integer height,
-            Boolean designMode) throws IOException {
+            Boolean showButtons) throws IOException {
         StringBuilder scriptBlock = new StringBuilder();
         scriptBlock.append("writeMultipleTextEditor(\"").append(htmlEditorClientId).append("\",")
                 .append(width).append(",").append(height).append(",document.getElementById('").append(
-                        hiddenFieldClientId).append("').value,").append(designMode.toString()).append(
+                        hiddenFieldClientId).append("').value,").append(showButtons.toString()).append(
                         ")");
 
         writer.startElement("script", this);

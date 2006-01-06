@@ -20,9 +20,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IDepartment;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.teacher.IAdvise;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -55,6 +59,8 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
     private List<SelectItem> executionYearItems;
 
     private List<IAdvise> finalDegreeWorkAdvises;
+
+    private List<IPersonFunction> teacherFunctions;
 
     private ResourceBundle bundle;
 
@@ -216,9 +222,14 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
 
         result.addAll(lecturedExecutionCourses);
 
-        BeanComparator comparator = new BeanComparator("executionPeriod.executionYear.year");
-        Collections.sort(result, comparator);
-        Collections.reverse(result);
+        ComparatorChain comparatorChain = new ComparatorChain();
+        BeanComparator executionYearComparator = new BeanComparator("executionPeriod.executionYear.year");
+        BeanComparator semesterComparator = new BeanComparator("executionPeriod.semester");
+
+        comparatorChain.addComparator(executionYearComparator);
+        comparatorChain.addComparator(semesterComparator);
+
+        Collections.sort(result, comparatorChain);
 
         return result;
     }
@@ -268,9 +279,20 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
                 executionYearID = null;
             }
 
-            this.finalDegreeWorkAdvises = (List<IAdvise>) ServiceUtils.executeService(getUserView(),
-                    "ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID", new Object[] {
-                            AdviseType.FINAL_WORK_DEGREE, getSelectedTeacherID(), executionYearID });
+            List<IAdvise> result = new ArrayList<IAdvise>((List<IAdvise>) ServiceUtils
+                    .executeService(getUserView(),
+                            "ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID",
+                            new Object[] { AdviseType.FINAL_WORK_DEGREE, getSelectedTeacherID(),
+                                    executionYearID }));
+
+            ComparatorChain comparatorChain = new ComparatorChain();
+            BeanComparator executionYearComparator = new BeanComparator("student.number");
+
+            comparatorChain.addComparator(executionYearComparator);
+
+            Collections.sort(result, comparatorChain);
+
+            this.finalDegreeWorkAdvises = result;
 
         }
         return this.finalDegreeWorkAdvises;
@@ -294,12 +316,43 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
         return this.guidedMasterDegreeThesisList;
     }
 
+    public List<IPersonFunction> getTeacherFunctions() throws FenixFilterException,
+            FenixServiceException {
+        if (this.teacherFunctions == null && this.getSelectedExecutionYearID() != null) {
+            Integer executionYearID = this.getSelectedExecutionYearID();
+
+            if (executionYearID == 0) {
+                executionYearID = null;
+            }
+
+            ITeacher teacher = (ITeacher) readDomainObject(Teacher.class, getSelectedTeacherID());
+
+            List<IPersonFunction> result = new ArrayList<IPersonFunction>(
+                    (List<IPersonFunction>) ServiceUtils.executeService(getUserView(),
+                            "ReadPersonFunctionsByPersonIDAndExecutionYearID", new Object[] {
+                                    teacher.getPerson().getIdInternal(), executionYearID }));
+
+            ComparatorChain comparatorChain = new ComparatorChain();
+            BeanComparator beginDateComparator = new BeanComparator("beginDate");
+
+            comparatorChain.addComparator(beginDateComparator);
+
+            Collections.sort(result, comparatorChain);
+
+            this.teacherFunctions = result;
+        }
+
+        return this.teacherFunctions;
+
+    }
+
     public void onSelectedExecutionYearChanged(ValueChangeEvent valueChangeEvent) {
         setSelectedExecutionYearID((Integer) valueChangeEvent.getNewValue());
         this.lecturedDegreeExecutionCourses = null;
         this.lecturedMasterDegreeExecutionCourses = null;
         this.finalDegreeWorkAdvises = null;
         this.guidedMasterDegreeThesisList = null;
+        this.teacherFunctions = null;
     }
 
 }

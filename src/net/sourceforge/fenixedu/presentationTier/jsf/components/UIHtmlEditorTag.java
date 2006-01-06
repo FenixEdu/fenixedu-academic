@@ -15,7 +15,7 @@ public class UIHtmlEditorTag extends UIComponentTag {
 
     private String value;
 
-    private String designMode;
+    private String showButtons;
 
     private String required;
 
@@ -45,12 +45,12 @@ public class UIHtmlEditorTag extends UIComponentTag {
         this.width = width;
     }
 
-    public String getDesignMode() {
-        return designMode;
+    public String getShowButtons() {
+        return showButtons;
     }
 
-    public void setDesignMode(String designMode) {
-        this.designMode = designMode;
+    public void setShowButtons(String designMode) {
+        this.showButtons = designMode;
     }
 
     public String getRequired() {
@@ -88,7 +88,7 @@ public class UIHtmlEditorTag extends UIComponentTag {
         JsfTagUtils.setInteger(component, "width", this.width);
         JsfTagUtils.setInteger(component, "height", this.height);
         JsfTagUtils.setString(component, "value", this.value);
-        JsfTagUtils.setBoolean(component, "designMode", this.designMode);
+        JsfTagUtils.setBoolean(component, "showButtons", this.showButtons);
         JsfTagUtils.setBoolean(component, "required", this.required);
         JsfTagUtils.setInteger(component, "maxLength", this.maxLength);
 
@@ -104,7 +104,7 @@ public class UIHtmlEditorTag extends UIComponentTag {
 
         value = null;
 
-        designMode = null;
+        showButtons = null;
 
         required = null;
 

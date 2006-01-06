@@ -535,4 +535,18 @@ public class Person extends Person_Base {
         }
         return false;
     }
+    
+    public List<IPersonFunction> getPersonFuntions(Date beginDate, Date endDate) {
+
+        List<IPersonFunction> result = new ArrayList<IPersonFunction>();
+        
+        for (IPersonFunction personFunction : getPersonFunctions()) {
+            if (personFunction.belongsToPeriod(beginDate, endDate)) {
+                result.add(personFunction);
+            }
+        }
+        
+        return result;
+    }
+    
 }

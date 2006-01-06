@@ -9565,4 +9565,14 @@
 		<filterChains>
 		</filterChains>
 	</service>
+	<service>
+   	 	<name>ReadPersonFunctionsByPersonIDAndExecutionYearID</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.function.ReadPersonFunctionsByPersonIDAndExecutionYearID</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="PersonAuthorization"></chain>
+        </filterChains>     
+    </service>
+	
 </serviceDefinitions>    

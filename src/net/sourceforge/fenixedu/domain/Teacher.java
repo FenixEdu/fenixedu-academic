@@ -192,6 +192,7 @@ public class Teacher extends Teacher_Base {
         for (Iterator iter = getProfessorships().iterator(); iter.hasNext();) {
             IProfessorship professorship = (IProfessorship) iter.next();
             IExecutionCourse executionCourse = professorship.getExecutionCourse();
+
             if (executionCourse.getExecutionPeriod().equals(executionPeriod)) {
                 executionCourses.add(executionCourse);
             }
@@ -367,14 +368,7 @@ public class Teacher extends Teacher_Base {
     }
 
     public List<IPersonFunction> getPersonFuntions(Date beginDate, Date endDate) {
-
-        List<IPersonFunction> personFuntions = new ArrayList<IPersonFunction>();
-        for (IPersonFunction personFunction : getPerson().getPersonFunctions()) {
-            if (personFunction.belongsToPeriod(beginDate, endDate)) {
-                personFuntions.add(personFunction);
-            }
-        }
-        return personFuntions;
+        return getPerson().getPersonFuntions(beginDate, endDate);
     }
 
     public int getHoursByCategory(Date begin, Date end) {
@@ -436,22 +430,22 @@ public class Teacher extends Teacher_Base {
         return 0;
     }
 
-    
-    public ICategory getCategoryByPeriod(Date begin, Date end){
+    public ICategory getCategoryByPeriod(Date begin, Date end) {
         List<ITeacherLegalRegimen> list = new ArrayList<ITeacherLegalRegimen>();
         for (ITeacherLegalRegimen teacherLegalRegimen : this.getLegalRegimens()) {
             if (teacherLegalRegimen.belongsToPeriod(begin, end)) {
                 list.add(teacherLegalRegimen);
             }
         }
-               
+
         if (list.isEmpty()) {
             return null;
         } else {
             Collections.sort(list,new BeanComparator("beginDate"));
             return list.get(list.size()-1).getCategory();
-        }              
+        }
     }
+
     // /////////////////////////////////////////
 
     private ICategory getTeacherCategory(List<ITeacherLegalRegimen> list, Date begin, Date end) {

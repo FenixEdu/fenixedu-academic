@@ -95,7 +95,7 @@
     </attribute>
     
     <attribute>
-      <name>designMode</name>
+      <name>showButtons</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
       <description>      	

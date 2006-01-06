@@ -3,6 +3,15 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
+<style>
+	.alignTopRight {
+		vertical-align: top;
+		text-align: right;
+		tex
+		
+	}
+</style>
+
 <ft:tilesView definition="departmentMember.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="ServidorApresentacao/DepartmentMemberResources" var="bundle"/>
 	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="bundleEnumeration"/>
@@ -56,21 +65,25 @@
 				</h:column>
 			</h:dataTable>
 		</h:panelGroup>
-		<h:panelGroup rendered="#{empty teacherExpectationManagement.lecturedDegreeExecutionCourses}">
+		<h:panelGrid rendered="#{empty teacherExpectationManagement.lecturedDegreeExecutionCourses}">
 			<h:outputText value="#{bundle['label.common.noLecturedCourses']}"></h:outputText>
-		</h:panelGroup>
-		<h:outputText value="<br/>" escape="false" />
-		<h:panelGrid columns="4" cellpadding="0" cellspacing="0" columnClasses="leftColumn,,rightColumn,errorColumn" style="background-color: #eee; padding: 0.5em; ">
-			<h:outputText value="#{bundle['label.personalExpectationsManagement.numberOfGraduations']}" />
-			<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false" />
-			<h:inputText id="graduations" value="#{teacherExpectationManagement.graduations}" required="true" maxlength="3" size="3" />
-			<h:message for="graduations" styleClass="error"/>
-			
-			<h:outputText value="#{bundle['label.personalExpectationsManagement.description']}" />
-			<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false" />			
-			<h:inputTextarea cols="45" rows="3" id="graduationsDescription" value="#{teacherExpectationManagement.graduationsDescription}" />
-			<h:message for="graduationsDescription" styleClass="error"/>
 		</h:panelGrid>
+		
+		<h:outputText value="<br/>" escape="false" />
+		
+		<h:panelGrid columns="2" columnClasses="alignTopRight infocell,infocell,errorColumn" border="0" style="padding: 0.5em; ">
+			<h:outputText value="#{bundle['label.personalExpectationsManagement.numberOfGraduations']}" />
+			<h:panelGroup>
+				<h:inputText id="graduations" value="#{teacherExpectationManagement.graduations}" required="true" maxlength="3" size="3" />
+				<h:outputText value="&nbsp;&nbsp;" escape="false"/>
+				<h:message for="graduations" styleClass="error"/>
+			</h:panelGroup>
+			<h:outputText value="#{bundle['label.personalExpectationsManagement.description']}" />
+			<h:panelGroup>
+				<fc:htmlEditor width="400" height="95" id="graduationsDescription" value="#{teacherExpectationManagement.graduationsDescription}" required="false" showButtons="false"/>
+				<h:message for="graduationsDescription" styleClass="error"/>
+			</h:panelGroup>
+		</h:panelGrid>	
 		
 		<h:outputText value="<br/>" escape="false" />
 		
@@ -116,57 +129,63 @@
 		
 		<h:outputText value="<br/>" escape="false" />
 		
-		<h:panelGrid columns="4" cellpadding="0" cellspacing="0" columnClasses="leftColumn,,rightColumn,errorColumn" style="background-color: #eee; padding: 0.5em; ">
+		<h:panelGrid columns="2" columnClasses="alignTopRight infocell,infocell,errorColumn" border="0" style="padding: 0.5em; ">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.numberOfCientificPosGraduations']}" />
-			<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false"/>
-			<h:inputText id="cientificPosGraduations" value="#{teacherExpectationManagement.cientificPosGraduations}" required="true" maxlength="3" size="3" />
-			<h:message for="cientificPosGraduations" styleClass="error"/>
+			<h:panelGroup>
+				<h:inputText id="cientificPosGraduations" value="#{teacherExpectationManagement.cientificPosGraduations}" required="true" maxlength="3" size="3" />
+				<h:outputText value="&nbsp;&nbsp;" escape="false"/>
+				<h:message for="cientificPosGraduations" styleClass="error"/>
+			</h:panelGroup>
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.description']}" />
-			<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false"/>
-			<h:inputTextarea cols="45" rows="3" id="cientificPosGraduationsDescription" value="#{teacherExpectationManagement.cientificPosGraduationsDescription}" />
-			<h:message for="cientificPosGraduationsDescription" styleClass="error"/>
+			<h:panelGroup>
+				<fc:htmlEditor width="400" height="95" id="cientificPosGraduationsDescription" value="#{teacherExpectationManagement.cientificPosGraduationsDescription}" required="false" showButtons="false"/>
+				<h:message for="cientificPosGraduationsDescription" styleClass="error"/>
+			</h:panelGroup>
 		</h:panelGrid>
 		
 		<h:outputText value="<br/>" escape="false" />
 		
 		<!-- Professional Pos-Graduations -->
 		<h:outputText value="<p>#{bundle['label.personalExpectationsManagement.professionalPosGraduations']}</p>" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" escape="false" />
-		<h:panelGrid columns="4" cellpadding="0" cellspacing="0" columnClasses="leftColumn,,rightColumn,errorColumn" style="background-color: #eee; padding: 0.5em; ">
+		<h:panelGrid columns="2" columnClasses="alignTopRight infocell,infocell,errorColumn" border="0" style="padding: 0.5em; ">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.numberOfProfessionalPosGraduations']}" />
-			<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false"/>
-			<h:inputText id="professionalPosGraduations" value="#{teacherExpectationManagement.professionalPosGraduations}" required="true" maxlength="3" size="3" />
-			<h:message for="professionalPosGraduations" styleClass="error"/>
+			<h:panelGroup>
+				<h:inputText id="professionalPosGraduations" value="#{teacherExpectationManagement.professionalPosGraduations}" required="true" maxlength="3" size="3" />
+				<h:outputText value="&nbsp;&nbsp;" escape="false"/>
+				<h:message for="professionalPosGraduations" styleClass="error"/>
+			</h:panelGroup>
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.description']}" />
-			<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false"/>
-			<h:inputTextarea cols="45" rows="3" id="professionalPosGraduationsDescription" value="#{teacherExpectationManagement.professionalPosGraduationsDescription}" />
-			<h:message for="professionalPosGraduationsDescription" styleClass="error"/>
+			<h:panelGroup>
+				<fc:htmlEditor width="400" height="95" id="professionalPosGraduationsDescription" value="#{teacherExpectationManagement.professionalPosGraduationsDescription}" required="false" showButtons="false"/>
+				<h:message for="professionalPosGraduationsDescription" styleClass="error"/>
+			</h:panelGroup>
 		</h:panelGrid>
 		
 		<h:outputText value="<br/>" escape="false" />
 		
 		<!-- Seminaries -->
 		<h:outputText value="<p>#{bundle['label.personalExpectationsManagement.seminaries']}</p>" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" escape="false" />
-		<h:panelGrid columns="4" cellpadding="0" cellspacing="0" columnClasses="leftColumn,,rightColumn,errorColumn" style="background-color: #eee; padding: 0.5em; ">
+		<h:panelGrid columns="2" columnClasses="alignTopRight infocell,infocell,errorColumn" border="0" style="padding: 0.5em; ">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.numberOfSeminaries']}" />
-			<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false"/>
-			<h:inputText id="seminaries" value="#{teacherExpectationManagement.seminaries}" required="true" maxlength="3" size="3" />
-			<h:message for="seminaries" styleClass="error"/>
+			<h:panelGroup>
+				<h:inputText id="seminaries" value="#{teacherExpectationManagement.seminaries}" required="true" maxlength="3" size="3" />
+				<h:outputText value="&nbsp;&nbsp;" escape="false"/>
+				<h:message for="seminaries" styleClass="error"/>
+			</h:panelGroup>
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.description']}" />
-			<h:outputText value="&nbsp;&nbsp;&nbsp;" escape="false"/>
-			<h:inputTextarea cols="45" rows="3" id="seminariesDescription" value="#{teacherExpectationManagement.seminariesDescription}" />
-			<h:message for="seminariesDescription" styleClass="error"/>
+			<h:panelGroup>
+				<fc:htmlEditor width="400" height="95" id="seminariesDescription" value="#{teacherExpectationManagement.seminariesDescription}" required="false" showButtons="false"/>
+				<h:message for="seminariesDescription" styleClass="error"/>
+			</h:panelGroup>
 		</h:panelGrid>
 		
 		<h:outputText value="<br/>" escape="false" />
 		
 		<h:panelGrid columns="1">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.mainFocus']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" escape="false" />
-			<fc:htmlEditor id="educationMainFocus" value="#{teacherExpectationManagement.educationMainFocus}" height="300" width="300" designMode="true"/>
+			<fc:htmlEditor id="educationMainFocus" value="#{teacherExpectationManagement.educationMainFocus}" height="300" width="300" showButtons="true"/>
 		</h:panelGrid>
 		
-		<h:outputText value="<br/>" escape="false" />
-		<h:outputText value="<br/>" escape="false" />
-						
 		<!-- Investigation Expectations Transport Data -->
 		<h:inputHidden id="researchAndDevProjects" value="#{teacherExpectationManagement.researchAndDevProjects}" />
 		<h:inputHidden id="jornalArticlePublications" value="#{teacherExpectationManagement.jornalArticlePublications}" />
@@ -196,9 +215,10 @@
 		<h:inputHidden id="companySocialOrgans" value="#{teacherExpectationManagement.companySocialOrgans}"  />
 		<h:inputHidden id="companyPositions" value="#{teacherExpectationManagement.companyPositions}"  />
 		<h:inputHidden value="#{teacherExpectationManagement.professionalActivityMainFocus}" />
-						
+								
 		<h:outputText value="<br/>" escape="false" />
 		<h:outputText value="<br/>" escape="false" />
+		
 		<fc:commandButton action="#{teacherExpectationManagement.editPersonalExpectation}" value="#{bundle['button.update']}" styleClass="inputbutton">
 			<f:param value="1" name="xpto" />
 		</fc:commandButton>
