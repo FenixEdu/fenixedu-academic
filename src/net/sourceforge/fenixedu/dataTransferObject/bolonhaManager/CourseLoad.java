@@ -44,7 +44,7 @@ public class CourseLoad implements Serializable {
         setTutorialOrientationHours(competenceCourseLoad.getTutorialOrientationHours());
         setAutonomousWorkHours(competenceCourseLoad.getAutonomousWorkHours());
         setEctsCredits(competenceCourseLoad.getEctsCredits());
-        //setOrder(competenceCourseLoad.get???);
+        setOrder(competenceCourseLoad.getOrder().intValue());
     }
 
     public Double getAutonomousWorkHours() {

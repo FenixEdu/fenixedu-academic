@@ -44,12 +44,12 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     public void addCompetenceCourseLoad(Double theoreticalHours, Double problemsHours,
             Double laboratorialHours, Double seminaryHours, Double fieldWorkHours,
             Double trainingPeriodHours, Double tutorialOrientationHours, Double autonomousWorkHours,
-            Double ectsCredits) {
+            Double ectsCredits, Integer order) {
 
         getRecentCompetenceCourseInformation().addCompetenceCourseLoads(
                 new CompetenceCourseLoad(theoreticalHours, problemsHours, laboratorialHours,
                         seminaryHours, fieldWorkHours, trainingPeriodHours, tutorialOrientationHours,
-                        autonomousWorkHours, ectsCredits));
+                        autonomousWorkHours, ectsCredits, order));
     }
     
     private void fillFields(String code, String name) {

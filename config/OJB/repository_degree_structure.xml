@@ -343,6 +343,11 @@
 		column="ECTS_CREDITS"
 		jdbc-type="DOUBLE"
 	/>
+	<field-descriptor
+		name="order"
+		column="LOAD_ORDER"
+		jdbc-type="INTEGER"
+	/>
 	<reference-descriptor auto-retrieve="false"
 			name="competenceCourseInformation"
 			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation">

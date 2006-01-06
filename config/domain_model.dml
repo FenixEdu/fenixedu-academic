@@ -1029,7 +1029,7 @@ class net.sourceforge.fenixedu.domain.CompetenceCourse extends net.sourceforge.f
 	public void delete();
 	public void addCurricularCourses(java.util.Collection<ICurricularCourse> curricularCourses);
 	public void addCompetenceCourseLoad(Double theoreticalHours, Double problemsHours, Double laboratorialHours, Double seminaryHours,
-	        Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours, Double autonomousWorkHours, Double ectsCredits);
+	        Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours, Double autonomousWorkHours, Double ectsCredits, Integer order);
 	public void edit(String code, String name, java.util.Collection<IDepartment> departments);
 	public void edit(String name, String nameEn, String acronym, Boolean basic, net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage curricularStage);
     public void edit(String objectives, String program, String evaluationMethod, String objectivesEn, String programEn, String evaluationMethodEn);
@@ -1086,11 +1086,12 @@ class net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad exten
 	Double trainingPeriodHours;
 	Double tutorialOrientationHours;
 	Double autonomousWorkHours;
-	Double ectsCredits; 
+	Double ectsCredits;
+	Integer order;
 	
 	interface "
-	public void edit(Double theoreticalHours, Double problemsHours, Double laboratorialHours, Double seminaryHours,
-	        Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours, Double autonomousWorkHours, Double ectsCredits);
+	public void edit(Double theoreticalHours, Double problemsHours, Double laboratorialHours, Double seminaryHours, Double fieldWorkHours,
+	        Double trainingPeriodHours, Double tutorialOrientationHours, Double autonomousWorkHours, Double ectsCredits, Integer order);
 	public void delete();
 	public double getTotalContactLessonHours();
 	"

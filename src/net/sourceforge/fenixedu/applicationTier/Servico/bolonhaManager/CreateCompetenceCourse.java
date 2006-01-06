@@ -3,10 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CourseLoad;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ICompetenceCourse;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
@@ -30,8 +27,6 @@ public class CreateCompetenceCourse implements IService {
         }           
         final ICompetenceCourse competenceCourse = 
             DomainFactory.makeCompetenceCourse(name, nameEn, acronym, basic, regimeType, CurricularStage.DRAFT, unit);
-
-        
         return competenceCourse;
     }
 }

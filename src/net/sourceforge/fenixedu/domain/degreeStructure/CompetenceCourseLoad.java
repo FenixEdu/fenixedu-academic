@@ -8,23 +8,23 @@ public class CompetenceCourseLoad extends CompetenceCourseLoad_Base {
     
     public CompetenceCourseLoad(Double theoreticalHours, Double problemsHours, Double laboratorialHours,
             Double seminaryHours, Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours,
-            Double autonomousWorkHours, Double ectsCredits) {        
+            Double autonomousWorkHours, Double ectsCredits, Integer order) {        
         this();
         setInformation(theoreticalHours, problemsHours, laboratorialHours, seminaryHours, fieldWorkHours,
-                trainingPeriodHours, tutorialOrientationHours, autonomousWorkHours, ectsCredits);
+                trainingPeriodHours, tutorialOrientationHours, autonomousWorkHours, ectsCredits, order);
     }
     
     public void edit(Double theoreticalHours, Double problemsHours, Double laboratorialHours,
             Double seminaryHours, Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours,
-            Double autonomousWorkHours, Double ectsCredits) {
+            Double autonomousWorkHours, Double ectsCredits, Integer order) {
         
         setInformation(theoreticalHours, problemsHours, laboratorialHours, seminaryHours, fieldWorkHours,
-                trainingPeriodHours, tutorialOrientationHours, autonomousWorkHours, ectsCredits);
+                trainingPeriodHours, tutorialOrientationHours, autonomousWorkHours, ectsCredits, order);
     }
     
     private void setInformation(Double theoreticalHours, Double problemsHours, Double laboratorialHours,
             Double seminaryHours, Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours,
-            Double autonomousWorkHours, Double ectsCredits) {
+            Double autonomousWorkHours, Double ectsCredits, Integer order) {
         
         setTheoreticalHours(theoreticalHours);
         setProblemsHours(problemsHours);
@@ -35,6 +35,7 @@ public class CompetenceCourseLoad extends CompetenceCourseLoad_Base {
         setTutorialOrientationHours(tutorialOrientationHours);
         setAutonomousWorkHours(autonomousWorkHours);
         setEctsCredits(ectsCredits);
+        setOrder(order);
     }
     
     public void delete() {

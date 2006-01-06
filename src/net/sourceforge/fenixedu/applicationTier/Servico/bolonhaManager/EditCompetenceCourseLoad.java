@@ -35,8 +35,7 @@ public class EditCompetenceCourseLoad implements IService {
                         .getProblemsHours(), courseLoad.getLaboratorialHours(), courseLoad
                         .getSeminaryHours(), courseLoad.getFieldWorkHours(), courseLoad
                         .getTrainingPeriodHours(), courseLoad.getTutorialOrientationHours(), courseLoad
-                        .getAutonomousWorkHours(), courseLoad.getEctsCredits());
-
+                        .getAutonomousWorkHours(), courseLoad.getEctsCredits(), courseLoad.getOrder());
             } else {
                 final ICompetenceCourseLoad competenceCourseLoad = (ICompetenceCourseLoad) persistentSupport
                         .getIPersistentObject().readByOID(CompetenceCourseLoad.class,
@@ -46,7 +45,7 @@ public class EditCompetenceCourseLoad implements IService {
                             .getProblemsHours(), courseLoad.getLaboratorialHours(), courseLoad
                             .getSeminaryHours(), courseLoad.getFieldWorkHours(), courseLoad
                             .getTrainingPeriodHours(), courseLoad.getTutorialOrientationHours(), courseLoad
-                            .getAutonomousWorkHours(), courseLoad.getEctsCredits());
+                            .getAutonomousWorkHours(), courseLoad.getEctsCredits(), Integer.valueOf(courseLoad.getOrder()));
                 } else if (competenceCourseLoad != null && courseLoad.getAction().equals("delete")) {
                     competenceCourseLoad.delete();
                 }
