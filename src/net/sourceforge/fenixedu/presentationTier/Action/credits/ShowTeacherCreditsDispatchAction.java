@@ -21,6 +21,8 @@ import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
+import net.sourceforge.fenixedu.domain.teacher.Category;
+import net.sourceforge.fenixedu.domain.teacher.ICategory;
 import net.sourceforge.fenixedu.domain.teacher.ITeacherAdviseService;
 import net.sourceforge.fenixedu.domain.teacher.ITeacherService;
 import net.sourceforge.fenixedu.domain.teacher.ITeacherServiceExemption;
@@ -113,10 +115,22 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
             request.setAttribute("personFunctions", orderedPersonFuntions);
         }
 
+        List<ICategory> categories = (List<ICategory>) ServiceUtils.executeService(userView,
+                "ReadAllDomainObjects", new Object[] { Category.class });
+        List<ICategory> monitorCategories = (List<ICategory>) CollectionUtils.select(categories, new Predicate(){
+            public boolean evaluate(Object object) {
+                ICategory category = (ICategory) object;
+                return category.getCode().equals("MNL") || category.getCode().equals("MNT");
+            }});
         double managementCredits = teacher.getManagementFunctionsCredits(executionPeriod);
         double serviceExemptionCredits = teacher.getServiceExemptionCredits(executionPeriod);
-        int mandatoryLessonHours = teacher.getHoursByCategory(executionPeriod.getBeginDate(),
+        int mandatoryLessonHours = 0;
+        ICategory category = teacher.getCategoryByPeriod(executionPeriod.getBeginDate(),
                 executionPeriod.getEndDate());
+        if(!monitorCategories.contains(category)){
+            mandatoryLessonHours = teacher.getHoursByCategory(executionPeriod.getBeginDate(),
+                    executionPeriod.getEndDate());
+        }
         CreditLineDTO creditLineDTO = new CreditLineDTO(executionPeriod, teacherService,
                 managementCredits, serviceExemptionCredits, mandatoryLessonHours);
         request.setAttribute("creditLineDTO", creditLineDTO);

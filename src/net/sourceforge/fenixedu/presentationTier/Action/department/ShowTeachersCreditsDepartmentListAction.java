@@ -13,12 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.dataTransferObject.credits.CreditLineDTO;
 import net.sourceforge.fenixedu.dataTransferObject.credits.TeacherWithCreditsDTO;
 import net.sourceforge.fenixedu.domain.IDepartment;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.ICategory;
 import net.sourceforge.fenixedu.domain.teacher.ITeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
@@ -26,6 +28,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -45,7 +48,14 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
         Integer executionPeriodID = Integer.valueOf(request.getParameter("executionPeriodId"));
         IExecutionPeriod executionPeriod = (IExecutionPeriod) ServiceUtils.executeService(userView,
                 "ReadDomainExecutionPeriodByOID", new Object[] { executionPeriodID });
-
+        List<ICategory> categories = (List<ICategory>) ServiceUtils.executeService(userView,
+                "ReadAllDomainObjects", new Object[] { Category.class });
+        List<ICategory> monitorCategories = (List<ICategory>) CollectionUtils.select(categories, new Predicate(){
+            public boolean evaluate(Object object) {
+                ICategory category = (ICategory) object;
+                return category.getCode().equals("MNL") || category.getCode().equals("MNT");
+            }});
+        
         List<TeacherWithCreditsDTO> teachersCredits = new ArrayList<TeacherWithCreditsDTO>();
         for (IDepartment department : userView.getPerson().getManageableDepartmentCredits()) {
             List<ITeacher> teachers = department.getTeachers(executionPeriod.getBeginDate(),
@@ -53,14 +63,17 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
             for (ITeacher teacher : teachers) {
                 double managementCredits = teacher.getManagementFunctionsCredits(executionPeriod);
                 double serviceExemptionsCredits = teacher.getServiceExemptionCredits(executionPeriod);
-                int mandatoryLessonHours = teacher.getHoursByCategory(executionPeriod.getBeginDate(),
+                int mandatoryLessonHours = 0;
+                ICategory category = teacher.getCategoryByPeriod(executionPeriod.getBeginDate(),
                         executionPeriod.getEndDate());
+                if(!monitorCategories.contains(category)){
+                    mandatoryLessonHours = teacher.getHoursByCategory(executionPeriod.getBeginDate(),
+                            executionPeriod.getEndDate());
+                }
                 ITeacherService teacherService = teacher
                         .getTeacherServiceByExecutionPeriod(executionPeriod);
                 CreditLineDTO creditLineDTO = new CreditLineDTO(executionPeriod, teacherService,
                         managementCredits, serviceExemptionsCredits, mandatoryLessonHours);
-                ICategory category = teacher.getCategoryByPeriod(executionPeriod.getBeginDate(),
-                        executionPeriod.getEndDate());
                 TeacherWithCreditsDTO teacherWithCreditsDTO = new TeacherWithCreditsDTO(teacher,
                         category, creditLineDTO);
                 teachersCredits.add(teacherWithCreditsDTO);

@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.teacher.ICategory;
 import net.sourceforge.fenixedu.domain.teacher.ITeacherService;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -47,12 +48,25 @@ public class ReadAllTeacherCredits implements IService {
                     }
                 });
 
+        List<ICategory> categories = persistentSupport.getIPersistentCategory().readAll();
+        List<ICategory> monitorCategories = (List<ICategory>) CollectionUtils.select(categories, new Predicate(){
+            public boolean evaluate(Object object) {
+                ICategory category = (ICategory) object;
+                return category.getCode().equals("MNL") || category.getCode().equals("MNT");
+            }});
+        
         IExecutionPeriod tempExecutionPeriod = executionPeriod;
         List<CreditLineDTO> creditLines = new ArrayList<CreditLineDTO>();
         while (tempExecutionPeriod.getNextExecutionPeriod() != null) {
             double managementCredits = teacher.getManagementFunctionsCredits(tempExecutionPeriod);
             double serviceExemptionsCredits = teacher.getServiceExemptionCredits(tempExecutionPeriod);
-            int mandatoryLessonHours = teacher.getHoursByCategory(tempExecutionPeriod.getBeginDate(), tempExecutionPeriod.getEndDate());
+            int mandatoryLessonHours = 0;
+            ICategory category = teacher.getCategoryByPeriod(tempExecutionPeriod.getBeginDate(),
+                    tempExecutionPeriod.getEndDate());
+            if(!monitorCategories.contains(category)){
+                mandatoryLessonHours = teacher.getHoursByCategory(tempExecutionPeriod.getBeginDate(),
+                        tempExecutionPeriod.getEndDate());
+            }                      
             ITeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(tempExecutionPeriod);
             CreditLineDTO creditLineDTO = new CreditLineDTO(tempExecutionPeriod, teacherService,
                     managementCredits, serviceExemptionsCredits, mandatoryLessonHours);
