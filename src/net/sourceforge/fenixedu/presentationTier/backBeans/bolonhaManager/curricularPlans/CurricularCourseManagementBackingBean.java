@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.IContext;
 import net.sourceforge.fenixedu.domain.degreeStructure.ICourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.IDegreeModule;
@@ -50,7 +51,6 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     private String prerequisites;
     private String prerequisitesEn;
 
-    private IUnit departmentUnit = null;
     private ICompetenceCourse competenceCourse = null;
     private IDegreeCurricularPlan degreeCurricularPlan = null;
     private ICourseGroup courseGroup = null;
@@ -58,7 +58,6 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     private IContext context = null;
 
     public List<SelectItem> departmentUnits = null;
-    public List<SelectItem> competenceCourses = null;
     public List<SelectItem> courseGroups = null;
     public List<SelectItem> curricularCourses = null;
 
@@ -130,7 +129,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public List<SelectItem> getCompetenceCourses() throws FenixFilterException, FenixServiceException {
-        return (competenceCourses == null) ? (competenceCourses = readCompetenceCourses()) : competenceCourses;
+        return readCompetenceCourses();
     }
 
     public List<SelectItem> getCourseGroups() throws FenixFilterException, FenixServiceException {
@@ -169,10 +168,10 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public IUnit getDepartmentUnit() throws FenixFilterException, FenixServiceException {
-       if (departmentUnit == null && getDepartmentUnitID() != null && !getDepartmentUnitID().equals(0)) {
-           departmentUnit = (IUnit) readDomainObject(Unit.class, getDepartmentUnitID());
+       if (getDepartmentUnitID() != null && !getDepartmentUnitID().equals(0)) {
+           return  (IUnit) readDomainObject(Unit.class, getDepartmentUnitID());
        }
-       return departmentUnit;
+       return null;
     }
     
     public ICompetenceCourse getCompetenceCourse() throws FenixFilterException, FenixServiceException {
@@ -195,7 +194,6 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public void resetCompetenceCourse(ValueChangeEvent event) {
         resetCompetenceCourseID = true;
-        competenceCourses = null;
     }
 
     public Double getWeight() throws FenixFilterException, FenixServiceException {
@@ -381,12 +379,11 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         final IUnit departmentUnit = getDepartmentUnit();
         if (departmentUnit != null) {
             for (final IUnit scientificAreaUnit : departmentUnit.getScientificAreaUnits()) {
-                for (final IUnit competenceCourseGroupUnit : scientificAreaUnit
-                        .getCompetenceCourseGroupUnits()) {
-                    for (final ICompetenceCourse competenceCourse : competenceCourseGroupUnit
-                            .getCompetenceCourses()) {
-                        result.add(new SelectItem(competenceCourse.getIdInternal(), competenceCourse
-                                .getName()));
+                for (final IUnit competenceCourseGroupUnit : scientificAreaUnit.getCompetenceCourseGroupUnits()) {
+                    for (final ICompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
+                        if (!competenceCourse.getCurricularStage().equals(CurricularStage.DRAFT)) {
+                            result.add(new SelectItem(competenceCourse.getIdInternal(), competenceCourse.getName()));
+                        }                        
                     }
                 }
             }
