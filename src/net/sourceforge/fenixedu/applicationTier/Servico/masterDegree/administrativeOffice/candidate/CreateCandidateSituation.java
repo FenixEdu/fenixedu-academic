@@ -14,46 +14,36 @@ import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * 
- * @author <a href="mailto:frnp@mega.ist.utl.pt">Francisco Paulo </a>
- * @author <a href="mailto:amam@mega.ist.utl.pt">Amin Amirali </a>
- *
- */
 public class CreateCandidateSituation implements IService {
 
-	public void run(Integer executionDegreeID, Integer personID, SituationName newSituation)
-			throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(Integer executionDegreeID, Integer personID, SituationName newSituation)
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		IMasterDegreeCandidate masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
-				.readByExecutionDegreeAndPerson(executionDegreeID, personID);
-		if (masterDegreeCandidate == null) {
-			throw new ExcepcaoInexistente("Unknown Master Degree Candidate");
-		}
+        final IMasterDegreeCandidate masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
+                .readByExecutionDegreeAndPerson(executionDegreeID, personID);
+        if (masterDegreeCandidate == null) {
+            throw new ExcepcaoInexistente("Unknown Master Degree Candidate");
+        }
 
-		for (ICandidateSituation candidateSituation : masterDegreeCandidate
-				.getSituations()) {
-			if (candidateSituation.getValidation().equals(new State(State.ACTIVE))) {
-				sp.getIPersistentCandidateSituation().simpleLockWrite(candidateSituation);
-				candidateSituation.setValidation(new State(State.INACTIVE));
-			}
-		}
+        for (ICandidateSituation candidateSituation : masterDegreeCandidate.getSituations()) {
+            if (candidateSituation.getValidation().equals(new State(State.ACTIVE))) {
+                candidateSituation.setValidation(new State(State.INACTIVE));
+            }
+        }
 
-		// Create the New Candidate Situation
-		ICandidateSituation candidateSituation = DomainFactory.makeCandidateSituation();
-		sp.getIPersistentCandidateSituation().simpleLockWrite(candidateSituation);
-		Calendar calendar = Calendar.getInstance();
-		candidateSituation.setDate(calendar.getTime());
-		candidateSituation.setSituation(newSituation);
-		candidateSituation.setValidation(new State(State.ACTIVE));
-		candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
+        // Create the New Candidate Situation
+        ICandidateSituation candidateSituation = DomainFactory.makeCandidateSituation();
+        Calendar calendar = Calendar.getInstance();
+        candidateSituation.setDate(calendar.getTime());
+        candidateSituation.setSituation(newSituation);
+        candidateSituation.setValidation(new State(State.ACTIVE));
+        candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
 
-		// Update Candidate
-		sp.getIPersistentMasterDegreeCandidate().simpleLockWrite(masterDegreeCandidate);
-		masterDegreeCandidate.getSituations().add(candidateSituation);
+        // Update Candidate
+        masterDegreeCandidate.getSituations().add(candidateSituation);
 
-	}
+    }
 
 }
