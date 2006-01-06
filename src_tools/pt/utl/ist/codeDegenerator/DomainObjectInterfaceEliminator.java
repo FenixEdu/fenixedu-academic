@@ -90,20 +90,20 @@ public class DomainObjectInterfaceEliminator {
 			final File outputFile = new File("interfaceEliminator.sh");
 			outputFile.createNewFile();
 			final FileOutputStream fileOutputStream = new FileOutputStream(outputFile);
-			replace(replaceTokens, file, ignorePatterns, report, fileOutputStream);
 
-			while (!filenames.isEmpty()) {
-				fileOutputStream.write(REPLACE_PREFIX);
-				for (final TokenValueBean tokenValueBean : replaceTokens) {
-					writeReplacementTokens(fileOutputStream, tokenValueBean);
-				}
-				fileOutputStream.write(FILENAME_PREFIX);
-				for (int i = 0; i++ < Math.min(100, filenames.size()); filenames.remove(0)) {
-					fileOutputStream.write(SEPERATOR);
-					fileOutputStream.write(filenames.get(0).getBytes());
-				}
-				fileOutputStream.write(NEWLINE);
-			}
+			final List<String> filenames = new ArrayList<String>();
+
+			replace(replaceTokens, file, ignorePatterns, report, fileOutputStream, filenames);
+
+			fileOutputStream.write("#!/bin/sh\n".getBytes());
+
+			generateScript(replaceTokens, fileOutputStream, new String[]{ " " }, new ArrayList<String>(filenames));
+			generateScript(replaceTokens, fileOutputStream, new String[]{ "<" }, new ArrayList<String>(filenames));
+			generateScript(replaceTokens, fileOutputStream, new String[]{ ">" }, new ArrayList<String>(filenames));
+			generateScript(replaceTokens, fileOutputStream, new String[]{ "(" }, new ArrayList<String>(filenames));
+			generateScript(replaceTokens, fileOutputStream, new String[]{ ")" }, new ArrayList<String>(filenames));
+			generateScript(replaceTokens, fileOutputStream, new String[]{ "," }, new ArrayList<String>(filenames));
+			generateScript(replaceTokens, fileOutputStream, new String[]{ ";" }, new ArrayList<String>(filenames));
 
 			fileOutputStream.close();
 		} catch (IOException e) {
@@ -112,16 +112,39 @@ public class DomainObjectInterfaceEliminator {
 		report.writeReport();
 	}
 
+	private static final int BATCH_SIZE = 500;
+
+	private static void generateScript(final Set<TokenValueBean> replaceTokens, final FileOutputStream fileOutputStream, final String[] replacementTokens, final ArrayList<String> filenames) throws IOException {
+		fileOutputStream.write("echo Replacing for tokens: ".getBytes());
+		for (final String string : replacementTokens) {
+			fileOutputStream.write("\\".getBytes());
+			fileOutputStream.write(string.getBytes());
+		}
+		fileOutputStream.write("\n".getBytes());
+		while (!filenames.isEmpty()) {
+			fileOutputStream.write("date\n".getBytes());
+			fileOutputStream.write(REPLACE_PREFIX);
+			for (final TokenValueBean tokenValueBean : replaceTokens) {
+				writeReplacementTokens(fileOutputStream, tokenValueBean, replacementTokens);
+			}
+			fileOutputStream.write(FILENAME_PREFIX);
+			for (int i = 0; i++ < Math.min(500, filenames.size()); filenames.remove(0)) {
+				fileOutputStream.write(SEPERATOR);
+				fileOutputStream.write(filenames.get(0).getBytes());
+			}
+			fileOutputStream.write(" > /dev/null".getBytes());
+			fileOutputStream.write(NEWLINE);
+			fileOutputStream.write("date\n".getBytes());
+			fileOutputStream.write(("echo Processed " + BATCH_SIZE + "\n").getBytes());
+		}
+	}
+
     private static final byte[] PARENTHESIS = "\"".getBytes();
 
-    private static void writeReplacementTokens(final FileOutputStream fileOutputStream, final TokenValueBean tokenValueBean) throws IOException {
-        writeReplacementToken(fileOutputStream, tokenValueBean, " ");
-        writeReplacementToken(fileOutputStream, tokenValueBean, "<");
-        writeReplacementToken(fileOutputStream, tokenValueBean, ">");
-        writeReplacementToken(fileOutputStream, tokenValueBean, "(");
-        writeReplacementToken(fileOutputStream, tokenValueBean, ")");
-        writeReplacementToken(fileOutputStream, tokenValueBean, ",");
-        writeReplacementToken(fileOutputStream, tokenValueBean, ";");
+    private static void writeReplacementTokens(final FileOutputStream fileOutputStream, final TokenValueBean tokenValueBean, final String ... replacementTokens) throws IOException {
+    	for (final String replacementToken : replacementTokens) {
+    		writeReplacementToken(fileOutputStream, tokenValueBean, replacementToken);
+    	}
     }
 
 
@@ -165,9 +188,9 @@ public class DomainObjectInterfaceEliminator {
 	private static final byte[] FILENAME_PREFIX = " -- ".getBytes();
 	private static final byte[] NEWLINE = "\n".getBytes();
 
-	private static final List<String> filenames = new ArrayList<String>();
+	
 
-	private static void replace(final Set<TokenValueBean> replaceTokens, final File file, final List<String> ignorePatterns, final Report report, final FileOutputStream fileOutputStream) throws IOException {
+	private static void replace(final Set<TokenValueBean> replaceTokens, final File file, final List<String> ignorePatterns, final Report report, final FileOutputStream fileOutputStream, final List<String> filenames) throws IOException {
 		for (final String ignorePattern : ignorePatterns) {
 			if (file.getAbsolutePath().indexOf(ignorePattern) != -1) {
 				return;
@@ -177,56 +200,23 @@ public class DomainObjectInterfaceEliminator {
 		if (file.isDirectory()) {
 			report.registerDirAsProccessed(file);
 			for (final File subFile : file.listFiles()) {
-				replace(replaceTokens, subFile, ignorePatterns, report, fileOutputStream);
+				replace(replaceTokens, subFile, ignorePatterns, report, fileOutputStream, filenames);
 			}
 		} else {
 			report.registerFileAsProccessed(file);
-
-//			fileOutputStream.write(REPLACE_PREFIX);
-//			for (final TokenValueBean tokenValueBean : replaceTokens) {
-//				fileOutputStream.write(SEPERATOR);
-//				fileOutputStream.write(tokenValueBean.getToken().getBytes());
-//				fileOutputStream.write(SEPERATOR);
-//				fileOutputStream.write(tokenValueBean.getValue().getBytes());
-//			}
-//			fileOutputStream.write(FILENAME_PREFIX);
-//			fileOutputStream.write(SEPERATOR);
-//			fileOutputStream.write(normalizeFileName(file.getAbsolutePath()).getBytes());
-
 			filenames.add(normalizeFileName(file.getAbsolutePath()));
-
-//			boolean markAsChanged = false;
-//
-//			final RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
-//			for (String line = randomAccessFile.readLine(); line != null; line = randomAccessFile.readLine()) {
-//				String changedLine = line;
-//				for (final TokenValueBean tokenValueBean : replaceTokens) {
-//					changedLine = changedLine.replaceAll(tokenValueBean.getToken(), tokenValueBean.getValue());
-//				}
-//				if (!changedLine.equals(line)) {
-//					markAsChanged = true;;
-//				}
-//			}
-//			randomAccessFile.close();
-//
-//			if (markAsChanged) {
-//				report.registerFileAsChanged(file);
-//			}
 		}
 	}
 
 
 	private static String normalizeFileName(final String filename) {
 		String replacedString = filename;
-//		for (String previous = null; previous == null || !previous.equals(replacedString); ) {
-//			previous = replacedString;
-			replacedString = replacedString.replace(" ", "\\ ");
-			replacedString = replacedString.replace("(", "\\(");
-			replacedString = replacedString.replace(")", "\\)");
-			replacedString = replacedString.replace("$", "\\$");
-			replacedString = replacedString.replace("{", "\\{");
-			replacedString = replacedString.replace("}", "\\}");
-//		}
+		replacedString = replacedString.replace(" ", "\\ ");
+		replacedString = replacedString.replace("(", "\\(");
+		replacedString = replacedString.replace(")", "\\)");
+		replacedString = replacedString.replace("$", "\\$");
+		replacedString = replacedString.replace("{", "\\{");
+		replacedString = replacedString.replace("}", "\\}");
 		return replacedString;
 	}
 
