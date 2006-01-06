@@ -40,6 +40,8 @@
 	<h:outputText value="#{bolonhaBundle['nonBasic']}<br/>" rendered="#{!CompetenceCourseManagement.competenceCourse.basic}" escape="false"/>
 	<br/>	
 	<h:outputText style="font-weight: bold" value="#{bolonhaBundle['lessonHours']}: " /><br/>
+	<h:outputText value="#{bolonhaBundle['regime']}: " style="font-weight: bold"/>
+	<h:outputText value="#{enumerationBundle[CompetenceCourseManagement.competenceCourse.regime.name]}" style="font-weight: bold"/><br/>
 	<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.competenceCourseLoads}" var="competenceCourseLoad">
 		<%-- print period number --%>
 		<h:outputText value="<ul><li>" escape="false"/>

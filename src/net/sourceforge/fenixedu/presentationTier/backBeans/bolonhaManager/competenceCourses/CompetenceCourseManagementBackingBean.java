@@ -40,8 +40,6 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private String nameEn;
     private String acronym;
     private Boolean basic;
-    private String regime;
-    private Integer numberOfPeriods;
     private boolean setNumberOfPeriods = true;
     
     // Competence-Course-Additional-Data
@@ -127,32 +125,26 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public String getRegime() {
-        if (regime == null) {
-            regime = (String) getViewState().getAttribute("regime");
-            if (regime == null) {
-                regime = "SEMESTER";
-            }                        
+        if (getViewState().getAttribute("regime") == null) {
+            setRegime("SEMESTER");
         }
-        return regime;
+        return (String) getViewState().getAttribute("regime");
     }
 
     public void setRegime(String regime) {
-        getViewState().setAttribute("regime", (this.regime = regime));
+        getViewState().setAttribute("regime", regime);
     }   
     
     public Integer getNumberOfPeriods() {
-        if (numberOfPeriods == null) {
-            numberOfPeriods = (Integer) getViewState().getAttribute("numberOfPeriods");
-            if (numberOfPeriods == null) {
-                numberOfPeriods = Integer.valueOf(1);
-            }
+        if (getViewState().getAttribute("numberOfPeriods") == null) {
+            setNumberOfPeriods(Integer.valueOf(1));        
         }
-        return numberOfPeriods;
+        return (Integer) getViewState().getAttribute("numberOfPeriods");
     }
 
     public void setNumberOfPeriods(Integer numberOfPeriods) {
         if (setNumberOfPeriods) {
-            getViewState().setAttribute("numberOfPeriods", (this.numberOfPeriods = numberOfPeriods));
+            getViewState().setAttribute("numberOfPeriods", numberOfPeriods);
         }        
     }    
     
@@ -184,7 +176,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         int numberOfPeriods = getNumberOfPeriods().intValue();
         final List<CourseLoad> courseLoads = new ArrayList<CourseLoad>(numberOfPeriods);        
         for (int i = 0; i < numberOfPeriods; i++) {
-            courseLoads.add(new CourseLoad());
+            courseLoads.add(new CourseLoad(i + 1));
         }
         return courseLoads;
     }
@@ -212,8 +204,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private void calculateCourseLoad(String regime, int newNumberOfPeriods) throws FenixFilterException, FenixServiceException {
         final List<CourseLoad> courseLoads = getCourseLoads();
         if (regime.equals("ANUAL")) {
-            if (newNumberOfPeriods == 2 && courseLoads.size() == 1) {
-                courseLoads.add(new CourseLoad());                
+            if (newNumberOfPeriods > getNumberOfPeriods().intValue()) {
+                courseLoads.add(new CourseLoad(2));                
             } else if (courseLoads.size() > 1) {
                 courseLoads.remove(0);
             }

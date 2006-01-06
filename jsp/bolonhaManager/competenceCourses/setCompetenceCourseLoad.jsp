@@ -64,10 +64,11 @@
 			</h:selectOneRadio>
 
 			<h:outputText value="#{bolonhaBundle['lessonHours']}: "/>						
-			<fc:dataRepeater value="#{CompetenceCourseManagement.courseLoads}" var="courseLoad" rowIndexVar="index">
-				<h:outputText value="#{index + 1}º #{bolonhaBundle['semester']}<br/>" escape="false" style="font-weight: bold"
-					rendered="#{CompetenceCourseManagement.regime == 'ANUAL' && CompetenceCourseManagement.numberOfPeriods == 2}"/>			
-				<h:panelGrid columns="2" rowClasses="backgroundColor,,,,,,,,,backgroundColor">
+			<h:dataTable value="#{CompetenceCourseManagement.courseLoads}" var="courseLoad">
+				<h:column>
+				<h:outputText value="#{courseLoad.order}º #{bolonhaBundle['semester']}<br/>" escape="false" style="font-weight: bold"
+					rendered="#{CompetenceCourseManagement.regime == 'ANUAL' && CompetenceCourseManagement.numberOfPeriods == 2 && courseLoad.action != 'delete'}"/>
+				<h:panelGrid columns="2" rowClasses="backgroundColor,,,,,,,,,backgroundColor" rendered="#{courseLoad.action != 'delete'}">
 					<h:outputText value="#{bolonhaBundle['contactLessonHours']}: "/>
 					<h:outputText value=" "/>
 		
@@ -129,8 +130,9 @@
 						<h:message styleClass="error" for="ectsCredits" />
 					</h:panelGroup>					
 				</h:panelGrid>
-				<h:outputText value="<hr>" escape="false"/>
-			</fc:dataRepeater>
+				<h:outputText value="<hr>" escape="false"/>								
+				</h:column>
+			</h:dataTable>
 		</h:panelGrid>			
 		<br/><hr>
 		<h:panelGroup rendered="#{CompetenceCourseManagement.action == 'create'}">

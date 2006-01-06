@@ -19,14 +19,17 @@ public class CourseLoad implements Serializable {
     private Double ectsCredits = Double.valueOf(0);
     
     private Integer identification = null;
+    private int order;
     private String action; // create-edit-delete
     
-    public CourseLoad() {
+    public CourseLoad(int order) {
         setAction("create");
+        setOrder(order);
     }
     
-    public CourseLoad(String action) {
+    public CourseLoad(String action, int order) {
         setAction(action);
+        setOrder(order);
     }
     
     public CourseLoad(String action, ICompetenceCourseLoad competenceCourseLoad) {
@@ -41,6 +44,7 @@ public class CourseLoad implements Serializable {
         setTutorialOrientationHours(competenceCourseLoad.getTutorialOrientationHours());
         setAutonomousWorkHours(competenceCourseLoad.getAutonomousWorkHours());
         setEctsCredits(competenceCourseLoad.getEctsCredits());
+        //setOrder(competenceCourseLoad.get???);
     }
 
     public Double getAutonomousWorkHours() {
@@ -129,5 +133,13 @@ public class CourseLoad implements Serializable {
 
     public void setAction(String action) {
         this.action = action;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 }
