@@ -1,7 +1,3 @@
-/*
- * Created on 2004/10/25
- * 
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.HashSet;
@@ -17,10 +13,7 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -28,75 +21,38 @@ import org.apache.commons.collections.Predicate;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * 
- * @author Luis Cruz
- */
 public class TransferCurricularCourse implements IService {
 
     public void run(Integer sourceExecutionCourseId, final Integer curricularCourseId,
             Integer destinationExecutionCourseId) throws ExcepcaoPersistencia {
 
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente persistentSuport = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
 
-        IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
-                .getIPersistentExecutionCourse();
-        IFrequentaPersistente persistentAttend = persistentSuport.getIFrequentaPersistente();
-        ITurnoPersistente persistentShift = persistentSuport.getITurnoPersistente();
-        
-        IExecutionCourse sourceExecutionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
-                ExecutionCourse.class, sourceExecutionCourseId);
-        IExecutionCourse destinationExecutionCourse = (IExecutionCourse) persistentExecutionCourse
-                .readByOID(ExecutionCourse.class, destinationExecutionCourseId);
-        ICurricularCourse curricularCourse = (ICurricularCourse) CollectionUtils.find(
+        final IExecutionCourse sourceExecutionCourse = (IExecutionCourse) persistentSuport
+                .getIPersistentObject().readByOID(ExecutionCourse.class, sourceExecutionCourseId);
+        final IExecutionCourse destinationExecutionCourse = (IExecutionCourse) persistentSuport
+                .getIPersistentObject().readByOID(ExecutionCourse.class, destinationExecutionCourseId);
+
+        final ICurricularCourse curricularCourse = (ICurricularCourse) CollectionUtils.find(
                 sourceExecutionCourse.getAssociatedCurricularCourses(), new Predicate() {
                     public boolean evaluate(Object arg0) {
                         ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
-                        return curricularCourseId.equals(curricularCourse.getIdInternal());
+                        return (curricularCourseId == curricularCourse.getIdInternal());
                     }
                 });
 
-        persistentExecutionCourse.simpleLockWrite(sourceExecutionCourse);
-        persistentExecutionCourse.simpleLockWrite(destinationExecutionCourse);
+        Set<Integer> transferedStudents = new HashSet<Integer>();
+        transferAttends(destinationExecutionCourseId, sourceExecutionCourse, destinationExecutionCourse,
+                curricularCourse, transferedStudents);
+        deleteShiftStudents(sourceExecutionCourse, transferedStudents);
 
-        Set transferedStudents = new HashSet();
-
-        transferAttends(destinationExecutionCourseId, persistentAttend, sourceExecutionCourse,
-                destinationExecutionCourse, curricularCourse, transferedStudents);
-
-        deleteShiftStudents(persistentShift, sourceExecutionCourse, transferedStudents);
-
-        sourceExecutionCourse.getAssociatedCurricularCourses().remove(curricularCourse);
-
-        destinationExecutionCourse.getAssociatedCurricularCourses().add(curricularCourse);
-    }
-
-    /**
-     * @param persistentShift
-     * @param persistentShiftStudent
-     * @param sourceExecutionCourse
-     * @param transferedStudents
-     * @throws ExcepcaoPersistencia
-     */
-    private void deleteShiftStudents(ITurnoPersistente persistentShift,
-            IExecutionCourse sourceExecutionCourse, Set transferedStudents) throws ExcepcaoPersistencia {
-        List shifts = persistentShift.readByExecutionCourse(sourceExecutionCourse.getIdInternal());
-        for (Iterator iterator = shifts.iterator(); iterator.hasNext();) {
-            IShift shift = (IShift) iterator.next();
-            List<IStudent> students = shift.getStudents();
-            Iterator<IStudent> iter = students.iterator();
-            while(iter.hasNext()){
-                IStudent student = iter.next();
-                if (transferedStudents.contains(student.getIdInternal())) {
-                    iter.remove();
-                }
-            }
-        }
+        sourceExecutionCourse.removeAssociatedCurricularCourses(curricularCourse);
+        destinationExecutionCourse.addAssociatedCurricularCourses(curricularCourse);
     }
 
     /**
      * @param destinationExecutionCourseId
-     * @param persistentAttend
      * @param sourceExecutionCourse
      * @param destinationExecutionCourse
      * @param curricularCourse
@@ -104,36 +60,51 @@ public class TransferCurricularCourse implements IService {
      * @throws ExcepcaoPersistencia
      */
     private void transferAttends(Integer destinationExecutionCourseId,
-            IFrequentaPersistente persistentAttend, IExecutionCourse sourceExecutionCourse,
-            IExecutionCourse destinationExecutionCourse, ICurricularCourse curricularCourse,
-            Set transferedStudents) throws ExcepcaoPersistencia {
-        List attends = sourceExecutionCourse.getAttends();
-        for (Iterator iterator = attends.iterator(); iterator.hasNext();) {
-            IAttends attend = (IAttends) iterator.next();
+            IExecutionCourse sourceExecutionCourse, IExecutionCourse destinationExecutionCourse,
+            ICurricularCourse curricularCourse, Set<Integer> transferedStudents)
+            throws ExcepcaoPersistencia {
+        for (IAttends attend : sourceExecutionCourse.getAttends()) {
             IEnrolment enrollment = attend.getEnrolment();
             final IStudent student = attend.getAluno();
             if (enrollment != null) {
                 ICurricularCourse associatedCurricularCourse = attend.getEnrolment()
                         .getCurricularCourse();
-                if (curricularCourse.getIdInternal().equals(associatedCurricularCourse.getIdInternal())) {
+                if (curricularCourse == associatedCurricularCourse) {
                     IAttends existingAttend = (IAttends) CollectionUtils.find(destinationExecutionCourse
                             .getAttends(), new Predicate() {
                         public boolean evaluate(Object arg0) {
                             IAttends attendFromDestination = (IAttends) arg0;
-                            return attendFromDestination.getAluno().getIdInternal().equals(
-                                    student.getIdInternal());
+                            return (attendFromDestination.getAluno() == student);
                         }
                     });
                     if (existingAttend != null) {
-                        persistentAttend.simpleLockWrite(existingAttend);
                         existingAttend.setEnrolment(enrollment);
-                        persistentAttend.delete(attend);
+                        attend.delete();
                     } else {
-                        persistentAttend.simpleLockWrite(attend);
                         attend.setDisciplinaExecucao(destinationExecutionCourse);
                     }
 
                     transferedStudents.add(student.getIdInternal());
+                }
+            }
+        }
+    }
+
+    /**
+     * @param sourceExecutionCourse
+     * @param transferedStudents
+     * @throws ExcepcaoPersistencia
+     */
+    private void deleteShiftStudents(IExecutionCourse sourceExecutionCourse, Set transferedStudents)
+            throws ExcepcaoPersistencia {
+        List<IShift> shifts = sourceExecutionCourse.getAssociatedShifts();
+
+        for (IShift shift : shifts) {
+            Iterator<IStudent> iter = shift.getStudentsIterator();
+            while (iter.hasNext()) {
+                IStudent student = iter.next();
+                if (transferedStudents.contains(student.getIdInternal())) {
+                    iter.remove();
                 }
             }
         }
