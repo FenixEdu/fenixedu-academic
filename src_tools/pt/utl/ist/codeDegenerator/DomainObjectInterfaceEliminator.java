@@ -104,6 +104,7 @@ public class DomainObjectInterfaceEliminator {
 			generateScript(replaceTokens, fileOutputStream, new String[]{ ")" }, new ArrayList<String>(filenames));
 			generateScript(replaceTokens, fileOutputStream, new String[]{ "," }, new ArrayList<String>(filenames));
 			generateScript(replaceTokens, fileOutputStream, new String[]{ ";" }, new ArrayList<String>(filenames));
+			generateScript(replaceTokens, fileOutputStream, new String[]{ "." }, new ArrayList<String>(filenames));
 
 			fileOutputStream.close();
 		} catch (IOException e) {
