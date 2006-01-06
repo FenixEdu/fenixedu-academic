@@ -1,10 +1,3 @@
-#-----------------------------------------------------------------------------
-# Cms Configuration
-#-----------------------------------------------------------------------------
-cms.mailer.username=xptze
-cms.mailer.password=xptze
-
-
 #------------------------------------------------------------------------------
 # General Configuration
 #------------------------------------------------------------------------------
@@ -346,6 +339,20 @@ roleback.filename=/tmp/roleback.sql
 struts.validation.doctype.url=file:///home/gedl/workspace/fenix-head/metadata/dtds/validator_1_0.dtd
 #
 #
+#-----------------------------------------------------------------------------
+# Cms Configuration
+#-----------------------------------------------------------------------------
+cms.mailer.username=xptze
+cms.mailer.password=xptze
+#
+#
+#----------------------------------------------
+# Authentication Service
+#----------------------------------------------
+authenticationService=net.sourceforge.fenixedu.applicationTier.Servico.Authenticate
+changePassService=net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePassword
+#
+#
 #------------------------------------------------------------------------------
 # End of build.properties.sample file
 #------------------------------------------------------------------------------
@@ -364,9 +371,3 @@ allowed-roles.build.file.constructor.header=<?xml version="1.0" encoding="ISO-88
 			\t\t<target name="generate-properties-file"> \n\n
 allowed-roles.build.file.constructor.tail=\n\n\t\t</target>\n\t</project>
 allowed-roles.newline.instruction=${line.seperator}
-
-#----------------------------------------------
-# Authentication Service
-#----------------------------------------------
-authenticationService=net.sourceforge.fenixedu.applicationTier.Servico.Authenticate
-changePassService=net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePassword
