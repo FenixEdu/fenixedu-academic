@@ -183,6 +183,15 @@ table#ects {
 	page-break-after: always;
 	}
 
+table.timetable tr {
+	font-size: 6px;
+}	
+
+table.timetable .period-hours {
+	font-size: 7px;
+}	
+
+
 /*****************************************************************
 	Assiduidade - layout verbete
 ******************************************************************/
