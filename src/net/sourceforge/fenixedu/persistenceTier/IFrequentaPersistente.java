@@ -1,14 +1,5 @@
-/*
- * IFrequentaPersistente.java
- *
- * Created on 20 de Outubro de 2002, 15:28
- */
 package net.sourceforge.fenixedu.persistenceTier;
 
-/**
- * 
- * @author tfc130
- */
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IAttends;
@@ -23,8 +14,6 @@ public interface IFrequentaPersistente extends IPersistentObject {
 
     public IAttends readByAlunoAndDisciplinaExecucao(Integer studentID, Integer executionCourseID)
             throws ExcepcaoPersistencia;
-
-    public void delete(IAttends frequenta) throws ExcepcaoPersistencia;
 
     public Integer countStudentsAttendingExecutionCourse(IExecutionCourse executionCourse)
             throws ExcepcaoPersistencia;

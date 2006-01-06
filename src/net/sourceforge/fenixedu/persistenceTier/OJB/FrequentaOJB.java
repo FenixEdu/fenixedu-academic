@@ -1,14 +1,5 @@
-/*
- * FrequentaOJB.java
- * 
- * Created on 20 de Outubro de 2002, 15:36
- */
-
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
-/**
- * @author tfc130
- */
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Attends;
@@ -53,10 +44,6 @@ public class FrequentaOJB extends PersistentObjectOJB implements IFrequentaPersi
         crit.addEqualTo("chaveDisciplinaExecucao", executionCourseID);
         return (IAttends) queryObject(Attends.class, crit);
 
-    }
-
-    public void delete(IAttends frequenta) throws ExcepcaoPersistencia {
-        super.delete(frequenta);
     }
 
     public List readByStudentNumber(Integer id, DegreeType tipoCurso) throws ExcepcaoPersistencia {
