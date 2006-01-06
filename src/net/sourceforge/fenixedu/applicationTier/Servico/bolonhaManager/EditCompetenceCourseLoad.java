@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CourseLoad;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.ICompetenceCourse;
+import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
+import net.sourceforge.fenixedu.domain.degreeStructure.ICompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -35,6 +37,19 @@ public class EditCompetenceCourseLoad implements IService {
                         .getTrainingPeriodHours(), courseLoad.getTutorialOrientationHours(), courseLoad
                         .getAutonomousWorkHours(), courseLoad.getEctsCredits());
 
+            } else {
+                final ICompetenceCourseLoad competenceCourseLoad = (ICompetenceCourseLoad) persistentSupport
+                        .getIPersistentObject().readByOID(CompetenceCourseLoad.class,
+                                courseLoad.getIdentification());
+                if (competenceCourseLoad != null && courseLoad.getAction().equals("edit")) {
+                    competenceCourseLoad.edit(courseLoad.getTheoreticalHours(), courseLoad
+                            .getProblemsHours(), courseLoad.getLaboratorialHours(), courseLoad
+                            .getSeminaryHours(), courseLoad.getFieldWorkHours(), courseLoad
+                            .getTrainingPeriodHours(), courseLoad.getTutorialOrientationHours(), courseLoad
+                            .getAutonomousWorkHours(), courseLoad.getEctsCredits());
+                } else if (competenceCourseLoad != null && courseLoad.getAction().equals("delete")) {
+                    competenceCourseLoad.delete();
+                }
             }
         }
     }   

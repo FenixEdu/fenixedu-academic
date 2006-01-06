@@ -38,24 +38,24 @@
 			</h:selectOneMenu>
 		</h:panelGrid>
 		<br/>
-		<h:messages styleClass="error"/>	
+		<h:messages styleClass="error"/>
 		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>				
 		<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0">
 			<h:outputText value="#{bolonhaBundle['name']} (pt): "/>
 			<h:panelGroup>
-				<h:inputText id="name" maxlength="100" size="40" value="#{CompetenceCourseManagement.name}"/>
+				<h:inputText id="name" required="true" maxlength="100" size="40" value="#{CompetenceCourseManagement.name}"/>
 				<h:message styleClass="error" for="name"/>
 			</h:panelGroup>		
 			
 			<h:outputText value="#{bolonhaBundle['nameEn']} (en): "/>
 			<h:panelGroup>
-				<h:inputText id="nameEn" maxlength="100" size="40" value="#{CompetenceCourseManagement.nameEn}"/>
+				<h:inputText id="nameEn" required="true" maxlength="100" size="40" value="#{CompetenceCourseManagement.nameEn}"/>
 				<h:message styleClass="error" for="nameEn" />
 			</h:panelGroup>
 			
 			<h:outputText value="#{bolonhaBundle['acronym']} (en): "/>
 			<h:panelGroup>
-				<h:inputText id="acronym" maxlength="40" size="10" value="#{CompetenceCourseManagement.acronym}"/>
+				<h:inputText id="acronym" required="true" maxlength="40" size="10" value="#{CompetenceCourseManagement.acronym}"/>
 				<h:message styleClass="error" for="acronym" />
 			</h:panelGroup>
 			

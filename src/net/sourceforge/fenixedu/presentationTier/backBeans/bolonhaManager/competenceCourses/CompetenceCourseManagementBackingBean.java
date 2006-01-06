@@ -30,7 +30,6 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private final ResourceBundle bundle = getResourceBundle("ServidorApresentacao/BolonhaManagerResources");
 
     private Integer competenceCourseID = null;
-
     private IUnit competenceCourseGroupUnit = null;
     private List<IUnit> scientificAreaUnits = null;
     private ICompetenceCourse competenceCourse = null;
@@ -124,9 +123,13 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         this.basic = basic;
     }
 
-    public String getRegime() {
+    public String getRegime() throws FenixFilterException, FenixServiceException {
         if (getViewState().getAttribute("regime") == null) {
-            setRegime("SEMESTER");
+            if (getCompetenceCourse() != null) {
+                setRegime(getCompetenceCourse().getRegime().name());
+            } else {
+                setRegime("SEMESTER");
+            }            
         }
         return (String) getViewState().getAttribute("regime");
     }
@@ -135,9 +138,13 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         getViewState().setAttribute("regime", regime);
     }   
     
-    public Integer getNumberOfPeriods() {
+    public Integer getNumberOfPeriods() throws FenixFilterException, FenixServiceException {
         if (getViewState().getAttribute("numberOfPeriods") == null) {
-            setNumberOfPeriods(Integer.valueOf(1));        
+            if (getCompetenceCourse() != null && getCompetenceCourse().getCompetenceCourseLoads().size() > 0) {
+                setNumberOfPeriods(getCompetenceCourse().getCompetenceCourseLoads().size());
+            } else {
+                setNumberOfPeriods(Integer.valueOf(1));
+            }                    
         }
         return (Integer) getViewState().getAttribute("numberOfPeriods");
     }
@@ -148,7 +155,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         }        
     }    
     
-    public List<SelectItem> getPeriods() {
+    public List<SelectItem> getPeriods() throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>(2);
         result.add(new SelectItem(Integer.valueOf(1), "1"));
         if (getRegime().equals("ANUAL")) {
@@ -172,7 +179,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return (List<CourseLoad>) getViewState().getAttribute("courseLoads");
     }
     
-    private List<CourseLoad> createNewCourseLoads() {
+    private List<CourseLoad> createNewCourseLoads() throws FenixFilterException, FenixServiceException {
         int numberOfPeriods = getNumberOfPeriods().intValue();
         final List<CourseLoad> courseLoads = new ArrayList<CourseLoad>(numberOfPeriods);        
         for (int i = 0; i < numberOfPeriods; i++) {
@@ -205,21 +212,49 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         final List<CourseLoad> courseLoads = getCourseLoads();
         if (regime.equals("ANUAL")) {
             if (newNumberOfPeriods > getNumberOfPeriods().intValue()) {
-                courseLoads.add(new CourseLoad(2));                
-            } else if (courseLoads.size() > 1) {
-                courseLoads.remove(0);
-            }
-            setCourseLoads(courseLoads);
-        } else if (regime.equals("SEMESTER")) {
-            if (courseLoads.size() > 1) {
-                courseLoads.remove(0);
-                setCourseLoads(courseLoads);
+                addCourseLoad(courseLoads);                                
+            } else {
+                removeCourseLoad(courseLoads);
             }            
+        } else if (regime.equals("SEMESTER")) {
+            removeCourseLoad(courseLoads);
             setNumberOfPeriods(Integer.valueOf(1));
-            setNumberOfPeriods = false; // prevent jsf to reset the value
+            // prevent application to reset the value
+            setNumberOfPeriods = false; 
         }
+        setCourseLoads(courseLoads);
+    }
+
+    private void addCourseLoad(final List<CourseLoad> courseLoads) {
+        if (getAction().equals("create")) {
+            courseLoads.add(new CourseLoad(2));
+        } else if (getAction().equals("edit")) {
+            final CourseLoad courseLoad = searchDeleteCourseLoad(courseLoads);
+            if (courseLoad != null) {
+                courseLoad.setAction("edit");
+            } else {
+                courseLoads.add(new CourseLoad(2));
+            }
+        }        
     }
     
+    private CourseLoad searchDeleteCourseLoad(final List<CourseLoad> courseLoads) {       
+        for (final CourseLoad courseLoad : courseLoads) {
+            if (courseLoad.getAction().equals("delete")) {
+                return courseLoad;                
+            }
+        }
+        return null;
+    }
+    
+    private void removeCourseLoad(final List<CourseLoad> courseLoads) {
+        if (getAction().equals("create") && courseLoads.size() > 1) {
+            courseLoads.remove(1);
+        } else if (getAction().equals("edit") && courseLoads.size() > 1) {
+            courseLoads.get(1).setAction("delete");
+        }
+    }
+
     public Integer getCompetenceCourseID() {
         return (competenceCourseID == null) ? (competenceCourseID = getAndHoldIntegerParameter("competenceCourseID")) : competenceCourseID;
     }
@@ -239,7 +274,10 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         this.competenceCourse = competenceCourse;
     }
     
-    public String getObjectives() {
+    public String getObjectives() throws FenixFilterException, FenixServiceException {
+        if (objectives == null && getCompetenceCourse() != null) {
+            objectives = getCompetenceCourse().getObjectives();
+        }
         return objectives;
     }
 
@@ -247,7 +285,10 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         this.objectives = objectives;
     }
 
-    public String getProgram() {
+    public String getProgram() throws FenixFilterException, FenixServiceException {
+        if (program == null && getCompetenceCourse() != null) {
+            program = getCompetenceCourse().getProgram();
+        }
         return program;
     }
 
@@ -255,7 +296,10 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         this.program = program;
     }
 
-    public String getEvaluationMethod() {
+    public String getEvaluationMethod() throws FenixFilterException, FenixServiceException {
+        if (evaluationMethod == null && getCompetenceCourse() != null) {
+            evaluationMethod = getCompetenceCourse().getEvaluationMethod();
+        }
         return evaluationMethod;
     }
 
@@ -263,7 +307,10 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         this.evaluationMethod = evaluationMethod;
     }
 
-    public String getObjectivesEn() {
+    public String getObjectivesEn() throws FenixFilterException, FenixServiceException {
+        if (objectivesEn == null && getCompetenceCourse() != null) {
+            objectivesEn = getCompetenceCourse().getObjectivesEn();
+        }
         return objectivesEn;
     }
 
@@ -271,7 +318,10 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         this.objectivesEn = objectivesEn;
     }
 
-    public String getProgramEn() {
+    public String getProgramEn() throws FenixFilterException, FenixServiceException {
+        if (programEn == null && getCompetenceCourse() != null) {
+            programEn = getCompetenceCourse().getProgramEn();
+        }
         return programEn;
     }
 
@@ -279,7 +329,10 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         this.programEn = programEn;
     }
 
-    public String getEvaluationMethodEn() {
+    public String getEvaluationMethodEn() throws FenixFilterException, FenixServiceException {
+        if (evaluationMethodEn == null && getCompetenceCourse() != null) {
+            evaluationMethodEn = getCompetenceCourse().getEvaluationMethodEn();
+        }
         return evaluationMethodEn;
     }
 
@@ -289,7 +342,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     
     public String getStage() throws FenixFilterException, FenixServiceException {
         if (stage == null && getCompetenceCourse() != null) {
-            stage = getCompetenceCourse().getRegime().getName();
+            stage = getCompetenceCourse().getCurricularStage().name();
         }
         return stage;
     }
@@ -324,6 +377,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             setErrorMessage("error.editingCompetenceCourse");
         } catch (FenixServiceException e) {
             setErrorMessage("error.editingCompetenceCourse");
+        } catch (DomainException e) {
+            setErrorMessage(e.getMessage());            
         }
         return "";
     }
@@ -362,6 +417,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             setErrorMessage("error.editingCompetenceCourse");
         } catch (FenixServiceException e) {
             setErrorMessage("error.editingCompetenceCourse");
+        } catch (DomainException e) {
+            setErrorMessage(e.getMessage());            
         }
         return "";
     }
