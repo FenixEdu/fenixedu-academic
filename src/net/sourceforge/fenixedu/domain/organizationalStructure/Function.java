@@ -37,10 +37,8 @@ public class Function extends Function_Base {
     }
     
     public boolean belongsToPeriod(Date beginDate, Date endDate) {
-        if (this.getBeginDate().before(endDate)
-                && (this.getEndDate() == null || ((this.getEndDate().before(endDate) && this
-                        .getEndDate().after(beginDate))
-                        || this.getEndDate().after(endDate) || this.getEndDate().equals(endDate)))) {
+        if (!this.getBeginDate().after(endDate)
+                && (this.getEndDate() == null || !this.getEndDate().before(beginDate))) {
             return true;
         }
         return false;

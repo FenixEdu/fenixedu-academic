@@ -11,15 +11,13 @@ import net.sourceforge.fenixedu.util.DateFormatUtil;
 public class Contract extends Contract_Base {
 
     public boolean belongsToPeriod(Date beginDate, Date endDate) {
-        if (this.getBeginDate().before(endDate)
-                && (this.getEndDate() == null || ((this.getEndDate().before(endDate) && this
-                        .getEndDate().after(beginDate))
-                        || this.getEndDate().after(endDate) || this.getEndDate().equals(endDate)))) {
+        if (!this.getBeginDate().after(endDate)
+                && (this.getEndDate() == null || !this.getEndDate().before(beginDate))) {
             return true;
         }
         return false;
     }
-    
+
     public boolean isActive(Date currentDate) {
         if (this.getEndDate() == null
                 || (DateFormatUtil.equalDates("yyyyMMdd", this.getEndDate(), currentDate) || this
@@ -28,8 +26,8 @@ public class Contract extends Contract_Base {
         }
         return false;
     }
-    
-    public void delete(){        
+
+    public void delete() {
         removeEmployee();
         removeMailingUnit();
         removeSalaryUnit();
