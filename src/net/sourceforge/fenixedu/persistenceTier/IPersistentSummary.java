@@ -1,9 +1,3 @@
-/*
- * Created on 21/Jul/2003
- * 
- *  
- */
-
 package net.sourceforge.fenixedu.persistenceTier;
 
 import java.util.Date;
@@ -11,12 +5,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ISummary;
 
-/**
- * @author João Mota
- * 
- * 21/Jul/2003 fenix-head ServidorPersistente.OJB
- *  
- */
 public interface IPersistentSummary extends IPersistentObject {
    
     public List readByExecutionCourse(Integer executionCourseID) throws ExcepcaoPersistencia;
@@ -32,7 +20,7 @@ public interface IPersistentSummary extends IPersistentObject {
 
     public List readByShift(Integer executionCourseID, Integer shiftID) throws ExcepcaoPersistencia;
 
-    public List readByTeacher(Integer executionCourseID, Integer teacherNumber)
+    public List<ISummary> readByTeacher(Integer executionCourseID, Integer teacherNumber)
             throws ExcepcaoPersistencia;
 
     public List readByOtherTeachers(Integer executionCourseID) throws ExcepcaoPersistencia;
