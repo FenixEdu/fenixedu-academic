@@ -22,7 +22,7 @@ public class EditAdvisory implements IService {
      
         ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
                 
-        IAdvisory advisory = (IAdvisory) suportePersistente.getIPersistentAdvisory().readByOID(Advisory.class, advisoryID);
+        IAdvisory advisory = (IAdvisory) suportePersistente.getIPersistentObject().readByOID(Advisory.class, advisoryID);
         
         if(advisory == null){                  
             throw new FenixServiceException("error.no.advisory");            

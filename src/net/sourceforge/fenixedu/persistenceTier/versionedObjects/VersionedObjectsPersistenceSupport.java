@@ -4,8 +4,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentAdvisory;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentAnnouncement;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBuilding;
@@ -195,8 +193,6 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransact
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.CMSVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.MailAdressAliasVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.MailingListVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AdvisoryVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AnnouncementVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AulaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AuthorshipVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.BibliographicReferenceVO;
@@ -470,10 +466,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentSeminaryCaseStudyChoice getIPersistentSeminaryCaseStudyChoice() {
         return new CaseStudyChoiceVO();
-    }
-
-    public IPersistentAdvisory getIPersistentAdvisory() {
-        return new AdvisoryVO();
     }
 
     public IPersistentMasterDegreeCandidate getIPersistentMasterDegreeCandidate() {
@@ -962,10 +954,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentExtraWork getIPersistentExtraWork() {
         return null;
-    }
-
-    public IPersistentAnnouncement getIPersistentAnnouncement() {
-        return new AnnouncementVO();
     }
 
     public IPersistentExtraWorkRequests getIPersistentExtraWorkRequests() {

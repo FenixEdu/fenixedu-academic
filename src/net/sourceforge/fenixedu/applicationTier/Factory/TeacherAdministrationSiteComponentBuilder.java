@@ -304,7 +304,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 			Integer announcementCode) throws FenixServiceException, ExcepcaoPersistencia {
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		IAnnouncement iAnnouncement = (IAnnouncement) sp.getIPersistentAnnouncement().readByOID(
+		IAnnouncement iAnnouncement = (IAnnouncement) sp.getIPersistentObject().readByOID(
 				Announcement.class, announcementCode);
 		InfoAnnouncement infoAnnouncement = InfoAnnouncement.newInfoFromDomain(iAnnouncement);
 

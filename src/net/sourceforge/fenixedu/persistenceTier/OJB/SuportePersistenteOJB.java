@@ -463,14 +463,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	}
 
 	/**
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentAnnouncement()
-	 */
-	public IPersistentAnnouncement getIPersistentAnnouncement()
-	{
-		return new AnnouncementOJB();
-	}
-
-	/**
 	 * @see ServidorPersistente.ISuportePersistente#getIPersistentCurriculum()
 	 */
 	public IPersistentCurriculum getIPersistentCurriculum()
@@ -947,11 +939,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentDistributedTestAdvisory getIPersistentDistributedTestAdvisory()
 	{
 		return new DistributedTestAdvisoryOJB();
-	}
-
-	public IPersistentAdvisory getIPersistentAdvisory()
-	{
-		return new AdvisoryOJB();
 	}
 
 	public IPersistentWebSite getIPersistentWebSite()

@@ -5,7 +5,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.domain.Announcement;
 import net.sourceforge.fenixedu.domain.IAnnouncement;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentAnnouncement;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -21,10 +20,8 @@ public class DeleteAnnouncementService implements IService {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-        final IPersistentAnnouncement persistentAnnouncement = persistentSupport
-                .getIPersistentAnnouncement();
 
-        IAnnouncement announcement = (IAnnouncement) persistentAnnouncement.readByOID(
+        IAnnouncement announcement = (IAnnouncement) persistentSupport.getIPersistentObject().readByOID(
                 Announcement.class, announcementCode);
         if (announcement == null) {
             throw new InvalidArgumentsServiceException();

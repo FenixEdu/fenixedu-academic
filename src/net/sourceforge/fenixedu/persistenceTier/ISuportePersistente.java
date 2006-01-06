@@ -169,8 +169,6 @@ public interface ISuportePersistente
 
 	public IPersistentItem getIPersistentItem();
 
-	public IPersistentAnnouncement getIPersistentAnnouncement();
-
 	public IPersistentCurriculum getIPersistentCurriculum();
 
 	public IPersistentEvaluationMethod getIPersistentEvaluationMethod();
@@ -308,8 +306,6 @@ public interface ISuportePersistente
 	public IPersistentGrantInsurance getIPersistentGrantInsurance();
 
 	public IPersistentGrantContractMovement getIPersistentGrantContractMovement();
-
-	public IPersistentAdvisory getIPersistentAdvisory();
 
 	public IPersistentWebSite getIPersistentWebSite();
 

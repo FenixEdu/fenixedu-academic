@@ -20,7 +20,7 @@ public class InsertStudentDistributedTestAdvisory implements IService {
 
     public void run(final Integer executionCourseId, final Integer advisoryId, final Integer studentId) throws ExcepcaoPersistencia {
         final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IAdvisory advisory = (IAdvisory) persistentSuport.getIPersistentAdvisory().readByOID(Advisory.class, advisoryId);
+        IAdvisory advisory = (IAdvisory) persistentSuport.getIPersistentObject().readByOID(Advisory.class, advisoryId);
         IStudent student = (IStudent) persistentSuport.getIPersistentStudent().readByOID(Student.class, studentId);
         advisory.addPeople(student.getPerson());
     }
