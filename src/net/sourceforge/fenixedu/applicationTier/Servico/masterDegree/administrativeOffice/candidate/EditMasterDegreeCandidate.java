@@ -1,10 +1,3 @@
-/**
- * 
- * Autores : - Nuno Nunes (nmsn@rnl.ist.utl.pt) - Joana Mota
- * (jccm@rnl.ist.utl.pt)
- *  
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate;
 
 import java.util.ArrayList;
@@ -29,22 +22,15 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.State;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * 
- * @author - Shezad Anavarali (shezad@ist.utl.pt)
- * 
- */
 public class EditMasterDegreeCandidate implements IService {
 
     public InfoMasterDegreeCandidate run(Integer oldCandidateID, InfoMasterDegreeCandidate newCandidate)
             throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
-                .getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
-                        oldCandidateID, true);
-
+                .getIPersistentObject().readByOID(MasterDegreeCandidate.class, oldCandidateID, true);
         if (masterDegreeCandidate == null) {
             throw new ExcepcaoInexistente("Unknown Candidate !!");
         }
@@ -56,8 +42,8 @@ public class EditMasterDegreeCandidate implements IService {
             country = sp.getIPersistentCountry().readCountryByNationality(
                     newCandidate.getInfoPerson().getInfoPais().getNationality());
         }
-        person.edit(newCandidate.getInfoPerson(),country);
-        
+        person.edit(newCandidate.getInfoPerson(), country);
+
         // Change Candidate Information
         masterDegreeCandidate.setAverage(newCandidate.getAverage());
         masterDegreeCandidate.setMajorDegree(newCandidate.getMajorDegree());
@@ -71,10 +57,8 @@ public class EditMasterDegreeCandidate implements IService {
                 newCandidate.getInfoCandidateSituation().getSituation())) {
 
             oldCandidateSituation.setValidation(new State(State.INACTIVE));
-            sp.getIPersistentCandidateSituation().simpleLockWrite(oldCandidateSituation);
 
             ICandidateSituation newCandidateSituation = DomainFactory.makeCandidateSituation();
-            sp.getIPersistentCandidateSituation().simpleLockWrite(newCandidateSituation);
             newCandidateSituation.setDate(Calendar.getInstance().getTime());
             newCandidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
             newCandidateSituation.setRemarks(newCandidate.getInfoCandidateSituation().getRemarks());
@@ -126,4 +110,5 @@ public class EditMasterDegreeCandidate implements IService {
         } catch (Exception e) {
         }
     }
+
 }
