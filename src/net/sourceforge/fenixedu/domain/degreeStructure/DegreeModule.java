@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
 import net.sourceforge.fenixedu.domain.ICurricularSemester;
+import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 
 
@@ -37,5 +38,21 @@ public abstract class DegreeModule extends DegreeModule_Base {
     
     public boolean isRoot() {
         return (getNewDegreeCurricularPlan() != null);
+    }
+    
+    public IDegreeCurricularPlan getParentDegreeCurricularPlan() {
+        return searchParentDegreeCurricularPlan(getFirstParent());
+    }
+    
+    private IDegreeCurricularPlan searchParentDegreeCurricularPlan(IDegreeModule degreeModule) {        
+        if (degreeModule.isRoot()) {
+            return degreeModule.getNewDegreeCurricularPlan();
+        } else {
+            return degreeModule.getParentDegreeCurricularPlan();
+        }
+    }    
+    
+    private IDegreeModule getFirstParent() {
+        return (hasAnyDegreeModuleContexts()) ? getDegreeModuleContexts().get(0).getCourseGroup() : null;
     }
 }

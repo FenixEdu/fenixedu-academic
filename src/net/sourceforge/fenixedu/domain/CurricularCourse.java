@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.IContext;
 import net.sourceforge.fenixedu.domain.degreeStructure.ICourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.IDegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -448,5 +449,5 @@ public class CurricularCourse extends CurricularCourse_Base {
             return this.getCompetenceCourse().getName();
         }
         return super.getName();
-    }        
+    }
 }

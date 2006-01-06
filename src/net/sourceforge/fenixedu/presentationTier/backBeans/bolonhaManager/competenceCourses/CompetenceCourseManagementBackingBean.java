@@ -4,8 +4,8 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.competenceCourses;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
@@ -26,21 +26,20 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
-public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
-    private final ResourceBundle bundle = getResourceBundle("ServidorApresentacao/BolonhaManagerResources");
+import org.apache.commons.beanutils.BeanComparator;
 
+public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
+    
     private Integer competenceCourseID = null;
     private IUnit competenceCourseGroupUnit = null;
     private List<IUnit> scientificAreaUnits = null;
-    private ICompetenceCourse competenceCourse = null;
-        
+    private ICompetenceCourse competenceCourse = null;        
     // Competence-Course-Information
     private String name;
     private String nameEn;
     private String acronym;
     private Boolean basic;
-    private boolean setNumberOfPeriods = true;
-    
+    private boolean setNumberOfPeriods = true;    
     // Competence-Course-Additional-Data
     private String objectives;
     private String program;
@@ -193,6 +192,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         for (final ICompetenceCourseLoad competenceCourseLoad : getCompetenceCourse().getCompetenceCourseLoads()) {
             courseLoads.add(new CourseLoad("edit", competenceCourseLoad));
         }
+        Collections.sort(courseLoads, new BeanComparator("order"));
         return courseLoads;
     }
     
@@ -351,6 +351,15 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         this.stage = stage;
     }
     
+    public List<ICompetenceCourseLoad> getSortedCompetenceCourseLoads() throws FenixFilterException, FenixServiceException {
+        final List<ICompetenceCourseLoad> result = new ArrayList<ICompetenceCourseLoad>();
+        if (getCompetenceCourse() != null) {
+            result.addAll(getCompetenceCourse().getCompetenceCourseLoads());
+            Collections.sort(result, new BeanComparator("order"));
+        }
+        return result;
+    }
+    
     public String createCompetenceCourse() {
         try {
             final Object args[] = { getName(), getNameEn(), getAcronym(), getBasic(),
@@ -450,7 +459,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         try {
             Object[] args = { getCompetenceCourseID() };
             ServiceUtils.executeService(getUserView(), "DeleteCompetenceCourse", args);
-            addInfoMessage(bundle.getString("competenceCourseDeleted"));
+            addInfoMessage(getResourceBundle("ServidorApresentacao/BolonhaManagerResources").getString("competenceCourseDeleted"));
             return "competenceCoursesManagement";
         } catch (FenixFilterException e) {
             setErrorMessage("error.deletingCompetenceCourse");

@@ -893,6 +893,7 @@ class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.s
            net.sourceforge.fenixedu.domain.ICurricularSemester curricularSemester);
 		public void deleteContext(IContext context);
 		public boolean isRoot();
+		public net.sourceforge.fenixedu.domain.IDegreeCurricularPlan getParentDegreeCurricularPlan();
 	"
 }
 

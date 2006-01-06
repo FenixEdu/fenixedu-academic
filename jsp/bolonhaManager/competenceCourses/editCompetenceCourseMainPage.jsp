@@ -53,36 +53,36 @@
 	<br/><br/>
 	<h:outputText style="font-weight: bold" value="#{bolonhaBundle['lessonHours']}: <br/>" escape="false"/>
 	<h:outputText value="#{bolonhaBundle['regime']}: " style="font-weight: bold"/>
-	<h:outputText value="#{enumerationBundle[CompetenceCourseManagement.competenceCourse.regime.name]}" style="font-weight: bold"/><br/>	
-	<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.competenceCourseLoads}" var="competenceCourseLoad">
-		<%-- print period number --%>
-		<h:outputText value="<ul><li>" escape="false"/>
-		<h:outputText value="#{bolonhaBundle['theoreticalLesson']}: " style="font-weight: bold"/>
+	<h:outputText value="#{enumerationBundle[CompetenceCourseManagement.competenceCourse.regime.name]}<br/><br/>" style="font-weight: bold" escape="false"/>	
+	<fc:dataRepeater value="#{CompetenceCourseManagement.sortedCompetenceCourseLoads}" var="competenceCourseLoad" rowCountVar="numberOfElements">
+		<h:outputText value="#{competenceCourseLoad.order}º #{bolonhaBundle['semester']}<br/>" escape="false"
+			rendered="#{CompetenceCourseManagement.competenceCourse.regime.name == 'ANUAL' && numberOfElements == 2}"/>
+		<h:outputText value="- #{bolonhaBundle['theoreticalLesson']}: " style="font-weight: bold"/>
 		<h:outputText value="#{competenceCourseLoad.theoreticalHours} h/#{bolonhaBundle['lowerCase.week']}<br/>" escape="false"/>
-		<h:outputText value="</li><li>" escape="false"/>
-		<h:outputText value="#{bolonhaBundle['problemsLesson']}: " style="font-weight: bold"/>
+
+		<h:outputText value="- #{bolonhaBundle['problemsLesson']}: " style="font-weight: bold"/>
 		<h:outputText value="#{competenceCourseLoad.problemsHours} h/#{bolonhaBundle['lowerCase.week']}<br/>" escape="false"/>
-		<h:outputText value="</li><li>" escape="false"/>
-		<h:outputText value="#{bolonhaBundle['laboratorialLesson']}: " style="font-weight: bold"/>
+
+		<h:outputText value="- #{bolonhaBundle['laboratorialLesson']}: " style="font-weight: bold"/>
 		<h:outputText value="#{competenceCourseLoad.laboratorialHours} h/#{bolonhaBundle['lowerCase.week']}<br/>" escape="false"/>
-		<h:outputText value="</li><li>" escape="false"/>
-		<h:outputText value="#{bolonhaBundle['seminary']}: " style="font-weight: bold"/>
+
+		<h:outputText value="- #{bolonhaBundle['seminary']}: " style="font-weight: bold"/>
 		<h:outputText value="#{competenceCourseLoad.seminaryHours} h/#{bolonhaBundle['lowerCase.week']}<br/>" escape="false"/>
-		<h:outputText value="</li><li>" escape="false"/>
-		<h:outputText value="#{bolonhaBundle['fieldWork']}: " style="font-weight: bold"/>
+
+		<h:outputText value="- #{bolonhaBundle['fieldWork']}: " style="font-weight: bold"/>
 		<h:outputText value="#{competenceCourseLoad.fieldWorkHours} h/#{bolonhaBundle['lowerCase.week']}<br/>" escape="false"/>
-		<h:outputText value="</li><li>" escape="false"/>
-		<h:outputText value="#{bolonhaBundle['trainingPeriod']}: " style="font-weight: bold"/>
+
+		<h:outputText value="- #{bolonhaBundle['trainingPeriod']}: " style="font-weight: bold"/>
 		<h:outputText value="#{competenceCourseLoad.trainingPeriodHours} h/#{bolonhaBundle['lowerCase.week']}<br/>" escape="false"/>
-		<h:outputText value="</li><li>" escape="false"/>
-		<h:outputText value="#{bolonhaBundle['tutorialOrientation']}: " style="font-weight: bold"/>
+
+		<h:outputText value="- #{bolonhaBundle['tutorialOrientation']}: " style="font-weight: bold"/>
 		<h:outputText value="#{competenceCourseLoad.tutorialOrientationHours} h/#{bolonhaBundle['lowerCase.week']}<br/>" escape="false"/>
-		<h:outputText value="</li><li>" escape="false"/>
-		<h:outputText value="#{bolonhaBundle['autonomousWork']}: " style="font-weight: bold"/>
-		<h:outputText value="#{competenceCourseLoad.autonomousWorkHours} h/#{bolonhaBundle['lowerCase.week']}<br/>" escape="false"/>
-		<h:outputText value="</li></ul>" escape="false"/>
-		<h:outputText value="<ul><li>#{bolonhaBundle['ectsCredits']}: " style="font-weight: bold" escape="false"/>
-		<h:outputText value="#{competenceCourseLoad.ectsCredits}</li></ul>" escape="false"/>
+
+		<h:outputText value="- #{bolonhaBundle['autonomousWork']}: " style="font-weight: bold"/>
+		<h:outputText value="#{competenceCourseLoad.autonomousWorkHours} h/#{bolonhaBundle['lowerCase.week']}<br/><br/>" escape="false"/>
+
+		<h:outputText value="- #{bolonhaBundle['ectsCredits']}: " style="font-weight: bold" escape="false"/>
+		<h:outputText value="#{competenceCourseLoad.ectsCredits}<br/><br/>" escape="false"/>
 	</fc:dataRepeater>
 	<br/>
 	<h:outputLink value="setCompetenceCourseLoad.faces">
