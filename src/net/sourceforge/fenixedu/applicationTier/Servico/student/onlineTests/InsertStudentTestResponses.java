@@ -179,7 +179,7 @@ public class InsertStudentTestResponses implements IService {
                 }
                 DecimalFormat df = new DecimalFormat("#0.##");
                 df.getDecimalFormatSymbols().setDecimalSeparator('.');
-                String grade = df.format(Math.max(0, totalMark));
+                String grade = df.format(Math.max(0, totalMark)).replace(',', '.');
                 System.out.println("GRADE ----------------------> " + student.getNumber() + " " + grade);
                 mark.setMark(grade);
             }
