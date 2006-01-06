@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.services;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
@@ -32,7 +33,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class EditTeacherAdviseService implements IService {
 
     public void run(Integer teacherID, Integer executionPeriodID, final Integer studentNumber,
-            Double percentage, AdviseType adviseType) throws ExcepcaoPersistencia {
+            Double percentage, AdviseType adviseType) throws ExcepcaoPersistencia, FenixServiceException {
 
         ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         ITeacher teacher = (ITeacher) persistentSupport.getIPersistentTeacher().readByOID(Teacher.class,
@@ -46,6 +47,10 @@ public class EditTeacherAdviseService implements IService {
                 IStudent tempStudent = (IStudent) arg0; 
                 return tempStudent.getNumber().equals(studentNumber);
             }});
+        
+        if(student == null){
+            throw new FenixServiceException("errors.invalid.student-number");
+        }
         
         ITeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
         if(teacherService == null){

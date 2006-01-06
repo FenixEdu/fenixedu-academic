@@ -536,6 +536,9 @@
             <exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" 
                 key="" 
                 handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/> 
+            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException" 
+                key="" 
+                handler="net.sourceforge.fenixedu.presentationTier.config.FenixExceptionMessageHandler"/>                 
             <forward name="teacher-not-found" path="/teacherAdviseServiceManagement.do?method=prepareTeacherSearch&amp;page=0"/>
 			<forward name="search-teacher-form" path="search-for-advise-service"/>   
             <forward name="list-teacher-advise-services" path="list-teacher-advise-services"/>
