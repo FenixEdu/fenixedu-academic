@@ -390,13 +390,8 @@ public class Teacher extends Teacher_Base {
             return 0;
         } else {
             Collections.sort(list, new BeanComparator("beginDate"));
-            return list.iterator().next().getLessonHours();
+            return list.get(list.size() -1).getLessonHours();
         }
-//            if (list.size() > 1) {
-//            return calculateTeacherHours(list, begin, end);
-//        } else {
-//            return list.iterator().next().getLessonHours();
-//        }
     }
 
     public int getServiceExemptionCredits(IExecutionPeriod executionPeriod) {
@@ -454,13 +449,8 @@ public class Teacher extends Teacher_Base {
             return null;
         } else {
             Collections.sort(list,new BeanComparator("beginDate"));
-            return list.iterator().next().getCategory();
-        }
-//        { if (list.size() > 1) {
-//            return getTeacherCategory(list, begin, end);
-//        } else {
-//            return list.iterator().next().getCategory();
-//        }               
+            return list.get(list.size()-1).getCategory();
+        }              
     }
     // /////////////////////////////////////////
 
