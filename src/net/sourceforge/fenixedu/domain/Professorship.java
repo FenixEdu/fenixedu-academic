@@ -44,14 +44,13 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
     }
 
     public void delete() {
-
-        if (this.getAssociatedSummariesCount() > 0 || this.getAssociatedShiftProfessorshipCount() > 0
-                || this.getSupportLessonsCount() > 0)
+        if (hasAnyAssociatedSummaries() || hasAnyAssociatedShiftProfessorship() || hasAnySupportLessons()) {
             throw new DomainException(this.getClass().getName(), "");
-
-        this.setExecutionCourse(null);
-        this.setTeacher(null);
+        }
+        this.removeExecutionCourse();
+        this.removeTeacher();
 
         super.deleteDomainObject();
     }
+
 }

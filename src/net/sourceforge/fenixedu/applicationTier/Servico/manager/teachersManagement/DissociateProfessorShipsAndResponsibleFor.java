@@ -2,164 +2,117 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.teachersManagem
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
 import net.sourceforge.fenixedu.domain.IProfessorship;
+import net.sourceforge.fenixedu.domain.IShiftProfessorship;
 import net.sourceforge.fenixedu.domain.ISummary;
+import net.sourceforge.fenixedu.domain.ISupportLesson;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author Fernanda Quitério 12/Dez/2003
- * 
- */
 public class DissociateProfessorShipsAndResponsibleFor implements IService {
 
-	public Map run(Integer teacherNumber, List professorships, List responsibleFors)
-			throws FenixServiceException, ExcepcaoPersistencia {
-		List professorshipsWithSupportLessons = new ArrayList();
-		List professorshipsWithShifts = new ArrayList();
-		HashMap professorshipsNotRemoved = new HashMap();
+    public Map run(Integer teacherNumber, List<Integer> professorships, List<Integer> responsibleFors)
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
-		IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-		IPersistentSupportLesson persistentSupportLesson = sp.getIPersistentSupportLesson();
-		IPersistentShiftProfessorship persistentShiftProfessorship = sp
-				.getIPersistentShiftProfessorship();
+        if (teacherNumber == null) {
+            throw new FenixServiceException("nullTeacherNumber");
+        }
 
-		if (teacherNumber == null) {
-			throw new FenixServiceException("nullTeacherNumber");
-		}
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		ITeacher teacher = teacherDAO.readByNumber(teacherNumber);
-		if (teacher == null) {
-			throw new NonExistingServiceException("noTeacher");
-		}
+        final ITeacher teacher = sp.getIPersistentTeacher().readByNumber(teacherNumber);
+        if (teacher == null) {
+            throw new NonExistingServiceException("noTeacher");
+        }
 
-		if (professorships != null && responsibleFors != null) {
-			List newProfessorships = new ArrayList();
-			Iterator iterProfessorships = professorships.iterator();
-			while (iterProfessorships.hasNext()) {
-				Integer professorshipId = (Integer) iterProfessorships.next();
+        List<InfoProfessorship> professorshipsWithSupportLessons = new ArrayList<InfoProfessorship>();
+        List<InfoProfessorship> professorshipsWithShifts = new ArrayList<InfoProfessorship>();
+        if (professorships != null && responsibleFors != null) {
+            List<IProfessorship> newProfessorships = new ArrayList<IProfessorship>();
+            for (Integer professorshipId : professorships) {
+                IProfessorship professorship = (IProfessorship) sp.getIPersistentObject().readByOID(
+                        Professorship.class, professorshipId);
+                if (professorship == null) {
+                    throw new FenixServiceException("nullPSNorRF");
+                }
 
-				IProfessorship professorship = (IProfessorship) persistentProfessorship.readByOID(
-						Professorship.class, professorshipId);
-				if (professorship == null) {
-					throw new FenixServiceException("nullPSNorRF");
-				}
-				if (!professorship.getTeacher().equals(teacher)) {
-					throw new FenixServiceException("notPSNorRFTeacher");
-				}
-				newProfessorships.add(professorship);
-			}
+                if (!(professorship.getTeacher() == teacher)) {
+                    throw new FenixServiceException("notPSNorRFTeacher");
+                }
+                newProfessorships.add(professorship);
+            }
 
-			List newResponsibleFor = new ArrayList();
-			Iterator iterResponsibleFor = responsibleFors.iterator();
-			while (iterResponsibleFor.hasNext()) {
-				Integer responsibleForId = (Integer) iterResponsibleFor.next();
+            List<IProfessorship> newResponsibleFor = new ArrayList<IProfessorship>();
+            for (Integer responsibleForId : responsibleFors) {
+                IProfessorship responsibleFor = (IProfessorship) sp.getIPersistentObject().readByOID(
+                        Professorship.class, responsibleForId);
+                if (responsibleFor == null) {
+                    throw new FenixServiceException("nullPSNorRF");
+                }
 
-				IProfessorship responsibleFor = (IProfessorship) persistentProfessorship.readByOID(
-						Professorship.class, responsibleForId);
+                if (!(responsibleFor.getTeacher() == teacher)) {
+                    throw new FenixServiceException("notPSNorRFTeacher");
+                }
+                newResponsibleFor.add(responsibleFor);
+            }
 
-				if (responsibleFor == null) {
-					throw new FenixServiceException("nullPSNorRF");
-				}
-				if (!responsibleFor.getTeacher().equals(teacher)) {
-					throw new FenixServiceException("notPSNorRFTeacher");
-				}
-				newResponsibleFor.add(responsibleFor);
-			}
+            // everything is ok for removal, but first check
+            // professorships with support lessons and shifts
+            for (IProfessorship professorship : newProfessorships) {
+                List<ISupportLesson> supportLessons = professorship.getSupportLessons();
+                List<IShiftProfessorship> shiftProfessorships = professorship
+                        .getAssociatedShiftProfessorship();
 
-			// everything is ok for removal, but first check
-			// professorships with support lessons and shifts
-			iterProfessorships = newProfessorships.iterator();
-			while (iterProfessorships.hasNext()) {
-				IProfessorship professorship = (IProfessorship) iterProfessorships.next();
+                if ((shiftProfessorships == null || shiftProfessorships.isEmpty())
+                        && (supportLessons == null || supportLessons.isEmpty())) {
 
-				List supportLessons = persistentSupportLesson.readByProfessorship(professorship
-						.getIdInternal());
-				List shiftProfessorships = persistentShiftProfessorship
-						.readByProfessorship(professorship);
+                    final IPersistentSummary persistentSummary = sp.getIPersistentSummary();
+                    List<ISummary> summaryList = persistentSummary.readByTeacher(professorship
+                            .getExecutionCourse().getIdInternal(), professorship.getTeacher()
+                            .getTeacherNumber());
+                    if (summaryList != null && !summaryList.isEmpty()) {
+                        for (ISummary summary : summaryList) {
+                            summary.removeProfessorship();
+                        }
+                    }
 
-				if ((shiftProfessorships == null || shiftProfessorships.size() == 0)
-						&& (supportLessons == null || supportLessons.size() == 0)) {
+                    professorship.delete();
+                } else {
+                    if (supportLessons.size() > 0) {
+                        professorshipsWithSupportLessons.add(InfoProfessorshipWithAll
+                                .newInfoFromDomain(professorship));
+                    }
+                    if (shiftProfessorships.size() > 0) {
+                        professorshipsWithShifts.add(InfoProfessorshipWithAll
+                                .newInfoFromDomain(professorship));
+                    }
+                }
+            }
 
-					IPersistentSummary persistentSummary = sp.getIPersistentSummary();
-					List summaryList = persistentSummary.readByTeacher(professorship
-							.getExecutionCourse().getIdInternal(), professorship.getTeacher()
-							.getTeacherNumber());
-					if (summaryList != null && !summaryList.isEmpty()) {
-						for (Iterator iterator = summaryList.iterator(); iterator.hasNext();) {
-							ISummary summary = (ISummary) iterator.next();
-							persistentSummary.simpleLockWrite(summary);
-							summary.setProfessorship(null);
-							summary.setKeyProfessorship(null);
-						}
-					}
-					deleteProfessorship(persistentProfessorship, professorship);
+            for (IProfessorship responsibleFor : newResponsibleFor) {
+                responsibleFor.setResponsibleFor(false);
+            }
+        }
 
-				} else {
-					if (supportLessons.size() > 0) {
-						professorshipsWithSupportLessons.add(InfoProfessorshipWithAll
-								.newInfoFromDomain(professorship));
-					}
-					if (shiftProfessorships.size() > 0) {
-						professorshipsWithShifts.add(InfoProfessorshipWithAll
-								.newInfoFromDomain(professorship));
-					}
-				}
+        HashMap<String, List<InfoProfessorship>> professorshipsNotRemoved = new HashMap<String, List<InfoProfessorship>>();
+        if (professorshipsWithSupportLessons.size() > 0 || professorshipsWithShifts.size() > 0) {
+            professorshipsNotRemoved.put(new String("supportLessons"), professorshipsWithSupportLessons);
+            professorshipsNotRemoved.put(new String("shifts"), professorshipsWithShifts);
+        }
 
-			}
+        return professorshipsNotRemoved;
+    }
 
-			iterResponsibleFor = newResponsibleFor.iterator();
-			while (iterResponsibleFor.hasNext()) {
-				IProfessorship responsibleFor = (IProfessorship) iterResponsibleFor.next();
-				responsibleFor.setResponsibleFor(false);
-			}
-		}
-
-		if (professorshipsWithSupportLessons.size() > 0 || professorshipsWithShifts.size() > 0) {
-			professorshipsNotRemoved.put(new String("supportLessons"), professorshipsWithSupportLessons);
-			professorshipsNotRemoved.put(new String("shifts"), professorshipsWithShifts);
-		}
-
-		return professorshipsNotRemoved;
-	}
-
-	private void deleteProfessorship(final IPersistentProfessorship persistentProfessorship,
-			final IProfessorship professorshipToDelete) throws ExcepcaoPersistencia {
-
-		if (professorshipToDelete.getAssociatedSummaries() != null)
-			professorshipToDelete.getAssociatedSummaries().clear();
-		if (professorshipToDelete.getSupportLessons() != null)
-			professorshipToDelete.getSupportLessons().clear();
-
-		if (professorshipToDelete.getAssociatedShiftProfessorship() != null)
-			professorshipToDelete.getAssociatedShiftProfessorship().clear();
-
-		if (professorshipToDelete.getExecutionCourse().getProfessorships() != null) {
-			professorshipToDelete.getExecutionCourse().getProfessorships().remove(professorshipToDelete);
-		}
-		professorshipToDelete.setExecutionCourse(null);
-		if (professorshipToDelete.getTeacher().getProfessorships() != null) {
-			professorshipToDelete.getTeacher().getProfessorships().remove(professorshipToDelete);
-		}
-		professorshipToDelete.setTeacher(null);
-		persistentProfessorship.deleteByOID(Professorship.class, professorshipToDelete.getIdInternal());
-	}
 }
