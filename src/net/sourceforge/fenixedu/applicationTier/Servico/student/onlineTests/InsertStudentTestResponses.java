@@ -8,6 +8,7 @@ import java.beans.XMLEncoder;
 import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -178,8 +179,10 @@ public class InsertStudentTestResponses implements IService {
                     mark.setEvaluation(onlineTest);
                 }
                 DecimalFormat df = new DecimalFormat("#0.##");
-                df.getDecimalFormatSymbols().setDecimalSeparator('.');
-                String grade = df.format(Math.max(0, totalMark)).replace(',', '.');
+                DecimalFormatSymbols decimalFormatSymbols = df.getDecimalFormatSymbols();
+                decimalFormatSymbols.setDecimalSeparator('.');
+                df.setDecimalFormatSymbols(decimalFormatSymbols);
+                String grade = df.format(Math.max(0, totalMark));
                 System.out.println("GRADE ----------------------> " + student.getNumber() + " " + grade);
                 mark.setMark(grade);
             }
