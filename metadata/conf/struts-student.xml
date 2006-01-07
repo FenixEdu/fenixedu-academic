@@ -439,35 +439,6 @@
       </action>
 
       <!-- VIEW SCHEDULE -->
-<!--
-      <action 
-              type="net.sourceforge.fenixedu.presentationTier.Action.student.PrepararEscolherCertidoesAction"
-              path="/chooseObtainCertificate"
-              
-             >
-        
-        <forward name="sucesso"
-                 path="/chooseObtainCertificate.jsp"
-				 />
-      </action> 
-      
-      
-      
-      <action attribute="escolherCertidaoForm"
-      		  name="escolherCertidaoForm"
-      		  input="/chooseObtainCertificate.jsp"
-              path="/escolherCertidaoForm"
-              type="net.sourceforge.fenixedu.presentationTier.Action.student.EscolherCertidoesAction">
-        <forward name="Tipo1" path="/obtainCertificateTipo1.do"/>
-        <forward name="Tipo2" path="/obtainCertificateTipo1.do"/>
-        <forward name="Tipo3" path="/obtainCertificateTipo3.do"/>
-        <forward name="Tipo4" path="/obtainCertificateTipo4.do"/>
-        <forward name="Tipo5" path="/obtainCertificateTipo5.do"/>
-        <forward name="Inexistente" path="/naoExecutado.do"/>
-      </action>
- 	-->
- 			<!-- GROUPS -->
- 	   
  	   <action type="net.sourceforge.fenixedu.presentationTier.Action.student.ViewEnroledExecutionCoursesAction"
               path="/viewEnroledExecutionCourses"
               name="enroledExecutionCoursesForm"
