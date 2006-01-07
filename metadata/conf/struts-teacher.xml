@@ -1054,13 +1054,6 @@
             <forward name="createSubSection" path="/createSubSection.jsp"/>
         </action>
         <!-- Section viewer -->
-        <!--
-	<action name="sectionForm"		
-		path="/viewSection"
-		input="/viewSection.jsp"
-        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ViewSectionAction">    
-     <forward name="Sucess" path="/viewSection.jsp"/>         
-	</action>-->
         <!-- Delete Section -->
         <action path="/deleteSection" input="/viewSection.jsp" parameter="method" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction">
