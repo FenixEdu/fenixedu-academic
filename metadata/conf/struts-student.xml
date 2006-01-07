@@ -440,21 +440,6 @@
 
       <!-- VIEW SCHEDULE -->
 <!--
-      <action
-              type="net.sourceforge.fenixedu.presentationTier.Action.student.ViewShiftScheduleAction"
-              path="/viewShiftSchedule"
-              input="/viewShiftsList.do"
-              scope="request"
-              name="shiftEnrolmentForm"
-              validate="true"
-             >
-        <forward name="sucess"
-                 path="/viewSchedule.jsp"/>
-      </action>
-      
-      
-      
-      
       <action 
               type="net.sourceforge.fenixedu.presentationTier.Action.student.GrauMestreAction"
               path="/obtainCertificateTipo1"
