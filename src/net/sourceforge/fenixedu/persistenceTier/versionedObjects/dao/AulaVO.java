@@ -14,12 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
-import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
@@ -36,26 +32,6 @@ public class AulaVO extends VersionedObjectsBase implements IAulaPersistente {
                 lessons.add(lesson);
             }
         }
-        return lessons;
-    }
-
-    public List readLessonsByStudent(final String username) throws ExcepcaoPersistencia {
-        final List lessons = new ArrayList();
-
-        List<Student> students = (List<Student>) readAll(Student.class);
-        for(Student student : students){
-            if(student.getPerson().getUsername().equalsIgnoreCase(username)){
-                List<Shift> shifts = student.getShifts();
-                for(Shift shift : shifts){
-                    List auxLessons = shift.getAssociatedLessons();
-                    if (auxLessons != null) {
-                        lessons.addAll(auxLessons);
-                    }
-                }
-                break;
-            }
-        }
-
         return lessons;
     }
 

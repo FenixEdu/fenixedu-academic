@@ -559,15 +559,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadStudentLessons</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentLessons</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="StudentAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ReadShiftLessons</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.ReadShiftLessons</implementationClass>
 		<description />

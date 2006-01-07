@@ -439,13 +439,7 @@
       </action>
 
       <!-- VIEW SCHEDULE -->
-<!--      <action 
-              type="net.sourceforge.fenixedu.presentationTier.Action.student.ViewScheduleAction"
-              path="/viewSchedule"
-              >
-        <forward name="sucess"
-                 path="/viewSchedule.jsp"/>
-      </action>
+<!--
       <action
               type="net.sourceforge.fenixedu.presentationTier.Action.student.ViewShiftScheduleAction"
               path="/viewShiftSchedule"
